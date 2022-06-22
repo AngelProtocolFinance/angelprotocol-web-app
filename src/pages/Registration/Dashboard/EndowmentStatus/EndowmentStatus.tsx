@@ -13,7 +13,7 @@ type Props = {
 
 export default function EndowmentStatus(props: Props) {
   const { RegistrationStatus, CharityName } = props.charity.Registration;
-  const { TerraWallet } = props.charity.Metadata;
+  const { JunoWallet } = props.charity.Metadata;
 
   if (props.isLoading) {
     return <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-2" />;
@@ -41,7 +41,7 @@ export default function EndowmentStatus(props: Props) {
         )}
         {RegistrationStatus === "Active" && (
           <p className="flex items-center h-10 ml-14 mr-auto text-green-500 uppercase">
-            Created: {maskAddress(TerraWallet)}
+            Created: {maskAddress(JunoWallet)}
           </p>
         )}
       </div>

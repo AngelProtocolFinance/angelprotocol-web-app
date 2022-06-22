@@ -69,6 +69,6 @@ export const placeHolderCharity: Charity = {
     EndowmentContract: "",
     KycDonorsOnly: false,
     SK: "Metadata",
-    TerraWallet: "",
+    JunoWallet: "",
   },
 };

@@ -9,7 +9,7 @@ export default function RegistrationSuccessful() {
   const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
 
-  if (!charity.Metadata.TerraWallet) {
+  if (!charity.Metadata.JunoWallet) {
     return <Navigate to={routes.index} />;
   }
 
@@ -24,7 +24,7 @@ export default function RegistrationSuccessful() {
       <div>
         <p>Thanks for registering your wallet:</p>
         <p>your address is</p>
-        <p className="font-bold">{charity.Metadata.TerraWallet}</p>
+        <p className="font-bold">{charity.Metadata.JunoWallet}</p>
       </div>
       <Link
         to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}

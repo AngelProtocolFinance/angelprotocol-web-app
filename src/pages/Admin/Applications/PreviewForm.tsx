@@ -54,7 +54,7 @@ export default function PreviewForm({
         label="Registration Date"
         text={new Date(ap.RegistrationDate).toDateString()}
       />
-      <Field label="Wallet Address" text={ap.TerraWallet} />
+      <Field label="Wallet Address" text={ap.JunoWallet} />
       <Proof
         label="Endowment Agreement"
         verified={ap.EndowmentAgreementVerified}
@@ -88,7 +88,7 @@ export default function PreviewForm({
               updateStatus({
                 PK: ap.PK,
                 status: "3",
-                endowmentAddr: ap.TerraWallet, // replace with endowment address
+                endowmentAddr: ap.JunoWallet, // replace with endowment address
                 title: getTitle("Reject"),
                 description: getDescription("Reject"),
               })
@@ -102,7 +102,7 @@ export default function PreviewForm({
               updateStatus({
                 PK: ap.PK,
                 status: "1",
-                endowmentAddr: ap.TerraWallet, // replace with endowment address
+                endowmentAddr: ap.JunoWallet, // replace with endowment address
                 title: getTitle("Approve"),
                 description: getDescription("Approve"),
               })

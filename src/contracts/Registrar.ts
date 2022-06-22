@@ -73,12 +73,12 @@ function createEndowmentCreationMsgPayload(
   charity: Charity
 ): RegistrarCreateEndowmentPayload {
   return {
-    beneficiary: charity.Metadata.TerraWallet,
+    beneficiary: charity.Metadata.JunoWallet,
     cw4_members: [],
     guardians_multisig_addr: undefined,
     maturity_height: undefined,
     maturity_time: undefined,
-    owner: charity.Metadata.TerraWallet,
+    owner: charity.Metadata.JunoWallet,
     profile: {
       annual_revenue: undefined,
       average_annual_budget: undefined,

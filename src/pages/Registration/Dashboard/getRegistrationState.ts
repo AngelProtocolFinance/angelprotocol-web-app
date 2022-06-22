@@ -7,7 +7,7 @@ export default function getRegistrationState(
 ): RegistrationState {
   return {
     stepOne: { completed: !!charity.ContactPerson.PK },
-    stepTwo: { completed: !!charity.Metadata.TerraWallet },
+    stepTwo: { completed: !!charity.Metadata.JunoWallet },
     stepThree: getStepThree(charity),
     stepFour: {
       completed:

@@ -109,7 +109,7 @@ const mockReviewsData: CharityApplication[] = [
     CharityName_ContactEmail: "123_COMPANY_chinadev20@outlook.com",
     ProofOfIdentity:
       "https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png",
-    TerraWallet: "terra11",
+    JunoWallet: "terra11",
     SK: "Registration",
     RegistrationStatus: "Under Review",
     PK: "eafe2aa3-6882-49f9-8f32-bc7f721fb3ab",
@@ -127,7 +127,7 @@ const mockReviewsData: CharityApplication[] = [
     CharityName_ContactEmail: "ALL4GOOD_ms@mail.com",
     ProofOfIdentity:
       "https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/06c08277-bc60-4df8-b0a3-3d00e7e2f1be.png",
-    TerraWallet: "terra23",
+    JunoWallet: "terra23",
     SK: "Registration",
     RegistrationStatus: "Under Review",
     PK: "06c08277-bc60-4df8-b0a3-3d00e7e2f1be",

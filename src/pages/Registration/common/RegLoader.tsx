@@ -1,10 +1,10 @@
 import Icon from "components/Icon";
 
-export default function RegLoader() {
+export default function RegLoader(props: { message?: string }) {
   return (
     <div className="flex gap-2 items-center">
       <Icon type="Loading" className="animate-spin" size={18} />
-      Getting registration data..
+      {props.message || "Getting registration data.."}
     </div>
   );
 }

@@ -4,9 +4,9 @@ import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
-import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
+import { postTerraTx } from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -49,7 +49,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await getTerraPoster(args.wallet.providerId)(tx);
+      const response = await postTerraTx(tx);
 
       updateTx({
         step: "broadcast",

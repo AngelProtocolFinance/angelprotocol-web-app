@@ -70,7 +70,7 @@ export default function TableView(props: {
             </p>
             <p className="font-mono flex justify-between items-center w-42 sm:w-32">
               <span className="text-base truncate w-22">
-                {ap.TerraWallet || "-"}
+                {ap.JunoWallet || "-"}
               </span>
             </p>
             <div className="w-42 sm:w-32">
@@ -93,7 +93,7 @@ const headers: { key: SortKey; name: string }[] = [
   { key: "CharityName_ContactEmail", name: "email" },
   { key: "RegistrationDate", name: "date" },
   { key: "RegistrationStatus", name: "status" },
-  { key: "TerraWallet", name: "wallet address" },
+  { key: "JunoWallet", name: "wallet address" },
 ];
 
 function HeaderButton(

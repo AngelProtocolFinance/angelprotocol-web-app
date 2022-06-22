@@ -211,7 +211,7 @@ export interface CharityApplication {
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
   SK: string;
-  TerraWallet: string;
+  JunoWallet: string;
   poll_id?: number;
 }
 
@@ -272,7 +272,7 @@ type InitialMetaData = Optional<
   | "CharityLogo"
   | "CharityOverview"
   | "EndowmentContract"
-  | "TerraWallet"
+  | "JunoWallet"
   | "KycDonorsOnly"
 >;
 export type Metadata = {
@@ -281,7 +281,7 @@ export type Metadata = {
   CharityOverview: string;
   EndowmentContract: string;
   SK: "Metadata";
-  TerraWallet: string;
+  JunoWallet: string;
   KycDonorsOnly: boolean;
 };
 
@@ -335,7 +335,7 @@ export type UpdateCharityMetadataData = {
     Banner?: FileObject;
     CharityLogo?: FileObject;
     CharityOverview?: string;
-    TerraWallet?: string;
+    JunoWallet?: string;
   };
 };
 
@@ -343,7 +343,7 @@ export type UpdateCharityMetadataResult = {
   Banner: FileObject;
   CharityLogo: FileObject;
   CharityOverview: string;
-  TerraWallet: string;
+  JunoWallet: string;
 };
 
 export type UpdateDocumentationData = {
