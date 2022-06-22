@@ -6,7 +6,3 @@ export default function getTokenBalance(
 ): number {
   return tokenBalances.find((token) => token.symbol === symbol)?.balance || 0;
 }
-
-export function getToken(tokenBalances: WithBalance[], symbol: string) {
-  return tokenBalances.find((token) => token.symbol === symbol) || {};
-}

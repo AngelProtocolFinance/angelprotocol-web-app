@@ -3,14 +3,14 @@ import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
-import { IS_DEV, terraChainId } from "constants/env";
+import { IS_TEST, terraChainId } from "constants/env";
 import { terra_lcds } from "constants/urls";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
-  network: IS_DEV ? "testnet" : "mainnet",
+  network: IS_TEST ? "testnet" : "mainnet",
   uxMode: "popup",
 });
 

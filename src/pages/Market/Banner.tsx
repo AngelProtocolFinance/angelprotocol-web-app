@@ -25,14 +25,14 @@ export default function Banner() {
             could displace over 7 million people.
           </span>{" "}
           <span className="md:leading-normal xl:leading-relaxed font-bold">
-            <a
+            {/*<a
               href="https://ukraine.angelprotocol.io/"
               target="_blank"
               rel="noreferrer"
               className="underline"
-            >
-              Fund relief & refugee efforts by donating crypto assets today!
-            </a>
+            >*/}
+            Fund relief & refugee efforts by donating crypto assets today!
+            {/*</a>*/}
           </span>
         </p>
       </div>

@@ -90,6 +90,7 @@ export default function useEstimator() {
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
+        console.error(err);
         dispatch(setFormError(processEstimateError(err)));
       }
     })();

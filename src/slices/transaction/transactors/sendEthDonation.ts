@@ -6,7 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { StageUpdator } from "slices/transaction/types";
-import { KYCData, Receiver } from "types/server/aws";
+import { Receiver } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers/getProvider";
@@ -19,7 +19,6 @@ type EthDonateArgs = {
   wallet?: WalletState;
   tx: TransactionRequest;
   donateValues: DonateValues;
-  kycData?: KYCData;
 };
 
 export const sendEthDonation = createAsyncThunk(
@@ -73,7 +72,6 @@ export const sendEthDonation = createAsyncThunk(
           denomination: token.symbol,
           splitLiq: split_liq,
           walletAddress,
-          kycData: args.kycData,
         });
       }
       updateTx({

@@ -3,6 +3,7 @@ import { EVMNative, TerraNative, Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
+import ustLogo from "assets/icons/currencies/ust.svg";
 import { chainIDs } from "constants/chainIDs";
 import { terraChainId } from "constants/env";
 
@@ -95,7 +96,15 @@ export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
     logo: lunaLogo,
     decimals: 6,
     chain_id: terraChainId,
-    chain_name: "Terra Testnet",
+    chain_name: "Terra",
+  },
+  uusd: {
+    type: "terra-native",
+    symbol: "UST",
+    logo: ustLogo,
+    decimals: 6,
+    chain_id: terraChainId,
+    chain_name: "Terra",
   },
 };
 

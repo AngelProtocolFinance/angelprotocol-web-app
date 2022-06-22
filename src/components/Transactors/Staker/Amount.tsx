@@ -46,7 +46,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={"HALO"}
+          placeholder="HALO"
           className="flex-auto p-1 pl-0 focus:outline-none text-angel-grey bg-light-grey text-lg"
         />
         <div
