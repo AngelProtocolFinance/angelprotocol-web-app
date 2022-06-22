@@ -160,11 +160,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: [
-            ...terraConnections,
+            keplrConnection,
             xdefiConnection,
             metamaskConnection,
+            ...terraConnections,
             binanceWalletConnection,
-            keplrConnection,
           ],
           disconnect,
         }}
