@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { Keplr } from "@keplr-wallet/types";
+import { ChainInfo, Keplr } from "@keplr-wallet/types";
 
 export interface Dwindow extends Window {
   xfi?: {

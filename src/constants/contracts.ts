@@ -27,7 +27,8 @@ export const contracts: Contracts = IS_TEST
       anchor_vault1: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
       anchor_vault2: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
       index_fund: "terra1nguvmjkjxfmqggvp3datged2cx6gjf4jl9apps",
-      registrar: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+      registrar:
+        "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
 
       // Admin
       apCW3: "terra1qspgamxqn9slwe7ecca4n2fs2xsl5hxvkc9lzs",

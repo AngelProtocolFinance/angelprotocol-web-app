@@ -10,9 +10,14 @@ export interface ERC20Token {
   balance: string;
 }
 
-/** _wrapper */
+/** _wrapper classic*/
 export interface QueryRes<T> {
   query_result: T;
+}
+
+/** _wrapper cosmwasm_v1*/
+export interface DataRes<T> {
+  data: T;
 }
 
 /** _shared */
