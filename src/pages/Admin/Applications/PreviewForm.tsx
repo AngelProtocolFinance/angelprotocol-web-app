@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { CharityApplication } from "types/server/aws";
-import { useProposal } from "services/terra/admin/queriers";
+import { useProposal } from "services/juno/admin/queriers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";

@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta } from "pages/Admin/types";
 import { IndexFundOwnerValues } from "pages/Admin/types";
-import { adminTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -53,8 +53,8 @@ export default function useUpdateOwner() {
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.admin, id: adminTags.proposals },
+          invalidateJunoTags([
+            { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink("apTeam"),

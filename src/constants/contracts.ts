@@ -26,13 +26,14 @@ export const contracts: Contracts = IS_TEST
       //core
       anchor_vault1: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
       anchor_vault2: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
-      index_fund: "terra1nguvmjkjxfmqggvp3datged2cx6gjf4jl9apps",
+      index_fund:
+        "juno1cwd6uktz66fky8ky2ufzvqve858uxvj84345cfeg7adalyamdy2qaurgm0",
       registrar:
         "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
 
       // Admin
-      apCW3: "terra1qspgamxqn9slwe7ecca4n2fs2xsl5hxvkc9lzs",
-      apCW4: "terra1wpnzy6w9gd3tt9wkvnqkcmzkyc8v0tgz75nuue",
+      apCW3: "juno1ms29h3vhvrfpa6mnf2ck3eh6dtrcpg628sudj5pucctmadqdqkjqkdrjdj",
+      apCW4: "juno15s4l8jnh5n9ehvay9v4l3vu9s2fn963r3wqu43dnkqjy8qyrm37sfk74s5",
 
       //terraswap
       halo_token: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { CharityParams } from "../../types";
-import { useEndowmentProfileState } from "services/terra/account/states";
+import { useEndowmentProfileState } from "services/juno/account/states";
 import RichTextRenderer from "components/RichTextRenderer";
 
 export default function Overview() {

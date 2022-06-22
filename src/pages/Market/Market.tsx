@@ -1,4 +1,4 @@
-import { useCategorizedEndowments } from "services/juno/queriers";
+import { useCategorizedEndowments } from "services/juno/registrar/queriers";
 import Loader from "components/Loader";
 import Banner from "./Banner";
 import Index from "./Index";

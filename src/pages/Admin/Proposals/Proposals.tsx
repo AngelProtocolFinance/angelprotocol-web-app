@@ -3,7 +3,7 @@ import { ProposalGroupOptions, ProposalStatusOptions } from "pages/Admin/types";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
-} from "services/terra/admin/queriers";
+} from "services/juno/admin/queriers";
 import Icon from "components/Icon";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";

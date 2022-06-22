@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
-import { useWithdrawConstraints } from "services/terra/multicall/queriers";
+import { useWithdrawConstraints } from "services/juno/multicall/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import WithdrawForm from "./WithdrawForm";

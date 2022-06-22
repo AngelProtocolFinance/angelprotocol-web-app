@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
-import { multicallTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
@@ -23,9 +23,9 @@ export default function useWithdraw(resources: WithdrawResource) {
         wallet,
         tx: tx!,
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.multicall, id: multicallTags.endowmentBalance },
-            { type: terraTags.multicall, id: multicallTags.terraBalances },
+          invalidateJunoTags([
+            { type: junoTags.multicall, id: multicallTags.endowmentBalance },
+            { type: junoTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
         successLink: {

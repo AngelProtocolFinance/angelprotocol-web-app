@@ -1,15 +1,15 @@
 import React, { ReactNode } from "react";
 import { ProposalDetails, ProposalMeta } from "pages/Admin/types";
 import { Tags } from "slices/transaction/types";
+import { invalidateJunoTags } from "services/juno";
 import {
   adminTags,
   endowmentTags,
   indexfundTags,
+  junoTags,
   multicallTags,
   registrarTags,
-  terraTags,
-} from "services/terra/tags";
-import { terra } from "services/terra/terra";
+} from "services/juno/tags";
 import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
 import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
 
@@ -69,17 +69,17 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
   const tagsToInvalidate: Tags = [
     //basic tags to invalidate
-    { type: terraTags.admin, id: adminTags.proposal },
-    { type: terraTags.admin, id: adminTags.proposals },
+    { type: junoTags.admin, id: adminTags.proposal },
+    { type: junoTags.admin, id: adminTags.proposals },
   ];
   if (!proposalMeta) {
-    return [terra.util.invalidateTags(tagsToInvalidate)];
+    return [invalidateJunoTags(tagsToInvalidate)];
   }
   const parsedProposalMeta: ProposalMeta = JSON.parse(proposalMeta);
   switch (parsedProposalMeta.type) {
     case "indexfund-alliance-edit":
       tagsToInvalidate.push({
-        type: terraTags.indexfund,
+        type: junoTags.indexfund,
         id: indexfundTags.alliance_members,
       });
       break;
@@ -87,7 +87,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "indexfund-create-fund":
     case "indexfund-update-fund-members": //fund members shown via selecFromResult (fund_list)
       tagsToInvalidate.push({
-        type: terraTags.indexfund,
+        type: junoTags.indexfund,
         id: indexfundTags.fund_list,
       });
       break;
@@ -95,28 +95,28 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "indexfund-config-update":
     case "indexfund-owner-update":
       tagsToInvalidate.push({
-        type: terraTags.indexfund,
+        type: junoTags.indexfund,
         id: indexfundTags.config,
       });
       break;
 
     case "admin-group-update-members":
       tagsToInvalidate.push({
-        type: terraTags.admin,
+        type: junoTags.admin,
         id: adminTags.members,
       });
       break;
 
     case "admin-group-fund-transfer":
       tagsToInvalidate.push({
-        type: terraTags.multicall,
+        type: junoTags.multicall,
         id: multicallTags.terraBalances,
       });
       break;
 
     case "endowment-update-status":
       tagsToInvalidate.push({
-        type: terraTags.registrar,
+        type: junoTags.registrar,
         id: registrarTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
       });
       break;
@@ -124,12 +124,12 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "endowment-withdraw":
       tagsToInvalidate.push(
         {
-          type: terraTags.multicall,
+          type: junoTags.multicall,
           id: multicallTags.endowmentBalance,
         },
         //edge: user transfers to CW20 or Native to his connected wallet
         {
-          type: terraTags.multicall,
+          type: junoTags.multicall,
           id: multicallTags.terraBalances,
         }
       );
@@ -137,7 +137,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
 
     case "endowment-update-profile":
       tagsToInvalidate.push({
-        type: terraTags.endowment,
+        type: junoTags.endowment,
         id: endowmentTags.profile,
       });
       break;
@@ -145,13 +145,13 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "registrar-update-owner":
     case "registrar-update-config":
       tagsToInvalidate.push({
-        type: terraTags.registrar,
+        type: junoTags.registrar,
         id: registrarTags.config,
       });
       break;
 
     default:
-      return [terra.util.invalidateTags(tagsToInvalidate)];
+      return [invalidateJunoTags(tagsToInvalidate)];
   }
-  return [terra.util.invalidateTags(tagsToInvalidate)];
+  return [invalidateJunoTags(tagsToInvalidate)];
 }

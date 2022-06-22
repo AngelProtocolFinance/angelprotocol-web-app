@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "pages/Admin/types";
-import { useFundMembers } from "services/terra/indexFund/queriers";
+import { useFundMembers } from "services/juno/indexFund/queriers";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 

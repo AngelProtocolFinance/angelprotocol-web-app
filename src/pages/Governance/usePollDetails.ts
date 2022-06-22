@@ -7,8 +7,8 @@ import {
   useGovHaloBalance,
   useGovPoll,
   useGovStaker,
-} from "services/terra/gov/queriers";
-import { useLatestBlock } from "services/terra/queriers";
+} from "services/juno/gov/queriers";
+import { useLatestBlock } from "services/juno/queriers";
 import toCurrency from "helpers/toCurrency";
 
 type ProcessedPollData = {

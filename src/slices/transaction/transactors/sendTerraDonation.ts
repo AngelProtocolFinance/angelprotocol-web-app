@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StageUpdator } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
-import { multicallTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import handleTerraError from "helpers/handleTerraError";
@@ -80,9 +80,9 @@ export const sendTerraDonation = createAsyncThunk(
 
           //invalidate user balance and endowment balance
           dispatch(
-            terra.util.invalidateTags([
-              { type: terraTags.multicall, id: multicallTags.endowmentBalance },
-              { type: terraTags.multicall, id: multicallTags.terraBalances },
+            invalidateJunoTags([
+              { type: junoTags.multicall, id: multicallTags.endowmentBalance },
+              { type: junoTags.multicall, id: multicallTags.terraBalances },
             ])
           );
         } else {

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { useMemberState } from "services/terra/admin/states";
-import { useEndowmentBalance } from "services/terra/multicall/queriers";
+import { useMemberState } from "services/juno/admin/states";
+import { useEndowmentBalance } from "services/juno/multicall/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";

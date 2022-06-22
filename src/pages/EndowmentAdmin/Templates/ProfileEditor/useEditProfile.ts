@@ -10,8 +10,8 @@ import { ObjectEntries } from "types/utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
 import { uploadToIpfs } from "pages/Registration/helpers";
-import { adminTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -117,8 +117,8 @@ export default function useEditProfile() {
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.admin, id: adminTags.proposals },
+          invalidateJunoTags([
+            { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink(cwContracts, endowmentAddr),

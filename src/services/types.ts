@@ -14,7 +14,7 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
-export type TerraTags =
+export type JunoTags =
   | "gov"
   | "indexfund"
   | "admin"

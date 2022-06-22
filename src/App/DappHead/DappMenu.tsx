@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useMember } from "services/terra/admin/queriers";
+import { useMember } from "services/juno/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { appRoutes, siteRoutes } from "constants/routes";
 

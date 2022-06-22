@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
-import { multicallTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useVoteEstimator from "./useVoteEstimator";
@@ -22,9 +22,9 @@ export default function useVote() {
         wallet,
         tx: tx!,
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.gov },
-            { type: terraTags.multicall, id: multicallTags.terraBalances },
+          invalidateJunoTags([
+            { type: junoTags.gov },
+            { type: junoTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

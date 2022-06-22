@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
-import { useGovStaker } from "services/terra/gov/queriers";
+import { useGovStaker } from "services/juno/gov/queriers";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 

@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
 import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
 import { AmountInfo } from "types/shared/withdraw";
-import { vaultMap } from "services/terra/multicall/constants";
+import { vaultMap } from "services/juno/multicall/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { CharityParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
-import { useEndowmentBalance } from "services/terra/multicall/queriers";
+import { useEndowmentBalance } from "services/juno/multicall/queriers";
 import toCurrency from "helpers/toCurrency";
 
 //TODO: refactor component markup

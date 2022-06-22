@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { ProposalDetails } from "pages/Admin/types";
 import { Proposal, Vote } from "types/server/contracts";
-import { useVoteList } from "services/terra/admin/queriers";
-import { useLatestBlock } from "services/terra/queriers";
+import { useVoteList } from "services/juno/admin/queriers";
+import { useLatestBlock } from "services/juno/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import idParamToNumber from "helpers/idParamToNum";
 

@@ -9,7 +9,7 @@ import { UpdateProfilePayload } from "types/server/contracts";
 import { Profile } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useEndowmentProfile } from "services/terra/account/queriers";
+import { useEndowmentProfile } from "services/juno/account/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
