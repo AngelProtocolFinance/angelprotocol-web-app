@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { web } from "constants/routes";
+import { webRoutes } from "constants/routes";
 
 //Will be for WebNav
 export default function MobileNav() {
   return (
     <div className="col-start-2 col-span-2  grid sm:hidden justify-items-end gap-1 bg-white font-body">
-      <NavLink to={`${web.charities}`} className={styler}>
+      <NavLink to={`${webRoutes.charities}`} className={styler}>
         For Charities
       </NavLink>
-      <NavLink to={`${web.donors}`} className={styler}>
+      <NavLink to={`${webRoutes.donors}`} className={styler}>
         For Donors
       </NavLink>
     </div>

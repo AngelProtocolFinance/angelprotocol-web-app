@@ -1,7 +1,7 @@
+import { CW3ConfigValues as CV } from "pages/Admin/types";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
-import { CW3ConfigValues as CV } from "./cw3ConfigSchema";
 import useConfigureCW3 from "./useConfigureCW3";
 
 export default function CW3ConfigForm() {

@@ -1,21 +1,23 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
+import { EndowmentUpdateValues } from "pages/Admin/types";
+import {
+  EndowmentStatusNum,
+  StatusChangePayload,
+} from "types/server/contracts";
 import { aws } from "services/aws/aws";
-import { admin, tags } from "services/aws/tags";
-import { EndowmentStatusNum } from "services/terra/registrar/types";
-import { sendEndowmentReviewTx } from "services/transaction/sendEndowmentReviewTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { adminTags, awsTags } from "services/aws/tags";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import { StatusChangePayload } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
-import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUpdateSchema";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
@@ -25,13 +27,13 @@ export default function useUpdateApplicationStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet);
+    const registrarContract = new Registrar(wallet?.address);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
       );
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -40,12 +42,12 @@ export default function useUpdateApplicationStatus() {
 
     dispatch(
       sendEndowmentReviewTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         applicationId: data.PK,
         tagPayloads: [
           aws.util.invalidateTags([
-            { type: tags.admin, id: admin.applications },
+            { type: awsTags.admin, id: adminTags.applications },
           ]),
         ],
       })

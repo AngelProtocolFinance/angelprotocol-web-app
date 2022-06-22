@@ -3,6 +3,7 @@ import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
+import NetworkPrompt from "./NetworkPrompt";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
@@ -23,6 +24,7 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
+      <NetworkPrompt />
       <Amount />
       <Breakdown />
 
@@ -57,9 +59,10 @@ export default function DonateForm() {
           .
         </label>
       </div>
+
       <button
         disabled={isSubmitDisabled || !isTermsAccepted}
-        className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

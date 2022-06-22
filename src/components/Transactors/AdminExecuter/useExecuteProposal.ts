@@ -1,33 +1,29 @@
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { TagPayloads } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { AdmiExecuterProps } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
 
-export default function useExecuteProposal(
-  proposal_id: number,
-  tagPayloads?: TagPayloads
-) {
+export default function useExecuteProposal(args: AdmiExecuterProps) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
   function executeProposal() {
-    if (proposal_id === 0) {
-      showModal<PopupProps>(Popup, { message: "Invalid poll id" });
+    if (args.proposal_id === 0) {
+      showModal(Popup, { message: "Invalid poll id" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet);
-    const execMsg = contract.createExecProposalMsg(proposal_id);
+    const contract = new Admin(cwContracts, wallet?.address);
+    const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendTerraTx({
-        wallet,
         msgs: [execMsg],
-        tagPayloads,
+        tagPayloads: args.tagPayloads,
       })
     );
     showModal(TransactionPrompt, {});

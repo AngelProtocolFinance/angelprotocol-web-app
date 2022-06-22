@@ -1,32 +1,30 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { ContractQueryArgs } from "services/terra/types";
-import { WalletProxy } from "providers/WalletProvider";
-import { denoms } from "constants/currency";
+import { ContractQueryArgs } from "services/types";
+import { Source, UpdateProfilePayload } from "types/server/contracts";
 import Contract from "./Contract";
-import { Source, UpdateProfilePayload } from "./types";
 
 export default class Account extends Contract {
-  address: string;
+  accountAddr: string;
   balance: ContractQueryArgs;
   endowmentDetails: ContractQueryArgs;
   profile: ContractQueryArgs;
 
-  constructor(accountAddr: string, wallet?: WalletProxy) {
-    super(wallet);
-    this.address = accountAddr;
+  constructor(accountAddr: string, walletAddr?: string) {
+    super(walletAddr);
+    this.accountAddr = accountAddr;
 
     this.balance = {
-      address: this.address,
+      address: this.accountAddr,
       msg: { balance: {} },
     };
 
     this.endowmentDetails = {
-      address: this.address,
+      address: this.accountAddr,
       msg: { endowment: {} },
     };
 
     this.profile = {
-      address: this.address,
+      address: this.accountAddr,
       msg: { get_profile: {} },
     };
   }
@@ -39,14 +37,14 @@ export default class Account extends Contract {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     return new MsgExecuteContract(
       this.walletAddr!,
-      this.address,
+      this.accountAddr,
       {
         deposit: {
           locked_percentage: pctLocked.toFixed(2),
           liquid_percentage: pctLiquid.toFixed(2),
         },
       },
-      [new Coin(denoms.uusd, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
   }
 
@@ -58,7 +56,7 @@ export default class Account extends Contract {
     beneficiary: string;
   }) {
     this.checkWallet();
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
       withdraw: {
         sources: sources,
         beneficiary,
@@ -68,7 +66,7 @@ export default class Account extends Contract {
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
     this.checkWallet();
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
       update_profile: payload,
     });
   }

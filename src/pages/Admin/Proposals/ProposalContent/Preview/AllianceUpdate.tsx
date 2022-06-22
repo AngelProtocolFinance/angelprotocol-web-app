@@ -1,10 +1,10 @@
-import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { AllianceEditMeta } from "pages/Admin/types";
-import { AllianceMember } from "services/terra/indexFund/types";
+import { AllianceMember } from "types/server/contracts";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import Header from "./preview-components/Header";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function AllianceUpdate(props: AllianceEditMeta) {
+export default function AllianceUpdate(props: AllianceEditMeta["data"]) {
   return (
     <PreviewContainer>
       {props.toAddMembers.length > 0 && (

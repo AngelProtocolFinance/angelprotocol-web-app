@@ -1,7 +1,21 @@
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
-import { HoldingSummary } from "../types";
 
+type LockedSummary = {
+  type: "locked";
+  balance: number;
+  isOwner?: never;
+  opener?: never;
+};
+
+type LiquidSummary = {
+  type: "liquid";
+  balance: number;
+  isOwner: boolean;
+  opener: () => void;
+};
+
+type HoldingSummary = LockedSummary | LiquidSummary;
 export default function Summary(props: HoldingSummary) {
   const title =
     props.type === "liquid" ? "Liquid Account" : "Endowment Account";

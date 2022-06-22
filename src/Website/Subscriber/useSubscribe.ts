@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { subscriberSchema } from "./subscriberSchema";
 
 export default function useSubscribe() {
@@ -52,13 +52,13 @@ export default function useSubscribe() {
       });
 
       if (response.status !== 200) {
-        showModal<PopupProps>(Popup, {
+        showModal(Popup, {
           message: "Failed to subscribe, please try again",
         });
       }
       reset();
     } catch (error) {
-      showModal<PopupProps>(Popup, {
+      showModal(Popup, {
         message: "Unknown error appeared, please try again.",
       });
     }

@@ -1,17 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import AppWrapper from "test/AppWrapper";
-import { site } from "constants/routes";
+import { siteRoutes } from "constants/routes";
 import App from "./App";
 
 // define initial routes
-const routes = [`${site.app}`];
+const routes = [`${siteRoutes.app}`];
 
 function TestApp() {
   return (
     <AppWrapper routes={routes} startingRouteIndex={0}>
       <Routes>
-        <Route path={site.app + "/*"} element={<App />} />
+        <Route path={siteRoutes.app + "/*"} element={<App />} />
       </Routes>
     </AppWrapper>
   );

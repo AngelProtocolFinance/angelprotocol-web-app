@@ -1,15 +1,7 @@
 import { useMemo, useState } from "react";
-import { CharityApplication } from "./types";
+import { SortDirection, SortKey } from "pages/Admin/types";
+import { CharityApplication } from "types/server/aws";
 
-export type SortDirection = "asc" | "desc";
-export type SortKey = keyof Pick<
-  CharityApplication,
-  | "CharityName"
-  | "RegistrationDate"
-  | "RegistrationStatus"
-  | "CharityName_ContactEmail"
-  | "TerraWallet"
->;
 export default function useSortedApplications(
   applications: CharityApplication[]
 ) {

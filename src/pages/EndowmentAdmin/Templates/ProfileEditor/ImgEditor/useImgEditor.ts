@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import { UpdateProfileValues } from "../profileEditSchema";
+import { UpdateProfileValues } from "../../../types";
+import { useModalContext } from "contexts/ModalContext";
 import ImgCropper from "./ImgCropper";
 
 export default function useImgEditor() {

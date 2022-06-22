@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Transactor, { TxProps } from "../Transactor";
-import StakeForm from "./StakeForm";
-import Staker from "./Staker";
 import { Props } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
+import Staker from "./Staker";
 
 export default function useStaker() {
   const { showModal } = useModalContext();
@@ -12,7 +11,7 @@ export default function useStaker() {
       showModal<TxProps<Props>>(Transactor, {
         inModal: true,
         Content: Staker,
-        contentProps: { Form: StakeForm, stake: is_stake },
+        contentProps: { isStake: is_stake },
       });
     },
     //eslint-disable-next-line

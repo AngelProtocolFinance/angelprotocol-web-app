@@ -1,3 +1,4 @@
+import { RegistrarConfigValues as RV } from "pages/Admin/types";
 import Label from "pages/Admin/components/Label";
 import {
   FormContainer,
@@ -5,7 +6,6 @@ import {
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
 import Submitter from "../Submitter";
-import { RegistrarConfigValues as RV } from "./registrarConfigSchema";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
 export default function RegistrarConfigForm() {

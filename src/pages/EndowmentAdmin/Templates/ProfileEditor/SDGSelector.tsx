@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { UpdateProfileValues } from "pages/EndowmentAdmin/types";
 import { unsdgs } from "constants/unsdgs";
-import { UpdateProfileValues } from "./profileEditSchema";
 
 export default function SDGSelector() {
   const { register } = useFormContext<UpdateProfileValues>();

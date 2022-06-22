@@ -1,12 +1,9 @@
 import * as Yup from "yup";
-import { RegistrarConfigPayload } from "contracts/types";
+import { RegistrarConfigValues } from "pages/Admin/types";
+import { SchemaShape } from "schemas/types";
 import { percentString, positiveNumber } from "schemas/number";
 import { address } from "schemas/string";
-import { SchemaShape } from "types/schema";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type RegistrarConfigValues = ProposalBase &
-  RegistrarConfigPayload & { initialConfigPayload: RegistrarConfigPayload };
+import { proposalShape } from "../proposalShape";
 
 const contractAddrSchema = address("contract").nullable();
 

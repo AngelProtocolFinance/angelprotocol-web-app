@@ -2,10 +2,10 @@ import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { useMemberState } from "services/terra/admin/states";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
-import ContentLoader from "components/ContentLoader/ContentLoader";
+import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import Summary from "./Summary";
 import Transactions from "./Transactions";
 
@@ -22,7 +22,7 @@ export default function Dashboard(props: { endowmentAddr: string }) {
       <PageError
         classes="place-self-start justify-self-center mt-10 "
         redirect={{
-          to: `${site.app}/${app.charity}/${props.endowmentAddr}`,
+          to: `${siteRoutes.app}/${appRoutes.charity}/${props.endowmentAddr}`,
           title: "back to profile",
         }}
       >

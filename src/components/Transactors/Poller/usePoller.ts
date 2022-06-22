@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Transactor, { TxProps } from "../Transactor";
+import { Props } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import Poller from "./Poller";
 import PollerForm from "./PollerForm";
-import { Props } from "./types";
 
 export default function usePoller() {
   const { showModal } = useModalContext();

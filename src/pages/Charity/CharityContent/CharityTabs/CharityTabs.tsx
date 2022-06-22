@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { charity } from "constants/routes";
+import { charityRoutes } from "constants/routes";
 import { EndowmentInfo } from "./EndowmentInfo";
 import Overview from "./Overview";
 
@@ -8,7 +8,7 @@ export default function CharityTabs() {
   return (
     <Routes>
       <Route index element={<Overview />} />
-      <Route path={charity.endowment} element={<EndowmentInfo />} />
+      <Route path={charityRoutes.endowment} element={<EndowmentInfo />} />
       <Route path="*" element={<Overview />} />
     </Routes>
   );

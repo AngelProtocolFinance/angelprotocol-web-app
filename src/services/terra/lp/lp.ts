@@ -1,7 +1,7 @@
+import { ContractQueryArgs } from "services/types";
+import { QueryRes, Simulation } from "types/server/contracts";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
-import { ContractQueryArgs, QueryRes } from "../types";
-import { Simulation } from "./types";
 
 export const lp_api = terra.injectEndpoints({
   endpoints: (builder) => ({

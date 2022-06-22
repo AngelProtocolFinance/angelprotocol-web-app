@@ -1,21 +1,21 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { HaloStakingValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 // import useTerraBalance from "hooks/useTerraBalance";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
-import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
@@ -25,10 +25,9 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { coins } = useGetter((state) => state.wallet);
+  const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -45,7 +44,7 @@ export default function useEstimator() {
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
-          dispatch(setFee({ fee: 0 }));
+          dispatch(setFee(0));
           return;
         }
 
@@ -67,7 +66,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let govMsg: MsgExecuteContract;
-        const contract = new Gov(wallet);
+        const contract = new Gov(wallet.address);
 
         if (is_stake) {
           govMsg = contract.createGovStakeMsg(debounced_amount);
@@ -79,7 +78,7 @@ export default function useEstimator() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeNum >= ustBalance) {
           setError("amount", {
             message: "not enough UST to pay for fees",
@@ -87,7 +86,7 @@ export default function useEstimator() {
           return;
         }
 
-        dispatch(setFee({ fee: feeNum }));
+        dispatch(setFee(feeNum));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -100,7 +99,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, coins, balance, locked, isValid, isDirty]);
+  }, [debounced_amount, wallet, balance, locked, isValid, isDirty]);
 
   return { tx, wallet };
 }

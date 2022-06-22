@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { setStage } from "services/transaction/transactionSlice";
-import { Step, SuccessStage } from "services/transaction/types";
+import { SuccessStage } from "slices/transaction/types";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import SharePrompt from "components/Share/SharePrompt";
+import SharePrompt from "components/Share";
 import { useSetter } from "store/accessors";
+import { setStage } from "slices/transaction/transactionSlice";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {
-  if (props.step !== Step.success) throw new Error("wrong component rendered");
+  if (props.step !== "success") throw new Error("wrong component rendered");
   const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
@@ -26,18 +26,18 @@ export default function Success(props: SuccessStage) {
     !isReceiptEnabled && !isShareEnabled && !successLink;
 
   function acknowledge() {
-    dispatch(setStage({ step: Step.form }));
+    dispatch(setStage({ step: "form" }));
     closeModal();
   }
 
   function showReceiptForm() {
-    dispatch(setStage({ step: Step.receipt, chainId, txHash }));
+    dispatch(setStage({ step: "receipt", chainId, txHash }));
   }
 
   function redirectToSuccessUrl(url: string) {
     return function () {
       navigate(url);
-      dispatch(setStage({ step: Step.form }));
+      dispatch(setStage({ step: "form" }));
       closeModal();
     };
   }

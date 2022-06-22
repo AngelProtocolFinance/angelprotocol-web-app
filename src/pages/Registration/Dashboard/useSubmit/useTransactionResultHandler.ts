@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { useSubmitMutation } from "services/aws/registration";
+import { Stage } from "slices/transaction/types";
+import {
+  useRegistrationState,
+  useSubmitMutation,
+} from "services/aws/registration";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFormError,
   setFormLoading,
   setStage,
-} from "services/transaction/transactionSlice";
-import { Stage, Step } from "services/transaction/types";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
 import { FORM_ERROR } from "../../constants";
-import { updateCharity } from "../../store";
 import useHandleError from "../../useHandleError";
 
 export default function useTransactionResultHandler() {
-  const charity = useGetter((state) => state.charity);
+  const { data } = useRegistrationState("");
+  const charity = data!; //ensured by guard
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
@@ -29,33 +32,18 @@ export default function useTransactionResultHandler() {
 
         if ("error" in result) {
           handleError(result.error, FORM_ERROR);
-        } else {
-          dispatch(
-            updateCharity({
-              ...charity,
-              Registration: {
-                ...charity.Registration,
-                RegistrationStatus: result.data.RegistrationStatus,
-              },
-              Metadata: {
-                ...charity.Metadata,
-                EndowmentContract: result.data.EndowmentContract,
-              },
-            })
-          );
         }
       } catch (error) {
         console.log(error);
-        dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
+        dispatch(setStage({ step: "error", message: FORM_ERROR }));
       } finally {
         dispatch(setFormLoading(false));
       }
     }
 
-    if (stage.step === Step.error) {
-      console.log(stage.message);
+    if (stage.step === "error") {
       dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
-    } else if (stage.step === Step.success) {
+    } else if (stage.step === "success") {
       handle();
     }
   }, [charity, stage, dispatch, handleError, submit]);

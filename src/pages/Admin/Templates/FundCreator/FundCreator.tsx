@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { FundCreatorValues } from "pages/Admin/types";
 import FundCreatorForm from "./FundCreatorForm";
-import { FundCreatorValues, fundCreatorSchema } from "./fundCreatorSchema";
+import { fundCreatorSchema } from "./fundCreatorSchema";
 
 export const INIT_SPLIT = "-1";
 

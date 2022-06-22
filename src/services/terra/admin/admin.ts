@@ -1,30 +1,42 @@
-import contract_querier from "../contract_querier";
-import { admin, tags } from "../tags";
-import { terra } from "../terra";
-import { ContractQueryArgs, QueryRes } from "../types";
+import { ContractQueryArgs } from "services/types";
 import {
+  AdminVoteInfo,
   CW3Config,
-  InquiredMember,
   Member,
-  MemberRes,
   Proposal,
-  ProposalsRes,
-  VoteInfo,
-  VoteListRes,
-} from "./types";
+  QueryRes,
+} from "types/server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
+import contract_querier from "../contract_querier";
+import { terra } from "../terra";
+
+type MemberRes = {
+  members: Member[];
+};
+type ProposalsRes = {
+  proposals: Proposal[];
+};
+
+type InquiredMember = {
+  weight: number | null;
+};
+
+type VoteListRes = {
+  votes: AdminVoteInfo[];
+};
 
 export const admin_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     //CW4
     members: builder.query<Member[], ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.members }],
+      providesTags: [{ type: terraTags.admin, id: adminTags.members }],
       query: contract_querier,
       transformResponse: (res: QueryRes<MemberRes>) => {
         return res.query_result.members;
       },
     }),
     member: builder.query<InquiredMember, ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.member }],
+      providesTags: [{ type: terraTags.admin, id: adminTags.member }],
       query: contract_querier,
       transformResponse: (res: QueryRes<InquiredMember>) => {
         return res.query_result;
@@ -33,7 +45,7 @@ export const admin_api = terra.injectEndpoints({
 
     //CW3
     cw3Config: builder.query<CW3Config, ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.config }],
+      providesTags: [{ type: terraTags.admin, id: adminTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW3Config>) => {
         return res.query_result;
@@ -41,21 +53,21 @@ export const admin_api = terra.injectEndpoints({
     }),
 
     proposal: builder.query<Proposal, ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.proposal }],
+      providesTags: [{ type: terraTags.admin, id: adminTags.proposal }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Proposal>) => {
         return res.query_result;
       },
     }),
     proposals: builder.query<Proposal[], ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.proposals }],
+      providesTags: [{ type: terraTags.admin, id: adminTags.proposals }],
       query: contract_querier,
       transformResponse: (res: QueryRes<ProposalsRes>) => {
         return res.query_result.proposals;
       },
     }),
-    votes: builder.query<VoteInfo[], ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.votes }],
+    votes: builder.query<AdminVoteInfo[], ContractQueryArgs>({
+      providesTags: [{ type: terraTags.admin, id: adminTags.votes }],
       query: contract_querier,
       transformResponse: (res: QueryRes<VoteListRes>) => {
         return res.query_result.votes;

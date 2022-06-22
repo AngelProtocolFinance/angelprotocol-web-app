@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
 
@@ -50,7 +50,7 @@ export default function Register() {
             </StepOneCompleteGuard>
           }
         />
-        <Route path={routes.index} element={<Registration />} />
+
         <Route path={routes.verify} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
@@ -60,10 +60,13 @@ export default function Register() {
             </StepOneCompleteGuard>
           }
         />
+        <Route index element={<Registration />} />
         <Route
           path="*"
           element={
-            <Navigate to={`${site.app}/${app.register}/${routes.dashboard}`} />
+            <Navigate
+              to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
+            />
           }
         />
       </Routes>

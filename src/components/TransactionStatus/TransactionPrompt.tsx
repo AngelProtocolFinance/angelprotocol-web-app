@@ -1,11 +1,10 @@
 import { useMemo } from "react";
-import { setStage } from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
 import { useGetter, useSetter } from "store/accessors";
+import { setStage } from "slices/transaction/transactionSlice";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
@@ -18,15 +17,15 @@ export default function TransactionPrompt() {
 
   const prompt = useMemo(() => {
     switch (stage.step) {
-      case Step.submit:
+      case "submit":
         return <Submit {...stage} />;
-      case Step.broadcast:
+      case "broadcast":
         return <Broadcast {...stage} />;
-      case Step.success:
+      case "success":
         return <Success {...stage} />;
-      case Step.error:
+      case "error":
         return <ErrPop {...stage} />;
-      case Step.receipt:
+      case "receipt":
         return (
           <Receipter {...stage}>
             <ReceiptForm />
@@ -39,11 +38,11 @@ export default function TransactionPrompt() {
 
   function closePrompt() {
     if (
-      stage.step === Step.success ||
-      stage.step === Step.receipt ||
-      stage.step === Step.error
+      stage.step === "success" ||
+      stage.step === "receipt" ||
+      stage.step === "error"
     ) {
-      dispatch(setStage({ step: Step.form }));
+      dispatch(setStage({ step: "form" }));
     }
     closeModal();
   }

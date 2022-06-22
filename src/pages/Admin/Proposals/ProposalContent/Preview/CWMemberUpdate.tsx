@@ -3,7 +3,7 @@ import Header from "./preview-components/Header";
 import MemberItem from "./preview-components/MemberItem";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function CWMemberUpdate(props: CWMemberUpdateMeta) {
+export default function CWMemberUpdate(props: CWMemberUpdateMeta["data"]) {
   return (
     <PreviewContainer>
       {props.toAdd.length > 0 && (

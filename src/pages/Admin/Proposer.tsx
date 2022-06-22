@@ -1,6 +1,5 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { proposalTypes } from "constants/routes";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
 import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
@@ -13,55 +12,60 @@ import IndexFundOwner from "./Templates/IndexFundOwner/IndexFundOwner";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import RegistrarConfigurer from "./Templates/RegistrarConfigurer/RegistrarConfigurer";
 import RegistrarOwner from "./Templates/RegistrarOwner/RegistrarOwner";
+import { proposalRoutes } from "./constants";
 
 export default function Proposer() {
   return (
     <div className="grid gap-2 grid-cols-a1">
       <ProposalTypes />
       <Routes>
+        {/** _index-fund */}
         <Route
-          path={proposalTypes.endowment_updateStatus}
-          element={<EndowmentUpdator />}
-        />
-        <Route
-          path={proposalTypes.indexFund_createFund}
-          element={<FundCreator />}
-        />
-        <Route
-          path={proposalTypes.indexFund_removeFund}
-          element={<FundDestroyer />}
-        />
-        <Route
-          path={proposalTypes.indexFund_updateFundMembers}
-          element={<FundUpdator />}
-        />
-        <Route
-          path={proposalTypes.indexFund_configUpdate}
-          element={<FundConfigurer />}
-        />
-        <Route
-          path={proposalTypes.indexFund_allianceEdits}
+          path={proposalRoutes["indexfund-alliance-edit"]}
           element={<AllianceEditor />}
         />
         <Route
-          path={proposalTypes.indexFund_ownerUpdate}
+          path={proposalRoutes["indexfund-create-fund"]}
+          element={<FundCreator />}
+        />
+        <Route
+          path={proposalRoutes["indexfund-remove-fund"]}
+          element={<FundDestroyer />}
+        />
+        <Route
+          path={proposalRoutes["indexfund-update-fund-members"]}
+          element={<FundUpdator />}
+        />
+        <Route
+          path={proposalRoutes["indexfund-config-update"]}
+          element={<FundConfigurer />}
+        />
+        <Route
+          path={proposalRoutes["indexfund-owner-update"]}
           element={<IndexFundOwner />}
         />
+        {/** _endowment */}
         <Route
-          path={proposalTypes.adminGroup_updateCW3Config}
-          element={<CW3Configurer />}
+          path={proposalRoutes["endowment-update-status"]}
+          element={<EndowmentUpdator />}
         />
+        {/** _registrar */}
         <Route
-          path={proposalTypes.adminGroup_fundTransfer}
-          element={<FundSender />}
-        />
-        <Route
-          path={proposalTypes.registrar_updateConfig}
+          path={proposalRoutes["registrar-update-config"]}
           element={<RegistrarConfigurer />}
         />
         <Route
-          path={proposalTypes.registrar_updateOwner}
+          path={proposalRoutes["registrar-update-owner"]}
           element={<RegistrarOwner />}
+        />
+        {/**_admin-group */}
+        <Route
+          path={proposalRoutes["admin-group-update-cw3-config"]}
+          element={<CW3Configurer />}
+        />
+        <Route
+          path={proposalRoutes["admin-group-fund-transfer"]}
+          element={<FundSender />}
         />
         <Route index element={<MemberUpdator />} />
       </Routes>
@@ -77,49 +81,67 @@ function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
       <ProposalCategory title="Admin group" />
-      <NavLink end to={proposalTypes.index} className={styler}>
+      <NavLink end to={proposalRoutes["index"]} className={styler}>
         Update group members
       </NavLink>
-      <NavLink to={proposalTypes.adminGroup_updateCW3Config} className={styler}>
+      <NavLink
+        to={proposalRoutes["admin-group-update-cw3-config"]}
+        className={styler}
+      >
         Update voting params
       </NavLink>
-      <NavLink to={proposalTypes.adminGroup_fundTransfer} className={styler}>
+      <NavLink
+        to={proposalRoutes["admin-group-fund-transfer"]}
+        className={styler}
+      >
         Fund transfer
       </NavLink>
 
       <ProposalCategory title="Index fund" classes="mt-4" />
-      <NavLink to={proposalTypes.indexFund_createFund} className={styler}>
+      <NavLink
+        to={proposalRoutes["indexfund-alliance-edit"]}
+        className={styler}
+      >
+        Edit Alliance List
+      </NavLink>
+      <NavLink to={proposalRoutes["indexfund-create-fund"]} className={styler}>
         Create Fund
       </NavLink>
-      <NavLink to={proposalTypes.indexFund_removeFund} className={styler}>
+      <NavLink to={proposalRoutes["indexfund-remove-fund"]} className={styler}>
         Remove Fund
       </NavLink>
       <NavLink
-        to={proposalTypes.indexFund_updateFundMembers}
+        to={proposalRoutes["indexfund-update-fund-members"]}
         className={styler}
       >
         Update Fund Members
       </NavLink>
-      <NavLink to={proposalTypes.indexFund_configUpdate} className={styler}>
+      <NavLink
+        to={proposalRoutes["indexfund-config-update"]}
+        className={styler}
+      >
         Update Config
       </NavLink>
-      <NavLink to={proposalTypes.indexFund_ownerUpdate} className={styler}>
+      <NavLink to={proposalRoutes["indexfund-owner-update"]} className={styler}>
         Update Owner
-      </NavLink>
-      <NavLink to={proposalTypes.indexFund_allianceEdits} className={styler}>
-        Edit Alliance List
       </NavLink>
 
       <ProposalCategory title="Endowment" classes="mt-4" />
-      <NavLink to={proposalTypes.endowment_updateStatus} className={styler}>
+      <NavLink
+        to={proposalRoutes["endowment-update-status"]}
+        className={styler}
+      >
         Change Endowment Status
       </NavLink>
 
       <ProposalCategory title="Registrar" classes="mt-4" />
-      <NavLink to={proposalTypes.registrar_updateConfig} className={styler}>
+      <NavLink
+        to={proposalRoutes["registrar-update-config"]}
+        className={styler}
+      >
         Update Config
       </NavLink>
-      <NavLink to={proposalTypes.registrar_updateOwner} className={styler}>
+      <NavLink to={proposalRoutes["registrar-update-owner"]} className={styler}>
         Update Owner
       </NavLink>
     </div>

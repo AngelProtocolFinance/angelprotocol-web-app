@@ -1,22 +1,19 @@
 import { useCallback } from "react";
-import { TagPayloads } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Transactor, { TxProps } from "../Transactor";
-import ExecuteForm, { Props } from "./ExecuteForm";
+import { AdmiExecuterProps } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
+import ExecuteForm from "./ExecuteForm";
 
-export default function useProposalExecutor(
-  proposal_id: number,
-  tagPayloads?: TagPayloads
-) {
+export default function useProposalExecutor(args: AdmiExecuterProps) {
   const { showModal } = useModalContext();
   const showPollEnder = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
+    showModal<TxProps<AdmiExecuterProps>>(Transactor, {
       inModal: true,
       Content: ExecuteForm,
-      contentProps: { proposal_id, tagPayloads },
+      contentProps: args,
     });
     //eslint-disable-next-line
-  }, [proposal_id]);
+  }, [args]);
 
   return showPollEnder;
 }

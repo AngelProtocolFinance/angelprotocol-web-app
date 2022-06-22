@@ -1,7 +1,7 @@
+import { ContactDetails } from "pages/Registration/types";
 import RichTextEditor, {
   EditorClasses,
 } from "components/RichTextEditor/RichTextEditor";
-import { ContactDetails } from "./types";
 
 export default function GoalsInput() {
   return (

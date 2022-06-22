@@ -1,24 +1,23 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
-import { admin, tags } from "services/terra/tags";
+import { FundMemberUpdateMeta } from "pages/Admin/types";
+import { FundUpdateValues } from "pages/Admin/types";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
-import { FundUpdateValues } from "./fundUpdatorSchema";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
+  const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
-  const { wallet } = useWalletContext();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -33,7 +32,7 @@ export default function useUpdateFund() {
 
       const fundId = getValues("fundId");
       if (fundId === "") {
-        showModal<PopupProps>(Popup, { message: "No fund selected" });
+        showModal(Popup, { message: "No fund selected" });
         return;
       }
       //check if there are changes
@@ -52,10 +51,10 @@ export default function useUpdateFund() {
       );
 
       if (toRemove.length <= 0 && toAdd.length <= 0) {
-        showModal<PopupProps>(Popup, { message: "No fund member changes" });
+        showModal(Popup, { message: "No fund member changes" });
         return;
       }
-      const indexFundContract = new Indexfund(wallet);
+      const indexFundContract = new Indexfund(wallet?.address);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -65,12 +64,12 @@ export default function useUpdateFund() {
 
       const fundDetails = await indexFundContract.getFundDetails(+fundId);
 
-      const fundUpdateMembersMeta: ProposalMeta = {
-        type: proposalTypes.indexFund_updateFundMembers,
+      const fundUpdateMembersMeta: FundMemberUpdateMeta = {
+        type: "indexfund-update-fund-members",
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new Admin("apTeam", wallet);
+      const adminContract = new Admin("apTeam", wallet?.address);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
@@ -87,7 +86,7 @@ export default function useUpdateFund() {
           msgs: [proposalMsg],
           tagPayloads: [
             terra.util.invalidateTags([
-              { type: tags.admin, id: admin.proposals },
+              { type: terraTags.admin, id: adminTags.proposals },
             ]),
           ],
           successLink: genProposalsLink("apTeam"),

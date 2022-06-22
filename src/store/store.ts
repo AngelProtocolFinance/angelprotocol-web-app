@@ -1,23 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { charityReducer } from "pages/Registration/store";
-import { adminReducer } from "services/admin/root";
 import { apes } from "services/apes/apes";
-import authReducer from "services/auth/authSlice";
 import { aws } from "services/aws/aws";
-import chainReducer from "services/chain/chainSlice";
 import { flipside } from "services/flipslide/flipslide";
-import providerReducer from "services/provider/providerSlice";
 import { terra } from "services/terra/terra";
-import transactionReducer from "../services/transaction/transactionSlice";
-import walletReducer from "../services/wallet/walletSlice";
+import { adminReducer } from "slices/admin/root";
+import authReducer from "slices/authSlice";
+import transactionReducer from "slices/transaction/transactionSlice";
 
 export const store = configureStore({
   reducer: {
-    charity: charityReducer,
     transaction: transactionReducer,
-    chain: chainReducer,
-    provider: providerReducer,
-    wallet: walletReducer,
     admin: adminReducer,
     auth: authReducer,
     [aws.reducerPath]: aws.reducer,

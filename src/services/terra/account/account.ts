@@ -1,10 +1,21 @@
-import { CWContracts } from "contracts/Admin";
-import { CW3Config } from "../admin/types";
+import { ContractQueryArgs } from "services/types";
+import {
+  CW3Config,
+  CWContracts,
+  Profile,
+  QueryRes,
+} from "types/server/contracts";
+import { endowmentTags, terraTags } from "services/terra/tags";
 import contract_querier from "../contract_querier";
-import { endowment, tags } from "../tags";
 import { terra } from "../terra";
-import { ContractQueryArgs, QueryRes } from "../types";
-import { EndowmentDetails, Profile } from "./types";
+
+interface EndowmentDetails {
+  owner: string; //"cw3 owner";
+  name: string;
+  //..update attr on demand
+
+  isPlaceHolder?: true;
+}
 
 export const account_api = terra.injectEndpoints({
   endpoints: (builder) => ({
@@ -46,7 +57,7 @@ export const account_api = terra.injectEndpoints({
     }),
 
     endowmentProfile: builder.query<Profile, ContractQueryArgs>({
-      providesTags: [{ type: tags.endowment, id: endowment.profile }],
+      providesTags: [{ type: terraTags.endowment, id: endowmentTags.profile }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Profile>) => {
         return res.query_result;

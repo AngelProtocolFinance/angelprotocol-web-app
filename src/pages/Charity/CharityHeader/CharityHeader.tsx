@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
-import { Profile } from "services/terra/account/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { CharityParams } from "../types";
+import { Profile } from "types/server/contracts";
+import { useModalContext } from "contexts/ModalContext";
 import { unsdgs } from "constants/unsdgs";
-import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";
 import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
-  const { address: endowment_addr } = useParams<CharityParam>();
+  const { address: endowment_addr } = useParams<CharityParams>();
   const { showModal } = useModalContext();
   function showDonateSelection() {
     showModal(DonateSelection, { endowmentAddr: endowment_addr! });

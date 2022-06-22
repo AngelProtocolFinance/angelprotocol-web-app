@@ -1,7 +1,7 @@
+import { CharityApplication } from "types/server/aws";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import PreviewForm from "./PreviewForm";
-import { CharityApplication } from "./types";
 
 export default function Reviewer(props: { application: CharityApplication }) {
   const { closeModal } = useModalContext();

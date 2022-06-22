@@ -1,8 +1,14 @@
-import { UpdateApplication } from "services/aws/types";
 import createAuthToken from "helpers/createAuthToken";
+import { LogApplicationUpdateError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 
+interface UpdateApplicationPayload {
+  PK: string;
+  poll_id: string;
+  chain_id: string;
+}
+type ReviewLogger = (payload: UpdateApplicationPayload) => Promise<void>;
 const logApplicationReview: ReviewLogger = async (payload) => {
   const generatedToken = createAuthToken("charity-owner");
   const is_test = payload.chain_id === chainIDs.terra_test;
@@ -26,16 +32,3 @@ const logApplicationReview: ReviewLogger = async (payload) => {
 };
 
 export default logApplicationReview;
-
-export type ReviewLogger = (payload: UpdateApplication) => Promise<void>;
-
-export class LogApplicationUpdateError extends Error {
-  chainId: string;
-  pollId: string;
-  constructor(chainId: string, pollId: string) {
-    super();
-    this.chainId = chainId;
-    this.pollId = pollId;
-    this.name = "ApplicationReviewPollUpdateError";
-  }
-}

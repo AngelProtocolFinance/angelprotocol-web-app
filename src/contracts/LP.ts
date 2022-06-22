@@ -1,10 +1,7 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { Simulation } from "services/terra/lp";
-import { ContractQueryArgs } from "services/terra/types";
-import { WalletProxy } from "providers/WalletProvider";
+import { ContractQueryArgs } from "services/types";
+import { Simulation } from "types/server/contracts";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -13,11 +10,11 @@ export default class LP extends Contract {
   halo_address: string;
   simul: ContractQueryArgs;
 
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
-    this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
-    this.halo_address = contracts[this.chainID][sc.halo_token];
+  constructor(walletAddr?: string) {
+    super(walletAddr);
+    this.pair_address = contracts.loop_haloust_pair;
+    this.lp_address = contracts.loop_haloust_lp;
+    this.halo_address = contracts.halo_token;
 
     //query args
     this.simul = {
@@ -27,7 +24,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: "uusd",
               },
             },
             amount: "1000000",
@@ -44,7 +41,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: denoms.uusd,
+            denom: "uusd",
           },
         }
       : {
@@ -80,7 +77,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: "uusd",
               },
             },
             amount: uust_amount,
@@ -90,7 +87,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin(denoms.uusd, uust_amount)]
+      [new Coin("uusd", uust_amount)]
     );
   }
 

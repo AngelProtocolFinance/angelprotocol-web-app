@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
-import { app, site } from "../constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
@@ -19,36 +19,43 @@ const TCA = lazy(() => import("pages/TCA/TCA"));
 
 export default function Views() {
   const location = useLocation();
-
   useScrollTop(location.pathname);
 
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
-        <Route path={`${app.charity}/:address/*`} element={<Charity />} />
-        <Route path={`${app.login}`} element={<Login />} />
-        <Route path={`${app.tca}`} element={<TCA />} />
-        <Route path={`${app.govern}/*`} element={<Governance />} />
-        <Route path={`${app.admin}/*`} element={<Admin />} />
+        <Route path={`${appRoutes.charity}/:address/*`} element={<Charity />} />
+        <Route path={`${appRoutes.login}`} element={<Login />} />
+        <Route path={`${appRoutes.tca}`} element={<TCA />} />
+        <Route path={`${appRoutes.govern}/*`} element={<Governance />} />
+        <Route path={`${appRoutes.admin}/*`} element={<Admin />} />
         <Route
-          path={`${app.endowment_admin}/:address/*`}
+          path={`${appRoutes.endowment_admin}/:address/*`}
           element={<EndowmentAdmin />}
         />
-        <Route path={`${app.donations}/:address`} element={<Donations />} />
         <Route
-          path={`${app.index}`}
-          element={<Navigate replace to={`${app.marketplace}`} />}
+          path={`${appRoutes.donations}/:address`}
+          element={<Donations />}
         />
-        <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
-        <Route path={`${app.login}`} element={<Login />} />
-        <Route path={`${app.marketplace}`} element={<Market />} />
-        <Route path={`${app.register}/*`} element={<Register />} />
-        <Route path={`${app.tca}`} element={<TCA />} />
+
+        <Route
+          path={`${appRoutes.donations}/:address`}
+          element={<Donations />}
+        />
+        <Route
+          path={`${appRoutes.index}`}
+          element={<Navigate replace to={`${appRoutes.marketplace}`} />}
+        />
+        <Route path={`${appRoutes.leaderboard}`} element={<Leaderboard />} />
+        <Route path={`${appRoutes.login}`} element={<Login />} />
+        <Route path={`${appRoutes.marketplace}`} element={<Market />} />
+        <Route path={`${appRoutes.register}/*`} element={<Register />} />
+        <Route path={`${appRoutes.tca}`} element={<TCA />} />
         <Route
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
         />
-        <Route path="*" element={<Navigate replace to={site.app} />} />
+        <Route path="*" element={<Navigate replace to={siteRoutes.app} />} />
       </Routes>
     </Suspense>
   );

@@ -1,18 +1,19 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { CharityParams } from "./types";
+import { proposalRoutes } from "pages/Admin/constants";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useEndowmentProfile } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
-import ContentLoader from "components/ContentLoader/ContentLoader";
+import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
-import { admin, app, proposalTypes, site } from "constants/routes";
+import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
-import { CharityParam } from "./types";
 
 export default function Charity() {
-  const { address: endowment_addr } = useParams<CharityParam>();
+  const { address: endowment_addr } = useParams<CharityParams>();
   const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
     endowment_addr!
   );
@@ -35,12 +36,15 @@ export default function Charity() {
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
-        <LinkIcon to={`${site.app}/${app.marketplace}`} _iconType="ArrowBack">
+        <LinkIcon
+          to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+          _iconType="ArrowBack"
+        >
           back to marketplace
         </LinkIcon>
         {isUserAdminMember && (
           <LinkIcon
-            to={`${site.app}/${app.endowment_admin}/${endowment_addr}/${admin.proposal_types}/${proposalTypes.endowment_updateProfile}`} //change to multisig edit
+            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
             _iconType="Edit"
             className="ml-auto border-r border-white/30 pr-2"
           >
@@ -49,7 +53,7 @@ export default function Charity() {
         )}
         {isUserAdminMember && (
           <LinkIcon
-            to={`${site.app}/${app.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
+            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
             _iconType="Admin"
           >
             admin
@@ -105,7 +109,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${site.app}/${app.marketplace}`}
+        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace

@@ -1,4 +1,4 @@
-import { ProposalStatus } from "services/terra/admin/types";
+import { ProposalStatus } from "types/server/contracts";
 
 export default function Status(props: { status: ProposalStatus }) {
   return (

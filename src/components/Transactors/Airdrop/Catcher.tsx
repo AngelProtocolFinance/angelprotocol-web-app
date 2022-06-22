@@ -1,10 +1,9 @@
-import { Airdrops } from "services/terra/multicall/types";
+import { Airdrops } from "types/server/aws";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import useClaimAirdrop from "./useClaimAirdrop";
 
-export type Props = { airdrops: Airdrops };
-export default function Catcher(props: Props) {
+export default function Catcher(props: { airdrops: Airdrops }) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
     <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">

@@ -1,8 +1,7 @@
 import * as Yup from "yup";
-import { SchemaShape } from "types/schema";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type FundDestroyValues = ProposalBase & { fundId: string };
+import { FundDestroyValues } from "pages/Admin/types";
+import { SchemaShape } from "schemas/types";
+import { proposalShape } from "../proposalShape";
 
 const fundDestroyerShape: SchemaShape<FundDestroyValues> = {
   ...proposalShape,

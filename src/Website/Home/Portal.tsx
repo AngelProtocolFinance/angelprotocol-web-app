@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 export default function Portal() {
   return (
@@ -9,7 +9,7 @@ export default function Portal() {
           Transform how your charity fundraises today
         </h3>
         <Link
-          to={`${site.app}/${app.register}`}
+          to={`${siteRoutes.app}/${appRoutes.register}`}
           className="text-center bg-angel-orange hover:bg-orange text-lg sm:text-xl lg:text-2xl py-1 px-2 lg:py-2 lg:px-5 rounded-sm text-white-grey font-semibold shadow-md"
         >
           I want to register!

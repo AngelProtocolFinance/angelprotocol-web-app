@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import TerraInfoModal from "./TerraInfoModal";
 
 // Purpose of this component is to avoid rendering the InfoIcon in a non-intuitive way on smaller screens

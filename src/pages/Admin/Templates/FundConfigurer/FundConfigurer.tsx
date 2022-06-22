@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dec } from "@terra-money/terra.js";
 import { FormProvider, useForm } from "react-hook-form";
+import { FundConfigValues } from "pages/Admin/types";
+import { FundConfig, IndexFundConfig } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useIndexFundConfig } from "services/terra/indexFund/queriers";
-import { IndexFundConfig } from "services/terra/indexFund/types";
-import { FundConfig } from "contracts/types";
 import FundConfigForm from "./FundConfigForm";
-import { FundConfigValues, fundConfigSchema } from "./fundconfigSchema";
+import { fundConfigSchema } from "./fundconfigSchema";
 
 export default function FundConfigurer() {
   const { indexFundConfig, isLoading, isError } = useIndexFundConfig();

@@ -1,82 +1,76 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { resetFee } from "services/transaction/transactionSlice";
-import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
-import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { DonateValues } from "../types";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter, useSetter } from "store/accessors";
-import useWalletContext from "hooks/useWalletContext";
-import { denoms } from "constants/currency";
+import { resetFee } from "slices/transaction/transactionSlice";
+import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
+import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import useEstimator from "../useEstimator";
 
-type Sender = (data: DonateValues) => any;
-
 export default function useDonate() {
+  const { wallet, isWalletLoading } = useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
-  const { watch, handleSubmit, setValue, getValues } =
-    useFormContext<DonateValues>();
-  const { wallet } = useWalletContext();
+  const {
+    watch,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { isValid, isDirty },
+  } = useFormContext<DonateValues>();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { terraTx, ethTx, bnbTx } = useEstimator();
-
-  const terraSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-
-    //eslint-disable-next-line
-    [terraTx, wallet]
-  );
-
-  const ethSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [ethTx]
-  );
-
-  const bnbSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: bnbTx!, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [bnbTx]
-  );
-
-  // const btcSender = useBTCSender();
-  // const solSender = useSolSender();
-  // const atomSender = useAtomSender();
-  const denomRef = useRef<string>(denoms.uusd);
+  const { evmTx, terraTx } = useEstimator();
+  const symbolRef = useRef<string>();
   const token = watch("token");
-  const denom = token.min_denom;
+
+  function sendTx(data: DonateValues) {
+    switch (token.type) {
+      case "evm-native":
+      case "erc20":
+        dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
+        break;
+      case "terra-native":
+      case "cw20":
+        dispatch(
+          sendTerraDonation({
+            wallet,
+            tx: terraTx!,
+            donateValues: data,
+          })
+        );
+        break;
+      default:
+        return;
+    }
+    showModal(TransactionPrompt, {});
+  }
+
+  const symbol = token.symbol;
+  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   //reset amount when changing currency
   useEffect(() => {
-    if (denomRef.current !== denom) {
+    if (symbolRef.current !== symbol) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
-    denomRef.current = denom;
+    symbolRef.current = symbol;
     //eslint-disable-next-line
-  }, [denom]);
-
-  const getSender = (denom: string): Sender => {
-    if (denom === denoms.wei) return ethSender;
-    if (denom === denoms.bnb) return bnbSender;
-    return terraSender;
-  };
+  }, [symbol]);
 
   return {
-    donate: handleSubmit(getSender(denom)),
-    isSubmitDisabled: form_error !== null || form_loading,
+    donate: handleSubmit(sendTx),
+    isSubmitDisabled:
+      form_error !== null ||
+      form_loading ||
+      !isValid ||
+      !isDirty ||
+      isWalletLoading ||
+      !isInCorrectNetwork,
     isFormLoading: form_loading,
     to: getValues("to"),
   };

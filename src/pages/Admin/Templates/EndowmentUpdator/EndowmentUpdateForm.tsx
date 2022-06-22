@@ -1,10 +1,10 @@
+import { EndowmentUpdateValues as V } from "pages/Admin/types";
 import Label from "pages/Admin/components/Label";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import EndowmentPreview from "./EndowmentPreview";
 import StatusOptions from "./StatusOptions";
-import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 import useUpdateStatus from "./useUpdateStatus";
 
 export default function EndowmentUpdateForm() {

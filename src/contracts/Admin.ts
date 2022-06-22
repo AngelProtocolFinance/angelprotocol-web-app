@@ -1,19 +1,17 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
-import { Member } from "services/terra/admin/types";
-import { ContractQueryArgs as CQA } from "services/terra/types";
-import { WalletProxy } from "providers/WalletProvider";
+import { ContractQueryArgs as CQA } from "services/types";
+import {
+  CWContracts,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  Member,
+  PageOptions,
+  Vote,
+  VotesPageOptions,
+} from "types/server/contracts";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "./types";
 
-export type PageOptions = { limit?: number; start_before?: number };
-export type VotesPageOptions = {
-  proposal_id: number;
-  limit?: number;
-  start_after?: number;
-};
-export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 export default class Admin extends Contract {
   cw4: string;
   cw3: string;
@@ -29,13 +27,11 @@ export default class Admin extends Contract {
   voter: CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, wallet?: WalletProxy) {
-    super(wallet);
+  constructor(cws: CWContracts, walletAddr?: string) {
+    super(walletAddr);
     //make sure to use query skips on empty addresses
-    this.cw4 =
-      cws === "apTeam" ? contracts[this.chainID][sc.apCW4] : cws.cw4 || "";
-    this.cw3 =
-      cws === "apTeam" ? contracts[this.chainID][sc.apCW3] : cws.cw3 || "";
+    this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
+    this.cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 
     //query args CW4
     this.members = {

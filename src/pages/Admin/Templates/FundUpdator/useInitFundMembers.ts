@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { setMembers } from "services/admin/fundMembers";
+import { FundUpdateValues } from "pages/Admin/types";
 import { useFundMembers } from "services/terra/indexFund/queriers";
 import { useGetter, useSetter } from "store/accessors";
-import { FundUpdateValues } from "./fundUpdatorSchema";
+import { setMembers } from "slices/admin/fundMembers";
 
 export default function useInitFundMembers() {
   const { watch } = useFormContext<FundUpdateValues>();

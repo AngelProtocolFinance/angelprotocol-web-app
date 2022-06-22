@@ -5,21 +5,21 @@ import {
 } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
-import { SwapValues } from "./types";
 
 export default function useSwapEstimator() {
   const {
@@ -30,10 +30,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { coins } = useGetter((state) => state.wallet);
-
-  const { wallet } = useWalletContext();
-
+  const { wallet } = useGetWallet();
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
@@ -53,12 +50,12 @@ export default function useSwapEstimator() {
         dispatch(setFormError(null));
 
         if (!debounced_amount) {
-          dispatch(setFee({ fee: 0 }));
+          dispatch(setFee(0));
           return;
         }
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
-        const haloBalance = getTokenBalance(coins, denoms.halo);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
+        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
           if (amount > ustBalance) {
@@ -74,7 +71,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(wallet);
+        const contract = new LP(wallet.address);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -105,7 +102,7 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {
@@ -117,7 +114,7 @@ export default function useSwapEstimator() {
           return;
         }
 
-        dispatch(setFee({ fee: feeNum }));
+        dispatch(setFee(feeNum));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",
@@ -134,15 +131,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    wallet,
-    coins,
-    is_buy,
-    debounced_slippage,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, wallet, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { wallet, tx };
+  return { tx, wallet };
 }

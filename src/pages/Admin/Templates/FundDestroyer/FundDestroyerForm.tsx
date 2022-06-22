@@ -1,9 +1,9 @@
+import { FundDestroyValues as FD } from "pages/Admin/types";
 import Label from "pages/Admin/components/Label";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";
-import { FundDestroyValues as FD } from "./fundDestroyerSchema";
 import useDestroyFund from "./useDestroyFund";
 
 export default function FundDestroyerForm() {

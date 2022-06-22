@@ -1,4 +1,4 @@
-import { ApplicationStatusOptions } from "./types";
+import { ApplicationStatusOptions } from "types/server/aws";
 
 type Props = {
   activeStatus: ApplicationStatusOptions;
@@ -41,6 +41,6 @@ const pollStatusOptions: { [key in ApplicationStatusOptions]: string } = {
   all: "all",
   // active: "Active",
   approved: "Approved",
-  inactive: "Inactive",
+  "not-complete": "Not Complete",
   "under-review": "Under-Review",
 };

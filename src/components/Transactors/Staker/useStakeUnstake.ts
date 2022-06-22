@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { gov, multicall, tags } from "services/terra/tags";
+import { HaloStakingValues } from "./types";
+import { govTags, multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { HaloStakingValues } from "./types";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useStakingEstimator from "./useStakingEstimator";
 
 export default function useStakeUnstake() {
@@ -15,7 +15,7 @@ export default function useStakeUnstake() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<HaloStakingValues>();
 
-  const { wallet, tx } = useStakingEstimator();
+  const { tx, wallet } = useStakingEstimator();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -26,9 +26,9 @@ export default function useStakeUnstake() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov, id: gov.staker },
-            { type: tags.gov, id: gov.halo_balance },
-            { type: tags.multicall, id: multicall.terraBalances },
+            { type: terraTags.gov, id: govTags.staker },
+            { type: terraTags.gov, id: govTags.halo_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

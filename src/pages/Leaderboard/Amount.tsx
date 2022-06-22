@@ -1,7 +1,7 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import toCurrency from "helpers/toCurrency";
-import Summary, { SummaryProps } from "./Summary";
+import Summary from "./Summary";
 
 type Props = {
   type: string;
@@ -11,7 +11,7 @@ type Props = {
 export default function Amount(props: Props) {
   const { showModal } = useModalContext();
   function showSummary() {
-    showModal<SummaryProps>(Summary, {
+    showModal(Summary, {
       type: props.type,
       principal: props.locked,
       impact: props.liquid,

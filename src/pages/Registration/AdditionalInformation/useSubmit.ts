@@ -1,21 +1,26 @@
 import { useCallback } from "react";
-import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { FileWrapper } from "components/FileDropzone/types";
-import { useGetter, useSetter } from "store/accessors";
+import { useNavigate } from "react-router-dom";
+import { AdditionalInfoValues } from "pages/Registration/types";
+import {
+  useRegistrationQuery,
+  useUpdateCharityMetadataMutation,
+} from "services/aws/registration";
+import { FileWrapper } from "components/FileDropzone";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
-import { updateCharity } from "../store";
+import routes from "../routes";
 import useHandleError from "../useHandleError";
-import { FormValues } from "./types";
 
 export default function useSubmit() {
-  const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
-  const charity = useGetter((state) => state.charity);
-  const dispatch = useSetter();
+  const [updateMetadata] = useUpdateCharityMetadataMutation();
+  const { data } = useRegistrationQuery("");
+  const charity = data!; //ensured by guard
   const handleError = useHandleError();
+  const navigate = useNavigate();
 
   const submit = useCallback(
-    async (values: FormValues) => {
+    async (values: AdditionalInfoValues) => {
       try {
         const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
@@ -26,29 +31,19 @@ export default function useSubmit() {
 
         if ("error" in result) {
           handleError(result.error, "Error updating profile ❌");
-        } else {
-          const { TerraWallet, ...resultMetadata } = result.data;
-          dispatch(
-            updateCharity({
-              ...charity,
-              Metadata: {
-                ...charity.Metadata,
-                ...resultMetadata,
-              },
-            })
-          );
         }
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }
     },
-    [charity, dispatch, handleError, updateMetadata]
+    [charity, handleError, updateMetadata, navigate]
   );
 
-  return { submit, isSuccess };
+  return { submit };
 }
 
-async function getUploadBody(primaryKey: string, values: FormValues) {
+async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
   const logoPromise = uploadIfNecessary(
     primaryKey,
     values.charityLogo,

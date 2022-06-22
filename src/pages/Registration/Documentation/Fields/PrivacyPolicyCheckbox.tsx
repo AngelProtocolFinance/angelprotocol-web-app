@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
-import Checkbox from "components/Checkbox";
+import { DocumentationValues } from "pages/Registration/types";
+import Checkbox from "components/Checkbox/Checkbox";
 import { PRIVACY_POLICY } from "constants/urls";
-import { FormValues } from "../types";
 
 export default function PrivacyPolicyCheckbox() {
   const {
     register,
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<DocumentationValues>();
 
   return (
     <Checkbox

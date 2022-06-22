@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { multicall, tags } from "services/terra/tags";
+import { VoteValues } from "./types";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { VoteValues } from "./types";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useVoteEstimator from "./useVoteEstimator";
 
 export default function useVote() {
@@ -15,7 +15,7 @@ export default function useVote() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<VoteValues>();
 
-  const { wallet, tx } = useVoteEstimator();
+  const { tx, wallet } = useVoteEstimator();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -26,8 +26,8 @@ export default function useVote() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.multicall, id: multicall.terraBalances },
+            { type: terraTags.gov },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

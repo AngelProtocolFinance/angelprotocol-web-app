@@ -1,12 +1,8 @@
 import * as Yup from "yup";
+import { FundUpdateValues } from "pages/Admin/types";
+import { SchemaShape } from "schemas/types";
 import { requiredAddress } from "schemas/string";
-import { SchemaShape } from "types/schema";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type FundUpdateValues = ProposalBase & {
-  fundId: string;
-  newMemberAddr: string;
-};
+import { proposalShape } from "../proposalShape";
 
 const fundDestroyerShape: SchemaShape<FundUpdateValues> = {
   ...proposalShape,

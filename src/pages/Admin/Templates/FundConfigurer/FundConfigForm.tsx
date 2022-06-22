@@ -1,7 +1,7 @@
+import { FundConfigValues as FV } from "pages/Admin/types";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
-import { FundConfigValues as FV } from "./fundconfigSchema";
 import useConfigureFund from "./useConfigureFund";
 
 export default function FundConfigForm() {

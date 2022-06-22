@@ -1,4 +1,4 @@
-import { TxLogPayload } from "services/apes/types";
+import { TxLogPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes_endpoint } from "constants/urls";
 

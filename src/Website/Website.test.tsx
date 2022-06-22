@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { site, web } from "constants/routes";
+import { siteRoutes, webRoutes } from "constants/routes";
 import Website from "./Website";
 
 describe("<Website/> reacts to routes", () => {
@@ -24,7 +24,10 @@ describe("<Website/> reacts to routes", () => {
     //set page initially to /for-donors
     render(
       <MemoryRouter
-        initialEntries={[`${site.home}${web.donors}`, site.home]}
+        initialEntries={[
+          `${siteRoutes.home}${webRoutes.donors}`,
+          siteRoutes.home,
+        ]}
         initialIndex={0}
       >
         <Website />

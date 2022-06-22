@@ -1,16 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { setMembers } from "services/admin/apCW4Members";
 import { useMembers } from "services/terra/admin/queriers";
 import { useSetter } from "store/accessors";
+import { setMembers } from "slices/admin/apCW4Members";
 import MemberUpdateForm from "./MemberUpdaterForm";
-import {
-  MemberUpdatorValues,
-  memberUpdatorSchema,
-} from "./memberUpdatorSchema";
+import { memberUpdatorSchema } from "./memberUpdatorSchema";
 
 export default function MemberUpdator() {
   const dispatch = useSetter();

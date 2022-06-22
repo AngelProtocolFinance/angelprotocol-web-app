@@ -1,13 +1,11 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { Charity } from "services/aws/types";
-import { WalletProxy } from "providers/WalletProvider";
-import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
+import { Charity } from "types/server/aws";
 import Registrar from "contracts/Registrar";
 
 describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const registrar = new Registrar(WALLET);
+    const registrar = new Registrar(
+      "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek"
+    );
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
     expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
@@ -58,6 +56,8 @@ const CHARITY: Charity = {
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
     Role: "ceo",
     SK: "ContactPerson",
+    Goals: "hello world",
+    ReferralMethod: "angel-alliance",
   },
   Registration: {
     CharityName: "charity",
@@ -87,22 +87,6 @@ const CHARITY: Charity = {
     EndowmentContract: "",
     SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    KycDonorsOnly: false,
   },
-};
-
-const WALLET: WalletProxy = {
-  connection: TORUS_CONNECTION,
-  address: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
-  network: chainOptions.walletConnectChainIds[0], // testnet
-  post: async (_: CreateTxOptions) => ({
-    result: {
-      height: 1,
-      raw_log: "",
-      txhash: "",
-    },
-    success: true,
-    msgs: [],
-  }),
-  connect: async (..._: any[]) => {},
-  disconnect: async () => {},
 };

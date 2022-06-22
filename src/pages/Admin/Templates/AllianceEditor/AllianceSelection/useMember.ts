@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
+import { AllianceEditValues } from "pages/Admin/types";
+import { AllianceMemberWithFlags } from "slices/admin/types";
+import { useGetter, useSetter } from "store/accessors";
 import {
-  AllianceMemberWithFlags,
   resetMemberEdits,
   setIsEditingMember,
   toggleDeleteExistingMember,
   undoAddMember,
-} from "services/admin/allianceMembers";
-import { useGetter, useSetter } from "store/accessors";
-import { AllianceEditValues } from "../alllianceEditSchema";
+} from "slices/admin/allianceMembers";
 
 export default function useMember(member: AllianceMemberWithFlags) {
   const { setValue, setFocus, resetField } =

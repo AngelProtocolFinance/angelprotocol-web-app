@@ -2,11 +2,11 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import countryList from "react-select-country-list";
+import { ReceipterValues } from "./types";
 import useReceiptForm from "components/Receipter/useReceiptForm";
 import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
-import { Values } from "./types";
 
 export default function ReceiptForm() {
   const {
@@ -15,7 +15,7 @@ export default function ReceiptForm() {
     register,
     formState: { errors },
     control,
-  } = useFormContext<Values>();
+  } = useFormContext<ReceipterValues>();
   const { submitHandler, processing } = useReceiptForm();
   const countries = useMemo(() => countryList().getData(), []);
 

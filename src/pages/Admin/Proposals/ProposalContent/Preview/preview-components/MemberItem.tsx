@@ -1,4 +1,4 @@
-import { Member } from "services/terra/admin/types";
+import { Member } from "types/server/contracts";
 import Icon, { IconTypes } from "components/Icon";
 
 export default function MemberItem(props: {

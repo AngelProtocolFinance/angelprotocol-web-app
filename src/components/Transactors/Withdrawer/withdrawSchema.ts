@@ -1,13 +1,12 @@
 import * as Yup from "yup";
-import { VaultFieldIds } from "services/terra/multicall/types";
+import { WithdrawValues } from "./types";
+import { SchemaShape } from "schemas/types";
 import { tokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { SchemaShape } from "types/schema";
-import { WithdrawValues } from "./types";
 
 const withdrawShape: SchemaShape<WithdrawValues> = {
-  [VaultFieldIds.anchor1_amount]: tokenAmount,
-  [VaultFieldIds.anchor2_amount]: tokenAmount,
+  anchor1_amount: tokenAmount,
+  anchor2_amount: tokenAmount,
   beneficiary: requiredAddress("beneficiary"),
   //add other vault fields here
 };

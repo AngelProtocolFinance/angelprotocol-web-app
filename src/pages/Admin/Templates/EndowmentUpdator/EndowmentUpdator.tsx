@@ -1,10 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { EndowmentUpdateValues } from "pages/Admin/types";
 import EndowmentUpdateForm from "./EndowmentUpdateForm";
-import {
-  EndowmentUpdateValues,
-  endowmentUpdateSchema,
-} from "./endowmentUpdateSchema";
+import { endowmentUpdateSchema } from "./endowmentUpdateSchema";
 
 export default function EndowmentUpdator() {
   const methods = useForm<EndowmentUpdateValues>({

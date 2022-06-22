@@ -1,27 +1,24 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ContactDetails } from "pages/Registration/types";
+import { ContactDetailsRequest } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import useHandleError from "pages/Registration/useHandleError";
 import {
+  registrationRefKey,
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { ContactDetailsRequest } from "services/aws/types";
-import { useGetter, useSetter } from "store/accessors";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
-import { updateCharity } from "../../store";
-import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const navigate = useNavigate();
-  const dispatch = useSetter();
-  const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
   const handleError = useHandleError();
 
@@ -74,29 +71,18 @@ export default function useSaveContactDetails() {
         return;
       }
 
-      const { data } = result;
-
-      dispatch(
-        updateCharity({
-          ...charity,
-          ContactPerson: {
-            ...charity.ContactPerson,
-            ...data.ContactPerson,
-          },
-          Registration: {
-            ...charity.Registration,
-            ...data.Registration,
-          },
-        })
-      );
-
       if (!is_create) {
-        return navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+        return navigate(
+          `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+        );
       }
 
+      const { data } = result;
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
       const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
-
+      //save ref before invalidating empty cache to retrigger fetch
+      localStorage.setItem(registrationRefKey, PK || "");
+      //sending this email invalidated registration query cache
       await resendEmail({
         uuid: PK,
         type: "verify-email",
@@ -105,17 +91,10 @@ export default function useSaveContactDetails() {
           CharityName: data.Registration.CharityName,
         },
       });
-      navigate(`${site.app}/${app.register}/${routes.confirm}`);
+
+      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`);
     },
-    [
-      charity,
-      handleError,
-      dispatch,
-      navigate,
-      registerCharity,
-      resendEmail,
-      updateContactPerson,
-    ]
+    [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
   );
 
   return {

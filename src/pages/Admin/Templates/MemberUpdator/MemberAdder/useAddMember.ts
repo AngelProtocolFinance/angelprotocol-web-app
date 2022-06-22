@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { addMember as _addMember } from "services/admin/apCW4Members";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import { useGetter, useSetter } from "store/accessors";
-import { MemberUpdatorValues } from "../memberUpdatorSchema";
+import { addMember as _addMember } from "slices/admin/apCW4Members";
 
 export default function useAddMember() {
   const dispatch = useSetter();

@@ -1,8 +1,5 @@
-import {
-  ProposalStatusOptions,
-  useGetProposalsState,
-  useSetProposalsState,
-} from "../Proposals";
+import { ProposalStatusOptions } from "pages/Admin/types";
+import { useGetProposalsState, useSetProposalsState } from "../Proposals";
 
 export default function StatusSelector() {
   const { activeStatus } = useGetProposalsState();

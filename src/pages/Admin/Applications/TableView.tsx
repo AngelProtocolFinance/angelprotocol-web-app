@@ -1,20 +1,21 @@
+import { SortDirection, SortKey } from "pages/Admin/types";
+import { CharityApplication } from "types/server/aws";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import TableSection, { Cells } from "components/TableSection";
 import { statusColorClasses } from "./Applications";
 import Reviewer from "./Previewer";
-import { CharityApplication } from "./types";
-import useSortedApplications, {
-  SortDirection,
-  SortKey,
-} from "./useSortApplications";
+import useSortedApplications from "./useSortApplications";
 
 export default function TableView(props: {
   applications: CharityApplication[];
 }) {
   const { showModal } = useModalContext();
-  const openReviewer = (ap: CharityApplication) =>
+
+  const openReviewer = (ap: CharityApplication) => {
     showModal(Reviewer, { application: ap });
+  };
+
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
     useSortedApplications(props.applications);
 

@@ -1,17 +1,6 @@
-export type EndowmentAddrParams = { address: string };
+import { ProposalBase } from "pages/Admin/types";
+import { UpdateProfilePayload } from "types/server/contracts";
 
-type LockedSummary = {
-  type: "locked";
-  balance: number;
-  isOwner?: never;
-  opener?: never;
-};
-
-type LiquidSummary = {
-  type: "liquid";
-  balance: number;
-  isOwner: boolean;
-  opener: () => void;
-};
-
-export type HoldingSummary = LockedSummary | LiquidSummary;
+export type EndowmentAdminParams = { address: string };
+export type UpdateProfileValues = ProposalBase &
+  UpdateProfilePayload & { initialProfile: UpdateProfilePayload };

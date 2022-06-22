@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { Vote } from "contracts/types";
+import { Vote } from "types/server/contracts";
 
 export interface VoteValues {
   vote: Vote;
@@ -9,5 +8,4 @@ export interface VoteValues {
 
 export type Props = {
   poll_id: number;
-  Form: FC;
 };
