@@ -1,4 +1,3 @@
-import { Dec } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
 import {
   CW20Balance,
@@ -11,6 +10,7 @@ import {
   QueryRes,
 } from "types/server/contracts";
 import { govTags, terraTags } from "services/terra/tags";
+import Decimal from "helpers/Decimal";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 
@@ -48,7 +48,7 @@ export const gov_api = terra.injectEndpoints({
       providesTags: [{ type: terraTags.gov, id: govTags.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW20Balance>) => {
-        return new Dec(res.query_result.balance).div(1e6).toNumber();
+        return new Decimal(res.query_result.balance, 6).toNumber();
       },
     }),
     haloInfo: builder.query<CW20Info, ContractQueryArgs>({

@@ -11,11 +11,3 @@ export function useGovStakerState() {
   );
   return data;
 }
-
-export function useGovHaloBalance() {
-  const { contract } = useContract<G, TG>(Gov);
-  const { data = 0 } = gov_api.endpoints.govHaloBalance.useQueryState(
-    contract.haloBalance
-  );
-  return data;
-}

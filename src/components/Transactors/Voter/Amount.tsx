@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useGovStakerState } from "services/terra/gov/states";
+import Decimal from "helpers/Decimal";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {
@@ -12,9 +12,10 @@ export default function Amount() {
     setValue,
   } = useFormContext<VoteValues>();
   const govStakerState = useGovStakerState();
-  const govStakedHalo = new Dec(govStakerState.balance)
-    .div(1e6)
-    .toFixed(3, Dec.ROUND_DOWN);
+  const govStakedHalo = new Decimal(govStakerState.balance, 6).toFixed(
+    3,
+    Dec.ROUND_DOWN
+  );
 
   const onMaxClick = () => {
     setValue("amount", govStakedHalo, {

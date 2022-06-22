@@ -19,17 +19,17 @@ export default class Decimal {
 
   public plus(b: Decimal): Decimal {
     const result = this.value.plus(b.value);
-    return new Decimal(result.atomics, this.value.fractionalDigits);
+    return Decimal.fromCosmJsDecimal(result);
   }
 
   public minus(b: Decimal): Decimal {
     const result = this.value.minus(b.value);
-    return new Decimal(result.atomics, this.value.fractionalDigits);
+    return Decimal.fromCosmJsDecimal(result);
   }
 
   public multiply(b: number): Decimal {
     const result = this.value.multiply(Uint64.fromNumber(b));
-    return new Decimal(result.atomics, this.value.fractionalDigits);
+    return Decimal.fromCosmJsDecimal(result);
   }
 
   /**
@@ -46,6 +46,10 @@ export default class Decimal {
 
   public floor(): Decimal {
     const result = this.value.floor();
-    return new Decimal(result.atomics, result.fractionalDigits);
+    return Decimal.fromCosmJsDecimal(result);
+  }
+
+  private static fromCosmJsDecimal(input: CosmJsDecimal): Decimal {
+    return new Decimal(input.atomics, input.fractionalDigits);
   }
 }
