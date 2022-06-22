@@ -1,21 +1,16 @@
-import { CWContracts } from "contracts/Admin";
-import { chainIDs } from "constants/chainIDs";
+import { CWContracts } from "types/server/contracts";
 import { admin_api } from "./admin";
 import { member } from "./placeholders";
 import useAdminContract from "./useAdminContract";
 
 export function useMemberState(customCWs?: CWContracts, skip = false) {
-  const { wallet, contract, isAdminSkip } = useAdminContract(customCWs);
+  const { contract, isAdminSkip, walletAddr } = useAdminContract(customCWs);
   const {
     data = member,
     isFetching,
     isLoading,
   } = admin_api.endpoints.member.useQueryState(contract.member, {
-    skip:
-      skip ||
-      isAdminSkip ||
-      !wallet ||
-      wallet.network.chainID === chainIDs.terra_local,
+    skip: skip || isAdminSkip || !walletAddr,
   });
   return { member: data, isMemberLoading: isFetching || isLoading };
 }

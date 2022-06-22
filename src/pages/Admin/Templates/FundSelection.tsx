@@ -1,8 +1,8 @@
 import { Path } from "react-hook-form";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import { FundIdContext } from "pages/Admin/types";
+import TableSection, { Cells } from "components/TableSection";
 import useFundSelection from "./useFundSelection";
 
-export type FundIdContext = { fundId: string };
 export default function FundSelection<T extends FundIdContext>(props: {
   fieldName: Path<T>;
 }) {

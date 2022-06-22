@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
+import { CharityParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { CharityParam } from "pages/Charity/types";
-import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin/endowment_admin";
+import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import toCurrency from "helpers/toCurrency";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
-  const { address } = useParams<CharityParam>();
+  const { address } = useParams<CharityParams>();
   //this component will not be rendered if address is undefined or incorrect
   const { endowmentBalance } = useEndowmentBalance(address!);
   const { data } = useDepositTransactionsQuery(address!);

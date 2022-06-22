@@ -1,3 +1,5 @@
+import { Charity } from "types/server/aws";
+
 export enum Folders {
   AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",
   CharityProfileImageLogo = "charity-profile-images/logo",
@@ -29,3 +31,44 @@ export const UN_SDGS = [
 
 export const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
+
+export const placeHolderCharity: Charity = {
+  ContactPerson: {
+    Email: "",
+    EmailVerified: false,
+    FirstName: "",
+    Goals: "",
+    LastName: "",
+    PhoneNumber: "",
+    PK: "",
+    ReferralMethod: "angel-alliance",
+    Role: "ceo",
+    SK: "ContactPerson",
+  },
+  Registration: {
+    CharityName: "",
+    CharityName_ContactEmail: "",
+    RegistrationDate: "",
+    RegistrationStatus: "Inactive",
+    Website: "",
+    UN_SDG: 0,
+    ProofOfIdentity: { name: "" },
+    ProofOfRegistration: { name: "" },
+    FinancialStatements: [],
+    AuditedFinancialReports: [],
+    ProofOfIdentityVerified: false,
+    ProofOfRegistrationVerified: false,
+    FinancialStatementsVerified: false,
+    AuditedFinancialReportsVerified: false,
+    SK: "Registration",
+  },
+  Metadata: {
+    Banner: { name: "" },
+    CharityLogo: { name: "" },
+    CharityOverview: "",
+    EndowmentContract: "",
+    KycDonorsOnly: false,
+    SK: "Metadata",
+    JunoWallet: "",
+  },
+};

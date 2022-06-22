@@ -1,12 +1,12 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
+import { FundCreatorValues as V } from "pages/Admin/types";
 import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import Label from "../../components/Label";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import { INIT_SPLIT } from "./FundCreator";
 import MemberAdder from "./MemberAdder/MemberAdder";
-import { FundCreatorValues as V } from "./fundCreatorSchema";
 import useCreateFund from "./useCreateFund";
 
 export default function FundCreatorForm() {

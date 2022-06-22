@@ -1,5 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { Simulation } from "services/terra/lp";
+import { Simulation } from "types/server/contracts";
 
 export function getSpotPrice(simul: Simulation, offer = 1) {
   if (simul.is_placeholder) {

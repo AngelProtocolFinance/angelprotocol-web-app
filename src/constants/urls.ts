@@ -1,5 +1,10 @@
 import { IconTypes } from "components/Icon";
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "./chainIDs";
+import { IS_TEST } from "./env";
+
+type URL_GROUP = {
+  [index: string]: string;
+};
 
 export const aws_endpoint =
   "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com";
@@ -10,21 +15,16 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_classic]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  //when wallet is not connected network === phoenix-1
-  //query classis endpoint when wallet is not connected
-  [chainIDs.terra_main]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  //
   [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
+  [chainIDs.terra_classic]: "https://fcd.terra.dev",
+  [chainIDs.terra_local]: "http://localhost:3060",
 };
+
+export const terraLcdUrl = IS_TEST
+  ? "https://pisco-lcd.terra.dev"
+  : "https://fcd.terra.dev";
 
 export const TERRA_FINDER = "https://finder.terra.money/";
-
-type URL_GROUP = {
-  [index: string]: string;
-};
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";

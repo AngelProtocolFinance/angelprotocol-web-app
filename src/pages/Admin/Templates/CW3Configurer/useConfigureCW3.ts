@@ -1,26 +1,28 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "pages/Admin/types";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { admin, tags } from "services/terra/tags";
+import {
+  CW3ConfigPayload,
+  CW3ConfigUpdateMeta,
+  CW3ConfigValues,
+} from "pages/Admin/types";
+import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
-import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
 
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -28,7 +30,7 @@ export default function useConfigureCW3() {
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
   async function configureCW3({
@@ -44,14 +46,14 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(cwContracts, wallet?.address);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       data.height,
       (data.threshold / 100).toFixed(3)
     );
 
-    const configUpdateMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_updateCW3Config,
+    const configUpdateMeta: CW3ConfigUpdateMeta = {
+      type: "admin-group-update-cw3-config",
       data: genDiffMeta(diffEntries, initialCW3Config),
     };
 
@@ -65,11 +67,11 @@ export default function useConfigureCW3() {
 
     dispatch(
       sendTerraTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink(cwContracts, endowmentAddr),

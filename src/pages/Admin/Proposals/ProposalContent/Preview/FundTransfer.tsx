@@ -4,7 +4,7 @@ import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function FundTransfer(props: FundSendMeta) {
+export default function FundTransfer(props: FundSendMeta["data"]) {
   const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
   return (
     <PreviewContainer>

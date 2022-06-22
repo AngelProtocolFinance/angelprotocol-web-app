@@ -1,11 +1,10 @@
 import jwt from "jsonwebtoken";
+import { UserTypes } from "types/lists";
 
 type Payload = {
   authorization: string;
   user: string;
 };
-
-type UserTypes = "charity-owner" | "angelprotocol-web-app";
 
 export default function createAuthToken(userType: UserTypes) {
   const payload: Payload = {

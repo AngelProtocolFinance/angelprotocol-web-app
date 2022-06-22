@@ -1,15 +1,14 @@
-import { multicall, tags } from "services/terra/tags";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Gov from "contracts/Gov";
-import useWalletContext from "hooks/useWalletContext";
 
 export default function useEndPoll(pollId: number) {
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -19,7 +18,7 @@ export default function useEndPoll(pollId: number) {
       return;
     }
 
-    const contract = new Gov(wallet);
+    const contract = new Gov(wallet?.address);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(
@@ -28,13 +27,12 @@ export default function useEndPoll(pollId: number) {
         msgs: [msg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.multicall, id: multicall.terraBalances },
+            { type: terraTags.gov },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return { endPoll };

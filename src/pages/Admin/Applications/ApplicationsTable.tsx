@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
+import { CharityApplication } from "types/server/aws";
 import ListView from "./ListView";
 import TableView from "./TableView";
-import { CharityApplication } from "./types";
 
 export default function ApplicationsTable(props: {
   applications: CharityApplication[];

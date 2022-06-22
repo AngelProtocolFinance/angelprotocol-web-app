@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import TerraInfoModal from "./TerraInfoModal";
 
 // Purpose of this component is to avoid rendering the InfoIcon in a non-intuitive way on smaller screens
@@ -8,8 +8,7 @@ import TerraInfoModal from "./TerraInfoModal";
 export default function Title() {
   return (
     <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
-      Please choose one of the options below to register a new Terra wallet for
-      your charity
+      Please connect Keplr to register a new wallet for your charity
       <InfoIcon />
     </h2>
   );

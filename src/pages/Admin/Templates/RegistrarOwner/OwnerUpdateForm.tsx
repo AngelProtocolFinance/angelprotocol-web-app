@@ -1,7 +1,7 @@
+import { RegistrarOwnerValues as RV } from "pages/Admin/types";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
 import Submitter from "../Submitter";
-import { RegistrarOwnerValues as RV } from "./updateOwnerSchema";
 import useUpdateOwner from "./useUpdateOwner";
 
 export default function OwnerUpdateForm() {

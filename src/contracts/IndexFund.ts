@@ -1,56 +1,57 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { AllianceMember } from "services/terra/indexFund/types";
-import { ContractQueryArgs } from "services/terra/types";
-import { WalletProxy } from "providers/WalletProvider";
+import { ContractQueryArgs } from "services/types";
+import {
+  AllianceMember,
+  FundConfig,
+  FundDetails,
+  IndexFundOwnerPayload,
+} from "types/server/contracts";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { FundConfig, FundDetails, IndexFundOwnerPayload } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
-  address: string;
+  contractAddr: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(wallet?: WalletProxy, fund_id?: number) {
-    super(wallet);
+  constructor(walletAddr?: string, fund_id?: number) {
+    super(walletAddr);
     this.fund_id = fund_id;
-    this.address = contracts[this.chainID][sc.index_fund];
+    this.contractAddr = contracts.index_fund;
 
     this.fundList = {
-      address: this.address,
+      address: this.contractAddr,
       msg: { funds_list: {} },
     };
 
     this.allianceMembers = {
-      address: this.address,
+      address: this.contractAddr,
       msg: { alliance_members: {} },
     };
 
     this.config = {
-      address: this.address,
+      address: this.contractAddr,
       msg: { config: {} },
     };
   }
 
   createEmbeddedFundConfigMsg(config: FundConfig) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_config: config,
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_owner: payload,
     });
   }
 
   async getFundDetails(fundId: number) {
     const fundDetailsRes = await this.query<{ fund: FundDetails }>(
-      this.address,
+      this.contractAddr,
       {
         fund_details: { fund_id: fundId },
       }
@@ -59,13 +60,13 @@ export default class Indexfund extends Contract {
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       create_fund: { ...fundDetails },
     });
   }
 
   createEmbeddedRemoveFundMsg(fundId: number) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       remove_fund: { fund_id: fundId },
     });
   }
@@ -75,7 +76,7 @@ export default class Indexfund extends Contract {
     toAdd: string[],
     toRemove: string[]
   ) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
     });
   }
@@ -84,13 +85,13 @@ export default class Indexfund extends Contract {
     member: AllianceMember,
     action: "add" | "remove"
   ) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member_list: { address: member.wallet, member, action },
     });
   }
 
   createEmbeddedAAMemberEditMsg(member: AllianceMember) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member: { address: member.wallet, member },
     });
   }
@@ -100,14 +101,14 @@ export default class Indexfund extends Contract {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     return new MsgExecuteContract(
       this.walletAddr!,
-      this.address,
+      this.contractAddr,
       {
         deposit: {
           fund_id: this.fund_id,
           split: `${splitToLiquid}`,
         },
       },
-      [new Coin(denoms.uusd, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
   }
 }

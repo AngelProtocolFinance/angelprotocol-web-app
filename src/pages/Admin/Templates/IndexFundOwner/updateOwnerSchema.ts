@@ -1,11 +1,8 @@
 import * as Yup from "yup";
-import { RegistrarOwnerPayload } from "contracts/types";
+import { IndexFundOwnerValues } from "pages/Admin/types";
+import { SchemaShape } from "schemas/types";
 import { requiredAddress } from "schemas/string";
-import { SchemaShape } from "types/schema";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type IndexFundOwnerValues = ProposalBase &
-  RegistrarOwnerPayload & { initialOwner: string };
+import { proposalShape } from "../proposalShape";
 
 const indexFundOwnerShape: SchemaShape<IndexFundOwnerValues> = {
   ...proposalShape,

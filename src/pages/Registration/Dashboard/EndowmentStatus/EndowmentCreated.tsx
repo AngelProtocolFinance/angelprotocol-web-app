@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
 
@@ -18,7 +18,9 @@ export default function EndowmentCreated(props: { charityName: string }) {
       <Button
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
         onClick={() =>
-          navigate(`${site.app}/${app.register}/${routes.charityProfile}`)
+          navigate(
+            `${siteRoutes.app}/${appRoutes.register}/${routes.charityProfile}`
+          )
         }
       >
         {`Go to ${possessiveFormOfName} profile`}
@@ -29,7 +31,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
 
 // TODO: update this link when the tutorial page gets created
 const TutorialLink = () => (
-  <Link to={site.home} className="hover:underline text-angel-blue">
+  <Link to={siteRoutes.home} className="hover:underline text-angel-blue">
     click here to learn how
   </Link>
 );

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { Proposal } from "services/terra/admin/types";
+import { Proposal } from "types/server/contracts";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
-import { admin } from "constants/routes";
+import { adminRoutes } from "constants/routes";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 import useProposalDetails from "./useProposalDetails";
@@ -22,7 +22,7 @@ export default function ProposalCard(props: Proposal) {
 
   return (
     <Link
-      to={`../${admin.proposal}/${props.id}`}
+      to={`../${adminRoutes.proposal}/${props.id}`}
       className="bg-white/10 hover:bg-white/20 p-4 rounded-md shadow-inner"
     >
       <div className="font-mono font-bold flex justify-between items-center text-white-grey/80">

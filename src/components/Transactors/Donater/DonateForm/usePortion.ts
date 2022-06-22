@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
+import { DonateValues } from "../types";
 import toCurrency from "helpers/toCurrency";
 
 export default function usePortion(type: string) {

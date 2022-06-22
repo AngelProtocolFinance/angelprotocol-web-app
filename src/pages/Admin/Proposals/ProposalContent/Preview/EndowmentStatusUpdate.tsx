@@ -1,12 +1,11 @@
 import { EndowmentStatusMeta } from "pages/Admin/types";
-import {
-  EndowmentStatus,
-  EndowmentStatusNum,
-} from "services/terra/registrar/types";
+import { EndowmentStatus, EndowmentStatusNum } from "types/server/contracts";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function EndowmentStatusUpdate(props: EndowmentStatusMeta) {
+export default function EndowmentStatusUpdate(
+  props: EndowmentStatusMeta["data"]
+) {
   return (
     <PreviewContainer>
       <KeyValue _key="previous status">

@@ -1,25 +1,31 @@
-import contract_querier from "../contract_querier";
-import { registrar, tags } from "../tags";
-import { terra } from "../terra";
-import { ContractQueryArgs, QueryRes } from "../types";
+import { ContractQueryArgs } from "services/types";
 import {
   CategorizedEndowments,
   EndowmentEntry,
-  EndowmentListRes,
+  QueryRes,
   RegistrarConfig,
-} from "./types";
+} from "types/server/contracts";
+import { registrarTags, terraTags } from "services/terra/tags";
+import contract_querier from "../contract_querier";
+import { terra } from "../terra";
+
+type EndowmentListRes = {
+  endowments: EndowmentEntry[];
+};
 
 export const registrar_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     endowments: builder.query<EndowmentEntry[], ContractQueryArgs>({
-      providesTags: [{ type: tags.registrar, id: registrar.endowments }],
+      providesTags: [
+        { type: terraTags.registrar, id: registrarTags.endowments },
+      ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         return res.query_result.endowments;
       },
     }),
     config: builder.query<RegistrarConfig, ContractQueryArgs>({
-      providesTags: [{ type: tags.registrar, id: registrar.config }],
+      providesTags: [{ type: terraTags.registrar, id: registrarTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {
         return res.query_result;
@@ -29,7 +35,9 @@ export const registrar_api = terra.injectEndpoints({
       CategorizedEndowments,
       ContractQueryArgs
     >({
-      providesTags: [{ type: tags.registrar, id: registrar.endowments }],
+      providesTags: [
+        { type: terraTags.registrar, id: registrarTags.endowments },
+      ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         return res.query_result.endowments.reduce((result, profile) => {

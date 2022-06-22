@@ -1,6 +1,6 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { CharityApplication } from "types/server/aws";
+import { useModalContext } from "contexts/ModalContext";
 import Reviewer from "./Previewer";
-import { CharityApplication } from "./types";
 
 export default function ListView(props: {
   applications: CharityApplication[];
@@ -33,7 +33,7 @@ const ApplicationCard = (props: { ap: CharityApplication }) => {
       </p>
       <p className="fw-42">
         <Text colored title="Wallet Address" />
-        <Text title={props.ap.TerraWallet || "-"} />
+        <Text title={props.ap.JunoWallet || "-"} />
       </p>
       <div className="w-42">
         <Text colored title="Click to review" />

@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { saveToken } from "services/auth/authSlice";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { useGetter, useSetter } from "store/accessors";
+import { saveToken } from "slices/authSlice";
 import { aws_endpoint } from "constants/urls";
 import { loginSchema } from "./loginSchema";
 
@@ -36,12 +36,12 @@ export default function useLogin() {
         dispatch(saveToken(data.accessToken));
         //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
-        showModal<PopupProps>(Popup, { message: "Unauthorized" });
+        showModal(Popup, { message: "Unauthorized" });
       } else {
-        showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
+        showModal(Popup, { message: "Something wen't wrong" });
       }
     } catch (error) {
-      showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
+      showModal(Popup, { message: "Something wen't wrong" });
     }
   }
 

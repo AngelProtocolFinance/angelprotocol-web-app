@@ -1,6 +1,6 @@
 import { aws } from "./aws";
 
-export interface StakingAPRQueryResult {
+interface StakingAPRQueryResult {
   message: string;
   stakingAPR: number;
   stakingAPY: number;

@@ -1,17 +1,15 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
-import { Charity } from "services/aws/types";
-import { EndowmentQueryOptions } from "services/terra/registrar/types";
-import { ContractQueryArgs as CQA } from "services/terra/types";
-import { WalletProxy } from "providers/WalletProvider";
-import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
-import Contract from "./Contract";
+import { ContractQueryArgs as CQA } from "services/types";
+import { Charity } from "types/server/aws";
 import {
+  EndowmentQueryOptions,
   RegistrarConfigPayload,
   RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
-} from "./types";
+} from "types/server/contracts";
+import { contracts } from "constants/contracts";
+import Contract from "./Contract";
 
 export default class Registrar extends Contract {
   address: string;
@@ -20,9 +18,9 @@ export default class Registrar extends Contract {
 
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.address = contracts[this.chainID][sc.registrar];
+  constructor(walletAddr?: string) {
+    super(walletAddr);
+    this.address = contracts.registrar;
 
     this.endowmentList = (queryOptions) => ({
       address: this.address,
@@ -75,12 +73,12 @@ function createEndowmentCreationMsgPayload(
   charity: Charity
 ): RegistrarCreateEndowmentPayload {
   return {
-    beneficiary: charity.Metadata.TerraWallet,
+    beneficiary: charity.Metadata.JunoWallet,
     cw4_members: [],
     guardians_multisig_addr: undefined,
     maturity_height: undefined,
     maturity_time: undefined,
-    owner: charity.Metadata.TerraWallet,
+    owner: charity.Metadata.JunoWallet,
     profile: {
       annual_revenue: undefined,
       average_annual_budget: undefined,

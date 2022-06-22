@@ -1,20 +1,21 @@
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { useRequestEmailMutation } from "services/aws/registration";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import { useGetter, useSetter } from "store/accessors";
-import { app } from "constants/routes";
+import {
+  useRegistrationState,
+  useRequestEmailMutation,
+} from "services/aws/registration";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { Button } from "./common";
 import { FORM_ERROR } from "./constants";
-import { removeCharity } from "./store";
+import routes from "./routes";
 import useHandleError from "./useHandleError";
 
 export default function ConfirmEmail() {
+  const { data } = useRegistrationState("");
+  const charity = data!; // data is checked on stepOneInitiated guard
   const navigate = useNavigate();
-  const dispatch = useSetter();
-  const charity = useGetter((state) => state.charity);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
@@ -46,7 +47,7 @@ export default function ConfirmEmail() {
       if ("error" in result) {
         handleError(result.error, FORM_ERROR);
       } else {
-        showModal<PopupProps>(Popup, {
+        showModal(Popup, {
           message:
             "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
         });
@@ -56,8 +57,7 @@ export default function ConfirmEmail() {
   );
 
   const handleClose = () => {
-    dispatch(removeCharity());
-    navigate(app.index);
+    navigate(routes.index);
   };
 
   return (

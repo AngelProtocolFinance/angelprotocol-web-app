@@ -1,32 +1,26 @@
-import { admin, tags } from "services/terra/tags";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import useWalletContext from "hooks/useWalletContext";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useEstimator from "./useEstimator";
 
 export default function useVote() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
-  const tx = useEstimator();
-  const { showModal } = useModalContext();
+  const { tx, wallet } = useEstimator();
   function vote() {
     dispatch(
       sendTerraTx({
-        tx: tx!,
         wallet,
+        tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposal },
-            { type: tags.admin, id: admin.proposals },
-            { type: tags.admin, id: admin.votes },
+            { type: terraTags.admin, id: adminTags.proposal },
+            { type: terraTags.admin, id: adminTags.proposals },
+            { type: terraTags.admin, id: adminTags.votes },
           ]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return vote;

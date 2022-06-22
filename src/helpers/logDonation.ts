@@ -1,4 +1,4 @@
-import { TxLogPayload } from "services/apes/types";
+import { TxLogPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes_endpoint } from "constants/urls";
 
@@ -7,7 +7,7 @@ const logDonation = async (payload: TxLogPayload) => {
   const response = await fetch(apes_endpoint + "/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ ...payload, ...payload.kycData }),
   });
 
   //success = 2xx

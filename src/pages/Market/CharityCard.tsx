@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
+import { EndowmentEntry } from "types/server/contracts";
 import defaultBanner from "assets/images/home-banner.jpg";
-import { EndowmentEntry } from "services/terra/registrar/types";
-import LazyImage from "components/LazyImage/LazyImage";
-import { app, site } from "constants/routes";
+import LazyImage from "components/LazyImage";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 export default function CharityCard(props: EndowmentEntry) {
   return (
     <Link
-      to={`${site.app}/${app.charity}/${props.address}`}
+      to={`${siteRoutes.app}/${appRoutes.charity}/${props.address}`}
       className="relative rounded-md hover:shadow-lg hover:bg-bright-blue/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
     >
       <LazyImage

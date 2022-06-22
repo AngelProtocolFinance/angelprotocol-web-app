@@ -1,37 +1,38 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
+import {
+  EndowmentAdminParams,
+  UpdateProfileValues,
+} from "pages/EndowmentAdmin/types";
+import { UpdateProfilePayload as UP } from "types/server/contracts";
+import { ObjectEntries } from "types/utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
-import { ProposalMeta } from "pages/Admin/types";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { uploadToIpfs } from "pages/Registration/helpers";
-import { admin, tags } from "services/terra/tags";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
-import { UpdateProfilePayload as UP } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import optimizeImage from "helpers/optimizeImage";
-import { ObjectEntries } from "types/utils";
-import { proposalTypes } from "constants/routes";
-import { UpdateProfileValues } from "./profileEditSchema";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
 export default function useEditProfile() {
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<UpdateProfileValues>();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -92,18 +93,18 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, wallet);
+    const accountContract = new Account(endowmentAddr!, wallet?.address);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
     );
 
-    const profileUpdateMeta: ProposalMeta = {
-      type: proposalTypes.endowment_updateProfile,
+    const profileUpdateMeta: EndowmentProfileUpdateMeta = {
+      type: "endowment-update-profile",
       data: genDiffMeta(diffEntries, initialProfile),
     };
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(cwContracts, wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -113,11 +114,11 @@ export default function useEditProfile() {
 
     dispatch(
       sendTerraTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink(cwContracts, endowmentAddr),

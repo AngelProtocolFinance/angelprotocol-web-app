@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { FileWrapper } from "components/FileDropzone/types";
-import { FormValues } from "./types";
+import { DocumentationValues } from "pages/Registration/types";
+import { FileWrapper } from "components/FileDropzone";
 
 export default function useCurrentLevel(
-  methods: UseFormReturn<FormValues, any>
+  methods: UseFormReturn<DocumentationValues, any>
 ) {
   const [level, setLevel] = useState(0);
 
@@ -21,7 +21,7 @@ export default function useCurrentLevel(
   return level;
 }
 
-function getCurrentLevel(methods: UseFormReturn<FormValues, any>) {
+function getCurrentLevel(methods: UseFormReturn<DocumentationValues, any>) {
   let newLevel = 0;
 
   // level checks are nested since subsequent levels can't be reached
@@ -41,7 +41,7 @@ function getCurrentLevel(methods: UseFormReturn<FormValues, any>) {
   return newLevel;
 }
 
-const getIsLevelOne = ({ control }: UseFormReturn<FormValues, any>) =>
+const getIsLevelOne = ({ control }: UseFormReturn<DocumentationValues, any>) =>
   // no errors
   !control._formState.errors.proofOfIdentity &&
   !control._formState.errors.website &&
@@ -51,7 +51,7 @@ const getIsLevelOne = ({ control }: UseFormReturn<FormValues, any>) =>
   control._formValues.website &&
   control._formValues.proofOfRegistration.name;
 
-const getIsLevelTwo = ({ control }: UseFormReturn<FormValues, any>) =>
+const getIsLevelTwo = ({ control }: UseFormReturn<DocumentationValues, any>) =>
   // no errors
   !control._formState.errors.un_sdg &&
   !control._formState.errors.financialStatements &&
@@ -59,7 +59,9 @@ const getIsLevelTwo = ({ control }: UseFormReturn<FormValues, any>) =>
   control._formValues.un_sdg >= 0 &&
   control._formValues.financialStatements.some((fs: FileWrapper) => fs.name);
 
-const getIsLevelThree = ({ control }: UseFormReturn<FormValues, any>) =>
+const getIsLevelThree = ({
+  control,
+}: UseFormReturn<DocumentationValues, any>) =>
   // no errors
   !control._formState.errors.auditedFinancialReports &&
   // values inserted

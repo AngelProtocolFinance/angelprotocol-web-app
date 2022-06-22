@@ -1,7 +1,7 @@
+import { AdditionalInfoValues } from "../types";
 import RichTextEditor, {
   EditorClasses,
 } from "components/RichTextEditor/RichTextEditor";
-import { FormValues } from "./types";
 
 export default function OverviewInput() {
   return (
@@ -10,7 +10,7 @@ export default function OverviewInput() {
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
-      <RichTextEditor<FormValues>
+      <RichTextEditor<AdditionalInfoValues>
         fieldName="charityOverview"
         editorClasses={editorClasses}
         placeHolder="an overview of your organization"

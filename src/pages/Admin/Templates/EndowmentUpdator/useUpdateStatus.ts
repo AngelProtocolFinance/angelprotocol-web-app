@@ -1,29 +1,27 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
-} from "services/terra/registrar/types";
-import { admin, tags } from "services/terra/tags";
+  StatusChangePayload,
+} from "types/server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import { StatusChangePayload } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
-import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
@@ -46,15 +44,15 @@ export default function useUpdateStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet);
+    const registrarContract = new Registrar(wallet?.address);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
       );
 
     //construct endowment payload preview
-    const statusUpdateMeta: ProposalMeta = {
-      type: proposalTypes.endowment_updateStatus,
+    const statusUpdateMeta: EndowmentStatusMeta = {
+      type: "endowment-update-status",
       data: {
         fromStatus: data.prevStatus,
         toStatus: data.status,
@@ -62,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -72,11 +70,11 @@ export default function useUpdateStatus() {
 
     dispatch(
       sendTerraTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink("apTeam"),

@@ -1,25 +1,20 @@
 import { useCallback } from "react";
+import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
-import { Charity } from "services/aws/types";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import {
-  setFormLoading,
-  setStage,
-} from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Registrar from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
+  const { wallet } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
-
-  const { wallet } = useWalletContext();
   const { showModal } = useModalContext();
 
   // this will submit the endowment contract to AWS
@@ -31,26 +26,31 @@ export default function useSubmit() {
       try {
         if (!wallet) {
           dispatch(
-            setStage({ step: Step.error, message: "Wallet is not connected" })
+            setStage({ step: "error", message: "Wallet is not connected" })
           );
           return;
         }
 
         dispatch(setFormLoading(true));
 
-        const contract = new Registrar(wallet);
+        const contract = new Registrar(wallet.address);
         const msg = contract.createEndowmentCreationMsg(charity);
 
-        dispatch(sendTerraTx({ wallet, msgs: [msg] }));
+        dispatch(
+          sendTerraTx({
+            wallet,
+            msgs: [msg],
+          })
+        );
       } catch (err) {
         console.log(processEstimateError(err));
-        dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
+        dispatch(setStage({ step: "error", message: FORM_ERROR }));
         dispatch(setFormLoading(false));
       } finally {
         showModal(TransactionPrompt, {});
       }
     },
-    [wallet, dispatch, showModal]
+    [dispatch, showModal, wallet]
   );
 
   return { submit, isSubmitting: form_loading };

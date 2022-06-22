@@ -1,9 +1,8 @@
 import { useState } from "react";
+import { ApplicationStatusOptions, RegistrationStatus } from "types/server/aws";
 import { useGetCharityApplicationsQuery } from "services/aws/registration";
-import { RegistrationStatus } from "services/aws/types";
 import ApplicationsTable from "./ApplicationsTable";
 import StatusSelector from "./StatusSelector";
-import { ApplicationStatusOptions } from "./types";
 
 export default function Applications() {
   const [applicationStatus, setApplicationStatus] =
@@ -44,7 +43,7 @@ export default function Applications() {
   );
 }
 
-export const statusColorClasses: Record<RegistrationStatus, string> = {
+export const statusColorClasses: { [key in RegistrationStatus]: string } = {
   Inactive: "bg-grey-accent",
   "Under Review": "bg-orange",
   Approved: "bg-bright-green",

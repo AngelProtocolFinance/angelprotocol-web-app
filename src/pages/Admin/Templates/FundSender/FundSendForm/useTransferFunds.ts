@@ -1,24 +1,23 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "pages/Admin/types";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { admin, tags } from "services/terra/tags";
+import { FundSendMeta } from "pages/Admin/types";
+import { FundSendValues } from "pages/Admin/types";
+import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import CW20 from "contracts/CW20";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../../genProposalsLink";
-import { FundSendValues } from "../fundSendSchema";
 
 export default function useTransferFunds() {
   const {
@@ -26,9 +25,9 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
-  const { wallet } = useWalletContext();
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
   function transferFunds(data: FundSendValues) {
@@ -44,8 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const haloContractAddr = contracts[wallet?.network.chainID!]["halo_token"];
-    const cw20Contract = new CW20(haloContractAddr, wallet);
+    const cw20Contract = new CW20(contracts.halo_token, wallet?.address);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -56,16 +54,16 @@ export default function useTransferFunds() {
         [
           {
             amount: new Dec(data.amount).mul(1e6).toInt().toString(),
-            denom: denoms.uusd,
+            denom: "uusd",
           },
         ],
         data.recipient
       );
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
-    const fundTransferMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_fundTransfer,
+    const adminContract = new Admin(cwContracts, wallet?.address);
+    const fundTransferMeta: FundSendMeta = {
+      type: "admin-group-fund-transfer",
       data: {
         amount: data.amount,
         currency: data.currency,
@@ -81,11 +79,11 @@ export default function useTransferFunds() {
 
     dispatch(
       sendTerraTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink(cwContracts, endowmentAddr),

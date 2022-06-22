@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { setCWContracts } from "services/admin/cwContracts";
 import { useMember } from "services/terra/admin/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
-import useWalletContext from "hooks/useWalletContext";
-import { admin } from "constants/routes";
+import { setCWContracts } from "slices/admin/cwContracts";
+import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Applications from "./Applications/Applications";
 import Proposal from "./Proposals/Proposal";
@@ -15,7 +15,7 @@ import Proposer from "./Proposer";
 
 export default function Admin() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
 
   useEffect(() => {
     dispatch(setCWContracts("apTeam"));
@@ -34,11 +34,17 @@ export default function Admin() {
       <div className="padded-container min-h-3/4 grid grid-rows-a1 pb-4 gap-2">
         <AdminNav />
         <Routes>
-          <Route path={`${admin.proposal}/:id`} element={<Proposal />} />
-          <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
-          <Route path={admin.proposals} element={<Proposals />} />
-          <Route path={admin.charity_applications} element={<Applications />} />
-          <Route index element={<Navigate to={admin.proposals} />} />
+          <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
+          <Route
+            path={`${adminRoutes.proposal_types}/*`}
+            element={<Proposer />}
+          />
+          <Route path={adminRoutes.proposals} element={<Proposals />} />
+          <Route
+            path={adminRoutes.charity_applications}
+            element={<Applications />}
+          />
+          <Route index element={<Navigate to={adminRoutes.proposals} />} />
         </Routes>
       </div>
     );

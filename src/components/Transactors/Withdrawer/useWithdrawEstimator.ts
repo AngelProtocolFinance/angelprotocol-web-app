@@ -1,24 +1,28 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta, SourcePreview } from "pages/Admin/types";
+import { WithdrawResource, WithdrawValues } from "./types";
+import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
+import { AmountInfo } from "types/shared/withdraw";
 import { vaultMap } from "services/terra/multicall/constants";
-import { AmountInfo, VaultFieldIds } from "services/terra/multicall/types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
-import { Source } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { proposalTypes } from "constants/routes";
-import { WithdrawResource, WithdrawValues } from "./types";
+
+interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
 
 const SEPARATOR = ":";
 export default function useWithrawEstimator(resources: WithdrawResource) {
@@ -30,13 +34,13 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
+  const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
 
-  const anchor1_amount = watch(VaultFieldIds.anchor1_amount) || "0";
-  const anchor2_amount = watch(VaultFieldIds.anchor2_amount) || "0";
+  const anchor1_amount = watch("anchor1_amount") || "0";
+  const anchor2_amount = watch("anchor2_amount") || "0";
 
   const concatenatedAmounts = [anchor1_amount, anchor2_amount].join(SEPARATOR);
 
@@ -71,11 +75,11 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //NOTE: change this pre-construction on addition on future vaults
         const fieldInputs: AmountInfo[] = [
           {
-            fieldId: VaultFieldIds.anchor1_amount,
+            fieldId: "anchor1_amount",
             amount: new Dec(debAnchor1Amount || "0"),
           },
           {
-            fieldId: VaultFieldIds.anchor2_amount,
+            fieldId: "anchor2_amount",
             amount: new Dec(debAnchor2Amount || "0"),
           },
         ];
@@ -87,7 +91,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //if all fields are blank, return
         if (filteredInputs.length <= 0) {
           dispatch(setFormError("No withdraw amount provided"));
-          dispatch(setFee({ fee: 0 }));
+          dispatch(setFee(0));
           setValue("total_ust", 0);
           setValue("total_receive", 0);
           return;
@@ -123,7 +127,10 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(resources.accountAddr, wallet);
+        const accountContract = new Account(
+          resources.accountAddr,
+          wallet.address
+        );
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
@@ -134,12 +141,12 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           .toNumber();
 
         //create proposal meta for tx preview
-        const proposalMeta: ProposalMeta = {
-          type: proposalTypes.endowment_withdraw,
+        const proposalMeta: EndowmentWithdrawMeta = {
+          type: "endowment-withdraw",
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 
-        const adminContract = new Admin(cwContracts, wallet);
+        const adminContract = new Admin(cwContracts, wallet.address);
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",
@@ -161,7 +168,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee({ fee: feeNum }));
+        dispatch(setFee(feeNum));
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

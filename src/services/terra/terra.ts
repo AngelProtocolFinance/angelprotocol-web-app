@@ -4,30 +4,31 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "store/store";
-import { terra_lcds } from "constants/urls";
-import { tags } from "./tags";
-import { BlockLatest } from "./types";
+import { terraLcdUrl } from "constants/urls";
+import { terraTags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
-    const chainID = (api.getState() as RootState).chain.terra;
-    const base_url = terra_lcds[chainID];
-    return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
+    return fetchBaseQuery({ baseUrl: terraLcdUrl })(args, api, extraOptions);
   },
   { maxRetries: 1 }
 );
+
+type BlockLatest = {
+  block_id: any;
+  block: { header: { height: string } };
+};
 
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
   tagTypes: [
-    tags.gov,
-    tags.indexfund,
-    tags.registrar,
-    tags.admin,
-    tags.endowment,
-    tags.multicall,
+    terraTags.gov,
+    terraTags.indexfund,
+    terraTags.registrar,
+    terraTags.admin,
+    terraTags.endowment,
+    terraTags.multicall,
   ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({

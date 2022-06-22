@@ -1,22 +1,22 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../common";
-import { FormValues } from "./types";
 
 type Props = {
-  name: keyof FormValues;
+  name: keyof AdditionalInfoValues;
   label: string;
 };
 
 export default function ImageInput({ name, label }: Props) {
   const {
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<AdditionalInfoValues>();
 
   return (
     <InputRow htmlFor={name} label={label} required>
-      <FileDropzone<FormValues>
+      <FileDropzone<AdditionalInfoValues>
         name={name}
         className="h-8"
         disabled={isSubmitting}

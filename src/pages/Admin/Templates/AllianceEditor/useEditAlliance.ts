@@ -1,24 +1,21 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
-import { AllianceMember as AM } from "services/terra/indexFund/types";
-import { admin, tags } from "services/terra/tags";
+import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import { EmbeddedWasmMsg } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
-import { AllianceEditValues } from "./alllianceEditSchema";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -37,11 +34,11 @@ export default function useEditAlliance() {
     );
 
     if (markedMembers.length <= 0) {
-      showModal<PopupProps>(Popup, { message: "No member changes" });
+      showModal(Popup, { message: "No member changes" });
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(wallet?.address);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -66,11 +63,11 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", wallet?.address);
 
     //construct proposal meta for preview
-    const editAllianceMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_allianceEdits,
+    const editAllianceMeta: AllianceEditMeta = {
+      type: "indexfund-alliance-edit",
       data: {
         toAddMembers,
         toRemoveMembers,
@@ -94,7 +91,7 @@ export default function useEditAlliance() {
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink("apTeam"),

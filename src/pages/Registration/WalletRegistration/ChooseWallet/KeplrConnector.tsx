@@ -1,0 +1,36 @@
+import keplrWalletLogo from "assets/icons/wallets/keplr.png";
+import { useModalContext } from "contexts/ModalContext";
+import { useSetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import { WalletError } from "errors/errors";
+
+export default function KeplrConnector() {
+  const { connections } = useSetWallet();
+  const { showModal } = useModalContext();
+
+  async function handleConnect() {
+    try {
+      const keplrConnection = connections.find((c) => c.name === "Keplr")!;
+      await keplrConnection!.connect!();
+    } catch (err: any) {
+      if (err instanceof WalletError) {
+        showModal(Popup, { message: err.message });
+      } else {
+        showModal(Popup, {
+          message:
+            "Unexpected error encountered while connecting to your Keplr wallet",
+        });
+      }
+    }
+  }
+
+  return (
+    <button
+      onClick={handleConnect}
+      className="flex justify-content items-center gap-2 border border-white/50 p-6 rounded-md f hover:bg-white/10 active:bg-white/40"
+    >
+      <img src={keplrWalletLogo} alt="" className="w-8 h-8 object-contain" />
+      <span className="font-heading uppercase">connect keplr wallet</span>
+    </button>
+  );
+}

@@ -1,8 +1,8 @@
-import { TokenWithBalance } from "services/terra/multicall/types";
+import { WithBalance } from "services/types";
 
 export default function getTokenBalance(
-  tokenBalances: TokenWithBalance[],
-  denom: string
-) {
-  return tokenBalances.find((token) => token.min_denom === denom)?.balance || 0;
+  tokenBalances: WithBalance[],
+  symbol: string
+): number {
+  return tokenBalances.find((token) => token.symbol === symbol)?.balance || 0;
 }

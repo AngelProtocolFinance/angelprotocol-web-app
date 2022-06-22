@@ -2,11 +2,11 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import countryList from "react-select-country-list";
-import useReceiptForm from "components/Receipter/useReceiptForm";
+import { ReceipterValues } from "./types";
+import useReceiptForm from "components/Receipter/useRequestReceipt";
 import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
-import { Values } from "./types";
 
 export default function ReceiptForm() {
   const {
@@ -15,30 +15,29 @@ export default function ReceiptForm() {
     register,
     formState: { errors },
     control,
-  } = useFormContext<Values>();
-  const { submitHandler, processing } = useReceiptForm();
+  } = useFormContext<ReceipterValues>();
+  const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
   const countries = useMemo(() => countryList().getData(), []);
-
   const transactionId = getValues("transactionId");
+  const isKYConly = transactionId === "";
 
   return (
     <form
-      onSubmit={handleSubmit(submitHandler)}
+      onSubmit={handleSubmit(requestReceipt)}
       className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >
-      <h1 className="font-heading font-bold text-angel-grey uppercase">
-        Request Receipt
-      </h1>
-      <p>
-        <span className="text-angel-grey text-xs uppercase font-bold mb-1">
-          Transaction ID:
-        </span>
-        <span className="font-normal text-sm text-angel-grey ml-2">
-          {maskAddress(transactionId)}
-        </span>
-      </p>
+      {!isKYConly && (
+        <p>
+          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+            Transaction ID:
+          </span>
+          <span className="font-normal text-sm text-angel-grey ml-2">
+            {maskAddress(transactionId)}
+          </span>
+        </p>
+      )}
       <TextInput name="email" id="email" label="Email Address" />
       <TextInput name="fullName" id="fullName" label="Full Name" />
       <TextInput
@@ -105,11 +104,11 @@ export default function ReceiptForm() {
         </label>
       </div>
       <button
-        disabled={processing}
+        disabled={isSubmitDisabled}
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {processing ? "Processing..." : "Submit"}
+        {isSubmitting ? "Processing..." : "Proceed"}
       </button>
     </form>
   );

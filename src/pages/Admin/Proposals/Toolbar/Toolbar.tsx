@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useLatestBlock } from "services/terra/queriers";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
-import { admin } from "constants/routes";
+import { adminRoutes } from "constants/routes";
 import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
@@ -20,7 +20,7 @@ export default function Toolbar(props: { classes?: string }) {
         <span>{toCurrency(+block_height, 0)}</span>
       </p>
       <Link
-        to={`../${admin.proposal_types}`}
+        to={`../${adminRoutes.proposal_types}`}
         className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
       >
         + Create a proposal

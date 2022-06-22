@@ -2,10 +2,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Charity } from "services/aws/types";
+import { ContactDetails } from "pages/Registration/types";
+import { Charity } from "types/server/aws";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import routes from "../../routes";
@@ -13,7 +14,7 @@ import GoalsInput from "./GoalsInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
 import { contactRoleOptions, referralMethodOptions } from "./constants";
-import { ContactDetails, ContactInfoSchema } from "./types";
+import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 
 type Props = { charity: Charity };
@@ -133,7 +134,9 @@ export default function ContactDetailsForm({ charity }: Props) {
               className="bg-green-400 w-48 h-12 mr-2"
               disabled={isSubmitting}
               onClick={() =>
-                navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+                navigate(
+                  `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+                )
               }
             >
               Back

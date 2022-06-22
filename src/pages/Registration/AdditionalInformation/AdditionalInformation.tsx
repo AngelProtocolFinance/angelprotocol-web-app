@@ -1,25 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ForwardedRef, forwardRef, useEffect } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { AdditionalInfoValues } from "../types";
+import { useRegistrationState } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
-import { useGetter } from "store/accessors";
-import { app, site } from "constants/routes";
 import { InputRow } from "../common";
-import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import ImageInput from "./ImageInput";
 import OverviewInput from "./OverviewInput";
-import { FormValues, SCHEMA } from "./types";
+import { additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
-  const navigate = useNavigate();
-  const charity = useGetter((state) => state.charity);
-  const { submit, isSuccess } = useSubmit();
+  const { data } = useRegistrationState("");
+  const charity = data!; //ensured by guard
+  const { submit } = useSubmit();
 
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(SCHEMA),
+  const methods = useForm<AdditionalInfoValues>({
+    resolver: yupResolver(additionalInfoSchema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
@@ -33,12 +31,6 @@ export default function AdditionalInformation() {
     register,
     formState: { isSubmitting },
   } = methods;
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
-    }
-  }, [isSuccess, navigate]);
 
   return (
     <div className="flex flex-col gap-5 items-center w-full">

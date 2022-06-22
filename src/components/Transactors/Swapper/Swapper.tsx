@@ -1,9 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { schema } from "./schema";
-import { Props, SwapValues } from "./types";
+import * as Yup from "yup";
+import { SwapValues } from "./types";
+import { SchemaShape } from "schemas/types";
+import { requiredTokenAmount } from "schemas/number";
+import SwapForm from "./SwapForm";
 
-export default function Swapper(props: Props) {
+const shape: SchemaShape<SwapValues> = { amount: requiredTokenAmount };
+const schema = Yup.object().shape(shape);
+
+export default function Swapper() {
   const methods = useForm<SwapValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -21,7 +27,7 @@ export default function Swapper(props: Props) {
 
   return (
     <FormProvider {...methods}>
-      <props.Form />
+      <SwapForm />
     </FormProvider>
   );
 }

@@ -1,15 +1,15 @@
+import { FundUpdateValues as FV } from "pages/Admin/types";
 import Label from "pages/Admin/components/Label";
 import {
   FormContainer,
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
-import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 import useInitFundMembers from "./useInitFundMembers";
 import useUpdateFund from "./useUpdateFund";
 

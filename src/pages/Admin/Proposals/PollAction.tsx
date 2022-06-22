@@ -1,27 +1,25 @@
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import React, { ReactNode } from "react";
+import { ProposalDetails, ProposalMeta } from "pages/Admin/types";
+import { Tags } from "slices/transaction/types";
 import {
-  admin,
-  endowment,
-  indexfund,
-  multicall,
-  registrar,
-  tags,
+  adminTags,
+  endowmentTags,
+  indexfundTags,
+  multicallTags,
+  registrarTags,
+  terraTags,
 } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
 import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
-import { proposalTypes } from "constants/routes";
-import { ProposalMeta } from "../types";
-import { ProposalDetails } from "./useProposalDetails";
 
 export default function PollAction(props: ProposalDetails) {
   const showAdminVoter = useAdminVoter(props.numId);
 
-  const showAdminExecuter = useProposalExecutor(
-    props.numId,
-    getTagPayloads(props.meta)
-  );
+  const showAdminExecuter = useProposalExecutor({
+    proposal_id: props.numId,
+    tagPayloads: getTagPayloads(props.meta),
+  });
 
   const EXED = props.isExecuted;
   const EX = props.isExecutable;
@@ -69,81 +67,87 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 */
 
 function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
-  const tagsToInvalidate: TagDescription<tags>[] = [
+  const tagsToInvalidate: Tags = [
     //basic tags to invalidate
-    { type: tags.admin, id: admin.proposal },
-    { type: tags.admin, id: admin.proposals },
+    { type: terraTags.admin, id: adminTags.proposal },
+    { type: terraTags.admin, id: adminTags.proposals },
   ];
   if (!proposalMeta) {
     return [terra.util.invalidateTags(tagsToInvalidate)];
   }
   const parsedProposalMeta: ProposalMeta = JSON.parse(proposalMeta);
   switch (parsedProposalMeta.type) {
-    case proposalTypes.indexFund_allianceEdits:
+    case "indexfund-alliance-edit":
       tagsToInvalidate.push({
-        type: tags.indexfund,
-        id: indexfund.alliance_members,
+        type: terraTags.indexfund,
+        id: indexfundTags.alliance_members,
       });
       break;
-    case proposalTypes.indexFund_removeFund:
-    case proposalTypes.indexFund_createFund:
-    case proposalTypes.indexFund_updateFundMembers: //fund members shown via selecFromResult (fund_list)
+    case "indexfund-remove-fund":
+    case "indexfund-create-fund":
+    case "indexfund-update-fund-members": //fund members shown via selecFromResult (fund_list)
       tagsToInvalidate.push({
-        type: tags.indexfund,
-        id: indexfund.fund_list,
-      });
-      break;
-
-    case proposalTypes.indexFund_configUpdate:
-    case proposalTypes.indexFund_ownerUpdate:
-      tagsToInvalidate.push({
-        type: tags.indexfund,
-        id: indexfund.config,
+        type: terraTags.indexfund,
+        id: indexfundTags.fund_list,
       });
       break;
 
-    case proposalTypes.adminGroup_updateMembers:
+    case "indexfund-config-update":
+    case "indexfund-owner-update":
       tagsToInvalidate.push({
-        type: tags.admin,
-        id: admin.members,
+        type: terraTags.indexfund,
+        id: indexfundTags.config,
       });
       break;
 
-    case proposalTypes.adminGroup_fundTransfer:
+    case "admin-group-update-members":
       tagsToInvalidate.push({
-        type: tags.multicall,
-        id: multicall.terraBalances,
+        type: terraTags.admin,
+        id: adminTags.members,
       });
       break;
 
-    case proposalTypes.endowment_updateStatus:
+    case "admin-group-fund-transfer":
       tagsToInvalidate.push({
-        type: tags.registrar,
-        id: registrar.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
+        type: terraTags.multicall,
+        id: multicallTags.terraBalances,
       });
       break;
 
-    case proposalTypes.endowment_withdraw:
+    case "endowment-update-status":
+      tagsToInvalidate.push({
+        type: terraTags.registrar,
+        id: registrarTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
+      });
+      break;
+
+    case "endowment-withdraw":
       tagsToInvalidate.push(
         {
-          type: tags.multicall,
-          id: multicall.endowmentBalance,
+          type: terraTags.multicall,
+          id: multicallTags.endowmentBalance,
         },
         //edge: user transfers to CW20 or Native to his connected wallet
         {
-          type: tags.multicall,
-          id: multicall.terraBalances,
+          type: terraTags.multicall,
+          id: multicallTags.terraBalances,
         }
       );
       break;
 
-    case proposalTypes.endowment_updateProfile:
-      tagsToInvalidate.push({ type: tags.endowment, id: endowment.profile });
+    case "endowment-update-profile":
+      tagsToInvalidate.push({
+        type: terraTags.endowment,
+        id: endowmentTags.profile,
+      });
       break;
 
-    case proposalTypes.registrar_updateOwner:
-    case proposalTypes.registrar_updateConfig:
-      tagsToInvalidate.push({ type: tags.registrar, id: registrar.config });
+    case "registrar-update-owner":
+    case "registrar-update-config":
+      tagsToInvalidate.push({
+        type: terraTags.registrar,
+        id: registrarTags.config,
+      });
       break;
 
     default:

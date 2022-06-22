@@ -1,15 +1,14 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
+import { Vote } from "types/server/contracts";
+import { PollStatus } from "types/server/contracts";
 import {
   useGovConfig,
   useGovHaloBalance,
   useGovPoll,
   useGovStaker,
 } from "services/terra/gov/queriers";
-import { PollStatus } from "services/terra/gov/types";
 import { useLatestBlock } from "services/terra/queriers";
-import { Vote } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
 import toCurrency from "helpers/toCurrency";
 
 type ProcessedPollData = {
@@ -34,7 +33,6 @@ type ProcessedPollData = {
 
 export default function useDetails(poll_id: number): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
-  const { wallet } = useWalletContext();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
   const gov_staked = useGovHaloBalance();
@@ -105,7 +103,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
     };
 
     setData(processed);
-  }, [wallet, gov_config, poll, gov_staker, block_height, poll_id, gov_staked]);
+  }, [gov_config, poll, gov_staker, block_height, poll_id, gov_staked]);
 
   return data;
 
@@ -114,7 +112,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
 
 const placeholder_data: ProcessedPollData = {
   id: 0,
-  status: PollStatus.in_progress,
+  status: "in_progress",
   title: "",
   creator: "",
   amount: "0",

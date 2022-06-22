@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { denomIcons } from "constants/currency";
 import { SwapValues } from "./types";
+import { denomIcons } from "constants/currency";
 
 export default function Output() {
   const { watch } = useFormContext<SwapValues>();

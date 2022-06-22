@@ -1,5 +1,5 @@
 import { BsX } from "react-icons/bs";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import { Button } from "../../common";
 
 export default function TerraInfoModal() {
@@ -12,7 +12,7 @@ export default function TerraInfoModal() {
         onClick={closeModal}
       />
       <p className="p-4">
-        A <b>Terra wallet</b> is an account sitting on the Terra blockchain on
+        <b>Keplr wallet</b> is an account sitting on the Juno blockchain on
         which Angel Protocol is built. It is in effect your ‘virtual bank
         account’, has unique public and private addresses, will hold your
         endowment balances and is used to authorise transactions.

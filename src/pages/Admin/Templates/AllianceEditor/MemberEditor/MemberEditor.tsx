@@ -1,7 +1,7 @@
 import React from "react";
+import { AllianceEditValues as AV } from "pages/Admin/types";
 import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import { AllianceEditValues as AV } from "../alllianceEditSchema";
 import useEditMember from "./useEditMember";
 
 export default function MemberEditor() {

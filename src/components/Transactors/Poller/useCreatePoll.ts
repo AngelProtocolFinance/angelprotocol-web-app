@@ -1,12 +1,10 @@
 import { useFormContext } from "react-hook-form";
-import { multicall, tags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import Gov from "contracts/Gov";
 import { CreatePollValues } from "./types";
+import { multicallTags, terraTags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import Gov from "contracts/Gov";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {
@@ -16,12 +14,11 @@ export default function useCreatePoll() {
   } = useFormContext<CreatePollValues>();
 
   const { form_error, form_loading } = useGetter((state) => state.transaction);
-  const { wallet, maxFee } = useCreatePollEstimate();
-  const { showModal } = useModalContext();
+  const { maxFee, wallet } = useCreatePollEstimate();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Gov(wallet);
+    const contract = new Gov(wallet?.address);
     const { amount, title, description, link } = data;
     const pollMsg = await contract.createPollMsgs(
       +amount,
@@ -36,13 +33,12 @@ export default function useCreatePoll() {
         tx: { msgs: [pollMsg], fee: maxFee },
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.multicall, id: multicall.terraBalances },
+            { type: terraTags.gov },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

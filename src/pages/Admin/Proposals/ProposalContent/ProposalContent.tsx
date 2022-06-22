@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Proposal } from "services/terra/admin/types";
+import {
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  Proposal,
+} from "types/server/contracts";
 import Icon from "components/Icon";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import DetailLabel from "../DetailLabel";
 import Preview from "./Preview/Preview";
 

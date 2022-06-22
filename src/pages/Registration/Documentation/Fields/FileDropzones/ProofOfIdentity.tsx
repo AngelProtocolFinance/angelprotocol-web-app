@@ -1,14 +1,14 @@
 import { FieldError, useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
+import { DocumentationValues } from "pages/Registration/types";
+import { useModalContext } from "contexts/ModalContext";
 import FileDropzone from "components/FileDropzone";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { Button, InputRow } from "../../../common";
-import { FormValues } from "../../types";
 
 export default function ProofOfIdentity() {
   const {
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<DocumentationValues>();
 
   const errorMessage = (errors.proofOfIdentity as FieldError)?.message;
 
@@ -19,7 +19,7 @@ export default function ProofOfIdentity() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone<FormValues>
+      <FileDropzone<DocumentationValues>
         name="proofOfIdentity"
         className="h-8"
         disabled={isSubmitting}

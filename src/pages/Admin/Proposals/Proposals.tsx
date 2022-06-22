@@ -1,11 +1,10 @@
 import { createContext, useContext, useState } from "react";
+import { ProposalGroupOptions, ProposalStatusOptions } from "pages/Admin/types";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
 } from "services/terra/admin/queriers";
-import { ProposalStatus } from "services/terra/admin/types";
 import Icon from "components/Icon";
-import { ProposalGroup } from "../types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";
 
@@ -81,8 +80,6 @@ export default function Proposals() {
   );
 }
 
-export type ProposalGroupOptions = ProposalGroup | "all";
-export type ProposalStatusOptions = ProposalStatus | "all";
 interface State {
   activeStatus: ProposalStatusOptions;
   activeGroup: ProposalGroupOptions;

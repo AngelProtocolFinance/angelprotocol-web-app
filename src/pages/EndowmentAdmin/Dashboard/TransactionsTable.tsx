@@ -1,10 +1,9 @@
 import { PropsWithChildren } from "react";
-import { Transaction } from "services/flipslide/endowment_admin/types";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import { Transaction } from "types/server/aws";
+import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { chainIDs } from "constants/chainIDs";
 
 export default function TransactionsTable(props: {
   transactions: Transaction[];
@@ -47,7 +46,7 @@ export default function TransactionsTable(props: {
             </span>
             <span className="font-mono">{maskAddress(tx.donator)}</span>
             <a
-              href={getTxUrl(chainIDs.terra_main, tx.tx_id)}
+              href={getTxUrl(tx.chain_id!, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

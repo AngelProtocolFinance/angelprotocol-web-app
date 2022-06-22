@@ -1,5 +1,5 @@
 import { DiffSet } from "pages/Admin/types";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import TableSection, { Cells } from "components/TableSection";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function DiffTable<T extends object>(props: {

@@ -1,17 +1,24 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity } from "services/aws/types";
-import { Step } from "services/transaction/types";
-import { WalletProxy } from "providers/WalletProvider";
-import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
+import { Charity } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
+import { chainIDs } from "constants/chainIDs";
 import useSubmit from "../useSubmit";
 
-const mockShowModal = jest.fn();
+const WALLET: WalletState = {
+  walletIcon: "",
+  displayCoin: placeHolderDisplayToken["station"],
+  coins: [placeHolderDisplayToken["station"]],
+  address: "terra1w0fn5u7puxafp3g2mehe6xvt4w2x2eennm7tzf",
+  chainId: chainIDs.terra_test,
+  providerId: "station",
+};
 
-jest.mock("components/ModalContext/ModalContext", () => ({
+const mockShowModal = jest.fn();
+jest.mock("contexts/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
@@ -21,16 +28,14 @@ jest.mock("helpers/processEstimateError", () => ({
   default: (_: any) => {},
 }));
 
-const mockUseWalletContext = jest.fn();
-
-jest.mock("hooks/useWalletContext", () => ({
+const mockUseGetWallet = jest.fn();
+jest.mock("contexts/WalletContext/WalletContext", () => ({
   __esModule: true,
-  default: () => mockUseWalletContext(),
+  useGetWallet: () => mockUseGetWallet(),
 }));
 
 const mockSendTerraTx = jest.fn();
-
-jest.mock("services/transaction/sendTerraTx", () => ({
+jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
   __esModule: true,
   sendTerraTx: (..._: any[]) => mockSendTerraTx,
 }));
@@ -52,7 +57,7 @@ jest.mock("../useTransactionResultHandler", () => ({
 describe("useSubmit tests", () => {
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -62,16 +67,15 @@ describe("useSubmit tests", () => {
 
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
 
     const { result } = renderHook(() => useSubmit());
-
     expect(result.current.isSubmitting).toBe(true);
   });
 
   it("sets the Stage to 'error' Step when wallet not connected", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet: undefined });
+    mockUseGetWallet.mockReturnValue({ wallet: undefined });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -81,7 +85,7 @@ describe("useSubmit tests", () => {
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
       payload: {
-        step: Step.error,
+        step: "error",
         message: "Wallet is not connected",
       },
     });
@@ -89,7 +93,7 @@ describe("useSubmit tests", () => {
 
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockImplementation((..._: any[]) => {
@@ -107,7 +111,7 @@ describe("useSubmit tests", () => {
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
       payload: {
-        step: Step.error,
+        step: "error",
         message:
           "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io",
       },
@@ -121,7 +125,7 @@ describe("useSubmit tests", () => {
 
   it("dispatches action sending a Terra Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
@@ -139,23 +143,6 @@ describe("useSubmit tests", () => {
   });
 });
 
-const WALLET: WalletProxy = {
-  connection: TORUS_CONNECTION,
-  address: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
-  network: chainOptions.walletConnectChainIds[0], // testnet
-  post: async (_: CreateTxOptions) => ({
-    result: {
-      height: 1,
-      raw_log: "",
-      txhash: "",
-    },
-    success: true,
-    msgs: [],
-  }),
-  connect: async (..._: any[]) => {},
-  disconnect: async () => {},
-};
-
 const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
@@ -166,6 +153,8 @@ const CHARITY: Charity = {
     Role: "ceo",
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
     SK: "ContactPerson",
+    Goals: "i have some goals",
+    ReferralMethod: "angel-alliance",
   },
   Registration: {
     CharityName: "charity",
@@ -194,7 +183,8 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    KycDonorsOnly: false,
   },
 };
 

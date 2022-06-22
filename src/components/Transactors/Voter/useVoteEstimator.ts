@@ -1,22 +1,22 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { VoteValues } from "./types";
+import { Vote } from "types/server/contracts";
 import { useGovStaker } from "services/terra/gov/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import { Vote } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
-import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
   const {
@@ -26,9 +26,9 @@ export default function useVoteEstimator() {
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
-  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
+
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
@@ -47,7 +47,7 @@ export default function useVoteEstimator() {
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
-          dispatch(setFee({ fee: 0 }));
+          dispatch(setFee(0));
           return;
         }
 
@@ -78,7 +78,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet);
+        const contract = new Gov(wallet.address);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -88,14 +88,14 @@ export default function useVoteEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee({ fee: feeNum }));
+        dispatch(setFee(feeNum));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -107,15 +107,7 @@ export default function useVoteEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_vote,
-    wallet,
-    coins,
-    govStaker,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, debounced_vote, wallet, govStaker, isValid, isDirty]);
 
   return { tx, wallet };
 }

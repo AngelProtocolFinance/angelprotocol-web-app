@@ -1,15 +1,22 @@
-import AppFoot from "components/AppFoot/AppFoot";
-import DappHead from "components/DappHead/DappHead";
-import ModalContext from "components/ModalContext/ModalContext";
-import useWalletContext from "hooks/useWalletContext";
+import ModalContext from "contexts/ModalContext";
+import {
+  useGetWallet,
+  useSetWallet,
+} from "contexts/WalletContext/WalletContext";
+import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import { chainIDs } from "constants/chainIDs";
+import AppFoot from "./AppFoot";
+import DappHead from "./DappHead";
 import Views from "./Views";
 
 export default function App() {
-  const { wallet } = useWalletContext();
-  const chainId = wallet?.network.chainID;
+  const { wallet } = useGetWallet();
 
-  if (wallet !== undefined && chainId !== chainIDs.terra_classic) {
+  if (
+    wallet &&
+    isTerraProvider(wallet.providerId) &&
+    wallet.chainId !== chainIDs.terra_classic
+  ) {
     return <NetworkGuard />;
   }
   //TODO: refactor non-terra providers to redux
@@ -29,7 +36,7 @@ export default function App() {
 }
 
 function NetworkGuard() {
-  const { wallet } = useWalletContext();
+  const { disconnect } = useSetWallet();
   return (
     <div className="grid gap-2 place-self-center bg-white-grey font-heading border border-angel-grey/30 w-full max-w-xs h-46 rounded-md p-6 leading-normal">
       <p className="text-center mb-4">
@@ -45,7 +52,7 @@ function NetworkGuard() {
       </button>
 
       <button
-        onClick={() => wallet?.disconnect()}
+        onClick={() => disconnect()}
         className="uppercase bg-angel-orange text-white text-sm px-4 py-2 rounded-md font-bold"
       >
         disconnect wallet

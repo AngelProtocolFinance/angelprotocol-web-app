@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
+import { EndowmentAdminParams } from "./types";
 import { GuardPrompt } from "pages/Admin/Admin";
 import Proposal from "pages/Admin/Proposals/Proposal";
 import Proposals from "pages/Admin/Proposals/Proposals";
-import { setCWContracts } from "services/admin/cwContracts";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
-import useWalletContext from "hooks/useWalletContext";
-import { admin } from "constants/routes";
+import { setCWContracts } from "slices/admin/cwContracts";
+import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
-import { EndowmentAddrParams } from "./types";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
-  const { address: endowmentAddress } = useParams<EndowmentAddrParams>();
+  const { wallet } = useGetWallet();
+  const { address: endowmentAddress } = useParams<EndowmentAdminParams>();
   const { cwContracts, isCWContractsLoading } =
     useEndowmentCWs(endowmentAddress);
 
@@ -44,9 +44,12 @@ export default function EndowmentAdmin() {
       <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
         <AdminNav />
         <Routes>
-          <Route path={admin.proposals} element={<Proposals />} />
-          <Route path={`${admin.proposal}/:id`} element={<Proposal />} />
-          <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
+          <Route path={adminRoutes.proposals} element={<Proposals />} />
+          <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
+          <Route
+            path={`${adminRoutes.proposal_types}/*`}
+            element={<Proposer />}
+          />
           <Route
             index
             element={<Dashboard endowmentAddr={endowmentAddress!} />}

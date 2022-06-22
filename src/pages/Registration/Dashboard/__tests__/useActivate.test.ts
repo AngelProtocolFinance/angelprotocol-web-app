@@ -1,28 +1,29 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { Charity } from "services/aws/types";
+import { Charity } from "types/server/aws";
 import useActivate from "../useActivate";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
 
+const mockRegistrationQuery = jest.fn();
 const mockUseActivateCharityMutation = jest.fn();
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
   useActivateCharityMutation: () => mockUseActivateCharityMutation(),
+  useRegistrationQuery: (..._: any[]) => mockRegistrationQuery(_),
+  useRegistrationState: (..._: any[]) => mockRegistrationQuery(_),
 }));
 
 const mockShowModal = jest.fn();
-jest.mock("components/ModalContext/ModalContext", () => ({
+jest.mock("contexts/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
-const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
 jest.mock("store/accessors", () => ({
   __esModule: true,
   useGetter: (..._: any[]) => mockUseGetter(),
-  useSetter: () => mockDispatch,
 }));
 
 describe("useActivate tests", () => {
@@ -48,7 +49,7 @@ describe("useActivate tests", () => {
 
   it("handles happy flow correctly", async () => {
     const mockActivate = jest.fn(() => ({}));
-    mockUseGetter.mockReturnValue(CHARITY);
+    mockRegistrationQuery.mockReturnValue({ data: CHARITY });
     mockUseActivateCharityMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
@@ -60,17 +61,6 @@ describe("useActivate tests", () => {
 
     expect(mockActivate).toHaveBeenCalledWith(PK);
     expect(mockActivate).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: "charity/updateCharity",
-      payload: {
-        ...CHARITY,
-        Registration: {
-          ...CHARITY.Registration,
-          RegistrationStatus: "Active",
-        },
-      },
-    });
   });
 
   it("handles error flow correctly", async () => {
@@ -78,7 +68,7 @@ describe("useActivate tests", () => {
       error: { status: "FETCH_ERROR", error: "some error" },
     };
     const mockActivate = jest.fn(() => error);
-    mockUseGetter.mockReturnValue(CHARITY);
+    mockRegistrationQuery.mockReturnValue({ data: CHARITY });
     mockUseActivateCharityMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
@@ -91,7 +81,6 @@ describe("useActivate tests", () => {
     expect(mockActivate).toHaveBeenCalledWith(PK);
     expect(mockActivate).toHaveBeenCalled();
     expect(mockShowModal).toHaveBeenCalled();
-    expect(mockDispatch).not.toBeCalled();
   });
 });
 
@@ -105,6 +94,8 @@ const CHARITY: Charity = {
     PK,
     Role: "ceo",
     SK: "ContactPerson",
+    Goals: "hello world",
+    ReferralMethod: "angel-alliance",
   },
   Registration: {
     CharityName: "charity",
@@ -133,6 +124,7 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     SK: "Metadata",
-    TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    KycDonorsOnly: false,
   },
 };

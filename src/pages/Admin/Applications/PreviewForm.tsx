@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { CharityApplication } from "types/server/aws";
 import { useProposal } from "services/terra/admin/queriers";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import useWalletContext from "hooks/useWalletContext";
-import { admin } from "constants/routes";
+import { adminRoutes } from "constants/routes";
 import useProposalDetails from "../Proposals/useProposalDetails";
-import { CharityApplication } from "./types";
 import useUpdateApplicationStatus from "./useUpdateApplication";
 
 export default function PreviewForm({
@@ -13,7 +13,7 @@ export default function PreviewForm({
 }: {
   application: CharityApplication;
 }) {
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const { closeModal } = useModalContext();
   const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
@@ -28,7 +28,7 @@ export default function PreviewForm({
     `${status} ${ap.CharityName} by ${wallet?.address}`;
 
   const openPoll = () => {
-    navigate(`admin/${admin.proposal}/${ap.poll_id}`);
+    navigate(`admin/${adminRoutes.proposal}/${ap.poll_id}`);
     closeModal();
   };
 
@@ -54,7 +54,7 @@ export default function PreviewForm({
         label="Registration Date"
         text={new Date(ap.RegistrationDate).toDateString()}
       />
-      <Field label="Wallet Address" text={ap.TerraWallet} />
+      <Field label="Wallet Address" text={ap.JunoWallet} />
       <Proof
         label="Endowment Agreement"
         verified={ap.EndowmentAgreementVerified}
@@ -88,7 +88,7 @@ export default function PreviewForm({
               updateStatus({
                 PK: ap.PK,
                 status: "3",
-                endowmentAddr: ap.TerraWallet, // replace with endowment address
+                endowmentAddr: ap.JunoWallet, // replace with endowment address
                 title: getTitle("Reject"),
                 description: getDescription("Reject"),
               })
@@ -102,7 +102,7 @@ export default function PreviewForm({
               updateStatus({
                 PK: ap.PK,
                 status: "1",
-                endowmentAddr: ap.TerraWallet, // replace with endowment address
+                endowmentAddr: ap.JunoWallet, // replace with endowment address
                 title: getTitle("Approve"),
                 description: getDescription("Approve"),
               })

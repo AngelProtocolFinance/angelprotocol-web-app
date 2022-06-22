@@ -4,7 +4,7 @@ import KeyValue from "./preview-components/KeyValue";
 import MemberItem from "./preview-components/MemberItem";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function FundMemberUpdate(props: FundMemberUpdateMeta) {
+export default function FundMemberUpdate(props: FundMemberUpdateMeta["data"]) {
   return (
     <PreviewContainer>
       <KeyValue _key="fund id">

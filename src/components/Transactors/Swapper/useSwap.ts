@@ -1,11 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { multicall, tags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
 import { SwapValues } from "./types";
+import { multicallTags, terraTags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useSwapEstimator from "./useSwapEstimator";
 
 export default function useSwap() {
@@ -17,8 +15,7 @@ export default function useSwap() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<SwapValues>();
 
-  const { wallet, tx } = useSwapEstimator();
-  const { showModal } = useModalContext();
+  const { tx, wallet } = useSwapEstimator();
   const dispatch = useSetter();
 
   const isBuy = watch("is_buy");
@@ -33,12 +30,11 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.multicall, id: multicall.terraBalances },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

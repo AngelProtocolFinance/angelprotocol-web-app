@@ -1,19 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import {
+  EndowmentAdminParams,
+  UpdateProfileValues,
+} from "pages/EndowmentAdmin/types";
+import { UpdateProfilePayload } from "types/server/contracts";
+import { Profile } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { useEndowmentProfile } from "services/terra/account/queriers";
-import { Profile } from "services/terra/account/types";
-import { UpdateProfilePayload } from "contracts/types";
-import useWalletContext from "hooks/useWalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import EditForm from "./EditForm";
-import { UpdateProfileValues, profileEditSchema } from "./profileEditSchema";
+import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
-  const { wallet } = useWalletContext();
-  const { address: endowment_addr } = useParams<EndowmentAddrParams>();
+  const { wallet } = useGetWallet();
+  const { address: endowment_addr } = useParams<EndowmentAdminParams>();
   const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
     endowment_addr!
   );

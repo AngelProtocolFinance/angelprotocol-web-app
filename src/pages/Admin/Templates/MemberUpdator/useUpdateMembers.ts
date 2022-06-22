@@ -1,27 +1,25 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "pages/Admin/types";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { Member } from "services/terra/admin/types";
-import { admin, tags } from "services/terra/tags";
+import { CWMemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
+import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
+import { Member } from "types/server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
-import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
-  const { wallet } = useWalletContext();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -51,18 +49,18 @@ export default function useUpdateMembers() {
     );
 
     if (to_remove.length <= 0 && to_add.length <= 0) {
-      showModal<PopupProps>(Popup, { message: "No member changes" });
+      showModal(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet);
+    const contract = new Admin(cwContracts, wallet?.address);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove
     );
 
     //create meta for proposal preview
-    const memberUpdateMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_updateMembers,
+    const memberUpdateMeta: CWMemberUpdateMeta = {
+      type: "admin-group-update-members",
       data: {
         toAdd: to_add,
         toRemove: to_remove,
@@ -85,7 +83,7 @@ export default function useUpdateMembers() {
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink(cwContracts, endowmentAddr),

@@ -1,23 +1,22 @@
-import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
-import { Charity } from "services/aws/types";
-import { useSetter } from "store/accessors";
+import { useNavigate } from "react-router-dom";
+import { UnprocessedCharity } from "types/server/aws";
+import { registrationRefKey } from "services/aws/registration";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../common";
-import { updateCharity } from "../store";
+import routes from "../routes";
 
-type Props = {
-  charity: Charity;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  isLoading: boolean;
-};
+export default function VerificationSuccessful({
+  newCharity,
+}: {
+  newCharity: UnprocessedCharity;
+}) {
+  const navigate = useNavigate();
 
-export default function VerificationSuccessful(props: Props) {
-  const { charity, onClick, isLoading } = props;
-  const dispatch = useSetter();
-
-  useEffect(() => {
-    dispatch(updateCharity(charity));
-  }, [dispatch, charity]);
+  function handleContinue() {
+    localStorage.setItem(registrationRefKey, newCharity.ContactPerson.PK!);
+    navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+  }
 
   return (
     <div className="flex flex-col gap-10 items-center">
@@ -25,18 +24,15 @@ export default function VerificationSuccessful(props: Props) {
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
-          {charity.Registration.CharityName}, {charity.ContactPerson.FirstName}!
+          {newCharity.Registration.CharityName},{" "}
+          {newCharity.ContactPerson.FirstName}!
         </p>
       </div>
       <div className="text-2xl font-bold">
         <p>Your registration reference is</p>
-        <p className="text-yellow-600">{charity.ContactPerson.PK}</p>
+        <p className="text-yellow-600">{newCharity.ContactPerson.PK}</p>
       </div>
-      <Button
-        className="bg-thin-blue w-48 h-12"
-        onClick={onClick}
-        isLoading={isLoading}
-      >
+      <Button className="bg-thin-blue w-48 h-12" onClick={handleContinue}>
         Continue
       </Button>
     </div>

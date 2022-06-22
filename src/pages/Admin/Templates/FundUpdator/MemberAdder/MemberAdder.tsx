@@ -1,6 +1,6 @@
+import { FundUpdateValues as T } from "pages/Admin/types";
 import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../../components/TextInput";
-import { FundUpdateValues as T } from "../fundUpdatorSchema";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {

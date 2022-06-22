@@ -2,7 +2,7 @@ import { OwnerUpdateMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function OwnerUpdate(props: OwnerUpdateMeta) {
+export default function OwnerUpdate(props: OwnerUpdateMeta["data"]) {
   return (
     <PreviewContainer>
       <KeyValue _key="current owner">

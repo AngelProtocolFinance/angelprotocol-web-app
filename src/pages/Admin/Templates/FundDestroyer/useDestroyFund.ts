@@ -1,18 +1,16 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
-import { admin, tags } from "services/terra/tags";
+import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
-import { FundDestroyValues } from "./fundDestroyerSchema";
 
 export default function useDestroyFund() {
   const {
@@ -20,27 +18,27 @@ export default function useDestroyFund() {
     formState: { isSubmitting },
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
   const { showModal } = useModalContext();
+  const { wallet } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(wallet?.address);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
 
     //get fund details for proposal preview
     const fundDetails = await indexFundContract.getFundDetails(+data.fundId);
-    const removeFundMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_removeFund,
+    const removeFundMeta: RemoveFundMeta = {
+      type: "indexfund-remove-fund",
       data: fundDetails,
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -50,11 +48,11 @@ export default function useDestroyFund() {
 
     dispatch(
       sendTerraTx({
-        msgs: [proposalMsg],
         wallet,
+        msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.admin, id: admin.proposals },
+            { type: terraTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: genProposalsLink("apTeam"),

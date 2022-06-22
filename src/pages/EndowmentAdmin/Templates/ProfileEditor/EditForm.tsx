@@ -1,3 +1,4 @@
+import { UpdateProfileValues as UV } from "pages/EndowmentAdmin/types";
 import Submitter from "pages/Admin/Templates/Submitter";
 import Label from "pages/Admin/components/Label";
 import {
@@ -11,7 +12,6 @@ import RichTextEditor, {
 } from "components/RichTextEditor/RichTextEditor";
 import ImgEditor from "./ImgEditor/ImgEditor";
 import SDGSelector from "./SDGSelector";
-import { UpdateProfileValues as UV } from "./profileEditSchema";
 import useEditForm from "./useEditProfile";
 
 export default function EditForm() {

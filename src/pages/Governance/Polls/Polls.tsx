@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
+import { PollFilterOptions } from "../types";
 import { useGovPolls } from "services/terra/gov/queriers";
-import { PollStatus } from "services/terra/gov/types";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
-
-export type PollFilterOptions = PollStatus | "all";
 
 export default function Polls() {
   const [pollFilter, setPollFilter] = useState<PollFilterOptions>("all");
