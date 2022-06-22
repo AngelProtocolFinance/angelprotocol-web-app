@@ -1,4 +1,4 @@
-import { IS_DEV } from "./env";
+import { IS_TEST } from "./env";
 
 type SC =
   | "index_fund"
@@ -20,7 +20,7 @@ type Contracts = {
   [key in SC]: string;
 };
 
-export const contracts: Contracts = IS_DEV
+export const contracts: Contracts = IS_TEST
   ? {
       //TESTNET CONTRACTS
       //core
@@ -50,7 +50,7 @@ export const contracts: Contracts = IS_DEV
       multicall: "terra1z9p02s5fkasx5qxdaes6mfyf2gt3kxuhcsd4va",
     }
   : {
-      //TESTNET CONTRACTS
+      //MAINNET CONTRACTS
       //core
       anchor_vault1: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
       anchor_vault2: "",

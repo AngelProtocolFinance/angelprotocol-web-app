@@ -12,10 +12,10 @@ const localterra: NetworkInfo = {
   walletconnectID: 2,
 };
 
-export const mainnet: NetworkInfo = {
-  name: "mainnet",
-  chainID: chainIDs.terra_main,
-  lcd: terra_lcds[chainIDs.terra_main],
+export const classic: NetworkInfo = {
+  name: "classic",
+  chainID: chainIDs.terra_classic,
+  lcd: terra_lcds[chainIDs.terra_classic],
   walletconnectID: 2,
 };
 
@@ -27,6 +27,6 @@ export const testnet: NetworkInfo = {
 };
 
 export const chainOptions: WalletControllerChainOptions = {
-  defaultNetwork: mainnet,
-  walletConnectChainIds: { 0: testnet, 1: mainnet, 2: localterra },
+  defaultNetwork: classic,
+  walletConnectChainIds: { 0: testnet, 1: classic, 2: localterra },
 };

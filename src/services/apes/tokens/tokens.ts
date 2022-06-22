@@ -5,7 +5,7 @@ import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
-import { IS_DEV } from "constants/env";
+import { IS_TEST } from "constants/env";
 import { apes_endpoint, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -37,8 +37,9 @@ const tokens_api = apes.injectEndpoints({
         try {
           const { providerId, address, chainId } = args.providerInfo;
           const tokensRes = await fetch(
-            `${apes_endpoint}/wallet/tokens${IS_DEV ? "/test" : ""}`
+            `${apes_endpoint}/wallet/tokens${IS_TEST ? "/test" : ""}`
           );
+
           const tokenList: Token[] = await tokensRes.json();
           const coins: WithBalance<Token>[] = [];
           const categorizedTokenList = tokenList.reduce((tokens, token) => {

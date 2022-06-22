@@ -1,12 +1,9 @@
-import { useFormContext } from "react-hook-form";
 import { ContactDetails } from "pages/Registration/types";
-import RichTextEditor from "components/RichTextEditor";
+import RichTextEditor, {
+  EditorClasses,
+} from "components/RichTextEditor/RichTextEditor";
 
 export default function GoalsInput() {
-  const {
-    formState: { errors, isSubmitting },
-  } = useFormContext<ContactDetails>();
-
   return (
     <div className="flex flex-col w-full text-left">
       <label htmlFor="goals">
@@ -14,13 +11,17 @@ export default function GoalsInput() {
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
       <RichTextEditor<ContactDetails>
-        name="goals"
-        placeholder="What is your goal in working with Angel Protocol?"
-        disabled={isSubmitting}
+        fieldName="goals"
+        placeHolder="What is your goal in working with Angel Protocol?"
+        editorClasses={editorClasses}
       />
-      {errors.goals?.message && (
-        <p className="text-sm text-failed-red">{errors.goals?.message}</p>
-      )}
     </div>
   );
 }
+
+const editorClasses: EditorClasses = {
+  container: "text-white/80 p-3 rounded-md bg-white/10 shadow-inner",
+  controlContainer: "flex gap-2 mt-2 mb-4",
+  control: "p-1.5 bg-angel-blue rounded-sm hover:bg-blue-accent shadow-md",
+  error: "text-sm text-failed-red ml-1",
+};

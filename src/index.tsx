@@ -1,9 +1,12 @@
+import { WalletProvider } from "@terra-money/wallet-provider";
 import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
 import { store } from "store/store";
+import { chainOptions } from "constants/chainOptions";
 import { siteRoutes } from "constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -21,7 +24,16 @@ ReactDOM.render(
       <BrowserRouter>
         <Suspense fallback={<LoaderComponent />}>
           <Routes>
-            <Route path={`${siteRoutes.app}/*`} element={<App />} />
+            <Route
+              path={`${siteRoutes.app}/*`}
+              element={
+                <WalletProvider {...chainOptions}>
+                  <WalletContext>
+                    <App />
+                  </WalletContext>
+                </WalletProvider>
+              }
+            />
             <Route path={`${siteRoutes.home}*`} element={<Website />} />
           </Routes>
         </Suspense>

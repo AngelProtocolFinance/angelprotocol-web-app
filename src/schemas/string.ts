@@ -24,12 +24,12 @@ export const stringByteSchema = (
     .required(`${title} is required`)
     .test(
       "min_length",
-      `${title} must be at least ${minBytes} bytes`,
+      `${title} is too short`,
       getBytesComparer("gt", minBytes)
     )
     .test(
       "max_length",
-      `title must be less than ${maxBytes} bytes `,
+      `${title} is too long`,
       getBytesComparer("lt", maxBytes)
     );
 
