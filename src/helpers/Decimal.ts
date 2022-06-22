@@ -27,8 +27,8 @@ export default class Decimal {
     return new Decimal(result.atomics, this.value.fractionalDigits);
   }
 
-  public multiply(b: number | string): Decimal {
-    const result = this.value.multiply(Uint64.fromString(b.toString()));
+  public multiply(b: number): Decimal {
+    const result = this.value.multiply(Uint64.fromNumber(b));
     return new Decimal(result.atomics, this.value.fractionalDigits);
   }
 
