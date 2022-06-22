@@ -24,7 +24,7 @@ export const terraLcdUrl = IS_DEV
   ? "https://pisco-lcd.terra.dev"
   : "https://lcd.terra.dev";
 
-export const TERRA_FINDER = "https://terrascope.info/";
+export const TERRA_FINDER = "https://finder.terra.money";
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";

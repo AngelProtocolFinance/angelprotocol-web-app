@@ -1,14 +1,13 @@
 import { useCallback } from "react";
 import { AdmiExecuterProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor from "components/Transactor";
 import ExecuteForm from "./ExecuteForm";
 
 export default function useProposalExecutor(args: AdmiExecuterProps) {
   const { showModal } = useModalContext();
   const showPollEnder = useCallback(() => {
-    showModal<TxProps<AdmiExecuterProps>>(Transactor, {
-      inModal: true,
+    showModal(Transactor, {
       Content: ExecuteForm,
       contentProps: args,
     });

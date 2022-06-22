@@ -8,36 +8,23 @@ import { setStage } from "slices/transaction/transactionSlice";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {
-  if (props.step !== "success") throw new Error("wrong component rendered");
   const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const {
-    chainId,
-    txHash,
-    message,
-    isReceiptEnabled,
-    isShareEnabled,
-    successLink,
-  } = props;
+  const { chainId, txHash, message, isShareEnabled, successLink } = props;
 
   //if no special action is needed, just shown normal acknowledge button
-  const isAcknowledgeButtonShown =
-    !isReceiptEnabled && !isShareEnabled && !successLink;
+  const isAcknowledgeButtonShown = !isShareEnabled && !successLink;
 
   function acknowledge() {
-    dispatch(setStage({ step: "form" }));
+    dispatch(setStage({ step: "initial" }));
     closeModal();
-  }
-
-  function showReceiptForm() {
-    dispatch(setStage({ step: "receipt", chainId, txHash }));
   }
 
   function redirectToSuccessUrl(url: string) {
     return function () {
       navigate(url);
-      dispatch(setStage({ step: "form" }));
+      dispatch(setStage({ step: "initial" }));
       closeModal();
     };
   }
@@ -62,10 +49,6 @@ export default function Success(props: SuccessStage) {
 
       <div className="flex justify-center gap-4">
         {isAcknowledgeButtonShown && <Button onClick={acknowledge}>ok</Button>}
-        {isReceiptEnabled && (
-          <Button onClick={showReceiptForm}>get receipt</Button>
-        )}
-
         {isShareEnabled && (
           <Button onClick={shareDonation} _bg="bg-angel-orange">
             share

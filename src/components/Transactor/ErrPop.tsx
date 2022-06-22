@@ -12,7 +12,7 @@ export default function ErrPop(props: ErrorStage) {
   const { message, chainId, txHash } = props;
 
   function acknowledge() {
-    dispatch(setStage({ step: "form" }));
+    dispatch(setStage({ step: "initial" }));
     closeModal();
   }
 

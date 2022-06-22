@@ -1,7 +1,5 @@
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useEstimator from "./useEstimator";
@@ -9,7 +7,6 @@ import useEstimator from "./useEstimator";
 export default function useVote() {
   const dispatch = useSetter();
   const { tx, wallet } = useEstimator();
-  const { showModal } = useModalContext();
   function vote() {
     dispatch(
       sendTerraTx({
@@ -24,7 +21,6 @@ export default function useVote() {
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return vote;

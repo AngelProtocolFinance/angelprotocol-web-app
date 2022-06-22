@@ -34,8 +34,8 @@ export interface Transaction {
 }
 
 /** apes/donation */
-export type ReceiptPayload = {
-  transactionId: string; // tx hash
+
+export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"
   streetAddress: string;
@@ -47,38 +47,34 @@ export type ReceiptPayload = {
   consent_marketing: boolean;
 };
 
-type CryptoTxDetails = {
-  walletAddress: string; //user wallet address, undefined for
-  fiatRamp?: never;
-  paymentMethod?: never;
+export type ReceiptPayload = KYCData & {
+  transactionId: string; // tx hash
+};
 
+type TxBase = {
   transactionId: string;
   transactionDate: string;
   chainId: string;
   amount: number;
   splitLiq: string; //"50"
-  denomination: string; //currency_text "UST", "LUNA"
+  denomination: string;
 };
 
-type FiatTxDetails = {
+type CryptoTx = TxBase & {
+  walletAddress: string; //user wallet address, undefined for
+  fiatRamp?: never;
+  paymentMethod?: never;
+};
+
+type FiatTx = TxBase & {
   walletAddress?: never;
   fiatRamp: string;
   //payment methods
   //https://www.notion.so/6cbdfa08522e444fadd732d73a7e15ad?v=68fdb3f0310d42e0b7cb28684449bb81
   paymentMethod: string;
-
-  transactionId: string;
-  transactionDate: string;
-  chainId: string;
-  amount: number;
-  splitLiq: string; //"50"
-  denomination: string; //currency_text "UST", "LUNA"
 };
 
-type TxDataPermissions = {
-  consent_tax?: boolean;
-  consent_marketing?: boolean;
-};
+type TxDetails = FiatTx | CryptoTx;
 
 export type Receiver =
   | {
@@ -87,12 +83,9 @@ export type Receiver =
     }
   | { fundId: number | undefined; charityId?: never };
 
-export type TxLogPayload = Receiver &
-  (CryptoTxDetails | FiatTxDetails) &
-  TxDataPermissions;
+export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
 /** apes/token-list */
-
 type TokenBase = {
   symbol: string; //LUNA
   logo: string;

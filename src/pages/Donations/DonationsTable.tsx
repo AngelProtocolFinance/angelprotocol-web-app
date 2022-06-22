@@ -2,10 +2,10 @@ import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
 import Icon from "components/Icon";
+import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import toCurrency from "helpers/toCurrency";
-import useDonor from "./useDonor";
 import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {
@@ -15,7 +15,7 @@ export default function DonationsTable(props: {
 }) {
   const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
     useSortTransactions(props.transactions);
-  const showDonor = useDonor();
+  const showReceiptForm = useReceipter();
 
   if (props.isLoading) {
     return <Tooltip>loading transactions..</Tooltip>;
@@ -69,9 +69,11 @@ export default function DonationsTable(props: {
             </a>
             <button
               className="font-heading text-sm text-white-grey bg-angel-blue hover:bg-bright-blue  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
-              onClick={() => showDonor(tx.tx_id)}
+              onClick={() =>
+                showReceiptForm({ chainId: tx.chain_id!, txHash: tx.tx_id! })
+              }
             >
-              Update
+              get receipt
             </button>
           </Cells>
         ))}

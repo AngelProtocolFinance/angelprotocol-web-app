@@ -10,6 +10,8 @@ const shape: SchemaShape<ReceipterValues> = {
   state: Yup.string().required("state is required"),
   zipCode: Yup.string().required("zipCode is required"),
   country: Yup.string().required("country is required"),
+  consent_marketing: Yup.boolean().oneOf([true]),
+  consent_tax: Yup.boolean().oneOf([true]),
 };
 
 export const schema = Yup.object().shape(shape);

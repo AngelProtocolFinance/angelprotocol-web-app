@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { DonateValues, FundFlow } from "./types";
+import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
 import { WithBalance } from "services/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -12,10 +12,13 @@ import DonateForm from "./DonateForm/DonateForm";
 
 const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,
+  isAgreedToTerms: Yup.boolean().oneOf([true]),
 };
 const schema = Yup.object().shape(shape);
 
-export default function Donater(props: FundFlow) {
+export default function Donater(
+  props: DonaterProps /** set by opener context */
+) {
   const { wallet, isWalletLoading } = useGetWallet();
 
   if (isWalletLoading) return <DonateFormLoader />;
@@ -27,7 +30,7 @@ export default function Donater(props: FundFlow) {
   );
 }
 
-function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
+function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -40,6 +43,7 @@ function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,
       receiver: props.receiver,
+      isKycDonorOnly: props.isKycDonorOnly,
     },
     resolver: yupResolver(schema),
   });
