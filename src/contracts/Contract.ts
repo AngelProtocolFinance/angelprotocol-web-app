@@ -1,10 +1,17 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import {
+  CosmosCoin,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  MsgExecuteContractObj,
+} from "types/server/contracts";
 import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
 import { terraChainId } from "constants/env";
 import { terraLcdUrl } from "constants/urls";
 
+const textEncoder = new TextEncoder();
 export default class Contract {
   client: LCDClient;
   walletAddr?: string;
@@ -40,6 +47,23 @@ export default class Contract {
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denoms.uluna] }
     );
+  }
+
+  createContractMsg(
+    msg: object,
+    sender: string,
+    contract: string,
+    funds?: CosmosCoin[]
+  ): MsgExecuteContractObj {
+    return {
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+      value: MsgExecuteContract.fromPartial({
+        sender,
+        contract,
+        msg: textEncoder.encode(JSON.stringify(msg)),
+        funds,
+      }),
+    };
   }
 
   createdEmbeddedWasmMsg(

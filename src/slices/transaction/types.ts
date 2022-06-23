@@ -2,6 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
+import { CosmosMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 type Tag = TagDescription<string>;
@@ -105,3 +106,5 @@ type WithTx = BaseArgs & {
 }; //pre-estimated tx
 
 export type TerraSendArgs = WithMsg | WithTx;
+
+export type SendCosmosTxArgs = BaseArgs & { msgs: CosmosMsg[] };

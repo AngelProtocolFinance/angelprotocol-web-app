@@ -28,6 +28,10 @@ export const junoLcdUrl = IS_TEST
   ? "https://lcd.uni.juno.deuslabs.fi"
   : "https://lcd-juno.itastakers.com";
 
+export const junoRpcUrl = IS_TEST
+  ? "https://rpc.uni.juno.deuslabs.fi"
+  : "https://rpc-juno.itastakers.com";
+
 export const TERRA_FINDER = "https://finder.terra.money/";
 
 export const PRIVACY_POLICY =
