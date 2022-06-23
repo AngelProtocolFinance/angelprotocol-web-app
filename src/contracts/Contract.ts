@@ -4,30 +4,22 @@ import {
   DirectSecp256k1HdWallet,
   EncodeObject,
 } from "@cosmjs/proto-signing";
-import { GasPrice } from "@cosmjs/stargate";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
-import { junoRpcUrl } from "constants/urls";
-
-const GAS_PRICE = GasPrice.fromString("0.025ujunox");
+import configureClient from "./configureClient";
 
 export default class Contract {
   client: SigningCosmWasmClient;
   walletAddr: string;
 
-  private constructor(client: SigningCosmWasmClient, walletAddr?: string) {
+  protected constructor(client: SigningCosmWasmClient, walletAddr?: string) {
     this.client = client;
     this.walletAddr = walletAddr || "";
   }
 
   static async create(wallet: DirectSecp256k1HdWallet) {
-    const client = await SigningCosmWasmClient.connectWithSigner(
-      junoRpcUrl,
-      wallet,
-      { gasPrice: GAS_PRICE }
-    );
-    const [{ address }] = await wallet.getAccounts();
+    const { client, address } = await configureClient(wallet);
     return new Contract(client, address);
   }
 
