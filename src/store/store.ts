@@ -16,14 +16,12 @@ export const store = configureStore({
     [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,
     [flipside.reducerPath]: flipside.reducer,
-    [junoApi.reducerPath]: junoApi.reducer,
     //auth: authReducer,
     //future: futureReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       aws.middleware,
-      junoApi.middleware,
       apes.middleware,
       junoApi.middleware,
     ]),
