@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
-import { Connection, ProviderId, ProviderStatuses } from "./types";
+import { Connection, Provider, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { placeHolderDisplayToken } from "./constants";
@@ -15,6 +15,7 @@ export type WalletState = {
   address: string;
   chainId: string;
   providerId: ProviderId;
+  provider?: Provider;
 };
 
 type State = {
@@ -108,7 +109,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProviderInfo) {
-      const { logo, providerId, address, chainId } = activeProviderInfo;
+      const { logo, providerId, address, chainId, provider } =
+        activeProviderInfo;
       return {
         walletIcon: logo,
         displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
@@ -119,6 +121,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         address,
         chainId,
         providerId,
+        provider,
       };
     }
   }, [activeProviderInfo, coinWithBalances]);

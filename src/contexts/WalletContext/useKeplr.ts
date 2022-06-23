@@ -8,6 +8,7 @@ import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
+
 export default function useKeplr() {
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
@@ -27,7 +28,6 @@ export default function useKeplr() {
       await dwindow.keplr.enable(chainIDs.juno_main);
       const key = await dwindow.keplr.getKey(chainIDs.juno_main);
       const address = key.bech32Address;
-
       setAddress(address);
       setChainId(chainIDs.juno_main);
       setIsLoading(false);
@@ -47,7 +47,6 @@ export default function useKeplr() {
 
   const connect = async () => {
     try {
-      const dwindow = window as Dwindow;
       if (!dwindow.keplr) {
         throw new WalletError("Keplr is not installed", 0);
       }
@@ -74,6 +73,7 @@ export default function useKeplr() {
   const providerInfo: ProviderInfo = {
     logo: providerIcons.keplr,
     providerId: "keplr",
+    provider: dwindow.keplr,
     chainId: chainId || chainIDs.juno_main,
     address: address || "",
   };

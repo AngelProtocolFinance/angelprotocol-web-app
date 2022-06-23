@@ -3,11 +3,11 @@ import { Keplr } from "@keplr-wallet/types";
 
 export interface Dwindow extends Window {
   xfi?: {
-    ethereum?: any;
+    ethereum?: InjectedProvider;
     terra?: any;
   };
-  ethereum?: any;
-  BinanceChain?: any;
+  ethereum?: InjectedProvider;
+  BinanceChain?: InjectedProvider;
   keplr?: Keplr;
 }
 
@@ -39,6 +39,7 @@ export type AccountChangeHandler = (accounts: string[]) => void;
 export type ChainChangeHandler = (chainId: string) => void;
 
 export type InjectedProvider = {
+  isMetaMask: boolean;
   chainId: string;
   request: <T>(args: RequestArguments) => Promise<T>;
   on(ev: "chainChanged", listener: ChainChangeHandler): any;
