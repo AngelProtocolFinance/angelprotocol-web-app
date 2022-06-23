@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
 import Contract from "./Contract";
@@ -7,8 +8,12 @@ export default class Account extends Contract {
   balance: ContractQueryArgs;
   profile: ContractQueryArgs;
 
-  constructor(accountAddr: string, walletAddr?: string) {
-    super(walletAddr);
+  constructor(
+    client: SigningCosmWasmClient,
+    accountAddr: string,
+    walletAddr?: string
+  ) {
+    super(client, walletAddr);
     this.accountAddr = accountAddr;
 
     this.balance = {

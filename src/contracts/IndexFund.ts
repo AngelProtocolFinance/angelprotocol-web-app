@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
@@ -14,8 +15,8 @@ export default class Indexfund extends Contract {
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(client: SigningCosmWasmClient, walletAddr?: string) {
+    super(client, walletAddr);
     this.contractAddr = contracts.index_fund;
 
     this.fundList = {

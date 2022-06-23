@@ -1,6 +1,6 @@
 import { Token } from "types/server/aws";
 
-export type ContractQueryArgs<T = object> = {
+export type ContractQueryArgs<T = Record<string, unknown>> = {
   address: string;
   msg: T;
 };

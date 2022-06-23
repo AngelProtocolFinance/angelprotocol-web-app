@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import {
@@ -26,8 +27,12 @@ export default class Admin extends Contract {
   voteList: (arg: VotesPageOptions) => CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, walletAddr?: string) {
-    super(walletAddr);
+  constructor(
+    client: SigningCosmWasmClient,
+    cws: CWContracts,
+    walletAddr?: string
+  ) {
+    super(client, walletAddr);
     //make sure to use query skips on empty addresses
     this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
     this.cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";

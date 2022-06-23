@@ -1,22 +1,30 @@
+import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Charity } from "types/server/aws";
 import Registrar from "contracts/Registrar";
+import configureClient from "helpers/configureClient";
+
+const TEST_MNEMONIC =
+  "pact fancy rough prison twenty dismiss mushroom rival page ship quantum deer rookie system cargo";
 
 describe("Registrar tests", () => {
-  test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const registrar = new Registrar(
-      "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek"
-    );
+  test("createEndowmentCreationMsg should return valid MsgExecuteContract", async () => {
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(TEST_MNEMONIC, {
+      prefix: "juno",
+    });
+    const { client, address } = await configureClient(wallet);
+
+    const registrar = new Registrar(client, address);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
-    expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
+    expect(payload.sender).toBe(address);
     expect(payload.execute_msg).toStrictEqual({
       create_endowment: {
-        beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        beneficiary: address,
         cw4_members: [],
         guardians_multisig_addr: undefined,
         maturity_height: undefined,
         maturity_time: undefined,
-        owner: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        owner: address,
         profile: {
           annual_revenue: undefined,
           average_annual_budget: undefined,

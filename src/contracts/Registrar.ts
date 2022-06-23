@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
@@ -18,8 +19,8 @@ export default class Registrar extends Contract {
 
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(client: SigningCosmWasmClient, walletAddr?: string) {
+    super(client, walletAddr);
     this.address = contracts.registrar;
 
     this.endowmentList = (queryOptions) => ({

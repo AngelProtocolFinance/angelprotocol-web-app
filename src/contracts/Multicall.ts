@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import {
   AggregatedQuery,
   ContractQueryArgs,
@@ -11,6 +12,7 @@ import Airdrop from "./Airdrop";
 import Registrar from "./Registrar";
 
 export default class Multicall {
+  client: SigningCosmWasmClient;
   walletAddr?: string;
   address: string;
   registrarContract: Registrar;
@@ -18,16 +20,17 @@ export default class Multicall {
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
 
-  constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr;
+  constructor(client: SigningCosmWasmClient, walletAddr?: string) {
     this.address = contracts.multicall;
-    this.registrarContract = new Registrar(walletAddr);
-    this.airdropContract = new Airdrop(walletAddr);
+    this.walletAddr = walletAddr;
+    this.client = client;
+    this.registrarContract = new Registrar(client, walletAddr);
+    this.airdropContract = new Airdrop(client, walletAddr);
 
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
       msg: this.constructAggregatedQuery([
-        new Account(endowmentAddr, this.walletAddr).balance,
+        new Account(this.client, endowmentAddr, this.walletAddr).balance,
         this.registrarContract.vaultsRate,
       ]),
     });

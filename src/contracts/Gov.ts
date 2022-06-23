@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
@@ -21,12 +22,12 @@ export default class Gov extends Contract {
 
   private cw20Contract: CW20;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(client: SigningCosmWasmClient, walletAddr?: string) {
+    super(client, walletAddr);
     this.govContractAddr = contracts.gov;
     this.haloContractAddr = contracts.halo_token;
 
-    this.cw20Contract = new CW20(this.haloContractAddr, walletAddr);
+    this.cw20Contract = new CW20(client, this.haloContractAddr, walletAddr);
     this.haloInfo = this.cw20Contract.info;
     this.haloBalance = this.cw20Contract.balance(this.govContractAddr);
 

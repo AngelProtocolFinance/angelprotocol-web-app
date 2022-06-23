@@ -1,26 +1,16 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import {
-  Coin,
-  DirectSecp256k1HdWallet,
-  EncodeObject,
-} from "@cosmjs/proto-signing";
+import { Coin, EncodeObject } from "@cosmjs/proto-signing";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
-import configureClient from "./configureClient";
 
 export default class Contract {
   client: SigningCosmWasmClient;
   walletAddr: string;
 
-  protected constructor(client: SigningCosmWasmClient, walletAddr?: string) {
+  constructor(client: SigningCosmWasmClient, walletAddr?: string) {
     this.client = client;
     this.walletAddr = walletAddr || "";
-  }
-
-  static async create(wallet: DirectSecp256k1HdWallet) {
-    const { client, address } = await configureClient(wallet);
-    return new Contract(client, address);
   }
 
   //for on-demand query, use RTK where possible

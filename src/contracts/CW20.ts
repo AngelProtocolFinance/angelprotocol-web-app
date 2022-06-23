@@ -1,4 +1,6 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { Coin } from "@cosmjs/proto-signing";
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
@@ -10,8 +12,12 @@ export default class CW20 extends Contract {
   balance: (address: string) => ContractQueryArgs;
   info: ContractQueryArgs;
 
-  constructor(cw20ContractAddr: string, walletAddr?: string) {
-    super(walletAddr);
+  constructor(
+    client: SigningCosmWasmClient,
+    cw20ContractAddr: string,
+    walletAddr?: string
+  ) {
+    super(client, walletAddr);
     this.cw20ContractAddr = cw20ContractAddr;
 
     this.info = {
@@ -27,7 +33,7 @@ export default class CW20 extends Contract {
     });
   }
 
-  createEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
     return {
       bank: {
         send: {
