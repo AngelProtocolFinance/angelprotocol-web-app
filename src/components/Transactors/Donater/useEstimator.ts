@@ -16,7 +16,7 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
@@ -72,7 +72,7 @@ export default function useEstimator() {
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
           const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
+          const numFee = convertFromMicro(aminoFee);
 
           if (debounced_amount + numFee >= wallet.displayCoin.balance) {
             setError("amount", {
@@ -95,7 +95,7 @@ export default function useEstimator() {
             ap_wallets.terra
           );
           const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
+          const numFee = convertFromMicro(aminoFee);
 
           if (
             numFee >=

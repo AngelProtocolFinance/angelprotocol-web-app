@@ -1,6 +1,5 @@
-import { Fee } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import Dec from "decimal.js";
 
-export default function extractFeeNum(fee: Fee) {
-  return fee.amount.get(denoms.uluna)!.div(1e6).amount.toNumber();
+export default function convertFromMicro(fee: number): number {
+  return new Dec(fee).div(1e6).toNumber();
 }

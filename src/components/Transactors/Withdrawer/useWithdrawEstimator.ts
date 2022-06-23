@@ -16,7 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 
 interface Source {
@@ -160,7 +160,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         );
 
         const fee = await adminContract.estimateFee([proposalMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeNum = convertFromMicro(fee);
 
         //get usd total of of sources
 

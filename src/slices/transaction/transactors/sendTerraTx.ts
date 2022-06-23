@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { postTerraTx } from "helpers/postTerraTx";
@@ -32,7 +32,7 @@ export const sendTerraTx = createAsyncThunk(
       } else {
         //run fee estimation for on-demand created tx
         const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const feeNum = convertFromMicro(fee);
 
         if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({

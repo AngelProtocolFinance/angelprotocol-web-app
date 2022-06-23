@@ -12,6 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
+import convertFromMicro from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -99,7 +100,7 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get("uusd")!.div(1e6).amount.toNumber();
+        const feeNum = convertFromMicro(fee);
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {

@@ -12,7 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -75,7 +75,7 @@ export default function useEstimator() {
         }
 
         const fee = await contract.estimateFee([govMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeNum = convertFromMicro(fee);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

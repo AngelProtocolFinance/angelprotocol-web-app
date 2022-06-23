@@ -11,7 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
@@ -43,7 +43,7 @@ export default function useEstimator() {
         const contract = new Admin(cwContracts, wallet.address);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeNum = convertFromMicro(fee);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees
