@@ -1,5 +1,5 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
+import { OfflineSigner } from "@cosmjs/proto-signing";
 import { GasPrice } from "@cosmjs/stargate";
 import { junoRpcUrl } from "constants/urls";
 
@@ -11,14 +11,14 @@ type ReturnType = {
   gasPrice: GasPrice;
 };
 
-export default async function configureClient(
-  wallet: DirectSecp256k1HdWallet
+export default async function configureCosmosClient(
+  signer: OfflineSigner
 ): Promise<ReturnType> {
   const client = await SigningCosmWasmClient.connectWithSigner(
     junoRpcUrl,
-    wallet,
+    signer,
     { gasPrice: GAS_PRICE }
   );
-  const [{ address }] = await wallet.getAccounts();
+  const [{ address }] = await signer.getAccounts();
   return { client, address, gasPrice: GAS_PRICE };
 }
