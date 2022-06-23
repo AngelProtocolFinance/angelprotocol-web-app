@@ -1988,7 +1988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/proto-signing@npm:0.28.9":
+"@cosmjs/proto-signing@npm:0.28.9, @cosmjs/proto-signing@npm:^0.28.9":
   version: 0.28.9
   resolution: "@cosmjs/proto-signing@npm:0.28.9"
   dependencies:
@@ -5218,6 +5218,7 @@ __metadata:
     "@babel/plugin-syntax-flow": ^7.17.12
     "@babel/plugin-transform-react-jsx": ^7.17.3
     "@cosmjs/cosmwasm-stargate": ^0.28.9
+    "@cosmjs/proto-signing": ^0.28.9
     "@cosmjs/stargate": ^0.28.9
     "@draft-js-plugins/counter": ^4.1.2
     "@draft-js-plugins/editor": ^4.1.3
@@ -7220,13 +7221,6 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
-  languageName: node
-  linkType: hard
-
-"decamelize@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "decamelize@npm:1.2.0"
-  checksum: ad8c51a7e7e0720c70ec2eeb1163b66da03e7616d7b98c9ef43cce2416395e84c1e9548dd94f5f6ffecfee9f8b94251fc57121a8b021f2ff2469b2bae247b8aa
   languageName: node
   linkType: hard
 

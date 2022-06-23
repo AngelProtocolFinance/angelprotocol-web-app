@@ -24,6 +24,10 @@ export const terraLcdUrl = IS_TEST
   ? "https://pisco-lcd.terra.dev"
   : "https://fcd.terra.dev";
 
+export const junoRpcUrl = IS_TEST
+  ? "https://rpc.uni.juno.deuslabs.fi/"
+  : "https://rpc-juno.itastakers.com/";
+
 export const TERRA_FINDER = "https://finder.terra.money/";
 
 export const PRIVACY_POLICY =
