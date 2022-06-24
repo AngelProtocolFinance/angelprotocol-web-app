@@ -1,9 +1,14 @@
-import { ProposalGroupOptions } from "pages/Admin/types";
-import { useGetProposalsState, useSetProposalsState } from "../Proposals";
+import { ProposalGroupOptions } from "slices/admin/types";
+import { useGetter, useSetter } from "store/accessors";
+import { changeSelectedGroup } from "slices/admin/proposals";
 
 export default function GroupSelector() {
-  const { activeGroup } = useGetProposalsState();
-  const { handleGroupChange } = useSetProposalsState();
+  const dispatch = useSetter();
+  const { activeGroup } = useGetter((state) => state.admin.proposals);
+
+  function handleGroupChange(ev: React.ChangeEvent<HTMLSelectElement>) {
+    dispatch(changeSelectedGroup(ev.target.value as ProposalGroupOptions));
+  }
 
   return (
     <div className="flex gap-2 items-center">

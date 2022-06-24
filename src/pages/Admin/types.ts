@@ -7,7 +7,6 @@ import {
   FundConfig,
   FundDetails,
   Member,
-  ProposalStatus,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   UpdateProfilePayload,
@@ -15,14 +14,6 @@ import {
 } from "types/server/contracts";
 
 export type AdminProposalParam = { id: string };
-
-export type ProposalGroup =
-  | "indexfund"
-  | "admin-group"
-  | "endowment"
-  | "registrar";
-export type ProposalGroupOptions = ProposalGroup | "all";
-export type ProposalStatusOptions = ProposalStatus | "all";
 
 export type ProposalDetails = {
   numYes: number;
