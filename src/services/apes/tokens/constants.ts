@@ -4,8 +4,8 @@ import ethLogo from "assets/icons/currencies/ether.png";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import ustLogo from "assets/icons/currencies/ust.svg";
-import { chainIDs } from "constants/chainIDs";
-import { terraChainId } from "constants/env";
+import { chainIDs, junoChainId } from "constants/chainIDs";
+import { terraChainId } from "constants/chainIDs";
 
 export const placeHolderToken: WithBalance = {
   type: "evm-native",
@@ -105,6 +105,22 @@ export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
     decimals: 6,
     chain_id: terraChainId,
     chain_name: "Terra",
+  },
+  ujunox: {
+    type: "terra-native",
+    symbol: "JUNOX",
+    logo: ustLogo,
+    decimals: 6,
+    chain_id: junoChainId,
+    chain_name: "Juno Test Network",
+  },
+  ujuno: {
+    type: "terra-native",
+    symbol: "JUNO",
+    logo: ustLogo,
+    decimals: 6,
+    chain_id: junoChainId,
+    chain_name: "Juno",
   },
 };
 

@@ -3,7 +3,8 @@ import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
 import { sendDonationLog } from "slices/transaction/transactors/sendDonationLog";
 import { ap_wallets } from "constants/ap_wallets";
-import { IS_TEST, terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
+import { IS_TEST } from "constants/env";
 
 const apiKey = IS_TEST
   ? process.env.REACT_APP_TRANSAK_API_KEY_STAGING

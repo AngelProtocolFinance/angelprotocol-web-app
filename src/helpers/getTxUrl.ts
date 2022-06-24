@@ -3,6 +3,10 @@ import { TERRA_FINDER } from "constants/urls";
 
 export default function getTxUrl(chainID: string, txhash: string) {
   switch (chainID) {
+    case chainIDs.juno_test:
+      return `https://testnet.mintscan.io/juno-testnet/txs/${txhash}`;
+    case chainIDs.juno_main:
+      return `https://www.mintscan.io/juno/txs/${txhash}`;
     case chainIDs.terra_classic:
       return `${TERRA_FINDER}classic/tx/${txhash}`;
     case chainIDs.terra_main:

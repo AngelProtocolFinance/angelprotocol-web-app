@@ -11,7 +11,7 @@ import logDonation from "helpers/logDonation";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { postTerraTx } from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {
@@ -72,7 +72,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            txInfo,
+            rawLogs: txInfo.raw_log,
             chainId: terraChainId,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,

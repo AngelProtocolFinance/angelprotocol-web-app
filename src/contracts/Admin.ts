@@ -113,6 +113,19 @@ export default class Admin extends Contract {
     });
   }
 
+  _createExecProposalMsg(proposal_id: number) {
+    this.checkWallet();
+    return this.createContractMsg(
+      {
+        execute: {
+          proposal_id,
+        },
+      },
+      this.walletAddr!,
+      this.cw3
+    );
+  }
+
   createProposalMsg(
     title: string,
     description: string,
@@ -129,6 +142,21 @@ export default class Admin extends Contract {
         msgs: embeddedMsgs,
       },
     });
+  }
+
+  _createProposalMsg(
+    title: string,
+    description: string,
+    embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
+    meta?: string,
+    latest?: any
+  ) {
+    this.checkWallet();
+    return this.createContractMsg(
+      { propose: { title, description, meta, msgs: embeddedMsgs } },
+      this.walletAddr!,
+      this.cw3
+    );
   }
 
   createVoteMsg(proposal_id: number, vote: Vote) {

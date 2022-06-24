@@ -1,17 +1,18 @@
-import { Coin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
+import { Coin } from "types/third-party/cosmjs";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
+import { junoDenom } from "constants/currency";
 import { IS_TEST } from "constants/env";
-import { apes_endpoint, terraLcdUrl } from "constants/urls";
+import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 import { terraNativeAssets } from "./constants";
 
-type TerraBalanceRes = { balances: Coin.Data[] };
+type TerraBalanceRes = { balances: Coin[] };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 
 const tokens_api = apes.injectEndpoints({
@@ -48,6 +49,21 @@ const tokens_api = apes.injectEndpoints({
             tokens[_t].push(token);
             return tokens;
           }, {} as CategorizedTokenList);
+
+          /** fetch balances for Juno */
+          if (providerId === "keplr") {
+            const res = await fetch(
+              junoLcdUrl +
+                `/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${junoDenom}`
+            );
+            const { balance }: { balance: Coin } = await res.json();
+            const assets = terraNativeAssets[balance.denom];
+            if (assets) {
+              return { data: [{ ...assets, balance: +balance.amount / 1e6 }] };
+            }
+
+            console.log(balance, assets, balance.denom);
+          }
 
           /**fetch balances for terra  */
           const isTerra = isTerraProvider(providerId); //query is skipped when wallet is not connected

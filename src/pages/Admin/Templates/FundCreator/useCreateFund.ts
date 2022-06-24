@@ -9,7 +9,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
@@ -79,7 +79,7 @@ export default function useCreateFund() {
     };
     //create proposal msg
     const adminContract = new Admin("apTeam", wallet?.address);
-    const proposalMsg = adminContract.createProposalMsg(
+    const proposalMsg = adminContract._createProposalMsg(
       title,
       description,
       [embeddedExecuteMsg],
@@ -87,7 +87,7 @@ export default function useCreateFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

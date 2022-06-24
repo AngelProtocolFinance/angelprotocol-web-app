@@ -2,7 +2,11 @@ import {
   MsgExecuteContractEncodeObject,
   SigningCosmWasmClient,
 } from "@cosmjs/cosmwasm-stargate";
-import { Coin as C, EncodeObject } from "@cosmjs/proto-signing";
+import {
+  Coin as C,
+  EncodeObject,
+  TxBodyEncodeObject,
+} from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
 import { Coin } from "@terra-money/terra.js";
 import { EndowmentTierNum } from "types/shared/registration";

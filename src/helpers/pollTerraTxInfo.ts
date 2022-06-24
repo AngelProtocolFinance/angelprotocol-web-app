@@ -1,6 +1,6 @@
 import { TxInfo } from "@terra-money/terra.js";
 import { TxResultFail } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import { terraLcdUrl } from "constants/urls";
 
 export async function pollTerraTxInfo(

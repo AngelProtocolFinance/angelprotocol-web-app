@@ -11,7 +11,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
@@ -63,7 +63,7 @@ export default function useConfigureRegistrar() {
     };
 
     const adminContract = new Admin("apTeam", wallet?.address);
-    const proposalMsg = adminContract.createProposalMsg(
+    const proposalMsg = adminContract._createProposalMsg(
       title,
       description,
       [configUpdateMsg],
@@ -71,7 +71,7 @@ export default function useConfigureRegistrar() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

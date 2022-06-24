@@ -7,7 +7,7 @@ import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { postTerraTx } from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
@@ -60,7 +60,7 @@ export const sendTerraTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
-            txInfo: txInfo,
+            rawLogs: txInfo.raw_log,
             chainId: terraChainId,
             successLink: args.successLink,
           });

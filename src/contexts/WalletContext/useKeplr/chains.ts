@@ -39,9 +39,9 @@ export const juno_test: ChainInfo = {
   ],
   coinType: 118,
   gasPriceStep: {
-    low: 0.0025,
-    average: 0.01,
-    high: 0.025,
+    low: 0.0425,
+    average: 0.0625,
+    high: 0.0825,
   },
   features: ["cosmwasm", "stargate", "ibc-transfer"],
 };

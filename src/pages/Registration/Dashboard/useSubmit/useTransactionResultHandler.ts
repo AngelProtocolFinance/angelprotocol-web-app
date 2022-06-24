@@ -10,6 +10,7 @@ import {
   setFormLoading,
   setStage,
 } from "slices/transaction/transactionSlice";
+import { parseRawLog } from "helpers/third-party/cosmjs";
 import { FORM_ERROR } from "../../constants";
 import useHandleError from "../../useHandleError";
 
@@ -51,9 +52,8 @@ export default function useTransactionResultHandler() {
 }
 
 function getEndowmentContract(stage: SuccessStage) {
-  return stage
-    .txInfo!.logs![0].events.find(
-      (event) => event.type === "instantiate_contract"
-    )!
+  const logs = parseRawLog(stage.rawLogs);
+  return logs![0].events
+    .find((event) => event.type === "instantiate_contract")!
     .attributes.find((attr) => attr.key === "contract_address")!.value;
 }

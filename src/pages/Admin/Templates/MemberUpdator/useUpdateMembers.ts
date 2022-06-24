@@ -11,9 +11,7 @@ import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import CosmosAdmin from "contracts/CosmosAdmin";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateMembers() {
@@ -54,7 +52,7 @@ export default function useUpdateMembers() {
       showModal(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new CosmosAdmin(cwContracts, wallet?.address);
+    const contract = new Admin(cwContracts, wallet?.address);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove

@@ -3,7 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(args: AdmiExecuterProps) {
@@ -18,9 +18,10 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
       return;
     }
     const contract = new Admin(cwContracts, wallet?.address);
-    const execMsg = contract.createExecProposalMsg(args.proposal_id);
+    const execMsg = contract._createExecProposalMsg(args.proposal_id);
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
+        wallet,
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,
       })

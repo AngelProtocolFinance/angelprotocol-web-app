@@ -1,17 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
+import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
+import { Tx } from "types/third-party/cosmjs";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
-import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import { postTerraTx } from "helpers/postTerraTx";
+import {
+  getCosmosClient,
+  getFee,
+  getFeeNum,
+  parseRawLog,
+} from "helpers/third-party/cosmjs";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
-type _SenderArgs = TerraSendArgs & {
+type _SenderArgs = SendCosmosTxArgs & {
   applicationId: string;
 };
 
@@ -26,18 +28,22 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       if (!args.wallet) {
         throw new WalletDisconnectError();
       }
-
       updateTx({ step: "submit", message: "Submitting transaction..." });
+      const client = await getCosmosClient();
 
-      let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet.address);
+      let tx: Tx;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(
+          args.wallet.address,
+          args.msgs,
+          undefined
+        );
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({
@@ -49,66 +55,51 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await postTerraTx(tx);
+      const response = await client.signAndBroadcast(
+        args.wallet.address,
+        tx.msgs,
+        tx.fee
+      );
 
-      updateTx({
-        step: "broadcast",
-        message: "Waiting for transaction result",
-        txHash: response.result.txhash,
-        chainId: terraChainId,
-      });
+      if (!response.code) {
+        updateTx({
+          step: "success",
+          message: args.successMessage || "Transaction succesful!",
+          txHash: response.transactionHash,
+          rawLogs: response.rawLog,
+          chainId: junoChainId,
+          successLink: args.successLink,
+        });
 
-      if (response.success) {
-        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
-        const txInfo = await getTxInfo;
+        const logs = parseRawLog(response.rawLog);
+        const proposal_id = logs[0]?.events
+          .find((event) => {
+            return event.type === "wasm";
+          })
+          ?.attributes.find((attribute) => {
+            return attribute.key === "proposal_id";
+          })?.value as string;
 
-        if (!txInfo.code) {
-          updateTx({
-            step: "success",
-            message: args.successMessage || "Transaction successful!",
-            txHash: txInfo.txhash,
-            txInfo,
-            chainId: terraChainId,
-            successLink: args.successLink,
-          });
+        await logApplicationReview({
+          poll_id: proposal_id,
+          chain_id: args.wallet.chainId,
+          PK: args.applicationId,
+        });
 
-          const logs = txInfo.logs as unknown as TxLog[];
-
-          const proposal_id = logs[0]?.events
-            .find((event) => {
-              return event.type === "wasm";
-            })
-            ?.attributes.find((attribute) => {
-              return attribute.key === "proposal_id";
-            })?.value as string;
-
-          await logApplicationReview({
-            poll_id: proposal_id,
-            chain_id: args.wallet.chainId,
-            PK: args.applicationId,
-          });
-
-          //invalidate cache entries
-          for (const tagPayload of args.tagPayloads || []) {
-            dispatch(tagPayload);
-          }
-        } else {
-          updateTx({
-            step: "error",
-            message: "Transaction failed",
-            txHash: txInfo.txhash,
-            chainId: terraChainId,
-          });
+        //invalidate cache entries
+        for (const tagPayload of args.tagPayloads || []) {
+          dispatch(tagPayload);
         }
       } else {
         updateTx({
           step: "error",
           message: "Transaction failed",
-          txHash: response.result.txhash,
-          chainId: terraChainId,
+          txHash: response.transactionHash,
+          chainId: junoChainId,
         });
       }
     } catch (err) {
+      console.log(err);
       handleTerraError(err, updateTx);
     }
   }

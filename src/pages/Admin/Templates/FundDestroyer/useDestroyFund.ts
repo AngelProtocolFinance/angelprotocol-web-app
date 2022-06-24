@@ -7,7 +7,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
@@ -39,7 +39,7 @@ export default function useDestroyFund() {
     };
 
     const adminContract = new Admin("apTeam", wallet?.address);
-    const proposalMsg = adminContract.createProposalMsg(
+    const proposalMsg = adminContract._createProposalMsg(
       data.title,
       data.description,
       [embeddedRemoveFundMsg],
@@ -47,7 +47,7 @@ export default function useDestroyFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

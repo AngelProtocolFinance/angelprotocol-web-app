@@ -1,3 +1,4 @@
+import { toUtf8 } from "@cosmjs/encoding";
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
 import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import {
@@ -7,11 +8,10 @@ import {
   MsgExecuteContractObj,
 } from "types/server/contracts";
 import { WalletDisconnectError } from "errors/errors";
+import { terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { terraChainId } from "constants/env";
 import { terraLcdUrl } from "constants/urls";
 
-const textEncoder = new TextEncoder();
 export default class Contract {
   client: LCDClient;
   walletAddr?: string;
@@ -60,7 +60,7 @@ export default class Contract {
       value: MsgExecuteContract.fromPartial({
         sender,
         contract,
-        msg: textEncoder.encode(JSON.stringify(msg)),
+        msg: toUtf8(JSON.stringify(msg)),
         funds,
       }),
     };
