@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfigValues } from "pages/Admin/types";
 import { FundConfig, IndexFundConfig } from "types/server/contracts";
@@ -24,7 +24,7 @@ function FundConfigContext(props: IndexFundConfig) {
     fund_rotation: props.fund_rotation,
     funding_goal:
       props.funding_goal &&
-      new Dec(props.funding_goal).div(1e6).toInt().toString(),
+      new Decimal(props.funding_goal).div(1e6).toInt().toString(),
   };
   const methods = useForm<FundConfigValues>({
     resolver: yupResolver(fundConfigSchema),

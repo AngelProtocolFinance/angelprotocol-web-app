@@ -1,5 +1,5 @@
 import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
 import Contract from "./Contract";
@@ -32,10 +32,10 @@ export default class Account extends Contract {
 
   async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
     this.checkWallet();
-    const pctLiquid = new Dec(splitToLiquid).div(100);
-    const pctLocked = new Dec(1).sub(pctLiquid);
+    const pctLiquid = new Decimal(splitToLiquid).div(100);
+    const pctLocked = new Decimal(1).sub(pctLiquid);
 
-    const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
+    const micro_UST_Amount = new Decimal(UST_amount).mul(1e6).toNumber();
     return new MsgExecuteContract(
       this.walletAddr!,
       this.accountAddr,

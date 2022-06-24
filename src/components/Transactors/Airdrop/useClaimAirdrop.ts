@@ -1,4 +1,4 @@
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "types/server/aws";
 import { govTags, multicallTags, terraTags } from "services/terra/tags";
@@ -15,8 +15,9 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
-        new Dec(0)
+        (result, airdrop) =>
+          new Decimal(airdrop.haloTokens).div(1e6).add(result),
+        new Decimal(0)
       ),
     [airdrops]
   );

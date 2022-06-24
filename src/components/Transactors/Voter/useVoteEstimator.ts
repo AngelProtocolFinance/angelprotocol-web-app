@@ -1,4 +1,4 @@
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions, Decimal } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
@@ -69,8 +69,8 @@ export default function useVoteEstimator() {
         }
 
         //check if voter has enough staked and not yet used to vote for other polls
-        const staked_amount = new Dec(govStaker.balance);
-        const vote_amount = new Dec(debounced_amount).mul(1e6);
+        const staked_amount = new Decimal(govStaker.balance);
+        const vote_amount = new Decimal(debounced_amount).mul(1e6);
 
         if (staked_amount.lt(vote_amount)) {
           setError("amount", { message: "not enough staked" });

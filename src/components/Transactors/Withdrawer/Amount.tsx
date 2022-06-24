@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { VaultField } from "types/shared/withdraw";
@@ -12,9 +12,9 @@ export default function Amount(props: VaultField) {
     formState: { errors },
   } = useFormContext<WithdrawValues>();
 
-  const ustBalance = new Dec(props.ustBalance).div(1e6);
+  const ustBalance = new Decimal(props.ustBalance).div(1e6);
   function setMax() {
-    setValue(props.fieldId, ustBalance.toFixed(3, Dec.ROUND_DOWN), {
+    setValue(props.fieldId, ustBalance.toFixed(3, Decimal.ROUND_DOWN), {
       shouldDirty: true,
       shouldValidate: true,
     });

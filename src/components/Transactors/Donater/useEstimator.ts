@@ -1,7 +1,7 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { Coin, CreateTxOptions, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -66,7 +66,7 @@ export default function useEstimator() {
         if (selectedToken.type === "terra-native") {
           const contract = new Contract(wallet.address);
           const receiver = ap_wallets.terra;
-          const amount = new Dec(debounced_amount).mul(1e6);
+          const amount = new Decimal(debounced_amount).mul(1e6);
 
           const msg = new MsgSend(wallet.address, receiver, [
             new Coin(denoms.uluna, amount.toNumber()),

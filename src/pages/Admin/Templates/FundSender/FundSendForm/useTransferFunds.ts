@@ -1,4 +1,4 @@
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { FundSendMeta } from "pages/Admin/types";
@@ -53,7 +53,7 @@ export default function useTransferFunds() {
       embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
         [
           {
-            amount: new Dec(data.amount).mul(1e6).toInt().toString(),
+            amount: new Decimal(data.amount).mul(1e6).toInt().toString(),
             denom: "uusd",
           },
         ],

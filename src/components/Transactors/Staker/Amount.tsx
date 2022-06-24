@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
 import Balance from "./Balance";
@@ -17,7 +17,7 @@ export default function Amount() {
   const onMaxClick = () => {
     setValue(
       "amount",
-      balance.sub(locked).div(1e6).toFixed(3, Dec.ROUND_DOWN),
+      balance.sub(locked).div(1e6).toFixed(3, Decimal.ROUND_DOWN),
       { shouldValidate: true, shouldDirty: true }
     );
   };

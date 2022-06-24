@@ -1,5 +1,5 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import Dec from "decimal.js";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
@@ -77,11 +77,11 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         const fieldInputs: AmountInfo[] = [
           {
             fieldId: "anchor1_amount",
-            amount: new Dec(debAnchor1Amount || "0"),
+            amount: new Decimal(debAnchor1Amount || "0"),
           },
           {
             fieldId: "anchor2_amount",
-            amount: new Dec(debAnchor2Amount || "0"),
+            amount: new Decimal(debAnchor2Amount || "0"),
           },
         ];
 
@@ -101,7 +101,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //construct exec payload along with proposal sources preview
         const sources: Source[] = [];
         const sourcesPreview: SourcePreview[] = [];
-        const usdValues: Dec[] = [];
+        const usdValues: Decimal[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
           const { limit, addr, rate } = resources.vaultLimits[fieldId];
@@ -142,7 +142,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         });
 
         const usdTotal = usdValues
-          .reduce((result, val) => result.add(val), new Dec(0))
+          .reduce((result, val) => result.add(val), new Decimal(0))
           .toNumber();
 
         //create proposal meta for tx preview
