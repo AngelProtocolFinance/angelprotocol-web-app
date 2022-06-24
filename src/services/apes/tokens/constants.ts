@@ -1,9 +1,9 @@
 import { WithBalance } from "services/types";
 import { EVMNative, TerraNative, Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
+import junoLogo from "assets/icons/currencies/juno.webp";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
-import ustLogo from "assets/icons/currencies/ust.svg";
 import { chainIDs, junoChainId } from "constants/chainIDs";
 import { terraChainId } from "constants/chainIDs";
 
@@ -89,7 +89,7 @@ export const lunaToken: TerraNative = {
   chain_name: "Terra Pisco Testnet",
 };
 
-export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
+export const cosmosNativeAssets: { [min_denom: string]: Token | undefined } = {
   uluna: {
     type: "terra-native",
     symbol: "LUNA",
@@ -98,26 +98,18 @@ export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
     chain_id: terraChainId,
     chain_name: "Terra",
   },
-  uusd: {
-    type: "terra-native",
-    symbol: "UST",
-    logo: ustLogo,
-    decimals: 6,
-    chain_id: terraChainId,
-    chain_name: "Terra",
-  },
   ujunox: {
-    type: "terra-native",
+    type: "cosmos-native",
     symbol: "JUNOX",
-    logo: ustLogo,
+    logo: junoLogo,
     decimals: 6,
     chain_id: junoChainId,
     chain_name: "Juno Test Network",
   },
   ujuno: {
-    type: "terra-native",
+    type: "cosmos-native",
     symbol: "JUNO",
-    logo: ustLogo,
+    logo: junoLogo,
     decimals: 6,
     chain_id: junoChainId,
     chain_name: "Juno",

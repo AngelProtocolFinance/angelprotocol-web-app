@@ -28,12 +28,7 @@ export default function CharityHeader(props: Profile) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button
-          disabled={true} /**disabled until v2 */
-          onClick={showDonateSelection}
-        >
-          DONATE NOW
-        </Button>
+        <Button onClick={showDonateSelection}>DONATE NOW</Button>
 
         <CharityLinks />
       </div>

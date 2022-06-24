@@ -93,9 +93,7 @@ type TokenBase = {
   chain_id: string;
 };
 
-export type TerraNative = TokenBase & {
-  type: "terra-native"; //uluna
-  //additional info for adding chain in wallet
+type CosmosBase = {
   chain_name: string; //Terra testnet
   rpc_url?: never;
   block_explorer_url?: never; //https://testnet.snowtrace.io
@@ -104,6 +102,17 @@ export type TerraNative = TokenBase & {
   contract_addr?: never;
   native_symbol?: never;
 };
+
+export type CosmosNative = TokenBase &
+  CosmosBase & {
+    type: "cosmos-native"; //uluna
+    //additional info for adding chain in wallet
+  };
+
+export type TerraNative = TokenBase &
+  CosmosBase & {
+    type: "terra-native"; //uluna
+  };
 
 export type ALT20 = TokenBase & {
   type: "cw20" | "erc20";
@@ -135,7 +144,7 @@ export type EVMNative = TokenBase & {
   native_symbol?: never;
 };
 
-export type Token = EVMNative | TerraNative | ALT20;
+export type Token = EVMNative | CosmosNative | TerraNative | ALT20;
 
 /** /leaderboards */
 export interface Endowment {

@@ -5,6 +5,7 @@ import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
+import { sendCosmosDonation } from "slices/transaction/transactors/sendCosmosDonation";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import useEstimator from "../useEstimator";
@@ -23,7 +24,7 @@ export default function useDonate() {
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const dispatch = useSetter();
-  const { evmTx, terraTx } = useEstimator();
+  const { evmTx, terraTx, cosmosTx } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
 
@@ -33,6 +34,11 @@ export default function useDonate() {
     //   return;
     // }
     switch (token.type) {
+      case "cosmos-native":
+        dispatch(
+          sendCosmosDonation({ wallet, tx: cosmosTx!, donateValues: data })
+        );
+        break;
       case "evm-native":
       case "erc20":
         dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));

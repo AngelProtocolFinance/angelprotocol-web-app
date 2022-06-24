@@ -5,14 +5,14 @@ import { ALT20, EVMNative, Token } from "types/server/aws";
 import { Coin } from "types/third-party/cosmjs";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
-import { junoDenom } from "constants/currency";
+import { denoms, junoDenom } from "constants/currency";
 import { IS_TEST } from "constants/env";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-import { terraNativeAssets } from "./constants";
+import { cosmosNativeAssets } from "./constants";
 
-type TerraBalanceRes = { balances: Coin[] };
+type BalanceRes = { balance: Coin };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 
 const tokens_api = apes.injectEndpoints({
@@ -56,39 +56,25 @@ const tokens_api = apes.injectEndpoints({
               junoLcdUrl +
                 `/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${junoDenom}`
             );
-            const { balance }: { balance: Coin } = await res.json();
-            const assets = terraNativeAssets[balance.denom];
-            if (assets) {
-              return { data: [{ ...assets, balance: +balance.amount / 1e6 }] };
-            }
-
-            console.log(balance, assets, balance.denom);
+            const { balance }: BalanceRes = await res.json();
+            const tokenAsset = cosmosNativeAssets[balance.denom];
+            return {
+              data: [{ ...tokenAsset!, balance: +balance.amount / 1e6 }],
+            };
           }
 
           /**fetch balances for terra  */
           const isTerra = isTerraProvider(providerId); //query is skipped when wallet is not connected
           if (isTerra) {
-            //fetch native terra coins
             const res = await fetch(
-              terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+              terraLcdUrl +
+                `/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${denoms.uluna}`
             );
-
-            const jsonRes: TerraBalanceRes = await res.json();
-            const terraTokens = jsonRes.balances.reduce((_coins, _coin) => {
-              const coinAsset = terraNativeAssets[_coin.denom];
-              //don't display coins with no assets
-              if (coinAsset) {
-                _coins.push({
-                  ...coinAsset,
-                  balance: +utils.formatUnits(_coin.amount, coinAsset.decimals),
-                });
-              }
-              return _coins;
-            }, [] as WithBalance<Token>[]);
-
-            coins.push(...terraTokens);
-            //if terra wallet is not xdefi return only terra balances
-            return { data: coins };
+            const { balance }: BalanceRes = await res.json();
+            const tokenAsset = cosmosNativeAssets[balance.denom];
+            return {
+              data: [{ ...tokenAsset!, balance: +balance.amount / 1e6 }],
+            };
           }
 
           /**fetch balances for ethereum */

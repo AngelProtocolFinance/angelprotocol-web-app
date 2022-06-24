@@ -1,6 +1,7 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
+import { junoDenom } from "constants/currency";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
@@ -45,6 +46,25 @@ export default class Account extends Contract {
         },
       },
       [new Coin("uusd", micro_UST_Amount)]
+    );
+  }
+
+  async _createDepositMsg(amount: number | string, splitToLiquid: number) {
+    this.checkWallet();
+    const pctLiquid = new Dec(splitToLiquid).div(100);
+    const pctLocked = new Dec(1).sub(pctLiquid);
+    const uamount = new Dec(amount).mul(1e6).toInt().toString();
+
+    return this.createContractMsg(
+      {
+        deposit: {
+          locked_percentage: pctLocked.toFixed(2),
+          liquid_percentage: pctLiquid.toFixed(2),
+        },
+      },
+      this.walletAddr!,
+      this.accountAddr,
+      [{ amount: uamount, denom: junoDenom }]
     );
   }
 

@@ -5,6 +5,11 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "./types";
+import {
+  EncodeObject,
+  SigningCosmWasmClient,
+  Tx,
+} from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -12,19 +17,25 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
+import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
+import Indexfund from "contracts/IndexFund";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeNum from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
+
+let client: SigningCosmWasmClient;
 
 export default function useEstimator() {
   const dispatch = useSetter();
   const {
     watch,
     setError,
+    getValues,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const { wallet } = useGetWallet();
@@ -35,6 +46,7 @@ export default function useEstimator() {
 
   const [evmTx, setEVMtx] = useState<TransactionRequest>();
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
+  const [cosmosTx, setCosmosTx] = useState<Tx>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -60,6 +72,41 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
+
+        /** keplr transaction */
+        if (selectedToken.type === "cosmos-native") {
+          if (!client) {
+            client = await getCosmosClient();
+          }
+          const receiver = getValues("receiver");
+          let msg: EncodeObject;
+          if (typeof receiver === "undefined" || typeof receiver === "number") {
+            const index_fund = new Indexfund(wallet.address, receiver);
+            msg = await index_fund._createDepositMsg(
+              debounced_amount,
+              debounced_split
+            );
+          } else {
+            const account = new Account(receiver, wallet.address);
+            msg = await account._createDepositMsg(
+              debounced_amount,
+              debounced_split
+            );
+          }
+
+          const gas = await client.simulate(wallet.address, [msg], undefined);
+          const fee = getFee(gas);
+          const numFee = getFeeNum(fee);
+
+          if (debounced_amount + numFee >= wallet.displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
+          dispatch(setFee(numFee));
+          setCosmosTx({ msgs: [msg], fee });
+        }
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
@@ -169,5 +216,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, selectedToken, wallet]);
 
-  return { evmTx, terraTx };
+  return { evmTx, terraTx, cosmosTx };
 }

@@ -7,6 +7,7 @@ import {
   IndexFundOwnerPayload,
 } from "types/server/contracts";
 import { contracts } from "constants/contracts";
+import { junoDenom } from "constants/currency";
 import Contract from "./Contract";
 
 export default class Indexfund extends Contract {
@@ -109,6 +110,22 @@ export default class Indexfund extends Contract {
         },
       },
       [new Coin("uusd", micro_UST_Amount)]
+    );
+  }
+
+  async _createDepositMsg(amount: number | string, splitToLiquid?: number) {
+    this.checkWallet(); //throws error when no wallet
+    const uamount = new Dec(amount).mul(1e6).toInt().toString();
+    return this.createContractMsg(
+      {
+        deposit: {
+          fund_id: this.fund_id,
+          split: `${splitToLiquid}`,
+        },
+      },
+      this.walletAddr!,
+      this.contractAddr,
+      [{ amount: uamount, denom: junoDenom }]
     );
   }
 }
