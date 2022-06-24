@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import Icon from "components/Icon";
@@ -11,8 +11,10 @@ export default function Claims() {
     () =>
       staker.claims
         ?.filter((claim) => +claim.release_at.at_time <= +Date.now() * 1e6)
-        .reduce((prev, curr) => prev.add(new Dec(curr.amount)), new Dec(0)) ||
-      new Dec(0),
+        .reduce(
+          (prev, curr) => prev.add(new Decimal(curr.amount)),
+          new Decimal(0)
+        ) || new Decimal(0),
     [staker]
   );
 
@@ -53,7 +55,7 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Dec(props.amount).div(1e6).toNumber();
+  const amount = new Decimal(props.amount).div(1e6).toNumber();
   return (
     <li className="flex justify-between">
       <p

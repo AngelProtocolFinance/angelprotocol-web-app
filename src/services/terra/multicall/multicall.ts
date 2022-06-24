@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { MultiContractQueryArgs } from "services/types";
 import { Airdrop, Airdrops } from "types/server/aws";
 import {
@@ -100,13 +100,13 @@ export const multicall_api = terra.injectEndpoints({
           let ustBalance = 0;
 
           if (vaultHolding) {
-            ustBalance = new Dec(vaultHolding.amount)
+            ustBalance = new Decimal(vaultHolding.amount)
               .mul(vault.fx_rate)
               .toNumber();
             vaultLimits[vaultInfo.fieldId] = {
               limit: ustBalance,
               addr: vaultHolding.address,
-              rate: new Dec(vault.fx_rate).toNumber(),
+              rate: new Decimal(vault.fx_rate).toNumber(),
             };
           }
 
@@ -158,8 +158,10 @@ function getTotalHolding(holdings: Holding[], ratesMap: RateLookUp) {
   return holdings
     .reduce(
       (result, curr) =>
-        new Dec(result).add(new Dec(curr.amount).mul(ratesMap[curr.address])),
-      new Dec(0)
+        new Decimal(result).add(
+          new Decimal(curr.amount).mul(ratesMap[curr.address])
+        ),
+      new Decimal(0)
     )
     .div(1e6);
 }

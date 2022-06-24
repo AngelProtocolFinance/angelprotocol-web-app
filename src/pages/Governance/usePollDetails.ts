@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { Vote } from "types/server/contracts";
 import { PollStatus } from "types/server/contracts";
@@ -41,8 +41,8 @@ export default function useDetails(poll_id: number): ProcessedPollData {
 
   useEffect(() => {
     //is voting period expired?
-    const curr_block = new Dec(block_height);
-    const end_block = new Dec(poll.end_height);
+    const curr_block = new Decimal(block_height);
+    const end_block = new Decimal(poll.end_height);
     const remaining_blocks = end_block.minus(curr_block);
     const is_expired = remaining_blocks.lt(0);
     //get user vote
@@ -56,14 +56,14 @@ export default function useDetails(poll_id: number): ProcessedPollData {
       vote = vote_info.vote;
     }
 
-    const _gov_staked = new Dec(poll.staked_amount);
+    const _gov_staked = new Decimal(poll.staked_amount);
 
-    const num_yes = new Dec(poll.yes_votes);
-    const num_no = new Dec(poll.no_votes);
+    const num_yes = new Decimal(poll.yes_votes);
+    const num_no = new Decimal(poll.no_votes);
 
     const is_votes_zero = num_yes.eq(0) && num_no.eq(0);
 
-    const quorum_pct = new Dec(gov_config?.quorum).mul(100).toNumber();
+    const quorum_pct = new Decimal(gov_config?.quorum).mul(100).toNumber();
 
     const voted_pct = _gov_staked.lte(0)
       ? 0
@@ -80,7 +80,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
     const yes_halo = num_yes.div(1e6).toNumber();
     const no_halo = num_no.div(1e6).toNumber();
 
-    const deposit_amount = new Dec(poll.deposit_amount).div(1e6).toNumber();
+    const deposit_amount = new Decimal(poll.deposit_amount).div(1e6).toNumber();
 
     const processed = {
       id: poll.id,

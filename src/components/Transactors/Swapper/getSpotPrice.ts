@@ -1,12 +1,12 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { Simulation } from "types/server/contracts";
 
 export function getSpotPrice(simul: Simulation, offer = 1) {
   if (simul.is_placeholder) {
-    return new Dec(0);
+    return new Decimal(0);
   }
-  const return_amount = new Dec(simul.return_amount);
-  const offer_amount = new Dec(offer).mul(1e6);
+  const return_amount = new Decimal(simul.return_amount);
+  const offer_amount = new Decimal(offer).mul(1e6);
 
   return offer_amount.div(return_amount);
 }

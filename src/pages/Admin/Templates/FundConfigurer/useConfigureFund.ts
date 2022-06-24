@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
 import { FundConfig } from "types/server/contracts";
@@ -55,7 +55,7 @@ export default function useConfigureFund() {
         ...data,
         funding_goal:
           data.funding_goal &&
-          new Dec(data.funding_goal).mul(1e6).toInt().toString(),
+          new Decimal(data.funding_goal).mul(1e6).divToInt(1).toString(),
       })
     );
 
