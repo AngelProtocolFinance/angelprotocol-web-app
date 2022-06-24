@@ -1,4 +1,5 @@
-import { CreateTxOptions, Decimal } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
