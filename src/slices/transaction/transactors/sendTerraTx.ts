@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import Contract from "contracts/Contract";
-import convertFromMicro from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/convertFromMicro";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { postTerraTx } from "helpers/postTerraTx";

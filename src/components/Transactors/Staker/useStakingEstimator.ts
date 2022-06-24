@@ -12,7 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import convertFromMicro from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/convertFromMicro";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";

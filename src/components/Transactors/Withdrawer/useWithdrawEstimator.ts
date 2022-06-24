@@ -16,7 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import convertFromMicro from "helpers/extractFeeNum";
+import convertFromMicro from "helpers/convertFromMicro";
 import processEstimateError from "helpers/processEstimateError";
 
 interface Source {
