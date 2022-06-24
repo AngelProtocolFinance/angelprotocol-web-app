@@ -1,12 +1,11 @@
-import { toUtf8 } from "@cosmjs/encoding";
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import {
-  CosmosCoin,
-  EmbeddedBankMsg,
-  EmbeddedWasmMsg,
-  MsgExecuteContractObj,
-} from "types/server/contracts";
+  Coin as CosmosCoin,
+  MsgExecuteContract,
+  MsgExecuteContractEncodeObject,
+} from "types/third-party/cosmjs";
+import { toUtf8 } from "helpers/third-party/cosmjs";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
@@ -54,7 +53,7 @@ export default class Contract {
     sender: string,
     contract: string,
     funds?: CosmosCoin[]
-  ): MsgExecuteContractObj {
+  ): MsgExecuteContractEncodeObject {
     return {
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({

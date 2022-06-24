@@ -1,22 +1,5 @@
-import {
-  MsgExecuteContractEncodeObject,
-  SigningCosmWasmClient,
-} from "@cosmjs/cosmwasm-stargate";
-import {
-  Coin as C,
-  EncodeObject,
-  TxBodyEncodeObject,
-} from "@cosmjs/proto-signing";
-import { StdFee } from "@cosmjs/stargate";
 import { Coin } from "@terra-money/terra.js";
 import { EndowmentTierNum } from "types/shared/registration";
-
-/** payloads */
-
-export type CosmosCoin = C;
-export type CosmosMsg = EncodeObject;
-export type MsgExecuteContractObj = MsgExecuteContractEncodeObject;
-export type CosmosSimulArgs = Parameters<SigningCosmWasmClient["simulate"]>;
 
 /** _ethereum contract */
 export interface ERC20Token {

@@ -6,8 +6,11 @@ import { junoDenom } from "constants/currency";
 import { junoRpcUrl } from "constants/urls";
 
 export { parseRawLog } from "@cosmjs/stargate/build/logs";
+export { toUtf8 } from "@cosmjs/encoding";
 
-const GAS_PRICE = "0.0625"; //TODO: uni-3 and juno-1 have diff gas price
+const GAS_PRICE =
+  "0.0625"; /**TODO: uni-3 and juno-1 have diff gas prices for fee display only, 
+  actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing  */
 const GAS_ADJUSTMENT = 1.5;
 export async function getCosmosClient(): Promise<SigningCosmWasmClient> {
   const dwindow = window as Dwindow;

@@ -1,9 +1,8 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
+import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
-import { CosmosMsg } from "types/server/contracts";
 import { Tx } from "types/third-party/cosmjs";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
