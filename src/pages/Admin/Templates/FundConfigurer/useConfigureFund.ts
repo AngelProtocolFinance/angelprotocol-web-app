@@ -55,7 +55,7 @@ export default function useConfigureFund() {
         ...data,
         funding_goal:
           data.funding_goal &&
-          new Decimal(data.funding_goal).mul(1e6).toInt().toString(),
+          new Decimal(data.funding_goal).mul(1e6).divToInt(1).toString(),
       })
     );
 

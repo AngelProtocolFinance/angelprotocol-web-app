@@ -100,7 +100,7 @@ export default class Gov extends Contract {
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
-    const uhalo = new Decimal(amount).mul(1e6).toInt();
+    const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
     return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });

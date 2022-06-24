@@ -24,7 +24,7 @@ function FundConfigContext(props: IndexFundConfig) {
     fund_rotation: props.fund_rotation,
     funding_goal:
       props.funding_goal &&
-      new Decimal(props.funding_goal).div(1e6).toInt().toString(),
+      new Decimal(props.funding_goal).div(1e6).divToInt(1).toString(),
   };
   const methods = useForm<FundConfigValues>({
     resolver: yupResolver(fundConfigSchema),

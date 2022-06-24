@@ -99,7 +99,7 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get("uusd")!.div(1e6).amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {

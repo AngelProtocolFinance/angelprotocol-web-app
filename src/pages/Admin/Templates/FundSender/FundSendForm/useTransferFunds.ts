@@ -53,7 +53,7 @@ export default function useTransferFunds() {
       embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
         [
           {
-            amount: new Decimal(data.amount).mul(1e6).toInt().toString(),
+            amount: new Decimal(data.amount).mul(1e6).divToInt(1).toString(),
             denom: "uusd",
           },
         ],
