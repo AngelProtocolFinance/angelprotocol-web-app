@@ -24,7 +24,6 @@ export default class Admin extends Contract {
   proposals: (arg: PageOptions) => CQA;
   proposal: (arg: number) => CQA;
   voteList: (arg: VotesPageOptions) => CQA;
-  voter: CQA;
   cw3Config: CQA;
 
   constructor(cws: CWContracts, walletAddr?: string) {
@@ -74,15 +73,6 @@ export default class Admin extends Contract {
         },
       },
     });
-
-    this.voter = {
-      address: this.cw3,
-      msg: {
-        voter: {
-          address: this.walletAddr,
-        },
-      },
-    };
   }
 
   //execute message creators

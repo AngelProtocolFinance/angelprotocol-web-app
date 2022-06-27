@@ -30,24 +30,6 @@ export default class Account extends Contract {
     };
   }
 
-  async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
-    const pctLiquid = new Decimal(splitToLiquid).div(100);
-    const pctLocked = new Decimal(1).sub(pctLiquid);
-
-    const micro_UST_Amount = new Decimal(UST_amount).mul(1e6).toNumber();
-    return new MsgExecuteContract(
-      this.walletAddr!,
-      this.accountAddr,
-      {
-        deposit: {
-          locked_percentage: pctLocked.toFixed(2),
-          liquid_percentage: pctLiquid.toFixed(2),
-        },
-      },
-      [new Coin("uusd", micro_UST_Amount)]
-    );
-  }
-
   createEmbeddedWithdrawMsg({
     sources,
     beneficiary,

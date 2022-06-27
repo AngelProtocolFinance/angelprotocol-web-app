@@ -19,15 +19,17 @@ export default class Gov extends Contract {
   config: CQA;
   polls: CQA;
 
+  private cw20Contract: CW20;
+
   constructor(walletAddr?: string) {
     super(walletAddr);
     this.govContractAddr = contracts.gov;
     this.haloContractAddr = contracts.halo_token;
 
-    this.haloInfo = new CW20(this.haloContractAddr, walletAddr).info;
-    this.haloBalance = new CW20(this.haloContractAddr, walletAddr).balance(
-      this.govContractAddr
-    );
+    this.cw20Contract = new CW20(this.haloContractAddr, walletAddr);
+    this.haloInfo = this.cw20Contract.info;
+    this.haloBalance = this.cw20Contract.balance(this.govContractAddr);
+
     //query args
     this.staker = {
       address: this.govContractAddr,
@@ -51,8 +53,7 @@ export default class Gov extends Contract {
   }
 
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
-    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
-    return cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       stake_voting_tokens: {},
     });
   }
@@ -64,8 +65,7 @@ export default class Gov extends Contract {
     link?: string
     // msgs?: PollExecuteMsg[]
   ) {
-    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
-    return cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       create_poll: { title, description, link },
     });
   }

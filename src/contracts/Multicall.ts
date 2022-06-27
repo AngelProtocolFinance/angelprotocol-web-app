@@ -8,14 +8,12 @@ import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
 import Account from "./Account";
 import Airdrop from "./Airdrop";
-import Gov from "./Gov";
 import Registrar from "./Registrar";
 
 export default class Multicall {
   walletAddr?: string;
   address: string;
   registrarContract: Registrar;
-  govContract: Gov;
   airdropContract: Airdrop;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
@@ -24,13 +22,12 @@ export default class Multicall {
     this.walletAddr = walletAddr;
     this.address = contracts.multicall;
     this.registrarContract = new Registrar(walletAddr);
-    this.govContract = new Gov(walletAddr);
     this.airdropContract = new Airdrop(walletAddr);
 
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
       msg: this.constructAggregatedQuery([
-        this.getAccountContract(endowmentAddr).balance,
+        new Account(endowmentAddr, this.walletAddr).balance,
         this.registrarContract.vaultsRate,
       ]),
     });
@@ -54,10 +51,6 @@ export default class Multicall {
         })),
       },
     };
-  }
-
-  getAccountContract(endowmentAddr: string) {
-    return new Account(endowmentAddr, this.walletAddr);
   }
 }
 
