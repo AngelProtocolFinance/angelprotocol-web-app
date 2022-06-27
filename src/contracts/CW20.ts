@@ -49,9 +49,9 @@ export default class CW20 extends Contract {
     amount: number | string,
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
-  ): MsgExecuteContract {
+  ) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw20ContractAddr, {
+    return this.createContractMsg(this.walletAddr!, this.cw20ContractAddr, {
       send: {
         //convert to uamount
         amount: new Dec(amount).mul(1e6).toInt().toString(),

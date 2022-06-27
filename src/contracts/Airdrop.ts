@@ -1,4 +1,4 @@
-import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Airdrops } from "types/server/aws";
 import { contracts } from "constants/contracts";
@@ -20,11 +20,10 @@ export default class Airdrop extends Contract {
 
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
     this.checkWallet();
-    const claimMsgs = airdrops.map(
-      ({ stage, haloTokens, proof }) =>
-        new MsgExecuteContract(this.walletAddr!, this.airdropContractAddr, {
-          claim: { stage, amount: haloTokens, proof },
-        })
+    const claimMsgs = airdrops.map(({ stage, haloTokens, proof }) =>
+      this.createContractMsg(this.walletAddr!, this.airdropContractAddr, {
+        claim: { stage, amount: haloTokens, proof },
+      })
     );
     if (is_stake) {
       const totalClaimable = airdrops.reduce(

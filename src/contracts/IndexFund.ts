@@ -1,4 +1,4 @@
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
@@ -97,34 +97,18 @@ export default class Indexfund extends Contract {
     });
   }
 
-  async createDepositMsg(UST_amount: number | string, splitToLiquid?: number) {
-    this.checkWallet(); //throws error when no wallet
-    const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
-    return new MsgExecuteContract(
-      this.walletAddr!,
-      this.contractAddr,
-      {
-        deposit: {
-          fund_id: this.fund_id,
-          split: `${splitToLiquid}`,
-        },
-      },
-      [new Coin("uusd", micro_UST_Amount)]
-    );
-  }
-
-  async _createDepositMsg(amount: number | string, splitToLiquid?: number) {
+  async createDepositMsg(amount: number | string, splitToLiquid?: number) {
     this.checkWallet(); //throws error when no wallet
     const uamount = new Dec(amount).mul(1e6).toInt().toString();
     return this.createContractMsg(
+      this.walletAddr!,
+      this.contractAddr,
       {
         deposit: {
           fund_id: this.fund_id,
           split: `${splitToLiquid}`,
         },
       },
-      this.walletAddr!,
-      this.contractAddr,
       [{ amount: uamount, denom: junoDenom }]
     );
   }

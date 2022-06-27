@@ -1,7 +1,7 @@
-import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
+import { SigningCosmWasmClient, StdFee } from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -10,11 +10,12 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import { denoms } from "constants/currency";
 
+let client: SigningCosmWasmClient;
 export default function useCreatePollEstimate() {
   const {
     setError,
@@ -22,7 +23,7 @@ export default function useCreatePollEstimate() {
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
   const dispatch = useSetter();
-  const [maxFee, setMaxFee] = useState<Fee>();
+  const [maxFee, setMaxFee] = useState<StdFee>();
   const { wallet } = useGetWallet();
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export default function useCreatePollEstimate() {
         }
 
         dispatch(setFormLoading(true));
+        if (!client) client = await getCosmosClient();
         const contract = new Gov(wallet.address);
         const pollMsgs = await contract.createPollMsgs(
           amount,
@@ -56,8 +58,13 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee([pollMsgs]);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(
+          wallet.address,
+          [pollMsgs],
+          undefined
+        );
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

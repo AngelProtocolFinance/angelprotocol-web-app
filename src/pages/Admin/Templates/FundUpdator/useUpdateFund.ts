@@ -73,7 +73,7 @@ export default function useUpdateFund() {
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
-      const proposalMsg = adminContract._createProposalMsg(
+      const proposalMsg = adminContract.createProposalMsg(
         proposalTitle,
         proposalDescription,
         [embeddedExecuteMsg],

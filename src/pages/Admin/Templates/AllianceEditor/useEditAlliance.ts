@@ -78,7 +78,7 @@ export default function useEditAlliance() {
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       proposalTitle,
       proposalDescription,
       updateMsgs,

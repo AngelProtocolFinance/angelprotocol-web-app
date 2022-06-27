@@ -79,7 +79,7 @@ export default function useCreateFund() {
     };
     //create proposal msg
     const adminContract = new Admin("apTeam", wallet?.address);
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
       [embeddedExecuteMsg],

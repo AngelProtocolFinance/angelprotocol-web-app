@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import {
   CWContracts,
@@ -106,24 +105,11 @@ export default class Admin extends Contract {
 
   createExecProposalMsg(proposal_id: number) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
+    return this.createContractMsg(this.walletAddr!, this.cw3, {
       execute: {
         proposal_id,
       },
     });
-  }
-
-  _createExecProposalMsg(proposal_id: number) {
-    this.checkWallet();
-    return this.createContractMsg(
-      {
-        execute: {
-          proposal_id,
-        },
-      },
-      this.walletAddr!,
-      this.cw3
-    );
   }
 
   createProposalMsg(
@@ -134,34 +120,15 @@ export default class Admin extends Contract {
     latest?: any
   ) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
-      propose: {
-        title,
-        description,
-        meta,
-        msgs: embeddedMsgs,
-      },
+    return this.createContractMsg(this.walletAddr!, this.cw3, {
+      propose: { title, description, meta, msgs: embeddedMsgs },
     });
-  }
-
-  _createProposalMsg(
-    title: string,
-    description: string,
-    embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
-    meta?: string,
-    latest?: any
-  ) {
-    this.checkWallet();
-    return this.createContractMsg(
-      { propose: { title, description, meta, msgs: embeddedMsgs } },
-      this.walletAddr!,
-      this.cw3
-    );
   }
 
   createVoteMsg(proposal_id: number, vote: Vote) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
+
+    return this.createContractMsg(this.walletAddr!, this.cw3, {
       vote: {
         proposal_id,
         vote,

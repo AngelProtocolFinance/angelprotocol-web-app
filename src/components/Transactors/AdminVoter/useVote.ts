@@ -1,7 +1,7 @@
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import useEstimator from "./useEstimator";
 
 export default function useVote() {
@@ -9,7 +9,7 @@ export default function useVote() {
   const { tx, wallet } = useEstimator();
   function vote() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [

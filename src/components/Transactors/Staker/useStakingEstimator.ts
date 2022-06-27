@@ -1,7 +1,11 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
+import {
+  MsgExecuteContractEncodeObject,
+  SigningCosmWasmClient,
+  Tx,
+} from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 // import useTerraBalance from "hooks/useTerraBalance";
@@ -12,12 +16,13 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
+let client: SigningCosmWasmClient;
 export default function useEstimator() {
   const {
     watch,
@@ -25,7 +30,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<Tx>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
@@ -64,8 +69,8 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-
-        let govMsg: MsgExecuteContract;
+        if (!client) client = await getCosmosClient();
+        let govMsg: MsgExecuteContractEncodeObject;
         const contract = new Gov(wallet.address);
 
         if (is_stake) {
@@ -74,8 +79,9 @@ export default function useEstimator() {
           govMsg = contract.createGovUnstakeMsg(debounced_amount);
         }
 
-        const fee = await contract.estimateFee([govMsg]);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(wallet.address, [govMsg], undefined);
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

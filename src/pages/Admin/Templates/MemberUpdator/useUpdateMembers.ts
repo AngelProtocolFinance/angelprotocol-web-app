@@ -70,7 +70,7 @@ export default function useUpdateMembers() {
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 
-    const proposalMsg = contract._createProposalMsg(
+    const proposalMsg = contract.createProposalMsg(
       proposalTitle,
       proposalDescription,
       [embeddedExecuteMsg],

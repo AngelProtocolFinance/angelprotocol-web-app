@@ -1,8 +1,9 @@
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { Vote } from "types/server/contracts";
+import { SigningCosmWasmClient, Tx } from "types/third-party/cosmjs";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
@@ -13,11 +14,12 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import { denoms } from "constants/currency";
 
+let client: SigningCosmWasmClient;
 export default function useVoteEstimator() {
   const {
     watch,
@@ -25,7 +27,7 @@ export default function useVoteEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<Tx>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
 
@@ -78,6 +80,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
+        if (!client) client = await getCosmosClient();
         const contract = new Gov(wallet.address);
         const voteMsg = contract.createVoteMsg(
           poll_id,
@@ -85,8 +88,9 @@ export default function useVoteEstimator() {
           debounced_amount
         );
 
-        const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(wallet.address, [voteMsg], undefined);
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees

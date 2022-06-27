@@ -105,7 +105,7 @@ export default function useEditProfile() {
     };
 
     const adminContract = new Admin(cwContracts, wallet?.address);
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
       [profileUpdateMsg],

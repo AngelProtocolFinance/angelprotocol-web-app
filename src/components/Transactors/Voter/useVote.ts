@@ -3,7 +3,7 @@ import { VoteValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import useVoteEstimator from "./useVoteEstimator";
 
 export default function useVote() {
@@ -18,7 +18,7 @@ export default function useVote() {
 
   function vote() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [

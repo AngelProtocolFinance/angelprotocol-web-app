@@ -70,7 +70,7 @@ export default function useTransferFunds() {
         recipient: data.recipient,
       },
     };
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
       [embeddedMsg],

@@ -61,7 +61,7 @@ export default function useUpdateStatus() {
     };
 
     const adminContract = new Admin("apTeam", wallet?.address);
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
       [embeddedMsg],

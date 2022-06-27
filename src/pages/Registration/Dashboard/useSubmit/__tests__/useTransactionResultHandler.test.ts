@@ -139,21 +139,19 @@ const CHARITY: Charity = {
 
 const SUCCESS_STAGE = {
   step: "success",
-  txInfo: {
-    logs: [
-      {
-        events: [
-          {
-            type: "instantiate_contract",
-            attributes: [
-              {
-                key: "contract_address",
-                value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  rawLogs: JSON.stringify([
+    {
+      events: [
+        {
+          type: "instantiate_contract",
+          attributes: [
+            {
+              key: "contract_address",
+              value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+            },
+          ],
+        },
+      ],
+    },
+  ]),
 } as Stage;

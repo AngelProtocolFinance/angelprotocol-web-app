@@ -1,9 +1,9 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import Contract from "contracts/Contract";
 import Registrar from "contracts/Registrar";
 import { chainIDs } from "constants/chainIDs";
 import useSubmit from "../useSubmit";
@@ -34,10 +34,10 @@ jest.mock("contexts/WalletContext/WalletContext", () => ({
   useGetWallet: () => mockUseGetWallet(),
 }));
 
-const mockSendTerraTx = jest.fn();
-jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
+const mockSendCosmosTx = jest.fn();
+jest.mock("slices/transaction/transactors/sendCosmosTx", () => ({
   __esModule: true,
-  sendTerraTx: (..._: any[]) => mockSendTerraTx,
+  sendCosmosTx: (..._: any[]) => mockSendCosmosTx,
 }));
 
 const mockDispatch = jest.fn();
@@ -123,7 +123,7 @@ describe("useSubmit tests", () => {
     expect(mockShowModal).toBeCalled();
   });
 
-  it("dispatches action sending a Terra Tx", async () => {
+  it("dispatches action sending a cosmos Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
@@ -138,7 +138,7 @@ describe("useSubmit tests", () => {
       type: "transaction/setFormLoading",
       payload: true,
     });
-    expect(mockDispatch).toBeCalledWith(mockSendTerraTx);
+    expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
   });
 });
@@ -188,8 +188,11 @@ const CHARITY: Charity = {
   },
 };
 
-const MSG_EXECUTE_CONTRACT = {
-  execute_msg: {
+const contract = new Contract("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
+const MSG_EXECUTE_CONTRACT = contract.createContractMsg(
+  contract.walletAddr!,
+  "123",
+  {
     create_endowment: {
       beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
       cw4_members: [],
@@ -222,5 +225,5 @@ const MSG_EXECUTE_CONTRACT = {
       },
       withdraw_before_maturity: false,
     },
-  },
-} as MsgExecuteContract;
+  }
+);

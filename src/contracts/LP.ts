@@ -1,7 +1,8 @@
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
 import { contracts } from "constants/contracts";
+import { junoDenom } from "constants/currency";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -63,13 +64,13 @@ export default class LP extends Contract {
   }
 
   createBuyMsg(
-    ust_amount: number,
+    amount: number,
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     this.checkWallet();
-    const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
-    return new MsgExecuteContract(
+    const uamount = new Dec(amount).mul(1e6).toInt().toString();
+    return this.createContractMsg(
       this.walletAddr!,
       this.pair_address,
       {
@@ -80,14 +81,14 @@ export default class LP extends Contract {
                 denom: "uusd",
               },
             },
-            amount: uust_amount,
+            amount: uamount,
           },
           belief_price,
           max_spread,
           // to: Option<HumanAddr>
         },
       },
-      [new Coin("uusd", uust_amount)]
+      [{ amount: uamount, denom: junoDenom }]
     );
   }
 
@@ -98,7 +99,7 @@ export default class LP extends Contract {
   ) {
     this.checkWallet();
     const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
-    return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
+    return this.createContractMsg(this.walletAddr!, this.halo_address, {
       send: {
         contract: this.pair_address,
         amount: uhalo_amount,

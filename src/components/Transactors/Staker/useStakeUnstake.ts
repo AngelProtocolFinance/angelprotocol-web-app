@@ -3,7 +3,7 @@ import { HaloStakingValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import useStakingEstimator from "./useStakingEstimator";
 
 export default function useStakeUnstake() {
@@ -18,7 +18,7 @@ export default function useStakeUnstake() {
 
   function stakeOrUnstake() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [

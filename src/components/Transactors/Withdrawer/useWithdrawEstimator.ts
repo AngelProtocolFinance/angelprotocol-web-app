@@ -1,9 +1,10 @@
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
 import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
 import { AmountInfo } from "types/shared/withdraw";
+import { SigningCosmWasmClient, Tx } from "types/third-party/cosmjs";
 import { vaultMap } from "services/juno/multicall/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
@@ -15,8 +16,8 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 
 interface Source {
   locked: string; //"0"
@@ -24,6 +25,7 @@ interface Source {
   vault: string; //"terra123addr"
 }
 
+let client: SigningCosmWasmClient;
 const SEPARATOR = ":";
 export default function useWithrawEstimator(resources: WithdrawResource) {
   const {
@@ -36,7 +38,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
   const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<Tx>();
   const dispatch = useSetter();
 
   const anchor1_amount = watch("anchor1_amount") || "0";
@@ -58,6 +60,10 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
+        }
+
+        if (!client) {
+          client = await getCosmosClient();
         }
 
         //any field input after this validation, can either be valid input or "0",
@@ -154,8 +160,13 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           JSON.stringify(proposalMeta)
         );
 
-        const fee = await adminContract.estimateFee([proposalMsg]);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(
+          wallet.address,
+          [proposalMsg],
+          undefined
+        );
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         //get usd total of of sources
 

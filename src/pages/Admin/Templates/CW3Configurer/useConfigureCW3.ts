@@ -58,7 +58,7 @@ export default function useConfigureCW3() {
     };
 
     //proposal meta for preview
-    const proposalMsg = adminContract._createProposalMsg(
+    const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
       [configUpdateMsg],

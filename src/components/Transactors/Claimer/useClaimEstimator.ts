@@ -1,5 +1,5 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
+import { SigningCosmWasmClient, Tx } from "types/third-party/cosmjs";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
@@ -9,13 +9,14 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import { denoms } from "constants/currency";
 
+let client: SigningCosmWasmClient;
 export default function useClaimEstimator() {
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<Tx>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const gov_staker = useGovStaker();
@@ -43,10 +44,16 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
+        if (!client) client = await getCosmosClient();
         const contract = new Gov(wallet.address);
         const claimMsg = contract.createGovClaimMsg();
-        const fee = await contract.estimateFee([claimMsg]);
-        const feeNum = extractFeeNum(fee);
+        const gas = await client.simulate(
+          wallet.address,
+          [claimMsg],
+          undefined
+        );
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees

@@ -75,20 +75,18 @@ export default function useEstimator() {
 
         /** keplr transaction */
         if (selectedToken.type === "cosmos-native") {
-          if (!client) {
-            client = await getCosmosClient();
-          }
+          if (!client) client = await getCosmosClient();
           const receiver = getValues("receiver");
           let msg: EncodeObject;
           if (typeof receiver === "undefined" || typeof receiver === "number") {
             const index_fund = new Indexfund(wallet.address, receiver);
-            msg = await index_fund._createDepositMsg(
+            msg = await index_fund.createDepositMsg(
               debounced_amount,
               debounced_split
             );
           } else {
             const account = new Account(receiver, wallet.address);
-            msg = await account._createDepositMsg(
+            msg = await account.createDepositMsg(
               debounced_amount,
               debounced_split
             );

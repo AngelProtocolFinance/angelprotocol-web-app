@@ -1,11 +1,12 @@
-import {
-  CreateTxOptions,
-  Dec,
-  MsgExecuteContract,
-} from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
+import {
+  MsgExecuteContractEncodeObject,
+  SigningCosmWasmClient,
+  Tx,
+} from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -17,10 +18,12 @@ import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { getCosmosClient, getFee, getFeeNum } from "helpers/third-party/cosmjs";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
+let client: SigningCosmWasmClient;
 export default function useSwapEstimator() {
   const {
     watch,
@@ -28,7 +31,7 @@ export default function useSwapEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<SwapValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<Tx>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_buy = watch("is_buy");
@@ -85,7 +88,7 @@ export default function useSwapEstimator() {
           .mul(100)
           .toNumber();
 
-        let swapMsg: MsgExecuteContract;
+        let swapMsg: MsgExecuteContractEncodeObject;
         if (is_buy) {
           swapMsg = contract.createBuyMsg(
             debounced_amount,
@@ -101,8 +104,10 @@ export default function useSwapEstimator() {
           );
         }
 
-        const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
+        if (!client) client = await getCosmosClient();
+        const gas = await client.simulate(wallet.address, [swapMsg], undefined);
+        const fee = getFee(gas);
+        const feeNum = getFeeNum(fee);
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {

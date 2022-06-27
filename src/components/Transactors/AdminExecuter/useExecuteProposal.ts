@@ -18,7 +18,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
       return;
     }
     const contract = new Admin(cwContracts, wallet?.address);
-    const execMsg = contract._createExecProposalMsg(args.proposal_id);
+    const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendCosmosTx({
         wallet,

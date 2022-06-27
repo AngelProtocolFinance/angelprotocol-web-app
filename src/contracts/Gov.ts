@@ -1,4 +1,4 @@
-import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { GovState, Vote } from "types/server/contracts";
 import { contracts } from "constants/contracts";
@@ -53,7 +53,7 @@ export default class Gov extends Contract {
     return this.query<GovState>(this.govContractAddr, this.gov_state.msg);
   }
 
-  createGovStakeMsg(amount: number | string): MsgExecuteContract {
+  createGovStakeMsg(amount: number | string) {
     this.checkWallet();
     const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
     return cw20Contract.createSendMsg(amount, this.govContractAddr, {
@@ -78,21 +78,21 @@ export default class Gov extends Contract {
   createGovUnstakeMsg(amount: number) {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       withdraw_voting_tokens: { amount: uhalo.toString() },
     });
   }
 
   createGovClaimMsg() {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       claim_voting_tokens: {},
     });
   }
 
   createEndPollMsg(poll_id: number) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       end_poll: { poll_id: poll_id },
     });
   }
@@ -100,7 +100,7 @@ export default class Gov extends Contract {
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });
   }

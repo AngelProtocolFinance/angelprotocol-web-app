@@ -1,15 +1,20 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import {
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  QueryRes,
+} from "types/server/contracts";
 import {
   Coin as CosmosCoin,
   MsgExecuteContract,
   MsgExecuteContractEncodeObject,
 } from "types/third-party/cosmjs";
+import contract_querier from "services/juno/contract_querier";
 import { toUtf8 } from "helpers/third-party/cosmjs";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { terraLcdUrl } from "constants/urls";
+import { junoLcdUrl, terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   client: LCDClient;
@@ -36,7 +41,10 @@ export default class Contract {
 
   //for on-demand query, use RTK where possible
   async query<T>(source: string, message: object) {
-    return this.client.wasm.contractQuery<T>(source, message);
+    const queryPath = contract_querier({ address: source, msg: message });
+    const res = await fetch(`${junoLcdUrl}/${queryPath}`);
+    const jsonRes: QueryRes<T> = await res.json();
+    return jsonRes.data;
   }
 
   async estimateFee(msgs: Msg[]): Promise<Fee> {
@@ -49,9 +57,9 @@ export default class Contract {
   }
 
   createContractMsg(
-    msg: object,
     sender: string,
     contract: string,
+    msg: object,
     funds?: CosmosCoin[]
   ): MsgExecuteContractEncodeObject {
     return {
