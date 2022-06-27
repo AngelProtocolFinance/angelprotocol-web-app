@@ -1,5 +1,6 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
+import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
 import { terraChainId } from "constants/env";
@@ -47,13 +48,12 @@ export default class Contract {
     to: string,
     msg: object
   ): EmbeddedWasmMsg {
-    const encodedMsg = btoa(JSON.stringify(msg));
     return {
       wasm: {
         execute: {
           contract_addr: to,
           funds,
-          msg: encodedMsg,
+          msg: toBase64(msg),
         },
       },
     };

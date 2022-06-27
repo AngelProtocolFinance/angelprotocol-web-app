@@ -4,6 +4,7 @@ import {
   MultiContractQueryArgs,
 } from "services/types";
 import { Airdrops } from "types/server/aws";
+import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
 import Account from "./Account";
 import Airdrop from "./Airdrop";
@@ -48,7 +49,7 @@ export default class Multicall {
       aggregate: {
         queries: queries.map((query) => ({
           address: query.address,
-          data: btoa(JSON.stringify(query.msg)),
+          data: toBase64(query.msg),
         })),
       },
     };

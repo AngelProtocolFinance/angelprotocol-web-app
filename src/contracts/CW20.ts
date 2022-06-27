@@ -2,6 +2,7 @@ import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
+import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -69,7 +70,7 @@ export default class CW20 extends Contract {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
         contract: msgReceiverAddr,
-        msg: btoa(JSON.stringify(msg)),
+        msg: toBase64(msg),
       },
     });
   }
