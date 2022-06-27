@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
-    "@hookform/resolvers": "^2.8.3",
+    "@hookform/resolvers": "^2.9.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@terra-money/terra.js": "^3.0.7",
     "@terra-money/wallet-provider": "^3.8.0",
