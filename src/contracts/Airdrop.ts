@@ -1,4 +1,5 @@
-import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { MsgExecuteContract } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Airdrops } from "types/server/aws";
 import { contracts } from "constants/contracts";
@@ -28,8 +29,9 @@ export default class Airdrop extends Contract {
     );
     if (is_stake) {
       const totalClaimable = airdrops.reduce(
-        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
-        new Dec(0)
+        (result, airdrop) =>
+          new Decimal(airdrop.haloTokens).div(1e6).add(result),
+        new Decimal(0)
       );
       const govContract = new Gov(this.walletAddr);
       const stake_msg = govContract.createGovStakeMsg(

@@ -1,4 +1,5 @@
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
 import { contracts } from "constants/contracts";
@@ -37,7 +38,10 @@ export default class LP extends Contract {
 
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
-    const offer_uamount = new Dec(offer_amount).mul(1e6).toInt().toString();
+    const offer_uamount = new Decimal(offer_amount)
+      .mul(1e6)
+      .divToInt(1)
+      .toString();
     const offer_asset = from_native
       ? {
           native_token: {
@@ -68,7 +72,7 @@ export default class LP extends Contract {
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     this.checkWallet();
-    const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
+    const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
     return new MsgExecuteContract(
       this.walletAddr!,
       this.pair_address,
@@ -97,7 +101,10 @@ export default class LP extends Contract {
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     this.checkWallet();
-    const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
+    const uhalo_amount = new Decimal(halo_amount)
+      .mul(1e6)
+      .divToInt(1)
+      .toString();
     return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
       send: {
         contract: this.pair_address,

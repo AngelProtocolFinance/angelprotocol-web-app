@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useEffect, useMemo, useState } from "react";
 import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 import { usePairSimul } from "services/juno/lp/queriers";
@@ -15,8 +15,8 @@ export default function useGov() {
 
   useEffect(() => {
     (async () => {
-      const haloSupply = new Dec(haloInfo.total_supply);
-      const haloBalance = new Dec(govHaloBalance);
+      const haloSupply = new Decimal(haloInfo.total_supply);
+      const haloBalance = new Decimal(govHaloBalance);
       const _staked = haloBalance.toNumber();
       const _pct_staked = haloSupply.lte(0)
         ? 0

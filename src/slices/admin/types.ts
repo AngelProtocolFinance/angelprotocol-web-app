@@ -1,4 +1,4 @@
-import { AllianceMember, Member } from "types/server/contracts";
+import { AllianceMember, Member, ProposalStatus } from "types/server/contracts";
 
 export type AllianceMemberWithFlags = AllianceMember & {
   isDeleted: boolean;
@@ -12,3 +12,13 @@ export type AddressWithFlags = {
   isAdded: boolean;
 };
 export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };
+
+/** proposals filter */
+export type ProposalGroup =
+  | "indexfund"
+  | "admin-group"
+  | "endowment"
+  | "registrar";
+
+export type ProposalGroupOptions = ProposalGroup | "all";
+export type ProposalStatusOptions = ProposalStatus | "all";
