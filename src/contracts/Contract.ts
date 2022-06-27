@@ -39,7 +39,7 @@ export default class Contract {
       throw new WalletDisconnectError();
     }
 
-    const account = await this.client.auth.accountInfo(this.walletAddr!);
+    const account = await this.client.auth.accountInfo(this.walletAddr);
 
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
