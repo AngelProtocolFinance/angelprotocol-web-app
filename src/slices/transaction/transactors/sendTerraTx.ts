@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
-import Contract from "contracts/Contract";
+import { createBaseContract } from "contracts";
 import convertFromMicro from "helpers/convertFromMicro";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
@@ -25,7 +25,7 @@ export const sendTerraTx = createAsyncThunk(
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet.address);
+      const contract = await createBaseContract(args.wallet);
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;

@@ -13,8 +13,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { createCW20Contract } from "contracts";
-import Contract from "contracts/Contract";
+import { createBaseContract, createCW20Contract } from "contracts";
 import useDebouncer from "hooks/useDebouncer";
 import convertFromMicro from "helpers/convertFromMicro";
 import { getProvider } from "helpers/getProvider";
@@ -64,7 +63,7 @@ export default function useEstimator() {
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
-          const contract = new Contract(wallet.address);
+          const contract = await createBaseContract(wallet);
           const receiver = ap_wallets.terra;
           const amount = new Decimal(debounced_amount).mul(1e6);
 
