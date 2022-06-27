@@ -5576,6 +5576,7 @@ __metadata:
     compress.js: ^1.2.2
     cropperjs: ^1.5.12
     crypto-browserify: ^3.12.0
+    decimal.js: ^10.3.1
     draft-js: ^0.11.7
     eslint: ^8.18.0
     eslint-config-prettier: ^8.3.0
@@ -7678,7 +7679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"decimal.js@npm:^10.2.1":
+"decimal.js@npm:^10.2.1, decimal.js@npm:^10.3.1":
   version: 10.3.1
   resolution: "decimal.js@npm:10.3.1"
   checksum: 0351ac9f05fe050f23227aa6a4573bee2d58fa7378fcf28d969a8c789525032effb488a90320fd3fe86a66e17b4bc507d811b15eada5b7f0e7ec5d2af4c24a59

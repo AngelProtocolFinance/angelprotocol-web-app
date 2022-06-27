@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 
 export type VaultFieldIds = "anchor1_amount" | "anchor2_amount";
 // others
@@ -13,4 +13,4 @@ export type VaultFieldLimits = {
 };
 
 export type VaultMap = { [index: string]: VaultInfo };
-export type AmountInfo = { fieldId: VaultFieldIds; amount: Dec };
+export type AmountInfo = { fieldId: VaultFieldIds; amount: Decimal };

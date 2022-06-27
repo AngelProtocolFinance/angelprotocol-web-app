@@ -1,8 +1,8 @@
+import { ProposalMeta } from "pages/Admin/types";
 import {
   ProposalGroupOptions,
-  ProposalMeta,
   ProposalStatusOptions,
-} from "pages/Admin/types";
+} from "slices/admin/types";
 import {
   CWContracts,
   PageOptions,

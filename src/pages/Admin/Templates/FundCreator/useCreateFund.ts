@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
@@ -59,7 +59,7 @@ export default function useCreateFund() {
       split_to_liquid:
         splitToLiquid === INIT_SPLIT
           ? undefined
-          : new Dec(splitToLiquid).div(100).toFixed(2, Dec.ROUND_DOWN),
+          : new Decimal(splitToLiquid).div(100).toFixed(2, Decimal.ROUND_DOWN),
       expiry_time:
         expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
       expiry_height: expiryHeight === "" ? undefined : +expiryHeight,

@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { GovState, Vote } from "types/server/contracts";
 import { contracts } from "constants/contracts";
@@ -77,7 +77,7 @@ export default class Gov extends Contract {
   //halo_gov
   createGovUnstakeMsg(amount: number) {
     this.checkWallet();
-    const uhalo = new Dec(amount).mul(1e6).toInt();
+    const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
     return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       withdraw_voting_tokens: { amount: uhalo.toString() },
     });
@@ -99,7 +99,7 @@ export default class Gov extends Contract {
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
-    const uhalo = new Dec(amount).mul(1e6).toInt();
+    const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
     return this.createContractMsg(this.walletAddr!, this.govContractAddr, {
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });

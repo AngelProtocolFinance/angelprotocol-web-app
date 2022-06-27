@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
@@ -99,7 +99,7 @@ export default class Indexfund extends Contract {
 
   async createDepositMsg(amount: number | string, splitToLiquid?: number) {
     this.checkWallet(); //throws error when no wallet
-    const uamount = new Dec(amount).mul(1e6).toInt().toString();
+    const uamount = new Decimal(amount).mul(1e6).divToInt(1).toString();
     return this.createContractMsg(
       this.walletAddr!,
       this.contractAddr,

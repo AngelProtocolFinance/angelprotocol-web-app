@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
@@ -81,8 +81,8 @@ export default function useSwapEstimator() {
         const spot_price = getSpotPrice(simul, debounced_amount);
 
         //get commission and price impact
-        const return_uamount = new Dec(simul.return_amount);
-        const ucommission = new Dec(simul.commission_amount);
+        const return_uamount = new Decimal(simul.return_amount);
+        const ucommission = new Decimal(simul.commission_amount);
         const pct_commission = ucommission
           .div(return_uamount.add(ucommission))
           .mul(100)

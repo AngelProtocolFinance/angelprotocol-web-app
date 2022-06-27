@@ -1,9 +1,15 @@
-import { ProposalStatusOptions } from "pages/Admin/types";
-import { useGetProposalsState, useSetProposalsState } from "../Proposals";
+import { ProposalStatusOptions } from "slices/admin/types";
+import { useGetter, useSetter } from "store/accessors";
+import { changeSelectedStatus } from "slices/admin/proposals";
 
 export default function StatusSelector() {
-  const { activeStatus } = useGetProposalsState();
-  const { handleStatusChange } = useSetProposalsState();
+  const dispatch = useSetter();
+  const { activeStatus } = useGetter((state) => state.admin.proposals);
+
+  function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
+    dispatch(changeSelectedStatus(ev.target.value as ProposalStatusOptions));
+  }
+
   return (
     <div className="flex gap-2 items-center">
       <label

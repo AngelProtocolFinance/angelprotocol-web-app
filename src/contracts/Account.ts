@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
 import { junoDenom } from "constants/currency";
@@ -32,10 +32,10 @@ export default class Account extends Contract {
 
   async createDepositMsg(amount: number | string, splitToLiquid: number) {
     this.checkWallet();
-    const pctLiquid = new Dec(splitToLiquid).div(100);
-    const pctLocked = new Dec(1).sub(pctLiquid);
-    const uamount = new Dec(amount).mul(1e6).toInt().toString();
+    const pctLiquid = new Decimal(splitToLiquid).div(100);
+    const pctLocked = new Decimal(1).sub(pctLiquid);
 
+    const uamount = new Decimal(amount).mul(1e6).divToInt(1).toString();
     return this.createContractMsg(
       this.walletAddr!,
       this.accountAddr,
