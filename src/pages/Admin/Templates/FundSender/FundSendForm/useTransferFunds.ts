@@ -13,8 +13,8 @@ import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { createCW20Contract } from "contracts";
 import Admin from "contracts/Admin";
-import CW20 from "contracts/CW20";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";
@@ -30,7 +30,7 @@ export default function useTransferFunds() {
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
-  function transferFunds(data: FundSendValues) {
+  async function transferFunds(data: FundSendValues) {
     const balance =
       data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
     const denomText = data.currency === denoms.uusd ? "UST" : "HALO";
@@ -43,7 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(contracts.halo_token, wallet?.address);
+    const cw20Contract = await createCW20Contract(wallet, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
