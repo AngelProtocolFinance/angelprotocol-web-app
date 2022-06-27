@@ -1,7 +1,7 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
-import { GovState, Vote } from "types/server/contracts";
+import { Vote } from "types/server/contracts";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
@@ -48,10 +48,6 @@ export default class Gov extends Contract {
       address: this.govContractAddr,
       msg: { polls: {} },
     };
-  }
-
-  async getGovState() {
-    return this.query<GovState>(this.govContractAddr, this.gov_state.msg);
   }
 
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
