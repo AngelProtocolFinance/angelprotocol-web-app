@@ -20,7 +20,6 @@ export default class Airdrop extends Contract {
   }
 
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
-    this.checkWallet();
     const claimMsgs = airdrops.map(
       ({ stage, haloTokens, proof }) =>
         new MsgExecuteContract(this.walletAddr!, this.airdropContractAddr, {

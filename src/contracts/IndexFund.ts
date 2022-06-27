@@ -1,5 +1,3 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
@@ -11,15 +9,13 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Indexfund extends Contract {
-  fund_id?: number;
   contractAddr: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(walletAddr?: string, fund_id?: number) {
+  constructor(walletAddr?: string) {
     super(walletAddr);
-    this.fund_id = fund_id;
     this.contractAddr = contracts.index_fund;
 
     this.fundList = {
@@ -95,22 +91,6 @@ export default class Indexfund extends Contract {
     return this.createdEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member: { address: member.wallet, member },
     });
-  }
-
-  async createDepositMsg(UST_amount: number | string, splitToLiquid?: number) {
-    this.checkWallet(); //throws error when no wallet
-    const micro_UST_Amount = new Decimal(UST_amount).mul(1e6).toNumber();
-    return new MsgExecuteContract(
-      this.walletAddr!,
-      this.contractAddr,
-      {
-        deposit: {
-          fund_id: this.fund_id,
-          split: `${splitToLiquid}`,
-        },
-      },
-      [new Coin("uusd", micro_UST_Amount)]
-    );
   }
 }
 
