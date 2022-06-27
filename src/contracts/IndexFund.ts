@@ -98,7 +98,6 @@ export default class Indexfund extends Contract {
   }
 
   async createDepositMsg(UST_amount: number | string, splitToLiquid?: number) {
-    this.checkWallet(); //throws error when no wallet
     const micro_UST_Amount = new Decimal(UST_amount).mul(1e6).toNumber();
     return new MsgExecuteContract(
       this.walletAddr!,

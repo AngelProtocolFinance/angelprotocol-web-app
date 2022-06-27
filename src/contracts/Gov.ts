@@ -51,7 +51,6 @@ export default class Gov extends Contract {
   }
 
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
-    this.checkWallet();
     const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
     return cw20Contract.createSendMsg(amount, this.govContractAddr, {
       stake_voting_tokens: {},

@@ -31,7 +31,6 @@ export default class Account extends Contract {
   }
 
   async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
-    this.checkWallet();
     const pctLiquid = new Decimal(splitToLiquid).div(100);
     const pctLocked = new Decimal(1).sub(pctLiquid);
 
