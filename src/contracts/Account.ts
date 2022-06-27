@@ -7,7 +7,6 @@ import Contract from "./Contract";
 export default class Account extends Contract {
   accountAddr: string;
   balance: ContractQueryArgs;
-  endowmentDetails: ContractQueryArgs;
   profile: ContractQueryArgs;
 
   constructor(accountAddr: string, walletAddr?: string) {
@@ -17,11 +16,6 @@ export default class Account extends Contract {
     this.balance = {
       address: this.accountAddr,
       msg: { balance: {} },
-    };
-
-    this.endowmentDetails = {
-      address: this.accountAddr,
-      msg: { endowment: {} },
     };
 
     this.profile = {
@@ -37,7 +31,7 @@ export default class Account extends Contract {
     sources: Source[];
     beneficiary: string;
   }) {
-    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], this.accountAddr, {
       withdraw: {
         sources: sources,
         beneficiary,
@@ -46,7 +40,7 @@ export default class Account extends Contract {
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], this.accountAddr, {
       update_profile: payload,
     });
   }
