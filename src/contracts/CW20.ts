@@ -1,6 +1,7 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
+import { EmbeddedBankMsg } from "types/server/contracts";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -23,6 +24,17 @@ export default class CW20 extends Contract {
       address: this.cw20ContractAddr,
       msg: { balance: { address } },
     });
+  }
+
+  createEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+    return {
+      bank: {
+        send: {
+          to_address: to,
+          amount: funds,
+        },
+      },
+    };
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {

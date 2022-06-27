@@ -1,5 +1,5 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
 import { terraChainId } from "constants/env";
@@ -54,17 +54,6 @@ export default class Contract {
           contract_addr: to,
           funds,
           msg: encodedMsg,
-        },
-      },
-    };
-  }
-
-  createdEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
-    return {
-      bank: {
-        send: {
-          to_address: to,
-          amount: funds,
         },
       },
     };

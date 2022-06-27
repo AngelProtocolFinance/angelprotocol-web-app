@@ -50,7 +50,7 @@ export default function useTransferFunds() {
         data.recipient
       );
     } else {
-      embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
+      embeddedMsg = cw20Contract.createEmbeddedBankMsg(
         [
           {
             amount: new Decimal(data.amount).mul(1e6).divToInt(1).toString(),
