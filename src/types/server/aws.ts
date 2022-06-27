@@ -200,15 +200,20 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
+export type FileObject = {
+  name: string;
+  publicUrl?: string;
+};
+
 export interface CharityApplication {
   CharityName: string;
   CharityName_ContactEmail: string;
   EndowmentAgreement: string;
   EndowmentAgreementVerified: boolean;
   PK: string;
-  ProofOfEmployment: string;
-  ProofOfEmploymentVerified: boolean;
-  ProofOfIdentity: string;
+  ProofOfRegistration: FileObject;
+  ProofOfRegistratioNVerified: boolean;
+  ProofOfIdentity: FileObject;
   ProofOfIdentityVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
@@ -230,11 +235,6 @@ export type ContactPerson = {
   ReferralMethod: ReferralMethods;
   Role: ContactRoles;
   SK: "ContactPerson";
-};
-
-export type FileObject = {
-  name: string;
-  publicUrl?: string;
 };
 
 type InitialRegistration = Optional<

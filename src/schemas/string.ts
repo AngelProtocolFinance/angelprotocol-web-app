@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { testAddress } from "./tests";
+import { testAddress, testContractAddr } from "./tests";
 
 export const address = (title: string) =>
   Yup.string().test(
@@ -8,10 +8,22 @@ export const address = (title: string) =>
     testAddress
   );
 
+export const contractAddr = (title: string) =>
+  Yup.string().test(
+    "is valid",
+    `${title} address format is not valid`,
+    testContractAddr
+  );
+
 export const requiredAddress = (title: string) =>
   Yup.string()
     .required(`${title} address is required`)
     .test("is valid", `${title} address format is not valid`, testAddress);
+
+export const requiredContractAddr = (title: string) =>
+  Yup.string()
+    .required(`${title} address is required`)
+    .test("is valid", `${title} address format is not valid`, testContractAddr);
 
 export const url = Yup.string().url("invalid url").nullable();
 

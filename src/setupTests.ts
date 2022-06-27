@@ -6,7 +6,8 @@
 //                    see: https://github.com/terra-money/terra.js/issues/100
 import { Crypto } from "@peculiar/webcrypto";
 import "@testing-library/jest-dom";
-import { TextEncoder } from "util";
+import { TextDecoder, TextEncoder } from "util";
 
 global.TextEncoder = TextEncoder;
+(global as any).TextDecoder = TextDecoder;
 global.crypto = new Crypto();

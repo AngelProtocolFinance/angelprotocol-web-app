@@ -3,7 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import PreviewForm from "./PreviewForm";
 
-export default function Reviewer(props: { application: CharityApplication }) {
+export default function Previewer(props: { application: CharityApplication }) {
   const { closeModal } = useModalContext();
 
   return (

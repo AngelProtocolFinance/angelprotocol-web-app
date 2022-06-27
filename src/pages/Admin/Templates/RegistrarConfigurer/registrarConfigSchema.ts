@@ -2,10 +2,10 @@ import * as Yup from "yup";
 import { RegistrarConfigValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { percentString, positiveNumber } from "schemas/number";
-import { address } from "schemas/string";
+import { address, contractAddr } from "schemas/string";
 import { proposalShape } from "../proposalShape";
 
-const contractAddrSchema = address("contract").nullable();
+const contractAddrSchema = contractAddr("contract").nullable();
 
 const registrarConfigShape: SchemaShape<RegistrarConfigValues> = {
   ...proposalShape,
@@ -23,7 +23,7 @@ const registrarConfigShape: SchemaShape<RegistrarConfigValues> = {
 
   //contracts
   index_fund_contract: contractAddrSchema,
-  treasury: contractAddrSchema,
+  treasury: address("contract").nullable(),
   guardians_multisig_addr: contractAddrSchema,
   endowment_owners_group_addr: contractAddrSchema,
   halo_token: contractAddrSchema,

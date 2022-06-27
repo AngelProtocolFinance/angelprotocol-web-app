@@ -4,7 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { statusColorClasses } from "./Applications";
-import Reviewer from "./Previewer";
+import Previewer from "./Previewer";
 import useSortedApplications from "./useSortApplications";
 
 export default function TableView(props: {
@@ -12,8 +12,8 @@ export default function TableView(props: {
 }) {
   const { showModal } = useModalContext();
 
-  const openReviewer = (ap: CharityApplication) => {
-    showModal(Reviewer, { application: ap });
+  const openPreviewer = (ap: CharityApplication) => {
+    showModal(Previewer, { application: ap });
   };
 
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
@@ -38,7 +38,6 @@ export default function TableView(props: {
                 {header.name}
               </HeaderButton>
             ))}
-            <button className="w-full"></button>
           </>
         </Cells>
       </TableSection>
@@ -75,7 +74,7 @@ export default function TableView(props: {
             </p>
             <div className="w-42 sm:w-32">
               <button
-                onClick={() => openReviewer(ap)}
+                onClick={() => openPreviewer(ap)}
                 className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
               >
                 Review
@@ -116,3 +115,44 @@ function HeaderButton(
     </button>
   );
 }
+
+/**
+ * 
+ * CharityName: "FreshNewOrg"
+CharityName_ContactEmail: "FRESHNEWORG_paolo@angelprotocol.io"
+PK: "d040baca-7a12-452a-b362-e9d7f88306e6"
+RegistrationDate: "2022-05-17T07:03:31.553Z"
+RegistrationStatus: "Inactive"
+SK: "Registration"
+UN_SDG: 0
+ */
+
+/**
+ * 
+ * 
+ * {
+    "ProofOfIdentityVerified": false,
+    "RegistrationDate": "2022-06-26T05:38:00.514Z",
+    "AuditedFinancialReportsVerified": false,
+    "CharityName": "Joe Green Ltd",
+    "Website": "https://www.google.com/",
+    "FinancialStatements": [],
+    "ProofOfRegistration": {
+        "name": "sample_PDF.pdf",
+        "publicUrl": "https://storageapi.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/charity-registration-documents/proof-of-registration/309eb09b-c3fc-4842-848b-ba78c316d8ea-sample_PDF.pdf"
+    },
+    "ProofOfRegistrationVerified": false,
+    "CharityName_ContactEmail": "JOE GREEN LTD_joegreenwas+testing@gmail.com",
+    "ProofOfIdentity": {
+        "name": "Sample-JPEG-file-download-for-Testing.webp",
+        "publicUrl": "https://storageapi.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/charity-registration-documents/proof-of-identity/309eb09b-c3fc-4842-848b-ba78c316d8ea-Sample-JPEG-file-download-for-Testing.webp"
+    },
+    "Tier": 1,
+    "UN_SDG": 0,
+    "SK": "Registration",
+    "RegistrationStatus": "Inactive",
+    "PK": "309eb09b-c3fc-4842-848b-ba78c316d8ea",
+    "AuditedFinancialReports": [],
+    "FinancialStatementsVerified": false
+}
+ */

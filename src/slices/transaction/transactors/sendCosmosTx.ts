@@ -20,7 +20,6 @@ export const sendCosmosTx = createAsyncThunk(
       }
       updateTx({ step: "submit", message: "Submitting transaction..." });
       const client = await getCosmosClient();
-
       let tx: Tx;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks

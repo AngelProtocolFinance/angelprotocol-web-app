@@ -62,13 +62,13 @@ export default function PreviewForm({
       />
       <Proof
         label="Proof of Employment"
-        verified={ap.ProofOfEmploymentVerified}
-        link={ap.ProofOfEmployment}
+        verified={ap.ProofOfRegistratioNVerified}
+        link={ap.ProofOfRegistration.publicUrl!}
       />
       <Proof
         label="Proof of Identity"
         verified={ap.ProofOfIdentityVerified}
-        link={ap.ProofOfIdentity}
+        link={ap.ProofOfIdentity.publicUrl!}
       />
       {!!ap.poll_id && (
         <button
@@ -81,7 +81,6 @@ export default function PreviewForm({
       {!disableAction && (
         <div className="flex justify-center gap-4">
           <ActionButton
-            title="Reject"
             actionColor="bg-failed-red"
             disabled={disableAction}
             onClick={() =>
@@ -93,7 +92,9 @@ export default function PreviewForm({
                 description: getDescription("Reject"),
               })
             }
-          />
+          >
+            Reject
+          </ActionButton>
           <ActionButton
             title="Accept"
             actionColor="bg-bright-green"
@@ -107,7 +108,9 @@ export default function PreviewForm({
                 description: getDescription("Approve"),
               })
             }
-          />
+          >
+            Accept
+          </ActionButton>
         </div>
       )}
     </div>
@@ -163,8 +166,6 @@ function ActionButton({ actionColor, type, ...props }: ActionButtonProps) {
       {...props}
       className={`w-full tracking-wider ${actionColor} disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold`}
       type="submit"
-    >
-      {props.title}
-    </button>
+    />
   );
 }
