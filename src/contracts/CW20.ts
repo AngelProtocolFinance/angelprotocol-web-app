@@ -39,7 +39,7 @@ export default class CW20 extends Contract {
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
-    return this.createdEmbeddedWasmMsg([], this.cw20ContractAddr, {
+    return this.createEmbeddedWasmMsg([], this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),

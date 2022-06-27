@@ -35,13 +35,13 @@ export default class Indexfund extends Contract {
   }
 
   createEmbeddedFundConfigMsg(config: FundConfig) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_config: config,
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_owner: payload,
     });
   }
@@ -57,13 +57,13 @@ export default class Indexfund extends Contract {
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       create_fund: { ...fundDetails },
     });
   }
 
   createEmbeddedRemoveFundMsg(fundId: number) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       remove_fund: { fund_id: fundId },
     });
   }
@@ -73,7 +73,7 @@ export default class Indexfund extends Contract {
     toAdd: string[],
     toRemove: string[]
   ) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
     });
   }
@@ -82,13 +82,13 @@ export default class Indexfund extends Contract {
     member: AllianceMember,
     action: "add" | "remove"
   ) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member_list: { address: member.wallet, member, action },
     });
   }
 
   createEmbeddedAAMemberEditMsg(member: AllianceMember) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member: { address: member.wallet, member },
     });
   }

@@ -47,7 +47,7 @@ export default class Contract {
     );
   }
 
-  createdEmbeddedWasmMsg(
+  createEmbeddedWasmMsg(
     funds: Coin.Data[],
     to: string,
     msg: object

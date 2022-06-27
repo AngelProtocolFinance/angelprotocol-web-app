@@ -43,13 +43,13 @@ export default class Registrar extends Contract {
   }
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_config: payload,
     });
   }
@@ -61,7 +61,7 @@ export default class Registrar extends Contract {
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_owner: payload,
     });
   }

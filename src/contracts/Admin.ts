@@ -77,7 +77,7 @@ export default class Admin extends Contract {
 
   //execute message creators
   createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
-    return this.createdEmbeddedWasmMsg([], this.cw4, {
+    return this.createEmbeddedWasmMsg([], this.cw4, {
       update_members: {
         add: to_add,
         remove: to_remove,
@@ -86,7 +86,7 @@ export default class Admin extends Contract {
   }
 
   createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
-    return this.createdEmbeddedWasmMsg([], this.cw3, {
+    return this.createEmbeddedWasmMsg([], this.cw3, {
       update_config: {
         threshold: { absolute_percentage: { percentage: threshold } },
         max_voting_period: { height },
