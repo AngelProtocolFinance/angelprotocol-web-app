@@ -102,5 +102,6 @@ function createEndowmentCreationMsgPayload(
       url: charity.Registration.Website,
     },
     withdraw_before_maturity: false,
+    kyc_donors_only: charity.Metadata.KycDonorsOnly,
   };
 }

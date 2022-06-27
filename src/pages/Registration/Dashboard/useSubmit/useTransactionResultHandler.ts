@@ -54,6 +54,6 @@ export default function useTransactionResultHandler() {
 function getEndowmentContract(stage: SuccessStage) {
   const logs = parseRawLog(stage.rawLogs);
   return logs![0].events
-    .find((event) => event.type === "instantiate_contract")!
-    .attributes.find((attr) => attr.key === "contract_address")!.value;
+    .find((event) => event.type === "instantiate")!
+    .attributes.find((attr) => attr.key === "_contract_address")!.value;
 }

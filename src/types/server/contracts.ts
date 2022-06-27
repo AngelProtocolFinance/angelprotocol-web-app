@@ -421,4 +421,5 @@ export type RegistrarCreateEndowmentPayload = {
     un_sdg: number; // 1 - 17 int
     url: string; // string of charity website URL if provided
   };
+  kyc_donors_only: boolean;
 };
