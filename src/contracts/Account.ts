@@ -56,7 +56,6 @@ export default class Account extends Contract {
     sources: Source[];
     beneficiary: string;
   }) {
-    this.checkWallet();
     return this.createdEmbeddedWasmMsg([], this.accountAddr, {
       withdraw: {
         sources: sources,
@@ -66,7 +65,6 @@ export default class Account extends Contract {
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    this.checkWallet();
     return this.createdEmbeddedWasmMsg([], this.accountAddr, {
       update_profile: payload,
     });

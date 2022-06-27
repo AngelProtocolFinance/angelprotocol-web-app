@@ -31,6 +31,7 @@ export default class Contract {
 
   //for on-demand query, use RTK where possible
   async query<T>(source: string, message: object) {
+    this.checkWallet();
     return this.client.wasm.contractQuery<T>(source, message);
   }
 

@@ -71,7 +71,6 @@ export default class LP extends Contract {
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    this.checkWallet();
     const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
     return new MsgExecuteContract(
       this.walletAddr!,
@@ -100,7 +99,6 @@ export default class LP extends Contract {
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    this.checkWallet();
     const uhalo_amount = new Decimal(halo_amount)
       .mul(1e6)
       .divToInt(1)
