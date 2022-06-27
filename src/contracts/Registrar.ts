@@ -55,7 +55,7 @@ export default class Registrar extends Contract {
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return new MsgExecuteContract(this.walletAddr!, this.address, {
+    return new MsgExecuteContract(this.walletAddr, this.address, {
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }

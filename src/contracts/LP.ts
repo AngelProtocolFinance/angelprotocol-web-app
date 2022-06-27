@@ -71,7 +71,7 @@ export default class LP extends Contract {
   ) {
     const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
     return new MsgExecuteContract(
-      this.walletAddr!,
+      this.walletAddr,
       this.pair_address,
       {
         swap: {
@@ -101,7 +101,7 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
-    return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
+    return new MsgExecuteContract(this.walletAddr, this.halo_address, {
       send: {
         contract: this.pair_address,
         amount: uhalo_amount,

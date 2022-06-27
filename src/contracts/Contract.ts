@@ -8,10 +8,10 @@ import { terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   client: LCDClient;
-  walletAddr?: string;
+  walletAddr: string;
 
   constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr;
+    this.walletAddr = walletAddr || "";
     this.client = new LCDClient({
       chainID: terraChainId,
       URL: terraLcdUrl,
@@ -31,13 +31,16 @@ export default class Contract {
 
   //for on-demand query, use RTK where possible
   async query<T>(source: string, message: object) {
-    this.checkWallet();
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
   async estimateFee(msgs: Msg[]): Promise<Fee> {
-    this.checkWallet();
+    if (!this.walletAddr) {
+      throw new WalletDisconnectError();
+    }
+
     const account = await this.client.auth.accountInfo(this.walletAddr!);
+
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denoms.uluna] }
@@ -58,11 +61,5 @@ export default class Contract {
         },
       },
     };
-  }
-
-  checkWallet() {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
   }
 }

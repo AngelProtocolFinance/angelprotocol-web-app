@@ -49,7 +49,7 @@ export default class CW20 extends Contract {
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    return new MsgExecuteContract(this.walletAddr!, this.cw20ContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -63,7 +63,7 @@ export default class CW20 extends Contract {
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
   ): MsgExecuteContract {
-    return new MsgExecuteContract(this.walletAddr!, this.cw20ContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
       send: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
