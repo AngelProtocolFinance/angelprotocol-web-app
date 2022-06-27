@@ -21,6 +21,7 @@ export default class Multicall {
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
 
   constructor(walletAddr?: string) {
+    this.walletAddr = walletAddr;
     this.address = contracts.multicall;
     this.registrarContract = new Registrar(walletAddr);
     this.govContract = new Gov(walletAddr);
