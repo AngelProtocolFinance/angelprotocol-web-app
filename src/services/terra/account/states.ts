@@ -1,5 +1,5 @@
+import { createAccountContract } from "contracts";
 import { account_api } from "./account";
-import useAccountContract from "./useAccountContract";
 
 export function useEndowmentCWsState(address?: string) {
   const {
@@ -17,7 +17,7 @@ export function useEndowmentCWsState(address?: string) {
 }
 
 export function useEndowmentProfileState(address: string) {
-  const { contract } = useAccountContract(address);
+  const contract = createAccountContract(address);
   const { data } = account_api.endpoints.endowmentProfile.useQueryState(
     contract.profile
   );

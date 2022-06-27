@@ -1,3 +1,4 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { Coin } from "@cosmjs/stargate";
 import { Keplr } from "@keplr-wallet/types";
@@ -7,25 +8,21 @@ import configureCosmosClient from "helpers/configureCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 
-export default async function createContract(wallet: WalletState) {
+export type BaseContract = {
+  client: SigningCosmWasmClient;
+  walletAddress: string;
+  estimateFee: (msgs: readonly EncodeObject[]) => Promise<number>;
+  query: <T>(source: string, message: Record<string, unknown>) => Promise<T>;
+};
+
+export async function createBaseContract(
+  wallet?: WalletState
+): Promise<BaseContract> {
+  if (!wallet) {
+    throw new WalletDisconnectError();
+  }
   const signer = (wallet.provider as Keplr).getOfflineSigner(wallet.chainId);
   const { client, address } = await configureCosmosClient(signer);
-
-  function createEmbeddedWasmMsg(
-    funds: Coin[],
-    to: string,
-    msg: object
-  ): EmbeddedWasmMsg {
-    return {
-      wasm: {
-        execute: {
-          contract_addr: to,
-          funds,
-          msg: toBase64(msg),
-        },
-      },
-    };
-  }
 
   async function estimateFee(msgs: readonly EncodeObject[]): Promise<number> {
     if (!address) {
@@ -45,7 +42,6 @@ export default async function createContract(wallet: WalletState) {
   return {
     client,
     walletAddress: address,
-    createEmbeddedWasmMsg,
     estimateFee,
     query,
   };

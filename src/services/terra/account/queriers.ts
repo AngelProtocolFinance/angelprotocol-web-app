@@ -1,5 +1,5 @@
+import { createAccountContract } from "contracts";
 import { account_api } from "./account";
-import useAccountContract from "./useAccountContract";
 
 export function useEndowmentCWs(address?: string) {
   const { useEndowmentCWsQuery } = account_api;
@@ -16,7 +16,7 @@ export function useEndowmentCWs(address?: string) {
 }
 
 export function useEndowmentProfile(address: string, skip = false) {
-  const { contract } = useAccountContract(address);
+  const contract = createAccountContract(address);
   const { useEndowmentProfileQuery } = account_api;
   const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
     contract.profile,

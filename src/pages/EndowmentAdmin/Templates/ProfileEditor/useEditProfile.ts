@@ -18,7 +18,7 @@ import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Account from "contracts/Account";
+import { createAccountContract } from "contracts";
 import Admin from "contracts/Admin";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
@@ -93,7 +93,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, wallet?.address);
+    const accountContract = await createAccountContract(wallet, endowmentAddr!);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)

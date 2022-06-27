@@ -13,7 +13,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Account from "contracts/Account";
+import { createAccountContract } from "contracts";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import convertFromMicro from "helpers/convertFromMicro";
@@ -132,9 +132,9 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(
-          resources.accountAddr,
-          wallet.address
+        const accountContract = await createAccountContract(
+          wallet,
+          resources.accountAddr
         );
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
