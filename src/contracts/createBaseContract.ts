@@ -1,11 +1,8 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { Coin } from "@cosmjs/stargate";
 import { Keplr } from "@keplr-wallet/types";
-import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import configureCosmosClient from "helpers/configureCosmosClient";
-import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 
 export type BaseContract = {
