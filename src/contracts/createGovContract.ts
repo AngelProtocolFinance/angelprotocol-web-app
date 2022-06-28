@@ -2,18 +2,14 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Vote } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
-import { BaseContract } from "./createBaseContract";
 import { createCW20Contract } from "./createCW20Contract";
 
 const GOV_CONTRACT_ADDR = contracts.gov;
 const HALO_CONTRACT_ADDR = contracts.halo_token;
 
-export function createGovContract(wallet?: WalletState): GovContract {
-  const cw20Contract = createCW20Contract(wallet, HALO_CONTRACT_ADDR);
-
-  const walletAddress = wallet?.address || "";
+export function createGovContract(walletAddress = ""): GovContract {
+  const cw20Contract = createCW20Contract(HALO_CONTRACT_ADDR, walletAddress);
 
   const staker = {
     address: GOV_CONTRACT_ADDR,
@@ -92,12 +88,10 @@ export function createGovContract(wallet?: WalletState): GovContract {
     createGovUnstakeMsg,
     createPollMsgs,
     createVoteMsg,
-    estimateFee: cw20Contract.estimateFee,
-    query: cw20Contract.query,
   };
 }
 
-export type GovContract = BaseContract & {
+export type GovContract = {
   config: ContractQueryArgs;
   gov_state: ContractQueryArgs;
   haloBalance: ContractQueryArgs;

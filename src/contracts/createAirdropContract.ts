@@ -2,19 +2,12 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Airdrops } from "types/server/aws";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
-import { BaseContract } from "./createBaseContract";
-import { createBaseContract } from "./createBaseContract";
 import { createGovContract } from "./createGovContract";
 
 const AIRDROP_CONTRACT_ADDR = contracts.airdrop;
 
-export function createAirdropContract(wallet?: WalletState): AirdropContract {
-  const baseContract = createBaseContract(wallet);
-
-  const walletAddress = wallet?.address || "";
-
+export function createAirdropContract(walletAddress = ""): AirdropContract {
   const isAirDropClaimed = (stage: number) => ({
     address: AIRDROP_CONTRACT_ADDR,
     msg: { is_claimed: { stage, address: walletAddress } },
@@ -36,7 +29,7 @@ export function createAirdropContract(wallet?: WalletState): AirdropContract {
           new Decimal(airdrop.haloTokens).div(1e6).add(result),
         new Decimal(0)
       );
-      const govContract = createGovContract(wallet);
+      const govContract = createGovContract(walletAddress);
       const stake_msg = govContract.createGovStakeMsg(
         totalClaimable.toString()
       );
@@ -47,14 +40,13 @@ export function createAirdropContract(wallet?: WalletState): AirdropContract {
   }
 
   return {
-    ...baseContract,
     airdropContractAddr: AIRDROP_CONTRACT_ADDR,
     isAirDropClaimed,
     createAirdropClaimMsg,
   };
 }
 
-export type AirdropContract = BaseContract & {
+export type AirdropContract = {
   airdropContractAddr: string;
   createAirdropClaimMsg: (
     airdrops: Airdrops,

@@ -3,18 +3,13 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import createEmbeddedWasmMsg from "helpers/createEmbeddedWasmMsg";
 import toBase64 from "helpers/toBase64";
-import { BaseContract, createBaseContract } from "./createBaseContract";
 
 export function createCW20Contract(
-  wallet: WalletState | undefined,
-  cw20ContractAddr: string
+  cw20ContractAddr: string,
+  walletAddress = ""
 ): CW20Contract {
-  const baseContract = createBaseContract(wallet);
-  const walletAddress = wallet?.address || "";
-
   const info = {
     address: cw20ContractAddr,
     msg: {
@@ -80,7 +75,6 @@ export function createCW20Contract(
   }
 
   return {
-    ...baseContract,
     info,
     balance,
     createEmbeddedBankMsg,
@@ -90,7 +84,7 @@ export function createCW20Contract(
   };
 }
 
-export type CW20Contract = BaseContract & {
+export type CW20Contract = {
   info: ContractQueryArgs;
   balance: (address: string) => ContractQueryArgs;
   createEmbeddedBankMsg: (funds: Coin[], to: string) => EmbeddedBankMsg;
