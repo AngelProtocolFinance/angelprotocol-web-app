@@ -38,6 +38,10 @@ export const junoLcdUrl = IS_TEST
   ? juno_lcds[chainIDs.juno_test]
   : juno_lcds[chainIDs.juno_main];
 
+export const junoRpcUrl = IS_TEST
+  ? juno_rpcs[chainIDs.juno_test]
+  : juno_rpcs[chainIDs.juno_main];
+
 export const TERRA_FINDER = "https://finder.terra.money";
 
 export const PRIVACY_POLICY =
