@@ -5,20 +5,20 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Gov from "contracts/Gov";
+import { createGovContract } from "contracts/createGovContract";
 
 export default function useEndPoll(pollId: number) {
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
-  function endPoll() {
+  async function endPoll() {
     if (pollId === 0) {
       showModal(Popup, { message: "Poll is invalid" });
       return;
     }
 
-    const contract = new Gov(wallet?.address);
+    const contract = await createGovContract(wallet);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(

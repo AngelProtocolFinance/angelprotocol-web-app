@@ -12,7 +12,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Gov from "contracts/Gov";
+import { createGovContract } from "contracts/createGovContract";
 import useDebouncer from "hooks/useDebouncer";
 import convertFromMicro from "helpers/convertFromMicro";
 import getTokenBalance from "helpers/getTokenBalance";
@@ -79,7 +79,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
+        const contract = await createGovContract(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,

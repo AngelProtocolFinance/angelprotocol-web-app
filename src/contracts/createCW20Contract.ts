@@ -11,7 +11,7 @@ import { BaseContract, createBaseContract } from "./createBaseContract";
 export async function createCW20Contract(
   wallet: WalletState | undefined,
   cw20ContractAddr: string
-) {
+): Promise<CW20Contract> {
   const baseContract = await createBaseContract(wallet);
 
   const info = {

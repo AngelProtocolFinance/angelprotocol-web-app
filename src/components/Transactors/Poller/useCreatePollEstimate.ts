@@ -9,7 +9,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Gov from "contracts/Gov";
+import { createGovContract } from "contracts/createGovContract";
 import convertFromMicro from "helpers/convertFromMicro";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -45,8 +45,8 @@ export default function useCreatePollEstimate() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
-        const pollMsgs = await contract.createPollMsgs(
+        const contract = await createGovContract(wallet);
+        const pollMsgs = contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths

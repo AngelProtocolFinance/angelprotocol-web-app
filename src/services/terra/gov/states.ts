@@ -1,4 +1,3 @@
-import Gov, { G, TG } from "contracts/Gov";
 import { useContract } from "../useContract";
 import { gov_api } from "./gov";
 import { staker } from "./placeholders";

@@ -10,7 +10,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Gov from "contracts/Gov";
+import { createGovContract } from "contracts/createGovContract";
 import useDebouncer from "hooks/useDebouncer";
 import convertFromMicro from "helpers/convertFromMicro";
 import getTokenBalance from "helpers/getTokenBalance";
@@ -65,14 +65,11 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        let govMsg: MsgExecuteContract;
-        const contract = new Gov(wallet.address);
+        const contract = await createGovContract(wallet);
 
-        if (is_stake) {
-          govMsg = contract.createGovStakeMsg(debounced_amount);
-        } else {
-          govMsg = contract.createGovUnstakeMsg(debounced_amount);
-        }
+        const govMsg = is_stake
+          ? contract.createGovStakeMsg(debounced_amount)
+          : contract.createGovUnstakeMsg(debounced_amount);
 
         const fee = await contract.estimateFee([govMsg]);
         const feeNum = convertFromMicro(fee);
