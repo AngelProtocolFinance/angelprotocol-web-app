@@ -18,14 +18,9 @@ export default function useCreatePoll() {
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Gov(wallet?.address);
+    const contract = new Gov(wallet);
     const { amount, title, description, link } = data;
-    const pollMsg = await contract.createPollMsgs(
-      +amount,
-      title,
-      description,
-      link
-    );
+    const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
     dispatch(
       sendTerraTx({

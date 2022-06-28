@@ -2,6 +2,7 @@ import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
@@ -10,8 +11,8 @@ export default class CW20 extends Contract {
   balance: (address: string) => ContractQueryArgs;
   info: ContractQueryArgs;
 
-  constructor(cw20ContractAddr: string, walletAddr?: string) {
-    super(walletAddr);
+  constructor(cw20ContractAddr: string, wallet?: WalletState) {
+    super(wallet);
     this.cw20ContractAddr = cw20ContractAddr;
 
     this.info = {

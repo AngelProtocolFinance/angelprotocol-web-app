@@ -45,8 +45,8 @@ export default function useCreatePollEstimate() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
-        const pollMsgs = await contract.createPollMsgs(
+        const contract = new Gov(wallet);
+        const pollMsgs = contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths

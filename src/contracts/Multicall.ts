@@ -4,6 +4,7 @@ import {
   MultiContractQueryArgs,
 } from "services/types";
 import { Airdrops } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
 import Account from "./Account";
@@ -11,23 +12,21 @@ import Airdrop from "./Airdrop";
 import Registrar from "./Registrar";
 
 export default class Multicall {
-  walletAddr?: string;
   address: string;
   registrarContract: Registrar;
   airdropContract: Airdrop;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
 
-  constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr;
+  constructor(wallet?: WalletState) {
     this.address = contracts.multicall;
-    this.registrarContract = new Registrar(walletAddr);
-    this.airdropContract = new Airdrop(walletAddr);
+    this.registrarContract = new Registrar(wallet);
+    this.airdropContract = new Airdrop(wallet);
 
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
       msg: this.constructAggregatedQuery([
-        new Account(endowmentAddr, this.walletAddr).balance,
+        new Account(endowmentAddr, wallet).balance,
         this.registrarContract.vaultsRate,
       ]),
     });

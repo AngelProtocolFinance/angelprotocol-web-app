@@ -8,6 +8,7 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -18,8 +19,8 @@ export default class Registrar extends Contract {
 
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(wallet?: WalletState) {
+    super(wallet);
     this.address = contracts.registrar;
 
     this.endowmentList = (queryOptions) => ({

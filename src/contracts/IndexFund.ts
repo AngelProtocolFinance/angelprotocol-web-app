@@ -5,6 +5,7 @@ import {
   FundDetails,
   IndexFundOwnerPayload,
 } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -14,8 +15,8 @@ export default class Indexfund extends Contract {
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(wallet?: WalletState) {
+    super(wallet);
     this.contractAddr = contracts.index_fund;
 
     this.fundList = {

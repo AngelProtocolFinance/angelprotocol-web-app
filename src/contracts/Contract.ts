@@ -1,46 +1,29 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
 import { Coin } from "@cosmjs/stargate";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
-import { WalletDisconnectError } from "errors/errors";
-import { denoms } from "constants/currency";
-import { terraChainId } from "constants/env";
-import { terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   wallet?: WalletState;
+  walletAddr: string;
 
   constructor(wallet?: WalletState) {
     this.wallet = wallet;
+    this.walletAddr = wallet?.address || "";
   }
-
-  // static gasAdjustment = 1.6; //use gas units 60% greater than estimate
-
-  // // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  // static gasPrices = [
-  //   new Coin(denoms.uusd, 0.15),
-  //   //for classic, pisco is 0.15
-  //   new Coin(denoms.uluna, 5.665),
-  // ];
 
   //for on-demand query, use RTK where possible
-  async query<T>(source: string, message: object) {
+  async query<T>(source: string, message: Record<string, unknown>) {
     const client = await getCosmosClient(this.wallet);
-    return await client.queryContractSmart(source, message);
+    const jsonObject = await client.queryContractSmart(source, message);
+    return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(msgs: Msg[]): Promise<Fee> {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
-
-    const account = await this.client.auth.accountInfo(this.walletAddr);
-
-    return this.client.tx.estimateFee(
-      [{ sequenceNumber: account.getSequenceNumber() }],
-      { msgs, feeDenoms: [denoms.uluna] }
-    );
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<number> {
+    const client = await getCosmosClient(this.wallet);
+    return await client.simulate(this.wallet!.address, msgs, undefined);
   }
 
   createEmbeddedWasmMsg(

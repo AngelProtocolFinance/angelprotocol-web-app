@@ -23,7 +23,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   );
 
   const claimAirdrop = (isStake: boolean) => () => {
-    const airdropContract = new Airdrop(wallet?.address);
+    const airdropContract = new Airdrop(wallet);
     const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake

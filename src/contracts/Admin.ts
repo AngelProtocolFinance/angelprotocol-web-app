@@ -9,6 +9,7 @@ import {
   Vote,
   VotesPageOptions,
 } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -26,8 +27,8 @@ export default class Admin extends Contract {
   voteList: (arg: VotesPageOptions) => CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, walletAddr?: string) {
-    super(walletAddr);
+  constructor(cws: CWContracts, wallet?: WalletState) {
+    super(wallet);
     //make sure to use query skips on empty addresses
     this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
     this.cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";

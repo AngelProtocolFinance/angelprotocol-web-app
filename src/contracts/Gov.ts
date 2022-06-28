@@ -2,6 +2,7 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Vote } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
@@ -21,12 +22,12 @@ export default class Gov extends Contract {
 
   private cw20Contract: CW20;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
+  constructor(wallet?: WalletState) {
+    super(wallet);
     this.govContractAddr = contracts.gov;
     this.haloContractAddr = contracts.halo_token;
 
-    this.cw20Contract = new CW20(this.haloContractAddr, walletAddr);
+    this.cw20Contract = new CW20(this.haloContractAddr, wallet);
     this.haloInfo = this.cw20Contract.info;
     this.haloBalance = this.cw20Contract.balance(this.govContractAddr);
 
@@ -58,12 +59,11 @@ export default class Gov extends Contract {
     });
   }
 
-  async createPollMsgs(
+  createPollMsgs(
     amount: number,
     title: string,
     description: string,
     link?: string
-    // msgs?: PollExecuteMsg[]
   ) {
     return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       create_poll: { title, description, link },

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.28.9",
+    "@cosmjs/proto-signing": "^0.28.9",
     "@cosmjs/stargate": "^0.28.9",
     "@draft-js-plugins/counter": "^4.1.2",
     "@draft-js-plugins/editor": "^4.1.3",
