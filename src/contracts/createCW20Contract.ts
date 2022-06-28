@@ -8,11 +8,12 @@ import createEmbeddedWasmMsg from "helpers/createEmbeddedWasmMsg";
 import toBase64 from "helpers/toBase64";
 import { BaseContract, createBaseContract } from "./createBaseContract";
 
-export async function createCW20Contract(
+export function createCW20Contract(
   wallet: WalletState | undefined,
   cw20ContractAddr: string
-): Promise<CW20Contract> {
-  const baseContract = await createBaseContract(wallet);
+): CW20Contract {
+  const baseContract = createBaseContract(wallet);
+  const walletAddress = wallet?.address || "";
 
   const info = {
     address: cw20ContractAddr,
@@ -54,17 +55,13 @@ export async function createCW20Contract(
     amount: number,
     recipient: string
   ): MsgExecuteContract {
-    return new MsgExecuteContract(
-      baseContract.walletAddress,
-      cw20ContractAddr,
-      {
-        transfer: {
-          //convert to uamount
-          amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
-          recipient,
-        },
-      }
-    );
+    return new MsgExecuteContract(walletAddress, cw20ContractAddr, {
+      transfer: {
+        //convert to uamount
+        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        recipient,
+      },
+    });
   }
 
   function createSendMsg(
@@ -72,23 +69,18 @@ export async function createCW20Contract(
     msgReceiverAddr: string,
     msg: object
   ): MsgExecuteContract {
-    return new MsgExecuteContract(
-      baseContract.walletAddress,
-      cw20ContractAddr,
-      {
-        send: {
-          //convert to uamount
-          amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
-          contract: msgReceiverAddr,
-          msg: toBase64(msg),
-        },
-      }
-    );
+    return new MsgExecuteContract(walletAddress, cw20ContractAddr, {
+      send: {
+        //convert to uamount
+        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        contract: msgReceiverAddr,
+        msg: toBase64(msg),
+      },
+    });
   }
 
   return {
     ...baseContract,
-    cw20ContractAddr,
     info,
     balance,
     createEmbeddedBankMsg,
@@ -99,7 +91,6 @@ export async function createCW20Contract(
 }
 
 export type CW20Contract = BaseContract & {
-  cw20ContractAddr: string;
   info: ContractQueryArgs;
   balance: (address: string) => ContractQueryArgs;
   createEmbeddedBankMsg: (funds: Coin[], to: string) => EmbeddedBankMsg;

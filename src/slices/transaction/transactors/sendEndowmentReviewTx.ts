@@ -30,7 +30,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
-      const contract = await createBaseContract(args.wallet);
+      const contract = createBaseContract(args.wallet);
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;

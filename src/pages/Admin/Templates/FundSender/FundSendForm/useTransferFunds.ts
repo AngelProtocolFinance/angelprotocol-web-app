@@ -30,7 +30,7 @@ export default function useTransferFunds() {
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
-  async function transferFunds(data: FundSendValues) {
+  function transferFunds(data: FundSendValues) {
     const balance =
       data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
     const denomText = data.currency === denoms.uusd ? "UST" : "HALO";
@@ -43,7 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = await createCW20Contract(wallet, contracts.halo_token);
+    const cw20Contract = createCW20Contract(wallet, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,

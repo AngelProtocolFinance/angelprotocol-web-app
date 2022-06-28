@@ -5,7 +5,7 @@ import { junoRpcUrl } from "constants/urls";
 
 const GAS_PRICE = GasPrice.fromString("0.025ujunox");
 
-export default async function configureCosmosClient(
+export default async function getCosmosClient(
   signer: OfflineSigner
 ): Promise<SigningCosmWasmClient> {
   const client = await SigningCosmWasmClient.connectWithSigner(

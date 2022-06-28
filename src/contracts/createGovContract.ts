@@ -10,10 +10,8 @@ import { createCW20Contract } from "./createCW20Contract";
 const GOV_CONTRACT_ADDR = contracts.gov;
 const HALO_CONTRACT_ADDR = contracts.halo_token;
 
-export async function createGovContract(
-  wallet?: WalletState
-): Promise<GovContract> {
-  const cw20Contract = await createCW20Contract(wallet, HALO_CONTRACT_ADDR);
+export function createGovContract(wallet?: WalletState): GovContract {
+  const cw20Contract = createCW20Contract(wallet, HALO_CONTRACT_ADDR);
 
   const walletAddress = wallet?.address || "";
 
@@ -82,14 +80,12 @@ export async function createGovContract(
   }
 
   return {
-    client: cw20Contract.client,
     config,
     gov_state,
     haloBalance: cw20Contract.info,
     haloInfo: cw20Contract.balance(GOV_CONTRACT_ADDR),
     polls,
     staker,
-    walletAddress: cw20Contract.walletAddress,
     createEndPollMsg,
     createGovClaimMsg,
     createGovStakeMsg,

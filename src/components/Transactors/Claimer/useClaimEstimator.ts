@@ -8,7 +8,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { createGovContract } from "contracts/createGovContract";
+import { createGovContract } from "contracts";
 import convertFromMicro from "helpers/convertFromMicro";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -43,7 +43,7 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = await createGovContract(wallet);
+        const contract = createGovContract(wallet);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = convertFromMicro(fee);

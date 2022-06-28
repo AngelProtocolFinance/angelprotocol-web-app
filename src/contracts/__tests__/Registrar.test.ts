@@ -1,7 +1,7 @@
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Charity } from "types/server/aws";
 import Registrar from "contracts/Registrar";
-import configureCosmosClient from "helpers/configureCosmosClient";
+import getCosmosClient from "helpers/getCosmosClient";
 
 const TEST_MNEMONIC =
   "pact fancy rough prison twenty dismiss mushroom rival page ship quantum deer rookie system cargo";
@@ -11,7 +11,7 @@ describe("Registrar tests", () => {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(TEST_MNEMONIC, {
       prefix: "juno",
     });
-    const { client, address } = await configureCosmosClient(wallet);
+    const { client, address } = await getCosmosClient(wallet);
 
     const registrar = new Registrar(client, address);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);

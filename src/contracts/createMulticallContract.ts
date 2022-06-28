@@ -7,7 +7,7 @@ import {
 } from "services/types";
 import { Airdrops } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import configureCosmosClient from "helpers/configureCosmosClient";
+import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 import { contracts } from "constants/contracts";
@@ -22,7 +22,7 @@ export async function createMulticallContract(
     throw new WalletDisconnectError();
   }
   const signer = (wallet.provider as Keplr).getOfflineSigner(wallet.chainId);
-  const { client, address } = await configureCosmosClient(signer);
+  const { client, address } = await getCosmosClient(signer);
 
   const balanceAndRates = (endowmentAddr: string) => ({
     address: address,

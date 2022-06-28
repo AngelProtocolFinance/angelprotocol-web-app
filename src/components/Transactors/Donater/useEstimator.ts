@@ -63,7 +63,7 @@ export default function useEstimator() {
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
-          const contract = await createBaseContract(wallet);
+          const contract = createBaseContract(wallet);
           const receiver = ap_wallets.terra;
           const amount = new Decimal(debounced_amount).mul(1e6);
 
@@ -85,7 +85,7 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = await createCW20Contract(
+          const contract = createCW20Contract(
             wallet,
             selectedToken.contract_addr
           );

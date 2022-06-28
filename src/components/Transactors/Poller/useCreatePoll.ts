@@ -4,7 +4,7 @@ import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { createGovContract } from "contracts/createGovContract";
+import { createGovContract } from "contracts";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {
@@ -17,8 +17,8 @@ export default function useCreatePoll() {
   const { maxFee, wallet } = useCreatePollEstimate();
   const dispatch = useSetter();
 
-  async function createPoll(data: CreatePollValues) {
-    const contract = await createGovContract(wallet);
+  function createPoll(data: CreatePollValues) {
+    const contract = createGovContract(wallet);
     const { amount, title, description, link } = data;
     const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
