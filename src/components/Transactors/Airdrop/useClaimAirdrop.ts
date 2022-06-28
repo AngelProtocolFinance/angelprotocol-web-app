@@ -6,7 +6,7 @@ import { terra } from "services/terra/terra";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Airdrop from "contracts/Airdrop";
+import { createAirdropContract } from "contracts";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();
@@ -23,7 +23,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   );
 
   const claimAirdrop = (isStake: boolean) => () => {
-    const airdropContract = new Airdrop(wallet?.address);
+    const airdropContract = createAirdropContract(wallet);
     const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake
