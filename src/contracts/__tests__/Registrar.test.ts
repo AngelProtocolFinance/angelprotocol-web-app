@@ -1,17 +1,30 @@
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Charity } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
 import getCosmosClient from "helpers/getCosmosClient";
+import { chainIDs } from "constants/chainIDs";
 
 const TEST_MNEMONIC =
   "pact fancy rough prison twenty dismiss mushroom rival page ship quantum deer rookie system cargo";
+
+const WALLET: WalletState = {
+  walletIcon: "",
+  displayCoin: placeHolderDisplayToken["keplr"],
+  coins: [placeHolderDisplayToken["keplr"]],
+  address: "terra1w0fn5u7puxafp3g2mehe6xvt4w2x2eennm7tzf",
+  chainId: chainIDs.juno_test,
+  providerId: "keplr",
+};
 
 describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", async () => {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(TEST_MNEMONIC, {
       prefix: "juno",
     });
-    const { client, address } = await getCosmosClient(wallet);
+
+    const client = await getCosmosClient(wallet);
 
     const registrar = new Registrar(client, address);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
