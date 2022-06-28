@@ -27,6 +27,13 @@ export class WalletDisconnectError extends Error {
   }
 }
 
+export class WrongNetworkError extends Error {
+  constructor() {
+    super();
+    this.name = "WrongNetworkError";
+  }
+}
+
 export class TxResultFail extends Error {
   chainId: string;
   txHash: string;
