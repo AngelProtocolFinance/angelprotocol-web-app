@@ -55,7 +55,6 @@ export default function Registration() {
 
   return (
     <div className="flex flex-col gap-3 items-center">
-      <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
       <span className="text-3xl font-bold">
         Thank you for registering, we'd love to have you on board!
       </span>

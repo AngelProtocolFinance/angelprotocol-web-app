@@ -15,7 +15,7 @@ export default function Steps({ disabled, registrationState }: Props) {
   return (
     <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
       <Step
-        title="Step #1: Contact Details"
+        title="Contact Details"
         onClick={() =>
           navigate(
             `${siteRoutes.app}/${appRoutes.register}/${routes.contactDetails}`
@@ -25,7 +25,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         completed
       />
       <Step
-        title="Step #2: Wallet Address"
+        title="Wallet Address"
         onClick={() =>
           navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.wallet}`)
         }
@@ -33,7 +33,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         completed={registrationState.stepTwo.completed}
       />
       <Step
-        title="Step #3: Documentation"
+        title="Documentation"
         onClick={() =>
           navigate(
             `${siteRoutes.app}/${appRoutes.register}/${routes.documentation}`
@@ -47,7 +47,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         }
       />
       <Step
-        title="Step #4: Additional Information"
+        title="Additional Information"
         onClick={() =>
           navigate(
             `${siteRoutes.app}/${appRoutes.register}/${routes.additionalInformation}`
