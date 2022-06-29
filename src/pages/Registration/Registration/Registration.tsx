@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import banner1 from "assets/images/banner-register-1.jpg";
+// import banner1 from "assets/images/banner-register-1.jpg";
 import {
   registrationRefKey,
   useRegistrationQueryLazyQuery,

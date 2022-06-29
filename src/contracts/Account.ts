@@ -1,5 +1,3 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
 import Contract from "./Contract";

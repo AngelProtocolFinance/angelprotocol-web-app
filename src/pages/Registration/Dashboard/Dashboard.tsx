@@ -1,7 +1,7 @@
 import { useRegistrationState } from "services/aws/registration";
 import { Button } from "../common";
 import EndowmentStatus from "./EndowmentStatus";
-import ProgressIndicator from "./ProgressIndicator";
+// import ProgressIndicator from "./ProgressIndicator";
 import Steps from "./Steps";
 import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
