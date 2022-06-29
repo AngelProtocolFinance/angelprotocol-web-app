@@ -11,7 +11,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
@@ -48,7 +48,7 @@ export default function useConfigureFund() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new IndexFund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({

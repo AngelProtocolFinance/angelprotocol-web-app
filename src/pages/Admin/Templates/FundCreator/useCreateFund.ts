@@ -11,7 +11,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
@@ -49,7 +49,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new IndexFund(wallet);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,

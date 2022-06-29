@@ -9,7 +9,7 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
-export default class Indexfund extends Contract {
+export default class IndexFund extends Contract {
   contractAddr: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
@@ -95,5 +95,5 @@ export default class Indexfund extends Contract {
   }
 }
 
-export interface IF extends Indexfund {}
-export type T = typeof Indexfund;
+export interface IF extends IndexFund {}
+export type T = typeof IndexFund;

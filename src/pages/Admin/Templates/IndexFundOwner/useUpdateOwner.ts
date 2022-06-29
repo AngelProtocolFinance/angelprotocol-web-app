@@ -10,7 +10,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateOwner() {
@@ -30,7 +30,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new IndexFund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
