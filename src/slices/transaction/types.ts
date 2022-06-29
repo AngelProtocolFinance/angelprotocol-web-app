@@ -1,7 +1,9 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
+import { Tx } from "types/third-party/cosmjs";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 type Tag = TagDescription<string>;
@@ -61,6 +63,7 @@ export type SuccessStage = {
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
   txInfo?: TxInfo;
+  rawLog?: string;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
@@ -105,3 +108,15 @@ type WithTx = BaseArgs & {
 }; //pre-estimated tx
 
 export type TerraSendArgs = WithMsg | WithTx;
+
+type _WithMsg = BaseArgs & {
+  msgs: EncodeObject[];
+  tx?: never;
+};
+
+type _WithTx = BaseArgs & {
+  msgs?: never;
+  tx: Tx;
+};
+
+export type SendCosmosTxArgs = _WithMsg | _WithTx;

@@ -23,18 +23,9 @@ export default class Account extends Contract {
     };
   }
 
-  createEmbeddedWithdrawMsg({
-    sources,
-    beneficiary,
-  }: {
-    sources: Source[];
-    beneficiary: string;
-  }) {
+  createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
     return this.createEmbeddedWasmMsg([], this.accountAddr, {
-      withdraw: {
-        sources: sources,
-        beneficiary,
-      },
+      withdraw: payload,
     });
   }
 
@@ -44,3 +35,8 @@ export default class Account extends Contract {
     });
   }
 }
+
+type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
+};

@@ -37,11 +37,9 @@ export default class Contract {
     return this.getFee(gasLimit);
   }
 
-  private getFee(gasLimit: number) {
-    return {
-      amount: [{ denom: denoms.ujuno, amount: GAS_PRICE }],
-      gas: `${Math.round(gasLimit * GAS_ADJUSTMENT)}`,
-    };
+  async signAndBroadcast(msgs: readonly EncodeObject[], fee: StdFee) {
+    const client = await getCosmosClient(this.wallet);
+    return await client.signAndBroadcast(this.wallet!.address, msgs, fee);
   }
 
   createEmbeddedWasmMsg(
@@ -57,6 +55,13 @@ export default class Contract {
           msg: toBase64(msg),
         },
       },
+    };
+  }
+
+  private getFee(gasLimit: number) {
+    return {
+      amount: [{ denom: denoms.ujuno, amount: GAS_PRICE }],
+      gas: `${Math.round(gasLimit * GAS_ADJUSTMENT)}`,
     };
   }
 }
