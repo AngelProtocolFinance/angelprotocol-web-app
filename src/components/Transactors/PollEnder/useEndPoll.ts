@@ -18,7 +18,7 @@ export default function useEndPoll(pollId: number) {
       return;
     }
 
-    const contract = new Gov(wallet?.address);
+    const contract = new Gov(wallet);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(

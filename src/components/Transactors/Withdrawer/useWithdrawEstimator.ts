@@ -132,10 +132,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(
-          resources.accountAddr,
-          wallet.address
-        );
+        const accountContract = new Account(resources.accountAddr, wallet);
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
@@ -151,7 +148,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 
-        const adminContract = new Admin(cwContracts, wallet.address);
+        const adminContract = new Admin(cwContracts, wallet);
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",

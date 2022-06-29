@@ -38,7 +38,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new Indexfund(wallet);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -63,7 +63,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin("apTeam", wallet);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {

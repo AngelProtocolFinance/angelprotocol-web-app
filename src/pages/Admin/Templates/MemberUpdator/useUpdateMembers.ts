@@ -52,7 +52,7 @@ export default function useUpdateMembers() {
       showModal(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet?.address);
+    const contract = new Admin(cwContracts, wallet);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove

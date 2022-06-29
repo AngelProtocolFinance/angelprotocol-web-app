@@ -52,7 +52,7 @@ export default function useConfigureRegistrar() {
       split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
-    const registrarContract = new Registrar(wallet?.address);
+    const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(
       cleanObject(finalPayload)
     );
@@ -62,7 +62,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

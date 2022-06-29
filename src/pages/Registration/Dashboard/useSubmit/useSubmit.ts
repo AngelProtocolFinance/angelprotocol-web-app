@@ -33,7 +33,7 @@ export default function useSubmit() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new Registrar(wallet.address);
+        const contract = new Registrar(wallet);
         const msg = contract.createEndowmentCreationMsg(charity);
 
         dispatch(

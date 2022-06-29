@@ -66,7 +66,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let govMsg: MsgExecuteContract;
-        const contract = new Gov(wallet.address);
+        const contract = new Gov(wallet);
 
         if (is_stake) {
           govMsg = contract.createGovStakeMsg(debounced_amount);

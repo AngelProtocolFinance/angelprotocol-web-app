@@ -25,7 +25,7 @@ export const sendTerraTx = createAsyncThunk(
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet.address);
+      const contract = new Contract(args.wallet);
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;

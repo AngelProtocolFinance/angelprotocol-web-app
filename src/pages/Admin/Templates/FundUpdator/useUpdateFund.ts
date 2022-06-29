@@ -54,7 +54,7 @@ export default function useUpdateFund() {
         showModal(Popup, { message: "No fund member changes" });
         return;
       }
-      const indexFundContract = new Indexfund(wallet?.address);
+      const indexFundContract = new Indexfund(wallet);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -69,7 +69,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new Admin("apTeam", wallet?.address);
+      const adminContract = new Admin("apTeam", wallet);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 

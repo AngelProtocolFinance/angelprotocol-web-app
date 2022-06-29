@@ -68,7 +68,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(wallet.address);
+        const contract = new LP(wallet);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);

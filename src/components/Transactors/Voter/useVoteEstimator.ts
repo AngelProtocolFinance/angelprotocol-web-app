@@ -79,7 +79,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
+        const contract = new Gov(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,

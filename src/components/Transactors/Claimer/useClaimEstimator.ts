@@ -43,7 +43,7 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
+        const contract = new Gov(wallet);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);

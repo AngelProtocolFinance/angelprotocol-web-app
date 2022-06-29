@@ -49,7 +49,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new Indexfund(wallet);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -78,7 +78,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

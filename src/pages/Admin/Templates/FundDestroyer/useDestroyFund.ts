@@ -26,7 +26,7 @@ export default function useDestroyFund() {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new Indexfund(wallet);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
@@ -38,7 +38,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

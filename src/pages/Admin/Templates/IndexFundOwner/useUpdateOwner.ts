@@ -30,7 +30,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new Indexfund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
@@ -40,7 +40,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
