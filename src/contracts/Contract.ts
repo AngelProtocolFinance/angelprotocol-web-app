@@ -1,9 +1,15 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { Coin } from "@cosmjs/stargate";
+import { Coin, StdFee } from "@cosmjs/stargate";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
+import { denoms } from "constants/currency";
+
+const GAS_PRICE =
+  "0.0625"; /**TODO: uni-3 and juno-1 have diff gas prices for fee display only, 
+  actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing  */
+const GAS_ADJUSTMENT = 1.5;
 
 export default class Contract {
   wallet?: WalletState;
@@ -21,9 +27,21 @@ export default class Contract {
     return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(msgs: readonly EncodeObject[]): Promise<number> {
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
     const client = await getCosmosClient(this.wallet);
-    return await client.simulate(this.wallet!.address, msgs, undefined);
+    const gasLimit = await client.simulate(
+      this.wallet!.address,
+      msgs,
+      undefined
+    );
+    return this.getFee(gasLimit);
+  }
+
+  private getFee(gasLimit: number) {
+    return {
+      amount: [{ denom: denoms.ujuno, amount: GAS_PRICE }],
+      gas: `${Math.round(gasLimit * GAS_ADJUSTMENT)}`,
+    };
   }
 
   createEmbeddedWasmMsg(

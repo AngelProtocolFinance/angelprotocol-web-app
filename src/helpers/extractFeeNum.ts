@@ -1,6 +1,9 @@
-import { Fee } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { StdFee } from "@cosmjs/stargate";
+import Decimal from "decimal.js";
+import { MAIN_DENOM } from "constants/currency";
 
-export default function extractFeeNum(fee: Fee) {
-  return fee.amount.get(denoms.uluna)!.div(1e6).amount.toNumber();
+export default function extractFeeNum(fee: StdFee): number {
+  return new Decimal(fee.amount.find((a) => a.denom === MAIN_DENOM)!.amount)
+    .div(1e6)
+    .toNumber();
 }
