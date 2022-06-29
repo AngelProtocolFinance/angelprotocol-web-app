@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import banner1 from "assets/images/banner-register-1.jpg";
+// import banner1 from "assets/images/banner-register-1.jpg";
 import {
   registrationRefKey,
   useRegistrationQueryLazyQuery,
@@ -55,7 +55,6 @@ export default function Registration() {
 
   return (
     <div className="flex flex-col gap-3 items-center">
-      <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
       <span className="text-3xl font-bold">
         Thank you for registering, we'd love to have you on board!
       </span>
