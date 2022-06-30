@@ -3,7 +3,7 @@ import { CreatePollValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 
@@ -23,7 +23,7 @@ export default function useCreatePoll() {
     const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: { msgs: [pollMsg], fee: maxFee },
         tagPayloads: [

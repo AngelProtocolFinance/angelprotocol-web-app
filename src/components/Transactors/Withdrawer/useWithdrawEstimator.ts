@@ -1,10 +1,10 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
 import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
 import { AmountInfo } from "types/shared/withdraw";
+import { TxOptions } from "types/third-party/cosmjs";
 import { vaultMap } from "services/juno/multicall/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
@@ -36,7 +36,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
   const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
 
   const anchor1_amount = watch("anchor1_amount") || "0";

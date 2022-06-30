@@ -11,7 +11,7 @@ import {
 import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Multicall from "contracts/Multicall";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 import { junoApi } from "..";
 import contract_querier from "../contract_querier";

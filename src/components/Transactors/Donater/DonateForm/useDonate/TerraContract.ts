@@ -1,8 +1,8 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import toBase64 from "helpers/toBase64";
+import { terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { terraChainId } from "constants/env";
 import { terraLcdUrl } from "constants/urls";
 
 const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate

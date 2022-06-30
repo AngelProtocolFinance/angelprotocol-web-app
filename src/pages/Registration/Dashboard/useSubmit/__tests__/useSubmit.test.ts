@@ -1,3 +1,4 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
@@ -34,10 +35,10 @@ jest.mock("contexts/WalletContext/WalletContext", () => ({
   useGetWallet: () => mockUseGetWallet(),
 }));
 
-const mockSendTerraTx = jest.fn();
-jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
+const mockSendCosmosTx = jest.fn();
+jest.mock("slices/transaction/transactors/sendCosmosTx", () => ({
   __esModule: true,
-  sendTerraTx: (..._: any[]) => mockSendTerraTx,
+  sendCosmosTx: (..._: any[]) => mockSendCosmosTx,
 }));
 
 const mockDispatch = jest.fn();
@@ -138,7 +139,7 @@ describe("useSubmit tests", () => {
       type: "transaction/setFormLoading",
       payload: true,
     });
-    expect(mockDispatch).toBeCalledWith(mockSendTerraTx);
+    expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
   });
 });
@@ -189,7 +190,8 @@ const CHARITY: Charity = {
 };
 
 const MSG_EXECUTE_CONTRACT = {
-  execute_msg: {
+  typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+  value: {
     create_endowment: {
       beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
       cw4_members: [],
@@ -223,4 +225,4 @@ const MSG_EXECUTE_CONTRACT = {
       withdraw_before_maturity: false,
     },
   },
-} as MsgExecuteContract;
+} as MsgExecuteContractEncodeObject;

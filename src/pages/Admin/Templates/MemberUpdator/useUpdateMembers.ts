@@ -10,7 +10,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 
@@ -78,7 +78,7 @@ export default function useUpdateMembers() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

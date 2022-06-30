@@ -1,7 +1,7 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
+import { TxOptions } from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -24,7 +24,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
@@ -64,14 +64,11 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        let govMsg: MsgExecuteContract;
         const contract = new Gov(wallet);
 
-        if (is_stake) {
-          govMsg = contract.createGovStakeMsg(debounced_amount);
-        } else {
-          govMsg = contract.createGovUnstakeMsg(debounced_amount);
-        }
+        const govMsg = is_stake
+          ? contract.createGovStakeMsg(debounced_amount)
+          : contract.createGovUnstakeMsg(debounced_amount);
 
         const { fee, feeNum } = await contract.estimateFee([govMsg]);
 

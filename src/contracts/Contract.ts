@@ -4,6 +4,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { Coin, StdFee, calculateFee } from "@cosmjs/stargate";
 import Decimal from "decimal.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
+import { TxOptions } from "types/third-party/cosmjs";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
@@ -53,9 +54,9 @@ export default class Contract {
     };
   }
 
-  async signAndBroadcast(msgs: readonly EncodeObject[], fee: StdFee) {
+  async signAndBroadcast(tx: TxOptions) {
     const client = await getCosmosClient(this.wallet);
-    return await client.signAndBroadcast(this.wallet!.address, msgs, fee);
+    return await client.signAndBroadcast(this.wallet!.address, tx.msgs, tx.fee);
   }
 
   createEmbeddedWasmMsg(

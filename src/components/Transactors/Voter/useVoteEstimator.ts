@@ -1,9 +1,9 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { Vote } from "types/server/contracts";
+import { TxOptions } from "types/third-party/cosmjs";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
@@ -25,7 +25,7 @@ export default function useVoteEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
 

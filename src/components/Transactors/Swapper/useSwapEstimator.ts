@@ -1,8 +1,8 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
+import { TxOptions } from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -25,7 +25,7 @@ export default function useSwapEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<SwapValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_buy = watch("is_buy");
@@ -82,21 +82,18 @@ export default function useSwapEstimator() {
           .mul(100)
           .toNumber();
 
-        let swapMsg: MsgExecuteContract;
-        if (is_buy) {
-          swapMsg = contract.createBuyMsg(
-            debounced_amount,
-            spot_price.toString(),
-            debounced_slippage
-          );
-        } else {
-          swapMsg = contract.createSellMsg(
-            debounced_amount,
-            //just reverse price for sell tx
-            spot_price.toString(),
-            debounced_slippage
-          );
-        }
+        const swapMsg = is_buy
+          ? contract.createBuyMsg(
+              debounced_amount,
+              spot_price.toString(),
+              debounced_slippage
+            )
+          : contract.createSellMsg(
+              debounced_amount,
+              //just reverse price for sell tx
+              spot_price.toString(),
+              debounced_slippage
+            );
 
         const { fee, feeNum } = await contract.estimateFee([swapMsg]);
 

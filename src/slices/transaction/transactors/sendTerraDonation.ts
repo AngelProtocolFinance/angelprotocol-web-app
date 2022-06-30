@@ -11,7 +11,7 @@ import logDonation from "helpers/logDonation";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import postTerraTx from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {

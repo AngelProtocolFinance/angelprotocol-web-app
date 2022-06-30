@@ -1,7 +1,7 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AdminVoteValues } from "./types";
+import { TxOptions } from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -18,7 +18,7 @@ export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useGetWallet();
   const { getValues, watch } = useFormContext<AdminVoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);

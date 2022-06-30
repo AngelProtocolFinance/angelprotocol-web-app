@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
+import { TxOptions } from "types/third-party/cosmjs";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -35,6 +36,7 @@ export default function useEstimator() {
 
   const [evmTx, setEVMtx] = useState<TransactionRequest>();
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
+  const [cosmosTx, setCosmosTx] = useState<TxOptions>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -101,7 +103,7 @@ export default function useEstimator() {
             return;
           }
           dispatch(setFee(feeNum));
-          setTerraTx({ msgs: [msg], fee });
+          setCosmosTx({ msgs: [msg], fee });
         }
 
         /** evm transactions */
@@ -163,5 +165,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, selectedToken, wallet]);
 
-  return { evmTx, terraTx };
+  return { evmTx, terraTx, junoTx: cosmosTx };
 }

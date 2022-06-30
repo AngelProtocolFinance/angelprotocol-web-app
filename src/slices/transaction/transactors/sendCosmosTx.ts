@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
-import { Tx } from "types/third-party/cosmjs";
+import { TxOptions } from "types/third-party/cosmjs";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import { WalletDisconnectError } from "errors/errors";
@@ -20,7 +20,7 @@ export const sendCosmosTx = createAsyncThunk(
       }
       updateTx({ step: "submit", message: "Submitting transaction..." });
       const contract = new Contract(args.wallet);
-      let tx: Tx;
+      let tx: TxOptions;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
@@ -37,7 +37,7 @@ export const sendCosmosTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await contract.signAndBroadcast(tx.msgs, tx.fee);
+      const response = await contract.signAndBroadcast(tx);
 
       if (!response.code) {
         updateTx({

@@ -6,7 +6,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Registrar from "contracts/Registrar";
 import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
@@ -37,7 +37,7 @@ export default function useSubmit() {
         const msg = contract.createEndowmentCreationMsg(charity);
 
         dispatch(
-          sendTerraTx({
+          sendCosmosTx({
             wallet,
             msgs: [msg],
           })

@@ -1,7 +1,7 @@
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import useClaimEstimator from "./useClaimEstimator";
 
 export default function useClaimUnstakedHalo() {
@@ -11,7 +11,7 @@ export default function useClaimUnstakedHalo() {
 
   function claimUnstakedHalo() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [

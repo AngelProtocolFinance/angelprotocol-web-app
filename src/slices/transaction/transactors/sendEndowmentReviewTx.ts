@@ -1,21 +1,21 @@
+import { isDeliverTxSuccess } from "@cosmjs/stargate";
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
+import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
+import { TxOptions } from "types/third-party/cosmjs";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
-import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import postTerraTx from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
-type _SenderArgs = TerraSendArgs & {
+type _SenderArgs = SendCosmosTxArgs & {
   applicationId: string;
 };
 
 export const sendEndowmentReviewTx = createAsyncThunk(
-  `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
+  `${transactionSlice.name}/sendEndowmentReviewCosmosTx`,
   async (args: _SenderArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
@@ -28,8 +28,8 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
-      let tx: CreateTxOptions;
       const contract = new Contract(args.wallet);
+      let tx: TxOptions;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
@@ -47,30 +47,26 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await postTerraTx(tx);
+      const response = await contract.signAndBroadcast(tx);
 
       updateTx({
         step: "broadcast",
         message: "Waiting for transaction result",
-        txHash: response.result.txhash,
+        txHash: response.transactionHash,
         chainId: terraChainId,
       });
 
-      if (response.success) {
-        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
-        const txInfo = await getTxInfo;
-
-        if (!txInfo.code) {
+      if (isDeliverTxSuccess(response)) {
+        if (!response.code) {
           updateTx({
             step: "success",
             message: args.successMessage || "Transaction successful!",
-            txHash: txInfo.txhash,
-            txInfo,
+            txHash: response.transactionHash,
             chainId: terraChainId,
             successLink: args.successLink,
           });
 
-          const logs = txInfo.logs as unknown as TxLog[];
+          const logs = parseRawLog(response.rawLog);
 
           const proposal_id = logs[0]?.events
             .find((event) => {
@@ -94,7 +90,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           updateTx({
             step: "error",
             message: "Transaction failed",
-            txHash: txInfo.txhash,
+            txHash: response.transactionHash,
             chainId: terraChainId,
           });
         }
@@ -102,7 +98,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         updateTx({
           step: "error",
           message: "Transaction failed",
-          txHash: response.result.txhash,
+          txHash: response.transactionHash,
           chainId: terraChainId,
         });
       }

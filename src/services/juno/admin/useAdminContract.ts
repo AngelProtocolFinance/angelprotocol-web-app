@@ -9,7 +9,7 @@ export default function useAdminContract(customCWs?: CWContracts) {
   const cws = customCWs || cwContracts;
   const { wallet } = useGetWallet();
 
-  const contract = useMemo(() => new Admin(cws, wallet), [wallet, cws]);
+  const contract = useMemo(() => new Admin(wallet, cws), [wallet, cws]);
 
   const isAdminSkip =
     cws !== "apTeam" &&

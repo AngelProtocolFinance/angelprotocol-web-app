@@ -9,7 +9,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import IndexFund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
@@ -68,7 +68,7 @@ export default function useConfigureFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

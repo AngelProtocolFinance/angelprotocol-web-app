@@ -3,7 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
-import { Tx } from "types/third-party/cosmjs";
+import { TxOptions } from "types/third-party/cosmjs";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 type Tag = TagDescription<string>;
@@ -116,7 +116,7 @@ type _WithMsg = BaseArgs & {
 
 type _WithTx = BaseArgs & {
   msgs?: never;
-  tx: Tx;
+  tx: TxOptions;
 };
 
 export type SendCosmosTxArgs = _WithMsg | _WithTx;
