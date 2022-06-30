@@ -3,7 +3,7 @@ import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
 import { sendDonationLog } from "slices/transaction/transactors/sendDonationLog";
 import { ap_wallets } from "constants/ap_wallets";
-import { terraChainId } from "constants/chainIDs";
+import { junoChainId } from "constants/chainIDs";
 import { IS_TEST } from "constants/env";
 
 const apiKey = IS_TEST
@@ -11,12 +11,13 @@ const apiKey = IS_TEST
   : process.env.REACT_APP_TRANSAK_API_KEY_PRODUCTION;
 
 const env = IS_TEST ? "STAGING" : "PRODUCTION";
+
 let transak = new transakSDK({
   apiKey: apiKey,
   environment: env,
-  cryptoCurrencyCode: "UST",
-  network: "terra", //on staging environment, this will automatically be on bombay-12
-  walletAddress: ap_wallets["terra"],
+  cryptoCurrencyCode: "JUNO",
+  network: "juno",
+  walletAddress: ap_wallets.juno,
   hostURL: window.location.origin,
 
   //widget look
@@ -51,7 +52,7 @@ export default function useTransak(receiver: Receiver) {
             ...receiver,
             transactionId: eventPayload.status.id,
             transactionDate: eventPayload.status.createdAt,
-            chainId: terraChainId,
+            chainId: junoChainId,
             amount: eventPayload.status.cryptoAmount,
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,
@@ -71,7 +72,7 @@ export default function useTransak(receiver: Receiver) {
 interface EventPayload {
   status: {
     id: string; //order id "9af4c841-1702-4266-8d55-c822582435ec";
-    walletAddress: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx";
+    walletAddress: string;
     createdAt: string; //"2022-04-19T09:56:05.282Z";
     paymentOptionId: string; //"credit_debit_card";
     //ORDER STATUSES
