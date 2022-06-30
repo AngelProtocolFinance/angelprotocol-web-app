@@ -14,7 +14,6 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
@@ -69,17 +68,16 @@ export default function useEstimator() {
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
-          const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
+          const { fee, feeNum } = await contract.estimateFee([msg]);
 
-          if (debounced_amount + numFee >= wallet.displayCoin.balance) {
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
             return;
           }
-          dispatch(setFee(numFee));
-          setTerraTx({ msgs: [msg], fee: aminoFee });
+          dispatch(setFee(feeNum));
+          setTerraTx({ msgs: [msg], fee });
         }
 
         /** terra cw20 transaction */
@@ -90,11 +88,10 @@ export default function useEstimator() {
             debounced_amount,
             ap_wallets.terra
           );
-          const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
+          const { fee, feeNum } = await contract.estimateFee([msg]);
 
           if (
-            numFee >=
+            feeNum >=
             wallet.displayCoin
               .balance /** displayCoin is native - for payment of fee */
           ) {
@@ -103,8 +100,8 @@ export default function useEstimator() {
             });
             return;
           }
-          dispatch(setFee(numFee));
-          setTerraTx({ msgs: [msg], fee: aminoFee });
+          dispatch(setFee(feeNum));
+          setTerraTx({ msgs: [msg], fee });
         }
 
         /** evm transactions */

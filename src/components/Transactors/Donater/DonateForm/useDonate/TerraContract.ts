@@ -8,7 +8,6 @@ import {
 import Decimal from "decimal.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import toBase64 from "helpers/toBase64";
-import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
 import { terraChainId } from "constants/env";
 import { terraLcdUrl } from "constants/urls";
@@ -41,17 +40,17 @@ export default class TerraContract {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[]): Promise<Fee> {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
-
+  async estimateFee(msgs: Msg[]): Promise<{ fee: Fee; feeNum: number }> {
     const account = await this.client.auth.accountInfo(this.walletAddr);
 
-    return this.client.tx.estimateFee(
+    const fee = await this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denoms.uluna] }
     );
+
+    const feeNum = extractFeeNum(fee);
+
+    return { fee, feeNum };
   }
 
   createEmbeddedWasmMsg(
@@ -83,4 +82,8 @@ export default class TerraContract {
       },
     });
   }
+}
+
+function extractFeeNum(fee: Fee): number {
+  return fee.amount.get(denoms.uluna)!.div(1e6).amount.toNumber();
 }
