@@ -12,7 +12,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -99,8 +98,7 @@ export default function useSwapEstimator() {
           );
         }
 
-        const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {

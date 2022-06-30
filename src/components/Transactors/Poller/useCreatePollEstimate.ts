@@ -10,7 +10,6 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -56,8 +55,7 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee([pollMsgs]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

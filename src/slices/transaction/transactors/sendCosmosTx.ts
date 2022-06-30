@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
 import { Tx } from "types/third-party/cosmjs";
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { WalletDisconnectError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
@@ -26,8 +25,7 @@ export const sendCosmosTx = createAsyncThunk(
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee(args.msgs);
 
         if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({

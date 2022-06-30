@@ -3,7 +3,6 @@ import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
 import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import postTerraTx from "helpers/postTerraTx";
@@ -36,8 +35,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee(args.msgs);
 
         if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({
