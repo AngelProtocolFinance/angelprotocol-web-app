@@ -1,3 +1,5 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { Coin, StdFee, calculateFee } from "@cosmjs/stargate";
 import Decimal from "decimal.js";
@@ -63,6 +65,20 @@ export default class Contract {
           funds,
           msg: toBase64(msg),
         },
+      },
+    };
+  }
+
+  createExecuteContractMsg(
+    contract: string,
+    msg: object
+  ): MsgExecuteContractEncodeObject {
+    return {
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+      value: {
+        contract: contract,
+        sender: this.walletAddr,
+        msg: toUtf8(JSON.stringify(msg)),
       },
     };
   }
