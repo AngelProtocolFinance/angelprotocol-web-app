@@ -88,7 +88,7 @@ export default function useEstimator() {
           const contract = new CW20(wallet, selectedToken.contract_addr);
           const msg = contract.createTransferMsg(
             debounced_amount,
-            ap_wallets.terra
+            ap_wallets.juno
           );
           const { fee, feeNum } = await contract.estimateFee([msg]);
 

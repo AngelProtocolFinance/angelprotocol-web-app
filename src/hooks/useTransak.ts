@@ -1,7 +1,7 @@
 import transakSDK from "@transak/transak-sdk";
 import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
-import { sendDonationLog } from "slices/transaction/transactors/sendDonationLog";
+import { sendDonationLog } from "slices/transaction/transactors";
 import { ap_wallets } from "constants/ap_wallets";
 import { junoChainId } from "constants/chainIDs";
 import { IS_TEST } from "constants/env";

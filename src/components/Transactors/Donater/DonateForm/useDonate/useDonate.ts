@@ -5,8 +5,10 @@ import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
-import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
-import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
+import {
+  sendEthDonation,
+  sendTerraDonation,
+} from "slices/transaction/transactors";
 import useEstimator from "./useEstimator";
 
 export default function useDonate() {

@@ -8,11 +8,11 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
-import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import postTerraTx from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
-import transactionSlice, { setStage } from "../transactionSlice";
+import transactionSlice, { setStage } from "../../transactionSlice";
+import { pollTerraTxInfo } from "./pollTerraTxInfo";
+import postTerraTx from "./postTerraTx";
 
 type TerraDonateArgs = {
   wallet?: WalletState;
