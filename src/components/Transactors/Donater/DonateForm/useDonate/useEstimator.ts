@@ -13,6 +13,7 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
+import CW20 from "contracts/CW20";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
@@ -82,9 +83,8 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new TerraContract(wallet.address);
+          const contract = new CW20(selectedToken.contract_addr, wallet);
           const msg = contract.createTransferMsg(
-            selectedToken.contract_addr,
             debounced_amount,
             ap_wallets.terra
           );

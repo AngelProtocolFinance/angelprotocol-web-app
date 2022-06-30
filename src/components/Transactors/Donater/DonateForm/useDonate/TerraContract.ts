@@ -68,20 +68,6 @@ export default class TerraContract {
       },
     };
   }
-
-  createTransferMsg(
-    cw20ContractAddr: string,
-    amount: number,
-    recipient: string
-  ) {
-    return new MsgExecuteContract(this.walletAddr, cw20ContractAddr, {
-      transfer: {
-        //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
-        recipient,
-      },
-    });
-  }
 }
 
 function extractFeeNum(fee: Fee): number {
