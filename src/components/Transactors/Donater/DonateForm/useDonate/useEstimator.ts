@@ -13,13 +13,12 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import CW20 from "contracts/CW20";
-import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeNum from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
+import TerraContract from "./TerraContract";
 
 export default function useEstimator() {
   const dispatch = useSetter();
@@ -64,11 +63,10 @@ export default function useEstimator() {
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
-          const contract = new Contract(wallet);
-          const receiver = ap_wallets.terra;
+          const contract = new TerraContract(wallet.address);
           const amount = new Decimal(debounced_amount).mul(1e6);
 
-          const msg = new MsgSend(wallet.address, receiver, [
+          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
           const aminoFee = await contract.estimateFee([msg]);
@@ -86,8 +84,9 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new CW20(selectedToken.contract_addr, wallet);
+          const contract = new TerraContract(wallet.address);
           const msg = contract.createTransferMsg(
+            selectedToken.contract_addr,
             debounced_amount,
             ap_wallets.terra
           );
