@@ -1,13 +1,13 @@
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
+import { scaleAmount } from "helpers/amountFormatters";
 import { junoDenom } from "constants/currency";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
   accountAddr: string;
   balance: ContractQueryArgs;
-  endowmentDetails: ContractQueryArgs;
   profile: ContractQueryArgs;
 
   constructor(accountAddr: string, walletAddr?: string) {
@@ -19,11 +19,6 @@ export default class Account extends Contract {
       msg: { balance: {} },
     };
 
-    this.endowmentDetails = {
-      address: this.accountAddr,
-      msg: { endowment: {} },
-    };
-
     this.profile = {
       address: this.accountAddr,
       msg: { get_profile: {} },
@@ -31,11 +26,10 @@ export default class Account extends Contract {
   }
 
   async createDepositMsg(amount: number | string, splitToLiquid: number) {
-    this.checkWallet();
     const pctLiquid = new Decimal(splitToLiquid).div(100);
     const pctLocked = new Decimal(1).sub(pctLiquid);
 
-    const uamount = new Decimal(amount).mul(1e6).divToInt(1).toString();
+    const uamount = scaleAmount(amount);
     return this.createContractMsg(
       this.walletAddr!,
       this.accountAddr,
@@ -56,8 +50,7 @@ export default class Account extends Contract {
     sources: Source[];
     beneficiary: string;
   }) {
-    this.checkWallet();
-    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], this.accountAddr, {
       withdraw: {
         sources: sources,
         beneficiary,
@@ -66,8 +59,7 @@ export default class Account extends Contract {
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    this.checkWallet();
-    return this.createdEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], this.accountAddr, {
       update_profile: payload,
     });
   }

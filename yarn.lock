@@ -3166,12 +3166,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^2.9.1":
-  version: 2.9.1
-  resolution: "@hookform/resolvers@npm:2.9.1"
+"@hookform/resolvers@npm:^2.9.3":
+  version: 2.9.3
+  resolution: "@hookform/resolvers@npm:2.9.3"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 534fc126462c26b27b786a785d24fdf36f6c704d23bba3d614c1df676892862f6ff3d5bc179378b4d062a11c842f83d92501baea48c8df67d3dfe8330a6b546d
+  checksum: e0010426c9415024ed65ac32e40a3b0a15837c3bc465ce6aa7048e7a47eb5ec5d4578b662e7bb3fdf528f8fb9216bf8b97fb5742b9f79f0314c7472e3b37c2f6
   languageName: node
   linkType: hard
 
@@ -5546,7 +5546,7 @@ __metadata:
     "@draft-js-plugins/editor": ^4.1.3
     "@fleekhq/fleek-storage-js": ^1.0.21
     "@hookform/error-message": ^2.0.0
-    "@hookform/resolvers": ^2.9.1
+    "@hookform/resolvers": ^2.9.3
     "@keplr-wallet/types": ^0.10.5
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.7.1
@@ -5580,7 +5580,7 @@ __metadata:
     draft-js: ^0.11.7
     eslint: ^8.18.0
     eslint-config-prettier: ^8.3.0
-    eslint-plugin-prettier: ^3.4.0
+    eslint-plugin-prettier: ^4.1.0
     ethereum-multicall: ^2.12.0
     ethers: ^5.5.4
     jsonwebtoken: ^8.5.1
@@ -5594,7 +5594,7 @@ __metadata:
     react-csv: ^2.2.2
     react-dom: ^17.0.2
     react-dropzone: ^12.0.4
-    react-hook-form: ^7.32.2
+    react-hook-form: ^7.33.0
     react-icons: ^4.4.0
     react-redux: ^7.2.5
     react-router-dom: ^6.2.0
@@ -5603,7 +5603,7 @@ __metadata:
     react-select-country-list: ^2.2.3
     react-test-renderer: 17.0.2
     stream-browserify: ^3.0.0
-    tailwindcss: ^3.1.3
+    tailwindcss: ^3.1.4
     ts-node: ^10.8.1
     typescript: ^4.7.4
     util: ^0.12.4
@@ -8508,18 +8508,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^3.4.0":
-  version: 3.4.1
-  resolution: "eslint-plugin-prettier@npm:3.4.1"
+"eslint-plugin-prettier@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "eslint-plugin-prettier@npm:4.1.0"
   dependencies:
     prettier-linter-helpers: ^1.0.0
   peerDependencies:
-    eslint: ">=5.0.0"
-    prettier: ">=1.13.0"
+    eslint: ">=7.28.0"
+    prettier: ">=2.0.0"
   peerDependenciesMeta:
     eslint-config-prettier:
       optional: true
-  checksum: fa6a89f0d7cba1cc87064352f5a4a68dc3739448dd279bec2bced1bfa3b704467e603d13b69dcec853f8fa30b286b8b715912898e9da776e1b016cf0ee48bd99
+  checksum: 3f731b9988383851f1a42bd67a093461886fc56dc5d0ca4c72bdd0755dc0f843faedde843c1812710a75782a9711096aad22b6140fe7d6f996cc4a672c8b3643
   languageName: node
   linkType: hard
 
@@ -14211,12 +14211,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.32.2":
-  version: 7.32.2
-  resolution: "react-hook-form@npm:7.32.2"
+"react-hook-form@npm:^7.33.0":
+  version: 7.33.0
+  resolution: "react-hook-form@npm:7.33.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: abe8ba146c313d206f99a01260457bc72af03b2c73d7bd4be5af11598140ec45ef1ef37bac64b80c4dbc298d6aa21af4caa259a133f305a04ddf583faa18e7d0
+  checksum: af64d1eeb4bf46c6fc6f43529fde9eb5992319af0a85814744b14c7dd4d51b1faec8c00c71c273258b6f607f2d0155485ca528fb78c9d2d9e65abcb3274f72c1
   languageName: node
   linkType: hard
 
@@ -15880,9 +15880,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.3":
-  version: 3.1.3
-  resolution: "tailwindcss@npm:3.1.3"
+"tailwindcss@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "tailwindcss@npm:3.1.4"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -15911,7 +15911,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: ff7e159301ad1e55db95e9251c27c7d0f2274ac149874201d4ebcca8db2f1d3aba6f1e22ada88499961936d21ec74a82a6aa461064e1a3d0668017e2b0d3658d
+  checksum: 716b7d80e51c4904d845920cbb88483114ae6f14b20328b9206f49fd642bbcd390b9764fc574f85901b0377184c5d4eb94c00bcf73e280f81e772cf621d390a5
   languageName: node
   linkType: hard
 

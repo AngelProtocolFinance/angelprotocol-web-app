@@ -1,6 +1,6 @@
 import { ContractQueryArgs } from "services/types";
+import toBase64 from "helpers/toBase64";
 
 export default function contract_querier(arg: ContractQueryArgs) {
-  const query_msg = btoa(JSON.stringify(arg.msg));
-  return `cosmwasm/wasm/v1/contract/${arg.address}/smart/${query_msg}`;
+  return `cosmwasm/wasm/v1/contract/${arg.address}/smart/${toBase64(arg.msg)}`;
 }

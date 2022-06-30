@@ -11,6 +11,7 @@ import {
 } from "types/third-party/cosmjs";
 import contract_querier from "services/juno/contract_querier";
 import { toUtf8 } from "helpers/third-party/cosmjs";
+import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
@@ -18,10 +19,10 @@ import { junoLcdUrl, terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   client: LCDClient;
-  walletAddr?: string;
+  walletAddr: string;
 
   constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr;
+    this.walletAddr = walletAddr || "";
     this.client = new LCDClient({
       chainID: terraChainId,
       URL: terraLcdUrl,
@@ -48,8 +49,12 @@ export default class Contract {
   }
 
   async estimateFee(msgs: Msg[]): Promise<Fee> {
-    this.checkWallet();
-    const account = await this.client.auth.accountInfo(this.walletAddr!);
+    if (!this.walletAddr) {
+      throw new WalletDisconnectError();
+    }
+
+    const account = await this.client.auth.accountInfo(this.walletAddr);
+
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denoms.uluna] }
@@ -73,24 +78,23 @@ export default class Contract {
     };
   }
 
-  createdEmbeddedWasmMsg(
+  createEmbeddedWasmMsg(
     funds: Coin.Data[],
     to: string,
     msg: object
   ): EmbeddedWasmMsg {
-    const encodedMsg = btoa(JSON.stringify(msg));
     return {
       wasm: {
         execute: {
           contract_addr: to,
           funds,
-          msg: encodedMsg,
+          msg: toBase64(msg),
         },
       },
     };
   }
 
-  createdEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+  createEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
     return {
       bank: {
         send: {
@@ -99,11 +103,5 @@ export default class Contract {
         },
       },
     };
-  }
-
-  checkWallet() {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
   }
 }

@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
@@ -6,21 +5,22 @@ import {
   FundDetails,
   IndexFundOwnerPayload,
 } from "types/server/contracts";
+import { scaleAmount } from "helpers/amountFormatters";
 import { contracts } from "constants/contracts";
 import { junoDenom } from "constants/currency";
 import Contract from "./Contract";
 
 export default class Indexfund extends Contract {
-  fund_id?: number;
   contractAddr: string;
+  fundId?: number;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(walletAddr?: string, fund_id?: number) {
+  constructor(walletAddr?: string, fundId?: number) {
     super(walletAddr);
-    this.fund_id = fund_id;
     this.contractAddr = contracts.index_fund;
+    this.fundId = fundId;
 
     this.fundList = {
       address: this.contractAddr,
@@ -39,13 +39,13 @@ export default class Indexfund extends Contract {
   }
 
   createEmbeddedFundConfigMsg(config: FundConfig) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_config: config,
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_owner: payload,
     });
   }
@@ -61,13 +61,13 @@ export default class Indexfund extends Contract {
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       create_fund: { ...fundDetails },
     });
   }
 
   createEmbeddedRemoveFundMsg(fundId: number) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       remove_fund: { fund_id: fundId },
     });
   }
@@ -77,7 +77,7 @@ export default class Indexfund extends Contract {
     toAdd: string[],
     toRemove: string[]
   ) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
     });
   }
@@ -86,30 +86,28 @@ export default class Indexfund extends Contract {
     member: AllianceMember,
     action: "add" | "remove"
   ) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member_list: { address: member.wallet, member, action },
     });
   }
 
   createEmbeddedAAMemberEditMsg(member: AllianceMember) {
-    return this.createdEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], this.contractAddr, {
       update_alliance_member: { address: member.wallet, member },
     });
   }
 
   async createDepositMsg(amount: number | string, splitToLiquid?: number) {
-    this.checkWallet(); //throws error when no wallet
-    const uamount = new Decimal(amount).mul(1e6).divToInt(1).toString();
     return this.createContractMsg(
       this.walletAddr!,
       this.contractAddr,
       {
         deposit: {
-          fund_id: this.fund_id,
+          fund_id: this.fundId,
           split: `${splitToLiquid}`,
         },
       },
-      [{ amount: uamount, denom: junoDenom }]
+      [{ amount: scaleAmount(amount), denom: junoDenom }]
     );
   }
 }

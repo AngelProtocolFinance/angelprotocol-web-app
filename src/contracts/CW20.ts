@@ -1,6 +1,7 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
+import { scaleAmount } from "helpers/amountFormatters";
+import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -26,21 +27,20 @@ export default class CW20 extends Contract {
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
-    return this.createdEmbeddedWasmMsg([], this.cw20ContractAddr, {
+    return this.createEmbeddedWasmMsg([], this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleAmount(amount),
         recipient,
       },
     });
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw20ContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleAmount(amount),
         recipient,
       },
     });
@@ -51,13 +51,12 @@ export default class CW20 extends Contract {
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
   ) {
-    this.checkWallet();
     return this.createContractMsg(this.walletAddr!, this.cw20ContractAddr, {
       send: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleAmount(amount),
         contract: msgReceiverAddr,
-        msg: btoa(JSON.stringify(msg)),
+        msg: toBase64(msg),
       },
     });
   }

@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { FundSendMeta } from "pages/Admin/types";
@@ -15,6 +14,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors/sendCosmosTx";
 import Admin from "contracts/Admin";
 import CW20 from "contracts/CW20";
+import { scaleAmount } from "helpers/amountFormatters";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";
@@ -50,10 +50,10 @@ export default function useTransferFunds() {
         data.recipient
       );
     } else {
-      embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
+      embeddedMsg = cw20Contract.createEmbeddedBankMsg(
         [
           {
-            amount: new Decimal(data.amount).mul(1e6).divToInt(1).toString(),
+            amount: scaleAmount(data.amount),
             denom: "uusd",
           },
         ],
