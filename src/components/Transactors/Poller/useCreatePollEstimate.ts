@@ -1,4 +1,4 @@
-import { Fee } from "@terra-money/terra.js";
+import { StdFee } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
@@ -21,7 +21,7 @@ export default function useCreatePollEstimate() {
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
   const dispatch = useSetter();
-  const [maxFee, setMaxFee] = useState<Fee>();
+  const [maxFee, setMaxFee] = useState<StdFee>();
   const { wallet } = useGetWallet();
 
   useEffect(() => {

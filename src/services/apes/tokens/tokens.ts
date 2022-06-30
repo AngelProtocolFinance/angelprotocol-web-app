@@ -11,6 +11,8 @@ import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 import { terraNativeAssets } from "./constants";
 
+TODO: REFACTOR THIS TO INCLUDE JUNO BALANCE
+
 type TerraBalanceRes = { balances: Coin.Data[] };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 
