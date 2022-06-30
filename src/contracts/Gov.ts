@@ -1,7 +1,7 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
-import { GovState, Vote } from "types/server/contracts";
+import { Vote } from "types/server/contracts";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
@@ -19,15 +19,17 @@ export default class Gov extends Contract {
   config: CQA;
   polls: CQA;
 
+  private cw20Contract: CW20;
+
   constructor(walletAddr?: string) {
     super(walletAddr);
     this.govContractAddr = contracts.gov;
     this.haloContractAddr = contracts.halo_token;
 
-    this.haloInfo = new CW20(this.haloContractAddr, walletAddr).info;
-    this.haloBalance = new CW20(this.haloContractAddr, walletAddr).balance(
-      this.govContractAddr
-    );
+    this.cw20Contract = new CW20(this.haloContractAddr, walletAddr);
+    this.haloInfo = this.cw20Contract.info;
+    this.haloBalance = this.cw20Contract.balance(this.govContractAddr);
+
     //query args
     this.staker = {
       address: this.govContractAddr,
@@ -50,14 +52,8 @@ export default class Gov extends Contract {
     };
   }
 
-  async getGovState() {
-    return this.query<GovState>(this.govContractAddr, this.gov_state.msg);
-  }
-
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
-    this.checkWallet();
-    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
-    return cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       stake_voting_tokens: {},
     });
   }
@@ -69,39 +65,34 @@ export default class Gov extends Contract {
     link?: string
     // msgs?: PollExecuteMsg[]
   ) {
-    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
-    return cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       create_poll: { title, description, link },
     });
   }
 
   //halo_gov
   createGovUnstakeMsg(amount: number) {
-    this.checkWallet();
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
       withdraw_voting_tokens: { amount: uhalo.toString() },
     });
   }
 
   createGovClaimMsg() {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
       claim_voting_tokens: {},
     });
   }
 
   createEndPollMsg(poll_id: number) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
       end_poll: { poll_id: poll_id },
     });
   }
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
-    this.checkWallet();
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return new MsgExecuteContract(this.walletAddr!, this.govContractAddr, {
+    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });
   }

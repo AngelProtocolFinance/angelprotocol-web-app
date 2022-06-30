@@ -1,4 +1,5 @@
-import { FieldError, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../../../common";
@@ -7,8 +8,6 @@ export default function ProofOfRegistration() {
   const {
     formState: { errors, isSubmitting },
   } = useFormContext<DocumentationValues>();
-
-  const errorMessage = (errors.proofOfRegistration as FieldError)?.message;
 
   return (
     <InputRow
@@ -21,11 +20,12 @@ export default function ProofOfRegistration() {
         className="h-8"
         disabled={isSubmitting}
       />
-      {errorMessage && (
-        <p className="w-full text-xs text-failed-red text-center">
-          {errorMessage}
-        </p>
-      )}
+      <ErrorMessage
+        errors={errors}
+        as="p"
+        name="proofOfRegistration"
+        className="w-full text-xs text-failed-red text-center"
+      />
     </InputRow>
   );
 }

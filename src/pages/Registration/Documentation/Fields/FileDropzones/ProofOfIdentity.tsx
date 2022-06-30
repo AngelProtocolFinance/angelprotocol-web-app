@@ -1,4 +1,5 @@
-import { FieldError, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import { DocumentationValues } from "pages/Registration/types";
 import { useModalContext } from "contexts/ModalContext";
@@ -9,8 +10,6 @@ export default function ProofOfIdentity() {
   const {
     formState: { errors, isSubmitting },
   } = useFormContext<DocumentationValues>();
-
-  const errorMessage = (errors.proofOfIdentity as FieldError)?.message;
 
   return (
     <InputRow
@@ -24,11 +23,12 @@ export default function ProofOfIdentity() {
         className="h-8"
         disabled={isSubmitting}
       />
-      {errorMessage && (
-        <p className="w-full text-xs text-failed-red text-center">
-          {errorMessage}
-        </p>
-      )}
+      <ErrorMessage
+        errors={errors}
+        name="proofOfIdentity"
+        as="p"
+        className="w-full text-xs text-failed-red text-center"
+      />
     </InputRow>
   );
 }

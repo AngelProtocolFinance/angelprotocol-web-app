@@ -43,25 +43,25 @@ export default class Registrar extends Contract {
   }
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_config: payload,
     });
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return new MsgExecuteContract(this.walletAddr!, this.address, {
+    return new MsgExecuteContract(this.walletAddr, this.address, {
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], this.address, {
       update_owner: payload,
     });
   }

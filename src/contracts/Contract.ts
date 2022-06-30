@@ -1,5 +1,6 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import { EmbeddedWasmMsg } from "types/server/contracts";
+import toBase64 from "helpers/toBase64";
 import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
 import { terraChainId } from "constants/env";
@@ -7,10 +8,10 @@ import { terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   client: LCDClient;
-  walletAddr?: string;
+  walletAddr: string;
 
   constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr;
+    this.walletAddr = walletAddr || "";
     this.client = new LCDClient({
       chainID: terraChainId,
       URL: terraLcdUrl,
@@ -34,45 +35,31 @@ export default class Contract {
   }
 
   async estimateFee(msgs: Msg[]): Promise<Fee> {
-    this.checkWallet();
-    const account = await this.client.auth.accountInfo(this.walletAddr!);
+    if (!this.walletAddr) {
+      throw new WalletDisconnectError();
+    }
+
+    const account = await this.client.auth.accountInfo(this.walletAddr);
+
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denoms.uluna] }
     );
   }
 
-  createdEmbeddedWasmMsg(
+  createEmbeddedWasmMsg(
     funds: Coin.Data[],
     to: string,
     msg: object
   ): EmbeddedWasmMsg {
-    const encodedMsg = btoa(JSON.stringify(msg));
     return {
       wasm: {
         execute: {
           contract_addr: to,
           funds,
-          msg: encodedMsg,
+          msg: toBase64(msg),
         },
       },
     };
-  }
-
-  createdEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
-    return {
-      bank: {
-        send: {
-          to_address: to,
-          amount: funds,
-        },
-      },
-    };
-  }
-
-  checkWallet() {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
   }
 }

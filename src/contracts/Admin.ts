@@ -24,7 +24,6 @@ export default class Admin extends Contract {
   proposals: (arg: PageOptions) => CQA;
   proposal: (arg: number) => CQA;
   voteList: (arg: VotesPageOptions) => CQA;
-  voter: CQA;
   cw3Config: CQA;
 
   constructor(cws: CWContracts, walletAddr?: string) {
@@ -74,20 +73,11 @@ export default class Admin extends Contract {
         },
       },
     });
-
-    this.voter = {
-      address: this.cw3,
-      msg: {
-        voter: {
-          address: this.walletAddr,
-        },
-      },
-    };
   }
 
   //execute message creators
   createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
-    return this.createdEmbeddedWasmMsg([], this.cw4, {
+    return this.createEmbeddedWasmMsg([], this.cw4, {
       update_members: {
         add: to_add,
         remove: to_remove,
@@ -96,7 +86,7 @@ export default class Admin extends Contract {
   }
 
   createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
-    return this.createdEmbeddedWasmMsg([], this.cw3, {
+    return this.createEmbeddedWasmMsg([], this.cw3, {
       update_config: {
         threshold: { absolute_percentage: { percentage: threshold } },
         max_voting_period: { height },
@@ -105,8 +95,7 @@ export default class Admin extends Contract {
   }
 
   createExecProposalMsg(proposal_id: number) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
+    return new MsgExecuteContract(this.walletAddr, this.cw3, {
       execute: {
         proposal_id,
       },
@@ -117,11 +106,9 @@ export default class Admin extends Contract {
     title: string,
     description: string,
     embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
-    meta?: string,
-    latest?: any
+    meta?: string
   ) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
+    return new MsgExecuteContract(this.walletAddr, this.cw3, {
       propose: {
         title,
         description,
@@ -132,8 +119,7 @@ export default class Admin extends Contract {
   }
 
   createVoteMsg(proposal_id: number, vote: Vote) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
+    return new MsgExecuteContract(this.walletAddr, this.cw3, {
       vote: {
         proposal_id,
         vote,
