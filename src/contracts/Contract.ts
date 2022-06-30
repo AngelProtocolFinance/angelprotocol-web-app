@@ -1,15 +1,15 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { Coin, StdFee } from "@cosmjs/stargate";
+import { Coin, StdFee, calculateFee } from "@cosmjs/stargate";
+import Decimal from "decimal.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM } from "constants/currency";
 
 const GAS_PRICE =
   "0.0625"; /**TODO: uni-3 and juno-1 have diff gas prices for fee display only, 
   actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing  */
-const GAS_ADJUSTMENT = 1.5;
 
 export default class Contract {
   wallet?: WalletState;
@@ -27,14 +27,23 @@ export default class Contract {
     return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
+  async estimateFee(
+    msgs: readonly EncodeObject[]
+  ): Promise<{ fee: StdFee; feeNum: number }> {
     const client = await getCosmosClient(this.wallet);
+
     const gasLimit = await client.simulate(
       this.wallet!.address,
       msgs,
       undefined
     );
-    return this.getFee(gasLimit);
+
+    const fee = calculateFee(gasLimit, GAS_PRICE);
+
+    return {
+      fee,
+      feeNum: extractFeeNum(fee),
+    };
   }
 
   async signAndBroadcast(msgs: readonly EncodeObject[], fee: StdFee) {
@@ -57,11 +66,10 @@ export default class Contract {
       },
     };
   }
+}
 
-  private getFee(gasLimit: number) {
-    return {
-      amount: [{ denom: denoms.ujuno, amount: GAS_PRICE }],
-      gas: `${Math.round(gasLimit * GAS_ADJUSTMENT)}`,
-    };
-  }
+function extractFeeNum(fee: StdFee): number {
+  return new Decimal(fee.amount.find((a) => a.denom === MAIN_DENOM)!.amount)
+    .div(1e6)
+    .toNumber();
 }
