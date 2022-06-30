@@ -1,4 +1,4 @@
-import { Coin } from "@terra-money/terra.js";
+import { Coin } from "@cosmjs/proto-signing";
 import { EndowmentTierNum } from "types/shared/registration";
 
 /** _ethereum contract */
@@ -22,7 +22,7 @@ export type EmbeddedWasmMsg = {
   wasm: {
     execute: {
       contract_addr: string;
-      funds: Coin.Data[];
+      funds: Coin[];
       msg: string; //base64 endocoded msg object
     };
   };
@@ -31,7 +31,7 @@ export type EmbeddedWasmMsg = {
 export type EmbeddedBankMsg = {
   bank: {
     send: {
-      amount: Coin.Data[];
+      amount: Coin[];
       to_address: string;
     };
   };

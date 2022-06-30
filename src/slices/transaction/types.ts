@@ -98,25 +98,25 @@ type BaseArgs = {
   successLink?: SuccessLink;
   wallet?: WalletState;
 };
-type WithMsg = BaseArgs & {
+type TerraWithMsg = BaseArgs & {
   msgs: Msg[];
   tx?: never;
 }; //tx created onflight
-type WithTx = BaseArgs & {
+type TerraWithTx = BaseArgs & {
   msgs?: never;
   tx: CreateTxOptions;
 }; //pre-estimated tx
 
-export type TerraSendArgs = WithMsg | WithTx;
+export type TerraSendArgs = TerraWithMsg | TerraWithTx;
 
-type _WithMsg = BaseArgs & {
+type CosmosWithMsg = BaseArgs & {
   msgs: EncodeObject[];
   tx?: never;
 };
 
-type _WithTx = BaseArgs & {
+type CosmosWithTx = BaseArgs & {
   msgs?: never;
   tx: TxOptions;
 };
 
-export type SendCosmosTxArgs = _WithMsg | _WithTx;
+export type SendCosmosTxArgs = CosmosWithMsg | CosmosWithTx;
