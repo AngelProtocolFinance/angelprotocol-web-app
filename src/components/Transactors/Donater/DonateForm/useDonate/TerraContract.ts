@@ -1,11 +1,4 @@
-import {
-  Coin,
-  Fee,
-  LCDClient,
-  Msg,
-  MsgExecuteContract,
-} from "@terra-money/terra.js";
-import Decimal from "decimal.js";
+import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import toBase64 from "helpers/toBase64";
 import { denoms } from "constants/currency";

@@ -10,8 +10,6 @@ export interface G extends Gov {}
 export type TG = typeof Gov;
 
 export default class Gov extends Contract {
-  govContractAddr: string;
-  haloContractAddr: string;
   haloBalance: CQA;
   haloInfo: CQA;
   staker: CQA;
@@ -21,39 +19,37 @@ export default class Gov extends Contract {
 
   private cw20Contract: CW20;
 
-  constructor(wallet?: WalletState) {
-    super(wallet);
-    this.govContractAddr = contracts.gov;
-    this.haloContractAddr = contracts.halo_token;
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.gov);
 
-    this.cw20Contract = new CW20(this.haloContractAddr, wallet);
+    this.cw20Contract = new CW20(wallet, contracts.halo_token);
     this.haloInfo = this.cw20Contract.info;
-    this.haloBalance = this.cw20Contract.balance(this.govContractAddr);
+    this.haloBalance = this.cw20Contract.balance(this.contractAddress);
 
     //query args
     this.staker = {
-      address: this.govContractAddr,
-      msg: { staker: { address: this.walletAddr } },
+      address: this.contractAddress,
+      msg: { staker: { address: this.walletAddress } },
     };
 
     this.gov_state = {
-      address: this.govContractAddr,
+      address: this.contractAddress,
       msg: { state: {} },
     };
 
     this.config = {
-      address: this.govContractAddr,
+      address: this.contractAddress,
       msg: { config: {} },
     };
 
     this.polls = {
-      address: this.govContractAddr,
+      address: this.contractAddress,
       msg: { polls: {} },
     };
   }
 
   createGovStakeMsg(amount: number | string) {
-    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.contractAddress, {
       stake_voting_tokens: {},
     });
   }
@@ -64,7 +60,7 @@ export default class Gov extends Contract {
     description: string,
     link?: string
   ) {
-    return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
+    return this.cw20Contract.createSendMsg(amount, this.contractAddress, {
       create_poll: { title, description, link },
     });
   }
@@ -72,26 +68,26 @@ export default class Gov extends Contract {
   //halo_gov
   createGovUnstakeMsg(amount: number) {
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return this.createExecuteContractMsg(this.govContractAddr, {
+    return this.createExecuteContractMsg({
       withdraw_voting_tokens: { amount: uhalo.toString() },
     });
   }
 
   createGovClaimMsg() {
-    return this.createExecuteContractMsg(this.govContractAddr, {
+    return this.createExecuteContractMsg({
       claim_voting_tokens: {},
     });
   }
 
   createEndPollMsg(poll_id: number) {
-    return this.createExecuteContractMsg(this.govContractAddr, {
+    return this.createExecuteContractMsg({
       end_poll: { poll_id: poll_id },
     });
   }
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return this.createExecuteContractMsg(this.govContractAddr, {
+    return this.createExecuteContractMsg({
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });
   }

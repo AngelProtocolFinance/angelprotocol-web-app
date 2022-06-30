@@ -12,56 +12,56 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
-  address: string;
   vaultsRate: CQA;
   config: CQA;
 
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
-  constructor(wallet?: WalletState) {
-    super(wallet);
-    this.address = contracts.registrar;
+  constructor(wallet: WalletState | undefined) {
+    const address = contracts.registrar;
+
+    super(wallet, address);
 
     this.endowmentList = (queryOptions) => ({
-      address: this.address,
+      address: address,
       msg: {
         endowment_list: queryOptions,
       },
     });
 
     this.vaultsRate = {
-      address: this.address,
+      address: address,
       msg: {
         approved_vault_rate_list: {},
       },
     };
 
     this.config = {
-      address: this.address,
+      address: address,
       msg: { config: {} },
     };
   }
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_config: payload,
     });
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return this.createExecuteContractMsg(this.address, {
+    return this.createExecuteContractMsg({
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_owner: payload,
     });
   }

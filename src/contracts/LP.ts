@@ -6,18 +6,19 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  pair_address: string;
   halo_address: string;
   simul: ContractQueryArgs;
 
-  constructor(wallet?: WalletState) {
-    super(wallet);
-    this.pair_address = contracts.loop_haloust_pair;
+  constructor(wallet: WalletState | undefined) {
+    const contractAddress = contracts.loop_haloust_pair;
+
+    super(wallet, contractAddress);
+
     this.halo_address = contracts.halo_token;
 
     //query args
     this.simul = {
-      address: this.pair_address,
+      address: contractAddress,
       msg: {
         simulation: {
           offer_asset: {
@@ -52,7 +53,7 @@ export default class LP extends Contract {
           },
         };
 
-    const result = await this.query<Simulation>(this.pair_address, {
+    const result = await this.query<Simulation>({
       simulation: {
         offer_asset: {
           info: offer_asset,
@@ -71,7 +72,6 @@ export default class LP extends Contract {
   ) {
     const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
     return this.createExecuteContractMsg(
-      this.pair_address,
       {
         swap: {
           offer_asset: {
@@ -100,17 +100,21 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
-    return this.createExecuteContractMsg(this.halo_address, {
-      send: {
-        contract: this.pair_address,
-        amount: uhalo_amount,
-        msg: Buffer.from(
-          JSON.stringify({
-            swap: { belief_price, max_spread },
-          })
-        ).toString("base64"),
+    return this.createExecuteContractMsg(
+      {
+        send: {
+          contract: this.contractAddress,
+          amount: uhalo_amount,
+          msg: Buffer.from(
+            JSON.stringify({
+              swap: { belief_price, max_spread },
+            })
+          ).toString("base64"),
+        },
       },
-    });
+      [],
+      this.halo_address
+    );
   }
 }
 

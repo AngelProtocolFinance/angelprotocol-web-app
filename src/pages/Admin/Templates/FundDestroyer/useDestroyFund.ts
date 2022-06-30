@@ -38,7 +38,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

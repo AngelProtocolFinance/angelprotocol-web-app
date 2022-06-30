@@ -1,4 +1,6 @@
+import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/server/aws";
+import { RegistrarCreateEndowmentPayload } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
@@ -9,8 +11,9 @@ describe("Registrar tests", () => {
     const registrar = new Registrar(WALLET);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
-    expect(payload.sender).toBe(WALLET.address);
-    expect(payload.execute_msg).toStrictEqual({
+    expect(payload.value.sender).toBe(WALLET.address);
+    expect(payload.value.msg).toBeDefined();
+    expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
       create_endowment: {
         beneficiary: WALLET.address,
         cw4_members: [],
@@ -31,11 +34,7 @@ describe("Registrar tests", () => {
           number_of_employees: undefined,
           overview: "some overview",
           registration_number: undefined,
-          social_media_urls: {
-            facebook: undefined,
-            linkedin: undefined,
-            twitter: undefined,
-          },
+          social_media_urls: {},
           street_address: undefined,
           tier: 1,
           un_sdg: 0,

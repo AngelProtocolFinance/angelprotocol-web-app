@@ -46,7 +46,7 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(wallet, cwContracts);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       data.height,
       (data.threshold / 100).toFixed(3)

@@ -60,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

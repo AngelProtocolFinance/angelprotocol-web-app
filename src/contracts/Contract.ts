@@ -14,18 +14,23 @@ const GAS_PRICE =
   actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing  */
 
 export default class Contract {
-  wallet?: WalletState;
-  walletAddr: string;
+  contractAddress: string;
+  wallet: WalletState | undefined;
+  walletAddress: string;
 
-  constructor(wallet?: WalletState) {
+  constructor(wallet: WalletState | undefined, contractAddress = "") {
+    this.contractAddress = contractAddress;
     this.wallet = wallet;
-    this.walletAddr = wallet?.address || "";
+    this.walletAddress = wallet?.address || "";
   }
 
   //for on-demand query, use RTK where possible
-  async query<T>(source: string, message: Record<string, unknown>) {
+  async query<T>(message: Record<string, unknown>) {
     const client = await getCosmosClient(this.wallet);
-    const jsonObject = await client.queryContractSmart(source, message);
+    const jsonObject = await client.queryContractSmart(
+      this.contractAddress,
+      message
+    );
     return JSON.parse(jsonObject) as T;
   }
 
@@ -55,13 +60,13 @@ export default class Contract {
 
   createEmbeddedWasmMsg(
     funds: Coin[],
-    to: string,
-    msg: object
+    msg: object,
+    contract_addr: string = this.contractAddress
   ): EmbeddedWasmMsg {
     return {
       wasm: {
         execute: {
-          contract_addr: to,
+          contract_addr,
           funds,
           msg: toBase64(msg),
         },
@@ -70,15 +75,15 @@ export default class Contract {
   }
 
   createExecuteContractMsg(
-    contract: string,
     msg: object,
-    funds: Coin[] = []
+    funds: Coin[] = [],
+    contract_addr: string = this.contractAddress
   ): MsgExecuteContractEncodeObject {
     return {
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: {
-        contract: contract,
-        sender: this.walletAddr,
+        contract: contract_addr,
+        sender: this.walletAddress,
         msg: toUtf8(JSON.stringify(msg)),
         funds,
       },

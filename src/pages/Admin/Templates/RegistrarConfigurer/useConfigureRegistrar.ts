@@ -62,7 +62,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,

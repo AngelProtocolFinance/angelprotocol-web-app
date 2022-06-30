@@ -7,23 +7,21 @@ import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
-  cw20ContractAddr: string;
   balance: (address: string) => ContractQueryArgs;
   info: ContractQueryArgs;
 
-  constructor(cw20ContractAddr: string, wallet?: WalletState) {
-    super(wallet);
-    this.cw20ContractAddr = cw20ContractAddr;
+  constructor(wallet: WalletState | undefined, cw20ContractAddr: string) {
+    super(wallet, cw20ContractAddr);
 
     this.info = {
-      address: this.cw20ContractAddr,
+      address: cw20ContractAddr,
       msg: {
         token_info: {},
       },
     };
 
     this.balance = (address) => ({
-      address: this.cw20ContractAddr,
+      address: cw20ContractAddr,
       msg: { balance: { address } },
     });
   }
@@ -40,7 +38,7 @@ export default class CW20 extends Contract {
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
-    return this.createEmbeddedWasmMsg([], this.cw20ContractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -50,7 +48,7 @@ export default class CW20 extends Contract {
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    return this.createExecuteContractMsg(this.cw20ContractAddr, {
+    return this.createExecuteContractMsg({
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -64,7 +62,7 @@ export default class CW20 extends Contract {
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
   ) {
-    return this.createExecuteContractMsg(this.cw20ContractAddr, {
+    return this.createExecuteContractMsg({
       send: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),

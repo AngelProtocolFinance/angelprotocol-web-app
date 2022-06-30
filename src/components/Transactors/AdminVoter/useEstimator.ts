@@ -39,7 +39,7 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(cwContracts, wallet);
+        const contract = new Admin(wallet, cwContracts);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const { fee, feeNum } = await contract.estimateFee([voteMsg]);
 

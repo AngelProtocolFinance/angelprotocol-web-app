@@ -40,7 +40,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

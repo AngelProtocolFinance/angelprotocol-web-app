@@ -18,7 +18,7 @@ export default class Multicall {
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
 
-  constructor(wallet?: WalletState) {
+  constructor(wallet: WalletState | undefined) {
     this.address = contracts.multicall;
     this.registrarContract = new Registrar(wallet);
     this.airdropContract = new Airdrop(wallet);
@@ -26,7 +26,7 @@ export default class Multicall {
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
       msg: this.constructAggregatedQuery([
-        new Account(endowmentAddr, wallet).balance,
+        new Account(wallet, endowmentAddr).balance,
         this.registrarContract.vaultsRate,
       ]),
     });

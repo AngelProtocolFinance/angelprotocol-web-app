@@ -63,7 +63,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(wallet, "apTeam");
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {

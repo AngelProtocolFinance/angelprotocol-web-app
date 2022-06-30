@@ -43,7 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(contracts.halo_token, wallet);
+    const cw20Contract = new CW20(wallet, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -61,7 +61,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(wallet, cwContracts);
     const fundTransferMeta: FundSendMeta = {
       type: "admin-group-fund-transfer",
       data: {

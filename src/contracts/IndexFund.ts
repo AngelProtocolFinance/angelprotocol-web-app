@@ -10,61 +10,56 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class IndexFund extends Contract {
-  contractAddr: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
   config: ContractQueryArgs;
 
-  constructor(wallet?: WalletState) {
-    super(wallet);
-    this.contractAddr = contracts.index_fund;
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.index_fund);
 
     this.fundList = {
-      address: this.contractAddr,
+      address: this.contractAddress,
       msg: { funds_list: {} },
     };
 
     this.allianceMembers = {
-      address: this.contractAddr,
+      address: this.contractAddress,
       msg: { alliance_members: {} },
     };
 
     this.config = {
-      address: this.contractAddr,
+      address: this.contractAddress,
       msg: { config: {} },
     };
   }
 
   createEmbeddedFundConfigMsg(config: FundConfig) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_config: config,
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_owner: payload,
     });
   }
 
   async getFundDetails(fundId: number) {
-    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
-      this.contractAddr,
-      {
-        fund_details: { fund_id: fundId },
-      }
-    );
+    const fundDetailsRes = await this.query<{ fund: FundDetails }>({
+      fund_details: { fund_id: fundId },
+    });
     return fundDetailsRes.fund;
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       create_fund: { ...fundDetails },
     });
   }
 
   createEmbeddedRemoveFundMsg(fundId: number) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       remove_fund: { fund_id: fundId },
     });
   }
@@ -74,7 +69,7 @@ export default class IndexFund extends Contract {
     toAdd: string[],
     toRemove: string[]
   ) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
     });
   }
@@ -83,13 +78,13 @@ export default class IndexFund extends Contract {
     member: AllianceMember,
     action: "add" | "remove"
   ) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_alliance_member_list: { address: member.wallet, member, action },
     });
   }
 
   createEmbeddedAAMemberEditMsg(member: AllianceMember) {
-    return this.createEmbeddedWasmMsg([], this.contractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_alliance_member: { address: member.wallet, member },
     });
   }

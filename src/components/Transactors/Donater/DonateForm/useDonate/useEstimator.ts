@@ -83,7 +83,7 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new CW20(selectedToken.contract_addr, wallet);
+          const contract = new CW20(wallet, selectedToken.contract_addr);
           const msg = contract.createTransferMsg(
             debounced_amount,
             ap_wallets.terra

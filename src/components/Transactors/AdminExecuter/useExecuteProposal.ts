@@ -17,7 +17,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
       showModal(Popup, { message: "Invalid poll id" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet);
+    const contract = new Admin(wallet, cwContracts);
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendTerraTx({

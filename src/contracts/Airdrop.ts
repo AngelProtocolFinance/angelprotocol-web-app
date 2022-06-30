@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Airdrops } from "types/server/aws";
@@ -8,24 +7,21 @@ import Contract from "./Contract";
 import Gov from "./Gov";
 
 export default class Airdrop extends Contract {
-  airdropContractAddr: string;
   isAirDropClaimed: (stage: number) => CQA;
 
-  constructor(wallet?: WalletState) {
-    super(wallet);
-    this.airdropContractAddr = contracts.airdrop;
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.airdrop);
     this.isAirDropClaimed = (stage) => ({
-      address: this.airdropContractAddr,
-      msg: { is_claimed: { stage, address: this.walletAddr } },
+      address: this.contractAddress,
+      msg: { is_claimed: { stage, address: this.walletAddress } },
     });
   }
 
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
-    const claimMsgs = airdrops.map(
-      ({ stage, haloTokens, proof }) =>
-        new MsgExecuteContract(this.walletAddr, this.airdropContractAddr, {
-          claim: { stage, amount: haloTokens, proof },
-        })
+    const claimMsgs = airdrops.map(({ stage, haloTokens, proof }) =>
+      this.createExecuteContractMsg({
+        claim: { stage, amount: haloTokens, proof },
+      })
     );
     if (is_stake) {
       const totalClaimable = airdrops.reduce(

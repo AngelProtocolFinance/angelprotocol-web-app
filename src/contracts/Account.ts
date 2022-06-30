@@ -4,33 +4,31 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
-  accountAddr: string;
   balance: ContractQueryArgs;
   profile: ContractQueryArgs;
 
-  constructor(accountAddr: string, wallet?: WalletState) {
-    super(wallet);
-    this.accountAddr = accountAddr;
+  constructor(wallet: WalletState | undefined, accountAddr: string) {
+    super(wallet, accountAddr);
 
     this.balance = {
-      address: this.accountAddr,
+      address: accountAddr,
       msg: { balance: {} },
     };
 
     this.profile = {
-      address: this.accountAddr,
+      address: accountAddr,
       msg: { get_profile: {} },
     };
   }
 
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
-    return this.createEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], {
       withdraw: payload,
     });
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_profile: payload,
     });
   }

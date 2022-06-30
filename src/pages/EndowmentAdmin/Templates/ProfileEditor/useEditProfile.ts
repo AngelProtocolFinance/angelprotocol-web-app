@@ -93,7 +93,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, wallet);
+    const accountContract = new Account(wallet, endowmentAddr!);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
@@ -104,7 +104,7 @@ export default function useEditProfile() {
       data: genDiffMeta(diffEntries, initialProfile),
     };
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(wallet, cwContracts);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
