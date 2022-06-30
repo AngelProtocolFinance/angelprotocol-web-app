@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
+import { DonateValues } from "../../types";
 import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import useEstimator from "../useEstimator";
+import useEstimator from "./useEstimator";
 
 export default function useDonate() {
   const { wallet, isWalletLoading } = useGetWallet();

@@ -5,7 +5,7 @@ import Decimal from "decimal.js";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "./types";
+import { DonateValues } from "../../types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
