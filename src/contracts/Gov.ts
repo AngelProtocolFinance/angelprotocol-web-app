@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Vote } from "types/server/contracts";
@@ -53,7 +52,7 @@ export default class Gov extends Contract {
     };
   }
 
-  createGovStakeMsg(amount: number | string): MsgExecuteContract {
+  createGovStakeMsg(amount: number | string) {
     return this.cw20Contract.createSendMsg(amount, this.govContractAddr, {
       stake_voting_tokens: {},
     });
@@ -73,26 +72,26 @@ export default class Gov extends Contract {
   //halo_gov
   createGovUnstakeMsg(amount: number) {
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
+    return this.createExecuteContractMsg(this.govContractAddr, {
       withdraw_voting_tokens: { amount: uhalo.toString() },
     });
   }
 
   createGovClaimMsg() {
-    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
+    return this.createExecuteContractMsg(this.govContractAddr, {
       claim_voting_tokens: {},
     });
   }
 
   createEndPollMsg(poll_id: number) {
-    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
+    return this.createExecuteContractMsg(this.govContractAddr, {
       end_poll: { poll_id: poll_id },
     });
   }
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
-    return new MsgExecuteContract(this.walletAddr, this.govContractAddr, {
+    return this.createExecuteContractMsg(this.govContractAddr, {
       cast_vote: { poll_id, vote, amount: uhalo.toString() },
     });
   }

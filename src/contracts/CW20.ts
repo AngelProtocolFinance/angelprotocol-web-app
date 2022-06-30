@@ -1,4 +1,4 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin } from "@cosmjs/proto-signing";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
@@ -28,7 +28,7 @@ export default class CW20 extends Contract {
     });
   }
 
-  createEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
     return {
       bank: {
         send: {
@@ -50,7 +50,7 @@ export default class CW20 extends Contract {
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
+    return this.createExecuteContractMsg(this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -63,8 +63,8 @@ export default class CW20 extends Contract {
     amount: number | string,
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
-  ): MsgExecuteContract {
-    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
+  ) {
+    return this.createExecuteContractMsg(this.cw20ContractAddr, {
       send: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),

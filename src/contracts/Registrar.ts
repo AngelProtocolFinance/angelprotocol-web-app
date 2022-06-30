@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
 import {
@@ -56,7 +55,7 @@ export default class Registrar extends Contract {
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return new MsgExecuteContract(this.walletAddr, this.address, {
+    return this.createExecuteContractMsg(this.address, {
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }

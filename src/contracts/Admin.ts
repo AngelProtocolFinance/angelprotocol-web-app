@@ -1,4 +1,4 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
+import { MsgSendEncodeObject } from "@cosmjs/stargate";
 import { ContractQueryArgs as CQA } from "services/types";
 import {
   CWContracts,
@@ -96,7 +96,7 @@ export default class Admin extends Contract {
   }
 
   createExecProposalMsg(proposal_id: number) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg(this.cw3, {
       execute: {
         proposal_id,
       },
@@ -109,7 +109,7 @@ export default class Admin extends Contract {
     embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
     meta?: string
   ) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg(this.cw3, {
       propose: {
         title,
         description,
@@ -120,7 +120,7 @@ export default class Admin extends Contract {
   }
 
   createVoteMsg(proposal_id: number, vote: Vote) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg(this.cw3, {
       vote: {
         proposal_id,
         vote,

@@ -71,7 +71,8 @@ export default class Contract {
 
   createExecuteContractMsg(
     contract: string,
-    msg: object
+    msg: object,
+    funds: Coin[] = []
   ): MsgExecuteContractEncodeObject {
     return {
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
@@ -79,6 +80,7 @@ export default class Contract {
         contract: contract,
         sender: this.walletAddr,
         msg: toUtf8(JSON.stringify(msg)),
+        funds,
       },
     };
   }

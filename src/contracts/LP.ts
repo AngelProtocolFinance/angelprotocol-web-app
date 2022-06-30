@@ -1,4 +1,3 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
@@ -71,8 +70,7 @@ export default class LP extends Contract {
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
-    return new MsgExecuteContract(
-      this.walletAddr,
+    return this.createExecuteContractMsg(
       this.pair_address,
       {
         swap: {
@@ -89,7 +87,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin("uusd", uust_amount)]
+      [{ denom: "uusd", amount: uust_amount }]
     );
   }
 
@@ -102,7 +100,7 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
-    return new MsgExecuteContract(this.walletAddr, this.halo_address, {
+    return this.createExecuteContractMsg(this.halo_address, {
       send: {
         contract: this.pair_address,
         amount: uhalo_amount,
