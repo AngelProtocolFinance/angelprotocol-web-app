@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import Selector from "components/Selector";
@@ -27,11 +28,12 @@ export default function UnSdgSelector() {
         control={control}
         disabled={isSubmitting}
       />
-      {errors.un_sdg?.message && (
-        <p className="w-full text-xs text-failed-red text-center">
-          {errors.un_sdg.message}
-        </p>
-      )}
+      <ErrorMessage
+        errors={errors}
+        as="p"
+        name="un_sdg"
+        className="w-full text-xs text-failed-red text-center"
+      />
     </InputRow>
   );
 }
