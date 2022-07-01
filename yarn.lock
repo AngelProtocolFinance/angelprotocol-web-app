@@ -2043,17 +2043,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/encoding@npm:^0.28.10":
-  version: 0.28.10
-  resolution: "@cosmjs/encoding@npm:0.28.10"
-  dependencies:
-    base64-js: ^1.3.0
-    bech32: ^1.1.4
-    readonly-date: ^1.0.0
-  checksum: 687f3417404eb684b5d19cc7f8cdef7a53ddc0e8747e6e2e92f7c87a71a2be2cad9873f6e63ab695abff44ff24dd82cd66d00b9f4378e9a4dbcb8a27f9ab3f76
-  languageName: node
-  linkType: hard
-
 "@cosmjs/json-rpc@npm:0.28.9":
   version: 0.28.9
   resolution: "@cosmjs/json-rpc@npm:0.28.9"
@@ -2105,7 +2094,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/proto-signing@npm:0.28.9, @cosmjs/proto-signing@npm:^0.28.9":
+"@cosmjs/proto-signing@npm:0.28.9":
   version: 0.28.9
   resolution: "@cosmjs/proto-signing@npm:0.28.9"
   dependencies:
@@ -2143,7 +2132,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/stargate@npm:0.28.9, @cosmjs/stargate@npm:^0.28.9":
+"@cosmjs/stargate@npm:0.28.9":
   version: 0.28.9
   resolution: "@cosmjs/stargate@npm:0.28.9"
   dependencies:
@@ -5691,9 +5680,6 @@ __metadata:
     "@babel/plugin-syntax-flow": ^7.18.6
     "@babel/plugin-transform-react-jsx": ^7.18.6
     "@cosmjs/cosmwasm-stargate": ^0.28.9
-    "@cosmjs/encoding": ^0.28.10
-    "@cosmjs/proto-signing": ^0.28.9
-    "@cosmjs/stargate": ^0.28.9
     "@draft-js-plugins/counter": ^4.1.2
     "@draft-js-plugins/editor": ^4.1.3
     "@fleekhq/fleek-storage-js": ^1.0.21
