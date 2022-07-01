@@ -10,7 +10,7 @@ export interface ERC20Token {
   balance: string;
 }
 
-/** _wrapper classic*/
+/** _wrapper */
 export interface QueryRes<T> {
   data: T;
 }

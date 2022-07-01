@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 import { IS_TEST } from "constants/env";
-import { providerIcons } from "./constants";
-import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
-import { juno_test } from "./useKeplr/chains";
+import { providerIcons } from "../constants";
+import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
+import { juno_test } from "./chains";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
@@ -29,15 +29,17 @@ export default function useKeplr() {
 
       let address: string;
       let chainId: string;
+
       if (IS_TEST) {
         chainId = juno_test.chainId;
         await dwindow.keplr.experimentalSuggestChain(juno_test);
         await dwindow.keplr.enable(chainId);
         const key = await dwindow.keplr.getKey(chainId);
         address = key.bech32Address;
+      } else {
+        chainId = chainIDs.juno_main;
       }
 
-      chainId = chainIDs.juno_main;
       await dwindow.keplr.enable(chainId);
       const key = await dwindow.keplr.getKey(chainId);
       address = key.bech32Address;
