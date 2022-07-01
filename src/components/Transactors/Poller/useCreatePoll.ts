@@ -25,7 +25,7 @@ export default function useCreatePoll() {
     dispatch(
       sendCosmosTx({
         wallet,
-        tx: { msgs: [pollMsg], fee: maxFee },
+        tx: { msgs: [pollMsg], fee: maxFee! },
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
