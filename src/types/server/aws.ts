@@ -147,7 +147,7 @@ export type EVMNative = TokenBase & {
   native_symbol?: never;
 };
 
-export type Token = EVMNative | TerraNative | ALT20;
+export type Token = EVMNative | TerraNative | ALT20 | JunoNative;
 
 /** /leaderboards */
 export interface Endowment {

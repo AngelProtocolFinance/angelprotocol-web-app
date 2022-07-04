@@ -9,7 +9,7 @@ import { IS_TEST } from "constants/env";
 import { apes_endpoint, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-import { terraNativeAssets } from "./constants";
+import { lunaToken } from "./constants";
 
 type TerraBalanceRes = { balances: Coin.Data[] };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
@@ -59,14 +59,11 @@ const tokens_api = apes.injectEndpoints({
 
             const jsonRes: TerraBalanceRes = await res.json();
             const terraTokens = jsonRes.balances.reduce((_coins, _coin) => {
-              const coinAsset = terraNativeAssets[_coin.denom];
               //don't display coins with no assets
-              if (coinAsset) {
-                _coins.push({
-                  ...coinAsset,
-                  balance: +utils.formatUnits(_coin.amount, coinAsset.decimals),
-                });
-              }
+              _coins.push({
+                ...lunaToken,
+                balance: +utils.formatUnits(_coin.amount, lunaToken.decimals),
+              });
               return _coins;
             }, [] as WithBalance<Token>[]);
 

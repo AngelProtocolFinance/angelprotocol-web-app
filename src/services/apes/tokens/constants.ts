@@ -1,6 +1,7 @@
 import { WithBalance } from "services/types";
-import { EVMNative, TerraNative, Token } from "types/server/aws";
+import { EVMNative, JunoNative, TerraNative, Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
+import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import { chainIDs } from "constants/chainIDs";
@@ -87,10 +88,20 @@ export const lunaToken: TerraNative = {
   chain_name: "Terra Pisco Testnet",
 };
 
+export const junoToken: JunoNative = {
+  type: "juno-native",
+  symbol: "JUNO",
+  logo: junoLogo,
+  decimals: 6,
+  chain_id: chainIDs.juno_main,
+  chain_name: "Juno Mainnet",
+};
+
 //TODO: get this from server
 export const tokenList: Token[] = [
   avalancheToken,
   binanceToken,
   ethereumToken,
   lunaToken,
+  junoToken,
 ];
