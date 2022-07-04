@@ -1,6 +1,6 @@
 import { ProviderId } from "../types";
 
-export default function isTerraProvider(providerId: ProviderId) {
+export default function isJunoProvider(providerId: ProviderId) {
   switch (providerId) {
     //FUTURE: add other leap falcon xdefi etc
     case "keplr":
