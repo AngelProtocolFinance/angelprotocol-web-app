@@ -2,9 +2,11 @@ import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { CharityParams } from "./types";
 import { proposalRoutes } from "pages/Admin/constants";
-import { useEndowmentCWs } from "services/terra/account/queriers";
-import { useEndowmentProfile } from "services/terra/account/queriers";
-import { useMember } from "services/terra/admin/queriers";
+import {
+  useEndowmentCWs,
+  useEndowmentProfile,
+} from "services/juno/account/queriers";
+import { useMember } from "services/juno/admin/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";

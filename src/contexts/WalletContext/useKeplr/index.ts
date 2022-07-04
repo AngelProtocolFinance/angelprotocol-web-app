@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
-import { providerIcons } from "./constants";
-import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+import { IS_TEST } from "constants/env";
+import { providerIcons } from "../constants";
+import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
+import { juno_test } from "./chains";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
@@ -24,12 +26,23 @@ export default function useKeplr() {
   const requestAccess = async (isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
-      await dwindow.keplr.enable(chainIDs.juno_main);
-      const key = await dwindow.keplr.getKey(chainIDs.juno_main);
-      const address = key.bech32Address;
+
+      let address: string;
+      let chainId: string;
+
+      if (IS_TEST) {
+        chainId = juno_test.chainId;
+        await dwindow.keplr.experimentalSuggestChain(juno_test);
+      } else {
+        chainId = chainIDs.juno_main;
+      }
+
+      await dwindow.keplr.enable(chainId);
+      const key = await dwindow.keplr.getKey(chainId);
+      address = key.bech32Address;
 
       setAddress(address);
-      setChainId(chainIDs.juno_main);
+      setChainId(chainId);
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect

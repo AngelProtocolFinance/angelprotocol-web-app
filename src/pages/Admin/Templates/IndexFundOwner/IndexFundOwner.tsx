@@ -4,7 +4,7 @@ import { IndexFundOwnerValues } from "pages/Admin/types";
 import { IndexFundConfig } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useIndexFundConfig } from "services/terra/indexFund/queriers";
+import { useIndexFundConfig } from "services/juno/indexFund/queriers";
 import OwnerUpdateForm from "./OwnerUpdateForm";
 import { updateOwnerSchema } from "./updateOwnerSchema";
 

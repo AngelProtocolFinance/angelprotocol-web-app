@@ -15,14 +15,29 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
+  [chainIDs.terra_main]: "https://phoenix-lcd.terra.dev/",
   [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
   [chainIDs.terra_classic]: "https://fcd.terra.dev",
   [chainIDs.terra_local]: "http://localhost:3060",
 };
 
 export const terraLcdUrl = IS_TEST
-  ? "https://pisco-lcd.terra.dev"
-  : "https://fcd.terra.dev";
+  ? terra_lcds[chainIDs.terra_test]
+  : terra_lcds[chainIDs.terra_main];
+
+export const juno_lcds: URL_GROUP = {
+  [chainIDs.juno_main]: "https://lcd-juno.itastakers.com",
+  [chainIDs.juno_test]: "https://lcd.uni.juno.deuslabs.fi",
+};
+
+export const juno_rpcs: URL_GROUP = {
+  [chainIDs.juno_main]: "https://rpc-juno.itastakers.com",
+  [chainIDs.juno_test]: " https://rpc.uni.juno.deuslabs.fi",
+};
+
+export const junoLcdUrl = IS_TEST
+  ? juno_lcds[chainIDs.juno_test]
+  : juno_lcds[chainIDs.juno_main];
 
 export const TERRA_FINDER = "https://finder.terra.money/";
 

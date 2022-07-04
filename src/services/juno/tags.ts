@@ -1,6 +1,6 @@
-import { TerraTags } from "services/types";
+import { JunoTags } from "services/types";
 
-export const terraTags: { [key in TerraTags]: string } = {
+export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",
   admin: "admin",
   indexfund: "indexfund",

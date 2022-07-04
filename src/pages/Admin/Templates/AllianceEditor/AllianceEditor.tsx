@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "pages/Admin/types";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useAllianceMembers } from "services/terra/indexFund/queriers";
+import { useAllianceMembers } from "services/juno/indexFund/queriers";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";
 import AllianceEditForm from "./AllianceEditForm";

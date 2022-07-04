@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
-import { govTags, multicallTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { govTags, junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useStakingEstimator from "./useStakingEstimator";
@@ -22,10 +22,10 @@ export default function useStakeUnstake() {
         wallet,
         tx: tx!,
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.gov, id: govTags.staker },
-            { type: terraTags.gov, id: govTags.halo_balance },
-            { type: terraTags.multicall, id: multicallTags.terraBalances },
+          invalidateJunoTags([
+            { type: junoTags.gov, id: govTags.staker },
+            { type: junoTags.gov, id: govTags.halo_balance },
+            { type: junoTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

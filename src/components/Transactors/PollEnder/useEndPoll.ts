@@ -1,5 +1,5 @@
-import { multicallTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags, multicallTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -26,9 +26,9 @@ export default function useEndPoll(pollId: number) {
         wallet,
         msgs: [msg],
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.gov },
-            { type: terraTags.multicall, id: multicallTags.terraBalances },
+          invalidateJunoTags([
+            { type: junoTags.gov },
+            { type: junoTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

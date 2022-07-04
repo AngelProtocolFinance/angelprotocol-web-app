@@ -1,5 +1,5 @@
-import { adminTags, terraTags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
+import { invalidateJunoTags } from "services/juno";
+import { adminTags, junoTags } from "services/juno/tags";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useEstimator from "./useEstimator";
@@ -13,10 +13,10 @@ export default function useVote() {
         wallet,
         tx: tx!,
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: terraTags.admin, id: adminTags.proposal },
-            { type: terraTags.admin, id: adminTags.proposals },
-            { type: terraTags.admin, id: adminTags.votes },
+          invalidateJunoTags([
+            { type: junoTags.admin, id: adminTags.proposal },
+            { type: junoTags.admin, id: adminTags.proposals },
+            { type: junoTags.admin, id: adminTags.votes },
           ]),
         ],
       })

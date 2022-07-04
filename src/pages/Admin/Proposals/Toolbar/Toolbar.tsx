@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLatestBlock } from "services/terra/queriers";
+import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import { adminRoutes } from "constants/routes";

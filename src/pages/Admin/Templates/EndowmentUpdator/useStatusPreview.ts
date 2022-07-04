@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues } from "pages/Admin/types";
-import { useEndowmentStatus } from "services/terra/registrar/queriers";
+import { useEndowmentStatus } from "services/juno/registrar/queriers";
 import useDebouncer from "hooks/useDebouncer";
 
 export default function useStatusPreview() {

@@ -4,12 +4,12 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { terraLcdUrl } from "constants/urls";
-import { terraTags } from "./tags";
+import { junoLcdUrl } from "constants/urls";
+import { junoTags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
-    return fetchBaseQuery({ baseUrl: terraLcdUrl })(args, api, extraOptions);
+    return fetchBaseQuery({ baseUrl: junoLcdUrl })(args, api, extraOptions);
   },
   { maxRetries: 1 }
 );
@@ -19,16 +19,16 @@ type BlockLatest = {
   block: { header: { height: string } };
 };
 
-export const terra = createApi({
-  reducerPath: "terra",
+export const junoApi = createApi({
+  reducerPath: "junoApi",
   baseQuery: customBaseQuery,
   tagTypes: [
-    terraTags.gov,
-    terraTags.indexfund,
-    terraTags.registrar,
-    terraTags.admin,
-    terraTags.endowment,
-    terraTags.multicall,
+    junoTags.gov,
+    junoTags.indexfund,
+    junoTags.registrar,
+    junoTags.admin,
+    junoTags.endowment,
+    junoTags.multicall,
   ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
@@ -39,3 +39,5 @@ export const terra = createApi({
     }),
   }),
 });
+
+export const { invalidateTags: invalidateJunoTags } = junoApi.util;

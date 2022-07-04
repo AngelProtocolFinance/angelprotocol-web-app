@@ -7,7 +7,7 @@ import {
 } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useRegistrarConfig } from "services/terra/registrar/queriers";
+import { useRegistrarConfig } from "services/juno/registrar/queriers";
 import RegistrarConfigForm from "./RegistrarConfigForm";
 import { registrarConfigSchema } from "./registrarConfigSchema";
 

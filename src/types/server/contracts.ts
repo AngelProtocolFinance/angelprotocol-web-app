@@ -12,7 +12,7 @@ export interface ERC20Token {
 
 /** _wrapper */
 export interface QueryRes<T> {
-  query_result: T;
+  data: T;
 }
 
 /** _shared */

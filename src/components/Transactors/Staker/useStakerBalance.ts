@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { useGovStaker } from "services/terra/gov/queriers";
+import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";

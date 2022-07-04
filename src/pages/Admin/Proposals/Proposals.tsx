@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
-} from "services/terra/admin/queriers";
+} from "services/juno/admin/queriers";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ProposalCard from "./ProposalCard";

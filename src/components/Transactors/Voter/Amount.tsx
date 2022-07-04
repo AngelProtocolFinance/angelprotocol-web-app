@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
-import { useGovStakerState } from "services/terra/gov/states";
+import { useGovStakerState } from "services/juno/gov/states";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {

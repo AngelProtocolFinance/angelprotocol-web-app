@@ -5,30 +5,30 @@ import {
   QueryRes,
   RegistrarConfig,
 } from "types/server/contracts";
-import { registrarTags, terraTags } from "services/terra/tags";
+import { junoTags, registrarTags } from "services/juno/tags";
+import { junoApi } from "..";
 import contract_querier from "../contract_querier";
-import { terra } from "../terra";
 
 type EndowmentListRes = {
   endowments: EndowmentEntry[];
 };
 
-export const registrar_api = terra.injectEndpoints({
+export const registrar_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     endowments: builder.query<EndowmentEntry[], ContractQueryArgs>({
       providesTags: [
-        { type: terraTags.registrar, id: registrarTags.endowments },
+        { type: junoTags.registrar, id: registrarTags.endowments },
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
-        return res.query_result.endowments;
+        return res.data.endowments;
       },
     }),
     config: builder.query<RegistrarConfig, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.registrar, id: registrarTags.config }],
+      providesTags: [{ type: junoTags.registrar, id: registrarTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     categorizedEndowments: builder.query<
@@ -36,11 +36,11 @@ export const registrar_api = terra.injectEndpoints({
       ContractQueryArgs
     >({
       providesTags: [
-        { type: terraTags.registrar, id: registrarTags.endowments },
+        { type: junoTags.registrar, id: registrarTags.endowments },
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
-        return res.query_result.endowments.reduce((result, profile) => {
+        return res.data.endowments.reduce((result, profile) => {
           if (!profile.un_sdg || profile.tier === "Level1") {
             return result;
           } else {

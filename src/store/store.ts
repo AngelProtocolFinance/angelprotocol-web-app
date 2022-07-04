@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes/apes";
 import { aws } from "services/aws/aws";
 import { flipside } from "services/flipslide/flipslide";
-import { terra } from "services/terra/terra";
+import { junoApi } from "services/juno";
 import { adminReducer } from "slices/admin/root";
 import authReducer from "slices/authSlice";
 import transactionReducer from "slices/transaction/transactionSlice";
@@ -13,7 +13,7 @@ export const store = configureStore({
     admin: adminReducer,
     auth: authReducer,
     [aws.reducerPath]: aws.reducer,
-    [terra.reducerPath]: terra.reducer,
+    [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,
     [flipside.reducerPath]: flipside.reducer,
     //auth: authReducer,
@@ -22,8 +22,8 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       aws.middleware,
-      terra.middleware,
       apes.middleware,
+      junoApi.middleware,
     ]),
 });
 export type RootState = ReturnType<typeof store.getState>;

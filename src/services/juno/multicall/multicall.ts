@@ -12,9 +12,9 @@ import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
 import Multicall from "contracts/Multicall";
 import { terraChainId } from "constants/env";
 import { aws_endpoint } from "constants/urls";
+import { junoApi } from "..";
 import contract_querier from "../contract_querier";
-import { multicallTags, terraTags } from "../tags";
-import { terra } from "../terra";
+import { junoTags, multicallTags } from "../tags";
 import { vaultMap } from "./constants";
 
 type VaultsRateRes = {
@@ -37,17 +37,17 @@ type EncodedResultMember = {
   data: string; //base64 encoded msg
 };
 
-export const multicall_api = terra.injectEndpoints({
+export const multicall_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     endowmentBalance: builder.query<EndowmentBalance, MultiContractQueryArgs>({
       providesTags: [
-        { type: terraTags.multicall, id: multicallTags.endowmentBalance },
+        { type: junoTags.multicall, id: multicallTags.endowmentBalance },
       ],
       query: contract_querier,
       transformResponse: (res: MultiQueryRes) => {
         const [holdings, ratesRes] = decodeAggregatedResult<
           [Holdings, VaultsRateRes]
-        >(res.query_result);
+        >(res.data);
 
         const ratesMap = ratesRes.vaults_rate.reduce((result, curr) => {
           result[curr.vault_addr] = curr.fx_rate;
@@ -70,13 +70,13 @@ export const multicall_api = terra.injectEndpoints({
       MultiContractQueryArgs
     >({
       providesTags: [
-        { type: terraTags.multicall, id: multicallTags.endowmentBalance },
+        { type: junoTags.multicall, id: multicallTags.endowmentBalance },
       ],
       query: contract_querier,
       transformResponse: (res: MultiQueryRes) => {
         const [holdings, ratesRes] = decodeAggregatedResult<
           [Holdings, VaultsRateRes]
-        >(res.query_result);
+        >(res.data);
 
         const vaultLimits: VaultFieldLimits = {
           anchor1_amount: {
@@ -120,7 +120,7 @@ export const multicall_api = terra.injectEndpoints({
       },
     }),
     airdrop: builder.query<Airdrop[], string>({
-      providesTags: [{ type: terraTags.multicall, id: multicallTags.airdrop }],
+      providesTags: [{ type: junoTags.multicall, id: multicallTags.airdrop }],
       async queryFn(walletAddr, queryApi, extraOptions, baseQuery) {
         try {
           const airDropsRes = await fetch(
@@ -133,11 +133,11 @@ export const multicall_api = terra.injectEndpoints({
           );
           const claimInqs = claimInqRes.data as MultiQueryRes;
           const claimables: Airdrops = [];
-          decodeAggregatedResult<ClaimInquiry[]>(
-            claimInqs.query_result
-          ).forEach((inquiry, i) => {
-            if (!inquiry.is_claimed) claimables.push(airDrops[i]);
-          });
+          decodeAggregatedResult<ClaimInquiry[]>(claimInqs.data).forEach(
+            (inquiry, i) => {
+              if (!inquiry.is_claimed) claimables.push(airDrops[i]);
+            }
+          );
 
           return { data: claimables };
         } catch (err) {

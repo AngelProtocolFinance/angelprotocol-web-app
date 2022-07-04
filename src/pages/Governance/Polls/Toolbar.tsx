@@ -1,5 +1,5 @@
 import { PollFilterOptions } from "../types";
-import { useLatestBlock } from "services/terra/queriers";
+import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
 import toCurrency from "helpers/toCurrency";

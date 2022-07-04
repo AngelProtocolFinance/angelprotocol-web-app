@@ -4,7 +4,7 @@ import { CW3ConfigPayload, CW3ConfigValues } from "pages/Admin/types";
 import { CW3Config } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useCW3Config } from "services/terra/admin/queriers";
+import { useCW3Config } from "services/juno/admin/queriers";
 import CW3ConfigForm from "./CW3ConfigForm";
 import { cw3ConfigSchema } from "./cw3ConfigSchema";
 

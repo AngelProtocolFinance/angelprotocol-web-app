@@ -10,52 +10,52 @@ import {
   Polls,
   QueryRes,
 } from "types/server/contracts";
-import { govTags, terraTags } from "services/terra/tags";
+import { govTags, junoTags } from "services/juno/tags";
+import { junoApi } from "..";
 import contract_querier from "../contract_querier";
-import { terra } from "../terra";
 
-export const gov_api = terra.injectEndpoints({
+export const gov_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     govPolls: builder.query<Poll[], ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.polls }],
+      providesTags: [{ type: junoTags.gov, id: govTags.polls }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Polls>) => {
-        return res.query_result.polls;
+        return res.data.polls;
       },
     }),
     govState: builder.query<GovState, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.state }],
+      providesTags: [{ type: junoTags.gov, id: govTags.state }],
       query: contract_querier,
       transformResponse: (res: QueryRes<GovState>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     govStaker: builder.query<GovStaker, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.staker }],
+      providesTags: [{ type: junoTags.gov, id: govTags.staker }],
       query: contract_querier,
       transformResponse: (res: QueryRes<GovStaker>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     govConfig: builder.query<GovConfig, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.config }],
+      providesTags: [{ type: junoTags.gov, id: govTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<GovConfig>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     govHaloBalance: builder.query<number, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.halo_balance }],
+      providesTags: [{ type: junoTags.gov, id: govTags.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW20Balance>) => {
-        return new Decimal(res.query_result.balance).div(1e6).toNumber();
+        return new Decimal(res.data.balance).div(1e6).toNumber();
       },
     }),
     haloInfo: builder.query<CW20Info, ContractQueryArgs>({
-      providesTags: [{ type: terraTags.gov, id: govTags.halo_info }],
+      providesTags: [{ type: junoTags.gov, id: govTags.halo_info }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW20Info>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
   }),

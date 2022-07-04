@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { MemberUpdatorValues } from "pages/Admin/types";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useMembers } from "services/terra/admin/queriers";
+import { useMembers } from "services/juno/admin/queriers";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/apCW4Members";
 import MemberUpdateForm from "./MemberUpdaterForm";
