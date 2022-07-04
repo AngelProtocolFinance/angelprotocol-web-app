@@ -25,7 +25,6 @@ export default function useInjectedProvider(
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>();
   const [chainId, setChainId] = useState<string>();
-  const [injectedProvider, setInjectedProvider] = useState<InjectedProvider>();
 
   useEffect(() => {
     requestAccess();
@@ -58,7 +57,6 @@ export default function useInjectedProvider(
     } else {
       setAddress(undefined);
       setChainId(undefined);
-      setInjectedProvider(undefined);
       saveUserAction(actionKey, "disconnect");
       removeAllListeners(providerId);
     }
@@ -82,7 +80,6 @@ export default function useInjectedProvider(
           method: EIPMethods.eth_chainId,
         });
 
-        setInjectedProvider(injectedProvider);
         setAddress(accounts[0]);
         setChainId(`${parseInt(hexChainId, 16)}`);
       }
@@ -106,7 +103,6 @@ export default function useInjectedProvider(
     setAddress(undefined);
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
-    setInjectedProvider(undefined);
     removeAllListeners(providerId);
   }
 
@@ -148,7 +144,6 @@ export default function useInjectedProvider(
     providerId,
     chainId: chainId || "",
     address: address || "",
-    provider: injectedProvider,
   };
 
   //connection object to render <Connector/>

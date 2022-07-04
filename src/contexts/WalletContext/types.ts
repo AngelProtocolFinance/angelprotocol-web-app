@@ -1,6 +1,3 @@
-import { Keplr } from "@keplr-wallet/types";
-import { InjectedProvider } from "types/ethereum";
-
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
@@ -13,8 +10,6 @@ export type ProviderId =
   | "walletconnect"
   | "torus"
   | "keplr";
-
-export type Provider = InjectedProvider | Keplr;
 
 export type SingleConnection = {
   logo: string;
@@ -34,7 +29,6 @@ export type Connection = SingleConnection | MultiConnection;
 
 export type ProviderInfo = {
   providerId: ProviderId;
-  provider?: Provider;
   logo: string;
   chainId: string;
   address: string;

@@ -1,5 +1,5 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { Keplr } from "@keplr-wallet/types";
+import { Dwindow } from "types/ethereum";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
@@ -17,7 +17,7 @@ export default async function getCosmosClient(
   ) {
     throw new WrongNetworkError();
   }
-  const signer = (wallet.provider as Keplr).getOfflineSigner(wallet.chainId);
+  const signer = (window as Dwindow).keplr!.getOfflineSigner(wallet.chainId);
   const client = await SigningCosmWasmClient.connectWithSigner(
     junoRpcUrl,
     signer

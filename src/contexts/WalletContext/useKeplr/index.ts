@@ -85,7 +85,6 @@ export default function useKeplr() {
   const providerInfo: ProviderInfo = {
     logo: providerIcons.keplr,
     providerId: "keplr",
-    provider: dwindow.keplr,
     chainId: chainId || chainIDs.juno_main,
     address: address || "",
   };
