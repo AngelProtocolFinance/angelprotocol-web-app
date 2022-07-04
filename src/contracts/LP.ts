@@ -10,15 +10,13 @@ export default class LP extends Contract {
   simul: ContractQueryArgs;
 
   constructor(wallet: WalletState | undefined) {
-    const contractAddress = contracts.loop_haloust_pair;
-
-    super(wallet, contractAddress);
+    super(wallet, contracts.loop_haloust_pair);
 
     this.halo_address = contracts.halo_token;
 
     //query args
     this.simul = {
-      address: contractAddress,
+      address: this.contractAddress,
       msg: {
         simulation: {
           offer_asset: {
