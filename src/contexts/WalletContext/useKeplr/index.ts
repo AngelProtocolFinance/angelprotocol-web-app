@@ -31,7 +31,7 @@ export default function useKeplr() {
       let chainId: string;
 
       if (IS_TEST) {
-        chainId = juno_test.chainId;
+        chainId = chainIDs.juno_test;
         await dwindow.keplr.experimentalSuggestChain(juno_test);
       } else {
         chainId = chainIDs.juno_main;
