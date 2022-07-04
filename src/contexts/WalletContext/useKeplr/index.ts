@@ -28,7 +28,6 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      let address: string;
       let chainId: string;
 
       if (IS_TEST) {
@@ -40,9 +39,8 @@ export default function useKeplr() {
 
       await dwindow.keplr.enable(chainId);
       const key = await dwindow.keplr.getKey(chainId);
-      address = key.bech32Address;
 
-      setAddress(address);
+      setAddress(key.bech32Address);
       setChainId(chainId);
       setIsLoading(false);
     } catch (err: any) {
