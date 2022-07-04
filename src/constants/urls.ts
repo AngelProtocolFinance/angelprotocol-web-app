@@ -30,6 +30,11 @@ export const juno_lcds: URL_GROUP = {
   [chainIDs.juno_test]: "https://lcd.uni.juno.deuslabs.fi",
 };
 
+export const juno_rpcs: URL_GROUP = {
+  [chainIDs.juno_main]: "https://rpc-juno.itastakers.com",
+  [chainIDs.juno_test]: " https://rpc.uni.juno.deuslabs.fi",
+};
+
 export const junoLcdUrl = IS_TEST
   ? juno_lcds[chainIDs.juno_test]
   : juno_lcds[chainIDs.juno_main];

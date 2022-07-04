@@ -33,9 +33,6 @@ export default function useKeplr() {
       if (IS_TEST) {
         chainId = juno_test.chainId;
         await dwindow.keplr.experimentalSuggestChain(juno_test);
-        await dwindow.keplr.enable(chainId);
-        const key = await dwindow.keplr.getKey(chainId);
-        address = key.bech32Address;
       } else {
         chainId = chainIDs.juno_main;
       }
