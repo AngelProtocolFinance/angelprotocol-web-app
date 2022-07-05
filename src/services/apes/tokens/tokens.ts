@@ -1,11 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
-import { ProviderInfo } from "contexts/WalletContext/types";
+import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
-import isJunoProvider from "contexts/WalletContext/helpers/isJunoProvider";
-import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
 import { IS_TEST } from "constants/env";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
@@ -75,8 +73,7 @@ const tokens_api = apes.injectEndpoints({
           }
 
           /**fetch balances for terra  */
-          const isTerra = isTerraProvider(providerId); //query is skipped when wallet is not connected
-          if (isTerra) {
+          if (isTerraProvider(providerId)) {
             //fetch native terra coins
             const res = await fetch(
               terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
@@ -177,3 +174,27 @@ const tokens_api = apes.injectEndpoints({
 });
 
 export const { useTokensQuery, useBalancesQuery } = tokens_api;
+
+function isJunoProvider(providerId: ProviderId) {
+  switch (providerId) {
+    //FUTURE: add other leap falcon xdefi etc
+    case "keplr":
+    case "walletconnect":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isTerraProvider(providerId: ProviderId) {
+  switch (providerId) {
+    //FUTURE: add other leap falcon etc
+    case "station":
+    case "walletconnect":
+    case "xdefi-wallet":
+    case "torus":
+      return true;
+    default:
+      return false;
+  }
+}
