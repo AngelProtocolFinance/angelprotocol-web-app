@@ -80,7 +80,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   {
     id: 4,
     iconType: "Medium",
-    link: "https://angelprotocol.medium.com/",
+    link: "https://angelprotocol.medium.com",
     textColor: "text-white hover:text-white/75",
     title: "Medium",
   },
