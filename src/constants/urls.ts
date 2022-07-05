@@ -15,7 +15,7 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_main]: "https://phoenix-lcd.terra.dev/",
+  [chainIDs.terra_main]: "https://phoenix-lcd.terra.dev",
   [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
   [chainIDs.terra_classic]: "https://fcd.terra.dev",
   [chainIDs.terra_local]: "http://localhost:3060",
@@ -32,14 +32,14 @@ export const juno_lcds: URL_GROUP = {
 
 export const juno_rpcs: URL_GROUP = {
   [chainIDs.juno_main]: "https://rpc-juno.itastakers.com",
-  [chainIDs.juno_test]: " https://rpc.uni.juno.deuslabs.fi",
+  [chainIDs.juno_test]: "https://rpc.uni.juno.deuslabs.fi",
 };
 
 export const junoLcdUrl = IS_TEST
   ? juno_lcds[chainIDs.juno_test]
   : juno_lcds[chainIDs.juno_main];
 
-export const TERRA_FINDER = "https://finder.terra.money/";
+export const TERRA_FINDER = "https://finder.terra.money";
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";
