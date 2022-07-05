@@ -32,8 +32,6 @@ const tokens_api = apes.injectEndpoints({
       { providerInfo: ProviderInfo }
     >({
       providesTags: [],
-      //address
-      //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const { providerId, address, chainId } = args.providerInfo;
