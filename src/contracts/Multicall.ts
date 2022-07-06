@@ -12,19 +12,19 @@ import Airdrop from "./Airdrop";
 import Registrar from "./Registrar";
 
 export default class Multicall {
-  address: string;
+  private static contractAddress = contracts.multicall;
+
   registrarContract: Registrar;
   airdropContract: Airdrop;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
 
   constructor(wallet: WalletState | undefined) {
-    this.address = contracts.multicall;
     this.registrarContract = new Registrar(wallet);
     this.airdropContract = new Airdrop(wallet);
 
     this.balanceAndRates = (endowmentAddr) => ({
-      address: this.address,
+      address: Multicall.contractAddress,
       msg: this.constructAggregatedQuery([
         new Account(wallet, endowmentAddr).balance,
         this.registrarContract.vaultsRate,
@@ -32,7 +32,7 @@ export default class Multicall {
     });
 
     this.airDropInquiries = (airdrops) => ({
-      address: this.address,
+      address: Multicall.contractAddress,
       msg: this.constructAggregatedQuery(
         airdrops.map((airdrop) =>
           this.airdropContract.isAirDropClaimed(airdrop.stage)

@@ -11,12 +11,12 @@ export default class Account extends Contract {
     super(wallet, accountAddr);
 
     this.balance = {
-      address: accountAddr,
+      address: this.contractAddress,
       msg: { balance: {} },
     };
 
     this.profile = {
-      address: accountAddr,
+      address: this.contractAddress,
       msg: { get_profile: {} },
     };
   }

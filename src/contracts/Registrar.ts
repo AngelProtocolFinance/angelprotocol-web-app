@@ -18,26 +18,24 @@ export default class Registrar extends Contract {
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
   constructor(wallet: WalletState | undefined) {
-    const address = contracts.registrar;
-
-    super(wallet, address);
+    super(wallet, contracts.registrar);
 
     this.endowmentList = (queryOptions) => ({
-      address: address,
+      address: this.contractAddress,
       msg: {
         endowment_list: queryOptions,
       },
     });
 
     this.vaultsRate = {
-      address: address,
+      address: this.contractAddress,
       msg: {
         approved_vault_rate_list: {},
       },
     };
 
     this.config = {
-      address: address,
+      address: this.contractAddress,
       msg: { config: {} },
     };
   }
@@ -66,8 +64,6 @@ export default class Registrar extends Contract {
     });
   }
 }
-export interface R extends Registrar {}
-export type T = typeof Registrar;
 
 function createEndowmentCreationMsgPayload(
   charity: Charity
@@ -105,3 +101,6 @@ function createEndowmentCreationMsgPayload(
     withdraw_before_maturity: false,
   };
 }
+
+export interface R extends Registrar {}
+export type T = typeof Registrar;

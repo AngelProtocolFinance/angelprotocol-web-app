@@ -26,9 +26,7 @@ export default class Admin extends Contract {
   cw3Config: CQA;
 
   constructor(wallet: WalletState | undefined, cws: CWContracts) {
-    const cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
-
-    super(wallet, cw3);
+    super(wallet, getCW3(cws));
 
     //make sure to use query skips on empty addresses
     this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
@@ -46,19 +44,19 @@ export default class Admin extends Contract {
 
     //query args CW3
     this.cw3Config = {
-      address: cw3,
+      address: this.contractAddress,
       msg: { config: {} },
     };
 
     this.proposals = (pageOptions) => ({
-      address: cw3,
+      address: this.contractAddress,
       msg: {
         reverse_proposals: pageOptions,
       },
     });
 
     this.proposal = (pollId: number) => ({
-      address: cw3,
+      address: this.contractAddress,
       msg: {
         proposal: {
           proposal_id: pollId,
@@ -67,7 +65,7 @@ export default class Admin extends Contract {
     });
 
     this.voteList = (options) => ({
-      address: cw3,
+      address: this.contractAddress,
       msg: {
         list_votes: {
           ...options,
@@ -131,4 +129,8 @@ export default class Admin extends Contract {
       },
     });
   }
+}
+
+function getCW3(cws: CWContracts) {
+  return cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 }

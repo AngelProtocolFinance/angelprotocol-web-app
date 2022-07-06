@@ -6,9 +6,6 @@ import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
 
-export interface G extends Gov {}
-export type TG = typeof Gov;
-
 export default class Gov extends Contract {
   haloBalance: CQA;
   haloInfo: CQA;
@@ -92,3 +89,6 @@ export default class Gov extends Contract {
     });
   }
 }
+
+export interface G extends Gov {}
+export type TG = typeof Gov;

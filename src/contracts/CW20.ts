@@ -14,14 +14,14 @@ export default class CW20 extends Contract {
     super(wallet, cw20ContractAddr);
 
     this.info = {
-      address: cw20ContractAddr,
+      address: this.contractAddress,
       msg: {
         token_info: {},
       },
     };
 
     this.balance = (address) => ({
-      address: cw20ContractAddr,
+      address: this.contractAddress,
       msg: { balance: { address } },
     });
   }
