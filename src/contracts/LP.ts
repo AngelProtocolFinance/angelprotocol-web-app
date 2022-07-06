@@ -2,6 +2,7 @@ import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
+import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -103,11 +104,12 @@ export default class LP extends Contract {
         send: {
           contract: this.contractAddress,
           amount: uhalo_amount,
-          msg: Buffer.from(
-            JSON.stringify({
-              swap: { belief_price, max_spread },
-            })
-          ).toString("base64"),
+          msg: toBase64({
+            swap: {
+              belief_price,
+              max_spread,
+            },
+          }),
         },
       },
       [],
