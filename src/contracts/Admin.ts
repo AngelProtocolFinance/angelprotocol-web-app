@@ -13,7 +13,7 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Admin extends Contract {
-  cw4: string;
+  cw4Contract: CW4;
 
   //CW4
   members: CQA;
@@ -26,21 +26,13 @@ export default class Admin extends Contract {
   cw3Config: CQA;
 
   constructor(wallet: WalletState | undefined, cws: CWContracts) {
-    super(wallet, getCW3(cws));
+    super(wallet, getCW3Address(cws));
 
-    //make sure to use query skips on empty addresses
-    this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
+    this.cw4Contract = new CW4(wallet, cws);
 
     //query args CW4
-    this.members = {
-      address: this.cw4,
-      msg: { list_members: {} },
-    };
-
-    this.member = {
-      address: this.cw4,
-      msg: { member: { addr: this.walletAddress } },
-    };
+    this.members = this.cw4Contract.members;
+    this.member = this.cw4Contract.member;
 
     //query args CW3
     this.cw3Config = {
@@ -76,16 +68,7 @@ export default class Admin extends Contract {
 
   //execute message creators
   createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
-    return this.createEmbeddedWasmMsg(
-      [],
-      {
-        update_members: {
-          add: to_add,
-          remove: to_remove,
-        },
-      },
-      this.cw4
-    );
+    return this.cw4Contract.createEmbeddedUpdateMembersMsg(to_add, to_remove);
   }
 
   createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
@@ -131,6 +114,38 @@ export default class Admin extends Contract {
   }
 }
 
-function getCW3(cws: CWContracts) {
+class CW4 extends Contract {
+  members: CQA;
+  member: CQA;
+
+  constructor(wallet: WalletState | undefined, cws: CWContracts) {
+    super(wallet, getCW4Address(cws));
+
+    this.members = {
+      address: this.contractAddress,
+      msg: { list_members: {} },
+    };
+
+    this.member = {
+      address: this.contractAddress,
+      msg: { member: { addr: this.walletAddress } },
+    };
+  }
+
+  createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
+    return this.createEmbeddedWasmMsg([], {
+      update_members: {
+        add: to_add,
+        remove: to_remove,
+      },
+    });
+  }
+}
+
+function getCW4Address(cws: CWContracts): string {
+  return cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
+}
+
+function getCW3Address(cws: CWContracts) {
   return cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 }

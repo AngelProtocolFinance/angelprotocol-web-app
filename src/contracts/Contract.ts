@@ -48,15 +48,11 @@ export default class Contract {
     return await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee);
   }
 
-  createEmbeddedWasmMsg(
-    funds: Coin[],
-    msg: object,
-    contract_addr: string = this.contractAddress
-  ): EmbeddedWasmMsg {
+  createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
     return {
       wasm: {
         execute: {
-          contract_addr,
+          contract_addr: this.contractAddress,
           funds,
           msg: toBase64(msg),
         },
