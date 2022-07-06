@@ -19,7 +19,8 @@ import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import TerraContract from "./TerraContract";
+import TerraContract from "./estimateTerraFee";
+import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
   const dispatch = useSetter();
@@ -65,13 +66,11 @@ export default function useEstimator() {
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
-          const contract = new TerraContract(wallet.address);
           const amount = new Decimal(debounced_amount).mul(1e6);
-
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
-          const { fee, feeNum } = await contract.estimateFee([msg]);
+          const { fee, feeNum } = await estimateTerraFee(wallet.address, [msg]);
 
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
