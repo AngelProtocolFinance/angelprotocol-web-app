@@ -6,7 +6,7 @@ import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
-import handleTerraError from "helpers/handleTerraError";
+import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
@@ -96,7 +96,7 @@ export const sendTerraDonation = createAsyncThunk(
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, updateStage);
+      handleWalletError(err, updateStage);
     }
   }
 );

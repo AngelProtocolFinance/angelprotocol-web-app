@@ -14,7 +14,7 @@ import {
   WrongNetworkError,
 } from "errors/errors";
 
-export default function handleTerraError(error: any, handler: StageUpdator) {
+export default function handleWalletError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof WalletDisconnectError) {

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
 import { TxOptions } from "types/third-party/cosmjs";
 import Contract from "contracts/Contract";
-import handleTerraError from "helpers/handleTerraError";
+import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -63,7 +63,7 @@ export const sendCosmosTx = createAsyncThunk(
       }
     } catch (err) {
       console.log(err);
-      handleTerraError(err, updateTx);
+      handleWalletError(err, updateTx);
     }
   }
 );

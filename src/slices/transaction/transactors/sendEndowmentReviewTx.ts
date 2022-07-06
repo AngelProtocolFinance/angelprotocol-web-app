@@ -5,7 +5,7 @@ import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
 import { TxOptions } from "types/third-party/cosmjs";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import handleTerraError from "helpers/handleTerraError";
+import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -103,7 +103,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         });
       }
     } catch (err) {
-      handleTerraError(err, updateTx);
+      handleWalletError(err, updateTx);
     }
   }
 );
