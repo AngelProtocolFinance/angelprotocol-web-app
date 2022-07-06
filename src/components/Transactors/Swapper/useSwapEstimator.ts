@@ -15,7 +15,7 @@ import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM, denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
@@ -51,12 +51,12 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
+        const junoBalance = getTokenBalance(wallet.coins, MAIN_DENOM);
         const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
-          if (amount > ustBalance) {
-            setError("amount", { message: "not enough UST" });
+          if (amount > junoBalance) {
+            setError("amount", { message: "not enough JUNO" });
             return;
           }
         } else {
@@ -98,12 +98,12 @@ export default function useSwapEstimator() {
         const { fee, feeNum } = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+        if (is_buy && feeNum + debounced_amount >= junoBalance) {
+          setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+        if (!is_buy && feeNum >= junoBalance) {
+          setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
 

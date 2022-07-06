@@ -4,6 +4,7 @@ import { Simulation } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
+import { MAIN_DENOM } from "constants/currency";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -62,27 +63,30 @@ export default class LP extends Contract {
   }
 
   createBuyMsg(
-    ust_amount: number,
+    juno_amount: number,
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
+    const ujuno_amount = new Decimal(juno_amount)
+      .mul(1e6)
+      .divToInt(1)
+      .toString();
     return this.createExecuteContractMsg(
       {
         swap: {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: MAIN_DENOM,
               },
             },
-            amount: uust_amount,
+            amount: ujuno_amount,
           },
           belief_price,
           max_spread,
         },
       },
-      [{ denom: "uusd", amount: uust_amount }]
+      [{ denom: MAIN_DENOM, amount: ujuno_amount }]
     );
   }
 
