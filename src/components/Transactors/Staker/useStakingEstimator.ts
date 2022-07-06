@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
-import { TxOptions } from "types/third-party/cosmjs";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -13,7 +13,6 @@ import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-// import useTerraBalance from "hooks/useTerraBalance";
 import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 

@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
-import { TxOptions } from "types/third-party/cosmjs";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -19,7 +19,6 @@ import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import TerraContract from "./estimateTerraFee";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {

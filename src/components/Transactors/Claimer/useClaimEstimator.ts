@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TxOptions } from "types/third-party/cosmjs";
+import { TxOptions } from "slices/transaction/types";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";

@@ -1,8 +1,11 @@
 import { isDeliverTxSuccess } from "@cosmjs/stargate";
 import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SendCosmosTxArgs, StageUpdator } from "slices/transaction/types";
-import { TxOptions } from "types/third-party/cosmjs";
+import {
+  SendCosmosTxArgs,
+  StageUpdator,
+  TxOptions,
+} from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";

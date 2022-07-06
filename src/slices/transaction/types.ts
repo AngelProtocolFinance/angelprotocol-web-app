@@ -1,9 +1,9 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
+import { StdFee } from "@cosmjs/stargate";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
-import { TxOptions } from "types/third-party/cosmjs";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 type Tag = TagDescription<string>;
@@ -108,6 +108,11 @@ type TerraWithTx = BaseArgs & {
 }; //pre-estimated tx
 
 export type TerraSendArgs = TerraWithMsg | TerraWithTx;
+
+export type TxOptions = {
+  msgs: EncodeObject[];
+  fee: StdFee;
+};
 
 type CosmosWithMsg = BaseArgs & {
   msgs: EncodeObject[];
