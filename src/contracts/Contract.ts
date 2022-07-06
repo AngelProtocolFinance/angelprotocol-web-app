@@ -10,9 +10,9 @@ import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { MAIN_DENOM } from "constants/currency";
 
-const GAS_PRICE =
-  "0.0625"; /**TODO: uni-3 and juno-1 have diff gas prices for fee display only, 
-  actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing  */
+// TODO: uni-3 and juno-1 have diff gas prices for fee display only,
+// actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
+const GAS_PRICE = "0.0625";
 
 export default class Contract {
   contractAddress: string;
@@ -39,24 +39,13 @@ export default class Contract {
     msgs: readonly EncodeObject[]
   ): Promise<{ fee: StdFee; feeNum: number }> {
     const client = await getCosmosClient(this.wallet);
-
-    const gasLimit = await client.simulate(
-      this.wallet!.address,
-      msgs,
-      undefined
-    );
-
-    const fee = calculateFee(gasLimit, GAS_PRICE);
-
-    return {
-      fee,
-      feeNum: extractFeeNum(fee),
-    };
+    const gasLimit = await client.simulate(this.walletAddress, msgs, undefined);
+    return createFeeResult(gasLimit);
   }
 
   async signAndBroadcast(tx: TxOptions) {
     const client = await getCosmosClient(this.wallet);
-    return await client.signAndBroadcast(this.wallet!.address, tx.msgs, tx.fee);
+    return await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee);
   }
 
   createEmbeddedWasmMsg(
@@ -90,6 +79,15 @@ export default class Contract {
       },
     };
   }
+}
+
+function createFeeResult(gasLimit: number): { fee: StdFee; feeNum: number } {
+  const fee = calculateFee(gasLimit, GAS_PRICE);
+
+  return {
+    fee,
+    feeNum: extractFeeNum(fee),
+  };
 }
 
 function extractFeeNum(fee: StdFee): number {
