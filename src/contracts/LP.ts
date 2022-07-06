@@ -7,13 +7,10 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  halo_address: string;
   simul: ContractQueryArgs;
 
   constructor(wallet: WalletState | undefined) {
     super(wallet, contracts.loop_haloust_pair);
-
-    this.halo_address = contracts.halo_token;
 
     //query args
     this.simul = {
@@ -48,7 +45,7 @@ export default class LP extends Contract {
         }
       : {
           token: {
-            contract_addr: this.halo_address,
+            contract_addr: contracts.halo_token,
           },
         };
 
@@ -83,7 +80,6 @@ export default class LP extends Contract {
           },
           belief_price,
           max_spread,
-          // to: Option<HumanAddr>
         },
       },
       [{ denom: "uusd", amount: uust_amount }]
@@ -99,22 +95,21 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
-    return this.createExecuteContractMsg(
-      {
-        send: {
-          contract: this.contractAddress,
-          amount: uhalo_amount,
-          msg: toBase64({
-            swap: {
-              belief_price,
-              max_spread,
-            },
-          }),
-        },
+
+    const haloContract = new Contract(this.wallet, contracts.halo_token);
+
+    return haloContract.createExecuteContractMsg({
+      send: {
+        contract: this.contractAddress,
+        amount: uhalo_amount,
+        msg: toBase64({
+          swap: {
+            belief_price,
+            max_spread,
+          },
+        }),
       },
-      [],
-      this.halo_address
-    );
+    });
   }
 }
 
