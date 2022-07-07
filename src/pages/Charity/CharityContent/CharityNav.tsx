@@ -26,9 +26,12 @@ export default function CharityNav(props: { classes?: string }) {
           <NavLink to={charityRoutes.media} className={disabledClass}>
             media
           </NavLink>
-          <NavLink to={charityRoutes.governance} className={disabledClass}>
-            governance
-          </NavLink>
+          {/* 
+            NOTE: Governance will be reenabled when we relaunch the $HALO token 
+            <NavLink to={charityRoutes.governance} className={disabledClass}>
+              governance
+            </NavLink> 
+          */}
         </div>
         {showBack && (
           <Button _iconType="Back" onClick={backward} className="left-0" />

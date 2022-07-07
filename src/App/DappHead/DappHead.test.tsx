@@ -12,7 +12,7 @@ import { appRoutes, siteRoutes } from "constants/routes";
 const routes = [
   `${siteRoutes.app}`,
   `${siteRoutes.app}/${appRoutes.marketplace}`,
-  `${siteRoutes.app}/${appRoutes.govern}`,
+  // `${siteRoutes.app}/${appRoutes.govern}`,
   `${siteRoutes.app}/${appRoutes.leaderboard}`,
 ];
 
@@ -52,22 +52,23 @@ describe("DappHead test", () => {
     expect(await screen.findByText(marketText2)).toBeInTheDocument();
     expect(loader).not.toBeInTheDocument();
 
+    // NOTE: Governance will be reenabled when we relaunch the $HALO token
     //user goes to governance
-    const govLink = screen.getByText(/governance/i);
-    userEvent.click(govLink);
+    // const govLink = screen.getByText(/governance/i);
+    // userEvent.click(govLink);
 
-    /** user is in governance */
-    const loader2 = screen.getByTestId("loader");
-    expect(loader2).toBeInTheDocument();
+    // /** user is in governance */
+    // const loader2 = screen.getByTestId("loader");
+    // expect(loader2).toBeInTheDocument();
 
-    //view is not yet rendered and being lazy loaded
-    expect(screen.queryByText(govText1)).toBeNull();
-    expect(screen.queryByText(govText2)).toBeNull();
+    // //view is not yet rendered and being lazy loaded
+    // expect(screen.queryByText(govText1)).toBeNull();
+    // expect(screen.queryByText(govText2)).toBeNull();
 
-    //view is finally loaded,
-    expect(await screen.findByText(govText1)).toBeInTheDocument();
-    expect(await screen.findByText(govText2)).toBeInTheDocument();
-    expect(loader2).not.toBeInTheDocument();
+    // //view is finally loaded,
+    // expect(await screen.findByText(govText1)).toBeInTheDocument();
+    // expect(await screen.findByText(govText2)).toBeInTheDocument();
+    // expect(loader2).not.toBeInTheDocument();
 
     //user goes to leaderboard
     const leaderboardLink = screen.getByText(/leaderboard/i);

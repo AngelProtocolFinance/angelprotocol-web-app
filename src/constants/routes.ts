@@ -23,7 +23,8 @@ export enum appRoutes {
   charity = "charity",
   tca = "tca",
   fund = "fund",
-  govern = "govern",
+  // NOTE: Governance will be reenabled when we relaunch the $HALO token
+  // govern = "govern",
   endowment_admin = "endowment-admin",
   donations = "donations",
 }
@@ -38,7 +39,8 @@ export enum charityRoutes {
   endowment = "endowment",
   programs = "programs",
   media = "media",
-  governance = "governance",
+  // NOTE: Governance will be reenabled when we relaunch the $HALO token
+  // governance = "governance",
 }
 
 export enum adminRoutes {
