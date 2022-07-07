@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import { postTerraTx } from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -18,12 +18,14 @@ type _SenderArgs = TerraSendArgs & {
 export const sendEndowmentReviewTx = createAsyncThunk(
   `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
   async (args: _SenderArgs, { dispatch }) => {
+    const wallet = useConnectedWallet();
+
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
     try {
-      if (!args.wallet) {
+      if (!args.wallet || !wallet) {
         throw new WalletDisconnectError();
       }
 
@@ -49,7 +51,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await postTerraTx(tx);
+      const response = await wallet.post(tx);
 
       updateTx({
         step: "broadcast",
