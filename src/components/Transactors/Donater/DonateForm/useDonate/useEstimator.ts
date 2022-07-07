@@ -186,5 +186,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, selectedToken, wallet]);
 
-  return { evmTx, terraTx, junoTx: cosmosTx };
+  return { evmTx, terraTx, cosmosTx };
 }
