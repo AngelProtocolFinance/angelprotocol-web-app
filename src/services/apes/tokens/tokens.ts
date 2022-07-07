@@ -50,7 +50,6 @@ const tokens_api = apes.injectEndpoints({
 
           // fetch balances for juno
           if (isJunoProvider(providerId)) {
-            //fetch native juno coins
             const res = await fetch(
               junoLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
             );

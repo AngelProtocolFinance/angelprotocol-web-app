@@ -1,7 +1,12 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { Coin, StdFee, calculateFee } from "@cosmjs/stargate";
+import {
+  Coin,
+  MsgSendEncodeObject,
+  StdFee,
+  calculateFee,
+} from "@cosmjs/stargate";
 import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
 import { EmbeddedWasmMsg } from "types/server/contracts";
@@ -9,10 +14,11 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { MAIN_DENOM } from "constants/currency";
+import { IS_TEST } from "constants/env";
 
 // TODO: uni-3 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
-const GAS_PRICE = "0.0625";
+const GAS_PRICE = `0.0625ujuno${IS_TEST ? "x" : ""}`;
 
 export default class Contract {
   contractAddress: string;
@@ -71,6 +77,25 @@ export default class Contract {
         sender: this.walletAddress,
         msg: toUtf8(JSON.stringify(msg)),
         funds,
+      },
+    };
+  }
+
+  createTransferNativeMsg(
+    amount: number,
+    recipient: string
+  ): MsgSendEncodeObject {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+      value: {
+        fromAddress: this.walletAddress,
+        toAddress: recipient,
+        amount: [
+          {
+            denom: MAIN_DENOM,
+            amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+          },
+        ],
       },
     };
   }

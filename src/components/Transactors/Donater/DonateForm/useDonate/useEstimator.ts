@@ -15,6 +15,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import CW20 from "contracts/CW20";
+import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
@@ -27,6 +28,7 @@ export default function useEstimator() {
     watch,
     setError,
     formState: { isValid, isDirty },
+    getFieldState,
   } = useFormContext<DonateValues>();
   const { wallet } = useGetWallet();
 
@@ -48,8 +50,9 @@ export default function useEstimator() {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
+        const fs = getFieldState("amount");
 
-        if (!isValid || !isDirty) return;
+        if (fs.error || !isDirty) return;
 
         if (!debounced_amount) {
           dispatch(setFee(0));
@@ -63,25 +66,27 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        /** terra native transaction, send or contract interaction */
-        if (selectedToken.type === "terra-native") {
-          const amount = new Decimal(debounced_amount).mul(1e6);
-          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-            new Coin(denoms.uluna, amount.toNumber()),
-          ]);
-          const { fee, feeNum } = await estimateTerraFee(wallet.address, [msg]);
+        /** juno native transaction, send or contract interaction */
+        if (selectedToken.type === "juno-native") {
+          const contract = new Contract(wallet);
+          const msg = contract.createTransferNativeMsg(
+            debounced_amount,
+            ap_wallets.juno
+          );
+          const { fee, feeNum } = await contract.estimateFee([msg]);
 
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+          /** displayCoin is native - for payment of fee */
+          if (feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
             return;
           }
           dispatch(setFee(feeNum));
-          setTerraTx({ msgs: [msg], fee });
+          setCosmosTx({ msgs: [msg], fee });
         }
 
-        /** terra cw20 transaction */
+        /** juno cw20 transaction */
         if (selectedToken.type === "cw20") {
           const contract = new CW20(wallet, selectedToken.contract_addr);
           const msg = contract.createTransferMsg(
@@ -102,6 +107,24 @@ export default function useEstimator() {
           }
           dispatch(setFee(feeNum));
           setCosmosTx({ msgs: [msg], fee });
+        }
+
+        /** terra native transaction, send or contract interaction */
+        if (selectedToken.type === "terra-native") {
+          const amount = new Decimal(debounced_amount).mul(1e6);
+          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
+            new Coin(denoms.uluna, amount.toNumber()),
+          ]);
+          const { fee, feeNum } = await estimateTerraFee(wallet.address, [msg]);
+
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
+          dispatch(setFee(feeNum));
+          setTerraTx({ msgs: [msg], fee });
         }
 
         /** evm transactions */

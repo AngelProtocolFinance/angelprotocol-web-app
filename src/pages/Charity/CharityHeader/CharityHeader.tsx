@@ -2,15 +2,23 @@ import { useParams } from "react-router-dom";
 import { CharityParams } from "../types";
 import { Profile } from "types/server/contracts";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import { unsdgs } from "constants/unsdgs";
 import CharityLinks from "./CharityLinks";
 import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
   const { address: endowment_addr } = useParams<CharityParams>();
+  const { wallet, isWalletLoading } = useGetWallet();
   const { showModal } = useModalContext();
+
   function showDonateSelection() {
-    showModal(DonateSelection, { endowmentAddr: endowment_addr! });
+    if (!isWalletLoading && !wallet) {
+      showModal(Popup, { message: "Please connect your wallet" });
+    } else {
+      showModal(DonateSelection, { endowmentAddr: endowment_addr! });
+    }
   }
 
   const sdg = unsdgs[props.un_sdg || 0];
@@ -28,12 +36,7 @@ export default function CharityHeader(props: Profile) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button
-          disabled={true} /**disabled until v2 */
-          onClick={showDonateSelection}
-        >
-          DONATE NOW
-        </Button>
+        <Button onClick={showDonateSelection}>DONATE NOW</Button>
 
         <CharityLinks />
       </div>

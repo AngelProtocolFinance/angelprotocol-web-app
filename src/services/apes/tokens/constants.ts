@@ -5,6 +5,7 @@ import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import { chainIDs } from "constants/chainIDs";
+import { IS_TEST } from "constants/env";
 
 export const placeHolderToken: WithBalance = {
   type: "evm-native",
@@ -88,14 +89,23 @@ export const lunaToken: TerraNative = {
   chain_name: "Terra Pisco Testnet",
 };
 
-export const junoToken: JunoNative = {
-  type: "juno-native",
-  symbol: "JUNO",
-  logo: junoLogo,
-  decimals: 6,
-  chain_id: chainIDs.juno_main,
-  chain_name: "Juno Mainnet",
-};
+export const junoToken: JunoNative = IS_TEST
+  ? {
+      type: "juno-native",
+      symbol: "JUNOX",
+      logo: junoLogo,
+      decimals: 6,
+      chain_id: chainIDs.juno_test,
+      chain_name: "Juno Testnet",
+    }
+  : {
+      type: "juno-native",
+      symbol: "JUNO",
+      logo: junoLogo,
+      decimals: 6,
+      chain_id: chainIDs.juno_main,
+      chain_name: "Juno Mainnet",
+    };
 
 //TODO: get this from server
 export const tokenList: Token[] = [
