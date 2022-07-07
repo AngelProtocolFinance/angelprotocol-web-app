@@ -25,7 +25,7 @@ export default function Donater(
   return (
     <DonateContext
       {...props}
-      tokens={wallet?.coins || [placeHolderDisplayToken["station"]]}
+      tokens={wallet?.coins || [placeHolderDisplayToken["keplr"]]}
     />
   );
 }
