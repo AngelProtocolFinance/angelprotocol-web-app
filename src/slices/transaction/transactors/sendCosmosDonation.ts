@@ -70,7 +70,7 @@ export const sendCosmosDonation = createAsyncThunk(
         dispatch(
           invalidateJunoTags([
             { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ])
         );
       } else {

@@ -18,7 +18,7 @@ export default function useClaimUnstakedHalo() {
           invalidateJunoTags([
             { type: junoTags.gov, id: govTags.staker },
             { type: junoTags.gov, id: govTags.halo_balance },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
       })

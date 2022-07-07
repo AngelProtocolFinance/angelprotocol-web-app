@@ -44,7 +44,8 @@ export enum endowmentTags {
 }
 
 export enum multicallTags {
-  endowmentBalance = "endowmentBalance",
   airdrop = "airdrop",
+  endowmentBalance = "endowmentBalance",
+  junoBalances = "junoBalances",
   terraBalances = "terraBalances",
 }

@@ -25,7 +25,7 @@ export default function useWithdraw(resources: WithdrawResource) {
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
         successLink: {

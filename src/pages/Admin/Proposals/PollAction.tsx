@@ -110,7 +110,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "admin-group-fund-transfer":
       tagsToInvalidate.push({
         type: junoTags.multicall,
-        id: multicallTags.terraBalances,
+        id: multicallTags.junoBalances,
       });
       break;
 
@@ -130,7 +130,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
         //edge: user transfers to CW20 or Native to his connected wallet
         {
           type: junoTags.multicall,
-          id: multicallTags.terraBalances,
+          id: multicallTags.junoBalances,
         }
       );
       break;

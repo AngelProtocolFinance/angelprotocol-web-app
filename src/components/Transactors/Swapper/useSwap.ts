@@ -30,7 +30,7 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
       })

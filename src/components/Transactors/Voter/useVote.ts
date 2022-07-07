@@ -24,7 +24,7 @@ export default function useVote() {
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
       })
