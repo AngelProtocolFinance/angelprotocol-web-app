@@ -42,7 +42,16 @@ export const junoRpcUrl = IS_TEST
   ? juno_rpcs[chainIDs.juno_test]
   : juno_rpcs[chainIDs.juno_main];
 
-export const TERRA_FINDER = "https://finder.terra.money";
+export const blockExplorers: URL_GROUP = {
+  [chainIDs.juno_main]: "https://mintscan.io/juno/tx",
+  [chainIDs.juno_test]: "https://testnet.mintscan.io/juno-testnet/tx",
+  [chainIDs.terra_main]: "https://finder.terra.money/mainnet/tx",
+  [chainIDs.terra_test]: "https://finder.terra.money/testnet/tx",
+  [chainIDs.eth_kovan]: "https://kovan.etherscan.io/tx",
+  [chainIDs.eth_main]: "https://etherscan.io/tx",
+  [chainIDs.bnb_main]: "https://testnet.bscscan.com/tx",
+  [chainIDs.bnb_test]: "https://bscscan.com/tx",
+};
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";
