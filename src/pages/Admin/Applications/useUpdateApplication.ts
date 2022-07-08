@@ -1,4 +1,3 @@
-// import { useConnectedWallet } from "@terra-money/use-wallet";
 import { EndowmentUpdateValues } from "pages/Admin/types";
 import {
   EndowmentStatusNum,
