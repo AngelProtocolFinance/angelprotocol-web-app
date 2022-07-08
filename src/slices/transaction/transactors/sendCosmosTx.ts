@@ -1,3 +1,4 @@
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   SendCosmosTxArgs,
@@ -47,7 +48,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "success",
           message: args.successMessage || "Transaction succesful!",
           txHash: response.transactionHash,
-          rawLog: response.rawLog,
+          logs: parseRawLog(response.rawLog),
           chainId: junoChainId,
           successLink: args.successLink,
         });

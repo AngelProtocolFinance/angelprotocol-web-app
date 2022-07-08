@@ -72,7 +72,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            txInfo,
+            logs: txInfo.logs, // @cosmjs/stargate.Log and @terra-money/terra.js.TxLog interfaces have the same signatures
             chainId: terraChainId,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,

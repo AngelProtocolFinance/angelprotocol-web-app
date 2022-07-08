@@ -1,5 +1,6 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
+import { Log } from "@cosmjs/stargate/build/logs";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
@@ -62,8 +63,7 @@ export type SuccessStage = {
   message: string;
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
-  txInfo?: TxInfo;
-  rawLog?: string;
+  logs?: readonly Log[];
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
