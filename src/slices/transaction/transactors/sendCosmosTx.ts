@@ -1,4 +1,3 @@
-import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   SendCosmosTxArgs,
@@ -7,6 +6,7 @@ import {
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
+import parseRawLog from "helpers/parseRawLog";
 import { WalletDisconnectError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";

@@ -52,8 +52,6 @@ export default function useTransactionResultHandler() {
 
 function getEndowmentContract(stage: SuccessStage) {
   return stage
-    .txInfo!.logs![0].events.find(
-      (event) => event.type === "instantiate_contract"
-    )!
+    .logs![0].events.find((event) => event.type === "instantiate_contract")!
     .attributes.find((attr) => attr.key === "contract_address")!.value;
 }

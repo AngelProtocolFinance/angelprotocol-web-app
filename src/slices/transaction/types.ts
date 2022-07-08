@@ -1,9 +1,8 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { StdFee } from "@cosmjs/stargate";
-import { Log } from "@cosmjs/stargate/build/logs";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
+import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
@@ -57,13 +56,29 @@ export type BroadcastStage = {
   chainId: string;
 };
 
+type Attribute = {
+  key: string;
+  value: string;
+};
+type Event = {
+  type: string;
+  attributes: Attribute[];
+};
+// This is a wrapper for @cosmjs/stargate/build/logs > Log as setting the cosmjs version of Log (which is readonly)
+// in the transactionSlice.setStage causes an error with setting an immutable type into a mutable variable
+export type Log = {
+  msg_index: number;
+  log: string;
+  events: Event[];
+};
+
 export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: "success";
   message: string;
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
-  logs?: readonly Log[];
+  logs?: Log[];
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
