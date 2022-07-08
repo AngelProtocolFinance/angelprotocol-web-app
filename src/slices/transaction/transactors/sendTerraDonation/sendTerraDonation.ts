@@ -15,7 +15,7 @@ import { pollTerraTxInfo } from "./pollTerraTxInfo";
 import postTerraTx from "./postTerraTx";
 
 type TerraDonateArgs = {
-  wallet?: WalletState;
+  wallet: WalletState | undefined;
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
