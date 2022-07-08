@@ -27,7 +27,7 @@ export default function useEstimator() {
   const {
     watch,
     setError,
-    formState: { isValid, isDirty },
+    formState: { isDirty },
     getFieldState,
   } = useFormContext<DonateValues>();
   const { wallet } = useGetWallet();
@@ -50,9 +50,9 @@ export default function useEstimator() {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
-        const fs = getFieldState("amount");
+        const amountFieldState = getFieldState("amount");
 
-        if (fs.error || !isDirty) return;
+        if (amountFieldState.error || !isDirty) return;
 
         if (!debounced_amount) {
           dispatch(setFee(0));
@@ -115,7 +115,7 @@ export default function useEstimator() {
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
-          const { fee, feeNum } = await estimateTerraFee(wallet.address, [msg]);
+          const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
 
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
