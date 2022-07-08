@@ -34,6 +34,15 @@ export class WrongNetworkError extends Error {
   }
 }
 
+export class UnimplementedNetworkError extends Error {
+  chainId: string;
+  constructor(chainId: string) {
+    super();
+    this.name = "UnimplementedNetworkError";
+    this.chainId = chainId;
+  }
+}
+
 export class TxResultFail extends Error {
   chainId: string;
   txHash: string;

@@ -10,6 +10,7 @@ import { LogDonationFail } from "helpers/logDonation";
 import {
   LogApplicationUpdateError,
   TxResultFail,
+  UnimplementedNetworkError,
   WalletDisconnectError,
   WrongNetworkError,
 } from "errors/errors";
@@ -19,6 +20,11 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof WalletDisconnectError) {
     handler({ step: "error", message: "Wallet is not connected" });
+  } else if (error instanceof UnimplementedNetworkError) {
+    handler({
+      step: "error",
+      message: `Network ${error.chainId} not implemented`,
+    });
   } else if (error instanceof WrongNetworkError) {
     handler({
       step: "error",
