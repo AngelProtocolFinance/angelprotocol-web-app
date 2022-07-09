@@ -17,9 +17,11 @@ export default function MobileDappNav() {
       >
         Marketplace
       </NavLink>
+      {/* 
+      NOTE: Governance will be reenabled when we relaunch the $HALO token
       <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} className={styler}>
         Governance
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
         className={styler}
