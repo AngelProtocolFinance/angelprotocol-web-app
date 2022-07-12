@@ -50,9 +50,8 @@ export default function useEstimator() {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
-        const amountFieldState = getFieldState("amount");
 
-        if (amountFieldState.error || !isDirty) return;
+        if (getFieldState("amount").error || !isDirty) return;
 
         if (!debounced_amount) {
           dispatch(setFee(0));
