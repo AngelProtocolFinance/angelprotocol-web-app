@@ -51,9 +51,7 @@ export default function useEstimator() {
           return;
         }
 
-        if (getFieldState("amount").error || !isDirty) return;
-
-        if (!debounced_amount) {
+        if (!isDirty || !debounced_amount || getFieldState("amount").error) {
           dispatch(setFee(0));
           return;
         }
@@ -182,8 +180,16 @@ export default function useEstimator() {
     return () => {
       dispatch(setFormError(null));
     };
-    //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, selectedToken, wallet]);
+  }, [
+    debounced_amount,
+    debounced_split,
+    isDirty,
+    selectedToken,
+    wallet,
+    dispatch,
+    getFieldState,
+    setError,
+  ]);
 
   return { evmTx, terraTx, cosmosTx };
 }
