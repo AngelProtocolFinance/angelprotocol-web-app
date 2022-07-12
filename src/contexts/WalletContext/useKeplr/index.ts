@@ -17,7 +17,7 @@ export default function useKeplr() {
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<string>();
+  const [chainId, setChainId] = useState<chainIDs>();
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
@@ -28,8 +28,7 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      let chainId: string;
-
+      let chainId: chainIDs;
       if (IS_TEST) {
         chainId = chainIDs.juno_test;
         await dwindow.keplr.experimentalSuggestChain(juno_test);

@@ -14,6 +14,7 @@ export enum chainIDs {
   bnb_main = "56",
   bnb_test = "97",
   unsupported = "-1",
+  none = "",
 }
 
 export const junoChainId = IS_TEST ? chainIDs.juno_test : chainIDs.juno_main;

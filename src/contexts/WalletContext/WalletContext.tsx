@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
+import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -13,7 +14,7 @@ export type WalletState = {
   displayCoin: WithBalance;
   coins: WithBalance[];
   address: string;
-  chainId: string;
+  chainId: chainIDs;
   providerId: ProviderId;
 };
 

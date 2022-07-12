@@ -1,3 +1,5 @@
+import { chainIDs } from "constants/chainIDs";
+
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
@@ -30,7 +32,7 @@ export type Connection = SingleConnection | MultiConnection;
 export type ProviderInfo = {
   providerId: ProviderId;
   logo: string;
-  chainId: string;
+  chainId: chainIDs;
   address: string;
 };
 
