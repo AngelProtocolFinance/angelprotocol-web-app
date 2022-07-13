@@ -21,10 +21,7 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
   } else if (error instanceof WalletDisconnectError) {
     handler({ step: "error", message: "Wallet is not connected" });
   } else if (error instanceof UnimplementedNetworkError) {
-    handler({
-      step: "error",
-      message: `Network ${error.chainId} not implemented`,
-    });
+    handler({ step: "error", message: error.message });
   } else if (error instanceof WrongNetworkError) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
