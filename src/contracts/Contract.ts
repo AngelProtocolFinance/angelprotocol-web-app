@@ -3,6 +3,7 @@ import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
   Coin,
+  GasPrice,
   MsgSendEncodeObject,
   StdFee,
   calculateFee,
@@ -18,7 +19,9 @@ import { IS_TEST } from "constants/env";
 
 // TODO: uni-3 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
-const GAS_PRICE = `0.0625ujuno${IS_TEST ? "x" : ""}`;
+const GAS_PRICE = IS_TEST
+  ? GasPrice.fromString("0.025ujunox")
+  : GasPrice.fromString("0.0025ujuno");
 
 export default class Contract {
   contractAddress: string;
