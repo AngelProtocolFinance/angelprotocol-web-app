@@ -159,10 +159,18 @@ export default function useEstimator() {
           }
 
           const minFee = gasLimit.mul(gasPrice);
-          const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
+          const feeNum = parseFloat(
+            ethers.utils.formatUnits(minFee, selectedToken.decimals)
+          );
 
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
           setEVMtx(tx);
-          dispatch(setFee(parseFloat(fee)));
+          dispatch(setFee(feeNum));
         }
 
         dispatch(setFormLoading(false));
