@@ -31,8 +31,8 @@ describe("DappHead test", () => {
   test("dapphead routing", async () => {
     render(<TestApp />);
 
-    const govText1 = /total staked/i;
-    const govText2 = /halo price/i;
+    // const govText1 = /total staked/i;
+    // const govText2 = /halo price/i;
 
     const marketText1 = /angel protocol supports/i;
     const marketText2 = /displaced ukrainians/i;

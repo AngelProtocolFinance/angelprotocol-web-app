@@ -6,7 +6,6 @@ import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import toCurrency from "helpers/toCurrency";
-import { chainIDs } from "constants/chainIDs";
 import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {
