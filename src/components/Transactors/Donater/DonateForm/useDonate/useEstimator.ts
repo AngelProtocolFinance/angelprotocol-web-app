@@ -174,8 +174,6 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(false));
-
-        //CW20 token estimate
       } catch (err) {
         console.error(err);
         dispatch(setFormError("tx simulation failed"));
