@@ -73,7 +73,7 @@ export default function useEstimator() {
           const { fee, feeNum } = await contract.estimateFee([msg]);
 
           /** displayCoin is native - for payment of fee */
-          if (feeNum >= wallet.displayCoin.balance) {
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
@@ -92,11 +92,8 @@ export default function useEstimator() {
           );
           const { fee, feeNum } = await contract.estimateFee([msg]);
 
-          if (
-            feeNum >=
-            wallet.displayCoin
-              .balance /** displayCoin is native - for payment of fee */
-          ) {
+          /** displayCoin is native - for payment of fee */
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
