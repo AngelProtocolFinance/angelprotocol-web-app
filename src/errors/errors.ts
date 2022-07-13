@@ -39,7 +39,7 @@ export class WrongNetworkError extends Error {
 }
 
 export class UnimplementedNetworkError extends Error {
-  constructor(chainId: chainIDs) {
+  constructor(chainId: string) {
     super();
     this.name = "UnimplementedNetworkError";
     this.message = `Network ${chainId} not implemented`;
