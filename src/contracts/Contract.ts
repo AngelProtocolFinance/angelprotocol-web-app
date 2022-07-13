@@ -3,7 +3,6 @@ import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
   Coin,
-  GasPrice,
   MsgSendEncodeObject,
   StdFee,
   calculateFee,
@@ -14,14 +13,7 @@ import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
-import { MAIN_DENOM } from "constants/currency";
-import { IS_TEST } from "constants/env";
-
-// TODO: uni-3 and juno-1 have diff gas prices for fee display only,
-// actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
-const GAS_PRICE = IS_TEST
-  ? GasPrice.fromString("0.025ujunox")
-  : GasPrice.fromString("0.0025ujuno");
+import { GAS_PRICE, MAIN_DENOM } from "constants/currency";
 
 export default class Contract {
   contractAddress: string;
@@ -48,8 +40,12 @@ export default class Contract {
     msgs: readonly EncodeObject[]
   ): Promise<{ fee: StdFee; feeNum: number }> {
     const client = await getCosmosClient(this.wallet);
-    const gasLimit = await client.simulate(this.walletAddress, msgs, undefined);
-    return createFeeResult(gasLimit);
+    const gasEstimation = await client.simulate(
+      this.walletAddress,
+      msgs,
+      undefined
+    );
+    return createFeeResult(gasEstimation);
   }
 
   async signAndBroadcast(tx: TxOptions) {
@@ -104,8 +100,13 @@ export default class Contract {
   }
 }
 
-function createFeeResult(gasLimit: number): { fee: StdFee; feeNum: number } {
-  const fee = calculateFee(gasLimit, GAS_PRICE);
+function createFeeResult(gasEstimation: number): {
+  fee: StdFee;
+  feeNum: number;
+} {
+  // This is the multiplier used when auto-calculating the fees
+  // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
+  const fee = calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
 
   return {
     fee,
