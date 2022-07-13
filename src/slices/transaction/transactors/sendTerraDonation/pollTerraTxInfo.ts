@@ -1,6 +1,5 @@
 import { TxInfo } from "@terra-money/terra.js";
-import { TxResultFail } from "errors/errors";
-import { terraChainId } from "constants/chainIDs";
+import { Timeout } from "@terra-money/wallet-provider";
 import { terraLcdUrl } from "constants/urls";
 
 export async function pollTerraTxInfo(
@@ -23,6 +22,6 @@ export async function pollTerraTxInfo(
     if (retries > 0 || res.status === 400) {
       return pollTerraTxInfo(txhash, retries - 1, interval);
     }
-    throw new TxResultFail(terraChainId, txhash);
+    throw new Timeout("Transaction timeout");
   });
 }
