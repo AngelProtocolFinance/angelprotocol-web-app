@@ -49,11 +49,18 @@ export class UnimplementedNetworkError extends Error {
 export class TxResultFail extends Error {
   chainId: string;
   txHash: string;
-  constructor(chainId: string, txHash: string) {
+  constructor(
+    chainId: string,
+    txHash: string,
+    height: number,
+    code: number,
+    rawLog?: string
+  ) {
     super();
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFailt";
+    this.message = `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`;
   }
 }
 

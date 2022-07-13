@@ -54,6 +54,11 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof TxUnspecifiedError) {
     handler({ step: "error", message: "Unspecified error occured" });
+  } else if (error instanceof Error) {
+    handler({
+      step: "error",
+      message: error.message || "Unknown error occured",
+    });
   } else {
     handler({ step: "error", message: "Unknown error occured" });
   }

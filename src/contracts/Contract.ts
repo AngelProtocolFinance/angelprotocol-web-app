@@ -3,9 +3,11 @@ import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
   Coin,
+  DeliverTxResponse,
   MsgSendEncodeObject,
   StdFee,
   calculateFee,
+  isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
@@ -13,6 +15,8 @@ import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
+import { TxResultFail } from "errors/errors";
+import { junoChainId } from "constants/chainIDs";
 import { GAS_PRICE, MAIN_DENOM } from "constants/currency";
 
 export default class Contract {
@@ -50,7 +54,9 @@ export default class Contract {
 
   async signAndBroadcast(tx: TxOptions) {
     const client = await getCosmosClient(this.wallet);
-    return await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee);
+    return validateTransactionSuccess(
+      await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee)
+    );
   }
 
   createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
@@ -118,4 +124,20 @@ function extractFeeNum(fee: StdFee): number {
   return new Decimal(fee.amount.find((a) => a.denom === MAIN_DENOM)!.amount)
     .div(1e6)
     .toNumber();
+}
+
+function validateTransactionSuccess(
+  result: DeliverTxResponse
+): DeliverTxResponse {
+  if (isDeliverTxFailure(result)) {
+    throw new TxResultFail(
+      junoChainId,
+      result.transactionHash,
+      result.height,
+      result.code,
+      result.rawLog
+    );
+  }
+
+  return result;
 }
