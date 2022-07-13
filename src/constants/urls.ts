@@ -48,7 +48,7 @@ export const blockExplorers: URL_GROUP = {
   [chainIDs.eth_kovan]: "https://kovan.etherscan.io/tx",
   [chainIDs.eth_main]: "https://etherscan.io/tx",
   [chainIDs.juno_main]: "https://mintscan.io/juno/tx",
-  [chainIDs.juno_test]: "https://testnet.mintscan.io/juno-testnet/tx",
+  [chainIDs.juno_test]: "https://testnet.ping.pub/juno/tx",
   [chainIDs.terra_main]: "https://finder.terra.money/mainnet/tx",
   [chainIDs.terra_test]: "https://finder.terra.money/testnet/tx",
 };
