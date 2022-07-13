@@ -1,3 +1,4 @@
+import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,
   Timeout,
@@ -31,7 +32,7 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
   } else if (error instanceof TxResultFail) {
     handler({
       step: "error",
-      message: "Timeout: failed to wait for transaction result.",
+      message: error.message,
       txHash: error.txHash,
       chainId: error.chainId,
     });
@@ -49,8 +50,8 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
       message: "Failed to log the Poll ID of your proposal.",
       chainId: error.chainId,
     });
-  } else if (error instanceof Timeout) {
-    handler({ step: "error", message: "Transaction timeout" });
+  } else if (error instanceof Timeout || error instanceof TimeoutError) {
+    handler({ step: "error", message: error.message });
   } else if (error instanceof TxUnspecifiedError) {
     handler({ step: "error", message: "Unspecified error occured" });
   } else {
