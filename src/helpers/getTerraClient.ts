@@ -19,7 +19,7 @@ export default function getTerraClient(wallet: WalletState | undefined) {
     throw new WalletDisconnectError();
   }
   if (wallet.chainId !== terraChainId) {
-    throw new WrongNetworkError();
+    throw new WrongNetworkError("Terra", terraChainId);
   }
 
   return new LCDClient({

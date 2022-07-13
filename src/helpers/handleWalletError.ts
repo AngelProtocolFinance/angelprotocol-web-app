@@ -26,11 +26,7 @@ export default function handleWalletError(error: any, handler: StageUpdator) {
       message: `Network ${error.chainId} not implemented`,
     });
   } else if (error instanceof WrongNetworkError) {
-    handler({
-      step: "error",
-      message:
-        "Connected to the wrong network. Please connect to the Juno chain.",
-    });
+    handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {

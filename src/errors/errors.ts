@@ -1,3 +1,5 @@
+import { chainIDs } from "constants/chainIDs";
+
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
@@ -27,10 +29,12 @@ export class WalletDisconnectError extends Error {
   }
 }
 
+type Network = "Juno" | "Terra" | "Ethereum" | "Binance";
 export class WrongNetworkError extends Error {
-  constructor() {
+  constructor(correctNetwork: Network, correctChainId: chainIDs) {
     super();
     this.name = "WrongNetworkError";
+    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} ${correctChainId} chain.`;
   }
 }
 
