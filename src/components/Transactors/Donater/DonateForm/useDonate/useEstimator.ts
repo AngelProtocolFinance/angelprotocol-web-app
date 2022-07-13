@@ -71,6 +71,7 @@ export default function useEstimator() {
             ap_wallets.juno
           );
           const { fee, feeNum } = await contract.estimateFee([msg]);
+          dispatch(setFee(feeNum));
 
           /** displayCoin is native - for payment of fee */
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
@@ -79,7 +80,6 @@ export default function useEstimator() {
             });
             return;
           }
-          dispatch(setFee(feeNum));
           setCosmosTx({ msgs: [msg], fee });
         }
 
@@ -91,6 +91,7 @@ export default function useEstimator() {
             ap_wallets.juno
           );
           const { fee, feeNum } = await contract.estimateFee([msg]);
+          dispatch(setFee(feeNum));
 
           /** displayCoin is native - for payment of fee */
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
@@ -99,7 +100,6 @@ export default function useEstimator() {
             });
             return;
           }
-          dispatch(setFee(feeNum));
           setCosmosTx({ msgs: [msg], fee });
         }
 
@@ -110,6 +110,7 @@ export default function useEstimator() {
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
           const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+          dispatch(setFee(feeNum));
 
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
@@ -117,7 +118,6 @@ export default function useEstimator() {
             });
             return;
           }
-          dispatch(setFee(feeNum));
           setTerraTx({ msgs: [msg], fee });
         }
 
@@ -162,6 +162,7 @@ export default function useEstimator() {
           const feeNum = parseFloat(
             ethers.utils.formatUnits(minFee, selectedToken.decimals)
           );
+          dispatch(setFee(feeNum));
 
           if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
@@ -170,7 +171,6 @@ export default function useEstimator() {
             return;
           }
           setEVMtx(tx);
-          dispatch(setFee(feeNum));
         }
 
         dispatch(setFormLoading(false));
