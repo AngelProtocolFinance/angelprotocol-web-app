@@ -6,7 +6,6 @@ import {
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
-import parseRawLog from "helpers/parseRawLog";
 import { WalletDisconnectError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -48,7 +47,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "success",
           message: args.successMessage || "Transaction succesful!",
           txHash: response.transactionHash,
-          logs: parseRawLog(response.rawLog),
+          rawLog: response.rawLog,
           chainId: junoChainId,
           successLink: args.successLink,
         });

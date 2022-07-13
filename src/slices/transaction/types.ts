@@ -56,29 +56,13 @@ export type BroadcastStage = {
   chainId: string;
 };
 
-type Attribute = {
-  key: string;
-  value: string;
-};
-type Event = {
-  type: string;
-  attributes: Attribute[];
-};
-// This is a wrapper for @cosmjs/stargate/build/logs > Log as setting the cosmjs version of Log (which is readonly)
-// in the transactionSlice.setStage causes an error with setting an immutable type into a mutable variable
-export type Log = {
-  msg_index: number;
-  log: string;
-  events: Event[];
-};
-
 export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: "success";
   message: string;
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
-  logs?: Log[];
+  rawLog?: string;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };

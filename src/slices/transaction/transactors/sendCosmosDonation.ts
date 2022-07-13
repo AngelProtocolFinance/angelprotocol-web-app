@@ -8,7 +8,6 @@ import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
-import parseRawLog from "helpers/parseRawLog";
 import { WalletDisconnectError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -61,7 +60,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "success",
           message: "Thank you for your donation",
           txHash: response.transactionHash,
-          logs: parseRawLog(response.rawLog),
+          rawLog: response.rawLog,
           chainId: junoChainId,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
