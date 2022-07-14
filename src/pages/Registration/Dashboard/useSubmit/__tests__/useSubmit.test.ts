@@ -123,7 +123,7 @@ describe("useSubmit tests", () => {
     expect(mockShowModal).toBeCalled();
   });
 
-  it("dispatches action sending a Terra Tx", async () => {
+  it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
@@ -183,7 +183,8 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet:
+      "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
     KycDonorsOnly: false,
   },
 };
@@ -192,12 +193,13 @@ const MSG_EXECUTE_CONTRACT = {
   typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
   value: {
     create_endowment: {
-      beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      beneficiary:
+        "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
       cw4_members: [],
       guardians_multisig_addr: undefined,
       maturity_height: undefined,
       maturity_time: undefined,
-      owner: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      owner: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
       profile: {
         annual_revenue: undefined,
         average_annual_budget: undefined,
