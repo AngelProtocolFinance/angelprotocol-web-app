@@ -132,14 +132,15 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet:
+      "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
     KycDonorsOnly: false,
   },
 };
 
 const SUCCESS_STAGE = {
   step: "success",
-  logs: [
+  rawLog: JSON.stringify([
     {
       events: [
         {
@@ -147,11 +148,12 @@ const SUCCESS_STAGE = {
           attributes: [
             {
               key: "contract_address",
-              value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+              value:
+                "juno1rahc28lsvetcra9fwueekm3u0l00jgdsnry8amcu8j9ah3c60ydqzrd70r",
             },
           ],
         },
       ],
     },
-  ],
+  ]),
 } as Stage;
