@@ -10,7 +10,7 @@ import logApplicationReview from "pages/Admin/Applications/logApplicationReview"
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/chainIDs";
+import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {
@@ -56,7 +56,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
-        chainId: terraChainId,
+        chainId: junoChainId,
       });
 
       if (isDeliverTxSuccess(response)) {
@@ -65,7 +65,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
-            chainId: terraChainId,
+            chainId: junoChainId,
             successLink: args.successLink,
           });
 
@@ -94,7 +94,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: response.transactionHash,
-            chainId: terraChainId,
+            chainId: junoChainId,
           });
         }
       } else {
@@ -102,7 +102,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: terraChainId,
+          chainId: junoChainId,
         });
       }
     } catch (err) {
