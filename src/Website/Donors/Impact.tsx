@@ -42,7 +42,7 @@ const list = [
   },
   {
     id: 2,
-    text: "Donations accepted in TerraUSD and scaling to others soon",
+    text: "Donations accepted in $JUNO and scaling to others soon",
   },
   {
     id: 3,
