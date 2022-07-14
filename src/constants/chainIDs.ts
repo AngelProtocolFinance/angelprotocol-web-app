@@ -20,3 +20,7 @@ export enum chainIDs {
 export const junoChainId = IS_TEST ? chainIDs.juno_test : chainIDs.juno_main;
 
 export const terraChainId = IS_TEST ? chainIDs.terra_test : chainIDs.terra_main;
+
+export const ethereumChainId = IS_TEST
+  ? chainIDs.eth_ropsten
+  : chainIDs.eth_main;

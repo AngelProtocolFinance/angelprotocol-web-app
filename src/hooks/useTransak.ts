@@ -3,7 +3,7 @@ import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
 import { sendDonationLog } from "slices/transaction/transactors";
 import { ap_wallets } from "constants/ap_wallets";
-import { junoChainId } from "constants/chainIDs";
+import { ethereumChainId } from "constants/chainIDs";
 import { IS_TEST } from "constants/env";
 
 const apiKey = IS_TEST
@@ -15,9 +15,9 @@ const env = IS_TEST ? "STAGING" : "PRODUCTION";
 let transak = new transakSDK({
   apiKey: apiKey,
   environment: env,
-  cryptoCurrencyCode: "JUNO",
-  network: "juno",
-  walletAddress: ap_wallets.juno,
+  cryptoCurrencyCode: "USDC",
+  network: "ethereum",
+  walletAddress: ap_wallets.eth,
   hostURL: window.location.origin,
 
   //widget look
@@ -52,7 +52,7 @@ export default function useTransak(receiver: Receiver) {
             ...receiver,
             transactionId: eventPayload.status.id,
             transactionDate: eventPayload.status.createdAt,
-            chainId: junoChainId,
+            chainId: ethereumChainId,
             amount: eventPayload.status.cryptoAmount,
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,
