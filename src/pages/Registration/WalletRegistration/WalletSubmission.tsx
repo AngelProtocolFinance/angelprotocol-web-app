@@ -45,7 +45,7 @@ export default function WalletSubmission() {
             mono
             id="walletAddress"
             label="Juno wallet address"
-            placeholder="terra1..."
+            placeholder="juno1..."
             value={wallet?.address}
             disabled
             required

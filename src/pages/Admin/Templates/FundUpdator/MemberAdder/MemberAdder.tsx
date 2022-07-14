@@ -10,7 +10,7 @@ export default function MemberAdder() {
       <TextInput<T>
         title="Endowment Address"
         name="newMemberAddr"
-        placeholder="terra123abc..."
+        placeholder="juno123abc..."
         mono
         plain
       />

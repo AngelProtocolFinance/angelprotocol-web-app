@@ -108,7 +108,7 @@ export type TerraNative = TokenBase & {
 export type JunoNative = TokenBase & {
   type: "juno-native"; //uluna
   //additional info for adding chain in wallet
-  chain_name: string; //Terra testnet
+  chain_name: string; //Juno testnet
   rpc_url?: never;
   block_explorer_url?: never; //https://testnet.snowtrace.io
   tokens?: never;
@@ -120,7 +120,7 @@ export type JunoNative = TokenBase & {
 export type ALT20 = TokenBase & {
   type: "cw20" | "erc20";
 
-  chain_name?: never; //Terra testnet
+  chain_name?: never; //Juno testnet
   rpc_url?: never;
   block_explorer_url?: never; //https://testnet.snowtrace.io
   tokens?: never;

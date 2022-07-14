@@ -21,7 +21,7 @@ import processEstimateError from "helpers/processEstimateError";
 interface Source {
   locked: string; //"0"
   liquid: string; //"0"
-  vault: string; //"terra123addr"
+  vault: string; //"juno123addr.."
 }
 
 const SEPARATOR = ":";
