@@ -28,7 +28,7 @@ export default function useCreatePollEstimate() {
     (async () => {
       try {
         if (!wallet) {
-          dispatch(setFormError("Terra wallet is not connected"));
+          dispatch(setFormError("Wallet not connected"));
           return;
         }
 

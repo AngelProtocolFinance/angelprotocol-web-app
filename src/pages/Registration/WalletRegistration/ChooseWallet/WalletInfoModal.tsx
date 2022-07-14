@@ -2,7 +2,7 @@ import { BsX } from "react-icons/bs";
 import { useModalContext } from "contexts/ModalContext";
 import { Button } from "../../common";
 
-export default function TerraInfoModal() {
+export default function WalletInfoModal() {
   const { closeModal } = useModalContext();
 
   return (
