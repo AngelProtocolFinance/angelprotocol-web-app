@@ -45,5 +45,5 @@ export const juno_test: ChainInfo = {
     average: 0.01,
     high: 0.025,
   },
-  features: ["cosmwasm", "stargate", "ibc-transfer"],
+  features: ["cosmwasm", "ibc-transfer"],
 };
