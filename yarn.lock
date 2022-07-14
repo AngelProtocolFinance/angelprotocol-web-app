@@ -3138,12 +3138,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^2.9.3":
-  version: 2.9.3
-  resolution: "@hookform/resolvers@npm:2.9.3"
+"@hookform/resolvers@npm:^2.9.5":
+  version: 2.9.5
+  resolution: "@hookform/resolvers@npm:2.9.5"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: e0010426c9415024ed65ac32e40a3b0a15837c3bc465ce6aa7048e7a47eb5ec5d4578b662e7bb3fdf528f8fb9216bf8b97fb5742b9f79f0314c7472e3b37c2f6
+  checksum: e03a07bc24b7f94981d0c854ae12bf530271b4e2ade4678df143cb58c8195b7ca0aca30c148d2c3a31e87a8b564291c9844d401835a5ff47bc96480133e8a835
   languageName: node
   linkType: hard
 
@@ -4585,10 +4585,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.0.1":
-  version: 18.0.1
-  resolution: "@types/node@npm:18.0.1"
-  checksum: be14b251c54cc2b4ca78ac6eadf2fe5e831e487f2e17848f21d576295945b538271dcc674d0bba582b3f8d95b84f6826e99b6ba4710c76f165a8bdd4d4f0618e
+"@types/node@npm:^18.0.3":
+  version: 18.0.4
+  resolution: "@types/node@npm:18.0.4"
+  checksum: 981284fd57941f233f0e77038087c122f56e3c2b4fc4e090dfc7f0a93abfc526d5ccdd59eb3ef551d713245cf3943e37c7b957f12ba699209341a447c39fab59
   languageName: node
   linkType: hard
 
@@ -5509,7 +5509,7 @@ __metadata:
     "@draft-js-plugins/editor": ^4.1.3
     "@fleekhq/fleek-storage-js": ^1.0.21
     "@hookform/error-message": ^2.0.0
-    "@hookform/resolvers": ^2.9.3
+    "@hookform/resolvers": ^2.9.5
     "@keplr-wallet/types": ^0.10.5
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.7.1
@@ -5527,7 +5527,7 @@ __metadata:
     "@types/draft-js": ^0.11.9
     "@types/jest": ^27.5.2
     "@types/jsonwebtoken": ^8.5.5
-    "@types/node": ^18.0.1
+    "@types/node": ^18.0.3
     "@types/react": ^17.0.39
     "@types/react-csv": ^1.1.2
     "@types/react-dom": ^17.0.11
@@ -5565,7 +5565,7 @@ __metadata:
     react-select-country-list: ^2.2.3
     react-test-renderer: 17.0.2
     stream-browserify: ^3.0.0
-    tailwindcss: ^3.1.4
+    tailwindcss: ^3.1.5
     ts-node: ^10.8.2
     typescript: ^4.7.4
     util: ^0.12.4
@@ -10162,6 +10162,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-core-module@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "is-core-module@npm:2.9.0"
+  dependencies:
+    has: ^1.0.3
+  checksum: b27034318b4b462f1c8f1dfb1b32baecd651d891a4e2d1922135daeff4141dfced2b82b07aef83ef54275c4a3526aa38da859223664d0868ca24182badb784ce
+  languageName: node
+  linkType: hard
+
 "is-date-object@npm:^1.0.1":
   version: 1.0.5
   resolution: "is-date-object@npm:1.0.5"
@@ -14688,6 +14697,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"resolve@npm:^1.22.1":
+  version: 1.22.1
+  resolution: "resolve@npm:1.22.1"
+  dependencies:
+    is-core-module: ^2.9.0
+    path-parse: ^1.0.7
+    supports-preserve-symlinks-flag: ^1.0.0
+  bin:
+    resolve: bin/resolve
+  checksum: 07af5fc1e81aa1d866cbc9e9460fbb67318a10fa3c4deadc35c3ad8a898ee9a71a86a65e4755ac3195e0ea0cfbe201eb323ebe655ce90526fd61917313a34e4e
+  languageName: node
+  linkType: hard
+
 "resolve@npm:^2.0.0-next.3":
   version: 2.0.0-next.3
   resolution: "resolve@npm:2.0.0-next.3"
@@ -14708,6 +14730,19 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: c79ecaea36c872ee4a79e3db0d3d4160b593f2ca16e031d8283735acd01715a203607e9ded3f91f68899c2937fa0d49390cddbe0fb2852629212f3cda283f4a7
+  languageName: node
+  linkType: hard
+
+"resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
+  version: 1.22.1
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
+  dependencies:
+    is-core-module: ^2.9.0
+    path-parse: ^1.0.7
+    supports-preserve-symlinks-flag: ^1.0.0
+  bin:
+    resolve: bin/resolve
+  checksum: 5656f4d0bedcf8eb52685c1abdf8fbe73a1603bb1160a24d716e27a57f6cecbe2432ff9c89c2bd57542c3a7b9d14b1882b73bfe2e9d7849c9a4c0b8b39f02b8b
   languageName: node
   linkType: hard
 
@@ -15793,9 +15828,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "tailwindcss@npm:3.1.4"
+"tailwindcss@npm:^3.1.5":
+  version: 3.1.6
+  resolution: "tailwindcss@npm:3.1.6"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -15818,13 +15853,13 @@ __metadata:
     postcss-selector-parser: ^6.0.10
     postcss-value-parser: ^4.2.0
     quick-lru: ^5.1.1
-    resolve: ^1.22.0
+    resolve: ^1.22.1
   peerDependencies:
     postcss: ^8.0.9
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 716b7d80e51c4904d845920cbb88483114ae6f14b20328b9206f49fd642bbcd390b9764fc574f85901b0377184c5d4eb94c00bcf73e280f81e772cf621d390a5
+  checksum: 90719c6fd0dcdda5c8e2882ad421048c9dd90890e0c118d12ff3ec31adba53eb2df8fed1ed203e728e5b32297e1cc207df463a6b196d37344a63fde9f67c52b6
   languageName: node
   linkType: hard
 
