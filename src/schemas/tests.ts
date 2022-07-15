@@ -4,7 +4,7 @@
 export function testContractAddress(address?: string): boolean {
   //for non-required schema, return true if address is undefined
   //for required schema, required() clause will catch it will not run this test
-  return !address || /^juno1[a-z0-9]{58}$/i.test(address);
+  return !address || /^juno1[a-z0-9]{38,58}$/i.test(address);
 }
 
 export function testTokenDigits(tokenAmount?: number): boolean {
