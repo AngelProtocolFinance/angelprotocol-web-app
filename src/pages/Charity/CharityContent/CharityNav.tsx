@@ -13,7 +13,7 @@ export default function CharityNav(props: { classes?: string }) {
     //bounding box to anchor buttons
     <div className={`relative ${props.classes || ""} my-3`}>
       <div ref={ref} className="overflow-hidden overflow-x-auto scroll-hidden">
-        <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(5,_minmax(8rem,_1fr))] divide-x">
+        <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(4,_minmax(8rem,_1fr))] divide-x">
           <NavLink end to={charityRoutes.overview} className={styler}>
             overview
           </NavLink>

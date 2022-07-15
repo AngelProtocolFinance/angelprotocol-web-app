@@ -40,7 +40,7 @@ export function useAirdrop() {
     isError,
     isLoading,
     isFetching,
-  } = useAirdropQuery(wallet?.address!, {
+  } = useAirdropQuery(wallet!, {
     skip: !wallet,
   });
   return {

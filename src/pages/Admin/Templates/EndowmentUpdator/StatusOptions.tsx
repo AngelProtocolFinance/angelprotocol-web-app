@@ -30,7 +30,7 @@ export default function StatusOptions() {
         <TextInput<V>
           title="Beneficiary"
           name="beneficiary"
-          placeholder="terra123abc..."
+          placeholder="juno123abc..."
           required
           mono
         />

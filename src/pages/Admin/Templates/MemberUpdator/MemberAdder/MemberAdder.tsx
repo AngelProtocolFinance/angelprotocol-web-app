@@ -10,13 +10,13 @@ export default function MemberAdder() {
       <TextInput<T>
         title="wallet address"
         name="addr"
-        placeholder="terra123abc..."
+        placeholder="juno123abc..."
         mono
         plain
       />
       <TextInput<T>
         title="weight"
-        placeholder="terra123abc..."
+        placeholder="juno123abc..."
         name="weight"
         mono
         plain

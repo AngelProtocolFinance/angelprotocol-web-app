@@ -1,22 +1,25 @@
+import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
+import { chainIDs } from "constants/chainIDs";
 
 describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const registrar = new Registrar(
-      "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek"
-    );
+    const registrar = new Registrar(WALLET);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
-    expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
-    expect(payload.execute_msg).toStrictEqual({
+    expect(payload.value.sender).toBe(WALLET.address);
+    expect(payload.value.msg).toBeDefined();
+    expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
       create_endowment: {
-        beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        beneficiary: WALLET.address,
         cw4_members: [],
         guardians_multisig_addr: undefined,
         maturity_height: undefined,
         maturity_time: undefined,
-        owner: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        owner: WALLET.address,
         profile: {
           annual_revenue: undefined,
           average_annual_budget: undefined,
@@ -30,11 +33,7 @@ describe("Registrar tests", () => {
           number_of_employees: undefined,
           overview: "some overview",
           registration_number: undefined,
-          social_media_urls: {
-            facebook: undefined,
-            linkedin: undefined,
-            twitter: undefined,
-          },
+          social_media_urls: {},
           street_address: undefined,
           tier: 1,
           un_sdg: 0,
@@ -45,6 +44,15 @@ describe("Registrar tests", () => {
     });
   });
 });
+
+const WALLET: WalletState = {
+  walletIcon: "",
+  displayCoin: placeHolderDisplayToken["keplr"],
+  coins: [placeHolderDisplayToken["keplr"]],
+  address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
+  chainId: chainIDs.juno_test,
+  providerId: "keplr",
+};
 
 const CHARITY: Charity = {
   ContactPerson: {
@@ -86,7 +94,7 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet: WALLET.address,
     KycDonorsOnly: false,
   },
 };

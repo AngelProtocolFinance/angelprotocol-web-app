@@ -1,22 +1,24 @@
+import { isDeliverTxSuccess } from "@cosmjs/stargate";
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
+import {
+  SendCosmosTxArgs,
+  StageUpdator,
+  TxOptions,
+} from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
-import handleTerraError from "helpers/handleTerraError";
-import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import postTerraTx from "helpers/postTerraTx";
+import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
+import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
-type _SenderArgs = TerraSendArgs & {
+type _SenderArgs = SendCosmosTxArgs & {
   applicationId: string;
 };
 
 export const sendEndowmentReviewTx = createAsyncThunk(
-  `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
+  `${transactionSlice.name}/sendEndowmentReviewCosmosTx`,
   async (args: _SenderArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
@@ -29,15 +31,14 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
-      let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet.address);
+      const contract = new Contract(args.wallet);
+      let tx: TxOptions;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee(args.msgs);
 
         if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({
@@ -49,30 +50,26 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await postTerraTx(tx);
+      const response = await contract.signAndBroadcast(tx);
 
       updateTx({
         step: "broadcast",
         message: "Waiting for transaction result",
-        txHash: response.result.txhash,
-        chainId: terraChainId,
+        txHash: response.transactionHash,
+        chainId: junoChainId,
       });
 
-      if (response.success) {
-        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
-        const txInfo = await getTxInfo;
-
-        if (!txInfo.code) {
+      if (isDeliverTxSuccess(response)) {
+        if (!response.code) {
           updateTx({
             step: "success",
             message: args.successMessage || "Transaction successful!",
-            txHash: txInfo.txhash,
-            txInfo,
-            chainId: terraChainId,
+            txHash: response.transactionHash,
+            chainId: junoChainId,
             successLink: args.successLink,
           });
 
-          const logs = txInfo.logs as unknown as TxLog[];
+          const logs = parseRawLog(response.rawLog);
 
           const proposal_id = logs[0]?.events
             .find((event) => {
@@ -96,20 +93,20 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           updateTx({
             step: "error",
             message: "Transaction failed",
-            txHash: txInfo.txhash,
-            chainId: terraChainId,
+            txHash: response.transactionHash,
+            chainId: junoChainId,
           });
         }
       } else {
         updateTx({
           step: "error",
           message: "Transaction failed",
-          txHash: response.result.txhash,
-          chainId: terraChainId,
+          txHash: response.transactionHash,
+          chainId: junoChainId,
         });
       }
     } catch (err) {
-      handleTerraError(err, updateTx);
+      handleWalletError(err, updateTx);
     }
   }
 );

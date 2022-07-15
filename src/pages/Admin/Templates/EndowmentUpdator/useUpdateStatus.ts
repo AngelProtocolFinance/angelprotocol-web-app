@@ -12,7 +12,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
@@ -44,7 +44,7 @@ export default function useUpdateStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet?.address);
+    const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -60,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -69,7 +69,7 @@ export default function useUpdateStatus() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

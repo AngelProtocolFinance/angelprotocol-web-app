@@ -3,7 +3,7 @@ import { WithdrawResource, WithdrawValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
@@ -19,13 +19,13 @@ export default function useWithdraw(resources: WithdrawResource) {
 
   function withdraw() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
         successLink: {

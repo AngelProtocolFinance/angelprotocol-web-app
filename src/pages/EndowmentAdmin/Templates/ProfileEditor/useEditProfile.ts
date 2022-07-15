@@ -17,7 +17,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import cleanObject from "helpers/cleanObject";
@@ -93,7 +93,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, wallet?.address);
+    const accountContract = new Account(wallet, endowmentAddr!);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
@@ -104,7 +104,7 @@ export default function useEditProfile() {
       data: genDiffMeta(diffEntries, initialProfile),
     };
 
-    const adminContract = new Admin(cwContracts, wallet?.address);
+    const adminContract = new Admin(wallet, cwContracts);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -113,7 +113,7 @@ export default function useEditProfile() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

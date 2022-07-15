@@ -9,9 +9,9 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
@@ -49,7 +49,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new IndexFund(wallet);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -78,7 +78,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -87,7 +87,7 @@ export default function useCreateFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

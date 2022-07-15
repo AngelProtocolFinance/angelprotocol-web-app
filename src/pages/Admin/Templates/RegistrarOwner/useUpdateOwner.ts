@@ -7,7 +7,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import genProposalsLink from "../genProposalsLink";
@@ -29,7 +29,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const registrarContract = new Registrar(wallet?.address);
+    const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
@@ -39,7 +39,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -48,7 +48,7 @@ export default function useUpdateOwner() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

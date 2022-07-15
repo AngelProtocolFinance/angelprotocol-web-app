@@ -1,10 +1,10 @@
-import Indexfund, { IF, T } from "contracts/IndexFund";
+import IndexFund, { IF, T } from "contracts/IndexFund";
 import { useContract } from "../useContract";
 import { indexFund_api } from "./indexFund";
 
 export function useFundList() {
   const { useFundListQuery } = indexFund_api;
-  const { contract } = useContract<IF, T>(Indexfund);
+  const { contract } = useContract<IF, T>(IndexFund);
   const {
     data = [],
     isLoading,
@@ -17,7 +17,7 @@ export function useFundList() {
 //selects a fund from funds[] cache and returns members
 export function useFundMembers(fundId: string) {
   const { useFundListQuery } = indexFund_api;
-  const { contract } = useContract<IF, T>(Indexfund);
+  const { contract } = useContract<IF, T>(IndexFund);
   const { fundMembers = [], isFundMembersLoading } = useFundListQuery(
     contract.fundList,
     {
@@ -33,7 +33,7 @@ export function useFundMembers(fundId: string) {
 
 export function useAllianceMembers() {
   const { useAllianceMembersQuery } = indexFund_api;
-  const { contract } = useContract<IF, T>(Indexfund);
+  const { contract } = useContract<IF, T>(IndexFund);
   const {
     data = [],
     isLoading,
@@ -50,7 +50,7 @@ export function useAllianceMembers() {
 
 export function useIndexFundConfig() {
   const { useConfigQuery } = indexFund_api;
-  const { contract } = useContract<IF, T>(Indexfund);
+  const { contract } = useContract<IF, T>(IndexFund);
   const { data, isLoading, isFetching, isError } = useConfigQuery(
     contract.config
   );

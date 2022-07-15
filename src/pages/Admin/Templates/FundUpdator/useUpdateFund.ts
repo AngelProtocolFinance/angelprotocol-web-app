@@ -9,9 +9,9 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateFund() {
@@ -54,7 +54,7 @@ export default function useUpdateFund() {
         showModal(Popup, { message: "No fund member changes" });
         return;
       }
-      const indexFundContract = new Indexfund(wallet?.address);
+      const indexFundContract = new IndexFund(wallet);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -69,7 +69,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new Admin("apTeam", wallet?.address);
+      const adminContract = new Admin(wallet, "apTeam");
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
@@ -81,7 +81,7 @@ export default function useUpdateFund() {
       );
 
       dispatch(
-        sendTerraTx({
+        sendCosmosTx({
           wallet,
           msgs: [proposalMsg],
           tagPayloads: [

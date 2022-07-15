@@ -1,4 +1,4 @@
-import { Coin } from "@terra-money/terra.js";
+import { Coin } from "@cosmjs/proto-signing";
 import { EndowmentTierNum } from "types/shared/registration";
 
 /** _ethereum contract */
@@ -22,7 +22,7 @@ export type EmbeddedWasmMsg = {
   wasm: {
     execute: {
       contract_addr: string;
-      funds: Coin.Data[];
+      funds: Coin[];
       msg: string; //base64 endocoded msg object
     };
   };
@@ -31,7 +31,7 @@ export type EmbeddedWasmMsg = {
 export type EmbeddedBankMsg = {
   bank: {
     send: {
-      amount: Coin.Data[];
+      amount: Coin[];
       to_address: string;
     };
   };
@@ -73,7 +73,7 @@ export interface Holdings {
 export interface Source {
   locked: string; //"0"
   liquid: string; //"0"
-  vault: string; //"terra123addr"
+  vault: string; //"juno123addr.."
 }
 
 export interface UpdateProfilePayload {
@@ -145,7 +145,7 @@ export type Proposal = {
 };
 
 export type CW3Config = {
-  group_addr: string; //"terra123abc.."
+  group_addr: string; //"juno123abc.."
   threshold: {
     absolute_percentage: {
       percentage: string; //"0.5"
@@ -159,7 +159,7 @@ export type CW3Config = {
 };
 
 export type AdminVoteInfo = {
-  voter: string; //"terra123abc.."
+  voter: string; //"juno123abc.."
   vote: Vote;
   weight: number; //1
 };
@@ -245,8 +245,8 @@ export type AllianceMember = {
 };
 
 export type IndexFundConfig = {
-  owner: string; //"terra123abc.."
-  registrar_contract: string; //"terra123abc";
+  owner: string; //"juno123abc.."
+  registrar_contract: string; //"juno123abc..";
   fund_rotation?: number; //10
   fund_member_limit: number; //10
   funding_goal?: string; //"50000000"
@@ -358,7 +358,7 @@ export type RegistrarConfig = {
 };
 
 export type VaultRateInfo = {
-  vault_addr: string; //"terra172u..
+  vault_addr: string; //"juno172u..
   fx_rate: string; //"1.206784043460040765"
 };
 

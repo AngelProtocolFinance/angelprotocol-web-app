@@ -7,7 +7,11 @@ import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import { ethereumToken, lunaToken } from "services/apes/tokens/constants";
+import {
+  ethereumToken,
+  junoToken,
+  lunaToken,
+} from "services/apes/tokens/constants";
 
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
@@ -26,6 +30,7 @@ export const providerIcons: { [key in ProviderId]: string } = {
 
 const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
 const lunaTokenWithBalance = { ...lunaToken, balance: 0 };
+const junoTokenWithBalance = { ...junoToken, balance: 0 };
 export const placeHolderDisplayToken: {
   [key in ProviderId]: WithBalance;
 } = {
@@ -37,7 +42,7 @@ export const placeHolderDisplayToken: {
   "leap-wallet": lunaTokenWithBalance,
   "falcon-wallet": lunaTokenWithBalance,
   "bitkeep-wallet": lunaTokenWithBalance,
-  keplr: lunaTokenWithBalance,
-  walletconnect: lunaTokenWithBalance,
+  keplr: junoTokenWithBalance,
+  walletconnect: junoTokenWithBalance,
   torus: lunaTokenWithBalance,
 };

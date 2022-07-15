@@ -10,13 +10,14 @@ import { juno_test } from "./chains";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
+
 export default function useKeplr() {
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<string>();
+  const [chainId, setChainId] = useState<chainIDs>();
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
@@ -27,11 +28,9 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      let address: string;
-      let chainId: string;
-
+      let chainId: chainIDs;
       if (IS_TEST) {
-        chainId = juno_test.chainId;
+        chainId = chainIDs.juno_test;
         await dwindow.keplr.experimentalSuggestChain(juno_test);
       } else {
         chainId = chainIDs.juno_main;
@@ -39,9 +38,8 @@ export default function useKeplr() {
 
       await dwindow.keplr.enable(chainId);
       const key = await dwindow.keplr.getKey(chainId);
-      address = key.bech32Address;
 
-      setAddress(address);
+      setAddress(key.bech32Address);
       setChainId(chainId);
       setIsLoading(false);
     } catch (err: any) {
@@ -60,7 +58,6 @@ export default function useKeplr() {
 
   const connect = async () => {
     try {
-      const dwindow = window as Dwindow;
       if (!dwindow.keplr) {
         throw new WalletError("Keplr is not installed", 0);
       }

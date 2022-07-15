@@ -9,8 +9,9 @@ import {
   VaultRateInfo,
 } from "types/server/contracts";
 import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import Multicall from "contracts/Multicall";
-import { terraChainId } from "constants/env";
+import { terraChainId } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 import { junoApi } from "..";
 import contract_querier from "../contract_querier";
@@ -119,15 +120,15 @@ export const multicall_api = junoApi.injectEndpoints({
         return { vaultFields, vaultLimits };
       },
     }),
-    airdrop: builder.query<Airdrop[], string>({
+    airdrop: builder.query<Airdrop[], WalletState>({
       providesTags: [{ type: junoTags.multicall, id: multicallTags.airdrop }],
-      async queryFn(walletAddr, queryApi, extraOptions, baseQuery) {
+      async queryFn(wallet, queryApi, extraOptions, baseQuery) {
         try {
           const airDropsRes = await fetch(
-            `${aws_endpoint}/airdrop/${walletAddr}/${terraChainId}`
+            `${aws_endpoint}/airdrop/${wallet.address}/${terraChainId}`
           );
           const airDrops = (await airDropsRes.json()) as Airdrops;
-          const multiCallContract = new Multicall(walletAddr);
+          const multiCallContract = new Multicall(wallet);
           const claimInqRes = await baseQuery(
             contract_querier(multiCallContract.airDropInquiries(airDrops))
           );

@@ -12,7 +12,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import CW20 from "contracts/CW20";
 import { contracts } from "constants/contracts";
@@ -43,7 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(contracts.halo_token, wallet?.address);
+    const cw20Contract = new CW20(wallet, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -61,7 +61,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const adminContract = new Admin(cwContracts, wallet?.address);
+    const adminContract = new Admin(wallet, cwContracts);
     const fundTransferMeta: FundSendMeta = {
       type: "admin-group-fund-transfer",
       data: {
@@ -78,7 +78,7 @@ export default function useTransferFunds() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

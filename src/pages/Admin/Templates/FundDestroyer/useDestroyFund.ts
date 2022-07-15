@@ -7,9 +7,9 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useDestroyFund() {
@@ -26,7 +26,7 @@ export default function useDestroyFund() {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new IndexFund(wallet);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
@@ -38,7 +38,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -47,7 +47,7 @@ export default function useDestroyFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

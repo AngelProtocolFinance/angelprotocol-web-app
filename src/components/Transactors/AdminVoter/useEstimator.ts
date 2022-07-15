@@ -1,7 +1,7 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AdminVoteValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -11,7 +11,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
@@ -19,7 +18,7 @@ export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useGetWallet();
   const { getValues, watch } = useFormContext<AdminVoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
@@ -40,10 +39,9 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(cwContracts, wallet.address);
+        const contract = new Admin(wallet, cwContracts);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
-        const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([voteMsg]);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees

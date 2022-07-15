@@ -1,13 +1,16 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
+import { DonateValues } from "../../types";
 import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
-import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
-import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import useEstimator from "../useEstimator";
+import {
+  sendCosmosDonation,
+  sendEthDonation,
+  sendTerraDonation,
+} from "slices/transaction/transactors";
+import useEstimator from "./useEstimator";
 
 export default function useDonate() {
   const { wallet, isWalletLoading } = useGetWallet();
@@ -23,7 +26,7 @@ export default function useDonate() {
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const dispatch = useSetter();
-  const { evmTx, terraTx } = useEstimator();
+  const { evmTx, terraTx, cosmosTx } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
 
@@ -38,11 +41,21 @@ export default function useDonate() {
         dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
-      case "cw20":
         dispatch(
           sendTerraDonation({
             wallet,
             tx: terraTx!,
+            donateValues: data,
+            kycData,
+          })
+        );
+        break;
+      case "cw20":
+      case "juno-native":
+        dispatch(
+          sendCosmosDonation({
+            wallet,
+            tx: cosmosTx!,
             donateValues: data,
             kycData,
           })

@@ -9,9 +9,9 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
@@ -48,7 +48,7 @@ export default function useConfigureFund() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new IndexFund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({
@@ -59,7 +59,7 @@ export default function useConfigureFund() {
       })
     );
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -68,7 +68,7 @@ export default function useConfigureFund() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

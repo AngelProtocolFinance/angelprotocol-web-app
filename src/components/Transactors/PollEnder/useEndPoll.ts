@@ -4,7 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
 
 export default function useEndPoll(pollId: number) {
@@ -18,17 +18,17 @@ export default function useEndPoll(pollId: number) {
       return;
     }
 
-    const contract = new Gov(wallet?.address);
+    const contract = new Gov(wallet);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [msg],
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
       })

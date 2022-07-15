@@ -1,17 +1,18 @@
-import { Coin } from "@terra-money/terra.js";
+import { Coin } from "@cosmjs/proto-signing";
+import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
-import { ProviderInfo } from "contexts/WalletContext/types";
+import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
-import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
 import { IS_TEST } from "constants/env";
-import { apes_endpoint, terraLcdUrl } from "constants/urls";
+import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-import { terraNativeAssets } from "./constants";
+import { junoToken, lunaToken } from "./constants";
 
-type TerraBalanceRes = { balances: Coin.Data[] };
+type TerraBalanceRes = { balances: TerraCoin.Data[] };
+type JunoBalanceRes = { balances: Coin[] };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 
 const tokens_api = apes.injectEndpoints({
@@ -31,8 +32,6 @@ const tokens_api = apes.injectEndpoints({
       { providerInfo: ProviderInfo }
     >({
       providesTags: [],
-      //address
-      //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const { providerId, address, chainId } = args.providerInfo;
@@ -49,9 +48,29 @@ const tokens_api = apes.injectEndpoints({
             return tokens;
           }, {} as CategorizedTokenList);
 
+          // fetch balances for juno
+          if (isJunoProvider(providerId)) {
+            const res = await fetch(
+              junoLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+            );
+
+            const jsonRes: JunoBalanceRes = await res.json();
+            const junoTokens = jsonRes.balances.reduce((_coins, _coin) => {
+              //don't display coins with no assets
+              _coins.push({
+                ...junoToken,
+                balance: +utils.formatUnits(_coin.amount, junoToken.decimals),
+              });
+              return _coins;
+            }, [] as WithBalance<Token>[]);
+
+            coins.push(...junoTokens);
+
+            return { data: coins };
+          }
+
           /**fetch balances for terra  */
-          const isTerra = isTerraProvider(providerId); //query is skipped when wallet is not connected
-          if (isTerra) {
+          if (isTerraProvider(providerId)) {
             //fetch native terra coins
             const res = await fetch(
               terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
@@ -59,14 +78,11 @@ const tokens_api = apes.injectEndpoints({
 
             const jsonRes: TerraBalanceRes = await res.json();
             const terraTokens = jsonRes.balances.reduce((_coins, _coin) => {
-              const coinAsset = terraNativeAssets[_coin.denom];
               //don't display coins with no assets
-              if (coinAsset) {
-                _coins.push({
-                  ...coinAsset,
-                  balance: +utils.formatUnits(_coin.amount, coinAsset.decimals),
-                });
-              }
+              _coins.push({
+                ...lunaToken,
+                balance: +utils.formatUnits(_coin.amount, lunaToken.decimals),
+              });
               return _coins;
             }, [] as WithBalance<Token>[]);
 
@@ -155,3 +171,27 @@ const tokens_api = apes.injectEndpoints({
 });
 
 export const { useTokensQuery, useBalancesQuery } = tokens_api;
+
+function isJunoProvider(providerId: ProviderId) {
+  switch (providerId) {
+    //FUTURE: add other leap falcon xdefi etc
+    case "keplr":
+    case "walletconnect":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isTerraProvider(providerId: ProviderId) {
+  switch (providerId) {
+    //FUTURE: add other leap falcon etc
+    case "station":
+    case "walletconnect":
+    case "xdefi-wallet":
+    case "torus":
+      return true;
+    default:
+      return false;
+  }
+}

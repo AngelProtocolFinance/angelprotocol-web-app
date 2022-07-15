@@ -1,11 +1,11 @@
 import { WithBalance } from "services/types";
-import { EVMNative, TerraNative, Token } from "types/server/aws";
+import { EVMNative, JunoNative, TerraNative, Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
+import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
-import ustLogo from "assets/icons/currencies/ust.svg";
 import { chainIDs } from "constants/chainIDs";
-import { terraChainId } from "constants/env";
+import { IS_TEST } from "constants/env";
 
 export const placeHolderToken: WithBalance = {
   type: "evm-native",
@@ -89,24 +89,23 @@ export const lunaToken: TerraNative = {
   chain_name: "Terra Pisco Testnet",
 };
 
-export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
-  uluna: {
-    type: "terra-native",
-    symbol: "LUNA",
-    logo: lunaLogo,
-    decimals: 6,
-    chain_id: terraChainId,
-    chain_name: "Terra",
-  },
-  uusd: {
-    type: "terra-native",
-    symbol: "UST",
-    logo: ustLogo,
-    decimals: 6,
-    chain_id: terraChainId,
-    chain_name: "Terra",
-  },
-};
+export const junoToken: JunoNative = IS_TEST
+  ? {
+      type: "juno-native",
+      symbol: "JUNOX",
+      logo: junoLogo,
+      decimals: 6,
+      chain_id: chainIDs.juno_test,
+      chain_name: "Juno Testnet",
+    }
+  : {
+      type: "juno-native",
+      symbol: "JUNO",
+      logo: junoLogo,
+      decimals: 6,
+      chain_id: chainIDs.juno_main,
+      chain_name: "Juno Mainnet",
+    };
 
 //TODO: get this from server
 export const tokenList: Token[] = [
@@ -114,4 +113,5 @@ export const tokenList: Token[] = [
   binanceToken,
   ethereumToken,
   lunaToken,
+  junoToken,
 ];

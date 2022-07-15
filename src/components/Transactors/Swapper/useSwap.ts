@@ -3,7 +3,7 @@ import { SwapValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import useSwapEstimator from "./useSwapEstimator";
 
 export default function useSwap() {
@@ -25,12 +25,12 @@ export default function useSwap() {
 
   function swap() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.terraBalances },
+            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
         ],
       })

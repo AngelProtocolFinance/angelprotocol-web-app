@@ -1,8 +1,8 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
 import { Vote } from "types/server/contracts";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -14,7 +14,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -26,7 +25,7 @@ export default function useVoteEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
 
@@ -79,15 +78,14 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
+        const contract = new Gov(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
           debounced_amount
         );
 
-        const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([voteMsg]);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees

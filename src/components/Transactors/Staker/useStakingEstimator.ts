@@ -1,10 +1,9 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
-// import useTerraBalance from "hooks/useTerraBalance";
 import {
   setFee,
   setFormError,
@@ -12,7 +11,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -25,7 +23,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
@@ -65,17 +63,13 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        let govMsg: MsgExecuteContract;
-        const contract = new Gov(wallet.address);
+        const contract = new Gov(wallet);
 
-        if (is_stake) {
-          govMsg = contract.createGovStakeMsg(debounced_amount);
-        } else {
-          govMsg = contract.createGovUnstakeMsg(debounced_amount);
-        }
+        const govMsg = is_stake
+          ? contract.createGovStakeMsg(debounced_amount)
+          : contract.createGovUnstakeMsg(debounced_amount);
 
-        const fee = await contract.estimateFee([govMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([govMsg]);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

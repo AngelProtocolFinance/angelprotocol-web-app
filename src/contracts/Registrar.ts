@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
 import {
@@ -8,66 +7,63 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
-  address: string;
   vaultsRate: CQA;
   config: CQA;
 
   endowmentList: (args: EndowmentQueryOptions) => CQA;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
-    this.address = contracts.registrar;
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.registrar);
 
     this.endowmentList = (queryOptions) => ({
-      address: this.address,
+      address: this.contractAddress,
       msg: {
         endowment_list: queryOptions,
       },
     });
 
     this.vaultsRate = {
-      address: this.address,
+      address: this.contractAddress,
       msg: {
         approved_vault_rate_list: {},
       },
     };
 
     this.config = {
-      address: this.address,
+      address: this.contractAddress,
       msg: { config: {} },
     };
   }
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_config: payload,
     });
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return new MsgExecuteContract(this.walletAddr, this.address, {
+    return this.createExecuteContractMsg({
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createEmbeddedWasmMsg([], this.address, {
+    return this.createEmbeddedWasmMsg([], {
       update_owner: payload,
     });
   }
 }
-export interface R extends Registrar {}
-export type T = typeof Registrar;
 
 function createEndowmentCreationMsgPayload(
   charity: Charity
@@ -105,3 +101,6 @@ function createEndowmentCreationMsgPayload(
     withdraw_before_maturity: false,
   };
 }
+
+export interface R extends Registrar {}
+export type T = typeof Registrar;

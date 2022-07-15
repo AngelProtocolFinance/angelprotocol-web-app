@@ -3,7 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(args: AdmiExecuterProps) {
@@ -17,10 +17,10 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
       showModal(Popup, { message: "Invalid poll id" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet?.address);
+    const contract = new Admin(wallet, cwContracts);
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,
       })

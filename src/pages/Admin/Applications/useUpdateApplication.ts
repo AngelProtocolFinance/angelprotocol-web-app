@@ -9,7 +9,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
+import { sendEndowmentReviewTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
@@ -26,13 +26,13 @@ export default function useUpdateApplicationStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet?.address);
+    const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
       );
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

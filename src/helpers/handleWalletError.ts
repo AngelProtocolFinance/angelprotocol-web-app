@@ -1,3 +1,4 @@
+import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,
   Timeout,
@@ -10,14 +11,20 @@ import { LogDonationFail } from "helpers/logDonation";
 import {
   LogApplicationUpdateError,
   TxResultFail,
+  UnimplementedNetworkError,
   WalletDisconnectError,
+  WrongNetworkError,
 } from "errors/errors";
 
-export default function handleTerraError(error: any, handler: StageUpdator) {
+export default function handleWalletError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof WalletDisconnectError) {
     handler({ step: "error", message: "Wallet is not connected" });
+  } else if (error instanceof UnimplementedNetworkError) {
+    handler({ step: "error", message: error.message });
+  } else if (error instanceof WrongNetworkError) {
+    handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
@@ -25,7 +32,7 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
   } else if (error instanceof TxResultFail) {
     handler({
       step: "error",
-      message: "Timeout: failed to wait for transaction result.",
+      message: error.message,
       txHash: error.txHash,
       chainId: error.chainId,
     });
@@ -43,10 +50,15 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
       message: "Failed to log the Poll ID of your proposal.",
       chainId: error.chainId,
     });
-  } else if (error instanceof Timeout) {
-    handler({ step: "error", message: "Transaction timeout" });
+  } else if (error instanceof Timeout || error instanceof TimeoutError) {
+    handler({ step: "error", message: error.message });
   } else if (error instanceof TxUnspecifiedError) {
     handler({ step: "error", message: "Unspecified error occured" });
+  } else if (error instanceof Error) {
+    handler({
+      step: "error",
+      message: error.message || "Unknown error occured",
+    });
   } else {
     handler({ step: "error", message: "Unknown error occured" });
   }

@@ -38,7 +38,9 @@ export const junoLcdUrl = IS_TEST
   ? juno_lcds[chainIDs.juno_test]
   : juno_lcds[chainIDs.juno_main];
 
-export const TERRA_FINDER = "https://finder.terra.money";
+export const junoRpcUrl = IS_TEST
+  ? juno_rpcs[chainIDs.juno_test]
+  : juno_rpcs[chainIDs.juno_main];
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";

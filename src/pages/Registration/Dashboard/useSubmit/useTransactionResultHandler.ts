@@ -1,3 +1,4 @@
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { useEffect } from "react";
 import { SuccessStage } from "slices/transaction/types";
 import {
@@ -51,9 +52,8 @@ export default function useTransactionResultHandler() {
 }
 
 function getEndowmentContract(stage: SuccessStage) {
-  return stage
-    .txInfo!.logs![0].events.find(
-      (event) => event.type === "instantiate_contract"
-    )!
+  // we can parse these logs with cosmjs because we know that logs came from Juno blockchain
+  return parseRawLog(stage.rawLog)[0]
+    .events.find((event) => event.type === "instantiate_contract")!
     .attributes.find((attr) => attr.key === "contract_address")!.value;
 }

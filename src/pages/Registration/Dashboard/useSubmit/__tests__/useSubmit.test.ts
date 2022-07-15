@@ -1,4 +1,4 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "types/server/aws";
@@ -10,11 +10,11 @@ import useSubmit from "../useSubmit";
 
 const WALLET: WalletState = {
   walletIcon: "",
-  displayCoin: placeHolderDisplayToken["station"],
-  coins: [placeHolderDisplayToken["station"]],
-  address: "terra1w0fn5u7puxafp3g2mehe6xvt4w2x2eennm7tzf",
-  chainId: chainIDs.terra_test,
-  providerId: "station",
+  displayCoin: placeHolderDisplayToken["keplr"],
+  coins: [placeHolderDisplayToken["keplr"]],
+  address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
+  chainId: chainIDs.juno_test,
+  providerId: "keplr",
 };
 
 const mockShowModal = jest.fn();
@@ -34,10 +34,10 @@ jest.mock("contexts/WalletContext/WalletContext", () => ({
   useGetWallet: () => mockUseGetWallet(),
 }));
 
-const mockSendTerraTx = jest.fn();
-jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
+const mockSendCosmosTx = jest.fn();
+jest.mock("slices/transaction/transactors/sendCosmosTx", () => ({
   __esModule: true,
-  sendTerraTx: (..._: any[]) => mockSendTerraTx,
+  sendCosmosTx: (..._: any[]) => mockSendCosmosTx,
 }));
 
 const mockDispatch = jest.fn();
@@ -123,7 +123,7 @@ describe("useSubmit tests", () => {
     expect(mockShowModal).toBeCalled();
   });
 
-  it("dispatches action sending a Terra Tx", async () => {
+  it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
@@ -138,7 +138,7 @@ describe("useSubmit tests", () => {
       type: "transaction/setFormLoading",
       payload: true,
     });
-    expect(mockDispatch).toBeCalledWith(mockSendTerraTx);
+    expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
   });
 });
@@ -183,20 +183,23 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet:
+      "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
     KycDonorsOnly: false,
   },
 };
 
 const MSG_EXECUTE_CONTRACT = {
-  execute_msg: {
+  typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+  value: {
     create_endowment: {
-      beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      beneficiary:
+        "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
       cw4_members: [],
       guardians_multisig_addr: undefined,
       maturity_height: undefined,
       maturity_time: undefined,
-      owner: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      owner: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
       profile: {
         annual_revenue: undefined,
         average_annual_budget: undefined,
@@ -223,4 +226,4 @@ const MSG_EXECUTE_CONTRACT = {
       withdraw_before_maturity: false,
     },
   },
-} as MsgExecuteContract;
+} as MsgExecuteContractEncodeObject;

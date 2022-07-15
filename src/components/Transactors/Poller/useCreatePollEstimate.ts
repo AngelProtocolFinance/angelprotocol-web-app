@@ -1,4 +1,4 @@
-import { Fee } from "@terra-money/terra.js";
+import { StdFee } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
@@ -10,7 +10,6 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -22,14 +21,14 @@ export default function useCreatePollEstimate() {
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
   const dispatch = useSetter();
-  const [maxFee, setMaxFee] = useState<Fee>();
+  const [maxFee, setMaxFee] = useState<StdFee>();
   const { wallet } = useGetWallet();
 
   useEffect(() => {
     (async () => {
       try {
         if (!wallet) {
-          dispatch(setFormError("Terra wallet is not connected"));
+          dispatch(setFormError("Wallet not connected"));
           return;
         }
 
@@ -45,8 +44,8 @@ export default function useCreatePollEstimate() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet.address);
-        const pollMsgs = await contract.createPollMsgs(
+        const contract = new Gov(wallet);
+        const pollMsgs = contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
@@ -56,8 +55,7 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee([pollMsgs]);
-        const feeNum = extractFeeNum(fee);
+        const { fee, feeNum } = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);

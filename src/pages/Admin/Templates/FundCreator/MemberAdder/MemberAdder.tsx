@@ -18,7 +18,7 @@ export default function MemberAdder() {
       <TextInput<V>
         title="endowment address"
         name="newFundAddr"
-        placeholder="terra123abc..."
+        placeholder="juno123abc..."
         plain
         mono
       />

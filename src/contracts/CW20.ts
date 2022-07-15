@@ -1,33 +1,32 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin } from "@cosmjs/proto-signing";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
-  cw20ContractAddr: string;
   balance: (address: string) => ContractQueryArgs;
   info: ContractQueryArgs;
 
-  constructor(cw20ContractAddr: string, walletAddr?: string) {
-    super(walletAddr);
-    this.cw20ContractAddr = cw20ContractAddr;
+  constructor(wallet: WalletState | undefined, cw20ContractAddr: string) {
+    super(wallet, cw20ContractAddr);
 
     this.info = {
-      address: this.cw20ContractAddr,
+      address: this.contractAddress,
       msg: {
         token_info: {},
       },
     };
 
     this.balance = (address) => ({
-      address: this.cw20ContractAddr,
+      address: this.contractAddress,
       msg: { balance: { address } },
     });
   }
 
-  createEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
     return {
       bank: {
         send: {
@@ -39,7 +38,7 @@ export default class CW20 extends Contract {
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
-    return this.createEmbeddedWasmMsg([], this.cw20ContractAddr, {
+    return this.createEmbeddedWasmMsg([], {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -49,7 +48,7 @@ export default class CW20 extends Contract {
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
+    return this.createExecuteContractMsg({
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -62,8 +61,8 @@ export default class CW20 extends Contract {
     amount: number | string,
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
-  ): MsgExecuteContract {
-    return new MsgExecuteContract(this.walletAddr, this.cw20ContractAddr, {
+  ) {
+    return this.createExecuteContractMsg({
       send: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),

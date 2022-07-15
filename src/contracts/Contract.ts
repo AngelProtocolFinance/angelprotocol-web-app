@@ -1,65 +1,143 @@
-import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { toUtf8 } from "@cosmjs/encoding";
+import { EncodeObject } from "@cosmjs/proto-signing";
+import {
+  Coin,
+  DeliverTxResponse,
+  MsgSendEncodeObject,
+  StdFee,
+  calculateFee,
+  isDeliverTxFailure,
+} from "@cosmjs/stargate";
+import Decimal from "decimal.js";
+import { TxOptions } from "slices/transaction/types";
 import { EmbeddedWasmMsg } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
-import { WalletDisconnectError } from "errors/errors";
-import { denoms } from "constants/currency";
-import { terraChainId } from "constants/env";
-import { terraLcdUrl } from "constants/urls";
+import { TxResultFail } from "errors/errors";
+import { junoChainId } from "constants/chainIDs";
+import { GAS_PRICE, MAIN_DENOM } from "constants/currency";
 
 export default class Contract {
-  client: LCDClient;
-  walletAddr: string;
+  contractAddress: string;
+  wallet: WalletState | undefined;
+  walletAddress: string;
 
-  constructor(walletAddr?: string) {
-    this.walletAddr = walletAddr || "";
-    this.client = new LCDClient({
-      chainID: terraChainId,
-      URL: terraLcdUrl,
-      gasAdjustment: Contract.gasAdjustment, //use gas units 20% greater than estimate
-      gasPrices: Contract.gasPrices,
-    });
+  constructor(wallet: WalletState | undefined, contractAddress = "") {
+    this.contractAddress = contractAddress;
+    this.wallet = wallet;
+    this.walletAddress = wallet?.address || "";
   }
-
-  static gasAdjustment = 1.6; //use gas units 60% greater than estimate
-
-  // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [
-    new Coin(denoms.uusd, 0.15),
-    //for classic, pisco is 0.15
-    new Coin(denoms.uluna, 5.665),
-  ];
 
   //for on-demand query, use RTK where possible
-  async query<T>(source: string, message: object) {
-    return this.client.wasm.contractQuery<T>(source, message);
+  async query<T>(message: Record<string, unknown>) {
+    const client = await getCosmosClient(this.wallet);
+    const jsonObject = await client.queryContractSmart(
+      this.contractAddress,
+      message
+    );
+    return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(msgs: Msg[]): Promise<Fee> {
-    if (!this.walletAddr) {
-      throw new WalletDisconnectError();
-    }
+  async estimateFee(
+    msgs: readonly EncodeObject[]
+  ): Promise<{ fee: StdFee; feeNum: number }> {
+    const client = await getCosmosClient(this.wallet);
+    const gasEstimation = await client.simulate(
+      this.walletAddress,
+      msgs,
+      undefined
+    );
+    return createFeeResult(gasEstimation);
+  }
 
-    const account = await this.client.auth.accountInfo(this.walletAddr);
-
-    return this.client.tx.estimateFee(
-      [{ sequenceNumber: account.getSequenceNumber() }],
-      { msgs, feeDenoms: [denoms.uluna] }
+  async signAndBroadcast(tx: TxOptions) {
+    const client = await getCosmosClient(this.wallet);
+    return validateTransactionSuccess(
+      await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee)
     );
   }
 
-  createEmbeddedWasmMsg(
-    funds: Coin.Data[],
-    to: string,
-    msg: object
-  ): EmbeddedWasmMsg {
+  createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
     return {
       wasm: {
         execute: {
-          contract_addr: to,
+          contract_addr: this.contractAddress,
           funds,
           msg: toBase64(msg),
         },
       },
     };
   }
+
+  createExecuteContractMsg(
+    msg: object,
+    funds: Coin[] = []
+  ): MsgExecuteContractEncodeObject {
+    return {
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+      value: {
+        contract: this.contractAddress,
+        sender: this.walletAddress,
+        msg: toUtf8(JSON.stringify(msg)),
+        funds,
+      },
+    };
+  }
+
+  createTransferNativeMsg(
+    amount: number,
+    recipient: string
+  ): MsgSendEncodeObject {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+      value: {
+        fromAddress: this.walletAddress,
+        toAddress: recipient,
+        amount: [
+          {
+            denom: MAIN_DENOM,
+            amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+          },
+        ],
+      },
+    };
+  }
+}
+
+function createFeeResult(gasEstimation: number): {
+  fee: StdFee;
+  feeNum: number;
+} {
+  // This is the multiplier used when auto-calculating the fees
+  // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
+  const fee = calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
+
+  return {
+    fee,
+    feeNum: extractFeeNum(fee),
+  };
+}
+
+function extractFeeNum(fee: StdFee): number {
+  return new Decimal(fee.amount.find((a) => a.denom === MAIN_DENOM)!.amount)
+    .div(1e6)
+    .toNumber();
+}
+
+function validateTransactionSuccess(
+  result: DeliverTxResponse
+): DeliverTxResponse {
+  if (isDeliverTxFailure(result)) {
+    throw new TxResultFail(
+      junoChainId,
+      result.transactionHash,
+      result.height,
+      result.code,
+      result.rawLog
+    );
+  }
+
+  return result;
 }

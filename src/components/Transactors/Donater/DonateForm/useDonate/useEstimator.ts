@@ -5,7 +5,8 @@ import Decimal from "decimal.js";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "./types";
+import { DonateValues } from "../../types";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -16,17 +17,18 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
+import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
   const dispatch = useSetter();
   const {
     watch,
     setError,
-    formState: { isValid, isDirty },
+    formState: { isDirty },
+    getFieldState,
   } = useFormContext<DonateValues>();
   const { wallet } = useGetWallet();
 
@@ -36,6 +38,7 @@ export default function useEstimator() {
 
   const [evmTx, setEVMtx] = useState<TransactionRequest>();
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
+  const [cosmosTx, setCosmosTx] = useState<TxOptions>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -48,9 +51,7 @@ export default function useEstimator() {
           return;
         }
 
-        if (!isValid || !isDirty) return;
-
-        if (!debounced_amount) {
+        if (!isDirty || !debounced_amount || getFieldState("amount").error) {
           dispatch(setFee(0));
           return;
         }
@@ -62,53 +63,62 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        /** terra native transaction, send or contract interaction */
-        if (selectedToken.type === "terra-native") {
-          const contract = new Contract(wallet.address);
-          const receiver = ap_wallets.terra;
-          const amount = new Decimal(debounced_amount).mul(1e6);
+        /** juno native transaction, send or contract interaction */
+        if (selectedToken.type === "juno-native") {
+          const contract = new Contract(wallet);
+          const msg = contract.createTransferNativeMsg(
+            debounced_amount,
+            ap_wallets.juno
+          );
+          const { fee, feeNum } = await contract.estimateFee([msg]);
+          dispatch(setFee(feeNum));
 
-          const msg = new MsgSend(wallet.address, receiver, [
-            new Coin(denoms.uluna, amount.toNumber()),
-          ]);
-          const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
-
-          if (debounced_amount + numFee >= wallet.displayCoin.balance) {
+          /** displayCoin is native - for payment of fee */
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
             return;
           }
-          dispatch(setFee(numFee));
-          setTerraTx({ msgs: [msg], fee: aminoFee });
+          setCosmosTx({ msgs: [msg], fee });
         }
 
-        /** terra cw20 transaction */
+        /** juno cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new CW20(
-            selectedToken.contract_addr,
-            wallet.address
-          );
+          const contract = new CW20(wallet, selectedToken.contract_addr);
           const msg = contract.createTransferMsg(
             debounced_amount,
-            ap_wallets.terra
+            ap_wallets.juno
           );
-          const aminoFee = await contract.estimateFee([msg]);
-          const numFee = extractFeeNum(aminoFee);
+          const { fee, feeNum } = await contract.estimateFee([msg]);
+          dispatch(setFee(feeNum));
 
-          if (
-            numFee >=
-            wallet.displayCoin
-              .balance /** displayCoin is native - for payment of fee */
-          ) {
+          /** displayCoin is native - for payment of fee */
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
             return;
           }
-          dispatch(setFee(numFee));
-          setTerraTx({ msgs: [msg], fee: aminoFee });
+          setCosmosTx({ msgs: [msg], fee });
+        }
+
+        /** terra native transaction, send or contract interaction */
+        if (selectedToken.type === "terra-native") {
+          const amount = new Decimal(debounced_amount).mul(1e6);
+          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
+            new Coin(denoms.uluna, amount.toNumber()),
+          ]);
+          const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+          dispatch(setFee(feeNum));
+
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
+          setTerraTx({ msgs: [msg], fee });
         }
 
         /** evm transactions */
@@ -149,15 +159,21 @@ export default function useEstimator() {
           }
 
           const minFee = gasLimit.mul(gasPrice);
-          const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
+          const feeNum = parseFloat(
+            ethers.utils.formatUnits(minFee, selectedToken.decimals)
+          );
+          dispatch(setFee(feeNum));
 
+          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
           setEVMtx(tx);
-          dispatch(setFee(parseFloat(fee)));
         }
 
         dispatch(setFormLoading(false));
-
-        //CW20 token estimate
       } catch (err) {
         console.error(err);
         dispatch(setFormError("tx simulation failed"));
@@ -167,8 +183,16 @@ export default function useEstimator() {
     return () => {
       dispatch(setFormError(null));
     };
-    //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, selectedToken, wallet]);
+  }, [
+    debounced_amount,
+    debounced_split,
+    isDirty,
+    selectedToken,
+    wallet,
+    dispatch,
+    getFieldState,
+    setError,
+  ]);
 
-  return { evmTx, terraTx };
+  return { evmTx, terraTx, cosmosTx };
 }

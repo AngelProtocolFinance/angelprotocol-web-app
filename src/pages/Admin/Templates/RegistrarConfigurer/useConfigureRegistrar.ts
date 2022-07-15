@@ -11,7 +11,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
@@ -52,7 +52,7 @@ export default function useConfigureRegistrar() {
       split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
-    const registrarContract = new Registrar(wallet?.address);
+    const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(
       cleanObject(finalPayload)
     );
@@ -62,7 +62,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -71,7 +71,7 @@ export default function useConfigureRegistrar() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

@@ -1,23 +1,21 @@
-import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
+import { MAIN_DENOM } from "constants/currency";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  pair_address: string;
-  halo_address: string;
   simul: ContractQueryArgs;
 
-  constructor(walletAddr?: string) {
-    super(walletAddr);
-    this.pair_address = contracts.loop_haloust_pair;
-    this.halo_address = contracts.halo_token;
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.loop_haloust_pair);
 
     //query args
     this.simul = {
-      address: this.pair_address,
+      address: this.contractAddress,
       msg: {
         simulation: {
           offer_asset: {
@@ -48,11 +46,11 @@ export default class LP extends Contract {
         }
       : {
           token: {
-            contract_addr: this.halo_address,
+            contract_addr: contracts.halo_token,
           },
         };
 
-    const result = await this.query<Simulation>(this.pair_address, {
+    const result = await this.query<Simulation>({
       simulation: {
         offer_asset: {
           info: offer_asset,
@@ -65,30 +63,30 @@ export default class LP extends Contract {
   }
 
   createBuyMsg(
-    ust_amount: number,
+    juno_amount: number,
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    const uust_amount = new Decimal(ust_amount).mul(1e6).divToInt(1).toString();
-    return new MsgExecuteContract(
-      this.walletAddr,
-      this.pair_address,
+    const ujuno_amount = new Decimal(juno_amount)
+      .mul(1e6)
+      .divToInt(1)
+      .toString();
+    return this.createExecuteContractMsg(
       {
         swap: {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: MAIN_DENOM,
               },
             },
-            amount: uust_amount,
+            amount: ujuno_amount,
           },
           belief_price,
           max_spread,
-          // to: Option<HumanAddr>
         },
       },
-      [new Coin("uusd", uust_amount)]
+      [{ denom: MAIN_DENOM, amount: ujuno_amount }]
     );
   }
 
@@ -101,15 +99,19 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
-    return new MsgExecuteContract(this.walletAddr, this.halo_address, {
+
+    const haloContract = new Contract(this.wallet, contracts.halo_token);
+
+    return haloContract.createExecuteContractMsg({
       send: {
-        contract: this.pair_address,
+        contract: this.contractAddress,
         amount: uhalo_amount,
-        msg: Buffer.from(
-          JSON.stringify({
-            swap: { belief_price, max_spread },
-          })
-        ).toString("base64"),
+        msg: toBase64({
+          swap: {
+            belief_price,
+            max_spread,
+          },
+        }),
       },
     });
   }

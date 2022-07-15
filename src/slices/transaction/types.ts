@@ -1,6 +1,8 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
+import { StdFee } from "@cosmjs/stargate";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
+import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { KYCData } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
@@ -60,7 +62,7 @@ export type SuccessStage = {
   message: string;
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
-  txInfo?: TxInfo;
+  rawLog?: string;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
@@ -95,13 +97,30 @@ type BaseArgs = {
   successLink?: SuccessLink;
   wallet?: WalletState;
 };
-type WithMsg = BaseArgs & {
+type TerraWithMsg = BaseArgs & {
   msgs: Msg[];
   tx?: never;
 }; //tx created onflight
-type WithTx = BaseArgs & {
+type TerraWithTx = BaseArgs & {
   msgs?: never;
   tx: CreateTxOptions;
 }; //pre-estimated tx
 
-export type TerraSendArgs = WithMsg | WithTx;
+export type TerraSendArgs = TerraWithMsg | TerraWithTx;
+
+export type TxOptions = {
+  msgs: EncodeObject[];
+  fee: StdFee;
+};
+
+type CosmosWithMsg = BaseArgs & {
+  msgs: EncodeObject[];
+  tx?: never;
+};
+
+type CosmosWithTx = BaseArgs & {
+  msgs?: never;
+  tx: TxOptions;
+};
+
+export type SendCosmosTxArgs = CosmosWithMsg | CosmosWithTx;

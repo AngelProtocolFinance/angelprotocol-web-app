@@ -19,7 +19,7 @@ interface IUser {
   ProofOfIdentityVerified?: any;
   ProofOfEmploymentVerified?: any;
   EndowmentAgreementVerified?: any;
-  TerraWallet?: any;
+  WalletAddress?: any;
   IsKeyPersonCompleted?: boolean;
   IsMetaDataCompleted?: boolean;
   token?: string;
@@ -45,7 +45,7 @@ const initialState: IUser = {
   ProofOfIdentityVerified: "",
   ProofOfEmploymentVerified: "",
   EndowmentAgreementVerified: "",
-  TerraWallet: "",
+  WalletAddress: "",
   IsKeyPersonCompleted: false,
   IsMetaDataCompleted: false,
 };

@@ -1,45 +1,40 @@
 import { ContractQueryArgs } from "services/types";
 import { Source, UpdateProfilePayload } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
-  accountAddr: string;
   balance: ContractQueryArgs;
   profile: ContractQueryArgs;
 
-  constructor(accountAddr: string, walletAddr?: string) {
-    super(walletAddr);
-    this.accountAddr = accountAddr;
+  constructor(wallet: WalletState | undefined, accountAddr: string) {
+    super(wallet, accountAddr);
 
     this.balance = {
-      address: this.accountAddr,
+      address: this.contractAddress,
       msg: { balance: {} },
     };
 
     this.profile = {
-      address: this.accountAddr,
+      address: this.contractAddress,
       msg: { get_profile: {} },
     };
   }
 
-  createEmbeddedWithdrawMsg({
-    sources,
-    beneficiary,
-  }: {
-    sources: Source[];
-    beneficiary: string;
-  }) {
-    return this.createEmbeddedWasmMsg([], this.accountAddr, {
-      withdraw: {
-        sources: sources,
-        beneficiary,
-      },
+  createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
+    return this.createEmbeddedWasmMsg([], {
+      withdraw: payload,
     });
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createEmbeddedWasmMsg([], this.accountAddr, {
+    return this.createEmbeddedWasmMsg([], {
       update_profile: payload,
     });
   }
 }
+
+type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
+};

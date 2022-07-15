@@ -1,4 +1,3 @@
-import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import {
   CWContracts,
@@ -9,12 +8,12 @@ import {
   Vote,
   VotesPageOptions,
 } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Admin extends Contract {
-  cw4: string;
-  cw3: string;
+  cw4Contract: CW4;
 
   //CW4
   members: CQA;
@@ -26,38 +25,30 @@ export default class Admin extends Contract {
   voteList: (arg: VotesPageOptions) => CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, walletAddr?: string) {
-    super(walletAddr);
-    //make sure to use query skips on empty addresses
-    this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
-    this.cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
+  constructor(wallet: WalletState | undefined, cws: CWContracts) {
+    super(wallet, getCW3Address(cws));
+
+    this.cw4Contract = new CW4(wallet, cws);
 
     //query args CW4
-    this.members = {
-      address: this.cw4,
-      msg: { list_members: {} },
-    };
-
-    this.member = {
-      address: this.cw4,
-      msg: { member: { addr: this.walletAddr } },
-    };
+    this.members = this.cw4Contract.members;
+    this.member = this.cw4Contract.member;
 
     //query args CW3
     this.cw3Config = {
-      address: this.cw3,
+      address: this.contractAddress,
       msg: { config: {} },
     };
 
     this.proposals = (pageOptions) => ({
-      address: this.cw3,
+      address: this.contractAddress,
       msg: {
         reverse_proposals: pageOptions,
       },
     });
 
     this.proposal = (pollId: number) => ({
-      address: this.cw3,
+      address: this.contractAddress,
       msg: {
         proposal: {
           proposal_id: pollId,
@@ -66,7 +57,7 @@ export default class Admin extends Contract {
     });
 
     this.voteList = (options) => ({
-      address: this.cw3,
+      address: this.contractAddress,
       msg: {
         list_votes: {
           ...options,
@@ -77,16 +68,11 @@ export default class Admin extends Contract {
 
   //execute message creators
   createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
-    return this.createEmbeddedWasmMsg([], this.cw4, {
-      update_members: {
-        add: to_add,
-        remove: to_remove,
-      },
-    });
+    return this.cw4Contract.createEmbeddedUpdateMembersMsg(to_add, to_remove);
   }
 
   createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
-    return this.createEmbeddedWasmMsg([], this.cw3, {
+    return this.createEmbeddedWasmMsg([], {
       update_config: {
         threshold: { absolute_percentage: { percentage: threshold } },
         max_voting_period: { height },
@@ -95,7 +81,7 @@ export default class Admin extends Contract {
   }
 
   createExecProposalMsg(proposal_id: number) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg({
       execute: {
         proposal_id,
       },
@@ -108,7 +94,7 @@ export default class Admin extends Contract {
     embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
     meta?: string
   ) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg({
       propose: {
         title,
         description,
@@ -119,11 +105,47 @@ export default class Admin extends Contract {
   }
 
   createVoteMsg(proposal_id: number, vote: Vote) {
-    return new MsgExecuteContract(this.walletAddr, this.cw3, {
+    return this.createExecuteContractMsg({
       vote: {
         proposal_id,
         vote,
       },
     });
   }
+}
+
+class CW4 extends Contract {
+  members: CQA;
+  member: CQA;
+
+  constructor(wallet: WalletState | undefined, cws: CWContracts) {
+    super(wallet, getCW4Address(cws));
+
+    this.members = {
+      address: this.contractAddress,
+      msg: { list_members: {} },
+    };
+
+    this.member = {
+      address: this.contractAddress,
+      msg: { member: { addr: this.walletAddress } },
+    };
+  }
+
+  createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
+    return this.createEmbeddedWasmMsg([], {
+      update_members: {
+        add: to_add,
+        remove: to_remove,
+      },
+    });
+  }
+}
+
+function getCW4Address(cws: CWContracts): string {
+  return cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
+}
+
+function getCW3Address(cws: CWContracts) {
+  return cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 }

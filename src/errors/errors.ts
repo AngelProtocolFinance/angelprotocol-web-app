@@ -1,3 +1,5 @@
+import { chainIDs } from "constants/chainIDs";
+
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
@@ -27,14 +29,38 @@ export class WalletDisconnectError extends Error {
   }
 }
 
+type Network = "Juno" | "Terra" | "Ethereum" | "Binance";
+export class WrongNetworkError extends Error {
+  constructor(correctNetwork: Network, correctChainId: chainIDs) {
+    super();
+    this.name = "WrongNetworkError";
+    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} ${correctChainId} chain.`;
+  }
+}
+
+export class UnimplementedNetworkError extends Error {
+  constructor(chainId: string) {
+    super();
+    this.name = "UnimplementedNetworkError";
+    this.message = `Network ${chainId} not implemented`;
+  }
+}
+
 export class TxResultFail extends Error {
   chainId: string;
   txHash: string;
-  constructor(chainId: string, txHash: string) {
+  constructor(
+    chainId: string,
+    txHash: string,
+    height: number,
+    code: number,
+    rawLog?: string
+  ) {
     super();
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFailt";
+    this.message = `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`;
   }
 }
 

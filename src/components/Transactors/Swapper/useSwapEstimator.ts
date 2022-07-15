@@ -1,8 +1,8 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -15,7 +15,7 @@ import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM, denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
@@ -25,7 +25,7 @@ export default function useSwapEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<SwapValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const is_buy = watch("is_buy");
@@ -51,12 +51,12 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
+        const junoBalance = getTokenBalance(wallet.coins, MAIN_DENOM);
         const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
-          if (amount > ustBalance) {
-            setError("amount", { message: "not enough UST" });
+          if (amount > junoBalance) {
+            setError("amount", { message: "not enough JUNO" });
             return;
           }
         } else {
@@ -68,7 +68,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(wallet.address);
+        const contract = new LP(wallet);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -82,32 +82,28 @@ export default function useSwapEstimator() {
           .mul(100)
           .toNumber();
 
-        let swapMsg: MsgExecuteContract;
-        if (is_buy) {
-          swapMsg = contract.createBuyMsg(
-            debounced_amount,
-            spot_price.toString(),
-            debounced_slippage
-          );
-        } else {
-          swapMsg = contract.createSellMsg(
-            debounced_amount,
-            //just reverse price for sell tx
-            spot_price.toString(),
-            debounced_slippage
-          );
-        }
+        const swapMsg = is_buy
+          ? contract.createBuyMsg(
+              debounced_amount,
+              spot_price.toString(),
+              debounced_slippage
+            )
+          : contract.createSellMsg(
+              debounced_amount,
+              //just reverse price for sell tx
+              spot_price.toString(),
+              debounced_slippage
+            );
 
-        const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get("uusd")!.div(1e6).amount.toNumber();
+        const { fee, feeNum } = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+        if (is_buy && feeNum + debounced_amount >= junoBalance) {
+          setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+        if (!is_buy && feeNum >= junoBalance) {
+          setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
 

@@ -6,16 +6,16 @@ import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
-import handleTerraError from "helpers/handleTerraError";
+import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
-import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import postTerraTx from "helpers/postTerraTx";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/env";
-import transactionSlice, { setStage } from "../transactionSlice";
+import { terraChainId } from "constants/chainIDs";
+import transactionSlice, { setStage } from "../../transactionSlice";
+import { pollTerraTxInfo } from "./pollTerraTxInfo";
+import postTerraTx from "./postTerraTx";
 
 type TerraDonateArgs = {
-  wallet?: WalletState;
+  wallet: WalletState | undefined;
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -72,7 +72,6 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            txInfo,
             chainId: terraChainId,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
@@ -96,7 +95,7 @@ export const sendTerraDonation = createAsyncThunk(
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, updateStage);
+      handleWalletError(err, updateStage);
     }
   }
 );

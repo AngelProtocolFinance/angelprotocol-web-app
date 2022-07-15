@@ -1,13 +1,13 @@
 import { useMemo } from "react";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import {
+  WalletState,
+  useGetWallet,
+} from "contexts/WalletContext/WalletContext";
 
-export function useContract<U, T extends { new (walletAddr?: string): U }>(
+export function useContract<U, T extends { new (wallet?: WalletState): U }>(
   Contract: T
 ) {
   const { wallet } = useGetWallet();
-  const contract = useMemo(
-    () => new Contract(wallet?.address),
-    [wallet, Contract]
-  );
+  const contract = useMemo(() => new Contract(wallet), [wallet, Contract]);
   return { walletAddr: wallet?.address, contract };
 }

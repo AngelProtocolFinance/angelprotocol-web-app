@@ -12,7 +12,7 @@ export default function MemberEditor() {
       <TextInput<AV>
         title="Wallet address"
         name="wallet"
-        placeholder="terra123abc..."
+        placeholder="juno123abc..."
         disabled={isEditingMember}
         plain
         required

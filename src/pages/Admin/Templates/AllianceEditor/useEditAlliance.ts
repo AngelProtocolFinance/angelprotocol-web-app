@@ -8,9 +8,9 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useEditAlliance() {
@@ -38,7 +38,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet?.address);
+    const indexFundContract = new IndexFund(wallet);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -63,7 +63,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", wallet?.address);
+    const adminContract = new Admin(wallet, "apTeam");
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {
@@ -86,7 +86,7 @@ export default function useEditAlliance() {
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
         tagPayloads: [

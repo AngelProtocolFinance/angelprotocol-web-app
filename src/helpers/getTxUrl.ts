@@ -1,21 +1,24 @@
+import { UnimplementedNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
-import { TERRA_FINDER } from "constants/urls";
 
-export default function getTxUrl(chainID: string, txhash: string) {
-  switch (chainID) {
-    case chainIDs.terra_main:
-      return `${TERRA_FINDER}/mainnet/tx/${txhash}`;
-    case chainIDs.terra_test:
-      return `${TERRA_FINDER}/testnet/tx/${txhash}`;
-    case chainIDs.eth_kovan:
-      return `https://kovan.etherscan.io/tx/${txhash}`;
-    case chainIDs.eth_main:
-      return `https://etherscan.io/tx/${txhash}`;
-    case chainIDs.bnb_main:
-      return `https://testnet.bscscan.com/tx/${txhash}`;
-    case chainIDs.bnb_test:
-      return `https://bscscan.com/tx/${txhash}`;
-    default:
-      return TERRA_FINDER;
+type URL_GROUP = { [index: string]: string };
+
+const blockExplorers: URL_GROUP = {
+  [chainIDs.bnb_main]: "https://testnet.bscscan.com/tx",
+  [chainIDs.bnb_test]: "https://bscscan.com/tx",
+  [chainIDs.eth_kovan]: "https://kovan.etherscan.io/tx",
+  [chainIDs.eth_main]: "https://etherscan.io/tx",
+  [chainIDs.juno_main]: "https://mintscan.io/juno/tx",
+  [chainIDs.juno_test]: "https://testnet.ping.pub/juno/tx",
+  [chainIDs.terra_main]: "https://finder.terra.money/mainnet/tx",
+  [chainIDs.terra_test]: "https://finder.terra.money/testnet/tx",
+};
+
+export default function getTxUrl(chainId: string, txhash: string) {
+  const blockExplorer = blockExplorers[chainId];
+  if (!blockExplorer) {
+    throw new UnimplementedNetworkError(chainId);
   }
+
+  return `${blockExplorer}/${txhash}`;
 }

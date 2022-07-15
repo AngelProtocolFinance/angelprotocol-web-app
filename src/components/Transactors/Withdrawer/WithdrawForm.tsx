@@ -27,7 +27,7 @@ export default function WithdrawForm(resources: WithdrawResource) {
       <InputField
         label="Destination wallet"
         field="beneficiary"
-        placeholder="terra1..."
+        placeholder="juno1..."
       />
       <div className="grid grid-cols-a1 items-center gap-1 bg-yellow-400/20 p-2 rounded-md text-angel-grey mb-2">
         <Icon type="Warning" />
