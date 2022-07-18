@@ -86,24 +86,20 @@ export type Receiver =
 export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
 /** apes/token-list */
-export type AssetBase = {
+export type Token = {
   approved: boolean; // true
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
-};
-
-// Token on a specific chain
-export type Token = AssetBase & {
-  contract_address: string;
+  denom: string;
 };
 
 // This `Chain` type is designed in a way that makes creating a separate `WalletProvider` type unnecessary
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
   name: string; // Avalanche Fuji Testnet
-  native_currency: AssetBase;
+  native_currency: Token;
   network_type: "mainnet" | "testnet";
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
