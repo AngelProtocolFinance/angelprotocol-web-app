@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
-import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
+import { ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
@@ -102,7 +102,7 @@ const tokens_api = apes.injectEndpoints({
           );
           const queryResults = await jsonProvider.getBalance(address);
 
-          const _coins: WithBalance[] = [
+          const coins: WithBalance[] = [
             {
               ...chain.native_currency,
               balance: +utils.formatUnits(
@@ -112,33 +112,29 @@ const tokens_api = apes.injectEndpoints({
             },
           ];
 
-          //fetch erc20 balances of activeCoin
-          const erc20Tokens = chain.tokens;
           const erc20Holdings = await getERC20Holdings(
             chain.rpc_url,
             address,
-            erc20Tokens.map((token) => token.token_identifier)
+            chain.tokens.map((token) => token.token_identifier)
           );
 
-          //convert to NativeBalanceFormat
-          const transformedTokens: WithBalance[] = erc20Holdings.map(
-            (token, i) => ({
-              type: "erc20",
-              symbol: token.symbol,
-              logo: erc20Tokens[i].logo,
-              decimals: token.decimals,
-              chain_id: activeCoin.chain_id,
-
-              native_symbol: activeCoin.symbol,
-              contract_addr: token.contractAddress,
-
-              balance: +token.balance,
-            })
+          const transformedTokens: WithBalance[] = chain.tokens.reduce(
+            (result, token) => {
+              const erc20Token = erc20Holdings.find(
+                (x) => x.contractAddress === token.token_identifier
+              );
+              if (erc20Token) {
+                ({
+                  ...token,
+                  balance: +erc20Token.balance,
+                });
+              }
+              return result;
+            },
+            [] as WithBalance[]
           );
-          //insert ERC20 tokens with balances next to native token
-          (evmCoins as WithBalance[]).splice(1, 0, ...transformedTokens);
 
-          return { data: coins.concat(evmCoins) };
+          return { data: coins.concat(transformedTokens) };
         } catch (err) {
           console.log(err);
           return {
