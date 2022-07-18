@@ -1,16 +1,18 @@
 import { WithBalance } from "services/types";
 import ethLogo from "assets/icons/currencies/ether.png";
+import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
+import { IS_TEST } from "constants/env";
 
 export const placeHolderToken: WithBalance = {
-  symbol: "ETH",
+  symbol: "JUNO",
   logo: ethLogo,
   decimals: 18,
   balance: 0,
   approved: false,
   name: "Placeholder",
-  contract_address: "",
+  denom: "",
 };
 
 export const unSupportedToken: WithBalance = {
@@ -20,7 +22,7 @@ export const unSupportedToken: WithBalance = {
   balance: 0,
   approved: false,
   name: "Unsupported",
-  contract_address: "",
+  denom: "",
 };
 
 export const ethereumToken: WithBalance = {
@@ -28,9 +30,9 @@ export const ethereumToken: WithBalance = {
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",
   decimals: 18,
   balance: 0,
-  approved: false,
+  approved: true,
   name: "Ethereum",
-  contract_address: "",
+  denom: "",
 };
 
 export const lunaToken: WithBalance = {
@@ -38,7 +40,27 @@ export const lunaToken: WithBalance = {
   logo: lunaLogo,
   decimals: 6,
   balance: 0,
-  approved: false,
+  approved: true,
   name: "Luna",
-  contract_address: "",
+  denom: "",
 };
+
+export const junoToken: WithBalance = IS_TEST
+  ? {
+      symbol: "JUNOX",
+      logo: junoLogo,
+      decimals: 6,
+      balance: 0,
+      approved: true,
+      name: "Juno",
+      denom: "",
+    }
+  : {
+      symbol: "JUNO",
+      logo: junoLogo,
+      decimals: 6,
+      balance: 0,
+      approved: true,
+      name: "Juno",
+      denom: "",
+    };
