@@ -12,7 +12,7 @@ export const placeHolderToken: WithBalance = {
   balance: 0,
   approved: false,
   name: "Placeholder",
-  denom: "",
+  token_identifier: "",
 };
 
 export const unSupportedToken: WithBalance = {
@@ -22,7 +22,7 @@ export const unSupportedToken: WithBalance = {
   balance: 0,
   approved: false,
   name: "Unsupported",
-  denom: "",
+  token_identifier: "",
 };
 
 export const ethereumToken: WithBalance = {
@@ -32,7 +32,7 @@ export const ethereumToken: WithBalance = {
   balance: 0,
   approved: true,
   name: "Ethereum",
-  denom: "",
+  token_identifier: "",
 };
 
 export const lunaToken: WithBalance = {
@@ -42,7 +42,7 @@ export const lunaToken: WithBalance = {
   balance: 0,
   approved: true,
   name: "Luna",
-  denom: "",
+  token_identifier: "",
 };
 
 export const junoToken: WithBalance = IS_TEST
@@ -53,7 +53,7 @@ export const junoToken: WithBalance = IS_TEST
       balance: 0,
       approved: true,
       name: "Juno",
-      denom: "",
+      token_identifier: "",
     }
   : {
       symbol: "JUNO",
@@ -62,5 +62,5 @@ export const junoToken: WithBalance = IS_TEST
       balance: 0,
       approved: true,
       name: "Juno",
-      denom: "",
+      token_identifier: "",
     };

@@ -49,7 +49,7 @@ const tokens_api = apes.injectEndpoints({
             const junoTokens = [chain.native_currency, ...chain.tokens].reduce(
               (result, coin) => {
                 const balance = junoBalance.balances.find(
-                  (x) => x.denom === coin.denom
+                  (x) => x.denom === coin.token_identifier
                 );
                 if (balance) {
                   result.push({
@@ -79,7 +79,7 @@ const tokens_api = apes.injectEndpoints({
             const terraTokens = [chain.native_currency, ...chain.tokens].reduce(
               (result, coin) => {
                 const balance = terraBalance.balances.find(
-                  (x) => x.denom === coin.denom
+                  (x) => x.denom === coin.token_identifier
                 );
                 if (balance) {
                   result.push({
@@ -96,64 +96,48 @@ const tokens_api = apes.injectEndpoints({
           }
 
           /**fetch balances for ethereum */
-          const evmTokenList = categorizedTokenList[
-            "evm-native"
-          ] as EVMNative[];
-          const balanceQueries = evmTokenList.map((token) => {
-            const jsonProvider = new ethers.providers.JsonRpcProvider(
-              token.rpc_url,
-              { chainId: +token.chain_id, name: token.chain_name }
-            );
-            return jsonProvider.getBalance(address);
-          });
+          const jsonProvider = new ethers.providers.JsonRpcProvider(
+            chain.rpc_url,
+            { chainId: +chainId, name: chain.name }
+          );
+          const queryResults = await jsonProvider.getBalance(address);
 
-          const queryResults = await Promise.allSettled(balanceQueries);
-          //map native balances with ordering
-          const evmCoins = queryResults.reduce((_coins, result, i) => {
-            const token: WithBalance = {
-              ...evmTokenList[i],
-              balance:
-                result.status === "fulfilled"
-                  ? +utils.formatUnits(result.value, evmTokenList[i].decimals)
-                  : 0,
-            };
-            if (token.chain_id === chainId) {
-              //bring active coin to front
-              _coins.unshift(token);
-            } else {
-              _coins.push(token);
-            }
-            return _coins;
-          }, [] as WithBalance[]);
+          const _coins: WithBalance[] = [
+            {
+              ...chain.native_currency,
+              balance: +utils.formatUnits(
+                queryResults,
+                chain.native_currency.decimals
+              ),
+            },
+          ];
 
           //fetch erc20 balances of activeCoin
-          if (evmCoins.length > 1) {
-            const activeCoin = evmCoins[0];
-            const erc20Tokens = activeCoin.tokens;
-            const erc20Holdings = await getERC20Holdings(
-              activeCoin.rpc_url,
-              address,
-              erc20Tokens.map((token) => token.contract_addr)
-            );
+          const erc20Tokens = chain.tokens;
+          const erc20Holdings = await getERC20Holdings(
+            chain.rpc_url,
+            address,
+            erc20Tokens.map((token) => token.token_identifier)
+          );
 
-            //convert to NativeBalanceFormat
-            const transformedTokens: WithBalance[] = erc20Holdings.map(
-              (token, i) => ({
-                type: "erc20",
-                symbol: token.symbol,
-                logo: erc20Tokens[i].logo,
-                decimals: token.decimals,
-                chain_id: activeCoin.chain_id,
+          //convert to NativeBalanceFormat
+          const transformedTokens: WithBalance[] = erc20Holdings.map(
+            (token, i) => ({
+              type: "erc20",
+              symbol: token.symbol,
+              logo: erc20Tokens[i].logo,
+              decimals: token.decimals,
+              chain_id: activeCoin.chain_id,
 
-                native_symbol: activeCoin.symbol,
-                contract_addr: token.contractAddress,
+              native_symbol: activeCoin.symbol,
+              contract_addr: token.contractAddress,
 
-                balance: +token.balance,
-              })
-            );
-            //insert ERC20 tokens with balances next to native token
-            (evmCoins as WithBalance[]).splice(1, 0, ...transformedTokens);
-          }
+              balance: +token.balance,
+            })
+          );
+          //insert ERC20 tokens with balances next to native token
+          (evmCoins as WithBalance[]).splice(1, 0, ...transformedTokens);
+
           return { data: coins.concat(evmCoins) };
         } catch (err) {
           console.log(err);

@@ -92,7 +92,7 @@ export type Token = {
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
-  denom: string;
+  token_identifier: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
 };
 
 // This `Chain` type is designed in a way that makes creating a separate `WalletProvider` type unnecessary
