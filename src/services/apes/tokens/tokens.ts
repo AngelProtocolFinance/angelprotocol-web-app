@@ -1,12 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Coin as TerraCoin } from "@terra-money/terra.js";
-import Decimal from "decimal.js";
 import { ethers, utils } from "ethers";
 import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import { denoms } from "constants/currency";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -36,7 +34,6 @@ const tokens_api = apes.injectEndpoints({
           );
 
           const chain: Chain = await chainRes.json();
-          const coins: WithBalance[] = [];
 
           // fetch balances for juno
           if (isJunoProvider(providerId)) {
@@ -74,19 +71,27 @@ const tokens_api = apes.injectEndpoints({
               terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
-            const jsonRes: TerraBalanceRes = await res.json();
-            const terraTokens = jsonRes.balances.reduce((_coins, _coin) => {
-              //don't display coins with no assets
-              _coins.push({
-                ...lunaToken,
-                balance: +utils.formatUnits(_coin.amount, lunaToken.decimals),
-              });
-              return _coins;
-            }, [] as WithBalance[]);
+            // returns only positive balances
+            const terraBalance: TerraBalanceRes = await res.json();
 
-            coins.push(...terraTokens);
-            //if terra wallet is not xdefi return only terra balances
-            return { data: coins };
+            //don't display coins with no assets
+            const terraTokens = [chain.native_currency, ...chain.tokens].reduce(
+              (result, coin) => {
+                const balance = terraBalance.balances.find(
+                  (x) => x.denom === coin.denom
+                );
+                if (balance) {
+                  result.push({
+                    ...coin,
+                    balance: +utils.formatUnits(balance.amount, coin.decimals),
+                  });
+                }
+                return result;
+              },
+              [] as WithBalance[]
+            );
+
+            return { data: terraTokens };
           }
 
           /**fetch balances for ethereum */
