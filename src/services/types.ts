@@ -23,4 +23,4 @@ export type JunoTags =
   | "registrar";
 
 /** multicall */
-export type WithBalance<T = Token> = T & { balance: number };
+export type WithBalance = Token & { balance: number };
