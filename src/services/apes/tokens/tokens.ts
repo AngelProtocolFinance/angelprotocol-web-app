@@ -36,7 +36,7 @@ const tokens_api = apes.injectEndpoints({
         try {
           const { providerId, address, chainId } = args.providerInfo;
           const tokensRes = await fetch(
-            `${apes_endpoint}/wallet/tokens${IS_TEST ? "/test" : ""}`
+            `${apes_endpoint}/chain/${args.providerInfo.chainId}`
           );
 
           const tokenList: Token[] = await tokensRes.json();
