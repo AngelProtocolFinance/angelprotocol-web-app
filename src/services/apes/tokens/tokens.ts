@@ -5,6 +5,7 @@ import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
+import { chainIDs } from "constants/chainIDs";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -28,7 +29,7 @@ const tokens_api = apes.injectEndpoints({
       providesTags: [],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
-          const { providerId, address, chainId } = args.providerInfo;
+          const { address, chainId } = args.providerInfo;
           const chainRes = await fetch(
             `${apes_endpoint}/chain/${args.providerInfo.chainId}`
           );
@@ -36,7 +37,7 @@ const tokens_api = apes.injectEndpoints({
           const chain: Chain = await chainRes.json();
 
           // fetch balances for juno
-          if (isJunoProvider(providerId)) {
+          if (isJunoChain(chainId)) {
             const balancesRes = await fetch(
               junoLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
             );
@@ -65,7 +66,7 @@ const tokens_api = apes.injectEndpoints({
           }
 
           /**fetch balances for terra  */
-          if (isTerraProvider(providerId)) {
+          if (isTerraChain(chainId)) {
             //fetch native terra coins
             const res = await fetch(
               terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
@@ -171,24 +172,21 @@ const tokens_api = apes.injectEndpoints({
 
 export const { useTokensQuery, useBalancesQuery } = tokens_api;
 
-function isJunoProvider(providerId: ProviderId) {
-  switch (providerId) {
-    //FUTURE: add other leap falcon xdefi etc
-    case "keplr":
-    case "walletconnect":
+function isJunoChain(chainId: chainIDs) {
+  switch (chainId) {
+    case chainIDs.juno_main:
+    case chainIDs.juno_test:
       return true;
     default:
       return false;
   }
 }
 
-function isTerraProvider(providerId: ProviderId) {
-  switch (providerId) {
-    //FUTURE: add other leap falcon etc
-    case "station":
-    case "walletconnect":
-    case "xdefi-wallet":
-    case "torus":
+function isTerraChain(chainId: chainIDs) {
+  switch (chainId) {
+    case chainIDs.terra_main:
+    case chainIDs.terra_test:
+    case chainIDs.terra_local:
       return true;
     default:
       return false;
