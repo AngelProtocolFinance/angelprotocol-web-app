@@ -86,68 +86,29 @@ export type Receiver =
 export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
 /** apes/token-list */
-type TokenBase = {
-  symbol: string; //LUNA
-  logo: string;
-  decimals: number; //6
-  chain_id: string;
+export type AssetBase = {
+  approved: boolean; // true
+  decimals: number; // 6
+  logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
+  name: string; // "Stader LunaX Token"
+  symbol: string; // DB Partition key ex., "LunaX"
 };
 
-export type TerraNative = TokenBase & {
-  type: "terra-native"; //uluna
-  //additional info for adding chain in wallet
-  chain_name: string; //Terra testnet
-  rpc_url?: never;
-  block_explorer_url?: never; //https://testnet.snowtrace.io
-  tokens?: never;
-
-  contract_addr?: never;
-  native_symbol?: never;
+// Token on a specific chain
+export type Token = AssetBase & {
+  contract_address: string;
 };
 
-export type JunoNative = TokenBase & {
-  type: "juno-native"; //uluna
-  //additional info for adding chain in wallet
-  chain_name: string; //Juno testnet
-  rpc_url?: never;
-  block_explorer_url?: never; //https://testnet.snowtrace.io
-  tokens?: never;
-
-  contract_addr?: never;
-  native_symbol?: never;
+// This `Chain` type is designed in a way that makes creating a separate `WalletProvider` type unnecessary
+export type Chain = {
+  block_explorer_url: string; // https://testnet.snowtrace.io
+  name: string; // Avalanche Fuji Testnet
+  native_currency: AssetBase;
+  network_type: "mainnet" | "testnet";
+  rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
+  tokens: Token[];
+  type: "bnb" | "evm" | "juno" | "terra"; // | "sol" | "btc" | ...
 };
-
-export type ALT20 = TokenBase & {
-  type: "cw20" | "erc20";
-
-  chain_name?: never; //Juno testnet
-  rpc_url?: never;
-  block_explorer_url?: never; //https://testnet.snowtrace.io
-  tokens?: never;
-
-  //info if token is an ERC20 token
-  contract_addr: string;
-  native_symbol: string;
-};
-
-export type EVMNative = TokenBase & {
-  type: "evm-native"; //avax
-
-  //additional info for adding chain in wallet
-  chain_name: string; //Avalanche
-  rpc_url: string;
-  block_explorer_url: string; //https://testnet.snowtrace.io
-  tokens: {
-    contract_addr: string;
-    logo: string;
-  }[];
-
-  //info if token is an ERC20 token
-  contract_addr?: never;
-  native_symbol?: never;
-};
-
-export type Token = EVMNative | TerraNative | ALT20 | JunoNative;
 
 /** /leaderboards */
 export interface Endowment {
