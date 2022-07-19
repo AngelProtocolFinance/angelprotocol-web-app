@@ -24,7 +24,7 @@ export default function NetworkPrompt() {
           /**
            * NOTE: xdefi doesn't propagate error to this scope
            */
-          await addNetworkAndSwitch(token, wallet.providerId);
+          await addNetworkAndSwitch(wallet);
         } catch (err) {
           console.error("add and switch error", err);
           //edge case, network is already in wallet: switch only

@@ -1,33 +1,30 @@
 import { ProviderId } from "contexts/WalletContext/types";
 import { ChainParams } from "types/ethereum";
-import { EVMNative } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { getProvider } from "helpers/getProvider";
 import { EIPMethods } from "constants/ethereum";
 
-export default async function addNetworkAndSwitch(
-  coin: EVMNative,
-  providerId: ProviderId
-) {
-  const provider = getProvider(providerId);
+export default async function addNetworkAndSwitch(wallet: WalletState) {
+  const provider = getProvider(wallet.providerId);
   await provider?.request({
     method: EIPMethods.wallet_addEthereumChain,
-    params: [getChainParamsFromCoin(coin)],
+    params: [getChainParams(wallet)],
   });
   //let caller catch error
 }
 
-function getChainParamsFromCoin(coin: EVMNative): ChainParams {
+function getChainParams({ chain }: WalletState): ChainParams {
   return {
-    chainId: toHexChainId(coin.chain_id),
-    blockExplorerUrls: [coin.block_explorer_url],
-    chainName: coin.chain_name,
-    iconUrls: [coin.logo],
+    chainId: toHexChainId(chain.chain_id),
+    blockExplorerUrls: [chain.block_explorer_url],
+    chainName: chain.name,
+    iconUrls: [chain.native_currency.logo],
     nativeCurrency: {
-      name: coin.symbol,
-      symbol: coin.symbol,
-      decimals: coin.decimals,
+      name: chain.native_currency.name,
+      symbol: chain.native_currency.symbol,
+      decimals: chain.native_currency.decimals,
     },
-    rpcUrls: [coin.rpc_url],
+    rpcUrls: [chain.rpc_url],
   };
 }
 
