@@ -1,8 +1,7 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
-import { Token } from "types/server/aws";
+import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/tokens/tokens";
-import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -14,7 +13,7 @@ export type WalletState = {
   displayCoin: Token;
   coins: Token[];
   address: string;
-  chainId: chainIDs;
+  chain: Chain;
   providerId: ProviderId;
 };
 
@@ -106,23 +105,22 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
+  const isWalletLoading = isFetching || isLoading;
 
   const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address, chainId } = activeProviderInfo;
+    const coins = chain ? [chain.native_currency, ...chain.tokens] : [];
+    if (activeProviderInfo && !isWalletLoading) {
+      const { logo, providerId, address } = activeProviderInfo;
       return {
         walletIcon: logo,
-        displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
-        coins:
-          coinWithBalances.length <= 0
-            ? [placeHolderDisplayToken[providerId]]
-            : coinWithBalances,
+        displayCoin: coins[0] ?? placeHolderDisplayToken[providerId],
+        coins: !coins.length ? [placeHolderDisplayToken[providerId]] : coins,
         address,
-        chainId,
+        chain: chain!, // chain exists because !isWalletLoading
         providerId,
       };
     }
-  }, [activeProviderInfo, coinWithBalances]);
+  }, [activeProviderInfo, chain]);
 
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
@@ -154,7 +152,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isWalletLoading: isFetching || isLoading,
+        isWalletLoading,
         isProviderLoading,
       }}
     >
