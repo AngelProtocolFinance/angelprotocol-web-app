@@ -8,7 +8,7 @@ import addNetworkAndSwitch, {
 } from "helpers/addNetworkAndSwitch";
 
 export default function NetworkPrompt() {
-  const { isWalletLoading, wallet } = useGetWallet();
+  const { isLoading, wallet } = useGetWallet();
   const { watch } = useFormContext<DonateValues>();
   const dispatch = useSetter();
   const token = watch("token");
@@ -64,12 +64,12 @@ export default function NetworkPrompt() {
         <span className="text-amber-500 font-semibold">{token.chain_name}</span>
       </p>
       <button
-        disabled={isWalletLoading}
+        disabled={isLoading}
         onClick={handleNetworkChange}
         className="justify-self-end text-xs font-bold text-angel-blue hover:text-bright-blue active:text-angel-orange uppercase font-heading"
         type="button"
       >
-        {isWalletLoading ? "Switching..." : "Switch to Network"}
+        {isLoading ? "Switching..." : "Switch to Network"}
       </button>
     </div>
   );

@@ -20,8 +20,7 @@ export type WalletState = {
 
 type State = {
   wallet?: WalletState;
-  isWalletLoading: boolean;
-  isProviderLoading: boolean;
+  isLoading: boolean;
 };
 
 type Setters = {
@@ -31,8 +30,7 @@ type Setters = {
 
 const initialState: State = {
   wallet: undefined,
-  isWalletLoading: true,
-  isProviderLoading: true,
+  isLoading: true,
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
@@ -89,28 +87,30 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       isLoading: isKeplrLoading,
     },
   ];
-
-  const isProviderLoading = providerStatuses.reduce(
-    (status, curr) => status || curr.isLoading,
-    false
-  );
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
   const {
     data: chain,
-    isLoading,
+    isLoading: isChainLoading,
     isFetching,
   } = useChainQuery(
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
-  const isWalletLoading = isFetching || isLoading;
+
+  const isLoading =
+    providerStatuses.reduce(
+      (status, curr) => status || curr.isLoading,
+      false
+    ) ||
+    isFetching ||
+    isChainLoading;
 
   const walletState: WalletState | undefined = useMemo(() => {
     const coins = chain ? [chain.native_currency, ...chain.tokens] : [];
-    if (activeProviderInfo && !isWalletLoading) {
+    if (activeProviderInfo && !isLoading) {
       const { logo, providerId, address } = activeProviderInfo;
       return {
         walletIcon: logo,
@@ -121,7 +121,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         providerId,
       };
     }
-  }, [activeProviderInfo, chain]);
+  }, [activeProviderInfo, chain, isLoading]);
 
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
@@ -153,8 +153,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isWalletLoading,
-        isProviderLoading,
+        isLoading,
       }}
     >
       <setContext.Provider
