@@ -2,6 +2,7 @@ import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/tokens/tokens";
+import { WalletDisconnectError } from "errors/errors";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -144,7 +145,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         disconnectTerra();
         break;
       default:
-        throw new Error("no wallet is connected");
+        throw new WalletDisconnectError();
     }
   };
 
