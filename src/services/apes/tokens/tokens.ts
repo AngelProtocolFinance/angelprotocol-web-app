@@ -2,7 +2,6 @@ import { Coin } from "@cosmjs/proto-signing";
 import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
-import { WithBalance } from "services/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { chainIDs } from "constants/chainIDs";
@@ -25,7 +24,7 @@ const tokens_api = apes.injectEndpoints({
         };
       },
     }),
-    balances: builder.query<WithBalance[], { providerInfo: ProviderInfo }>({
+    balances: builder.query<Chain, { providerInfo: ProviderInfo }>({
       providesTags: [],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
@@ -46,23 +45,19 @@ const tokens_api = apes.injectEndpoints({
             const junoBalance: JunoBalance = await balancesRes.json();
 
             //don't display coins with no assets
-            const junoTokens = [chain.native_currency, ...chain.tokens].reduce(
-              (result, coin) => {
-                const balance = junoBalance.balances.find(
-                  (x) => x.denom === coin.token_id
+            [chain.native_currency, ...chain.tokens].forEach((coin) => {
+              const balance = junoBalance.balances.find(
+                (x) => x.denom === coin.token_id
+              );
+              if (balance) {
+                coin.balance = +utils.formatUnits(
+                  balance.amount,
+                  coin.decimals
                 );
-                if (balance) {
-                  result.push({
-                    ...coin,
-                    balance: +utils.formatUnits(balance.amount, coin.decimals),
-                  });
-                }
-                return result;
-              },
-              [] as WithBalance[]
-            );
+              }
+            });
 
-            return { data: junoTokens };
+            return { data: chain };
           }
 
           /**fetch balances for terra  */
@@ -76,23 +71,19 @@ const tokens_api = apes.injectEndpoints({
             const terraBalance: TerraBalanceRes = await res.json();
 
             //don't display coins with no assets
-            const terraTokens = [chain.native_currency, ...chain.tokens].reduce(
-              (result, coin) => {
-                const balance = terraBalance.balances.find(
-                  (x) => x.denom === coin.token_id
+            [chain.native_currency, ...chain.tokens].forEach((coin) => {
+              const balance = terraBalance.balances.find(
+                (x) => x.denom === coin.token_id
+              );
+              if (balance) {
+                coin.balance = +utils.formatUnits(
+                  balance.amount,
+                  coin.decimals
                 );
-                if (balance) {
-                  result.push({
-                    ...coin,
-                    balance: +utils.formatUnits(balance.amount, coin.decimals),
-                  });
-                }
-                return result;
-              },
-              [] as WithBalance[]
-            );
+              }
+            });
 
-            return { data: terraTokens };
+            return { data: chain };
           }
 
           /**fetch balances for ethereum */
@@ -102,15 +93,10 @@ const tokens_api = apes.injectEndpoints({
           );
           const queryResults = await jsonProvider.getBalance(address);
 
-          const coins: WithBalance[] = [
-            {
-              ...chain.native_currency,
-              balance: +utils.formatUnits(
-                queryResults,
-                chain.native_currency.decimals
-              ),
-            },
-          ];
+          chain.native_currency.balance = +utils.formatUnits(
+            queryResults,
+            chain.native_currency.decimals
+          );
 
           const erc20Holdings = await getERC20Holdings(
             chain.rpc_url,
@@ -118,23 +104,16 @@ const tokens_api = apes.injectEndpoints({
             chain.tokens.map((token) => token.token_id)
           );
 
-          const transformedTokens: WithBalance[] = chain.tokens.reduce(
-            (result, token) => {
-              const erc20Token = erc20Holdings.find(
-                (x) => x.contractAddress === token.token_id
-              );
-              if (erc20Token) {
-                ({
-                  ...token,
-                  balance: +erc20Token.balance,
-                });
-              }
-              return result;
-            },
-            [] as WithBalance[]
-          );
+          chain.tokens.forEach((token) => {
+            const erc20Token = erc20Holdings.find(
+              (x) => x.contractAddress === token.token_id
+            );
+            if (erc20Token) {
+              token.balance = +erc20Token.balance;
+            }
+          });
 
-          return { data: coins.concat(transformedTokens) };
+          return { data: chain };
         } catch (err) {
           console.log(err);
           return {

@@ -88,6 +88,7 @@ export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 /** apes/token-list */
 export type Token = {
   approved: boolean; // true
+  balance: number; // 0
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   name: string; // "Stader LunaX Token"
