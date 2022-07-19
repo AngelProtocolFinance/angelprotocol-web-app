@@ -98,6 +98,7 @@ export type Token = {
 // This `Chain` type is designed in a way that makes creating a separate `WalletProvider` type unnecessary
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
+  chain_id: string;
   name: string; // Avalanche Fuji Testnet
   native_currency: Token;
   network_type: "mainnet" | "testnet";
