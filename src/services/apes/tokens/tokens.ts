@@ -49,7 +49,7 @@ const tokens_api = apes.injectEndpoints({
             const junoTokens = [chain.native_currency, ...chain.tokens].reduce(
               (result, coin) => {
                 const balance = junoBalance.balances.find(
-                  (x) => x.denom === coin.token_identifier
+                  (x) => x.denom === coin.token_id
                 );
                 if (balance) {
                   result.push({
@@ -79,7 +79,7 @@ const tokens_api = apes.injectEndpoints({
             const terraTokens = [chain.native_currency, ...chain.tokens].reduce(
               (result, coin) => {
                 const balance = terraBalance.balances.find(
-                  (x) => x.denom === coin.token_identifier
+                  (x) => x.denom === coin.token_id
                 );
                 if (balance) {
                   result.push({
@@ -115,13 +115,13 @@ const tokens_api = apes.injectEndpoints({
           const erc20Holdings = await getERC20Holdings(
             chain.rpc_url,
             address,
-            chain.tokens.map((token) => token.token_identifier)
+            chain.tokens.map((token) => token.token_id)
           );
 
           const transformedTokens: WithBalance[] = chain.tokens.reduce(
             (result, token) => {
               const erc20Token = erc20Holdings.find(
-                (x) => x.contractAddress === token.token_identifier
+                (x) => x.contractAddress === token.token_id
               );
               if (erc20Token) {
                 ({
