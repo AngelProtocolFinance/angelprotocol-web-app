@@ -19,6 +19,7 @@ import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
+import { chainIDs, junoChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
@@ -64,7 +65,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         /** juno native transaction, send or contract interaction */
-        if (selectedToken.type === "juno-native") {
+        if (wallet.chainId === junoChainId) {
           const contract = new Contract(wallet);
           const msg = contract.createTransferNativeMsg(
             debounced_amount,
