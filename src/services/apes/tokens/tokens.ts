@@ -36,7 +36,7 @@ const tokens_api = apes.injectEndpoints({
 
           const chain: Chain | { message: string } = await chainRes.json();
 
-          if ("message" in chain) {
+          if (!chain || "message" in chain) {
             throw new WrongNetworkError("Juno", junoChainId);
           }
 
