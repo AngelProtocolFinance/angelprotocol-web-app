@@ -1,5 +1,6 @@
 import { ProviderId } from "./types";
-import { Token } from "types/server/aws";
+import { Chain } from "types/server/aws";
+import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -7,11 +8,6 @@ import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import {
-  ethereumToken,
-  junoToken,
-  lunaToken,
-} from "services/apes/tokens/constants";
 
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
@@ -28,21 +24,21 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
-const ethTokenW = { ...ethereumToken, balance: 0 };
-const lunaTokenW = { ...lunaToken, balance: 0 };
-const junoTokenW = { ...junoToken, balance: 0 };
-export const placeHolderDisplayToken: {
-  [key in ProviderId]: Token;
-} = {
-  "binance-wallet": ethTokenW,
-  metamask: ethTokenW,
-  "xdefi-wallet": lunaTokenW,
-  "xdefi-evm": ethTokenW,
-  station: lunaTokenW,
-  "leap-wallet": lunaTokenW,
-  "falcon-wallet": lunaTokenW,
-  "bitkeep-wallet": lunaTokenW,
-  keplr: junoTokenW,
-  walletconnect: junoTokenW,
-  torus: lunaTokenW,
+export const placeholderChain: Chain = {
+  block_explorer_url: "https://www.placeholder.io/token/txs/",
+  chain_id: "juno-1",
+  name: "Token",
+  native_currency: {
+    symbol: "TOKEN",
+    logo: tokenLogo,
+    decimals: 18,
+    balance: 0,
+    approved: true,
+    name: "Token",
+    token_id: "utoken",
+  },
+  network_type: "mainnet",
+  rpc_url: "https://rpc-token.placeholder.com",
+  tokens: [],
+  type: "placeholder-native",
 };

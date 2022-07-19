@@ -65,29 +65,33 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         /** juno native transaction, send or contract interaction */
-        if (wallet.chainId === junoChainId) {
-          const contract = new Contract(wallet);
-          const msg = contract.createTransferNativeMsg(
-            debounced_amount,
-            ap_wallets.juno
-          );
-          const { fee, feeNum } = await contract.estimateFee([msg]);
-          dispatch(setFee(feeNum));
+        if (wallet.chain.chain_id === junoChainId) {
+          /** juno cw20 transaction */
+          if (
+            selectedToken.token_id === wallet.chain.native_currency.token_id
+          ) {
+            const contract = new CW20(wallet, selectedToken.token_id);
+            const msg = contract.createTransferMsg(
+              debounced_amount,
+              ap_wallets.juno
+            );
+            const { fee, feeNum } = await contract.estimateFee([msg]);
+            dispatch(setFee(feeNum));
 
-          /** displayCoin is native - for payment of fee */
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
+            /** displayCoin is native - for payment of fee */
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setCosmosTx({ msgs: [msg], fee });
+
             return;
           }
-          setCosmosTx({ msgs: [msg], fee });
-        }
 
-        /** juno cw20 transaction */
-        if (selectedToken.type === "cw20") {
-          const contract = new CW20(wallet, selectedToken.contract_addr);
-          const msg = contract.createTransferMsg(
+          const contract = new Contract(wallet);
+          const msg = contract.createTransferNativeMsg(
             debounced_amount,
             ap_wallets.juno
           );
