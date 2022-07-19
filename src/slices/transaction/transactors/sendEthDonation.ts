@@ -41,22 +41,21 @@ export const sendEthDonation = createAsyncThunk(
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
       const chainId = `${chainNum}`;
-      const { contract_addr } = args.donateValues.token;
+      const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
-      if (contract_addr) {
+      if (args.wallet.isNativeCoin(token)) {
+        response = await signer.sendTransaction(args.tx);
+      } else {
         const ER20Contract: any = new ethers.Contract(
-          contract_addr,
+          token.token_id,
           ERC20Abi,
           signer
         );
         response = await ER20Contract.transfer(args.tx.to, args.tx.value);
-      } else {
-        response = await signer.sendTransaction(args.tx);
       }
 
       updateStage({ step: "submit", message: "Saving donation info.." });
-      const { receiver, token, amount, split_liq } = args.donateValues;
       const receipient: Receiver =
         typeof receiver === "string"
           ? { charityId: receiver }
