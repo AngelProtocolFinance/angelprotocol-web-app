@@ -13,7 +13,7 @@ import {
 import useEstimator from "./useEstimator";
 
 export default function useDonate() {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
   const { form_loading, form_error, stage } = useGetter(
     (state) => state.transaction
   );
@@ -90,7 +90,7 @@ export default function useDonate() {
       form_loading ||
       !isValid ||
       !isDirty ||
-      isWalletLoading ||
+      isLoading ||
       !isInCorrectNetwork ||
       !isKycCompleted,
     isFormLoading: form_loading,
