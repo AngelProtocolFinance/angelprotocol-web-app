@@ -4,7 +4,8 @@ import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import { chainIDs } from "constants/chainIDs";
+import { WrongNetworkError } from "errors/errors";
+import { chainIDs, junoChainId } from "constants/chainIDs";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -33,7 +34,11 @@ const tokens_api = apes.injectEndpoints({
             `${apes_endpoint}/chain/${args.providerInfo.chainId}`
           );
 
-          const chain: Chain = await chainRes.json();
+          const chain: Chain | { message: string } = await chainRes.json();
+
+          if ("message" in chain) {
+            throw new WrongNetworkError("Juno", junoChainId);
+          }
 
           // fetch balances for juno
           if (isJunoChain(chainId)) {
