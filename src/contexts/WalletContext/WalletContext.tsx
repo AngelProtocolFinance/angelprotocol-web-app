@@ -16,6 +16,7 @@ export type WalletState = {
   address: string;
   chain: Chain;
   providerId: ProviderId;
+  isNativeCoin: (token: Token) => boolean;
 };
 
 type State = {
@@ -110,6 +111,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         address,
         chain: chain!, // chain exists because !isWalletLoading
         providerId,
+        isNativeCoin: (token: Token) =>
+          token.token_id === chain.native_currency.token_id,
       };
     }
   }, [activeProviderInfo, chain]);
