@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { TxOptions } from "slices/transaction/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { Token } from "types/server/aws";
+import {
+  WalletState,
+  useGetWallet,
+} from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -19,7 +23,7 @@ import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIDs, junoChainId } from "constants/chainIDs";
+import { isEvmChainId, junoChainId, terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
@@ -66,19 +70,16 @@ export default function useEstimator() {
 
         /** juno native transaction, send or contract interaction */
         if (wallet.chain.chain_id === junoChainId) {
-          /** juno cw20 transaction */
-          if (
-            selectedToken.token_id === wallet.chain.native_currency.token_id
-          ) {
-            const contract = new CW20(wallet, selectedToken.token_id);
-            const msg = contract.createTransferMsg(
+          /** juno native transaction */
+          if (isNativeCoin(wallet, selectedToken)) {
+            const contract = new Contract(wallet);
+            const msg = contract.createTransferNativeMsg(
               debounced_amount,
               ap_wallets.juno
             );
             const { fee, feeNum } = await contract.estimateFee([msg]);
             dispatch(setFee(feeNum));
 
-            /** displayCoin is native - for payment of fee */
             if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
@@ -90,16 +91,16 @@ export default function useEstimator() {
             return;
           }
 
-          const contract = new Contract(wallet);
-          const msg = contract.createTransferNativeMsg(
+          const contract = new CW20(wallet, selectedToken.token_id);
+          const msg = contract.createTransferMsg(
             debounced_amount,
             ap_wallets.juno
           );
           const { fee, feeNum } = await contract.estimateFee([msg]);
           dispatch(setFee(feeNum));
 
-          /** displayCoin is native - for payment of fee */
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+          // not paying in native currency, so just check if there's enough balance for fees
+          if (feeNum >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
@@ -109,7 +110,7 @@ export default function useEstimator() {
         }
 
         /** terra native transaction, send or contract interaction */
-        if (selectedToken.type === "terra-native") {
+        if (wallet.chain.chain_id === terraChainId) {
           const amount = new Decimal(debounced_amount).mul(1e6);
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
@@ -127,12 +128,7 @@ export default function useEstimator() {
         }
 
         /** evm transactions */
-        if (
-          selectedToken.type === "evm-native" ||
-          selectedToken.type === "erc20"
-        ) {
-          if (wallet.chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
-
+        if (isEvmChainId(wallet.chain.chain_id)) {
           const provider = new ethers.providers.Web3Provider(
             getProvider(wallet.providerId) as any
           );
@@ -148,33 +144,45 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          let gasLimit: ethers.BigNumber;
-          if (selectedToken.type === "erc20") {
+          if (isNativeCoin(wallet, selectedToken)) {
+            const gasLimit = await signer.estimateGas(tx);
+            const minFee = gasLimit.mul(gasPrice);
+            const feeNum = parseFloat(
+              ethers.utils.formatUnits(minFee, selectedToken.decimals)
+            );
+            dispatch(setFee(feeNum));
+
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+          } else {
             const ER20Contract: any = new ethers.Contract(
-              selectedToken.contract_addr,
+              selectedToken.token_id,
               ERC20Abi,
               signer
             );
-            gasLimit = await ER20Contract.estimateGas.transfer(
+            const gasLimit = await ER20Contract.estimateGas.transfer(
               tx.to,
               wei_amount
             );
-          } else {
-            gasLimit = await signer.estimateGas(tx);
+            const minFee = gasLimit.mul(gasPrice);
+            const feeNum = parseFloat(
+              ethers.utils.formatUnits(minFee, selectedToken.decimals)
+            );
+            dispatch(setFee(feeNum));
+
+            // not paying in native currency, so just check if there's enough balance for fees
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
           }
 
-          const minFee = gasLimit.mul(gasPrice);
-          const feeNum = parseFloat(
-            ethers.utils.formatUnits(minFee, selectedToken.decimals)
-          );
-          dispatch(setFee(feeNum));
-
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
-          }
           setEVMtx(tx);
         }
 
@@ -200,4 +208,8 @@ export default function useEstimator() {
   ]);
 
   return { evmTx, terraTx, cosmosTx };
+}
+
+function isNativeCoin(wallet: WalletState, token: Token): boolean {
+  return token.token_id === wallet.chain.native_currency.token_id;
 }
