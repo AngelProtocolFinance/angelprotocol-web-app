@@ -12,7 +12,6 @@ export default function NetworkPrompt() {
   const { watch } = useFormContext<DonateValues>();
   const dispatch = useSetter();
   const token = watch("token");
-  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   async function handleNetworkChange() {
     try {
@@ -20,7 +19,7 @@ export default function NetworkPrompt() {
         dispatch(setFormError("Wallet is not connected"));
         return;
       }
-      if (token.type === "evm-native") {
+      if (wallet.chain.type === "evm-native") {
         try {
           /**
            * NOTE: xdefi doesn't propagate error to this scope
@@ -29,7 +28,7 @@ export default function NetworkPrompt() {
         } catch (err) {
           console.error("add and switch error", err);
           //edge case, network is already in wallet: switch only
-          await switchToNetwork(token.chain_id, wallet.providerId);
+          await switchToNetwork(wallet.chain.chain_id, wallet.providerId);
         }
       } else {
         dispatch(
@@ -52,7 +51,7 @@ export default function NetworkPrompt() {
     }
   }
 
-  if (isInCorrectNetwork || !wallet) {
+  if (!wallet) {
     return null;
   }
 
@@ -61,7 +60,9 @@ export default function NetworkPrompt() {
       <p className="text-xs font-mono text-amber-500">
         To transact <span className="font-semibold">{token.symbol}</span>,
         kindly switch wallet network to{" "}
-        <span className="text-amber-500 font-semibold">{token.chain_name}</span>
+        <span className="text-amber-500 font-semibold">
+          {wallet.chain.name}
+        </span>
       </p>
       <button
         disabled={isLoading}
