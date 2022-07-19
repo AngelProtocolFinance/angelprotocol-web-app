@@ -105,7 +105,7 @@ export type Chain = {
   network_type: string;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: string; // | "sol" | "btc" | ...
+  type: "juno-native" | "terra-native" | "evm-native"; // | "sol" | "btc" | ...
 };
 
 /** /leaderboards */
