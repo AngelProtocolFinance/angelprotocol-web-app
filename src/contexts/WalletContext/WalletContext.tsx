@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";
@@ -11,8 +11,8 @@ import useXdefi from "./useXdefi";
 
 export type WalletState = {
   walletIcon: string;
-  displayCoin: WithBalance;
-  coins: WithBalance[];
+  displayCoin: Token;
+  coins: Token[];
   address: string;
   chainId: chainIDs;
   providerId: ProviderId;
