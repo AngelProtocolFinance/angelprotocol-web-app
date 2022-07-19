@@ -3,7 +3,7 @@ import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/tokens/tokens";
 import { WalletDisconnectError } from "errors/errors";
-import { placeHolderDisplayToken } from "./constants";
+import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -92,7 +92,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   )?.providerInfo;
 
   const {
-    data: chain,
+    data: chain = placeholderChain,
     isLoading: isChainLoading,
     isFetching,
   } = useChainQuery(
@@ -100,28 +100,19 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     { skip: !activeProviderInfo }
   );
 
-  const isLoading =
-    providerStatuses.reduce(
-      (status, curr) => status || curr.isLoading,
-      false
-    ) ||
-    isFetching ||
-    isChainLoading;
-
   const walletState: WalletState | undefined = useMemo(() => {
-    const coins = chain ? [chain.native_currency, ...chain.tokens] : [];
-    if (activeProviderInfo && !isLoading) {
+    if (activeProviderInfo) {
       const { logo, providerId, address } = activeProviderInfo;
       return {
         walletIcon: logo,
-        displayCoin: coins[0] ?? placeHolderDisplayToken[providerId],
-        coins: !coins.length ? [placeHolderDisplayToken[providerId]] : coins,
+        displayCoin: chain.native_currency,
+        coins: [chain.native_currency, ...chain.tokens],
         address,
         chain: chain!, // chain exists because !isWalletLoading
         providerId,
       };
     }
-  }, [activeProviderInfo, chain, isLoading]);
+  }, [activeProviderInfo, chain]);
 
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
@@ -153,7 +144,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isLoading,
+        isLoading:
+          providerStatuses.some((x) => x.isLoading) ||
+          isFetching ||
+          isChainLoading,
       }}
     >
       <setContext.Provider

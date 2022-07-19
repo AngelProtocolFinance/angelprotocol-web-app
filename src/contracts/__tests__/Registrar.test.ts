@@ -1,9 +1,8 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
-import { chainIDs } from "constants/chainIDs";
 
 describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
@@ -47,10 +46,10 @@ describe("Registrar tests", () => {
 
 const WALLET: WalletState = {
   walletIcon: "",
-  displayCoin: placeHolderDisplayToken["keplr"],
-  coins: [placeHolderDisplayToken["keplr"]],
+  displayCoin: placeholderChain.native_currency,
+  coins: placeholderChain.tokens,
   address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
-  chainId: chainIDs.juno_test,
+  chain: placeholderChain,
   providerId: "keplr",
 };
 
