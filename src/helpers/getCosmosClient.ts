@@ -11,10 +11,12 @@ export default async function getCosmosClient(
   if (!wallet) {
     throw new WalletDisconnectError();
   }
-  if (wallet.chainId !== junoChainId) {
+  if (wallet.chain.chain_id !== junoChainId) {
     throw new WrongNetworkError("Juno", junoChainId);
   }
-  const signer = (window as Dwindow).keplr!.getOfflineSigner(wallet.chainId);
+  const signer = (window as Dwindow).keplr!.getOfflineSigner(
+    wallet.chain.chain_id
+  );
   const client = await SigningCosmWasmClient.connectWithSigner(
     junoRpcUrl,
     signer

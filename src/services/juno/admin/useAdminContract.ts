@@ -14,7 +14,7 @@ export default function useAdminContract(customCWs?: CWContracts) {
 
   const isAdminSkip =
     // skip if wallet not connected to Juno blockchain
-    wallet?.chainId !== junoChainId ||
+    wallet?.chain.chain_id !== junoChainId ||
     (cws !== "apTeam" &&
       //skip query if user didn't provide any address
       (cws.cw3 === undefined || cws.cw4 === undefined));

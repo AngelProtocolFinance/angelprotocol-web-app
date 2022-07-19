@@ -18,12 +18,12 @@ export default function getTerraClient(wallet: WalletState | undefined) {
   if (!wallet) {
     throw new WalletDisconnectError();
   }
-  if (wallet.chainId !== terraChainId) {
+  if (wallet.chain.chain_id !== terraChainId) {
     throw new WrongNetworkError("Terra", terraChainId);
   }
 
   return new LCDClient({
-    chainID: wallet.chainId,
+    chainID: wallet.chain.chain_id,
     URL: terraLcdUrl,
     gasAdjustment: GAS_ADJUSTMENT, //use gas units 20% greater than estimate
     gasPrices: GAS_PRICES,

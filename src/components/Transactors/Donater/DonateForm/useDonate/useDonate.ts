@@ -35,9 +35,8 @@ export default function useDonate() {
     //   showKycForm();
     //   return;
     // }
-    switch (token.type) {
+    switch (wallet?.chain.type) {
       case "evm-native":
-      case "erc20":
         dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
@@ -50,7 +49,6 @@ export default function useDonate() {
           })
         );
         break;
-      case "cw20":
       case "juno-native":
         dispatch(
           sendCosmosDonation({
@@ -67,7 +65,6 @@ export default function useDonate() {
   }
 
   const symbol = token.symbol;
-  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   //reset amount when changing currency
   useEffect(() => {
@@ -91,7 +88,6 @@ export default function useDonate() {
       !isValid ||
       !isDirty ||
       isLoading ||
-      !isInCorrectNetwork ||
       !isKycCompleted,
     isFormLoading: form_loading,
     to: getValues("to"),
