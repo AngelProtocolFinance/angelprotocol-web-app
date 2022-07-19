@@ -16,7 +16,7 @@ export default function WalletDetails(props: {
   wallet: WalletState;
   closeHandler: () => void;
 }) {
-  const { coins, displayCoin, address } = props.wallet;
+  const { coins, address } = props.wallet;
   const { disconnect } = useSetWallet();
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
 
@@ -43,7 +43,7 @@ export default function WalletDetails(props: {
           </button>
         </div>
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
-          <p className="uppercase">network : {displayCoin.chain_name}</p>
+          <p className="uppercase">network : {props.wallet.chain.name}</p>
         </div>
         {!isEmpty && (
           <Filter
