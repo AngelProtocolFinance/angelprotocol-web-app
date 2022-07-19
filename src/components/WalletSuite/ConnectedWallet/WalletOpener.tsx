@@ -7,7 +7,7 @@ import Details from "./WalletDetails";
 
 //this component won't be rendered if wallet is not connected
 export default function WalletOpener() {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
   const [detailsShown, setIsDetailsShown] = useState(false);
   const maskedAddr = maskAddress(wallet?.address);
   const toggleDetails = () => setIsDetailsShown((p) => !p);
@@ -18,11 +18,11 @@ export default function WalletOpener() {
   return (
     <>
       <button
-        disabled={isWalletLoading}
+        disabled={isLoading}
         onClick={toggleDetails}
         className="flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent"
       >
-        {(!isWalletLoading && (
+        {(!isLoading && (
           <img
             src={walletIcon}
             alt=""
@@ -30,13 +30,13 @@ export default function WalletOpener() {
           />
         )) || <Icon type="Loading" className="animate-spin mr-1" />}
         <span className="pr-2 text-sm hidden sm:block">
-          {isWalletLoading ? "loading..." : maskedAddr}
+          {isLoading ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
           {displayCoin.symbol} {toCurrency(displayCoin.balance, 3, true)}
         </span>
       </button>
-      {detailsShown && !isWalletLoading && (
+      {detailsShown && !isLoading && (
         <Details closeHandler={hideDetails} wallet={wallet!} />
       )}
     </>

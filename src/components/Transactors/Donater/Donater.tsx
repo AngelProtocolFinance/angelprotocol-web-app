@@ -5,7 +5,7 @@ import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Token } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
@@ -25,7 +25,7 @@ export default function Donater(
   return (
     <DonateContext
       {...props}
-      tokens={wallet?.coins || [placeHolderDisplayToken["keplr"]]}
+      tokens={wallet?.coins || placeholderChain.tokens}
     />
   );
 }
