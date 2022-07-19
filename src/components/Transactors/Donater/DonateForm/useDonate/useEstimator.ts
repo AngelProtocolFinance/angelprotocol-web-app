@@ -71,7 +71,7 @@ export default function useEstimator() {
         /** juno native transaction, send or contract interaction */
         if (wallet.chain.chain_id === junoChainId) {
           /** juno native transaction */
-          if (isNativeCoin(wallet, selectedToken)) {
+          if (wallet.isNativeCoin(selectedToken)) {
             const contract = new Contract(wallet);
             const msg = contract.createTransferNativeMsg(
               debounced_amount,
@@ -144,7 +144,7 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          if (isNativeCoin(wallet, selectedToken)) {
+          if (wallet.isNativeCoin(selectedToken)) {
             const gasLimit = await signer.estimateGas(tx);
             const minFee = gasLimit.mul(gasPrice);
             const feeNum = parseFloat(
@@ -208,8 +208,4 @@ export default function useEstimator() {
   ]);
 
   return { evmTx, terraTx, cosmosTx };
-}
-
-function isNativeCoin(wallet: WalletState, token: Token): boolean {
-  return token.token_id === wallet.chain.native_currency.token_id;
 }
