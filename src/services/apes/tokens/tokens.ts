@@ -24,7 +24,7 @@ const tokens_api = apes.injectEndpoints({
         };
       },
     }),
-    balances: builder.query<Chain, { providerInfo: ProviderInfo }>({
+    chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
       providesTags: [],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
@@ -129,7 +129,7 @@ const tokens_api = apes.injectEndpoints({
   }),
 });
 
-export const { useTokensQuery, useBalancesQuery } = tokens_api;
+export const { useTokensQuery, useChainQuery } = tokens_api;
 
 function isJunoChain(chainId: chainIDs) {
   switch (chainId) {

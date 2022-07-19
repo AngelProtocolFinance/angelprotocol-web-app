@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Token } from "types/server/aws";
-import { useBalancesQuery } from "services/apes/tokens/tokens";
+import { useChainQuery } from "services/apes/tokens/tokens";
 import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
@@ -99,10 +99,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   )?.providerInfo;
 
   const {
-    data: coinWithBalances = [],
+    data: chain,
     isLoading,
     isFetching,
-  } = useBalancesQuery(
+  } = useChainQuery(
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
