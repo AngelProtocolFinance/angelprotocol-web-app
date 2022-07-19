@@ -1,5 +1,5 @@
 import { ProviderId } from "./types";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -28,21 +28,21 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
-const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
-const lunaTokenWithBalance = { ...lunaToken, balance: 0 };
-const junoTokenWithBalance = { ...junoToken, balance: 0 };
+const ethTokenW = { ...ethereumToken, balance: 0 };
+const lunaTokenW = { ...lunaToken, balance: 0 };
+const junoTokenW = { ...junoToken, balance: 0 };
 export const placeHolderDisplayToken: {
-  [key in ProviderId]: WithBalance;
+  [key in ProviderId]: Token;
 } = {
-  "binance-wallet": ethTokenWithBalance,
-  metamask: ethTokenWithBalance,
-  "xdefi-wallet": lunaTokenWithBalance,
-  "xdefi-evm": ethTokenWithBalance,
-  station: lunaTokenWithBalance,
-  "leap-wallet": lunaTokenWithBalance,
-  "falcon-wallet": lunaTokenWithBalance,
-  "bitkeep-wallet": lunaTokenWithBalance,
-  keplr: junoTokenWithBalance,
-  walletconnect: junoTokenWithBalance,
-  torus: lunaTokenWithBalance,
+  "binance-wallet": ethTokenW,
+  metamask: ethTokenW,
+  "xdefi-wallet": lunaTokenW,
+  "xdefi-evm": ethTokenW,
+  station: lunaTokenW,
+  "leap-wallet": lunaTokenW,
+  "falcon-wallet": lunaTokenW,
+  "bitkeep-wallet": lunaTokenW,
+  keplr: junoTokenW,
+  walletconnect: junoTokenW,
+  torus: lunaTokenW,
 };

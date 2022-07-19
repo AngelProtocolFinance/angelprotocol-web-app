@@ -1,7 +1,7 @@
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 
 export default function getTokenBalance(
-  tokenBalances: WithBalance[],
+  tokenBalances: Token[],
   symbol: string
 ): number {
   return tokenBalances.find((token) => token.symbol === symbol)?.balance || 0;

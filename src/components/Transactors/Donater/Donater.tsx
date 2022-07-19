@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
@@ -30,7 +30,7 @@ export default function Donater(
   );
 }
 
-function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {
+function DonateContext(props: DonaterProps & { tokens: Token[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",

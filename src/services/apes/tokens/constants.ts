@@ -1,11 +1,11 @@
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
 import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import { IS_TEST } from "constants/env";
 
-export const placeHolderToken: WithBalance = {
+export const placeHolderToken: Token = {
   symbol: "JUNO",
   logo: ethLogo,
   decimals: 18,
@@ -15,7 +15,7 @@ export const placeHolderToken: WithBalance = {
   token_id: "",
 };
 
-export const unSupportedToken: WithBalance = {
+export const unSupportedToken: Token = {
   symbol: "XX",
   logo: coinIcon,
   decimals: 18,
@@ -25,7 +25,7 @@ export const unSupportedToken: WithBalance = {
   token_id: "",
 };
 
-export const ethereumToken: WithBalance = {
+export const ethereumToken: Token = {
   symbol: "ETH",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",
   decimals: 18,
@@ -35,7 +35,7 @@ export const ethereumToken: WithBalance = {
   token_id: "",
 };
 
-export const lunaToken: WithBalance = {
+export const lunaToken: Token = {
   symbol: "LUNA",
   logo: lunaLogo,
   decimals: 6,
@@ -45,7 +45,7 @@ export const lunaToken: WithBalance = {
   token_id: "",
 };
 
-export const junoToken: WithBalance = IS_TEST
+export const junoToken: Token = IS_TEST
   ? {
       symbol: "JUNOX",
       logo: junoLogo,
