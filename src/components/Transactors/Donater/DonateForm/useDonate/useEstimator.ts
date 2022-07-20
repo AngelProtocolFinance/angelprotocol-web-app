@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { TxOptions } from "slices/transaction/types";
-import { Token } from "types/server/aws";
-import {
-  WalletState,
-  useGetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
   setFee,

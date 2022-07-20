@@ -85,7 +85,6 @@ export type Receiver =
 
 export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
-/** apes/token-list */
 export type Token = {
   approved: boolean; // true
   balance: number; // 0
@@ -96,7 +95,7 @@ export type Token = {
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
 };
 
-// This `Chain` type is designed in a way that makes creating a separate `WalletProvider` type unnecessary
+// APES chain type returned by /chain/{chain_id}
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
   chain_id: string;
