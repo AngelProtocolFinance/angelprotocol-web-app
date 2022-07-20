@@ -3,7 +3,7 @@ import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   SendCosmosTxArgs,
-  StageUpdator,
+  StageUpdater,
   TxOptions,
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
@@ -20,7 +20,7 @@ type _SenderArgs = SendCosmosTxArgs & {
 export const sendEndowmentReviewTx = createAsyncThunk(
   `${transactionSlice.name}/sendEndowmentReviewCosmosTx`,
   async (args: _SenderArgs, { dispatch }) => {
-    const updateState: StageUpdator = (update) => {
+    const updateState: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   SendCosmosTxArgs,
-  StageUpdator,
+  StageUpdater,
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
@@ -13,7 +13,7 @@ import transactionSlice, { setStage } from "../transactionSlice";
 export const sendCosmosTx = createAsyncThunk(
   `${transactionSlice.name}/sendCosmosTx`,
   async (args: SendCosmosTxArgs, { dispatch }) => {
-    const updateStage: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
 

@@ -89,7 +89,7 @@ export type Stage =
   | BroadcastStage
   | SuccessStage
   | ErrorStage;
-export type StageUpdator = (update: Stage) => void;
+export type StageUpdater = (update: Stage) => void;
 
 type BaseArgs = {
   tagPayloads?: TagPayloads;

@@ -6,7 +6,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
 import {
   LogApplicationUpdateError,
@@ -16,7 +16,7 @@ import {
   WrongNetworkError,
 } from "errors/errors";
 
-export default function handleWalletError(error: any, handler: StageUpdator) {
+export default function handleWalletError(error: any, handler: StageUpdater) {
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof WalletDisconnectError) {

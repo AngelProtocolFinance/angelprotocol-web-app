@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
@@ -13,7 +13,7 @@ export default function useRequestReceipt() {
   } = useFormContext<RV>();
   const [submitRequest] = useRequestReceiptMutation();
 
-  const updateStage: StageUpdator = (update) => {
+  const updateStage: StageUpdater = (update) => {
     dispatch(setStage(update));
   };
 

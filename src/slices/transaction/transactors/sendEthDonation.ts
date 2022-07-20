@@ -5,7 +5,7 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
@@ -24,7 +24,7 @@ type EthDonateArgs = {
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
   async (args: EthDonateArgs, { dispatch }) => {
-    const updateStage: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
 

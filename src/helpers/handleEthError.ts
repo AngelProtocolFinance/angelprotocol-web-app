@@ -1,7 +1,7 @@
 import { errors } from "ethers";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 
-export default function handleEthError(error: any, handler: StageUpdator) {
+export default function handleEthError(error: any, handler: StageUpdater) {
   switch (error?.code) {
     //https://eips.ethereum.org/EIPS/eip-1193#provider-errors
     case 4001:

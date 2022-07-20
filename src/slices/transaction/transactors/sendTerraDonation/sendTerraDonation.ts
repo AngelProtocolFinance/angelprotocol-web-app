@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
@@ -24,7 +24,7 @@ type TerraDonateArgs = {
 export const sendTerraDonation = createAsyncThunk(
   `${transactionSlice.name}/terraDonate`,
   async (args: TerraDonateArgs, { dispatch }) => {
-    const updateStage: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
     try {
