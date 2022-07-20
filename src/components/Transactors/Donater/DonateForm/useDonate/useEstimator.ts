@@ -17,9 +17,9 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
+import { isEvmChainId, isJunoChain, isTerraChain } from "helpers/checkChain";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
-import { isEvmChainId, junoChainId, terraChainId } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
@@ -65,7 +65,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         /** juno native transaction, send or contract interaction */
-        if (wallet.chain.chain_id === junoChainId) {
+        if (isJunoChain(wallet.chain.chain_id)) {
           /** juno native transaction */
           if (wallet.isNativeCoin(selectedToken)) {
             const contract = new Contract(wallet);
@@ -106,7 +106,7 @@ export default function useEstimator() {
         }
 
         /** terra native transaction, send or contract interaction */
-        if (wallet.chain.chain_id === terraChainId) {
+        if (isTerraChain(wallet.chain.chain_id)) {
           const amount = new Decimal(debounced_amount).mul(1e6);
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
