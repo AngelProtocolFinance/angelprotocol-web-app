@@ -20,7 +20,6 @@ export const junoChainId = IS_TEST ? chainIDs.juno_test : chainIDs.juno_main;
 
 export const terraChainId = IS_TEST ? chainIDs.terra_test : chainIDs.terra_main;
 
-export const isEvmChainId = (chainId: string | undefined) =>
-  IS_TEST
-    ? chainId === chainIDs.eth_kovan || chainId === chainIDs.bnb_test
-    : chainId === chainIDs.eth_main || chainId === chainIDs.bnb_main;
+export const ethereumChainId = IS_TEST ? chainIDs.eth_kovan : chainIDs.eth_main;
+
+export const binanceChainId = IS_TEST ? chainIDs.bnb_test : chainIDs.bnb_main;

@@ -3,9 +3,10 @@ import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
+import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
 import { WrongNetworkError } from "errors/errors";
-import { chainIDs, junoChainId } from "constants/chainIDs";
+import { junoChainId } from "constants/chainIDs";
 import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -135,24 +136,3 @@ const tokens_api = apes.injectEndpoints({
 });
 
 export const { useTokensQuery, useChainQuery } = tokens_api;
-
-function isJunoChain(chainId: chainIDs) {
-  switch (chainId) {
-    case chainIDs.juno_main:
-    case chainIDs.juno_test:
-      return true;
-    default:
-      return false;
-  }
-}
-
-function isTerraChain(chainId: chainIDs) {
-  switch (chainId) {
-    case chainIDs.terra_main:
-    case chainIDs.terra_test:
-    case chainIDs.terra_local:
-      return true;
-    default:
-      return false;
-  }
-}
