@@ -1,29 +1,35 @@
 import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
+import { StageUpdater } from "slices/transaction/types";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import useTxUpdator from "slices/transaction/updators";
+import { useSetter } from "store/accessors";
+import { setStage } from "slices/transaction/transactionSlice";
 
 export default function useRequestReceipt() {
-  const { updateTx } = useTxUpdator();
+  const dispatch = useSetter();
   const {
     getValues,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<RV>();
   const [submitRequest] = useRequestReceiptMutation();
 
+  const updateStage: StageUpdater = (update) => {
+    dispatch(setStage(update));
+  };
+
   const requestReceipt = async (data: RV) => {
     const { transactionId, ...kycData } = data;
     const prevTxDetails = getValues("prevTx");
     if (!prevTxDetails) {
-      updateTx({ step: "initial", kycData: kycData });
+      updateStage({ step: "initial", kycData: kycData });
       return;
     }
     const { chainId, txHash } = prevTxDetails;
-    updateTx({ step: "submit", message: "Submitting receipt request" });
+    updateStage({ step: "submit", message: "Submitting receipt request" });
     const response = await submitRequest(data);
 
     if ("error" in response) {
-      updateTx({
+      updateStage({
         step: "error",
         message: `Error processing your receipt`,
         txHash,
@@ -31,7 +37,7 @@ export default function useRequestReceipt() {
       });
       return;
     }
-    updateTx({
+    updateStage({
       step: "success",
       message: `Your receipt will be sent to your email.`,
       txHash,

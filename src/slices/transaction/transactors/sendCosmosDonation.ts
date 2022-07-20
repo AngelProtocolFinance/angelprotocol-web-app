@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { StageUpdator, TxOptions } from "slices/transaction/types";
+import { StageUpdater, TxOptions } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
@@ -22,7 +22,7 @@ type JunoDonateArgs = {
 export const sendCosmosDonation = createAsyncThunk(
   `${transactionSlice.name}/junoDonate`,
   async (args: JunoDonateArgs, { dispatch }) => {
-    const updateStage: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
     try {

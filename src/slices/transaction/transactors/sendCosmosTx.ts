@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   SendCosmosTxArgs,
-  StageUpdator,
+  StageUpdater,
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
@@ -13,7 +13,7 @@ import transactionSlice, { setStage } from "../transactionSlice";
 export const sendCosmosTx = createAsyncThunk(
   `${transactionSlice.name}/sendCosmosTx`,
   async (args: SendCosmosTxArgs, { dispatch }) => {
-    const updateTx: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
 
@@ -21,7 +21,7 @@ export const sendCosmosTx = createAsyncThunk(
       if (!args.wallet) {
         throw new WalletDisconnectError();
       }
-      updateTx({ step: "submit", message: "Submitting transaction..." });
+      updateStage({ step: "submit", message: "Submitting transaction..." });
       const contract = new Contract(args.wallet);
       let tx: TxOptions;
       if (args.tx) {
@@ -31,7 +31,7 @@ export const sendCosmosTx = createAsyncThunk(
         const { fee, feeNum } = await contract.estimateFee(args.msgs);
 
         if (feeNum > args.wallet.displayCoin.balance) {
-          updateTx({
+          updateStage({
             step: "error",
             message: `Not enough balance to pay for fees`,
           });
@@ -43,7 +43,7 @@ export const sendCosmosTx = createAsyncThunk(
       const response = await contract.signAndBroadcast(tx);
 
       if (!response.code) {
-        updateTx({
+        updateStage({
           step: "success",
           message: args.successMessage || "Transaction succesful!",
           txHash: response.transactionHash,
@@ -57,7 +57,7 @@ export const sendCosmosTx = createAsyncThunk(
           dispatch(tagPayload);
         }
       } else {
-        updateTx({
+        updateStage({
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
@@ -66,7 +66,7 @@ export const sendCosmosTx = createAsyncThunk(
       }
     } catch (err) {
       console.log(err);
-      handleWalletError(err, updateTx);
+      handleWalletError(err, updateStage);
     }
   }
 );

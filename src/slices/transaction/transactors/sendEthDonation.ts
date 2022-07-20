@@ -5,7 +5,7 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { StageUpdator } from "slices/transaction/types";
+import { StageUpdater } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
@@ -24,13 +24,13 @@ type EthDonateArgs = {
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
   async (args: EthDonateArgs, { dispatch }) => {
-    const updateTx: StageUpdator = (update) => {
+    const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
 
     try {
       if (!args.wallet) throw new WalletDisconnectError();
-      updateTx({ step: "submit", message: "Submitting transaction.." });
+      updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(
         //wallet is connected to send this tx
@@ -55,7 +55,7 @@ export const sendEthDonation = createAsyncThunk(
         response = await signer.sendTransaction(args.tx);
       }
 
-      updateTx({ step: "submit", message: "Saving donation info.." });
+      updateStage({ step: "submit", message: "Saving donation info.." });
       const { receiver, token, amount, split_liq } = args.donateValues;
       const receipient: Receiver =
         typeof receiver === "string"
@@ -74,7 +74,7 @@ export const sendEthDonation = createAsyncThunk(
           walletAddress,
         });
       }
-      updateTx({
+      updateStage({
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
@@ -83,7 +83,7 @@ export const sendEthDonation = createAsyncThunk(
       });
     } catch (error) {
       console.error(error);
-      handleEthError(error, updateTx);
+      handleEthError(error, updateStage);
     }
   }
 );
