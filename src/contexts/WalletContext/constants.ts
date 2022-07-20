@@ -40,5 +40,5 @@ export const placeholderChain: Chain = {
   network_type: "mainnet",
   rpc_url: "https://rpc-token.placeholder.com",
   tokens: [],
-  type: "placeholder-native",
+  type: "juno-native",
 };
