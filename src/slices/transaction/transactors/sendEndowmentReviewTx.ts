@@ -20,7 +20,7 @@ type _SenderArgs = SendCosmosTxArgs & {
 export const sendEndowmentReviewTx = createAsyncThunk(
   `${transactionSlice.name}/sendEndowmentReviewCosmosTx`,
   async (args: _SenderArgs, { dispatch }) => {
-    const updateTx: StageUpdator = (update) => {
+    const updateState: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
@@ -29,7 +29,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         throw new WalletDisconnectError();
       }
 
-      updateTx({ step: "submit", message: "Submitting transaction..." });
+      updateState({ step: "submit", message: "Submitting transaction..." });
 
       const contract = new Contract(args.wallet);
       let tx: TxOptions;
@@ -41,7 +41,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         const { fee, feeNum } = await contract.estimateFee(args.msgs);
 
         if (feeNum > args.wallet.displayCoin.balance) {
-          updateTx({
+          updateState({
             step: "error",
             message: `Not enough balance to pay for fees`,
           });
@@ -52,7 +52,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
       const response = await contract.signAndBroadcast(tx);
 
-      updateTx({
+      updateState({
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
@@ -61,7 +61,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
       if (isDeliverTxSuccess(response)) {
         if (!response.code) {
-          updateTx({
+          updateState({
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
@@ -90,7 +90,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             dispatch(tagPayload);
           }
         } else {
-          updateTx({
+          updateState({
             step: "error",
             message: "Transaction failed",
             txHash: response.transactionHash,
@@ -98,7 +98,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           });
         }
       } else {
-        updateTx({
+        updateState({
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
@@ -106,7 +106,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         });
       }
     } catch (err) {
-      handleWalletError(err, updateTx);
+      handleWalletError(err, updateState);
     }
   }
 );
