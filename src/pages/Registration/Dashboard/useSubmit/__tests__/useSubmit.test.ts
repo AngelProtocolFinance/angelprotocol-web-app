@@ -1,7 +1,7 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity } from "types/server/aws";
+import { Charity, Token } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
@@ -14,6 +14,8 @@ const WALLET: WalletState = {
   address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
   chain: placeholderChain,
   providerId: "keplr",
+  isNativeCoin: (token: Token) =>
+    token.token_id === placeholderChain.native_currency.token_id,
 };
 
 const mockShowModal = jest.fn();
