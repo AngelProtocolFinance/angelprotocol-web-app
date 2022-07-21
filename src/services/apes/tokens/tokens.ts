@@ -31,9 +31,7 @@ const tokens_api = apes.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const { address, chainId } = args.providerInfo;
-          const chainRes = await fetch(
-            `${apes_endpoint}/chain/${args.providerInfo.chainId}`
-          );
+          const chainRes = await fetch(`${apes_endpoint}/chain/${chainId}`);
 
           const chain: Chain | { message: string } = await chainRes.json();
 
