@@ -23,5 +23,7 @@ export default async function estimateTerraFee(
 }
 
 function extractFeeNum(fee: Fee): number {
+  // needed to wrap with `Decimal` because the plain terra.js` operations
+  // would usually floor the fee amount to 0.0 after `.div(1e6)`
   return new Decimal(fee.amount.get(denoms.uluna)!.amount).div(1e6).toNumber();
 }
