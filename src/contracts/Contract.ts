@@ -17,7 +17,7 @@ import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { TxResultFail } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
-import { GAS_PRICE, MAIN_DENOM } from "constants/currency";
+import { GAS_PRICE } from "constants/currency";
 
 export default class Contract {
   contractAddress: string;
@@ -49,7 +49,8 @@ export default class Contract {
       msgs,
       undefined
     );
-    return createFeeResult(gasEstimation);
+    const denom = this.wallet!.chain.native_currency.token_id;
+    return createFeeResult(gasEstimation, denom);
   }
 
   async signAndBroadcast(tx: TxOptions) {
@@ -97,7 +98,7 @@ export default class Contract {
         toAddress: recipient,
         amount: [
           {
-            denom: MAIN_DENOM,
+            denom: this.wallet!.chain.native_currency.token_id,
             amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
           },
         ],
@@ -106,7 +107,10 @@ export default class Contract {
   }
 }
 
-function createFeeResult(gasEstimation: number): {
+function createFeeResult(
+  gasEstimation: number,
+  denom: string
+): {
   fee: StdFee;
   feeNum: number;
 } {
@@ -116,12 +120,12 @@ function createFeeResult(gasEstimation: number): {
 
   return {
     fee,
-    feeNum: extractFeeNum(fee),
+    feeNum: extractFeeNum(fee, denom),
   };
 }
 
-function extractFeeNum(fee: StdFee): number {
-  return new Decimal(fee.amount.find((a) => a.denom === MAIN_DENOM)!.amount)
+function extractFeeNum(fee: StdFee, denom: string): number {
+  return new Decimal(fee.amount.find((a) => a.denom === denom)!.amount)
     .div(1e6)
     .toNumber();
 }
