@@ -1,13 +1,14 @@
 import { TxInfo } from "@terra-money/terra.js";
 import { Timeout } from "@terra-money/wallet-provider";
-import { terraLcdUrl } from "constants/urls";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 
 export async function pollTerraTxInfo(
+  wallet: WalletState,
   txhash: string,
   retries: number,
   interval: number
 ): Promise<TxInfo> {
-  const req = new Request(`${terraLcdUrl}/txs/${txhash}`, {
+  const req = new Request(`${wallet.chain.lcd_url}/txs/${txhash}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -20,7 +21,7 @@ export async function pollTerraTxInfo(
       return res.json() as unknown as TxInfo;
     }
     if (retries > 0 || res.status === 400) {
-      return pollTerraTxInfo(txhash, retries - 1, interval);
+      return pollTerraTxInfo(wallet, txhash, retries - 1, interval);
     }
     throw new Timeout("Transaction timeout");
   });

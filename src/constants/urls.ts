@@ -1,10 +1,5 @@
 import { IconTypes } from "components/Icon";
-import { chainIDs } from "./chainIDs";
 import { IS_TEST } from "./env";
-
-type URL_GROUP = {
-  [index: string]: string;
-};
 
 export const aws_endpoint =
   "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com";
@@ -13,34 +8,9 @@ export const apes_endpoint =
 
 export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
-//terra urls
-export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_main]: "https://phoenix-lcd.terra.dev",
-  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
-  [chainIDs.terra_local]: "http://localhost:3060",
-};
-
-export const terraLcdUrl = IS_TEST
-  ? terra_lcds[chainIDs.terra_test]
-  : terra_lcds[chainIDs.terra_main];
-
-export const juno_lcds: URL_GROUP = {
-  [chainIDs.juno_main]: "https://lcd-juno.itastakers.com",
-  [chainIDs.juno_test]: "https://lcd.uni.juno.deuslabs.fi",
-};
-
-export const juno_rpcs: URL_GROUP = {
-  [chainIDs.juno_main]: "https://rpc-juno.itastakers.com",
-  [chainIDs.juno_test]: "https://rpc.uni.juno.deuslabs.fi",
-};
-
 export const junoLcdUrl = IS_TEST
-  ? juno_lcds[chainIDs.juno_test]
-  : juno_lcds[chainIDs.juno_main];
-
-export const junoRpcUrl = IS_TEST
-  ? juno_rpcs[chainIDs.juno_test]
-  : juno_rpcs[chainIDs.juno_main];
+  ? "https://lcd.uni.juno.deuslabs.fi"
+  : "https://lcd-juno.itastakers.com";
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).pdf";

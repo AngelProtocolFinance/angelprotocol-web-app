@@ -3,7 +3,6 @@ import { Dwindow } from "types/ethereum";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
-import { junoRpcUrl } from "constants/urls";
 
 export default async function getCosmosClient(
   wallet: WalletState | undefined
@@ -18,7 +17,7 @@ export default async function getCosmosClient(
     wallet.chain.chain_id
   );
   const client = await SigningCosmWasmClient.connectWithSigner(
-    junoRpcUrl,
+    wallet.chain.rpc_url,
     signer
   );
   return client;
