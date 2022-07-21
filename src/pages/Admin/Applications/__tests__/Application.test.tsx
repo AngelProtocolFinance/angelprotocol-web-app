@@ -9,13 +9,12 @@ import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";
 import { chainIDs } from "constants/chainIDs";
-import { terra_lcds } from "constants/urls";
 import Applications from "../Applications";
 
 const testnet: NetworkInfo = {
   name: "testnet",
   chainID: chainIDs.terra_test,
-  lcd: terra_lcds[chainIDs.terra_test],
+  lcd: "https://pisco-lcd.terra.dev",
   walletconnectID: 0,
 };
 

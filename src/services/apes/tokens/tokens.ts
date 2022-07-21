@@ -7,7 +7,7 @@ import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
 import { WrongNetworkError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
-import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
+import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 
@@ -44,7 +44,7 @@ const tokens_api = apes.injectEndpoints({
           // fetch balances for juno
           if (isJunoChain(chainId)) {
             const balancesRes = await fetch(
-              junoLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             // returns only positive balances
@@ -70,7 +70,7 @@ const tokens_api = apes.injectEndpoints({
           if (isTerraChain(chainId)) {
             //fetch native terra coins
             const res = await fetch(
-              terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             // returns only positive balances
