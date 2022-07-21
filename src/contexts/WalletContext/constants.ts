@@ -39,6 +39,7 @@ export const placeholderChain: Chain = {
   },
   network_type: "mainnet",
   rpc_url: "https://rpc-token.placeholder.com",
+  lcd_url: "https://lcd-token.placeholder.com",
   tokens: [],
   type: "juno-native",
 };
