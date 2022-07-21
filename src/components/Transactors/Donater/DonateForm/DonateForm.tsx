@@ -4,7 +4,6 @@ import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
 import KYCGuard from "./KYCGuard";
-import NetworkPrompt from "./NetworkPrompt";
 import Terms from "./Terms";
 import useDonate from "./useDonate";
 
@@ -21,7 +20,6 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
-      <NetworkPrompt />
       <Amount />
       <Breakdown />
 
