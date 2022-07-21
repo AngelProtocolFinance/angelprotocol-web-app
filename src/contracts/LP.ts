@@ -4,7 +4,6 @@ import { Simulation } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
-import { MAIN_DENOM } from "constants/currency";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -71,13 +70,17 @@ export default class LP extends Contract {
       .mul(1e6)
       .divToInt(1)
       .toString();
+
+    // we should never allow creating messages without a connected wallet
+    const denom = this.wallet!.chain.native_currency.token_id;
+
     return this.createExecuteContractMsg(
       {
         swap: {
           offer_asset: {
             info: {
               native_token: {
-                denom: MAIN_DENOM,
+                denom,
               },
             },
             amount: ujuno_amount,
@@ -86,7 +89,7 @@ export default class LP extends Contract {
           max_spread,
         },
       },
-      [{ denom: MAIN_DENOM, amount: ujuno_amount }]
+      [{ denom, amount: ujuno_amount }]
     );
   }
 

@@ -15,7 +15,7 @@ import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { MAIN_DENOM, denoms } from "constants/currency";
+import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
@@ -51,7 +51,10 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const junoBalance = getTokenBalance(wallet.coins, MAIN_DENOM);
+        const junoBalance = getTokenBalance(
+          wallet.coins,
+          wallet.chain.native_currency.token_id
+        );
         const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
