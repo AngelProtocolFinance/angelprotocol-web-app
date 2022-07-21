@@ -1,3 +1,4 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
@@ -14,6 +15,7 @@ import useEstimator from "./useEstimator";
 
 export default function useDonate() {
   const { wallet, isLoading } = useGetWallet();
+  const terraWallet = useConnectedWallet(); // sendTerraDonation requires this wallet to send donations
   const { form_loading, form_error, stage } = useGetter(
     (state) => state.transaction
   );
@@ -42,7 +44,7 @@ export default function useDonate() {
       case "terra-native":
         dispatch(
           sendTerraDonation({
-            wallet,
+            wallet: terraWallet,
             tx: terraTx!,
             donateValues: data,
             kycData,
