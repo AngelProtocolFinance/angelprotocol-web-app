@@ -4,11 +4,7 @@ import { IS_TEST } from "./env";
 export const denoms = {
   uluna: "uluna",
   uusd: "uusd",
-  bnb: "bnb",
-  wei: "wei",
   halo: "halo",
-  ujunox: "ujunox",
-  ujuno: "ujuno",
 };
 
 // TODO: uni-3 and juno-1 have diff gas prices for fee display only,
