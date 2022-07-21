@@ -17,7 +17,7 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
-import { isEvmChainId, isJunoChain, isTerraChain } from "helpers/checkChain";
+import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
@@ -82,31 +82,27 @@ export default function useEstimator() {
               return;
             }
             setCosmosTx({ msgs: [msg], fee });
+          } else {
+            const contract = new CW20(wallet, selectedToken.token_id);
+            const msg = contract.createTransferMsg(
+              debounced_amount,
+              ap_wallets.juno
+            );
+            const { fee, feeNum } = await contract.estimateFee([msg]);
+            dispatch(setFee(feeNum));
 
-            return;
+            // not paying in native currency, so just check if there's enough balance for fees
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setCosmosTx({ msgs: [msg], fee });
           }
-
-          const contract = new CW20(wallet, selectedToken.token_id);
-          const msg = contract.createTransferMsg(
-            debounced_amount,
-            ap_wallets.juno
-          );
-          const { fee, feeNum } = await contract.estimateFee([msg]);
-          dispatch(setFee(feeNum));
-
-          // not paying in native currency, so just check if there's enough balance for fees
-          if (feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
-          }
-          setCosmosTx({ msgs: [msg], fee });
-          return;
         }
-
         // terra native transaction, send or contract interaction
-        if (isTerraChain(wallet.chain.chain_id)) {
+        else if (isTerraChain(wallet.chain.chain_id)) {
           const amount = new Decimal(debounced_amount).mul(1e6);
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
@@ -122,9 +118,8 @@ export default function useEstimator() {
           }
           setTerraTx({ msgs: [msg], fee });
         }
-
         // evm transactions
-        if (isEvmChainId(wallet.chain.chain_id)) {
+        else {
           const provider = new ethers.providers.Web3Provider(
             getProvider(wallet.providerId) as any
           );
