@@ -27,8 +27,6 @@ export const denomIcons = {
   ujuno: juno,
 };
 
-export const MAIN_DENOM = IS_TEST ? denoms.ujunox : denoms.ujuno;
-
 // TODO: uni-3 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
 // NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
