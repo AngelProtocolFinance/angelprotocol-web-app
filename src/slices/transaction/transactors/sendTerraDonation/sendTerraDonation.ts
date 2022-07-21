@@ -64,7 +64,12 @@ export const sendTerraDonation = createAsyncThunk(
           chainId: terraChainId,
         });
 
-        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
+        const getTxInfo = pollTerraTxInfo(
+          args.wallet,
+          response.result.txhash,
+          7,
+          1000
+        );
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
