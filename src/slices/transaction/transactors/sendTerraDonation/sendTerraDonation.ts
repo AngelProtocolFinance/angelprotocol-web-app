@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
@@ -12,10 +12,9 @@ import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
-import postTerraTx from "./postTerraTx";
 
 type TerraDonateArgs = {
-  wallet: WalletState | undefined;
+  wallet: ConnectedWallet | undefined;
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -31,7 +30,7 @@ export const sendTerraDonation = createAsyncThunk(
       if (!args.wallet) throw new WalletDisconnectError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const response = await postTerraTx(args.tx);
+      const response = await args.wallet.post(args.tx);
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
@@ -53,7 +52,7 @@ export const sendTerraDonation = createAsyncThunk(
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
-            walletAddress: args.wallet.address,
+            walletAddress: args.wallet.walletAddress,
           });
         }
 
