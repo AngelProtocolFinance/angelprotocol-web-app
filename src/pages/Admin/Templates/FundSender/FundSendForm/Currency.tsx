@@ -1,12 +1,14 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import { denomIcons, denoms } from "constants/currency";
 
-function Currency(props: { currency: FundSendValues["currency"] }) {
+function Currency(props: {
+  currency: FundSendValues["currency"] | string;
+  text: string;
+  icon: string;
+}) {
   const { register, watch } = useFormContext<FundSendValues>();
   const isActive = watch("currency") === props.currency;
-  const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
 
   return (
     <div
@@ -25,12 +27,8 @@ function Currency(props: { currency: FundSendValues["currency"] }) {
         htmlFor={props.currency}
         className="uppercase flex items-center text-sm cursor-pointer"
       >
-        <img
-          src={denomIcons[props.currency]}
-          alt=""
-          className="w-4 h-4 object-contain"
-        />
-        <span className={`ml-0.5`}>{denomText}</span>
+        <img src={props.icon} alt="" className="w-4 h-4 object-contain" />
+        <span className={`ml-0.5`}>{props.text}</span>
       </label>
     </div>
   );
