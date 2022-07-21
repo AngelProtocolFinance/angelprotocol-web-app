@@ -1,14 +1,13 @@
 import { TxInfo } from "@terra-money/terra.js";
-import { Timeout } from "@terra-money/wallet-provider";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { ConnectedWallet, Timeout } from "@terra-money/wallet-provider";
 
 export async function pollTerraTxInfo(
-  wallet: WalletState,
+  wallet: ConnectedWallet,
   txhash: string,
   retries: number,
   interval: number
 ): Promise<TxInfo> {
-  const req = new Request(`${wallet.chain.lcd_url}/txs/${txhash}`, {
+  const req = new Request(`${wallet.network.lcd}/txs/${txhash}`, {
     headers: {
       "Content-Type": "application/json",
     },
