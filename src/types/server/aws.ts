@@ -99,6 +99,7 @@ export type Token = {
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
   chain_id: string;
+  lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   name: string; // Avalanche Fuji Testnet
   native_currency: Token;
   network_type: string;
