@@ -64,9 +64,8 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        /** juno native transaction, send or contract interaction */
+        // juno transaction, send or contract interaction
         if (isJunoChain(wallet.chain.chain_id)) {
-          /** juno native transaction */
           if (wallet.isNativeCoin(selectedToken)) {
             const contract = new Contract(wallet);
             const msg = contract.createTransferNativeMsg(
@@ -103,9 +102,10 @@ export default function useEstimator() {
             return;
           }
           setCosmosTx({ msgs: [msg], fee });
+          return;
         }
 
-        /** terra native transaction, send or contract interaction */
+        // terra native transaction, send or contract interaction
         if (isTerraChain(wallet.chain.chain_id)) {
           const amount = new Decimal(debounced_amount).mul(1e6);
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
@@ -123,7 +123,7 @@ export default function useEstimator() {
           setTerraTx({ msgs: [msg], fee });
         }
 
-        /** evm transactions */
+        // evm transactions
         if (isEvmChainId(wallet.chain.chain_id)) {
           const provider = new ethers.providers.Web3Provider(
             getProvider(wallet.providerId) as any
