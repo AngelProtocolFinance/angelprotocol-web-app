@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { Coin as TerraCoin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
@@ -11,8 +10,7 @@ import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 
-type TerraBalanceRes = { balances: TerraCoin.Data[] };
-type JunoBalance = { balances: Coin[] };
+type WalletBalance = { balances: Coin[] };
 
 const tokens_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -39,49 +37,23 @@ const tokens_api = apes.injectEndpoints({
             throw new WrongNetworkError("Juno", junoChainId);
           }
 
-          // fetch balances for juno
-          if (isJunoChain(chainId)) {
+          // fetch balances for juno or terra
+          if (isJunoChain(chainId) || isTerraChain(chainId)) {
             const balancesRes = await fetch(
               chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             // returns only positive balances
-            const junoBalance: JunoBalance = await balancesRes.json();
+            const walletBalance: WalletBalance = await balancesRes.json();
 
-            //don't display coins with no assets
+            // don't display coins with no assets
             [chain.native_currency, ...chain.tokens].forEach((coin) => {
-              const balance = junoBalance.balances.find(
+              const coinBalance = walletBalance.balances.find(
                 (x) => x.denom === coin.token_id
               );
-              if (balance) {
+              if (coinBalance) {
                 coin.balance = +utils.formatUnits(
-                  balance.amount,
-                  coin.decimals
-                );
-              }
-            });
-
-            return { data: chain };
-          }
-
-          /**fetch balances for terra  */
-          if (isTerraChain(chainId)) {
-            //fetch native terra coins
-            const res = await fetch(
-              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
-            );
-
-            // returns only positive balances
-            const terraBalance: TerraBalanceRes = await res.json();
-
-            //don't display coins with no assets
-            [chain.native_currency, ...chain.tokens].forEach((coin) => {
-              const balance = terraBalance.balances.find(
-                (x) => x.denom === coin.token_id
-              );
-              if (balance) {
-                coin.balance = +utils.formatUnits(
-                  balance.amount,
+                  coinBalance.amount,
                   coin.decimals
                 );
               }
