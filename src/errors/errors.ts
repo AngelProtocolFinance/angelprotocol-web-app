@@ -38,11 +38,11 @@ export class WrongNetworkError extends Error {
   }
 }
 
-export class UnimplementedNetworkError extends Error {
+export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
     super();
-    this.name = "UnimplementedNetworkError";
-    this.message = `Network ${chainId} not implemented`;
+    this.name = "UnsupportedNetworkError";
+    this.message = `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`;
   }
 }
 

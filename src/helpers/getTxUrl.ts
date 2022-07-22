@@ -1,4 +1,4 @@
-import { UnimplementedNetworkError } from "errors/errors";
+import { UnsupportedNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 
 type URL_GROUP = { [index: string]: string };
@@ -17,7 +17,7 @@ const blockExplorers: URL_GROUP = {
 export default function getTxUrl(chainId: string, txhash: string) {
   const blockExplorer = blockExplorers[chainId];
   if (!blockExplorer) {
-    throw new UnimplementedNetworkError(chainId);
+    throw new UnsupportedNetworkError(chainId);
   }
 
   return `${blockExplorer}/${txhash}`;
