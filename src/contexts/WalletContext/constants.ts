@@ -27,7 +27,7 @@ export const providerIcons: { [key in ProviderId]: string } = {
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
   chain_id: "juno-1",
-  name: "Token",
+  chain_name: "Token",
   native_currency: {
     symbol: "TOKEN",
     logo: tokenLogo,

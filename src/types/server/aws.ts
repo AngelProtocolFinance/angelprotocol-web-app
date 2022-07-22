@@ -87,7 +87,7 @@ export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
 export type Token = {
   approved: boolean; // true
-  balance: number; // 0
+  balance: number; // 0 --> not returned by APES but dynamically calculated and set
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   name: string; // "Stader LunaX Token"
@@ -100,7 +100,7 @@ export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
   chain_id: string;
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
-  name: string; // Avalanche Fuji Testnet
+  chain_name: string; // Avalanche Fuji Testnet
   native_currency: Token;
   network_type: string;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
