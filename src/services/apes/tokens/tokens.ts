@@ -4,7 +4,7 @@ import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
-import { WrongNetworkError } from "errors/errors";
+import { UnsupportedNetworkError, WrongNetworkError } from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
@@ -34,7 +34,7 @@ const tokens_api = apes.injectEndpoints({
           const chain: Chain | { message: string } = await chainRes.json();
 
           if (!chain || "message" in chain) {
-            throw new WrongNetworkError("Juno", junoChainId);
+            throw new UnsupportedNetworkError(chainId);
           }
 
           // fetch balances for juno or terra
