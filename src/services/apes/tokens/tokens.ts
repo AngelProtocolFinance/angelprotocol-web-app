@@ -64,7 +64,7 @@ const tokens_api = apes.injectEndpoints({
           /**fetch balances for ethereum */
           const jsonProvider = new ethers.providers.JsonRpcProvider(
             chain.rpc_url,
-            { chainId: +chainId, name: chain.name }
+            { chainId: +chainId, name: chain.chain_name }
           );
           const queryResults = await jsonProvider.getBalance(address);
 
