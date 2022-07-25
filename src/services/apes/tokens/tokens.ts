@@ -79,13 +79,12 @@ const tokens_api = apes.injectEndpoints({
             chain.tokens.map((token) => token.token_id)
           );
 
-          chain.tokens.forEach((token) => {
-            const erc20Token = erc20Holdings.find(
-              (x) => x.contractAddress === token.token_id
+          erc20Holdings.forEach((erc20) => {
+            const token = chain.tokens.find(
+              (x) => x.token_id === erc20.contractAddress
             );
-            if (erc20Token) {
-              token.balance = +erc20Token.balance;
-            }
+            // token exists because getERC20Holdings returns balances only for chain.tokens
+            token!.balance = +erc20.balance;
           });
 
           return { data: chain };
