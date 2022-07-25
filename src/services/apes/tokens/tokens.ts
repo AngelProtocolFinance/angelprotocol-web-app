@@ -1,10 +1,12 @@
 import { Coin } from "@cosmjs/proto-signing";
+import Decimal from "decimal.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
 import getCosmosClient from "helpers/getCosmosClient";
+import getTerraClient from "helpers/getTerraClient";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
@@ -62,19 +64,23 @@ const tokens_api = apes.injectEndpoints({
           // fetch balances for terra
           if (isTerraChain(chainId)) {
             // returns only positive balances
-            const balances = await getNativeCosmosBalances(chain, address);
+            const nativeBalances = await getNativeCosmosBalances(
+              chain,
+              address
+            );
 
-            // don't display coins with no assets
-            [chain.native_currency, ...chain.tokens].forEach((coin) => {
-              const coinBalance = balances.find(
-                (x) => x.denom === coin.token_id
+            const cw20Balances = await getTerraCW20Balances(chain, address);
+
+            const allBalances = nativeBalances.concat(cw20Balances);
+
+            const allCoins = [chain.native_currency, ...chain.tokens];
+
+            allBalances.forEach((balance) => {
+              const coin = allCoins.find((x) => x.token_id === balance.denom);
+              coin!.balance = +utils.formatUnits(
+                balance.amount,
+                coin!.decimals
               );
-              if (coinBalance) {
-                coin.balance = +utils.formatUnits(
-                  coinBalance.amount,
-                  coin.decimals
-                );
-              }
             });
 
             return { data: chain };
@@ -124,17 +130,6 @@ const tokens_api = apes.injectEndpoints({
 
 export const { useTokensQuery, useChainQuery } = tokens_api;
 
-async function getJunoCW20Balances(chain: Chain, address: string) {
-  const junoClient = await getCosmosClient(chain.chain_id, chain.rpc_url);
-
-  const cw20BalancePromises = chain.tokens
-    .filter((x) => x.type === "cw20")
-    .map((x) => junoClient.getBalance(address, x.token_id));
-
-  const cw20Balances = await Promise.all(cw20BalancePromises);
-  return cw20Balances;
-}
-
 /**
  * @param chain Chain
  * @param address wallet address
@@ -154,4 +149,41 @@ async function getNativeCosmosBalances(
   return balances.filter(
     (x) => !!chain.tokens.find((token) => token.token_id === x.denom)
   );
+}
+
+async function getJunoCW20Balances(
+  chain: Chain,
+  walletAddress: string
+): Promise<Coin[]> {
+  const junoClient = await getCosmosClient(chain.chain_id, chain.rpc_url);
+
+  const cw20BalancePromises = chain.tokens
+    .filter((x) => x.type === "cw20")
+    .map((x) => junoClient.getBalance(walletAddress, x.token_id));
+
+  const cw20Balances = await Promise.all(cw20BalancePromises);
+  return cw20Balances;
+}
+
+async function getTerraCW20Balances(
+  chain: Chain,
+  walletAddress: string
+): Promise<Coin[]> {
+  const terraClient = getTerraClient(chain.chain_id, chain.rpc_url);
+
+  const cw20BalancePromises = chain.tokens
+    .filter((x) => x.type === "cw20")
+    .map((x) =>
+      terraClient.wasm
+        .contractQuery<{ balance: string }>(x.token_id, {
+          balance: { address: walletAddress },
+        })
+        .then((data) => ({
+          denom: x.token_id,
+          amount: data.balance,
+        }))
+    );
+
+  const cw20Balances = await Promise.all(cw20BalancePromises);
+  return cw20Balances;
 }
