@@ -36,8 +36,33 @@ const tokens_api = apes.injectEndpoints({
             throw new UnsupportedNetworkError(chainId);
           }
 
-          // fetch balances for juno or terra
-          if (isJunoChain(chainId) || isTerraChain(chainId)) {
+          // fetch balances for juno
+          if (isJunoChain(chainId)) {
+            const balancesRes = await fetch(
+              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+            );
+
+            // returns only positive balances
+            const walletBalance: WalletBalance = await balancesRes.json();
+
+            // don't display coins with no assets
+            [chain.native_currency, ...chain.tokens].forEach((coin) => {
+              const coinBalance = walletBalance.balances.find(
+                (x) => x.denom === coin.token_id
+              );
+              if (coinBalance) {
+                coin.balance = +utils.formatUnits(
+                  coinBalance.amount,
+                  coin.decimals
+                );
+              }
+            });
+
+            return { data: chain };
+          }
+
+          // fetch balances for terra
+          if (isTerraChain(chainId)) {
             const balancesRes = await fetch(
               chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
             );
