@@ -37,7 +37,8 @@ export default class Contract {
   //for on-demand query, use RTK where possible
   async query<T>(message: Record<string, unknown>) {
     this.verifyWallet();
-    const client = await getCosmosClient(this.wallet);
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getCosmosClient(chain_id, rpc_url);
     const jsonObject = await client.queryContractSmart(
       this.contractAddress,
       message
@@ -49,7 +50,8 @@ export default class Contract {
     msgs: readonly EncodeObject[]
   ): Promise<{ fee: StdFee; feeNum: number }> {
     this.verifyWallet();
-    const client = await getCosmosClient(this.wallet);
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getCosmosClient(chain_id, rpc_url);
     const gasEstimation = await client.simulate(
       this.walletAddress,
       msgs,
@@ -61,7 +63,8 @@ export default class Contract {
 
   async signAndBroadcast(tx: TxOptions) {
     this.verifyWallet();
-    const client = await getCosmosClient(this.wallet);
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getCosmosClient(chain_id, rpc_url);
     return validateTransactionSuccess(
       await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee)
     );
