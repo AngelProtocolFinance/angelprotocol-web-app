@@ -119,7 +119,7 @@ const tokens_api = apes.injectEndpoints({
             error: {
               status: 500,
               statusText: "Query error",
-              data: "Failed to get ethereum balances",
+              data: "Failed to get balances",
             },
           };
         }
