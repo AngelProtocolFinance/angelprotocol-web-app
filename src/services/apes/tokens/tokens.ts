@@ -4,12 +4,11 @@ import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
+import getCosmosClient from "helpers/getCosmosClient";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-
-type WalletBalance = { balances: Coin[] };
 
 const tokens_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -38,24 +37,23 @@ const tokens_api = apes.injectEndpoints({
 
           // fetch balances for juno
           if (isJunoChain(chainId)) {
-            const balancesRes = await fetch(
-              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+            const nativeBalances = await getNativeCosmosBalances(
+              chain,
+              address
             );
 
-            // returns only positive balances
-            const walletBalance: WalletBalance = await balancesRes.json();
+            const cw20Balances = await getJunoCW20Balances(chain, address);
 
-            // don't display coins with no assets
-            [chain.native_currency, ...chain.tokens].forEach((coin) => {
-              const coinBalance = walletBalance.balances.find(
-                (x) => x.denom === coin.token_id
+            const allBalances = nativeBalances.concat(cw20Balances);
+
+            const allCoins = [chain.native_currency, ...chain.tokens];
+
+            allBalances.forEach((balance) => {
+              const coin = allCoins.find((x) => x.token_id === balance.denom);
+              coin!.balance = +utils.formatUnits(
+                balance.amount,
+                coin!.decimals
               );
-              if (coinBalance) {
-                coin.balance = +utils.formatUnits(
-                  coinBalance.amount,
-                  coin.decimals
-                );
-              }
             });
 
             return { data: chain };
@@ -63,16 +61,12 @@ const tokens_api = apes.injectEndpoints({
 
           // fetch balances for terra
           if (isTerraChain(chainId)) {
-            const balancesRes = await fetch(
-              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
-            );
-
             // returns only positive balances
-            const walletBalance: WalletBalance = await balancesRes.json();
+            const balances = await getNativeCosmosBalances(chain, address);
 
             // don't display coins with no assets
             [chain.native_currency, ...chain.tokens].forEach((coin) => {
-              const coinBalance = walletBalance.balances.find(
+              const coinBalance = balances.find(
                 (x) => x.denom === coin.token_id
               );
               if (coinBalance) {
@@ -129,3 +123,35 @@ const tokens_api = apes.injectEndpoints({
 });
 
 export const { useTokensQuery, useChainQuery } = tokens_api;
+
+async function getJunoCW20Balances(chain: Chain, address: string) {
+  const junoClient = await getCosmosClient(chain.chain_id, chain.rpc_url);
+
+  const cw20BalancePromises = chain.tokens
+    .filter((x) => x.type === "cw20")
+    .map((x) => junoClient.getBalance(address, x.token_id));
+
+  const cw20Balances = await Promise.all(cw20BalancePromises);
+  return cw20Balances;
+}
+
+/**
+ * @param chain Chain
+ * @param address wallet address
+ * @returns non-zero native balances of coins/tokens approved for donation
+ */
+async function getNativeCosmosBalances(
+  chain: Chain,
+  address: string
+): Promise<Coin[]> {
+  const balancesRes = await fetch(
+    chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+  );
+
+  // returns only positive balances
+  const { balances }: { balances: Coin[] } = await balancesRes.json();
+
+  return balances.filter(
+    (x) => !!chain.tokens.find((token) => token.token_id === x.denom)
+  );
+}
