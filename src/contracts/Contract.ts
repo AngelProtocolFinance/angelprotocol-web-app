@@ -15,7 +15,11 @@ import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
-import { TxResultFail } from "errors/errors";
+import {
+  TxResultFail,
+  WalletDisconnectError,
+  WrongNetworkError,
+} from "errors/errors";
 import { junoChainId } from "constants/chainIDs";
 import { GAS_PRICE } from "constants/currency";
 
@@ -32,6 +36,7 @@ export default class Contract {
 
   //for on-demand query, use RTK where possible
   async query<T>(message: Record<string, unknown>) {
+    this.verifyWallet();
     const client = await getCosmosClient(this.wallet);
     const jsonObject = await client.queryContractSmart(
       this.contractAddress,
@@ -43,6 +48,7 @@ export default class Contract {
   async estimateFee(
     msgs: readonly EncodeObject[]
   ): Promise<{ fee: StdFee; feeNum: number }> {
+    this.verifyWallet();
     const client = await getCosmosClient(this.wallet);
     const gasEstimation = await client.simulate(
       this.walletAddress,
@@ -54,6 +60,7 @@ export default class Contract {
   }
 
   async signAndBroadcast(tx: TxOptions) {
+    this.verifyWallet();
     const client = await getCosmosClient(this.wallet);
     return validateTransactionSuccess(
       await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee)
@@ -104,6 +111,15 @@ export default class Contract {
         ],
       },
     };
+  }
+
+  private verifyWallet() {
+    if (!this.wallet) {
+      throw new WalletDisconnectError();
+    }
+    if (this.wallet.chain.chain_id !== junoChainId) {
+      throw new WrongNetworkError("Juno", junoChainId);
+    }
   }
 }
 
