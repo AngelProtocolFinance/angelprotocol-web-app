@@ -10,7 +10,9 @@ export default async function estimateTerraFee(
   msgs: Msg[]
 ): Promise<{ fee: Fee; feeNum: number }> {
   verifyWallet(wallet);
-  const client = getTerraClient(wallet);
+
+  const { chain_id, rpc_url } = wallet!.chain;
+  const client = getTerraClient(chain_id, rpc_url);
 
   const account = await client.auth.accountInfo(wallet!.address);
 
