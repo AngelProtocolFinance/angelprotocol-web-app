@@ -31,10 +31,10 @@ export class WalletDisconnectError extends Error {
 
 type Network = "Juno" | "Terra" | "Ethereum" | "Binance";
 export class WrongNetworkError extends Error {
-  constructor(correctNetwork: Network, correctChainId: chainIDs) {
+  constructor(correctNetwork: Network) {
     super();
     this.name = "WrongNetworkError";
-    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} ${correctChainId} chain.`;
+    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} chain.`;
   }
 }
 
