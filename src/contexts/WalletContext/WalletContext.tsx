@@ -109,7 +109,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         displayCoin: chain.native_currency,
         coins: [chain.native_currency, ...chain.tokens],
         address,
-        chain: chain!, // chain exists because !isWalletLoading
+        chain,
         providerId,
         isNativeCoin: (token: Token) =>
           token.token_id === chain.native_currency.token_id,
