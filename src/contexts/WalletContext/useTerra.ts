@@ -4,7 +4,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { ProviderId, ProviderInfo, SingleConnection } from "./types";
-import { parseChainId } from "constants/chainIDs";
+import { parseChainId } from "constants/chainIds";
 
 export default function useTerra() {
   const {

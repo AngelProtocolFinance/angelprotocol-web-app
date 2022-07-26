@@ -1,4 +1,5 @@
 import { Coin, LCDClient } from "@terra-money/terra.js";
+import { ChainId } from "constants/chainIds";
 import { denoms } from "constants/currency";
 
 const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate
@@ -10,7 +11,7 @@ const GAS_PRICES = [
   new Coin(denoms.uluna, 5.665),
 ];
 
-export default function getTerraClient(chain_id: string, lcd_url: string) {
+export default function getTerraClient(chain_id: ChainId, lcd_url: string) {
   return new LCDClient({
     chainID: chain_id,
     URL: lcd_url,

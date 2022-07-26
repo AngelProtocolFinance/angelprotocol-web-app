@@ -26,7 +26,7 @@ export default function useRequestReceipt() {
       updateStage({ step: "initial", kycData: kycData });
       return;
     }
-    const { chainId, txHash } = prevTxDetails;
+    const { txHash } = prevTxDetails;
     updateStage({ step: "submit", message: "Submitting receipt request" });
     const response = await submitRequest(data);
 

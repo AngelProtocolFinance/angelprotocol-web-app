@@ -1,7 +1,7 @@
 import { UnsupportedNetworkError } from "errors/errors";
 import { IS_TEST_ENV } from "./env";
 
-const chainIdValues = [
+const chainIdsConst = [
   "56",
   "97",
   "42",
@@ -12,9 +12,8 @@ const chainIdValues = [
   "pisco-1",
   "-1",
   "",
-];
+] as const;
 
-const chainIdsConst = [...chainIdValues] as const;
 export type ChainId = typeof chainIdsConst[number];
 
 type ChainIdsType = {
@@ -34,11 +33,13 @@ export const chainIds: ChainIdsType = {
   none: "",
 };
 
+const chainIdValues = [...chainIdsConst];
+
 export function parseChainId(chainId: string | number): ChainId {
   const chainIdString =
     typeof chainId === "string" ? chainId : chainId.toString();
 
-  if (chainIdValues.includes(chainIdString)) {
+  if (chainIdValues.some((x) => x === chainIdString)) {
     return chainIdString as ChainId;
   }
 
@@ -46,7 +47,5 @@ export function parseChainId(chainId: string | number): ChainId {
 }
 
 export function isExpectedChain(chainId: ChainId): boolean {
-  return Object.values(chainIds).some(
-    (expectedChainId) => expectedChainId === chainId
-  );
+  return chainIdValues.some((expectedChainId) => expectedChainId === chainId);
 }

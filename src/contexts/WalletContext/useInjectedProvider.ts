@@ -9,7 +9,7 @@ import {
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
 import { WalletError } from "errors/errors";
-import { ChainId, chainIds, parseChainId } from "constants/chainIDs";
+import { ChainId, chainIds, parseChainId } from "constants/chainIds";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";

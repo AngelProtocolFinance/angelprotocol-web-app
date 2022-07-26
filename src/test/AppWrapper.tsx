@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { store } from "store/store";
-import { chainIds } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 
 const testnet: NetworkInfo = {
   name: "bombay",

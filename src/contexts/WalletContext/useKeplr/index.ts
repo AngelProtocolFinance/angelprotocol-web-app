@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
-import { ChainId, chainIds } from "constants/chainIDs";
+import { ChainId, chainIds } from "constants/chainIds";
 import { IS_TEST_ENV } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
