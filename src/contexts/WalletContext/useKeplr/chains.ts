@@ -1,7 +1,7 @@
 import { ChainInfo } from "@keplr-wallet/types";
 
 // is used only when running on Juno Testnet
-export const juno_test: ChainInfo = {
+export const juno_test_chain_info: ChainInfo = {
   //FROM: https://github.com/CosmosContracts/junoswap-asset-list/blob/main/chain_info.json
   // modified denoms
   chainId: "uni-3",

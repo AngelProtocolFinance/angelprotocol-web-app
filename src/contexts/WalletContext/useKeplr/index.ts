@@ -6,7 +6,7 @@ import { ChainId, chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
-import { juno_test } from "./chains";
+import { juno_test_chain_info } from "./chains";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
@@ -29,7 +29,7 @@ export default function useKeplr() {
       if (!dwindow.keplr) return;
 
       if (IS_TEST) {
-        await dwindow.keplr.experimentalSuggestChain(juno_test);
+        await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
       await dwindow.keplr.enable(chainIds.juno);
