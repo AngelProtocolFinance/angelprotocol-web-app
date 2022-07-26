@@ -1,5 +1,5 @@
 import { UnsupportedNetworkError } from "errors/errors";
-import { IS_TEST_ENV } from "./env";
+import { IS_TEST } from "./env";
 
 const chainIdsConst = [
   "56",
@@ -25,10 +25,10 @@ type ChainIdsType = {
   none: ChainId;
 };
 export const chainIds: ChainIdsType = {
-  bnb: IS_TEST_ENV ? "97" : "56",
-  eth: IS_TEST_ENV ? "42" : "1",
-  juno: IS_TEST_ENV ? "uni-3" : "juno-1",
-  terra: IS_TEST_ENV ? "pisco-1" : "phoenix-1",
+  bnb: IS_TEST ? "97" : "56",
+  eth: IS_TEST ? "42" : "1",
+  juno: IS_TEST ? "uni-3" : "juno-1",
+  terra: IS_TEST ? "pisco-1" : "phoenix-1",
   unsupported: "-1",
   none: "",
 };

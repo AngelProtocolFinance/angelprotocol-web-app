@@ -1,5 +1,5 @@
 import { IconTypes } from "components/Icon";
-import { IS_TEST_ENV } from "./env";
+import { IS_TEST } from "./env";
 
 export const aws_endpoint =
   "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com";
@@ -8,7 +8,7 @@ export const apes_endpoint =
 
 export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
-export const junoLcdUrl = IS_TEST_ENV
+export const junoLcdUrl = IS_TEST
   ? "https://lcd.uni.juno.deuslabs.fi"
   : "https://lcd-juno.itastakers.com";
 

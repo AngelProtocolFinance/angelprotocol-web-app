@@ -1,5 +1,5 @@
 import { AWSQueryRes, Endowment, Update } from "types/server/aws";
-import { IS_TEST_ENV } from "constants/env";
+import { IS_TEST } from "constants/env";
 import { aws } from "./aws";
 
 interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {
@@ -9,8 +9,7 @@ const leaderboard_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     leaderboards: builder.query<Update, unknown>({
       //TODO:refactor this query pattern - how?
-      query: () =>
-        `endowments/leaderboard/${IS_TEST_ENV ? "testnet" : "mainnet"}`,
+      query: () => `endowments/leaderboard/${IS_TEST ? "testnet" : "mainnet"}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: LeaderBoardQueryRes<Endowment[]>) => {
         return { endowments: res.Items, last_update: res.LastUpdate };

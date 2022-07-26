@@ -3,7 +3,7 @@ import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
 import { ChainId, chainIds } from "constants/chainIds";
-import { IS_TEST_ENV } from "constants/env";
+import { IS_TEST } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test } from "./chains";
@@ -28,7 +28,7 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      if (IS_TEST_ENV) {
+      if (IS_TEST) {
         await dwindow.keplr.experimentalSuggestChain(juno_test);
       }
 
