@@ -1,1 +1,1 @@
-export const IS_TEST = process.env.REACT_APP_NETWORK === "TESTNET";
+export const IS_TEST_ENV = process.env.REACT_APP_NETWORK === "TESTNET";

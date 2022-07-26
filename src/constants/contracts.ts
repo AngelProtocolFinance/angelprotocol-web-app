@@ -1,4 +1,4 @@
-import { IS_TEST } from "./env";
+import { IS_TEST_ENV } from "./env";
 
 type SC =
   | "index_fund"
@@ -20,7 +20,7 @@ type Contracts = {
   [key in SC]: string;
 };
 
-export const contracts: Contracts = IS_TEST
+export const contracts: Contracts = IS_TEST_ENV
   ? {
       //TESTNET CONTRACTS
       //core
