@@ -9,7 +9,6 @@ import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type JunoDonateArgs = {
@@ -48,7 +47,7 @@ export const sendCosmosDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.transactionHash,
             transactionDate: new Date().toISOString(),
-            chainId: junoChainId,
+            chainId: args.wallet.chain.chain_id,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -61,7 +60,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: junoChainId,
+          chainId: args.wallet.chain.chain_id,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -78,7 +77,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: junoChainId,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {

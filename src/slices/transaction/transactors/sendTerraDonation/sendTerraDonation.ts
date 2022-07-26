@@ -9,7 +9,6 @@ import { DonateValues } from "components/Transactors/Donater";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
@@ -48,7 +47,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId: terraChainId,
+            chainId: args.wallet.network.chainID,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -60,7 +59,7 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chainId: terraChainId,
+          chainId: args.wallet.network.chainID,
         });
 
         const getTxInfo = pollTerraTxInfo(
@@ -76,7 +75,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chainId: terraChainId,
+            chainId: args.wallet.network.chainID,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -93,7 +92,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: terraChainId,
+            chainId: args.wallet.network.chainID,
           });
         }
       }
