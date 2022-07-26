@@ -6,10 +6,11 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
+import { parseChainId } from "helpers/chain";
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
 import { WalletError } from "errors/errors";
-import { ChainId, chainIds, parseChainId } from "constants/chainIds";
+import { ChainId, chainIds } from "constants/chainIds";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";

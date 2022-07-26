@@ -1,7 +1,6 @@
-import { UnsupportedNetworkError } from "errors/errors";
 import { IS_TEST } from "./env";
 
-const chainIdsConst = [
+export const allChainIds = [
   "56",
   "97",
   "42",
@@ -14,38 +13,21 @@ const chainIdsConst = [
   "",
 ] as const;
 
-export type ChainId = typeof chainIdsConst[number];
+export type ChainId = typeof allChainIds[number];
 
 type ChainIdsType = {
-  bnb: ChainId;
-  eth: ChainId;
+  binance: ChainId;
+  ethereum: ChainId;
   juno: ChainId;
   terra: ChainId;
   unsupported: ChainId;
   none: ChainId;
 };
 export const chainIds: ChainIdsType = {
-  bnb: IS_TEST ? "97" : "56",
-  eth: IS_TEST ? "42" : "1",
+  binance: IS_TEST ? "97" : "56",
+  ethereum: IS_TEST ? "42" : "1",
   juno: IS_TEST ? "uni-3" : "juno-1",
   terra: IS_TEST ? "pisco-1" : "phoenix-1",
   unsupported: "-1",
   none: "",
 };
-
-const chainIdValues = [...chainIdsConst];
-
-export function parseChainId(chainId: string | number): ChainId {
-  const chainIdString =
-    typeof chainId === "string" ? chainId : chainId.toString();
-
-  if (chainIdValues.some((x) => x === chainIdString)) {
-    return chainIdString as ChainId;
-  }
-
-  throw new UnsupportedNetworkError(chainIdString);
-}
-
-export function isExpectedChain(chainId: ChainId): boolean {
-  return chainIdValues.some((expectedChainId) => expectedChainId === chainId);
-}
