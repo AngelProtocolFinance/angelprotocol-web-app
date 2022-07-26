@@ -21,7 +21,6 @@ import {
   WalletDisconnectError,
   WrongNetworkError,
 } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
 import { GAS_PRICE } from "constants/currency";
 
 export default class Contract {
@@ -62,13 +61,12 @@ export default class Contract {
     return createFeeResult(gasEstimation, denom);
   }
 
-  async signAndBroadcast(tx: TxOptions) {
+  async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getCosmosClient(chain_id, rpc_url);
-    return validateTransactionSuccess(
-      await client.signAndBroadcast(this.walletAddress, tx.msgs, tx.fee)
-    );
+    const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
+    return validateTransactionSuccess(result, chain_id);
   }
 
   createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
@@ -151,11 +149,12 @@ function extractFeeNum(fee: StdFee, denom: string): number {
 }
 
 function validateTransactionSuccess(
-  result: DeliverTxResponse
+  result: DeliverTxResponse,
+  chain_id: string
 ): DeliverTxResponse {
   if (isDeliverTxFailure(result)) {
     throw new TxResultFail(
-      junoChainId,
+      chain_id,
       result.transactionHash,
       result.height,
       result.code,
