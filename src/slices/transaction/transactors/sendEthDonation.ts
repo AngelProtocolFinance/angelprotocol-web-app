@@ -39,8 +39,6 @@ export const sendEthDonation = createAsyncThunk(
 
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
-      const chainNum = await signer.getChainId();
-      const chainId = `${chainNum}`;
       const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
