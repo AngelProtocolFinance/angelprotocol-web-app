@@ -2,18 +2,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
-import { KYCData, Receiver } from "types/server/aws";
+import { Chain, KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { DonateValues } from "components/Transactors/Donater";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
+import { UnexpectedStateError, WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
 type TerraDonateArgs = {
   wallet: ConnectedWallet | undefined;
+  chain: Chain;
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -26,7 +27,16 @@ export const sendTerraDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) {
+        throw new WalletDisconnectError();
+      }
+
+      if (args.wallet.network.chainID !== args.chain.chain_id) {
+        throw new UnexpectedStateError(
+          `Connected to the Terra Station wallet on '${args.wallet.network.chainID}', but passed chain data on '${args.chain.chain_id}' network`
+        );
+      }
+
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const response = await args.wallet.post(args.tx);
@@ -47,7 +57,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId: args.wallet.network.chainID,
+            chain: args.chain,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -59,7 +69,7 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chainId: args.wallet.network.chainID,
+          chain: args.chain,
         });
 
         const getTxInfo = pollTerraTxInfo(
@@ -75,7 +85,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chainId: args.wallet.network.chainID,
+            chain: args.chain,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -92,7 +102,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: args.wallet.network.chainID,
+            chain: args.chain,
           });
         }
       }

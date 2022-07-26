@@ -66,7 +66,7 @@ export const sendEthDonation = createAsyncThunk(
           ...receipient,
           transactionId: response.hash,
           transactionDate: new Date().toISOString(),
-          chainId,
+          chain: args.wallet.chain,
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,
@@ -77,7 +77,7 @@ export const sendEthDonation = createAsyncThunk(
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
-        chainId,
+        chain: args.wallet.chain,
         isShareEnabled: true,
       });
     } catch (error) {

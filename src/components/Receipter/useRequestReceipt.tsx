@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
 import { StageUpdater } from "slices/transaction/types";
 import { useRequestReceiptMutation } from "services/apes/donations";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
 
@@ -12,6 +13,7 @@ export default function useRequestReceipt() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<RV>();
   const [submitRequest] = useRequestReceiptMutation();
+  const { wallet } = useGetWallet();
 
   const updateStage: StageUpdater = (update) => {
     dispatch(setStage(update));
@@ -33,7 +35,7 @@ export default function useRequestReceipt() {
         step: "error",
         message: `Error processing your receipt`,
         txHash,
-        chainId,
+        chain: wallet!.chain,
       });
       return;
     }
@@ -41,7 +43,7 @@ export default function useRequestReceipt() {
       step: "success",
       message: `Your receipt will be sent to your email.`,
       txHash,
-      chainId,
+      chain: wallet!.chain,
     });
   };
 

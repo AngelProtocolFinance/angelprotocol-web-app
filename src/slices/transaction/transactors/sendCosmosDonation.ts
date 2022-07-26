@@ -47,7 +47,7 @@ export const sendCosmosDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.transactionHash,
             transactionDate: new Date().toISOString(),
-            chainId: args.wallet.chain.chain_id,
+            chain: args.wallet.chain,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -60,7 +60,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: args.wallet.chain.chain_id,
+          chain: args.wallet.chain,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -77,7 +77,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.wallet.chain.chain_id,
+          chain: args.wallet.chain,
         });
       }
     } catch (err) {

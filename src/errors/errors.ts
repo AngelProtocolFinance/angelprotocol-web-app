@@ -1,20 +1,22 @@
+import { Chain } from "types/server/aws";
+
 export class LogApplicationUpdateError extends Error {
-  chainId: string;
+  chain: Chain;
   pollId: string;
-  constructor(chainId: string, pollId: string) {
+  constructor(chain: Chain, pollId: string) {
     super();
-    this.chainId = chainId;
+    this.chain = chain;
     this.pollId = pollId;
     this.name = "ApplicationReviewPollUpdateError";
   }
 }
 
 export class LogDonationFail extends Error {
-  chainId: string;
+  chain: Chain;
   txHash: string;
-  constructor(chainId: string, txHash: string) {
+  constructor(chain: Chain, txHash: string) {
     super();
-    this.chainId = chainId;
+    this.chain = chain;
     this.txHash = txHash;
     this.name = "LogDonationFail";
   }
@@ -24,6 +26,13 @@ export class WalletDisconnectError extends Error {
   constructor() {
     super();
     this.name = "WalletDisconnectError";
+  }
+}
+
+export class UnexpectedStateError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnexpectedStateError";
   }
 }
 
@@ -45,17 +54,17 @@ export class UnsupportedNetworkError extends Error {
 }
 
 export class TxResultFail extends Error {
-  chainId: string;
+  chain: Chain;
   txHash: string;
   constructor(
-    chainId: string,
+    chain: Chain,
     txHash: string,
     height: number,
     code: number,
     rawLog?: string
   ) {
     super();
-    this.chainId = chainId;
+    this.chain = chain;
     this.txHash = txHash;
     this.name = "TxResultFailt";
     this.message = `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`;

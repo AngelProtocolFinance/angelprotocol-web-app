@@ -55,7 +55,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
-        chainId: args.wallet.chain.chain_id,
+        chain: args.wallet.chain,
       });
 
       if (isDeliverTxSuccess(response)) {
@@ -64,7 +64,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
-            chainId: args.wallet.chain.chain_id,
+            chain: args.wallet.chain,
             successLink: args.successLink,
           });
 
@@ -80,7 +80,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.chain.chain_id,
+            chain: args.wallet.chain,
             PK: args.applicationId,
           });
 
@@ -93,7 +93,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: response.transactionHash,
-            chainId: args.wallet.chain.chain_id,
+            chain: args.wallet.chain,
           });
         }
       } else {
@@ -101,7 +101,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.wallet.chain.chain_id,
+          chain: args.wallet.chain,
         });
       }
     } catch (err) {

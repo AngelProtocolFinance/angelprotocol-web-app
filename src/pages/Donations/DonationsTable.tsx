@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
@@ -16,6 +17,12 @@ export default function DonationsTable(props: {
   const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
     useSortTransactions(props.transactions);
   const showReceiptForm = useReceipter();
+
+  const { wallet } = useGetWallet();
+
+  if (!wallet) {
+    return <Tooltip>Your wallet is not connected!!!</Tooltip>;
+  }
 
   if (props.isLoading) {
     return <Tooltip>loading transactions..</Tooltip>;
@@ -58,7 +65,7 @@ export default function DonationsTable(props: {
             <>{tx.block_timestamp.substring(0, 10)}</>
             <span className="font-mono">{tx.name}</span>
             <a
-              href={getTxUrl(tx.chain_id!, tx.tx_id)}
+              href={getTxUrl(wallet!.chain, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

@@ -11,6 +11,7 @@ import {
 } from "@cosmjs/stargate";
 import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
+import { Chain } from "types/server/aws";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getKeplrClient from "helpers/getKeplrClient";
@@ -65,7 +66,7 @@ export default class Contract {
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
-    return validateTransactionSuccess(result, chain_id);
+    return validateTransactionSuccess(result, this.wallet!.chain);
   }
 
   createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
@@ -149,11 +150,11 @@ function extractFeeNum(fee: StdFee, denom: string): number {
 
 function validateTransactionSuccess(
   result: DeliverTxResponse,
-  chain_id: string
+  chain: Chain
 ): DeliverTxResponse {
   if (isDeliverTxFailure(result)) {
     throw new TxResultFail(
-      chain_id,
+      chain,
       result.transactionHash,
       result.height,
       result.code,
