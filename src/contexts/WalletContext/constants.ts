@@ -29,6 +29,7 @@ export const placeholderChain: Chain = {
   chain_id: "juno-1",
   chain_name: "Token",
   native_currency: {
+    type: "juno-native",
     symbol: "TOKEN",
     logo: tokenLogo,
     decimals: 18,
