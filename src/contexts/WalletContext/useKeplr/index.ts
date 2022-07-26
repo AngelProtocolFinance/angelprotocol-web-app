@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
@@ -17,7 +17,7 @@ export default function useKeplr() {
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
-  const [chainId, setChainId] = useState<ChainId>(chainIds.none);
+  const [chainId, setChainId] = useState<ChainId>();
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
@@ -73,16 +73,19 @@ export default function useKeplr() {
   function disconnect() {
     if (!address) return;
     setAddress("");
-    setChainId(chainIds.none);
+    setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
   }
 
-  const providerInfo: ProviderInfo = {
-    logo: providerIcons.keplr,
-    providerId: "keplr",
-    chainId,
-    address,
-  };
+  const providerInfo =
+    address && chainId
+      ? ({
+          logo: providerIcons.keplr,
+          providerId: "keplr",
+          chainId,
+          address,
+        } as ProviderInfo)
+      : undefined;
 
   //connection object to render <Connector/>
   const connection: Connection = {
@@ -95,6 +98,6 @@ export default function useKeplr() {
     connection,
     disconnect,
     isLoading,
-    providerInfo: (address && providerInfo) || undefined,
+    providerInfo,
   };
 }

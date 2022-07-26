@@ -1,4 +1,5 @@
 import { Chain } from "types/server/aws";
+import { chainIds } from "constants/chainIds";
 
 export class LogApplicationUpdateError extends Error {
   chain: Chain;
@@ -36,19 +37,18 @@ export class UnexpectedStateError extends Error {
   }
 }
 
-const supportedNetworks = ["Juno", "Terra", "Ethereum", "Binance"] as const;
-export class WrongNetworkError extends Error {
-  constructor(correctNetwork: typeof supportedNetworks[number]) {
+export class WrongChainError extends Error {
+  constructor(expectedChain: keyof typeof chainIds) {
     super(
-      `Connected to the wrong network. Please connect to the ${correctNetwork} chain.`
+      `Connected to the wrong chain. Please connect to the ${expectedChain} chain.`
     );
-    this.name = "WrongNetworkError";
+    this.name = "WrongChainError";
   }
 }
 
 export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
-    const networksStr = supportedNetworks.join(", ");
+    const networksStr = Object.keys(chainIds).join(", ");
 
     super(`${chainId} not supported. Supported networks: ${networksStr}`);
     this.name = "UnsupportedNetworkError";

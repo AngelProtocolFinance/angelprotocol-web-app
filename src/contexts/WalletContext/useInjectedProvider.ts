@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import {
   AccountChangeHandler,
@@ -10,7 +10,7 @@ import { parseChainId } from "helpers/chain";
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
 import { WalletError } from "errors/errors";
-import { ChainId, chainIds } from "constants/chainIds";
+import { ChainId } from "constants/chainIds";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
@@ -26,7 +26,7 @@ export default function useInjectedProvider(
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
-  const [chainId, setChainId] = useState<ChainId>(chainIds.none);
+  const [chainId, setChainId] = useState<ChainId>();
 
   useEffect(() => {
     requestAccess();
@@ -58,7 +58,7 @@ export default function useInjectedProvider(
       //if no account is found, means user disconnected
     } else {
       setAddress("");
-      setChainId(chainIds.none);
+      setChainId(undefined);
       saveUserAction(actionKey, "disconnect");
       removeAllListeners(providerId);
     }
@@ -103,7 +103,7 @@ export default function useInjectedProvider(
     const injectedProvider = getProvider(providerId);
     if (!injectedProvider) return;
     setAddress("");
-    setChainId(chainIds.none);
+    setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
     removeAllListeners(providerId);
   }
@@ -141,12 +141,15 @@ export default function useInjectedProvider(
   };
 
   //consolidate to one object for diff
-  const providerInfo: ProviderInfo = {
-    logo: providerIcons[providerId],
-    providerId,
-    chainId,
-    address,
-  };
+  const providerInfo =
+    chainId && address
+      ? ({
+          logo: providerIcons[providerId],
+          providerId,
+          chainId,
+          address,
+        } as ProviderInfo)
+      : undefined;
 
   //connection object to render <Connector/>
   const connection: Connection = {
@@ -159,7 +162,7 @@ export default function useInjectedProvider(
     connection,
     disconnect,
     isLoading,
-    providerInfo: (address && providerInfo) || undefined,
+    providerInfo,
   };
 }
 
