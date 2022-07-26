@@ -1,4 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
+import { ChainId } from "constants/chainIds";
 
 export type ProviderId =
   | "binance-wallet"
@@ -32,7 +32,7 @@ export type Connection = SingleConnection | MultiConnection;
 export type ProviderInfo = {
   providerId: ProviderId;
   logo: string;
-  chainId: chainIDs;
+  chainId: ChainId;
   address: string;
 };
 
