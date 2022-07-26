@@ -36,20 +36,22 @@ export class UnexpectedStateError extends Error {
   }
 }
 
-type Network = "Juno" | "Terra" | "Ethereum" | "Binance";
+const supportedNetworks = ["Juno", "Terra", "Ethereum", "Binance"] as const;
 export class WrongNetworkError extends Error {
-  constructor(correctNetwork: Network) {
-    super();
+  constructor(correctNetwork: typeof supportedNetworks[number]) {
+    super(
+      `Connected to the wrong network. Please connect to the ${correctNetwork} chain.`
+    );
     this.name = "WrongNetworkError";
-    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} chain.`;
   }
 }
 
 export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
-    super();
+    const networksStr = supportedNetworks.join(", ");
+
+    super(`${chainId} not supported. Supported networks: ${networksStr}`);
     this.name = "UnsupportedNetworkError";
-    this.message = `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`;
   }
 }
 
@@ -63,23 +65,22 @@ export class TxResultFail extends Error {
     code: number,
     rawLog?: string
   ) {
-    super();
+    super(
+      `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`
+    );
     this.chain = chain;
     this.txHash = txHash;
     this.name = "TxResultFailt";
-    this.message = `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`;
   }
 }
 
 export class WalletError extends Error {
   //based on EIP1193 error spec
   code: number;
-  message: string;
   data?: unknown;
   constructor(message: string, code: number, data?: unknown) {
-    super();
+    super(message);
     this.code = code;
-    this.message = message;
     this.data = data;
   }
 }
