@@ -1,5 +1,6 @@
 import { Chain } from "types/server/aws";
-import { chainIds } from "constants/chainIds";
+import { ChainId, chainIds } from "constants/chainIds";
+import { IS_TEST } from "constants/env";
 
 export class LogApplicationUpdateError extends Error {
   chain: Chain;
@@ -43,6 +44,15 @@ export class WrongChainError extends Error {
       `Connected to the wrong chain. Please connect to the ${expectedChain} chain.`
     );
     this.name = "WrongChainError";
+  }
+}
+
+export class WrongNetworkError extends Error {
+  constructor() {
+    super(
+      `Please connect to network ${IS_TEST ? "testnet" : "mainnet"} network.`
+    );
+    this.name = "WrongNetworkError";
   }
 }
 

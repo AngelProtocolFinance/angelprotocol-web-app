@@ -14,6 +14,7 @@ import {
   UnsupportedNetworkError,
   WalletDisconnectError,
   WrongChainError,
+  WrongNetworkError,
 } from "errors/errors";
 
 export default function handleWalletError(error: any, handler: StageUpdater) {
@@ -24,6 +25,8 @@ export default function handleWalletError(error: any, handler: StageUpdater) {
   } else if (error instanceof UnsupportedNetworkError) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof WrongChainError) {
+    handler({ step: "error", message: error.message });
+  } else if (error instanceof WrongNetworkError) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });

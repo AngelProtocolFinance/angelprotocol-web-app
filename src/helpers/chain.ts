@@ -1,4 +1,4 @@
-import { UnsupportedNetworkError, WrongChainError } from "errors/errors";
+import { UnsupportedNetworkError, WrongNetworkError } from "errors/errors";
 import { ChainId, allChainIds, chainIds } from "constants/chainIds";
 
 export function parseChainId(chainId: string | number): ChainId {
@@ -14,7 +14,7 @@ export function parseChainId(chainId: string | number): ChainId {
   }
 
   if (allChainIds.find((x) => x === chainIdString)) {
-    throw new WrongChainError("juno");
+    throw new WrongNetworkError();
   }
 
   throw new UnsupportedNetworkError(chainIdString);
