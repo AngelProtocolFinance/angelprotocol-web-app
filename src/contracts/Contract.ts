@@ -13,7 +13,6 @@ import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { isJunoChain } from "helpers/checkChain";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import {
@@ -119,7 +118,7 @@ export default class Contract {
     if (!this.wallet) {
       throw new WalletDisconnectError();
     }
-    if (!isJunoChain(this.wallet.chain.chain_id)) {
+    if (this.wallet.chain.type !== "juno-native") {
       throw new WrongNetworkError("Juno");
     }
   }
