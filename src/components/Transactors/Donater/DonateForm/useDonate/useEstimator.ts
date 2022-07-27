@@ -1,5 +1,10 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import { Coin, CreateTxOptions, MsgSend } from "@terra-money/terra.js";
+import {
+  Coin,
+  CreateTxOptions,
+  MsgExecuteContract,
+  MsgSend,
+} from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
 import Decimal from "decimal.js";
 import { ethers } from "ethers";
@@ -104,20 +109,46 @@ export default function useEstimator() {
         }
         // terra native transaction, send or contract interaction
         else if (wallet.chain.type === "terra-native") {
-          const amount = new Decimal(debounced_amount).mul(1e6);
-          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-            new Coin(denoms.uluna, amount.toNumber()),
-          ]);
-          const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
-          dispatch(setFee(feeNum));
+          if (
+            wallet.chain.native_currency.token_id === selectedToken.token_id
+          ) {
+            const amount = new Decimal(debounced_amount).mul(1e6);
+            const msg = new MsgSend(wallet.address, ap_wallets.terra, [
+              new Coin(denoms.uluna, amount.toNumber()),
+            ]);
+            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+            dispatch(setFee(feeNum));
 
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setTerraTx({ msgs: [msg], fee });
+          } else {
+            const amount = new Decimal(debounced_amount).mul(1e6);
+            const msg = new MsgExecuteContract(
+              wallet.address,
+              selectedToken.token_id,
+              {
+                transfer: {
+                  amount,
+                  recipient: ap_wallets.terra,
+                },
+              }
+            );
+            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+            dispatch(setFee(feeNum));
+
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setTerraTx({ msgs: [msg], fee });
           }
-          setTerraTx({ msgs: [msg], fee });
         }
         // evm transactions
         else {
