@@ -13,7 +13,7 @@ import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import getCosmosClient from "helpers/getCosmosClient";
+import getKeplrClient from "helpers/getKeplrClient";
 import toBase64 from "helpers/toBase64";
 import {
   TxResultFail,
@@ -37,7 +37,7 @@ export default class Contract {
   async query<T>(message: Record<string, unknown>) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getCosmosClient(chain_id, rpc_url);
+    const client = await getKeplrClient(chain_id, rpc_url);
     const jsonObject = await client.queryContractSmart(
       this.contractAddress,
       message
@@ -50,7 +50,7 @@ export default class Contract {
   ): Promise<{ fee: StdFee; feeNum: number }> {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getCosmosClient(chain_id, rpc_url);
+    const client = await getKeplrClient(chain_id, rpc_url);
     const gasEstimation = await client.simulate(
       this.walletAddress,
       msgs,
@@ -63,7 +63,7 @@ export default class Contract {
   async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getCosmosClient(chain_id, rpc_url);
+    const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, chain_id);
   }
