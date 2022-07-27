@@ -3,7 +3,7 @@ import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import getCosmosClient from "helpers/getCosmosClient";
+import getKeplrClient from "helpers/getKeplrClient";
 import getTerraClient from "helpers/getTerraClient";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
@@ -114,7 +114,7 @@ async function getJunoCW20Balances(
   chain: Chain,
   walletAddress: string
 ): Promise<Coin[]> {
-  const cosmosClient = await getCosmosClient(chain.chain_id, chain.rpc_url);
+  const cosmosClient = await getKeplrClient(chain.chain_id, chain.rpc_url);
 
   const cw20BalancePromises = chain.tokens
     .filter((x) => x.type === "cw20")

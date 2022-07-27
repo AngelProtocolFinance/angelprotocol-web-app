@@ -1,7 +1,7 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Dwindow } from "types/ethereum";
 
-export default async function getCosmosClient(
+export default async function getKeplrClient(
   chain_id: string,
   rpc_url: string
 ): Promise<SigningCosmWasmClient> {
