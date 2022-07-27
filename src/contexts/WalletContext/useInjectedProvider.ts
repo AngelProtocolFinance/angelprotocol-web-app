@@ -139,14 +139,14 @@ export default function useInjectedProvider(
   };
 
   //consolidate to one object for diff
-  const providerInfo =
+  const providerInfo: ProviderInfo | undefined =
     chainId && address
-      ? ({
+      ? {
           logo: providerIcons[providerId],
           providerId,
           chainId,
           address,
-        } as ProviderInfo)
+        }
       : undefined;
 
   //connection object to render <Connector/>

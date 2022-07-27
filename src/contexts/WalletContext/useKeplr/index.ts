@@ -77,14 +77,14 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
-  const providerInfo =
+  const providerInfo: ProviderInfo | undefined =
     address && chainId
-      ? ({
+      ? {
           logo: providerIcons.keplr,
           providerId: "keplr",
           chainId,
           address,
-        } as ProviderInfo)
+        }
       : undefined;
 
   //connection object to render <Connector/>
