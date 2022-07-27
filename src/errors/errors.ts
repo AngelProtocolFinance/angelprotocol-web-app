@@ -1,5 +1,3 @@
-import { chainIDs } from "constants/chainIDs";
-
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
