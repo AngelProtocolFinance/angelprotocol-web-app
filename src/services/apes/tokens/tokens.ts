@@ -2,7 +2,6 @@ import { Coin } from "@cosmjs/proto-signing";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
-import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import createAuthToken from "helpers/createAuthToken";
 import getCosmosClient from "helpers/getCosmosClient";
 import getTerraClient from "helpers/getTerraClient";
@@ -37,7 +36,7 @@ const tokens_api = apes.injectEndpoints({
           }
 
           // fetch balances for juno or terra
-          if (isJunoChain(chainId) || isTerraChain(chainId)) {
+          if (chain.type === "juno-native" || chain.type === "terra-native") {
             const balancesRes = await fetch(
               chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
             );
@@ -46,9 +45,10 @@ const tokens_api = apes.injectEndpoints({
             const { balances: nativeBalances }: { balances: Coin[] } =
               await balancesRes.json();
 
-            const cw20Balances = isJunoChain(chain.chain_id)
-              ? await getJunoCW20Balances(chain, address)
-              : await getTerraCW20Balances(chain, address);
+            const cw20Balances =
+              chain.type === "juno-native"
+                ? await getJunoCW20Balances(chain, address)
+                : await getTerraCW20Balances(chain, address);
 
             const allBalances = nativeBalances.concat(cw20Balances);
 

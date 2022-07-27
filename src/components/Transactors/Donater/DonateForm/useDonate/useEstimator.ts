@@ -17,7 +17,6 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
-import { isJunoChain, isTerraChain } from "helpers/checkChain";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
@@ -65,7 +64,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         // juno transaction, send or contract interaction
-        if (isJunoChain(wallet.chain.chain_id)) {
+        if (wallet.chain.type === "juno-native") {
           if (wallet.isNativeCoin(selectedToken)) {
             const contract = new Contract(wallet);
             const msg = contract.createTransferNativeMsg(
@@ -102,7 +101,7 @@ export default function useEstimator() {
           }
         }
         // terra native transaction, send or contract interaction
-        else if (isTerraChain(wallet.chain.chain_id)) {
+        else if (wallet.chain.type === "terra-native") {
           const amount = new Decimal(debounced_amount).mul(1e6);
           const msg = new MsgSend(wallet.address, ap_wallets.terra, [
             new Coin(denoms.uluna, amount.toNumber()),
