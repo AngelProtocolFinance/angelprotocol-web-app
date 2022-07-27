@@ -109,12 +109,15 @@ export default function useEstimator() {
         }
         // terra native transaction, send or contract interaction
         else if (wallet.chain.type === "terra-native") {
+          const amount = new Decimal(debounced_amount)
+            .mul(1e6)
+            .divToInt(1)
+            .toString();
           if (
             wallet.chain.native_currency.token_id === selectedToken.token_id
           ) {
-            const amount = new Decimal(debounced_amount).mul(1e6);
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-              new Coin(denoms.uluna, amount.toNumber()),
+              new Coin(denoms.uluna, amount),
             ]);
             const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
             dispatch(setFee(feeNum));
@@ -127,7 +130,6 @@ export default function useEstimator() {
             }
             setTerraTx({ msgs: [msg], fee });
           } else {
-            const amount = new Decimal(debounced_amount).mul(1e6);
             const msg = new MsgExecuteContract(
               wallet.address,
               selectedToken.token_id,
