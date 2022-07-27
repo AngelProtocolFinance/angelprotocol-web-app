@@ -65,7 +65,9 @@ export default function useEstimator() {
 
         // juno transaction, send or contract interaction
         if (wallet.chain.type === "juno-native") {
-          if (wallet.isNativeCoin(selectedToken)) {
+          if (
+            wallet.chain.native_currency.token_id === selectedToken.token_id
+          ) {
             const contract = new Contract(wallet);
             const msg = contract.createTransferNativeMsg(
               debounced_amount,
@@ -134,7 +136,9 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          if (wallet.isNativeCoin(selectedToken)) {
+          if (
+            wallet.chain.native_currency.token_id === selectedToken.token_id
+          ) {
             const gasLimit = await signer.estimateGas(tx);
             const minFee = gasLimit.mul(gasPrice);
             const feeNum = parseFloat(
