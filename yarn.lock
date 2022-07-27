@@ -3462,12 +3462,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:^2.9.5":
-  version: 2.9.5
-  resolution: "@hookform/resolvers@npm:2.9.5"
+"@hookform/resolvers@npm:^2.9.7":
+  version: 2.9.7
+  resolution: "@hookform/resolvers@npm:2.9.7"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: e03a07bc24b7f94981d0c854ae12bf530271b4e2ade4678df143cb58c8195b7ca0aca30c148d2c3a31e87a8b564291c9844d401835a5ff47bc96480133e8a835
+  checksum: 1449ad8ae9de5e170a45136e0a929a82ae40b61ca1727dae2b3292aee29771b05cfd6335321a5c6429f77a4b9d69eb9434af804c1ef4ae29e87bb8a7c7939025
   languageName: node
   linkType: hard
 
@@ -5833,7 +5833,7 @@ __metadata:
     "@draft-js-plugins/editor": ^4.1.3
     "@fleekhq/fleek-storage-js": ^1.0.21
     "@hookform/error-message": ^2.0.0
-    "@hookform/resolvers": ^2.9.5
+    "@hookform/resolvers": ^2.9.7
     "@keplr-wallet/types": ^0.10.5
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.7.1
