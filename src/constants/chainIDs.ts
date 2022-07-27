@@ -1,5 +1,3 @@
-import { IS_TEST } from "./env";
-
 export enum chainIDs {
   //for multi-chain wallets, generalize as either mainnet or testnet only
   bnb_main = "56",
@@ -15,7 +13,3 @@ export enum chainIDs {
   unsupported = "-1",
   none = "",
 }
-
-export const junoChainId = IS_TEST ? chainIDs.juno_test : chainIDs.juno_main;
-
-export const terraChainId = IS_TEST ? chainIDs.terra_test : chainIDs.terra_main;
