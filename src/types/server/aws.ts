@@ -93,7 +93,13 @@ export type Token = {
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
-  type: string;
+  type:
+    | "juno-native"
+    | "terra-native"
+    | "evm-native"
+    | "erc20"
+    | "cw20"
+    | "ibc";
 };
 
 // APES chain type returned by /chain/{chain_id}
