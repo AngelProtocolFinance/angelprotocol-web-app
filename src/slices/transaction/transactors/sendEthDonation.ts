@@ -44,7 +44,7 @@ export const sendEthDonation = createAsyncThunk(
       const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
-      if (args.wallet.isNativeCoin(token)) {
+      if (args.wallet.chain.native_currency.token_id === token.token_id) {
         response = await signer.sendTransaction(args.tx);
       } else {
         const ER20Contract: any = new ethers.Contract(

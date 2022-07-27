@@ -10,8 +10,9 @@ export default function Breakdown() {
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isAltToken = wallet!.isNativeCoin(token);
-  const totalAmount = isAltToken ? amount : fee + amount;
+  const isNativeCoin =
+    wallet!.chain.native_currency.token_id === token.token_id;
+  const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
     <div className="m-1">
