@@ -45,10 +45,13 @@ const tokens_api = apes.injectEndpoints({
             const { balances: nativeBalances }: { balances: Coin[] } =
               await balancesRes.json();
 
+            // checking providerId to know which specific wallet is connected
+            // this way once Terra v2 is enabled on Keplr again, the users will be able to
+            // fetch their balances even when using Keplr
             const cw20Balances =
-              chain.type === "juno-native"
-                ? await getJunoCW20Balances(chain, address)
-                : await getTerraCW20Balances(chain, address);
+              args.providerInfo.providerId === "keplr"
+                ? await getKeplrCW20Balances(chain, address)
+                : await getTerraStationCW20Balances(chain, address);
 
             const allBalances = nativeBalances.concat(cw20Balances);
 
@@ -110,7 +113,7 @@ const tokens_api = apes.injectEndpoints({
 
 export const { useTokensQuery, useChainQuery } = tokens_api;
 
-async function getJunoCW20Balances(
+async function getKeplrCW20Balances(
   chain: Chain,
   walletAddress: string
 ): Promise<Coin[]> {
@@ -124,7 +127,7 @@ async function getJunoCW20Balances(
   return cw20Balances;
 }
 
-async function getTerraCW20Balances(
+async function getTerraStationCW20Balances(
   chain: Chain,
   walletAddress: string
 ): Promise<Coin[]> {
