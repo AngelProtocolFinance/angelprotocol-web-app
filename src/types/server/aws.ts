@@ -1,6 +1,5 @@
 import { EndowmentTierNum } from "types/shared/registration";
 import { Optional } from "types/utils";
-import { ChainId } from "constants/chainIds";
 
 /**result wrapper */
 export interface AWSQueryRes<T> {
@@ -106,7 +105,7 @@ export type Token = {
 // APES chain type returned by /chain/{chain_id}
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
-  chain_id: ChainId;
+  chain_id: string;
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   chain_name: string; // Avalanche Fuji Testnet
   native_currency: Token;

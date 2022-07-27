@@ -1,5 +1,3 @@
-import { ChainId } from "constants/chainIds";
-
 export type ProviderId =
   | "binance-wallet"
   | "metamask"

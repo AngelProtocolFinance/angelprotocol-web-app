@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
-import { ChainId } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
@@ -18,7 +17,7 @@ export default function useKeplr() {
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
-  const [chainId, setChainId] = useState<ChainId>();
+  const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
