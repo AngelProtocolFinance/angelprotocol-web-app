@@ -1,5 +1,4 @@
 import { Chain } from "types/server/aws";
-import { ChainId, chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 
 export class LogApplicationUpdateError extends Error {
@@ -39,9 +38,11 @@ export class UnexpectedStateError extends Error {
 }
 
 export class WrongChainError extends Error {
-  constructor(expectedChain: keyof typeof chainIds) {
+  constructor(expectedChain?: string) {
     super(
-      `Connected to the wrong chain. Please connect to the ${expectedChain} chain.`
+      `Connected to the wrong chain.${
+        !expectedChain ? " " : ` Please connect to the ${expectedChain} chain.`
+      }`
     );
     this.name = "WrongChainError";
   }
@@ -58,9 +59,9 @@ export class WrongNetworkError extends Error {
 
 export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
-    const networksStr = Object.keys(chainIds).join(", ");
-
-    super(`${chainId} not supported. Supported networks: ${networksStr}`);
+    super(
+      `${chainId} not supported. Supported networks: Juno, Terra, Ethereum, Binance`
+    );
     this.name = "UnsupportedNetworkError";
   }
 }

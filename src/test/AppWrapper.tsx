@@ -6,11 +6,10 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { store } from "store/store";
-import { chainIds } from "constants/chainIds";
 
 const testnet: NetworkInfo = {
   name: "bombay",
-  chainID: chainIds.terra,
+  chainID: "pisco-1",
   lcd: "https://pisco-lcd.terra.dev",
   walletconnectID: 0,
 };

@@ -32,7 +32,7 @@ export type Connection = SingleConnection | MultiConnection;
 export type ProviderInfo = {
   providerId: ProviderId;
   logo: string;
-  chainId: ChainId;
+  chainId: string;
   address: string;
 };
 
