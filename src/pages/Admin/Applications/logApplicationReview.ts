@@ -1,4 +1,3 @@
-import { Chain } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { LogApplicationUpdateError } from "errors/errors";
 import { aws_endpoint } from "constants/urls";
@@ -6,7 +5,7 @@ import { aws_endpoint } from "constants/urls";
 interface Payload {
   PK: string;
   poll_id: string;
-  chain: Chain;
+  chain_id: string;
 }
 
 const logApplicationReview = async (payload: Payload): Promise<void> => {

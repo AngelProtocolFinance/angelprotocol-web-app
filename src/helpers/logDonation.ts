@@ -1,4 +1,4 @@
-import { Chain, TxLogPayload } from "types/server/aws";
+import { TxLogPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes_endpoint } from "constants/urls";
 
@@ -12,18 +12,18 @@ const logDonation = async (payload: TxLogPayload) => {
 
   //success = 2xx
   if (response.status < 200 || response.status > 299) {
-    throw new LogDonationFail(payload.chain, payload.transactionId);
+    throw new LogDonationFail(payload.chainId, payload.transactionId);
   }
 };
 
 export default logDonation;
 
 export class LogDonationFail extends Error {
-  chain: Chain;
+  chainId: string;
   txHash: string;
-  constructor(chain: Chain, txHash: string) {
+  constructor(chainId: string, txHash: string) {
     super();
-    this.chain = chain;
+    this.chainId = chainId;
     this.txHash = txHash;
     this.name = "LogDonationFail";
   }

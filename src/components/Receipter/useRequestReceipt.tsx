@@ -35,7 +35,7 @@ export default function useRequestReceipt() {
         step: "error",
         message: `Error processing your receipt`,
         txHash,
-        chain: wallet!.chain,
+        chainId: wallet!.chain.chain_id,
       });
       return;
     }

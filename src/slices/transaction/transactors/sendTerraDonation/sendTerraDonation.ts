@@ -57,7 +57,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chain: args.chain,
+            chainId: args.chain.chain_id,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -102,7 +102,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chain: args.chain,
+            chainId: args.wallet.network.chainID,
           });
         }
       }

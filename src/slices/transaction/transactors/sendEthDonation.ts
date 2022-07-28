@@ -64,7 +64,7 @@ export const sendEthDonation = createAsyncThunk(
           ...receipient,
           transactionId: response.hash,
           transactionDate: new Date().toISOString(),
-          chain: args.wallet.chain,
+          chainId: args.wallet.chain.chain_id,
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,

@@ -2,22 +2,22 @@ import { Chain } from "types/server/aws";
 import { IS_TEST } from "constants/env";
 
 export class LogApplicationUpdateError extends Error {
-  chain: Chain;
+  chainId: string;
   pollId: string;
-  constructor(chain: Chain, pollId: string) {
+  constructor(chainId: string, pollId: string) {
     super();
-    this.chain = chain;
+    this.chainId = chainId;
     this.pollId = pollId;
     this.name = "ApplicationReviewPollUpdateError";
   }
 }
 
 export class LogDonationFail extends Error {
-  chain: Chain;
+  chainId: string;
   txHash: string;
-  constructor(chain: Chain, txHash: string) {
+  constructor(chainId: string, txHash: string) {
     super();
-    this.chain = chain;
+    this.chainId = chainId;
     this.txHash = txHash;
     this.name = "LogDonationFail";
   }
@@ -67,10 +67,10 @@ export class UnsupportedNetworkError extends Error {
 }
 
 export class TxResultFail extends Error {
-  chain: Chain;
+  chainId: string;
   txHash: string;
   constructor(
-    chain: Chain,
+    chainId: string,
     txHash: string,
     height: number,
     code: number,
@@ -79,7 +79,7 @@ export class TxResultFail extends Error {
     super(
       `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`
     );
-    this.chain = chain;
+    this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFailt";
   }

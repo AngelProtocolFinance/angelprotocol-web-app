@@ -71,7 +71,8 @@ export type ErrorStage = {
   step: "error";
   message: string;
   txHash?: string;
-  chain?: Chain;
+  chainId?: string;
+  chain?: never;
 };
 
 export type KYCStage = {

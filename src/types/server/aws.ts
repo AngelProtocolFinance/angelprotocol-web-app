@@ -54,7 +54,7 @@ export type ReceiptPayload = KYCData & {
 type TxBase = {
   transactionId: string;
   transactionDate: string;
-  chain: Chain;
+  chainId: string;
   amount: number;
   splitLiq: string; //"50"
   denomination: string;
