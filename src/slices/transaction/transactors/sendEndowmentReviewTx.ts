@@ -55,7 +55,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
-        chainId: args.wallet.chain.chain_id,
+        chain: args.wallet.chain,
       });
 
       if (isDeliverTxSuccess(response)) {
@@ -64,7 +64,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
-            chainId: args.wallet.chain.chain_id,
+            chain: args.wallet.chain,
             successLink: args.successLink,
           });
 

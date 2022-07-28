@@ -18,7 +18,7 @@ import toBase64 from "helpers/toBase64";
 import {
   TxResultFail,
   WalletDisconnectError,
-  WrongNetworkError,
+  WrongChainError,
 } from "errors/errors";
 import { GAS_PRICE } from "constants/currency";
 
@@ -119,7 +119,7 @@ export default class Contract {
       throw new WalletDisconnectError();
     }
     if (this.wallet.chain.type !== "juno-native") {
-      throw new WrongNetworkError("Juno");
+      throw new WrongChainError("juno");
     }
   }
 }

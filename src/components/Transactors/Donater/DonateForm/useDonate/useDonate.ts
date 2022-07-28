@@ -45,6 +45,7 @@ export default function useDonate() {
         dispatch(
           sendTerraDonation({
             wallet: terraWallet,
+            chain: wallet.chain,
             tx: terraTx!,
             donateValues: data,
             kycData,

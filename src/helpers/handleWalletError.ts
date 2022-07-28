@@ -13,6 +13,7 @@ import {
   TxResultFail,
   UnsupportedNetworkError,
   WalletDisconnectError,
+  WrongChainError,
   WrongNetworkError,
 } from "errors/errors";
 
@@ -22,6 +23,8 @@ export default function handleWalletError(error: any, handler: StageUpdater) {
   } else if (error instanceof WalletDisconnectError) {
     handler({ step: "error", message: "Wallet is not connected" });
   } else if (error instanceof UnsupportedNetworkError) {
+    handler({ step: "error", message: error.message });
+  } else if (error instanceof WrongChainError) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof WrongNetworkError) {
     handler({ step: "error", message: error.message });

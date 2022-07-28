@@ -109,7 +109,7 @@ export type Chain = {
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   chain_name: string; // Avalanche Fuji Testnet
   native_currency: Token;
-  network_type: string;
+  network_type: "mainnet" | "testnet";
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
   type: "juno-native" | "terra-native" | "evm-native"; // | "sol" | "btc" | ...
