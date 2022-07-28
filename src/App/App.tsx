@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
+import ErrorBoundary from "errors/ErrorBoundary";
 import AppFoot from "./AppFoot";
 import DappHead from "./DappHead";
 import Views from "./Views";
@@ -37,14 +38,16 @@ export default function App() {
         </div>
       ) : (
         <div className="grid grid-rows-a1">
-          <WalletProvider {...chainOptions}>
-            <WalletContext>
-              <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-                <DappHead />
-                <Views />
-              </ModalContext>
-            </WalletContext>
-          </WalletProvider>
+          <ErrorBoundary>
+            <WalletProvider {...chainOptions}>
+              <WalletContext>
+                <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+                  <DappHead />
+                  <Views />
+                </ModalContext>
+              </WalletContext>
+            </WalletProvider>
+          </ErrorBoundary>
         </div>
       )}
       <AppFoot />
