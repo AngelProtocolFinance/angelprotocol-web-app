@@ -59,7 +59,7 @@ export class WrongNetworkError extends Error {
 export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
     super(
-      `${chainId} not supported. Supported networks: Juno, Terra, Ethereum, Binance`
+      `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`
     );
     this.name = "UnsupportedNetworkError";
   }

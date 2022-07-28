@@ -26,7 +26,7 @@ export default function useRequestReceipt() {
       updateStage({ step: "initial", kycData: kycData });
       return;
     }
-    const { txHash } = prevTxDetails;
+    const { chainId, txHash } = prevTxDetails;
     updateStage({ step: "submit", message: "Submitting receipt request" });
     const response = await submitRequest(data);
 
@@ -35,7 +35,7 @@ export default function useRequestReceipt() {
         step: "error",
         message: `Error processing your receipt`,
         txHash,
-        chainId: wallet!.chain.chain_id,
+        chainId,
       });
       return;
     }

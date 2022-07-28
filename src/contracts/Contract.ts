@@ -65,7 +65,7 @@ export default class Contract {
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
-    return validateTransactionSuccess(result, this.wallet!.chain.chain_id);
+    return validateTransactionSuccess(result, chain_id);
   }
 
   createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
@@ -149,11 +149,11 @@ function extractFeeNum(fee: StdFee, denom: string): number {
 
 function validateTransactionSuccess(
   result: DeliverTxResponse,
-  chainId: string
+  chain_id: string
 ): DeliverTxResponse {
   if (isDeliverTxFailure(result)) {
     throw new TxResultFail(
-      chainId,
+      chain_id,
       result.transactionHash,
       result.height,
       result.code,

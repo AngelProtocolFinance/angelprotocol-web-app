@@ -14,7 +14,7 @@ import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
 type TerraDonateArgs = {
   wallet: ConnectedWallet | undefined;
-  chain: Chain;
+  chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -57,7 +57,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId: args.chain.chain_id,
+            chainId: args.wallet.network.chainID,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,

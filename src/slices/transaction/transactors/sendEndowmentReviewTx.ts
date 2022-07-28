@@ -80,7 +80,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chainId: args.wallet.chain.chain_id,
+            chain_id: args.wallet.chain.chain_id,
             PK: args.applicationId,
           });
 

@@ -38,7 +38,6 @@ export const sendEthDonation = createAsyncThunk(
       );
 
       const signer = provider.getSigner();
-      const walletAddress = await signer.getAddress();
       const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
@@ -68,7 +67,7 @@ export const sendEthDonation = createAsyncThunk(
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,
-          walletAddress,
+          walletAddress: args.wallet.address,
         });
       }
       updateStage({
