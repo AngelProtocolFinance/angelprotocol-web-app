@@ -40,7 +40,7 @@ export class WrongChainError extends Error {
   constructor(expectedChain?: string) {
     super(
       `Connected to the wrong chain.${
-        !expectedChain ? " " : ` Please connect to the ${expectedChain} chain.`
+        !expectedChain ? "" : ` Please connect to the ${expectedChain} chain.`
       }`
     );
     this.name = "WrongChainError";
