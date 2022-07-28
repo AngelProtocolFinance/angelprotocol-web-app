@@ -11,7 +11,6 @@ import {
 } from "@cosmjs/stargate";
 import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
-import { Chain } from "types/server/aws";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getKeplrClient from "helpers/getKeplrClient";

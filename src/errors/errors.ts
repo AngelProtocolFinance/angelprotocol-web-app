@@ -1,4 +1,3 @@
-import { Chain } from "types/server/aws";
 import { IS_TEST } from "constants/env";
 
 export class LogApplicationUpdateError extends Error {
