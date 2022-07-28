@@ -7,10 +7,10 @@ import CW20 from "contracts/CW20";
 import createAuthToken from "helpers/createAuthToken";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
-import { apes } from "../apes";
-import { getERC20Holdings } from "../helpers/getERC20Holdings";
+import { apes } from "./apes";
+import { getERC20Holdings } from "./helpers/getERC20Holdings";
 
-const tokens_api = apes.injectEndpoints({
+const chains_api = apes.injectEndpoints({
   endpoints: (builder) => ({
     tokens: builder.query<Token[], unknown>({
       query: () => {
@@ -108,7 +108,7 @@ const tokens_api = apes.injectEndpoints({
   }),
 });
 
-export const { useTokensQuery, useChainQuery } = tokens_api;
+export const { useTokensQuery, useChainQuery } = chains_api;
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
   const cw20BalancePromises = chain.tokens

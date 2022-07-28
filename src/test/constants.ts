@@ -1,4 +1,3 @@
-import { Token } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 

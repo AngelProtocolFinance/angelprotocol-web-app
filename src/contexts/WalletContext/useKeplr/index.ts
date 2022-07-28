@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
-import { chainIDs } from "constants/chainIDs";
 import { IS_TEST } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
-import { juno_test } from "./chains";
+import { juno_test_chain_info } from "./chains";
 
+const CHAIN_ID = IS_TEST ? "uni-3" : "juno-1";
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 
@@ -16,8 +16,8 @@ export default function useKeplr() {
   const lastAction = retrieveUserAction(actionKey);
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
-  const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<chainIDs>();
+  const [address, setAddress] = useState<string>("");
+  const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
@@ -28,19 +28,15 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      let chainId: chainIDs;
       if (IS_TEST) {
-        chainId = chainIDs.juno_test;
-        await dwindow.keplr.experimentalSuggestChain(juno_test);
-      } else {
-        chainId = chainIDs.juno_main;
+        await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
-      await dwindow.keplr.enable(chainId);
-      const key = await dwindow.keplr.getKey(chainId);
+      await dwindow.keplr.enable(CHAIN_ID);
+      const key = await dwindow.keplr.getKey(CHAIN_ID);
 
       setAddress(key.bech32Address);
-      setChainId(chainId);
+      setChainId(CHAIN_ID);
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
@@ -76,17 +72,20 @@ export default function useKeplr() {
 
   function disconnect() {
     if (!address) return;
-    setAddress(undefined);
+    setAddress("");
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
   }
 
-  const providerInfo: ProviderInfo = {
-    logo: providerIcons.keplr,
-    providerId: "keplr",
-    chainId: chainId || chainIDs.juno_main,
-    address: address || "",
-  };
+  const providerInfo: ProviderInfo | undefined =
+    address && chainId
+      ? {
+          logo: providerIcons.keplr,
+          providerId: "keplr",
+          chainId,
+          address,
+        }
+      : undefined;
 
   //connection object to render <Connector/>
   const connection: Connection = {
@@ -99,6 +98,6 @@ export default function useKeplr() {
     connection,
     disconnect,
     isLoading,
-    providerInfo: (address && providerInfo) || undefined,
+    providerInfo,
   };
 }

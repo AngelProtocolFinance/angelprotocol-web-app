@@ -60,7 +60,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: args.wallet.chain.chain_id,
+          chain: args.wallet.chain,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });

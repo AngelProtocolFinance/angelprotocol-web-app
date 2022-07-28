@@ -10,9 +10,9 @@ const GAS_PRICES = [
   new Coin(denoms.uluna, 5.665),
 ];
 
-export default function getTerraClient(chain_id: string, lcd_url: string) {
+export default function getTerraClient(chainID: string, lcd_url: string) {
   return new LCDClient({
-    chainID: chain_id,
+    chainID,
     URL: lcd_url,
     gasAdjustment: GAS_ADJUSTMENT, //use gas units 20% greater than estimate
     gasPrices: GAS_PRICES,

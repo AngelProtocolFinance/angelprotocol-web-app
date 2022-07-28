@@ -4,7 +4,6 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { ProviderId, ProviderInfo, SingleConnection } from "./types";
-import { chainIDs } from "constants/chainIDs";
 
 export default function useTerra() {
   const {
@@ -24,7 +23,7 @@ export default function useTerra() {
           (connection?.identifier as ProviderId) ||
           connection.type.toLowerCase(),
         logo: connection?.icon!,
-        chainId: network.chainID as chainIDs,
+        chainId: network.chainID,
         address: wallets[0].terraAddress,
       }
     : undefined;

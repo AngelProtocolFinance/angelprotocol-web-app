@@ -38,9 +38,6 @@ export const sendEthDonation = createAsyncThunk(
       );
 
       const signer = provider.getSigner();
-      const walletAddress = await signer.getAddress();
-      const chainNum = await signer.getChainId();
-      const chainId = `${chainNum}`;
       const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
@@ -66,18 +63,18 @@ export const sendEthDonation = createAsyncThunk(
           ...receipient,
           transactionId: response.hash,
           transactionDate: new Date().toISOString(),
-          chainId,
+          chainId: args.wallet.chain.chain_id,
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,
-          walletAddress,
+          walletAddress: args.wallet.address,
         });
       }
       updateStage({
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
-        chainId,
+        chain: args.wallet.chain,
         isShareEnabled: true,
       });
     } catch (error) {

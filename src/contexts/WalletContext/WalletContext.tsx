@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, Token } from "types/server/aws";
-import { useChainQuery } from "services/apes/tokens/tokens";
+import { useChainQuery } from "services/apes/chains";
 import { WalletDisconnectError } from "errors/errors";
 import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";

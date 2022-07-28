@@ -1,5 +1,5 @@
 import { fromUtf8 } from "@cosmjs/encoding";
-import { Charity, Token } from "types/server/aws";
+import { Charity } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";

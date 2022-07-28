@@ -1,3 +1,5 @@
+import { IS_TEST } from "constants/env";
+
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
@@ -27,20 +29,39 @@ export class WalletDisconnectError extends Error {
   }
 }
 
-type Network = "Juno" | "Terra" | "Ethereum" | "Binance";
+export class UnexpectedStateError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UnexpectedStateError";
+  }
+}
+
+export class WrongChainError extends Error {
+  constructor(expectedChain?: string) {
+    super(
+      `Connected to the wrong chain.${
+        !expectedChain ? " " : ` Please connect to the ${expectedChain} chain.`
+      }`
+    );
+    this.name = "WrongChainError";
+  }
+}
+
 export class WrongNetworkError extends Error {
-  constructor(correctNetwork: Network) {
-    super();
+  constructor() {
+    super(
+      `Please connect to network ${IS_TEST ? "testnet" : "mainnet"} network.`
+    );
     this.name = "WrongNetworkError";
-    this.message = `Connected to the wrong network. Please connect to the ${correctNetwork} chain.`;
   }
 }
 
 export class UnsupportedNetworkError extends Error {
   constructor(chainId: string) {
-    super();
+    super(
+      `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`
+    );
     this.name = "UnsupportedNetworkError";
-    this.message = `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`;
   }
 }
 
@@ -54,23 +75,22 @@ export class TxResultFail extends Error {
     code: number,
     rawLog?: string
   ) {
-    super();
+    super(
+      `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`
+    );
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFailt";
-    this.message = `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`;
   }
 }
 
 export class WalletError extends Error {
   //based on EIP1193 error spec
   code: number;
-  message: string;
   data?: unknown;
   constructor(message: string, code: number, data?: unknown) {
-    super();
+    super(message);
     this.code = code;
-    this.message = message;
     this.data = data;
   }
 }
