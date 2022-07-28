@@ -102,6 +102,8 @@ export type Token = {
     | "ibc";
 };
 
+export type NetworkType = "mainnet" | "testnet";
+
 // APES chain type returned by /chain/{chain_id}
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
@@ -109,7 +111,7 @@ export type Chain = {
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   chain_name: string; // Avalanche Fuji Testnet
   native_currency: Token;
-  network_type: "mainnet" | "testnet";
+  network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
   type: "juno-native" | "terra-native" | "evm-native"; // | "sol" | "btc" | ...
