@@ -2,9 +2,9 @@ import { Coin } from "@cosmjs/proto-signing";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
+import contract_querier from "services/juno/contract_querier";
+import CW20 from "contracts/CW20";
 import createAuthToken from "helpers/createAuthToken";
-import getKeplrClient from "helpers/getKeplrClient";
-import getTerraClient from "helpers/getTerraClient";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
@@ -48,10 +48,7 @@ const tokens_api = apes.injectEndpoints({
             // checking providerId to know which specific wallet is connected
             // this way once Terra v2 is enabled on Keplr again, the users will be able to
             // fetch their balances even when using Keplr
-            const cw20Balances =
-              args.providerInfo.providerId === "keplr"
-                ? await getKeplrCW20Balances(chain, address)
-                : await getTerraStationCW20Balances(chain, address);
+            const cw20Balances = await getCW20Balance(chain, address);
 
             const allBalances = nativeBalances.concat(cw20Balances);
 
@@ -113,36 +110,19 @@ const tokens_api = apes.injectEndpoints({
 
 export const { useTokensQuery, useChainQuery } = tokens_api;
 
-async function getKeplrCW20Balances(
-  chain: Chain,
-  walletAddress: string
-): Promise<Coin[]> {
-  const cosmosClient = await getKeplrClient(chain.chain_id, chain.rpc_url);
-
-  const cw20BalancePromises = chain.tokens
-    .filter((x) => x.type === "cw20")
-    .map((x) => cosmosClient.getBalance(walletAddress, x.token_id));
-
-  const cw20Balances = await Promise.all(cw20BalancePromises);
-  return cw20Balances;
-}
-
-async function getTerraStationCW20Balances(
-  chain: Chain,
-  walletAddress: string
-): Promise<Coin[]> {
-  const terraClient = getTerraClient(chain.chain_id, chain.rpc_url);
-
+async function getCW20Balance(chain: Chain, walletAddress: string) {
   const cw20BalancePromises = chain.tokens
     .filter((x) => x.type === "cw20")
     .map((x) =>
-      terraClient.wasm
-        .contractQuery<{ balance: string }>(x.token_id, {
-          balance: { address: walletAddress },
-        })
-        .then((data) => ({
+      fetch(
+        `${chain.lcd_url}${contract_querier(
+          new CW20(undefined, x.token_id).balance(walletAddress)
+        )}`
+      )
+        .then((res) => res.json())
+        .then((res: { data: { balance: string } }) => ({
           denom: x.token_id,
-          amount: data.balance,
+          amount: res.data.balance,
         }))
     );
 
