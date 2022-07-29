@@ -57,14 +57,12 @@ export class WrongChainError extends Error {
 }
 
 export class WrongNetworkError extends APError {
-  dismissable: boolean;
-  constructor(dismissable = true) {
+  constructor() {
     super(
       "WrongNetworkError",
       `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`,
-      dismissable
+      false
     );
-    this.dismissable = dismissable;
   }
 }
 
