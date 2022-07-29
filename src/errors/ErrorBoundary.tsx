@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
-import ErrorDisplayer from "./ErrorDisplayer";
+import Icon from "components/Icon";
 
 type Props = PropsWithChildren<{}>;
 
@@ -7,22 +7,26 @@ type State = { error?: Error };
 
 // https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
 export default class ErrorBoundary extends Component<Props, State> {
-  public state: State = {};
+  state: State = {};
 
-  public static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI.
     return { error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
   }
 
-  public render() {
-    return (
-      <ErrorDisplayer error={this.state.error}>
-        {this.props.children}
-      </ErrorDisplayer>
-    );
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Icon type="Warning" className="text-2xl" />
+          <span>Something went wrong</span>
+        </div>
+      );
+    }
+    return this.props.children;
   }
 }
