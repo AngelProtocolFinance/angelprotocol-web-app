@@ -5,6 +5,7 @@ type Props = PropsWithChildren<{}>;
 
 type State = { error?: Error };
 
+// https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
 export default class ErrorBoundary extends Component<Props, State> {
   public state: State = {};
 
