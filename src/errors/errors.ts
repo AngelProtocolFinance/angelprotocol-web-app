@@ -1,5 +1,14 @@
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
+export abstract class APError extends Error {
+  dismissable: boolean;
+  constructor(name: string, message: string, dismissable = true) {
+    super(message);
+    this.name = name;
+    this.dismissable = dismissable;
+  }
+}
+
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
@@ -47,10 +56,15 @@ export class WrongChainError extends Error {
   }
 }
 
-export class WrongNetworkError extends Error {
-  constructor() {
-    super(`Please connect to ${EXPECTED_NETWORK_TYPE} network.`);
-    this.name = "WrongNetworkError";
+export class WrongNetworkError extends APError {
+  dismissable: boolean;
+  constructor(dismissable = true) {
+    super(
+      "WrongNetworkError",
+      `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`,
+      dismissable
+    );
+    this.dismissable = dismissable;
   }
 }
 

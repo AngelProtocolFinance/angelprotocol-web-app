@@ -9,7 +9,7 @@ export default function useVerifyNetwork(networkType: NetworkType) {
 
   useEffect(() => {
     if (networkType !== EXPECTED_NETWORK_TYPE) {
-      handleError(new WrongNetworkError());
+      handleError(new WrongNetworkError(false));
     }
-  }, [networkType]);
+  }, [networkType, handleError]);
 }
