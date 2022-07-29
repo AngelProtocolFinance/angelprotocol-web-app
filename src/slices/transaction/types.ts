@@ -95,7 +95,7 @@ type BaseArgs = {
   tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
-  wallet?: WalletState;
+  wallet: WalletState | undefined;
 };
 type TerraWithMsg = BaseArgs & {
   msgs: Msg[];
