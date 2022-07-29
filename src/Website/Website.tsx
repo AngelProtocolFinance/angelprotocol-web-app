@@ -11,13 +11,14 @@ const Donors = lazy(() => import("./Donors/Donors"));
 const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));
 
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+);
+
 const Website = () => {
   const location = useLocation();
   useScrollTop(location.pathname);
 
-  const LoaderComponent = () => (
-    <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
-  );
   return (
     <div className="grid grid-rows-1a bg-white">
       <WebHead />
