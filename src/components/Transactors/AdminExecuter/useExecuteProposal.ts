@@ -21,6 +21,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendCosmosTx({
+        wallet,
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,
       })

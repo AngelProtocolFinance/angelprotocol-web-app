@@ -41,13 +41,14 @@ export const registrar_api = junoApi.injectEndpoints({
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         return res.data.endowments.reduce((result, profile) => {
-          if (!profile.un_sdg || profile.tier === "Level1") {
+          const { un_sdg, tier } = profile;
+          if (un_sdg === undefined || tier === "Level1") {
             return result;
           } else {
-            if (!result[profile.un_sdg]) {
-              result[profile.un_sdg] = [];
+            if (!result[un_sdg]) {
+              result[un_sdg] = [];
             }
-            result[+profile.un_sdg!].push(profile);
+            result[un_sdg].push(profile);
             return result;
           }
         }, {} as CategorizedEndowments);

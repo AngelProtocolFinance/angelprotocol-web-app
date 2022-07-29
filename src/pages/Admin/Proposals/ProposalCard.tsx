@@ -29,7 +29,7 @@ export default function ProposalCard(props: Proposal) {
         <p className="text-sm">ID: {props.id}</p>
         <Status status={props.status} />
       </div>
-      <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-white/40">
+      <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-white/40 line-clamp-2">
         {props.title}
       </p>
       <div className="flex justify-between mt-2 mb-6 text-sm">
