@@ -15,7 +15,7 @@ export default function ErrorHandler(
   }, [props.error, showModal]);
 
   const handleError = useCallback(
-    ({ message }: Error) => showModal(Popup, { message }),
+    ({ message }: Error) => showModal(Popup, { message, canBeClosed: false }),
     [showModal]
   );
 
