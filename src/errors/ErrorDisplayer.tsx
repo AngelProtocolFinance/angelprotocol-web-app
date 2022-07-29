@@ -1,21 +1,26 @@
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, createContext, useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 
-export default function ErrorDisplayer(
-  props: PropsWithChildren<{ error?: Error }>
-) {
+type State = {
+  setError: (error: Error) => void;
+};
+
+const ErrorContext = createContext<State>({ setError: (_: Error) => {} });
+
+export default function ErrorDisplayer(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
-  useEffect(() => {
-    console.log("if props.error");
+  const setError = useCallback(
+    (error: Error) => {
+      showModal(Popup, { message: error.message });
+    },
+    [showModal]
+  );
 
-    if (props.error) {
-      console.log("showModal", props.error.message);
-
-      showModal(Popup, { message: props.error.message });
-    }
-  }, [props.error]);
-
-  return <>{props.children}</>;
+  return (
+    <ErrorContext.Provider value={{ setError }}>
+      {props.children}
+    </ErrorContext.Provider>
+  );
 }

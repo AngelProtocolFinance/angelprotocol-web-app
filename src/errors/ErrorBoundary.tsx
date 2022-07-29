@@ -24,6 +24,10 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className="flex flex-col items-center justify-center gap-4">
           <Icon type="Warning" className="text-2xl" />
           <span>Something went wrong</span>
+          <span>
+            Please reload the page and if the error persists, contact
+            support@angelprotocol.io
+          </span>
         </div>
       );
     }
