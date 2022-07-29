@@ -59,7 +59,7 @@ export default function ModalContext(
     </setContext.Provider>
   );
 }
-export const setContext = createContext<Handlers>({
+const setContext = createContext<Handlers>({
   showModal: () => {},
   closeModal: () => {},
 });

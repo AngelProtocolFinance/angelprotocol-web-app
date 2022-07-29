@@ -6,7 +6,7 @@ import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -82,7 +82,7 @@ export const sendCosmosDonation = createAsyncThunk(
       }
     } catch (err) {
       console.error(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

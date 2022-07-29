@@ -10,7 +10,7 @@ import { StageUpdater } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
 import { LogApplicationUpdateError, TxResultFail } from "errors/errors";
 
-export default function handleWalletError(error: any, handler: StageUpdater) {
+export default function handleTxError(error: any, handler: StageUpdater) {
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof CreateTxFailed) {

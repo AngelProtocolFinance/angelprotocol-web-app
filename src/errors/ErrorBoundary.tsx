@@ -1,14 +1,11 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
-import { setContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
+import ErrorDisplayer from "./ErrorDisplayer";
 
 type Props = PropsWithChildren<{}>;
 
 type State = { error?: Error };
 
 export default class ErrorBoundary extends Component<Props, State> {
-  static contextType = setContext;
-
   public state: State = {};
 
   public static getDerivedStateFromError(error: Error): State {
@@ -21,10 +18,10 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    if (this.state.error) {
-      this.context.showModal(Popup, { message: this.state.error.message });
-    }
-
-    return this.props.children;
+    return (
+      <ErrorDisplayer error={this.state.error}>
+        {this.props.children}
+      </ErrorDisplayer>
+    );
   }
 }
