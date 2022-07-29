@@ -23,23 +23,23 @@ getChainOptions().then((chainOptions) => {
   ReactDOM.render(
     <StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
-          <Suspense fallback={<LoaderComponent />}>
-            <Routes>
-              <Route
-                path={`${siteRoutes.app}/*`}
-                element={
-                  <WalletProvider {...chainOptions}>
+        <WalletProvider {...chainOptions}>
+          <BrowserRouter>
+            <Suspense fallback={<LoaderComponent />}>
+              <Routes>
+                <Route
+                  path={`${siteRoutes.app}/*`}
+                  element={
                     <WalletContext>
                       <App />
                     </WalletContext>
-                  </WalletProvider>
-                }
-              />
-              <Route path={`${siteRoutes.home}*`} element={<Website />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
+                  }
+                />
+                <Route path={`${siteRoutes.home}*`} element={<Website />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </WalletProvider>
       </Provider>
     </StrictMode>,
     document.getElementById("root")
