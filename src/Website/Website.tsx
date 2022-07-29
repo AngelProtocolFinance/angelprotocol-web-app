@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import ModalContext from "contexts/ModalContext";
 import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { siteRoutes, webRoutes } from "constants/routes";
@@ -21,26 +20,21 @@ const Website = () => {
   );
   return (
     <div className="grid grid-rows-1a bg-white">
-      <ModalContext backdropClasses="fixed inset-0 z-10 bg-black/50">
-        <WebHead />
-        <Suspense fallback={<LoaderComponent />}>
-          <Routes>
-            <Route
-              path="/:url*(/+)"
-              element={<Navigate replace to={location.pathname.slice(0, -1)} />}
-            />
-            <Route path={webRoutes.contact} element={<Contact />} />
-            <Route path={webRoutes.donors} element={<Donors />} />
-            <Route path={webRoutes.charities} element={<Charities />} />
-            <Route path={webRoutes.index} element={<Home />} />
-            <Route
-              path="*"
-              element={<Navigate replace to={siteRoutes.home} />}
-            />
-          </Routes>
-        </Suspense>
-        <WebFoot />
-      </ModalContext>
+      <WebHead />
+      <Suspense fallback={<LoaderComponent />}>
+        <Routes>
+          <Route
+            path="/:url*(/+)"
+            element={<Navigate replace to={location.pathname.slice(0, -1)} />}
+          />
+          <Route path={webRoutes.contact} element={<Contact />} />
+          <Route path={webRoutes.donors} element={<Donors />} />
+          <Route path={webRoutes.charities} element={<Charities />} />
+          <Route path={webRoutes.index} element={<Home />} />
+          <Route path="*" element={<Navigate replace to={siteRoutes.home} />} />
+        </Routes>
+      </Suspense>
+      <WebFoot />
     </div>
   );
 };
