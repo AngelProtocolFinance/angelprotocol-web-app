@@ -1,13 +1,15 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
-import Icon from "components/Icon";
+import ErrorHandler from "./ErrorHandler";
 
 type Props = PropsWithChildren<{}>;
 
-type State = { error?: Error };
+type State = { error: Error | undefined };
 
 // https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
 export default class ErrorBoundary extends Component<Props, State> {
-  state: State = {};
+  state: State = {
+    error: undefined,
+  };
 
   static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI.
@@ -19,18 +21,10 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
-    if (this.state.error) {
-      return (
-        <div className="flex flex-col items-center justify-center gap-4">
-          <Icon type="Warning" className="text-2xl" />
-          <span>Something went wrong</span>
-          <span>
-            Please reload the page and if the error persists, contact
-            support@angelprotocol.io
-          </span>
-        </div>
-      );
-    }
-    return this.props.children;
+    return (
+      <ErrorHandler error={this.state.error}>
+        {this.props.children}
+      </ErrorHandler>
+    );
   }
 }
