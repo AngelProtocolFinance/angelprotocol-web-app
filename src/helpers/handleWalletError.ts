@@ -8,26 +8,11 @@ import {
 } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
-import {
-  LogApplicationUpdateError,
-  TxResultFail,
-  UnsupportedNetworkError,
-  WalletDisconnectError,
-  WrongChainError,
-  WrongNetworkError,
-} from "errors/errors";
+import { LogApplicationUpdateError, TxResultFail } from "errors/errors";
 
 export default function handleWalletError(error: any, handler: StageUpdater) {
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
-  } else if (error instanceof WalletDisconnectError) {
-    handler({ step: "error", message: "Wallet is not connected" });
-  } else if (error instanceof UnsupportedNetworkError) {
-    handler({ step: "error", message: error.message });
-  } else if (error instanceof WrongChainError) {
-    handler({ step: "error", message: error.message });
-  } else if (error instanceof WrongNetworkError) {
-    handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
