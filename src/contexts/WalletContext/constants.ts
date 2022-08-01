@@ -1,5 +1,5 @@
 import { ProviderId } from "./types";
-import { Chain } from "types/server/aws";
+import { Chain, Token } from "types/server/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";
@@ -25,20 +25,22 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
+export const placeholderToken: Token = {
+  type: "juno-native",
+  symbol: "TOKEN",
+  logo: tokenLogo,
+  decimals: 18,
+  balance: 0,
+  approved: true,
+  name: "Token",
+  token_id: "utoken",
+};
+
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
   chain_id: "juno-1",
   chain_name: "Token",
-  native_currency: {
-    type: "juno-native",
-    symbol: "TOKEN",
-    logo: tokenLogo,
-    decimals: 18,
-    balance: 0,
-    approved: true,
-    name: "Token",
-    token_id: "utoken",
-  },
+  native_currency: placeholderToken,
   network_type: EXPECTED_NETWORK_TYPE,
   rpc_url: "https://rpc-token.placeholder.com",
   lcd_url: "https://lcd-token.placeholder.com",
