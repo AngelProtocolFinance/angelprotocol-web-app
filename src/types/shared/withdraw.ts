@@ -7,7 +7,7 @@ export type VaultInfo = {
   fieldId: VaultFieldIds;
   //other needed info
 };
-export type VaultField = VaultInfo & { ustBalance: number };
+export type VaultField = VaultInfo & { nativeBalance: number };
 export type VaultFieldLimits = {
   [key in VaultFieldIds]: { addr: string; limit: number; rate: number };
 };

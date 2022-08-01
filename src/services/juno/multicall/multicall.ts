@@ -97,14 +97,14 @@ export const multicall_api = junoApi.injectEndpoints({
             (liquidHolding) => liquidHolding.address === vault.vault_addr
           );
           const vaultInfo = vaultMap[vault.vault_addr];
-          let ustBalance = 0;
+          let nativeBalance = 0;
 
           if (vaultHolding) {
-            ustBalance = new Decimal(vaultHolding.amount)
+            nativeBalance = new Decimal(vaultHolding.amount)
               .mul(vault.fx_rate)
               .toNumber();
             vaultLimits[vaultInfo.fieldId] = {
-              limit: ustBalance,
+              limit: nativeBalance,
               addr: vaultHolding.address,
               rate: new Decimal(vault.fx_rate).toNumber(),
             };
@@ -112,7 +112,7 @@ export const multicall_api = junoApi.injectEndpoints({
 
           return {
             ...vaultInfo,
-            ustBalance,
+            nativeBalance,
           };
         });
 

@@ -14,9 +14,9 @@ export default function Amount(props: VaultField) {
   } = useFormContext<WithdrawValues>();
   const { wallet } = useGetWallet();
 
-  const ustBalance = new Decimal(props.ustBalance).div(1e6);
+  const nativeBalance = new Decimal(props.nativeBalance).div(1e6);
   function setMax() {
-    setValue(props.fieldId, ustBalance.toFixed(3, Decimal.ROUND_DOWN), {
+    setValue(props.fieldId, nativeBalance.toFixed(3, Decimal.ROUND_DOWN), {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -40,7 +40,7 @@ export default function Amount(props: VaultField) {
               type="button"
               className="font-bold hover:text-angel-blue"
             >
-              {toCurrency(ustBalance.toNumber(), 3, true)}{" "}
+              {toCurrency(nativeBalance.toNumber(), 3, true)}{" "}
               {wallet?.chain.native_currency.symbol}
             </button>
           </p>
