@@ -159,22 +159,19 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         const fee = await adminContract.estimateFee([proposalMsg]);
 
         //get usd total of of sources
-
         const feeData = extractFeeData(
           fee,
           wallet.chain.native_currency.token_id
         );
         dispatch(setFee(feeData.amount));
 
-        if (feeData.amount > usdTotal) {
+        if (feeData.amount > wallet.chain.native_currency.balance) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeData.amount;
-
         setValue("total_amount", usdTotal);
-        setValue("total_receive", receiveAmount);
+        setValue("total_receive", usdTotal);
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
