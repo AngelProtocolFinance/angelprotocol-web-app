@@ -67,7 +67,7 @@ export default function useCreatePollEstimate() {
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeData.amount >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+          setError("amount", { message: "Not enough balance to pay for fees" });
           return;
         }
 

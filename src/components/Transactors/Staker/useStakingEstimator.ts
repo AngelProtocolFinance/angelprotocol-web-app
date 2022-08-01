@@ -83,7 +83,7 @@ export default function useEstimator() {
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeData.amount >= ustBalance) {
           setError("amount", {
-            message: "not enough UST to pay for fees",
+            message: "Not enough balance to pay for fees",
           });
           return;
         }
