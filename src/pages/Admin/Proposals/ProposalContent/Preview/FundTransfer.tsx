@@ -1,11 +1,16 @@
 import { FundSendMeta } from "pages/Admin/types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function FundTransfer(props: FundSendMeta["data"]) {
-  const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
+  const { wallet } = useGetWallet();
+  const denomText =
+    props.currency === denoms.uusd
+      ? wallet?.chain.native_currency.symbol
+      : "HALO";
   return (
     <PreviewContainer>
       <KeyValue _key="from">

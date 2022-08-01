@@ -3,7 +3,7 @@ import toCurrency from "helpers/toCurrency";
 type Props = {
   title: string;
   value: number;
-  symbol: string;
+  symbol: string | undefined;
   percent?: number;
   position?: string;
   precision?: number;

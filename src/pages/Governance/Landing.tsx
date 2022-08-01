@@ -7,7 +7,7 @@ import useGov from "./useGov";
 // import { app, site } from "constants/routes";
 
 export default function Landing() {
-  const { staked, percentStaked, spot_price } = useGov();
+  const { staked, percentStaked, spot_price, wallet } = useGov();
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
@@ -18,7 +18,7 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
-          symbol="UST"
+          symbol={wallet?.chain.native_currency.symbol}
           precision={6}
         />
         <Figure

@@ -33,7 +33,10 @@ export default function useTransferFunds() {
   function transferFunds(data: FundSendValues) {
     const balance =
       data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
-    const denomText = data.currency === denoms.uusd ? "UST" : "HALO";
+    const denomText =
+      data.currency === denoms.uusd
+        ? wallet?.chain.native_currency.symbol
+        : "HALO";
     if (data.amount > balance) {
       showModal(Popup, {
         message: `not enough ${denomText} balance`,

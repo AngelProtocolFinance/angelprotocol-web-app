@@ -2,6 +2,7 @@ import Decimal from "decimal.js";
 import { useEffect, useMemo, useState } from "react";
 import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 import { usePairSimul } from "services/juno/lp/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 
 export default function useGov() {
@@ -12,6 +13,7 @@ export default function useGov() {
   const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
   const haloInfo = useHaloInfo();
   const govHaloBalance = useGovHaloBalance();
+  const { wallet } = useGetWallet();
 
   useEffect(() => {
     (async () => {
@@ -28,5 +30,5 @@ export default function useGov() {
     })();
   }, [haloInfo, govHaloBalance]);
 
-  return { staked, percentStaked, spot_price: spot_price.toNumber() };
+  return { staked, percentStaked, spot_price: spot_price.toNumber(), wallet };
 }

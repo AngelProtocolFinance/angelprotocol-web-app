@@ -3,6 +3,7 @@ import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { VaultField } from "types/shared/withdraw";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import toCurrency from "helpers/toCurrency";
 
 export default function Amount(props: VaultField) {
@@ -11,6 +12,7 @@ export default function Amount(props: VaultField) {
     setValue,
     formState: { errors },
   } = useFormContext<WithdrawValues>();
+  const { wallet } = useGetWallet();
 
   const ustBalance = new Decimal(props.ustBalance).div(1e6);
   function setMax() {
@@ -38,7 +40,8 @@ export default function Amount(props: VaultField) {
               type="button"
               className="font-bold hover:text-angel-blue"
             >
-              {toCurrency(ustBalance.toNumber(), 3, true)} UST
+              {toCurrency(ustBalance.toNumber(), 3, true)}{" "}
+              {wallet?.chain.native_currency.symbol}
             </button>
           </p>
         </div>

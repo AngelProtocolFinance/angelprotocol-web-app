@@ -29,7 +29,8 @@ export default function Balance() {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(balance, 3, true)} {is_buy ? "UST" : "HALO"}
+        {toCurrency(balance, 3, true)}{" "}
+        {is_buy ? wallet?.chain.native_currency.symbol : "HALO"}
       </button>
     </p>
   );
