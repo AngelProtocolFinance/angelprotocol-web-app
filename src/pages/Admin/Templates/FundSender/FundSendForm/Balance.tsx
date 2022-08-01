@@ -1,19 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
+import { denoms, symbols } from "constants/currency";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<FundSendValues>();
   const currency = watch("currency");
   const haloBalance = watch("haloBalance");
-  const nativeBalance = watch("nativeBalance");
-  const { wallet } = useGetWallet();
+  const usdBalance = watch("usdBalance");
 
-  const displayBalance = currency === denoms.uusd ? nativeBalance : haloBalance;
-  const denomText =
-    currency === denoms.uusd ? wallet?.chain.native_currency.symbol : "HALO";
+  const displayBalance = currency === denoms.axlusdc ? usdBalance : haloBalance;
 
   function setMax() {
     setValue("amount", displayBalance, {
@@ -29,7 +25,7 @@ export default function Balance() {
     >
       <span className="uppercase text-xs">balance:</span>
       <span>{toCurrency(displayBalance, 3, true)}</span>
-      <span>{denomText}</span>
+      <span>{symbols[currency]}</span>
     </button>
   );
 }

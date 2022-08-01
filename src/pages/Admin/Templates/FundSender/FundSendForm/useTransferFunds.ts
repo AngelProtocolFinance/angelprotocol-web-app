@@ -16,7 +16,7 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import CW20 from "contracts/CW20";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
+import { denoms, symbols } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";
 
 export default function useTransferFunds() {
@@ -32,14 +32,10 @@ export default function useTransferFunds() {
 
   function transferFunds(data: FundSendValues) {
     const balance =
-      data.currency === denoms.uusd ? data.nativeBalance : data.haloBalance;
-    const denomText =
-      data.currency === denoms.uusd
-        ? wallet?.chain.native_currency.symbol
-        : "HALO";
+      data.currency === denoms.axlusdc ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
       showModal(Popup, {
-        message: `not enough ${denomText} balance`,
+        message: `not enough ${symbols[data.currency]} balance`,
       });
       return;
     }
@@ -57,7 +53,7 @@ export default function useTransferFunds() {
         [
           {
             amount: new Decimal(data.amount).mul(1e6).divToInt(1).toString(),
-            denom: "uusd",
+            denom: denoms.axlusdc,
           },
         ],
         data.recipient

@@ -49,13 +49,13 @@ export default function useEstimator() {
         if (is_stake) {
           //check $HALO balance
           if (balance.div(1e6).lt(debounced_amount)) {
-            setError("amount", { message: "not enough HALO balance" });
+            setError("amount", { message: "not enough balance" });
             return;
           }
         } else {
           if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
             setError("amount", {
-              message: "not enough staked halo less locked",
+              message: "not enough staked balance",
             });
             return;
           }

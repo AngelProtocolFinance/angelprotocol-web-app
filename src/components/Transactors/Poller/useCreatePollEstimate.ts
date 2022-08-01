@@ -40,7 +40,7 @@ export default function useCreatePollEstimate() {
 
         const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         if (amount >= haloBalance) {
-          setError("amount", { message: "not enough HALO balance" });
+          setError("amount", { message: "not enough balance" });
           return;
         }
 
