@@ -5,7 +5,6 @@ const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate
 
 // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
 const GAS_PRICES = [
-  new Coin(denoms.uusd, 0.15),
   //for classic, pisco is 0.15
   new Coin(denoms.uluna, 5.665),
 ];
