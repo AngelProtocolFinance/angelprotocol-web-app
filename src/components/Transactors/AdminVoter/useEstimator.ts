@@ -12,8 +12,6 @@ import {
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
-import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);

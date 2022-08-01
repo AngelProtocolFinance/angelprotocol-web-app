@@ -10,9 +10,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<TxOptions>();

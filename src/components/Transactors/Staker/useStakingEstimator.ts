@@ -12,10 +12,8 @@ import {
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
 import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {

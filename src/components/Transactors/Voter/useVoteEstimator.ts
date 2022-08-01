@@ -15,9 +15,7 @@ import {
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 
 export default function useVoteEstimator() {
   const {
