@@ -53,9 +53,8 @@ export default function useClaimEstimator() {
         );
         dispatch(setFee(feeData.amount));
 
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
-        if (feeData.amount >= ustBalance) {
+        if (feeData.amount >= wallet.chain.native_currency.balance) {
           dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }

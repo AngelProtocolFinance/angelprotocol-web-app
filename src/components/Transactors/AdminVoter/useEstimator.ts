@@ -50,9 +50,8 @@ export default function useEstimator() {
         );
         dispatch(setFee(feeData.amount));
 
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees
-        if (feeData.amount >= ustBalance) {
+        if (feeData.amount >= wallet.chain.native_currency.balance) {
           dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }
