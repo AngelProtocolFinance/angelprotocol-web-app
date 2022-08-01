@@ -106,6 +106,8 @@ export default function useSwapEstimator() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         if (is_buy && feeData.amount + debounced_amount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
@@ -115,7 +117,6 @@ export default function useSwapEstimator() {
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

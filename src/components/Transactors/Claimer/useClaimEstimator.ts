@@ -51,6 +51,8 @@ export default function useClaimEstimator() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
         if (feeData.amount >= ustBalance) {
@@ -58,7 +60,6 @@ export default function useClaimEstimator() {
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

@@ -63,13 +63,14 @@ export default function useCreatePollEstimate() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeData.amount >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {

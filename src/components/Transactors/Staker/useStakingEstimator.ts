@@ -78,6 +78,8 @@ export default function useEstimator() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeData.amount >= ustBalance) {
           setError("amount", {
@@ -86,7 +88,6 @@ export default function useEstimator() {
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

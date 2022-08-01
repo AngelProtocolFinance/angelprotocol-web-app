@@ -92,6 +92,8 @@ export default function useVoteEstimator() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
         if (feeData.amount >= ustBalance) {
@@ -99,7 +101,6 @@ export default function useVoteEstimator() {
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {

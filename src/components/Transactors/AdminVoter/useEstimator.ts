@@ -48,6 +48,8 @@ export default function useEstimator() {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees
         if (feeData.amount >= ustBalance) {
@@ -55,7 +57,6 @@ export default function useEstimator() {
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

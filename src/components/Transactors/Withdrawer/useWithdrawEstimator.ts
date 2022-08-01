@@ -164,6 +164,8 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           fee,
           wallet.chain.native_currency.token_id
         );
+        dispatch(setFee(feeData.amount));
+
         if (feeData.amount > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
@@ -173,7 +175,6 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
