@@ -2,7 +2,6 @@ import { Fee, Msg } from "@terra-money/terra.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getTerraClient from "helpers/getTerraClient";
 import { WalletDisconnectError } from "errors/errors";
-import { denoms } from "constants/currency";
 
 export default async function estimateTerraFee(
   wallet: WalletState | undefined,
@@ -18,6 +17,6 @@ export default async function estimateTerraFee(
 
   return await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
-    { msgs, feeDenoms: [denoms.uluna] }
+    { msgs, feeDenoms: [wallet.chain.native_currency.token_id] }
   );
 }

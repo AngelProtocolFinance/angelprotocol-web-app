@@ -26,7 +26,6 @@ import extractFeeData from "helpers/extractFeeData";
 import { getProvider } from "helpers/getProvider";
 import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
@@ -128,7 +127,7 @@ export default function useEstimator() {
             .toString();
           if (selectedToken.type.includes("native")) {
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-              new Coin(denoms.uluna, amount),
+              new Coin(selectedToken.token_id, amount),
             ]);
             const fee = await estimateTerraFee(wallet, [msg]);
 

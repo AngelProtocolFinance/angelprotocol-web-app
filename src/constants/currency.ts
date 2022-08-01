@@ -2,7 +2,6 @@ import { GasPrice } from "@cosmjs/stargate";
 import { IS_TEST } from "./env";
 
 export const denoms = {
-  uluna: "uluna",
   uusd: "uusd",
   halo: "halo",
 };
