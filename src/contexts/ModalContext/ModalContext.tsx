@@ -49,7 +49,7 @@ export default function ModalContext(
     setParentId(undefined);
     // pointer to last active dom element
     lastActiveElRef.current?.focus();
-  }, []);
+  }, [isClosable]);
 
   const Content = !!Modal && (
     <>
