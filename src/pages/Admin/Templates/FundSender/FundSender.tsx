@@ -10,18 +10,14 @@ export default function FundSender() {
   // const cw3address =
   //   cwContracts === "apTeam" ? contracts.apCW3 : cwContracts.cw3;
 
-  return <FundSendContext {...{ haloBalance: 0, ustBalance: 0 }} />;
-}
-
-function FundSendContext(props: { haloBalance: number; ustBalance: number }) {
   const methods = useForm<FundSendValues>({
     resolver: yupResolver(fundSendSchema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       currency: "uusd",
-      haloBalance: props.haloBalance,
-      ustBalance: props.ustBalance,
+      haloBalance: 0,
+      nativeBalance: 0,
     },
   });
 
