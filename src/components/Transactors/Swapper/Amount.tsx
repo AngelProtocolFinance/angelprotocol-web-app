@@ -2,9 +2,10 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import haloLogo from "assets/icons/currencies/halo_outline.png";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { placeholderToken } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
+import { denoms } from "constants/currency";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 
@@ -16,13 +17,18 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<SwapValues>();
   const { wallet } = useGetWallet();
-  const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
+  const is_buy = watch("is_buy");
 
   function toggle_settings() {
     show_settings((p) => !p);
   }
 
-  const is_buy = watch("is_buy");
+  const displayToken =
+    (is_buy
+      ? wallet?.chain.native_currency
+      : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo)) ||
+    placeholderToken;
+
   return (
     <div className="grid mt-2">
       <div className="grid grid-cols-1a mb-1">
@@ -42,7 +48,7 @@ export default function Amount() {
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
-        <Balance />
+        <Balance token={displayToken} />
         <label
           htmlFor="amount"
           className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading rounded-md"
@@ -51,11 +57,11 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={is_buy ? native_currency.logo : haloLogo}
+            src={displayToken.logo}
             alt=""
           />
           <span className="block font-bold text-2xl">
-            {is_buy ? native_currency.symbol : "HALO"}
+            {displayToken.symbol}
           </span>
         </label>
 
