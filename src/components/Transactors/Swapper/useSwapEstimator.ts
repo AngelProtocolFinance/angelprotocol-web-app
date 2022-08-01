@@ -12,6 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeData from "helpers/extractFeeData";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -98,19 +99,23 @@ export default function useSwapEstimator() {
               debounced_slippage
             );
 
-        const { fee, feeNum } = await contract.estimateFee([swapMsg]);
+        const fee = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= junoBalance) {
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        if (is_buy && feeData.amount + debounced_amount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= junoBalance) {
+        if (!is_buy && feeData.amount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

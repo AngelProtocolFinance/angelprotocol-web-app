@@ -8,6 +8,7 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
+import extractFeeData from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -37,9 +38,13 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const { fee, feeNum } = await contract.estimateFee(args.msgs);
+        const fee = await contract.estimateFee(args.msgs);
 
-        if (feeNum > args.wallet.displayCoin.balance) {
+        const feeData = extractFeeData(
+          fee,
+          args.wallet.chain.native_currency.token_id
+        );
+        if (feeData.amount > args.wallet.displayCoin.balance) {
           updateState({
             step: "error",
             message: `Not enough balance to pay for fees`,

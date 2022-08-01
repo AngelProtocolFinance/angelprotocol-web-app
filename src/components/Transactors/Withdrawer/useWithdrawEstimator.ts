@@ -16,6 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 
 interface Source {
@@ -155,20 +156,24 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           JSON.stringify(proposalMeta)
         );
 
-        const { fee, feeNum } = await adminContract.estimateFee([proposalMsg]);
+        const fee = await adminContract.estimateFee([proposalMsg]);
 
         //get usd total of of sources
 
-        if (feeNum > usdTotal) {
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        if (feeData.amount > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeNum;
+        const receiveAmount = usdTotal - feeData.amount;
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

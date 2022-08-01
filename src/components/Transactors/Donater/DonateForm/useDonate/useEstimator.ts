@@ -22,6 +22,7 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeData from "helpers/extractFeeData";
 import { getProvider } from "helpers/getProvider";
 import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
@@ -77,10 +78,18 @@ export default function useEstimator() {
               debounced_amount,
               ap_wallets.juno
             );
-            const { fee, feeNum } = await contract.estimateFee([msg]);
-            dispatch(setFee(feeNum));
+            const fee = await contract.estimateFee([msg]);
 
-            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            const feeData = extractFeeData(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeData.amount));
+
+            if (
+              debounced_amount + feeData.amount >=
+              wallet.displayCoin.balance
+            ) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -93,11 +102,16 @@ export default function useEstimator() {
               debounced_amount,
               ap_wallets.juno
             );
-            const { fee, feeNum } = await contract.estimateFee([msg]);
-            dispatch(setFee(feeNum));
+            const fee = await contract.estimateFee([msg]);
+
+            const feeData = extractFeeData(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeData.amount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeNum >= wallet.displayCoin.balance) {
+            if (feeData.amount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -116,10 +130,18 @@ export default function useEstimator() {
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
               new Coin(denoms.uluna, amount),
             ]);
-            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
-            dispatch(setFee(feeNum));
+            const fee = await estimateTerraFee(wallet, [msg]);
 
-            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            const feeData = extractFeeData(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeData.amount));
+
+            if (
+              debounced_amount + feeData.amount >=
+              wallet.displayCoin.balance
+            ) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -137,10 +159,14 @@ export default function useEstimator() {
                 },
               }
             );
-            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
-            dispatch(setFee(feeNum));
+            const fee = await estimateTerraFee(wallet, [msg]);
 
-            if (feeNum >= wallet.displayCoin.balance) {
+            const feeData = extractFeeData(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeData.amount));
+            if (feeData.amount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });

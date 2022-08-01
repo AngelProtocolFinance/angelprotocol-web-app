@@ -9,6 +9,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
+import extractFeeData from "helpers/extractFeeData";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -44,16 +45,20 @@ export default function useClaimEstimator() {
         dispatch(setFormLoading(true));
         const contract = new Gov(wallet);
         const claimMsg = contract.createGovClaimMsg();
-        const { fee, feeNum } = await contract.estimateFee([claimMsg]);
+        const fee = await contract.estimateFee([claimMsg]);
 
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
-        if (feeNum >= ustBalance) {
+        if (feeData.amount >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

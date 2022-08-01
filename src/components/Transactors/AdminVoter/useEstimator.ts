@@ -11,6 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeData from "helpers/extractFeeData";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
@@ -41,16 +42,20 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
         const contract = new Admin(wallet, cwContracts);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
-        const { fee, feeNum } = await contract.estimateFee([voteMsg]);
+        const fee = await contract.estimateFee([voteMsg]);
 
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees
-        if (feeNum >= ustBalance) {
+        if (feeData.amount >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

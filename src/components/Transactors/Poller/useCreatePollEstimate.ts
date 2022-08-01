@@ -10,6 +10,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
+import extractFeeData from "helpers/extractFeeData";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
@@ -55,16 +56,20 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const { fee, feeNum } = await contract.estimateFee([pollMsgs]);
+        const fee = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeNum >= ustBalance) {
+        if (feeData.amount >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {

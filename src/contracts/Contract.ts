@@ -45,9 +45,7 @@ export default class Contract {
     return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(
-    msgs: readonly EncodeObject[]
-  ): Promise<{ fee: StdFee; feeNum: number }> {
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
@@ -57,7 +55,7 @@ export default class Contract {
       undefined
     );
     const denom = this.wallet!.chain.native_currency.token_id;
-    return createFeeResult(gasEstimation, denom);
+    return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
@@ -122,29 +120,6 @@ export default class Contract {
       throw new WrongChainError("juno");
     }
   }
-}
-
-function createFeeResult(
-  gasEstimation: number,
-  denom: string
-): {
-  fee: StdFee;
-  feeNum: number;
-} {
-  // This is the multiplier used when auto-calculating the fees
-  // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
-  const fee = calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
-
-  return {
-    fee,
-    feeNum: extractFeeNum(fee, denom),
-  };
-}
-
-function extractFeeNum(fee: StdFee, denom: string): number {
-  return new Decimal(fee.amount.find((a) => a.denom === denom)!.amount)
-    .div(1e6)
-    .toNumber();
 }
 
 function validateTransactionSuccess(

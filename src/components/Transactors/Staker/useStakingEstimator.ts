@@ -11,6 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeData from "helpers/extractFeeData";
 import getTokenBalance from "helpers/getTokenBalance";
 import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
@@ -70,18 +71,22 @@ export default function useEstimator() {
           ? contract.createGovStakeMsg(debounced_amount)
           : contract.createGovUnstakeMsg(debounced_amount);
 
-        const { fee, feeNum } = await contract.estimateFee([govMsg]);
+        const fee = await contract.estimateFee([govMsg]);
 
         //2nd balance check including fees
+        const feeData = extractFeeData(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeNum >= ustBalance) {
+        if (feeData.amount >= ustBalance) {
           setError("amount", {
             message: "not enough UST to pay for fees",
           });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
