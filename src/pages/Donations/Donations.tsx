@@ -6,7 +6,7 @@ import DonationsTable from "./DonationsTable";
 
 const headers: { key: keyof Transaction; label: string }[] = [
   { key: "name", label: "Name" },
-  { key: "ust_amount", label: "Amount" },
+  { key: "amount", label: "Amount" },
   { key: "block_timestamp", label: "Date" },
   { key: "donator", label: "Donator" },
   { key: "tx_id", label: "Transaction Hash" },

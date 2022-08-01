@@ -93,7 +93,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         if (filteredInputs.length <= 0) {
           dispatch(setFormError("No withdraw amount provided"));
           dispatch(setFee(0));
-          setValue("total_ust", 0);
+          setValue("total_amount", 0);
           setValue("total_receive", 0);
           return;
         }
@@ -173,7 +173,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         const receiveAmount = usdTotal - feeData.amount;
 
-        setValue("total_ust", usdTotal);
+        setValue("total_amount", usdTotal);
         setValue("total_receive", receiveAmount);
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));

@@ -4,7 +4,7 @@ import {
   VaultFieldLimits,
 } from "types/shared/withdraw";
 
-export type WithdrawMeta = { total_ust: number; total_receive: number };
+export type WithdrawMeta = { total_amount: number; total_receive: number };
 export type WithdrawResource = {
   accountAddr: string;
   vaultFields: VaultField[];

@@ -27,11 +27,11 @@ export function Fee() {
 export function Total() {
   const { watch } = useFormContext<WithdrawValues>();
   const { wallet } = useGetWallet();
-  const total_ust = watch("total_ust");
+  const total_amount = watch("total_amount");
   return (
     <Misc
       title="total"
-      value={`${toCurrency(total_ust, 3)} ${
+      value={`${toCurrency(total_amount, 3)} ${
         wallet?.chain.native_currency.symbol
       }`}
     />

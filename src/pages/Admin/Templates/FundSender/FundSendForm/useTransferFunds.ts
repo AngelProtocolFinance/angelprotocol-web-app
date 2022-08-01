@@ -32,7 +32,7 @@ export default function useTransferFunds() {
 
   function transferFunds(data: FundSendValues) {
     const balance =
-      data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
+      data.currency === denoms.uusd ? data.nativeBalance : data.haloBalance;
     const denomText =
       data.currency === denoms.uusd
         ? wallet?.chain.native_currency.symbol

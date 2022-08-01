@@ -222,7 +222,7 @@ export type FundSendPayload = {
   //metadata
   currency: "uusd" | "halo";
   haloBalance: number;
-  ustBalance: number;
+  nativeBalance: number;
 };
 
 export type FundSendValues = ProposalBase & FundSendPayload;

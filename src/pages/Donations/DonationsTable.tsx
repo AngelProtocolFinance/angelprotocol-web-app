@@ -59,7 +59,7 @@ export default function DonationsTable(props: {
       >
         {sortedTransactions.map((tx) => (
           <Cells key={tx.tx_id} type="td" cellClass="p-2 first:pl-0 last:pr-0">
-            <p className="text-base font-bold">$ {toCurrency(tx.ust_amount)}</p>
+            <p className="text-base font-bold">$ {toCurrency(tx.amount)}</p>
             <>{tx.block_timestamp.substring(0, 10)}</>
             <span className="font-mono">{tx.name}</span>
             <a
@@ -88,7 +88,7 @@ export default function DonationsTable(props: {
 }
 
 const headers: { key: SortKey; name: string }[] = [
-  { key: "ust_amount", name: "amount" },
+  { key: "amount", name: "amount" },
   { key: "block_timestamp", name: "date" },
   { key: "name", name: "Charity" },
   { key: "tx_id", name: "transaction hash" },

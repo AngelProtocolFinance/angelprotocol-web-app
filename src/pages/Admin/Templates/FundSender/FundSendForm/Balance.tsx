@@ -8,10 +8,10 @@ export default function Balance() {
   const { watch, setValue } = useFormContext<FundSendValues>();
   const currency = watch("currency");
   const haloBalance = watch("haloBalance");
-  const ustBalance = watch("ustBalance");
+  const nativeBalance = watch("nativeBalance");
   const { wallet } = useGetWallet();
 
-  const displayBalance = currency === denoms.uusd ? ustBalance : haloBalance;
+  const displayBalance = currency === denoms.uusd ? nativeBalance : haloBalance;
   const denomText =
     currency === denoms.uusd ? wallet?.chain.native_currency.symbol : "HALO";
 
