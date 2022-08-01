@@ -20,7 +20,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: wallet?.chain.native_currency.token_id,
               },
             },
             amount: "1000000",
@@ -40,7 +40,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: "uusd",
+            denom: this.wallet?.chain.native_currency.token_id,
           },
         }
       : {
