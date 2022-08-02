@@ -11,7 +11,9 @@ import {
   multicallTags,
   registrarTags,
 } from "services/juno/tags";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -20,13 +22,14 @@ import { useAdminResources } from "../AdminGuard";
 
 export default function PollAction(props: ProposalDetails) {
   const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { cw3 } = useAdminResources();
 
   const showAdminVoter = useAdminVoter(props.id);
 
   function executeProposal() {
-    const contract = new CW3(undefined, cw3);
+    const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
     dispatch(
       sendCosmosTx({
@@ -35,6 +38,7 @@ export default function PollAction(props: ProposalDetails) {
         tagPayloads: getTagPayloads(props.meta),
       })
     );
+    showModal(TransactionPrompt, {});
   }
 
   const isExpired = new Date() > new Date(props.expires.at_time / 1e6);

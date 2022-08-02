@@ -27,3 +27,4 @@ merge into just /Admin
 ### bug fixes
 
 - image editor submits whole edit profile proposal when clicking image crop button
+- rename duplicate services endpoint
