@@ -3,19 +3,18 @@ import { useFormContext } from "react-hook-form";
 import { AdminVoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Admin from "contracts/Admin";
+import CW3 from "contracts/CW3";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
 export default function useEstimator() {
-  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useGetWallet();
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<TxOptions>();
@@ -39,7 +38,7 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(wallet, cwContracts);
+        const contract = new CW3(wallet, "");
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const { fee, feeNum } = await contract.estimateFee([voteMsg]);
 

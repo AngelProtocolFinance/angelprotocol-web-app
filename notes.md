@@ -23,3 +23,7 @@ merge into just /Admin
 
 - rename files and folders according to folder namespace e.g if root if `Profile` then `ProfileHeader` can be just `Header`
 - separate profile loading from admin check (put admin check on profile Nav)
+
+### bug fixes
+
+- image editor submits whole edit profile proposal when clicking image crop button

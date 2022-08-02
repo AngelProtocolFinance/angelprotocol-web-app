@@ -120,8 +120,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [activeProviderInfo, coinWithBalances]);
 
-  console.log({ isProviderLoading, isLoading });
-
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
       case "metamask":

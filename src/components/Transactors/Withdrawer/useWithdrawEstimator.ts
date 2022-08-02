@@ -7,14 +7,14 @@ import { TxOptions } from "slices/transaction/types";
 import { AmountInfo } from "types/shared/withdraw";
 import { vaultMap } from "services/juno/multicall/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Account from "contracts/Account";
-import Admin from "contracts/Admin";
+import CW3 from "contracts/CW3";
 import useDebouncer from "hooks/useDebouncer";
 import processEstimateError from "helpers/processEstimateError";
 
@@ -35,7 +35,6 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
   } = useFormContext<WithdrawValues>();
 
   const { wallet } = useGetWallet();
-  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
 
@@ -147,7 +146,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 
-        const adminContract = new Admin(wallet, cwContracts);
+        const adminContract = new CW3(wallet, "");
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",
@@ -179,15 +178,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    wallet,
-    debAmounts,
-    isDebouncing,
-    isDirty,
-    isValid,
-    beneficiary,
-    cwContracts,
-  ]);
+  }, [wallet, debAmounts, isDebouncing, isDirty, isValid, beneficiary]);
 
   return { tx, wallet };
 }

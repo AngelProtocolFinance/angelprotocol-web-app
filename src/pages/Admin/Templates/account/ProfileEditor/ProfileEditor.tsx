@@ -36,25 +36,27 @@ export default function ProfileEditor() {
 }
 
 function ProfileEditContext(props: Profile) {
-  const initialProfile: UpdateProfilePayload = {
+  //initialize falsy values
+  const initialProfile: Required<UpdateProfilePayload> = {
     name: props.name,
     overview: props.overview,
-    un_sdg: props.un_sdg,
-    tier: props.tier,
-    logo: props.logo,
-    image: props.image,
-    url: props.url,
-    registration_number: props.registration_number,
-    street_address: props.street_address,
-    country_of_origin: props.country_of_origin,
-    contact_email: props.contact_email,
-    facebook: props.social_media_urls.facebook,
-    twitter: props.social_media_urls.twitter,
-    linkedin: props.social_media_urls.linkedin,
-    number_of_employees: props.number_of_employees,
-    average_annual_budget: props.average_annual_budget,
-    annual_revenue: props.annual_revenue,
-    charity_navigator_rating: props.charity_navigator_rating,
+    un_sdg: props.un_sdg || 0,
+    tier: props.tier || 0,
+    logo: props.logo || "",
+    image: props.image || "",
+    url: props.url || "",
+    registration_number: props.registration_number || "",
+    street_address: props.street_address || "",
+    country_of_origin: props.country_of_origin || "",
+    contact_email: props.contact_email || "",
+    facebook: props.social_media_urls.facebook || "",
+    twitter: props.social_media_urls.twitter || "",
+    linkedin: props.social_media_urls.linkedin || "",
+    number_of_employees: props.number_of_employees || 1,
+    average_annual_budget: props.average_annual_budget || "",
+    annual_revenue: props.annual_revenue || "",
+    charity_navigator_rating: props.charity_navigator_rating || "",
+    endow_type: "",
     // endow_type: prof,
   };
   const methods = useForm<UpdateProfileValues>({

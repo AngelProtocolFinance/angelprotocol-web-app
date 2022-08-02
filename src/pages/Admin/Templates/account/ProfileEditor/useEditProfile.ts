@@ -12,7 +12,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
@@ -72,6 +72,7 @@ export default function useEditProfile() {
     //upload if image is changed and is set to something
     if ("image" in diff && data.image) {
       //convert dataURL to file
+      showModal(Popup, { message: "Uploading image.." });
       const imageRes = await fetch(data.image);
       const imageBlob = await imageRes.blob();
       const imageFile = new File([imageBlob], `banner_${endowment}`); //use endow address as unique imageName

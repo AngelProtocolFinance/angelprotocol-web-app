@@ -1,5 +1,5 @@
 import React from "react";
-import Icon, { IconTypes } from "components/Icon";
+import Icon from "components/Icon";
 import Loader from "components/Loader";
 import useImgEditor from "./useImgEditor";
 
@@ -23,24 +23,23 @@ export default function ImgEditor() {
     >
       {(loading && <LoadingOverlay />) || (
         <div className="hidden absolute group-hover:flex">
-          <ImageControl
-            type="upload"
-            htmlFor="file__image"
-            iconType="Upload"
-            disabled={loading}
-          />
-          <ImageControl
-            type="btn"
+          <Label htmlFor="file__image">
+            <Icon type="Upload" />
+          </Label>
+          <Button
+            type="button"
             onClick={handleImageReset}
-            iconType="Undo"
             disabled={isInitial || loading}
-          />
-          <ImageControl
-            type="btn"
+          >
+            <Icon type="Undo" />
+          </Button>
+          <Button
+            type="button"
             onClick={handleOpenCropper}
-            iconType="Crop"
             disabled={isInitial || loading}
-          />
+          >
+            <Icon type="Crop" />
+          </Button>
           <input
             ref={inputRef}
             disabled={loading}
@@ -56,22 +55,14 @@ export default function ImgEditor() {
   );
 }
 
-type Common = { iconType: IconTypes; disabled?: boolean };
-type ControlProps =
-  | { type: "upload"; onClick?: never; htmlFor: string }
-  | {
-      type: "btn";
-      onClick: () => void;
-      htmlFor?: never;
-    };
-function ImageControl(props: ControlProps & Common) {
-  const { iconType, type, ...valitAttrs } = props;
-  return React.createElement(props.type === "btn" ? "button" : "label", {
-    ...valitAttrs,
-    className:
-      "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",
-    children: <Icon type={iconType} />,
-  });
+const btnStyle =
+  "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg";
+function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return <button {...props} className={btnStyle} />;
+}
+
+function Label(props: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  return <label {...props} className={btnStyle} />;
 }
 
 function LoadingOverlay() {

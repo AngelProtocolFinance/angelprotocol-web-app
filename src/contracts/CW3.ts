@@ -1,6 +1,5 @@
 import { ContractQueryArgs as CQA } from "services/types";
 import {
-  CWContracts,
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   PageOptions,
@@ -8,7 +7,6 @@ import {
   VotesPageOptions,
 } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class CW3 extends Contract {
@@ -109,12 +107,4 @@ export default class CW3 extends Contract {
       },
     });
   }
-}
-
-function getCW4Address(cws: CWContracts): string {
-  return cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
-}
-
-function getCW3Address(cws: CWContracts) {
-  return cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 }

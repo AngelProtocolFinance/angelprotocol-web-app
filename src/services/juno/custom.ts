@@ -11,7 +11,7 @@ import {
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import { contracts } from "constants/contracts";
-import { adminRoutes, appRoutes } from "constants/routes";
+import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import { junoApi } from ".";
 import contract_querier from "./contract_querier";
 import { customTags, junoTags } from "./tags";
@@ -71,7 +71,7 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         /** special case for ap admin usage */
         const proposalLink: SuccessLink = {
-          url: `/${appRoutes.admin}/${AP_ADDR}/${adminRoutes.proposals}`,
+          url: `${siteRoutes.app}/${appRoutes.admin}/${args.endowment}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         };
 

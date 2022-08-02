@@ -13,6 +13,8 @@ export default function Success(props: SuccessStage) {
   const dispatch = useSetter();
   const { chainId, txHash, message, isShareEnabled, successLink } = props;
 
+  console.log(successLink);
+
   //if no special action is needed, just shown normal acknowledge button
   const isAcknowledgeButtonShown = !isShareEnabled && !successLink;
 
