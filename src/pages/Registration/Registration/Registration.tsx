@@ -10,7 +10,7 @@ import {
 import { Button } from "../common";
 import routes from "../routes";
 import useHandleError from "../useHandleError";
-import ButtonMailTo from "./ButtonMailTo";
+import ButtonMailTo from "components/ButtonMailTo";
 
 type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({

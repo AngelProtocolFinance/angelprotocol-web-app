@@ -6,6 +6,7 @@ import {
   useRequestEmailMutation,
 } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
+import ButtonMailTo from "components/ButtonMailTo";
 import Popup from "components/Popup";
 import { Button } from "./common";
 import { FORM_ERROR } from "./constants";
@@ -102,9 +103,11 @@ export default function ConfirmEmail() {
         >
           close
         </Button>
-        <p className="mt-5 font-normal italic underline">
-          <a href="#new-form">Having trouble receiving our emails?</a>
-        </p>
+        <ButtonMailTo
+          label="Having trouble receiving our emails?"
+          mailTo="support@angelprotocol.io"
+          subject="Charity Registration: Trouble with receiving confirmation email"
+        />
       </div>
     </div>
   );
