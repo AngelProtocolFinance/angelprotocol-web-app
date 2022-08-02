@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { placeholderToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
 import { denoms } from "constants/currency";
 import Balance from "./Balance";
@@ -27,7 +27,7 @@ export default function Amount() {
     (is_buy
       ? wallet?.chain.native_currency
       : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo)) ||
-    placeholderToken;
+    placeholderChain.native_currency;
 
   return (
     <div className="grid mt-2">

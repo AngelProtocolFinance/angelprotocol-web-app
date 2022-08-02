@@ -25,7 +25,7 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
-export const placeholderToken: Token = {
+const placeholderToken: Token = {
   type: "juno-native",
   symbol: "TOKEN",
   logo: tokenLogo,
