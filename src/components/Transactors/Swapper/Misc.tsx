@@ -37,17 +37,17 @@ export function SwapRate() {
   const { wallet } = useGetWallet();
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
+
+  const formattedRatio = toCurrency(ratio, 6, true);
+  const nativeSymbol = wallet?.chain.native_currency.symbol;
+  const haloSymbol = symbols[denoms.halo];
   return (
     <Misc
       title="Rate"
       value={
         is_buy
-          ? `${toCurrency(ratio, 6, true)} ${
-              wallet?.chain.native_currency.symbol
-            } = 1 ${symbols[denoms.halo]}`
-          : `${toCurrency(ratio, 6, true)} ${symbols[denoms.halo]} = 1 ${
-              wallet?.chain.native_currency.symbol
-            }`
+          ? `${formattedRatio} ${nativeSymbol} = 1 ${haloSymbol}`
+          : `${formattedRatio} ${haloSymbol} = 1 ${nativeSymbol}`
       }
       class="font-semibold"
     />
