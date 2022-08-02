@@ -1,22 +1,57 @@
+import {
+  WalletControllerChainOptions,
+  WalletProvider,
+  getChainOptions,
+} from "@terra-money/wallet-provider";
+import { useEffect, useState } from "react";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
+import Loader from "components/Loader";
 import AppFoot from "./AppFoot";
 import DappHead from "./DappHead";
 import Views from "./Views";
 
+const backgroundColor = "bg-gradient-to-b from-blue-accent to-black-blue";
+
 export default function App() {
+  const [chainOptions, setChainOptions] =
+    useState<WalletControllerChainOptions>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedChainOptions = await getChainOptions();
+      setChainOptions(fetchedChainOptions);
+    })();
+  }, []);
+
+  if (!chainOptions) {
+    return (
+      <div
+        className={`flex h-screen items-center justify-center ${backgroundColor}`}
+      >
+        <Loader
+          bgColorClass="bg-white-grey"
+          gapClass="gap-2"
+          widthClass="w-4"
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-rows-a1a bg-gradient-to-b from-blue-accent to-black-blue relative pt-6">
+    <div className={`grid grid-rows-a1a relative pt-6 ${backgroundColor}`}>
       <p className="transition-shadow fixed z-20 top-0 inset-x-0 font-heading font-bold bg-angel-orange w-full p-2 text-center text-angel-grey text-xs">
         Please note: Donations are currently disabled. V2 coming soon!
       </p>
-      <WalletContext>
-        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-          <DappHead />
-          <Views />
-          <AppFoot />
-        </ModalContext>
-      </WalletContext>
+      <WalletProvider {...chainOptions}>
+        <WalletContext>
+          <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+            <DappHead />
+            <Views />
+            <AppFoot />
+          </ModalContext>
+        </WalletContext>
+      </WalletProvider>
     </div>
   );
 }
