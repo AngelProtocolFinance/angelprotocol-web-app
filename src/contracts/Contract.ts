@@ -54,7 +54,6 @@ export default class Contract {
       msgs,
       undefined
     );
-    const denom = this.wallet!.chain.native_currency.token_id;
     return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
   }
 
