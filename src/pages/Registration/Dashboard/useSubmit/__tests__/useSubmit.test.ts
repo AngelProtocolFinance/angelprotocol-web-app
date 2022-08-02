@@ -113,7 +113,7 @@ describe("useSubmit tests", () => {
       payload: {
         step: "error",
         message:
-          "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io",
+          "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io",
       },
     });
     expect(mockDispatch).toHaveBeenCalledWith({

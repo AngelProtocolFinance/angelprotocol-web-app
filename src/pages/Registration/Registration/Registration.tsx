@@ -7,8 +7,7 @@ import {
   registrationRefKey,
   useRegistrationQueryLazyQuery,
 } from "services/aws/registration";
-import ButtonMailTo from "components/ButtonMailTo";
-import { Button } from "../common";
+import { Button, ButtonMailTo } from "../common";
 import routes from "../routes";
 import useHandleError from "../useHandleError";
 
