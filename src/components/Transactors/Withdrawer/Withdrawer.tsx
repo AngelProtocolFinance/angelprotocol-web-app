@@ -32,7 +32,6 @@ function WithdrawContext(props: WithdrawResource) {
     reValidateMode: "onChange",
     defaultValues: {
       total_amount: 0,
-      total_receive: 0,
       beneficiary: wallet?.address,
     },
     resolver: yupResolver(withdrawSchema),

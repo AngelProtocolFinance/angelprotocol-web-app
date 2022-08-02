@@ -37,17 +37,3 @@ export function Total() {
     />
   );
 }
-
-export function ToReceive() {
-  const { watch } = useFormContext<WithdrawValues>();
-  const { wallet } = useGetWallet();
-  const total_receive = watch("total_receive");
-  return (
-    <Misc
-      title="to receive"
-      value={`${toCurrency(total_receive, 3)} ${
-        wallet?.chain.native_currency.symbol
-      }`}
-    />
-  );
-}

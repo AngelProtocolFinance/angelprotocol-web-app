@@ -4,7 +4,6 @@ import {
   VaultFieldLimits,
 } from "types/shared/withdraw";
 
-export type WithdrawMeta = { total_amount: number; total_receive: number };
 export type WithdrawResource = {
   accountAddr: string;
   vaultFields: VaultField[];
@@ -13,7 +12,8 @@ export type WithdrawResource = {
 export type WithdrawValues = { [key in VaultFieldIds]: string } & {
   beneficiary: string;
   memo?: string;
-} & WithdrawMeta;
+  total_amount: number;
+};
 //form meta
 
 export interface WithdrawerProps {
