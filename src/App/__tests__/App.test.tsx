@@ -1,11 +1,35 @@
-import { render, screen } from "@testing-library/react";
+import {
+  NetworkInfo,
+  WalletControllerChainOptions,
+} from "@terra-money/wallet-provider";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Route, Routes } from "react-router-dom";
 import AppWrapper from "test/AppWrapper";
 import { siteRoutes } from "constants/routes";
-import App from "./App";
+import App from "../App";
 
 // define initial routes
 const routes = [`${siteRoutes.app}`];
+
+const terra_testnet: NetworkInfo = {
+  name: "testnet",
+  chainID: "pisco-1",
+  lcd: "https://pisco-lcd.terra.dev",
+  walletconnectID: 0,
+};
+
+jest.mock("@terra-money/wallet-provider", () => {
+  const originalModule = jest.requireActual("@terra-money/wallet-provider");
+  return {
+    __esModule: true,
+    ...originalModule,
+    getChainOptions: () =>
+      Promise.resolve<WalletControllerChainOptions>({
+        defaultNetwork: terra_testnet,
+        walletConnectChainIds: [terra_testnet],
+      }),
+  };
+});
 
 function TestApp() {
   return (
@@ -20,12 +44,13 @@ function TestApp() {
 describe("User visits app", () => {
   window.scrollTo = jest.fn();
   test("App's default page is lazy loaded Marketplace", async () => {
-    render(<TestApp />);
+    const { getByRole } = render(<TestApp />);
 
     //header is immediately rendered
     //role here https://www.w3.org/TR/html-aria/#docconformance
-    const header = screen.getByRole("banner");
-    expect(header).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByRole("banner")).toBeInTheDocument();
+    });
 
     //footer is immediately rendered
     //role here https://www.w3.org/TR/html-aria/#docconformance
