@@ -56,11 +56,10 @@ const chains_api = apes.injectEndpoints({
               const balance = allBalances.find(
                 (x) => x.denom === token.token_id
               );
-              if (balance?.amount)
-                token.balance = +utils.formatUnits(
-                  balance.amount,
-                  token.decimals
-                );
+              token.balance = +utils.formatUnits(
+                balance?.amount ?? 0,
+                token.decimals
+              );
             });
 
             return { data: chain };
