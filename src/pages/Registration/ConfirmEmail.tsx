@@ -7,7 +7,7 @@ import {
 } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { Button } from "./common";
+import { Button, ButtonMailTo } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
 import useHandleError from "./useHandleError";
@@ -102,9 +102,11 @@ export default function ConfirmEmail() {
         >
           close
         </Button>
-        <p className="mt-5 font-normal italic underline">
-          <a href="#new-form">Having trouble receiving our emails?</a>
-        </p>
+        <ButtonMailTo
+          label="Having trouble receiving our emails?"
+          mailTo="support@angelprotocol.io"
+          subject="Charity Registration: Trouble with receiving confirmation email"
+        />
       </div>
     </div>
   );
