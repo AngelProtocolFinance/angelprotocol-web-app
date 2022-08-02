@@ -11,7 +11,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 
@@ -38,7 +37,7 @@ export default function useCreatePollEstimate() {
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
 
-        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
+        const haloBalance = wallet.getBalance(denoms.halo);
         if (amount >= haloBalance) {
           setError("amount", { message: "not enough balance" });
           return;

@@ -13,7 +13,6 @@ import {
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeData from "helpers/extractFeeData";
-import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
@@ -53,7 +52,7 @@ export default function useSwapEstimator() {
         }
 
         const nativeCoin = wallet.chain.native_currency;
-        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
+        const haloBalance = wallet.getBalance(denoms.halo);
         // first balance check
         if (is_buy) {
           if (amount > nativeCoin.balance) {
