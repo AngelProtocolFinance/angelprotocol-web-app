@@ -1,3 +1,7 @@
+### admin & endowment admin
+
+merge into just /Admin
+
 ### contract
 
 - split Admin contract to --> CW3 & CW4

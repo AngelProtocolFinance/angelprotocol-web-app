@@ -24,17 +24,16 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
 
   const numVoted = numYes + numNo;
   const total = +threshold.absolute_percentage.total_weight;
-  const target = +threshold.absolute_percentage.percentage * 100;
 
   const pctYes = getPct(numYes, total);
   const pctNo = getPct(numNo, total);
 
-  const pctTarget = getPct(target, total);
+  const pctTarget = +threshold.absolute_percentage.percentage * 100;
   const pctVoted = getPct(numVoted, total);
 
   return (
     <div>
-      <div className="flex justify-around text-lg p-4">
+      <div className="flex gap-4 text-lg py-4">
         <Stat
           title="yes"
           value={numYes}
@@ -48,18 +47,18 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, 
-            #34d399 ${pctYes}%, 
-            #f43f5e ${pctYes}%, #f43f5e ${pctYes + pctNo}%, 
-            #f59e0b ${pctYes + pctNo}%, #f59e0b ${100}%, 
+            #34d39990 ${pctYes}%, 
+            #f43f5e90 ${pctYes}%, #f43f5e90 ${pctYes + pctNo}%, 
+            #fafafa30 ${pctYes + pctNo}%, #fafafa30 ${100}%, 
             #fafafa30 ${100}%)`,
         }}
       >
         <p
-          className="absolute top-0 h-8 border-l border-emerald-400/80 align-bottom font-mono text-xs"
+          className="absolute bottom-0 h-8 border-l border-emerald-400/80 align-bottom font-mono text-xs"
           style={{ left: `${pctTarget}%` }}
         >
-          <span className="absolute -bottom-1/2 right-0 w-max translate-x-1/2 transform">
-            threshold: ${target} votes
+          <span className="absolute -top-1/2 right-0 w-max translate-x-1/2 transform">
+            threshold: {pctTarget}%
           </span>
         </p>
       </div>
@@ -72,19 +71,23 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
   );
 }
 
-export function Stat(props: {
+function Stat(props: {
   title: string;
   value: number;
   pct: number;
   textColor: string;
 }) {
   return (
-    <p className={`font-mono uppercase ${props.textColor} items-center`}>
-      <span>{props.title}</span>
-      <span>{`${props.value} (${props.pct.toFixed(2)}%)`}</span>
+    <p
+      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-zinc-50/30 p-4`}
+    >
+      <span className="">{props.title}</span>
+      <span className="my-2 text-2xl">{props.value}</span>
+      <span className="text-sm">{props.pct}%</span>
     </p>
   );
 }
+
 function getPct(numerator: number, denominator: number) {
   return roundDown((numerator / denominator) * 100);
 }

@@ -25,7 +25,7 @@ export default function ProposalContent(props: Proposal) {
         </>
       )}
 
-      <DetailLabel>
+      <DetailLabel classes="mt-4 mb-2">
         raw messages
         <button
           onClick={toggleRawMessage}
@@ -52,7 +52,7 @@ function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
     : JSON.stringify(props, null, 2);
 
   return (
-    <div className="grid bg-white/10 shadow-inner rounded-md p-2 my-2 text-sm">
+    <div className="grid bg-white/10 shadow-inner rounded-md p-2 mb-6 text-sm">
       <code className="font-mono whitespace-pre overflow-x-auto">
         {isWASM && <span>to contract: {props.wasm.execute.contract_addr}</span>}
         <br />

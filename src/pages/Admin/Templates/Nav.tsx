@@ -10,8 +10,8 @@ const styler = createNavLinkStyler(
 export default function Nav() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
-      <Category title="Admin group" />
-      <NavLink end to={routes.index} className={styler}>
+      <Category title="Admin" />
+      <NavLink end to={routes.cw4_members} className={styler}>
         Update group members
       </NavLink>
       <NavLink to={routes.cw3_config} className={styler}>

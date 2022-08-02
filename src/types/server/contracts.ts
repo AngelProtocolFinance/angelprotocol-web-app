@@ -164,7 +164,7 @@ export type Proposal = {
   meta?: string; //JSON string that contains preview metadata
   msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
-  expires: { at_height: number };
+  expires: { at_time: number };
   threshold: {
     //others absolute account, threshold quourum
     absolute_percentage: {

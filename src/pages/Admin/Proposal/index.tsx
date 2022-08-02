@@ -29,11 +29,25 @@ export default function Proposal() {
   );
 
   if (isLoading) {
-    return <p>loading proposal..</p>;
+    return (
+      <p className="text-white-grey flex gap-2">
+        <Icon
+          type="Loading"
+          className="animate-spin relative top-1"
+          size={18}
+        />
+        <span>Loading proposal..</span>
+      </p>
+    );
   }
 
   if (isError || !proposal) {
-    return <p>error getting proposal</p>;
+    return (
+      <p className="text-rose-300 flex gap-1">
+        <Icon type="Warning" className="relative top-0.5" size={18} />
+        <span>Error getting proposal</span>
+      </p>
+    );
   }
 
   return (
@@ -48,21 +62,15 @@ export default function Proposal() {
           <PollAction {...proposal} />
         </div>
         <DetailLabel>ends</DetailLabel>
-        <p className="flex items-center font-heading text-xs uppercase mt-1 mb-6">
-          <span>block height </span>
-          <Icon type="Blockchain" className="mx-2" />
-          <span>{proposal.expires.at_height}</span>
+        <p className="flex items-center font-heading text-sm uppercase mt-1 mb-6">
+          {new Date(proposal.expires.at_time / 1e6).toLocaleString()}
         </p>
         <DetailLabel>description</DetailLabel>
         <p className="mb-6">{proposal.description}</p>
         <ProposalContent {...proposal} />
-        <h4 className="font-bold text-lg text-white py-2 border-b-2 border-white/10">
-          <span className="uppercase">Votes</span>
-          <span className="font-mono font-normal text-green-100 tracking-wide text-xs">
-            {" "}
-            {+proposal.threshold.absolute_percentage.percentage * 100}% YES to
-            pass
-          </span>
+
+        <h4 className="uppercase font-bold text-lg text-white py-2 border-b-2 border-white/10">
+          Votes
         </h4>
         <Stats {...proposal} />
         {proposal.votes.length > 0 && <Votes proposalId={proposal.id} />}
