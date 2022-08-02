@@ -3,14 +3,12 @@ import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, NetworkType, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/chains";
 import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
-import { IS_TEST } from "constants/env";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 import useXdefi from "./useXdefi";
-
-const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 export type WalletState = {
   walletIcon: string;

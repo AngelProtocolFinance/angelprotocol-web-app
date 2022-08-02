@@ -8,6 +8,7 @@ import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
@@ -38,7 +39,7 @@ export const placeholderChain: Chain = {
     name: "Token",
     token_id: "utoken",
   },
-  network_type: "mainnet",
+  network_type: EXPECTED_NETWORK_TYPE,
   rpc_url: "https://rpc-token.placeholder.com",
   lcd_url: "https://lcd-token.placeholder.com",
   tokens: [],
