@@ -49,9 +49,7 @@ export class WrongChainError extends Error {
 
 export class WrongNetworkError extends Error {
   constructor() {
-    super(
-      `Please connect to network ${IS_TEST ? "testnet" : "mainnet"} network.`
-    );
+    super(`Please connect to ${IS_TEST ? "testnet" : "mainnet"} network.`);
     this.name = "WrongNetworkError";
   }
 }
