@@ -1,27 +1,23 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/server/aws";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import {
-  placeholderChain,
-  placeholderToken,
-} from "contexts/WalletContext/constants";
+import { PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
 
 describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const registrar = new Registrar(WALLET);
+    const registrar = new Registrar(PLACEHOLDER_WALLET);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
-    expect(payload.value.sender).toBe(WALLET.address);
+    expect(payload.value.sender).toBe(PLACEHOLDER_WALLET.address);
     expect(payload.value.msg).toBeDefined();
     expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
       create_endowment: {
-        beneficiary: WALLET.address,
+        beneficiary: PLACEHOLDER_WALLET.address,
         cw4_members: [],
         guardians_multisig_addr: undefined,
         maturity_height: undefined,
         maturity_time: undefined,
-        owner: WALLET.address,
+        owner: PLACEHOLDER_WALLET.address,
         profile: {
           annual_revenue: undefined,
           average_annual_budget: undefined,
@@ -46,16 +42,6 @@ describe("Registrar tests", () => {
     });
   });
 });
-
-const WALLET: WalletState = {
-  walletIcon: "",
-  displayCoin: placeholderChain.native_currency,
-  coins: placeholderChain.tokens,
-  address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
-  chain: placeholderChain,
-  providerId: "keplr",
-  getBalance: (_: string) => placeholderToken.balance,
-};
 
 const CHARITY: Charity = {
   ContactPerson: {
@@ -97,7 +83,7 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
-    JunoWallet: WALLET.address,
+    JunoWallet: PLACEHOLDER_WALLET.address,
     KycDonorsOnly: false,
   },
 };
