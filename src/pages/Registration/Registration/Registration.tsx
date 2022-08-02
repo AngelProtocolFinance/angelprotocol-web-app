@@ -7,10 +7,10 @@ import {
   registrationRefKey,
   useRegistrationQueryLazyQuery,
 } from "services/aws/registration";
+import ButtonMailTo from "components/ButtonMailTo";
 import { Button } from "../common";
 import routes from "../routes";
 import useHandleError from "../useHandleError";
-import ButtonMailTo from "components/ButtonMailTo";
 
 type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
