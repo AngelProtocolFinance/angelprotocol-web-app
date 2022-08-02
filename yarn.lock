@@ -4311,12 +4311,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/terra.js@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "@terra-money/terra.js@npm:3.1.4"
+"@terra-money/terra.js@npm:^3.1.5":
+  version: 3.1.5
+  resolution: "@terra-money/terra.js@npm:3.1.5"
   dependencies:
     "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7"
-    "@terra-money/terra.proto": ~2.0.0
+    "@terra-money/terra.proto": ^2.1.0
     axios: ^0.26.1
     bech32: ^2.0.0
     bip32: ^2.0.6
@@ -4329,19 +4329,19 @@ __metadata:
     tmp: ^0.2.1
     utf-8-validate: ^5.0.5
     ws: ^7.5.5
-  checksum: e416d813695a8fa45b239d4b19d91d299ac54e3009e158a2f50144fa80435cdd1e8a763a3b2e0d554a17df7452d0123d70550c97deacc45b2ddca8fde8c232dd
+  checksum: e9da43d4d329b975abeaafeeb13facd29b603c0ff64eaf8dd5a885410a74dc928c019e98f6e05a46087e3ea4ab6ff7cbadf79d3c1e909ce864591cae828133d6
   languageName: node
   linkType: hard
 
-"@terra-money/terra.proto@npm:~2.0.0":
-  version: 2.0.0
-  resolution: "@terra-money/terra.proto@npm:2.0.0"
+"@terra-money/terra.proto@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@terra-money/terra.proto@npm:2.1.0"
   dependencies:
     "@improbable-eng/grpc-web": ^0.14.1
     google-protobuf: ^3.17.3
     long: ^4.0.0
     protobufjs: ~6.11.2
-  checksum: 6bd13988f6581aa96534ed1440784d3189ac82a0baab7d0244b9abe580ebf9caa552f6814d9d11a6d05fc9eb14ec9fefdbf8749f8e821b06105e35509e65dc56
+  checksum: 545ff0b6fd664f16a88bebae4ad5d999197531868c5e2fcc3d76f6f712031e82d8ab7014923edb5bca90657568b8f71325964d78c2e1accff192d6cb933b9a94
   languageName: node
   linkType: hard
 
@@ -4905,10 +4905,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.6.1":
-  version: 18.6.1
-  resolution: "@types/node@npm:18.6.1"
-  checksum: 06331f68bc73d93b73977ae19ca87818e004bc7b8e70b0d4f73b0ea5e341a4a1ba6f0e79db8fb75a841af2b8d74552d6b9a8f846b267954689f57effedcf5d77
+"@types/node@npm:^18.6.3":
+  version: 18.6.3
+  resolution: "@types/node@npm:18.6.3"
+  checksum: 38495b8fd27200d2b7ab9ccd8c1e2475d2411fba15330f2cba869a85ef79dd42382a2658c8dd298ace8c21ed3bfafcdea408faecd74928b144377d07d00e7c8c
   languageName: node
   linkType: hard
 
@@ -5838,7 +5838,7 @@ __metadata:
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.7.1
     "@tailwindcss/line-clamp": ^0.4.0
-    "@terra-money/terra.js": ^3.1.4
+    "@terra-money/terra.js": ^3.1.5
     "@terra-money/wallet-provider": ^3.9.4
     "@testing-library/dom": ^8.13.0
     "@testing-library/jest-dom": ^5.16.2
@@ -5850,7 +5850,7 @@ __metadata:
     "@types/draft-js": ^0.11.9
     "@types/jest": ^27.5.2
     "@types/jsonwebtoken": ^8.5.5
-    "@types/node": ^18.6.1
+    "@types/node": ^18.6.3
     "@types/react": ^17.0.39
     "@types/react-csv": ^1.1.2
     "@types/react-dom": ^17.0.11
@@ -5880,7 +5880,7 @@ __metadata:
     react-csv: ^2.2.2
     react-dom: ^17.0.2
     react-dropzone: ^12.0.4
-    react-hook-form: ^7.33.1
+    react-hook-form: ^7.34.0
     react-icons: ^4.4.0
     react-redux: ^7.2.5
     react-router-dom: ^6.2.0
@@ -5889,7 +5889,7 @@ __metadata:
     react-select-country-list: ^2.2.3
     react-test-renderer: 17.0.2
     stream-browserify: ^3.0.0
-    tailwindcss: ^3.1.6
+    tailwindcss: ^3.1.7
     ts-node: ^10.9.1
     typescript: ^4.7.4
     util: ^0.12.4
@@ -11596,6 +11596,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lilconfig@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "lilconfig@npm:2.0.6"
+  checksum: 40a3cd72f103b1be5975f2ac1850810b61d4053e20ab09be8d3aeddfe042187e1ba70b4651a7e70f95efa1642e7dc8b2ae395b317b7d7753b241b43cef7c0f7d
+  languageName: node
+  linkType: hard
+
 "lines-and-columns@npm:^1.1.6":
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
@@ -14292,12 +14299,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.33.1":
-  version: 7.33.1
-  resolution: "react-hook-form@npm:7.33.1"
+"react-hook-form@npm:^7.34.0":
+  version: 7.34.0
+  resolution: "react-hook-form@npm:7.34.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: ec8f938b5af32148956edc9a87b6a0a99cc305617925608961cf4352ad1a786daea9fdc4d15106aea2821937d27367a69ab525882f07c0bb7ea45fba5dbf8ff2
+  checksum: 2b4a6f6ca5b3f729b88aa14a1a8c47ba86405d9c5fef2560b1dc85ac6fe1b105326571b8e1e857f8d8f3449636062d2d6201809918b5bb37f6f8f0b9c6cd6e2c
   languageName: node
   linkType: hard
 
@@ -15938,9 +15945,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.6":
-  version: 3.1.6
-  resolution: "tailwindcss@npm:3.1.6"
+"tailwindcss@npm:^3.1.7":
+  version: 3.1.7
+  resolution: "tailwindcss@npm:3.1.7"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -15951,7 +15958,7 @@ __metadata:
     fast-glob: ^3.2.11
     glob-parent: ^6.0.2
     is-glob: ^4.0.3
-    lilconfig: ^2.0.5
+    lilconfig: ^2.0.6
     normalize-path: ^3.0.0
     object-hash: ^3.0.0
     picocolors: ^1.0.0
@@ -15969,7 +15976,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 90719c6fd0dcdda5c8e2882ad421048c9dd90890e0c118d12ff3ec31adba53eb2df8fed1ed203e728e5b32297e1cc207df463a6b196d37344a63fde9f67c52b6
+  checksum: adbc9869b72f741e9a0fc281b79710863617a588fd5d897316b676f789b6482c79f46f324223300ca962afbe55bed3ec16a37a6ccf4bb2c99c53cf8c5dd9700d
   languageName: node
   linkType: hard
 
