@@ -11,15 +11,15 @@ export default function TransactionsTable(props: {
   isError: boolean;
 }) {
   if (props.isLoading) {
-    return <Tooltip>loading transactions..</Tooltip>;
+    return <Tooltip>Loading transactions...</Tooltip>;
   }
 
   if (props.isError) {
-    return <Tooltip>failed to get transactions..</Tooltip>;
+    return <Tooltip>Failed to get transactions...</Tooltip>;
   }
 
   if (!props.isError && !props.isLoading && props.transactions.length === 0) {
-    return <Tooltip classes="mt-10">You have no donations yet!!!</Tooltip>;
+    return <Tooltip classes="mt-10">You have not made any donations.</Tooltip>;
   }
 
   return (
