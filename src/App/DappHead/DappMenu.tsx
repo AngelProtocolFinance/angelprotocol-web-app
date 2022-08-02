@@ -31,7 +31,10 @@ export default function DappMenu() {
         Leaderboard
       </NavLink>
       {isMember && (
-        <NavLink to={`${siteRoutes.app}/${appRoutes.admin}`} className={styler}>
+        <NavLink
+          to={`${siteRoutes.app}/${appRoutes.admin}/${AP_ADDR}`}
+          className={styler}
+        >
           Admin
         </NavLink>
       )}

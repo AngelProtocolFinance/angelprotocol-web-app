@@ -1,12 +1,20 @@
 import { NavLink } from "react-router-dom";
+import { AP_ADDR, useIsMemberQuery } from "services/juno/custom";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { junoChainId } from "constants/chainIDs";
 import { appRoutes, siteRoutes } from "constants/routes";
 
+const styler = createNavLinkStyler(
+  "text-white/75 uppercase inline-flex items-center font-heading",
+  "text-angel-orange"
+);
 //Will be for WebNav
 export default function MobileDappNav() {
-  const styler = createNavLinkStyler(
-    "text-white/75 uppercase inline-flex items-center font-heading",
-    "text-angel-orange"
+  const { wallet } = useGetWallet();
+  const { data: isMember } = useIsMemberQuery(
+    { user: wallet?.address!, endowment: AP_ADDR },
+    { skip: !wallet || wallet.chainId !== junoChainId }
   );
 
   return (
@@ -28,9 +36,14 @@ export default function MobileDappNav() {
       >
         Leaderboard
       </NavLink>
-      <NavLink to={`${siteRoutes.app}/${appRoutes.admin}`} className={styler}>
-        Admin
-      </NavLink>
+      {isMember && (
+        <NavLink
+          to={`${siteRoutes.app}/${appRoutes.admin}/${AP_ADDR}}`}
+          className={styler}
+        >
+          Admin
+        </NavLink>
+      )}
     </nav>
   );
 }

@@ -96,6 +96,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: AP_ADDR,
                 cw3config,
                 proposalLink,
+                isAp: true,
               },
             };
           } else {
@@ -130,6 +131,7 @@ export const customApi = junoApi.injectEndpoints({
               endowment: args.endowment,
               cw3config,
               proposalLink,
+              isAp: false,
             },
           };
         }

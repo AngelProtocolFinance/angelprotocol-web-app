@@ -22,6 +22,7 @@ export type AdminResources = {
   endowment: string;
   cw3config: CW3Config;
   proposalLink: SuccessLink;
+  isAp: boolean;
 };
 
 export type ProposalDetails = Proposal & {
