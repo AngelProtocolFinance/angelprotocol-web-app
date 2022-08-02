@@ -1,4 +1,4 @@
-import { IS_TEST } from "constants/env";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export class LogApplicationUpdateError extends Error {
   chainId: string;
@@ -49,7 +49,7 @@ export class WrongChainError extends Error {
 
 export class WrongNetworkError extends Error {
   constructor() {
-    super(`Please connect to ${IS_TEST ? "testnet" : "mainnet"} network.`);
+    super(`Please connect to ${EXPECTED_NETWORK_TYPE} network.`);
     this.name = "WrongNetworkError";
   }
 }
