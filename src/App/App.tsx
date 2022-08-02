@@ -1,3 +1,4 @@
+import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import AppFoot from "./AppFoot";
 import DappHead from "./DappHead";
@@ -10,9 +11,11 @@ export default function App() {
         Please note: Donations are currently disabled. V2 coming soon!
       </p>
       <WalletContext>
-        <DappHead />
-        <Views />
-        <AppFoot />
+        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+          <DappHead />
+          <Views />
+          <AppFoot />
+        </ModalContext>
       </WalletContext>
     </div>
   );
