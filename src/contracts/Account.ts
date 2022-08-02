@@ -4,11 +4,17 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
+  endowment: ContractQueryArgs;
   balance: ContractQueryArgs;
   profile: ContractQueryArgs;
 
   constructor(wallet: WalletState | undefined, accountAddr: string) {
     super(wallet, accountAddr);
+
+    this.endowment = {
+      address: this.contractAddress,
+      msg: { endowment: {} },
+    };
 
     this.balance = {
       address: this.contractAddress,

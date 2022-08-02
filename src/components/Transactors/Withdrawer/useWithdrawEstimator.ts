@@ -143,7 +143,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         //create proposal meta for tx preview
         const proposalMeta: EndowmentWithdrawMeta = {
-          type: "endowment-withdraw",
+          type: "acc_withdraw",
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 

@@ -9,9 +9,9 @@ import routes from "../routes";
  * them to access the component passed in "props.children", otherwise navigates to /app/register page
  */
 export function StepOneCompleteGuard(props: any) {
-  const { data: charity, isLoading, isFetching } = useRegistrationQuery("");
+  const { data: charity, isLoading } = useRegistrationQuery("");
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <RegLoader />;
   }
 

@@ -42,8 +42,9 @@ export default function GroupSelector() {
 
 const groupOptions: { [key in ProposalGroupOptions]: string } = {
   all: "all",
-  indexfund: "index fund",
-  "admin-group": "admin group",
-  endowment: "endowment",
-  registrar: "registrar",
+  if: "index fund",
+  cw3: "admin",
+  cw4: "admin group",
+  acc: "endowment",
+  reg: "registrar",
 };

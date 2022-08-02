@@ -1,28 +1,27 @@
-import { AdminProposalTypes } from "pages/Admin/types";
+import { Templates } from "pages/Admin/types";
 
-export const proposalRoutes: { [key in AdminProposalTypes | "index"]: string } =
-  {
-    index: "",
+export const templates: { [key in Templates]: string } = {
+  //index fund
+  if_alliance: "if_alliance",
+  if_create: "if_create",
+  if_remove: "if_remove",
+  if_members: "if_members",
+  if_config: "if_config",
+  if_owner: "if_owner",
 
-    //index fund
-    "indexfund-alliance-edit": "indexfund-alliance-edit",
-    "indexfund-create-fund": "indexfund-create-fund",
-    "indexfund-remove-fund": "indexfund-remove-fund",
-    "indexfund-update-fund-members": "indexfund-update-fund-members",
-    "indexfund-config-update": "indexfund-config-update",
-    "indexfund-owner-update": "indexfund-owner-update",
+  //cw3
+  cw3_config: "cw3_config",
+  cw3_transfer: "cw3_transfer",
 
-    //admin group
-    "admin-group-update-members": "admin-group-update-members",
-    "admin-group-update-cw3-config": "admin-group-update-cw3-config",
-    "admin-group-fund-transfer": "admin-group-fund-transfer",
+  //cw4
+  cw4_members: "cw4_members",
 
-    //endowment
-    "endowment-update-status": "endowment-update-status",
-    "endowment-withdraw": "endowment-withdraw",
-    "endowment-update-profile": "endowment-update-profile",
+  //account
+  acc_withdraw: "acc_withdraw",
+  acc_profile: "acc_profile",
 
-    //registrar
-    "registrar-update-config": "registrar-update-config",
-    "registrar-update-owner": "registrar-update-owner",
-  };
+  //registrar
+  reg_endow_status: "reg_endow_status",
+  reg_config: "reg_config",
+  reg_owner: "reg_owner",
+};

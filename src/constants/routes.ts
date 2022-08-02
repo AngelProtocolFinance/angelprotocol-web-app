@@ -46,5 +46,5 @@ export enum adminRoutes {
   charity_applications = "charity-applications",
   proposal = "proposal",
   proposals = "proposals",
-  proposal_types = "proposal-types",
+  templates = "templates",
 }

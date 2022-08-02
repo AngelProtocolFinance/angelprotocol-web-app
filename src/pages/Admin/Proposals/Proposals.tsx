@@ -1,12 +1,12 @@
 import { useState } from "react";
-import {
-  NUM_PROPOSALS_PER_PAGE,
-  useFilteredProposals,
-} from "services/juno/admin/queriers";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";
+import {
+  NUM_PROPOSALS_PER_PAGE,
+  useFilteredProposals,
+} from "./useFilteredProposals";
 
 export default function Proposals() {
   const [pageNum, setPageNum] = useState(1);

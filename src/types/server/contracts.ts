@@ -38,6 +38,32 @@ export type EmbeddedBankMsg = {
 };
 
 /** _account */
+
+interface RebalanceDetails {
+  rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
+  locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
+  interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
+  locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
+  principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
+}
+
+interface StrategyComponent {
+  vault: string; // Vault SC Address
+  locked_percentage: string; // percentage of funds to invest
+  liquid_percentage: string; // percentage of funds to invest
+}
+
+export interface EndowmentDetails {
+  owner: string;
+  beneficiary: string;
+  withdraw_before_maturity: boolean;
+  maturity_time?: number;
+  maturity_height?: number;
+  strategies: StrategyComponent[];
+  rebalance: RebalanceDetails;
+  guardians: string[];
+}
+
 export interface Profile {
   name: string;
   overview: string;
@@ -110,6 +136,10 @@ export type VotesPageOptions = {
 export type Member = {
   addr: string;
   weight: number;
+};
+
+export type InquiredMember = {
+  weight: number | null;
 };
 
 export type MemberRes = {

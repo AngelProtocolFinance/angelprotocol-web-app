@@ -7,6 +7,7 @@ export const junoTags: { [key in JunoTags]: string } = {
   multicall: "multicall",
   endowment: "endowment",
   registrar: "registrar",
+  custom: "custom",
 };
 
 export enum adminTags {
@@ -48,4 +49,10 @@ export enum multicallTags {
   endowmentBalance = "endowmentBalance",
   junoBalances = "junoBalances",
   terraBalances = "terraBalances",
+}
+
+export enum customTags {
+  isMember,
+  adminResources,
+  proposalDetails,
 }

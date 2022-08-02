@@ -98,11 +98,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
-  const {
-    data: coinWithBalances = [],
-    isLoading,
-    isFetching,
-  } = useBalancesQuery(
+  const { data: coinWithBalances = [], isLoading } = useBalancesQuery(
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
@@ -123,6 +119,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       };
     }
   }, [activeProviderInfo, coinWithBalances]);
+
+  console.log({ isProviderLoading, isLoading });
 
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
@@ -154,7 +152,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isWalletLoading: isFetching || isLoading,
+        isWalletLoading: isLoading,
         isProviderLoading,
       }}
     >
