@@ -166,7 +166,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         dispatch(setFee(feeData.amount));
 
         if (feeData.amount > wallet.chain.native_currency.balance) {
-          dispatch(setFormError("Withdraw amount is too low to pay for fees"));
+          dispatch(setFormError("Not enough balance to pay for fees"));
           return;
         }
 
