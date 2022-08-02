@@ -23,11 +23,11 @@ export default function Amount() {
     show_settings((p) => !p);
   }
 
-  const displayToken =
-    (is_buy
-      ? wallet?.chain.native_currency
-      : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo)) ||
-    placeholderChain.native_currency;
+  const buyingWithToken = is_buy
+    ? wallet?.chain.native_currency
+    : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo);
+
+  const displayToken = buyingWithToken ?? placeholderChain.native_currency;
 
   return (
     <div className="grid mt-2">
