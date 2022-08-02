@@ -20,7 +20,7 @@ export default function WithdrawForm(resources: WithdrawResource) {
 
       {resources.vaultFields.map(
         (vaultField) =>
-          vaultField.nativeBalance > 0 && (
+          vaultField.usdBalance > 0 && (
             <Amount key={vaultField.fieldId} {...vaultField} />
           )
       )}

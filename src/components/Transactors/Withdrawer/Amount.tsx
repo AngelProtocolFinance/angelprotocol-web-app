@@ -14,7 +14,7 @@ export default function Amount(props: VaultField) {
   } = useFormContext<WithdrawValues>();
   const { wallet } = useGetWallet();
 
-  const nativeBalance = new Decimal(props.nativeBalance).div(1e6);
+  const nativeBalance = new Decimal(props.usdBalance).div(1e6);
   function setMax() {
     setValue(props.fieldId, nativeBalance.toFixed(3, Decimal.ROUND_DOWN), {
       shouldDirty: true,
