@@ -6,9 +6,8 @@ import {
   useRequestEmailMutation,
 } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
-import ButtonMailTo from "components/ButtonMailTo";
 import Popup from "components/Popup";
-import { Button } from "./common";
+import { Button, ButtonMailTo } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
 import useHandleError from "./useHandleError";

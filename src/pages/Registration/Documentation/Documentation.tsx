@@ -86,7 +86,8 @@ export default function Documentation() {
                 <Header>Level 3</Header>
                 <p>
                   All benefits from Level 2 + your organization will be able to
-                  receive automatic donations from members of the Angel Alliance.
+                  receive automatic donations from members of the Angel
+                  Alliance.
                 </p>
               </Column>
             </Column>
