@@ -11,24 +11,18 @@ export default function MobileDappNav() {
 
   return (
     <nav className="lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2">
-      <NavLink
-        to={`${siteRoutes.index}/${appRoutes.marketplace}`}
-        className={styler}
-      >
+      <NavLink to={appRoutes.marketplace} className={styler}>
         Marketplace
       </NavLink>
       {/* 
       NOTE: Governance will be reenabled when we relaunch the $HALO token
-      <NavLink to={`${siteRoutes.index}/${appRoutes.govern}`} className={styler}>
+      <NavLink to={appRoutes.govern} className={styler}>
         Governance
       </NavLink> */}
-      <NavLink
-        to={`${siteRoutes.index}/${appRoutes.leaderboard}`}
-        className={styler}
-      >
+      <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
-      <NavLink to={`${siteRoutes.index}/${appRoutes.admin}`} className={styler}>
+      <NavLink to={appRoutes.admin} className={styler}>
         Admin
       </NavLink>
     </nav>

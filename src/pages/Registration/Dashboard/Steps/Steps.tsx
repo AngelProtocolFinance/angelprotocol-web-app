@@ -17,27 +17,21 @@ export default function Steps({ disabled, registrationState }: Props) {
       <Step
         title="Contact Details"
         onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${routes.contactDetails}`
-          )
+          navigate(`${appRoutes.register}/${routes.contactDetails}`)
         }
         disabled={disabled}
         completed
       />
       <Step
         title="Wallet Address"
-        onClick={() =>
-          navigate(`${siteRoutes.index}/${appRoutes.register}/${routes.wallet}`)
-        }
+        onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
         disabled={disabled}
         completed={registrationState.stepTwo.completed}
       />
       <Step
         title="Documentation"
         onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${routes.documentation}`
-          )
+          navigate(`${appRoutes.register}/${routes.documentation}`)
         }
         disabled={disabled}
         completed={registrationState.stepThree.completed}
@@ -49,9 +43,7 @@ export default function Steps({ disabled, registrationState }: Props) {
       <Step
         title="Additional Information"
         onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${routes.additionalInformation}`
-          )
+          navigate(`${appRoutes.register}/${routes.additionalInformation}`)
         }
         disabled={disabled}
         completed={registrationState.stepFour.completed}

@@ -32,9 +32,7 @@ export default function useSubmit() {
         if ("error" in result) {
           handleError(result.error, "Error updating profile ❌");
         }
-        navigate(
-          `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
-        );
+        navigate(`${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }

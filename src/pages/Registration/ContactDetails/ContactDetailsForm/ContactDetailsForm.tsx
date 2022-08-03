@@ -134,9 +134,7 @@ export default function ContactDetailsForm({ charity }: Props) {
               className="bg-green-400 w-48 h-12 mr-2"
               disabled={isSubmitting}
               onClick={() =>
-                navigate(
-                  `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
-                )
+                navigate(`${appRoutes.register}/${routes.dashboard}`)
               }
             >
               Back

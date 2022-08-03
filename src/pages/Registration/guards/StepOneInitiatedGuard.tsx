@@ -21,18 +21,14 @@ export function StepOneInitiatedGuard(props: any) {
   }
 
   if (!charity) {
-    return <Navigate to={`${siteRoutes.index}/${appRoutes.register}`} />;
+    return <Navigate to={appRoutes.register} />;
   }
 
   // if EmailVerified === true this means the charity has finished step 1 but hasn't initiated an update of contact details
   // if `!charity.ContactPerson.Email`, this means the charity hasn't even completed step 1
   // in both cases we navigate to dashboard and let its guard decide whether they should be allowed in
   if (charity.ContactPerson.EmailVerified || !charity.ContactPerson.Email) {
-    return (
-      <Navigate
-        to={`${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`}
-      />
-    );
+    return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 
   return <>{props.children}</>;

@@ -7,28 +7,19 @@ export default function DappMenu() {
   const { member } = useMember("apTeam");
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
-      <NavLink
-        className={styler}
-        to={`${siteRoutes.index}/${appRoutes.marketplace}`}
-      >
+      <NavLink className={styler} to={appRoutes.marketplace}>
         Marketplace
       </NavLink>
       {/* 
       NOTE: Governance will be reenabled when we relaunch the $HALO token
-      <NavLink to={`${siteRoutes.index}/${appRoutes.govern}`} className={styler}>
+      <NavLink to={appRoutes.govern} className={styler}>
         Governance
       </NavLink> */}
-      <NavLink
-        to={`${siteRoutes.index}/${appRoutes.leaderboard}`}
-        className={styler}
-      >
+      <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
       {member.weight && (
-        <NavLink
-          to={`${siteRoutes.index}/${appRoutes.admin}`}
-          className={styler}
-        >
+        <NavLink to={appRoutes.admin} className={styler}>
           Admin
         </NavLink>
       )}

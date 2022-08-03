@@ -71,11 +71,7 @@ export default function WalletSubmission() {
       <Button
         className="bg-green-400 w-80 h-10"
         disabled={isSubmitting}
-        onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
-          )
-        }
+        onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
       >
         Back to registration dashboard
       </Button>

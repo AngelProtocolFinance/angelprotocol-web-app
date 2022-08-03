@@ -18,9 +18,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
       <Button
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
         onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${routes.charityProfile}`
-          )
+          navigate(`${appRoutes.register}/${routes.charityProfile}`)
         }
       >
         {`Go to ${possessiveFormOfName} profile`}

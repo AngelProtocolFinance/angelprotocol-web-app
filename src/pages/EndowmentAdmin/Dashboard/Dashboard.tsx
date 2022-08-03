@@ -22,7 +22,7 @@ export default function Dashboard(props: { endowmentAddr: string }) {
       <PageError
         classes="place-self-start justify-self-center mt-10 "
         redirect={{
-          to: `${siteRoutes.index}/${appRoutes.charity}/${props.endowmentAddr}`,
+          to: `${appRoutes.charity}/${props.endowmentAddr}`,
           title: "back to profile",
         }}
       >

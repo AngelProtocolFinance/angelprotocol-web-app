@@ -9,7 +9,7 @@ export default function AdminNav() {
   return (
     <div className="flex justify-end ">
       <Link
-        to={`${siteRoutes.index}/${appRoutes.charity}/${endowmentAddress}`}
+        to={`${appRoutes.charity}/${endowmentAddress}`}
         className={linkStyle + " mr-auto flex items-center"}
       >
         <Icon size={15} type="ArrowBack" />

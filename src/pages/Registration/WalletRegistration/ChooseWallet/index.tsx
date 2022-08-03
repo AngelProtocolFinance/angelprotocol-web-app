@@ -14,9 +14,7 @@ export default function ChooseWallet() {
       <Button
         className="bg-green-400 w-80 h-10"
         onClick={() =>
-          navigate(
-            `${siteRoutes.index}/${appRoutes.register}/${registerRoutes.dashboard}`
-          )
+          navigate(`${appRoutes.register}/${registerRoutes.dashboard}`)
         }
       >
         Back to registration dashboard

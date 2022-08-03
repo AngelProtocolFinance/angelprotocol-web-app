@@ -72,9 +72,7 @@ export default function useSaveContactDetails() {
       }
 
       if (!is_create) {
-        return navigate(
-          `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
-        );
+        return navigate(`${appRoutes.register}/${routes.dashboard}`);
       }
 
       const { data } = result;
@@ -92,7 +90,7 @@ export default function useSaveContactDetails() {
         },
       });
 
-      navigate(`${siteRoutes.index}/${appRoutes.register}/${routes.confirm}`);
+      navigate(`${appRoutes.register}/${routes.confirm}`);
     },
     [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
   );

@@ -11,9 +11,9 @@ import { appRoutes, siteRoutes } from "constants/routes";
 // define initial routes
 const routes = [
   `${siteRoutes.index}`,
-  `${siteRoutes.index}/${appRoutes.marketplace}`,
-  // `${siteRoutes.index}/${appRoutes.govern}`,
-  `${siteRoutes.index}/${appRoutes.leaderboard}`,
+  `${appRoutes.marketplace}`,
+  // `${appRoutes.govern}`,
+  `${appRoutes.leaderboard}`,
 ];
 
 function TestApp() {

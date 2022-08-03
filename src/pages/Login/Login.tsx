@@ -15,7 +15,7 @@ const Login = () => {
   const { tcaToken, isSubmitting, errors, register, login } = useLogin();
 
   if (tcaToken) {
-    return <Navigate to={`${appRoutes.tca}`} />;
+    return <Navigate to={appRoutes.tca} />;
   }
 
   return (

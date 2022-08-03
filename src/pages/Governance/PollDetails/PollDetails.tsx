@@ -13,7 +13,7 @@ export default function PollDetails() {
   return (
     <div className="padded-container grid content-start gap-4">
       <Link
-        to={`${siteRoutes.index}/${appRoutes.govern}`}
+        to={appRoutes.govern}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
         <Icon type="ArrowBack" size={15} /> back to proposals

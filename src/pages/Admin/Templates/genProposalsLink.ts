@@ -14,7 +14,7 @@ function genProposalsLink(
 ): SuccessLink {
   return {
     description: "Go to proposals",
-    url: `${siteRoutes.index}/${
+    url: `${
       cws === "apTeam"
         ? appRoutes.admin
         : appRoutes.endowment_admin + "/" + endowmentAddr
