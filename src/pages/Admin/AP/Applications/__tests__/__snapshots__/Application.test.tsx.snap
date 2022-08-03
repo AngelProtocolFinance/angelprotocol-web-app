@@ -180,6 +180,12 @@ exports[`Charity applications review Application preview modal renders 2nd appli
       </svg>
     </a>
   </div>
+  <a
+    class="\`w-full bg-angel-blue text-center tracking-wider p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+    href="/admin/ap-team/proposal/undefined"
+  >
+    Go to Poll
+  </a>
   <div
     class="flex justify-center gap-4"
   >

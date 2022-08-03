@@ -3,7 +3,6 @@ import {
   EndowmentStatusNum,
   StatusChangePayload,
 } from "types/server/contracts";
-import { useAdminResources } from "pages/Admin/AdminGuard";
 import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -16,7 +15,6 @@ import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
 
 export default function useUpdateApplicationStatus() {
-  const { cw3 } = useAdminResources();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -34,7 +32,7 @@ export default function useUpdateApplicationStatus() {
         cleanObject(statusChangePayload)
       );
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(wallet, "" /**TODO: make this work */);
     const proposalMsg = contract.createProposalMsg(
       data.title,
       data.description,
