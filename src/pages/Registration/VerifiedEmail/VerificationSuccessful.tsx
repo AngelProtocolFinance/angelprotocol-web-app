@@ -15,7 +15,7 @@ export default function VerificationSuccessful({
 
   function handleContinue() {
     localStorage.setItem(registrationRefKey, newCharity.ContactPerson.PK!);
-    navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+    navigate(`${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`);
   }
 
   return (

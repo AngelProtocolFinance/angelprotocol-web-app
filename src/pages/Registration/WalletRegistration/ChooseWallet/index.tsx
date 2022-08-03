@@ -15,7 +15,7 @@ export default function ChooseWallet() {
         className="bg-green-400 w-80 h-10"
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${registerRoutes.dashboard}`
+            `${siteRoutes.index}/${appRoutes.register}/${registerRoutes.dashboard}`
           )
         }
       >

@@ -56,7 +56,7 @@ export default function Views() {
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
         />
-        <Route path="*" element={<Navigate replace to={siteRoutes.app} />} />
+        <Route path="*" element={<Navigate replace to={siteRoutes.index} />} />
       </Routes>
     </Suspense>
   );

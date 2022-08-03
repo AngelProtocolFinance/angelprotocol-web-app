@@ -135,7 +135,7 @@ export default function ContactDetailsForm({ charity }: Props) {
               disabled={isSubmitting}
               onClick={() =>
                 navigate(
-                  `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+                  `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
                 )
               }
             >

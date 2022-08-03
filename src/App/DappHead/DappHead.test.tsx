@@ -10,17 +10,17 @@ import { appRoutes, siteRoutes } from "constants/routes";
  */
 // define initial routes
 const routes = [
-  `${siteRoutes.app}`,
-  `${siteRoutes.app}/${appRoutes.marketplace}`,
-  // `${siteRoutes.app}/${appRoutes.govern}`,
-  `${siteRoutes.app}/${appRoutes.leaderboard}`,
+  `${siteRoutes.index}`,
+  `${siteRoutes.index}/${appRoutes.marketplace}`,
+  // `${siteRoutes.index}/${appRoutes.govern}`,
+  `${siteRoutes.index}/${appRoutes.leaderboard}`,
 ];
 
 function TestApp() {
   return (
     <AppWrapper routes={routes} startingRouteIndex={0}>
       <Routes>
-        <Route path={siteRoutes.app + "/*"} element={<App />} />
+        <Route path={siteRoutes.index + "/*"} element={<App />} />
       </Routes>
     </AppWrapper>
   );

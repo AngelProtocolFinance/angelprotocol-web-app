@@ -19,7 +19,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.charityProfile}`
+            `${siteRoutes.index}/${appRoutes.register}/${routes.charityProfile}`
           )
         }
       >
@@ -31,7 +31,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
 
 // TODO: update this link when the tutorial page gets created
 const TutorialLink = () => (
-  <Link to={siteRoutes.app} className="hover:underline text-angel-blue">
+  <Link to={siteRoutes.index} className="hover:underline text-angel-blue">
     click here to learn how
   </Link>
 );

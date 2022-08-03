@@ -32,7 +32,7 @@ export default function AppMenu() {
       </li>
       <li>
         <Link
-          to={`${siteRoutes.app}/${appRoutes.register}`}
+          to={`${siteRoutes.index}/${appRoutes.register}`}
           className={linkStyles.className}
         >
           REGISTER

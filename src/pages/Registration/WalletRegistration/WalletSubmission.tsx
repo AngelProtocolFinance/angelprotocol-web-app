@@ -73,7 +73,7 @@ export default function WalletSubmission() {
         disabled={isSubmitting}
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+            `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
           )
         }
       >

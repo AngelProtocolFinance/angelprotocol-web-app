@@ -29,7 +29,7 @@ export default function useWithdraw(resources: WithdrawResource) {
           ]),
         ],
         successLink: {
-          url: `${siteRoutes.app}/${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
+          url: `${siteRoutes.index}/${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         },
         successMessage: "Withdraw proposal successfully created!",

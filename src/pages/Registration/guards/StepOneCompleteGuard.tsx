@@ -16,13 +16,13 @@ export function StepOneCompleteGuard(props: any) {
   }
 
   if (!charity) {
-    return <Navigate to={`${siteRoutes.app}/${appRoutes.register}`} />;
+    return <Navigate to={`${siteRoutes.index}/${appRoutes.register}`} />;
   }
 
   if (!charity!.ContactPerson.EmailVerified) {
     return (
       <Navigate
-        to={`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`}
+        to={`${siteRoutes.index}/${appRoutes.register}/${routes.confirm}`}
         state={{ is_sent: true }}
       />
     );

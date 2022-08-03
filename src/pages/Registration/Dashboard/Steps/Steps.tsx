@@ -18,7 +18,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         title="Contact Details"
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.contactDetails}`
+            `${siteRoutes.index}/${appRoutes.register}/${routes.contactDetails}`
           )
         }
         disabled={disabled}
@@ -27,7 +27,7 @@ export default function Steps({ disabled, registrationState }: Props) {
       <Step
         title="Wallet Address"
         onClick={() =>
-          navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.wallet}`)
+          navigate(`${siteRoutes.index}/${appRoutes.register}/${routes.wallet}`)
         }
         disabled={disabled}
         completed={registrationState.stepTwo.completed}
@@ -36,7 +36,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         title="Documentation"
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.documentation}`
+            `${siteRoutes.index}/${appRoutes.register}/${routes.documentation}`
           )
         }
         disabled={disabled}
@@ -50,7 +50,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         title="Additional Information"
         onClick={() =>
           navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.additionalInformation}`
+            `${siteRoutes.index}/${appRoutes.register}/${routes.additionalInformation}`
           )
         }
         disabled={disabled}

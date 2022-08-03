@@ -65,7 +65,7 @@ export default function Register() {
           path="*"
           element={
             <Navigate
-              to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
+              to={`${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`}
             />
           }
         />

@@ -27,7 +27,7 @@ export default function RegistrationSuccessful() {
         <p className="font-bold">{charity.Metadata.JunoWallet}</p>
       </div>
       <Link
-        to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
+        to={`${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`}
         className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
       >
         Back to registration dashboard

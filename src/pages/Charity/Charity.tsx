@@ -39,14 +39,14 @@ export default function Charity() {
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
         <LinkIcon
-          to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+          to={`${siteRoutes.index}/${appRoutes.marketplace}`}
           _iconType="ArrowBack"
         >
           back to marketplace
         </LinkIcon>
         {isUserAdminMember && (
           <LinkIcon
-            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
+            to={`${siteRoutes.index}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
             _iconType="Edit"
             className="ml-auto border-r border-white/30 pr-2"
           >
@@ -55,7 +55,7 @@ export default function Charity() {
         )}
         {isUserAdminMember && (
           <LinkIcon
-            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
+            to={`${siteRoutes.index}/${appRoutes.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
             _iconType="Admin"
           >
             admin
@@ -111,7 +111,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+        to={`${siteRoutes.index}/${appRoutes.marketplace}`}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace

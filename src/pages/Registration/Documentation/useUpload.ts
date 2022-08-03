@@ -33,7 +33,9 @@ export default function useUpload() {
           handleError(result.error, FORM_ERROR);
         }
 
-        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+        navigate(
+          `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
+        );
       } catch (error) {
         handleError(error, FORM_ERROR);
       }

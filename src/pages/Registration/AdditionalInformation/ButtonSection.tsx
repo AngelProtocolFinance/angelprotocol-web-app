@@ -21,7 +21,7 @@ export default function ButtonSection() {
             className="bg-green-400 w-48 h-12 mr-2"
             onClick={() =>
               navigate(
-                `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+                `${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`
               )
             }
           >

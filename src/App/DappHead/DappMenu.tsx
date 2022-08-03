@@ -9,23 +9,26 @@ export default function DappMenu() {
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
       <NavLink
         className={styler}
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+        to={`${siteRoutes.index}/${appRoutes.marketplace}`}
       >
         Marketplace
       </NavLink>
       {/* 
       NOTE: Governance will be reenabled when we relaunch the $HALO token
-      <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} className={styler}>
+      <NavLink to={`${siteRoutes.index}/${appRoutes.govern}`} className={styler}>
         Governance
       </NavLink> */}
       <NavLink
-        to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
+        to={`${siteRoutes.index}/${appRoutes.leaderboard}`}
         className={styler}
       >
         Leaderboard
       </NavLink>
       {member.weight && (
-        <NavLink to={`${siteRoutes.app}/${appRoutes.admin}`} className={styler}>
+        <NavLink
+          to={`${siteRoutes.index}/${appRoutes.admin}`}
+          className={styler}
+        >
           Admin
         </NavLink>
       )}

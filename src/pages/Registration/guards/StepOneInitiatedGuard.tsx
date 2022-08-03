@@ -21,7 +21,7 @@ export function StepOneInitiatedGuard(props: any) {
   }
 
   if (!charity) {
-    return <Navigate to={`${siteRoutes.app}/${appRoutes.register}`} />;
+    return <Navigate to={`${siteRoutes.index}/${appRoutes.register}`} />;
   }
 
   // if EmailVerified === true this means the charity has finished step 1 but hasn't initiated an update of contact details
@@ -30,7 +30,7 @@ export function StepOneInitiatedGuard(props: any) {
   if (charity.ContactPerson.EmailVerified || !charity.ContactPerson.Email) {
     return (
       <Navigate
-        to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
+        to={`${siteRoutes.index}/${appRoutes.register}/${routes.dashboard}`}
       />
     );
   }
