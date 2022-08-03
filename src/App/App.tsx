@@ -48,10 +48,10 @@ export default function App() {
           <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
             <DappHead />
             <Views />
-            <AppFoot />
           </ModalContext>
         </WalletContext>
       </WalletProvider>
+      <AppFoot />
     </div>
   );
 }
