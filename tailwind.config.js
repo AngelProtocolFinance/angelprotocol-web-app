@@ -100,6 +100,7 @@ module.exports = {
         "1a": "1fr auto",
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
+        aa1a: "auto auto 1fr auto",
         a11: "auto 1fr 1fr",
         aa1: "auto auto 1fr",
         dashboard: "auto 1fr auto",
