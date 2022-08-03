@@ -2,8 +2,6 @@ import { ContractQueryArgs } from "services/types";
 import {
   AdminVoteInfo,
   CW3Config,
-  InquiredMember,
-  Member,
   Proposal,
   QueryRes,
 } from "types/server/contracts";

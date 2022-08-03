@@ -40,7 +40,6 @@ const Website = () => {
             />
           </Routes>
         </Suspense>
-
         <WebFoot />
       </ModalContext>
     </div>

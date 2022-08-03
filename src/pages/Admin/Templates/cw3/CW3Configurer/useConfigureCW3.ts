@@ -20,7 +20,7 @@ import genDiffMeta from "../../genDiffMeta";
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
-  const { cw3, endowment, proposalLink } = useAdminResources();
+  const { cw3, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,

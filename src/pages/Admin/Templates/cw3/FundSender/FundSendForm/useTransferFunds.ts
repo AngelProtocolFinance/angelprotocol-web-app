@@ -23,7 +23,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { cw3, endowment, proposalLink } = useAdminResources();
+  const { cw3, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
