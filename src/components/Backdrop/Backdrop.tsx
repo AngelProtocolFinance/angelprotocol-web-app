@@ -17,8 +17,6 @@ export default function Backdrop(props: Props) {
   useFocusHandler(backdropRef);
   useAttachKeyPressHandler("Escape", handleBackdropDismiss);
 
-  console.log("backdrop", canBeClosed);
-
   function handleBackdropDismiss() {
     if (!canBeClosed) {
       return;
