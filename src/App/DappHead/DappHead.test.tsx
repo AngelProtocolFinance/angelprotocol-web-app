@@ -20,7 +20,7 @@ function TestApp() {
   return (
     <AppWrapper routes={routes} startingRouteIndex={0}>
       <Routes>
-        <Route path={siteRoutes.index + "/*"} element={<App />} />
+        <Route path={`${siteRoutes.index}*`} element={<App />} />
       </Routes>
     </AppWrapper>
   );
