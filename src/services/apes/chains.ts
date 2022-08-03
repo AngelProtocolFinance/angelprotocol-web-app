@@ -1,4 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
+import Decimal from "decimal.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
