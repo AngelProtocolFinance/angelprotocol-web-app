@@ -6,7 +6,7 @@ import {
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import routes from "../routes";

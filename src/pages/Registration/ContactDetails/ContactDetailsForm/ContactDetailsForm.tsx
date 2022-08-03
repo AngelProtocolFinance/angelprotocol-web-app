@@ -6,7 +6,7 @@ import { ContactDetails } from "pages/Registration/types";
 import { Charity } from "types/server/aws";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import routes from "../../routes";

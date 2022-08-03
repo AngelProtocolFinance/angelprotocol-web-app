@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { default as registerRoutes } from "../../routes";
 import KeplrConnector from "./KeplrConnector";
 import Title from "./Title";

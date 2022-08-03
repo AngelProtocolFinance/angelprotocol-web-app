@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 
 export default function AppMenu() {

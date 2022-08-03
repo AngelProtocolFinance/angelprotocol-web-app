@@ -11,7 +11,7 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
 export default function useSaveContactDetails() {

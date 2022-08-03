@@ -1,5 +1,4 @@
-import { LinkProps, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, LinkProps, useParams } from "react-router-dom";
 import { CharityParams } from "./types";
 import { proposalRoutes } from "pages/Admin/constants";
 import {
@@ -9,7 +8,7 @@ import {
 import { useMember } from "services/juno/admin/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";

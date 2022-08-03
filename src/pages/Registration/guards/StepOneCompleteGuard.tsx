@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 

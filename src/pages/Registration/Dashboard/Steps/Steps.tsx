@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { RegistrationState } from "pages/Registration/types";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 import Step from "./Step";
 

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 
 //Will be for WebNav
 export default function MobileDappNav() {

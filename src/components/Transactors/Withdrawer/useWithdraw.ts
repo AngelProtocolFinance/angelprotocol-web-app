@@ -4,7 +4,7 @@ import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
 export default function useWithdraw(resources: WithdrawResource) {

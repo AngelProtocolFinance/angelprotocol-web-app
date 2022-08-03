@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useMember } from "services/juno/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 
 export default function DappMenu() {
   const { member } = useMember("apTeam");

@@ -5,7 +5,7 @@ import { useEndowmentBalance } from "services/juno/multicall/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import Summary from "./Summary";
 import Transactions from "./Transactions";
 

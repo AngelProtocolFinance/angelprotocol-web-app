@@ -9,8 +9,6 @@ import { siteRoutes } from "constants/routes";
 import App from "../App";
 
 // define initial routes
-const routes = [`${siteRoutes.index}`];
-
 const terra_testnet: NetworkInfo = {
   name: "testnet",
   chainID: "pisco-1",
@@ -33,7 +31,7 @@ jest.mock("@terra-money/wallet-provider", () => {
 
 function TestApp() {
   return (
-    <AppWrapper routes={routes} startingRouteIndex={0}>
+    <AppWrapper routes={[siteRoutes.index]} startingRouteIndex={0}>
       <Routes>
         <Route path={siteRoutes.index + "/*"} element={<App />} />
       </Routes>

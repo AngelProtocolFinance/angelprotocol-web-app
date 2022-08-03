@@ -6,7 +6,7 @@ import {
   useRegistrationState,
 } from "services/aws/registration";
 import { useSetter } from "store/accessors";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 

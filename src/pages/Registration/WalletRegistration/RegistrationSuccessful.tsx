@@ -2,7 +2,7 @@ import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
 import { Link, Navigate } from "react-router-dom";
 import { useRegistrationState } from "services/aws/registration";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import routes from "../routes";
 
 export default function RegistrationSuccessful() {

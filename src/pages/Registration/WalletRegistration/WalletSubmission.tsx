@@ -4,7 +4,7 @@ import {
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
 import FormInput from "components/FormInput";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
