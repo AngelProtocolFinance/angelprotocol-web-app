@@ -17,7 +17,7 @@ export default function DappHead() {
 
   return (
     <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full padded-container pt-3">
-      <Link to={siteRoutes.home} title="to home">
+      <Link to={siteRoutes.app} title="to home">
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </Link>
       <DappMenu />

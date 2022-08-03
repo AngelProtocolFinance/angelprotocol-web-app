@@ -31,7 +31,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
 
 // TODO: update this link when the tutorial page gets created
 const TutorialLink = () => (
-  <Link to={siteRoutes.home} className="hover:underline text-angel-blue">
+  <Link to={siteRoutes.app} className="hover:underline text-angel-blue">
     click here to learn how
   </Link>
 );

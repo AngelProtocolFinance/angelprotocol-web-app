@@ -1,8 +1,8 @@
 export enum siteRoutes {
-  home = "/",
   app = "/app",
   admin = "/admin",
 }
+
 export enum webRoutes {
   index = "",
   charities = "for-charities",
