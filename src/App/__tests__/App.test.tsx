@@ -46,17 +46,6 @@ describe("User visits app", () => {
   test("App's default page is lazy loaded Marketplace", async () => {
     const { getByRole } = render(<TestApp />);
 
-    //header is immediately rendered
-    //role here https://www.w3.org/TR/html-aria/#docconformance
-    await waitFor(() => {
-      expect(getByRole("banner")).toBeInTheDocument();
-    });
-
-    //footer is immediately rendered
-    //role here https://www.w3.org/TR/html-aria/#docconformance
-    const footer = screen.getByRole("contentinfo");
-    expect(footer).toBeInTheDocument();
-
     //loader is rendered because content is being lazy loaded
     const loader = screen.getByTestId("loader");
     expect(loader).toBeInTheDocument();
@@ -66,6 +55,17 @@ describe("User visits app", () => {
     const text2 = /displaced ukrainians/i;
     expect(screen.queryByText(text1)).toBeNull();
     expect(screen.queryByText(text2)).toBeNull();
+
+    //footer is immediately rendered
+    //role here https://www.w3.org/TR/html-aria/#docconformance
+    const footer = screen.getByRole("contentinfo");
+    expect(footer).toBeInTheDocument();
+
+    //header is immediately rendered
+    //role here https://www.w3.org/TR/html-aria/#docconformance
+    await waitFor(() => {
+      expect(getByRole("banner")).toBeInTheDocument();
+    });
 
     //view is finally loaded,
     expect(await screen.findByText(text1)).toBeInTheDocument();

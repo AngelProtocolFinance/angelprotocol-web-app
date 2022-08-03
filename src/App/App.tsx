@@ -39,8 +39,8 @@ export default function App() {
   }
 
   return (
-    <div className={`grid grid-rows-a1a relative pt-6 ${backgroundColor}`}>
-      <p className="transition-shadow fixed z-20 top-0 inset-x-0 font-heading font-bold bg-angel-orange w-full p-2 text-center text-angel-grey text-xs">
+    <div className={`grid grid-rows-aa1a ${backgroundColor}`}>
+      <p className="transition-shadow flex z-20 items-center justify-center font-heading font-bold bg-angel-orange w-full p-2 text-center text-angel-grey text-xs">
         Please note: Donations are currently disabled. V2 coming soon!
       </p>
       <WalletProvider {...chainOptions}>
