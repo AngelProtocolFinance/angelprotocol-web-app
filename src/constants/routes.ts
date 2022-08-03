@@ -1,5 +1,5 @@
 export enum siteRoutes {
-  app = "/app",
+  app = "/",
   admin = "/admin",
 }
 
