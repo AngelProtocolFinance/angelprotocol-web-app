@@ -44,7 +44,7 @@ function TestApp() {
 describe("User visits app", () => {
   window.scrollTo = jest.fn();
   test("App's default page is lazy loaded Marketplace", async () => {
-    const { getByRole } = render(<TestApp />);
+    render(<TestApp />);
 
     //loader is rendered because content is being lazy loaded
     const loader = screen.getByTestId("loader");
@@ -64,7 +64,7 @@ describe("User visits app", () => {
     //header is immediately rendered
     //role here https://www.w3.org/TR/html-aria/#docconformance
     await waitFor(() => {
-      expect(getByRole("banner")).toBeInTheDocument();
+      expect(screen.getByRole("banner")).toBeInTheDocument();
     });
 
     //view is finally loaded,
