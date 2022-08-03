@@ -1,4 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
+import Decimal from "decimal.js";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
@@ -87,15 +88,12 @@ const chains_api = apes.injectEndpoints({
             const erc20 = erc20Holdings.find(
               (x) => x.contractAddress === token.token_id
             );
-            token.balance = +utils.formatUnits(
-              erc20?.balance ?? 0,
-              token.decimals
-            );
+            token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
           });
 
           return { data: chain };
         } catch (err) {
-          console.log(err);
+          console.log("Failed to get balances", err);
           return {
             error: {
               status: 500,
