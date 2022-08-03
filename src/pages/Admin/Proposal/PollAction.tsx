@@ -3,6 +3,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { Tags } from "slices/transaction/types";
 import { invalidateJunoTags } from "services/juno";
+import { useLatestBlock } from "services/juno/queriers";
 import {
   adminTags,
   endowmentTags,
@@ -21,6 +22,7 @@ import CW3 from "contracts/CW3";
 import { useAdminResources } from "../AdminGuard";
 
 export default function PollAction(props: ProposalDetails) {
+  const latestBlock = useLatestBlock();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -41,7 +43,10 @@ export default function PollAction(props: ProposalDetails) {
     showModal(TransactionPrompt, {});
   }
 
-  const isExpired = new Date() > new Date(props.expires.at_time / 1e6);
+  const isExpired =
+    "at_time" in props.expires
+      ? new Date() > new Date(props.expires.at_time / 1e6)
+      : +latestBlock > props.expires.at_height;
 
   const userVote = useMemo(
     () => props.votes.find((vote) => vote.voter === wallet?.address),

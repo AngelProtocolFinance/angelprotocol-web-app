@@ -157,6 +157,8 @@ export type ProposalStatus =
   | "passed"
   | "executed";
 
+export type Expiration = { at_time: number } | { at_height: number };
+
 export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
@@ -164,7 +166,7 @@ export type Proposal = {
   meta?: string; //JSON string that contains preview metadata
   msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
-  expires: { at_time: number };
+  expires: Expiration;
   threshold: {
     //others absolute account, threshold quourum
     absolute_percentage: {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Proposal } from "types/server/contracts";
+import { Expiration, Proposal } from "types/server/contracts";
+import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";
 import Status from "../common/Status";
 
@@ -17,14 +18,28 @@ export default function ProposalCard(props: Proposal) {
         {props.title}
       </span>
 
-      <div className="flex gap-1 items-baseline text-white/80 mt-2 justify-self-end">
-        <span className="inline-block font-heading uppercase text-xs text-right mr-1">
-          ends
-        </span>
-        <span className="font-heading text-sm">
-          {new Date(props.expires.at_time / 1e6).toLocaleString()}
-        </span>
-      </div>
+      <Expiry {...props.expires} />
     </Link>
+  );
+}
+
+function Expiry(props: Expiration) {
+  const isTime = "at_time" in props;
+  return (
+    <div className="flex gap-1 items-baseline text-white/80 mt-2 justify-self-end">
+      <span className="inline-block font-heading uppercase text-xs text-right mr-1">
+        ends
+      </span>
+      {isTime ? (
+        <span className="font-mono">
+          {new Date(props.at_time / 1e6).toLocaleString()}
+        </span>
+      ) : (
+        <>
+          <span>{props.at_height.toLocaleString()}</span>
+          <Icon type="Blockchain" className="relative top-0.5" />
+        </>
+      )}
+    </div>
   );
 }

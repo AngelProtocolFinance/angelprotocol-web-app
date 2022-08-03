@@ -14,6 +14,7 @@ merge into just /Admin
 ### admin
 
 - organized admin files, Proposals, Proposal, Templates, index.tsx
+- expiration ui for both time and block types
 
 ### admin/proposals
 

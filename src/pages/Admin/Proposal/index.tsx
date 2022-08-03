@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
+import { Expiration } from "types/server/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
@@ -62,19 +63,30 @@ export default function Proposal() {
           <PollAction {...proposal} />
         </div>
         <DetailLabel>ends</DetailLabel>
-        <p className="flex items-center font-heading text-sm uppercase mt-1 mb-6">
-          {new Date(proposal.expires.at_time / 1e6).toLocaleString()}
-        </p>
-        <DetailLabel>description</DetailLabel>
+        <Expiry {...proposal.expires} />
+        <DetailLabel classes="mt-4">description</DetailLabel>
         <p className="mb-6">{proposal.description}</p>
         <ProposalContent {...proposal} />
-
         <h4 className="uppercase font-bold text-lg text-white py-2 border-b-2 border-white/10">
           Votes
         </h4>
         <Stats {...proposal} />
         {proposal.votes.length > 0 && <Votes proposalId={proposal.id} />}
       </div>
+    </div>
+  );
+}
+
+function Expiry(props: Expiration) {
+  const isTime = "at_time" in props;
+  return isTime ? (
+    <span className="font-mono text-sm">
+      {new Date(props.at_time / 1e6).toLocaleString()}
+    </span>
+  ) : (
+    <div className="flex gap-1">
+      <span className="font-mono">{props.at_height.toLocaleString()}</span>
+      <Icon type="Blockchain" className="relative top-1" />
     </div>
   );
 }
