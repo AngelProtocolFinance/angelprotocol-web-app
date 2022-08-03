@@ -3,9 +3,7 @@ import {
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
 import { render, screen, waitFor } from "@testing-library/react";
-import { Route, Routes } from "react-router-dom";
 import AppWrapper from "test/AppWrapper";
-import { siteRoutes } from "constants/routes";
 import App from "../App";
 
 // define initial routes
@@ -31,10 +29,8 @@ jest.mock("@terra-money/wallet-provider", () => {
 
 function TestApp() {
   return (
-    <AppWrapper routes={[siteRoutes.index]} startingRouteIndex={0}>
-      <Routes>
-        <Route path={siteRoutes.index + "/*"} element={<App />} />
-      </Routes>
+    <AppWrapper>
+      <App />
     </AppWrapper>
   );
 }
