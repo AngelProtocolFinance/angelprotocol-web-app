@@ -1,4 +1,4 @@
-import App from "App/App";
+import App from "App";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
