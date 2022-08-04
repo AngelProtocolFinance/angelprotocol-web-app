@@ -5,18 +5,22 @@ import Popup from "components/Popup";
 import logger from "helpers/logger";
 import { APError } from "../errors/errors";
 
-type State = { handleError: (error: any) => void };
+type State = { handleError: (error: any, displayMessage?: string) => void };
 
-const Context = createContext<State>({ handleError: (_: any) => {} });
+const Context = createContext<State>({
+  handleError: (_: any, __?: string) => {},
+});
 
 export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(
-    (error: any) => {
+    (error: any, displayMessage?: string) => {
       logger.log(error);
 
-      if (typeof error === "string") {
+      if (displayMessage) {
+        showModal(Popup, { message: displayMessage });
+      } else if (typeof error === "string") {
         showModal(Popup, { message: error });
       } else if (isErrorInstance(error)) {
         const canBeClosed = "dismissable" in error && error.dismissable;
@@ -35,14 +39,12 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
           handleError(error.data);
         } else {
           showModal(Popup, {
-            message: `Error occurred while fetching: ${
-              error.message ?? error.status
-            }`,
+            message: `Error occurred: ${error.message ?? error.status}`,
           });
         }
       } else {
         showModal(Popup, {
-          message: `Unknown error occurred while fetching`,
+          message: `Unknown error occurred`,
         });
       }
     },
