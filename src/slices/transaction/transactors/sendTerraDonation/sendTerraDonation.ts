@@ -107,7 +107,6 @@ export const sendTerraDonation = createAsyncThunk(
         }
       }
     } catch (err) {
-      console.error(err);
       handleTxError(err, updateStage);
     }
   }

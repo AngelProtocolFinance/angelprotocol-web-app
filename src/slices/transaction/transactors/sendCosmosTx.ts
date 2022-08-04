@@ -64,7 +64,6 @@ export const sendCosmosTx = createAsyncThunk(
         });
       }
     } catch (err) {
-      console.log(err);
       handleTxError(err, updateStage);
     }
   }

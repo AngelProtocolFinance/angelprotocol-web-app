@@ -8,9 +8,12 @@ import {
 } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
+import logger from "helpers/logger";
 import { LogApplicationUpdateError, TxResultFail } from "errors/errors";
 
 export default function handleTxError(error: any, handler: StageUpdater) {
+  logger.error(error);
+
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof CreateTxFailed) {

@@ -81,7 +81,6 @@ export const sendCosmosDonation = createAsyncThunk(
         });
       }
     } catch (err) {
-      console.error(err);
       handleTxError(err, updateStage);
     }
   }

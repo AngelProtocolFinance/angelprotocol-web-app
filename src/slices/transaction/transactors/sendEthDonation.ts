@@ -78,7 +78,6 @@ export const sendEthDonation = createAsyncThunk(
         isShareEnabled: true,
       });
     } catch (error) {
-      console.error(error);
       handleEthError(error, updateStage);
     }
   }

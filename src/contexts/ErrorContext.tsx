@@ -2,6 +2,7 @@ import { PropsWithChildren, useCallback, useContext } from "react";
 import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
+import logger from "helpers/logger";
 import { APError } from "../errors/errors";
 
 type State = { handleError: (error: any) => void };
@@ -13,7 +14,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
 
   const handleError = useCallback(
     (error: any) => {
-      console.log(error);
+      logger.log(error);
 
       if (typeof error === "string") {
         showModal(Popup, { message: error });

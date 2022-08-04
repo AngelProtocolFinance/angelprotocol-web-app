@@ -6,6 +6,7 @@ import {
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
+import logger from "helpers/logger";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
@@ -81,7 +82,7 @@ async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
     .concat([ProofOfIdentity, ProofOfRegistration])
     .some((x) => {
       if (!x.publicUrl) {
-        console.log(`Error occured. File ${x.name} does not have a publicUrl`);
+        logger.log(`Error occured. File ${x.name} does not have a publicUrl`);
         return true;
       }
       return false;

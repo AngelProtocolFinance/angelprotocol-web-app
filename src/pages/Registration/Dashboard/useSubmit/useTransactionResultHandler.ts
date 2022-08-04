@@ -11,6 +11,7 @@ import {
   setFormLoading,
   setStage,
 } from "slices/transaction/transactionSlice";
+import logger from "helpers/logger";
 import { FORM_ERROR } from "../../constants";
 import useHandleError from "../../useHandleError";
 
@@ -35,7 +36,7 @@ export default function useTransactionResultHandler() {
           handleError(result.error, FORM_ERROR);
         }
       } catch (error) {
-        console.log(error);
+        logger.log(error);
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
       } finally {
         dispatch(setFormLoading(false));

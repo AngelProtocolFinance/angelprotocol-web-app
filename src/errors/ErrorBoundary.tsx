@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
+import logger from "helpers/logger";
 import ErrorContext from "../contexts/ErrorContext";
 import ErrorHandler from "./ErrorHandler";
 
@@ -18,7 +19,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Caught error:", error, errorInfo);
+    logger.error("Caught error:", error, errorInfo);
   }
 
   render() {
