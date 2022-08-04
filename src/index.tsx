@@ -1,14 +1,21 @@
 import { WalletProvider, getChainOptions } from "@terra-money/wallet-provider";
-import App from "App";
-import { StrictMode } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
+import Loader from "components/Loader";
 import { store } from "store/store";
+import { siteRoutes } from "constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+
+const App = lazy(() => import("./App/App"));
+
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+);
 
 // Readin chain options as per the official docs:
 // https://docs.terra.money/docs/develop/wallet-provider/wallet-provider-tutorial.html#wrap-your-app-in-walletprovider
@@ -20,7 +27,11 @@ getChainOptions().then((chainOptions) =>
           <WalletProvider {...chainOptions}>
             <WalletContext>
               <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-                <App />
+                <Suspense fallback={<LoaderComponent />}>
+                  <Routes>
+                    <Route path={`${siteRoutes.index}*`} element={<App />} />
+                  </Routes>
+                </Suspense>
               </ModalContext>
             </WalletContext>
           </WalletProvider>
