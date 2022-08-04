@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useContext, useEffect } from "react";
+import { PropsWithChildren, useCallback, useContext } from "react";
 import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
@@ -8,22 +8,8 @@ type State = { handleError: (error: any) => void };
 
 const Context = createContext<State>({ handleError: (_: any) => {} });
 
-export default function ErrorContext(
-  props: PropsWithChildren<{
-    error?: Error;
-  }>
-) {
+export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
-
-  useEffect(() => {
-    if (props.error) {
-      // field 'dismissable' shouldn't appear in errors catched by ErrorBoundary as APError can
-      // only be thrown from inside event handlers/async function and other components that cannot
-      // be caught by the boundary
-      // see docs for more details: https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
-      showModal(Popup, { message: props.error.message });
-    }
-  }, [props.error, showModal]);
 
   const handleError = useCallback(
     (error: any) => {
