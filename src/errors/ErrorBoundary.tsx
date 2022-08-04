@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
-import ErrorHandler from "./ErrorHandler";
+import ErrorContext from "../contexts/ErrorContext";
 
 type Props = PropsWithChildren<{}>;
 
@@ -22,9 +22,9 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     return (
-      <ErrorHandler error={this.state.error}>
+      <ErrorContext error={this.state.error}>
         {this.props.children}
-      </ErrorHandler>
+      </ErrorContext>
     );
   }
 }

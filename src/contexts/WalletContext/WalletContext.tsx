@@ -1,8 +1,15 @@
-import { PropsWithChildren, createContext, useContext, useMemo } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/chains";
 import { WalletDisconnectError } from "errors/errors";
+import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -35,6 +42,8 @@ const initialState: State = {
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
+  const { handleError } = useErrorContext();
+
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
@@ -96,10 +105,18 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
     isFetching,
+    isError,
+    error,
   } = useChainQuery(
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
+
+  useEffect(() => {
+    if (isError && error) {
+      handleError(error);
+    }
+  }, [isError, error, handleError]);
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProviderInfo) {
