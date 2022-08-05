@@ -57,7 +57,9 @@ export class WrongChainError extends APError {
     super(
       "WrongChainError",
       `Connected to the wrong chain.${
-        !expectedChain ? "" : ` Please connect to the ${expectedChain} chain.`
+        !expectedChain
+          ? ""
+          : ` Please connect to the ${expectedChain} chain and reload the page.`
       }`,
       false
     );
@@ -78,7 +80,7 @@ export class UnsupportedNetworkError extends APError {
   constructor(unsupportedChainId: string) {
     super(
       "UnsupportedNetworkError",
-      `Network ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`,
+      `Network ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`,
       false
     );
   }
