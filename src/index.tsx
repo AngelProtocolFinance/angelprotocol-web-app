@@ -2,12 +2,11 @@ import { WalletProvider, getChainOptions } from "@terra-money/wallet-provider";
 import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
 import { store } from "store/store";
-import { siteRoutes } from "constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -28,9 +27,7 @@ getChainOptions().then((chainOptions) =>
             <WalletContext>
               <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
                 <Suspense fallback={<LoaderComponent />}>
-                  <Routes>
-                    <Route path={`${siteRoutes.index}*`} element={<App />} />
-                  </Routes>
+                  <App />
                 </Suspense>
               </ModalContext>
             </WalletContext>
