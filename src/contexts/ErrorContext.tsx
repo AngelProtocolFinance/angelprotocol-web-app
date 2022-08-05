@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import logger from "helpers/logger";
-import { APError } from "../errors/errors";
+import { IAPError } from "../errors/errors";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -22,26 +22,27 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         showModal(Popup, { message: displayMessage });
       } else if (typeof error === "string") {
         showModal(Popup, { message: error });
-      } else if (isErrorInstance(error)) {
-        const canBeClosed = "dismissable" in error && error.dismissable;
+      } else if (instanceOfAPError(error)) {
         showModal(
           Popup,
           {
             message: error.message,
-            hideCloseBtn: !canBeClosed,
+            hideCloseBtn: !error.dismissable,
           },
           undefined,
-          canBeClosed
+          error.dismissable
         );
-      } else if ("data" in error || "message" in error || "status" in error) {
+      } else if (error instanceof Error) {
+        showModal(Popup, { message: error.message });
+      } else if ("error" in error) {
+        handleError(error.error);
+      } else if ("data" in error) {
+        handleError(error.data);
+      } else if ("message" in error || "status" in error) {
         //  e.g. FetchBaseQueryError or SerializedError from @reduxjs/toolkit
-        if (!!error.data) {
-          handleError(error.data);
-        } else {
-          showModal(Popup, {
-            message: `Error occurred: ${error.message ?? error.status}`,
-          });
-        }
+        showModal(Popup, {
+          message: `Error occurred: ${error.message ?? error.status}`,
+        });
       } else {
         showModal(Popup, {
           message: `Unknown error occurred`,
@@ -58,8 +59,8 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
   );
 }
 
-function isErrorInstance(error: unknown): error is Error | APError {
-  return error instanceof Error || error instanceof APError;
+function instanceOfAPError(error: any): error is IAPError {
+  return error instanceof Error || error.type === "APError";
 }
 
 export function useErrorContext() {
