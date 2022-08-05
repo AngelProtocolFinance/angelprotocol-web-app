@@ -105,18 +105,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
     isFetching,
-    isError,
     error,
   } = useChainQuery(
     { providerInfo: activeProviderInfo! },
     { skip: !activeProviderInfo }
   );
 
-  useEffect(() => {
-    if (isError && error) {
-      handleError(error);
-    }
-  }, [isError, error, handleError]);
+  useVerifyChain(chain.network_type, error);
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProviderInfo) {
@@ -131,8 +126,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       };
     }
   }, [activeProviderInfo, chain]);
-
-  useVerifyNetwork(chain.network_type);
 
   const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
@@ -188,8 +181,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
-function useVerifyNetwork(networkType: NetworkType) {
+function useVerifyChain(networkType: NetworkType, chainError: any) {
   const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (chainError) {
+      handleError(chainError);
+    }
+  }, [chainError, handleError]);
 
   useEffect(() => {
     if (networkType !== EXPECTED_NETWORK_TYPE) {
