@@ -8,6 +8,8 @@ type Logger = {
 
 const logger: Logger = IS_TEST
   ? {
+      // using console.log for .error and .info funcs as console.error and
+      // console.info are undefined while testing for some reason
       error: (...data) => console.log(...data),
       info: (...data) => console.log(...data),
       log: (...data) => console.log(...data),
