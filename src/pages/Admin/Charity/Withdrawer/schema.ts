@@ -1,14 +1,13 @@
 import * as Yup from "yup";
 import { WithdrawValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { tokenAmount } from "schemas/number";
+import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress } from "schemas/string";
 
-const withdrawShape: SchemaShape<WithdrawValues> = {
-  anchor1_amount: tokenAmount,
-  anchor2_amount: tokenAmount,
+const shape: SchemaShape<WithdrawValues> = {
+  amounts: Yup.array(requiredPositiveNumber),
   beneficiary: requiredAddress("beneficiary"),
   //add other vault fields here
 };
 
-export const withdrawSchema = Yup.object(withdrawShape);
+export const schema = Yup.object(shape);

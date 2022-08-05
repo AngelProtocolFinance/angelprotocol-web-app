@@ -1,56 +1,41 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
-import { useWithdrawConstraints } from "services/juno/multicall/queriers";
+import { Amount, Props, WithdrawValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import ContentLoader from "components/ContentLoader";
-import WithdrawForm from "./WithdrawForm";
-import { withdrawSchema } from "./withdrawSchema";
+import Form from "./Form";
+import { schema } from "./schema";
 
-export default function Withdrawer(props: WithdrawerProps) {
-  const { withdrawContrains, isLoading, isError } = useWithdrawConstraints(
-    props.account_addr
-  );
-
-  // return <WithdrawSkeleton />;
-
-  if (isLoading) return <WithdrawSkeleton />;
-  if (isError || !withdrawContrains) return <div>error</div>;
-  return (
-    <WithdrawContext
-      accountAddr={props.account_addr}
-      vaultFields={withdrawContrains.vaultFields}
-      vaultLimits={withdrawContrains.vaultLimits}
-    />
-  );
-}
-
-function WithdrawContext(props: WithdrawResource) {
+export default function Withdrawer({ balance: { cw20, native } }: Props) {
   const { wallet } = useGetWallet();
+
+  const cw20s: Amount[] = cw20.map((c) => ({
+    type: "cw20",
+    id: c.address,
+    balance: c.amount,
+    amount: "",
+  }));
+
+  const natives: Amount[] = native.map((n) => ({
+    type: "native",
+    id: n.denom,
+    balance: n.amount,
+    amount: "",
+  }));
+
   const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      total_ust: 0,
-      total_receive: 0,
-      beneficiary: wallet?.address,
+      beneficiary: wallet?.address || "",
+      network: "juno",
+      //transform to form format
+      amounts: [...natives, ...cw20s],
     },
-    resolver: yupResolver(withdrawSchema),
+    resolver: yupResolver(schema),
   });
   return (
     <FormProvider {...methods}>
-      <WithdrawForm {...props} />
+      <Form />
     </FormProvider>
-  );
-}
-
-function WithdrawSkeleton() {
-  return (
-    <div className="bg-white-grey grid p-4 pt-0 mt-4 opacity-30">
-      <ContentLoader className="w-full h-12 rounded-md mb-4" />
-      <ContentLoader className="w-full h-12 rounded-md mb-4" />
-      <ContentLoader className="w-full h-12 rounded-md mb-8" />
-      <ContentLoader className="w-full h-12 rounded-md" />
-    </div>
   );
 }

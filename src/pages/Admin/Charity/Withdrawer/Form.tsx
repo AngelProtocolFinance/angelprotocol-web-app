@@ -1,13 +1,10 @@
-import { WithdrawResource } from "./types";
 import Icon from "components/Icon";
-import Status from "../../../../components/Transactors/Status";
-import Amount from "./Amount";
+import Status from "components/Transactors/Status";
 import InputField from "./InputField";
-import { Fee, ToReceive, Total } from "./Misc";
 import useWithdraw from "./useWithdraw";
 
-export default function WithdrawForm(resources: WithdrawResource) {
-  const { withdraw, isFormLoading, isSubmitDisabled } = useWithdraw(resources);
+export default function Form() {
+  const { withdraw, isFormLoading, isSubmitDisabled } = useWithdraw();
 
   return (
     <form
@@ -17,13 +14,6 @@ export default function WithdrawForm(resources: WithdrawResource) {
       noValidate
     >
       <Status />
-
-      {resources.vaultFields.map(
-        (vaultField) =>
-          vaultField.ustBalance > 0 && (
-            <Amount key={vaultField.fieldId} {...vaultField} />
-          )
-      )}
       <InputField
         label="Destination wallet"
         field="beneficiary"
@@ -36,9 +26,7 @@ export default function WithdrawForm(resources: WithdrawResource) {
           are not responsible for the loss of funds.
         </span>
       </div>
-      <Total />
-      <Fee />
-      <ToReceive />
+
       <button
         type="submit"
         className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"

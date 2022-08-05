@@ -1,17 +1,13 @@
 import * as Yup from "yup";
-import { testAddress } from "./tests";
+import { isJunoAddress } from "./tests";
 
-export const address = (title: string) =>
-  Yup.string().test(
-    "is valid",
-    `${title} address format is not valid`,
-    testAddress
-  );
+export const address = (title: string, tester = isJunoAddress) =>
+  Yup.string().test("is valid", `${title} address format is not valid`, tester);
 
-export const requiredAddress = (title: string) =>
+export const requiredAddress = (title: string, tester = isJunoAddress) =>
   Yup.string()
     .required(`${title} address is required`)
-    .test("is valid", `${title} address format is not valid`, testAddress);
+    .test("is valid", `${title} address format is not valid`, tester);
 
 export const url = Yup.string().url("invalid url").nullable();
 

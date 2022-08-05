@@ -2,10 +2,9 @@ import { ErrorMessage } from "@hookform/error-message";
 import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { VaultField } from "types/shared/withdraw";
 import toCurrency from "helpers/toCurrency";
 
-export default function Amount(props: VaultField) {
+export default function Amount(props: any) {
   const {
     register,
     setValue,

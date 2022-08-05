@@ -1,37 +1,32 @@
 import { useFormContext } from "react-hook-form";
-import { WithdrawResource, WithdrawValues } from "./types";
+import { WithdrawValues } from "./types";
+import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import { adminRoutes, appRoutes } from "constants/routes";
-import useWithrawEstimator from "./useEstimator";
 
-export default function useWithdraw(resources: WithdrawResource) {
+export default function useWithdraw() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
-
-  const { tx, wallet } = useWithrawEstimator(resources);
+  const { wallet } = useGetWallet();
+  const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
 
-  function withdraw() {
+  function withdraw(data: WithdrawValues) {
     dispatch(
       sendCosmosTx({
         wallet,
-        tx: tx!,
+        msgs: [],
         tagPayloads: [
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            /**TODO: invalidate balance query */
           ]),
         ],
-        successLink: {
-          url: `${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
-          description: "Go to proposals",
-        },
+        successLink: proposalLink,
         successMessage: "Withdraw proposal successfully created!",
       })
     );
