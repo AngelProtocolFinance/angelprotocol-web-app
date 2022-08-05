@@ -4,7 +4,7 @@ import { Expiration } from "types/server/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import { useAdminResources } from "../AdminGuard";
+import { useAdminResources } from "../Guard";
 import DetailLabel from "../common/DetailLabel";
 import Status from "../common/Status";
 import ProposalContent from "./Content";

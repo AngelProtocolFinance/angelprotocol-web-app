@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { CW3ConfigPayload, CW3ConfigValues } from "pages/Admin/types";
 import { CW3Config } from "types/server/contracts";
-import { useAdminResources } from "pages/Admin/AdminGuard";
+import { useAdminResources } from "pages/Admin/Guard";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useCw3ConfigQuery } from "services/juno/cw3";

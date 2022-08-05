@@ -7,6 +7,7 @@ import { invalidateJunoTags } from "services/juno";
 import { useLatestBlock } from "services/juno/queriers";
 import {
   adminTags,
+  customTags,
   endowmentTags,
   indexfundTags,
   junoTags,
@@ -19,7 +20,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
-import { useAdminResources } from "../AdminGuard";
+import { useAdminResources } from "../Guard";
 
 export default function PollAction(props: ProposalDetails) {
   const latestBlock = useLatestBlock();
@@ -104,8 +105,8 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
   const tagsToInvalidate: Tags = [
     //basic tags to invalidate
-    { type: junoTags.admin, id: adminTags.proposal },
     { type: junoTags.admin, id: adminTags.proposals },
+    { type: junoTags.custom, id: customTags.proposalDetails },
   ];
   if (!proposalMeta) {
     return [invalidateJunoTags(tagsToInvalidate)];

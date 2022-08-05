@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { AdminVoteValues } from "./types";
+import { VoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
@@ -16,7 +16,7 @@ import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const { wallet } = useGetWallet();
-  const { getValues, watch } = useFormContext<AdminVoteValues>();
+  const { getValues, watch } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const vote = watch("vote");
@@ -31,15 +31,11 @@ export default function useEstimator() {
           return;
         }
 
-        const proposal_id = getValues("proposal_id");
-        if (proposal_id === 0) {
-          dispatch(setFormError("Error getting poll info"));
-          return;
-        }
+        const proposalId = getValues("proposalId");
 
         dispatch(setFormLoading(true));
         const contract = new CW3(wallet, "");
-        const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
+        const voteMsg = contract.createVoteMsg(proposalId, debounced_vote);
         const { fee, feeNum } = await contract.estimateFee([voteMsg]);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
@@ -53,6 +49,7 @@ export default function useEstimator() {
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
+        console.log(err);
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
@@ -60,7 +57,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, []);
+  }, [debounced_vote]);
 
   return { tx, wallet };
 }

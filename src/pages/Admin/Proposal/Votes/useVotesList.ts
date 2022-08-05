@@ -1,7 +1,7 @@
 import { VotesPageOptions } from "types/server/contracts";
 import { useVotesQuery } from "services/juno/cw3";
 import CW3 from "contracts/CW3";
-import { useAdminResources } from "../../AdminGuard";
+import { useAdminResources } from "../../Guard";
 
 export const VOTES_PER_PAGE = 15;
 export function useVoteList(pollId: number, pageNum?: number) {

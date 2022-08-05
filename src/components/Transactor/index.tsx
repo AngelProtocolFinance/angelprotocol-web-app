@@ -1,11 +1,12 @@
 import { FC } from "react";
 import TransactionPrompt from "./TransactionPrompt";
 
-type TxProps<C> = {
+export type TxProps<C> = {
   Content: FC<C>;
   contentProps: C;
   inModal?: false;
 };
+
 export default function Transactor<C>({
   Content,
   contentProps,

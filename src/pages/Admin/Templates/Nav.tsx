@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { useAdminResources } from "../AdminGuard";
+import { useAdminResources } from "../Guard";
 import { routes } from "./routes";
 
 const styler = createNavLinkStyler(

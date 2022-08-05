@@ -7,7 +7,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
-export function AdminGuard(props: PropsWithChildren<{}>) {
+export function Guard(props: PropsWithChildren<{}>) {
   const { wallet, isWalletLoading } = useGetWallet();
   const { address } = useParams<AdminParams>();
 

@@ -6,7 +6,7 @@ import {
 import { PageOptions, Proposal } from "types/server/contracts";
 import { useProposalsQuery } from "services/juno/cw3";
 import CW3 from "contracts/CW3";
-import { useAdminResources } from "../AdminGuard";
+import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
 export function useFilteredProposals(

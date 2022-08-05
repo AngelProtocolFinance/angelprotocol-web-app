@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AdminVoteValues as V } from "./types";
+import { VoteValues as V } from "./types";
 import Fee from "components/Transactors/Fee";
 import Status from "components/Transactors/Status";
 import VoteOption from "components/Transactors/VoteOption";

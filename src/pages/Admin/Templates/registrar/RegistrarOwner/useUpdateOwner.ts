@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/AdminGuard";
+import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";

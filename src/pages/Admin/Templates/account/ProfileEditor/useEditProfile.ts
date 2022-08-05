@@ -3,7 +3,7 @@ import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
 import { UpdateProfileValues } from "pages/Admin/types";
 import { UpdateProfilePayload as UP } from "types/server/contracts";
 import { ObjectEntries } from "types/utils";
-import { useAdminResources } from "pages/Admin/AdminGuard";
+import { useAdminResources } from "pages/Admin/Guard";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import { uploadToIpfs } from "pages/Registration/helpers";
 import { invalidateJunoTags } from "services/juno";

@@ -1,8 +1,8 @@
 import { Vote } from "types/server/contracts";
 
-export type AdminVoteValues = {
+export type VoteValues = {
   vote: Vote;
-  proposal_id: number;
+  proposalId: number;
 };
 
-export type Props = { proposal_id: number };
+export type Props = { proposalId: number };

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { UpdateProfileValues } from "pages/Admin/types";
 import { UpdateProfilePayload } from "types/server/contracts";
 import { Profile } from "types/server/contracts";
-import { useAdminResources } from "pages/Admin/AdminGuard";
+import { useAdminResources } from "pages/Admin/Guard";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useEndowmentProfileQuery } from "services/juno/account";

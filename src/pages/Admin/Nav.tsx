@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import Icon from "components/Icon";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
-import { useAdminResources } from "./AdminGuard";
+import { useAdminResources } from "./Guard";
 
-export default function AdminNav() {
+export default function Nav() {
   const { isAp, endowment } = useAdminResources();
 
   return (
-    <div className="flex justify-end divide-x divide-white/60">
+    <div className="flex justify-end">
       {!isAp && (
         <Link
           to={`${siteRoutes.app}/${appRoutes.charity}/${endowment}`}
@@ -19,9 +19,17 @@ export default function AdminNav() {
           back to profile
         </Link>
       )}
+
+      {!isAp && (
+        <NavLink end to={adminRoutes.index} className={styler}>
+          dashboard
+        </NavLink>
+      )}
+
       <NavLink end to={adminRoutes.proposals} className={styler}>
         proposals
       </NavLink>
+
       {isAp && (
         <NavLink to={adminRoutes.charity_applications} className={styler}>
           charity applications

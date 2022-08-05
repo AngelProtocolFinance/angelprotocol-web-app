@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { useAdminResources } from "../AdminGuard";
+import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
 import ProfileEditor from "./account/ProfileEditor/ProfileEditor";
 import CW3Configurer from "./cw3/CW3Configurer/CW3Configurer";
