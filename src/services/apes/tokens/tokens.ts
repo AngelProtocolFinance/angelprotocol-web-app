@@ -5,8 +5,7 @@ import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import { IS_TEST } from "constants/env";
-import { apes_endpoint, junoLcdUrl, terraLcdUrl } from "constants/urls";
+import { junoLcdUrl, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 import { junoToken, lunaToken } from "./constants";
@@ -35,18 +34,15 @@ const tokens_api = apes.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const { providerId, address, chainId } = args.providerInfo;
-          const tokensRes = await fetch(
-            `${apes_endpoint}/wallet/tokens${IS_TEST ? "/test" : ""}`
-          );
 
-          const tokenList: Token[] = await tokensRes.json();
           const coins: WithBalance<Token>[] = [];
-          const categorizedTokenList = tokenList.reduce((tokens, token) => {
-            const _t = token.type;
-            if (!tokens[_t]) tokens[_t] = [];
-            tokens[_t].push(token);
-            return tokens;
-          }, {} as CategorizedTokenList);
+          const categorizedTokenList: CategorizedTokenList = {
+            cw20: [],
+            erc20: [],
+            "evm-native": [],
+            "terra-native": [],
+            "juno-native": [],
+          };
 
           // fetch balances for juno
           if (isJunoProvider(providerId)) {

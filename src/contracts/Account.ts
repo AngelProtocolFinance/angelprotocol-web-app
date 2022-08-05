@@ -1,5 +1,10 @@
+import { Coin } from "@cosmjs/proto-signing";
 import { ContractQueryArgs } from "services/types";
-import { Source, UpdateProfilePayload } from "types/server/contracts";
+import {
+  DepositPayload,
+  Source,
+  UpdateProfilePayload,
+} from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
@@ -37,6 +42,15 @@ export default class Account extends Contract {
     return this.createEmbeddedWasmMsg([], {
       update_profile: payload,
     });
+  }
+
+  createDepositMsg(payload: DepositPayload, funds: Coin[]) {
+    return this.createExecuteContractMsg(
+      {
+        deposit: payload,
+      },
+      funds
+    );
   }
 }
 

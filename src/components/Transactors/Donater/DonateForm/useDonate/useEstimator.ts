@@ -1,3 +1,5 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { MsgSendEncodeObject } from "@cosmjs/stargate";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { Coin, CreateTxOptions, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
@@ -14,12 +16,14 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
+import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
+import { IS_TEST } from "constants/env";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
@@ -29,6 +33,7 @@ export default function useEstimator() {
     setError,
     formState: { isDirty },
     getFieldState,
+    getValues,
   } = useFormContext<DonateValues>();
   const { wallet } = useGetWallet();
 
@@ -65,11 +70,35 @@ export default function useEstimator() {
 
         /** juno native transaction, send or contract interaction */
         if (selectedToken.type === "juno-native") {
+          //donate to contract
+          let msg: MsgSendEncodeObject | MsgExecuteContractEncodeObject;
           const contract = new Contract(wallet);
-          const msg = contract.createTransferNativeMsg(
+          msg = contract.createTransferNativeMsg(
             debounced_amount,
             ap_wallets.juno
           );
+
+          if (IS_TEST) {
+            const account = new Account(
+              wallet,
+              getValues("receiver") as string
+            );
+            msg = account.createDepositMsg(
+              {
+                liquid_percentage: "1",
+                locked_percentage: "0",
+              },
+              [
+                {
+                  amount: new Decimal(debounced_amount)
+                    .mul(1e6)
+                    .divToInt(1)
+                    .toString(),
+                  denom: "ujunox",
+                },
+              ]
+            );
+          }
           const { fee, feeNum } = await contract.estimateFee([msg]);
           dispatch(setFee(feeNum));
 
@@ -192,6 +221,7 @@ export default function useEstimator() {
     dispatch,
     getFieldState,
     setError,
+    getValues,
   ]);
 
   return { evmTx, terraTx, cosmosTx };

@@ -39,6 +39,11 @@ export type EmbeddedBankMsg = {
 
 /** _account */
 
+export interface DepositPayload {
+  locked_percentage: string; //"0.7"
+  liquid_percentage: string; //"0.3"
+}
+
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
