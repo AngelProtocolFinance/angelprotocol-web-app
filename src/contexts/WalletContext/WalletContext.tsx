@@ -208,6 +208,9 @@ function useVerifyChain(
       try {
         disconnect();
       } catch (err) {
+        // when wallet is disconnected, the `disconnect` func is recreated,
+        // causing this hook to rerun and throwing the error below.
+        // We ignore this error and rethrow others
         if (!(err instanceof WalletDisconnectError)) {
           throw err;
         }
@@ -217,6 +220,7 @@ function useVerifyChain(
   );
 
   useEffect(() => {
+    // no active provider === no connected wallet so no need to run hook
     if (!activeProviderInfo) {
       return;
     }
