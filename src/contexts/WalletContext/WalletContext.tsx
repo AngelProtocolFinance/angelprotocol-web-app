@@ -6,15 +6,15 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
-import { Chain, Token } from "types/server/aws";
+import { Chain, NetworkType, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/chains";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useVerifyNetwork from "./useVerifyNetwork";
 import useXdefi from "./useXdefi";
 
 export type WalletState = {
@@ -186,6 +186,16 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       </setContext.Provider>
     </getContext.Provider>
   );
+}
+
+function useVerifyNetwork(networkType: NetworkType) {
+  const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (networkType !== EXPECTED_NETWORK_TYPE) {
+      handleError(new WrongNetworkError());
+    }
+  }, [networkType, handleError]);
 }
 
 const getContext = createContext<State>(initialState);
