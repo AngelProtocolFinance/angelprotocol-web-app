@@ -8,9 +8,9 @@ type Logger = {
 
 const logger: Logger = IS_TEST
   ? {
-      error: (...data) => logger.error(...data),
-      info: (...data) => logger.info(...data),
-      log: (...data) => logger.log(...data),
+      error: (...data) => console.error(...data),
+      info: (...data) => console.info(...data),
+      log: (...data) => console.log(...data),
     }
   : {
       error: (_) => {},
