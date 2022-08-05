@@ -9,7 +9,11 @@ import {
 import { StageUpdater } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
 import logger from "helpers/logger";
-import { LogApplicationUpdateError, TxResultFail } from "errors/errors";
+import {
+  LogApplicationUpdateError,
+  TxResultFail,
+  UnexpectedStateError,
+} from "errors/errors";
 
 export default function handleTxError(error: any, handler: StageUpdater) {
   logger.error(error);
@@ -45,6 +49,8 @@ export default function handleTxError(error: any, handler: StageUpdater) {
     handler({ step: "error", message: error.message });
   } else if (error instanceof TxUnspecifiedError) {
     handler({ step: "error", message: "Unspecified error occured" });
+  } else if (error instanceof UnexpectedStateError) {
+    handler({ step: "error", message: error.message });
   } else if (error instanceof Error) {
     handler({
       step: "error",
