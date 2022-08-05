@@ -2,7 +2,7 @@ import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
@@ -56,7 +56,7 @@ export default function Views() {
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
         />
-        <Route path="*" element={<Navigate replace to={siteRoutes.index} />} />
+        <Route path="*" element={<Navigate replace to={appRoutes.index} />} />
       </Routes>
     </Suspense>
   );

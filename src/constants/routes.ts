@@ -1,8 +1,3 @@
-export enum siteRoutes {
-  index = "/",
-  admin = "/admin",
-}
-
 export enum webRoutes {
   index = "",
   charities = "for-charities",

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
 
@@ -29,7 +29,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
 
 // TODO: update this link when the tutorial page gets created
 const TutorialLink = () => (
-  <Link to={siteRoutes.index} className="hover:underline text-angel-blue">
+  <Link to={appRoutes.index} className="hover:underline text-angel-blue">
     click here to learn how
   </Link>
 );
