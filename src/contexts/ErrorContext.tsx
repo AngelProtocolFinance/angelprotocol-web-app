@@ -23,15 +23,9 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else if (typeof error === "string") {
         showModal(Popup, { message: error });
       } else if (instanceOfAPError(error)) {
-        showModal(
-          Popup,
-          {
-            message: error.message,
-            hideCloseBtn: !error.dismissable,
-          },
-          undefined,
-          error.dismissable
-        );
+        showModal(Popup, {
+          message: error.message,
+        });
       } else if (error instanceof Error) {
         showModal(Popup, { message: error.message });
       } else if (

@@ -6,11 +6,10 @@ import useFocusHandler from "./useFocusHandler";
 type Props = {
   classes: string;
   customCloseHandler?: () => void;
-  canBeClosed?: boolean;
 };
 
 export default function Backdrop(props: Props) {
-  const { classes, customCloseHandler, canBeClosed = true } = props;
+  const { classes, customCloseHandler } = props;
 
   const { closeModal } = useModalContext();
   const backdropRef = useRef<HTMLDivElement | null>(null);
@@ -18,9 +17,7 @@ export default function Backdrop(props: Props) {
   useAttachKeyPressHandler("Escape", handleBackdropDismiss);
 
   function handleBackdropDismiss() {
-    if (!canBeClosed) {
-      return;
-    } else if (customCloseHandler) {
+    if (customCloseHandler) {
       customCloseHandler();
     } else {
       closeModal();
