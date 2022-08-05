@@ -34,10 +34,13 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         );
       } else if (error instanceof Error) {
         showModal(Popup, { message: error.message });
+      } else if (
+        "data" in error &&
+        (error.data instanceof Error || instanceOfAPError(error.data))
+      ) {
+        handleError(error.data);
       } else if ("error" in error) {
         handleError(error.error);
-      } else if ("data" in error) {
-        handleError(error.data);
       } else if ("message" in error || "status" in error) {
         //  e.g. FetchBaseQueryError or SerializedError from @reduxjs/toolkit
         showModal(Popup, {
@@ -60,7 +63,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
 }
 
 function instanceOfAPError(error: any): error is IAPError {
-  return error instanceof Error || error.type === "APError";
+  return error.type === "APError";
 }
 
 export function useErrorContext() {
