@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 
 export default function AppMenu() {
@@ -31,10 +31,7 @@ export default function AppMenu() {
         </a>
       </li>
       <li>
-        <Link
-          to={`${siteRoutes.app}/${appRoutes.register}`}
-          className={linkStyles.className}
-        >
+        <Link to={appRoutes.register} className={linkStyles.className}>
           REGISTER
         </Link>
       </li>

@@ -11,7 +11,7 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
 export default function useSaveContactDetails() {
@@ -72,9 +72,7 @@ export default function useSaveContactDetails() {
       }
 
       if (!is_create) {
-        return navigate(
-          `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
-        );
+        return navigate(`${appRoutes.register}/${routes.dashboard}`);
       }
 
       const { data } = result;
@@ -92,7 +90,7 @@ export default function useSaveContactDetails() {
         },
       });
 
-      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`);
+      navigate(`${appRoutes.register}/${routes.confirm}`);
     },
     [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
   );

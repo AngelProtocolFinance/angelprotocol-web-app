@@ -6,7 +6,7 @@ import {
   useRegistrationState,
 } from "services/aws/registration";
 import { useSetter } from "store/accessors";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
@@ -49,7 +49,7 @@ export default function RegisteredWallet() {
         change wallet
       </Button>
       <Link
-        to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
+        to={`${appRoutes.register}/${routes.dashboard}`}
         className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
       >
         Back to registration dashboard

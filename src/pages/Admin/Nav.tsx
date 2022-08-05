@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminResources } from "./Guard";
 
 export default function Nav() {
@@ -12,7 +12,7 @@ export default function Nav() {
     <div className="flex justify-end">
       {!isAp && (
         <Link
-          to={`${siteRoutes.app}/${appRoutes.charity}/${endowment}`}
+          to={`${appRoutes.charity}/${endowment}`}
           className="uppercase text-sm text-center font-semibold font-heading text-white mr-auto flex items-center"
         >
           <Icon size={15} type="ArrowBack" />

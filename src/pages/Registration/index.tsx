@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
 
@@ -64,9 +64,7 @@ export default function Register() {
         <Route
           path="*"
           element={
-            <Navigate
-              to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
-            />
+            <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />
           }
         />
       </Routes>

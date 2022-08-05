@@ -1,27 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "App/App";
-import { Route, Routes } from "react-router-dom";
 import AppWrapper from "test/AppWrapper";
-import { appRoutes, siteRoutes } from "constants/routes";
-
-/**
- * @jest-environment jsdom
- */
-// define initial routes
-const routes = [
-  `${siteRoutes.app}`,
-  `${siteRoutes.app}/${appRoutes.marketplace}`,
-  // `${siteRoutes.app}/${appRoutes.govern}`,
-  `${siteRoutes.app}/${appRoutes.leaderboard}`,
-];
 
 function TestApp() {
   return (
-    <AppWrapper routes={routes} startingRouteIndex={0}>
-      <Routes>
-        <Route path={siteRoutes.app + "/*"} element={<App />} />
-      </Routes>
+    <AppWrapper>
+      <App />
     </AppWrapper>
   );
 }

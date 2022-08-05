@@ -6,7 +6,7 @@ import { templates } from "pages/Admin/constants";
 import { useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon, { IconTypes } from "components/Icon";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Nav() {
   const { address } = useParams<ProfileParams>();
@@ -21,15 +21,12 @@ export default function Nav() {
 
   return (
     <div className="lg:col-span-2 flex gap-2">
-      <LinkIcon
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
-        _iconType="ArrowBack"
-      >
+      <LinkIcon to={`${appRoutes.marketplace}`} _iconType="ArrowBack">
         back to marketplace
       </LinkIcon>
       {isMember && (
         <LinkIcon
-          to={`${siteRoutes.app}/${appRoutes.admin}/${address}/${adminRoutes.templates}/${templates.acc_profile}`} //change to multisig edit
+          to={`${appRoutes.admin}/${address}/${adminRoutes.templates}/${templates.acc_profile}`} //change to multisig edit
           _iconType="Edit"
           className="ml-auto border-r border-white/30 pr-2"
         >
@@ -38,7 +35,7 @@ export default function Nav() {
       )}
       {isMember && (
         <LinkIcon
-          to={`${siteRoutes.app}/${appRoutes.admin}/${address}`} //change to updateProfile from RC-web-profile
+          to={`${appRoutes.admin}/${address}`} //change to updateProfile from RC-web-profile
           _iconType="Admin"
         >
           admin

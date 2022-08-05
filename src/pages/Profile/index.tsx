@@ -7,7 +7,7 @@ import { useEndowmentProfileQuery } from "services/juno/account";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Account from "contracts/Account";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import Content from "./Content";
 import Header from "./Header";
 import Nav from "./Nav";
@@ -67,7 +67,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+        to={`${appRoutes.marketplace}`}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace

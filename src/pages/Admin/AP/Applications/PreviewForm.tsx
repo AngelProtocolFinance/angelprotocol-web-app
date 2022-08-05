@@ -60,7 +60,7 @@ export default function PreviewForm({
 
       <Link
         className="`w-full bg-angel-blue text-center tracking-wider p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        to={`/${appRoutes.admin}/${AP_ADDR}/${adminRoutes.proposal}/${ap.poll_id}`}
+        to={`${appRoutes.admin}/${AP_ADDR}/${adminRoutes.proposal}/${ap.poll_id}`}
       >
         Go to Poll
       </Link>

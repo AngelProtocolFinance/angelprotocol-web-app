@@ -16,11 +16,9 @@ const testnet: NetworkInfo = {
   walletconnectID: 0,
 };
 
-export default function AppWrapper(
-  props: PropsWithChildren<{ routes: string[]; startingRouteIndex: number }>
-) {
+export default function AppWrapper(props: PropsWithChildren<{}>) {
   return (
-    <MemoryRouter initialEntries={props.routes} initialIndex={0}>
+    <MemoryRouter>
       <Provider store={store}>
         <StaticWalletProvider defaultNetwork={testnet}>
           {props.children}
