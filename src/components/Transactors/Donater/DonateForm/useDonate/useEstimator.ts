@@ -85,8 +85,8 @@ export default function useEstimator() {
             );
             msg = account.createDepositMsg(
               {
-                liquid_percentage: "1",
-                locked_percentage: "0",
+                liquid_percentage: "0.5",
+                locked_percentage: "0.5",
               },
               [
                 {

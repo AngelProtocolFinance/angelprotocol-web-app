@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import { adminRoutes } from "constants/routes";
-import Applications from "./AP/Applications";
 import { AdminGuard } from "./AdminGuard";
 import AdminNav from "./AdminNav";
 import Proposal from "./Proposal";
 import Proposals from "./Proposals/Proposals";
 import Proposer from "./Templates";
+import Applications from "./ap/Applications";
 
 export default function Admin() {
   return (

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor from "components/Transactor";
-import AdminVoter from "./AdminVoter";
+import AdminVoter from ".";
 
 export default function useAdminVoter(proposal_id: number) {
   const { showModal } = useModalContext();

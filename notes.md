@@ -15,10 +15,12 @@ merge into just /Admin
 
 - organized admin files, Proposals, Proposal, Templates, index.tsx
 - expiration ui for both time and block types
+- move `<Withdrawer>` from `components/transactors` to `page/admin/charity`
 
-### admin/proposals
+### admin/proposal(s)
 
 - remove vote details from proposal cards: not doing so causes each card on proposals page to fetch `{proposal:{proposal_id:x}}`
+- move `<Voter/>` from `components/transactor` to `page/admin/proposal`
 
 ### profile
 

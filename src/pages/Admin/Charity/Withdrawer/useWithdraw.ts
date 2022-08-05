@@ -5,7 +5,7 @@ import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
-import useWithrawEstimator from "./useWithdrawEstimator";
+import useWithrawEstimator from "./useEstimator";
 
 export default function useWithdraw(resources: WithdrawResource) {
   const { form_loading, form_error } = useGetter((state) => state.transaction);

@@ -6,7 +6,7 @@ import {
   StageUpdater,
   TxOptions,
 } from "slices/transaction/types";
-import logApplicationReview from "pages/Admin/AP/Applications/logApplicationReview";
+import logApplicationReview from "pages/Admin/ap/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";

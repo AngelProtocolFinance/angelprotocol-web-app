@@ -1,6 +1,6 @@
 import { WithdrawResource } from "./types";
 import Icon from "components/Icon";
-import Status from "../Status";
+import Status from "../../../../components/Transactors/Status";
 import Amount from "./Amount";
 import InputField from "./InputField";
 import { Fee, ToReceive, Total } from "./Misc";

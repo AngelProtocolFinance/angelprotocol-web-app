@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { AdminVoteValues as V } from "./types";
+import Fee from "components/Transactors/Fee";
+import Status from "components/Transactors/Status";
+import VoteOption from "components/Transactors/VoteOption";
 import { useGetter } from "store/accessors";
-import Fee from "../Fee";
-import Status from "../Status";
-import VoteOption from "../VoteOption";
 import useVote from "./useVote";
 
-export default function VoteForm() {
+export default function Form() {
   const { handleSubmit } = useFormContext<V>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const vote = useVote();

@@ -2,6 +2,7 @@ import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { Tags } from "slices/transaction/types";
+import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
 import { invalidateJunoTags } from "services/juno";
 import { useLatestBlock } from "services/juno/queriers";
 import {
@@ -15,7 +16,6 @@ import {
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
