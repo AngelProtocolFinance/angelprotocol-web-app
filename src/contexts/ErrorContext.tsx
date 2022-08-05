@@ -16,7 +16,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
 
   const handleError = useCallback(
     (error: any, displayMessage?: string) => {
-      logger.log(error);
+      logger.error(error);
 
       if (displayMessage) {
         showModal(Popup, { message: displayMessage });

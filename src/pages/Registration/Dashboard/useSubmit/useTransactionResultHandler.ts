@@ -36,7 +36,7 @@ export default function useTransactionResultHandler() {
           handleError(result.error, FORM_ERROR);
         }
       } catch (error) {
-        logger.log(error);
+        logger.error(error);
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
       } finally {
         dispatch(setFormLoading(false));

@@ -82,7 +82,7 @@ async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
     .concat([ProofOfIdentity, ProofOfRegistration])
     .some((x) => {
       if (!x.publicUrl) {
-        logger.log(`Error occured. File ${x.name} does not have a publicUrl`);
+        logger.error(`Error occured. File ${x.name} does not have a publicUrl`);
         return true;
       }
       return false;

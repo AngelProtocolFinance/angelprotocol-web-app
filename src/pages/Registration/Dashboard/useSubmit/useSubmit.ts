@@ -44,7 +44,7 @@ export default function useSubmit() {
           })
         );
       } catch (err) {
-        logger.log(processEstimateError(err));
+        logger.error(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
         dispatch(setFormLoading(false));
       } finally {
