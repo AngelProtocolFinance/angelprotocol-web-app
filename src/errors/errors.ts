@@ -60,8 +60,7 @@ export class WrongChainError extends APError {
         !expectedChain
           ? ""
           : ` Please connect to the ${expectedChain} chain and reload the page.`
-      }`,
-      false
+      }`
     );
   }
 }
@@ -70,8 +69,7 @@ export class WrongNetworkError extends APError {
   constructor() {
     super(
       "WrongNetworkError",
-      `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`,
-      false
+      `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`
     );
   }
 }
@@ -80,8 +78,7 @@ export class UnsupportedNetworkError extends APError {
   constructor(unsupportedChainId: string) {
     super(
       "UnsupportedNetworkError",
-      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`,
-      false
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`
     );
   }
 }

@@ -1,12 +1,18 @@
 import {
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatuses } from "./types";
-import { Chain, NetworkType, Token } from "types/server/aws";
+import {
+  Connection,
+  ProviderId,
+  ProviderInfo,
+  ProviderStatuses,
+} from "./types";
+import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/chains";
 import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
@@ -42,8 +48,6 @@ const initialState: State = {
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
-  const { handleError } = useErrorContext();
-
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
@@ -101,33 +105,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
-  const {
-    data: chain = placeholderChain,
-    isLoading: isChainLoading,
-    isFetching,
-    error,
-  } = useChainQuery(
-    { providerInfo: activeProviderInfo! },
-    { skip: !activeProviderInfo }
-  );
+  const disconnect = useCallback(() => {
+    console.log(activeProviderInfo?.providerId);
 
-  useVerifyChain(chain.network_type, error);
-
-  const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address } = activeProviderInfo;
-      return {
-        walletIcon: logo,
-        displayCoin: chain.native_currency,
-        coins: [chain.native_currency, ...chain.tokens],
-        address,
-        chain,
-        providerId,
-      };
-    }
-  }, [activeProviderInfo, chain]);
-
-  const disconnect = () => {
     switch (activeProviderInfo?.providerId) {
       case "metamask":
         disconnectMetamask();
@@ -151,7 +131,40 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       default:
         throw new WalletDisconnectError();
     }
-  };
+  }, [
+    activeProviderInfo?.providerId,
+    disconnectMetamask,
+    disconnectBinanceWallet,
+    disconnectEVMxdefi,
+    disconnectKeplr,
+    disconnectTerra,
+  ]);
+
+  const {
+    data: chain = placeholderChain,
+    isLoading: isChainLoading,
+    isFetching,
+    error,
+  } = useChainQuery(
+    { providerInfo: activeProviderInfo! },
+    { skip: !activeProviderInfo }
+  );
+
+  useVerifyChain(activeProviderInfo, chain, error, disconnect);
+
+  const walletState: WalletState | undefined = useMemo(() => {
+    if (activeProviderInfo) {
+      const { logo, providerId, address } = activeProviderInfo;
+      return {
+        walletIcon: logo,
+        displayCoin: chain.native_currency,
+        coins: [chain.native_currency, ...chain.tokens],
+        address,
+        chain,
+        providerId,
+      };
+    }
+  }, [activeProviderInfo, chain]);
 
   return (
     <getContext.Provider
@@ -181,20 +194,38 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
-function useVerifyChain(networkType: NetworkType, chainError: any) {
+function useVerifyChain(
+  activeProviderInfo: ProviderInfo | undefined,
+  chain: Chain,
+  chainError: any,
+  disconnect: () => void
+) {
   const { handleError } = useErrorContext();
 
-  useEffect(() => {
-    if (chainError) {
-      handleError(chainError);
-    }
-  }, [chainError, handleError]);
+  const handle = useCallback(
+    (error: any) => {
+      handleError(error);
+      try {
+        disconnect();
+      } catch (err) {
+        if (!(err instanceof WalletDisconnectError)) {
+          throw err;
+        }
+      }
+    },
+    [handleError, disconnect]
+  );
 
   useEffect(() => {
-    if (networkType !== EXPECTED_NETWORK_TYPE) {
-      handleError(new WrongNetworkError());
+    if (!activeProviderInfo) {
+      return;
     }
-  }, [networkType, handleError]);
+    if (chainError) {
+      handle(chainError);
+    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
+      handle(new WrongNetworkError());
+    }
+  }, [activeProviderInfo, chain, chainError, handle]);
 }
 
 const getContext = createContext<State>(initialState);
