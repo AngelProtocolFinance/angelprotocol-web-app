@@ -6,7 +6,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
@@ -32,7 +32,7 @@ export default function useSubmit() {
         if ("error" in result) {
           handleError(result.error, "Error updating profile ❌");
         }
-        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+        navigate(`${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }

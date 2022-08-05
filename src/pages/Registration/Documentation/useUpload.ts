@@ -6,7 +6,7 @@ import {
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
@@ -33,7 +33,7 @@ export default function useUpload() {
           handleError(result.error, FORM_ERROR);
         }
 
-        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+        navigate(`${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, FORM_ERROR);
       }

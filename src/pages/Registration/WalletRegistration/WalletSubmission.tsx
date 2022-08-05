@@ -4,7 +4,7 @@ import {
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
 import FormInput from "components/FormInput";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
@@ -71,11 +71,7 @@ export default function WalletSubmission() {
       <Button
         className="bg-green-400 w-80 h-10"
         disabled={isSubmitting}
-        onClick={() =>
-          navigate(
-            `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
-          )
-        }
+        onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
       >
         Back to registration dashboard
       </Button>

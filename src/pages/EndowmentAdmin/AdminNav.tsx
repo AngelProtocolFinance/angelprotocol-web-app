@@ -2,14 +2,14 @@ import { Link, NavLink, useParams } from "react-router-dom";
 import { EndowmentAdminParams } from "./types";
 import Icon from "components/Icon";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function AdminNav() {
   const { address: endowmentAddress } = useParams<EndowmentAdminParams>();
   return (
     <div className="flex justify-end ">
       <Link
-        to={`${siteRoutes.app}/${appRoutes.charity}/${endowmentAddress}`}
+        to={`${appRoutes.charity}/${endowmentAddress}`}
         className={linkStyle + " mr-auto flex items-center"}
       >
         <Icon size={15} type="ArrowBack" />

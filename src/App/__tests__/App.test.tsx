@@ -3,14 +3,10 @@ import {
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
 import { render, screen, waitFor } from "@testing-library/react";
-import { Route, Routes } from "react-router-dom";
 import AppWrapper from "test/AppWrapper";
-import { siteRoutes } from "constants/routes";
 import App from "../App";
 
 // define initial routes
-const routes = [`${siteRoutes.app}`];
-
 const terra_testnet: NetworkInfo = {
   name: "testnet",
   chainID: "pisco-1",
@@ -33,10 +29,8 @@ jest.mock("@terra-money/wallet-provider", () => {
 
 function TestApp() {
   return (
-    <AppWrapper routes={routes} startingRouteIndex={0}>
-      <Routes>
-        <Route path={siteRoutes.app + "/*"} element={<App />} />
-      </Routes>
+    <AppWrapper>
+      <App />
     </AppWrapper>
   );
 }

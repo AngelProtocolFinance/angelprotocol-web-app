@@ -2,7 +2,7 @@ import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { UnprocessedCharity } from "types/server/aws";
 import { registrationRefKey } from "services/aws/registration";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
@@ -15,7 +15,7 @@ export default function VerificationSuccessful({
 
   function handleContinue() {
     localStorage.setItem(registrationRefKey, newCharity.ContactPerson.PK!);
-    navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
+    navigate(`${appRoutes.register}/${routes.dashboard}`);
   }
 
   return (

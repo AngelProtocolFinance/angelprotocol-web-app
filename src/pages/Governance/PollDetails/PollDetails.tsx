@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "types/server/contracts";
 import Icon from "components/Icon";
 import idParamToNumber from "helpers/idParamToNum";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 
@@ -13,7 +13,7 @@ export default function PollDetails() {
   return (
     <div className="padded-container grid content-start gap-4">
       <Link
-        to={`${siteRoutes.app}/${appRoutes.govern}`}
+        to={appRoutes.govern}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
         <Icon type="ArrowBack" size={15} /> back to proposals

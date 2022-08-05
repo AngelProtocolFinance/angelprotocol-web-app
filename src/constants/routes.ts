@@ -1,8 +1,3 @@
-export enum siteRoutes {
-  home = "/",
-  app = "/app",
-  admin = "/admin",
-}
 export enum webRoutes {
   index = "",
   charities = "for-charities",
@@ -13,19 +8,19 @@ export enum webRoutes {
 
 export enum appRoutes {
   index = "/",
-  dashboard = "dashboard",
-  marketplace = "marketplace",
-  leaderboard = "leaderboard",
-  admin = "admin",
-  register = "register",
-  login = "login",
-  unsdgs = "unsdgs",
-  charity = "charity",
-  tca = "tca",
-  fund = "fund",
-  govern = "govern",
-  endowment_admin = "endowment-admin",
-  donations = "donations",
+  dashboard = "/dashboard",
+  marketplace = "/marketplace",
+  leaderboard = "/leaderboard",
+  admin = "/admin",
+  register = "/register",
+  login = "/login",
+  unsdgs = "/unsdgs",
+  charity = "/charity",
+  tca = "/tca",
+  fund = "/fund",
+  govern = "/govern",
+  endowment_admin = "/endowment-admin",
+  donations = "/donations",
 }
 
 export enum governRoutes {

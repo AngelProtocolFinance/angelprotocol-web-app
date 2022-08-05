@@ -1,31 +1,25 @@
 import { NavLink } from "react-router-dom";
 import { useMember } from "services/juno/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 
 export default function DappMenu() {
   const { member } = useMember("apTeam");
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
-      <NavLink
-        className={styler}
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
-      >
+      <NavLink className={styler} to={appRoutes.marketplace}>
         Marketplace
       </NavLink>
       {/* 
       NOTE: Governance will be reenabled when we relaunch the $HALO token
-      <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} className={styler}>
+      <NavLink to={appRoutes.govern} className={styler}>
         Governance
       </NavLink> */}
-      <NavLink
-        to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
-        className={styler}
-      >
+      <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
       {member.weight && (
-        <NavLink to={`${siteRoutes.app}/${appRoutes.admin}`} className={styler}>
+        <NavLink to={appRoutes.admin} className={styler}>
           Admin
         </NavLink>
       )}

@@ -6,7 +6,7 @@ import { ContactDetails } from "pages/Registration/types";
 import { Charity } from "types/server/aws";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import routes from "../../routes";
@@ -134,9 +134,7 @@ export default function ContactDetailsForm({ charity }: Props) {
               className="bg-green-400 w-48 h-12 mr-2"
               disabled={isSubmitting}
               onClick={() =>
-                navigate(
-                  `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
-                )
+                navigate(`${appRoutes.register}/${routes.dashboard}`)
               }
             >
               Back

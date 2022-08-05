@@ -4,7 +4,7 @@ import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
 export default function useWithdraw(resources: WithdrawResource) {
@@ -29,7 +29,7 @@ export default function useWithdraw(resources: WithdrawResource) {
           ]),
         ],
         successLink: {
-          url: `${siteRoutes.app}/${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
+          url: `${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         },
         successMessage: "Withdraw proposal successfully created!",

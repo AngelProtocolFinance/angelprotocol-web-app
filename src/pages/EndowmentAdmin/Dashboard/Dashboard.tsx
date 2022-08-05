@@ -5,7 +5,7 @@ import { useEndowmentBalance } from "services/juno/multicall/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
-import { appRoutes, siteRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import Summary from "./Summary";
 import Transactions from "./Transactions";
 
@@ -22,7 +22,7 @@ export default function Dashboard(props: { endowmentAddr: string }) {
       <PageError
         classes="place-self-start justify-self-center mt-10 "
         redirect={{
-          to: `${siteRoutes.app}/${appRoutes.charity}/${props.endowmentAddr}`,
+          to: `${appRoutes.charity}/${props.endowmentAddr}`,
           title: "back to profile",
         }}
       >

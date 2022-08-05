@@ -1,6 +1,6 @@
 import { SuccessLink } from "slices/transaction/types";
 import { CWContracts } from "types/server/contracts";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 function genProposalsLink(cws: Extract<CWContracts, "apTeam">): SuccessLink;
 //when passing cw3s, prompts to also pass endomwnent addr
@@ -14,7 +14,7 @@ function genProposalsLink(
 ): SuccessLink {
   return {
     description: "Go to proposals",
-    url: `${siteRoutes.app}/${
+    url: `${
       cws === "apTeam"
         ? appRoutes.admin
         : appRoutes.endowment_admin + "/" + endowmentAddr

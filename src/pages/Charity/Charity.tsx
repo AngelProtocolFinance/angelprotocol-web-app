@@ -1,5 +1,4 @@
-import { LinkProps, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, LinkProps, useParams } from "react-router-dom";
 import { CharityParams } from "./types";
 import { proposalRoutes } from "pages/Admin/constants";
 import {
@@ -9,7 +8,7 @@ import {
 import { useMember } from "services/juno/admin/queriers";
 import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
-import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
@@ -38,15 +37,12 @@ export default function Charity() {
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
-        <LinkIcon
-          to={`${siteRoutes.app}/${appRoutes.marketplace}`}
-          _iconType="ArrowBack"
-        >
+        <LinkIcon to={appRoutes.marketplace} _iconType="ArrowBack">
           back to marketplace
         </LinkIcon>
         {isUserAdminMember && (
           <LinkIcon
-            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
+            to={`${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
             _iconType="Edit"
             className="ml-auto border-r border-white/30 pr-2"
           >
@@ -55,7 +51,7 @@ export default function Charity() {
         )}
         {isUserAdminMember && (
           <LinkIcon
-            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
+            to={`${appRoutes.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
             _iconType="Admin"
           >
             admin
@@ -111,7 +107,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+        to={appRoutes.marketplace}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace
