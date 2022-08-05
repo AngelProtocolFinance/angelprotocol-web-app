@@ -5,7 +5,7 @@ import { Chain, Token } from "types/server/aws";
 import contract_querier from "services/juno/contract_querier";
 import CW20 from "contracts/CW20";
 import createAuthToken from "helpers/createAuthToken";
-import { UnsupportedNetworkError } from "errors/errors";
+import { IAPError, UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "./apes";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
@@ -98,7 +98,7 @@ const chains_api = apes.injectEndpoints({
               error: "Error querying balances",
               data:
                 error instanceof UnsupportedNetworkError
-                  ? error.message
+                  ? createAPErrorObject(error)
                   : error,
             },
           };
@@ -128,4 +128,20 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
 
   const cw20Balances = await Promise.all(cw20BalancePromises);
   return cw20Balances;
+}
+
+// added this function to have better type safety - when it is required to create an object
+// based on some interface, creating it like `const objName: Interface = { ... }` enables
+// build-time type checking, so that changing the interface signature would immediately
+// cause the build pipeline to complain of a missing/unrecognized field
+function createAPErrorObject(error: UnsupportedNetworkError) {
+  const apError: IAPError = {
+    dismissable: error.dismissable,
+    name: error.name,
+    message: error.message,
+    stack: error.stack,
+    cause: error.cause,
+    type: "APError",
+  };
+  return apError;
 }
