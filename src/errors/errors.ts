@@ -80,7 +80,7 @@ export class UnsupportedNetworkError extends APError {
   constructor(unsupportedChainId: string) {
     super(
       "UnsupportedNetworkError",
-      `Network ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`,
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`,
       false
     );
   }
