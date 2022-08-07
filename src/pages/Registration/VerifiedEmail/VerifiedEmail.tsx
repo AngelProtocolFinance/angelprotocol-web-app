@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/server/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
+import logger from "helpers/logger";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
@@ -25,7 +26,7 @@ export default function VerifiedEmail() {
 
   const resendVerificationEmail = useCallback(async () => {
     if (!newCharity.ContactPerson.PK) {
-      console.error("Invalid Data. Please ask the administrator about that.");
+      logger.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
@@ -35,8 +36,8 @@ export default function VerifiedEmail() {
       body: newCharity,
     });
     response.data
-      ? console.info(response.data?.message)
-      : console.error(response.error?.data.message);
+      ? logger.info(response.data?.message)
+      : logger.error(response.error?.data.message);
   }, [newCharity, resendEmail]);
 
   if (is_expired) {

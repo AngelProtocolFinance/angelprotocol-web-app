@@ -5,12 +5,12 @@ import {
   useRegistrationState,
   useRequestEmailMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { Button, ButtonMailTo } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
-import useHandleError from "./useHandleError";
 
 export default function ConfirmEmail() {
   const { data } = useRegistrationState("");
@@ -19,7 +19,7 @@ export default function ConfirmEmail() {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
   const sendEmail = useCallback(

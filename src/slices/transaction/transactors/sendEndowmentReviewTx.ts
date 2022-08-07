@@ -8,7 +8,7 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
@@ -105,7 +105,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         });
       }
     } catch (err) {
-      handleWalletError(err, updateState);
+      handleTxError(err, updateState);
     }
   }
 );

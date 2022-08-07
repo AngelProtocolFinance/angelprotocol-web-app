@@ -1,16 +1,16 @@
 import { useCallback } from "react";
-import useHandleError from "pages/Registration/useHandleError";
 import {
   useRegistrationState,
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 
 export default function useRegisterWallet() {
   const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
   const [updateMetadata, { isSuccess, isLoading }] =
     useUpdateCharityMetadataMutation();
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
 
   const registerWallet = useCallback(
     async (walletAddress: string) => {

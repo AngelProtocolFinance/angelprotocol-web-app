@@ -8,6 +8,7 @@ import {
 } from "types/ethereum";
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
+import logger from "helpers/logger";
 import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
@@ -86,7 +87,7 @@ export default function useInjectedProvider(
       setIsLoading(false);
     } catch (err) {
       //if user cancels, set pref to disconnect
-      console.error(err);
+      logger.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {

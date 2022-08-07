@@ -6,7 +6,7 @@ import { Chain, KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags, multicallTags } from "services/juno/tags";
 import { DonateValues } from "components/Transactors/Donater";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
 import { UnexpectedStateError, WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../../transactionSlice";
@@ -107,8 +107,7 @@ export const sendTerraDonation = createAsyncThunk(
         }
       }
     } catch (err) {
-      console.error(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

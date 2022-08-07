@@ -5,7 +5,7 @@ import {
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
@@ -64,8 +64,7 @@ export const sendCosmosTx = createAsyncThunk(
         });
       }
     } catch (err) {
-      console.log(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

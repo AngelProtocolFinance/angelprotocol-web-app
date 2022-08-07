@@ -40,7 +40,9 @@ export class WrongChainError extends Error {
   constructor(expectedChain?: string) {
     super(
       `Connected to the wrong chain.${
-        !expectedChain ? "" : ` Please connect to the ${expectedChain} chain.`
+        !expectedChain
+          ? ""
+          : ` Please connect to the ${expectedChain} chain and reload the page.`
       }`
     );
     this.name = "WrongChainError";
@@ -49,15 +51,17 @@ export class WrongChainError extends Error {
 
 export class WrongNetworkError extends Error {
   constructor() {
-    super(`Please connect to ${EXPECTED_NETWORK_TYPE} network.`);
+    super(
+      `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`
+    );
     this.name = "WrongNetworkError";
   }
 }
 
 export class UnsupportedNetworkError extends Error {
-  constructor(chainId: string) {
+  constructor(unsupportedChainId: string) {
     super(
-      `Network ${chainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance`
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`
     );
     this.name = "UnsupportedNetworkError";
   }

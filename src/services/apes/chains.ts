@@ -91,13 +91,15 @@ const chains_api = apes.injectEndpoints({
           });
 
           return { data: chain };
-        } catch (err) {
-          console.log("Failed to get balances", err);
+        } catch (error) {
           return {
             error: {
-              status: 500,
-              statusText: "Query error",
-              data: "Failed to get balances",
+              status: "CUSTOM_ERROR",
+              error: "Error querying balances",
+              data:
+                error instanceof UnsupportedNetworkError
+                  ? createSerializableErrorObject(error)
+                  : error,
             },
           };
         }
@@ -126,4 +128,18 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
 
   const cw20Balances = await Promise.all(cw20BalancePromises);
   return cw20Balances;
+}
+
+// added this function to have better type safety - when it is required to create an object
+// based on some interface, creating it like `const objName: Interface = { ... }` enables
+// build-time type checking, so that changing the interface signature would immediately
+// cause the build pipeline to complain of a missing/unrecognized field
+function createSerializableErrorObject(error: UnsupportedNetworkError) {
+  const serializableError: Error = {
+    name: error.name,
+    message: error.message,
+    stack: error.stack,
+    cause: error.cause,
+  };
+  return serializableError;
 }
