@@ -15,7 +15,7 @@ const amountsKey: keyof WithdrawValues = "amounts";
 const amount: SchemaShape<Amount> = {
   value: Yup.lazy((val: TVal) =>
     val === ""
-      ? Yup.string().required("required")
+      ? Yup.string() //required collected on _amount
       : tokenConstraint.when(balKey, (balance: TBal, schema) =>
           schema.test("balance test", "not enough balance", () => {
             return +balance >= +val; //if false test fails
@@ -26,6 +26,11 @@ const amount: SchemaShape<Amount> = {
 
 const shape: SchemaShape<WithdrawValues> = {
   amounts: Yup.array(Yup.object().shape(amount)),
+  _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
+    schema.test("at least one is valid", "", () =>
+      amounts.some((amount) => amount.value !== "")
+    )
+  ),
   beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
   ),

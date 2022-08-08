@@ -12,7 +12,7 @@ export default function Network() {
       //validate address on network change
       await trigger("beneficiary");
     })();
-  }, [network]);
+  }, [network, trigger]);
 
   return (
     <div>

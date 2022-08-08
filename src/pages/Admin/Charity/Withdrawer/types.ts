@@ -12,6 +12,9 @@ export type WithdrawValues = {
   amounts: Amount[];
   network: AddrNetwork;
   beneficiary: string;
+
+  //meta
+  _amounts: string; //collective amounts error
 };
 
 export type Props = {
