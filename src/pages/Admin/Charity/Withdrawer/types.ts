@@ -1,10 +1,8 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { GenericBalance } from "types/server/contracts";
-import CW20 from "contracts/CW20";
 
 export type Amount = {
-  id: string;
-  amount: string;
+  tokenId: string; //
+  value: string;
   balance: string;
   type: "cw20" | "native";
 };

@@ -10,16 +10,16 @@ export default function Withdrawer({ balance: { cw20, native } }: Props) {
 
   const cw20s: Amount[] = cw20.map((c) => ({
     type: "cw20",
-    id: c.address,
+    tokenId: c.address,
     balance: c.amount,
-    amount: "",
+    value: "",
   }));
 
   const natives: Amount[] = native.map((n) => ({
     type: "native",
-    id: n.denom,
+    tokenId: n.denom,
     balance: n.amount,
-    amount: "",
+    value: "",
   }));
 
   const methods = useForm<WithdrawValues>({

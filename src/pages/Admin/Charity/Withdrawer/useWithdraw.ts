@@ -12,6 +12,7 @@ export default function useWithdraw() {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
+
   const { wallet } = useGetWallet();
   const { proposalLink } = useAdminResources();
   const dispatch = useSetter();

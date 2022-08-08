@@ -1,15 +1,9 @@
 import { Coin } from "@cosmjs/proto-signing";
 import Decimal from "decimal.js";
 import { CW20, GenericBalance } from "types/server/contracts";
-import haloIcon from "assets/icons/currencies/halo_solid.png";
-import junoIcon from "assets/icons/currencies/juno.svg";
 import TableSection, { Cells } from "components/TableSection";
 import toCurrency from "helpers/toCurrency";
-
-const assets: { [index: string]: { name: string; icon: string } } = {
-  ujunox: { icon: junoIcon, name: "Juno" },
-  junoabc123: { icon: haloIcon, name: "Halo" },
-};
+import { assets } from "../constants";
 
 export default function Holdings(props: { balance: GenericBalance }) {
   return (

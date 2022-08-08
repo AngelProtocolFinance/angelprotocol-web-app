@@ -1,5 +1,6 @@
 import Icon from "components/Icon";
 import Status from "components/Transactors/Status";
+import Amounts from "./Amounts";
 import InputField from "./InputField";
 import useWithdraw from "./useWithdraw";
 
@@ -14,6 +15,8 @@ export default function Form() {
       noValidate
     >
       <Status />
+      <Amounts />
+      {/**status selector */}
       <InputField
         label="Destination wallet"
         field="beneficiary"
