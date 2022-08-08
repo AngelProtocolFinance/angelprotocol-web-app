@@ -6,36 +6,53 @@ import { assets } from "../constants";
 export default function Amounts() {
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext<WithdrawValues>();
   const { fields } = useFieldArray<WithdrawValues>({ name: "amounts" });
 
-  console.log(fields);
-
   return (
     <>
       {fields.map((field, i) => {
-        const id = `amounts.${i}.tokenId` as const;
+        const fieldName = `amounts.${i}.value` as const;
         return (
-          <div className="grid my-2 p-3 pb-1" key={field.id}>
+          <div
+            className="flex relative mb-8 border-b border-zinc-900/10 px-2 pb-1 pt-6 items-center"
+            key={field.id}
+          >
+            <button
+              onClick={() => {
+                setValue(fieldName, field.balance, { shouldValidate: true });
+              }}
+              type="button"
+              className="absolute top-1 right-2 text-sky-400 uppercase text-xs"
+            >
+              max
+            </button>
+            <img
+              src={assets[field.tokenId].icon}
+              alt=""
+              className="h-5 w-5 object-contain mr-1"
+            />
             <label
-              htmlFor={id}
-              className="text-angel-grey font-bold font-heading text-sm uppercase mb-2"
+              htmlFor={field.id}
+              className="uppercase font-heading text-sm"
             >
               {assets[field.tokenId].name}
             </label>
             <input
-              {...register(`amounts.${i}.value`)}
-              id={id}
+              {...register(fieldName)}
+              id={field.id}
               type="text"
               autoComplete="off"
-              className="p-1 pl-0 w-full outline-none text-angel-grey font-mono text-sm"
+              placeholder="0.000000"
+              className="bg-transparent text-right w-full outline-none text-angel-grey font-mono text-xl"
             />
             <ErrorMessage
               errors={errors}
-              name={`amounts.${i}.value`}
+              name={fieldName}
               as="span"
-              className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+              className="text-right text-rose-400 text-xs absolute -bottom-5 right-2"
             />
           </div>
         );

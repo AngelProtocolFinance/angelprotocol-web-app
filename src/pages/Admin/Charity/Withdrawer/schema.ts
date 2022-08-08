@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Amount, WithdrawValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
-import { requiredAddress } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
@@ -23,7 +23,7 @@ const amount: SchemaShape<Amount> = {
 
 const shape: SchemaShape<WithdrawValues> = {
   amounts: Yup.array(Yup.object().shape(amount)),
-  beneficiary: requiredAddress("beneficiary"),
+  beneficiary: requiredWalletAddr(),
   //add other vault fields here
 };
 

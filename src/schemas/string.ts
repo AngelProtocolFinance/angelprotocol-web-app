@@ -1,13 +1,24 @@
 import * as Yup from "yup";
-import { isJunoAddress } from "./tests";
+import { AddrNetwork } from "./types";
 
-export const address = (title: string, tester = isJunoAddress) =>
-  Yup.string().test("is valid", `${title} address format is not valid`, tester);
+export const contractAddr = Yup.string().matches(
+  /^juno1[a-z0-9]{58}$/i,
+  "contract address not valid"
+);
+export const requiredContractAddr = Yup.string()
+  .required("required")
+  .matches(/^juno1[a-z0-9]{58}$/i, "address format is not valid");
 
-export const requiredAddress = (title: string, tester = isJunoAddress) =>
-  Yup.string()
-    .required(`${title} address is required`)
-    .test("is valid", `${title} address format is not valid`, tester);
+export const walletAddr = (network: AddrNetwork = "juno") =>
+  Yup.string().matches(
+    getWalletAddrPattern(network),
+    "wallet address not valid"
+  );
+export const requiredWalletAddr = (network: AddrNetwork = "juno") => {
+  return Yup.string()
+    .required("required")
+    .matches(getWalletAddrPattern(network), `wallet address not valid`);
+};
 
 export const url = Yup.string().url("invalid url").nullable();
 
@@ -37,4 +48,14 @@ function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
       return new Blob([str || ""]).size <= num_bytes;
     }
   };
+}
+
+function getWalletAddrPattern(network: AddrNetwork) {
+  switch (network) {
+    case "bnb":
+    case "eth":
+      return /^0x[a-fA-F0-9]{40}$/;
+    default:
+      return /^juno1[a-z0-9]{38,58}$/i;
+  }
 }
