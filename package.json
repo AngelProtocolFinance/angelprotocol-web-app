@@ -70,7 +70,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.18.10",
     "@babel/plugin-syntax-flow": "^7.16.7",
     "@babel/plugin-transform-react-jsx": "^7.17.3",
     "@peculiar/webcrypto": "^1.1.7",
