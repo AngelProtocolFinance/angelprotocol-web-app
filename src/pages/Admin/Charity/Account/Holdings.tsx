@@ -33,7 +33,7 @@ function Balance(props: CW20 | Coin) {
         <span>{assets[id].name}</span>
       </div>
 
-      <>{toCurrency(new Decimal(props.amount).divToInt(1e6).toNumber(), 4)}</>
+      <>{toCurrency(new Decimal(props.amount).div(1e6).toNumber(), 4)}</>
     </Cells>
   );
 }

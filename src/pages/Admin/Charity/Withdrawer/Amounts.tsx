@@ -10,6 +10,8 @@ export default function Amounts() {
   } = useFormContext<WithdrawValues>();
   const { fields } = useFieldArray<WithdrawValues>({ name: "amounts" });
 
+  console.log(fields);
+
   return (
     <>
       {fields.map((field, i) => {
@@ -23,7 +25,7 @@ export default function Amounts() {
               {assets[field.tokenId].name}
             </label>
             <input
-              {...register(id)}
+              {...register(`amounts.${i}.value`)}
               id={id}
               type="text"
               autoComplete="off"
@@ -31,7 +33,7 @@ export default function Amounts() {
             />
             <ErrorMessage
               errors={errors}
-              name={id}
+              name={`amounts.${i}.value`}
               as="span"
               className="font-mono font-semibold text-right text-red-400 text-xs m-1"
             />

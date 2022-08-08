@@ -14,9 +14,9 @@ const amount: SchemaShape<Amount> = {
     val === ""
       ? Yup.string().required("required")
       : tokenConstraint.when(balKey, (balance: TBal, schema) =>
-          val > balance
-            ? schema.test("balance test", "not enough balance", () => true)
-            : schema
+          schema.test("balance test", "not enough balance", () => {
+            return +balance >= +val; //if false test fails
+          })
         )
   ),
 };
