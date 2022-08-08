@@ -106,8 +106,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   )?.providerInfo;
 
   const disconnect = useCallback(() => {
-    console.log(activeProviderInfo?.providerId);
-
     switch (activeProviderInfo?.providerId) {
       case "metamask":
         disconnectMetamask();
