@@ -31,3 +31,7 @@ merge into just /Admin
 
 - image editor submits whole edit profile proposal when clicking image crop button
 - rename duplicate services endpoint
+
+### withdraw related refactors
+
+- distinguish contract address from wallet address schema

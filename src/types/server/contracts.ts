@@ -59,6 +59,16 @@ export interface DepositPayload {
   liquid_percentage: string; //"0.3"
 }
 
+export type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
+};
+
+export interface WithdrawLiqPayload {
+  beneficiary: string;
+  assets: GenericBalance;
+}
+
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?

@@ -4,6 +4,8 @@ import {
   DepositPayload,
   Source,
   UpdateProfilePayload,
+  WithdrawLiqPayload,
+  WithdrawPayload,
 } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
@@ -38,6 +40,12 @@ export default class Account extends Contract {
     });
   }
 
+  createEmbeddedWithdrawLiqMsg(payload: WithdrawLiqPayload) {
+    return this.createEmbeddedWasmMsg([], {
+      withdraw_liquid: payload,
+    });
+  }
+
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
     return this.createEmbeddedWasmMsg([], {
       update_profile: payload,
@@ -53,8 +61,3 @@ export default class Account extends Contract {
     );
   }
 }
-
-type WithdrawPayload = {
-  sources: Source[];
-  beneficiary: string;
-};

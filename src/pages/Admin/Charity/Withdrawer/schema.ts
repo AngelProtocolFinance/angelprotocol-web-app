@@ -26,8 +26,9 @@ const amount: SchemaShape<Amount> = {
 
 const shape: SchemaShape<WithdrawValues> = {
   amounts: Yup.array(Yup.object().shape(amount)),
+  //test if at least one amount is filled
   _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
-    schema.test("at least one is valid", "", () =>
+    schema.test("at least one is filled", "", () =>
       amounts.some((amount) => amount.value !== "")
     )
   ),
