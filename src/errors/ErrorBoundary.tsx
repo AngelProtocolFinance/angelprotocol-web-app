@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, PropsWithChildren } from "react";
+import ModalContext from "contexts/ModalContext";
 import logger from "helpers/logger";
 import ErrorContext from "../contexts/ErrorContext";
 import ErrorHandler from "./ErrorHandler";
@@ -24,11 +25,13 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     return (
-      <ErrorContext>
-        <ErrorHandler error={this.state.error}>
-          {this.props.children}
-        </ErrorHandler>
-      </ErrorContext>
+      <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+        <ErrorContext>
+          <ErrorHandler error={this.state.error}>
+            {this.props.children}
+          </ErrorHandler>
+        </ErrorContext>
+      </ModalContext>
     );
   }
 }
