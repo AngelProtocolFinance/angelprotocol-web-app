@@ -1,5 +1,30 @@
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
+export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
+
+interface IAPError extends Error {
+  discriminator: string;
+}
+
+export abstract class APError extends Error implements IAPError {
+  discriminator: string;
+  constructor(name: string, message: string) {
+    super(message);
+    this.name = name;
+    this.discriminator = AP_ERROR_DISCRIMINATOR;
+  }
+
+  toSerializable(): IAPError {
+    return {
+      name: this.name,
+      message: this.message,
+      stack: this.stack,
+      cause: this.cause,
+      discriminator: this.discriminator,
+    };
+  }
+}
+
 export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
@@ -22,48 +47,46 @@ export class LogDonationFail extends Error {
   }
 }
 
-export class WalletDisconnectError extends Error {
+export class WalletDisconnectError extends APError {
   constructor() {
-    super();
-    this.name = "WalletDisconnectError";
+    super("WalletDisconnectError", "Wallet is already disconnected");
   }
 }
 
-export class UnexpectedStateError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "UnexpectedStateError";
+export class UnexpectedStateError extends APError {
+  constructor(message = "App is in unexpected state") {
+    super("UnexpectedStateError", message);
   }
 }
 
-export class WrongChainError extends Error {
+export class WrongChainError extends APError {
   constructor(expectedChain?: string) {
     super(
+      "WrongChainError",
       `Connected to the wrong chain.${
         !expectedChain
           ? ""
           : ` Please connect to the ${expectedChain} chain and reload the page.`
       }`
     );
-    this.name = "WrongChainError";
   }
 }
 
-export class WrongNetworkError extends Error {
+export class WrongNetworkError extends APError {
   constructor() {
     super(
+      "WrongNetworkError",
       `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`
     );
-    this.name = "WrongNetworkError";
   }
 }
 
-export class UnsupportedNetworkError extends Error {
+export class UnsupportedNetworkError extends APError {
   constructor(unsupportedChainId: string) {
     super(
+      "UnsupportedNetworkError",
       `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`
     );
-    this.name = "UnsupportedNetworkError";
   }
 }
 
