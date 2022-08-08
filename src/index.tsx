@@ -22,21 +22,21 @@ const LoaderComponent = () => (
 getChainOptions().then((chainOptions) =>
   ReactDOM.render(
     <StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <WalletProvider {...chainOptions}>
-            <WalletContext>
-              <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-                <ErrorBoundary>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <BrowserRouter>
+            <WalletProvider {...chainOptions}>
+              <WalletContext>
+                <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
                   <Suspense fallback={<LoaderComponent />}>
                     <App />
                   </Suspense>
-                </ErrorBoundary>
-              </ModalContext>
-            </WalletContext>
-          </WalletProvider>
-        </BrowserRouter>
-      </Provider>
+                </ModalContext>
+              </WalletContext>
+            </WalletProvider>
+          </BrowserRouter>
+        </Provider>
+      </ErrorBoundary>
     </StrictMode>,
     document.getElementById("root")
   )
