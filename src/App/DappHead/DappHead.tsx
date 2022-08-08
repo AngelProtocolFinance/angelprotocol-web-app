@@ -4,7 +4,7 @@ import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import Icon from "components/Icon";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
-import WalletSuite from "components/WalletSuite/WalletSuite";
+import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import DappMenu from "./DappMenu";
 import MobileDappNav from "./MobileDappNav";
