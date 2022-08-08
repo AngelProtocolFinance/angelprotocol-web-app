@@ -20,9 +20,7 @@ export default function WalletSuite() {
   }, [wallet]);
 
   return (
-    <div
-      className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
-    >
+    <div className="relative border border-white/40 hover:bg-white/10 rounded-md">
       {!wallet && (
         <button
           className="flex py-2 px-3 items-center text-white  "
