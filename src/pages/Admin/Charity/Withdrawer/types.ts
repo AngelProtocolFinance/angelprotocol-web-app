@@ -1,3 +1,4 @@
+import { AddrNetwork } from "schemas/types";
 import { GenericBalance } from "types/server/contracts";
 
 export type Amount = {
@@ -9,7 +10,7 @@ export type Amount = {
 
 export type WithdrawValues = {
   amounts: Amount[];
-  network: "bnb" | "eth" | "juno";
+  network: AddrNetwork;
   beneficiary: string;
 };
 

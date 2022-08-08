@@ -6,8 +6,11 @@ import { requiredWalletAddr } from "schemas/string";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
+type TNetwork = WithdrawValues["network"];
 
 const balKey: keyof Amount = "balance";
+const netKey: keyof WithdrawValues = "network";
+const amountsKey: keyof WithdrawValues = "amounts";
 
 const amount: SchemaShape<Amount> = {
   value: Yup.lazy((val: TVal) =>
@@ -23,7 +26,9 @@ const amount: SchemaShape<Amount> = {
 
 const shape: SchemaShape<WithdrawValues> = {
   amounts: Yup.array(Yup.object().shape(amount)),
-  beneficiary: requiredWalletAddr(),
+  beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
+    requiredWalletAddr(network)
+  ),
   //add other vault fields here
 };
 

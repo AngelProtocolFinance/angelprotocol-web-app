@@ -17,12 +17,15 @@ export default function Amounts() {
         const fieldName = `amounts.${i}.value` as const;
         return (
           <div
-            className="flex relative mb-8 border-b border-zinc-900/10 px-2 pb-1 pt-6 items-center"
+            className="flex relative mb-8 border-b border-zinc-900/10 pr-2 pb-1 pt-6 items-center"
             key={field.id}
           >
             <button
               onClick={() => {
-                setValue(fieldName, field.balance, { shouldValidate: true });
+                setValue(fieldName, field.balance, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                });
               }}
               type="button"
               className="absolute top-1 right-2 text-sky-400 uppercase text-xs"
