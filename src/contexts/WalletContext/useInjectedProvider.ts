@@ -9,7 +9,6 @@ import {
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
 import { WalletError } from "errors/errors";
-import { chainIDs } from "constants/chainIDs";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
@@ -25,7 +24,7 @@ export default function useInjectedProvider(
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<chainIDs>();
+  const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
     requestAccess();
@@ -46,7 +45,7 @@ export default function useInjectedProvider(
 
   /** event handlers */
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setChainId(`${parseInt(hexChainId, 16)}` as chainIDs);
+    setChainId(`${parseInt(hexChainId, 16)}`);
   };
 
   //useful when user changes account internally via metamask
@@ -82,7 +81,7 @@ export default function useInjectedProvider(
         });
 
         setAddress(accounts[0]);
-        setChainId(`${parseInt(hexChainId, 16)}` as chainIDs);
+        setChainId(`${parseInt(hexChainId, 16)}`);
       }
       setIsLoading(false);
     } catch (err) {
@@ -143,7 +142,7 @@ export default function useInjectedProvider(
   const providerInfo: ProviderInfo = {
     logo: providerIcons[providerId],
     providerId,
-    chainId: chainId || chainIDs.none,
+    chainId: chainId || "",
     address: address || "",
   };
 

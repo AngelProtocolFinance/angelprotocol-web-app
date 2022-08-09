@@ -1,5 +1,5 @@
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -28,7 +28,7 @@ export default function useEndPoll(pollId: number) {
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            //TODO: invalidate user balance query
           ]),
         ],
       })

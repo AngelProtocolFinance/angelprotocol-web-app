@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
@@ -29,7 +29,7 @@ export default function useCreatePoll() {
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            //TODO: invalidate user balance query
           ]),
         ],
       })

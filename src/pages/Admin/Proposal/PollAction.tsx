@@ -11,7 +11,6 @@ import {
   endowmentTags,
   indexfundTags,
   junoTags,
-  multicallTags,
   registrarTags,
 } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -144,24 +143,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
       break;
 
     case "cw3_transfer":
-      tagsToInvalidate.push({
-        type: junoTags.multicall,
-        id: multicallTags.junoBalances,
-      });
-      break;
-
-    case "acc_withdraw":
-      tagsToInvalidate.push(
-        {
-          type: junoTags.multicall,
-          id: multicallTags.endowmentBalance,
-        },
-        //edge: user transfers to CW20 or Native to his connected wallet
-        {
-          type: junoTags.multicall,
-          id: multicallTags.junoBalances,
-        }
-      );
+      //TODO: invalidate tags for cw3 transfer
       break;
 
     case "acc_profile":

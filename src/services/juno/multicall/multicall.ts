@@ -11,8 +11,8 @@ import {
 import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Multicall from "contracts/Multicall";
-import { terraChainId } from "constants/chainIDs";
-import { aws_endpoint } from "constants/urls";
+import { chainIds } from "constants/chainIds";
+import { APIs } from "constants/urls";
 import { junoApi } from "..";
 import contract_querier from "../contract_querier";
 import { junoTags, multicallTags } from "../tags";
@@ -125,7 +125,7 @@ export const multicall_api = junoApi.injectEndpoints({
       async queryFn(wallet, queryApi, extraOptions, baseQuery) {
         try {
           const airDropsRes = await fetch(
-            `${aws_endpoint}/airdrop/${wallet.address}/${terraChainId}`
+            `${APIs.aws}/airdrop/${wallet.address}/${chainIds.terra}`
           );
           const airDrops = (await airDropsRes.json()) as Airdrops;
           const multiCallContract = new Multicall(wallet);

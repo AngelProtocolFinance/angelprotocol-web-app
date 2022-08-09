@@ -16,7 +16,7 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import getCosmosClient from "helpers/getCosmosClient";
 import toBase64 from "helpers/toBase64";
 import { TxResultFail } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import { GAS_PRICE, MAIN_DENOM } from "constants/currency";
 
 export default class Contract {
@@ -131,7 +131,7 @@ function validateTransactionSuccess(
 ): DeliverTxResponse {
   if (isDeliverTxFailure(result)) {
     throw new TxResultFail(
-      junoChainId,
+      chainIds.juno,
       result.transactionHash,
       result.height,
       result.code,

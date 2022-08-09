@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import useVoteEstimator from "./useVoteEstimator";
@@ -24,7 +24,7 @@ export default function useVote() {
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            //TODO: invalidate user balance query
           ]),
         ],
       })

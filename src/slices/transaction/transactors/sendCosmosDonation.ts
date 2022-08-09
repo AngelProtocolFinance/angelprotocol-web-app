@@ -2,14 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type JunoDonateArgs = {
@@ -48,7 +47,7 @@ export const sendCosmosDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.transactionHash,
             transactionDate: new Date().toISOString(),
-            chainId: junoChainId,
+            chainId: chainIds.juno,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -61,7 +60,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: junoChainId,
+          chainId: chainIds.juno,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -69,8 +68,7 @@ export const sendCosmosDonation = createAsyncThunk(
         //invalidate user balance and endowment balance
         dispatch(
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            /** invalidate future balance queriers */
           ])
         );
       } else {
@@ -78,7 +76,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: junoChainId,
+          chainId: chainIds.juno,
         });
       }
     } catch (err) {

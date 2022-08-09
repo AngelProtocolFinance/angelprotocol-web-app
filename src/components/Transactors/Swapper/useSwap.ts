@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import useSwapEstimator from "./useSwapEstimator";
@@ -30,7 +29,7 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            //TODO: invalidate user balance query,
           ]),
         ],
       })

@@ -34,8 +34,8 @@ export type JunoTags =
   | "indexfund"
   | "admin"
   | "endowment"
-  | "multicall"
   | "registrar"
+  | "multicall"
   | "custom";
 
 /** multicall */
