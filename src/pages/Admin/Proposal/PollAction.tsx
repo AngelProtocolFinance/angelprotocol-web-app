@@ -19,7 +19,9 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
+import { chainIds } from "constants/chainIds";
 import { useAdminResources } from "../Guard";
+import { logWithdrawProposal } from "./logWithdrawProposal";
 
 export default function PollAction(props: ProposalDetails) {
   const latestBlock = useLatestBlock();
@@ -33,6 +35,7 @@ export default function PollAction(props: ProposalDetails) {
   function executeProposal() {
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
+
     dispatch(
       sendCosmosTx({
         wallet,
@@ -40,7 +43,26 @@ export default function PollAction(props: ProposalDetails) {
         tagPayloads: getTagPayloads(props.meta),
       })
     );
+
     showModal(TransactionPrompt, {});
+
+    //POST proposal for withdraw liquid & withdraw
+    const meta =
+      (props.meta && (JSON.parse(props.meta) as ProposalMeta)) || undefined;
+
+    if (
+      meta &&
+      meta.type === "acc_withdraw_liq" &&
+      meta.data.target_chain !== chainIds.juno
+    ) {
+      dispatch(
+        logWithdrawProposal({
+          proposal_id: props.id,
+          endowment_multisig: cw3,
+          proposal_chain_id: wallet?.chainId!, //hook will not be rendered if wallet is undefined
+        })
+      );
+    }
   }
 
   const isExpired =

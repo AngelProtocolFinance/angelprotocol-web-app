@@ -11,6 +11,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 
 export default function useWithdraw() {
@@ -49,7 +50,9 @@ export default function useWithdraw() {
 
     const account = new Account(wallet, endowment);
     const msg = account.createEmbeddedWithdrawLiqMsg({
-      beneficiary: data.beneficiary,
+      beneficiary:
+        //if not juno, send to apes wallet (juno)
+        data.network !== chainIds.juno ? ap_wallets.juno : data.beneficiary,
       assets: {
         cw20: cw20s,
         native: natives,
