@@ -17,12 +17,6 @@ export const account_api = junoApi.injectEndpoints({
       providesTags: [{ type: junoTags.endowment, id: endowmentTags.profile }],
       query: contract_querier,
       transformResponse: (res: QueryRes<BalanceInfo>) => {
-        res.data.liquid_balance.cw20 = [
-          { address: "junoabc123", amount: "1123123" },
-        ];
-        res.data.locked_balance.cw20 = [
-          { address: "junoabc123", amount: "1123123" },
-        ];
         return res.data;
       },
     }),

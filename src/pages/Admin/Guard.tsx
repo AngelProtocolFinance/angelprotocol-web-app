@@ -29,13 +29,12 @@ export function Guard(props: PropsWithChildren<{}>) {
 
   if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
 
-  if (!data) return <GuardPrompt message="Error getting wallet resoures" />;
+  if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
 
   return <context.Provider value={data!}>{props.children}</context.Provider>;
 }
 
 const context = createContext({} as AdminResources);
-
 export const useAdminResources = () => {
   const val = useContext(context);
   if (Object.entries(val).length <= 0 /** empty object */) {

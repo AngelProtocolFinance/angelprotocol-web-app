@@ -2,14 +2,14 @@ import { NavLink } from "react-router-dom";
 import { AP_ADDR, useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { junoChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
 export default function DappMenu() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     { user: wallet?.address!, endowment: AP_ADDR },
-    { skip: !wallet || wallet.chainId !== junoChainId }
+    { skip: !wallet || wallet.chainId !== chainIds.juno }
   );
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">

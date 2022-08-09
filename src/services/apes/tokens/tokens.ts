@@ -5,7 +5,7 @@ import { ProviderId, ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import { junoLcdUrl, terraLcdUrl } from "constants/urls";
+import { LCDs } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
 import { junoToken, lunaToken } from "./constants";
@@ -47,7 +47,7 @@ const tokens_api = apes.injectEndpoints({
           // fetch balances for juno
           if (isJunoProvider(providerId)) {
             const res = await fetch(
-              junoLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+              LCDs.juno + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             const jsonRes: JunoBalanceRes = await res.json();
@@ -69,7 +69,7 @@ const tokens_api = apes.injectEndpoints({
           if (isTerraProvider(providerId)) {
             //fetch native terra coins
             const res = await fetch(
-              terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
+              LCDs.terra + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             const jsonRes: TerraBalanceRes = await res.json();

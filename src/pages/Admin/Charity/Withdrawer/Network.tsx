@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { AddrNetwork } from "schemas/types";
+import { chainIds } from "constants/chainIds";
 
 export default function Network() {
   const { register, watch, trigger } = useFormContext<WithdrawValues>();
@@ -20,9 +20,17 @@ export default function Network() {
         Select network
       </p>
       <div className="flex items-center gap-4">
-        <Option reg={register("network")} label="juno" value="juno" />
-        <Option reg={register("network")} label="eth" value="eth" />
-        <Option reg={register("network")} label="bnb" value="bnb" />
+        <Option reg={register("network")} label="juno" value={chainIds.juno} />
+        <Option
+          reg={register("network")}
+          label="eth"
+          value={chainIds.ethereum}
+        />
+        <Option
+          reg={register("network")}
+          label="bnb"
+          value={chainIds.binance}
+        />
       </div>
     </div>
   );
@@ -31,7 +39,7 @@ export default function Network() {
 function Option(props: {
   reg: UseFormRegisterReturn;
   label: string;
-  value: AddrNetwork;
+  value: string;
 }) {
   return (
     <div className="flex items-center gap-1">

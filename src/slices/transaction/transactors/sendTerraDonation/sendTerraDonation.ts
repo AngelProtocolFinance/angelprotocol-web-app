@@ -3,13 +3,12 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { StageUpdater } from "slices/transaction/types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import handleWalletError from "helpers/handleWalletError";
 import logDonation from "helpers/logDonation";
 import { WalletDisconnectError } from "errors/errors";
-import { terraChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
 import postTerraTx from "./postTerraTx";
@@ -49,7 +48,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId: terraChainId,
+            chainId: chainIds.terra,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -61,7 +60,7 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chainId: terraChainId,
+          chainId: chainIds.terra,
         });
 
         const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
@@ -72,7 +71,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chainId: terraChainId,
+            chainId: chainIds.terra,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -80,8 +79,7 @@ export const sendTerraDonation = createAsyncThunk(
           //invalidate user balance and endowment balance
           dispatch(
             invalidateJunoTags([
-              { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-              { type: junoTags.multicall, id: multicallTags.terraBalances },
+              /**TODO: invalidate future balance queriers */
             ])
           );
         } else {
@@ -89,7 +87,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: terraChainId,
+            chainId: chainIds.terra,
           });
         }
       }

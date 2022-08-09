@@ -32,6 +32,7 @@ export type Templates =
 
   //account
   | "acc_withdraw"
+  | "acc_withdraw_liq"
   | "acc_profile"
 
   //registrar
@@ -80,7 +81,7 @@ export type FundConfigUpdateMeta = MetaConstructor<
   DiffSet<FundConfig>
 >;
 
-/** _admin-group */
+/** _cw4 */
 
 export type CW4MemberUpdateMeta = MetaConstructor<
   "cw4_members",
@@ -89,6 +90,8 @@ export type CW4MemberUpdateMeta = MetaConstructor<
     toRemove: string[];
   }
 >;
+
+/** _cw3 */
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
   DiffSet<FormCW3Config>
@@ -100,13 +103,12 @@ export type FundSendMeta = MetaConstructor<
 >;
 
 /** _endowment */
-
-export type EndowmentWithdrawMeta = MetaConstructor<
-  "acc_withdraw",
+export type WithdrawLiqMeta = MetaConstructor<
+  "acc_withdraw_liq",
   {
-    totalAmount: number;
-    sourcesPreview: SourcePreview[];
-    beneficiary: string;
+    target_chain: string;
+    target_wallet: string;
+    proposal_chain_id: string;
   }
 >;
 
@@ -139,13 +141,14 @@ export type ProposalMeta =
   | RemoveFundMeta
   | FundMemberUpdateMeta
   | FundConfigUpdateMeta
-  //admin-group
+  //cw4
   | CW4MemberUpdateMeta
+  //cw3
   | CW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
-  | EndowmentWithdrawMeta
+  | WithdrawLiqMeta
   | EndowmentProfileUpdateMeta
   //registrar
   | RegistrarConfigUpdateMeta;

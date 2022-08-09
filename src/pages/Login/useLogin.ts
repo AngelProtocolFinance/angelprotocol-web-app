@@ -4,7 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { saveToken } from "slices/authSlice";
-import { aws_endpoint } from "constants/urls";
+import { APIs } from "constants/urls";
 import { loginSchema } from "./loginSchema";
 
 export default function useLogin() {
@@ -25,7 +25,7 @@ export default function useLogin() {
   async function login(values: { password: string }) {
     //start request
     try {
-      const response = await fetch(aws_endpoint + "/tca-login", {
+      const response = await fetch(APIs.aws + "/tca-login", {
         method: "POST",
         body: JSON.stringify(values),
       });

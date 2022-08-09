@@ -1,23 +1,11 @@
+import { Chains } from "types/lists";
 import { IS_TEST } from "./env";
 
-export enum chainIDs {
-  //for multi-chain wallets, generalize as either mainnet or testnet only
-  bnb_main = "56",
-  bnb_test = "97",
-  cosmoshub_main = "cosmoshub-4",
-  eth_kovan = "42",
-  eth_main = "1",
-  juno_main = "juno-1",
-  juno_test = "uni-3",
-  terra_local = "localterra",
-  terra_main = "phoenix-1",
-  terra_test = "pisco-1",
-  unsupported = "-1",
-  none = "",
-}
-
-export const junoChainId = IS_TEST ? chainIDs.juno_test : chainIDs.juno_main;
-
-export const terraChainId = IS_TEST ? chainIDs.terra_test : chainIDs.terra_main;
-
-export const ethereumChainId = IS_TEST ? chainIDs.eth_kovan : chainIDs.eth_main;
+export const chainIds: { [key in Chains]: string } = IS_TEST
+  ? {
+      binance: "97",
+      ethereum: "42",
+      juno: "uni-3",
+      terra: "pisco-1",
+    }
+  : { binance: "56", ethereum: "1", juno: "juno-1", terra: "phoenix-1" };

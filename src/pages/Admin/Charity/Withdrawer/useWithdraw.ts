@@ -1,6 +1,8 @@
 import { Coin } from "@cosmjs/proto-signing";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
+import { WithdrawLiqMeta } from "pages/Admin/types";
 import { CW20 } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -9,6 +11,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import { chainIds } from "constants/chainIds";
 
 export default function useWithdraw() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
@@ -28,10 +31,16 @@ export default function useWithdraw() {
     //filter + map
     const [cw20s, natives] = data.amounts.reduce(
       (result, amount) => {
-        if (amount.type == "cw20") {
-          result[0].push({ address: amount.tokenId, amount: "1000" });
+        if (amount.type === "cw20") {
+          result[0].push({
+            address: amount.tokenId,
+            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+          });
         } else {
-          result[1].push({ denom: amount.tokenId, amount: "498000" });
+          result[1].push({
+            denom: amount.tokenId,
+            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+          });
         }
         return result;
       },
@@ -42,18 +51,29 @@ export default function useWithdraw() {
     const msg = account.createEmbeddedWithdrawLiqMsg({
       beneficiary: data.beneficiary,
       assets: {
-        cw20: [], //cw20s are placeholder TODO:remove placeholder
+        cw20: cw20s,
         native: natives,
       },
     });
+
+    const meta: WithdrawLiqMeta = {
+      type: "acc_withdraw_liq",
+      data: {
+        target_wallet: data.beneficiary,
+        target_chain: data.network,
+        proposal_chain_id: chainIds.juno,
+      },
+    };
 
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "withdraw proposal",
       `withdraw from endowment: ${endowment}`,
-      [msg]
+      [msg],
+      JSON.stringify(meta)
     );
+
     dispatch(
       sendCosmosTx({
         wallet,

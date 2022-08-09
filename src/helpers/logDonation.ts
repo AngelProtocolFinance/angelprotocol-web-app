@@ -1,10 +1,10 @@
 import { TxLogPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
-import { apes_endpoint } from "constants/urls";
+import { APIs } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {
   const generatedToken = createAuthToken("angelprotocol-web-app");
-  const response = await fetch(apes_endpoint + "/donation", {
+  const response = await fetch(APIs.apes + "/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
     body: JSON.stringify({ ...payload, ...payload.kycData }),

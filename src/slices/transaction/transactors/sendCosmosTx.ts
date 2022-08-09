@@ -7,7 +7,7 @@ import {
 import Contract from "contracts/Contract";
 import handleWalletError from "helpers/handleWalletError";
 import { WalletDisconnectError } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendCosmosTx = createAsyncThunk(
@@ -48,7 +48,7 @@ export const sendCosmosTx = createAsyncThunk(
           message: args.successMessage || "Transaction succesful!",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: junoChainId,
+          chainId: chainIds.juno,
           successLink: args.successLink,
         });
 
@@ -61,7 +61,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: junoChainId,
+          chainId: chainIds.juno,
         });
       }
     } catch (err) {

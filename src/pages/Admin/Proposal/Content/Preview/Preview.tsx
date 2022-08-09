@@ -7,7 +7,7 @@ import Fund from "./Fund";
 import FundMemberUpdate from "./FundMemberUpdate";
 import FundTransfer from "./FundTransfer";
 import OwnerUpdate from "./OwnerUpdate";
-import Withdraw from "./Withdraw";
+import WithdrawLiq from "./WithdrawLiq";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -37,8 +37,8 @@ export default function Preview(props: ProposalMeta) {
 
     /** _account */
 
-    case "acc_withdraw":
-      return <Withdraw {...props.data} />;
+    case "acc_withdraw_liq":
+      return <WithdrawLiq {...props.data} />;
     case "acc_profile":
       return <DiffTable diffSet={props.data} />;
 

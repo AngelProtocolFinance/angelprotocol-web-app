@@ -2,7 +2,6 @@ import { Coin } from "@cosmjs/proto-signing";
 import { ContractQueryArgs } from "services/types";
 import {
   DepositPayload,
-  Source,
   UpdateProfilePayload,
   WithdrawLiqPayload,
   WithdrawPayload,

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { AP_ADDR, useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { junoChainId } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
 const styler = createNavLinkStyler(
@@ -14,7 +14,7 @@ export default function MobileDappNav() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     { user: wallet?.address!, endowment: AP_ADDR },
-    { skip: !wallet || wallet.chainId !== junoChainId }
+    { skip: !wallet || wallet.chainId !== chainIds.juno }
   );
 
   return (

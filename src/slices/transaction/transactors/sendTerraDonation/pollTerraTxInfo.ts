@@ -1,13 +1,13 @@
 import { TxInfo } from "@terra-money/terra.js";
 import { Timeout } from "@terra-money/wallet-provider";
-import { terraLcdUrl } from "constants/urls";
+import { LCDs } from "constants/urls";
 
 export async function pollTerraTxInfo(
   txhash: string,
   retries: number,
   interval: number
 ): Promise<TxInfo> {
-  const req = new Request(`${terraLcdUrl}/txs/${txhash}`, {
+  const req = new Request(`${LCDs.terra}/txs/${txhash}`, {
     headers: {
       "Content-Type": "application/json",
     },

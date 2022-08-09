@@ -4,7 +4,7 @@ import ethLogo from "assets/icons/currencies/ether.png";
 import junoLogo from "assets/icons/currencies/juno.svg";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
-import { chainIDs } from "constants/chainIDs";
+import { chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 
 export const placeHolderToken: WithBalance = {
@@ -25,7 +25,7 @@ export const unSupportedToken: WithBalance = {
   symbol: "XX",
   logo: coinIcon,
   decimals: 18,
-  chain_id: chainIDs.unsupported,
+  chain_id: "",
   rpc_url: "",
   chain_name: "Unsuported Network",
   block_explorer_url: "",
@@ -89,23 +89,14 @@ export const lunaToken: TerraNative = {
   chain_name: "Terra Pisco Testnet",
 };
 
-export const junoToken: JunoNative = IS_TEST
-  ? {
-      type: "juno-native",
-      symbol: "JUNOX",
-      logo: junoLogo,
-      decimals: 6,
-      chain_id: chainIDs.juno_test,
-      chain_name: "Juno Testnet",
-    }
-  : {
-      type: "juno-native",
-      symbol: "JUNO",
-      logo: junoLogo,
-      decimals: 6,
-      chain_id: chainIDs.juno_main,
-      chain_name: "Juno Mainnet",
-    };
+export const junoToken: JunoNative = {
+  type: "juno-native",
+  symbol: IS_TEST ? "JUNOX" : "JUNO",
+  logo: junoLogo,
+  decimals: 6,
+  chain_id: chainIds.juno,
+  chain_name: "Juno Testnet",
+};
 
 //TODO: get this from server
 export const tokenList: Token[] = [

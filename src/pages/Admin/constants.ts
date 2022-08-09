@@ -18,6 +18,7 @@ export const templates: { [key in Templates]: string } = {
 
   //account
   acc_withdraw: "acc_withdraw",
+  acc_withdraw_liq: "acc_withdraw_liq",
   acc_profile: "acc_profile",
 
   //registrar
