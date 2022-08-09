@@ -5,7 +5,7 @@ import TransactionsTable from "./TransactionsTable";
 
 const headers: { key: keyof Transaction; label: string }[] = [
   { key: "name", label: "Name" },
-  { key: "amount", label: "Amount" },
+  { key: "usd_amount", label: "Amount" },
   { key: "block_timestamp", label: "Date" },
   { key: "donator", label: "Donator" },
   { key: "tx_id", label: "Transaction Hash" },

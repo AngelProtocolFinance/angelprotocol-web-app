@@ -64,7 +64,7 @@ export default function PollDetails() {
           <p className="text-white font-heading uppercase text-xs font-bold mb-2">
             Description
           </p>
-          <p className="">{details.description}</p>
+          <p>{details.description}</p>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ function Item(props: { title: string; value: string }) {
       <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
         {props.title}
       </h4>
-      <p className="">{props.value}</p>
+      <p>{props.value}</p>
     </div>
   );
 }
