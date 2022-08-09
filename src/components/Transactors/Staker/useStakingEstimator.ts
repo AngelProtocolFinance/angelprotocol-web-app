@@ -12,6 +12,7 @@ import {
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
+import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
@@ -84,7 +85,7 @@ export default function useEstimator() {
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         dispatch(setFormError(processEstimateError(err)));
       }
     })();

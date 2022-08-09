@@ -5,18 +5,18 @@ import {
   useRegistrationQuery,
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { appRoutes } from "constants/routes";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
-import useHandleError from "../useHandleError";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
   const { data } = useRegistrationQuery("");
   const charity = data!; //ensured by guard
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit = useCallback(

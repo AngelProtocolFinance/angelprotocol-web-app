@@ -5,12 +5,13 @@ import {
   useRegistrationState,
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
+import logger from "helpers/logger";
 import { appRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
-import useHandleError from "../useHandleError";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
@@ -18,7 +19,7 @@ export default function useUpload() {
   const charity = data!; //ensured by guard
   const navigate = useNavigate();
 
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
 
   const upload = useCallback(
     async (values: DocumentationValues) => {
@@ -81,7 +82,7 @@ async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
     .concat([ProofOfIdentity, ProofOfRegistration])
     .some((x) => {
       if (!x.publicUrl) {
-        console.log(`Error occured. File ${x.name} does not have a publicUrl`);
+        logger.error(`Error occured. File ${x.name} does not have a publicUrl`);
         return true;
       }
       return false;

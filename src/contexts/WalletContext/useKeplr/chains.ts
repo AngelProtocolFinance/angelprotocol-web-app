@@ -1,14 +1,13 @@
 import { ChainInfo } from "@keplr-wallet/types";
-import { chainIDs } from "constants/chainIDs";
-import { juno_lcds, juno_rpcs } from "constants/urls";
 
-export const juno_test: ChainInfo = {
+// is used only when running on Juno Testnet
+export const juno_test_chain_info: ChainInfo = {
   //FROM: https://github.com/CosmosContracts/junoswap-asset-list/blob/main/chain_info.json
   // modified denoms
-  chainId: chainIDs.juno_test,
+  chainId: "uni-3",
   chainName: "Juno Testnet",
-  rpc: juno_rpcs[chainIDs.juno_test],
-  rest: juno_lcds[chainIDs.juno_test],
+  rpc: "https://rpc.uni.juno.deuslabs.fi",
+  rest: "https://lcd.uni.juno.deuslabs.fi",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",

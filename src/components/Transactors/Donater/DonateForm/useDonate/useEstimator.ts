@@ -1,5 +1,10 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import { Coin, CreateTxOptions, MsgSend } from "@terra-money/terra.js";
+import {
+  Coin,
+  CreateTxOptions,
+  MsgExecuteContract,
+  MsgSend,
+} from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
 import Decimal from "decimal.js";
 import { ethers } from "ethers";
@@ -18,6 +23,7 @@ import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
+import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
@@ -63,71 +69,88 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        /** juno native transaction, send or contract interaction */
-        if (selectedToken.type === "juno-native") {
-          const contract = new Contract(wallet);
-          const msg = contract.createTransferNativeMsg(
-            debounced_amount,
-            ap_wallets.juno
-          );
-          const { fee, feeNum } = await contract.estimateFee([msg]);
-          dispatch(setFee(feeNum));
+        // juno transaction, send or contract interaction
+        if (wallet.chain.type === "juno-native") {
+          if (selectedToken.type.includes("native")) {
+            const contract = new Contract(wallet);
+            const msg = contract.createTransferNativeMsg(
+              debounced_amount,
+              ap_wallets.juno
+            );
+            const { fee, feeNum } = await contract.estimateFee([msg]);
+            dispatch(setFee(feeNum));
 
-          /** displayCoin is native - for payment of fee */
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setCosmosTx({ msgs: [msg], fee });
+          } else {
+            const contract = new CW20(wallet, selectedToken.token_id);
+            const msg = contract.createTransferMsg(
+              debounced_amount,
+              ap_wallets.juno
+            );
+            const { fee, feeNum } = await contract.estimateFee([msg]);
+            dispatch(setFee(feeNum));
+
+            // not paying in native currency, so just check if there's enough balance for fees
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setCosmosTx({ msgs: [msg], fee });
           }
-          setCosmosTx({ msgs: [msg], fee });
         }
+        // terra native transaction, send or contract interaction
+        else if (wallet.chain.type === "terra-native") {
+          const amount = new Decimal(debounced_amount)
+            .mul(1e6)
+            .divToInt(1)
+            .toString();
+          if (selectedToken.type.includes("native")) {
+            const msg = new MsgSend(wallet.address, ap_wallets.terra, [
+              new Coin(denoms.uluna, amount),
+            ]);
+            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+            dispatch(setFee(feeNum));
 
-        /** juno cw20 transaction */
-        if (selectedToken.type === "cw20") {
-          const contract = new CW20(wallet, selectedToken.contract_addr);
-          const msg = contract.createTransferMsg(
-            debounced_amount,
-            ap_wallets.juno
-          );
-          const { fee, feeNum } = await contract.estimateFee([msg]);
-          dispatch(setFee(feeNum));
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setTerraTx({ msgs: [msg], fee });
+          } else {
+            const msg = new MsgExecuteContract(
+              wallet.address,
+              selectedToken.token_id,
+              {
+                transfer: {
+                  amount,
+                  recipient: ap_wallets.terra,
+                },
+              }
+            );
+            const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
+            dispatch(setFee(feeNum));
 
-          /** displayCoin is native - for payment of fee */
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+            setTerraTx({ msgs: [msg], fee });
           }
-          setCosmosTx({ msgs: [msg], fee });
         }
-
-        /** terra native transaction, send or contract interaction */
-        if (selectedToken.type === "terra-native") {
-          const amount = new Decimal(debounced_amount).mul(1e6);
-          const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-            new Coin(denoms.uluna, amount.toNumber()),
-          ]);
-          const { fee, feeNum } = await estimateTerraFee(wallet, [msg]);
-          dispatch(setFee(feeNum));
-
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
-          }
-          setTerraTx({ msgs: [msg], fee });
-        }
-
-        /** evm transactions */
-        if (
-          selectedToken.type === "evm-native" ||
-          selectedToken.type === "erc20"
-        ) {
-          if (wallet.chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
-
+        // evm transactions
+        else {
           const provider = new ethers.providers.Web3Provider(
             getProvider(wallet.providerId) as any
           );
@@ -143,39 +166,51 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          let gasLimit: ethers.BigNumber;
-          if (selectedToken.type === "erc20") {
+          if (selectedToken.type.includes("native")) {
+            const gasLimit = await signer.estimateGas(tx);
+            const minFee = gasLimit.mul(gasPrice);
+            const feeNum = parseFloat(
+              ethers.utils.formatUnits(minFee, selectedToken.decimals)
+            );
+            dispatch(setFee(feeNum));
+
+            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
+          } else {
             const ER20Contract: any = new ethers.Contract(
-              selectedToken.contract_addr,
+              selectedToken.token_id,
               ERC20Abi,
               signer
             );
-            gasLimit = await ER20Contract.estimateGas.transfer(
+            const gasLimit = await ER20Contract.estimateGas.transfer(
               tx.to,
               wei_amount
             );
-          } else {
-            gasLimit = await signer.estimateGas(tx);
+            const minFee = gasLimit.mul(gasPrice);
+            const feeNum = parseFloat(
+              ethers.utils.formatUnits(minFee, selectedToken.decimals)
+            );
+            dispatch(setFee(feeNum));
+
+            // not paying in native currency, so just check if there's enough balance for fees
+            if (feeNum >= wallet.displayCoin.balance) {
+              setError("amount", {
+                message: "not enough balance to pay for fees",
+              });
+              return;
+            }
           }
 
-          const minFee = gasLimit.mul(gasPrice);
-          const feeNum = parseFloat(
-            ethers.utils.formatUnits(minFee, selectedToken.decimals)
-          );
-          dispatch(setFee(feeNum));
-
-          if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
-            setError("amount", {
-              message: "not enough balance to pay for fees",
-            });
-            return;
-          }
           setEVMtx(tx);
         }
 
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         dispatch(setFormError("tx simulation failed"));
       }
     })();

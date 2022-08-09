@@ -3,9 +3,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
@@ -19,18 +19,18 @@ const schema = Yup.object().shape(shape);
 export default function Donater(
   props: DonaterProps /** set by opener context */
 ) {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
 
-  if (isWalletLoading) return <DonateFormLoader />;
+  if (isLoading) return <DonateFormLoader />;
   return (
     <DonateContext
       {...props}
-      tokens={wallet?.coins || [placeHolderDisplayToken["keplr"]]}
+      tokens={wallet?.coins || placeholderChain.tokens}
     />
   );
 }
 
-function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {
+function DonateContext(props: DonaterProps & { tokens: Token[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",

@@ -1,20 +1,26 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import toCurrency from "helpers/toCurrency";
 
 export default function Breakdown() {
+  const { wallet } = useGetWallet();
   const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isERC20 = token.contract_addr !== undefined;
-  const totalAmount = isERC20 ? amount : fee + amount;
-  const feeSymbol = isERC20 ? token.native_symbol! : token.symbol;
+  const isNativeCoin =
+    wallet!.chain.native_currency.token_id === token.token_id;
+  const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
     <div className="m-1">
-      <Entry title="tx fee" amount={fee} symbol={feeSymbol} />
+      <Entry
+        title="tx fee"
+        amount={fee}
+        symbol={wallet!.chain.native_currency.symbol}
+      />
       <Entry title="total amount" amount={totalAmount} symbol={token.symbol} />
     </div>
   );

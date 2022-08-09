@@ -11,7 +11,7 @@ async function uploadToIpfs(uploadPath: string, file: File): Promise<string> {
 
     return publicUrl;
   } catch (e) {
-    // console.log(`Error uploading file ${file?.name}`, e);
+    // logger.error(`Error uploading file ${file?.name}`, e);
     return "";
   }
 }

@@ -1,5 +1,6 @@
 import { ProviderId } from "./types";
-import { WithBalance } from "services/types";
+import { Chain } from "types/server/aws";
+import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -7,11 +8,7 @@ import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import {
-  ethereumToken,
-  junoToken,
-  lunaToken,
-} from "services/apes/tokens/constants";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
@@ -28,21 +25,23 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
-const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
-const lunaTokenWithBalance = { ...lunaToken, balance: 0 };
-const junoTokenWithBalance = { ...junoToken, balance: 0 };
-export const placeHolderDisplayToken: {
-  [key in ProviderId]: WithBalance;
-} = {
-  "binance-wallet": ethTokenWithBalance,
-  metamask: ethTokenWithBalance,
-  "xdefi-wallet": lunaTokenWithBalance,
-  "xdefi-evm": ethTokenWithBalance,
-  station: lunaTokenWithBalance,
-  "leap-wallet": lunaTokenWithBalance,
-  "falcon-wallet": lunaTokenWithBalance,
-  "bitkeep-wallet": lunaTokenWithBalance,
-  keplr: junoTokenWithBalance,
-  walletconnect: junoTokenWithBalance,
-  torus: lunaTokenWithBalance,
+export const placeholderChain: Chain = {
+  block_explorer_url: "https://www.placeholder.io/token/txs/",
+  chain_id: "juno-1",
+  chain_name: "Token",
+  native_currency: {
+    type: "juno-native",
+    symbol: "TOKEN",
+    logo: tokenLogo,
+    decimals: 18,
+    balance: 0,
+    approved: true,
+    name: "Token",
+    token_id: "utoken",
+  },
+  network_type: EXPECTED_NETWORK_TYPE,
+  rpc_url: "https://rpc-token.placeholder.com",
+  lcd_url: "https://lcd-token.placeholder.com",
+  tokens: [],
+  type: "juno-native",
 };

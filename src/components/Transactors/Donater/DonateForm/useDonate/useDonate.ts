@@ -1,3 +1,4 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
@@ -13,7 +14,8 @@ import {
 import useEstimator from "./useEstimator";
 
 export default function useDonate() {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
+  const terraWallet = useConnectedWallet(); // sendTerraDonation requires this wallet to send donations
   const { form_loading, form_error, stage } = useGetter(
     (state) => state.transaction
   );
@@ -35,22 +37,21 @@ export default function useDonate() {
     //   showKycForm();
     //   return;
     // }
-    switch (token.type) {
+    switch (wallet?.chain.type) {
       case "evm-native":
-      case "erc20":
         dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
         dispatch(
           sendTerraDonation({
-            wallet,
+            wallet: terraWallet,
+            chain: wallet.chain,
             tx: terraTx!,
             donateValues: data,
             kycData,
           })
         );
         break;
-      case "cw20":
       case "juno-native":
         dispatch(
           sendCosmosDonation({
@@ -67,7 +68,6 @@ export default function useDonate() {
   }
 
   const symbol = token.symbol;
-  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   //reset amount when changing currency
   useEffect(() => {
@@ -90,8 +90,7 @@ export default function useDonate() {
       form_loading ||
       !isValid ||
       !isDirty ||
-      isWalletLoading ||
-      !isInCorrectNetwork ||
+      isLoading ||
       !isKycCompleted,
     isFormLoading: form_loading,
     to: getValues("to"),

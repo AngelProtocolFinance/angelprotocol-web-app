@@ -8,9 +8,8 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectError } from "errors/errors";
-import { junoChainId } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {
@@ -56,7 +55,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
-        chainId: junoChainId,
+        chain: args.wallet.chain,
       });
 
       if (isDeliverTxSuccess(response)) {
@@ -65,7 +64,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
-            chainId: junoChainId,
+            chain: args.wallet.chain,
             successLink: args.successLink,
           });
 
@@ -81,7 +80,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.chainId,
+            chain_id: args.wallet.chain.chain_id,
             PK: args.applicationId,
           });
 
@@ -94,7 +93,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: response.transactionHash,
-            chainId: junoChainId,
+            chainId: args.wallet.chain.chain_id,
           });
         }
       } else {
@@ -102,11 +101,11 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: junoChainId,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {
-      handleWalletError(err, updateState);
+      handleTxError(err, updateState);
     }
   }
 );

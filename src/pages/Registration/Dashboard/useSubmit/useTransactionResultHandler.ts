@@ -5,14 +5,15 @@ import {
   useRegistrationState,
   useSubmitMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFormError,
   setFormLoading,
   setStage,
 } from "slices/transaction/transactionSlice";
+import logger from "helpers/logger";
 import { FORM_ERROR } from "../../constants";
-import useHandleError from "../../useHandleError";
 
 export default function useTransactionResultHandler() {
   const { data } = useRegistrationState("");
@@ -20,7 +21,7 @@ export default function useTransactionResultHandler() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
   const [submit] = useSubmitMutation();
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function useTransactionResultHandler() {
           handleError(result.error, FORM_ERROR);
         }
       } catch (error) {
-        console.log(error);
+        logger.error(error);
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
       } finally {
         dispatch(setFormLoading(false));

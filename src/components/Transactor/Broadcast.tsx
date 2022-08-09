@@ -2,14 +2,12 @@ import { BroadcastStage } from "slices/transaction/types";
 import Loader from "components/Loader";
 import getTxUrl from "helpers/getTxUrl";
 
-export default function Broadcast(props: BroadcastStage) {
-  const { message, chainId, txHash } = props;
-
+export default function Broadcast({ chain, message, txHash }: BroadcastStage) {
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center">
       <p className="text-center text-angel-grey mb-2">{message}</p>
       <a
-        href={getTxUrl(chainId, txHash)}
+        href={getTxUrl(chain, txHash)}
         target="_blank"
         rel="noreferrer noopener"
         className="text-center text-angel-blue cursor-pointer mb-6"

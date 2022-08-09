@@ -8,8 +8,8 @@ import {
 } from "types/ethereum";
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
+import logger from "helpers/logger";
 import { WalletError } from "errors/errors";
-import { chainIDs } from "constants/chainIDs";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
@@ -24,8 +24,8 @@ export default function useInjectedProvider(
   const lastAction = retrieveUserAction(actionKey);
   const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
-  const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<chainIDs>();
+  const [address, setAddress] = useState<string>("");
+  const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
     requestAccess();
@@ -46,7 +46,7 @@ export default function useInjectedProvider(
 
   /** event handlers */
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setChainId(`${parseInt(hexChainId, 16)}` as chainIDs);
+    setChainId(`${parseInt(hexChainId, 16)}`);
   };
 
   //useful when user changes account internally via metamask
@@ -56,7 +56,7 @@ export default function useInjectedProvider(
       setAddress(accounts[0]);
       //if no account is found, means user disconnected
     } else {
-      setAddress(undefined);
+      setAddress("");
       setChainId(undefined);
       saveUserAction(actionKey, "disconnect");
       removeAllListeners(providerId);
@@ -82,12 +82,12 @@ export default function useInjectedProvider(
         });
 
         setAddress(accounts[0]);
-        setChainId(`${parseInt(hexChainId, 16)}` as chainIDs);
+        setChainId(`${parseInt(hexChainId, 16)}`);
       }
       setIsLoading(false);
     } catch (err) {
       //if user cancels, set pref to disconnect
-      console.error(err);
+      logger.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
@@ -101,7 +101,7 @@ export default function useInjectedProvider(
     if (!address) return;
     const injectedProvider = getProvider(providerId);
     if (!injectedProvider) return;
-    setAddress(undefined);
+    setAddress("");
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
     removeAllListeners(providerId);
@@ -140,12 +140,15 @@ export default function useInjectedProvider(
   };
 
   //consolidate to one object for diff
-  const providerInfo: ProviderInfo = {
-    logo: providerIcons[providerId],
-    providerId,
-    chainId: chainId || chainIDs.none,
-    address: address || "",
-  };
+  const providerInfo: ProviderInfo | undefined =
+    chainId && address
+      ? {
+          logo: providerIcons[providerId],
+          providerId,
+          chainId,
+          address,
+        }
+      : undefined;
 
   //connection object to render <Connector/>
   const connection: Connection = {
@@ -158,7 +161,7 @@ export default function useInjectedProvider(
     connection,
     disconnect,
     isLoading,
-    providerInfo: (address && providerInfo) || undefined,
+    providerInfo,
   };
 }
 

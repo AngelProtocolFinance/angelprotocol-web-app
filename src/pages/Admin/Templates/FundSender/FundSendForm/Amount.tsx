@@ -1,8 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
+import haloLogo from "assets/icons/currencies/halo_outline.png";
 import Label from "pages/Admin/components/Label";
-import { denoms } from "constants/currency";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Balance from "./Balance";
 import Currency from "./Currency";
 
@@ -13,7 +14,13 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<FundSendValues>();
 
-  const denomText = watch("currency") === denoms.uusd ? "UST" : "HALO";
+  const { wallet } = useGetWallet();
+  const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
+
+  const denomText =
+    watch("currency") === native_currency.token_id
+      ? native_currency.symbol
+      : "HALO";
 
   return (
     <div className="grid mb-4">
@@ -31,8 +38,12 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency currency="uusd" />
-          <Currency currency="halo" />
+          <Currency
+            currency={native_currency.token_id}
+            icon={native_currency.logo}
+            text={native_currency.symbol}
+          />
+          <Currency currency="halo" icon={haloLogo} text="HALO" />
         </div>
         <ErrorMessage
           errors={errors}
