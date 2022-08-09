@@ -13,7 +13,6 @@ export default function useGov() {
   const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
   const haloInfo = useHaloInfo();
   const govHaloBalance = useGovHaloBalance();
-  const { wallet } = useGetWallet();
 
   useEffect(() => {
     (async () => {
@@ -30,5 +29,5 @@ export default function useGov() {
     })();
   }, [haloInfo, govHaloBalance]);
 
-  return { staked, percentStaked, spot_price: spot_price.toNumber(), wallet };
+  return { staked, percentStaked, spot_price: spot_price.toNumber() };
 }
