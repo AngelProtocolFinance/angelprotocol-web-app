@@ -10,7 +10,7 @@ export default function ErrorHandler(
 
   useEffect(() => {
     if (props.error) {
-      handleError(props.error.message);
+      handleError(props.error);
     }
   }, [props.error, handleError]);
 
