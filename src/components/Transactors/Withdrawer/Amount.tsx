@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { VaultField } from "types/shared/withdraw";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
+import { denoms, symbols } from "constants/currency";
 
 export default function Amount(props: VaultField) {
   const {
@@ -65,4 +65,4 @@ export default function Amount(props: VaultField) {
 }
 
 const getDisplayAmount = (usdBalance: Decimal) =>
-  `${toCurrency(usdBalance.toNumber(), 3, true)} ${denoms.axlusdc}`;
+  `${toCurrency(usdBalance.toNumber(), 3, true)} ${symbols[denoms.axlusdc]}`;
