@@ -5,7 +5,7 @@ import { IS_TEST } from "./env";
 export const LCDs: { [key in Chains]: string } = IS_TEST
   ? {
       terra: "https://pisco-lcd.terra.dev",
-      juno: "",
+      juno: "https://lcd.uni.juno.deuslabs.fi",
       binance: "",
       ethereum: "",
     }
