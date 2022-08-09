@@ -27,10 +27,10 @@ export const providerIcons: { [key in ProviderId]: string } = {
 
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
-  chain_id: "juno-1",
+  chain_id: "placeholder",
   chain_name: "Token",
   native_currency: {
-    type: "juno-native",
+    type: "placeholder",
     symbol: "NATIVE",
     logo: tokenLogo,
     decimals: 18,
@@ -44,7 +44,7 @@ export const placeholderChain: Chain = {
   lcd_url: "https://lcd-token.placeholder.com",
   tokens: [
     {
-      type: "juno-native",
+      type: "placeholder",
       symbol: "TOKEN",
       logo: tokenLogo,
       decimals: 18,
@@ -54,5 +54,5 @@ export const placeholderChain: Chain = {
       token_id: "utoken",
     },
   ],
-  type: "juno-native",
+  type: "placeholder",
 };
