@@ -67,17 +67,15 @@ export default function useDonate() {
     }
   }
 
-  const symbol = token.symbol;
-
   //reset amount when changing currency
   useEffect(() => {
-    if (symbolRef.current !== symbol) {
+    if (symbolRef.current !== token?.symbol) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
-    symbolRef.current = symbol;
+    symbolRef.current = token?.symbol;
     //eslint-disable-next-line
-  }, [symbol]);
+  }, [token?.symbol]);
 
   const { kycData } = stage as InitialStage;
   const isKycRequired = getValues("isKycDonorOnly") === true;

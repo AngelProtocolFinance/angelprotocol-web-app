@@ -9,7 +9,7 @@ import {
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import handleTxError from "helpers/handleTxError";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {
@@ -25,7 +25,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
 
       updateState({ step: "submit", message: "Submitting transaction..." });
@@ -37,9 +37,9 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const { fee, feeNum } = await contract.estimateFee(args.msgs);
+        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
 
-        if (feeNum > args.wallet.displayCoin.balance) {
+        if (feeAmount > args.wallet.displayCoin.balance) {
           updateState({
             step: "error",
             message: `Not enough balance to pay for fees`,

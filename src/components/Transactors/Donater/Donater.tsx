@@ -22,15 +22,10 @@ export default function Donater(
   const { wallet, isLoading } = useGetWallet();
 
   if (isLoading) return <DonateFormLoader />;
-  return (
-    <DonateContext
-      {...props}
-      tokens={wallet?.coins || placeholderChain.tokens}
-    />
-  );
+  return <DonateContext {...props} tokens={wallet?.coins} />;
 }
 
-function DonateContext(props: DonaterProps & { tokens: Token[] }) {
+function DonateContext(props: DonaterProps & { tokens: Token[] | undefined }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -38,7 +33,7 @@ function DonateContext(props: DonaterProps & { tokens: Token[] }) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: props.tokens[0], //will always be filled with at least one token
+      token: (props.tokens || placeholderChain.tokens)[0],
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

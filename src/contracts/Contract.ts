@@ -4,6 +4,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import {
   Coin,
   DeliverTxResponse,
+  GasPrice,
   MsgSendEncodeObject,
   StdFee,
   calculateFee,
@@ -17,10 +18,21 @@ import getKeplrClient from "helpers/getKeplrClient";
 import toBase64 from "helpers/toBase64";
 import {
   TxResultFail,
-  WalletDisconnectError,
+  WalletDisconnectedError,
   WrongChainError,
 } from "errors/errors";
-import { GAS_PRICE } from "constants/currency";
+import { IS_TEST } from "constants/env";
+
+// TODO: uni-3 and juno-1 have diff gas prices for fee display only,
+// actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
+// NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
+const GAS_PRICE = IS_TEST
+  ? GasPrice.fromString("0.025ujunox")
+  : GasPrice.fromString("0.0025ujuno");
+
+// This is the multiplier used when auto-calculating the fees
+// https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
+const GAS_MULTIPLIER = 1.3;
 
 export default class Contract {
   contractAddress: string;
@@ -47,7 +59,7 @@ export default class Contract {
 
   async estimateFee(
     msgs: readonly EncodeObject[]
-  ): Promise<{ fee: StdFee; feeNum: number }> {
+  ): Promise<{ fee: StdFee; feeAmount: number }> {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
@@ -116,7 +128,7 @@ export default class Contract {
 
   private verifyWallet() {
     if (!this.wallet) {
-      throw new WalletDisconnectError();
+      throw new WalletDisconnectedError();
     }
     if (this.wallet.chain.type !== "juno-native") {
       throw new WrongChainError("juno");
@@ -129,19 +141,18 @@ function createFeeResult(
   denom: string
 ): {
   fee: StdFee;
-  feeNum: number;
+  feeAmount: number;
 } {
-  // This is the multiplier used when auto-calculating the fees
-  // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
-  const fee = calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
+  const fee = calculateFee(
+    Math.round(gasEstimation * GAS_MULTIPLIER),
+    GAS_PRICE
+  );
+  const feeAmount = extractFeeAmount(fee, denom);
 
-  return {
-    fee,
-    feeNum: extractFeeNum(fee, denom),
-  };
+  return { fee, feeAmount };
 }
 
-function extractFeeNum(fee: StdFee, denom: string): number {
+function extractFeeAmount(fee: StdFee, denom: string): number {
   return new Decimal(fee.amount.find((a) => a.denom === denom)!.amount)
     .div(1e6)
     .toNumber();

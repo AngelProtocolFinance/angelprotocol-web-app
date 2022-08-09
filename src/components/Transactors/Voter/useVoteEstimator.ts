@@ -85,16 +85,16 @@ export default function useVoteEstimator() {
           debounced_amount
         );
 
-        const { fee, feeNum } = await contract.estimateFee([voteMsg]);
+        const { fee, feeAmount } = await contract.estimateFee([voteMsg]);
 
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
-        if (feeNum >= ustBalance) {
+        if (feeAmount >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
