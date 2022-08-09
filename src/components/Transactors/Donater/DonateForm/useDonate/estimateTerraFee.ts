@@ -7,11 +7,11 @@ import { denoms } from "constants/currency";
 export default async function estimateTerraFee(
   wallet: WalletState,
   msgs: Msg[]
-): Promise<{ fee: Fee; feeNum: number }> {
+): Promise<{ fee: Fee; feeAmount: number }> {
   const fee = await getFee(wallet, msgs);
-  const feeNum = extractFeeNum(fee);
+  const feeAmount = extractFeeAmount(fee);
 
-  return { fee, feeNum };
+  return { fee, feeAmount };
 }
 
 async function getFee(wallet: WalletState, msgs: Msg[]) {
@@ -26,7 +26,7 @@ async function getFee(wallet: WalletState, msgs: Msg[]) {
   return fee;
 }
 
-function extractFeeNum(fee: Fee): number {
+function extractFeeAmount(fee: Fee): number {
   // needed to wrap with `Decimal` because the plain terra.js` operations
   // would usually floor the fee amount to 0.0 after `.div(1e6)`
   return new Decimal(fee.amount.get(denoms.uluna)!.amount).div(1e6).toNumber();

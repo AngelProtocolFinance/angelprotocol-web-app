@@ -98,19 +98,19 @@ export default function useSwapEstimator() {
               debounced_slippage
             );
 
-        const { fee, feeNum } = await contract.estimateFee([swapMsg]);
+        const { fee, feeAmount } = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= junoBalance) {
+        if (is_buy && feeAmount + debounced_amount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= junoBalance) {
+        if (!is_buy && feeAmount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

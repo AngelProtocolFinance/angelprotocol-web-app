@@ -37,9 +37,9 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const { fee, feeNum } = await contract.estimateFee(args.msgs);
+        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
 
-        if (feeNum > args.wallet.displayCoin.balance) {
+        if (feeAmount > args.wallet.displayCoin.balance) {
           updateState({
             step: "error",
             message: `Not enough balance to pay for fees`,
