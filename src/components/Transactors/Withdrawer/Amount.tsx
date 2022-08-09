@@ -3,8 +3,8 @@ import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { VaultField } from "types/shared/withdraw";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 
 export default function Amount(props: VaultField) {
   const {
@@ -12,7 +12,6 @@ export default function Amount(props: VaultField) {
     setValue,
     formState: { errors },
   } = useFormContext<WithdrawValues>();
-  const { wallet } = useGetWallet();
 
   const usdBalance = new Decimal(props.usdBalance).div(1e6);
   function setMax() {
@@ -40,8 +39,7 @@ export default function Amount(props: VaultField) {
               type="button"
               className="font-bold hover:text-angel-blue"
             >
-              {toCurrency(usdBalance.toNumber(), 3, true)}{" "}
-              {wallet?.chain.native_currency.symbol}
+              {getDisplayAmount(usdBalance)}
             </button>
           </p>
         </div>
@@ -65,3 +63,6 @@ export default function Amount(props: VaultField) {
     </div>
   );
 }
+
+const getDisplayAmount = (usdBalance: Decimal) =>
+  `${toCurrency(usdBalance.toNumber(), 3, true)} ${denoms.axlusdc}`;
