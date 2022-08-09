@@ -130,25 +130,28 @@ export interface UpdateProfilePayload {
   endow_type?: string;
 }
 
-/** _admin */
+/** _cw3 */
+
+type Duration = { time: number } | { height: number };
+
+type AbsolutePercentage = { absolute_percentage: { percentage: string } };
+
+type PercentageRes = {
+  absolute_percentage: {
+    percentage: string; //"0.5"
+    total_weight: number; //2
+  };
+};
+
+type ThresholdRes = PercentageRes; // | AbsoluteCount | Quorum;
+type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
+
 export type PageOptions = { limit?: number; start_before?: number };
+
 export type VotesPageOptions = {
   proposal_id: number;
   limit?: number;
   start_after?: number;
-};
-
-export type Member = {
-  addr: string;
-  weight: number;
-};
-
-export type InquiredMember = {
-  weight: number | null;
-};
-
-export type MemberRes = {
-  members: Member[];
 };
 
 export type ProposalsRes = {
@@ -172,27 +175,21 @@ export type Proposal = {
   msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
   expires: Expiration;
-  threshold: {
-    //others absolute account, threshold quourum
-    absolute_percentage: {
-      percentage: string; //"0.5"
-      total_weight: number; //2
-    };
-  };
+  threshold: ThresholdRes;
 };
 
 export type CW3Config = {
   group_addr: string; //"juno123abc.."
-  threshold: {
-    absolute_percentage: {
-      percentage: string; //"0.5"
-    };
-  };
-  max_voting_period: {
-    height: number; //1000
-  };
-  isPlacholder?: true;
+  threshold: Threshold;
+  max_voting_period: Duration;
   //...future needed attr
+};
+
+export type CW3ConfigPayload = {
+  //percent vote to pass poll
+  threshold: Threshold;
+  //poll duration in block height
+  max_voting_period: Duration;
 };
 
 export type AdminVoteInfo = {
@@ -201,7 +198,20 @@ export type AdminVoteInfo = {
   weight: number; //1
 };
 
-export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
+/** _cw4 */
+
+export type Member = {
+  addr: string;
+  weight: number;
+};
+
+export type InquiredMember = {
+  weight: number | null;
+};
+
+export type MemberRes = {
+  members: Member[];
+};
 
 /** _governance */
 export type PollStatus =

@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import {
-  CW3ConfigPayload,
   CW3ConfigUpdateMeta,
   CW3ConfigValues,
+  FormCW3Config,
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -17,12 +17,14 @@ import CW3 from "contracts/CW3";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../../genDiffMeta";
 
-type Key = keyof CW3ConfigPayload;
-type Value = CW3ConfigPayload[Key];
-export default function useConfigureCW3() {
+type Key = keyof FormCW3Config;
+type Value = FormCW3Config[Key];
+
+export default function usePropose() {
   const { cw3, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
+    getValues,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues>();
@@ -32,25 +34,34 @@ export default function useConfigureCW3() {
   async function configureCW3({
     title,
     description,
-    initialCW3Config,
+    initial,
+    isTime,
     ...data
   }: CW3ConfigValues) {
-    const diff = getPayloadDiff(initialCW3Config, data);
+    const diff = getPayloadDiff(initial, data);
     const diffEntries = Object.entries(diff) as [Key, Value][];
+
     if (diffEntries.length <= 0) {
       showModal(Popup, { message: "no changes made" });
       return;
     }
 
     const contract = new CW3(wallet, cw3);
-    const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg(
-      data.height,
-      (data.threshold / 100).toFixed(3)
-    );
+
+    const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
+      threshold: {
+        absolute_percentage: {
+          percentage: `${Math.floor(data.threshold / 100)}`,
+        },
+      },
+      max_voting_period: isTime
+        ? { time: data.duration }
+        : { height: data.duration },
+    });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
       type: "cw3_config",
-      data: genDiffMeta(diffEntries, initialCW3Config),
+      data: genDiffMeta(diffEntries, initial),
     };
 
     //proposal meta for preview
@@ -78,6 +89,7 @@ export default function useConfigureCW3() {
   }
 
   return {
+    isTime: getValues("isTime"),
     configureCW3: handleSubmit(configureCW3),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };

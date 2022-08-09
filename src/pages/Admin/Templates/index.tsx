@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
 import ProfileEditor from "./account/ProfileEditor/ProfileEditor";
-import CW3Configurer from "./cw3/CW3Configurer/CW3Configurer";
+import CW3Configurer from "./cw3/Config";
 import FundSender from "./cw3/FundSender/FundSender";
 import MemberUpdator from "./cw4/MemberUpdator/MemberUpdator";
 import AllianceEditor from "./indexfund/AllianceEditor/AllianceEditor";

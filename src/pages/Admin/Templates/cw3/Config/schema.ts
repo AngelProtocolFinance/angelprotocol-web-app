@@ -4,10 +4,10 @@ import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
 import { proposalShape } from "../../proposalShape";
 
-const cw3ConfigShape: SchemaShape<CW3ConfigValues> = {
+const shape: SchemaShape<CW3ConfigValues> = {
   ...proposalShape,
   threshold: requiredPositiveNumber,
-  height: requiredPositiveNumber,
+  duration: requiredPositiveNumber,
 };
 
-export const cw3ConfigSchema = Yup.object(cw3ConfigShape);
+export const schema = Yup.object(shape);

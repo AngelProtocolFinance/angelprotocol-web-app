@@ -9,7 +9,6 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   UpdateProfilePayload,
-  Vote,
 } from "types/server/contracts";
 
 export type AdminParams = { address: string };
@@ -92,7 +91,7 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
-  DiffSet<CW3ConfigPayload>
+  DiffSet<FormCW3Config>
 >;
 
 export type FundSendMeta = MetaConstructor<
@@ -159,14 +158,13 @@ export type ProposalBase = {
 export type FundIdContext = { fundId: string };
 export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
-export type CW3ConfigPayload = {
-  //percent vote to pass poll
+export type FormCW3Config = {
   threshold: number;
-  //poll duration in block height
-  height: number;
+  duration: number;
 };
 export type CW3ConfigValues = ProposalBase &
-  CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
+  FormCW3Config & { initial: FormCW3Config; isTime: boolean };
+
 export type EndowmentUpdateValues = ProposalBase & {
   endowmentAddr: string;
   status: EndowmentStatusStrNum;
