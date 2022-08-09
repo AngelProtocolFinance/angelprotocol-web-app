@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired build --stats",
-    "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
+    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "analyze": "webpack-bundle-analyzer --port 4200 build/stats.json",
     "start": "react-app-rewired start",
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",

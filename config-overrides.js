@@ -15,7 +15,11 @@ module.exports = function override(config, env) {
       Buffer: ["buffer", "Buffer"],
       process: "process/browser",
     }),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({
+      analyzerMode: "disabled",
+      generateStatsFile: true,
+      statsOptions: { source: false },
+    })
   );
 
   return config;
