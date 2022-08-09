@@ -1,5 +1,6 @@
 import { ContractQueryArgs as CQA } from "services/types";
 import {
+  CW3ConfigPayload,
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   PageOptions,
@@ -66,12 +67,9 @@ export default class CW3 extends Contract {
     });
   }
 
-  createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
+  createEmbeddedUpdateConfigMsg(payload: CW3ConfigPayload) {
     return this.createEmbeddedWasmMsg([], {
-      update_config: {
-        threshold: { absolute_percentage: { percentage: threshold } },
-        max_voting_period: { height },
-      },
+      update_config: payload,
     });
   }
 

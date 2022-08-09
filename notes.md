@@ -16,6 +16,8 @@ merge into just /Admin
 - organized admin files, Proposals, Proposal, Templates, index.tsx
 - expiration ui for both time and block types
 - move `<Withdrawer>` from `components/transactors` to `page/admin/charity`
+- remove `<AdminExecuter>` and place `execute` function inside `<PollAction/>`
+- update cw3 config template to accept both `time` (charities) and `height`(ap-admin) voting duration values
 
 ### admin/proposal(s)
 
@@ -31,6 +33,7 @@ merge into just /Admin
 
 - image editor submits whole edit profile proposal when clicking image crop button
 - rename duplicate services endpoint
+- update fee balance check on admin voter: set still to `uusd`
 
 ### withdraw related refactors
 

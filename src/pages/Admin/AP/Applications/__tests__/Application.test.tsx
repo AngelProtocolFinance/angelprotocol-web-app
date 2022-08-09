@@ -5,7 +5,6 @@ import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { CharityApplication } from "types/server/aws";
-import { AdminGuard } from "pages/Admin/Guard";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";

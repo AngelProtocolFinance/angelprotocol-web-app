@@ -2,10 +2,10 @@ import { CW3ConfigValues as CV } from "pages/Admin/types";
 import Submitter from "pages/Admin/common/Submitter";
 import { FormContainer } from "pages/Admin/common/TemplateContainer";
 import TextInput from "pages/Admin/common/TextInput";
-import useConfigureCW3 from "./useConfigureCW3";
+import usePropose from "./usePropose";
 
-export default function CW3ConfigForm() {
-  const { configureCW3, isSubmitDisabled } = useConfigureCW3();
+export default function Form() {
+  const { configureCW3, isSubmitDisabled, isTime } = usePropose();
   return (
     <FormContainer onSubmit={configureCW3}>
       <TextInput<CV> title="Proposal Title" name="title" required />
@@ -22,8 +22,8 @@ export default function CW3ConfigForm() {
         mono
       />
       <TextInput<CV>
-        title="voting period (blocks)"
-        name="height"
+        title={`voting period (${isTime ? "seconds" : "blocks"})`}
+        name="duration"
         required
         mono
       />
