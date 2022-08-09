@@ -12,7 +12,7 @@ import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers/getProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
@@ -29,7 +29,7 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) throw new WalletDisconnectedError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(

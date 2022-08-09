@@ -6,7 +6,7 @@ import {
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
 import handleTxError from "helpers/handleTxError";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendCosmosTx = createAsyncThunk(
@@ -18,7 +18,7 @@ export const sendCosmosTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
       updateStage({ step: "submit", message: "Submitting transaction..." });
       const contract = new Contract(args.wallet);

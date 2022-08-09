@@ -2,7 +2,7 @@ import { Fee, Msg } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getTerraClient from "helpers/getTerraClient";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import { denoms } from "constants/currency";
 
 export default async function estimateTerraFee(
@@ -34,6 +34,6 @@ function extractFeeNum(fee: Fee): number {
 
 function verifyWallet(wallet: WalletState | undefined) {
   if (!wallet) {
-    throw new WalletDisconnectError();
+    throw new WalletDisconnectedError();
   }
 }

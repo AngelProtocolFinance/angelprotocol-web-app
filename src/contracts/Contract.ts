@@ -17,7 +17,7 @@ import getKeplrClient from "helpers/getKeplrClient";
 import toBase64 from "helpers/toBase64";
 import {
   TxResultFail,
-  WalletDisconnectError,
+  WalletDisconnectedError,
   WrongChainError,
 } from "errors/errors";
 import { GAS_PRICE } from "constants/currency";
@@ -116,7 +116,7 @@ export default class Contract {
 
   private verifyWallet() {
     if (!this.wallet) {
-      throw new WalletDisconnectError();
+      throw new WalletDisconnectedError();
     }
     if (this.wallet.chain.type !== "juno-native") {
       throw new WrongChainError("juno");

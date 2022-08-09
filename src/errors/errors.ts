@@ -47,9 +47,9 @@ export class LogDonationFail extends Error {
   }
 }
 
-export class WalletDisconnectError extends APError {
+export class WalletDisconnectedError extends APError {
   constructor() {
-    super("WalletDisconnectError", "Wallet is already disconnected");
+    super("WalletDisconnectedError", "Wallet is not connected");
   }
 }
 
