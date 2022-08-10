@@ -6,12 +6,13 @@ import Donater from "./Donater";
 
 export default function useDonater(args: DonaterProps) {
   const { showModal } = useModalContext();
+
   const showDonater = useCallback(() => {
     showModal(Transactor, {
       Content: Donater,
       contentProps: args,
     });
-    //eslint-disable-next-line
-  }, [args]);
+  }, [args, showModal]);
+
   return showDonater;
 }

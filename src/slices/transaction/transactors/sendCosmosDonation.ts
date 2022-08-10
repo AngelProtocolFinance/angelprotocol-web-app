@@ -8,7 +8,7 @@ import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
 import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type CosmosDonateArgs = {
@@ -25,7 +25,7 @@ export const sendCosmosDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) throw new WalletDisconnectedError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const contract = new Contract(args.wallet);

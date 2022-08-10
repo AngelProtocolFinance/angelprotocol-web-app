@@ -11,7 +11,7 @@ export default function Breakdown() {
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
   const isNativeCoin =
-    wallet!.chain.native_currency.token_id === token.token_id;
+    wallet?.chain.native_currency.token_id === token.token_id;
   const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
@@ -19,14 +19,18 @@ export default function Breakdown() {
       <Entry
         title="tx fee"
         amount={fee}
-        symbol={wallet!.chain.native_currency.symbol}
+        symbol={wallet?.chain.native_currency.symbol}
       />
       <Entry title="total amount" amount={totalAmount} symbol={token.symbol} />
     </div>
   );
 }
 
-function Entry(props: { title: string; amount: number; symbol: string }) {
+function Entry(props: {
+  title: string;
+  amount: number;
+  symbol: string | undefined;
+}) {
   return (
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>

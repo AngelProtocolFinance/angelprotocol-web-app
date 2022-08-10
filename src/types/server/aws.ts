@@ -99,7 +99,8 @@ export type Token = {
     | "evm-native"
     | "erc20"
     | "cw20"
-    | "ibc";
+    | "ibc"
+    | "placeholder";
 };
 
 export type NetworkType = "mainnet" | "testnet";
@@ -114,7 +115,7 @@ export type Chain = {
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: "juno-native" | "terra-native" | "evm-native"; // | "sol" | "btc" | ...
+  type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
 /** /leaderboards */

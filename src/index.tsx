@@ -3,8 +3,6 @@ import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import ModalContext from "contexts/ModalContext";
-import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import ErrorBoundary from "errors/ErrorBoundary";
@@ -26,13 +24,9 @@ getChainOptions().then((chainOptions) =>
         <Provider store={store}>
           <BrowserRouter>
             <WalletProvider {...chainOptions}>
-              <WalletContext>
-                <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-                  <Suspense fallback={<LoaderComponent />}>
-                    <App />
-                  </Suspense>
-                </ModalContext>
-              </WalletContext>
+              <Suspense fallback={<LoaderComponent />}>
+                <App />
+              </Suspense>
             </WalletProvider>
           </BrowserRouter>
         </Provider>

@@ -8,7 +8,7 @@ import { junoTags, multicallTags } from "services/juno/tags";
 import { DonateValues } from "components/Transactors/Donater";
 import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
-import { UnexpectedStateError, WalletDisconnectError } from "errors/errors";
+import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
@@ -28,7 +28,7 @@ export const sendTerraDonation = createAsyncThunk(
     };
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
 
       if (args.wallet.network.chainID !== args.chain.chain_id) {

@@ -194,12 +194,12 @@ export default function useEstimator() {
           if (selectedToken.type.includes("native")) {
             const gasLimit = await signer.estimateGas(tx);
             const minFee = gasLimit.mul(gasPrice);
-            const feeNum = parseFloat(
+            const feeAmount = parseFloat(
               ethers.utils.formatUnits(minFee, selectedToken.decimals)
             );
-            dispatch(setFee(feeNum));
+            dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeNum >= wallet.displayCoin.balance) {
+            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -216,13 +216,13 @@ export default function useEstimator() {
               wei_amount
             );
             const minFee = gasLimit.mul(gasPrice);
-            const feeNum = parseFloat(
+            const feeAmount = parseFloat(
               ethers.utils.formatUnits(minFee, selectedToken.decimals)
             );
-            dispatch(setFee(feeNum));
+            dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeNum >= wallet.displayCoin.balance) {
+            if (feeAmount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });

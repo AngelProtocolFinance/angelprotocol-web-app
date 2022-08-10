@@ -14,7 +14,7 @@ import {
 } from "./types";
 import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes/chains";
-import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
+import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
@@ -128,7 +128,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         disconnectTerra();
         break;
       default:
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
     }
   }, [
     activeProviderInfo?.providerId,
@@ -214,7 +214,7 @@ function useVerifyChain(
         // when wallet is disconnected, the `disconnect` func is recreated,
         // causing this hook to rerun and throwing the error below.
         // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectError)) {
+        if (!(err instanceof WalletDisconnectedError)) {
           throw err;
         }
       }

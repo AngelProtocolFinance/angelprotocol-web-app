@@ -10,7 +10,7 @@ import logApplicationReview from "pages/Admin/Applications/logApplicationReview"
 import Contract from "contracts/Contract";
 import extractFeeData from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {
@@ -26,7 +26,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
 
       updateState({ step: "submit", message: "Submitting transaction..." });

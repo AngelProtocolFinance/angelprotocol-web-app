@@ -1,16 +1,11 @@
 import { Fee, Msg } from "@terra-money/terra.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getTerraClient from "helpers/getTerraClient";
-import { WalletDisconnectError } from "errors/errors";
 
 export default async function estimateTerraFee(
-  wallet: WalletState | undefined,
+  wallet: WalletState,
   msgs: Msg[]
 ): Promise<Fee> {
-  if (!wallet) {
-    throw new WalletDisconnectError();
-  }
-
   const client = getTerraClient(wallet.chain.chain_id, wallet.chain.rpc_url);
 
   const account = await client.auth.accountInfo(wallet.address);
