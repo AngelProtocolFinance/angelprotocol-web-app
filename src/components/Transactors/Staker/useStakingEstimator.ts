@@ -14,6 +14,7 @@ import useDebouncer from "hooks/useDebouncer";
 import extractFeeAmount from "helpers/extractFeeData";
 import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms, symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
@@ -46,19 +47,17 @@ export default function useEstimator() {
           return;
         }
 
-        if (is_stake) {
+        if (is_stake && balance.div(1e6).lt(debounced_amount)) {
           //check $HALO balance
-          if (balance.div(1e6).lt(debounced_amount)) {
-            setError("amount", { message: "not enough balance" });
-            return;
-          }
-        } else {
-          if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
-            setError("amount", {
-              message: "not enough staked balance",
-            });
-            return;
-          }
+          setError("amount", {
+            message: `not enough ${symbols[denoms.halo]} balance`,
+          });
+          return;
+        } else if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
+          setError("amount", {
+            message: "not enough unlocked staked balance",
+          });
+          return;
         }
 
         dispatch(setFormLoading(true));
