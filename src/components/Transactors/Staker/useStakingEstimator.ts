@@ -11,7 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeData from "helpers/extractFeeData";
+import extractFeeAmount from "helpers/extractFeeData";
 import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
 import useStakerBalance from "./useStakerBalance";
@@ -72,13 +72,13 @@ export default function useEstimator() {
         const fee = await contract.estimateFee([govMsg]);
 
         //2nd balance check including fees
-        const feeData = extractFeeData(
+        const feeAmount = extractFeeAmount(
           fee,
           wallet.chain.native_currency.token_id
         );
-        dispatch(setFee(feeData.amount));
+        dispatch(setFee(feeAmount));
 
-        if (feeData.amount >= wallet.chain.native_currency.balance) {
+        if (feeAmount >= wallet.chain.native_currency.balance) {
           setError("amount", {
             message: "Not enough balance to pay for fees",
           });

@@ -16,7 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeData from "helpers/extractFeeData";
+import extractFeeAmount from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 
 interface Source {
@@ -158,13 +158,13 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         const fee = await adminContract.estimateFee([proposalMsg]);
 
         //get usd total of of sources
-        const feeData = extractFeeData(
+        const feeAmount = extractFeeAmount(
           fee,
           wallet.chain.native_currency.token_id
         );
-        dispatch(setFee(feeData.amount));
+        dispatch(setFee(feeAmount));
 
-        if (feeData.amount > wallet.chain.native_currency.balance) {
+        if (feeAmount > wallet.chain.native_currency.balance) {
           dispatch(setFormError("Not enough balance to pay for fees"));
           return;
         }

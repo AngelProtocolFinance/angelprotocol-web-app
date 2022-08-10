@@ -9,7 +9,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeData from "helpers/extractFeeData";
+import extractFeeAmount from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 
 export default function useClaimEstimator() {
@@ -45,14 +45,14 @@ export default function useClaimEstimator() {
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
 
-        const feeData = extractFeeData(
+        const feeAmount = extractFeeAmount(
           fee,
           wallet.chain.native_currency.token_id
         );
-        dispatch(setFee(feeData.amount));
+        dispatch(setFee(feeAmount));
 
         //2nd balance check including fees
-        if (feeData.amount >= wallet.chain.native_currency.balance) {
+        if (feeAmount >= wallet.chain.native_currency.balance) {
           dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }

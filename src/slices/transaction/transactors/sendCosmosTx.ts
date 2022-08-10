@@ -5,7 +5,7 @@ import {
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
-import extractFeeData from "helpers/extractFeeData";
+import extractFeeAmount from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -30,11 +30,11 @@ export const sendCosmosTx = createAsyncThunk(
       } else {
         const fee = await contract.estimateFee(args.msgs);
 
-        const feeData = extractFeeData(
+        const feeAmount = extractFeeAmount(
           fee,
           args.wallet.chain.native_currency.token_id
         );
-        if (feeData.amount > args.wallet.displayCoin.balance) {
+        if (feeAmount > args.wallet.displayCoin.balance) {
           updateStage({
             step: "error",
             message: `Not enough balance to pay for fees`,

@@ -12,7 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeData from "helpers/extractFeeData";
+import extractFeeAmount from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
@@ -98,16 +98,16 @@ export default function useSwapEstimator() {
         const fee = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        const feeData = extractFeeData(fee, nativeCoin.token_id);
-        dispatch(setFee(feeData.amount));
+        const feeAmount = extractFeeAmount(fee, nativeCoin.token_id);
+        dispatch(setFee(feeAmount));
 
-        if (is_buy && feeData.amount + debounced_amount >= nativeCoin.balance) {
+        if (is_buy && feeAmount + debounced_amount >= nativeCoin.balance) {
           setError("amount", {
             message: `not enough ${nativeCoin.symbol} to pay for fees`,
           });
           return;
         }
-        if (!is_buy && feeData.amount >= nativeCoin.balance) {
+        if (!is_buy && feeAmount >= nativeCoin.balance) {
           setError("amount", {
             message: `not enough ${nativeCoin.symbol} to pay for fees`,
           });
