@@ -24,7 +24,7 @@ jest.mock("contexts/ModalContext", () => ({
 
 jest.mock("helpers/processEstimateError", () => ({
   __esModule: true,
-  default: (_: any) => {},
+  processEstimateError: (_: any) => {},
 }));
 
 const mockUseGetWallet = jest.fn();
