@@ -106,7 +106,8 @@ export default class Contract {
 
   createTransferNativeMsg(
     amount: number,
-    recipient: string
+    recipient: string,
+    denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
     return {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
@@ -115,7 +116,7 @@ export default class Contract {
         toAddress: recipient,
         amount: [
           {
-            denom: this.wallet!.chain.native_currency.token_id,
+            denom,
             amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
           },
         ],
