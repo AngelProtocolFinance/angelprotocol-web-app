@@ -13,7 +13,7 @@ export default function Amount(props: VaultField) {
 
   const ustBalance = condense(props.ustBalance);
   function setMax() {
-    setValue(props.fieldId, roundDown(ustBalance), {
+    setValue(props.fieldId, roundDown(ustBalance, 3), {
       shouldDirty: true,
       shouldValidate: true,
     });

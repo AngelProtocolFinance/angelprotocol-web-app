@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useGovStakerState } from "services/juno/gov/states";
-import { condense, roundDown } from "helpers";
+import { condense, roundDown, toCurrency } from "helpers";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {
@@ -15,7 +15,7 @@ export default function Amount() {
   const govStakedHalo = roundDown(condense(govStakerState.balance), 3);
 
   const onMaxClick = () => {
-    setValue("amount", `${govStakedHalo}`, {
+    setValue("amount", govStakedHalo, {
       shouldValidate: true,
       shouldDirty: true,
     });
@@ -28,7 +28,7 @@ export default function Amount() {
         className="text-angel-grey uppercase font-bold mb-2"
       >
         <span>Deposit amount</span>
-        <Balance amount={govStakedHalo} title="Balance" />
+        <Balance amount={toCurrency(govStakedHalo, 3)} title="Balance" />
       </label>
       <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <input
