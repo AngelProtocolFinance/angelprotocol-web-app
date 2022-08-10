@@ -15,7 +15,7 @@ import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { MAIN_DENOM, denoms } from "constants/currency";
+import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
@@ -51,7 +51,10 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const junoBalance = getTokenBalance(wallet.coins, MAIN_DENOM);
+        const junoBalance = getTokenBalance(
+          wallet.coins,
+          wallet.chain.native_currency.token_id
+        );
         const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
@@ -95,19 +98,19 @@ export default function useSwapEstimator() {
               debounced_slippage
             );
 
-        const { fee, feeNum } = await contract.estimateFee([swapMsg]);
+        const { fee, feeAmount } = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= junoBalance) {
+        if (is_buy && feeAmount + debounced_amount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= junoBalance) {
+        if (!is_buy && feeAmount >= junoBalance) {
           setError("amount", { message: "not enough JUNO to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

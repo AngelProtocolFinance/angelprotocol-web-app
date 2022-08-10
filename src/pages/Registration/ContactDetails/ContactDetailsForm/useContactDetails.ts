@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
-import useHandleError from "pages/Registration/useHandleError";
 import {
   registrationRefKey,
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
@@ -20,7 +20,7 @@ export default function useSaveContactDetails() {
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {

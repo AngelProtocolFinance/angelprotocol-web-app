@@ -55,16 +55,16 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const { fee, feeNum } = await contract.estimateFee([pollMsgs]);
+        const { fee, feeAmount } = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeNum >= ustBalance) {
+        if (feeAmount >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {

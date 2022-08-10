@@ -1,5 +1,3 @@
-import { Token } from "types/server/aws";
-
 export type ContractQueryArgs<T = object> = {
   address: string;
   msg: T;
@@ -21,6 +19,3 @@ export type JunoTags =
   | "endowment"
   | "multicall"
   | "registrar";
-
-/** multicall */
-export type WithBalance<T = Token> = T & { balance: number };

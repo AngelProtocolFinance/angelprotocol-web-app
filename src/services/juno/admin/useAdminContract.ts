@@ -3,7 +3,6 @@ import { CWContracts } from "types/server/contracts";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import { junoChainId } from "constants/chainIDs";
 
 export default function useAdminContract(customCWs?: CWContracts) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
@@ -14,7 +13,7 @@ export default function useAdminContract(customCWs?: CWContracts) {
 
   const isAdminSkip =
     // skip if wallet not connected to Juno blockchain
-    wallet?.chainId !== junoChainId ||
+    wallet?.chain.type !== "juno-native" ||
     (cws !== "apTeam" &&
       //skip query if user didn't provide any address
       (cws.cw3 === undefined || cws.cw4 === undefined));

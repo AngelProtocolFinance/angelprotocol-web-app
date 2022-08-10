@@ -14,10 +14,10 @@ jest.mock("services/aws/registration", () => ({
   useRegistrationState: (..._: any[]) => mockRegistrationQuery(_),
 }));
 
-const mockShowModal = jest.fn();
-jest.mock("contexts/ModalContext", () => ({
+const mockHandleError = jest.fn();
+jest.mock("contexts/ErrorContext", () => ({
   __esModule: true,
-  useModalContext: () => ({ showModal: mockShowModal }),
+  useErrorContext: () => ({ handleError: mockHandleError }),
 }));
 
 const mockUseGetter = jest.fn();
@@ -80,7 +80,7 @@ describe("useActivate tests", () => {
 
     expect(mockActivate).toHaveBeenCalledWith(PK);
     expect(mockActivate).toHaveBeenCalled();
-    expect(mockShowModal).toHaveBeenCalled();
+    expect(mockHandleError).toHaveBeenCalled();
   });
 });
 

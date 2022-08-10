@@ -12,6 +12,7 @@ import {
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
+import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
@@ -69,22 +70,22 @@ export default function useEstimator() {
           ? contract.createGovStakeMsg(debounced_amount)
           : contract.createGovUnstakeMsg(debounced_amount);
 
-        const { fee, feeNum } = await contract.estimateFee([govMsg]);
+        const { fee, feeAmount } = await contract.estimateFee([govMsg]);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeNum >= ustBalance) {
+        if (feeAmount >= ustBalance) {
           setError("amount", {
             message: "not enough UST to pay for fees",
           });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         dispatch(setFormError(processEstimateError(err)));
       }
     })();

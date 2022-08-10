@@ -12,7 +12,7 @@ import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers/getProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
@@ -29,7 +29,7 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) throw new WalletDisconnectedError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(
@@ -38,25 +38,21 @@ export const sendEthDonation = createAsyncThunk(
       );
 
       const signer = provider.getSigner();
-      const walletAddress = await signer.getAddress();
-      const chainNum = await signer.getChainId();
-      const chainId = `${chainNum}`;
-      const { contract_addr } = args.donateValues.token;
+      const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
-      if (contract_addr) {
+      if (args.wallet.chain.native_currency.token_id === token.token_id) {
+        response = await signer.sendTransaction(args.tx);
+      } else {
         const ER20Contract: any = new ethers.Contract(
-          contract_addr,
+          token.token_id,
           ERC20Abi,
           signer
         );
         response = await ER20Contract.transfer(args.tx.to, args.tx.value);
-      } else {
-        response = await signer.sendTransaction(args.tx);
       }
 
       updateStage({ step: "submit", message: "Saving donation info.." });
-      const { receiver, token, amount, split_liq } = args.donateValues;
       const receipient: Receiver =
         typeof receiver === "string"
           ? { charityId: receiver }
@@ -67,22 +63,21 @@ export const sendEthDonation = createAsyncThunk(
           ...receipient,
           transactionId: response.hash,
           transactionDate: new Date().toISOString(),
-          chainId,
+          chainId: args.wallet.chain.chain_id,
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,
-          walletAddress,
+          walletAddress: args.wallet.address,
         });
       }
       updateStage({
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
-        chainId,
+        chain: args.wallet.chain,
         isShareEnabled: true,
       });
     } catch (error) {
-      console.error(error);
       handleEthError(error, updateStage);
     }
   }

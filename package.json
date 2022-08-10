@@ -2,6 +2,44 @@
   "name": "angelprotocol-web-app",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "analyze": "webpack-bundle-analyzer --port 4200 build/stats.json",
+    "start": "react-app-rewired start",
+    "test": "react-app-rewired test --colors",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "packageManager": "yarn@3.2.1",
+  "engines": {
+    "node": "16.13.2"
+  },
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.28.9",
     "@cosmjs/encoding": "^0.28.10",
@@ -37,54 +75,10 @@
     "react-select-country-list": "^2.2.3",
     "yup": "^0.32.9"
   },
-  "scripts": {
-    "build": "react-app-rewired build",
-    "start": "react-app-rewired start",
-    "test": "react-app-rewired test --colors",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
-    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
+    "@babel/core": "^7.18.10",
     "@babel/plugin-syntax-flow": "^7.18.6",
-    "@babel/plugin-transform-react-jsx": "^7.18.6",
+    "@babel/plugin-transform-react-jsx": "^7.18.10",
     "@peculiar/webcrypto": "^1.4.0",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@testing-library/dom": "^8.13.0",
@@ -97,7 +91,7 @@
     "@types/draft-js": "^0.11.9",
     "@types/jest": "^27.5.2",
     "@types/jsonwebtoken": "^8.5.5",
-    "@types/node": "^18.6.3",
+    "@types/node": "^18.6.5",
     "@types/react": "^17.0.39",
     "@types/react-csv": "^1.1.2",
     "@types/react-dom": "^17.0.11",
@@ -118,14 +112,11 @@
     "react-scripts": "^5.0.0",
     "react-test-renderer": "17.0.2",
     "stream-browserify": "^3.0.0",
-    "tailwindcss": "^3.1.7",
+    "tailwindcss": "^3.1.8",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.4",
     "util": "^0.12.4",
-    "web-vitals": "^1.0.1"
-  },
-  "packageManager": "yarn@3.2.1",
-  "engines": {
-    "node": "16.13.2"
+    "web-vitals": "^1.0.1",
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }

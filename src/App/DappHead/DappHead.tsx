@@ -26,7 +26,7 @@ export default function DappHead() {
         <WalletSuite />
         <Airdrop />
       </div>
-      <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
+      <button className="text-white-grey ml-2 lg:hidden" onClick={toggleNav}>
         {navShown ? (
           <Icon type="Close" className="text-2xl" />
         ) : (

@@ -8,13 +8,13 @@ import WalletSubmission from "./WalletSubmission";
 export default function WalletRegistration() {
   const { data } = useRegistrationState("");
   const charity = data!; //
-  const { wallet, isProviderLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
 
   if (charity.Metadata.JunoWallet) {
     return <RegisteredWallet />;
   }
 
-  if (isProviderLoading) {
+  if (isLoading) {
     return <RegLoader message="Wallet is loading" />;
   }
 

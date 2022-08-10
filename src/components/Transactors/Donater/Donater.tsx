@@ -3,9 +3,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
@@ -19,18 +19,13 @@ const schema = Yup.object().shape(shape);
 export default function Donater(
   props: DonaterProps /** set by opener context */
 ) {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
 
-  if (isWalletLoading) return <DonateFormLoader />;
-  return (
-    <DonateContext
-      {...props}
-      tokens={wallet?.coins || [placeHolderDisplayToken["keplr"]]}
-    />
-  );
+  if (isLoading) return <DonateFormLoader />;
+  return <DonateContext {...props} tokens={wallet?.coins} />;
 }
 
-function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {
+function DonateContext(props: DonaterProps & { tokens: Token[] | undefined }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -38,7 +33,7 @@ function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: props.tokens[0], //will always be filled with at least one token
+      token: (props.tokens || placeholderChain.tokens)[0],
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

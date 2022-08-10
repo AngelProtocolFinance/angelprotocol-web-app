@@ -1,4 +1,5 @@
 import { Fee, Msg } from "@terra-money/terra.js";
+import Decimal from "decimal.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import getTerraClient from "helpers/getTerraClient";
 import { denoms } from "constants/currency";
@@ -6,8 +7,15 @@ import { denoms } from "constants/currency";
 export default async function estimateTerraFee(
   wallet: WalletState,
   msgs: Msg[]
-): Promise<{ fee: Fee; feeNum: number }> {
-  const client = getTerraClient(wallet);
+): Promise<{ fee: Fee; feeAmount: number }> {
+  const fee = await getFee(wallet, msgs);
+  const feeAmount = extractFeeAmount(fee);
+
+  return { fee, feeAmount };
+}
+
+async function getFee(wallet: WalletState, msgs: Msg[]) {
+  const client = getTerraClient(wallet.chain.chain_id, wallet.chain.lcd_url);
 
   const account = await client.auth.accountInfo(wallet.address);
 
@@ -15,12 +23,11 @@ export default async function estimateTerraFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
     { msgs, feeDenoms: [denoms.uluna] }
   );
-
-  const feeNum = extractFeeNum(fee);
-
-  return { fee, feeNum };
+  return fee;
 }
 
-function extractFeeNum(fee: Fee): number {
-  return fee.amount.get(denoms.uluna)!.div(1e6).amount.toNumber();
+function extractFeeAmount(fee: Fee): number {
+  // needed to wrap with `Decimal` because the plain terra.js` operations
+  // would usually floor the fee amount to 0.0 after `.div(1e6)`
+  return new Decimal(fee.amount.get(denoms.uluna)!.amount).div(1e6).toNumber();
 }

@@ -1,13 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { denomIcons } from "constants/currency";
+import haloLogo from "assets/icons/currencies/halo_outline.png";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 
 export default function Output() {
   const { watch } = useFormContext<SwapValues>();
+  const { wallet } = useGetWallet();
+  const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");
-  const icon = denomIcons[is_buy ? "halo" : "uusd"];
 
   return (
     <div className="grid grid-cols-a1 bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">
@@ -17,11 +19,11 @@ export default function Output() {
       <div className="row-start-2 flex items-center justify-center text-angel-grey text-lg uppercase font-heading rounded-md">
         <img
           className={`${is_buy ? "w-9 h-9" : "w-10 h-10"} mr-1 object-contain`}
-          src={icon}
+          src={is_buy ? haloLogo : native_currency.logo}
           alt=""
         />
         <span className="block font-bold text-2xl">
-          {is_buy ? "HALO" : "UST"}
+          {is_buy ? "HALO" : native_currency.symbol}
         </span>
       </div>
 
