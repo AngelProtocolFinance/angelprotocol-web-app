@@ -5,6 +5,7 @@ import { WithdrawValues } from "./types";
 import { WithdrawLiqMeta } from "pages/Admin/types";
 import { CW20 } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
+import { logWithdrawProposal } from "pages/Admin/charity/Withdrawer/logWithdrawProposal";
 import { invalidateJunoTags } from "services/juno";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
@@ -48,11 +49,12 @@ export default function useWithdraw() {
       [[], []] as [CW20[], Coin[]]
     );
 
+    const isJuno = data.network === chainIds.juno;
     const account = new Account(wallet, endowment);
     const msg = account.createEmbeddedWithdrawLiqMsg({
       beneficiary:
-        //if not juno, send to apes wallet (juno)
-        data.network !== chainIds.juno ? ap_wallets.juno : data.beneficiary,
+        //if not juno, send to ap wallet (juno)
+        isJuno ? data.beneficiary : ap_wallets.juno,
       assets: {
         cw20: cw20s,
         native: natives,
@@ -62,9 +64,7 @@ export default function useWithdraw() {
     const meta: WithdrawLiqMeta = {
       type: "acc_withdraw_liq",
       data: {
-        target_wallet: data.beneficiary,
-        target_chain: data.network,
-        proposal_chain_id: chainIds.juno,
+        beneficiary: data.beneficiary,
       },
     };
 
@@ -88,6 +88,17 @@ export default function useWithdraw() {
         ],
         successLink: proposalLink,
         successMessage: "Withdraw proposal successfully created!",
+        setLogProcessor: isJuno
+          ? undefined //no need to POST to AWS if destination is juno
+          : (rawLog) =>
+              //will run if sendCosmos is success
+              logWithdrawProposal({
+                rawLog,
+                endowment_multisig: cw3,
+                proposal_chain_id: chainIds.juno,
+                target_chain: data.network,
+                target_wallet: data.beneficiary,
+              }),
       })
     );
   }

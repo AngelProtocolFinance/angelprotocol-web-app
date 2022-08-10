@@ -106,9 +106,7 @@ export type FundSendMeta = MetaConstructor<
 export type WithdrawLiqMeta = MetaConstructor<
   "acc_withdraw_liq",
   {
-    target_chain: string;
-    target_wallet: string;
-    proposal_chain_id: string;
+    beneficiary: string;
   }
 >;
 

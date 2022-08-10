@@ -3,6 +3,7 @@ import Decimal from "decimal.js";
 import { FormProvider, useForm } from "react-hook-form";
 import { Amount, Props, WithdrawValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -28,7 +29,7 @@ export default function Withdrawer({ balance: { cw20, native } }: Props) {
     reValidateMode: "onChange",
     defaultValues: {
       beneficiary: wallet?.address || "",
-      network: "juno",
+      network: chainIds.juno,
       //transform to form format
       amounts: [...natives, ...cw20s],
     },

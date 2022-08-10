@@ -1,3 +1,4 @@
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import transactionSlice, {
   setStage,
@@ -8,19 +9,34 @@ import { APIs } from "constants/urls";
 export const logWithdrawProposal = createAsyncThunk(
   `${transactionSlice.name}/logWithdrawProposal`,
   async (
-    payload: {
-      proposal_id: number;
-      proposal_chain_id: string;
+    {
+      rawLog,
+      ...payload
+    }: {
+      rawLog?: string;
       endowment_multisig: string;
+      proposal_chain_id: string;
+      target_chain: string;
+      target_wallet: string;
     },
     { dispatch }
   ) => {
     try {
+      //set to helper
+      const logs = parseRawLog(rawLog);
+      const proposal_id = logs[0]?.events
+        .find((event) => {
+          return event.type === "wasm";
+        })
+        ?.attributes.find((attribute) => {
+          return attribute.key === "proposal_id";
+        })?.value as string;
+
       const generatedToken = createAuthToken("angelprotocol-web-app");
       const response = await fetch(APIs.apes + "/withdraw", {
         method: "POST",
         headers: { authorization: generatedToken },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, proposal_id }),
       });
 
       //success = 2xx
@@ -31,7 +47,7 @@ export const logWithdrawProposal = createAsyncThunk(
       dispatch(
         setStage({
           step: "error",
-          message: `Failed to log withdraw proposal. Kindly reject transaction and contact support@angelprotocol.io`,
+          message: `Failed to log withdraw proposal. Contact support@angelprotocol.io`,
         })
       );
     }
