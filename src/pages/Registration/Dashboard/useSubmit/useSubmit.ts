@@ -8,6 +8,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Registrar from "contracts/Registrar";
+import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
@@ -43,7 +44,7 @@ export default function useSubmit() {
           })
         );
       } catch (err) {
-        console.log(processEstimateError(err));
+        logger.error(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
         dispatch(setFormLoading(false));
       } finally {

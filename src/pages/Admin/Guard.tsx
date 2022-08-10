@@ -8,7 +8,7 @@ import Icon from "components/Icon";
 import Loader from "components/Loader";
 
 export function Guard(props: PropsWithChildren<{}>) {
-  const { wallet, isWalletLoading } = useGetWallet();
+  const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const { address } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(

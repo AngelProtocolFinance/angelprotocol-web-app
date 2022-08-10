@@ -14,7 +14,7 @@ export default function MobileDappNav() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     { user: wallet?.address!, endowment: AP_ADDR },
-    { skip: !wallet || wallet.chainId !== chainIds.juno }
+    { skip: !wallet || wallet.chain.chain_id !== chainIds.juno }
   );
 
   return (

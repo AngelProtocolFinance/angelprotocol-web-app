@@ -8,12 +8,12 @@ import { CharityApplication } from "types/server/aws";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";
-import Applications from "..";
+import Applications from "../Applications";
 
 const testnet: NetworkInfo = {
-  name: "",
-  chainID: "",
-  lcd: "",
+  name: "testnet",
+  chainID: "pisco-1",
+  lcd: "https://pisco-lcd.terra.dev",
   walletconnectID: 0,
 };
 

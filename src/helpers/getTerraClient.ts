@@ -1,9 +1,5 @@
 import { Coin, LCDClient } from "@terra-money/terra.js";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import { WalletDisconnectError, WrongNetworkError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
 import { denoms } from "constants/currency";
-import { LCDs } from "constants/urls";
 
 const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate
 
@@ -14,17 +10,10 @@ const GAS_PRICES = [
   new Coin(denoms.uluna, 5.665),
 ];
 
-export default function getTerraClient(wallet: WalletState | undefined) {
-  if (!wallet) {
-    throw new WalletDisconnectError();
-  }
-  if (wallet.chainId !== chainIds.terra) {
-    throw new WrongNetworkError("Terra", chainIds.terra);
-  }
-
+export default function getTerraClient(chainID: string, lcd_url: string) {
   return new LCDClient({
-    chainID: wallet.chainId,
-    URL: LCDs.terra,
+    chainID,
+    URL: lcd_url,
     gasAdjustment: GAS_ADJUSTMENT, //use gas units 20% greater than estimate
     gasPrices: GAS_PRICES,
   });

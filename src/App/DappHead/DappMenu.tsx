@@ -9,7 +9,7 @@ export default function DappMenu() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     { user: wallet?.address!, endowment: AP_ADDR },
-    { skip: !wallet || wallet.chainId !== chainIds.juno }
+    { skip: !wallet || wallet.chain.chain_id !== chainIds.juno }
   );
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">

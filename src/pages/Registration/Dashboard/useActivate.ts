@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useActivateCharityMutation } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { FORM_ERROR } from "../constants";
-import useHandleError from "../useHandleError";
 
 export default function useActivate() {
   const [activateCharity, { isLoading }] = useActivateCharityMutation();
-  const handleError = useHandleError();
+  const { handleError } = useErrorContext();
 
   const activate = useCallback(
     async (primaryKey?: string) => {

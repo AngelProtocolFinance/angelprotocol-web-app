@@ -5,7 +5,7 @@ import ConnectOptions from "./ConnectOptions";
 import WalletOpener from "./ConnectedWallet/WalletOpener";
 
 export default function WalletSuite() {
-  const { wallet, isProviderLoading } = useGetWallet();
+  const { wallet, isLoading } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {
@@ -20,17 +20,15 @@ export default function WalletSuite() {
   }, [wallet]);
 
   return (
-    <div
-      className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
-    >
+    <div className="relative border border-white/40 hover:bg-white/10 rounded-md">
       {!wallet && (
         <button
           className="flex py-2 px-3 items-center text-white  "
-          disabled={isProviderLoading}
+          disabled={isLoading}
           onClick={toggleConnectOptions}
         >
           <Icon type="Wallet" className="text-white text-xl mr-2" />
-          <span>{isProviderLoading ? "Loading" : "Connect"}</span>
+          <span>{isLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
       {wallet && <WalletOpener />}

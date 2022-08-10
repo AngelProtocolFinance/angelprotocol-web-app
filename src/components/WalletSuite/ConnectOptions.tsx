@@ -14,10 +14,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
   const { connections } = useSetWallet();
   return (
     <>
-      <Backdrop
-        customCloseHandler={props.closeHandler}
-        classes="z-10 fixed inset-0"
-      />
+      <Backdrop onClick={props.closeHandler} classes="z-10 fixed inset-0" />
       <div
         id="connect-options"
         className="w-max absolute top-full right-0 flex flex-col gap-3 bg-white p-4 pt-4 mt-2 rounded-md shadow-2xl z-50"

@@ -1,8 +1,23 @@
-import { PropsWithChildren, createContext, useContext, useMemo } from "react";
-import { Connection, ProviderId, ProviderStatuses } from "./types";
-import { WithBalance } from "services/types";
-import { useBalancesQuery } from "services/apes/tokens/tokens";
-import { placeHolderDisplayToken } from "./constants";
+import {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
+import {
+  Connection,
+  ProviderId,
+  ProviderInfo,
+  ProviderStatuses,
+} from "./types";
+import { Chain, Token } from "types/server/aws";
+import { useChainQuery } from "services/apes/chains";
+import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { useErrorContext } from "../ErrorContext";
+import { placeholderChain } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -10,17 +25,16 @@ import useXdefi from "./useXdefi";
 
 export type WalletState = {
   walletIcon: string;
-  displayCoin: WithBalance;
-  coins: WithBalance[];
+  displayCoin: Token;
+  coins: Token[];
   address: string;
-  chainId: string;
+  chain: Chain;
   providerId: ProviderId;
 };
 
 type State = {
   wallet?: WalletState;
-  isWalletLoading: boolean;
-  isProviderLoading: boolean;
+  isLoading: boolean;
 };
 
 type Setters = {
@@ -30,8 +44,7 @@ type Setters = {
 
 const initialState: State = {
   wallet: undefined,
-  isWalletLoading: true,
-  isProviderLoading: true,
+  isLoading: true,
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
@@ -88,38 +101,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       isLoading: isKeplrLoading,
     },
   ];
-
-  const isProviderLoading = providerStatuses.reduce(
-    (status, curr) => status || curr.isLoading,
-    false
-  );
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
-  const { data: coinWithBalances = [], isLoading } = useBalancesQuery(
-    { providerInfo: activeProviderInfo! },
-    { skip: !activeProviderInfo }
-  );
-
-  const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address, chainId } = activeProviderInfo;
-      return {
-        walletIcon: logo,
-        displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
-        coins:
-          coinWithBalances.length <= 0
-            ? [placeHolderDisplayToken[providerId]]
-            : coinWithBalances,
-        address,
-        chainId,
-        providerId,
-      };
-    }
-  }, [activeProviderInfo, coinWithBalances]);
-
-  const disconnect = () => {
+  const disconnect = useCallback(() => {
     switch (activeProviderInfo?.providerId) {
       case "metamask":
         disconnectMetamask();
@@ -141,16 +127,51 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         disconnectTerra();
         break;
       default:
-        throw new Error("no wallet is connected");
+        throw new WalletDisconnectedError();
     }
-  };
+  }, [
+    activeProviderInfo?.providerId,
+    disconnectMetamask,
+    disconnectBinanceWallet,
+    disconnectEVMxdefi,
+    disconnectKeplr,
+    disconnectTerra,
+  ]);
+
+  const {
+    data: chain = placeholderChain,
+    isLoading: isChainLoading,
+    isFetching,
+    error,
+  } = useChainQuery(
+    { providerInfo: activeProviderInfo! },
+    { skip: !activeProviderInfo }
+  );
+
+  useVerifyChain(activeProviderInfo, chain, error, disconnect);
+
+  const walletState: WalletState | undefined = useMemo(() => {
+    if (activeProviderInfo) {
+      const { logo, providerId, address } = activeProviderInfo;
+      return {
+        walletIcon: logo,
+        displayCoin: chain.native_currency,
+        coins: [chain.native_currency, ...chain.tokens],
+        address,
+        chain,
+        providerId,
+      };
+    }
+  }, [activeProviderInfo, chain]);
 
   return (
     <getContext.Provider
       value={{
         wallet: walletState,
-        isWalletLoading: isLoading,
-        isProviderLoading,
+        isLoading:
+          providerStatuses.some((x) => x.isLoading) ||
+          isFetching ||
+          isChainLoading,
       }}
     >
       <setContext.Provider
@@ -169,6 +190,44 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       </setContext.Provider>
     </getContext.Provider>
   );
+}
+
+function useVerifyChain(
+  activeProviderInfo: ProviderInfo | undefined,
+  chain: Chain,
+  chainError: any,
+  disconnect: () => void
+) {
+  const { handleError } = useErrorContext();
+
+  const handle = useCallback(
+    (error: any) => {
+      handleError(error);
+      try {
+        disconnect();
+      } catch (err) {
+        // when wallet is disconnected, the `disconnect` func is recreated,
+        // causing this hook to rerun and throwing the error below.
+        // We ignore this error and rethrow others
+        if (!(err instanceof WalletDisconnectedError)) {
+          throw err;
+        }
+      }
+    },
+    [handleError, disconnect]
+  );
+
+  useEffect(() => {
+    // no active provider === no connected wallet so no need to run hook
+    if (!activeProviderInfo) {
+      return;
+    }
+    if (chainError) {
+      handle(chainError);
+    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
+      handle(new WrongNetworkError());
+    }
+  }, [activeProviderInfo, chain, chainError, handle]);
 }
 
 const getContext = createContext<State>(initialState);

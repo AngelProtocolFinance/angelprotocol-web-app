@@ -1,30 +1,24 @@
 import { useRef } from "react";
-import { useModalContext } from "contexts/ModalContext";
 import useAttachKeyPressHandler from "hooks/useAttachKeypressHandler";
 import useFocusHandler from "./useFocusHandler";
 
-export default function Backdrop(props: {
+type Props = {
   classes: string;
-  customCloseHandler?: () => void;
-}) {
-  const { closeModal } = useModalContext();
+  onClick: () => void;
+};
+
+export default function Backdrop(props: Props) {
+  const { classes, onClick } = props;
+
   const backdropRef = useRef<HTMLDivElement | null>(null);
   useFocusHandler(backdropRef);
-  useAttachKeyPressHandler("Escape", handleBackdropDismiss);
-
-  function handleBackdropDismiss() {
-    if (props.customCloseHandler) {
-      props.customCloseHandler();
-    } else {
-      closeModal();
-    }
-  }
+  useAttachKeyPressHandler("Escape", onClick);
 
   return (
     <div
       role="alertdialog"
-      onClick={handleBackdropDismiss}
-      className={props.classes}
+      onClick={onClick}
+      className={classes}
       ref={backdropRef}
     />
   );
