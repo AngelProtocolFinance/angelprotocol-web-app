@@ -36,7 +36,7 @@ export const logWithdrawProposal = createAsyncThunk(
       const response = await fetch(APIs.apes + "/withdraw", {
         method: "POST",
         headers: { authorization: generatedToken },
-        body: JSON.stringify({ ...payload, proposal_id }),
+        body: JSON.stringify({ ...payload, proposal_id: +proposal_id }),
       });
 
       //success = 2xx

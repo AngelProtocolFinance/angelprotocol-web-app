@@ -4,12 +4,12 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { LCDs } from "constants/urls";
+import { junoLcdUrl } from "constants/urls";
 import { junoTags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
-    return fetchBaseQuery({ baseUrl: LCDs.juno })(args, api, extraOptions);
+    return fetchBaseQuery({ baseUrl: junoLcdUrl })(args, api, extraOptions);
   },
   { maxRetries: 1 }
 );

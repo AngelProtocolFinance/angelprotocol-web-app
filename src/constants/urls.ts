@@ -1,34 +1,5 @@
-import { Chains } from "types/lists";
 import { IconTypes } from "components/Icon";
 import { IS_TEST } from "./env";
-
-export const LCDs: { [key in Chains]: string } = IS_TEST
-  ? {
-      terra: "https://pisco-lcd.terra.dev",
-      juno: "https://lcd.uni.juno.deuslabs.fi",
-      binance: "",
-      ethereum: "",
-    }
-  : {
-      terra: "https://phoenix-lcd.terra.dev",
-      juno: "https://lcd-juno.itastakers.com",
-      binance: "",
-      ethereum: "",
-    };
-
-export const RPCs: { [key in Chains]: string } = IS_TEST
-  ? {
-      terra: "",
-      juno: "https://rpc.uni.juno.deuslabs.fi",
-      binance: "",
-      ethereum: "",
-    }
-  : {
-      terra: "",
-      juno: "https://rpc-juno.itastakers.com",
-      binance: "",
-      ethereum: "",
-    };
 
 export const APIs = {
   aws: "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com",
