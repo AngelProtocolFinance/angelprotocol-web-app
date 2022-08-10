@@ -7,6 +7,7 @@ import { CW20 } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { logWithdrawProposal } from "pages/Admin/charity/Withdrawer/logWithdrawProposal";
 import { invalidateJunoTags } from "services/juno";
+import { adminTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -28,8 +29,6 @@ export default function useWithdraw() {
   const dispatch = useSetter();
 
   function withdraw(data: WithdrawValues) {
-    //TODO: handle ETH/BNB,
-
     //filter + map
     const [cw20s, natives] = data.amounts.reduce(
       (result, amount) => {
@@ -83,7 +82,8 @@ export default function useWithdraw() {
         msgs: [proposal],
         tagPayloads: [
           invalidateJunoTags([
-            /**TODO: invalidate balance query */
+            //no need to invalidate balance, since this is just proposal
+            { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
         successLink: proposalLink,

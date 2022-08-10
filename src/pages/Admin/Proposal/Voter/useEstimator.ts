@@ -22,7 +22,6 @@ export default function useEstimator() {
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
 
-  //TODO: check also if voter already voted
   useEffect(() => {
     (async () => {
       try {

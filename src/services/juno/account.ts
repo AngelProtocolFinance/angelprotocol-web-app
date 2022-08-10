@@ -14,7 +14,7 @@ export const account_api = junoApi.injectEndpoints({
       },
     }),
     balance: builder.query<BalanceInfo, ContractQueryArgs>({
-      providesTags: [{ type: junoTags.endowment, id: endowmentTags.profile }],
+      providesTags: [{ type: junoTags.endowment, id: endowmentTags.balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<BalanceInfo>) => {
         return res.data;
