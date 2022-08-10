@@ -66,8 +66,6 @@ export default function useEstimator() {
           return;
         }
 
-        console.log(wallet);
-
         dispatch(setFormLoading(true));
 
         // juno transaction, send or contract interaction
