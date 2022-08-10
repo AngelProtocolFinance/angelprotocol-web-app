@@ -3,10 +3,10 @@ import ConnectedWallet from "./ConnectedWallet";
 import WalletSelector from "./WalletSelector";
 
 export default function WalletSuite() {
-  const { wallet, isProviderLoading } = useGetWallet();
-
-  if (isProviderLoading || !wallet) {
-    return <WalletSelector isLoading={isProviderLoading} />;
+  const { wallet, isLoading } = useGetWallet();
+  //TODO: balance fetching and connecting must be separate
+  if (isLoading || !wallet) {
+    return <WalletSelector isLoading={isLoading} />;
   }
 
   return <ConnectedWallet {...wallet} />;

@@ -19,16 +19,18 @@ export default function Connector(props: SingleConnection) {
 
   return (
     <Menu.Item
-      className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
+      className="group p-2 flex items-center gap-2 w-full items-center last:border-none border-b border-zinc-900/10"
       onClick={handleConnect}
       as="button"
     >
       <img
         src={props.logo}
-        className="w-8 h-8 object-contain p-1.5 bg-white-grey rounded-full shadow-md"
+        className="w-8 h-8 object-contain p-1.5 bg-white-grey"
         alt=""
       />
-      <p className="uppercase text-sm text-white">{props.name}</p>
+      <p className="uppercase text-sm text-angel-grey group-hover:text-sky-500 group-active:text-amber-500">
+        {props.name}
+      </p>
     </Menu.Item>
   );
 }

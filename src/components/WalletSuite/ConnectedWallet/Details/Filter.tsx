@@ -1,12 +1,12 @@
 import { Switch } from "@headlessui/react";
 import { ReactElement, useMemo, useState } from "react";
-import { WithBalance } from "services/types";
+import { Token } from "types/server/aws";
 
 const criterionAmount = 0.001;
 
 export default function Filter(props: {
-  coins: WithBalance[];
-  children(filtered: WithBalance[]): ReactElement;
+  coins: Token[];
+  children(filtered: Token[]): ReactElement;
 }) {
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
   const filteredCoins = useMemo(
@@ -25,21 +25,26 @@ export default function Filter(props: {
   }
 
   return (
-    <div>
-      <Switch
-        checked={isSmallAmountsShown}
-        onChange={setIsSmallAmountShown}
-        className={`${
-          isSmallAmountsShown ? "bg-blue-600" : "bg-gray-200"
-        } relative inline-flex h-6 w-11 items-center rounded-full`}
-      >
-        <span className="sr-only">Enable notifications</span>
-        <span
+    <div className="px-3">
+      <div className="flex items-center gap-1">
+        <span className="font-mono text-sm text-zinc-600">
+          {"<" + criterionAmount}
+        </span>
+        <Switch
+          checked={isSmallAmountsShown}
+          onChange={setIsSmallAmountShown}
           className={`${
-            isSmallAmountsShown ? "translate-x-6" : "translate-x-1"
-          } inline-block h-4 w-4 transform rounded-full bg-white`}
-        />
-      </Switch>
+            isSmallAmountsShown ? "bg-sky-500" : "bg-zinc-300"
+          } relative flex h-4 w-9 items-center rounded-full`}
+        >
+          <span
+            className={`${
+              isSmallAmountsShown ? "translate-x-5" : "translate-x-1"
+            } inline-block h-3 w-3 transform rounded-full bg-white`}
+          />
+        </Switch>
+      </div>
+
       {props.children(filteredCoins)}
     </div>
   );

@@ -5,22 +5,21 @@ import {
 } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import maskAddress from "helpers/maskAddress";
-import toCurrency from "helpers/toCurrency";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
 export default function ConnectedWallet(props: WalletState) {
-  const { isWalletLoading } = useGetWallet();
+  const { isLoading } = useGetWallet();
   const maskedAddr = maskAddress(props.address);
 
-  const { walletIcon, displayCoin } = props;
+  const { walletIcon } = props;
   return (
     <Popover as="div" className="relative">
       <Popover.Button
-        disabled={isWalletLoading}
-        className="flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent"
+        disabled={isLoading}
+        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent"
       >
-        {(!isWalletLoading && (
+        {(!isLoading && (
           <img
             src={walletIcon}
             alt=""
@@ -28,9 +27,6 @@ export default function ConnectedWallet(props: WalletState) {
           />
         )) || <Icon type="Loading" className="animate-spin mr-1" />}
         <span className="pr-2 text-sm hidden sm:block">{maskedAddr}</span>
-        <span className="pl-2 text-sm text-sm sm:border-l">
-          {displayCoin.symbol} {toCurrency(displayCoin.balance, 3, true)}
-        </span>
       </Popover.Button>
       <Details {...props} />
     </Popover>
