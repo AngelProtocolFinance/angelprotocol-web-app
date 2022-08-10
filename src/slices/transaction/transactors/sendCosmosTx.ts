@@ -5,9 +5,8 @@ import {
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
-import { WalletDisconnectError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
+import handleTxError from "helpers/handleTxError";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendCosmosTx = createAsyncThunk(
@@ -19,7 +18,7 @@ export const sendCosmosTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
       updateStage({ step: "submit", message: "Submitting transaction..." });
       const contract = new Contract(args.wallet);
@@ -28,9 +27,9 @@ export const sendCosmosTx = createAsyncThunk(
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
-        const { fee, feeNum } = await contract.estimateFee(args.msgs);
+        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
 
-        if (feeNum > args.wallet.displayCoin.balance) {
+        if (feeAmount > args.wallet.displayCoin.balance) {
           updateStage({
             step: "error",
             message: `Not enough balance to pay for fees`,
@@ -48,7 +47,7 @@ export const sendCosmosTx = createAsyncThunk(
           message: args.successMessage || "Transaction succesful!",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: chainIds.juno,
+          chain: args.wallet.chain,
           successLink: args.successLink,
         });
 
@@ -61,12 +60,11 @@ export const sendCosmosTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: chainIds.juno,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {
-      console.log(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

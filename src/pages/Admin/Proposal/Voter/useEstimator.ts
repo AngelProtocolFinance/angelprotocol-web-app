@@ -36,15 +36,15 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
         const contract = new CW3(wallet, cw3);
         const voteMsg = contract.createVoteMsg(proposalId, debounced_vote);
-        const { fee, feeNum } = await contract.estimateFee([voteMsg]);
+        const { fee, feeAmount } = await contract.estimateFee([voteMsg]);
 
         //check if user has enough balance to pay for fees
-        if (feeNum >= wallet.displayCoin.balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeAmount >= wallet.displayCoin.balance) {
+          dispatch(setFormError("Not balance to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

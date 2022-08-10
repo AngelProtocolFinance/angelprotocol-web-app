@@ -16,7 +16,7 @@ export default function ImgEditor() {
 
   return (
     <div
-      className={`grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
+      className="grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey"
       style={{
         background: `no-repeat center/cover url(${currentImage})`,
       }}

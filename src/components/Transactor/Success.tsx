@@ -11,7 +11,7 @@ export default function Success(props: SuccessStage) {
   const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chainId, txHash, message, isShareEnabled, successLink } = props;
+  const { chain, txHash, message, isShareEnabled, successLink } = props;
 
   console.log(successLink);
 
@@ -38,9 +38,9 @@ export default function Success(props: SuccessStage) {
       <Icon type="CheckCircle" className="text-blue-accent text-3xl mb-1" />
       <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
 
-      {chainId && txHash && (
+      {chain && txHash && (
         <a
-          href={getTxUrl(chainId, txHash)}
+          href={getTxUrl(chain, txHash)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

@@ -5,10 +5,9 @@ import { invalidateJunoTags } from "services/juno";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type JunoDonateArgs = {
@@ -25,7 +24,7 @@ export const sendCosmosDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) throw new WalletDisconnectedError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const contract = new Contract(args.wallet);
@@ -47,7 +46,7 @@ export const sendCosmosDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.transactionHash,
             transactionDate: new Date().toISOString(),
-            chainId: chainIds.juno,
+            chainId: args.wallet.chain.chain_id,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -60,7 +59,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chainId: chainIds.juno,
+          chain: args.wallet.chain,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -76,12 +75,11 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: chainIds.juno,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {
-      console.error(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

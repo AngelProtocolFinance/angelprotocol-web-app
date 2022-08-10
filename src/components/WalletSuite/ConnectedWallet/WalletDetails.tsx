@@ -16,7 +16,7 @@ export default function WalletDetails(props: {
   wallet: WalletState;
   closeHandler: () => void;
 }) {
-  const { coins, displayCoin, address } = props.wallet;
+  const { coins, address } = props.wallet;
   const { disconnect } = useSetWallet();
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
 
@@ -32,10 +32,7 @@ export default function WalletDetails(props: {
 
   return (
     <>
-      <Backdrop
-        classes="z-10 fixed inset-0"
-        customCloseHandler={props.closeHandler}
-      />
+      <Backdrop classes="z-10 fixed inset-0" onClick={props.closeHandler} />
       <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
         <div className="bg-angel-grey flex justify-end">
           <button className="text-white p-1" onClick={props.closeHandler}>
@@ -43,7 +40,7 @@ export default function WalletDetails(props: {
           </button>
         </div>
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
-          <p className="uppercase">network : {displayCoin.chain_name}</p>
+          <p className="uppercase">network : {props.wallet.chain.chain_name}</p>
         </div>
         {!isEmpty && (
           <Filter

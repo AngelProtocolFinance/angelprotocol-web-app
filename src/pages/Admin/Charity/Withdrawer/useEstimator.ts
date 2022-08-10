@@ -154,20 +154,22 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           JSON.stringify(proposalMeta)
         );
 
-        const { fee, feeNum } = await adminContract.estimateFee([proposalMsg]);
+        const { fee, feeAmount } = await adminContract.estimateFee([
+          proposalMsg,
+        ]);
 
         //get usd total of of sources
 
-        if (feeNum > usdTotal) {
+        if (feeAmount > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeNum;
+        const receiveAmount = usdTotal - feeAmount;
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

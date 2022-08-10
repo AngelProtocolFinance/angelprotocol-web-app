@@ -40,7 +40,7 @@ export default function ModalContext(
 
   const Content = !!Modal && (
     <>
-      <Backdrop classes={props.backdropClasses} />
+      <Backdrop classes={props.backdropClasses} onClick={closeModal} />
       {Modal}
     </>
   );

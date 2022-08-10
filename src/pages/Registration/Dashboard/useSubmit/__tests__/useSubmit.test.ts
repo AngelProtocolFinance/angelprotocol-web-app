@@ -3,16 +3,16 @@ import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
 import useSubmit from "../useSubmit";
 
 const WALLET: WalletState = {
   walletIcon: "",
-  displayCoin: placeHolderDisplayToken["keplr"],
-  coins: [placeHolderDisplayToken["keplr"]],
+  displayCoin: placeholderChain.native_currency,
+  coins: placeholderChain.tokens,
   address: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
-  chainId: "",
+  chain: placeholderChain,
   providerId: "keplr",
 };
 

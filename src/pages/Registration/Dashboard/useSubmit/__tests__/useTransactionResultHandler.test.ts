@@ -14,11 +14,10 @@ jest.mock("services/aws/registration", () => ({
   useRegistrationState: (..._: any[]) => mockRegistrationQuery(_),
 }));
 
-const mockShowModal = jest.fn();
-
-jest.mock("contexts/ModalContext", () => ({
+const mockHandleError = jest.fn();
+jest.mock("contexts/ErrorContext", () => ({
   __esModule: true,
-  useModalContext: () => ({ showModal: mockShowModal }),
+  useErrorContext: () => ({ handleError: mockHandleError }),
 }));
 
 const mockDispatch = jest.fn();
@@ -45,7 +44,7 @@ describe("useTransactionResultHandler tests", () => {
       renderHook(() => useTransactionResultHandler());
       expect(mockSubmit).not.toHaveBeenCalled();
       expect(mockDispatch).not.toHaveBeenCalled();
-      expect(mockShowModal).not.toHaveBeenCalled();
+      expect(mockHandleError).not.toHaveBeenCalled();
     }
     runTest("form");
     runTest("broadcast");
@@ -64,7 +63,7 @@ describe("useTransactionResultHandler tests", () => {
     mockUseSubmitMutation.mockReturnValue([mockSubmit]);
     renderHook(() => useTransactionResultHandler());
     expect(mockSubmit).not.toHaveBeenCalled();
-    expect(mockShowModal).not.toHaveBeenCalled();
+    expect(mockHandleError).not.toHaveBeenCalled();
     expect(mockDispatch).toHaveBeenCalled();
   });
   it("handles success step with error", async () => {
@@ -84,7 +83,7 @@ describe("useTransactionResultHandler tests", () => {
     await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
     // if 'showModal' call is not await like this, jest tries to somehow
     // assert this before 'mockSubmit' has been called
-    await waitFor(() => expect(mockShowModal).toHaveBeenCalled());
+    await waitFor(() => expect(mockHandleError).toHaveBeenCalled());
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "transaction/setFormLoading",
       payload: false,

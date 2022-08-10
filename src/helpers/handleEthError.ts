@@ -1,7 +1,10 @@
 import { errors } from "ethers";
 import { StageUpdater } from "slices/transaction/types";
+import logger from "./logger";
 
 export default function handleEthError(error: any, handler: StageUpdater) {
+  logger.error(error);
+
   switch (error?.code) {
     //https://eips.ethereum.org/EIPS/eip-1193#provider-errors
     case 4001:
@@ -31,5 +34,4 @@ export default function handleEthError(error: any, handler: StageUpdater) {
         message: "Unknown error occured.",
       });
   }
-  return;
 }

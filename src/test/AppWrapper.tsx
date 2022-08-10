@@ -8,9 +8,9 @@ import { MemoryRouter } from "react-router-dom";
 import { store } from "store/store";
 
 const testnet: NetworkInfo = {
-  name: "",
-  chainID: "",
-  lcd: "",
+  name: "bombay",
+  chainID: "pisco-1",
+  lcd: "https://pisco-lcd.terra.dev",
   walletconnectID: 0,
 };
 

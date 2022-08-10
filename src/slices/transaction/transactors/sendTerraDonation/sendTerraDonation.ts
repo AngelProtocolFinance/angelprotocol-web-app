@@ -1,20 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
-import { KYCData, Receiver } from "types/server/aws";
+import { Chain, KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
-import handleWalletError from "helpers/handleWalletError";
+import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
-import { WalletDisconnectError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
+import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
-import postTerraTx from "./postTerraTx";
 
 type TerraDonateArgs = {
-  wallet: WalletState | undefined;
+  wallet: ConnectedWallet | undefined;
+  chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -27,10 +26,19 @@ export const sendTerraDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
-      if (!args.wallet) throw new WalletDisconnectError();
+      if (!args.wallet) {
+        throw new WalletDisconnectedError();
+      }
+
+      if (args.wallet.network.chainID !== args.chain.chain_id) {
+        throw new UnexpectedStateError(
+          `Connected to the Terra Station wallet on '${args.wallet.network.chainID}', but passed chain data on '${args.chain.chain_id}' network`
+        );
+      }
+
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const response = await postTerraTx(args.tx);
+      const response = await args.wallet.post(args.tx);
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
@@ -48,11 +56,11 @@ export const sendTerraDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId: chainIds.terra,
+            chainId: args.wallet.network.chainID,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
-            walletAddress: args.wallet.address,
+            walletAddress: args.wallet.walletAddress,
           });
         }
 
@@ -60,10 +68,15 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chainId: chainIds.terra,
+          chain: args.chain,
         });
 
-        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
+        const getTxInfo = pollTerraTxInfo(
+          args.wallet,
+          response.result.txhash,
+          7,
+          1000
+        );
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
@@ -71,7 +84,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chainId: chainIds.terra,
+            chain: args.chain,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -87,13 +100,12 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: chainIds.terra,
+            chainId: args.wallet.network.chainID,
           });
         }
       }
     } catch (err) {
-      console.error(err);
-      handleWalletError(err, updateStage);
+      handleTxError(err, updateStage);
     }
   }
 );

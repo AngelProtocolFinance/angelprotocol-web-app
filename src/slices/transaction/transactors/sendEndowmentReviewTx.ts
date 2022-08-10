@@ -8,9 +8,8 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/ap/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import handleWalletError from "helpers/handleWalletError";
-import { WalletDisconnectError } from "errors/errors";
-import { chainIds } from "constants/chainIds";
+import handleTxError from "helpers/handleTxError";
+import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {
@@ -26,7 +25,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        throw new WalletDisconnectError();
+        throw new WalletDisconnectedError();
       }
 
       updateState({ step: "submit", message: "Submitting transaction..." });
@@ -38,9 +37,9 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const { fee, feeNum } = await contract.estimateFee(args.msgs);
+        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
 
-        if (feeNum > args.wallet.displayCoin.balance) {
+        if (feeAmount > args.wallet.displayCoin.balance) {
           updateState({
             step: "error",
             message: `Not enough balance to pay for fees`,
@@ -56,7 +55,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.transactionHash,
-        chainId: chainIds.juno,
+        chain: args.wallet.chain,
       });
 
       if (isDeliverTxSuccess(response)) {
@@ -65,7 +64,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: response.transactionHash,
-            chainId: chainIds.juno,
+            chain: args.wallet.chain,
             successLink: args.successLink,
           });
 
@@ -81,7 +80,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.chainId,
+            chain_id: args.wallet.chain.chain_id,
             PK: args.applicationId,
           });
 
@@ -94,7 +93,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: response.transactionHash,
-            chainId: chainIds.juno,
+            chainId: args.wallet.chain.chain_id,
           });
         }
       } else {
@@ -102,11 +101,11 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: chainIds.juno,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {
-      handleWalletError(err, updateState);
+      handleTxError(err, updateState);
     }
   }
 );

@@ -123,7 +123,7 @@ function Proof(props: { label: string; link: string; verified: boolean }) {
         href={props.link}
         target="_blank"
         rel="noopener noreferrer"
-        className={`focus:outline-none flex justify-between items-center gap-3 p-3 text-angel-grey rounded-md bg-light-grey overflow-hidden`}
+        className="focus:outline-none flex justify-between items-center gap-3 p-3 text-angel-grey rounded-md bg-light-grey overflow-hidden"
       >
         <span className="w-3/4 truncate">{props.link}</span>
         {props.verified ? (
