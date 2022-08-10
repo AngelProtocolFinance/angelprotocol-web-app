@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DonateValues as DV } from "../types";
-import TokensSelector from "components/TokensSelector";
+import TokensSelector from "components/TokenSelector";
 import Balance from "./Balance";
 
 export default function Amount() {
