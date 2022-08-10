@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DonateValues as DV } from "../types";
-import TokenSelector from "components/TokenSelector";
+import TokensSelector from "components/TokensSelector";
 import Balance from "./Balance";
 
 export default function Amount() {
@@ -22,16 +22,17 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="flex items-center pr-1 justify-between gap-2 shadow-inner-white-grey rounded-md text-xl bg-light-grey/80 text-angel-grey">
+      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 shadow-inner-white-grey rounded-md text-xl bg-light-grey/80 text-angel-grey">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="0"
-          className="w-full p-3 bg-transparent focus:outline-none"
+          className="w-full p-3 bg-transparent focus:outline-none border-r border-zinc-600/20"
         />
-        <TokenSelector<DV> fieldName="token" classes="border-l-2 pl-2" />
+        {/* <TokenSelector<DV> fieldName="token" classes="border-l-2 pl-2" /> */}
+        <TokensSelector<DV> fieldName="token" />
       </div>
 
       <ErrorMessage
