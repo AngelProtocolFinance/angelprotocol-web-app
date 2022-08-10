@@ -25,7 +25,6 @@ import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
 import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
@@ -67,15 +66,21 @@ export default function useEstimator() {
           return;
         }
 
+        console.log(wallet);
+
         dispatch(setFormLoading(true));
 
         // juno transaction, send or contract interaction
         if (wallet.chain.type === "juno-native") {
-          if (selectedToken.type.includes("native")) {
+          if (
+            selectedToken.type === "juno-native" ||
+            selectedToken.type === "ibc"
+          ) {
             const contract = new Contract(wallet);
             const msg = contract.createTransferNativeMsg(
               debounced_amount,
-              ap_wallets.juno
+              ap_wallets.juno,
+              selectedToken.token_id
             );
             const { fee, feeAmount } = await contract.estimateFee([msg]);
             dispatch(setFee(feeAmount));
@@ -112,9 +117,12 @@ export default function useEstimator() {
             .mul(1e6)
             .divToInt(1)
             .toString();
-          if (selectedToken.type.includes("native")) {
+          if (
+            selectedToken.type === "terra-native" ||
+            selectedToken.type === "ibc"
+          ) {
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-              new Coin(denoms.uluna, amount),
+              new Coin(selectedToken.token_id, amount),
             ]);
             const { fee, feeAmount } = await estimateTerraFee(wallet, [msg]);
             dispatch(setFee(feeAmount));
@@ -166,7 +174,7 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          if (selectedToken.type.includes("native")) {
+          if (selectedToken.type === "evm-native") {
             const gasLimit = await signer.estimateGas(tx);
             const minFee = gasLimit.mul(gasPrice);
             const feeAmount = parseFloat(
