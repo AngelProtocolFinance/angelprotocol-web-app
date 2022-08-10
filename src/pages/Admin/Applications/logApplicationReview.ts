@@ -1,4 +1,4 @@
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { LogApplicationUpdateError } from "errors/errors";
 import { aws_endpoint } from "constants/urls";
 

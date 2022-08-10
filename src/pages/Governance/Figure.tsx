@@ -1,4 +1,4 @@
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 type Props = {
   title: string;

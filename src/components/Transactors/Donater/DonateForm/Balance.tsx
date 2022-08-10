@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();

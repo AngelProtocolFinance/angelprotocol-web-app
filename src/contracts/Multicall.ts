@@ -5,7 +5,7 @@ import {
 } from "services/types";
 import { Airdrops } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import toBase64 from "helpers/toBase64";
+import { toBase64 } from "helpers";
 import { contracts } from "constants/contracts";
 import Account from "./Account";
 import Airdrop from "./Airdrop";

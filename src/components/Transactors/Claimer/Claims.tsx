@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { condense, toCurrency } from "helpers";
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -18,7 +18,7 @@ export default function Claims() {
     [staker]
   );
 
-  const amount = toCurrency(total_claims.div(1e6).toNumber(), 2, true);
+  const amount = toCurrency(condense(total_claims), 2, true);
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
@@ -55,7 +55,6 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Decimal(props.amount).div(1e6).toNumber();
   return (
     <li className="flex justify-between">
       <p
@@ -63,7 +62,9 @@ function Claim(props: { time: string; amount: string }) {
           claimable ? "text-angel-blue" : "text-grey-accent"
         }`}
       >
-        <span className="mr-1">{toCurrency(amount, 2, true)}</span>
+        <span className="mr-1">
+          {toCurrency(condense(props.amount), 2, true)}
+        </span>
         <span className="text-xs font-semibold">HALO</span>
       </p>
       <p className="text-xs font-semibold">

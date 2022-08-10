@@ -14,8 +14,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import cleanObject from "helpers/cleanObject";
-import getPayloadDiff from "helpers/getPayloadDiff";
+import { cleanObject, getPayloadDiff } from "helpers";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 

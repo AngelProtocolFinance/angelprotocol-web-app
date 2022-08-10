@@ -2,8 +2,8 @@ import { useWallet } from "@terra-money/wallet-provider";
 import { MultiConnection, SingleConnection } from "./types";
 import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
-import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { providerIcons } from "./constants";
+import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import useInjectedProvider from "./useInjectedProvider";
 
 export default function useXdefi() {

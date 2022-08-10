@@ -1,5 +1,5 @@
 import { FundPreview } from "pages/Admin/types";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";
 import MemberItem from "./preview-components/MemberItem";

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Proposal } from "types/server/contracts";
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import { adminRoutes } from "constants/routes";
 import Status from "./Status";
 import VoteStat from "./VoteStat";

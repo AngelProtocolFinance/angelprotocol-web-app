@@ -4,7 +4,7 @@ import FundSender from "pages/Admin/Templates/FundSender/FundSender";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 import { proposalRoutes } from "pages/Admin/constants";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import ProfileEditor from "./Templates/ProfileEditor/ProfileEditor";
 
 export default function Proposer() {

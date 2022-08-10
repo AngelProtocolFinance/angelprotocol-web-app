@@ -15,7 +15,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import cleanObject from "helpers/cleanObject";
+import { cleanObject } from "helpers";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateStatus() {

@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   CW20Balance,
@@ -11,6 +10,7 @@ import {
   QueryRes,
 } from "types/server/contracts";
 import { govTags, junoTags } from "services/juno/tags";
+import { condenseToNum } from "helpers";
 import { junoApi } from "..";
 import contract_querier from "../contract_querier";
 
@@ -48,7 +48,7 @@ export const gov_api = junoApi.injectEndpoints({
       providesTags: [{ type: junoTags.gov, id: govTags.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW20Balance>) => {
-        return new Decimal(res.data.balance).div(1e6).toNumber();
+        return condenseToNum(res.data.balance);
       },
     }),
     haloInfo: builder.query<CW20Info, ContractQueryArgs>({

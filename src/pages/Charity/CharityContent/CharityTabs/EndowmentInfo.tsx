@@ -3,7 +3,7 @@ import { CharityParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
 import { useEndowmentBalance } from "services/juno/multicall/queriers";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {

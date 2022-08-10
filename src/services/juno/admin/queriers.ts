@@ -9,7 +9,7 @@ import {
   Proposal,
   VotesPageOptions,
 } from "types/server/contracts";
-import idParamToNumber from "helpers/idParamToNum";
+import { idParamToNumber } from "helpers";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import useAdminContract from "./useAdminContract";

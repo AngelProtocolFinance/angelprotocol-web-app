@@ -12,7 +12,7 @@ import {
   setFormLoading,
   setStage,
 } from "slices/transaction/transactionSlice";
-import logger from "helpers/logger";
+import { logger } from "helpers";
 import { FORM_ERROR } from "../../constants";
 
 export default function useTransactionResultHandler() {

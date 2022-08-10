@@ -1,5 +1,5 @@
 import { NavLink, Route, Routes } from "react-router-dom";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
 import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";

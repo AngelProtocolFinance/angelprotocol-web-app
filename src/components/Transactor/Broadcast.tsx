@@ -1,6 +1,6 @@
 import { BroadcastStage } from "slices/transaction/types";
 import Loader from "components/Loader";
-import getTxUrl from "helpers/getTxUrl";
+import { getTxUrl } from "helpers";
 
 export default function Broadcast({ chain, message, txHash }: BroadcastStage) {
   return (

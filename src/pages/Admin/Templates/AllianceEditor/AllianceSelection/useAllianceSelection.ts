@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useGetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
-import sanitizeRegexSearchText from "helpers/sanitizeRegexSearchText";
 
 export default function useAllianceSelection() {
   const allianceCopy = useGetter(
@@ -39,4 +38,8 @@ export default function useAllianceSelection() {
     searchText,
     isDebouncing,
   };
+}
+
+function sanitizeRegexSearchText(text: string) {
+  return text.replace(/[#-.]|[[-^]|[?|{}]/g, "\\$&");
 }

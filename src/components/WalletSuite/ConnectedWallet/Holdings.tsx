@@ -1,5 +1,5 @@
 import { Token } from "types/server/aws";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 export default function Holdings(props: { coins: Token[] }) {
   return (

@@ -11,9 +11,12 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import getTokenBalance from "helpers/getTokenBalance";
-import logger from "helpers/logger";
-import processEstimateError from "helpers/processEstimateError";
+import {
+  condense,
+  getTokenBalance,
+  logger,
+  processEstimateError,
+} from "helpers";
 import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
@@ -49,12 +52,12 @@ export default function useEstimator() {
 
         if (is_stake) {
           //check $HALO balance
-          if (balance.div(1e6).lt(debounced_amount)) {
+          if (condense(balance).lt(debounced_amount)) {
             setError("amount", { message: "not enough HALO balance" });
             return;
           }
         } else {
-          if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
+          if (condense(balance.sub(locked)).lt(debounced_amount)) {
             setError("amount", {
               message: "not enough staked halo less locked",
             });

@@ -14,8 +14,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import getTokenBalance from "helpers/getTokenBalance";
-import processEstimateError from "helpers/processEstimateError";
+import { getTokenBalance, processEstimateError, scale } from "helpers";
 import { denoms } from "constants/currency";
 
 export default function useVoteEstimator() {
@@ -70,7 +69,7 @@ export default function useVoteEstimator() {
 
         //check if voter has enough staked and not yet used to vote for other polls
         const staked_amount = new Decimal(govStaker.balance);
-        const vote_amount = new Decimal(debounced_amount).mul(1e6);
+        const vote_amount = scale(debounced_amount);
 
         if (staked_amount.lt(vote_amount)) {
           setError("amount", { message: "not enough staked" });

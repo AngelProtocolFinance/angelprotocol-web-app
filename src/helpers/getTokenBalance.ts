@@ -1,6 +1,6 @@
 import { Token } from "types/server/aws";
 
-export default function getTokenBalance(
+export function getTokenBalance(
   tokenBalances: Token[],
   symbol: string
 ): number {

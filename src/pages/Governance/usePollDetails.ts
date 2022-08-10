@@ -9,7 +9,7 @@ import {
   useGovStaker,
 } from "services/juno/gov/queriers";
 import { useLatestBlock } from "services/juno/queriers";
-import toCurrency from "helpers/toCurrency";
+import { condenseToNum, toCurrency } from "helpers";
 
 type ProcessedPollData = {
   id: number;
@@ -77,10 +77,10 @@ export default function useDetails(poll_id: number): ProcessedPollData {
       ? 0
       : num_no.div(num_yes.add(num_no)).mul(100).toNumber();
 
-    const yes_halo = num_yes.div(1e6).toNumber();
-    const no_halo = num_no.div(1e6).toNumber();
+    const yes_halo = condenseToNum(num_yes);
+    const no_halo = condenseToNum(num_no);
 
-    const deposit_amount = new Decimal(poll.deposit_amount).div(1e6).toNumber();
+    const deposit_amount = condenseToNum(poll.deposit_amount);
 
     const processed = {
       id: poll.id,

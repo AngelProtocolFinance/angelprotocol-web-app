@@ -12,9 +12,12 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import getTokenBalance from "helpers/getTokenBalance";
-import processEstimateError from "helpers/processEstimateError";
-import toCurrency from "helpers/toCurrency";
+import {
+  condense,
+  getTokenBalance,
+  processEstimateError,
+  toCurrency,
+} from "helpers";
 import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
@@ -112,10 +115,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFee(feeAmount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
-        setValue(
-          "return_amount",
-          toCurrency(return_uamount.div(1e6).toNumber(), 3)
-        );
+        setValue("return_amount", toCurrency(condense(return_uamount), 3));
         setValue("ratio", spot_price.toNumber());
         setTx({ msgs: [swapMsg], fee });
         dispatch(setFormLoading(false));

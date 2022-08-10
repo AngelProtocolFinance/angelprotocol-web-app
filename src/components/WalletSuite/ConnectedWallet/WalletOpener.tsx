@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import maskAddress from "helpers/maskAddress";
-import toCurrency from "helpers/toCurrency";
+import { maskAddress, toCurrency } from "helpers";
 import Details from "./WalletDetails";
 
 //this component won't be rendered if wallet is not connected

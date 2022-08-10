@@ -11,7 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import getTokenBalance from "helpers/getTokenBalance";
+import { getTokenBalance } from "helpers";
 import { denoms } from "constants/currency";
 
 export default function useEstimator() {

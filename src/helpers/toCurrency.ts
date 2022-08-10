@@ -1,4 +1,4 @@
-export default function toCurrency(num = 0, precision = 2, truncate = false) {
+export function toCurrency(num = 0, precision = 2, truncate = false) {
   num = decimalAdjust(num, -precision);
   const [truncated, suffix] = truncate ? truncator(num) : [num, ""];
   //set local to undefined to use user's default format

@@ -20,9 +20,8 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
-import cleanObject from "helpers/cleanObject";
-import getPayloadDiff from "helpers/getPayloadDiff";
-import optimizeImage from "helpers/optimizeImage";
+import { cleanObject, getPayloadDiff } from "helpers";
+import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";

@@ -1,6 +1,6 @@
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import Summary from "./Summary";
 
 type Props = {

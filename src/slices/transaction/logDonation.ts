@@ -1,5 +1,5 @@
 import { TxLogPayload } from "types/server/aws";
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { apes_endpoint } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {

@@ -2,7 +2,7 @@ import { PollFilterOptions } from "../types";
 import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import Button from "../Button";
 import PollSelector from "./PollSelector";
 

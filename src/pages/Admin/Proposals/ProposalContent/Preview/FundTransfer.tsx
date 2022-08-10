@@ -1,5 +1,5 @@
 import { FundSendMeta } from "pages/Admin/types";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";

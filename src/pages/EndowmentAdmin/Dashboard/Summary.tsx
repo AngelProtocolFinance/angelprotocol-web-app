@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 type LockedSummary = {
   type: "locked";

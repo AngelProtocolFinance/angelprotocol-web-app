@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxLogPayload } from "types/server/aws";
-import logDonation from "helpers/logDonation";
+import logDonation from "../logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 //top level wrapper for delegated donation logs not in flow with chain tx

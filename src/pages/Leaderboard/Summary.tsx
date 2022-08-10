@@ -1,5 +1,5 @@
 import { useModalContext } from "contexts/ModalContext";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {

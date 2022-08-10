@@ -1,5 +1,5 @@
 import { EndowmentWithdrawMeta } from "pages/Admin/types";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 

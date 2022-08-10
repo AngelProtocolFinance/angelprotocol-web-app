@@ -6,7 +6,7 @@ import {
 import Backdrop from "components/Backdrop";
 import Copier from "components/Copier";
 import Icon from "components/Icon";
-import maskAddress from "helpers/maskAddress";
+import { maskAddress } from "helpers";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";

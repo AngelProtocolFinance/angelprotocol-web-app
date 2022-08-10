@@ -15,7 +15,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
-import getPayloadDiff from "helpers/getPayloadDiff";
+import { getPayloadDiff } from "helpers";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 

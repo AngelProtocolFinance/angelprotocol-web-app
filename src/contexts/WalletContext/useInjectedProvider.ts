@@ -6,12 +6,11 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
-import checkXdefiPriority from "helpers/checkXdefiPriority";
-import { getProvider } from "helpers/getProvider";
-import logger from "helpers/logger";
+import { getProvider, logger } from "helpers";
 import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
+import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(

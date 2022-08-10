@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 import { usePairSimul } from "services/juno/lp/queriers";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
+import { scale } from "helpers";
 
 export default function useGov() {
   const [staked, setStaked] = useState(0);
@@ -21,7 +22,7 @@ export default function useGov() {
       const _pct_staked = haloSupply.lte(0)
         ? 0
         : //convert back to utoken
-          haloBalance.mul(1e6).div(haloSupply).mul(100).toNumber();
+          scale(haloBalance).div(haloSupply).mul(100).toNumber();
 
       setStaked(_staked);
       setPercentStaked(_pct_staked);

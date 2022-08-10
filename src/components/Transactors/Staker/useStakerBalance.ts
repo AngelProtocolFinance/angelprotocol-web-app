@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import getTokenBalance from "helpers/getTokenBalance";
+import { getTokenBalance, scale } from "helpers";
 import { denoms } from "constants/currency";
 
 export default function useStakerBalance(is_stake: boolean) {
@@ -13,7 +13,7 @@ export default function useStakerBalance(is_stake: boolean) {
     const haloBalance = getTokenBalance(wallet?.coins || [], denoms.halo);
     const staked = new Decimal(gov_staker.balance);
     if (is_stake) {
-      return [new Decimal(haloBalance).mul(1e6), new Decimal(0)];
+      return [scale(haloBalance), new Decimal(0)];
     } else {
       //used in voting to a poll
       const vote_locked = gov_staker.locked_balance.reduce(
@@ -24,7 +24,7 @@ export default function useStakerBalance(is_stake: boolean) {
       );
       return [staked, vote_locked];
     }
-    // is_stake ? haloBalance : new Decimal(gov_staker.balance).div(1e6).toNumber();
+    // is_stake ? haloBalance : condenseToNum(gov_staker.balance)
   }, [gov_staker, wallet, is_stake]);
 
   return { balance, locked };

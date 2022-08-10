@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useMember } from "services/juno/admin/queriers";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
 export default function DappMenu() {

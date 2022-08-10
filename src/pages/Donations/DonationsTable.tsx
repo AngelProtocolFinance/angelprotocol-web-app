@@ -5,8 +5,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
-import getTxUrl from "helpers/getTxUrl";
-import toCurrency from "helpers/toCurrency";
+import { getTxUrl, toCurrency } from "helpers";
 import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {

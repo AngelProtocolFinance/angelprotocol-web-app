@@ -16,7 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import processEstimateError from "helpers/processEstimateError";
+import { processEstimateError, scale } from "helpers";
 
 interface Source {
   locked: string; //"0"
@@ -104,7 +104,8 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
           const { limit, addr, rate } = resources.vaultLimits[fieldId];
-          if (fieldInput.amount.mul(1e6).gt(limit)) {
+          const amount = scale(fieldInput.amount);
+          if (amount.gt(limit)) {
             setError(fieldId, { message: "not enough balance" });
           } else {
             clearErrors(fieldId);
@@ -112,11 +113,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
             sources.push({
               vault: addr,
               locked: "0",
-              liquid: fieldInput.amount
-                .mul(1e6)
-                .div(rate)
-                .divToInt(1)
-                .toString(),
+              liquid: amount.div(rate).divToInt(1).toString(),
             });
 
             sourcesPreview.push({

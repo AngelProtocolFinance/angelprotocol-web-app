@@ -7,13 +7,13 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
-import { LogDonationFail } from "helpers/logDonation";
-import logger from "helpers/logger";
+import { logger } from "helpers";
 import {
   LogApplicationUpdateError,
   TxResultFail,
   UnexpectedStateError,
 } from "errors/errors";
+import { LogDonationFail } from "./logDonation";
 
 export default function handleTxError(error: any, handler: StageUpdater) {
   logger.error(error);

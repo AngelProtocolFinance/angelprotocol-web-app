@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import getTokenBalance from "helpers/getTokenBalance";
-import toCurrency from "helpers/toCurrency";
+import { getTokenBalance, toCurrency } from "helpers";
 import { denoms } from "constants/currency";
 
 export default function Balance() {

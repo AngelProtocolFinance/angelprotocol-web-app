@@ -1,4 +1,7 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import {
+  MsgExecuteContractEncodeObject,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
@@ -10,12 +13,11 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import Decimal from "decimal.js";
 import { TxOptions } from "slices/transaction/types";
+import { Dwindow } from "types/ethereum";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import getKeplrClient from "helpers/getKeplrClient";
-import toBase64 from "helpers/toBase64";
+import { condenseToNum, scaleToStr, toBase64 } from "helpers";
 import {
   TxResultFail,
   WalletDisconnectedError,
@@ -120,7 +122,7 @@ export default class Contract {
         amount: [
           {
             denom,
-            amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+            amount: scaleToStr(amount),
           },
         ],
       },
@@ -154,9 +156,7 @@ function createFeeResult(
 }
 
 function extractFeeAmount(fee: StdFee, denom: string): number {
-  return new Decimal(fee.amount.find((a) => a.denom === denom)!.amount)
-    .div(1e6)
-    .toNumber();
+  return condenseToNum(fee.amount.find((a) => a.denom === denom)!.amount);
 }
 
 function validateTransactionSuccess(
@@ -174,4 +174,13 @@ function validateTransactionSuccess(
   }
 
   return result;
+}
+
+async function getKeplrClient(
+  chain_id: string,
+  rpc_url: string
+): Promise<SigningCosmWasmClient> {
+  const signer = (window as Dwindow).keplr!.getOfflineSigner(chain_id);
+  const client = await SigningCosmWasmClient.connectWithSigner(rpc_url, signer);
+  return client;
 }

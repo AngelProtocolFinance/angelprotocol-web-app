@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
-import toCurrency from "helpers/toCurrency";
+import { toCurrency } from "helpers";
 
 export default function Breakdown() {
   const { wallet } = useGetWallet();

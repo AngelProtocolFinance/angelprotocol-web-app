@@ -5,7 +5,7 @@ import countryList from "react-select-country-list";
 import { ReceipterValues } from "./types";
 import useReceiptForm from "components/Receipter/useRequestReceipt";
 import Selector from "components/Selector";
-import maskAddress from "helpers/maskAddress";
+import { maskAddress } from "helpers";
 import TextInput from "./TextInput";
 
 export default function ReceiptForm() {

@@ -1,15 +1,11 @@
 import { isDeliverTxSuccess } from "@cosmjs/stargate";
 import { parseRawLog } from "@cosmjs/stargate/build/logs";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  SendCosmosTxArgs,
-  StageUpdater,
-  TxOptions,
-} from "slices/transaction/types";
+import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectedError } from "errors/errors";
+import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {

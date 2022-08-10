@@ -12,7 +12,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Admin from "contracts/Admin";
 import IndexFund from "contracts/IndexFund";
-import cleanObject from "helpers/cleanObject";
+import { cleanObject } from "helpers";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
 

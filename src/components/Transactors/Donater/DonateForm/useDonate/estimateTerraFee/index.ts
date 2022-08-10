@@ -1,8 +1,8 @@
 import { Fee, Msg } from "@terra-money/terra.js";
-import Decimal from "decimal.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import getTerraClient from "helpers/getTerraClient";
+import { condenseToNum } from "helpers";
 import { denoms } from "constants/currency";
+import getTerraClient from "./getTerraClient";
 
 export default async function estimateTerraFee(
   wallet: WalletState,
@@ -29,5 +29,5 @@ async function getFee(wallet: WalletState, msgs: Msg[]) {
 function extractFeeAmount(fee: Fee): number {
   // needed to wrap with `Decimal` because the plain terra.js` operations
   // would usually floor the fee amount to 0.0 after `.div(1e6)`
-  return new Decimal(fee.amount.get(denoms.uluna)!.amount).div(1e6).toNumber();
+  return condenseToNum(fee.amount.get(denoms.uluna)!.amount);
 }

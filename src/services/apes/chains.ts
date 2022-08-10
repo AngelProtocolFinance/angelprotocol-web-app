@@ -4,7 +4,7 @@ import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, Token } from "types/server/aws";
 import contract_querier from "services/juno/contract_querier";
 import CW20 from "contracts/CW20";
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { UnsupportedNetworkError } from "errors/errors";
 import { apes_endpoint } from "constants/urls";
 import { apes } from "./apes";

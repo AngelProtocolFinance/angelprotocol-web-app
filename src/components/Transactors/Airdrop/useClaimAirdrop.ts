@@ -7,6 +7,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Airdrop from "contracts/Airdrop";
+import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();
@@ -15,8 +16,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) =>
-          new Decimal(airdrop.haloTokens).div(1e6).add(result),
+        (result, airdrop) => condense(airdrop.haloTokens).add(result),
         new Decimal(0)
       ),
     [airdrops]

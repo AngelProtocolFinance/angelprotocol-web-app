@@ -6,7 +6,7 @@ type Logger = {
   log: (...data: any[]) => void;
 };
 
-const logger: Logger = IS_TEST
+export const logger: Logger = IS_TEST
   ? {
       // using console.log for .error and .info funcs as console.error and
       // console.info are undefined while testing for some reason
@@ -19,5 +19,3 @@ const logger: Logger = IS_TEST
       info: (_) => {},
       log: (_) => {},
     };
-
-export default logger;
