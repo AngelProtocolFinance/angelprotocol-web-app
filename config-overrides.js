@@ -1,6 +1,4 @@
 const { ProvidePlugin } = require("webpack");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = function override(config, env) {
   config.resolve.fallback = {
@@ -14,11 +12,6 @@ module.exports = function override(config, env) {
     new ProvidePlugin({
       Buffer: ["buffer", "Buffer"],
       process: "process/browser",
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "disabled",
-      generateStatsFile: true,
-      statsOptions: { source: false },
     })
   );
 
