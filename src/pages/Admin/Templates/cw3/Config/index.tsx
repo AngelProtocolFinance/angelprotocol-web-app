@@ -22,8 +22,6 @@ export default function Config() {
   if (isError || !cw3Config)
     return <FormError errorMessage="failed to get contract config" />;
 
-  console.log(cw3Config);
-
   return <CW3ConfigContext {...cw3Config} />;
 }
 
