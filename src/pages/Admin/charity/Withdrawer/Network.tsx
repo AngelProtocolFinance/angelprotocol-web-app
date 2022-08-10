@@ -23,12 +23,12 @@ export default function Network() {
         <Option reg={register("network")} label="juno" value={chainIds.juno} />
         <Option
           reg={register("network")}
-          label="eth"
+          label="ethereum"
           value={chainIds.ethereum}
         />
         <Option
           reg={register("network")}
-          label="bnb"
+          label="binance"
           value={chainIds.binance}
         />
       </div>
