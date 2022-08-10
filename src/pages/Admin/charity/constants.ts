@@ -1,7 +1,14 @@
-import haloIcon from "assets/icons/currencies/halo_solid.png";
 import junoIcon from "assets/icons/currencies/juno.svg";
+import unknownTokenIcon from "assets/icons/currencies/token.svg";
 
-export const assets: { [index: string]: { name: string; icon: string } } = {
+//need to update this to expected result of `{balance:{}}` query
+//better include that data in said query
+const _assets: { [index: string]: { name: string; icon: string } } = {
   ujunox: { icon: junoIcon, name: "Juno" },
-  junoabc123: { icon: haloIcon, name: "Halo" },
 };
+
+export const assets = new Proxy(_assets, {
+  get(target, key: string) {
+    return target[key] ?? { icon: unknownTokenIcon, name: "Token" };
+  },
+});
