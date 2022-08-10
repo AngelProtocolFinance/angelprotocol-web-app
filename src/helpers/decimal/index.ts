@@ -9,11 +9,17 @@ export function condense(
   return new Dec(scaled).div(new Dec(10).pow(decimals));
 }
 
-export function condenseToNum(scaled: Dec.Value) {
-  return condense(scaled).toNumber();
+export function condenseToNum(
+  scaled: Dec.Value,
+  decimals: number = DEFAULT_DECIMAL
+) {
+  return condense(scaled, decimals).toNumber();
 }
-export function condenseToStr(scaled: Dec.Value) {
-  return condense(scaled).toString();
+export function condenseToStr(
+  scaled: Dec.Value,
+  decimals: number = DEFAULT_DECIMAL
+) {
+  return condense(scaled, decimals).toString();
 }
 
 export function scale(
@@ -23,8 +29,11 @@ export function scale(
   return new Dec(condensed).mul(new Dec(10).pow(decimals));
 }
 
-export function scaleToStr(condensed: Dec.Value) {
-  return scale(condensed).divToInt(1).toString();
+export function scaleToStr(
+  condensed: Dec.Value,
+  decimals: number = DEFAULT_DECIMAL
+) {
+  return scale(condensed, decimals).divToInt(1).toString();
 }
 
 export function toCurrency(num: Dec.Value, precision = 2, truncate = false) {
@@ -32,11 +41,16 @@ export function toCurrency(num: Dec.Value, precision = 2, truncate = false) {
   const [truncated, suffix] = truncate ? shorten(_num) : [_num, ""];
   //set local to undefined to use user's default format
   return (
-    roundDownToNum(truncated).toLocaleString(undefined, {
-      minimumFractionDigits: precision,
-      maximumFractionDigits: precision,
-    }) + suffix
+    toPreciseLocaleString(roundDownToNum(truncated, precision), precision) +
+    suffix
   );
+}
+
+export function toPreciseLocaleString(num: number, precision: number) {
+  return num.toLocaleString(undefined, {
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  });
 }
 
 export function roundDown(num: Dec.Value, precision = 2) {
