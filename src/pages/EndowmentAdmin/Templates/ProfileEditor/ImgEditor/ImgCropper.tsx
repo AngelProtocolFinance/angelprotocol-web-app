@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import React, { useEffect, useRef, useState } from "react";
@@ -38,7 +39,7 @@ export default function ImgCropper(props: {
   }
 
   return (
-    <div className="grid grid-rows-a1 fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
+    <Dialog.Panel className="grid grid-rows-a1 fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
       <div className="bg-white flex items-center justify-end gap-2 p-1">
         {error && (
           <p className="mr-auto text-red-400 font-mono text-xs">{error}</p>
@@ -47,7 +48,7 @@ export default function ImgCropper(props: {
         <Button iconType={"Close"} onClick={closeModal} />
       </div>
       <img ref={imageRef} src={props.src} className="w-full" alt="banner" />
-    </div>
+    </Dialog.Panel>
   );
 }
 

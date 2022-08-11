@@ -1,9 +1,18 @@
 ###refactored components
 
-- WalletSuite
-- MobileNav
-- CountrySelector
-- Selector used in `Registration`
+- WalletSuite - with Menu
+- MobileNav - with Menu
+- CountrySelector - with ListBox
+- Selector used in `Registration` - with ListBox
+- ModalContext - with Dialog
+  - wrapped modals with Dialog.Panel and tests
+  - `<Popup/>` - ok
+  - `<TransactionPrompt/>` - ok
+  - donate `<SharePrompt/>` - ok
+  - admin/applications `<Previewer/>` - ok
+  - edit profile `<ImgCropper/>` - ok
+  - leaderboard `<Summary/>`
+  - registration `<ProofOfIdentityModal>`
 
 ### side refactors
 

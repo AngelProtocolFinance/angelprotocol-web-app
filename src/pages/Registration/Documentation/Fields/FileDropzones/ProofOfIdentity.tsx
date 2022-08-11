@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
@@ -37,7 +38,7 @@ function ProofOfIdentityModal() {
   const { closeModal } = useModalContext();
 
   return (
-    <div className="bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
+    <Dialog.Panel className="fixed-center z-20 bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
       <BsX
         className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
         onClick={closeModal}
@@ -49,6 +50,6 @@ function ProofOfIdentityModal() {
       <Button className="bg-thin-blue w-40 h-10" onClick={closeModal}>
         Got it
       </Button>
-    </div>
+    </Dialog.Panel>
   );
 }

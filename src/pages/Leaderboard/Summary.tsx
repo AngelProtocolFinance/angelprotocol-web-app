@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import toCurrency from "helpers/toCurrency";
 
@@ -5,7 +6,7 @@ type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
   const { closeModal } = useModalContext();
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md grid content-start">
+    <Dialog.Panel className="bg-white fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md grid content-start">
       <Amount title="principal" value={props.principal} />
       <Amount title="impact" value={props.impact} />
       <button
@@ -17,7 +18,7 @@ export default function Summary(props: SummaryProps) {
 
       <Text type={props.type} title="Principal" />
       <Text type={props.type} title="Impact" />
-    </div>
+    </Dialog.Panel>
   );
 }
 
