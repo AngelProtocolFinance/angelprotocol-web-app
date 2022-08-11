@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import Status from "../Status";
 import Amount from "./Amount";
 import InputField from "./InputField";
-import { Fee, ToReceive, Total } from "./Misc";
+import { Fee, Total } from "./Misc";
 import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm(resources: WithdrawResource) {
@@ -20,7 +20,7 @@ export default function WithdrawForm(resources: WithdrawResource) {
 
       {resources.vaultFields.map(
         (vaultField) =>
-          vaultField.ustBalance > 0 && (
+          vaultField.usdBalance > 0 && (
             <Amount key={vaultField.fieldId} {...vaultField} />
           )
       )}
@@ -38,7 +38,6 @@ export default function WithdrawForm(resources: WithdrawResource) {
       </div>
       <Total />
       <Fee />
-      <ToReceive />
       <button
         type="submit"
         className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"

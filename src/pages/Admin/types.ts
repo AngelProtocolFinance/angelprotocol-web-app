@@ -12,6 +12,7 @@ import {
   UpdateProfilePayload,
   Vote,
 } from "types/server/contracts";
+import { denoms } from "constants/currency";
 
 export type AdminProposalParam = { id: string };
 
@@ -220,9 +221,9 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: "uusd" | "halo";
+  currency: denoms;
   haloBalance: number;
-  ustBalance: number;
+  usdBalance: number;
 };
 
 export type FundSendValues = ProposalBase & FundSendPayload;

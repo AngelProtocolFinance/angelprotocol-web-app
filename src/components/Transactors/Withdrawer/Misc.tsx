@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import { toCurrency } from "helpers";
 
@@ -14,19 +15,25 @@ function Misc(props: { title: string; value: string }) {
 
 export function Fee() {
   const { fee } = useGetter((state) => state.transaction);
-  return <Misc title="tx fee" value={`${toCurrency(fee, 3)} UST`} />;
+  const { wallet } = useGetWallet();
+  return (
+    <Misc
+      title="tx fee"
+      value={`${toCurrency(fee, 3)} ${wallet?.chain.native_currency.symbol}`}
+    />
+  );
 }
 
 export function Total() {
   const { watch } = useFormContext<WithdrawValues>();
-  const total_ust = watch("total_ust");
-  return <Misc title="total" value={`${toCurrency(total_ust, 3)} UST`} />;
-}
-
-export function ToReceive() {
-  const { watch } = useFormContext<WithdrawValues>();
-  const total_receive = watch("total_receive");
+  const { wallet } = useGetWallet();
+  const total_amount = watch("total_amount");
   return (
-    <Misc title="to receive" value={`${toCurrency(total_receive, 3)} UST`} />
+    <Misc
+      title="total"
+      value={`${toCurrency(total_amount, 3)} ${
+        wallet?.chain.native_currency.symbol
+      }`}
+    />
   );
 }

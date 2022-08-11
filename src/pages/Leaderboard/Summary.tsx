@@ -56,7 +56,7 @@ function Amount(props: { title: string; value: number }) {
       <span className="text-base text-right justify-self-end ">
         {props.title}
       </span>
-      <span className="">$ {toCurrency(props.value, 0)}</span>
+      <span>$ {toCurrency(props.value, 0)}</span>
     </p>
   );
 }

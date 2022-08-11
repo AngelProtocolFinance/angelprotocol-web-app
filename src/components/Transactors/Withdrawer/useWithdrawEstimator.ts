@@ -16,7 +16,7 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import { processEstimateError, scale } from "helpers";
+import { extractFeeAmount, processEstimateError, scale } from "helpers";
 
 interface Source {
   locked: string; //"0"
@@ -92,8 +92,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         if (filteredInputs.length <= 0) {
           dispatch(setFormError("No withdraw amount provided"));
           dispatch(setFee(0));
-          setValue("total_ust", 0);
-          setValue("total_receive", 0);
+          setValue("total_amount", 0);
           return;
         }
 
@@ -152,22 +151,21 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           JSON.stringify(proposalMeta)
         );
 
-        const { fee, feeAmount } = await adminContract.estimateFee([
-          proposalMsg,
-        ]);
+        const fee = await adminContract.estimateFee([proposalMsg]);
 
         //get usd total of of sources
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
 
-        if (feeAmount > usdTotal) {
-          dispatch(setFormError("Withdraw amount is too low to pay for fees"));
+        if (feeAmount > wallet.chain.native_currency.balance) {
+          dispatch(setFormError("Not enough balance to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeAmount;
-
-        setValue("total_ust", usdTotal);
-        setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeAmount));
+        setValue("total_amount", usdTotal);
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

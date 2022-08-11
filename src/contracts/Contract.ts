@@ -17,7 +17,7 @@ import { TxOptions } from "slices/transaction/types";
 import { Dwindow } from "types/ethereum";
 import { EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { condenseToNum, scaleToStr, toBase64 } from "helpers";
+import { scaleToStr, toBase64 } from "helpers";
 import {
   TxResultFail,
   WalletDisconnectedError,
@@ -34,7 +34,6 @@ const GAS_PRICE = IS_TEST
 
 // This is the multiplier used when auto-calculating the fees
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
-const GAS_MULTIPLIER = 1.3;
 
 export default class Contract {
   contractAddress: string;
@@ -59,9 +58,7 @@ export default class Contract {
     return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(
-    msgs: readonly EncodeObject[]
-  ): Promise<{ fee: StdFee; feeAmount: number }> {
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
@@ -70,8 +67,7 @@ export default class Contract {
       msgs,
       undefined
     );
-    const denom = this.wallet!.chain.native_currency.token_id;
-    return createFeeResult(gasEstimation, denom);
+    return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
@@ -137,26 +133,6 @@ export default class Contract {
       throw new WrongChainError("juno");
     }
   }
-}
-
-function createFeeResult(
-  gasEstimation: number,
-  denom: string
-): {
-  fee: StdFee;
-  feeAmount: number;
-} {
-  const fee = calculateFee(
-    Math.round(gasEstimation * GAS_MULTIPLIER),
-    GAS_PRICE
-  );
-  const feeAmount = extractFeeAmount(fee, denom);
-
-  return { fee, feeAmount };
-}
-
-function extractFeeAmount(fee: StdFee, denom: string): number {
-  return condenseToNum(fee.amount.find((a) => a.denom === denom)!.amount);
 }
 
 function validateTransactionSuccess(

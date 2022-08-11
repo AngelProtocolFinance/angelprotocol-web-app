@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
 import Contract from "contracts/Contract";
+import { extractFeeAmount } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
 import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -23,8 +24,12 @@ export const sendCosmosTx = createAsyncThunk(
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
-        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
+        const fee = await contract.estimateFee(args.msgs);
 
+        const feeAmount = extractFeeAmount(
+          fee,
+          args.wallet.chain.native_currency.token_id
+        );
         if (feeAmount > args.wallet.displayCoin.balance) {
           updateStage({
             step: "error",

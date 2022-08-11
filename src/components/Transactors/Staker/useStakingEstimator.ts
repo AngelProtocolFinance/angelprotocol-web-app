@@ -13,11 +13,11 @@ import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import {
   condense,
-  getTokenBalance,
+  extractFeeAmount,
   logger,
   processEstimateError,
 } from "helpers";
-import { denoms } from "constants/currency";
+import { denoms, symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
@@ -50,16 +50,18 @@ export default function useEstimator() {
           return;
         }
 
-        if (is_stake) {
+        if (is_stake && balance.div(1e6).lt(debounced_amount)) {
           //check $HALO balance
           if (condense(balance).lt(debounced_amount)) {
-            setError("amount", { message: "not enough HALO balance" });
+            setError("amount", {
+              message: `not enough ${symbols[denoms.halo]} balance`,
+            });
             return;
           }
         } else {
           if (condense(balance.sub(locked)).lt(debounced_amount)) {
             setError("amount", {
-              message: "not enough staked halo less locked",
+              message: "not enough unlocked staked balance",
             });
             return;
           }
@@ -73,18 +75,22 @@ export default function useEstimator() {
           ? contract.createGovStakeMsg(debounced_amount)
           : contract.createGovUnstakeMsg(debounced_amount);
 
-        const { fee, feeAmount } = await contract.estimateFee([govMsg]);
+        const fee = await contract.estimateFee([govMsg]);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeAmount >= ustBalance) {
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
+
+        if (feeAmount >= wallet.chain.native_currency.balance) {
           setError("amount", {
-            message: "not enough UST to pay for fees",
+            message: "Not enough balance to pay for fees",
           });
           return;
         }
 
-        dispatch(setFee(feeAmount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

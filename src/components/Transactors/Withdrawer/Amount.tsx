@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { VaultField } from "types/shared/withdraw";
 import { condense, roundDown, toCurrency } from "helpers";
+import { denoms, symbols } from "constants/currency";
 
 export default function Amount(props: VaultField) {
   const {
@@ -11,7 +12,7 @@ export default function Amount(props: VaultField) {
     formState: { errors },
   } = useFormContext<WithdrawValues>();
 
-  const ustBalance = condense(props.ustBalance);
+  const ustBalance = condense(props.usdBalance);
   function setMax() {
     setValue(props.fieldId, roundDown(ustBalance, 3), {
       shouldDirty: true,
@@ -37,7 +38,7 @@ export default function Amount(props: VaultField) {
               type="button"
               className="font-bold hover:text-angel-blue"
             >
-              {toCurrency(ustBalance, 3, true)} UST
+              {toCurrency(ustBalance, 3, true)} {symbols[denoms.axlusdc]}
             </button>
           </p>
         </div>

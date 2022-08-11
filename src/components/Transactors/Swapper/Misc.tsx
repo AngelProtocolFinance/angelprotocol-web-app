@@ -1,7 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import { toCurrency } from "helpers";
+import { denoms, symbols } from "constants/currency";
 
 function Misc(props: { title: string; value: string; class?: string }) {
   const classes = `text-xs font-light ${props.class}`;
@@ -15,7 +17,13 @@ function Misc(props: { title: string; value: string; class?: string }) {
 
 export function Fee() {
   const { fee } = useGetter((state) => state.transaction);
-  return <Misc title="tx fee" value={`${fee} UST`} />;
+  const { wallet } = useGetWallet();
+  return (
+    <Misc
+      title="tx fee"
+      value={`${fee} ${wallet?.chain.native_currency.symbol}`}
+    />
+  );
 }
 
 export function Commission() {
@@ -26,15 +34,20 @@ export function Commission() {
 
 export function SwapRate() {
   const { watch } = useFormContext<SwapValues>();
+  const { wallet } = useGetWallet();
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
+
+  const formattedRatio = toCurrency(ratio, 6, true);
+  const nativeSymbol = wallet?.chain.native_currency.symbol;
+  const haloSymbol = symbols[denoms.halo];
   return (
     <Misc
       title="Rate"
       value={
         is_buy
-          ? `${toCurrency(ratio, 6, true)} UST = 1 HALO`
-          : `${toCurrency(ratio, 6, true)} HALO = 1 UST`
+          ? `${formattedRatio} ${nativeSymbol} = 1 ${haloSymbol}`
+          : `${formattedRatio} ${haloSymbol} = 1 ${nativeSymbol}`
       }
       class="font-semibold"
     />
