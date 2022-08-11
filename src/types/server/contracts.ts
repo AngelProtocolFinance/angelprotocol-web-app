@@ -298,7 +298,7 @@ export type IndexFundConfig = {
   fund_member_limit: number; //10
   funding_goal?: string; //"50000000"
   accepted_tokens: {
-    native: string[]; //["uusd"]
+    native: string[]; //["ujuno"]
     cw20: string[]; //
   };
 };

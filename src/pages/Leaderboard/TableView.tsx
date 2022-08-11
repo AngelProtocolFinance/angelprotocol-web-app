@@ -6,7 +6,7 @@ export default function TableView(props: { endowments: Endowment[] }) {
   return (
     <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">
-        <thead className="">
+        <thead>
           <tr>
             <Heading text="" />
             <Heading text="" />

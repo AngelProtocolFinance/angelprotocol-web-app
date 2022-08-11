@@ -1,5 +1,5 @@
 import { ProviderId } from "./types";
-import { Chain } from "types/server/aws";
+import { Chain, Token } from "types/server/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";

@@ -57,9 +57,7 @@ export default class Contract {
     return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(
-    msgs: readonly EncodeObject[]
-  ): Promise<{ fee: StdFee; feeAmount: number }> {
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
@@ -68,8 +66,7 @@ export default class Contract {
       msgs,
       undefined
     );
-    const denom = this.wallet!.chain.native_currency.token_id;
-    return createFeeResult(gasEstimation, denom);
+    return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
@@ -109,7 +106,8 @@ export default class Contract {
 
   createTransferNativeMsg(
     amount: number,
-    recipient: string
+    recipient: string,
+    denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
     return {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
@@ -118,7 +116,7 @@ export default class Contract {
         toAddress: recipient,
         amount: [
           {
-            denom: this.wallet!.chain.native_currency.token_id,
+            denom,
             amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
           },
         ],
@@ -134,28 +132,6 @@ export default class Contract {
       throw new WrongChainError("juno");
     }
   }
-}
-
-function createFeeResult(
-  gasEstimation: number,
-  denom: string
-): {
-  fee: StdFee;
-  feeAmount: number;
-} {
-  const fee = calculateFee(
-    Math.round(gasEstimation * GAS_MULTIPLIER),
-    GAS_PRICE
-  );
-  const feeAmount = extractFeeAmount(fee, denom);
-
-  return { fee, feeAmount };
-}
-
-function extractFeeAmount(fee: StdFee, denom: string): number {
-  return new Decimal(fee.amount.find((a) => a.denom === denom)!.amount)
-    .div(1e6)
-    .toNumber();
 }
 
 function validateTransactionSuccess(

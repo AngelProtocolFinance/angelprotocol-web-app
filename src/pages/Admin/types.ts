@@ -10,6 +10,7 @@ import {
   RegistrarOwnerPayload,
   UpdateProfilePayload,
 } from "types/server/contracts";
+import { denoms } from "constants/currency";
 
 export type AdminParams = { address: string };
 export type ProposalParams = { id: string };
@@ -197,9 +198,9 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: "uusd" | "halo";
+  currency: denoms;
   haloBalance: number;
-  ustBalance: number;
+  usdBalance: number;
 };
 
 export type FundSendValues = ProposalBase & FundSendPayload;

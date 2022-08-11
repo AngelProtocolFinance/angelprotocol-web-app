@@ -12,6 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import CW3 from "contracts/CW3";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeAmount from "helpers/extractFeeData";
 
 export default function useEstimator() {
   const { wallet } = useGetWallet();
@@ -36,15 +37,20 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
         const contract = new CW3(wallet, cw3);
         const voteMsg = contract.createVoteMsg(proposalId, debounced_vote);
-        const { fee, feeAmount } = await contract.estimateFee([voteMsg]);
+        const fee = await contract.estimateFee([voteMsg]);
+
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
 
         //check if user has enough balance to pay for fees
-        if (feeAmount >= wallet.displayCoin.balance) {
-          dispatch(setFormError("Not balance to pay fees"));
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeAmount));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

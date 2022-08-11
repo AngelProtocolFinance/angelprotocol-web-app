@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
+import { denoms, symbols } from "constants/currency";
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -45,7 +46,9 @@ export default function Claims() {
             {" "}
             Total claimable
           </span>
-          <span className="font-heading">{amount} HALO</span>
+          <span className="font-heading">
+            {amount} {symbols[denoms.halo]}
+          </span>
         </p>
       )}
     </div>
@@ -64,7 +67,7 @@ function Claim(props: { time: string; amount: string }) {
         }`}
       >
         <span className="mr-1">{toCurrency(amount, 2, true)}</span>
-        <span className="text-xs font-semibold">HALO</span>
+        <span className="text-xs font-semibold">{symbols[denoms.halo]}</span>
       </p>
       <p className="text-xs font-semibold">
         {claimable ? (

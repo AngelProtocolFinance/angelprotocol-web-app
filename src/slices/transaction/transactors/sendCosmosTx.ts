@@ -5,6 +5,7 @@ import {
   TxOptions,
 } from "slices/transaction/types";
 import Contract from "contracts/Contract";
+import extractFeeAmount from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -27,8 +28,12 @@ export const sendCosmosTx = createAsyncThunk(
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
-        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
+        const fee = await contract.estimateFee(args.msgs);
 
+        const feeAmount = extractFeeAmount(
+          fee,
+          args.wallet.chain.native_currency.token_id
+        );
         if (feeAmount > args.wallet.displayCoin.balance) {
           updateStage({
             step: "error",

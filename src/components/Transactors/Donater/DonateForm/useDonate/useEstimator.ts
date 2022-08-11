@@ -22,10 +22,10 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeAmount from "helpers/extractFeeData";
 import { getProvider } from "helpers/getProvider";
 import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
 import estimateTerraFee from "./estimateTerraFee";
 
 export default function useEstimator() {
@@ -72,14 +72,23 @@ export default function useEstimator() {
 
         // juno transaction, send or contract interaction
         if (wallet.chain.type === "juno-native") {
-          if (selectedToken.type.includes("native")) {
+          if (
+            selectedToken.type === "juno-native" ||
+            selectedToken.type === "ibc"
+          ) {
             const contract = new Contract(wallet);
 
             const msg = contract.createTransferNativeMsg(
               debounced_amount,
-              ap_wallets.juno
+              ap_wallets.juno,
+              selectedToken.token_id
             );
-            const { fee, feeAmount } = await contract.estimateFee([msg]);
+            const fee = await contract.estimateFee([msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
@@ -95,7 +104,12 @@ export default function useEstimator() {
               debounced_amount,
               ap_wallets.juno
             );
-            const { fee, feeAmount } = await contract.estimateFee([msg]);
+            const fee = await contract.estimateFee([msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
@@ -114,11 +128,19 @@ export default function useEstimator() {
             .mul(1e6)
             .divToInt(1)
             .toString();
-          if (selectedToken.type.includes("native")) {
+          if (
+            selectedToken.type === "terra-native" ||
+            selectedToken.type === "ibc"
+          ) {
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-              new Coin(denoms.uluna, amount),
+              new Coin(selectedToken.token_id, amount),
             ]);
-            const { fee, feeAmount } = await estimateTerraFee(wallet, [msg]);
+            const fee = await estimateTerraFee(wallet, [msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
@@ -139,9 +161,13 @@ export default function useEstimator() {
                 },
               }
             );
-            const { fee, feeAmount } = await estimateTerraFee(wallet, [msg]);
-            dispatch(setFee(feeAmount));
+            const fee = await estimateTerraFee(wallet, [msg]);
 
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeAmount));
             if (feeAmount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
@@ -168,7 +194,7 @@ export default function useEstimator() {
             value: wei_amount,
           };
 
-          if (selectedToken.type.includes("native")) {
+          if (selectedToken.type === "evm-native") {
             const gasLimit = await signer.estimateGas(tx);
             const minFee = gasLimit.mul(gasPrice);
             const feeAmount = parseFloat(
