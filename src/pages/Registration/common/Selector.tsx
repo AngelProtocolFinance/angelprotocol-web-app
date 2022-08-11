@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { ReactElement, useMemo } from "react";
+import { useMemo } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 
 type OptionType = { label: string; value: any };
@@ -20,7 +20,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
   const display = useMemo(
     () =>
       props.options.find((o) => o.value === value)?.label || props.placeholder,
-    [value, props.options]
+    [value, props.options, props.placeholder]
   );
 
   return (

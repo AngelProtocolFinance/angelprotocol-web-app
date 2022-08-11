@@ -71,8 +71,6 @@
     "react-icons": "^4.4.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^6.2.0",
-    "react-select": "^5.4.0",
-    "react-select-country-list": "^2.2.3",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -96,7 +94,6 @@
     "@types/react-csv": "^1.1.2",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.1.8",
-    "@types/react-select-country-list": "^2.2.0",
     "@types/react-test-renderer": "17.0.2",
     "autoprefixer": "^10.0.2",
     "buffer": "^6.0.3",
