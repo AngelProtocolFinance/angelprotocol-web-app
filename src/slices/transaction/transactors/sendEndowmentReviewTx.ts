@@ -8,6 +8,7 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/ap/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
+import extractFeeAmount from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
 import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -37,8 +38,12 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const { fee, feeAmount } = await contract.estimateFee(args.msgs);
+        const fee = await contract.estimateFee(args.msgs);
 
+        const feeAmount = extractFeeAmount(
+          fee,
+          args.wallet.chain.native_currency.token_id
+        );
         if (feeAmount > args.wallet.displayCoin.balance) {
           updateState({
             step: "error",

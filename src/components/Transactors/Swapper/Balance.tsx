@@ -1,21 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import getTokenBalance from "helpers/getTokenBalance";
+import { Token } from "types/server/aws";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
 
-export default function Balance() {
-  const { watch, setValue } = useFormContext<SwapValues>();
-  const is_buy = watch("is_buy");
-  const { wallet } = useGetWallet();
-  const coins = wallet?.coins || [];
-  const ustBalance = getTokenBalance(coins, denoms.uusd);
-  const haloBalance = getTokenBalance(coins, denoms.halo);
-  const balance = is_buy ? ustBalance : haloBalance;
+export default function Balance({ token }: { token: Token }) {
+  const { setValue } = useFormContext<SwapValues>();
 
   function setAmount() {
-    setValue("amount", `${balance}`, {
+    setValue("amount", `${token.balance}`, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -29,7 +21,7 @@ export default function Balance() {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(balance, 3, true)} {is_buy ? "UST" : "HALO"}
+        {toCurrency(token.balance, 3, true)} {token.symbol}
       </button>
     </p>
   );
