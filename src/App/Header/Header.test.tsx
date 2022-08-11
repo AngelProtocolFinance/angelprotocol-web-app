@@ -11,7 +11,7 @@ function TestApp() {
   );
 }
 
-describe("DappHead test", () => {
+describe("Header test", () => {
   window.scrollTo = jest.fn();
   test("dapphead routing", async () => {
     render(<TestApp />);

@@ -1,20 +1,13 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
-import Icon from "components/Icon";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
-import DappMenu from "./DappMenu";
-import MobileDappNav from "./MobileDappNav";
+import MobileNav from "./MobileNav";
+import DappMenu from "./Nav";
 
-export default function DappHead() {
-  const [navShown, showNav] = useState(false);
-  function toggleNav() {
-    showNav((prevState) => !prevState);
-  }
-
+export default function Header() {
   return (
     <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full padded-container pt-3">
       <Link to={appRoutes.index} title="to home">
@@ -26,14 +19,7 @@ export default function DappHead() {
         <WalletSuite />
         <Airdrop />
       </div>
-      <button className="text-white-grey ml-2 lg:hidden" onClick={toggleNav}>
-        {navShown ? (
-          <Icon type="Close" className="text-2xl" />
-        ) : (
-          <Icon type="Menu" className="text-2xl" />
-        )}
-      </button>
-      {navShown && <MobileDappNav />}
+      <MobileNav />
     </header>
   );
 }

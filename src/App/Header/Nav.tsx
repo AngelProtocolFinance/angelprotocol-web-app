@@ -3,7 +3,7 @@ import { useMember } from "services/juno/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { appRoutes } from "constants/routes";
 
-export default function DappMenu() {
+export default function Nav() {
   const { member } = useMember("apTeam");
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">

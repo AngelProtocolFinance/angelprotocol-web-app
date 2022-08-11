@@ -27,9 +27,6 @@ export default function Filter(props: {
   return (
     <div className="px-3">
       <div className="flex items-center gap-1">
-        <span className="font-mono text-sm text-zinc-600">
-          {"<" + criterionAmount}
-        </span>
         <Switch
           checked={isSmallAmountsShown}
           onChange={setIsSmallAmountShown}
@@ -43,6 +40,9 @@ export default function Filter(props: {
             } inline-block h-3 w-3 transform rounded-full bg-white`}
           />
         </Switch>
+        <span className="font-mono text-sm text-zinc-600">
+          {"<" + criterionAmount}
+        </span>
       </div>
 
       {props.children(filteredCoins)}
