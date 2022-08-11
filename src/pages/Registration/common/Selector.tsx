@@ -1,6 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { useMemo } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
+import Icon from "components/Icon";
 
 type OptionType = { label: string; value: any };
 
@@ -27,16 +28,28 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
     <Listbox value={value} onChange={onChange} as="div" className="relative">
       <Listbox.Button
         disabled={props.disabled || isSubmitting}
-        className="bg-white text-left rounded-md outline-none border-none w-full px-3 py-2 text-black"
+        className="flex items-center bg-white text-left rounded-md outline-none border-none w-full px-3 py-2 text-black"
       >
-        {display}
+        {({ open }) => (
+          <>
+            <span>{display}</span>
+            <Icon
+              type={open ? "Down" : "CaretLeft"}
+              className="text-angel-grey ml-auto"
+            />
+          </>
+        )}
       </Listbox.Button>
-      <Listbox.Options className="z-10 mt-2 w-full absolute top-full right-0 bg-white-grey rounded-md shadow-md">
+      <Listbox.Options className="z-10 mt-2 w-full h-[15rem] overflow-y-auto absolute top-full right-0 bg-white-grey rounded-md shadow-md">
         {props.options.map((option) => (
           <Listbox.Option
             key={option.value}
             value={option.value}
-            className="text-angel-grey cursor-pointer p-1 px-2 hover:bg-sky-100/50"
+            className={({ selected }) =>
+              `cursor-pointer p-1 px-2 hover:bg-sky-200/50 ${
+                selected ? "bg-sky-500 text-zinc-50" : "text-angel-grey"
+              }`
+            }
           >
             {option.label}
           </Listbox.Option>
