@@ -32,7 +32,6 @@ const GAS_PRICE = IS_TEST
 
 // This is the multiplier used when auto-calculating the fees
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
-const GAS_MULTIPLIER = 1.3;
 
 export default class Contract {
   contractAddress: string;

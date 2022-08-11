@@ -1,19 +1,36 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import FormInput from "pages/Registration/common/FormInput";
 import {
   useGetWallet,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
-import FormInput from "components/FormInput";
+import { requiredAddress } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
 
+export type Wallet = {
+  address: string;
+};
+
 export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
-  const { isSubmitting, registerWallet } = useRegisterWallet();
   const navigate = useNavigate();
+
+  const methods = useForm<Wallet>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: { address: wallet?.address || "" },
+    resolver: yupResolver(Yup.object({ address: requiredAddress("wallet") })),
+  });
+
+  const { handleSubmit } = methods;
+  const { isSubmitting, registerWallet } = useRegisterWallet();
 
   return (
     <div className="flex flex-col h-full items-center gap-10 justify-center">
@@ -40,33 +57,33 @@ export default function WalletSubmission() {
           </Button>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 items-center w-128">
-          <FormInput
-            mono
-            id="walletAddress"
-            label="Juno wallet address"
-            placeholder="juno1..."
-            value={wallet?.address}
-            disabled
-            required
-          />
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit(registerWallet)}
+            className="flex flex-col gap-4 items-center w-128"
+          >
+            <FormInput<Wallet>
+              fieldName="address"
+              label="Juno Wallet address"
+              placeholder="juno1..."
+            />
 
-          <Button
-            submit
-            className="bg-thin-blue w-48 h-10"
-            isLoading={isSubmitting}
-            onClick={() => registerWallet(wallet?.address!)}
-          >
-            Submit
-          </Button>
-          <Button
-            className="text-sm uppercase hover:text-angel-orange px-2 py-1"
-            disabled={isSubmitting}
-            onClick={disconnect}
-          >
-            change wallet address
-          </Button>
-        </div>
+            <Button
+              submit
+              className="bg-thin-blue w-48 h-10"
+              isLoading={isSubmitting}
+            >
+              Submit
+            </Button>
+            <Button
+              className="text-sm uppercase hover:text-angel-orange px-2 py-1"
+              disabled={isSubmitting}
+              onClick={disconnect}
+            >
+              change wallet address
+            </Button>
+          </form>
+        </FormProvider>
       )}
       <Button
         className="bg-green-400 w-80 h-10"

@@ -1,10 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import countryList from "react-select-country-list";
 import { ReceipterValues } from "./types";
+import CountrySelector from "components/CountrySelector";
 import useReceiptForm from "components/Receipter/useRequestReceipt";
-import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
 
@@ -14,10 +12,8 @@ export default function ReceiptForm() {
     handleSubmit,
     register,
     formState: { errors },
-    control,
   } = useFormContext<ReceipterValues>();
   const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
-  const countries = useMemo(() => countryList().getData(), []);
   const transactionId = getValues("transactionId");
   const isKYConly = transactionId === "";
 
@@ -56,14 +52,13 @@ export default function ReceiptForm() {
           Country
         </label>
         <div className="form-control rounded-md grid bg-white-grey">
-          <Selector
-            name="country"
-            options={countries.map((item) => ({
-              value: item.label,
-              label: item.label,
-            }))}
-            control={control}
-            menuPlacement="top"
+          <CountrySelector
+            fieldName="country"
+            classes={{
+              container:
+                "p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey",
+              input: "bg-transparent",
+            }}
           />
           <ErrorMessage
             errors={errors}

@@ -1,29 +1,12 @@
-import { useEffect, useState } from "react";
 import { Profile } from "types/server/contracts";
-import { CountryOption } from "components/CountrySelector";
-import { COUNTRIES_REST_ENDPOINT } from "constants/urls";
 
 //toDO
 export default function CharityStats(props: Profile & { classes?: string }) {
-  const [countryName, setCountryName] = useState("");
-
-  //get country name from country code
-  useEffect(() => {
-    if (!props.country_of_origin) return;
-    fetch(
-      `${COUNTRIES_REST_ENDPOINT}/alpha/${props.country_of_origin}?fields=name,cca2`
-    )
-      .then((res) => res.json())
-      .then((country: CountryOption) => {
-        setCountryName(country.name.common);
-      });
-  }, [props.country_of_origin]);
-
   return (
     <ul className={`${props.classes || ""} `}>
       <StatsItem title="Registration#" value={props.registration_number} />
       <StatsItem title="Address" value={props.street_address} />
-      <StatsItem title="Country" value={countryName} />
+      <StatsItem title="Country" value={props.country_of_origin} />
       <StatsItem
         title="avg annual budget"
         value={props.average_annual_budget}

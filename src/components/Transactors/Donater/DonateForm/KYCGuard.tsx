@@ -10,7 +10,8 @@ export default function KYCGuard() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { kycData } = stage as InitialStage;
-  const isKycRequired = getValues("isKycDonorOnly") === true;
+  // const isKycRequired = getValues("isKycDonorOnly") === true;
+  const isKycRequired = true;
   const isKycCompleted = isKycRequired ? kycData !== undefined : true;
 
   function showKycForm() {
