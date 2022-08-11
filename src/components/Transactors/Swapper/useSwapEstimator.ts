@@ -12,7 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import getTokenBalance from "helpers/getTokenBalance";
+import extractFeeAmount from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
@@ -51,20 +51,17 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const junoBalance = getTokenBalance(
-          wallet.coins,
-          wallet.chain.native_currency.token_id
-        );
-        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
+        const nativeCoin = wallet.chain.native_currency;
+        const haloBalance = wallet.getBalance(denoms.halo);
         // first balance check
         if (is_buy) {
-          if (amount > junoBalance) {
-            setError("amount", { message: "not enough JUNO" });
+          if (amount > nativeCoin.balance) {
+            setError("amount", { message: "not enough balance" });
             return;
           }
         } else {
           if (amount > haloBalance) {
-            setError("amount", { message: "not enough HALO" });
+            setError("amount", { message: "not enough balance" });
             return;
           }
         }
@@ -98,19 +95,25 @@ export default function useSwapEstimator() {
               debounced_slippage
             );
 
-        const { fee, feeAmount } = await contract.estimateFee([swapMsg]);
+        const fee = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        if (is_buy && feeAmount + debounced_amount >= junoBalance) {
-          setError("amount", { message: "not enough JUNO to pay for fees" });
+        const feeAmount = extractFeeAmount(fee, nativeCoin.token_id);
+        dispatch(setFee(feeAmount));
+
+        if (is_buy && feeAmount + debounced_amount >= nativeCoin.balance) {
+          setError("amount", {
+            message: `not enough ${nativeCoin.symbol} to pay for fees`,
+          });
           return;
         }
-        if (!is_buy && feeAmount >= junoBalance) {
-          setError("amount", { message: "not enough JUNO to pay for fees" });
+        if (!is_buy && feeAmount >= nativeCoin.balance) {
+          setError("amount", {
+            message: `not enough ${nativeCoin.symbol} to pay for fees`,
+          });
           return;
         }
 
-        dispatch(setFee(feeAmount));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

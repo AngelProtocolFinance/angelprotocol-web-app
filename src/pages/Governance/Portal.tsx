@@ -3,6 +3,7 @@ import { useStakingAPRQuery } from "services/aws/governance";
 import useClaimer from "components/Transactors/Claimer/useClaimer";
 import useStaker from "components/Transactors/Staker/useStaker";
 import useSwapper from "components/Transactors/Swapper/useSwapper";
+import { denoms, symbols } from "constants/currency";
 import Button from "./Button";
 
 export default function Portal() {
@@ -22,7 +23,9 @@ export default function Portal() {
             className="w-14 h-14 m-2 opacity-90 shadow-lg rounded-full"
           />
         </div>
-        <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
+        <span className="text-6xl text-white-grey font-bold -mr-1">
+          {symbols[denoms.halo]}
+        </span>
         <span className="sm:ml-auto text-3xl text-white-grey/90">
           {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>

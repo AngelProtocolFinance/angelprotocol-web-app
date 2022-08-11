@@ -48,7 +48,7 @@ export default function Summary(props: HoldingSummary) {
           </tr>
         </thead>
         <tbody>
-          <tr className="">
+          <tr>
             <td className="pr-8">Anchor Protocol</td>
             <td className="font-heading text-right">100%</td>
           </tr>

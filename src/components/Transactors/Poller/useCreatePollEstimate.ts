@@ -10,7 +10,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import getTokenBalance from "helpers/getTokenBalance";
+import extractFeeAmount from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 
@@ -37,9 +37,9 @@ export default function useCreatePollEstimate() {
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
 
-        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
+        const haloBalance = wallet.getBalance(denoms.halo);
         if (amount >= haloBalance) {
-          setError("amount", { message: "not enough HALO balance" });
+          setError("amount", { message: "not enough balance" });
           return;
         }
 
@@ -55,16 +55,20 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const { fee, feeAmount } = await contract.estimateFee([pollMsgs]);
+        const fee = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
-        if (feeAmount >= ustBalance) {
-          setError("amount", { message: "not enough UST to pay for fees" });
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
+
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          setError("amount", { message: "Not enough balance to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeAmount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
