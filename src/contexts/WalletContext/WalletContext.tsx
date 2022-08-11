@@ -30,6 +30,7 @@ export type WalletState = {
   address: string;
   chain: Chain;
   providerId: ProviderId;
+  getBalance: (token_id: string) => number;
 };
 
 type State = {
@@ -160,6 +161,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         address,
         chain,
         providerId,
+        getBalance: (token_id: string) =>
+          [chain.native_currency, ...chain.tokens].find(
+            (x) => x.token_id === token_id
+          )?.balance || 0,
       };
     }
   }, [activeProviderInfo, chain]);

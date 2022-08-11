@@ -22,6 +22,7 @@ import {
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeAmount from "helpers/extractFeeData";
 import { getProvider } from "helpers/getProvider";
 import logger from "helpers/logger";
 import { ap_wallets } from "constants/ap_wallets";
@@ -80,7 +81,12 @@ export default function useEstimator() {
               ap_wallets.juno,
               selectedToken.token_id
             );
-            const { fee, feeAmount } = await contract.estimateFee([msg]);
+            const fee = await contract.estimateFee([msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
@@ -96,7 +102,12 @@ export default function useEstimator() {
               debounced_amount,
               ap_wallets.juno
             );
-            const { fee, feeAmount } = await contract.estimateFee([msg]);
+            const fee = await contract.estimateFee([msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
@@ -122,7 +133,12 @@ export default function useEstimator() {
             const msg = new MsgSend(wallet.address, ap_wallets.terra, [
               new Coin(selectedToken.token_id, amount),
             ]);
-            const { fee, feeAmount } = await estimateTerraFee(wallet, [msg]);
+            const fee = await estimateTerraFee(wallet, [msg]);
+
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
             dispatch(setFee(feeAmount));
 
             if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
@@ -143,9 +159,13 @@ export default function useEstimator() {
                 },
               }
             );
-            const { fee, feeAmount } = await estimateTerraFee(wallet, [msg]);
-            dispatch(setFee(feeAmount));
+            const fee = await estimateTerraFee(wallet, [msg]);
 
+            const feeAmount = extractFeeAmount(
+              fee,
+              wallet.chain.native_currency.token_id
+            );
+            dispatch(setFee(feeAmount));
             if (feeAmount >= wallet.displayCoin.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",

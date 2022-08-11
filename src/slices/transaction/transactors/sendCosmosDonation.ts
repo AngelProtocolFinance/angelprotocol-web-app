@@ -11,7 +11,7 @@ import logDonation from "helpers/logDonation";
 import { WalletDisconnectedError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
-type JunoDonateArgs = {
+type CosmosDonateArgs = {
   wallet?: WalletState;
   donateValues: DonateValues;
   tx: TxOptions;
@@ -20,7 +20,7 @@ type JunoDonateArgs = {
 
 export const sendCosmosDonation = createAsyncThunk(
   `${transactionSlice.name}/junoDonate`,
-  async (args: JunoDonateArgs, { dispatch }) => {
+  async (args: CosmosDonateArgs, { dispatch }) => {
     const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
