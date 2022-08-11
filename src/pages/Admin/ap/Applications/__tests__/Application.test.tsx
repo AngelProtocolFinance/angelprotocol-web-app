@@ -8,7 +8,7 @@ import { CharityApplication } from "types/server/aws";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";
-import Applications from "../Applications";
+import Applications from "..";
 
 const testnet: NetworkInfo = {
   name: "testnet",
