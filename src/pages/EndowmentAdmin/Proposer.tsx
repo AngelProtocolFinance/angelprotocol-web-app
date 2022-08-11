@@ -9,7 +9,7 @@ import ProfileEditor from "./Templates/ProfileEditor/ProfileEditor";
 
 export default function Proposer() {
   return (
-    <div className="grid gap-2 grid-cols-a1">
+    <div className="grid gap-2 grid-cols-[auto_1fr]">
       <ProposalTypes />
       <Routes>
         <Route index element={<MemberUpdator />} />

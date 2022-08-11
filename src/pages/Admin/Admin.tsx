@@ -31,7 +31,7 @@ export default function Admin() {
     return <GuardPrompt message="You are not authorized to view this page" />;
   } else
     return (
-      <div className="padded-container min-h-3/4 grid grid-rows-a1 pb-4 gap-2">
+      <div className="padded-container min-h-[75%] grid grid-rows-[auto_1fr] pb-4 gap-2">
         <AdminNav />
         <Routes>
           <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
@@ -52,7 +52,7 @@ export default function Admin() {
 
 export function GuardPrompt(props: { message: string; showLoader?: true }) {
   return (
-    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-115 w-full max-w-sm p-4 rounded-md shadow-lg">
+    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-[15rem] w-full max-w-sm p-4 rounded-md shadow-lg">
       {props.showLoader ? (
         <Loader
           gapClass="gap-2"

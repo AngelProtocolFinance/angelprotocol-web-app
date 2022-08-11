@@ -9,12 +9,12 @@ import DappMenu from "./Nav";
 
 export default function Header() {
   return (
-    <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full padded-container pt-3">
+    <header className="mb-4 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[auto_auto_1fr] items-center w-full padded-container pt-3">
       <Link to={appRoutes.index} title="to home">
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </Link>
       <DappMenu />
-      <div className="ml-auto grid grid-cols-a1a gap-1">
+      <div className="ml-auto grid grid-cols-[auto_1fr_auto] gap-1">
         <TransactionHint />
         <WalletSuite />
         <Airdrop />

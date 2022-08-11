@@ -60,7 +60,7 @@ export default function WalletSubmission() {
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(registerWallet)}
-            className="flex flex-col gap-4 items-center w-128"
+            className="flex flex-col gap-4 items-center w-[28rem]"
           >
             <FormInput<Wallet>
               fieldName="address"

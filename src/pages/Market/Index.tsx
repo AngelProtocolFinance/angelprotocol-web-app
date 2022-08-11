@@ -13,7 +13,7 @@ export default function Index(props: {
   //remove infinite scroll temporarily
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-a1 border-t border-white/10">
+    <section className="grid grid-cols-1 sm:grid-cols-[auto_1fr] border-t border-white/10">
       <IndexCard id={props.id} />
       <section className="overflow-hidden relative group">
         <div

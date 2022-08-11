@@ -16,7 +16,7 @@ import { proposalRoutes } from "./constants";
 
 export default function Proposer() {
   return (
-    <div className="grid gap-2 grid-cols-a1">
+    <div className="grid gap-2 grid-cols-[auto_1fr]">
       <ProposalTypes />
       <Routes>
         {/** _index-fund */}

@@ -2,7 +2,7 @@
 
 exports[`Charity applications review Application preview modal renders 2nd application: "123_Company" 1`] = `
 <div
-  class="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
+  class="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
   data-testid="preview-form"
 >
   <h1

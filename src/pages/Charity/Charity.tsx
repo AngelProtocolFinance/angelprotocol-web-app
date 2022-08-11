@@ -35,7 +35,7 @@ export default function Charity() {
   if (isResourcesLoading) return <CharitySkeleton />;
   if (isResourcesError || !profile) return <PageError />;
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
         <LinkIcon to={appRoutes.marketplace} _iconType="ArrowBack">
           back to marketplace
@@ -85,10 +85,10 @@ function LinkIcon({
 
 function CharitySkeleton() {
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start opacity-20">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start opacity-20">
       <ContentLoader className="w-48 h-10 lg:col-span-2" />
       <ContentLoader className="w-full rounded-md" />
-      <div className="w-full row-span-2 grid grid grid-rows-aa1">
+      <div className="w-full row-span-2 grid grid grid-rows-[auto_auto_1fr]">
         <ContentLoader className="w-full h-[300px] rounded-md" />
         <ContentLoader className="w-full h-10 mt-2 rounded-md" />
         <ContentLoader className="w-full h-full mt-2 rounded-md" />
