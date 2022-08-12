@@ -1,7 +1,5 @@
 import { AdditionalInfoValues } from "../types";
-import RichTextEditor, {
-  EditorClasses,
-} from "components/RichTextEditor/RichTextEditor";
+import RichTextEditor from "components/RichTextEditor";
 
 export default function OverviewInput() {
   return (
@@ -12,16 +10,12 @@ export default function OverviewInput() {
       </label>
       <RichTextEditor<AdditionalInfoValues>
         fieldName="charityOverview"
-        editorClasses={editorClasses}
+        classes={{
+          container: "text-white/80 p-3 rounded-md bg-white/10 shadow-inner",
+          error: "text-sm text-failed-red ml-1",
+        }}
         placeHolder="an overview of your organization"
       />
     </div>
   );
 }
-
-const editorClasses: EditorClasses = {
-  container: "text-white/80 p-3 rounded-md bg-white/10 shadow-inner",
-  controlContainer: "flex gap-2 mt-2 mb-4",
-  control: "p-1.5 bg-angel-blue rounded-sm hover:bg-blue-accent shadow-md",
-  error: "text-sm text-failed-red ml-1",
-};

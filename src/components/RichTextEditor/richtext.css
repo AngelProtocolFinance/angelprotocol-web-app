@@ -1,0 +1,12 @@
+.ql-editor {
+  padding: 0;
+  tab-size: 2;
+}
+
+.ql-editor.ql-blank::before {
+  color: inherit;
+  font-size: inherit;
+  left: 0;
+  font-style: normal;
+  opacity: 0.5;
+}
