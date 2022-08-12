@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import { AdditionalInfoValues } from "../types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { SchemaShape } from "schemas/types";
+import { stringByteSchema } from "schemas/string";
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
@@ -27,7 +28,7 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   });
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
-  charityOverview: Yup.string().required("Organization description required"),
+  charityOverview: stringByteSchema("overview", 4, 1024),
   charityLogo: FILE_SCHEMA.test({
     name: "fileSize",
     message: "Image size must be smaller than 1MB",
