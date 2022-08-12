@@ -1,7 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
+import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
-import { govTags, junoTags, multicallTags } from "services/juno/tags";
+import { govTags, junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import useStakingEstimator from "./useStakingEstimator";
@@ -25,8 +26,8 @@ export default function useStakeUnstake() {
           invalidateJunoTags([
             { type: junoTags.gov, id: govTags.staker },
             { type: junoTags.gov, id: govTags.halo_balance },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
           ]),
+          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
         ],
       })
     );

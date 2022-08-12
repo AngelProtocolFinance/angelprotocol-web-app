@@ -1,11 +1,3 @@
-export enum webRoutes {
-  index = "",
-  charities = "for-charities",
-  donors = "for-donors",
-  about = "about",
-  contact = "contact",
-}
-
 export enum appRoutes {
   index = "/",
   dashboard = "/dashboard",
@@ -41,5 +33,5 @@ export enum adminRoutes {
   charity_applications = "charity-applications",
   proposal = "proposal",
   proposals = "proposals",
-  proposal_types = "proposal-types",
+  templates = "templates",
 }

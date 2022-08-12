@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";

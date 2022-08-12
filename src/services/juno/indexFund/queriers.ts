@@ -49,9 +49,9 @@ export function useAllianceMembers() {
 }
 
 export function useIndexFundConfig() {
-  const { useConfigQuery } = indexFund_api;
+  const { useIndexFundConfigQuery } = indexFund_api;
   const { contract } = useContract<IF, T>(IndexFund);
-  const { data, isLoading, isFetching, isError } = useConfigQuery(
+  const { data, isLoading, isFetching, isError } = useIndexFundConfigQuery(
     contract.config
   );
 

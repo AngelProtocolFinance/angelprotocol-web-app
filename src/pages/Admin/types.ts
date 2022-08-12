@@ -1,6 +1,5 @@
 import { CharityApplication } from "types/server/aws";
 import {
-  AdminVoteInfo,
   AllianceMember,
   EndowmentStatus,
   EndowmentStatusStrNum,
@@ -10,56 +9,42 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   UpdateProfilePayload,
-  Vote,
 } from "types/server/contracts";
 import { denoms } from "constants/currency";
 
-export type AdminProposalParam = { id: string };
+export type AdminParams = { address: string };
+export type ProposalParams = { id: string };
 
-export type ProposalDetails = {
-  numYes: number;
-  numNo: number;
-  numNotYet: number;
-  pctYes: number;
-  pctNo: number;
-  pctNotYet: number;
-  blockHeight: string;
-  expiry: number;
-  remainingBlocks: number;
-  isVoteEnded: boolean;
-  isExecutable: boolean;
-  isExecuted: boolean;
-  numId: number;
-  userVote?: Vote;
-  votes: AdminVoteInfo[];
-  meta?: string;
-};
-
-export type AdminProposalTypes =
+export type Templates =
   //index fund
-  | "indexfund-alliance-edit"
-  | "indexfund-create-fund"
-  | "indexfund-remove-fund"
-  | "indexfund-update-fund-members"
-  | "indexfund-config-update"
-  | "indexfund-owner-update"
-  //admin group
-  | "admin-group-update-members"
-  | "admin-group-update-cw3-config"
-  | "admin-group-fund-transfer"
-  //endowment
-  | "endowment-update-status"
-  | "endowment-withdraw"
-  | "endowment-update-profile"
+  | "if_alliance"
+  | "if_create"
+  | "if_remove"
+  | "if_members"
+  | "if_config"
+  | "if_owner"
+
+  //cw3
+  | "cw3_config"
+  | "cw3_transfer"
+
+  //cw4
+  | "cw4_members"
+
+  //account
+  | "acc_withdraw"
+  | "acc_withdraw_liq"
+  | "acc_profile"
 
   //registrar
-  | "registrar-update-config"
-  | "registrar-update-owner";
+  | "reg_endow_status"
+  | "reg_config"
+  | "reg_owner";
 
 export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
-export type MetaConstructor<K extends AdminProposalTypes, V> = {
+export type MetaConstructor<K extends Templates, V> = {
   type: K;
-  data: K extends AdminProposalTypes ? V : unknown;
+  data: K extends Templates ? V : unknown;
 };
 
 export type FundPreview = Omit<FundDetails, "id">;
@@ -67,29 +52,23 @@ export type SourcePreview = { vaultName: string; usdAmount: number };
 
 /** _shared */
 export type OwnerUpdateMeta = MetaConstructor<
-  "indexfund-owner-update" | "registrar-update-owner",
+  "if_owner" | "reg_owner",
   { owner: string; newOwner: string }
 >;
 /** _indexfund */
 export type AllianceEditMeta = MetaConstructor<
-  "indexfund-alliance-edit",
+  "if_alliance",
   {
     toAddMembers: AllianceMember[];
     toRemoveMembers: AllianceMember[];
     editedMembers: AllianceMember[];
   }
 >;
-export type CreateFundMeta = MetaConstructor<
-  "indexfund-create-fund",
-  FundPreview
->;
-export type RemoveFundMeta = MetaConstructor<
-  "indexfund-remove-fund",
-  FundPreview
->;
+export type CreateFundMeta = MetaConstructor<"if_create", FundPreview>;
+export type RemoveFundMeta = MetaConstructor<"if_remove", FundPreview>;
 
 export type FundMemberUpdateMeta = MetaConstructor<
-  "indexfund-update-fund-members",
+  "if_members",
   {
     fundId: string;
     fundName: string;
@@ -99,57 +78,56 @@ export type FundMemberUpdateMeta = MetaConstructor<
 >;
 
 export type FundConfigUpdateMeta = MetaConstructor<
-  "indexfund-config-update",
+  "if_config",
   DiffSet<FundConfig>
 >;
 
-/** _admin-group */
+/** _cw4 */
 
-export type CWMemberUpdateMeta = MetaConstructor<
-  "admin-group-update-members",
+export type CW4MemberUpdateMeta = MetaConstructor<
+  "cw4_members",
   {
     toAdd: Member[];
     toRemove: string[];
   }
 >;
+
+/** _cw3 */
 export type CW3ConfigUpdateMeta = MetaConstructor<
-  "admin-group-update-cw3-config",
-  DiffSet<CW3ConfigPayload>
+  "cw3_config",
+  DiffSet<FormCW3Config>
 >;
 
 export type FundSendMeta = MetaConstructor<
-  "admin-group-fund-transfer",
+  "cw3_transfer",
   Pick<FundSendPayload, "amount" | "currency" | "recipient">
 >;
 
 /** _endowment */
-export type EndowmentStatusMeta = MetaConstructor<
-  "endowment-update-status",
+export type WithdrawLiqMeta = MetaConstructor<
+  "acc_withdraw_liq",
   {
-    fromStatus: keyof EndowmentStatus;
-    toStatus: EndowmentStatusStrNum;
-    beneficiary?: string;
-  }
->;
-
-export type EndowmentWithdrawMeta = MetaConstructor<
-  "endowment-withdraw",
-  {
-    totalAmount: number;
-    sourcesPreview: SourcePreview[];
     beneficiary: string;
   }
 >;
 
 export type EndowmentProfileUpdateMeta = MetaConstructor<
-  "endowment-update-profile",
+  "acc_profile",
   DiffSet<UpdateProfilePayload>
 >;
 
 /** _registrar */
 export type RegistrarConfigUpdateMeta = MetaConstructor<
-  "registrar-update-config",
+  "reg_config",
   DiffSet<RegistrarConfigPayload>
+>;
+export type EndowmentStatusMeta = MetaConstructor<
+  "reg_endow_status",
+  {
+    fromStatus: keyof EndowmentStatus;
+    toStatus: EndowmentStatusStrNum;
+    beneficiary?: string;
+  }
 >;
 
 export type ProposalMeta =
@@ -162,13 +140,14 @@ export type ProposalMeta =
   | RemoveFundMeta
   | FundMemberUpdateMeta
   | FundConfigUpdateMeta
-  //admin-group
-  | CWMemberUpdateMeta
+  //cw4
+  | CW4MemberUpdateMeta
+  //cw3
   | CW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
-  | EndowmentWithdrawMeta
+  | WithdrawLiqMeta
   | EndowmentProfileUpdateMeta
   //registrar
   | RegistrarConfigUpdateMeta;
@@ -181,14 +160,13 @@ export type ProposalBase = {
 export type FundIdContext = { fundId: string };
 export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
-export type CW3ConfigPayload = {
-  //percent vote to pass poll
+export type FormCW3Config = {
   threshold: number;
-  //poll duration in block height
-  height: number;
+  duration: number;
 };
 export type CW3ConfigValues = ProposalBase &
-  CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
+  FormCW3Config & { initial: FormCW3Config; isTime: boolean };
+
 export type EndowmentUpdateValues = ProposalBase & {
   endowmentAddr: string;
   status: EndowmentStatusStrNum;
@@ -245,6 +223,9 @@ export type RegistrarConfigValues = ProposalBase &
 
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
+
+export type UpdateProfileValues = ProposalBase &
+  UpdateProfilePayload & { initialProfile: UpdateProfilePayload };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

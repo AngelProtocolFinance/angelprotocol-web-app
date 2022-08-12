@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import logDonation from "slices/transaction/logDonation";
@@ -68,8 +67,7 @@ export const sendCosmosDonation = createAsyncThunk(
         //invalidate user balance and endowment balance
         dispatch(
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            /** invalidate future balance queriers */
           ])
         );
       } else {
