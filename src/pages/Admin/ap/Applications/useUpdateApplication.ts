@@ -12,7 +12,7 @@ import { useSetter } from "store/accessors";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { cleanObject } from "helpers/helpers/cleanObject";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();

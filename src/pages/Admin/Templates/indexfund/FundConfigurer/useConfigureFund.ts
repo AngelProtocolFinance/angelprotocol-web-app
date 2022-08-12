@@ -13,8 +13,8 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import { scaleToStr } from "helpers";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { genDiffMeta, getPayloadDiff } from "helpers/helpers";
+import { cleanObject } from "helpers/helpers/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

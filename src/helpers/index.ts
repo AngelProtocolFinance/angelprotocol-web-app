@@ -1,6 +1,3 @@
-export * from "./admin/getPayloadDiff";
-export * from "./admin/cleanObject";
-
 export * from "./createAuthToken";
 export * from "./createNavLinkStyler";
 export * from "./decimal";
