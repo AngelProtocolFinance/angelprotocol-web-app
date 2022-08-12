@@ -7,7 +7,7 @@ import {
   useGetWallet,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
-import { requiredAddress } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
@@ -26,7 +26,9 @@ export default function WalletSubmission() {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: { address: wallet?.address || "" },
-    resolver: yupResolver(Yup.object({ address: requiredAddress("wallet") })),
+    resolver: yupResolver(
+      Yup.object({ address: requiredWalletAddr("wallet") })
+    ),
   });
 
   const { handleSubmit } = methods;

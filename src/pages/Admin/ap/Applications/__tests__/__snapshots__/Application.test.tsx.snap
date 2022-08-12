@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Charity applications review Application preview modal renders 2nd application: "123_Company" 1`] = `
+<div
+  class="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
+  data-testid="preview-form"
+>
+  <h1
+    class="font-heading font-bold text-angel-grey uppercase"
+  >
+    Review Application
+  </h1>
+  <p>
+    <span
+      class="text-angel-grey text-sm uppercase font-bold mb-1"
+    >
+      Application ID:
+    </span>
+    <span
+      class="font-normal text-sm text-angel-grey ml-2"
+    >
+      eafe2aa3-6882-49f9-8f32-bc7f721fb3ab
+    </span>
+  </p>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Name
+    </span>
+    <p
+      class="p-3 text-angel-grey rounded-md bg-light-grey focus:outline-none"
+    >
+      123_Company
+    </p>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Contact Email
+    </span>
+    <p
+      class="p-3 text-angel-grey rounded-md bg-light-grey focus:outline-none"
+    >
+      123_COMPANY_chinadev20@outlook.com
+    </p>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Registration Date
+    </span>
+    <p
+      class="p-3 text-angel-grey rounded-md bg-light-grey focus:outline-none"
+    >
+      Tue Oct 19 2021
+    </p>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Wallet Address
+    </span>
+    <p
+      class="p-3 text-angel-grey rounded-md bg-light-grey focus:outline-none"
+    >
+      juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn
+    </p>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Endowment Agreement
+    </span>
+    <a
+      class="focus:outline-none flex justify-between items-center gap-3 p-3 text-angel-grey rounded-md bg-light-grey overflow-hidden"
+      href="https://charity-registration-documents.s3.amazonaws.com/endowment-agreement/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <span
+        class="w-3/4 truncate"
+      >
+        https://charity-registration-documents.s3.amazonaws.com/endowment-agreement/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png
+      </span>
+      <svg
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 512 512"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+        />
+      </svg>
+    </a>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Proof of Employment
+    </span>
+    <a
+      class="focus:outline-none flex justify-between items-center gap-3 p-3 text-angel-grey rounded-md bg-light-grey overflow-hidden"
+      href="https://charity-registration-documents.s3.amazonaws.com/proof-of-employment/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <span
+        class="w-3/4 truncate"
+      >
+        https://charity-registration-documents.s3.amazonaws.com/proof-of-employment/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png
+      </span>
+      <svg
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 512 512"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+        />
+      </svg>
+    </a>
+  </div>
+  <div
+    class="grid mb-3"
+  >
+    <span
+      class="ml-0.5 text-angel-grey text-md uppercase font-bold mb-1"
+    >
+      Proof of Identity
+    </span>
+    <a
+      class="focus:outline-none flex justify-between items-center gap-3 p-3 text-angel-grey rounded-md bg-light-grey overflow-hidden"
+      href="https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <span
+        class="w-3/4 truncate"
+      >
+        https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png
+      </span>
+      <svg
+        fill="currentColor"
+        height="1em"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 512 512"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+        />
+      </svg>
+    </a>
+  </div>
+  <a
+    class="\`w-full bg-angel-blue text-center tracking-wider p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+    href="/admin/ap-team/proposal/undefined"
+  >
+    Go to Poll
+  </a>
+  <div
+    class="flex justify-center gap-4"
+  >
+    <button
+      class="w-full tracking-wider bg-failed-red disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+      title="Reject"
+      type="submit"
+    >
+      Reject
+    </button>
+    <button
+      class="w-full tracking-wider bg-bright-green disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+      title="Accept"
+      type="submit"
+    >
+      Accept
+    </button>
+  </div>
+</div>
+`;

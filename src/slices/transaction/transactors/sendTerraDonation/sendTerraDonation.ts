@@ -3,8 +3,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
 import { Chain, KYCData, Receiver } from "types/server/aws";
-import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import handleTxError from "helpers/handleTxError";
 import logDonation from "helpers/logDonation";
@@ -92,9 +91,8 @@ export const sendTerraDonation = createAsyncThunk(
 
           //invalidate user balance and endowment balance
           dispatch(
-            invalidateJunoTags([
-              { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-              { type: junoTags.multicall, id: multicallTags.terraBalances },
+            invalidateApesTags([
+              { type: apesTags.custom, id: customTags.chain },
             ])
           );
         } else {

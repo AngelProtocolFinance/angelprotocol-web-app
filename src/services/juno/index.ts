@@ -32,7 +32,7 @@ export const junoApi = createApi({
     junoTags.registrar,
     junoTags.admin,
     junoTags.endowment,
-    junoTags.multicall,
+    junoTags.custom,
   ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({

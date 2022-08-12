@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
 import { StageUpdater } from "slices/transaction/types";
-import { useRequestReceiptMutation } from "services/apes/donations";
+import { useRequestReceiptMutation } from "services/apes";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";

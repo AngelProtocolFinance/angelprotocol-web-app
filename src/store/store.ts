@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apes } from "services/apes/apes";
+import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { countriesApi } from "services/countries";
 import { flipside } from "services/flipslide/flipslide";

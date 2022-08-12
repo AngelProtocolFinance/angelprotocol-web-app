@@ -14,11 +14,7 @@ export type AddressWithFlags = {
 export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };
 
 /** proposals filter */
-export type ProposalGroup =
-  | "indexfund"
-  | "admin-group"
-  | "endowment"
-  | "registrar";
+export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";
 
 export type ProposalGroupOptions = ProposalGroup | "all";
 export type ProposalStatusOptions = ProposalStatus | "all";

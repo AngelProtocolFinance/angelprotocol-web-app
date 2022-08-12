@@ -13,7 +13,7 @@ function TestApp() {
 
 describe("Header test", () => {
   window.scrollTo = jest.fn();
-  test("dapphead routing", async () => {
+  test("Dapphead routing", async () => {
     render(<TestApp />);
 
     // const govText1 = /total staked/i;

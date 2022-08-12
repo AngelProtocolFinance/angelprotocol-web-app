@@ -35,7 +35,7 @@ function TestApp() {
   );
 }
 
-describe("User visits app", () => {
+describe("user visits app", () => {
   window.scrollTo = jest.fn();
   test("App's default page is lazy loaded Marketplace", async () => {
     render(<TestApp />);

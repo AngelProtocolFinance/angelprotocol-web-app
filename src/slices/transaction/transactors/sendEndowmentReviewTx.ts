@@ -6,7 +6,7 @@ import {
   StageUpdater,
   TxOptions,
 } from "slices/transaction/types";
-import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
+import logApplicationReview from "pages/Admin/ap/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import extractFeeAmount from "helpers/extractFeeData";
 import handleTxError from "helpers/handleTxError";
