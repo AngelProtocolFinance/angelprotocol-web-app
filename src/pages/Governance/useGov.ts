@@ -2,7 +2,6 @@ import Decimal from "decimal.js";
 import { useEffect, useMemo, useState } from "react";
 import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 import { usePairSimul } from "services/juno/lp/queriers";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 
 export default function useGov() {
