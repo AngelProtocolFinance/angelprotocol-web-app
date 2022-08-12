@@ -31,6 +31,7 @@ export default function ConnectedWallet(props: WalletState) {
         <span className="pl-2 hidden sm:block border-l border-zinc-50/20 text-sm ">
           {toCurrency(wallet?.displayCoin.balance || 0, 3)}
         </span>
+        <span className="text-sm pl-1">{wallet?.displayCoin.symbol}</span>
       </Popover.Button>
       <Details {...props} />
     </Popover>

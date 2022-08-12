@@ -3,7 +3,7 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { ProviderId, ProviderInfo, SingleConnection } from "./types";
+import { Connection, ProviderId, ProviderInfo } from "./types";
 
 export default function useTerra() {
   const {
@@ -28,7 +28,7 @@ export default function useTerra() {
       }
     : undefined;
 
-  const terraConnections: SingleConnection[] = availableConnections
+  const terraConnections: Connection[] = availableConnections
     .filter(
       (connection) =>
         !(

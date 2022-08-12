@@ -2,7 +2,6 @@ import { Menu } from "@headlessui/react";
 import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Connector from "./Connector";
-import { NetworkSelector } from "./NetworkSelector";
 
 export default function WalletSelector(props: { isLoading: boolean }) {
   const { connections } = useSetWallet();
@@ -20,13 +19,9 @@ export default function WalletSelector(props: { isLoading: boolean }) {
       </Menu.Button>
 
       <Menu.Items className="absolute z-10 bg-zinc-50 w-max p-3 rounded-md mt-2 right-0">
-        {connections.map((connection) =>
-          connection.connections ? (
-            <NetworkSelector {...connection} key={connection.name} />
-          ) : (
-            <Connector {...connection} key={connection.name} />
-          )
-        )}
+        {connections.map((connection) => (
+          <Connector {...connection} key={connection.name} />
+        ))}
       </Menu.Items>
     </Menu>
   );
