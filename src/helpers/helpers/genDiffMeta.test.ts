@@ -16,6 +16,7 @@ describe("genDiffMeta", () => {
     ).toEqual([
       ["a", 2, 1],
       ["b", 1, 2],
+      ["c", undefined, 1],
     ]);
   });
 });
