@@ -35,7 +35,6 @@ export type JunoTags =
   | "admin"
   | "endowment"
   | "registrar"
-  | "multicall"
   | "custom";
 
 /** multicall */

@@ -21,8 +21,8 @@ export default function TransactionsTable(props: {
     return <Tooltip>Failed to get transactions...</Tooltip>;
   }
 
-  if (!props.isError && !props.isLoading && props.transactions.length === 0) {
-    return <Tooltip classes="mt-10">You have not made any donations.</Tooltip>;
+  if (props.transactions.length <= 0) {
+    return <Tooltip classes="mt-10">No transactions found.</Tooltip>;
   }
 
   return (

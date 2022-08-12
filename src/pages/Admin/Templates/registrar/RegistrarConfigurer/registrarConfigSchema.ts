@@ -2,10 +2,10 @@ import * as Yup from "yup";
 import { RegistrarConfigValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { percentString, positiveNumber } from "schemas/number";
-import { address } from "schemas/string";
+import { contractAddr } from "schemas/string";
 import { proposalShape } from "../../proposalShape";
 
-const contractAddrSchema = address("contract").nullable();
+const contractAddrSchema = contractAddr.nullable();
 
 const registrarConfigShape: SchemaShape<RegistrarConfigValues> = {
   ...proposalShape,

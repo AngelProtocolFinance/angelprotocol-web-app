@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apes } from "services/apes/apes";
+import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { flipside } from "services/flipslide/flipslide";
 import { junoApi } from "services/juno";
@@ -24,6 +24,7 @@ export const store = configureStore({
       aws.middleware,
       apes.middleware,
       junoApi.middleware,
+      flipside.middleware,
     ]),
 });
 export type RootState = ReturnType<typeof store.getState>;

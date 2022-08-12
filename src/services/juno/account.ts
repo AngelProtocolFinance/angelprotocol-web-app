@@ -1,5 +1,5 @@
 import { ContractQueryArgs } from "services/types";
-import { Profile, QueryRes } from "types/server/contracts";
+import { BalanceInfo, Profile, QueryRes } from "types/server/contracts";
 import { endowmentTags, junoTags } from "services/juno/tags";
 import { junoApi } from ".";
 import contract_querier from "./contract_querier";
@@ -13,7 +13,14 @@ export const account_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
+    balance: builder.query<BalanceInfo, ContractQueryArgs>({
+      providesTags: [{ type: junoTags.endowment, id: endowmentTags.balance }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<BalanceInfo>) => {
+        return res.data;
+      },
+    }),
   }),
 });
 
-export const { useEndowmentProfileQuery } = account_api;
+export const { useEndowmentProfileQuery, useBalanceQuery } = account_api;

@@ -13,7 +13,7 @@ import {
   ProviderStatuses,
 } from "./types";
 import { Chain, Token } from "types/server/aws";
-import { useChainQuery } from "services/apes/chains";
+import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
@@ -142,7 +142,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
-    isFetching,
     error,
   } = useChainQuery(
     { providerInfo: activeProviderInfo! },
@@ -173,10 +172,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isLoading:
-          providerStatuses.some((x) => x.isLoading) ||
-          isFetching ||
-          isChainLoading,
+        isLoading: providerStatuses.some((x) => x.isLoading) || isChainLoading,
       }}
     >
       <setContext.Provider

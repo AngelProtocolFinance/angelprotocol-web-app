@@ -34,7 +34,6 @@ export default function useSwapEstimator() {
   const [debounced_amount] = useDebouncer(amount, 300);
   const [debounced_slippage] = useDebouncer<string>(slippage, 150);
 
-  //TODO: check also if voter already voted
   useEffect(() => {
     (async () => {
       try {

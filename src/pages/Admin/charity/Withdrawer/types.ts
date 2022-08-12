@@ -1,21 +1,22 @@
-import {
-  VaultField,
-  VaultFieldIds,
-  VaultFieldLimits,
-} from "types/shared/withdraw";
+import { GenericBalance } from "types/server/contracts";
 
-export type WithdrawResource = {
-  accountAddr: string;
-  vaultFields: VaultField[];
-  vaultLimits: VaultFieldLimits;
+export type Amount = {
+  tokenId: string; //
+  value: string;
+  balance: string;
+  type: "cw20" | "native";
 };
-export type WithdrawValues = { [key in VaultFieldIds]: string } & {
+
+export type WithdrawValues = {
+  amounts: Amount[];
+  network: string;
   beneficiary: string;
-  memo?: string;
-  total_amount: number;
+
+  //meta
+  _amounts: string; //collective amounts error
+};
+
+export type Props = {
+  balance: GenericBalance;
 };
 //form meta
-
-export interface WithdrawerProps {
-  account_addr: string;
-}

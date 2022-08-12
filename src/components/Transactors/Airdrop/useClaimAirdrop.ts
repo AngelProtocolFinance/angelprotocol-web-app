@@ -1,6 +1,7 @@
 import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "types/server/aws";
+import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -37,8 +38,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
           invalidateJunoTags([
             { type: junoTags.gov, id: govTags.staker },
             { type: junoTags.gov, id: govTags.halo_balance },
-            //TODO: invalidate user balance and airdrop info
           ]),
+          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
         ],
       })
     );

@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
+import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
@@ -22,10 +23,8 @@ export default function useVote() {
         wallet,
         tx: tx!,
         tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.gov },
-            //TODO: invalidate user balance query
-          ]),
+          invalidateJunoTags([{ type: junoTags.gov }]),
+          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
         ],
       })
     );
