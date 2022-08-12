@@ -1,4 +1,3 @@
-//NOTE: will be in `pages/admin` in admin refactor PR
 export function getPayloadDiff<T>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   // include attr different to prev

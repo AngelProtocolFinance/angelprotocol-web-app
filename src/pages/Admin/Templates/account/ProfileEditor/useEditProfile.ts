@@ -4,9 +4,6 @@ import { UpdateProfileValues } from "pages/Admin/types";
 import { UpdateProfilePayload as UP } from "types/server/contracts";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
-import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
-import { cleanObject } from "pages/Admin/helpers/cleanObject";
-import { getPayloadDiff } from "pages/Admin/helpers/getPayloadDiff";
 import { uploadToIpfs } from "pages/Registration/helpers";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -18,6 +15,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";

@@ -2,8 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
 import { FundConfig } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { cleanObject } from "pages/Admin/helpers/cleanObject";
-import { getPayloadDiff } from "pages/Admin/helpers/getPayloadDiff";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -15,7 +13,8 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import { scaleToStr } from "helpers";
-import genDiffMeta from "../../genDiffMeta";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { cleanObject } from "helpers/admin/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

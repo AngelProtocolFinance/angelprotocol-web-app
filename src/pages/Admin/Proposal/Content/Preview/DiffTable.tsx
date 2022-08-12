@@ -1,4 +1,4 @@
-import { DiffSet } from "pages/Admin/types";
+import { DiffSet } from "types/utils";
 import TableSection, { Cells } from "components/TableSection";
 import PreviewContainer from "./common/PreviewContainer";
 

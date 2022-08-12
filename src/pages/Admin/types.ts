@@ -10,6 +10,7 @@ import {
   RegistrarOwnerPayload,
   UpdateProfilePayload,
 } from "types/server/contracts";
+import { DiffSet } from "types/utils";
 import { denoms } from "constants/currency";
 
 export type AdminParams = { address: string };
@@ -41,7 +42,6 @@ export type Templates =
   | "reg_config"
   | "reg_owner";
 
-export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type MetaConstructor<K extends Templates, V> = {
   type: K;
   data: K extends Templates ? V : unknown;

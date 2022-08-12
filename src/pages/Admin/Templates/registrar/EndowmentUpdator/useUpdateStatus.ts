@@ -6,7 +6,6 @@ import {
   StatusChangePayload,
 } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { cleanObject } from "pages/Admin/helpers/cleanObject";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -17,6 +16,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
+import { cleanObject } from "helpers/admin/cleanObject";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
