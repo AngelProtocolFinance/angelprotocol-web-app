@@ -51,7 +51,7 @@ export default function usePropose() {
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
         absolute_percentage: {
-          percentage: `${Math.floor(data.threshold / 100)}`,
+          percentage: `${data.threshold / 100}`,
         },
       },
       max_voting_period: isTime

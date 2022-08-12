@@ -3,6 +3,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { Tags } from "slices/transaction/types";
 import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
+import { customTags as apesCustomTags, apesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { useLatestBlock } from "services/juno/queriers";
 import {
@@ -33,6 +34,7 @@ export default function PollAction(props: ProposalDetails) {
   function executeProposal() {
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
+
     dispatch(
       sendCosmosTx({
         wallet,
@@ -40,6 +42,7 @@ export default function PollAction(props: ProposalDetails) {
         tagPayloads: getTagPayloads(props.meta),
       })
     );
+
     showModal(TransactionPrompt, {});
   }
 
@@ -143,7 +146,28 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
       break;
 
     case "cw3_transfer":
-      //TODO: invalidate tags for cw3 transfer
+      tagsToInvalidate.push({
+        type: apesTags.custom,
+        id: apesCustomTags.chain,
+      });
+      break;
+
+    case "cw3_config":
+      tagsToInvalidate.push({
+        type: junoTags.admin,
+        id: adminTags.config,
+      });
+      break;
+
+    case "acc_withdraw_liq":
+      tagsToInvalidate.push(
+        {
+          type: junoTags.endowment,
+          id: endowmentTags.balance,
+        },
+        { type: apesTags.custom, id: apesCustomTags.chain }
+        // edge: beneficiary is user wallet
+      );
       break;
 
     case "acc_profile":

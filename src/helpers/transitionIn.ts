@@ -7,6 +7,7 @@ export enum Direction {
   fromFront = "from-front",
 }
 
+//TODO: remove used by marketing site
 export default function transitionIn(cue: boolean, direction: Direction) {
   const init = "relative transition-all duration-700";
   let transition = "";

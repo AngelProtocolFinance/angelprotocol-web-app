@@ -17,7 +17,7 @@ export default function DappMenu() {
         Marketplace
       </NavLink>
       {/* 
-      NOTE: Governance will be reenabled when we relaunch the $HALO token
+      NOTE: governance will be reenabled when we relaunch the $HALO token
       <NavLink to={appRoutes.govern} className={styler}>
         Governance
       </NavLink> */}

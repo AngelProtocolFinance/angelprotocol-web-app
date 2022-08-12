@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 import { AllianceEditValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
-import { requiredAddress } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../proposalShape";
 
 const allianceEditShape: SchemaShape<AllianceEditValues> = {
   ...proposalShape,
-  wallet: requiredAddress("wallet"),
+  wallet: requiredWalletAddr(),
   name: Yup.string().required("name is required"),
   logo: Yup.string()
     .nullable()

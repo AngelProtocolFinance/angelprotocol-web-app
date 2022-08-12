@@ -39,9 +39,34 @@ export type EmbeddedBankMsg = {
 
 /** _account */
 
+export interface CW20 {
+  address: string;
+  amount: string;
+}
+
+export interface GenericBalance {
+  native: Coin[];
+  cw20: CW20[];
+}
+
+export interface BalanceInfo {
+  locked_balance: GenericBalance;
+  liquid_balance: GenericBalance;
+}
+
 export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
+}
+
+export type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
+};
+
+export interface WithdrawLiqPayload {
+  beneficiary: string;
+  assets: GenericBalance;
 }
 
 interface RebalanceDetails {

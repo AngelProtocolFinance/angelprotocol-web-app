@@ -1,55 +1,43 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Decimal from "decimal.js";
 import { FormProvider, useForm } from "react-hook-form";
-import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
-import { useWithdrawConstraints } from "services/juno/multicall/queriers";
+import { Amount, Props, WithdrawValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import ContentLoader from "components/ContentLoader";
-import WithdrawForm from "./WithdrawForm";
-import { withdrawSchema } from "./withdrawSchema";
+import { chainIds } from "constants/chainIds";
+import Form from "./Form";
+import { schema } from "./schema";
 
-export default function Withdrawer(props: WithdrawerProps) {
-  const { withdrawContrains, isLoading, isError } = useWithdrawConstraints(
-    props.account_addr
-  );
-
-  // return <WithdrawSkeleton />;
-
-  if (isLoading) return <WithdrawSkeleton />;
-  if (isError || !withdrawContrains) return <div>error</div>;
-  return (
-    <WithdrawContext
-      accountAddr={props.account_addr}
-      vaultFields={withdrawContrains.vaultFields}
-      vaultLimits={withdrawContrains.vaultLimits}
-    />
-  );
-}
-
-function WithdrawContext(props: WithdrawResource) {
+export default function Withdrawer({ balance: { cw20, native } }: Props) {
   const { wallet } = useGetWallet();
+
+  const cw20s: Amount[] = cw20.map((c) => ({
+    type: "cw20",
+    tokenId: c.address,
+    balance: new Decimal(c.amount).div(1e6).toFixed(4, Decimal.ROUND_DOWN),
+    value: "",
+  }));
+
+  const natives: Amount[] = native.map((n) => ({
+    type: "native",
+    tokenId: n.denom,
+    balance: new Decimal(n.amount).div(1e6).toFixed(4, Decimal.ROUND_DOWN),
+    value: "",
+  }));
+
   const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      total_amount: 0,
-      beneficiary: wallet?.address,
+      beneficiary: wallet?.address || "",
+      network: chainIds.juno,
+      //transform to form format
+      amounts: [...natives, ...cw20s],
     },
-    resolver: yupResolver(withdrawSchema),
+    resolver: yupResolver(schema),
   });
   return (
     <FormProvider {...methods}>
-      <WithdrawForm {...props} />
+      <Form />
     </FormProvider>
-  );
-}
-
-function WithdrawSkeleton() {
-  return (
-    <div className="bg-white-grey grid p-4 pt-0 mt-4 opacity-30">
-      <ContentLoader className="w-full h-12 rounded-md mb-4" />
-      <ContentLoader className="w-full h-12 rounded-md mb-4" />
-      <ContentLoader className="w-full h-12 rounded-md mb-8" />
-      <ContentLoader className="w-full h-12 rounded-md" />
-    </div>
   );
 }

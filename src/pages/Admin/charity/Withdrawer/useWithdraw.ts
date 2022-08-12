@@ -1,38 +1,104 @@
+import { Coin } from "@cosmjs/proto-signing";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
-import { WithdrawResource, WithdrawValues } from "./types";
+import { WithdrawValues } from "./types";
+import { WithdrawLiqMeta } from "pages/Admin/types";
+import { CW20 } from "types/server/contracts";
+import { useAdminResources } from "pages/Admin/Guard";
+import { logWithdrawProposal } from "pages/Admin/charity/Withdrawer/logWithdrawProposal";
 import { invalidateJunoTags } from "services/juno";
-import { junoTags, multicallTags } from "services/juno/tags";
+import { adminTags, junoTags } from "services/juno/tags";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import { adminRoutes, appRoutes } from "constants/routes";
-import useWithrawEstimator from "./useEstimator";
+import Account from "contracts/Account";
+import CW3 from "contracts/CW3";
+import { ap_wallets } from "constants/ap_wallets";
+import { chainIds } from "constants/chainIds";
 
-export default function useWithdraw(resources: WithdrawResource) {
+export default function useWithdraw() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { tx, wallet } = useWithrawEstimator(resources);
+  const { cw3, endowment } = useAdminResources();
+  const { wallet } = useGetWallet();
+  const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
 
-  function withdraw() {
+  function withdraw(data: WithdrawValues) {
+    //filter + map
+    const [cw20s, natives] = data.amounts.reduce(
+      (result, amount) => {
+        if (amount.type === "cw20") {
+          result[0].push({
+            address: amount.tokenId,
+            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+          });
+        } else {
+          result[1].push({
+            denom: amount.tokenId,
+            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+          });
+        }
+        return result;
+      },
+      [[], []] as [CW20[], Coin[]]
+    );
+
+    const isJuno = data.network === chainIds.juno;
+    const account = new Account(wallet, endowment);
+    const msg = account.createEmbeddedWithdrawLiqMsg({
+      beneficiary:
+        //if not juno, send to ap wallet (juno)
+        isJuno ? data.beneficiary : ap_wallets.juno,
+      assets: {
+        cw20: cw20s,
+        native: natives,
+      },
+    });
+
+    const meta: WithdrawLiqMeta = {
+      type: "acc_withdraw_liq",
+      data: {
+        beneficiary: data.beneficiary,
+      },
+    };
+
+    const cw3contract = new CW3(wallet, cw3);
+    //proposal meta for preview
+    const proposal = cw3contract.createProposalMsg(
+      "withdraw proposal",
+      `withdraw from endowment: ${endowment}`,
+      [msg],
+      JSON.stringify(meta)
+    );
+
     dispatch(
       sendCosmosTx({
         wallet,
-        tx: tx!,
+        msgs: [proposal],
         tagPayloads: [
           invalidateJunoTags([
-            { type: junoTags.multicall, id: multicallTags.endowmentBalance },
-            { type: junoTags.multicall, id: multicallTags.junoBalances },
+            //no need to invalidate balance, since this is just proposal
+            { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: {
-          url: `${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
-          description: "Go to proposals",
-        },
+        successLink: proposalLink,
         successMessage: "Withdraw proposal successfully created!",
+        setLogProcessor: isJuno
+          ? undefined //no need to POST to AWS if destination is juno
+          : (rawLog) =>
+              //will run if sendCosmos is success
+              logWithdrawProposal({
+                rawLog,
+                endowment_multisig: cw3,
+                proposal_chain_id: chainIds.juno,
+                target_chain: data.network,
+                target_wallet: data.beneficiary,
+              }),
       })
     );
   }

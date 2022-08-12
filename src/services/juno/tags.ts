@@ -4,7 +4,6 @@ export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",
   admin: "admin",
   indexfund: "indexfund",
-  multicall: "multicall",
   endowment: "endowment",
   registrar: "registrar",
   custom: "custom",
@@ -42,13 +41,7 @@ export enum registrarTags {
 
 export enum endowmentTags {
   profile = "profile",
-}
-
-export enum multicallTags {
-  airdrop = "airdrop",
-  endowmentBalance = "endowmentBalance",
-  junoBalances = "junoBalances",
-  terraBalances = "terraBalances",
+  balance = "balance",
 }
 
 export enum customTags {
