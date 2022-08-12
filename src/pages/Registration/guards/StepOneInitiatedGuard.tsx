@@ -10,13 +10,10 @@ import routes from "../routes";
  * to access the component passed in "props.children", otherwise navigates to /app/register/dashboard page
  */
 export function StepOneInitiatedGuard(props: any) {
-  const {
-    data: charity = placeHolderCharity,
-    isLoading,
-    isFetching,
-  } = useRegistrationQuery("");
+  const { data: charity = placeHolderCharity, isLoading } =
+    useRegistrationQuery("");
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <RegLoader />;
   }
 

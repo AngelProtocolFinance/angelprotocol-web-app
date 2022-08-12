@@ -38,6 +38,62 @@ export type EmbeddedBankMsg = {
 };
 
 /** _account */
+
+export interface CW20 {
+  address: string;
+  amount: string;
+}
+
+export interface GenericBalance {
+  native: Coin[];
+  cw20: CW20[];
+}
+
+export interface BalanceInfo {
+  locked_balance: GenericBalance;
+  liquid_balance: GenericBalance;
+}
+
+export interface DepositPayload {
+  locked_percentage: string; //"0.7"
+  liquid_percentage: string; //"0.3"
+}
+
+export type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
+};
+
+export interface WithdrawLiqPayload {
+  beneficiary: string;
+  assets: GenericBalance;
+}
+
+interface RebalanceDetails {
+  rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
+  locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
+  interest_distribution: string; // % of Locked acct interest earned to be distributed to the Liquid Acct
+  locked_principle_to_liquid: boolean; // should Locked acct principle be distributed to the Liquid Acct?
+  principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
+}
+
+interface StrategyComponent {
+  vault: string; // Vault SC Address
+  locked_percentage: string; // percentage of funds to invest
+  liquid_percentage: string; // percentage of funds to invest
+}
+
+export interface EndowmentDetails {
+  owner: string;
+  beneficiary: string;
+  withdraw_before_maturity: boolean;
+  maturity_time?: number;
+  maturity_height?: number;
+  strategies: StrategyComponent[];
+  rebalance: RebalanceDetails;
+  guardians: string[];
+}
+
 export interface Profile {
   name: string;
   overview: string;
@@ -99,21 +155,28 @@ export interface UpdateProfilePayload {
   endow_type?: string;
 }
 
-/** _admin */
+/** _cw3 */
+
+type Duration = { time: number } | { height: number };
+
+type AbsolutePercentage = { absolute_percentage: { percentage: string } };
+
+type PercentageRes = {
+  absolute_percentage: {
+    percentage: string; //"0.5"
+    total_weight: number; //2
+  };
+};
+
+type ThresholdRes = PercentageRes; // | AbsoluteCount | Quorum;
+type Threshold = AbsolutePercentage; // | AbsoluteCount | Quorum;
+
 export type PageOptions = { limit?: number; start_before?: number };
+
 export type VotesPageOptions = {
   proposal_id: number;
   limit?: number;
   start_after?: number;
-};
-
-export type Member = {
-  addr: string;
-  weight: number;
-};
-
-export type MemberRes = {
-  members: Member[];
 };
 
 export type ProposalsRes = {
@@ -127,6 +190,8 @@ export type ProposalStatus =
   | "passed"
   | "executed";
 
+export type Expiration = { at_time: number } | { at_height: number };
+
 export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
@@ -134,28 +199,22 @@ export type Proposal = {
   meta?: string; //JSON string that contains preview metadata
   msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
-  expires: { at_height: number };
-  threshold: {
-    //others absolute account, threshold quourum
-    absolute_percentage: {
-      percentage: string; //"0.5"
-      total_weight: number; //2
-    };
-  };
+  expires: Expiration;
+  threshold: ThresholdRes;
 };
 
 export type CW3Config = {
   group_addr: string; //"juno123abc.."
-  threshold: {
-    absolute_percentage: {
-      percentage: string; //"0.5"
-    };
-  };
-  max_voting_period: {
-    height: number; //1000
-  };
-  isPlacholder?: true;
+  threshold: Threshold;
+  max_voting_period: Duration;
   //...future needed attr
+};
+
+export type CW3ConfigPayload = {
+  //percent vote to pass poll
+  threshold: Threshold;
+  //poll duration in block height
+  max_voting_period: Duration;
 };
 
 export type AdminVoteInfo = {
@@ -164,7 +223,20 @@ export type AdminVoteInfo = {
   weight: number; //1
 };
 
-export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
+/** _cw4 */
+
+export type Member = {
+  addr: string;
+  weight: number;
+};
+
+export type InquiredMember = {
+  weight: number | null;
+};
+
+export type MemberRes = {
+  members: Member[];
+};
 
 /** _governance */
 export type PollStatus =

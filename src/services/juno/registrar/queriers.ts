@@ -22,9 +22,9 @@ export function useEndowmentStatus(address: string, skip = false) {
 }
 
 export function useRegistrarConfig() {
-  const { useConfigQuery } = registrar_api;
+  const { useRegistrarConfigQuery } = registrar_api;
   const { contract } = useContract<R, T>(Registrar);
-  const { data, isError, isLoading, isFetching } = useConfigQuery(
+  const { data, isError, isLoading, isFetching } = useRegistrarConfigQuery(
     contract.config
   );
 

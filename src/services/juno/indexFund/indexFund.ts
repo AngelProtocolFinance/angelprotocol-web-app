@@ -35,7 +35,7 @@ export const indexFund_api = junoApi.injectEndpoints({
         return res.data.alliance_members;
       },
     }),
-    config: builder.query<IndexFundConfig, ContractQueryArgs>({
+    indexFundConfig: builder.query<IndexFundConfig, ContractQueryArgs>({
       providesTags: [{ type: junoTags.indexfund, id: indexfundTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<IndexFundConfig>) => {

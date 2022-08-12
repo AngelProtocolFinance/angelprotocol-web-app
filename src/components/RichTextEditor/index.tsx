@@ -13,8 +13,6 @@ export default function RichTextEditor<T extends FieldValues>(props: {
     field: { value, onChange },
   } = useController<T>({ name: props.fieldName });
 
-  console.log(value);
-
   return (
     <>
       <RichText

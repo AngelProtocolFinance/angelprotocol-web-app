@@ -24,7 +24,7 @@ export const registrar_api = junoApi.injectEndpoints({
         return res.data.endowments;
       },
     }),
-    config: builder.query<RegistrarConfig, ContractQueryArgs>({
+    registrarConfig: builder.query<RegistrarConfig, ContractQueryArgs>({
       providesTags: [{ type: junoTags.registrar, id: registrarTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {

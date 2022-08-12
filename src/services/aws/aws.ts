@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
+import { APIs } from "constants/urls";
 import { awsTags } from "./tags";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
-    baseUrl: aws_endpoint,
+    baseUrl: APIs.aws,
     mode: "cors",
   }),
   // current default for all endpoints, change if necessary
