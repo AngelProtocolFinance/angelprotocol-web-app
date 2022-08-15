@@ -18,7 +18,7 @@ export default function Applications() {
   }
 
   return (
-    <div className="px-3 pb-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
+    <div className="px-3 pb-3 grid grid-rows-[auto_1fr] bg-white/10 shadow-inner rounded-md">
       {(data.length > 0 && (
         <div className="scroll-hidden p-3 overflow-auto ">
           <div className="flex flex-row justify-between mb-10">

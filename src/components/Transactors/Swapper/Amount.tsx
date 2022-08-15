@@ -31,7 +31,7 @@ export default function Amount() {
 
   return (
     <div className="grid mt-2">
-      <div className="grid grid-cols-1a mb-1">
+      <div className="grid grid-cols-[1fr_auto] mb-1">
         {settings_shown && <Slippage />}
         <button
           onClick={toggle_settings}
@@ -44,7 +44,7 @@ export default function Amount() {
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-a1 text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
+      <div className="grid grid-cols-[auto_1fr] text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>

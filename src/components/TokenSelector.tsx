@@ -1,136 +1,86 @@
-import { FC } from "react";
-import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
-import Select, {
-  ControlProps,
-  MenuListProps,
-  MenuProps,
-  NoticeProps,
-  OptionProps,
-  SingleValueProps,
-  ValueContainerProps,
-} from "react-select";
+import { Combobox } from "@headlessui/react";
+import { useState } from "react";
+import { Path, useController } from "react-hook-form";
 import { Token } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Icon from "./Icon";
 
-export default function TokenSelector<T extends FieldValues>(props: {
-  classes?: string;
+type Base = { token: Token };
+export default function TokenSelector<T extends Base>(props: {
   fieldName: Path<T>;
 }) {
   const { wallet } = useGetWallet();
-  const { control } = useFormContext<T>();
+  const {
+    field: { onChange: onTokenChange, value: token },
+  } = useController<T>({ name: props.fieldName });
+
   const coins = wallet?.coins || [];
+  const [symbol, setSymbol] = useState("");
+
+  const filteredCoins =
+    symbol === ""
+      ? coins
+      : coins.filter((coin) => {
+          return coin.symbol.includes(symbol.toLowerCase());
+        });
 
   return (
-    <Controller
-      name={props.fieldName}
-      control={control}
-      render={({ field: { value, onChange } }) => {
-        return (
-          <Select
-            className={props.classes}
-            value={value}
-            onChange={onChange}
-            options={coins}
-            isDisabled={coins.length <= 1}
-            getOptionLabel={getOptionLabel}
-            noOptionsMessage={(obj) => `${obj.inputValue} not found`}
-            components={{
-              Control,
-              ValueContainer,
-              SingleValue,
-              IndicatorSeparator: null,
-              Menu,
-              MenuList,
-              Option,
-              NoOptionsMessage,
-            }}
-          />
-        );
-      }}
-    />
+    <Combobox
+      value={token}
+      onChange={onTokenChange}
+      as="div"
+      className="relative flex items-center gap-1 w-full"
+    >
+      <img
+        alt=""
+        src={(token as Token).logo}
+        className="w-6 h-6 object-contain "
+      />
+      <Combobox.Input
+        disabled={coins.length <= 1}
+        className="w-16 text-center text-sm focus:outline-none bg-transparent"
+        displayValue={(coin: Token) => coin.symbol}
+        onChange={(event) => setSymbol(event.target.value)}
+      />
+
+      {coins.length > 1 && (
+        <Combobox.Button className="">
+          {({ open }) => <Icon type={open ? "Down" : "CaretLeft"} />}
+        </Combobox.Button>
+      )}
+
+      <Combobox.Options className="absolute top-0 right-0 mt-10 max-h-60 w-max overflow-auto rounded-md bg-zinc-50 shadow-lg focus:outline-none">
+        {filteredCoins.length === 0 && symbol !== "" ? (
+          <div className="relative cursor-default select-none py-2 px-4 text-zinc-700 text-sm">
+            {symbol} not found
+          </div>
+        ) : (
+          filteredCoins.map((coin) => (
+            <Combobox.Option
+              key={coin.token_id}
+              className={
+                "flex items-center gap-2 p-3 hover:bg-sky-500/10 cursor-pointer"
+              }
+              value={coin}
+            >
+              {({ selected }) =>
+                !selected ? (
+                  <>
+                    <img
+                      alt=""
+                      src={coin.logo}
+                      className="w-5 h-5 object-contain"
+                    />
+                    <span className={`text-sm text-zinc-600`}>
+                      {coin.symbol}
+                    </span>
+                  </>
+                ) : null
+              }
+            </Combobox.Option>
+          ))
+        )}
+      </Combobox.Options>
+    </Combobox>
   );
 }
-
-const Control: FC<ControlProps<Token>> = ({
-  children,
-  innerProps,
-  innerRef,
-}) => {
-  return (
-    <div ref={innerRef} {...innerProps} className="relative flex gap-2">
-      {children}
-    </div>
-  );
-};
-
-const ValueContainer: FC<ValueContainerProps<Token>> = ({
-  innerProps,
-  children,
-}) => (
-  <div {...innerProps} className="flex text-sm">
-    {children}
-  </div>
-);
-
-const SingleValue: FC<SingleValueProps<Token>> = ({
-  children,
-  data,
-  innerProps,
-}) => {
-  return (
-    <div {...innerProps} className="flex gap-2 items-center">
-      <img src={data.logo} alt="" className="w-6 h-6 object-contain" />
-      <p>{children}</p>
-    </div>
-  );
-};
-
-const getOptionLabel = (option: Token) => option.symbol;
-const Option: FC<OptionProps<Token>> = ({
-  data: option,
-  innerRef,
-  innerProps,
-  children,
-}) => {
-  return (
-    <div
-      ref={innerRef}
-      {...innerProps}
-      className="w-full flex items-center gap-2 p-2 pr-4 hover:bg-angel-blue cursor-pointer"
-    >
-      <img src={option.logo} alt="" className="w-6 h-6 object-contain" />
-      <p className="text-angel-grey text-sm">{children}</p>
-    </div>
-  );
-};
-const Menu: FC<MenuProps<Token>> = ({ innerProps, innerRef, children }) => {
-  return (
-    <div ref={innerRef} {...innerProps} className="absolute right-0 shadow-lg">
-      {children}
-    </div>
-  );
-};
-
-const MenuList: FC<MenuListProps<Token>> = ({
-  innerProps,
-  innerRef,
-  children,
-}) => {
-  return (
-    <div
-      ref={innerRef}
-      {...innerProps}
-      className="bg-white scroll-hidden max-h-116 overflow-y-auto rounded-md min-w-max"
-    >
-      {children}
-    </div>
-  );
-};
-
-const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
-  return (
-    <div {...innerProps} className="text-sm text-red-400/70 p-2">
-      {children}
-    </div>
-  );
-};

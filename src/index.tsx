@@ -15,8 +15,6 @@ const LoaderComponent = () => (
   <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
-// Readin chain options as per the official docs:
-// https://docs.terra.money/docs/develop/wallet-provider/wallet-provider-tutorial.html#wrap-your-app-in-walletprovider
 getChainOptions().then((chainOptions) =>
   ReactDOM.render(
     <StrictMode>

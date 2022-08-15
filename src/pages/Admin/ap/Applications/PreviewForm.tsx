@@ -21,7 +21,7 @@ export default function PreviewForm({
 
   return (
     <div
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
+      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
       data-testid="preview-form"
     >
       <h1 className="font-heading font-bold text-angel-grey uppercase">
