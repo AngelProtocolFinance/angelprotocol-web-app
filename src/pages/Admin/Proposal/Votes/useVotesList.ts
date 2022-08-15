@@ -1,17 +1,20 @@
 import { VotesPageOptions } from "types/server/contracts";
 import { useVotesQuery } from "services/juno/cw3";
-import CW3 from "contracts/CW3";
+import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useAdminResources } from "../../Guard";
 
+//contract.voteList(genVoteListPageOptions(pollId, pageNum))
 export const VOTES_PER_PAGE = 15;
 export function useVoteList(pollId: number, pageNum?: number) {
   const { cw3 } = useAdminResources();
-  const contract = new CW3(undefined, cw3);
   const {
     data = [],
     isFetching,
     isLoading,
-  } = useVotesQuery(contract.voteList(genVoteListPageOptions(pollId, pageNum)));
+  } = useVotesQuery({
+    address: cw3,
+    msg: queryObject.cw3Votes(genVoteListPageOptions(pollId, pageNum)),
+  });
   return { votes: data, isVoteListLoading: isFetching || isLoading };
 }
 

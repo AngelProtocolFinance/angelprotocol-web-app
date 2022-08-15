@@ -13,8 +13,7 @@ type SC =
   | "loop_factory"
   | "loop_router"
   | "loop_haloust_pair"
-  | "loop_haloust_lp"
-  | "multicall";
+  | "loop_haloust_lp";
 
 type Contracts = {
   [key in SC]: string;
@@ -47,9 +46,6 @@ export const contracts: Contracts = IS_TEST
       loop_router: "",
       loop_haloust_pair: "",
       loop_haloust_lp: "",
-
-      //multicall
-      multicall: "terra1z9p02s5fkasx5qxdaes6mfyf2gt3kxuhcsd4va",
     }
   : {
       //MAINNET CONTRACTS
@@ -75,7 +71,4 @@ export const contracts: Contracts = IS_TEST
       loop_router: "",
       loop_haloust_pair: "terra1yjg0tuhc6kzwz9jl8yqgxnf2ctwlfumnvscupp",
       loop_haloust_lp: "terra17pzt8t2hmx6587zn6yh5ensylm3s9mm4m72v2n",
-
-      //multicall
-      multicall: "terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5",
     };

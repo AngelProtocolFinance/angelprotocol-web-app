@@ -6,18 +6,17 @@ import { useAdminResources } from "pages/Admin/Guard";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useCw3ConfigQuery } from "services/juno/cw3";
-import CW3 from "contracts/CW3";
+import { queryObject } from "services/juno/queryContract/queryObjects";
 import CW3ConfigForm from "./Form";
 import { schema } from "./schema";
 
 export default function Config() {
   const { cw3 } = useAdminResources();
-  const contract = new CW3(undefined, cw3);
   const {
     data: cw3Config,
     isLoading,
     isError,
-  } = useCw3ConfigQuery(contract.config);
+  } = useCw3ConfigQuery({ address: cw3, msg: queryObject.cw3Config });
   if (isLoading) return <FormSkeleton />;
   if (isError || !cw3Config)
     return <FormError errorMessage="failed to get contract config" />;
