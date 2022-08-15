@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "GENERATE_SOURCEMAP=false react-app-rewired --max_old_space_size=4096 build",
-    "analyze": "GENERATE_SOURCEMAP=true react-app-rewired --max_old_space_size=4096 build && source-map-explorer 'build/static/js/*.js'",
+    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
