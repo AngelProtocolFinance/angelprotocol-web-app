@@ -4,10 +4,10 @@ import {
   MultiContractQueryArgs,
 } from "services/types";
 import { Airdrops } from "types/server/aws";
+import { queryObject } from "services/juno/queryContract/queryObjects";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
-import Account from "./Account";
 import Airdrop from "./Airdrop";
 import Registrar from "./Registrar";
 
@@ -24,7 +24,7 @@ export default class Multicall {
     this.balanceAndRates = (endowmentAddr) => ({
       address: contracts.multicall,
       msg: this.constructAggregatedQuery([
-        new Account(wallet, endowmentAddr).balance,
+        { address: endowmentAddr, msg: queryObject.accBalance },
         this.registrarContract.vaultsRate,
       ]),
     });
