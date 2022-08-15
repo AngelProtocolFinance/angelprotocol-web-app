@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { Profile as IProfile } from "types/server/contracts";
 import { useEndowmentProfileQuery } from "services/juno/account";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
@@ -28,10 +27,7 @@ export default function Profile() {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(
-    { address: address!, msg: queryObject.accProfile },
-    { skip: !address }
-  );
+  } = useEndowmentProfileQuery(address!, { skip: !address });
 
   if (isLoading) return <Skeleton />;
   if (isError || !profile) return <PageError />;

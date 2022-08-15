@@ -7,7 +7,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useEndowmentProfileQuery } from "services/juno/account";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
@@ -19,10 +18,7 @@ export default function ProfileEditor() {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery({
-    address: endowment,
-    msg: queryObject.accProfile,
-  });
+  } = useEndowmentProfileQuery(endowment);
 
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;

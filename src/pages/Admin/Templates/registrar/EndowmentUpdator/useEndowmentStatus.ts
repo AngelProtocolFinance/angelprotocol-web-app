@@ -1,4 +1,4 @@
-import { useEndowmentsQuery } from "services/juno/registrar/registrar";
+import { useEndowmentsQuery } from "services/juno/registrar";
 
 export function useEndowmentStatus(endowAddr: string, skip?: boolean) {
   return useEndowmentsQuery(

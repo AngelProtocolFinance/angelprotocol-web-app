@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 import { useEffect, useMemo, useState } from "react";
-import { usePairSimulQuery } from "services/juno/lp/lp";
+import { usePairSimulQuery } from "services/juno/lp";
 import { simulation } from "services/juno/lp/placeholders";
 // import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 // import { usePairSimul } from "services/juno/lp/queriers";

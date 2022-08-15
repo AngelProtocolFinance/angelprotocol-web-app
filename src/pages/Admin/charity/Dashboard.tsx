@@ -1,5 +1,4 @@
 import { useBalanceQuery } from "services/juno/account";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import Icon from "components/Icon";
 import { useAdminResources } from "../Guard";
 import Account from "./Account";
@@ -7,11 +6,7 @@ import Transactions from "./Transactions";
 
 export default function Dashboard() {
   const { endowment } = useAdminResources();
-  const {
-    data: balance,
-    isLoading,
-    isError,
-  } = useBalanceQuery({ address: endowment, msg: queryObject.accBalance });
+  const { data: balance, isLoading, isError } = useBalanceQuery(endowment);
 
   if (isLoading) {
     return (

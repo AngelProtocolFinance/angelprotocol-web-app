@@ -1,4 +1,4 @@
-import { useCategorizedEndowmentsQuery } from "services/juno/registrar/registrar";
+import { useCategorizedEndowmentsQuery } from "services/juno/registrar";
 import Loader from "components/Loader";
 import Banner from "./Banner";
 import Index from "./Index";

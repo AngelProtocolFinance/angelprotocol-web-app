@@ -1,4 +1,4 @@
-import { useRegistrarConfigQuery } from "./registrar";
+import { useRegistrarConfigQuery } from ".";
 
 export function useRegistrarConfig() {
   const { data, isError, isLoading, isFetching } =

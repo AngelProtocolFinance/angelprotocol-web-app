@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { PollFilterOptions } from "../types";
-import { useGovPollsQuery } from "services/juno/gov/gov";
+import { useGovPollsQuery } from "services/juno/gov";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 
