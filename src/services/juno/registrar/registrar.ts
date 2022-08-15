@@ -1,45 +1,39 @@
-import { ContractQueryArgs } from "services/types";
-import {
-  CategorizedEndowments,
-  EndowmentEntry,
-  QueryRes,
-  RegistrarConfig,
-} from "types/server/contracts";
+import { Args, Res, Result } from "../queryContract/types";
+import { CategorizedEndowments } from "types/server/contracts";
 import { junoTags, registrarTags } from "services/juno/tags";
+import { contracts } from "constants/contracts";
 import { junoApi } from "..";
-import contract_querier from "../contract_querier";
+import { genQueryPath } from "../queryContract/genQueryPath";
 
-type EndowmentListRes = {
-  endowments: EndowmentEntry[];
-};
-
+const reg = contracts.registrar;
 export const registrar_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    endowments: builder.query<EndowmentEntry[], ContractQueryArgs>({
+    endowments: builder.query<Result<"regEndowList">, Args<"regEndowList">>({
       providesTags: [
         { type: junoTags.registrar, id: registrarTags.endowments },
       ],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<EndowmentListRes>) => {
+      query: (args) => genQueryPath("regEndowList", args, reg),
+      transformResponse: (res: Res<"regEndowList">) => {
         return res.data.endowments;
       },
     }),
-    registrarConfig: builder.query<RegistrarConfig, ContractQueryArgs>({
+    registrarConfig: builder.query<Result<"regConfig">, Args<"regConfig">>({
       providesTags: [{ type: junoTags.registrar, id: registrarTags.config }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<RegistrarConfig>) => {
+      query: (args) => genQueryPath("regConfig", args, reg),
+      transformResponse: (res: Res<"regConfig">) => {
         return res.data;
       },
     }),
+
     categorizedEndowments: builder.query<
-      CategorizedEndowments,
-      ContractQueryArgs
+      Result<"regCategorizedEndows">,
+      Args<"regCategorizedEndows">
     >({
       providesTags: [
         { type: junoTags.registrar, id: registrarTags.endowments },
       ],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<EndowmentListRes>) => {
+      query: (args) => genQueryPath("regConfig", args, reg),
+      transformResponse: (res: Res<"regCategorizedEndows">) => {
         return res.data.endowments.reduce((result, profile) => {
           const { un_sdg, tier } = profile;
           if (un_sdg === undefined || tier === "Level1") {

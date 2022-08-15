@@ -9,6 +9,9 @@ export const queryObject: {
   regEndowList(options) {
     return { endowment_list: options };
   },
+  regCategorizedEndows(options) {
+    return { endowment_list: options };
+  },
   regVaultRates: { approved_vault_rate_list: {} },
   regConfig: { config: {} },
 

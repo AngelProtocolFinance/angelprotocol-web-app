@@ -1,13 +1,8 @@
-import { contracts } from "constants/contracts";
-import { queryObject } from "../queryContract/queryObjects";
 import { useRegistrarConfigQuery } from "./registrar";
 
 export function useRegistrarConfig() {
-  const { data, isError, isLoading, isFetching } = useRegistrarConfigQuery({
-    address: contracts.registrar,
-    msg: queryObject.regConfig,
-  });
-
+  const { data, isError, isLoading, isFetching } =
+    useRegistrarConfigQuery(null);
   return {
     registrarConfig: data,
     isError: isError,

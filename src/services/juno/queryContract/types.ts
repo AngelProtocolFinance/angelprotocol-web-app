@@ -5,6 +5,7 @@ import {
   CW3Config,
   CW20Balance,
   CW20Info,
+  CategorizedEndowments,
   EndowmentDetails,
   EndowmentEntry,
   EndowmentQueryOptions,
@@ -25,12 +26,19 @@ import {
   VotesPageOptions,
 } from "types/server/contracts";
 
+type EndowmentListRes = { endowments: EndowmentEntry[] };
+
 type Addr = { addr: string };
 export interface ContractQueries {
   regEndowList: {
     args: EndowmentQueryOptions;
-    res: Q<{ endowments: EndowmentEntry[] }>;
+    res: Q<EndowmentListRes>;
     result: EndowmentEntry[];
+  };
+  regCategorizedEndows: {
+    args: EndowmentQueryOptions;
+    res: Q<EndowmentListRes>;
+    result: CategorizedEndowments;
   };
   regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
