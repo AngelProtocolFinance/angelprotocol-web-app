@@ -110,12 +110,15 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
   const cw20BalancePromises = chain.tokens
     .filter((x) => x.type === "cw20")
     .map((x) =>
-      queryContract("cw20Balance", x.token_id, { addr: walletAddress }).then(
-        (data) => ({
-          denom: x.token_id,
-          amount: data.balance,
-        })
-      )
+      queryContract(
+        "cw20Balance",
+        x.token_id,
+        { addr: walletAddress },
+        chain.lcd_url
+      ).then((data) => ({
+        denom: x.token_id,
+        amount: data.balance,
+      }))
     );
 
   const cw20Balances = await Promise.all(cw20BalancePromises);
