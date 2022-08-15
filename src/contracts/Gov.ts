@@ -1,5 +1,4 @@
 import Decimal from "decimal.js";
-import { ContractQueryArgs as CQA } from "services/types";
 import { Vote } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
@@ -7,42 +6,11 @@ import CW20 from "./CW20";
 import Contract from "./Contract";
 
 export default class Gov extends Contract {
-  haloBalance: CQA;
-  haloInfo: CQA;
-  staker: CQA;
-  gov_state: CQA;
-  config: CQA;
-  polls: CQA;
-
   private cw20Contract: CW20;
 
   constructor(wallet: WalletState | undefined) {
     super(wallet, contracts.gov);
-
     this.cw20Contract = new CW20(wallet, contracts.halo_token);
-    this.haloInfo = this.cw20Contract.info;
-    this.haloBalance = this.cw20Contract.balance(this.contractAddress);
-
-    //query args
-    this.staker = {
-      address: this.contractAddress,
-      msg: { staker: { address: this.walletAddress } },
-    };
-
-    this.gov_state = {
-      address: this.contractAddress,
-      msg: { state: {} },
-    };
-
-    this.config = {
-      address: this.contractAddress,
-      msg: { config: {} },
-    };
-
-    this.polls = {
-      address: this.contractAddress,
-      msg: { polls: {} },
-    };
   }
 
   createGovStakeMsg(amount: number | string) {
@@ -89,6 +57,3 @@ export default class Gov extends Contract {
     });
   }
 }
-
-export interface G extends Gov {}
-export type TG = typeof Gov;

@@ -5,9 +5,9 @@ import {
   IndexFundConfig,
   QueryRes,
 } from "types/server/contracts";
-import { junoApi } from "..";
-import contract_querier from "../contract_querier";
-import { indexfundTags, junoTags } from "../tags";
+import { junoApi } from ".";
+import contract_querier from "./contract_querier";
+import { indexfundTags, junoTags } from "./tags";
 
 type AllianceMembersRes = {
   alliance_members: AllianceMember[];
@@ -44,3 +44,9 @@ export const indexFund_api = junoApi.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useFundListQuery,
+  useAllianceMembersQuery,
+  useIndexFundConfigQuery,
+} = indexFund_api;

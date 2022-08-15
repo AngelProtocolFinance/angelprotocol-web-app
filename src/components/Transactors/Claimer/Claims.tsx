@@ -7,7 +7,6 @@ import { denoms, symbols } from "constants/currency";
 
 export default function Claims() {
   const staker = useGovStaker();
-
   const total_claims = useMemo(
     () =>
       staker.claims

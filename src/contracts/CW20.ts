@@ -1,31 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import Decimal from "decimal.js";
-import { ContractQueryArgs } from "services/types";
 import { EmbeddedBankMsg } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
-  balance: (address: string) => ContractQueryArgs;
-  info: ContractQueryArgs;
-
-  constructor(wallet: WalletState | undefined, cw20ContractAddr: string) {
-    super(wallet, cw20ContractAddr);
-
-    this.info = {
-      address: this.contractAddress,
-      msg: {
-        token_info: {},
-      },
-    };
-
-    this.balance = (address) => ({
-      address: this.contractAddress,
-      msg: { balance: { address } },
-    });
-  }
-
   createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
     return {
       bank: {

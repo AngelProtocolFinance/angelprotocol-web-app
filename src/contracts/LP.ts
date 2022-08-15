@@ -7,30 +7,6 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  simul: ContractQueryArgs;
-
-  constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.loop_haloust_pair);
-
-    //query args
-    this.simul = {
-      address: this.contractAddress,
-      msg: {
-        simulation: {
-          offer_asset: {
-            info: {
-              native_token: {
-                denom: wallet?.chain.native_currency.token_id,
-              },
-            },
-            amount: "1000000",
-          },
-          block_time: Math.round(new Date().getTime() / 1000 + 10),
-        },
-      },
-    };
-  }
-
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
     const offer_uamount = new Decimal(offer_amount)
@@ -119,6 +95,3 @@ export default class LP extends Contract {
     });
   }
 }
-
-export interface L extends LP {}
-export type T = typeof LP;

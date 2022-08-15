@@ -4,7 +4,7 @@ import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain } from "types/server/aws";
 import contract_querier from "services/juno/contract_querier";
-import CW20 from "contracts/CW20";
+import { queryObject } from "services/juno/queryContract/queryObjects";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
@@ -20,7 +20,7 @@ export const apes = createApi({
   endpoints: (builder) => ({
     chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
       providesTags: [{ type: apesTags.custom, id: customTags.chain }],
-      async queryFn(args, queryApi, extraOptions, baseQuery) {
+      async queryFn(args) {
         try {
           const { address, chainId } = args.providerInfo;
           const chainRes = await fetch(`${APIs.apes}/chain/${chainId}`);
@@ -112,9 +112,10 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
     .filter((x) => x.type === "cw20")
     .map((x) =>
       fetch(
-        `${chain.lcd_url}${contract_querier(
-          new CW20(undefined, x.token_id).balance(walletAddress)
-        )}`
+        `${chain.lcd_url}${contract_querier({
+          address: x.token_id,
+          msg: queryObject.cw20Balance({ addr: walletAddress }),
+        })}`
       )
         .then((res) => res.json())
         .then((res: { data: { balance: string } }) => ({

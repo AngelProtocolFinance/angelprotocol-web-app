@@ -13,3 +13,5 @@ export const lp_api = junoApi.injectEndpoints({
     }),
   }),
 });
+
+export const { usePairSimulQuery } = lp_api;

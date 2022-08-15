@@ -4,19 +4,27 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AllianceEditValues } from "pages/Admin/types";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
-import { useAllianceMembers } from "services/juno/indexFund/queriers";
+import { useAllianceMembersQuery } from "services/juno/indexFund";
+import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";
+import { contracts } from "constants/contracts";
 import AllianceEditForm from "./AllianceEditForm";
 import { allianceEditSchema } from "./alllianceEditSchema";
 
 export default function AllianceEditor() {
   const dispatch = useSetter();
-  const { allianceMembers, isAllianceMembersLoading, isError } =
-    useAllianceMembers();
+  const {
+    data: allianceMembers = [],
+    isLoading,
+    isError,
+  } = useAllianceMembersQuery({
+    address: contracts.index_fund,
+    msg: queryObject.ifAlliance,
+  });
 
   useEffect(() => {
-    if (isAllianceMembersLoading) return;
+    if (isLoading) return;
     if (allianceMembers.length <= 0) return;
 
     dispatch(
@@ -28,9 +36,9 @@ export default function AllianceEditor() {
         }))
       )
     );
-  }, [dispatch, allianceMembers, isAllianceMembersLoading]);
+  }, [dispatch, allianceMembers, isLoading]);
 
-  if (isAllianceMembersLoading) return <FormSkeleton />;
+  if (isLoading) return <FormSkeleton />;
   if (isError)
     return <FormError errorMessage="failed to load alliance members" />;
 

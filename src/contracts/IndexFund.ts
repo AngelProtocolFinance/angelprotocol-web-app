@@ -1,38 +1,12 @@
-import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
 } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class IndexFund extends Contract {
-  fundList: ContractQueryArgs;
-  allianceMembers: ContractQueryArgs;
-  config: ContractQueryArgs;
-
-  constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.index_fund);
-
-    this.fundList = {
-      address: this.contractAddress,
-      msg: { funds_list: {} },
-    };
-
-    this.allianceMembers = {
-      address: this.contractAddress,
-      msg: { alliance_members: {} },
-    };
-
-    this.config = {
-      address: this.contractAddress,
-      msg: { config: {} },
-    };
-  }
-
   createEmbeddedFundConfigMsg(config: FundConfig) {
     return this.createEmbeddedWasmMsg([], {
       update_config: config,
@@ -89,6 +63,3 @@ export default class IndexFund extends Contract {
     });
   }
 }
-
-export interface IF extends IndexFund {}
-export type T = typeof IndexFund;

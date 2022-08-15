@@ -60,3 +60,8 @@ export const gov_api = junoApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useGovStakerQuery, useGovPollsQuery } = gov_api;
+export const {
+  govStaker: { useQueryState: useGovStakerState },
+} = gov_api.endpoints;
