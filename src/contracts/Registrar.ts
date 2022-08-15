@@ -5,29 +5,32 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
+  private static address = contracts.registrar;
+
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_config: payload,
     });
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return this.createExecuteContractMsg({
+    return this.createExecuteContractMsg(Registrar.address, {
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_owner: payload,
     });
   }

@@ -1,12 +1,11 @@
 import Decimal from "decimal.js";
-import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
+  private static address = contracts.loop_haloust_lp;
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
     const offer_uamount = new Decimal(offer_amount)
@@ -25,7 +24,7 @@ export default class LP extends Contract {
           },
         };
 
-    const result = await this.query<Simulation>({
+    const result = await this.query<Simulation>(LP.address, {
       simulation: {
         offer_asset: {
           info: offer_asset,
@@ -51,6 +50,7 @@ export default class LP extends Contract {
     const denom = this.wallet!.chain.native_currency.token_id;
 
     return this.createExecuteContractMsg(
+      LP.address,
       {
         swap: {
           offer_asset: {
@@ -79,11 +79,9 @@ export default class LP extends Contract {
       .divToInt(1)
       .toString();
 
-    const haloContract = new Contract(this.wallet, contracts.halo_token);
-
-    return haloContract.createExecuteContractMsg({
+    return this.createExecuteContractMsg(contracts.halo_token, {
       send: {
-        contract: this.contractAddress,
+        contract: LP.address,
         amount: uhalo_amount,
         msg: toBase64({
           swap: {

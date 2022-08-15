@@ -1,12 +1,15 @@
 import Decimal from "decimal.js";
 import { Airdrops } from "types/server/aws";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import Gov from "./Gov";
 
 export default class Airdrop extends Contract {
+  private static address = contracts.airdrop;
+
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
     const claimMsgs = airdrops.map(({ stage, haloTokens, proof }) =>
-      this.createExecuteContractMsg({
+      this.createExecuteContractMsg(Airdrop.address, {
         claim: { stage, amount: haloTokens, proof },
       })
     );

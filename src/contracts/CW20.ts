@@ -1,23 +1,18 @@
-import { Coin } from "@cosmjs/proto-signing";
 import Decimal from "decimal.js";
-import { EmbeddedBankMsg } from "types/server/contracts";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import toBase64 from "helpers/toBase64";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
-  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
-    return {
-      bank: {
-        send: {
-          to_address: to,
-          amount: funds,
-        },
-      },
-    };
+  address: string;
+
+  constructor(wallet: WalletState | undefined, address: string) {
+    super(wallet);
+    this.address = address;
   }
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(this.address, {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -27,7 +22,7 @@ export default class CW20 extends Contract {
   }
 
   createTransferMsg(amount: number, recipient: string) {
-    return this.createExecuteContractMsg({
+    return this.createExecuteContractMsg(this.address, {
       transfer: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
@@ -41,7 +36,7 @@ export default class CW20 extends Contract {
     msgReceiverAddr: string,
     msg: object //base64 encoded msg
   ) {
-    return this.createExecuteContractMsg({
+    return this.createExecuteContractMsg(this.address, {
       send: {
         //convert to uamount
         amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
