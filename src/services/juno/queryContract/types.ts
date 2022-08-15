@@ -19,46 +19,81 @@ import {
   Polls,
   Profile,
   Proposal,
+  QueryRes as Q,
   RegistrarConfig,
   Simulation,
   VotesPageOptions,
 } from "types/server/contracts";
 
 type Addr = { addr: string };
-//prettier-ignore
 export interface ContractQueries {
-  regEndowList:      { args: EndowmentQueryOptions;    return: { endowments: EndowmentEntry[] } };
-  regVaultRates:     { args: null;                     return: any }; //TODO update this
-  regConfig:         { args: null;                     return: RegistrarConfig };
+  regEndowList: {
+    args: EndowmentQueryOptions;
+    res: Q<{ endowments: EndowmentEntry[] }>;
+    result: EndowmentEntry[];
+  };
+  regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
+  regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
-  ifFunds:           { args: null;                     return: { funds: FundDetails[] }};
-  ifAlliance:        { args: null;                     return: { alliance_members: AllianceMember[] }};
-  ifConfig:          { args: null;                     return: IndexFundConfig };
+  ifFunds: {
+    args: null;
+    res: Q<{ funds: FundDetails[] }>;
+    result: FundDetails[];
+  };
+  ifAlliance: {
+    args: null;
+    res: Q<{ alliance_members: AllianceMember[] }>;
+    result: AllianceMember[];
+  };
+  ifConfig: { args: null; res: Q<IndexFundConfig>; result: IndexFundConfig };
 
-  lpSimul:           { args: null;                     return: Simulation };
+  lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
 
-  govStaker:         { args: Addr;                     return: GovStaker };
-  govState:          { args: null;                     return: GovState };
-  govConfig:         { args: null;                     return: GovConfig };
-  govPolls:          { args: null;                     return: Polls };
+  govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
+  govState: { args: null; res: Q<GovState>; result: GovState };
+  govConfig: { args: null; res: Q<GovConfig>; result: GovConfig };
+  govPolls: { args: null; res: Q<Polls>; result: Polls["polls"] };
 
-  cw20Info:          { args: null;                     return: CW20Info };
-  cw20Balance:       { args: Addr;                     return: CW20Balance };
+  cw20Info: { args: null; res: Q<CW20Info>; result: CW20Info };
+  cw20Balance: { args: Addr; res: Q<CW20Balance>; result: number };
 
-  cw4Members:        { args: null;                     return: { members: Member[]} };
-  cw4Member:         { args: Addr;                     return: InquiredMember };
+  cw4Members: { args: null; res: Q<{ members: Member[] }>; result: Member[] };
+  cw4Member: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
 
-  cw3Voter:          { args: Addr;                     return: InquiredMember };
-  cw3Config:         { args: null;                     return: CW3Config };
-  cw3Propsosals:     { args: PageOptions;              return: { proposals: Proposal[] } };
-  cw3Proposal:       { args: { id: number };           return: Proposal };
-  cw3Votes:          { args: VotesPageOptions;         return: { votes: AdminVoteInfo[];} };
+  cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
+  cw3Config: { args: null; res: Q<CW3Config>; result: CW3Config };
+  cw3Propsosals: {
+    args: PageOptions;
+    res: Q<{ proposals: Proposal[] }>;
+    result: Proposal[];
+  };
+  cw3Proposal: { args: { id: number }; res: Q<Proposal>; result: Proposal };
+  cw3Votes: {
+    args: VotesPageOptions;
+    res: Q<{ votes: AdminVoteInfo[] }>;
+    result: AdminVoteInfo[];
+  };
 
-  airdropIsClaimed: { args: Addr & { stage: number };  return: any }; //TODO update once to be used
+  airdropIsClaimed: {
+    args: Addr & { stage: number };
+    res: Q<any>;
+    result: any;
+  }; //TODO update once to be used
 
-  accEndowment:      { args: null;                     return: EndowmentDetails };
-  accBalance:        { args: null;                     return: BalanceInfo };
-  accProfile:        { args: null;                     return: Profile };
+  accEndowment: {
+    args: null;
+    res: Q<EndowmentDetails>;
+    result: EndowmentDetails;
+  };
+  accBalance: { args: null; res: Q<BalanceInfo>; result: BalanceInfo };
+  accProfile: { args: null; res: Q<Profile>; result: Profile };
 }
 
 export type ContractQueryTypes = keyof ContractQueries;
+export type Args<T extends ContractQueryTypes> = ContractQueries[T]["args"];
+export type WithAddrArgs<T extends ContractQueryTypes> =
+  ContractQueries[T]["args"] extends null
+    ? string
+    : ContractQueries[T]["args"] & { contract: string };
+export type Res<T extends ContractQueryTypes> = ContractQueries[T]["res"];
+export type Result<T extends ContractQueryTypes> = ContractQueries[T]["result"];

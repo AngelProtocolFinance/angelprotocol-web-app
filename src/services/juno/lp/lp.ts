@@ -1,13 +1,13 @@
-import { ContractQueryArgs } from "services/types";
-import { QueryRes, Simulation } from "types/server/contracts";
+import { Args, Res, Result } from "../queryContract/types";
+import { contracts } from "constants/contracts";
 import { junoApi } from "..";
-import contract_querier from "../contract_querier";
+import { genQueryPath } from "../queryContract/genQueryPath";
 
 export const lp_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    pairSimul: builder.query<Simulation, ContractQueryArgs>({
-      query: contract_querier,
-      transformResponse: (res: QueryRes<Simulation>) => {
+    pairSimul: builder.query<Result<"lpSimul">, Args<"lpSimul">>({
+      query: (args) => genQueryPath("lpSimul", args, contracts.loop_haloust_lp),
+      transformResponse: (res: Res<"lpSimul">) => {
         return res.data;
       },
     }),

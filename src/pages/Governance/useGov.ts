@@ -2,20 +2,15 @@ import Decimal from "decimal.js";
 import { useEffect, useMemo, useState } from "react";
 import { usePairSimulQuery } from "services/juno/lp/lp";
 import { simulation } from "services/juno/lp/placeholders";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 // import { useGovHaloBalance, useHaloInfo } from "services/juno/gov/queriers";
 // import { usePairSimul } from "services/juno/lp/queriers";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
-import { contracts } from "constants/contracts";
 
 export default function useGov() {
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
 
-  const { data: simul = simulation } = usePairSimulQuery({
-    address: contracts.loop_haloust_lp,
-    msg: queryObject.lpSimul,
-  });
+  const { data: simul = simulation } = usePairSimulQuery(null);
   const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
 
   //TODO: create custom query for this under juno/custom

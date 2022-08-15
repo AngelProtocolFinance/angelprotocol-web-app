@@ -1,17 +1,12 @@
 import { useMemo, useState } from "react";
 import { PollFilterOptions } from "../types";
 import { useGovPollsQuery } from "services/juno/gov/gov";
-import { queryObject } from "services/juno/queryContract/queryObjects";
-import { contracts } from "constants/contracts";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 
 export default function Polls() {
   const [pollFilter, setPollFilter] = useState<PollFilterOptions>("all");
-  const { data: govPolls = [], isLoading } = useGovPollsQuery({
-    address: contracts.gov,
-    msg: queryObject.govPolls,
-  });
+  const { data: govPolls = [], isLoading } = useGovPollsQuery(null);
 
   const filteredPolls = useMemo(() => {
     if (pollFilter === "all") {
