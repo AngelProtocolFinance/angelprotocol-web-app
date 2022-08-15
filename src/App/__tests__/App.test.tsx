@@ -55,15 +55,11 @@ describe("user visits app", () => {
     const footer = screen.getByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
-    //header is immediately rendered
-    //role here https://www.w3.org/TR/html-aria/#docconformance
-    await waitFor(() => {
-      expect(screen.getByRole("banner")).toBeInTheDocument();
-    });
-
     //view is finally loaded,
-    expect(await screen.findByText(text1)).toBeInTheDocument();
-    expect(await screen.findByText(text2)).toBeInTheDocument();
+    //role here https://www.w3.org/TR/html-aria/#docconformance
+    expect(await screen.findByRole("banner")).toBeInTheDocument();
+    expect(screen.getByText(text1)).toBeInTheDocument();
+    expect(screen.getByText(text2)).toBeInTheDocument();
     expect(loader).not.toBeInTheDocument();
   });
 });
