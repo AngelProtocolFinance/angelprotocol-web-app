@@ -2,7 +2,7 @@ import {
   NetworkInfo,
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
 
@@ -57,7 +57,9 @@ describe("user visits app", () => {
 
     //header is immediately rendered
     //role here https://www.w3.org/TR/html-aria/#docconformance
-    expect(screen.getByRole("banner")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole("banner")).toBeInTheDocument();
+    });
 
     //view is finally loaded,
     expect(await screen.findByText(text1)).toBeInTheDocument();
