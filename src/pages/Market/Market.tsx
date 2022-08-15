@@ -1,15 +1,20 @@
-import { useCategorizedEndowments } from "services/juno/registrar/queriers";
+import { queryObject } from "services/juno/queryContract/queryObjects";
+import { useCategorizedEndowmentsQuery } from "services/juno/registrar/registrar";
 import Loader from "components/Loader";
+import { contracts } from "constants/contracts";
 import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
-  const { endowments, isEndowmentsLoading } = useCategorizedEndowments();
+  const { data: endowments = {}, isLoading } = useCategorizedEndowmentsQuery({
+    address: contracts.registrar,
+    msg: queryObject.regEndowList({ endow_type: "charity", status: "1" }),
+  });
 
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />
-      {(isEndowmentsLoading && (
+      {(isLoading && (
         <Loader
           bgColorClass="bg-white-grey/80"
           gapClass="gap-2"

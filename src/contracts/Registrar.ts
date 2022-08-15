@@ -1,45 +1,13 @@
-import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
 import {
-  EndowmentQueryOptions,
   RegistrarConfigPayload,
   RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
-  vaultsRate: CQA;
-  config: CQA;
-
-  endowmentList: (args: EndowmentQueryOptions) => CQA;
-
-  constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.registrar);
-
-    this.endowmentList = (queryOptions) => ({
-      address: this.contractAddress,
-      msg: {
-        endowment_list: queryOptions,
-      },
-    });
-
-    this.vaultsRate = {
-      address: this.contractAddress,
-      msg: {
-        approved_vault_rate_list: {},
-      },
-    };
-
-    this.config = {
-      address: this.contractAddress,
-      msg: { config: {} },
-    };
-  }
-
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
     return this.createEmbeddedWasmMsg([], {
       update_endowment_status: payload,

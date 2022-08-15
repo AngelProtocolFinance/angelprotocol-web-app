@@ -1,58 +1,16 @@
-import Registrar, { R, T } from "contracts/Registrar";
-import { useContract } from "../useContract";
-import { registrar_api } from "./registrar";
-
-export function useEndowmentStatus(address: string, skip = false) {
-  const { useEndowmentsQuery } = registrar_api;
-  const { contract } = useContract<R, T>(Registrar);
-  const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
-    contract.endowmentList({}),
-    {
-      skip,
-      selectFromResult: ({ data, isLoading, isFetching }) => ({
-        endowmentStatus: data?.find(
-          (endowment) => endowment.address === address
-        )?.status,
-        isEndowmentStatusLoading: isLoading || isFetching,
-      }),
-    }
-  );
-
-  return { endowmentStatus, isEndowmentStatusLoading };
-}
+import { contracts } from "constants/contracts";
+import { queryObject } from "../queryContract/queryObjects";
+import { useRegistrarConfigQuery } from "./registrar";
 
 export function useRegistrarConfig() {
-  const { useRegistrarConfigQuery } = registrar_api;
-  const { contract } = useContract<R, T>(Registrar);
-  const { data, isError, isLoading, isFetching } = useRegistrarConfigQuery(
-    contract.config
-  );
+  const { data, isError, isLoading, isFetching } = useRegistrarConfigQuery({
+    address: contracts.registrar,
+    msg: queryObject.regConfig,
+  });
 
   return {
     registrarConfig: data,
     isError: isError,
     isLoading: isLoading || isFetching,
-  };
-}
-
-export function useCategorizedEndowments() {
-  const { useCategorizedEndowmentsQuery } = registrar_api;
-  const { contract } = useContract<R, T>(Registrar);
-  const {
-    data = {},
-    isError,
-    isLoading,
-    isFetching,
-  } = useCategorizedEndowmentsQuery(
-    contract.endowmentList({
-      endow_type: "charity",
-      status: "1",
-    })
-  );
-
-  return {
-    endowments: data,
-    isEndowmentsError: isError,
-    isEndowmentsLoading: isLoading || isFetching,
   };
 }

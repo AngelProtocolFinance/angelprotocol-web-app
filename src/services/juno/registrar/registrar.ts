@@ -56,3 +56,9 @@ export const registrar_api = junoApi.injectEndpoints({
     }),
   }),
 });
+
+export const {
+  useCategorizedEndowmentsQuery,
+  useEndowmentsQuery,
+  useRegistrarConfigQuery,
+} = registrar_api;
