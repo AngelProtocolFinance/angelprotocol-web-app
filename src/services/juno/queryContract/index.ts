@@ -11,5 +11,5 @@ export async function queryContract<T extends QT>(
     ${baseUrl}/${genQueryPath(type, args, contract)}
   `)
     .then<Q[T]["res"]>((res) => res.json())
-    .then((result) => result.data);
+    .then((result) => result.data as Q[T]["res"]["data"]);
 }

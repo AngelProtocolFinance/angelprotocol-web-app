@@ -3,8 +3,6 @@ import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
 import { useFundListQuery } from "services/juno/indexFund";
 import { useLatestBlock } from "services/juno/queriers";
-import { queryObject } from "services/juno/queryContract/queryObjects";
-import { contracts } from "constants/contracts";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>
@@ -12,10 +10,7 @@ export default function useFundSelection<T extends FundIdContext>(
   const { setValue } = useFormContext<T>();
 
   const blockHeight = useLatestBlock();
-  const { data: fundList = [] } = useFundListQuery({
-    address: contracts.index_fund,
-    msg: queryObject.ifFunds,
-  });
+  const { data: fundList = [] } = useFundListQuery(null);
 
   const [activeRow, setActiveRow] = useState<number | undefined>();
 

@@ -5,10 +5,8 @@ import { AllianceEditValues } from "pages/Admin/types";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useAllianceMembersQuery } from "services/juno/indexFund";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";
-import { contracts } from "constants/contracts";
 import AllianceEditForm from "./AllianceEditForm";
 import { allianceEditSchema } from "./alllianceEditSchema";
 
@@ -18,10 +16,7 @@ export default function AllianceEditor() {
     data: allianceMembers = [],
     isLoading,
     isError,
-  } = useAllianceMembersQuery({
-    address: contracts.index_fund,
-    msg: queryObject.ifAlliance,
-  });
+  } = useAllianceMembersQuery(null);
 
   useEffect(() => {
     if (isLoading) return;

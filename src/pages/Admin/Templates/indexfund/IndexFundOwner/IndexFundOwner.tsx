@@ -5,8 +5,6 @@ import { IndexFundConfig } from "types/server/contracts";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
-import { queryObject } from "services/juno/queryContract/queryObjects";
-import { contracts } from "constants/contracts";
 import OwnerUpdateForm from "./OwnerUpdateForm";
 import { updateOwnerSchema } from "./updateOwnerSchema";
 
@@ -15,10 +13,7 @@ export default function IndexFundOwner() {
     data: indexFundConfig,
     isLoading,
     isError,
-  } = useIndexFundConfigQuery({
-    address: contracts.index_fund,
-    msg: queryObject.ifConfig,
-  });
+  } = useIndexFundConfigQuery(null);
   if (isLoading) return <FormSkeleton />;
   if (isError || !indexFundConfig)
     return <FormError errorMessage="failed to load registrar config" />;

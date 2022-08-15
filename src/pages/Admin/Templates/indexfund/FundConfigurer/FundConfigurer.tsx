@@ -6,7 +6,6 @@ import { FundConfig, IndexFundConfig } from "types/server/contracts";
 import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import FundConfigForm from "./FundConfigForm";
 import { fundConfigSchema } from "./fundconfigSchema";
 
@@ -15,10 +14,7 @@ export default function FundConfigurer() {
     data: indexFundConfig,
     isLoading,
     isError,
-  } = useIndexFundConfigQuery({
-    address: "",
-    msg: queryObject.ifConfig,
-  });
+  } = useIndexFundConfigQuery(null);
 
   if (isLoading) return <FormSkeleton />;
   if (isError || !indexFundConfig)

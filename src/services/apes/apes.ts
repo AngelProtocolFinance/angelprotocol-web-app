@@ -3,8 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain } from "types/server/aws";
-import contract_querier from "services/juno/contract_querier";
-import { queryObject } from "services/juno/queryContract/queryObjects";
+import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
@@ -111,17 +110,12 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
   const cw20BalancePromises = chain.tokens
     .filter((x) => x.type === "cw20")
     .map((x) =>
-      fetch(
-        `${chain.lcd_url}${contract_querier({
-          address: x.token_id,
-          msg: queryObject.cw20Balance({ addr: walletAddress }),
-        })}`
-      )
-        .then((res) => res.json())
-        .then((res: { data: { balance: string } }) => ({
+      queryContract("cw20Balance", x.token_id, { addr: walletAddress }).then(
+        (data) => ({
           denom: x.token_id,
-          amount: res.data.balance,
-        }))
+          amount: data.balance,
+        })
+      )
     );
 
   const cw20Balances = await Promise.all(cw20BalancePromises);

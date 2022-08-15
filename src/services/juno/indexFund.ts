@@ -1,44 +1,32 @@
-import { ContractQueryArgs } from "services/types";
-import {
-  AllianceMember,
-  FundDetails,
-  IndexFundConfig,
-  QueryRes,
-} from "types/server/contracts";
+import { Args, Res, Result } from "./queryContract/types";
+import { contracts } from "constants/contracts";
 import { junoApi } from ".";
-import contract_querier from "./contract_querier";
+import { genQueryPath } from "./queryContract/genQueryPath";
 import { indexfundTags, junoTags } from "./tags";
 
-type AllianceMembersRes = {
-  alliance_members: AllianceMember[];
-};
-
-type FundListRes = {
-  funds: FundDetails[];
-};
-
+const indexFund = contracts.index_fund;
 export const indexFund_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    fundList: builder.query<FundDetails[], ContractQueryArgs>({
+    fundList: builder.query<Result<"ifFunds">, Args<"ifFunds">>({
       providesTags: [{ type: junoTags.indexfund, id: indexfundTags.fund_list }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<FundListRes>) => {
+      query: (args) => genQueryPath("ifFunds", args, indexFund),
+      transformResponse: (res: Res<"ifFunds">) => {
         return res.data.funds;
       },
     }),
-    allianceMembers: builder.query<AllianceMember[], ContractQueryArgs>({
+    allianceMembers: builder.query<Result<"ifAlliance">, Args<"ifAlliance">>({
       providesTags: [
         { type: junoTags.indexfund, id: indexfundTags.alliance_members },
       ],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<AllianceMembersRes>) => {
+      query: (args) => genQueryPath("ifAlliance", args, indexFund),
+      transformResponse: (res: Res<"ifAlliance">) => {
         return res.data.alliance_members;
       },
     }),
-    indexFundConfig: builder.query<IndexFundConfig, ContractQueryArgs>({
+    indexFundConfig: builder.query<Result<"ifConfig">, Args<"ifConfig">>({
       providesTags: [{ type: junoTags.indexfund, id: indexfundTags.config }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<IndexFundConfig>) => {
+      query: (args) => genQueryPath("ifConfig", args, indexFund),
+      transformResponse: (res: Res<"ifConfig">) => {
         return res.data;
       },
     }),
