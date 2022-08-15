@@ -5,7 +5,6 @@ import {
 } from "slices/admin/types";
 import { PageOptions, Proposal } from "types/server/contracts";
 import { useProposalsQuery } from "services/juno/cw3";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
@@ -17,8 +16,8 @@ export function useFilteredProposals(
   const { cw3 } = useAdminResources();
   const { filteredProposals, isLoading, isError } = useProposalsQuery(
     {
-      address: cw3,
-      msg: queryObject.cw3Propsosals(genPageOptions(pageNum, status, group)),
+      contract: cw3,
+      ...genPageOptions(pageNum, status, group),
     },
     {
       selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {

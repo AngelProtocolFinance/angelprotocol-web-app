@@ -1,5 +1,5 @@
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useGovStakerQuery, useGovStakerState } from ".";
+import { useGovStakerQuery, useGovStakerState } from "./gov";
 import { staker } from "./placeholders";
 
 export function useGovStaker() {

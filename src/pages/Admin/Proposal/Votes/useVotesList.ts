@@ -1,6 +1,5 @@
 import { VotesPageOptions } from "types/server/contracts";
 import { useVotesQuery } from "services/juno/cw3";
-import { queryObject } from "services/juno/queryContract/queryObjects";
 import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))
@@ -12,8 +11,8 @@ export function useVoteList(pollId: number, pageNum?: number) {
     isFetching,
     isLoading,
   } = useVotesQuery({
-    address: cw3,
-    msg: queryObject.cw3Votes(genVoteListPageOptions(pollId, pageNum)),
+    contract: cw3,
+    ...genVoteListPageOptions(pollId, pageNum),
   });
   return { votes: data, isVoteListLoading: isFetching || isLoading };
 }
