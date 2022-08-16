@@ -40,6 +40,6 @@ export default function Nav() {
 }
 
 const styler = createNavLinkStyler(
-  "px-2 uppercase text-sm text-center font-semibold font-heading text-white",
+  "px-2 uppercase text-sm text-center font-semibold font-heading text-white-grey",
   "text-angel-orange"
 );
