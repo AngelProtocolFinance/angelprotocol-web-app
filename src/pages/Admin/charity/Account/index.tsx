@@ -19,7 +19,7 @@ export default function Account(props: TAcount) {
   const showWithdraw = useWithdrawer(props.balance);
 
   return (
-    <div className="grid grid-rows-a1a rounded-md text-white/80 shadow-inner bg-white/10 p-4">
+    <div className="grid grid-rows-[auto_1fr_auto] rounded-md text-white/80 shadow-inner bg-white/10 p-4">
       <h3 className="mb-2 text-lg w-full font-bold uppercase flex items-center justify-self-start">
         <span>{title}</span>
         {props.type === "liquid" && (

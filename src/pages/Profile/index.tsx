@@ -35,7 +35,7 @@ export default function Profile() {
   if (isError || !profile) return <PageError />;
 
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
       <context.Provider value={{ ...profile, address: address! }}>
         <Nav />
         <Header {...profile} />
@@ -48,10 +48,10 @@ export default function Profile() {
 
 function Skeleton() {
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start opacity-20">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start opacity-20">
       <ContentLoader className="w-48 h-10 lg:col-span-2" />
       <ContentLoader className="w-full rounded-md" />
-      <div className="w-full row-span-2 grid grid grid-rows-aa1">
+      <div className="w-full row-span-2 grid grid grid-rows-[auto_auto_1fr]">
         <ContentLoader className="w-full h-[300px] rounded-md" />
         <ContentLoader className="w-full h-10 mt-2 rounded-md" />
         <ContentLoader className="w-full h-full mt-2 rounded-md" />
@@ -67,7 +67,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${appRoutes.marketplace}`}
+        to={`${appRoutes.index}`}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace

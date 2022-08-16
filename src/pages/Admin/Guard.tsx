@@ -45,7 +45,7 @@ export const useAdminResources = () => {
 
 export function GuardPrompt(props: { message: string; showLoader?: true }) {
   return (
-    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-115 w-full max-w-sm p-4 rounded-md shadow-lg">
+    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-[15rem] w-full max-w-sm p-4 rounded-md shadow-lg">
       {props.showLoader ? (
         <Loader
           gapClass="gap-2"

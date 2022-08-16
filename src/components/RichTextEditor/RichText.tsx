@@ -51,7 +51,13 @@ export default function RichText(props: Props) {
       },
     });
 
-    quillRef.current.setContents(JSON.parse(props.content));
+    try {
+      quillRef.current.setContents(JSON.parse(props.content));
+    } catch (err) {
+      //previous rich text format based on draft-js will throw parse error
+      //in this case just set it to blank
+      quillRef.current.setContents(quillRef.current.getContents());
+    }
 
     if (!props.readOnly) {
       /** even if quill is empty, it's string value for form purposes is not.
