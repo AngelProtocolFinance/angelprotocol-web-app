@@ -32,7 +32,7 @@ export const registrar_api = junoApi.injectEndpoints({
       providesTags: [
         { type: junoTags.registrar, id: registrarTags.endowments },
       ],
-      query: (args) => genQueryPath("regConfig", args, reg),
+      query: (args) => genQueryPath("regCategorizedEndows", args, reg),
       transformResponse: (res: Res<"regCategorizedEndows">) => {
         return res.data.endowments.reduce((result, profile) => {
           const { un_sdg, tier } = profile;
