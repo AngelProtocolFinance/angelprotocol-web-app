@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { Simulation } from "types/server/contracts";
-import toBase64 from "helpers/toBase64";
 import { contracts } from "constants/contracts";
+import CW20 from "./CW20";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -74,21 +74,11 @@ export default class LP extends Contract {
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    const uhalo_amount = new Decimal(halo_amount)
-      .mul(1e6)
-      .divToInt(1)
-      .toString();
-
-    return this.createExecuteContractMsg(contracts.halo_token, {
-      send: {
-        contract: LP.address,
-        amount: uhalo_amount,
-        msg: toBase64({
-          swap: {
-            belief_price,
-            max_spread,
-          },
-        }),
+    const halo = new CW20(this.wallet, contracts.halo_token);
+    return halo.createSendMsg(halo_amount, LP.address, {
+      swap: {
+        belief_price,
+        max_spread,
       },
     });
   }
