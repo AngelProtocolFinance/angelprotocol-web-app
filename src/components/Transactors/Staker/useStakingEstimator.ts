@@ -52,12 +52,10 @@ export default function useEstimator() {
 
         if (is_stake && condense(balance).lt(debounced_amount)) {
           //check $HALO balance
-          if (condense(balance).lt(debounced_amount)) {
-            setError("amount", {
-              message: `not enough ${symbols[denoms.halo]} balance`,
-            });
-            return;
-          }
+          setError("amount", {
+            message: `not enough ${symbols[denoms.halo]} balance`,
+          });
+          return;
         } else {
           if (condense(balance.sub(locked)).lt(debounced_amount)) {
             setError("amount", {
