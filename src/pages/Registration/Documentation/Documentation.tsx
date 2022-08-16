@@ -128,7 +128,7 @@ const Header = ({
 );
 
 const RowContainer = ({ children }: PropsWithChildren<{}>) => (
-  <div className="grid grid-cols-32 gap-3 text-sm">{children}</div>
+  <div className="grid grid-cols-[3fr_2fr] gap-3 text-sm">{children}</div>
 );
 
 type ColumnProps = PropsWithChildren<{ colored?: boolean; className?: string }>;

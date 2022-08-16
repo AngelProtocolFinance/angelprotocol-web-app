@@ -36,7 +36,7 @@ export default function Amount() {
       {!is_stake && (
         <Balance
           amount={toCurrency(condense(locked), 3, true)}
-          title={"Vote Locked"}
+          title="Vote Locked"
         />
       )}
       <span className="my-3 text-angel-grey italic text-xs">

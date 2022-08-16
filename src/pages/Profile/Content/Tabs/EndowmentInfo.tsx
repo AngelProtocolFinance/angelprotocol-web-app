@@ -66,7 +66,7 @@ type Props = { className: string; account: any };
 export function AccountInfo(props: Props) {
   return (
     <div
-      className={`w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${props.className}`}
+      className={`w-full lg:max-w-[600px] lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${props.className}`}
     >
       <p className="uppercase font-semibold text-white text-xl">
         {props.account.type}

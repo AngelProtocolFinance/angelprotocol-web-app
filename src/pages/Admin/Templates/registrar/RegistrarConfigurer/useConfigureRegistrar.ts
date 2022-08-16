@@ -15,7 +15,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/helpers";
+import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

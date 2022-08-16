@@ -6,7 +6,7 @@ import useClaimAirdrop from "./useClaimAirdrop";
 export default function Catcher(props: { airdrops: Airdrops }) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
-    <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
+    <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-[15rem] w-full">
       <Icon type="Parachute" className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop

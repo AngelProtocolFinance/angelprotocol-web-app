@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { CharityApplication } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -7,7 +8,7 @@ export default function Reviewer(props: { application: CharityApplication }) {
   const { closeModal } = useModalContext();
 
   return (
-    <div
+    <Dialog.Panel
       className={
         "w-full max-w-md bg-white-grey rounded-md overflow-hidden pt-4 fixed-center z-20"
       }
@@ -19,6 +20,6 @@ export default function Reviewer(props: { application: CharityApplication }) {
         <Icon type="Close" size={25} />
       </button>
       <PreviewForm application={props.application} />
-    </div>
+    </Dialog.Panel>
   );
 }

@@ -13,7 +13,7 @@ export default function Output() {
   const is_buy = watch("is_buy");
 
   return (
-    <div className="grid grid-cols-a1 bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">
+    <div className="grid grid-cols-[auto_1fr] bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">
       <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
         To:
       </p>

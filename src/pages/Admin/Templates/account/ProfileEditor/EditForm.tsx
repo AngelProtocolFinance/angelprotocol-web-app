@@ -6,7 +6,7 @@ import {
   GroupContainer,
 } from "pages/Admin/common/TemplateContainer";
 import TextInput from "pages/Admin/common/TextInput";
-import CountrySelector from "components/CountrySelector/CountrySelector";
+import CountrySelector from "components/CountrySelector";
 import RichTextEditor from "components/RichTextEditor";
 import ImgEditor from "./ImgEditor/ImgEditor";
 import SDGSelector from "./SDGSelector";
@@ -43,7 +43,13 @@ export default function EditForm() {
         placeholder="Manila, Philippines"
       />
       <Label className="text-angel-grey -mb-2">Country</Label>
-      <CountrySelector<UV> fieldName="country_of_origin" classes="mb-6 z-10" />
+      <CountrySelector<UV>
+        fieldName="country_of_origin"
+        classes={{
+          container: "bg-light-grey shadow-inner-white-grey rounded-md p-3",
+          input: "bg-transparent",
+        }}
+      />
       <Label className="text-angel-grey -mb-2">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"

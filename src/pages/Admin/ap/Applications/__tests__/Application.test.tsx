@@ -55,7 +55,7 @@ describe("Charity applications review", () => {
   });
   test("Application reviews rendered", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
-    render(<Applications />);
+    render(<TestApp />);
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })

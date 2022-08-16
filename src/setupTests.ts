@@ -8,6 +8,18 @@ import { Crypto } from "@peculiar/webcrypto";
 import "@testing-library/jest-dom";
 import { TextDecoder, TextEncoder } from "util";
 
+class IntersectionObserver {
+  observe = jest.fn();
+  disconnect = jest.fn();
+  unobserve = jest.fn();
+}
+
+Object.defineProperty(window, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: IntersectionObserver,
+});
+
 // required after adding @cosmjs/cosmwasm-stargate
 global.TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder; // `global as any` cast required due to (expected) type incompatibility

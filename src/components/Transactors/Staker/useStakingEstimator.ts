@@ -50,7 +50,7 @@ export default function useEstimator() {
           return;
         }
 
-        if (is_stake && balance.div(1e6).lt(debounced_amount)) {
+        if (is_stake && condense(balance).lt(debounced_amount)) {
           //check $HALO balance
           if (condense(balance).lt(debounced_amount)) {
             setError("amount", {

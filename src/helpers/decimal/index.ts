@@ -1,5 +1,11 @@
 import Dec from "decimal.js";
 
+/** in most cosmos chains scale
+ * 1 user amount = 1_000_000 or 10^(6) transaction amount
+ * e.g *sending 1atom
+ * const userAmount = 1; //atom
+ * sendMsg = new MsgSend(userAmount * 10^6) //send 1_000_000 uatom
+ */
 const DEFAULT_DECIMAL = 6;
 
 export function condense(
@@ -58,7 +64,7 @@ export function roundDown(num: Dec.Value, precision = 2) {
 }
 
 export function roundDownToNum(num: Dec.Value, precision = 2) {
-  return +new Dec(num).toFixed(precision, Dec.ROUND_DOWN);
+  return +roundDown(num, precision);
 }
 
 function shorten(num: Dec): [Dec, string] {

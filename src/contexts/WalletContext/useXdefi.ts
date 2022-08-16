@@ -1,5 +1,5 @@
 import { useWallet } from "@terra-money/wallet-provider";
-import { MultiConnection, SingleConnection } from "./types";
+import { Connection } from "./types";
 import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
 import { providerIcons } from "./constants";
@@ -19,7 +19,7 @@ export default function useXdefi() {
     (connection) => connection.identifier === "xdefi-wallet"
   );
 
-  const xdefiTerraConnection: SingleConnection = connection
+  const xdefiTerraConnection: Connection = connection
     ? {
         logo: terraIcon, //this connector will appear on network selection
         name: "Terra",
@@ -35,10 +35,10 @@ export default function useXdefi() {
         },
       };
 
-  const xdefiConnection: MultiConnection = {
+  const xdefiConnection: Connection = {
     name: "xdefi",
     logo: providerIcons["xdefi-wallet"],
-    connections: [xdefiTerraConnection, xdefiEVMConnection],
+    networks: [xdefiTerraConnection, xdefiEVMConnection],
   };
 
   return {

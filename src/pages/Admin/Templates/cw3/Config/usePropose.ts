@@ -14,7 +14,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
-import { genDiffMeta, getPayloadDiff } from "helpers/helpers";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];

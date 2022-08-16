@@ -1,4 +1,3 @@
-import { WalletProvider, getChainOptions } from "@terra-money/wallet-provider";
 import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -15,25 +14,19 @@ const LoaderComponent = () => (
   <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
-// Readin chain options as per the official docs:
-// https://docs.terra.money/docs/develop/wallet-provider/wallet-provider-tutorial.html#wrap-your-app-in-walletprovider
-getChainOptions().then((chainOptions) =>
-  ReactDOM.render(
-    <StrictMode>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <BrowserRouter>
-            <WalletProvider {...chainOptions}>
-              <Suspense fallback={<LoaderComponent />}>
-                <App />
-              </Suspense>
-            </WalletProvider>
-          </BrowserRouter>
-        </Provider>
-      </ErrorBoundary>
-    </StrictMode>,
-    document.getElementById("root")
-  )
+ReactDOM.render(
+  <StrictMode>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Suspense fallback={<LoaderComponent />}>
+            <App />
+          </Suspense>
+        </BrowserRouter>
+      </Provider>
+    </ErrorBoundary>
+  </StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

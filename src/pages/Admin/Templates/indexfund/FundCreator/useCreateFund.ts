@@ -13,7 +13,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import { cleanObject } from "helpers/helpers/cleanObject";
+import { cleanObject } from "helpers/admin/cleanObject";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {

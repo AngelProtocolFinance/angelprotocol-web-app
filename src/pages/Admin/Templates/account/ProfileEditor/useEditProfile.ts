@@ -15,7 +15,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/helpers";
+import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
