@@ -1,44 +1,47 @@
-import { Control, UseFormRegister } from "react-hook-form";
-import { ContactDetails, OptionType } from "pages/Registration/types";
-import FormInput from "components/FormInput";
-import Selector from "components/Selector";
+import { useFormContext } from "react-hook-form";
+import { ContactDetails as CD, OptionType } from "pages/Registration/types";
+import FormInput from "../../common/FormInput";
+import Selector from "../../common/Selector";
 
-type Props = {
-  label: string;
-  name: keyof ContactDetails;
-  options: OptionType[];
-  control: Control<ContactDetails, object>;
-  otherRoleErrorMessage: string | undefined;
-  onChange: (value: string) => void;
-  register: UseFormRegister<ContactDetails>;
-  disabled: boolean;
-};
+export default function RoleSelector() {
+  const { watch } = useFormContext<CD>();
 
-export default function RoleSelector(props: Props) {
+  const role = watch("role");
+
   return (
     <div className="flex flex-col gap-1 w-full text-left">
-      <label htmlFor={props.name} className="text-dark-grey">
-        {props.label}
+      <label className="text-dark-grey">
+        What's your role within the organization?
         <span className="text-failed-red ml-0.5">*</span>
       </label>
-      <Selector<ContactDetails>
-        name={props.name}
-        options={props.options}
-        control={props.control}
-        onChange={props.onChange}
-        disabled={props.disabled}
-      />
-      {props.control._formValues[props.name] === "other" && (
-        <FormInput
+      <Selector<CD> name="role" options={contactRoleOptions} />
+      {role === "other" && (
+        <FormInput<CD>
+          fieldName="otherRole"
           label="Specify your role"
           placeholder="Specify your role"
-          registerReturn={props.register("otherRole")}
-          errorMessage={props.otherRoleErrorMessage}
           required
-          disabled={props.disabled}
-          className="mt-3"
+          classes={{ container: "mt-3" }}
         />
       )}
     </div>
   );
 }
+
+const contactRoleOptions: OptionType[] = [
+  { label: "Chairperson / President", value: "president" },
+  {
+    label: "Vice-chairperson / Vice president",
+    value: "vice-president",
+  },
+  { label: "Secretary", value: "secretary" },
+  { label: "Treasurer", value: "treasurer" },
+  { label: "CEO", value: "ceo" },
+  { label: "CFO", value: "cfo" },
+  { label: "Board Member", value: "board-member" },
+  { label: "Leadership Team", value: "leadership-team" },
+  { label: "Fundraising / Finance", value: "fundraising-finance" },
+  { label: "Legal", value: "legal" },
+  { label: "Communications", value: "communications" },
+  { label: "Other", value: "other" },
+];

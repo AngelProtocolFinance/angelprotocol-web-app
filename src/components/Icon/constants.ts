@@ -23,7 +23,6 @@ import {
   BiSearchAlt2,
 } from "react-icons/bi";
 import {
-  BsDiscord,
   BsExclamationCircle,
   BsHourglassSplit,
   BsSafeFill,
@@ -32,6 +31,7 @@ import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
   FaCog,
+  FaDiscord,
   FaExternalLinkAlt,
   FaFacebook,
   FaFacebookF,
@@ -57,7 +57,6 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineFileDownload,
 } from "react-icons/md";
-import { RiDiscordLine } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
@@ -71,8 +70,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
   FacebookCircle: FaFacebook,
-  Discord: BsDiscord,
-  DiscordLine: RiDiscordLine,
+  Discord: FaDiscord,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
   Youtube: AiFillYoutube,

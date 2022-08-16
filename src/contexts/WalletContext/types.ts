@@ -11,21 +11,10 @@ export type ProviderId =
   | "torus"
   | "keplr";
 
-export type SingleConnection = {
-  logo: string;
-  name: string;
-  connections?: never;
-  connect(arg?: string): Promise<void>;
-};
-
-export type MultiConnection = {
-  logo: string;
-  name: string;
-  connect?: never;
-  connections: SingleConnection[];
-};
-
-export type Connection = SingleConnection | MultiConnection;
+type Base = { logo: string; name: string; network?: true };
+type Single = { connect(args?: string): Promise<void>; networks?: never };
+type Multi = { connect?: never; networks: Connection[] };
+export type Connection = Base & (Single | Multi);
 
 export type ProviderInfo = {
   providerId: ProviderId;

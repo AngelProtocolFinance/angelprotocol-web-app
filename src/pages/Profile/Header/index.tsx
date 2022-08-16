@@ -17,7 +17,7 @@ export default function CharityHeader(props: Profile) {
   return (
     <div className="flex flex-col items-start gap-2">
       {props.un_sdg && (
-        <p className="p-3 max-w-250 text-center bg-angel-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl">
+        <p className="p-3 max-w-[250px] text-center bg-angel-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl">
           SDG #{props.un_sdg}: {sdg?.title}
         </p>
       )}

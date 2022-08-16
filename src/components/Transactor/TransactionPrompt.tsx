@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { PropsWithChildren, useMemo } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -47,7 +48,7 @@ export default function TransactionPrompt({
   }
 
   return (
-    <div
+    <Dialog.Panel
       className={`w-full max-w-md ${
         inModal
           ? "bg-white-grey rounded-md overflow-visible pt-4 fixed-center z-20"
@@ -63,6 +64,6 @@ export default function TransactionPrompt({
         </button>
       )}
       {prompt}
-    </div>
+    </Dialog.Panel>
   );
 }
