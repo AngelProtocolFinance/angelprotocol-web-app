@@ -7,12 +7,13 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
-import { LogDonationFail } from "helpers/logDonation";
 import logger from "helpers/logger";
 import {
   LogApplicationUpdateError,
+  LogDonationFail,
   TxResultFail,
   UnexpectedStateError,
+  WalletDisconnectedError,
 } from "errors/errors";
 
 export default function handleTxError(error: any, handler: StageUpdater) {
@@ -20,6 +21,8 @@ export default function handleTxError(error: any, handler: StageUpdater) {
 
   if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
+  } else if (error instanceof WalletDisconnectedError) {
+    handler({ step: "error", message: error.message });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
