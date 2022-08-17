@@ -6,13 +6,13 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminResources } from "./Guard";
 
 export default function Nav() {
-  const { isAp, endowment } = useAdminResources();
+  const { isAp, endowmentId } = useAdminResources();
 
   return (
     <div className="flex justify-end">
       {!isAp && (
         <Link
-          to={`${appRoutes.charity}/${endowment}`}
+          to={`${appRoutes.profile}/${endowmentId}`}
           className="uppercase text-sm text-center font-semibold font-heading text-white mr-auto flex items-center"
         >
           <Icon size={15} type="ArrowBack" />

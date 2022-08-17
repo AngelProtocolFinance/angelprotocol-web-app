@@ -12,7 +12,7 @@ import {
 } from "types/server/contracts";
 import { denoms } from "constants/currency";
 
-export type AdminParams = { address: string };
+export type AdminParams = { id: string };
 export type ProposalParams = { id: string };
 
 export type Templates =
@@ -124,6 +124,7 @@ export type RegistrarConfigUpdateMeta = MetaConstructor<
 export type EndowmentStatusMeta = MetaConstructor<
   "reg_endow_status",
   {
+    id: number;
     fromStatus: keyof EndowmentStatus;
     toStatus: EndowmentStatusStrNum;
     beneficiary?: string;
@@ -168,7 +169,7 @@ export type CW3ConfigValues = ProposalBase &
   FormCW3Config & { initial: FormCW3Config; isTime: boolean };
 
 export type EndowmentUpdateValues = ProposalBase & {
-  endowmentAddr: string;
+  id: number;
   status: EndowmentStatusStrNum;
   //address to transfer funds when endowment will be closed
   beneficiary?: string;

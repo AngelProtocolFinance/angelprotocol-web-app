@@ -2,7 +2,7 @@ import Registrar, { R, T } from "contracts/Registrar";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
 
-export function useEndowmentStatus(address: string, skip = false) {
+export function useEndowmentStatus(id: number, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
   const { contract } = useContract<R, T>(Registrar);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
@@ -10,9 +10,7 @@ export function useEndowmentStatus(address: string, skip = false) {
     {
       skip,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
-        endowmentStatus: data?.find(
-          (endowment) => endowment.address === address
-        )?.status,
+        endowmentStatus: data?.find((endowment) => endowment.id === id)?.status,
         isEndowmentStatusLoading: isLoading || isFetching,
       }),
     }

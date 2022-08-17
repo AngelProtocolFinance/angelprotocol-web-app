@@ -9,14 +9,14 @@ import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Nav() {
-  const { address } = useParams<ProfileParams>();
+  const { id } = useParams<ProfileParams>();
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     {
       user: wallet?.address!,
-      endowment: address!,
+      endowmentId: id!,
     },
-    { skip: !wallet || !address }
+    { skip: !wallet || !id! }
   );
 
   return (
@@ -26,7 +26,7 @@ export default function Nav() {
       </LinkIcon>
       {isMember && (
         <LinkIcon
-          to={`${appRoutes.admin}/${address}/${adminRoutes.templates}/${templates.acc_profile}`} //change to multisig edit
+          to={`${appRoutes.admin}/${id}/${adminRoutes.templates}/${templates.acc_profile}`} //change to multisig edit
           _iconType="Edit"
           className="ml-auto border-r border-white/30 pr-2"
         >
@@ -35,7 +35,7 @@ export default function Nav() {
       )}
       {isMember && (
         <LinkIcon
-          to={`${appRoutes.admin}/${address}`} //change to updateProfile from RC-web-profile
+          to={`${appRoutes.admin}/${id}`} //change to updateProfile from RC-web-profile
           _iconType="Admin"
         >
           admin

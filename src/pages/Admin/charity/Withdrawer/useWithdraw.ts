@@ -23,7 +23,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowment } = useAdminResources();
+  const { cw3, endowmentId } = useAdminResources();
   const { wallet } = useGetWallet();
   const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
@@ -49,7 +49,7 @@ export default function useWithdraw() {
     );
 
     const isJuno = data.network === chainIds.juno;
-    const account = new Account(wallet, endowment);
+    const account = new Account(wallet);
     const msg = account.createEmbeddedWithdrawLiqMsg({
       beneficiary:
         //if not juno, send to ap wallet (juno)
@@ -71,7 +71,7 @@ export default function useWithdraw() {
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "withdraw proposal",
-      `withdraw from endowment: ${endowment}`,
+      `withdraw from endowment: ${endowmentId}`,
       [msg],
       JSON.stringify(meta)
     );

@@ -9,9 +9,7 @@ export default function EndowmentUpdator() {
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: yupResolver(endowmentUpdateSchema),
-    defaultValues: {
-      endowmentAddr: "",
-    },
+    defaultValues: {},
   });
 
   return (

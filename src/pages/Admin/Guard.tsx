@@ -9,14 +9,14 @@ import Loader from "components/Loader";
 
 export function Guard(props: PropsWithChildren<{}>) {
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
-  const { address } = useParams<AdminParams>();
+  const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
       user: wallet?.address!,
-      endowment: address!,
+      endowmentId: id!,
     },
-    { skip: !wallet }
+    { skip: !wallet || !id }
   );
 
   if (isWalletLoading)

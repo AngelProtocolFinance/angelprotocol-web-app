@@ -23,11 +23,11 @@ type VoteListRes = {
 export const AP_ADDR = "ap-team";
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    isMember: builder.query<boolean, { user: string; endowment: string }>({
+    isMember: builder.query<boolean, { user: string; endowmentId: string }>({
       providesTags: [{ type: junoTags.custom, id: customTags.isMember }],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         /** special case for ap admin usage */
-        if (args.endowment === AP_ADDR) {
+        if (args.endowmentId === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
           const cw3 = new CW3(undefined, contracts.apCW3);
           //get voter info of wallet addr
@@ -40,7 +40,7 @@ export const customApi = junoApi.injectEndpoints({
           };
         }
 
-        const account = new Account(undefined, args.endowment);
+        const account = new Account(undefined);
         //get endowment details
         const endowmentRes = await baseQuery(
           contract_querier(account.endowment)
@@ -65,17 +65,17 @@ export const customApi = junoApi.injectEndpoints({
     }),
     adminResources: builder.query<
       AdminResources | undefined,
-      { user: string; endowment: string }
+      { user: string; endowmentId: string }
     >({
       providesTags: [{ type: junoTags.custom, id: customTags.adminResources }],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         /** special case for ap admin usage */
         const proposalLink: SuccessLink = {
-          url: `${appRoutes.admin}/${args.endowment}/${adminRoutes.proposals}`,
+          url: `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         };
 
-        if (args.endowment === AP_ADDR) {
+        if (args.endowmentId === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
           const cw3 = new CW3(undefined, contracts.apCW3);
 
@@ -93,7 +93,7 @@ export const customApi = junoApi.injectEndpoints({
               data: {
                 cw3: contracts.apCW3,
                 cw4: contracts.apCW4,
-                endowment: AP_ADDR,
+                endowmentId: AP_ADDR,
                 cw3config,
                 proposalLink,
                 isAp: true,
@@ -104,7 +104,7 @@ export const customApi = junoApi.injectEndpoints({
           }
         }
 
-        const account = new Account(undefined, args.endowment);
+        const account = new Account(undefined);
         //get endowment details
         const endowmentRes = await baseQuery(
           contract_querier(account.endowment)
@@ -128,7 +128,7 @@ export const customApi = junoApi.injectEndpoints({
             data: {
               cw3: endowment.owner,
               cw4: cw3config.group_addr,
-              endowment: args.endowment,
+              endowmentId: args.endowmentId,
               cw3config,
               proposalLink,
               isAp: false,

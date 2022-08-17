@@ -383,14 +383,14 @@ export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
 
 export type EndowmentTier = "Level1" | "Level2" | "Level3";
 export type EndowmentEntry = {
-  address: string;
+  id: number; //int
+  owner: String;
   status: keyof EndowmentStatus;
-  name: string;
+  endow_type: Capitalize<EndowmentType>;
+  name?: string;
   logo?: string;
   image?: string;
-  owner?: string;
   tier?: EndowmentTier;
-  endow_type?: EndowmentType;
   un_sdg?: number;
 };
 
@@ -435,7 +435,7 @@ export type VaultRateInfo = {
 };
 
 export type StatusChangePayload = {
-  endowment_addr: string;
+  endowment_id: number;
   status: EndowmentStatus[keyof EndowmentStatus];
   beneficiary?: string;
 };

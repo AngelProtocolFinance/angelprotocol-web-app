@@ -23,7 +23,7 @@ import optimizeImage from "helpers/optimizeImage";
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
 export default function useEditProfile() {
-  const { endowment, cw3, proposalLink } = useAdminResources();
+  const { endowmentId, cw3, proposalLink } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -75,7 +75,7 @@ export default function useEditProfile() {
       showModal(Popup, { message: "Uploading image.." });
       const imageRes = await fetch(data.image);
       const imageBlob = await imageRes.blob();
-      const imageFile = new File([imageBlob], `banner_${endowment}`); //use endow address as unique imageName
+      const imageFile = new File([imageBlob], `banner_${endowmentId}`); //use endow address as unique imageName
 
       const key = imageFile.name;
       const file = await optimizeImage(imageFile);
@@ -89,7 +89,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(wallet, endowment);
+    const accountContract = new Account(wallet);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)

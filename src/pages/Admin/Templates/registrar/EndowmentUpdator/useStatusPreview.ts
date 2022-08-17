@@ -7,13 +7,13 @@ import useDebouncer from "hooks/useDebouncer";
 export default function useStatusPreview() {
   const { watch, getFieldState, setValue } =
     useFormContext<EndowmentUpdateValues>();
-  const inputAddr = watch("endowmentAddr");
-  const { invalid } = getFieldState("endowmentAddr");
-  const [debInputAddress, isDebouncing] = useDebouncer<string>(inputAddr, 500);
+  const inputId = watch("id");
+  const isInvalid = getFieldState("id").error !== undefined;
+  const [debInputId, isDebouncing] = useDebouncer(inputId, 500);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentStatus(
-    debInputAddress,
+    debInputId,
     //skip async call when field is invalid or still debouncing
-    isDebouncing || invalid
+    isDebouncing || isInvalid
   );
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function useStatusPreview() {
     isPreviewLoading: isDebouncing || isEndowmentStatusLoading,
     //fieldState isDirty, isTouched not working well
     //inputAddr can be both valid and == "" on initial render
-    isRenderPreview: !invalid && inputAddr !== "",
+    isRenderPreview: !isInvalid && debInputId !== 0,
     endowmentStatus,
   };
 }

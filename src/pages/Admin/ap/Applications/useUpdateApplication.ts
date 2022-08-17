@@ -23,7 +23,7 @@ export default function useUpdateApplicationStatus() {
     const statusChangePayload: StatusChangePayload = {
       beneficiary: data.beneficiary,
       status: +data.status as EndowmentStatusNum,
-      endowment_addr: data.endowmentAddr,
+      endowment_id: data.id,
     };
 
     const registrarContract = new Registrar(wallet);

@@ -14,8 +14,8 @@ import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
   const { wallet } = useGetWallet();
-  const { endowment } = useAdminResources();
-  const contract = new Account(undefined, endowment);
+  const { endowmentId } = useAdminResources();
+  const contract = new Account(undefined);
   const {
     data: profile,
     isLoading,

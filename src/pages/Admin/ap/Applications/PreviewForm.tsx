@@ -73,7 +73,7 @@ export default function PreviewForm({
             updateStatus({
               PK: ap.PK,
               status: "3",
-              endowmentAddr: ap.JunoWallet, // replace with endowment address
+              id: 0, // TODO: replace with endowment address
               title: getTitle("Reject"),
               description: getDescription("Reject"),
             })
@@ -86,7 +86,7 @@ export default function PreviewForm({
             updateStatus({
               PK: ap.PK,
               status: "1",
-              endowmentAddr: ap.JunoWallet, // replace with endowment address
+              id: 0, // TODO: replace with endowment address
               title: getTitle("Approve"),
               description: getDescription("Approve"),
             })

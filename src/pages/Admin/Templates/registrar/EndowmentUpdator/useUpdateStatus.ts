@@ -42,7 +42,7 @@ export default function useUpdateStatus() {
     const statusChangePayload: StatusChangePayload = {
       beneficiary: data.beneficiary,
       status: +data.status as EndowmentStatusNum,
-      endowment_addr: data.endowmentAddr,
+      endowment_id: data.id,
     };
 
     const registrarContract = new Registrar(wallet);
@@ -55,6 +55,7 @@ export default function useUpdateStatus() {
     const statusUpdateMeta: EndowmentStatusMeta = {
       type: "reg_endow_status",
       data: {
+        id: data.id,
         fromStatus: data.prevStatus,
         toStatus: data.status,
         beneficiary: data.beneficiary,

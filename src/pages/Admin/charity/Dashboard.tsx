@@ -6,8 +6,8 @@ import Account from "./Account";
 import Transactions from "./Transactions";
 
 export default function Dashboard() {
-  const { endowment } = useAdminResources();
-  const account = new AccountContract(undefined, endowment);
+  const { endowmentId } = useAdminResources();
+  const account = new AccountContract(undefined);
   const {
     data: balance,
     isLoading,
@@ -51,7 +51,7 @@ export default function Dashboard() {
         <p className="text-lg text-zinc-100">Coming soon!</p>
       </div>
 
-      <Transactions endowmentAddress={endowment} />
+      <Transactions endowmentId={endowmentId} />
     </div>
   );
 }

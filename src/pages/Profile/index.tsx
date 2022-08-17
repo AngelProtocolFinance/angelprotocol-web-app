@@ -13,8 +13,8 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileWithAddr = IProfile & { address: string };
-const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
+type ProfileWithId = IProfile & { id: number };
+const context = createContext<ProfileWithId>({} as ProfileWithId);
 export const useProfile = () => {
   const val = useContext(context);
   if (Object.entries(val).length <= 0)
@@ -23,8 +23,8 @@ export const useProfile = () => {
 };
 
 export default function Profile() {
-  const { address } = useParams<ProfileParams>();
-  const account = new Account(undefined, address!);
+  const { id } = useParams<ProfileParams>();
+  const account = new Account(undefined);
   const {
     data: profile,
     isLoading,
@@ -36,7 +36,12 @@ export default function Profile() {
 
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
-      <context.Provider value={{ ...profile, address: address! }}>
+      <context.Provider
+        value={{
+          ...profile,
+          id: Number(id /**!isError? id is a valid id */),
+        }}
+      >
         <Nav />
         <Header {...profile} />
         <Content {...profile} classes="row-span-2" />

@@ -7,6 +7,7 @@ import {
   WithdrawPayload,
 } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
@@ -14,8 +15,8 @@ export default class Account extends Contract {
   balance: ContractQueryArgs;
   profile: ContractQueryArgs;
 
-  constructor(wallet: WalletState | undefined, accountAddr: string) {
-    super(wallet, accountAddr);
+  constructor(wallet: WalletState | undefined) {
+    super(wallet, contracts.accounts);
 
     this.endowment = {
       address: this.contractAddress,

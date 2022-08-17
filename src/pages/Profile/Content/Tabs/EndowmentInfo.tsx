@@ -6,9 +6,9 @@ import toCurrency from "helpers/toCurrency";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
-  const { address } = useParams<ProfileParams>();
+  const { id } = useParams<ProfileParams>();
   //this component will not be rendered if address is undefined or incorrect
-  const { data } = useDepositTransactionsQuery(address!);
+  const { data } = useDepositTransactionsQuery(id!);
   const accountDetails = [
     {
       type: "Liquid Account",

@@ -11,12 +11,12 @@ const headers: { key: keyof Transaction; label: string }[] = [
   { key: "tx_id", label: "Transaction Hash" },
 ];
 
-export default function Transactions(props: { endowmentAddress: string }) {
+export default function Transactions(props: { endowmentId: string }) {
   const {
     data = [],
     isLoading,
     isError,
-  } = useDepositTransactionsQuery(props.endowmentAddress);
+  } = useDepositTransactionsQuery(props.endowmentId);
 
   return (
     <div className="mt-8 col-span-2 flex flex-col bg-white/10 p-4 rounded-md shadow-inner overflow-auto h-36">

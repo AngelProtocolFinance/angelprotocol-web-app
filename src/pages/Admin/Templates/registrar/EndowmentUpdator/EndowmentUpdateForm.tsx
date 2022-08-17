@@ -19,9 +19,9 @@ export default function EndowmentUpdateForm() {
         required
       />
       <TextInput<V>
-        title="Endowment addresss"
-        name="endowmentAddr"
-        placeholder="juno123abc..."
+        title="Endowment id"
+        name="id"
+        placeholder="0"
         required
         mono
       />

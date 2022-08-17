@@ -8,7 +8,7 @@ import { appRoutes } from "constants/routes";
 export default function DappMenu() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
-    { user: wallet?.address!, endowment: AP_ADDR },
+    { user: wallet?.address!, endowmentId: AP_ADDR },
     { skip: !wallet || wallet.chain.chain_id !== chainIds.juno }
   );
   return (
