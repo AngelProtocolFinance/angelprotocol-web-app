@@ -66,6 +66,7 @@ export type WithdrawPayload = {
 };
 
 export interface WithdrawLiqPayload {
+  id: number;
   beneficiary: string;
   assets: GenericBalance;
 }

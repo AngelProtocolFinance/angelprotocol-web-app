@@ -51,6 +51,7 @@ export default function useWithdraw() {
     const isJuno = data.network === chainIds.juno;
     const account = new Account(wallet);
     const msg = account.createEmbeddedWithdrawLiqMsg({
+      id: endowmentId,
       beneficiary:
         //if not juno, send to ap wallet (juno)
         isJuno ? data.beneficiary : ap_wallets.juno,
@@ -90,7 +91,7 @@ export default function useWithdraw() {
         successMessage: "Withdraw proposal successfully created!",
         setLogProcessor: isJuno
           ? undefined //no need to POST to AWS if destination is juno
-          : (rawLog) =>
+          : (rawLog /**TODO: pass whole response */) =>
               //will run if sendCosmos is success
               logWithdrawProposal({
                 rawLog,
