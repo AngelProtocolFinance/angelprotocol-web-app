@@ -5,9 +5,9 @@ import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -22,6 +22,7 @@ export default function useUpdateFund() {
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
   const dispatch = useSetter();
+  const { handleError } = useErrorContext();
 
   async function updateFund() {
     try {
@@ -33,8 +34,7 @@ export default function useUpdateFund() {
 
       const fundId = getValues("fundId");
       if (fundId === "") {
-        showModal(Popup, { message: "No fund selected" });
-        return;
+        throw new Error("No fund selected");
       }
       //check if there are changes
       type Diffs = [string[], string[]];
@@ -52,8 +52,7 @@ export default function useUpdateFund() {
       );
 
       if (toRemove.length <= 0 && toAdd.length <= 0) {
-        showModal(Popup, { message: "No fund member changes" });
-        return;
+        throw new Error("No fund member changes");
       }
       const indexFundContract = new IndexFund(wallet);
       const embeddedExecuteMsg =
@@ -99,6 +98,7 @@ export default function useUpdateFund() {
       reset();
     } catch (err) {
       setIsLoading(false);
+      handleError(err);
     }
   }
 
