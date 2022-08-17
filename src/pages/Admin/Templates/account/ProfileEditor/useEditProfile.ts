@@ -68,8 +68,7 @@ export default function useEditProfile() {
 
       const diffEntries = Object.entries(diff) as ObjectEntries<UP>;
       if (diffEntries.length <= 0) {
-        showModal(Popup, { message: "no changes detected" });
-        return;
+        throw new Error("no changes detected");
       }
 
       //run form change check first
@@ -88,8 +87,7 @@ export default function useEditProfile() {
         if (url) {
           data.image = url;
         } else {
-          showModal(Popup, { message: "Error uploading image" });
-          return;
+          throw new Error("Error uploading image");
         }
       }
 
