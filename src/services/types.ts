@@ -19,7 +19,7 @@ export type EncodedQueryMember = {
 export type AdminResources = {
   cw3: string;
   cw4: string;
-  endowmentId: string; //reaching this means id is valid and can be safely converted to number
+  endowmentId: number; //reaching this means id is valid and can be safely converted to number
   cw3config: CW3Config;
   proposalLink: SuccessLink;
   isAp: boolean;

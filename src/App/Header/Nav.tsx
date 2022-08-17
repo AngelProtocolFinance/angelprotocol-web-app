@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { AP_ADDR, useIsMemberQuery } from "services/juno/custom";
+import { AP_ID, useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { chainIds } from "constants/chainIds";
@@ -8,7 +8,7 @@ import { appRoutes } from "constants/routes";
 export default function DappMenu() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
-    { user: wallet?.address!, endowmentId: AP_ADDR },
+    { user: wallet?.address!, endowmentId: `${AP_ID}` },
     { skip: !wallet || wallet.chain.chain_id !== chainIds.juno }
   );
   return (
@@ -25,7 +25,7 @@ export default function DappMenu() {
         Leaderboard
       </NavLink>
       {isMember && (
-        <NavLink to={`${appRoutes.admin}/${AP_ADDR}`} className={styler}>
+        <NavLink to={`${appRoutes.admin}/${AP_ID}`} className={styler}>
           Admin
         </NavLink>
       )}

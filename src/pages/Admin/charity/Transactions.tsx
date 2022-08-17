@@ -11,7 +11,7 @@ const headers: { key: keyof Transaction; label: string }[] = [
   { key: "tx_id", label: "Transaction Hash" },
 ];
 
-export default function Transactions(props: { endowmentId: string }) {
+export default function Transactions(props: { endowmentId: number }) {
   const {
     data = [],
     isLoading,

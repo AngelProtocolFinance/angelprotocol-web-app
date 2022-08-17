@@ -14,9 +14,9 @@ export default function Nav() {
   const { data: isMember } = useIsMemberQuery(
     {
       user: wallet?.address!,
-      endowmentId: id!,
+      endowmentId: id,
     },
-    { skip: !wallet || !id! }
+    { skip: !wallet || !id }
   );
 
   return (

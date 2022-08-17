@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CharityApplication } from "types/server/aws";
-import { AP_ADDR } from "services/juno/custom";
+import { AP_ID } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
@@ -60,7 +60,7 @@ export default function PreviewForm({
 
       <Link
         className="`w-full bg-angel-blue text-center tracking-wider p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        to={`${appRoutes.admin}/${AP_ADDR}/${adminRoutes.proposal}/${ap.poll_id}`}
+        to={`${appRoutes.admin}/${AP_ID}/${adminRoutes.proposal}/${ap.poll_id}`}
       >
         Go to Poll
       </Link>

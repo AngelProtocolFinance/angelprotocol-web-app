@@ -10,6 +10,7 @@ import {
 } from "types/server/contracts";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import idParamToNum from "helpers/idParamToNum";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
@@ -20,14 +21,16 @@ type VoteListRes = {
   votes: AdminVoteInfo[];
 };
 
-export const AP_ADDR = "ap-team";
+export const AP_ID = 0;
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    isMember: builder.query<boolean, { user: string; endowmentId: string }>({
+    isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
       providesTags: [{ type: junoTags.custom, id: customTags.isMember }],
+
       async queryFn(args, queryApi, extraOptions, baseQuery) {
+        const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
-        if (args.endowmentId === AP_ADDR) {
+        if (numId === AP_ID) {
           //skip endowment query, query hardcoded cw3 straight
           const cw3 = new CW3(undefined, contracts.apCW3);
           //get voter info of wallet addr
@@ -65,17 +68,18 @@ export const customApi = junoApi.injectEndpoints({
     }),
     adminResources: builder.query<
       AdminResources | undefined,
-      { user: string; endowmentId: string }
+      { user: string; endowmentId?: string }
     >({
       providesTags: [{ type: junoTags.custom, id: customTags.adminResources }],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
+        const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
         const proposalLink: SuccessLink = {
           url: `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         };
 
-        if (args.endowmentId === AP_ADDR) {
+        if (numId === AP_ID) {
           //skip endowment query, query hardcoded cw3 straight
           const cw3 = new CW3(undefined, contracts.apCW3);
 
@@ -93,7 +97,7 @@ export const customApi = junoApi.injectEndpoints({
               data: {
                 cw3: contracts.apCW3,
                 cw4: contracts.apCW4,
-                endowmentId: AP_ADDR,
+                endowmentId: numId,
                 cw3config,
                 proposalLink,
                 isAp: true,
@@ -128,7 +132,7 @@ export const customApi = junoApi.injectEndpoints({
             data: {
               cw3: endowment.owner,
               cw4: cw3config.group_addr,
-              endowmentId: args.endowmentId,
+              endowmentId: numId,
               cw3config,
               proposalLink,
               isAp: false,

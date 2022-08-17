@@ -33,15 +33,16 @@ export default function ProfileEditor() {
     return <FormError errorMessage="Failed to load profile" />;
 
   return (
-    <ProfileEditContext {...(profile || ({} as any))}>
+    <ProfileEditContext {...{ ...profile, id: +endowmentId }}>
       <EditForm />
     </ProfileEditContext>
   );
 }
 
-function ProfileEditContext(props: Profile) {
+function ProfileEditContext(props: Profile & { id: number }) {
   //initialize falsy values
   const initialProfile: Required<UpdateProfilePayload> = {
+    id: props.id,
     name: props.name,
     overview: props.overview,
     un_sdg: props.un_sdg || 0,

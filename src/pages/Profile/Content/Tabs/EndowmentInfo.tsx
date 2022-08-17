@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { ProfileParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
+import idParamToNum from "helpers/idParamToNum";
 import toCurrency from "helpers/toCurrency";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
   const { id } = useParams<ProfileParams>();
   //this component will not be rendered if address is undefined or incorrect
-  const { data } = useDepositTransactionsQuery(id!);
+  const { data } = useDepositTransactionsQuery(idParamToNum(id));
   const accountDetails = [
     {
       type: "Liquid Account",

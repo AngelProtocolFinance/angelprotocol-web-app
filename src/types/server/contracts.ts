@@ -134,13 +134,14 @@ export interface Source {
 
 export interface UpdateProfilePayload {
   //separate shape for update
-  name?: string;
-  overview?: string;
-  un_sdg?: number;
+  id: number;
+  name: string;
+  overview: string;
+  un_sdg: number;
   tier?: number;
-  logo?: string;
-  image?: string;
-  url?: string;
+  logo: string;
+  image: string;
+  url: string;
   registration_number?: string;
   country_of_origin?: string;
   street_address?: string;
