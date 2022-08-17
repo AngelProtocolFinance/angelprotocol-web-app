@@ -3,7 +3,7 @@ import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useGovStakerState } from "services/juno/gov/states";
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {
@@ -39,7 +39,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={symbols[denoms.halo]}
+          placeholder={symbols.halo}
           className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div

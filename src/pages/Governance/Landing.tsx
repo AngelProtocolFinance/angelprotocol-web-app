@@ -1,4 +1,4 @@
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
@@ -19,14 +19,14 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
-          symbol={symbols[denoms.axlusdc]}
+          symbol={symbols.axlusdc}
           precision={6}
         />
         <Figure
           position="lg:row-start-2"
           title="total staked"
           value={staked}
-          symbol={symbols[denoms.halo]}
+          symbol={symbols.axlusdc}
           percent={percentStaked}
         />
         <Portal />

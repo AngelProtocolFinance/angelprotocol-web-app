@@ -14,7 +14,7 @@ import useDebouncer from "hooks/useDebouncer";
 import extractFeeAmount from "helpers/extractFeeData";
 import logger from "helpers/logger";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
@@ -50,7 +50,7 @@ export default function useEstimator() {
         if (is_stake && balance.div(1e6).lt(debounced_amount)) {
           //check $HALO balance
           setError("amount", {
-            message: `not enough ${symbols[denoms.halo]} balance`,
+            message: `not enough ${symbols.halo} balance`,
           });
           return;
         } else if (balance.sub(locked).div(1e6).lt(debounced_amount)) {

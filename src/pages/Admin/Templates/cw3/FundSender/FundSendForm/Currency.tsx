@@ -2,11 +2,7 @@ import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 
-function Currency(props: {
-  currency: FundSendValues["currency"] | string;
-  text: string;
-  icon: string;
-}) {
+function Currency(props: { currency: string; text: string; icon: string }) {
   const { register, watch } = useFormContext<FundSendValues>();
   const isActive = watch("currency") === props.currency;
 

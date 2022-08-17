@@ -55,6 +55,7 @@ export interface BalanceInfo {
 }
 
 export interface DepositPayload {
+  id: number;
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }

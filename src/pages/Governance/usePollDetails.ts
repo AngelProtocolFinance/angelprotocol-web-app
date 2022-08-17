@@ -10,7 +10,7 @@ import {
 } from "services/juno/gov/queriers";
 import { useLatestBlock } from "services/juno/queriers";
 import toCurrency from "helpers/toCurrency";
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 
 type ProcessedPollData = {
   id: number;
@@ -97,8 +97,8 @@ export default function useDetails(poll_id: number): ProcessedPollData {
       no_pct: toCurrency(no_pct, 2), //0.02%
       voted_pct: toCurrency(voted_pct, 2), //0.03
       quorum_val: `Quorum ${toCurrency(quorum_pct, 2)}%`,
-      yes_val: toCurrency(yes_halo) + " " + symbols[denoms.halo], //10
-      no_val: toCurrency(no_halo) + " " + symbols[denoms.halo], //10
+      yes_val: toCurrency(yes_halo) + " " + symbols.halo, //10
+      no_val: toCurrency(no_halo) + " " + symbols.halo, //10
       vote,
       vote_ended: is_expired,
     };

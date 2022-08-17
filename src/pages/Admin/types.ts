@@ -1,3 +1,4 @@
+import { Denoms } from "types/lists";
 import { CharityApplication } from "types/server/aws";
 import {
   AllianceMember,
@@ -10,7 +11,6 @@ import {
   RegistrarOwnerPayload,
   UpdateProfilePayload,
 } from "types/server/contracts";
-import { denoms } from "constants/currency";
 
 export type AdminParams = { id: string };
 export type ProposalParams = { id: string };
@@ -200,7 +200,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: denoms;
+  currency: Denoms; //NOTE: Denoms might contain non-juno denoms
   haloBalance: number;
   usdBalance: number;
 };
