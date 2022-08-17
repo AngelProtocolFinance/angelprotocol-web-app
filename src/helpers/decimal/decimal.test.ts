@@ -3,11 +3,11 @@ import {
   condense,
   condenseToNum,
   condenseToStr,
+  humanize,
   roundDown,
   roundDownToNum,
   scale,
   scaleToStr,
-  toCurrency,
   toPreciseLocaleString,
 } from ".";
 
@@ -86,93 +86,93 @@ describe("common decimal helpers", () => {
   });
 
   test("to currency: truncating lt 1K", () => {
-    expect(toCurrency(934.23456789, 0, true)).toBe(
+    expect(humanize(934.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(934, 0)
     );
-    expect(toCurrency(934.23456789, 1, true)).toBe(
+    expect(humanize(934.23456789, 1, true)).toBe(
       toPreciseLocaleString(934.2, 1)
     );
-    expect(toCurrency(934.23456789, 2, true)).toBe(
+    expect(humanize(934.23456789, 2, true)).toBe(
       toPreciseLocaleString(934.23, 2)
     );
-    expect(toCurrency(934.23456789, 4, true)).toBe(
+    expect(humanize(934.23456789, 4, true)).toBe(
       toPreciseLocaleString(934.2345, 4)
     );
   });
 
   test("to currency: truncating gt 1k", () => {
-    expect(toCurrency(1234.23456789, 0, true)).toBe(
+    expect(humanize(1234.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(1, 0) + "K"
     );
-    expect(toCurrency(1234.23456789, 1, true)).toBe(
+    expect(humanize(1234.23456789, 1, true)).toBe(
       toPreciseLocaleString(1.2, 1) + "K"
     );
-    expect(toCurrency(1234.23456789, 2, true)).toBe(
+    expect(humanize(1234.23456789, 2, true)).toBe(
       toPreciseLocaleString(1.23, 2) + "K"
     );
-    expect(toCurrency(1234.23456789, 4, true)).toBe(
+    expect(humanize(1234.23456789, 4, true)).toBe(
       toPreciseLocaleString(1.2342, 4) + "K"
     );
   });
 
   test("to currency: truncating gt 1M", () => {
-    expect(toCurrency(1_234_567.23456789, 0, true)).toBe(
+    expect(humanize(1_234_567.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(1, 0) + "M"
     );
-    expect(toCurrency(1_234_567.23456789, 1, true)).toBe(
+    expect(humanize(1_234_567.23456789, 1, true)).toBe(
       toPreciseLocaleString(1.2, 1) + "M"
     );
-    expect(toCurrency(1_234_567.23456789, 2, true)).toBe(
+    expect(humanize(1_234_567.23456789, 2, true)).toBe(
       toPreciseLocaleString(1.23, 2) + "M"
     );
-    expect(toCurrency(1_234_567.23456789, 4, true)).toBe(
+    expect(humanize(1_234_567.23456789, 4, true)).toBe(
       toPreciseLocaleString(1.2345, 4) + "M"
     );
 
-    expect(toCurrency(1_234_567.23456789, 0, false)).toBe(
+    expect(humanize(1_234_567.23456789, 0, false)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(1_234_567, 0)
     );
-    expect(toCurrency(1_234_567.23456789, 1, false)).toBe(
+    expect(humanize(1_234_567.23456789, 1, false)).toBe(
       toPreciseLocaleString(1_234_567.2, 1)
     );
-    expect(toCurrency(1_234_567.23456789, 2, false)).toBe(
+    expect(humanize(1_234_567.23456789, 2, false)).toBe(
       toPreciseLocaleString(1_234_567.23, 2)
     );
-    expect(toCurrency(1_234_567.23456789, 4, false)).toBe(
+    expect(humanize(1_234_567.23456789, 4, false)).toBe(
       toPreciseLocaleString(1_234_567.2345, 4)
     );
   });
 
   test("to currency: truncating gt 1B", () => {
-    expect(toCurrency(1_234_567_891.23456789, 0, true)).toBe(
+    expect(humanize(1_234_567_891.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(1, 0) + "B"
     );
-    expect(toCurrency(1_234_567_891.23456789, 1, true)).toBe(
+    expect(humanize(1_234_567_891.23456789, 1, true)).toBe(
       toPreciseLocaleString(1.2, 1) + "B"
     );
-    expect(toCurrency(1_234_567_891.23456789, 2, true)).toBe(
+    expect(humanize(1_234_567_891.23456789, 2, true)).toBe(
       toPreciseLocaleString(1.23, 2) + "B"
     );
-    expect(toCurrency(1_234_567_891.23456789, 4, true)).toBe(
+    expect(humanize(1_234_567_891.23456789, 4, true)).toBe(
       toPreciseLocaleString(1.2345, 4) + "B"
     );
 
-    expect(toCurrency(1_234_567_891.23456789, 0, false)).toBe(
+    expect(humanize(1_234_567_891.23456789, 0, false)).toBe(
       //toLocalString output may vary depending on machine
       toPreciseLocaleString(1_234_567_891, 0)
     );
-    expect(toCurrency(1_234_567_891.23456789, 1, false)).toBe(
+    expect(humanize(1_234_567_891.23456789, 1, false)).toBe(
       toPreciseLocaleString(1_234_567_891.2, 1)
     );
-    expect(toCurrency(1_234_567_891.23456789, 2, false)).toBe(
+    expect(humanize(1_234_567_891.23456789, 2, false)).toBe(
       toPreciseLocaleString(1_234_567_891.23, 2)
     );
-    expect(toCurrency(1_234_567_891.23456789, 4, false)).toBe(
+    expect(humanize(1_234_567_891.23456789, 4, false)).toBe(
       toPreciseLocaleString(1_234_567_891.2345, 4)
     );
   });

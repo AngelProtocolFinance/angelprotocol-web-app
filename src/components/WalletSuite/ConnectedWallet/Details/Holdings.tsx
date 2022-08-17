@@ -1,5 +1,5 @@
 import { Token } from "types/server/aws";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 
 export default function Holdings(props: { coins: Token[] }) {
   return (
@@ -19,7 +19,7 @@ export default function Holdings(props: { coins: Token[] }) {
               {coin.symbol}
             </span>
             <span className="ml-auto text-angel-grey">
-              {toCurrency(+coin.balance, 3, true)}
+              {humanize(+coin.balance, 3, true)}
             </span>
           </li>
         );

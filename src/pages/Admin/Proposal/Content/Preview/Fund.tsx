@@ -1,5 +1,5 @@
 import { FundPreview } from "pages/Admin/types";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 import Header from "./common/Header";
 import KeyValue from "./common/KeyValue";
 import MemberItem from "./common/MemberItem";
@@ -53,13 +53,13 @@ function getExpiry(
   let expiry: string = "no expiry";
 
   if (time && height) {
-    expiry = `at block ${toCurrency(height, 0)} or ${new Date(
+    expiry = `at block ${humanize(height, 0)} or ${new Date(
       time * secToMillisFactor
     ).toLocaleString()}`;
   } else if (time) {
     expiry = new Date(time * secToMillisFactor).toLocaleString();
   } else if (height) {
-    expiry = `at block ${toCurrency(height, 0)}`;
+    expiry = `at block ${humanize(height, 0)}`;
   }
   return expiry;
 }

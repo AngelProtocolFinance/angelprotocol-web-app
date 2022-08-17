@@ -9,7 +9,7 @@ import {
   useGovStaker,
 } from "services/juno/gov/queriers";
 import { useLatestBlock } from "services/juno/queriers";
-import { condenseToNum, toCurrency } from "helpers";
+import { condenseToNum, humanize } from "helpers";
 import { denoms, symbols } from "constants/currency";
 
 type ProcessedPollData = {
@@ -88,17 +88,17 @@ export default function useDetails(poll_id: number): ProcessedPollData {
       status: poll.status,
       title: poll.title,
       creator: poll.creator,
-      amount: toCurrency(deposit_amount),
+      amount: humanize(deposit_amount),
       end_height: poll.end_height,
       blocks_remaining: remaining_blocks.toNumber(),
       link: poll.link,
       description: poll.description,
-      yes_pct: toCurrency(yes_pct, 2), //0.01
-      no_pct: toCurrency(no_pct, 2), //0.02%
-      voted_pct: toCurrency(voted_pct, 2), //0.03
-      quorum_val: `Quorum ${toCurrency(quorum_pct, 2)}%`,
-      yes_val: toCurrency(yes_halo) + " " + symbols[denoms.halo], //10
-      no_val: toCurrency(no_halo) + " " + symbols[denoms.halo], //10
+      yes_pct: humanize(yes_pct, 2), //0.01
+      no_pct: humanize(no_pct, 2), //0.02%
+      voted_pct: humanize(voted_pct, 2), //0.03
+      quorum_val: `Quorum ${humanize(quorum_pct, 2)}%`,
+      yes_val: humanize(yes_halo) + " " + symbols[denoms.halo], //10
+      no_val: humanize(no_halo) + " " + symbols[denoms.halo], //10
       vote,
       vote_ended: is_expired,
     };

@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import Icon from "components/Icon";
-import { condense, toCurrency } from "helpers";
+import { condense, humanize } from "helpers";
 import { denoms, symbols } from "constants/currency";
 
 export default function Claims() {
@@ -19,7 +19,7 @@ export default function Claims() {
     [staker]
   );
 
-  const amount = toCurrency(condense(total_claims), 2, true);
+  const amount = humanize(condense(total_claims), 2, true);
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
@@ -66,7 +66,7 @@ function Claim(props: { time: string; amount: string }) {
         }`}
       >
         <span className="mr-1">
-          {toCurrency(condense(props.amount), 2, true)}
+          {humanize(condense(props.amount), 2, true)}
         </span>
         <span className="text-xs font-semibold">{symbols[denoms.halo]}</span>
       </p>

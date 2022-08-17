@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
 import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
@@ -17,7 +17,7 @@ export default function Toolbar(props: { classes?: string }) {
           current block{" "}
         </span>
         <Icon type="Blockchain" className="mr-1" />
-        <span>{toCurrency(+block_height, 0)}</span>
+        <span>{humanize(+block_height, 0)}</span>
       </p>
       <Link
         to={`../${adminRoutes.templates}`}

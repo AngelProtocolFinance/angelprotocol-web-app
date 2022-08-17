@@ -5,7 +5,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
-import { getTxUrl, toCurrency } from "helpers";
+import { getTxUrl, humanize } from "helpers";
 import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {
@@ -58,7 +58,7 @@ export default function DonationsTable(props: {
       >
         {sortedTransactions.map((tx) => (
           <Cells key={tx.tx_id} type="td" cellClass="p-2 first:pl-0 last:pr-0">
-            <p className="text-base font-bold">$ {toCurrency(tx.usd_amount)}</p>
+            <p className="text-base font-bold">$ {humanize(tx.usd_amount)}</p>
             <>{tx.block_timestamp.substring(0, 10)}</>
             <span className="font-mono">{tx.name}</span>
             <a

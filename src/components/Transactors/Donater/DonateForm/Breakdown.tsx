@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 
 export default function Breakdown() {
   const { wallet } = useGetWallet();
@@ -35,7 +35,7 @@ function Entry(props: {
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
-        {toCurrency(props.amount, 6)} {props.symbol}
+        {humanize(props.amount, 6)} {props.symbol}
       </p>
     </div>
   );

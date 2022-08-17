@@ -2,7 +2,7 @@ import { PollFilterOptions } from "../types";
 import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 import Button from "../Button";
 import PollSelector from "./PollSelector";
 
@@ -25,7 +25,7 @@ export default function Toolbar(props: {
       <p className="ml-auto text-white-grey/80 font-heading text-sm flex items-center px-3">
         <span className="font-heading uppercase text-2xs">current block </span>
         <Icon type="Blockchain" className="mr-1" />
-        <span>{toCurrency(+block_height, 0)}</span>
+        <span>{humanize(+block_height, 0)}</span>
       </p>
 
       <Button

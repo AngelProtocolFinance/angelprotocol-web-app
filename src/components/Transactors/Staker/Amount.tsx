@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
-import { condense, roundDown, toCurrency } from "helpers";
+import { condense, humanize, roundDown } from "helpers";
 import { denoms, symbols } from "constants/currency";
 import Balance from "./Balance";
 import useStakerBalance from "./useStakerBalance";
@@ -29,13 +29,13 @@ export default function Amount() {
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance
-          amount={toCurrency(condense(balance), 3, true)}
+          amount={humanize(condense(balance), 3, true)}
           title={is_stake ? "Balance" : "Staked"}
         />
       </label>
       {!is_stake && (
         <Balance
-          amount={toCurrency(condense(locked), 3, true)}
+          amount={humanize(condense(locked), 3, true)}
           title="Vote Locked"
         />
       )}

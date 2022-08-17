@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Icon from "components/Icon";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 import { governRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 
@@ -52,7 +52,7 @@ export default function PollCard(props: { poll_id: number }) {
             </span>
             <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+details.end_height, 0)}
+              {humanize(+details.end_height, 0)}
             </span>
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function PollCard(props: { poll_id: number }) {
           <p className="flex items-center justify-end">
             <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+details.blocks_remaining, 0)}
+              {humanize(+details.blocks_remaining, 0)}
             </span>
             <span className="font-heading uppercase text-2xs ml-1">blocks</span>
           </p>

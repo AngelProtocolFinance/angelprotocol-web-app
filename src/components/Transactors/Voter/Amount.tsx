@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useGovStakerState } from "services/juno/gov/states";
-import { condense, roundDown, toCurrency } from "helpers";
+import { condense, humanize, roundDown } from "helpers";
 import { denoms, symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
 
@@ -29,7 +29,7 @@ export default function Amount() {
         className="text-angel-grey uppercase font-bold mb-2"
       >
         <span>Deposit amount</span>
-        <Balance amount={toCurrency(govStakedHalo, 3)} title="Balance" />
+        <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
       <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <input

@@ -1,4 +1,4 @@
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 
 type Props = {
   title: string;
@@ -20,11 +20,11 @@ export default function Figure(props: Props) {
         {props.title}
       </p>
       <p className="text-4xl font-heading text-white-grey/80">
-        <span>{toCurrency(props.value, props.precision || 2, true)}</span>
+        <span>{humanize(props.value, props.precision || 2, true)}</span>
         <span> {props.symbol}</span>
         {/* {(props.percent && (
           <span className="text-lg pl-2 font-body">
-            ( {toCurrency(props.percent)}% )
+            ( {humanize(props.percent)}% )
           </span>
         )) ||
           null} */}

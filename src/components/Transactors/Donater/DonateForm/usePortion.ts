@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
@@ -11,7 +11,7 @@ export default function usePortion(type: string) {
   const token = watch("token");
 
   //values
-  const disp_amount = `${token.symbol} ${toCurrency(
+  const disp_amount = `${token.symbol} ${humanize(
     ((isLocked ? split_locked : split_liq) / 100) * amount,
     6
   )}`;

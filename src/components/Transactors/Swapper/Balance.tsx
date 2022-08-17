@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { Token } from "types/server/aws";
-import { toCurrency } from "helpers";
+import { humanize } from "helpers";
 
 export default function Balance({ token }: { token: Token }) {
   const { setValue } = useFormContext<SwapValues>();
@@ -21,7 +21,7 @@ export default function Balance({ token }: { token: Token }) {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(token.balance, 3, true)} {token.symbol}
+        {humanize(token.balance, 3, true)} {token.symbol}
       </button>
     </p>
   );

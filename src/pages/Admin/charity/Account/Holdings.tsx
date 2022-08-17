@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { CW20, GenericBalance } from "types/server/contracts";
 import TableSection, { Cells } from "components/TableSection";
-import { condense, toCurrency } from "helpers";
+import { condense, humanize } from "helpers";
 import { assets } from "../constants";
 
 export default function Holdings(props: { balance: GenericBalance }) {
@@ -32,7 +32,7 @@ function Balance(props: CW20 | Coin) {
         <span>{assets[id].name}</span>
       </div>
 
-      <>{toCurrency(condense(props.amount), 4)}</>
+      <>{humanize(condense(props.amount), 4)}</>
     </Cells>
   );
 }

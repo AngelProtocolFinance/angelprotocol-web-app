@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { Transaction } from "types/server/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
-import { getTxUrl, maskAddress, toCurrency } from "helpers";
+import { getTxUrl, humanize, maskAddress } from "helpers";
 
 export default function TransactionsTable(props: {
   transactions: Transaction[];
@@ -41,7 +41,7 @@ export default function TransactionsTable(props: {
         {props.transactions.map((tx) => (
           <Cells type="td" cellClass="p-2 first:pl-0 last:pr-0" key={tx.tx_id}>
             {/* <p className="capitalize">{tx.transaction_type}</p> */}
-            <p className="text-base font-bold">$ {toCurrency(tx.usd_amount)}</p>
+            <p className="text-base font-bold">$ {humanize(tx.usd_amount)}</p>
             <span className="text-base">
               {tx.block_timestamp.substring(0, 10)}
             </span>
