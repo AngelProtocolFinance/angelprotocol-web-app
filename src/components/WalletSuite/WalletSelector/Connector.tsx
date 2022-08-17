@@ -11,8 +11,11 @@ export default function Connector(props: Connection) {
   const isMulti = "networks" in props;
 
   const toggle = () => {
-    if (!isMulti) throw new Error("No network selection");
-    setIsOpen((prev) => !prev);
+    if (isMulti) {
+      setIsOpen((prev) => !prev);
+    } else {
+      handleError("No network selection");
+    }
   };
 
   async function handleConnect() {
