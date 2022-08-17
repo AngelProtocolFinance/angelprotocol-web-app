@@ -4,6 +4,7 @@ import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
 import createAuthToken from "helpers/createAuthToken";
+import logger from "helpers/logger";
 import { APIs } from "constants/urls";
 
 export const logWithdrawProposal = createAsyncThunk(
@@ -44,6 +45,7 @@ export const logWithdrawProposal = createAsyncThunk(
         throw new Error(`Non-success response status: ${response.status}`);
       }
     } catch (err) {
+      logger.error(err);
       dispatch(
         setStage({
           step: "error",
