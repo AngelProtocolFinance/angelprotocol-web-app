@@ -19,10 +19,10 @@ import {
 export default function handleTxError(error: any, handler: StageUpdater) {
   logger.error(error);
 
-  if (error instanceof UserDenied) {
-    handler({ step: "error", message: "Transaction aborted" });
-  } else if (error instanceof WalletDisconnectedError) {
+  if (error instanceof WalletDisconnectedError) {
     handler({ step: "error", message: error.message });
+  } else if (error instanceof UserDenied) {
+    handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
@@ -44,7 +44,7 @@ export default function handleTxError(error: any, handler: StageUpdater) {
   } else if (error instanceof LogApplicationUpdateError) {
     handler({
       step: "error",
-      message: "Failed to log the Poll ID of your proposal.",
+      message: error.message,
       chainId: error.chainId,
     });
   } else if (error instanceof Timeout || error instanceof TimeoutError) {
