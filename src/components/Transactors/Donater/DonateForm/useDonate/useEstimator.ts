@@ -77,7 +77,6 @@ export default function useEstimator() {
             selectedToken.type === "ibc"
           ) {
             const contract = new Contract(wallet);
-
             const msg = contract.createTransferNativeMsg(
               debounced_amount,
               ap_wallets.juno,

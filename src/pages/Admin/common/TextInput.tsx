@@ -12,6 +12,7 @@ export default function TextInput<T extends FieldValues>(props: {
   mono?: true;
   wide?: true;
   plain?: true;
+  number?: true;
 }) {
   const {
     register,
@@ -29,7 +30,7 @@ export default function TextInput<T extends FieldValues>(props: {
       </label>
 
       {React.createElement(props.wide ? "textarea" : "input", {
-        ...register(props.name as string),
+        ...register(props.name as string, { valueAsNumber: props.number }),
         id: id,
         className: `${
           props.mono ? "font-mono text-sm" : ""

@@ -46,7 +46,7 @@ export const customApi = junoApi.injectEndpoints({
         const account = new Account(undefined);
         //get endowment details
         const endowmentRes = await baseQuery(
-          contract_querier(account.endowment(Number(args.endowmentId)))
+          contract_querier(account.endowment(numId))
         );
 
         const endowment = (endowmentRes.data as QueryRes<EndowmentDetails>)
@@ -151,11 +151,8 @@ export const customApi = junoApi.injectEndpoints({
     >({
       providesTags: [{ type: junoTags.custom, id: customTags.proposalDetails }],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
-        const id = Number(args.id);
-
-        if (isNaN(id)) {
-          return { data: undefined };
-        }
+        const id = idParamToNum(args.id);
+        if (id === 0) return { data: undefined };
 
         const cw3 = new CW3(undefined, args.cw3);
 

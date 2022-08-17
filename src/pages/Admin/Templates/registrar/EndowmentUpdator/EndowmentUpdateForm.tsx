@@ -24,6 +24,7 @@ export default function EndowmentUpdateForm() {
         placeholder="0"
         required
         mono
+        number
       />
       <EndowmentPreview />
       <Label _required>New endowment status</Label>

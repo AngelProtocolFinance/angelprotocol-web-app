@@ -11,7 +11,7 @@ export default function useStatusPreview() {
   const isInvalid = getFieldState("id").error !== undefined;
   const [debInputId, isDebouncing] = useDebouncer(inputId, 500);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentStatus(
-    debInputId,
+    debInputId, //debInputId is casted to string by textInput
     //skip async call when field is invalid or still debouncing
     isDebouncing || isInvalid
   );

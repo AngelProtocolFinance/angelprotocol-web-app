@@ -7,6 +7,7 @@ import { useEndowmentProfileQuery } from "services/juno/account";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Account from "contracts/Account";
+import idParamToNum from "helpers/idParamToNum";
 import { appRoutes } from "constants/routes";
 import Content from "./Content";
 import Header from "./Header";
@@ -24,14 +25,14 @@ export const useProfile = () => {
 
 export default function Profile() {
   const { id } = useParams<ProfileParams>();
-  const numId = Number(id);
+  const numId = idParamToNum(id);
   const account = new Account(undefined);
   const {
     data: profile,
     isLoading,
     isError,
   } = useEndowmentProfileQuery(account.profile(numId), {
-    skip: isNaN(numId),
+    skip: numId === 0,
   });
 
   if (isLoading) return <Skeleton />;
