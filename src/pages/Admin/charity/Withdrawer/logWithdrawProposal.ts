@@ -41,7 +41,7 @@ export const logWithdrawProposal = createAsyncThunk(
 
       //success = 2xx
       if (response.status < 200 || response.status > 299) {
-        throw new Error();
+        throw new Error(`Non-success response status: ${response.status}`);
       }
     } catch (err) {
       dispatch(
