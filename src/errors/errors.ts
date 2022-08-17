@@ -111,12 +111,12 @@ export class TxResultFail extends Error {
   }
 }
 
-export class WalletError extends Error {
+export class WalletError extends APError {
   //based on EIP1193 error spec
   code: number;
   data?: unknown;
   constructor(message: string, code: number, data?: unknown) {
-    super(message);
+    super("WalletError", message);
     this.code = code;
     this.data = data;
   }
