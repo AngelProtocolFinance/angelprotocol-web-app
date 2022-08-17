@@ -13,20 +13,18 @@ export default function ErrPop(props: ErrorStage) {
   const { chain, message, txHash } = props;
   const { handleError } = useErrorContext();
 
-  const isErrorStep = props.step === "error";
-
   useEffect(() => {
-    if (!isErrorStep) {
+    if (props.step !== "error") {
       handleError("wrong component rendered");
     }
-  }, [props.step]);
+  }, [props.step, handleError]);
 
   function acknowledge() {
     dispatch(setStage({ step: "initial" }));
     closeModal();
   }
 
-  if (!isErrorStep) {
+  if (props.step !== "error") {
     return null;
   }
 
