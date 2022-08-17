@@ -85,14 +85,17 @@ export default function useInjectedProvider(
         setChainId(`${parseInt(hexChainId, 16)}`);
       }
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       //if user cancels, set pref to disconnect
       logger.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
         //if connection is made via "connect-button"
-        throw err;
+        throw new WalletError(
+          err.message || "Unknown error occured",
+          err.code || 0
+        );
       }
     }
   };
