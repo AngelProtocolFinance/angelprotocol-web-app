@@ -37,8 +37,7 @@ export default function handleTxError(error: any, handler: StageUpdater) {
   } else if (error instanceof LogDonationFail) {
     handler({
       step: "error",
-      message:
-        "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io",
+      message: error.message,
       txHash: error.txHash,
       chainId: error.chainId,
     });

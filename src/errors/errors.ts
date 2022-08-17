@@ -40,7 +40,9 @@ export class LogDonationFail extends Error {
   chainId: string;
   txHash: string;
   constructor(chainId: string, txHash: string) {
-    super();
+    super(
+      "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io"
+    );
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "LogDonationFail";
