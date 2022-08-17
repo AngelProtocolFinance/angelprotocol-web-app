@@ -26,7 +26,7 @@ export default function Views() {
         <Route path={appRoutes.login} element={<Login />} />
         <Route path={appRoutes.tca} element={<TCA />} />
         {/* <Route path={`${appRoutes.govern}/*`} element={<Governance />} /> */}
-        <Route path={`${appRoutes.admin}/:address/*`} element={<Admin />} />
+        <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
         <Route
           path={`${appRoutes.donations}/:address`}
           element={<Donations />}

@@ -12,7 +12,7 @@ export default function Dashboard() {
     data: balance,
     isLoading,
     isError,
-  } = useBalanceQuery(account.balance);
+  } = useBalanceQuery(account.balance(+endowmentId));
 
   if (isLoading) {
     return (

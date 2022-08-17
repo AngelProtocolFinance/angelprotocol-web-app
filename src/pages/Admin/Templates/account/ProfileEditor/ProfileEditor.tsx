@@ -20,7 +20,11 @@ export default function ProfileEditor() {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(contract.profile);
+  } = useEndowmentProfileQuery(
+    contract.profile(
+      +endowmentId /**valid id, already verified in useAdminResources */
+    )
+  );
 
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;

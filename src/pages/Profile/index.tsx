@@ -24,12 +24,15 @@ export const useProfile = () => {
 
 export default function Profile() {
   const { id } = useParams<ProfileParams>();
+  const numId = Number(id);
   const account = new Account(undefined);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(account.profile);
+  } = useEndowmentProfileQuery(account.profile(numId), {
+    skip: isNaN(numId),
+  });
 
   if (isLoading) return <Skeleton />;
   if (isError || !profile) return <PageError />;
@@ -39,7 +42,7 @@ export default function Profile() {
       <context.Provider
         value={{
           ...profile,
-          id: Number(id /**!isError? id is a valid id */),
+          id: numId, //!isError && numId is valid id
         }}
       >
         <Nav />

@@ -11,27 +11,27 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
-  endowment: ContractQueryArgs;
-  balance: ContractQueryArgs;
-  profile: ContractQueryArgs;
+  endowment: (id: number) => ContractQueryArgs;
+  balance: (id: number) => ContractQueryArgs;
+  profile: (id: number) => ContractQueryArgs;
 
   constructor(wallet: WalletState | undefined) {
     super(wallet, contracts.accounts);
 
-    this.endowment = {
+    this.endowment = (id) => ({
       address: this.contractAddress,
-      msg: { endowment: {} },
-    };
+      msg: { endowment: { id } },
+    });
 
-    this.balance = {
+    this.balance = (id) => ({
       address: this.contractAddress,
-      msg: { balance: {} },
-    };
+      msg: { balance: { id } },
+    });
 
-    this.profile = {
+    this.profile = (id) => ({
       address: this.contractAddress,
-      msg: { get_profile: {} },
-    };
+      msg: { get_profile: { id } },
+    });
   }
 
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {

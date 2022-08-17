@@ -3,7 +3,7 @@ import { EndowmentUpdateValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { EndowmentStatusStrNum as ST } from "types/server/contracts";
 import { requiredPositiveNumber } from "schemas/number";
-import { requiredContractAddr, requiredWalletAddr } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../proposalShape";
 
 const endowmentUpdateShape: SchemaShape<EndowmentUpdateValues> = {

@@ -43,7 +43,7 @@ export const customApi = junoApi.injectEndpoints({
         const account = new Account(undefined);
         //get endowment details
         const endowmentRes = await baseQuery(
-          contract_querier(account.endowment)
+          contract_querier(account.endowment(Number(args.endowmentId)))
         );
 
         const endowment = (endowmentRes.data as QueryRes<EndowmentDetails>)
@@ -107,7 +107,7 @@ export const customApi = junoApi.injectEndpoints({
         const account = new Account(undefined);
         //get endowment details
         const endowmentRes = await baseQuery(
-          contract_querier(account.endowment)
+          contract_querier(account.endowment(Number(args.endowmentId)))
         );
         const endowment = (endowmentRes.data as QueryRes<EndowmentDetails>)
           .data;
