@@ -36,89 +36,102 @@ function TestApp() {
   );
 }
 
-describe("user visits app", () => {
-  window.scrollTo = jest.fn();
-  test("App's default page is lazy loaded Marketplace", async () => {
-    render(<TestApp />);
+describe("App.tsx tests", () => {
+  const marketText1 = /angel protocol supports/i;
+  const marketText2 = /displaced ukrainians/i;
+  const marketplaceLinkText = /marketplace/i;
+  const leaderboardLinkText = /leaderboard/i;
+  const registerLinkText = /register/i;
+  // const governanceLinkText = /governance/i;
 
-    //loader is rendered because content is being lazy loaded
+  window.scrollTo = jest.fn();
+
+  beforeEach(() => {
+    render(<TestApp />);
+  });
+
+  test("App's default page is lazy loaded Marketplace", async () => {
+    // loader is rendered because content is being lazy loaded
     const loader = screen.getByTestId("loader");
     expect(loader).toBeInTheDocument();
 
-    //view is not yet rendered and being lazy loaded
-    const text1 = /angel protocol supports/i;
-    const text2 = /displaced ukrainians/i;
-    expect(screen.queryByText(text1)).toBeNull();
-    expect(screen.queryByText(text2)).toBeNull();
+    // view is not yet rendered and being lazy loaded
+    expect(screen.queryByText(marketText1)).toBeNull();
 
-    //footer is immediately rendered
-    //role here https://www.w3.org/TR/html-aria/#docconformance
+    // footer is immediately rendered
+    // role here https://www.w3.org/TR/html-aria/#docconformance
     const footer = screen.getByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
-    //view is finally loaded,
-    //role here https://www.w3.org/TR/html-aria/#docconformance
+    // view is finally loaded,
+    // role here https://www.w3.org/TR/html-aria/#docconformance
     expect(await screen.findByRole("banner")).toBeInTheDocument();
-    expect(screen.getByText(text1)).toBeInTheDocument();
-    expect(screen.getByText(text2)).toBeInTheDocument();
     expect(loader).not.toBeInTheDocument();
+    expect(screen.getByText(marketText1)).toBeInTheDocument();
+    expect(screen.getByText(marketText2)).toBeInTheDocument();
+    expect(screen.getByText(marketplaceLinkText)).toBeInTheDocument();
+    expect(screen.getByText(leaderboardLinkText)).toBeInTheDocument();
+    expect(screen.getByText(registerLinkText)).toBeInTheDocument();
+    // expect(screen.getByText(governanceLinkText)).toBeInTheDocument();
   });
 
-  test("Routing", async () => {
-    render(<TestApp />);
+  describe("Routing", () => {
+    const leaderboardText1 = /total donations/i;
 
     // const govText1 = /total staked/i;
     // const govText2 = /halo price/i;
 
-    const marketText1 = /angel protocol supports/i;
-    const marketText2 = /displaced ukrainians/i;
+    test("routing to leaderboard", async () => {
+      // wait for Marketplace to load
+      // user goes to leaderboard
+      const leaderboardLink = await screen.findByText(leaderboardLinkText);
+      userEvent.click(leaderboardLink);
 
-    const leaderboardText1 = /total donations/i;
+      // user is in leaderboard
+      const loader3 = screen.getByTestId("loader");
+      expect(loader3).toBeInTheDocument();
 
-    // NOTE: Governance will be reenabled when we relaunch the $HALO token
-    //user goes to governance
-    // const govLink = screen.getByText(/governance/i);
+      //view is not yet rendered and being lazy loaded
+      expect(screen.queryByText(leaderboardText1)).toBeNull();
+
+      //view is finally loaded,
+      expect(await screen.findByText(leaderboardText1)).toBeInTheDocument();
+      expect(loader3).not.toBeInTheDocument();
+    });
+
+    test("routing to marketplace", async () => {
+      // user goes to leaderboard once marketplace loads
+      const leaderboardLink = await screen.findByText(leaderboardLinkText);
+      userEvent.click(leaderboardLink);
+
+      // user goes back to marketplace
+      const marketPlaceLink = screen.getByText(marketplaceLinkText);
+      userEvent.click(marketPlaceLink);
+
+      // user is back to marketplace
+      // view is loaded immediately since it's been loaded before
+      expect(screen.getByText(marketText1)).toBeInTheDocument();
+      expect(screen.getByText(marketText2)).toBeInTheDocument();
+    });
+
+    // test("routing to governance", async () => {
+    // // NOTE: Governance will be reenabled when we relaunch the $HALO token
+    // // user goes to governance once marketplace is loaded
+    // const govLink = await screen.findByText(governanceLinkText);
     // userEvent.click(govLink);
-
-    // /** user is in governance */
+    //
+    // // user is in governance
     // const loader2 = screen.getByTestId("loader");
     // expect(loader2).toBeInTheDocument();
-
-    // //view is not yet rendered and being lazy loaded
+    //
+    // // view is not yet rendered and being lazy loaded
     // expect(screen.queryByText(govText1)).toBeNull();
     // expect(screen.queryByText(govText2)).toBeNull();
-
-    // //view is finally loaded,
+    //
+    // // view is finally loaded,
     // expect(await screen.findByText(govText1)).toBeInTheDocument();
     // expect(await screen.findByText(govText2)).toBeInTheDocument();
     // expect(loader2).not.toBeInTheDocument();
-
-    // wait for Marketplace to load
-    const leaderboardLink = await screen.findByText(/leaderboard/i);
-    expect(leaderboardLink).toBeInTheDocument();
-
-    //user goes to leaderboard
-    userEvent.click(leaderboardLink);
-
-    /** user is in leaderboard */
-    const loader3 = screen.getByTestId("loader");
-    expect(loader3).toBeInTheDocument();
-
-    //view is not yet rendered and being lazy loaded
-    expect(screen.queryByText(leaderboardText1)).toBeNull();
-
-    //view is finally loaded,
-    expect(await screen.findByText(leaderboardText1)).toBeInTheDocument();
-    expect(loader3).not.toBeInTheDocument();
-
-    //user goes back to marketplace
-    const marketPlaceLink = screen.getByText(/marketplace/i);
-    userEvent.click(marketPlaceLink);
-
-    /**user is back to marketplace */
-
-    //view is loaded immediately since it's been loaded before
-    expect(screen.getByText(marketText1)).toBeInTheDocument();
-    expect(screen.getByText(marketText2)).toBeInTheDocument();
+    // });
   });
 });
