@@ -7,53 +7,34 @@ describe("getPayloadDiff", () => {
     ).toMatchObject({});
 
     expect(
+      getPayloadDiff({ a: 1, b: 2, c: 3 }, { a: 4, b: 5, c: 6 })
+    ).toMatchObject({ a: 4, b: 5, c: 6 });
+  });
+
+  test("prevs (excluding 0) are falsies, next (including 0) are truthies", () => {
+    expect(
+      getPayloadDiff({ a: undefined, b: null, c: "" }, { a: 0, b: "b", c: 3 })
+    ).toMatchObject({ a: 0, b: "b", c: 3 });
+  });
+  test("prevs (excluding 0) are falsies, next (excluding 0) are falsies", () => {
+    expect(
+      getPayloadDiff(
+        { a: undefined, b: null, c: "", d: 0 },
+        { a: null, b: "", c: 0, d: undefined }
+      )
+    ).toMatchObject({ c: 0 });
+  });
+
+  test("include attributes not in prev but in next (truthies including 0)", () => {
+    expect(
       getPayloadDiff(
         { a: "a", b: "b", c: "c" },
-        { a: "", b: undefined, c: null }
+        { a: null, b: undefined, c: "", d: 0, e: undefined, f: 0 }
       )
-    ).toMatchObject({ a: "", b: undefined, c: null });
-
-    expect(
-      getPayloadDiff({ a: "a", b: "b", c: 5 }, { a: "x", b: "y", c: 0 })
-    ).toMatchObject({ a: "x", b: "y", c: 0 });
-
-    expect(
-      getPayloadDiff(
-        { a: undefined, b: undefined, c: undefined },
-        { a: "", b: 0, c: null }
-      )
-    ).toMatchObject({ a: "", b: 0, c: null });
-
-    expect(
-      getPayloadDiff(
-        { a: "", b: 0, c: null },
-        { a: undefined, b: undefined, c: undefined }
-      )
-    ).toMatchObject({ a: undefined, b: undefined, c: undefined });
-
-    expect(
-      getPayloadDiff(
-        { a: undefined, b: "", c: null },
-        { a: "a", b: "b", c: "c", d: "d", e: "e" }
-      )
-    ).toMatchObject({ a: "a", b: "b", c: "c", d: "d", e: "e" });
+    ).toMatchObject({ d: 0, f: 0 });
   });
 
-  test("include attributes not in prev but in next", () => {
-    expect(
-      getPayloadDiff(
-        { a: undefined, b: "", c: null },
-        { a: "a", b: "b", c: "c", d: "d", e: "e" }
-      )
-    ).toMatchObject({ a: "a", b: "b", c: "c", d: "d", e: "e" });
-  });
-
-  test("include non-falsy (except 0) next attributes not in prev", () => {
-    expect(
-      getPayloadDiff(
-        { a: undefined, b: "", c: null },
-        { a: "a", b: "b", c: "c", d: undefined, e: "", f: null, g: 0 }
-      )
-    ).toMatchObject({ a: "a", b: "b", c: "c", g: 0 });
+  test("both zero in prev and next", () => {
+    expect(getPayloadDiff({ a: 0 }, { a: 0 })).toMatchObject({});
   });
 });
