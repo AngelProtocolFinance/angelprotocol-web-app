@@ -28,6 +28,11 @@ jest.mock("@terra-money/wallet-provider", () => {
   };
 });
 
+jest.mock("services/aws/registration", () => ({
+  __esModule: true,
+  useRegistrationQueryLazyQuery: () => [() => {}],
+}));
+
 function TestApp() {
   return (
     <AppWrapper>
