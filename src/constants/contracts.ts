@@ -1,22 +1,22 @@
 import { IS_TEST } from "./env";
 
 type SC =
-  | "accounts"
   | "index_fund"
   | "registrar"
+  | "accounts"
+  | "cw3ApTeam"
+  | "cw4GrpApTeam"
+  | "cw3ReviewTeam"
+  | "cw4GrpReviewTeam"
   | "anchor_vault1"
   | "anchor_vault2" //mainnet doesn't have anchor vault2
-  | "cw4GrpApTeam"
-  | "cw3ApTeam"
   | "halo_token"
   | "gov"
   | "airdrop"
   | "loop_factory"
   | "loop_router"
   | "loop_haloust_pair"
-  | "loop_haloust_lp"
-  | "cw3ReviewTeam"
-  | "cw4GrpReviewTeam";
+  | "loop_haloust_lp";
 
 type Contracts = {
   [key in SC]: string;
