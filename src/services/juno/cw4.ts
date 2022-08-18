@@ -1,31 +1,19 @@
-import { ContractQueryArgs } from "services/types";
-import { InquiredMember, Member, QueryRes } from "types/server/contracts";
+import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { adminTags, junoTags } from "services/juno/tags";
 import { junoApi } from ".";
-import contract_querier from "./contract_querier";
-
-type MemberRes = {
-  members: Member[];
-};
+import { genQueryPath } from "./queryContract/genQueryPath";
 
 export const cw4Api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     //CW4
-    members: builder.query<Member[], ContractQueryArgs>({
+    members: builder.query<Result<"cw4Members">, WithAddrArgs<"cw4Members">>({
       providesTags: [{ type: junoTags.admin, id: adminTags.members }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<MemberRes>) => {
+      query: (contract) => genQueryPath("cw4Members", null, contract),
+      transformResponse: (res: Res<"cw4Members">) => {
         return res.data.members;
-      },
-    }),
-    member: builder.query<InquiredMember, ContractQueryArgs>({
-      providesTags: [{ type: junoTags.admin, id: adminTags.member }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<InquiredMember>) => {
-        return res.data;
       },
     }),
   }),
 });
 
-export const { useMemberQuery, useMembersQuery } = cw4Api;
+export const { useMembersQuery } = cw4Api;

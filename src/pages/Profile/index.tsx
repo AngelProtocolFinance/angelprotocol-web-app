@@ -7,7 +7,6 @@ import { useEndowmentProfileQuery } from "services/juno/account";
 import { useErrorContext } from "contexts/ErrorContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
-import Account from "contracts/Account";
 import { appRoutes } from "constants/routes";
 import Content from "./Content";
 import Header from "./Header";
@@ -29,12 +28,11 @@ export const useProfile = () => {
 
 export default function Profile() {
   const { address } = useParams<ProfileParams>();
-  const account = new Account(undefined, address!);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(account.profile);
+  } = useEndowmentProfileQuery(address!, { skip: !address });
 
   if (isLoading) return <Skeleton />;
   if (isError || !profile) return <PageError />;

@@ -1,4 +1,10 @@
-import { GovConfig, GovStaker, GovState, Poll } from "types/server/contracts";
+import {
+  CW20Info,
+  GovConfig,
+  GovStaker,
+  GovState,
+  Poll,
+} from "types/server/contracts";
 
 export const staker: GovStaker = {
   balance: "0",
@@ -34,4 +40,11 @@ export const gov_config: GovConfig = {
   timelock_period: 0,
   proposal_deposit: "0",
   snapshot_period: 0,
+};
+
+export const placeHolderCW20Info: CW20Info = {
+  name: "",
+  symbol: "",
+  decimals: 6,
+  total_supply: "1",
 };

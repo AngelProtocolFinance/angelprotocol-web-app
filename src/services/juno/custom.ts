@@ -1,62 +1,37 @@
 import { AdminResources, ProposalDetails } from "services/types";
 import { SuccessLink } from "slices/transaction/types";
-import {
-  AdminVoteInfo,
-  CW3Config,
-  EndowmentDetails,
-  InquiredMember,
-  Proposal,
-  QueryRes,
-} from "types/server/contracts";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
-import contract_querier from "./contract_querier";
+import { queryContract } from "./queryContract";
 import { customTags, junoTags } from "./tags";
-
-type VoteListRes = {
-  votes: AdminVoteInfo[];
-};
 
 export const AP_ADDR = "ap-team";
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowment: string }>({
       providesTags: [{ type: junoTags.custom, id: customTags.isMember }],
-      async queryFn(args, queryApi, extraOptions, baseQuery) {
+      async queryFn(args) {
         /** special case for ap admin usage */
         if (args.endowment === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
-          const cw3 = new CW3(undefined, contracts.apCW3);
-          //get voter info of wallet addr
-          const voterRes = await baseQuery(
-            contract_querier(cw3.voter(args.user))
-          );
-          const voter = (voterRes.data as QueryRes<InquiredMember>).data;
+          const voter = await queryContract("cw3Voter", contracts.apCW3, {
+            addr: args.user,
+          });
           return {
             data: !!voter.weight,
           };
         }
 
-        const account = new Account(undefined, args.endowment);
-        //get endowment details
-        const endowmentRes = await baseQuery(
-          contract_querier(account.endowment)
+        const endowment = await queryContract(
+          "accEndowment",
+          args.endowment,
+          null
         );
 
-        const endowment = (endowmentRes.data as QueryRes<EndowmentDetails>)
-          .data;
-
-        const cw3 = new CW3(undefined, endowment.owner);
-
-        //get voter info of wallet addr
-        const voterRes = await baseQuery(
-          contract_querier(cw3.voter(args.user))
-        );
-
-        const voter = (voterRes.data as QueryRes<InquiredMember>).data;
+        const voter = await queryContract("cw3Voter", endowment.owner, {
+          addr: args.user,
+        });
 
         return {
           data: !!voter.weight,
@@ -77,17 +52,16 @@ export const customApi = junoApi.injectEndpoints({
 
         if (args.endowment === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
-          const cw3 = new CW3(undefined, contracts.apCW3);
-
-          const voterRes = await baseQuery(
-            contract_querier(cw3.voter(args.user))
-          );
-
-          const voter = (voterRes.data as QueryRes<InquiredMember>).data;
+          const voter = await queryContract("cw3Voter", contracts.apCW3, {
+            addr: args.user,
+          });
 
           if (!!voter.weight) {
-            const configRes = await baseQuery(contract_querier(cw3.config));
-            const cw3config = (configRes.data as QueryRes<CW3Config>).data;
+            const cw3config = await queryContract(
+              "cw3Config",
+              contracts.apCW3,
+              null
+            );
 
             return {
               data: {
@@ -104,26 +78,23 @@ export const customApi = junoApi.injectEndpoints({
           }
         }
 
-        const account = new Account(undefined, args.endowment);
         //get endowment details
-        const endowmentRes = await baseQuery(
-          contract_querier(account.endowment)
-        );
-        const endowment = (endowmentRes.data as QueryRes<EndowmentDetails>)
-          .data;
-
-        const cw3 = new CW3(undefined, endowment.owner);
-
-        const voterRes = await baseQuery(
-          contract_querier(cw3.voter(args.user))
+        const endowment = await queryContract(
+          "accEndowment",
+          args.endowment,
+          null
         );
 
-        const voter = (voterRes.data as QueryRes<InquiredMember>).data;
+        const voter = await queryContract("cw3Voter", endowment.owner, {
+          addr: args.user,
+        });
 
         if (!!voter.weight) {
-          const configRes = await baseQuery(contract_querier(cw3.config));
-          //get cw3Config
-          const cw3config = (configRes.data as QueryRes<CW3Config>).data;
+          const cw3config = await queryContract(
+            "cw3Config",
+            endowment.owner,
+            null
+          );
           return {
             data: {
               cw3: endowment.owner,
@@ -146,28 +117,22 @@ export const customApi = junoApi.injectEndpoints({
       { id?: string; cw3: string; voter: string }
     >({
       providesTags: [{ type: junoTags.custom, id: customTags.proposalDetails }],
-      async queryFn(args, queryApi, extraOptions, baseQuery) {
+      async queryFn(args) {
         const id = Number(args.id);
 
         if (isNaN(id)) {
           return { data: undefined };
         }
 
-        const cw3 = new CW3(undefined, args.cw3);
-
-        const proposalRes = await baseQuery(contract_querier(cw3.proposal(id)));
-        const proposal = (proposalRes.data as QueryRes<Proposal>).data;
-
-        const votesRes = await baseQuery(
-          contract_querier(cw3.votes({ proposal_id: id }))
-        );
-
-        const votes = (votesRes.data as QueryRes<VoteListRes>).data.votes;
+        const proposal = await queryContract("cw3Proposal", args.cw3, { id });
+        const votesRes = await queryContract("cw3Votes", args.cw3, {
+          proposal_id: id,
+        });
 
         return {
           data: {
             ...proposal,
-            votes,
+            votes: votesRes.votes,
           },
         };
       },

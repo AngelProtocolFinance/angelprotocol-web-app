@@ -1,65 +1,36 @@
-import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
 import {
-  EndowmentQueryOptions,
   RegistrarConfigPayload,
   RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
-  vaultsRate: CQA;
-  config: CQA;
-
-  endowmentList: (args: EndowmentQueryOptions) => CQA;
-
-  constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.registrar);
-
-    this.endowmentList = (queryOptions) => ({
-      address: this.contractAddress,
-      msg: {
-        endowment_list: queryOptions,
-      },
-    });
-
-    this.vaultsRate = {
-      address: this.contractAddress,
-      msg: {
-        approved_vault_rate_list: {},
-      },
-    };
-
-    this.config = {
-      address: this.contractAddress,
-      msg: { config: {} },
-    };
-  }
+  private static address = contracts.registrar;
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_endowment_status: payload,
     });
   }
 
   createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_config: payload,
     });
   }
 
   createEndowmentCreationMsg(charity: Charity) {
-    return this.createExecuteContractMsg({
+    return this.createExecuteContractMsg(Registrar.address, {
       create_endowment: createEndowmentCreationMsgPayload(charity),
     });
   }
 
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
       update_owner: payload,
     });
   }
