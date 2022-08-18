@@ -9,7 +9,7 @@ export default function CharityHeader(props: Profile) {
 
   const showDonater = useDonater({
     to: "charity",
-    receiver: profile.address,
+    receiver: profile?.address || "",
   });
 
   const sdg = unsdgs[props.un_sdg || 0];

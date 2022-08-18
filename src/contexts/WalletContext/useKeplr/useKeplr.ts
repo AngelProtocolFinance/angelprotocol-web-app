@@ -24,6 +24,7 @@ export default function useKeplr() {
     //eslint-disable-next-line
   }, []);
 
+  // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
   const requestAccess = async (isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
@@ -63,6 +64,7 @@ export default function useKeplr() {
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
+      // Error handled in src/components/WalletSuite/WalletSelector/Connector.tsx
       throw new WalletError(
         err?.message || "Unknown error occured",
         err?.code || 0

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
@@ -35,12 +36,15 @@ export function Guard(props: PropsWithChildren<{}>) {
 }
 
 const context = createContext({} as AdminResources);
-export const useAdminResources = () => {
+export const useAdminResources = (): AdminResources => {
   const val = useContext(context);
-  if (Object.entries(val).length <= 0 /** empty object */) {
-    throw new Error("Can't use this hook outside AdminGuard scope");
+  const { handleError } = useErrorContext();
+
+  if (Object.entries(val).length > 0) {
+    return val;
   }
-  return val;
+  handleError("Can't use this hook outside AdminGuard scope");
+  return {} as AdminResources;
 };
 
 export function GuardPrompt(props: { message: string; showLoader?: true }) {

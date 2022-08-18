@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { Profile as IProfile } from "types/server/contracts";
 import { useEndowmentProfileQuery } from "services/juno/account";
+import { useErrorContext } from "contexts/ErrorContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Account from "contracts/Account";
@@ -14,12 +15,16 @@ import Nav from "./Nav";
 import Stats from "./Stats";
 
 type ProfileWithAddr = IProfile & { address: string };
+
 const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
+
 export const useProfile = () => {
   const val = useContext(context);
-  if (Object.entries(val).length <= 0)
-    throw new Error("this hook can only be used inside profile");
-  return val;
+  const { handleError } = useErrorContext();
+  if (Object.entries(val).length > 0) {
+    return val;
+  }
+  handleError("this hook can only be used inside profile");
 };
 
 export default function Profile() {

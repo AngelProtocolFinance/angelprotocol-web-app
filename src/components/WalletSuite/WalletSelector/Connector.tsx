@@ -1,31 +1,29 @@
 import { Menu } from "@headlessui/react";
 import { PropsWithChildren, useState } from "react";
 import { Connection } from "contexts/WalletContext/types";
+import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
-import { WalletError } from "errors/errors";
 
 export default function Connector(props: Connection) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { handleError } = useErrorContext();
+
   const isMulti = "networks" in props;
 
-  const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => {
-    if (!isMulti) throw new Error("No network selection");
-    setIsOpen((prev) => !prev);
+    if (isMulti) {
+      setIsOpen((prev) => !prev);
+    } else {
+      handleError("No network selection");
+    }
   };
 
   async function handleConnect() {
     try {
       if (isMulti) throw new Error("Need to choose network first");
       await props.connect();
-    } catch (_err: any) {
-      let errorMsg: string;
-      if (_err instanceof WalletError) {
-        errorMsg = _err.message;
-      } else {
-        errorMsg = "Unknown error occured";
-      }
-      alert(errorMsg);
+    } catch (error: any) {
+      handleError(error);
     }
   }
 
