@@ -77,7 +77,8 @@ describe("App.tsx tests", () => {
 
   describe("Routing", () => {
     const leaderboardText1 = /total donations/i;
-
+    const registerText1 =
+      /Thank you for registering, we'd love to have you on board!/i;
     // const govText1 = /total staked/i;
     // const govText2 = /halo price/i;
 
@@ -112,6 +113,24 @@ describe("App.tsx tests", () => {
       // view is loaded immediately since it's been loaded before
       expect(screen.getByText(marketText1)).toBeInTheDocument();
       expect(screen.getByText(marketText2)).toBeInTheDocument();
+    });
+
+    test("routing to register", async () => {
+      // wait for Marketplace to load
+      // user goes to register
+      const registerLink = await screen.findByText(registerLinkText);
+      userEvent.click(registerLink);
+
+      // user is in register
+      const loader3 = screen.getByTestId("loader");
+      expect(loader3).toBeInTheDocument();
+
+      //view is not yet rendered and being lazy loaded
+      expect(screen.queryByText(registerText1)).toBeNull();
+
+      //view is finally loaded,
+      expect(await screen.findByText(registerText1)).toBeInTheDocument();
+      expect(loader3).not.toBeInTheDocument();
     });
 
     // test("routing to governance", async () => {
