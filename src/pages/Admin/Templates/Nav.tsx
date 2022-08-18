@@ -10,8 +10,9 @@ const styler = createNavLinkStyler(
 );
 
 export default function Nav() {
-  const { isAp } = useAdminResources();
-  return isAp ? <APNav /> : <CharityNav />;
+  const { role } = useAdminResources();
+  //role = "reviewer" can't render templates
+  return role === "ap" ? <APNav /> : <CharityNav />;
 }
 
 function APNav() {

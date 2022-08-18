@@ -16,12 +16,13 @@ import RegistrarConfigurer from "./registrar/RegistrarConfigurer/RegistrarConfig
 import RegistrarOwner from "./registrar/RegistrarOwner/RegistrarOwner";
 import { routes } from "./routes";
 
+//TODO: make sure role "reviewer" doesn't have access to templates
 export default function Templates() {
-  const { isAp } = useAdminResources();
+  const { role } = useAdminResources();
   return (
     <div className="grid gap-2 grid-cols-[auto_1fr]">
       <Nav />
-      {isAp ? <ApRoutes /> : <CharityRoutes />}
+      {role === "ap" ? <ApRoutes /> : <CharityRoutes />}
     </div>
   );
 }

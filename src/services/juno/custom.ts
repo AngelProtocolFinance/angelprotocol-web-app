@@ -1,4 +1,4 @@
-import { AdminResources, ProposalDetails } from "services/types";
+import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
 import { SuccessLink } from "slices/transaction/types";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
@@ -11,9 +11,12 @@ export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
 
 function getCWs(id: number) {
+  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
   const cw3Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  const cw4Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  return { cw3Addr, cw4Addr };
+  const cw4Addr =
+    id === REVIEWER_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
+  const role: AdminRoles = id === AP_ID ? "ap" : "reviewer";
+  return { cw3Addr, cw4Addr, role };
 }
 function isAp(id: number) {
   return id === AP_ID || id === REVIEWER_ID;
@@ -66,7 +69,7 @@ export const customApi = junoApi.injectEndpoints({
         };
 
         if (isAp(numId)) {
-          const { cw3Addr, cw4Addr } = getCWs(numId);
+          const { cw3Addr, cw4Addr, role } = getCWs(numId);
           //skip endowment query, query hardcoded cw3 straight
           const voter = await queryContract("cw3Voter", cw3Addr, {
             addr: args.user,
@@ -82,7 +85,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowmentId: numId,
                 cw3config,
                 proposalLink,
-                isAp: true,
+                role,
               },
             };
           } else {
@@ -114,7 +117,7 @@ export const customApi = junoApi.injectEndpoints({
               endowmentId: numId,
               cw3config,
               proposalLink,
-              isAp: false,
+              role: "charity",
             },
           };
         }

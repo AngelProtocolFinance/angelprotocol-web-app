@@ -6,11 +6,11 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminResources } from "./Guard";
 
 export default function Nav() {
-  const { isAp, endowmentId } = useAdminResources();
+  const { role, endowmentId } = useAdminResources();
 
   return (
     <div className="flex justify-end">
-      {!isAp && (
+      {role === "charity" && (
         <Link
           to={`${appRoutes.profile}/${endowmentId}`}
           className="uppercase text-sm text-center font-semibold font-heading text-white mr-auto flex items-center"
@@ -20,21 +20,14 @@ export default function Nav() {
         </Link>
       )}
 
-      {!isAp && (
+      {(role === "charity" || role === "reviewer") && (
         <NavLink end to={adminRoutes.index} className={styler}>
-          dashboard
+          {role === "charity" ? "Dashboard" : "Applications"}
         </NavLink>
       )}
-
       <NavLink end to={adminRoutes.proposals} className={styler}>
         proposals
       </NavLink>
-
-      {isAp && (
-        <NavLink to={adminRoutes.charity_applications} className={styler}>
-          charity applications
-        </NavLink>
-      )}
     </div>
   );
 }

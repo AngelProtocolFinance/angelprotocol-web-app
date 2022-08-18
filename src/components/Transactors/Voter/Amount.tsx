@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useCachedGovStaker } from "services/juno/gov/queriers";
 import { condense, humanize, roundDown } from "helpers";
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {

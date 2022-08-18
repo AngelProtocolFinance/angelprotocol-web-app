@@ -16,13 +16,14 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
+export type AdminRoles = "ap" | "reviewer" | "charity";
 export type AdminResources = {
   cw3: string;
   cw4: string;
   endowmentId: number; //reaching this means id is valid and can be safely converted to number
   cw3config: CW3Config;
   proposalLink: SuccessLink;
-  isAp: boolean;
+  role: AdminRoles;
 };
 
 export type ProposalDetails = Proposal & {
