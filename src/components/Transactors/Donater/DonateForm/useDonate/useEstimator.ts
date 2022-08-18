@@ -32,7 +32,10 @@ import { denoms } from "constants/currency";
 import { IS_TEST } from "constants/env";
 import estimateTerraFee from "./estimateTerraFee";
 
-const isSendToContract = IS_TEST && false; //set to true to donate directly to account
+//set to true to donate directly to account
+//only available if IS_TEST
+const isSendToContract =
+  IS_TEST && process.env.REACT_APP_DONATION_TYPE === "DIRECT";
 export default function useEstimator() {
   const dispatch = useSetter();
   const {
@@ -84,6 +87,8 @@ export default function useEstimator() {
             let msg: MsgSendEncodeObject | MsgExecuteContractEncodeObject;
             const contract = new Account(wallet);
             if (isSendToContract) {
+              //TODO: remove this once accounts have initial balances for testing
+              alert("you are sending directly to contract");
               msg = contract.createDepositMsg(
                 {
                   id: Number(getValues("receiver")),

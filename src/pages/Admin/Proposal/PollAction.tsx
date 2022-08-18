@@ -35,8 +35,6 @@ export default function PollAction(props: ProposalDetails) {
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
 
-    console.log(cw3, execMsg);
-
     dispatch(
       sendCosmosTx({
         wallet,
