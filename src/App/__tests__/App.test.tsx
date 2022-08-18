@@ -46,11 +46,9 @@ describe("App.tsx tests", () => {
 
   window.scrollTo = jest.fn();
 
-  beforeEach(() => {
-    render(<TestApp />);
-  });
-
   test("App's default page is lazy loaded Marketplace", async () => {
+    render(<TestApp />);
+
     // loader is rendered because content is being lazy loaded
     const loader = screen.getByTestId("loader");
     expect(loader).toBeInTheDocument();
@@ -78,6 +76,8 @@ describe("App.tsx tests", () => {
 
   describe("Routing", () => {
     test("routing to leaderboard", async () => {
+      render(<TestApp />);
+
       const leaderboardText1 = /total donations/i;
 
       // wait for Marketplace to load
@@ -96,6 +96,8 @@ describe("App.tsx tests", () => {
     });
 
     test("routing to marketplace", async () => {
+      render(<TestApp />);
+
       // user goes to leaderboard once marketplace loads
       const leaderboardLink = await screen.findByText(leaderboardLinkText);
       userEvent.click(leaderboardLink);
@@ -111,6 +113,8 @@ describe("App.tsx tests", () => {
     });
 
     test("routing to register", async () => {
+      render(<TestApp />);
+
       const registerText1 =
         /Thank you for registering, we'd love to have you on board!/i;
 
@@ -131,6 +135,8 @@ describe("App.tsx tests", () => {
 
     // NOTE: Governance will be reenabled when we relaunch the $HALO token
     // test("routing to governance", async () => {
+    // render(<TestApp />);
+    //
     // const govText1 = /total staked/i;
     // const govText2 = /halo price/i;
     //
