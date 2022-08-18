@@ -21,7 +21,19 @@ type VoteListRes = {
   votes: AdminVoteInfo[];
 };
 
+/** charity IDs are >= 1 */
 export const AP_ID = 0;
+export const REVIEWER_ID = 0.5;
+
+function getCWs(id: number) {
+  const cw3Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
+  const cw4Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
+  return { cw3Addr, cw4Addr };
+}
+function isAp(id: number) {
+  return id === AP_ID || id === REVIEWER_ID;
+}
+
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
@@ -30,9 +42,10 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
-        if (numId === AP_ID) {
+        if (isAp(numId)) {
+          const { cw3Addr } = getCWs(numId);
           //skip endowment query, query hardcoded cw3 straight
-          const cw3 = new CW3(undefined, contracts.apCW3);
+          const cw3 = new CW3(undefined, cw3Addr);
           //get voter info of wallet addr
           const voterRes = await baseQuery(
             contract_querier(cw3.voter(args.user))
@@ -79,9 +92,10 @@ export const customApi = junoApi.injectEndpoints({
           description: "Go to proposals",
         };
 
-        if (numId === AP_ID) {
+        if (isAp(numId)) {
+          const { cw3Addr, cw4Addr } = getCWs(numId);
           //skip endowment query, query hardcoded cw3 straight
-          const cw3 = new CW3(undefined, contracts.apCW3);
+          const cw3 = new CW3(undefined, cw3Addr);
 
           const voterRes = await baseQuery(
             contract_querier(cw3.voter(args.user))
@@ -95,8 +109,8 @@ export const customApi = junoApi.injectEndpoints({
 
             return {
               data: {
-                cw3: contracts.apCW3,
-                cw4: contracts.apCW4,
+                cw3: cw3Addr,
+                cw4: cw4Addr,
                 endowmentId: numId,
                 cw3config,
                 proposalLink,

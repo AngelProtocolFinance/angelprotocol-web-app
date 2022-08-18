@@ -4,8 +4,10 @@ type SC =
   | "index_fund"
   | "registrar"
   | "accounts"
-  | "apCW4"
-  | "apCW3"
+  | "cw3ApTeam"
+  | "cw4GrpApTeam"
+  | "cw3ReviewTeam"
+  | "cw4GrpReviewTeam"
   | "halo_token"
   | "gov"
   | "airdrop"
@@ -27,8 +29,15 @@ export const contracts: Contracts = IS_TEST
         "juno1fd0xwagz43w053sj0z948rlegyt24wglfyjjtd7l7vf2pvme6dsqmpc73n",
 
       // Admin
-      apCW3: "juno1a6grxe4nz2r0p7h048exta4qx6wfj47h7yug0zw44ele6a7faausqqhzcg",
-      apCW4: "juno1k77vksqvhy4r83scmh80gqkfluv5kjtxcxfuw6de323cdpnxgvhqqcq40y",
+      cw3ApTeam:
+        "juno1a6grxe4nz2r0p7h048exta4qx6wfj47h7yug0zw44ele6a7faausqqhzcg",
+      cw4GrpApTeam:
+        "juno1k77vksqvhy4r83scmh80gqkfluv5kjtxcxfuw6de323cdpnxgvhqqcq40y",
+
+      cw3ReviewTeam:
+        "juno1xe4pewxhddsg3y2rpemjnvdx0ut4dpsze32t0fj47kr4m9ryy02sq35jq0",
+      cw4GrpReviewTeam:
+        "juno1sfu6h84vk82zrqac5s72tnh3pujcxgraxgdnamalhsafet7unf8q7stmgz",
 
       //terraswap
       halo_token: "",
@@ -48,8 +57,10 @@ export const contracts: Contracts = IS_TEST
       accounts: "",
 
       // Admin
-      apCW3: "",
-      apCW4: "",
+      cw3ApTeam: "",
+      cw4GrpApTeam: "",
+      cw3ReviewTeam: "",
+      cw4GrpReviewTeam: "",
 
       //terraswap
       halo_token: "",
