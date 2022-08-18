@@ -6,8 +6,8 @@ type SC =
   | "registrar"
   | "anchor_vault1"
   | "anchor_vault2" //mainnet doesn't have anchor vault2
-  | "apCW4"
-  | "apCW3"
+  | "cw4GrpApTeam"
+  | "cw3ApTeam"
   | "halo_token"
   | "gov"
   | "airdrop"
@@ -15,8 +15,8 @@ type SC =
   | "loop_router"
   | "loop_haloust_pair"
   | "loop_haloust_lp"
-  | "apCW3ReviewTeam"
-  | "apCW4ReviewTeam";
+  | "cw3ReviewTeam"
+  | "cw4GrpReviewTeam";
 
 type Contracts = {
   [key in SC]: string;
@@ -36,13 +36,15 @@ export const contracts: Contracts = IS_TEST
         "juno15ckjm0va7gd57p70t609hggq5stuc5hwzyc5ksm62uj4rwzwj42sj6utrw",
 
       // Admin
-      apCW3: "juno178c53lrle9my5cm4y3yqjjgp0gfx9ks4nnv64gvy35nyfzn4uf6q8f6agw",
-      apCW4: "juno1zc67wc0gwac8cear606a8mr5py4kr790g8vy5zxlt7prde400yas3zklpr",
+      cw3ApTeam:
+        "juno178c53lrle9my5cm4y3yqjjgp0gfx9ks4nnv64gvy35nyfzn4uf6q8f6agw",
+      cw4GrpApTeam:
+        "juno1zc67wc0gwac8cear606a8mr5py4kr790g8vy5zxlt7prde400yas3zklpr",
 
       // Review team
-      apCW3ReviewTeam:
+      cw3ReviewTeam:
         "juno1xe4pewxhddsg3y2rpemjnvdx0ut4dpsze32t0fj47kr4m9ryy02sq35jq0",
-      apCW4ReviewTeam:
+      cw4GrpReviewTeam:
         "juno1sfu6h84vk82zrqac5s72tnh3pujcxgraxgdnamalhsafet7unf8q7stmgz",
 
       //terraswap
@@ -68,12 +70,12 @@ export const contracts: Contracts = IS_TEST
       registrar: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
       // Admin
-      apCW3: "terra1zrwpm9htqdh80nhqcuvw999cexvtmu0xt4dks5",
-      apCW4: "terra1eueh924845wwsc2mna5u3ysn79q66kwqgq26mj",
+      cw3ApTeam: "terra1zrwpm9htqdh80nhqcuvw999cexvtmu0xt4dks5",
+      cw4GrpApTeam: "terra1eueh924845wwsc2mna5u3ysn79q66kwqgq26mj",
 
       // Review team
-      apCW3ReviewTeam: "",
-      apCW4ReviewTeam: "",
+      cw3ReviewTeam: "",
+      cw4GrpReviewTeam: "",
 
       //terraswap
       halo_token: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
