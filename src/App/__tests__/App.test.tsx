@@ -57,6 +57,7 @@ describe("App.tsx tests", () => {
 
     // view is not yet rendered and being lazy loaded
     expect(screen.queryByText(marketText1)).toBeNull();
+    expect(screen.queryByText(marketText2)).toBeNull();
 
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
@@ -76,23 +77,17 @@ describe("App.tsx tests", () => {
   });
 
   describe("Routing", () => {
-    const leaderboardText1 = /total donations/i;
-    const registerText1 =
-      /Thank you for registering, we'd love to have you on board!/i;
-    // const govText1 = /total staked/i;
-    // const govText2 = /halo price/i;
-
     test("routing to leaderboard", async () => {
+      const leaderboardText1 = /total donations/i;
+
       // wait for Marketplace to load
       // user goes to leaderboard
       const leaderboardLink = await screen.findByText(leaderboardLinkText);
       userEvent.click(leaderboardLink);
 
-      // user is in leaderboard
+      // user is in leaderboard but the view is being lazy loaded
       const loader3 = screen.getByTestId("loader");
       expect(loader3).toBeInTheDocument();
-
-      //view is not yet rendered and being lazy loaded
       expect(screen.queryByText(leaderboardText1)).toBeNull();
 
       //view is finally loaded,
@@ -116,16 +111,17 @@ describe("App.tsx tests", () => {
     });
 
     test("routing to register", async () => {
+      const registerText1 =
+        /Thank you for registering, we'd love to have you on board!/i;
+
       // wait for Marketplace to load
       // user goes to register
       const registerLink = await screen.findByText(registerLinkText);
       userEvent.click(registerLink);
 
-      // user is in register
+      // user is in register but the view is being lazy loaded
       const loader3 = screen.getByTestId("loader");
       expect(loader3).toBeInTheDocument();
-
-      //view is not yet rendered and being lazy loaded
       expect(screen.queryByText(registerText1)).toBeNull();
 
       //view is finally loaded,
@@ -133,17 +129,18 @@ describe("App.tsx tests", () => {
       expect(loader3).not.toBeInTheDocument();
     });
 
+    // NOTE: Governance will be reenabled when we relaunch the $HALO token
     // test("routing to governance", async () => {
-    // // NOTE: Governance will be reenabled when we relaunch the $HALO token
+    // const govText1 = /total staked/i;
+    // const govText2 = /halo price/i;
+    //
     // // user goes to governance once marketplace is loaded
     // const govLink = await screen.findByText(governanceLinkText);
     // userEvent.click(govLink);
     //
-    // // user is in governance
+    // // user is in governance but the view is being lazy loaded
     // const loader2 = screen.getByTestId("loader");
     // expect(loader2).toBeInTheDocument();
-    //
-    // // view is not yet rendered and being lazy loaded
     // expect(screen.queryByText(govText1)).toBeNull();
     // expect(screen.queryByText(govText2)).toBeNull();
     //
