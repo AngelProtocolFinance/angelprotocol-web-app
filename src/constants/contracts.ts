@@ -1,6 +1,7 @@
 import { IS_TEST } from "./env";
 
 type SC =
+  | "accounts"
   | "index_fund"
   | "registrar"
   | "anchor_vault1"
@@ -25,16 +26,18 @@ export const contracts: Contracts = IS_TEST
   ? {
       //TESTNET CONTRACTS
       //core
+      accounts:
+        "juno1tvqhftjf73hvznhtungc3t5mn0u6xflqrl3wk3e4huxn09v0w2rqf68apr",
       anchor_vault1: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
       anchor_vault2: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
       index_fund:
-        "juno1rafegcggtmetfcdfp2umvlmperpu6vdcxwraz59wcgja85mz25fs27yvae",
+        "juno1sddduqk23xrvnga8am6v9gvfqnjw640exxt9quk3qv95spe829vqc78uyt",
       registrar:
-        "juno1tsg3rqyzj32swe4ah392psej4szldx582ga32gnw925medju5h6su2fefg",
+        "juno15ckjm0va7gd57p70t609hggq5stuc5hwzyc5ksm62uj4rwzwj42sj6utrw",
 
       // Admin
-      apCW3: "juno1a6grxe4nz2r0p7h048exta4qx6wfj47h7yug0zw44ele6a7faausqqhzcg",
-      apCW4: "juno1k77vksqvhy4r83scmh80gqkfluv5kjtxcxfuw6de323cdpnxgvhqqcq40y",
+      apCW3: "juno178c53lrle9my5cm4y3yqjjgp0gfx9ks4nnv64gvy35nyfzn4uf6q8f6agw",
+      apCW4: "juno1zc67wc0gwac8cear606a8mr5py4kr790g8vy5zxlt7prde400yas3zklpr",
 
       // Review team
       apCW3ReviewTeam:
@@ -58,6 +61,7 @@ export const contracts: Contracts = IS_TEST
   : {
       //MAINNET CONTRACTS
       //core
+      accounts: "",
       anchor_vault1: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
       anchor_vault2: "",
       index_fund: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
