@@ -1,6 +1,6 @@
 import { Airdrops } from "types/server/aws";
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
 
 export default function Catcher(props: { airdrops: Airdrops }) {
@@ -12,7 +12,7 @@ export default function Catcher(props: { airdrops: Airdrops }) {
         Airdrop
       </h2>
       <p className="text-angel-blue font-heading text-2xl mt-4 mb-6">
-        {toCurrency(totalClaimable)} HALO
+        {humanize(totalClaimable)} HALO
       </p>
 
       <Action onClick={claimAirdrop(true)} className="text-sm">

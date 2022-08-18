@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { StageUpdater, TxOptions } from "slices/transaction/types";
+import { StageUpdater, TxOptions } from "../types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
+import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
-import handleTxError from "helpers/handleTxError";
-import logDonation from "helpers/logDonation";
 import { WalletDisconnectedError } from "errors/errors";
+import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type CosmosDonateArgs = {

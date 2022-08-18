@@ -2,7 +2,7 @@ import { Menu } from "@headlessui/react";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import Icon from "components/Icon";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
 const styler = createNavLinkStyler(

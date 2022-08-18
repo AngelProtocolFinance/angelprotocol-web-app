@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useCachedGovStaker } from "services/juno/gov/queriers";
+import { condense, humanize, roundDown } from "helpers";
 import { denoms, symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
 
@@ -13,9 +13,7 @@ export default function Amount() {
     setValue,
   } = useFormContext<VoteValues>();
   const govStakerState = useCachedGovStaker();
-  const govStakedHalo = new Decimal(govStakerState.balance)
-    .div(1e6)
-    .toFixed(3, Decimal.ROUND_DOWN);
+  const govStakedHalo = roundDown(condense(govStakerState.balance), 3);
 
   const onMaxClick = () => {
     setValue("amount", govStakedHalo, {
@@ -31,7 +29,7 @@ export default function Amount() {
         className="text-angel-grey uppercase font-bold mb-2"
       >
         <span>Deposit amount</span>
-        <Balance amount={+govStakedHalo} title="Balance" />
+        <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
       <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <input

@@ -1,4 +1,5 @@
-export default function idParamToNumber(id?: string | number) {
+//NOTE: will be removed after admin refactor PR
+export function idParamToNumber(id?: string | number) {
   if (id === undefined) {
     return 0;
   } else {

@@ -7,7 +7,7 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { StageUpdater } from "slices/transaction/types";
-import logger from "helpers/logger";
+import { logger } from "helpers";
 import {
   LogApplicationUpdateError,
   LogDonationFail,

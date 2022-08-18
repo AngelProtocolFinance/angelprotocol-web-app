@@ -1,6 +1,6 @@
-import { DiffSet } from "pages/Admin/types";
+import { DiffSet } from "types/utils";
 
-export default function genDiffMeta<T extends object>(
+export function genDiffMeta<T extends object>(
   diffEntries: [keyof T, T[keyof T]][],
   initial: T
 ) {

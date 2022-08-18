@@ -1,5 +1,5 @@
 import { FundSendMeta } from "pages/Admin/types";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import { symbols } from "constants/currency";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
@@ -14,7 +14,7 @@ export default function FundTransfer(props: FundSendMeta["data"]) {
       </KeyValue>
       <KeyValue _key="total amount" _classes="border-t border-white/10 mt-2">
         <span>
-          {toCurrency(props.amount, 3)} {symbols[props.currency]}
+          {humanize(props.amount, 3)} {symbols[props.currency]}
         </span>
       </KeyValue>
       <KeyValue _key="recipient">

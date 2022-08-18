@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
@@ -14,6 +13,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
+import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import { denoms, symbols } from "constants/currency";
 
@@ -49,7 +49,7 @@ export default function useTransferFunds() {
       embeddedMsg = cw20Contract.createEmbeddedBankMsg(
         [
           {
-            amount: new Decimal(data.amount).mul(1e6).divToInt(1).toString(),
+            amount: scaleToStr(data.amount),
             denom: denoms.axlusdc,
           },
         ],

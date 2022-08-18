@@ -5,7 +5,7 @@ import {
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
 import Copier from "components/Copier";
-import maskAddress from "helpers/maskAddress";
+import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 import Filter from "./Filter";
 import Holdings from "./Holdings";

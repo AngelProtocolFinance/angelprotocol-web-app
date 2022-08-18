@@ -5,7 +5,6 @@ import {
   FormCW3Config,
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import getPayloadDiff from "pages/Admin/helpers/getPayloadDiff";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -15,7 +14,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
-import genDiffMeta from "../../genDiffMeta";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];

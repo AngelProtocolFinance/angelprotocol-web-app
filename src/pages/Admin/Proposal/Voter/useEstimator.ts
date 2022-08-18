@@ -12,7 +12,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import CW3 from "contracts/CW3";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeAmount from "helpers/extractFeeData";
+import { extractFeeAmount } from "helpers";
 
 export default function useEstimator() {
   const { wallet } = useGetWallet();

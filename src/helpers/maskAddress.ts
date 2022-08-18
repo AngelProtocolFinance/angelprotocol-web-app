@@ -1,4 +1,4 @@
-export default function maskAddress(addr?: string) {
+export function maskAddress(addr?: string) {
   const nChars = 6;
   if (!addr) {
     return "";

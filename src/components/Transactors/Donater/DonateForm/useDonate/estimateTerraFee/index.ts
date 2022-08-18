@@ -1,6 +1,6 @@
 import { Fee, Msg } from "@terra-money/terra.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import getTerraClient from "helpers/getTerraClient";
+import getTerraClient from "./getTerraClient";
 
 export default async function estimateTerraFee(
   wallet: WalletState,

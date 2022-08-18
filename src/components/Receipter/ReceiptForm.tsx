@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { ReceipterValues } from "./types";
 import CountrySelector from "components/CountrySelector";
 import useReceiptForm from "components/Receipter/useRequestReceipt";
-import maskAddress from "helpers/maskAddress";
+import { maskAddress } from "helpers";
 import TextInput from "./TextInput";
 
 export default function ReceiptForm() {

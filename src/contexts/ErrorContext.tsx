@@ -2,7 +2,7 @@ import { PropsWithChildren, useCallback, useContext } from "react";
 import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import logger from "helpers/logger";
+import { logger } from "helpers";
 import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };

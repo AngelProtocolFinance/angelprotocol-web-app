@@ -1,6 +1,5 @@
-import Decimal from "decimal.js";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import toBase64 from "helpers/toBase64";
+import { scaleToStr, toBase64 } from "helpers";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -15,7 +14,7 @@ export default class CW20 extends Contract {
     return this.createEmbeddedWasmMsg(this.address, {
       transfer: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleToStr(amount),
         recipient,
       },
     });
@@ -25,7 +24,7 @@ export default class CW20 extends Contract {
     return this.createExecuteContractMsg(this.address, {
       transfer: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleToStr(amount),
         recipient,
       },
     });
@@ -39,7 +38,7 @@ export default class CW20 extends Contract {
     return this.createExecuteContractMsg(this.address, {
       send: {
         //convert to uamount
-        amount: new Decimal(amount).mul(1e6).divToInt(1).toString(),
+        amount: scaleToStr(amount),
         contract: msgReceiverAddr,
         msg: toBase64(msg),
       },

@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { StageUpdater } from "slices/transaction/types";
+import { StageUpdater } from "../../types";
 import { Chain, KYCData, Receiver } from "types/server/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
-import handleTxError from "helpers/handleTxError";
-import logDonation from "helpers/logDonation";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
+import handleTxError from "../../handleTxError";
+import logDonation from "../../logDonation";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import { pollTerraTxInfo } from "./pollTerraTxInfo";
 

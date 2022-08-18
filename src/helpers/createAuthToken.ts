@@ -6,7 +6,7 @@ type Payload = {
   user: string;
 };
 
-export default function createAuthToken(userType: UserTypes) {
+export function createAuthToken(userType: UserTypes) {
   const payload: Payload = {
     authorization: "allow",
     user: userType,

@@ -9,11 +9,11 @@ import { StageUpdater } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
-import { getProvider } from "helpers/getProvider";
-import handleEthError from "helpers/handleEthError";
-import logDonation from "helpers/logDonation";
+import { getProvider } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
-import transactionSlice, { setStage } from "../transactionSlice";
+import logDonation from "../../logDonation";
+import transactionSlice, { setStage } from "../../transactionSlice";
+import handleEthError from "./handleEthError";
 
 type EthDonateArgs = {
   wallet?: WalletState;

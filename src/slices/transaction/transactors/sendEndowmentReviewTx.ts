@@ -8,9 +8,9 @@ import {
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/ap/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
-import extractFeeAmount from "helpers/extractFeeData";
-import handleTxError from "helpers/handleTxError";
+import { extractFeeAmount } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
+import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SendCosmosTxArgs & {

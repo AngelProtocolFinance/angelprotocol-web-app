@@ -3,8 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
-import createAuthToken from "helpers/createAuthToken";
-import logger from "helpers/logger";
+import { createAuthToken, logger } from "helpers";
 import { APIs } from "constants/urls";
 
 export const logWithdrawProposal = createAsyncThunk(

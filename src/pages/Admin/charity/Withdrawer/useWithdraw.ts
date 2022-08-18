@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawLiqMeta } from "pages/Admin/types";
@@ -13,6 +12,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 
@@ -35,12 +35,12 @@ export default function useWithdraw() {
         if (amount.type === "cw20") {
           result[0].push({
             address: amount.tokenId,
-            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+            amount: scaleToStr(amount.value),
           });
         } else {
           result[1].push({
             denom: amount.tokenId,
-            amount: new Decimal(amount.value).mul(1e6).divToInt(1).toString(),
+            amount: scaleToStr(amount.value),
           });
         }
         return result;

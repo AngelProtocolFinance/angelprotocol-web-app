@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import { useAdminResources } from "../Guard";
 import { routes } from "./routes";
 

@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 
 type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
@@ -57,7 +57,7 @@ function Amount(props: { title: string; value: number }) {
       <span className="text-base text-right justify-self-end ">
         {props.title}
       </span>
-      <span>$ {toCurrency(props.value, 0)}</span>
+      <span>$ {humanize(props.value, 0)}</span>
     </p>
   );
 }

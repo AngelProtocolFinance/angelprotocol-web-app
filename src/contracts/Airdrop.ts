@@ -1,5 +1,6 @@
 import Decimal from "decimal.js";
 import { Airdrops } from "types/server/aws";
+import { condense } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import Gov from "./Gov";
@@ -15,8 +16,7 @@ export default class Airdrop extends Contract {
     );
     if (is_stake) {
       const totalClaimable = airdrops.reduce(
-        (result, airdrop) =>
-          new Decimal(airdrop.haloTokens).div(1e6).add(result),
+        (result, airdrop) => condense(airdrop.haloTokens).add(result),
         new Decimal(0)
       );
       const govContract = new Gov(this.wallet);

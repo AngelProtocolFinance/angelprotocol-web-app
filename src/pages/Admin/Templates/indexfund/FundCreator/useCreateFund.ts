@@ -4,7 +4,6 @@ import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
 import { FundDetails } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import cleanObject from "pages/Admin/helpers/cleanObject";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -14,6 +13,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import { cleanObject } from "helpers/admin/cleanObject";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {

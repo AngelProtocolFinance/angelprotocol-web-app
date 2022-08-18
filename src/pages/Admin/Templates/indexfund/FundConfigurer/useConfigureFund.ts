@@ -1,10 +1,7 @@
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
 import { FundConfig } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import cleanObject from "pages/Admin/helpers/cleanObject";
-import getPayloadDiff from "pages/Admin/helpers/getPayloadDiff";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -15,7 +12,9 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import genDiffMeta from "../../genDiffMeta";
+import { scaleToStr } from "helpers";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { cleanObject } from "helpers/admin/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
@@ -54,9 +53,7 @@ export default function useConfigureFund() {
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({
         ...data,
-        funding_goal:
-          data.funding_goal &&
-          new Decimal(data.funding_goal).mul(1e6).divToInt(1).toString(),
+        funding_goal: data.funding_goal && scaleToStr(data.funding_goal),
       })
     );
 
