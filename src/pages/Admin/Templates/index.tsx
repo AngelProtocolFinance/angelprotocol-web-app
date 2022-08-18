@@ -19,7 +19,7 @@ import { routes } from "./routes";
 export default function Templates() {
   const { isAp } = useAdminResources();
   return (
-    <div className="grid gap-2 grid-cols-a1">
+    <div className="grid gap-2 grid-cols-[auto_1fr]">
       <Nav />
       {isAp ? <ApRoutes /> : <CharityRoutes />}
     </div>

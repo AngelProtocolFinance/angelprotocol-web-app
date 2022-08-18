@@ -28,8 +28,8 @@ export function EndowmentInfo() {
 
   return (
     <div className="w-full text-left font-heading">
-      <div className="flex flex-col gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
-        <div className="endowment_stats bg-white w-full min-h-r15 shadow-xl border-0 rounded-2xl p-5">
+      <div className="flex flex-col gap-5 justify-between items-center min-h-[15rem] w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
+        <div className="endowment_stats bg-white w-full min-h-[15rem] shadow-xl border-0 rounded-2xl p-5">
           <p className="uppercase font-bold text-thin-blue text-xl">
             Total Account Value
           </p>
@@ -66,7 +66,7 @@ type Props = { className: string; account: any };
 export function AccountInfo(props: Props) {
   return (
     <div
-      className={`w-full lg:max-w-[600px] lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${props.className}`}
+      className={`w-full lg:max-w-[600px] lg:w-3/4 min-h-[15rem] shadow-xl border-0 rounded-2xl p-5 ${props.className}`}
     >
       <p className="uppercase font-semibold text-white text-xl">
         {props.account.type}

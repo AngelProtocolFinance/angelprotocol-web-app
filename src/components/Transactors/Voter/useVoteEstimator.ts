@@ -26,7 +26,6 @@ export default function useVoteEstimator() {
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
-
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");

@@ -8,19 +8,17 @@ import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
   const { wallet } = useGetWallet();
   const { endowment } = useAdminResources();
-  const contract = new Account(undefined, endowment);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(contract.profile);
+  } = useEndowmentProfileQuery(endowment);
 
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;

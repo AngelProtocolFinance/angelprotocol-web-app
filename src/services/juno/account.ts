@@ -1,22 +1,24 @@
-import { ContractQueryArgs } from "services/types";
-import { BalanceInfo, Profile, QueryRes } from "types/server/contracts";
+import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { endowmentTags, junoTags } from "services/juno/tags";
 import { junoApi } from ".";
-import contract_querier from "./contract_querier";
+import { genQueryPath } from "./queryContract/genQueryPath";
 
 export const account_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    endowmentProfile: builder.query<Profile, ContractQueryArgs>({
+    endowmentProfile: builder.query<
+      Result<"accProfile">,
+      WithAddrArgs<"accProfile">
+    >({
       providesTags: [{ type: junoTags.endowment, id: endowmentTags.profile }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<Profile>) => {
+      query: (contract) => genQueryPath("accProfile", null, contract),
+      transformResponse: (res: Res<"accProfile">) => {
         return res.data;
       },
     }),
-    balance: builder.query<BalanceInfo, ContractQueryArgs>({
+    balance: builder.query<Result<"accBalance">, WithAddrArgs<"accBalance">>({
       providesTags: [{ type: junoTags.endowment, id: endowmentTags.balance }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<BalanceInfo>) => {
+      query: (contract) => genQueryPath("accBalance", null, contract),
+      transformResponse: (res: Res<"accBalance">) => {
         return res.data;
       },
     }),

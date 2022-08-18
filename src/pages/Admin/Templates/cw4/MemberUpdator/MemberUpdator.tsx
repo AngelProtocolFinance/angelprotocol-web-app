@@ -8,19 +8,13 @@ import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useMembersQuery } from "services/juno/cw4";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/apCW4Members";
-import CW4 from "contracts/CW4";
 import MemberUpdateForm from "./MemberUpdaterForm";
 import { memberUpdatorSchema } from "./memberUpdatorSchema";
 
 export default function MemberUpdator() {
   const { cw4 } = useAdminResources();
   const dispatch = useSetter();
-  const contract = new CW4(undefined, cw4);
-  const {
-    data: members = [],
-    isLoading,
-    isError,
-  } = useMembersQuery(contract.members);
+  const { data: members = [], isLoading, isError } = useMembersQuery(cw4);
 
   useEffect(() => {
     if (members.length > 0) {

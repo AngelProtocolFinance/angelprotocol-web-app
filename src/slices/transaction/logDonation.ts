@@ -1,5 +1,6 @@
 import { TxLogPayload } from "types/server/aws";
 import { createAuthToken } from "helpers";
+import { LogDonationFail } from "errors/errors";
 import { APIs } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {
@@ -17,14 +18,3 @@ const logDonation = async (payload: TxLogPayload) => {
 };
 
 export default logDonation;
-
-export class LogDonationFail extends Error {
-  chainId: string;
-  txHash: string;
-  constructor(chainId: string, txHash: string) {
-    super();
-    this.chainId = chainId;
-    this.txHash = txHash;
-    this.name = "LogDonationFail";
-  }
-}

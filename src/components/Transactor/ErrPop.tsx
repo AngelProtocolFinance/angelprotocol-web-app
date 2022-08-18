@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { ErrorStage } from "slices/transaction/types";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
@@ -6,14 +8,24 @@ import { setStage } from "slices/transaction/transactionSlice";
 import { getTxUrl } from "helpers";
 
 export default function ErrPop(props: ErrorStage) {
-  if (props.step !== "error") throw new Error("wrong component rendered");
   const dispatch = useSetter();
   const { closeModal } = useModalContext();
   const { chain, message, txHash } = props;
+  const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (props.step !== "error") {
+      handleError("wrong component rendered");
+    }
+  }, [props.step, handleError]);
 
   function acknowledge() {
     dispatch(setStage({ step: "initial" }));
     closeModal();
+  }
+
+  if (props.step !== "error") {
+    return null;
   }
 
   return (

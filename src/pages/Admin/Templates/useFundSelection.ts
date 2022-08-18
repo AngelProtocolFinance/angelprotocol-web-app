@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "pages/Admin/types";
-import { useFundList } from "services/juno/indexFund/queriers";
+import { useFundListQuery } from "services/juno/indexFund";
 import { useLatestBlock } from "services/juno/queriers";
 
 export default function useFundSelection<T extends FundIdContext>(
@@ -10,7 +10,8 @@ export default function useFundSelection<T extends FundIdContext>(
   const { setValue } = useFormContext<T>();
 
   const blockHeight = useLatestBlock();
-  const { fundList } = useFundList();
+  const { data: fundList = [] } = useFundListQuery(null);
+
   const [activeRow, setActiveRow] = useState<number | undefined>();
 
   const unexpiredFundList = useMemo(

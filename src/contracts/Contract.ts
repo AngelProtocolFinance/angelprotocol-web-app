@@ -15,7 +15,7 @@ import {
 } from "@cosmjs/stargate";
 import { TxOptions } from "slices/transaction/types";
 import { Dwindow } from "types/ethereum";
-import { EmbeddedWasmMsg } from "types/server/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { scaleToStr, toBase64 } from "helpers";
 import {
@@ -36,25 +36,20 @@ const GAS_PRICE = IS_TEST
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
 
 export default class Contract {
-  contractAddress: string;
   wallet: WalletState | undefined;
   walletAddress: string;
 
-  constructor(wallet: WalletState | undefined, contractAddress = "") {
-    this.contractAddress = contractAddress;
+  constructor(wallet: WalletState | undefined) {
     this.wallet = wallet;
     this.walletAddress = wallet?.address || "";
   }
 
   //for on-demand query, use RTK where possible
-  async query<T>(message: Record<string, unknown>) {
+  async query<T>(to: string, message: Record<string, unknown>) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
-    const jsonObject = await client.queryContractSmart(
-      this.contractAddress,
-      message
-    );
+    const jsonObject = await client.queryContractSmart(to, message);
     return JSON.parse(jsonObject) as T;
   }
 
@@ -78,26 +73,15 @@ export default class Contract {
     return validateTransactionSuccess(result, chain_id);
   }
 
-  createEmbeddedWasmMsg(funds: Coin[], msg: object): EmbeddedWasmMsg {
-    return {
-      wasm: {
-        execute: {
-          contract_addr: this.contractAddress,
-          funds,
-          msg: toBase64(msg),
-        },
-      },
-    };
-  }
-
   createExecuteContractMsg(
+    to: string,
     msg: object,
     funds: Coin[] = []
   ): MsgExecuteContractEncodeObject {
     return {
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: {
-        contract: this.contractAddress,
+        contract: to,
         sender: this.walletAddress,
         msg: toUtf8(JSON.stringify(msg)),
         funds,
@@ -121,6 +105,33 @@ export default class Contract {
             amount: scaleToStr(amount),
           },
         ],
+      },
+    };
+  }
+
+  createEmbeddedWasmMsg(
+    to: string,
+    msg: object,
+    funds: Coin[] = []
+  ): EmbeddedWasmMsg {
+    return {
+      wasm: {
+        execute: {
+          contract_addr: to,
+          funds,
+          msg: toBase64(msg),
+        },
+      },
+    };
+  }
+
+  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
+    return {
+      bank: {
+        send: {
+          to_address: to,
+          amount: funds,
+        },
       },
     };
   }

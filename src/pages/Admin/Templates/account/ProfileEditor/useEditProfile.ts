@@ -7,6 +7,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { uploadToIpfs } from "pages/Registration/helpers";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -20,6 +21,7 @@ import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
+
 export default function useEditProfile() {
   const { endowment, cw3, proposalLink } = useAdminResources();
   const {
@@ -29,6 +31,7 @@ export default function useEditProfile() {
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   const editProfile = async ({
     title,
@@ -36,91 +39,94 @@ export default function useEditProfile() {
     initialProfile,
     ...data
   }: UpdateProfileValues) => {
-    //extract [code]
-    if (data.country_of_origin) {
-      data.country_of_origin = data.country_of_origin.split(" ")[0];
-    }
-    const diff = getPayloadDiff(initialProfile, data);
-
-    //if overview has changed, and is set to something
-    if ("overview" in diff && data.overview) {
-      //truncate to reduce proposalMsg size
-      diff.overview = PLACEHOLDER_OVERVIEW;
-      if (initialProfile.image) {
-        initialProfile.overview = PLACEHOLDER_OVERVIEW;
+    try {
+      //extract [code]
+      if (data.country_of_origin) {
+        data.country_of_origin = data.country_of_origin.split(" ")[0];
       }
-    }
+      const diff = getPayloadDiff(initialProfile, data);
 
-    //if image has changed, and is set to something
-    if ("image" in diff && data.image) {
-      //truncate to reduce proposalMsg size
-      diff.image = PLACEHOLDER_IMAGE;
-      if (initialProfile.image) {
-        initialProfile.image = PLACEHOLDER_IMAGE;
+      //if overview has changed, and is set to something
+      if ("overview" in diff && data.overview) {
+        //truncate to reduce proposalMsg size
+        diff.overview = PLACEHOLDER_OVERVIEW;
+        if (initialProfile.image) {
+          initialProfile.overview = PLACEHOLDER_OVERVIEW;
+        }
       }
-    }
 
-    const diffEntries = Object.entries(diff) as ObjectEntries<UP>;
-    if (diffEntries.length <= 0) {
-      showModal(Popup, { message: "no changes detected" });
-      return;
-    }
-
-    //run form change check first
-    //upload if image is changed and is set to something
-    if ("image" in diff && data.image) {
-      //convert dataURL to file
-      showModal(Popup, { message: "Uploading image.." });
-      const imageRes = await fetch(data.image);
-      const imageBlob = await imageRes.blob();
-      const imageFile = new File([imageBlob], `banner_${endowment}`); //use endow address as unique imageName
-
-      const key = imageFile.name;
-      const file = await optimizeImage(imageFile);
-      const url = await uploadToIpfs(key, file);
-
-      if (url) {
-        data.image = url;
-      } else {
-        showModal(Popup, { message: "Error uploading image" });
-        return;
+      //if image has changed, and is set to something
+      if ("image" in diff && data.image) {
+        //truncate to reduce proposalMsg size
+        diff.image = PLACEHOLDER_IMAGE;
+        if (initialProfile.image) {
+          initialProfile.image = PLACEHOLDER_IMAGE;
+        }
       }
+
+      const diffEntries = Object.entries(diff) as ObjectEntries<UP>;
+      if (diffEntries.length <= 0) {
+        throw new Error("no changes detected");
+      }
+
+      //run form change check first
+      //upload if image is changed and is set to something
+      if ("image" in diff && data.image) {
+        //convert dataURL to file
+        showModal(Popup, { message: "Uploading image.." });
+        const imageRes = await fetch(data.image);
+        const imageBlob = await imageRes.blob();
+        const imageFile = new File([imageBlob], `banner_${endowment}`); //use endow address as unique imageName
+
+        const key = imageFile.name;
+        const file = await optimizeImage(imageFile);
+        const url = await uploadToIpfs(key, file);
+
+        if (url) {
+          data.image = url;
+        } else {
+          throw new Error("Error uploading image");
+        }
+      }
+
+      const accountContract = new Account(wallet, endowment);
+      const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
+        //don't pass just diff here, old value should be included for null will be set if it's not present in payload
+        cleanObject(data)
+      );
+
+      const profileUpdateMeta: EndowmentProfileUpdateMeta = {
+        type: "acc_profile",
+        data: genDiffMeta(diffEntries, initialProfile),
+      };
+
+      const adminContract = new CW3(wallet, cw3);
+      const proposalMsg = adminContract.createProposalMsg(
+        title,
+        description,
+        [profileUpdateMsg],
+        JSON.stringify(profileUpdateMeta)
+      );
+
+      dispatch(
+        sendCosmosTx({
+          wallet,
+          msgs: [proposalMsg],
+          tagPayloads: [
+            invalidateJunoTags([
+              { type: junoTags.admin, id: adminTags.proposals },
+            ]),
+          ],
+          successLink: proposalLink,
+          successMessage: "Profile update proposal submitted",
+        })
+      );
+      showModal(TransactionPrompt, {});
+    } catch (err) {
+      handleError(err);
     }
-
-    const accountContract = new Account(wallet, endowment);
-    const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
-      //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-      cleanObject(data)
-    );
-
-    const profileUpdateMeta: EndowmentProfileUpdateMeta = {
-      type: "acc_profile",
-      data: genDiffMeta(diffEntries, initialProfile),
-    };
-
-    const adminContract = new CW3(wallet, cw3);
-    const proposalMsg = adminContract.createProposalMsg(
-      title,
-      description,
-      [profileUpdateMsg],
-      JSON.stringify(profileUpdateMeta)
-    );
-
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink: proposalLink,
-        successMessage: "Profile update proposal submitted",
-      })
-    );
-    showModal(TransactionPrompt, {});
   };
+
   return {
     editProfile: handleSubmit(editProfile),
     isSubmitDisabled: isSubmitting || !isDirty,

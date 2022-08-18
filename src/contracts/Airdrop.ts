@@ -1,26 +1,16 @@
 import Decimal from "decimal.js";
-import { ContractQueryArgs as CQA } from "services/types";
 import { Airdrops } from "types/server/aws";
-import { WalletState } from "contexts/WalletContext/WalletContext";
 import { condense } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import Gov from "./Gov";
 
 export default class Airdrop extends Contract {
-  isAirDropClaimed: (stage: number) => CQA;
-
-  constructor(wallet: WalletState | undefined) {
-    super(wallet, contracts.airdrop);
-    this.isAirDropClaimed = (stage) => ({
-      address: this.contractAddress,
-      msg: { is_claimed: { stage, address: this.walletAddress } },
-    });
-  }
+  private static address = contracts.airdrop;
 
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
     const claimMsgs = airdrops.map(({ stage, haloTokens, proof }) =>
-      this.createExecuteContractMsg({
+      this.createExecuteContractMsg(Airdrop.address, {
         claim: { stage, amount: haloTokens, proof },
       })
     );

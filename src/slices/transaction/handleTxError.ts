@@ -10,15 +10,18 @@ import { StageUpdater } from "slices/transaction/types";
 import { logger } from "helpers";
 import {
   LogApplicationUpdateError,
+  LogDonationFail,
   TxResultFail,
   UnexpectedStateError,
+  WalletDisconnectedError,
 } from "errors/errors";
-import { LogDonationFail } from "./logDonation";
 
 export default function handleTxError(error: any, handler: StageUpdater) {
   logger.error(error);
 
-  if (error instanceof UserDenied) {
+  if (error instanceof WalletDisconnectedError) {
+    handler({ step: "error", message: error.message });
+  } else if (error instanceof UserDenied) {
     handler({ step: "error", message: "Transaction aborted" });
   } else if (error instanceof CreateTxFailed) {
     handler({ step: "error", message: "Failed to create transaction" });
@@ -34,15 +37,14 @@ export default function handleTxError(error: any, handler: StageUpdater) {
   } else if (error instanceof LogDonationFail) {
     handler({
       step: "error",
-      message:
-        "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io",
+      message: error.message,
       txHash: error.txHash,
       chainId: error.chainId,
     });
   } else if (error instanceof LogApplicationUpdateError) {
     handler({
       step: "error",
-      message: "Failed to log the Poll ID of your proposal.",
+      message: error.message,
       chainId: error.chainId,
     });
   } else if (error instanceof Timeout || error instanceof TimeoutError) {

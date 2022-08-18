@@ -1,62 +1,45 @@
-import { ContractQueryArgs } from "services/types";
-import {
-  CW20Balance,
-  CW20Info,
-  GovConfig,
-  GovStaker,
-  GovState,
-  Poll,
-  Polls,
-  QueryRes,
-} from "types/server/contracts";
+import { Args, Res, Result } from "../queryContract/types";
 import { govTags, junoTags } from "services/juno/tags";
-import { condenseToNum } from "helpers";
+import { contracts } from "constants/contracts";
 import { junoApi } from "..";
-import contract_querier from "../contract_querier";
+import { genQueryPath } from "../queryContract/genQueryPath";
 
+const gov = contracts.gov;
 export const gov_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    govPolls: builder.query<Poll[], ContractQueryArgs>({
+    govPolls: builder.query<Result<"govPolls">, Args<"govPolls">>({
       providesTags: [{ type: junoTags.gov, id: govTags.polls }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<Polls>) => {
+      query: (args) => genQueryPath("govPolls", args, gov),
+      transformResponse: (res: Res<"govPolls">) => {
         return res.data.polls;
       },
     }),
-    govState: builder.query<GovState, ContractQueryArgs>({
+
+    govState: builder.query<Result<"govState">, Args<"govState">>({
       providesTags: [{ type: junoTags.gov, id: govTags.state }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<GovState>) => {
+      query: (args) => genQueryPath("govPolls", args, gov),
+      transformResponse: (res: Res<"govState">) => {
         return res.data;
       },
     }),
-    govStaker: builder.query<GovStaker, ContractQueryArgs>({
+    govStaker: builder.query<Result<"govStaker">, Args<"govStaker">>({
       providesTags: [{ type: junoTags.gov, id: govTags.staker }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<GovStaker>) => {
+      query: (args) => genQueryPath("govStaker", args, gov),
+      transformResponse: (res: Res<"govStaker">) => {
         return res.data;
       },
     }),
-    govConfig: builder.query<GovConfig, ContractQueryArgs>({
+    govConfig: builder.query<Result<"govConfig">, Args<"govConfig">>({
       providesTags: [{ type: junoTags.gov, id: govTags.config }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<GovConfig>) => {
-        return res.data;
-      },
-    }),
-    govHaloBalance: builder.query<number, ContractQueryArgs>({
-      providesTags: [{ type: junoTags.gov, id: govTags.halo_balance }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<CW20Balance>) => {
-        return condenseToNum(res.data.balance);
-      },
-    }),
-    haloInfo: builder.query<CW20Info, ContractQueryArgs>({
-      providesTags: [{ type: junoTags.gov, id: govTags.halo_info }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<CW20Info>) => {
+      query: (args) => genQueryPath("govConfig", args, gov),
+      transformResponse: (res: Res<"govConfig">) => {
         return res.data;
       },
     }),
   }),
 });
+
+export const { useGovStakerQuery, useGovPollsQuery } = gov_api;
+export const {
+  govStaker: { useQueryState: useGovStakerState },
+} = gov_api.endpoints;

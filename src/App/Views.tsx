@@ -36,13 +36,9 @@ export default function Views() {
           path={`${appRoutes.donations}/:address`}
           element={<Donations />}
         />
-        <Route
-          path={appRoutes.index}
-          element={<Navigate replace to={appRoutes.marketplace} />}
-        />
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
         <Route path={appRoutes.login} element={<Login />} />
-        <Route path={appRoutes.marketplace} element={<Market />} />
+        <Route index element={<Market />} />
         <Route path={`${appRoutes.register}/*`} element={<Register />} />
         <Route path={appRoutes.tca} element={<TCA />} />
         <Route

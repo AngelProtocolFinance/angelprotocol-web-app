@@ -7,7 +7,7 @@ import {
 import { IS_TEST } from "constants/env";
 import { junoTags } from "./tags";
 
-const baseUrl = IS_TEST
+export const baseUrl = IS_TEST
   ? "https://lcd.uni.juno.deuslabs.fi"
   : "https://lcd-juno.itastakers.com";
 

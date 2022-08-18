@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { PollFilterOptions } from "../types";
-import { useGovPolls } from "services/juno/gov/queriers";
+import { useGovPollsQuery } from "services/juno/gov/gov";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 
 export default function Polls() {
   const [pollFilter, setPollFilter] = useState<PollFilterOptions>("all");
-  const { govPolls, isGovPollsLoading } = useGovPolls();
+  const { data: govPolls = [], isLoading } = useGovPollsQuery(null);
 
   const filteredPolls = useMemo(() => {
     if (pollFilter === "all") {
@@ -25,7 +25,7 @@ export default function Polls() {
             <PollCard key={poll.id} poll_id={poll.id} />
           ))) || (
           <p className="font-mono text-white-grey ml-3">
-            {isGovPollsLoading ? "Loading polls.." : "no polls found"}
+            {isLoading ? "Loading polls.." : "no polls found"}
           </p>
         )}
       </div>

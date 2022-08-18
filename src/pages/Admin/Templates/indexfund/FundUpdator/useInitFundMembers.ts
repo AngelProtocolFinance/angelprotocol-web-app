@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "pages/Admin/types";
-import { useFundMembers } from "services/juno/indexFund/queriers";
+import { useFundListQuery } from "services/juno/indexFund";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";
 
@@ -10,7 +10,13 @@ export default function useInitFundMembers() {
   const fundId = watch("fundId");
   const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
-  const { fundMembers, isFundMembersLoading } = useFundMembers(fundId);
+
+  const { fundMembers = [], isFundMembersLoading } = useFundListQuery(null, {
+    selectFromResult: ({ data, isLoading, isFetching }) => ({
+      fundMembers: data?.find((fund) => fund.id === +fundId)?.members,
+      isFundMembersLoading: isLoading || isFetching,
+    }),
+  });
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {

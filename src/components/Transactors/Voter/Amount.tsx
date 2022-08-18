@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
-import { useGovStakerState } from "services/juno/gov/states";
+import { useCachedGovStaker } from "services/juno/gov/queriers";
 import { condense, humanize, roundDown } from "helpers";
 import { denoms, symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
@@ -12,7 +12,7 @@ export default function Amount() {
     formState: { errors },
     setValue,
   } = useFormContext<VoteValues>();
-  const govStakerState = useGovStakerState();
+  const govStakerState = useCachedGovStaker();
   const govStakedHalo = roundDown(condense(govStakerState.balance), 3);
 
   const onMaxClick = () => {

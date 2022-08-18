@@ -23,7 +23,7 @@ export default function MobileNav() {
         className="lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2"
       >
         <Menu.Item as={Fragment}>
-          <NavLink to={appRoutes.marketplace} className={styler}>
+          <NavLink to={appRoutes.index} className={styler} end>
             Marketplace
           </NavLink>
         </Menu.Item>

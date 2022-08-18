@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { ContractQueryArgs } from "services/types";
 import {
   DepositPayload,
   UpdateProfilePayload,
@@ -10,49 +9,34 @@ import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
-  endowment: ContractQueryArgs;
-  balance: ContractQueryArgs;
-  profile: ContractQueryArgs;
+  address: string;
 
-  constructor(wallet: WalletState | undefined, accountAddr: string) {
-    super(wallet, accountAddr);
-
-    this.endowment = {
-      address: this.contractAddress,
-      msg: { endowment: {} },
-    };
-
-    this.balance = {
-      address: this.contractAddress,
-      msg: { balance: {} },
-    };
-
-    this.profile = {
-      address: this.contractAddress,
-      msg: { get_profile: {} },
-    };
+  constructor(wallet: WalletState | undefined, address: string) {
+    super(wallet);
+    this.address = address;
   }
 
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(this.address, {
       withdraw: payload,
     });
   }
 
   createEmbeddedWithdrawLiqMsg(payload: WithdrawLiqPayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(this.address, {
       withdraw_liquid: payload,
     });
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createEmbeddedWasmMsg([], {
+    return this.createEmbeddedWasmMsg(this.address, {
       update_profile: payload,
     });
   }
 
   createDepositMsg(payload: DepositPayload, funds: Coin[]) {
     return this.createExecuteContractMsg(
+      this.address,
       {
         deposit: payload,
       },

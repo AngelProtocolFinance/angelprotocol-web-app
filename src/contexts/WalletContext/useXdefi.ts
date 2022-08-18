@@ -31,6 +31,7 @@ export default function useXdefi() {
         logo: terraIcon,
         name: "Terra",
         connect: async () => {
+          // Errors within handled in src/components/WalletSuite/WalletSelector/Connector.tsx
           checkXdefiPriority();
         },
       };

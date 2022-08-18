@@ -1,50 +1,45 @@
-import { ContractQueryArgs } from "services/types";
-import {
-  AdminVoteInfo,
-  CW3Config,
-  Proposal,
-  QueryRes,
-} from "types/server/contracts";
+import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { adminTags, junoTags } from "services/juno/tags";
 import { junoApi } from ".";
-import contract_querier from "./contract_querier";
-
-type ProposalsRes = {
-  proposals: Proposal[];
-};
-
-type VoteListRes = {
-  votes: AdminVoteInfo[];
-};
+import { genQueryPath } from "./queryContract/genQueryPath";
 
 export const cw3Api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     //CW3
-    cw3Config: builder.query<CW3Config, ContractQueryArgs>({
+    cw3Config: builder.query<Result<"cw3Config">, WithAddrArgs<"cw3Config">>({
       providesTags: [{ type: junoTags.admin, id: adminTags.config }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<CW3Config>) => {
+      query: (contract) => genQueryPath("cw3Config", null, contract),
+      transformResponse: (res: Res<"cw3Config">) => {
         return res.data;
       },
     }),
-    proposal: builder.query<Proposal, ContractQueryArgs>({
-      providesTags: [{ type: junoTags.admin, id: adminTags.proposal }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<Proposal>) => {
-        return res.data;
-      },
-    }),
-    proposals: builder.query<Proposal[], ContractQueryArgs>({
+    proposal: builder.query<Result<"cw3Proposal">, WithAddrArgs<"cw3Proposal">>(
+      {
+        providesTags: [{ type: junoTags.admin, id: adminTags.proposal }],
+        query: ({ contract, ...args }) =>
+          genQueryPath("cw3Proposal", args, contract),
+        transformResponse: (res: Res<"cw3Proposal">) => {
+          return res.data;
+        },
+      }
+    ),
+    proposals: builder.query<
+      Result<"cw3Propsosals">,
+      WithAddrArgs<"cw3Propsosals">
+    >({
       providesTags: [{ type: junoTags.admin, id: adminTags.proposals }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<ProposalsRes>) => {
+      query: ({ contract, ...args }) =>
+        genQueryPath("cw3Propsosals", args, contract),
+      transformResponse: (res: Res<"cw3Propsosals">) => {
         return res.data.proposals;
       },
     }),
-    votes: builder.query<AdminVoteInfo[], ContractQueryArgs>({
+
+    votes: builder.query<Result<"cw3Votes">, WithAddrArgs<"cw3Votes">>({
       providesTags: [{ type: junoTags.admin, id: adminTags.votes }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<VoteListRes>) => {
+      query: ({ contract, ...args }) =>
+        genQueryPath("cw3Votes", args, contract),
+      transformResponse: (res: Res<"cw3Votes">) => {
         return res.data.votes;
       },
     }),
