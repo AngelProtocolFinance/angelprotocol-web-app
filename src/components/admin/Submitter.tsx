@@ -1,4 +1,4 @@
-export default function Submitter(
+export function Submitter(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
     _classes?: string;
   }

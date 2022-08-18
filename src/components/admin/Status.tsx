@@ -1,6 +1,6 @@
 import { ProposalStatus } from "types/server/contracts";
 
-export default function Status(props: { status: ProposalStatus }) {
+export function Status(props: { status: ProposalStatus }) {
   return (
     <p
       className={`text-xs uppercase px-2 py-1 rounded-sm ${

@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { DivContainer } from "./TemplateContainer";
 
-export default function FormError(props: { errorMessage: string }) {
+export function FormError(props: { errorMessage: string }) {
   return (
     <DivContainer>
       <p className="flex gap-2 font-mono text-red-400 font-semibold text-sm">

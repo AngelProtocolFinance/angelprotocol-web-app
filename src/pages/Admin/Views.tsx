@@ -9,6 +9,7 @@ import Dashboard from "./charity/Dashboard";
 
 export default function Views() {
   const { role } = useAdminResources();
+  console.log(role);
   switch (role) {
     case "reviewer":
       return <ReviewerRoutes />;

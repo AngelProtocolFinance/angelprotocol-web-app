@@ -1,7 +1,9 @@
 import { Menu } from "@headlessui/react";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import Icon from "components/Icon";
+import { AdminLink } from "components/admin";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
@@ -33,9 +35,10 @@ export default function MobileNav() {
           </NavLink>
         </Menu.Item>
         <Menu.Item as={Fragment}>
-          <NavLink to={appRoutes.admin} className={styler}>
-            Admin
-          </NavLink>
+          <AdminLink label="admin" className={styler} id={AP_ID} />
+        </Menu.Item>
+        <Menu.Item as={Fragment}>
+          <AdminLink label="applications" className={styler} id={REVIEWER_ID} />
         </Menu.Item>
       </Menu.Items>
     </Menu>

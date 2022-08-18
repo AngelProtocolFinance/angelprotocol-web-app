@@ -1,8 +1,5 @@
 import { MemberUpdatorValues as T } from "pages/Admin/types";
-import { DivContainer } from "pages/Admin/common/TemplateContainer";
-import Label from "../../../common/Label";
-import Submitter from "../../../common/Submitter";
-import TextInput from "../../../common/TextInput";
+import { DivContainer, Label, Submitter, TextInput } from "components/admin";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
 import useUpdateMembers from "./useUpdateMembers";

@@ -1,8 +1,6 @@
 import { PropsWithChildren } from "react";
 
-export default function DetailLabel(
-  props: PropsWithChildren<{ classes?: string }>
-) {
+export function DetailLabel(props: PropsWithChildren<{ classes?: string }>) {
   return (
     <p
       className={`${

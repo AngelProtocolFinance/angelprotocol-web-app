@@ -1,11 +1,11 @@
 import { RegistrarConfigValues as RV } from "pages/Admin/types";
-import Label from "pages/Admin/common/Label";
 import {
   FormContainer,
   GroupContainer,
-} from "pages/Admin/common/TemplateContainer";
-import TextInput from "pages/Admin/common/TextInput";
-import Submitter from "../../../common/Submitter";
+  Label,
+  Submitter,
+  TextInput,
+} from "components/admin";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
 export default function RegistrarConfigForm() {

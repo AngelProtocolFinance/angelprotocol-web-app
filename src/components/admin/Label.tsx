@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Label(
+export function Label(
   props: React.HTMLProps<HTMLParagraphElement> & {
     _required?: true;
   }
