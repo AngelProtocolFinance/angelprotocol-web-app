@@ -13,7 +13,9 @@ type SC =
   | "loop_factory"
   | "loop_router"
   | "loop_haloust_pair"
-  | "loop_haloust_lp";
+  | "loop_haloust_lp"
+  | "apCW3ReviewTeam"
+  | "apCW4ReviewTeam";
 
 type Contracts = {
   [key in SC]: string;
@@ -33,6 +35,12 @@ export const contracts: Contracts = IS_TEST
       // Admin
       apCW3: "juno1a6grxe4nz2r0p7h048exta4qx6wfj47h7yug0zw44ele6a7faausqqhzcg",
       apCW4: "juno1k77vksqvhy4r83scmh80gqkfluv5kjtxcxfuw6de323cdpnxgvhqqcq40y",
+
+      // Review team
+      apCW3ReviewTeam:
+        "juno1xe4pewxhddsg3y2rpemjnvdx0ut4dpsze32t0fj47kr4m9ryy02sq35jq0",
+      apCW4ReviewTeam:
+        "juno1sfu6h84vk82zrqac5s72tnh3pujcxgraxgdnamalhsafet7unf8q7stmgz",
 
       //terraswap
       halo_token: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
@@ -58,6 +66,10 @@ export const contracts: Contracts = IS_TEST
       // Admin
       apCW3: "terra1zrwpm9htqdh80nhqcuvw999cexvtmu0xt4dks5",
       apCW4: "terra1eueh924845wwsc2mna5u3ysn79q66kwqgq26mj",
+
+      // Review team
+      apCW3ReviewTeam: "",
+      apCW4ReviewTeam: "",
 
       //terraswap
       halo_token: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
