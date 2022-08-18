@@ -29,7 +29,7 @@ export class LogApplicationUpdateError extends Error {
   chainId: string;
   pollId: string;
   constructor(chainId: string, pollId: string) {
-    super();
+    super("Failed to log the Poll ID of your proposal");
     this.chainId = chainId;
     this.pollId = pollId;
     this.name = "ApplicationReviewPollUpdateError";
@@ -40,7 +40,9 @@ export class LogDonationFail extends Error {
   chainId: string;
   txHash: string;
   constructor(chainId: string, txHash: string) {
-    super();
+    super(
+      "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io"
+    );
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "LogDonationFail";
@@ -109,12 +111,12 @@ export class TxResultFail extends Error {
   }
 }
 
-export class WalletError extends Error {
+export class WalletError extends APError {
   //based on EIP1193 error spec
   code: number;
   data?: unknown;
   constructor(message: string, code: number, data?: unknown) {
-    super(message);
+    super("WalletError", message);
     this.code = code;
     this.data = data;
   }

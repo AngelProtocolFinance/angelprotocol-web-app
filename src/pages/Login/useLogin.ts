@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter, useSetter } from "store/accessors";
 import { saveToken } from "slices/authSlice";
 import { APIs } from "constants/urls";
@@ -20,7 +19,7 @@ export default function useLogin() {
 
   const { tca: tcaToken } = useGetter((state) => state.auth);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   async function login(values: { password: string }) {
     //start request
@@ -36,12 +35,12 @@ export default function useLogin() {
         dispatch(saveToken(data.accessToken));
         //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
-        showModal(Popup, { message: "Unauthorized" });
+        throw new Error("Unauthorized");
       } else {
-        showModal(Popup, { message: "Something wen't wrong" });
+        throw new Error("Something wen't wrong");
       }
     } catch (error) {
-      showModal(Popup, { message: "Something wen't wrong" });
+      handleError(error);
     }
   }
 

@@ -8,23 +8,17 @@ import FormError from "pages/Admin/common/FormError";
 import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
   const { wallet } = useGetWallet();
   const { endowmentId } = useAdminResources();
-  const contract = new Account(undefined);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(
-    contract.profile(
-      +endowmentId /**valid id, already verified in useAdminResources */
-    )
-  );
+  } = useEndowmentProfileQuery({ id: endowmentId });
 
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;
@@ -33,7 +27,7 @@ export default function ProfileEditor() {
     return <FormError errorMessage="Failed to load profile" />;
 
   return (
-    <ProfileEditContext {...{ ...profile, id: +endowmentId }}>
+    <ProfileEditContext {...{ ...profile, id: endowmentId }}>
       <EditForm />
     </ProfileEditContext>
   );

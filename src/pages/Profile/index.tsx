@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { Profile as IProfile } from "types/server/contracts";
 import { useEndowmentProfileQuery } from "services/juno/account";
+import { useErrorContext } from "contexts/ErrorContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
-import Account from "contracts/Account";
 import idParamToNum from "helpers/idParamToNum";
 import { appRoutes } from "constants/routes";
 import Content from "./Content";
@@ -14,26 +14,27 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileWithId = IProfile & { id: number };
-const context = createContext<ProfileWithId>({} as ProfileWithId);
+type ProfileWithAddr = IProfile & { id: number };
+
+const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
+
 export const useProfile = () => {
   const val = useContext(context);
-  if (Object.entries(val).length <= 0)
-    throw new Error("this hook can only be used inside profile");
-  return val;
+  const { handleError } = useErrorContext();
+  if (Object.entries(val).length <= 0) {
+    handleError("this hook can only be used inside profile");
+  }
+  return val; //val is defined here
 };
 
 export default function Profile() {
   const { id } = useParams<ProfileParams>();
   const numId = idParamToNum(id);
-  const account = new Account(undefined);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(account.profile(numId), {
-    skip: numId === 0,
-  });
+  } = useEndowmentProfileQuery({ id: numId }, { skip: numId === 0 });
 
   if (isLoading) return <Skeleton />;
   if (isError || !profile) return <PageError />;

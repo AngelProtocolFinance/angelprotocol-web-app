@@ -1,15 +1,18 @@
-import { useCategorizedEndowments } from "services/juno/registrar/queriers";
+import { useCategorizedEndowmentsQuery } from "services/juno/registrar";
 import Loader from "components/Loader";
 import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
-  const { endowments, isEndowmentsLoading } = useCategorizedEndowments();
+  const { data: endowments = {}, isLoading } = useCategorizedEndowmentsQuery({
+    endow_type: "charity",
+    status: "1",
+  });
 
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />
-      {(isEndowmentsLoading && (
+      {(isLoading && (
         <Loader
           bgColorClass="bg-white-grey/80"
           gapClass="gap-2"

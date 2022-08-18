@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
-import { useGovStakerState } from "services/juno/gov/states";
+import { useCachedGovStaker } from "services/juno/gov/queriers";
 import { symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
 
@@ -12,7 +12,7 @@ export default function Amount() {
     formState: { errors },
     setValue,
   } = useFormContext<VoteValues>();
-  const govStakerState = useGovStakerState();
+  const govStakerState = useCachedGovStaker();
   const govStakedHalo = new Decimal(govStakerState.balance)
     .div(1e6)
     .toFixed(3, Decimal.ROUND_DOWN);

@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { PropsWithChildren, useMemo } from "react";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Receipter from "components/Receipter";
@@ -17,6 +18,7 @@ export default function TransactionPrompt({
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
   const { closeModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   const prompt = useMemo(() => {
     switch (stage.step) {
@@ -33,9 +35,10 @@ export default function TransactionPrompt({
       case "error":
         return <ErrPop {...stage} />;
       default:
-        throw Error("wrong prompt");
+        handleError("wrong prompt");
+        return null;
     }
-  }, [stage, children]);
+  }, [stage, children, handleError]);
 
   function closePrompt() {
     switch (stage.step) {

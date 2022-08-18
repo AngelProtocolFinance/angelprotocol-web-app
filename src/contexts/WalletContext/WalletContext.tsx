@@ -211,7 +211,7 @@ function useVerifyChain(
         // causing this hook to rerun and throwing the error below.
         // We ignore this error and rethrow others
         if (!(err instanceof WalletDisconnectedError)) {
-          throw err;
+          handleError(err);
         }
       }
     },

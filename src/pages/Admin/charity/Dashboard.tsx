@@ -1,18 +1,16 @@
 import { useBalanceQuery } from "services/juno/account";
 import Icon from "components/Icon";
-import AccountContract from "contracts/Account";
 import { useAdminResources } from "../Guard";
 import Account from "./Account";
 import Transactions from "./Transactions";
 
 export default function Dashboard() {
   const { endowmentId } = useAdminResources();
-  const account = new AccountContract(undefined);
   const {
     data: balance,
     isLoading,
     isError,
-  } = useBalanceQuery(account.balance(+endowmentId));
+  } = useBalanceQuery({ id: endowmentId });
 
   if (isLoading) {
     return (
