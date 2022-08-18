@@ -13,7 +13,7 @@ const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 const Documentation = lazy(() => import("./Documentation"));
 
-export default function Register() {
+export default function Registration() {
   return (
     <Container>
       <Routes>
