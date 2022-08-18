@@ -75,19 +75,6 @@ describe("user visits app", () => {
 
     const leaderboardText1 = /total donations/i;
 
-    /** user starts at marketplace */
-    const loader = screen.getByTestId("loader");
-    expect(loader).toBeInTheDocument();
-
-    //view is not yet rendered and being lazy loaded
-    expect(screen.queryByText(marketText1)).toBeNull();
-    expect(screen.queryByText(marketText2)).toBeNull();
-
-    //view is finally loaded,
-    expect(await screen.findByText(marketText1)).toBeInTheDocument();
-    expect(await screen.findByText(marketText2)).toBeInTheDocument();
-    expect(loader).not.toBeInTheDocument();
-
     // NOTE: Governance will be reenabled when we relaunch the $HALO token
     //user goes to governance
     // const govLink = screen.getByText(/governance/i);
@@ -106,8 +93,11 @@ describe("user visits app", () => {
     // expect(await screen.findByText(govText2)).toBeInTheDocument();
     // expect(loader2).not.toBeInTheDocument();
 
+    // wait for Marketplace to load
+    const leaderboardLink = await screen.findByText(/leaderboard/i);
+    expect(leaderboardLink).toBeInTheDocument();
+
     //user goes to leaderboard
-    const leaderboardLink = screen.getByText(/leaderboard/i);
     userEvent.click(leaderboardLink);
 
     /** user is in leaderboard */
