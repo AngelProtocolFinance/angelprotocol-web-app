@@ -14,7 +14,7 @@ import {
   UpdateDocumentationResult,
 } from "types/server/aws";
 import { adminTags } from "services/aws/tags";
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { aws } from "./aws";
 import { awsTags } from "./tags";
 

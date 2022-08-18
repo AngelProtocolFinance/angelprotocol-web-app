@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import { assets } from "../constants";
 
 export default function Amounts() {
@@ -31,7 +31,7 @@ export default function Amounts() {
               type="button"
               className="absolute top-1 right-2 text-sky-400 uppercase text-xs"
             >
-              bal: {toCurrency(+field.balance, 4)}
+              bal: {humanize(+field.balance, 4)}
             </button>
             <img
               src={assets[field.tokenId].icon}

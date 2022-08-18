@@ -2,14 +2,14 @@ import { useParams } from "react-router-dom";
 import { ProfileParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
-import idParamToNum from "helpers/idParamToNum";
-import toCurrency from "helpers/toCurrency";
+import { humanize, idParamToNum } from "helpers";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
   const { id } = useParams<ProfileParams>();
+  const numId = idParamToNum(id);
   //this component will not be rendered if address is undefined or incorrect
-  const { data } = useDepositTransactionsQuery(idParamToNum(id));
+  const { data } = useDepositTransactionsQuery(numId, { skip: numId === 0 });
   const accountDetails = [
     {
       type: "Liquid Account",
@@ -35,7 +35,7 @@ export function EndowmentInfo() {
             Total Account Value
           </p>
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
-            ${toCurrency(0)}
+            ${humanize(0)}
           </p>
           <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations

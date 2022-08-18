@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import { symbols } from "constants/currency";
 
 function Misc(props: { title: string; value: string; class?: string }) {
@@ -38,7 +38,7 @@ export function SwapRate() {
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
 
-  const formattedRatio = toCurrency(ratio, 6, true);
+  const formattedRatio = humanize(ratio, 6, true);
   const nativeSymbol = wallet?.chain.native_currency.symbol;
   const haloSymbol = symbols.halo;
   return (

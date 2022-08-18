@@ -9,8 +9,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import extractFeeAmount from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
+import { extractFeeAmount, processEstimateError } from "helpers";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<TxOptions>();

@@ -24,9 +24,7 @@ import {
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeAmount from "helpers/extractFeeData";
-import { getProvider } from "helpers/getProvider";
-import logger from "helpers/logger";
+import { extractFeeAmount, getProvider, logger } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
 import { IS_TEST } from "constants/env";

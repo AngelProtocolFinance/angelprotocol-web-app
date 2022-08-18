@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/server/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
-import logger from "helpers/logger";
+import { logger } from "helpers";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 

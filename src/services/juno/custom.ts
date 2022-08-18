@@ -1,6 +1,6 @@
 import { AdminResources, ProposalDetails } from "services/types";
 import { SuccessLink } from "slices/transaction/types";
-import idParamToNum from "helpers/idParamToNum";
+import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";

@@ -11,9 +11,12 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeAmount from "helpers/extractFeeData";
-import logger from "helpers/logger";
-import processEstimateError from "helpers/processEstimateError";
+import {
+  condense,
+  extractFeeAmount,
+  logger,
+  processEstimateError,
+} from "helpers";
 import { symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
@@ -47,17 +50,19 @@ export default function useEstimator() {
           return;
         }
 
-        if (is_stake && balance.div(1e6).lt(debounced_amount)) {
+        if (is_stake && condense(balance).lt(debounced_amount)) {
           //check $HALO balance
           setError("amount", {
             message: `not enough ${symbols.halo} balance`,
           });
           return;
-        } else if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
-          setError("amount", {
-            message: "not enough unlocked staked balance",
-          });
-          return;
+        } else {
+          if (condense(balance.sub(locked)).lt(debounced_amount)) {
+            setError("amount", {
+              message: "not enough unlocked staked balance",
+            });
+            return;
+          }
         }
 
         dispatch(setFormLoading(true));

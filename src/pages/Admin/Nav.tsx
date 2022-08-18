@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { createNavLinkStyler } from "helpers";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminResources } from "./Guard";
 

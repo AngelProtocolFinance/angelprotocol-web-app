@@ -1,4 +1,4 @@
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { LogApplicationUpdateError } from "errors/errors";
 import { APIs } from "constants/urls";
 

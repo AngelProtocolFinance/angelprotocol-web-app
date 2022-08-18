@@ -8,8 +8,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Registrar from "contracts/Registrar";
-import logger from "helpers/logger";
-import processEstimateError from "helpers/processEstimateError";
+import { logger, processEstimateError } from "helpers";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {

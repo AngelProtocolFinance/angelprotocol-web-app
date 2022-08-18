@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "types/server/contracts";
 import Icon from "components/Icon";
-import idParamToNumber from "helpers/idParamToNum";
+import { idParamToNum } from "helpers";
 import { symbols } from "constants/currency";
 import { appRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
@@ -9,7 +9,7 @@ import PollAction from "./PollAction";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
-  const numPollId = idParamToNumber(pollId);
+  const numPollId = idParamToNum(pollId);
   const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">

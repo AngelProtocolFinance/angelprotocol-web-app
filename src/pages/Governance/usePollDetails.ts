@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Vote } from "types/server/contracts";
 import { PollStatus } from "types/server/contracts";
 // import { useLatestBlock } from "services/juno/queriers";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 
 // import { denoms, symbols } from "constants/currency";
 type ProcessedPollData = {
@@ -92,7 +92,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
         yes_pct: "0.01", //0.01
         no_pct: "0.02", //0.02%
         voted_pct: "0.03", //0.03
-        quorum_val: `Quorum ${toCurrency(0.4, 2)}%`,
+        quorum_val: `Quorum ${humanize(0.4, 2)}%`,
         yes_val: "10", //10
         no_val: "10", //10
         vote: "no",

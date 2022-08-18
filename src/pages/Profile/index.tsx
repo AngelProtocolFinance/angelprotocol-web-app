@@ -7,7 +7,7 @@ import { useEndowmentProfileQuery } from "services/juno/account";
 import { useErrorContext } from "contexts/ErrorContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
-import idParamToNum from "helpers/idParamToNum";
+import { idParamToNum } from "helpers";
 import { appRoutes } from "constants/routes";
 import Content from "./Content";
 import Header from "./Header";

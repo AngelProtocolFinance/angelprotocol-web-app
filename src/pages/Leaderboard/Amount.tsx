@@ -1,6 +1,6 @@
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import Summary from "./Summary";
 
 type Props = {
@@ -26,7 +26,7 @@ export default function Amount(props: Props) {
         />
       </button>
       <p className="text-angel-grey">
-        ${toCurrency(props.locked + props.liquid, 0)}
+        ${humanize(props.locked + props.liquid, 0)}
       </p>
     </div>
   );

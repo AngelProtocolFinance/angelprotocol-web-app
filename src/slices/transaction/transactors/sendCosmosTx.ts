@@ -1,13 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  SendCosmosTxArgs,
-  StageUpdater,
-  TxOptions,
-} from "slices/transaction/types";
+import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
 import Contract from "contracts/Contract";
-import extractFeeAmount from "helpers/extractFeeData";
-import handleTxError from "helpers/handleTxError";
+import { extractFeeAmount } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
+import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendCosmosTx = createAsyncThunk(

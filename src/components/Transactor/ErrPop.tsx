@@ -5,7 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
-import getTxUrl from "helpers/getTxUrl";
+import { getTxUrl } from "helpers";
 
 export default function ErrPop(props: ErrorStage) {
   const dispatch = useSetter();

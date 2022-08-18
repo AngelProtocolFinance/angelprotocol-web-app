@@ -1,5 +1,5 @@
 import { TxLogPayload } from "types/server/aws";
-import createAuthToken from "helpers/createAuthToken";
+import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
 import { APIs } from "constants/urls";
 

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
+import { condense, humanize, roundDown } from "helpers";
 import { symbols } from "constants/currency";
 import Balance from "./Balance";
 import useStakerBalance from "./useStakerBalance";
@@ -16,11 +16,10 @@ export default function Amount() {
   const is_stake = watch("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const onMaxClick = () => {
-    setValue(
-      "amount",
-      balance.sub(locked).div(1e6).toFixed(3, Decimal.ROUND_DOWN),
-      { shouldValidate: true, shouldDirty: true }
-    );
+    setValue("amount", roundDown(condense(balance.sub(locked)), 3), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
   return (
     <div className="grid">
@@ -30,12 +29,15 @@ export default function Amount() {
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance
-          amount={balance.div(1e6).toNumber()}
+          amount={humanize(condense(balance), 3, true)}
           title={is_stake ? "Balance" : "Staked"}
         />
       </label>
       {!is_stake && (
-        <Balance amount={locked.div(1e6).toNumber()} title={"Vote Locked"} />
+        <Balance
+          amount={humanize(condense(locked), 3, true)}
+          title="Vote Locked"
+        />
       )}
       <span className="my-3 text-angel-grey italic text-xs">
         There is a 7 day wait period to unstake {symbols.halo}. You will not be

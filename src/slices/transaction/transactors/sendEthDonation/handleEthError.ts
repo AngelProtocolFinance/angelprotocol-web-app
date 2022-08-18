@@ -1,6 +1,6 @@
 import { errors } from "ethers";
 import { StageUpdater } from "slices/transaction/types";
-import logger from "./logger";
+import { logger } from "helpers";
 
 export default function handleEthError(error: any, handler: StageUpdater) {
   logger.error(error);

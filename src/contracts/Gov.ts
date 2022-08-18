@@ -1,6 +1,6 @@
-import Decimal from "decimal.js";
 import { Vote } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
+import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
@@ -34,9 +34,8 @@ export default class Gov extends Contract {
 
   //halo_gov
   createGovUnstakeMsg(amount: number) {
-    const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
     return this.createExecuteContractMsg(this.address, {
-      withdraw_voting_tokens: { amount: uhalo.toString() },
+      withdraw_voting_tokens: { amount: scaleToStr(amount) },
     });
   }
 
@@ -53,9 +52,8 @@ export default class Gov extends Contract {
   }
 
   createVoteMsg(poll_id: number, vote: Vote, amount: number) {
-    const uhalo = new Decimal(amount).mul(1e6).divToInt(1);
     return this.createExecuteContractMsg(this.address, {
-      cast_vote: { poll_id, vote, amount: uhalo.toString() },
+      cast_vote: { poll_id, vote, amount: scaleToStr(amount) },
     });
   }
 }

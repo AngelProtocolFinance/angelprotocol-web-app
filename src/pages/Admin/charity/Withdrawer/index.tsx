@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Decimal from "decimal.js";
 import { FormProvider, useForm } from "react-hook-form";
 import { Amount, Props, WithdrawValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { condense, roundDown } from "helpers";
 import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -13,14 +13,14 @@ export default function Withdrawer({ balance: { cw20, native } }: Props) {
   const cw20s: Amount[] = cw20.map((c) => ({
     type: "cw20",
     tokenId: c.address,
-    balance: new Decimal(c.amount).div(1e6).toFixed(4, Decimal.ROUND_DOWN),
+    balance: roundDown(condense(c.amount), 4),
     value: "",
   }));
 
   const natives: Amount[] = native.map((n) => ({
     type: "native",
     tokenId: n.denom,
-    balance: new Decimal(n.amount).div(1e6).toFixed(4, Decimal.ROUND_DOWN),
+    balance: roundDown(condense(n.amount), 4),
     value: "",
   }));
 

@@ -4,8 +4,7 @@ import {
   useGetWallet,
 } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import maskAddress from "helpers/maskAddress";
-import toCurrency from "helpers/toCurrency";
+import { humanize, maskAddress } from "helpers";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
@@ -29,7 +28,7 @@ export default function ConnectedWallet(props: WalletState) {
         )) || <Icon type="Loading" className="animate-spin mr-1" />}
         <span className="px-2 text-sm">{maskedAddr}</span>
         <span className="pl-2 hidden sm:block border-l border-zinc-50/20 text-sm ">
-          {toCurrency(wallet?.displayCoin.balance || 0, 3)}
+          {humanize(wallet?.displayCoin.balance || 0, 3)}
         </span>
         <span className="text-sm pl-1">{wallet?.displayCoin.symbol}</span>
       </Popover.Button>

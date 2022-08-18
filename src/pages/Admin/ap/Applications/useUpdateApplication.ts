@@ -3,7 +3,6 @@ import {
   EndowmentStatusNum,
   StatusChangePayload,
 } from "types/server/contracts";
-import cleanObject from "pages/Admin/helpers/cleanObject";
 import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -13,6 +12,7 @@ import { useSetter } from "store/accessors";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
+import { cleanObject } from "helpers/admin/cleanObject";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
