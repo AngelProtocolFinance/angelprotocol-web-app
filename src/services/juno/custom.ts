@@ -15,7 +15,7 @@ export const customApi = junoApi.injectEndpoints({
         /** special case for ap admin usage */
         if (args.endowment === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
-          const voter = await queryContract("cw3Voter", contracts.apCW3, {
+          const voter = await queryContract("cw3Voter", contracts.cw3ApTeam, {
             addr: args.user,
           });
           return {
@@ -52,21 +52,21 @@ export const customApi = junoApi.injectEndpoints({
 
         if (args.endowment === AP_ADDR) {
           //skip endowment query, query hardcoded cw3 straight
-          const voter = await queryContract("cw3Voter", contracts.apCW3, {
+          const voter = await queryContract("cw3Voter", contracts.cw3ApTeam, {
             addr: args.user,
           });
 
           if (!!voter.weight) {
             const cw3config = await queryContract(
               "cw3Config",
-              contracts.apCW3,
+              contracts.cw3ApTeam,
               null
             );
 
             return {
               data: {
-                cw3: contracts.apCW3,
-                cw4: contracts.apCW4,
+                cw3: contracts.cw3ApTeam,
+                cw4: contracts.cw4GrpApTeam,
                 endowment: AP_ADDR,
                 cw3config,
                 proposalLink,
