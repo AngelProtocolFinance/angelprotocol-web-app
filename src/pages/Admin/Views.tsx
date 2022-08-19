@@ -9,7 +9,6 @@ import Applications from "./reviewer/Applications";
 
 export default function Views() {
   const { role } = useAdminResources();
-  console.log(role);
   switch (role) {
     case "reviewer":
       return <ReviewerRoutes />;

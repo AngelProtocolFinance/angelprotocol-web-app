@@ -12,7 +12,7 @@ async function uploadToIpfs(uploadPath: string, file: File): Promise<string> {
 
 export default uploadToIpfs;
 //https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
-const GATEWAY = "ipfs.io/ipfs"; //public
+const GATEWAY = "ipfs.w3s.link"; //public
 function genPublicUrl(cid: string, fileName: string) {
-  return `https://${GATEWAY}/${cid}/${fileName}`;
+  return `https://${cid}.${GATEWAY}/${fileName}`;
 }
