@@ -40,38 +40,24 @@ function createEndowmentCreationMsgPayload(
   charity: Charity
 ): RegistrarCreateEndowmentPayload {
   return {
-    beneficiary: charity.Metadata.JunoWallet,
-    cw4_members: [],
-    guardians_multisig_addr: undefined,
-    maturity_height: undefined,
-    maturity_time: undefined,
     owner: charity.Metadata.JunoWallet,
-    profile: {
-      annual_revenue: undefined,
-      average_annual_budget: undefined,
-      charity_navigator_rating: undefined,
-      contact_email: charity.ContactPerson.Email,
-      country_of_origin: undefined,
-      endow_type: "Charity",
-      image: charity.Metadata.Banner.publicUrl!,
-      logo: charity.Metadata.CharityLogo.publicUrl!,
-      name: charity.Registration.CharityName,
-      number_of_employees: undefined,
-      overview: charity.Metadata.CharityOverview,
-      registration_number: undefined,
-      social_media_urls: {
-        facebook: undefined,
-        linkedin: undefined,
-        twitter: undefined,
-      },
-      street_address: undefined,
-      tier: charity.Registration.Tier!,
-      un_sdg: charity.Registration.UN_SDG,
-      url: charity.Registration.Website,
-    },
+    beneficiary: charity.Metadata.JunoWallet,
     withdraw_before_maturity: false,
+    maturity_time: undefined,
+    maturity_height: undefined,
+    profile: {
+      name: charity.Registration.CharityName,
+      overview: charity.Metadata.CharityOverview,
+      un_sdg: charity.Registration.UN_SDG,
+      tier: charity.Registration.Tier!,
+      logo: charity.Metadata.CharityLogo.publicUrl || "",
+      image: charity.Metadata.Banner.publicUrl || "",
+      social_media_urls: {},
+      endow_type: "Charity",
+    },
+    cw4_members: [{ addr: charity.Metadata.JunoWallet, weight: 1 }],
+    kyc_donors_only: false, //set to false initially
+    cw3_threshold: { absolute_percentage: { percentage: "0.5" } }, //set initial 50%
+    cw3_max_voting_period: 86400,
   };
 }
-
-export interface R extends Registrar {}
-export type T = typeof Registrar;

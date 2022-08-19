@@ -97,7 +97,10 @@ type BaseArgs = {
   successMessage?: string;
   successLink?: SuccessLink;
   wallet: WalletState | undefined;
-  onSuccess?(res: DeliverTxResponse): AsyncThunkAction<void, any, {}>;
+  onSuccess?(
+    res: DeliverTxResponse,
+    chain: Chain
+  ): AsyncThunkAction<void, any, {}>;
 };
 
 type TerraWithMsg = BaseArgs & {

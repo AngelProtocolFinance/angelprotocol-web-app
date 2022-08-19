@@ -87,14 +87,18 @@ export default function useWithdraw() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
+        //Juno withdrawal
         successLink: proposalLink,
         successMessage: "Withdraw proposal successfully created!",
+
         onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno
-          : (response /**TODO: pass whole response */) =>
-              //will run if sendCosmos is success
+          : (response) =>
               logWithdrawProposal({
-                rawLog: response.rawLog,
+                res: response,
+                proposalLink,
+                wallet: wallet!, //wallet is defined at this point
+
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,
