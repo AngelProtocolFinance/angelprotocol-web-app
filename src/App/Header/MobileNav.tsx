@@ -1,4 +1,4 @@
-import { Menu } from "@headlessui/react";
+import { Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { AP_ID, REVIEWER_ID } from "services/juno/custom";
@@ -14,33 +14,25 @@ const styler = createNavLinkStyler(
 
 export default function MobileNav() {
   return (
-    <Menu as={Fragment}>
-      <Menu.Button className="text-white-grey ml-2 lg:hidden">
+    <Popover as={Fragment}>
+      <Popover.Button className="text-white-grey ml-2 lg:hidden">
         {({ open }) => (
           <Icon type={open ? "Close" : "Menu"} className="text-2xl" />
         )}
-      </Menu.Button>
-      <Menu.Items
+      </Popover.Button>
+      <Popover.Panel
         as="nav"
         className="lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2"
       >
-        <Menu.Item as={Fragment}>
-          <NavLink to={appRoutes.index} className={styler} end>
-            Marketplace
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item as={Fragment}>
-          <NavLink to={appRoutes.leaderboard} className={styler}>
-            Leaderboard
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item as={Fragment}>
-          <AdminLink label="admin" className={styler} id={AP_ID} />
-        </Menu.Item>
-        <Menu.Item as={Fragment}>
-          <AdminLink label="applications" className={styler} id={REVIEWER_ID} />
-        </Menu.Item>
-      </Menu.Items>
-    </Menu>
+        <NavLink to={appRoutes.index} className={styler} end>
+          Marketplace
+        </NavLink>
+        <NavLink to={appRoutes.leaderboard} className={styler}>
+          Leaderboard
+        </NavLink>
+        <AdminLink label="admin" className={styler} id={AP_ID} />
+        <AdminLink label="applications" className={styler} id={REVIEWER_ID} />
+      </Popover.Panel>
+    </Popover>
   );
 }

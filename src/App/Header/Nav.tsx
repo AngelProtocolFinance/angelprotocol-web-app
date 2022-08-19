@@ -4,7 +4,7 @@ import { AdminLink } from "components/admin";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
-export default function DappMenu() {
+export default function Nav() {
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
       <NavLink className={styler} to={appRoutes.index}>
