@@ -4,6 +4,7 @@ import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
 import KYCGuard from "./KYCGuard";
+import ReceiptTooltip from "./ReceiptTooltip";
 import Terms from "./Terms";
 import useDonate from "./useDonate";
 
@@ -31,6 +32,9 @@ export default function DonateForm() {
       )}
 
       <Terms />
+
+      <ReceiptTooltip />
+
       <KYCGuard />
 
       <button
