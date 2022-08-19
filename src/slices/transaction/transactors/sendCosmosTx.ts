@@ -52,8 +52,8 @@ export const sendCosmosTx = createAsyncThunk(
           successLink: args.successLink,
         });
 
-        if (args.setLogProcessor) {
-          dispatch(args.setLogProcessor(response.rawLog));
+        if (args.onSuccess) {
+          dispatch(args.onSuccess(response));
         }
 
         //invalidate cache entries
