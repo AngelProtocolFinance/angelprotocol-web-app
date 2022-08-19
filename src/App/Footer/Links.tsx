@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 
 export default function Links(props: { classes?: string }) {
@@ -25,9 +23,6 @@ export default function Links(props: { classes?: string }) {
       >
         feedback
       </a>
-      <Link to={appRoutes.register} className={linkStyle}>
-        register
-      </Link>
       <a
         className={linkStyle}
         rel="noreferrer"

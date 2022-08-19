@@ -33,6 +33,11 @@ export default function MobileNav() {
           </NavLink>
         </Menu.Item>
         <Menu.Item as={Fragment}>
+          <NavLink to={appRoutes.register} className={styler}>
+            Register
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item as={Fragment}>
           <NavLink to={appRoutes.admin} className={styler}>
             Admin
           </NavLink>
