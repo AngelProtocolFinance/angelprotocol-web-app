@@ -145,7 +145,6 @@ export type RegistrationStatus =
   | "Approved"
   | "Active";
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
-export type ApplicationStatusOptions = ApplicationStatus | "all";
 
 export type ReferralMethods =
   | "angel-alliance"

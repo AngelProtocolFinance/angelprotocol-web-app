@@ -1,5 +1,6 @@
 export type IconTypes =
   | "Discord"
+  | "FilterLeft"
   | "FileDownload"
   | "Telegram"
   | "Twitter"

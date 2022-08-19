@@ -6,6 +6,7 @@ import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Application(props: CharityApplication) {
+  const email = props.CharityName_ContactEmail!.split("_")[1];
   return (
     <Dialog.Panel
       className="fixed-center z-20 bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
@@ -20,7 +21,7 @@ export default function Application(props: CharityApplication) {
         </span>
       </p>
       <Field label="Name">{props.CharityName}</Field>
-      <Field label="Contact Email">{props.CharityName_ContactEmail}</Field>
+      <Field label="Contact Email">{email}</Field>
       <Field label="Registration Date">
         {new Date(props.RegistrationDate).toDateString()}
       </Field>

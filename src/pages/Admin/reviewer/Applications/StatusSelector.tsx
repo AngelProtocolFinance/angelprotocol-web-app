@@ -1,46 +1,55 @@
-import { ApplicationStatusOptions } from "types/server/aws";
+import { Listbox } from "@headlessui/react";
+import { Fragment } from "react";
+import { ApplicationStatusOptions } from "slices/admin/types";
+import Icon from "components/Icon";
+import { useGetter, useSetter } from "store/accessors";
+import { changeSelectedStatus } from "slices/admin/applications";
 
-type Props = {
-  activeStatus: ApplicationStatusOptions;
-  onStatusChange: (ev: React.ChangeEvent<HTMLSelectElement>) => void;
+const options: ApplicationStatusOptions[] = [
+  "all",
+  "approved",
+  "not-complete",
+  "under-review",
+];
+const texts: { [key in ApplicationStatusOptions]: string } = {
+  all: "all",
+  approved: "approved",
+  "not-complete": "not complete",
+  "under-review": "under review",
 };
 
-export default function StatusSelector(props: Props) {
-  const { activeStatus, onStatusChange } = props;
+export default function StatusSelector() {
+  const dispatch = useSetter();
+  const { activeStatus } = useGetter((state) => state.admin.applications);
+
+  function handleStatusChange(value: ApplicationStatusOptions) {
+    dispatch(changeSelectedStatus(value));
+  }
   return (
-    <div className="flex gap-2 items-center">
-      <label
-        htmlFor="status_selector"
-        className="uppercase text-white text-sm font-heading font-bold"
-      >
-        status
-      </label>
-      <select
-        value={activeStatus}
-        onChange={onStatusChange}
-        id="status_selector"
-        className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
-      >
-        {Object.entries(pollStatusOptions).map(
-          ([optionValue, optionDescription]) => (
-            <option
-              key={optionValue}
-              value={optionValue}
-              className="text-sm text-angel-grey uppercase p-1"
-            >
-              {optionDescription}
-            </option>
-          )
-        )}
-      </select>
-    </div>
+    <Listbox value={activeStatus} onChange={handleStatusChange}>
+      <div className="relative">
+        <Listbox.Button
+          className={`text-white-grey flex items-center gap-1 text-sm uppercase cursor-pointer font-heading`}
+        >
+          <span>{activeStatus === "all" ? "status" : texts[activeStatus]}</span>
+          <Icon type="FilterLeft" size={20} />
+        </Listbox.Button>
+        <Listbox.Options className="absolute w-max rounded-sm bg-zinc-50 text-angel-grey ">
+          {options.map((status) => (
+            <Listbox.Option key={status} value={status} as={Fragment}>
+              {({ selected }) =>
+                (!selected && (
+                  <li
+                    className={`font-normal px-2 py-0.5 text-sm uppercase hover:bg-sky-300/30 text-left cursor-pointer`}
+                  >
+                    {texts[status]}
+                  </li>
+                )) || <></>
+              }
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </div>
+    </Listbox>
   );
 }
-
-const pollStatusOptions: { [key in ApplicationStatusOptions]: string } = {
-  all: "all",
-  // active: "Active",
-  approved: "Approved",
-  "not-complete": "Not Complete",
-  "under-review": "Under-Review",
-};

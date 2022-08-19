@@ -27,6 +27,7 @@ import {
   BsHourglassSplit,
   BsSafeFill,
 } from "react-icons/bs";
+import { BsFilterLeft } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
@@ -62,6 +63,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  FilterLeft: BsFilterLeft,
   FileDownload: MdOutlineFileDownload,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,

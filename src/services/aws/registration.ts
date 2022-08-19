@@ -1,6 +1,6 @@
+import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
-  ApplicationStatusOptions,
   Charity,
   CharityApplication,
   ContactDetailsRequest,

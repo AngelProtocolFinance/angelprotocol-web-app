@@ -1,30 +1,15 @@
-import { useState } from "react";
-import { ApplicationStatusOptions, RegistrationStatus } from "types/server/aws";
+import { RegistrationStatus } from "types/server/aws";
 import { useCharityApplicationsQuery } from "services/aws/registration";
-import StatusSelector from "./StatusSelector";
+import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
 
 export default function Applications() {
-  const [applicationStatus, setApplicationStatus] =
-    useState<ApplicationStatusOptions>("under-review");
-  const { data = [], isLoading } =
-    useCharityApplicationsQuery(applicationStatus);
-
-  function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
-    setApplicationStatus(ev.target.value as ApplicationStatusOptions);
-  }
+  const { activeStatus } = useGetter((state) => state.admin.applications);
+  const { data = [], isLoading } = useCharityApplicationsQuery(activeStatus);
 
   return (
     <div className="">
-      {(data.length > 0 && (
-        <div className="">
-          <StatusSelector
-            activeStatus={applicationStatus}
-            onStatusChange={handleStatusChange}
-          />
-          <ApplicationsTable applications={data} />
-        </div>
-      )) || (
+      {(data.length > 0 && <ApplicationsTable applications={data} />) || (
         <p className="font-mono text-white place-self-center mt-20">
           <span className="capitalize">
             {isLoading ? "Loading Applications..." : "No applications found"}
@@ -35,9 +20,9 @@ export default function Applications() {
   );
 }
 
-export const statusColorClasses: { [key in RegistrationStatus]: string } = {
-  Inactive: "bg-grey-accent",
-  "Under Review": "bg-orange",
-  Approved: "bg-bright-green",
-  Active: "bg-bright-green",
+export const statusColors: { [key in RegistrationStatus]: { text: string } } = {
+  Inactive: { text: "text-grey-accent" },
+  "Under Review": { text: "text-orange" },
+  Approved: { text: "text-bright-green" },
+  Active: { text: "text-bright-green" },
 };
