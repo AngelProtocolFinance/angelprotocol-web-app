@@ -12,4 +12,8 @@ describe("id param to number", () => {
     expect(idParamToNum("10")).toBe(10);
     expect(idParamToNum("100")).toBe(100);
   });
+  test("<1 Ids (AP ids) shoudn't be floored", () => {
+    expect(idParamToNum("0.5")).toBe(0.5);
+    expect(idParamToNum("0.711")).toBe(0.711);
+  });
 });
