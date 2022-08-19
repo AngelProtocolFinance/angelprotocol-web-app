@@ -4,8 +4,8 @@ import { useAdminResources } from "./Guard";
 import Proposal from "./Proposal";
 import Proposals from "./Proposals";
 import Templates from "./Templates";
-import Applications from "./ap/Applications";
 import Dashboard from "./charity/Dashboard";
+import Applications from "./reviewer/Applications";
 
 export default function Views() {
   const { role } = useAdminResources();

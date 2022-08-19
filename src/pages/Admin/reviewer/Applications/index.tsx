@@ -1,36 +1,28 @@
 import { useState } from "react";
 import { ApplicationStatusOptions, RegistrationStatus } from "types/server/aws";
-import { useGetCharityApplicationsQuery } from "services/aws/registration";
-import ApplicationsTable from "./ApplicationsTable";
+import { useCharityApplicationsQuery } from "services/aws/registration";
 import StatusSelector from "./StatusSelector";
+import ApplicationsTable from "./Table";
 
 export default function Applications() {
   const [applicationStatus, setApplicationStatus] =
-    useState<ApplicationStatusOptions>("all");
-  const {
-    data = [],
-    isLoading,
-    isError,
-  } = useGetCharityApplicationsQuery(applicationStatus);
+    useState<ApplicationStatusOptions>("under-review");
+  const { data = [], isLoading } =
+    useCharityApplicationsQuery(applicationStatus);
 
   function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
     setApplicationStatus(ev.target.value as ApplicationStatusOptions);
   }
 
   return (
-    <div className="px-3 pb-3 grid grid-rows-[auto_1fr] bg-white/10 shadow-inner rounded-md">
+    <div className="">
       {(data.length > 0 && (
-        <div className="scroll-hidden p-3 overflow-auto ">
-          <div className="flex flex-row justify-between mb-10">
-            <h1 className="text-2xl text-white font-semibold">
-              Charity Applications
-            </h1>
-            <StatusSelector
-              activeStatus={applicationStatus}
-              onStatusChange={handleStatusChange}
-            />
-          </div>
-          <ApplicationsTable applications={data} isError={isError} />
+        <div className="">
+          <StatusSelector
+            activeStatus={applicationStatus}
+            onStatusChange={handleStatusChange}
+          />
+          <ApplicationsTable applications={data} />
         </div>
       )) || (
         <p className="font-mono text-white place-self-center mt-20">

@@ -30,7 +30,7 @@ export default function useSubmit() {
               return logEndowmentId({
                 res,
                 wallet: wallet!, //wallet is defined at this point
-                PK: charity.ContactPerson.PK!,
+                PK: charity.ContactPerson.PK!, //registration data is complete at this point
               });
             },
           })

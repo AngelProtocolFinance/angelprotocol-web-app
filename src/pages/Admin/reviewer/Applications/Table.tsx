@@ -4,17 +4,13 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { statusColorClasses } from ".";
-import Reviewer from "./Previewer";
+import Application from "./Application";
 import useSortedApplications from "./useSortApplications";
 
 export default function TableView(props: {
   applications: CharityApplication[];
 }) {
   const { showModal } = useModalContext();
-
-  const openReviewer = (ap: CharityApplication) => {
-    showModal(Reviewer, { application: ap });
-  };
 
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
     useSortedApplications(props.applications);
@@ -52,7 +48,7 @@ export default function TableView(props: {
             cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full border-grey-accent/30 border-t border-l border-b border-r sm:flex-1"
             key={ap.PK}
           >
-            <p className="pl-1 capitalize w-42 sm:w-32">{ap.CharityName}</p>
+            <p className="pl-1 w-42 sm:w-32">{ap.CharityName}</p>
             <p className="text-base font-bold w-42 sm:w-32 truncate">
               {ap.CharityName_ContactEmail}
             </p>
@@ -68,14 +64,9 @@ export default function TableView(props: {
                 {ap.RegistrationStatus}
               </span>
             </p>
-            <p className="font-mono flex justify-between items-center w-42 sm:w-32">
-              <span className="text-base truncate w-22">
-                {ap.JunoWallet || "-"}
-              </span>
-            </p>
             <div className="w-42 sm:w-32">
               <button
-                onClick={() => openReviewer(ap)}
+                onClick={() => showModal(Application, ap)}
                 className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
               >
                 Review
@@ -93,7 +84,6 @@ const headers: { key: SortKey; name: string }[] = [
   { key: "CharityName_ContactEmail", name: "email" },
   { key: "RegistrationDate", name: "date" },
   { key: "RegistrationStatus", name: "status" },
-  { key: "JunoWallet", name: "wallet address" },
 ];
 
 function HeaderButton(

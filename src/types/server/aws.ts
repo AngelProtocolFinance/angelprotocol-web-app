@@ -172,23 +172,6 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
-export interface CharityApplication {
-  CharityName: string;
-  CharityName_ContactEmail: string;
-  EndowmentAgreement: string;
-  EndowmentAgreementVerified: boolean;
-  PK: string;
-  ProofOfEmployment: string;
-  ProofOfEmploymentVerified: boolean;
-  ProofOfIdentity: string;
-  ProofOfIdentityVerified: boolean;
-  RegistrationDate: string;
-  RegistrationStatus: RegistrationStatus;
-  SK: string;
-  JunoWallet: string;
-  poll_id?: number;
-}
-
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
@@ -341,3 +324,5 @@ export type UpdateDocumentationResult = {
   FinancialStatements: FileObject[];
   AuditedFinancialReports: FileObject[];
 };
+
+export type CharityApplication = Registration & { PK: string };

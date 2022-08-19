@@ -93,9 +93,12 @@ const registration_api = aws.injectEndpoints({
         body,
       }),
     }),
-    getCharityApplications: builder.query<any, any>({
+    charityApplications: builder.query<
+      CharityApplication[],
+      ApplicationStatusOptions
+    >({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
-      query: (status: ApplicationStatusOptions) => {
+      query: (status) => {
         return {
           url: `registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
@@ -180,7 +183,7 @@ export const {
   useRegistrationQuery,
   useActivateCharityMutation,
   useCreateNewCharityMutation,
-  useGetCharityApplicationsQuery,
+  useCharityApplicationsQuery,
   useRequestEmailMutation,
   useSubmitMutation,
   useUpdateCharityMetadataMutation,
