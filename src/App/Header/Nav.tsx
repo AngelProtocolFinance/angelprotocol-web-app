@@ -5,7 +5,7 @@ import { createNavLinkStyler } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
-export default function DappMenu() {
+export default function Nav() {
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     { user: wallet?.address!, endowment: AP_ADDR },
