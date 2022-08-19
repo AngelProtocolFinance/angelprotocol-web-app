@@ -17,7 +17,8 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
-import optimizeImage from "./optimizeImage";
+
+// import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
@@ -76,11 +77,13 @@ export default function useEditProfile() {
         showModal(Popup, { message: "Uploading image.." });
         const imageRes = await fetch(data.image);
         const imageBlob = await imageRes.blob();
-        const imageFile = new File([imageBlob], `banner_${endowmentId}`); //use endow address as unique imageName
+        const imageFile = new File([imageBlob], "banner"); //use endow address as unique imageName
 
-        const key = imageFile.name;
-        const file = await optimizeImage(imageFile);
-        const url = await uploadToIpfs(key, file);
+        console.log(imageFile.name);
+
+        //TODO: investigate optimizeImage file.name = undefined
+        // const file = await optimizeImage(imageFile);
+        const url = await uploadToIpfs(`endowment_${endowmentId}`, imageFile);
 
         if (url) {
           data.image = url;

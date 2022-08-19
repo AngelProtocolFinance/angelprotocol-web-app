@@ -72,7 +72,7 @@ export default function ContactDetailsForm({ charity }: Props) {
             required
           />
           <FormInput<CD>
-            fieldName="email"
+            fieldName="phone"
             label="Phone number"
             placeholder="Phone number"
           />

@@ -85,7 +85,6 @@ async function uploadIfNecessary(
   }
 
   const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
-
   const publicUrl = await uploadToIpfs(path, fileWrapper.file);
 
   return {
