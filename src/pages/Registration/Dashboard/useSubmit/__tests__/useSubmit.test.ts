@@ -38,48 +38,21 @@ jest.mock("store/accessors", () => ({
   useSetter: () => mockDispatch,
 }));
 
-jest.mock("../useTransactionResultHandler", () => ({
-  __esModule: true,
-  default: () => jest.fn(),
-}));
-
 describe("useSubmit tests", () => {
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-
     const { result } = renderHook(() => useSubmit());
-
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.submit).toBeDefined();
   });
-
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(true);
   });
-
-  it("sets the Stage to 'error' Step when wallet not connected", async () => {
-    mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue({ wallet: undefined });
-
-    const { result } = renderHook(() => useSubmit());
-
-    await act(() => result.current.submit(CHARITY));
-
-    expect(mockShowModal).toBeCalled();
-    expect(mockDispatch).toBeCalledWith({
-      type: "transaction/setStage",
-      payload: {
-        step: "error",
-        message: "Wallet is not connected",
-      },
-    });
-  });
-
+  // wallet check now handled in `sendCosmosTx`
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
@@ -88,15 +61,9 @@ describe("useSubmit tests", () => {
       .mockImplementation((..._: any[]) => {
         throw new Error();
       });
-
     const { result } = renderHook(() => useSubmit());
-
     await act(() => result.current.submit(CHARITY));
-
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: "transaction/setFormLoading",
-      payload: true,
-    });
+    //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
       payload: {
@@ -111,22 +78,15 @@ describe("useSubmit tests", () => {
     });
     expect(mockShowModal).toBeCalled();
   });
-
   it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
-
     const { result } = renderHook(() => useSubmit());
-
     await act(() => result.current.submit(CHARITY));
-
-    expect(mockDispatch).toBeCalledWith({
-      type: "transaction/setFormLoading",
-      payload: true,
-    });
+    //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
   });

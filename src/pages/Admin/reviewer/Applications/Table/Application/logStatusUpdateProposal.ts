@@ -13,23 +13,14 @@ import {
 } from "helpers";
 import { APIs } from "constants/urls";
 
-export const logWithdrawProposal = createAsyncThunk(
-  `${transactionSlice.name}/logWithdrawProposal`,
+export const logStatusUpdateProposal = createAsyncThunk(
+  `${transactionSlice.name}/logStatusUpdateProposal`,
   async (
-    {
-      res,
-      proposalLink,
-      wallet,
-      ...payload
-    }: {
+    args: {
       res: DeliverTxResponse;
       proposalLink: SuccessLink;
       wallet: WalletState;
-
-      endowment_multisig: string;
-      proposal_chain_id: string;
-      target_chain: string;
-      target_wallet: string;
+      PK: string;
     },
     { dispatch }
   ) => {
@@ -41,24 +32,27 @@ export const logWithdrawProposal = createAsyncThunk(
         })
       );
       //set to helper
-      const parsedId = getWasmAttribute("proposal_id", res.rawLog);
+      const parsedId = getWasmAttribute("proposal_id", args.res.rawLog);
       const numId = idParamToNum(parsedId);
 
       if (numId === 0) throw new Error("Failed to get proposal id");
-      const generatedToken = createAuthToken("angelprotocol-web-app");
-      const response = await fetch(APIs.apes + "/withdraw", {
-        method: "POST",
+      const generatedToken = createAuthToken("charity-owner");
+      const response = await fetch(`${APIs.aws}/registration?uuid=${args.PK}`, {
+        method: "PUT",
         headers: { authorization: generatedToken },
-        body: JSON.stringify({ ...payload, proposal_id: numId }),
+        body: JSON.stringify({
+          chain_id: args.wallet.chain.chain_id,
+          poll_id: numId,
+        }),
       });
 
       dispatch(
         setStage({
           step: "success",
-          message: "Withdraw proposal submitted",
-          txHash: res.transactionHash,
-          chain: wallet.chain,
-          successLink: proposalLink,
+          message: "Status change proposal submitted",
+          txHash: args.res.transactionHash,
+          chain: args.wallet.chain,
+          successLink: args.proposalLink,
         })
       );
       //success = 2xx
@@ -70,8 +64,8 @@ export const logWithdrawProposal = createAsyncThunk(
       dispatch(
         setStage({
           step: "error",
-          message: `Failed to log created withdraw proposal. Contact support@angelprotocol.io`,
-          txHash: res.transactionHash,
+          message: `Failed to log status change proposal. Contact support@angelprotocol.io`,
+          txHash: args.res.transactionHash,
         })
       );
     }

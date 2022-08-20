@@ -1,30 +1,31 @@
-import { EndowmentUpdateValues } from "pages/Admin/types";
+import { CharityApplication } from "types/server/aws";
 import {
   EndowmentStatusNum,
   StatusChangePayload,
 } from "types/server/contracts";
-import { aws } from "services/aws/aws";
-import { adminTags, awsTags } from "services/aws/tags";
+import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendEndowmentReviewTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 import { cleanObject } from "helpers/admin/cleanObject";
+import { logStatusUpdateProposal } from "./logStatusUpdateProposal";
 
-export default function useUpdateApplicationStatus() {
+export default function useProposeStatusChange(app: CharityApplication) {
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
+  const { cw3, proposalLink } = useAdminResources();
 
-  function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
+  function updateStatus(status: Extract<EndowmentStatusNum, 1 | 3>) {
     const statusChangePayload: StatusChangePayload = {
-      beneficiary: data.beneficiary,
-      status: +data.status as EndowmentStatusNum,
-      endowment_id: data.id,
+      status,
+      endowment_id: 10, //TODO: get this from ap (not yet present)
     };
+    const statusWord = status === 1 ? "Approve" : "Reject";
 
     const registrarContract = new Registrar(wallet);
     const embeddedMsg =
@@ -32,25 +33,28 @@ export default function useUpdateApplicationStatus() {
         cleanObject(statusChangePayload)
       );
 
-    const contract = new CW3(wallet, "" /**TODO: make this work */);
+    const contract = new CW3(wallet, cw3 /** cw3Reviewer */);
     const proposalMsg = contract.createProposalMsg(
-      data.title,
-      data.description,
+      `${statusWord} ${app.CharityName}`,
+      "",
       [embeddedMsg]
     );
 
     dispatch(
-      sendEndowmentReviewTx({
+      sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        applicationId: data.PK,
-        tagPayloads: [
-          aws.util.invalidateTags([
-            { type: awsTags.admin, id: adminTags.applications },
-          ]),
-        ],
+        onSuccess(res) {
+          return logStatusUpdateProposal({
+            res,
+            wallet: wallet!,
+            proposalLink,
+            PK: app.PK,
+          });
+        },
       })
     );
+
     showModal(TransactionPrompt, {});
   }
 

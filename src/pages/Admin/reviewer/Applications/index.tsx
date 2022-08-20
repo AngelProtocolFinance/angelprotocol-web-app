@@ -1,28 +1,34 @@
-import { RegistrationStatus } from "types/server/aws";
 import { useCharityApplicationsQuery } from "services/aws/registration";
+import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
 
 export default function Applications() {
   const { activeStatus } = useGetter((state) => state.admin.applications);
-  const { data = [], isLoading } = useCharityApplicationsQuery(activeStatus);
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useCharityApplicationsQuery(activeStatus);
+  // const data: CharityApplication[] = [];
 
-  return (
-    <div className="">
-      {(data.length > 0 && <ApplicationsTable applications={data} />) || (
-        <p className="font-mono text-white place-self-center mt-20">
-          <span className="capitalize">
-            {isLoading ? "Loading Applications..." : "No applications found"}
-          </span>
-        </p>
-      )}
-    </div>
-  );
+  if (isLoading) {
+    return (
+      <p className="text-white-grey place-self-center flex items-center gap-1">
+        <Icon type="Loading" className="animate-spin" />
+        <span>Loading applications</span>
+      </p>
+    );
+  }
+
+  if (isError) {
+    return (
+      <p className="text-rose-400 place-self-center flex items-center gap-1">
+        <Icon type="Warning" />
+        <span>Failed to get applications</span>
+      </p>
+    );
+  }
+
+  return <ApplicationsTable applications={data} />;
 }
-
-export const statusColors: { [key in RegistrationStatus]: { text: string } } = {
-  Inactive: { text: "text-grey-accent" },
-  "Under Review": { text: "text-orange" },
-  Approved: { text: "text-bright-green" },
-  Active: { text: "text-bright-green" },
-};

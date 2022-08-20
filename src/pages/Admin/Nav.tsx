@@ -19,10 +19,9 @@ export default function Nav() {
           back to profile
         </Link>
       )}
-
       {(role === "charity" || role === "reviewer") && (
         <NavLink end to={adminRoutes.index} className={styler}>
-          {role === "charity" ? "Dashboard" : "Applications"}
+          Dashboard
         </NavLink>
       )}
       <NavLink end to={adminRoutes.proposals} className={styler}>

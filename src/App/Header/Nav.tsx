@@ -28,6 +28,6 @@ export default function Nav() {
 }
 
 const styler = createNavLinkStyler(
-  "py-3 px-4 text-white-grey hover:text-white-grey/75 uppercase inline-flex items-center font-heading font-semibold",
-  "rounded-md bg-white/10 shadow-inner pointer-events-none"
+  "px-3 text-md text-white-grey hover:text-white-grey/75 uppercase font-heading font-semibold",
+  "pointer-events-none text-angel-orange"
 );

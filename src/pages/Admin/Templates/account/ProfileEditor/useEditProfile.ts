@@ -79,8 +79,6 @@ export default function useEditProfile() {
         const imageBlob = await imageRes.blob();
         const imageFile = new File([imageBlob], "banner"); //use endow address as unique imageName
 
-        console.log(imageFile.name);
-
         //TODO: investigate optimizeImage file.name = undefined
         // const file = await optimizeImage(imageFile);
         const url = await uploadToIpfs(`endowment_${endowmentId}`, imageFile);
