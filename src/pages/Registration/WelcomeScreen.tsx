@@ -8,15 +8,15 @@ import {
   useRegistrationQueryLazyQuery,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Button, ButtonMailTo } from "../common";
-import routes from "../routes";
+import { Button, ButtonMailTo } from "./common";
+import routes from "./routes";
 
 type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
   refer: Yup.string().required("Please enter your registration reference."),
 });
 
-export default function Registration() {
+export default function WelcomeScreen() {
   const { handleError } = useErrorContext();
   const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
   const navigate = useNavigate();

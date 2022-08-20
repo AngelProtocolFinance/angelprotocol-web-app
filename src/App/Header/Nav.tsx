@@ -18,6 +18,9 @@ export default function Nav() {
       <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
+      <NavLink to={appRoutes.register} className={styler}>
+        Register
+      </NavLink>
       <AdminLink className={styler} id={AP_ID} label={"Admin"} />
       <AdminLink className={styler} id={REVIEWER_ID} label={"Applications"} />
     </nav>

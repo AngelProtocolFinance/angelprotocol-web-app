@@ -30,6 +30,9 @@ export default function MobileNav() {
         <NavLink to={appRoutes.leaderboard} className={styler}>
           Leaderboard
         </NavLink>
+        <NavLink to={appRoutes.register} className={styler}>
+          Register
+        </NavLink>
         <AdminLink label="admin" className={styler} id={AP_ID} />
         <AdminLink label="applications" className={styler} id={REVIEWER_ID} />
       </Popover.Panel>

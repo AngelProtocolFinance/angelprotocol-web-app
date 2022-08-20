@@ -12,7 +12,7 @@ const Donations = lazy(() => import("pages/Donations/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Login = lazy(() => import("pages/Login/Login"));
 const Market = lazy(() => import("pages/Market/Market"));
-const Register = lazy(() => import("pages/Registration"));
+const Registration = lazy(() => import("pages/Registration"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
 
 export default function Views() {
@@ -34,7 +34,7 @@ export default function Views() {
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
         <Route path={appRoutes.login} element={<Login />} />
         <Route index element={<Market />} />
-        <Route path={`${appRoutes.register}/*`} element={<Register />} />
+        <Route path={`${appRoutes.register}/*`} element={<Registration />} />
         <Route path={appRoutes.tca} element={<TCA />} />
         <Route
           path="/:url*(/+)"
