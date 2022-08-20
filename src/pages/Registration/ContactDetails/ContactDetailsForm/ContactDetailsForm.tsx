@@ -10,7 +10,6 @@ import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import routes from "../../routes";
-import GoalsInput from "./GoalsInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
 import { ContactInfoSchema } from "./contactDetailsSchema";
@@ -85,7 +84,12 @@ export default function ContactDetailsForm({ charity }: Props) {
           <RoleSelector />
           <ReferralSelector />
         </div>
-        <GoalsInput />
+        <FormInput<CD>
+          fieldName="goals"
+          label="Goals"
+          placeholder="What is your goal in working with Angel Protocol?"
+          required
+        />
         <PrivacyPolicyCheckbox
           disabled={isSubmitting}
           {...register("checkedPolicy")}
