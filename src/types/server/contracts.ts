@@ -472,7 +472,7 @@ export type RegistrarCreateEndowmentPayload = {
   maturity_height: undefined; ///don't set maturity for charities
   profile: Profile;
   cw4_members: Member[];
-  kyc_donors_only: false;
+  kyc_donors_only: boolean;
   cw3_threshold: Threshold;
   cw3_max_voting_period: 86400; //seconds - 24H
 };

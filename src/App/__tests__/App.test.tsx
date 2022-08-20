@@ -7,6 +7,12 @@ import userEvent from "@testing-library/user-event";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
 
+jest.mock("web3.storage", () => ({
+  Web3Storage: function (this: any) {
+    this.put = function () {};
+  },
+}));
+
 // define initial routes
 const terra_testnet: NetworkInfo = {
   name: "testnet",

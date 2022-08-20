@@ -7,9 +7,9 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
+import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import { Folders } from "../constants";
-import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
 
 export default function useSubmit() {

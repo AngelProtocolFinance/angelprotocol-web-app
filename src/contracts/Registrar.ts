@@ -56,7 +56,7 @@ function createEndowmentCreationMsgPayload(
       endow_type: "Charity",
     },
     cw4_members: [{ addr: charity.Metadata.JunoWallet, weight: 1 }],
-    kyc_donors_only: false, //set to false initially
+    kyc_donors_only: charity.Metadata.KycDonorsOnly, //set to false initially
     cw3_threshold: { absolute_percentage: { percentage: "0.5" } }, //set initial 50%
     cw3_max_voting_period: 86400,
   };
