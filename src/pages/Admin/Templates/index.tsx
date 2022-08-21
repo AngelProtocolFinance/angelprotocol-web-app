@@ -11,7 +11,7 @@ import FundCreator from "./indexfund/FundCreator/FundCreator";
 import FundDestroyer from "./indexfund/FundDestroyer/FundDestroyer";
 import FundUpdator from "./indexfund/FundUpdator/FundUpdator";
 import IndexFundOwner from "./indexfund/IndexFundOwner/IndexFundOwner";
-import EndowmentUpdator from "./registrar/EndowmentUpdator/EndowmentUpdator";
+import EndowmentUpdator from "./registrar/EndowmentStatus";
 import RegistrarConfigurer from "./registrar/RegistrarConfigurer/RegistrarConfigurer";
 import RegistrarOwner from "./registrar/RegistrarOwner/RegistrarOwner";
 import { routes } from "./routes";

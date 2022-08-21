@@ -170,7 +170,7 @@ export type CW3ConfigValues = ProposalBase &
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;
-  status: EndowmentStatusStrNum;
+  status: Exclude<EndowmentStatusStrNum, "0">;
   //address to transfer funds when endowment will be closed
   beneficiary?: string;
 

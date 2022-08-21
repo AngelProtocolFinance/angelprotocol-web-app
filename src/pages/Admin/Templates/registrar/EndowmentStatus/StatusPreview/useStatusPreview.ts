@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues } from "pages/Admin/types";
+import { useEndowmentsQuery } from "services/juno/registrar";
 import useDebouncer from "hooks/useDebouncer";
-import { useEndowmentStatus } from "./useEndowmentStatus";
 
 export default function useStatusPreview() {
   const { watch, getFieldState, setValue } =
@@ -10,10 +10,17 @@ export default function useStatusPreview() {
   const inputId = watch("id");
   const isInvalid = getFieldState("id").error !== undefined;
   const [debInputId, isDebouncing] = useDebouncer(inputId, 500);
-  const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentStatus(
-    debInputId, //debInputId is casted to string by textInput
-    //skip async call when field is invalid or still debouncing
-    isDebouncing || isInvalid
+
+  const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
+    {},
+    {
+      skip: isDebouncing || isInvalid,
+      selectFromResult: ({ data, isLoading, isFetching }) => ({
+        endowmentStatus: data?.find((endowment) => endowment.id === debInputId)
+          ?.status,
+        isEndowmentStatusLoading: isLoading || isFetching,
+      }),
+    }
   );
 
   useEffect(() => {

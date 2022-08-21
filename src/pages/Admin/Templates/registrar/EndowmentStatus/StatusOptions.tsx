@@ -1,0 +1,60 @@
+import { RadioGroup } from "@headlessui/react";
+import { ErrorMessage } from "@hookform/error-message";
+import { Fragment } from "react";
+import { useController } from "react-hook-form";
+import { EndowmentUpdateValues as V } from "pages/Admin/types";
+import { TextInput } from "components/admin";
+
+const statuses: V["status"][] = ["1", "2", "3"];
+const text: { [key in V["status"]]: string } = {
+  1: "Approve",
+  2: "Frozen",
+  3: "Closed",
+};
+
+export default function StatusOptions() {
+  const {
+    formState: { errors },
+    field: { value: status, onChange: onStatusChange },
+  } = useController<Pick<V, "status">>({ name: "status" });
+
+  return (
+    <>
+      <RadioGroup
+        value={status}
+        onChange={onStatusChange}
+        name="plan"
+        className="flex gap-2"
+      >
+        {statuses.map((status) => (
+          <RadioGroup.Option key={status} value={status} as={Fragment}>
+            {({ checked }) => (
+              <span
+                className={`${
+                  checked ? "bg-angel-blue/20" : ""
+                } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
+              >
+                {text[status]}
+              </span>
+            )}
+          </RadioGroup.Option>
+        ))}
+      </RadioGroup>
+      <ErrorMessage
+        as="p"
+        errors={errors}
+        name="status"
+        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+      />
+      {status === "3" && (
+        <TextInput<V>
+          title="Beneficiary"
+          name="beneficiary"
+          placeholder="juno123abc..."
+          required
+          mono
+        />
+      )}
+    </>
+  );
+}

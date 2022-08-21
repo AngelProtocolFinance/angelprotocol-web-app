@@ -1,10 +1,10 @@
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
 import { FormContainer, Label, Submitter, TextInput } from "components/admin";
-import EndowmentPreview from "./EndowmentPreview";
 import StatusOptions from "./StatusOptions";
+import StatusPreview from "./StatusPreview";
 import useUpdateStatus from "./useUpdateStatus";
 
-export default function EndowmentUpdateForm() {
+export default function Form() {
   const { updateStatus } = useUpdateStatus();
   return (
     <FormContainer onSubmit={updateStatus}>
@@ -23,7 +23,7 @@ export default function EndowmentUpdateForm() {
         mono
         number
       />
-      <EndowmentPreview />
+      <StatusPreview />
       <Label _required>New endowment status</Label>
       <StatusOptions />
       <Submitter type="submit" _classes="mt-4">

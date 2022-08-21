@@ -11,10 +11,11 @@ export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
 
 function getCWs(id: number) {
+  //TODO: atm, only two admin types, refactor this once > 2
   //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
   const cw3Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
   const cw4Addr =
-    id === REVIEWER_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
+    id === REVIEWER_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
   const role: AdminRoles = id === AP_ID ? "ap" : "reviewer";
   return { cw3Addr, cw4Addr, role };
 }
