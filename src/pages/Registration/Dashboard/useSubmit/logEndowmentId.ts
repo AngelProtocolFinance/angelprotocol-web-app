@@ -1,5 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { invalidateAwsTags } from "services/aws/aws";
+import { adminTags, awsTags } from "services/aws/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import transactionSlice, {
   setStage,
@@ -44,6 +46,10 @@ export const logEndowmentId = createAsyncThunk(
           txHash: args.res.transactionHash,
           chain: args.wallet.chain,
         })
+      );
+
+      dispatch(
+        invalidateAwsTags([{ type: awsTags.admin, id: adminTags.registration }])
       );
       //success = 2xx
       if (response.status < 200 || response.status > 299) {

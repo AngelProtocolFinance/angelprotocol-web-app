@@ -17,3 +17,5 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: () => ({}),
 });
+
+export const { invalidateTags: invalidateAwsTags } = aws.util;
