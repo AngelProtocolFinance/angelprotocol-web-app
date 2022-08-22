@@ -11,8 +11,14 @@ const styler = createNavLinkStyler(
 
 export default function Nav() {
   const { role } = useAdminResources();
-  //role = "reviewer" can't render templates
-  return role === "ap" ? <APNav /> : <CharityNav />;
+  switch (role) {
+    case "reviewer":
+      return <ReviewerNav />;
+    case "charity":
+      return <CharityNav />;
+    default:
+      return <APNav />;
+  }
 }
 
 function APNav() {
@@ -82,6 +88,20 @@ function CharityNav() {
       <Category title="Endowment" classes="mt-4" />
       <NavLink to={routes.acc_profile} className={styler}>
         Edit profile
+      </NavLink>
+    </Container>
+  );
+}
+
+function ReviewerNav() {
+  return (
+    <Container>
+      <Category title="Admin" />
+      <NavLink end to={routes.cw4_members} className={styler}>
+        Update group members
+      </NavLink>
+      <NavLink to={routes.cw3_config} className={styler}>
+        Update voting params
       </NavLink>
     </Container>
   );

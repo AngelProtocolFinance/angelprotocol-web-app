@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
@@ -16,18 +17,28 @@ import RegistrarConfigurer from "./registrar/RegistrarConfigurer/RegistrarConfig
 import RegistrarOwner from "./registrar/RegistrarOwner/RegistrarOwner";
 import { routes } from "./routes";
 
-//TODO: make sure role "reviewer" doesn't have access to templates
 export default function Templates() {
   const { role } = useAdminResources();
+  const routes = useMemo(() => {
+    switch (role) {
+      case "charity":
+        return <CharityTemplates />;
+      case "reviewer":
+        return <ReviewerTemplates />;
+      default:
+        return <ApTemplates />;
+    }
+  }, [role]);
+
   return (
     <div className="grid gap-2 grid-cols-[auto_1fr]">
       <Nav />
-      {role === "ap" ? <ApRoutes /> : <CharityRoutes />}
+      {routes}
     </div>
   );
 }
 
-function ApRoutes() {
+function ApTemplates() {
   return (
     <Routes>
       {/** _index-fund */}
@@ -53,7 +64,7 @@ function ApRoutes() {
   );
 }
 
-function CharityRoutes() {
+function CharityTemplates() {
   return (
     <Routes>
       {/** _endowment */}
@@ -63,6 +74,18 @@ function CharityRoutes() {
       <Route path={routes.cw3_config} element={<CW3Configurer />} />
       <Route path={routes.cw3_transfer} element={<FundSender />} />
 
+      {/**_cw4 */}
+      <Route path={routes.cw4_members} element={<MemberUpdator />} />
+    </Routes>
+  );
+}
+
+function ReviewerTemplates() {
+  return (
+    <Routes>
+      {/**_cw3 */}
+      <Route path={routes.cw3_config} element={<CW3Configurer />} />
+      <Route path={routes.cw3_transfer} element={<FundSender />} />
       {/**_cw4 */}
       <Route path={routes.cw4_members} element={<MemberUpdator />} />
     </Routes>

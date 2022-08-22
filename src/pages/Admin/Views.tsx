@@ -19,12 +19,12 @@ export default function Views() {
   }
 }
 
-//TODO: h
 function ReviewerRoutes() {
   return (
     <Routes>
       <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
       <Route path={adminRoutes.proposals} element={<Proposals />} />
+      <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
       <Route index element={<Applications />} />
     </Routes>
   );

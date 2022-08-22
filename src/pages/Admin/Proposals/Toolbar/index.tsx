@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAdminResources } from "pages/Admin/Guard";
+import { templates } from "pages/Admin/constants";
 import { useLatestBlock } from "services/juno/queriers";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -8,7 +8,6 @@ import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar(props: { classes?: string }) {
-  const { role } = useAdminResources();
   const block_height = useLatestBlock(10_000);
   return (
     <div className={`flex items-center gap-3 ${props.classes || ""}`}>
@@ -21,14 +20,13 @@ export default function Toolbar(props: { classes?: string }) {
         <Icon type="Blockchain" className="mr-1" />
         <span>{humanize(+block_height, 0)}</span>
       </p>
-      {role !== "reviewer" && (
-        <Link
-          to={`../${adminRoutes.templates}`}
-          className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
-        >
-          + Create a proposal
-        </Link>
-      )}
+
+      <Link
+        to={`../${adminRoutes.templates}/${templates.cw4_members}`}
+        className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
+      >
+        + Create a proposal
+      </Link>
     </div>
   );
 }

@@ -53,14 +53,14 @@ export default function Application(props: CharityApplication) {
         <Button
           onClick={() => updateStatus(1)}
           className="text-emerald-500 hover:bg-emerald-500/20"
-          disabled={props.poll_id !== undefined}
+          // disabled={props.poll_id !== undefined}
         >
           Approve
         </Button>
         <Button
           onClick={() => updateStatus(3)}
           className="text-rose-500 hover:bg-rose-500/20"
-          disabled={props.poll_id !== undefined}
+          // disabled={props.poll_id !== undefined}
         >
           Reject
         </Button>
