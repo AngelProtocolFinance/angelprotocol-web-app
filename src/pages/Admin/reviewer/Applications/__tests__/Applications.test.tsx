@@ -70,12 +70,7 @@ describe("Charity Applications", () => {
       screen.getAllByRole("button", {
         name: /^review$/i,
       })
-    ).toHaveLength(2); //2 rows rendered with review button
-    expect(
-      screen.getAllByRole("link", {
-        name: /vote/i,
-      })
-    ).toHaveLength(1); //1 row with vote link
+    ).toHaveLength(3); //3 rows rendered with review button
   });
   test("Open application modal", () => {
     mockCharityApplicationsQuery.mockReturnValue({
@@ -91,8 +86,8 @@ describe("Charity Applications", () => {
     const openers = screen.getAllByRole("button", { name: /^review$/i });
     userEvent.click(openers[0]);
     expect(screen.getByTestId("application-preview")).toBeInTheDocument();
+    //FUTURE: test Application modal in /Application
   });
-  //TODO: test link to proposals page
 });
 
 const mockApplications: CharityApplication[] = [
