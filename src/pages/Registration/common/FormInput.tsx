@@ -41,7 +41,7 @@ export default function FormInput<T extends FieldValues>(
         id={props.fieldName}
         type={type}
         disabled={disabled || isSubmitting}
-        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black ${
+        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black bg-zinc-50 disabled:bg-zinc-50/10 ${
           props.mono ? "font-mono" : ""
         }`}
         {...register(props.fieldName)}

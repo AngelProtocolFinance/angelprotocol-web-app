@@ -25,11 +25,14 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
   );
 
   return (
-    <Listbox value={value} onChange={onChange} as="div" className="relative">
-      <Listbox.Button
-        disabled={props.disabled || isSubmitting}
-        className="flex items-center bg-white text-left rounded-md outline-none border-none w-full px-3 py-2 text-black"
-      >
+    <Listbox
+      disabled={isSubmitting || props.disabled}
+      value={value}
+      onChange={onChange}
+      as="div"
+      className="relative"
+    >
+      <Listbox.Button className="flex items-center bg-zinc-50 disabled:bg-zinc-50/10 text-left rounded-md outline-none border-none w-full px-3 py-2 text-black">
         {({ open }) => (
           <>
             <span>{display}</span>
