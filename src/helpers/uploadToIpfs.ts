@@ -9,12 +9,14 @@ export async function uploadToIpfs(
     endpoint: new URL("https://api.web3.storage"),
   });
   const cid = await client.put([file], { name: uploadPath });
-  return genPublicUrl(cid, file.name);
+  //remove all whitespace from file name
+  //NOTE: AWS doesn't accept URLs with space e.g google.com/hello to the world.jpg
+  return genPublicUrl(cid, file.name.replace(/\s/g, ""));
   //let caller handle errors
 }
 
 //https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
 export const IPFS_GATEWAY = "ipfs.w3s.link"; //public
 function genPublicUrl(cid: string, fileName: string) {
-  return `https://${cid}.${IPFS_GATEWAY}/${fileName}`;
+  return `https://${cid}.${IPFS_GATEWAY}/${fileName.trim()}`;
 }

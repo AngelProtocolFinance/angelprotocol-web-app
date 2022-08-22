@@ -23,7 +23,7 @@ export default function useProposeStatusChange(app: CharityApplication) {
   function updateStatus(status: Extract<EndowmentStatusNum, 1 | 3>) {
     const statusChangePayload: StatusChangePayload = {
       status,
-      endowment_id: 10, //TODO: get this from ap (not yet present)
+      endowment_id: 16, //TODO: get this from ap (not yet present)
     };
     const statusWord = status === 1 ? "Approve" : "Reject";
 
