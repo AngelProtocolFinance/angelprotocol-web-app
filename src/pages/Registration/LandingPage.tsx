@@ -76,7 +76,7 @@ export default function LandingPage() {
 
         <form
           onSubmit={handleSubmit(onResume)}
-          className="flex flex-col items-center gap-2 w-5/6 mb-5"
+          className="flex flex-col items-center gap-2 w-full lg:w-5/6 mb-5"
         >
           <input
             {...register("refer")}
