@@ -85,22 +85,25 @@ export type Receiver =
 
 export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
 
+export type TokenType =
+  | "juno-native"
+  | "terra-native"
+  | "evm-native"
+  | "erc20"
+  | "cw20"
+  | "ibc"
+  | "placeholder";
+
 export type Token = {
   approved: boolean; // true
+  //TODO: remove this since this is not return by apes
   balance: number; // 0 --> not returned by APES but dynamically calculated and set
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
-  type:
-    | "juno-native"
-    | "terra-native"
-    | "evm-native"
-    | "erc20"
-    | "cw20"
-    | "ibc"
-    | "placeholder";
+  type: TokenType;
 };
 
 export type NetworkType = "mainnet" | "testnet";
@@ -115,7 +118,7 @@ export type Chain = {
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
+  type: Extract<TokenType, "juno-native" | "terra-native" | "evm-native">;
 };
 
 /** /leaderboards */

@@ -20,6 +20,16 @@ export default function TransactionPrompt({
   const { closeModal } = useModalContext();
   const { handleError } = useErrorContext();
 
+  function closePrompt() {
+    switch (stage.step) {
+      case "success":
+      case "error":
+      case "kyc":
+        dispatch(resetTxFormState());
+    }
+    closeModal();
+  }
+
   const prompt = useMemo(() => {
     switch (stage.step) {
       case "initial":
@@ -39,16 +49,6 @@ export default function TransactionPrompt({
         return null;
     }
   }, [stage, children, handleError]);
-
-  function closePrompt() {
-    switch (stage.step) {
-      case "success":
-      case "error":
-      case "kyc":
-        dispatch(resetTxFormState());
-    }
-    closeModal();
-  }
 
   return (
     <Dialog.Panel

@@ -1,13 +1,17 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
-import { ProviderInfo } from "contexts/WalletContext/types";
-import { Chain } from "types/server/aws";
+import { Chain, Token, TokenType } from "types/server/aws";
 import { queryContract } from "services/juno/queryContract";
+import { WalletInfo } from "contexts/Wallet";
+import { condenseToNum } from "helpers";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
+import { fillERC20Holdings } from "./helpers/fillERC20Holdings";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 import { apesTags, customTags } from "./tags";
+
+type CategorizedTokens = { [key in TokenType]: Token[] };
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -17,11 +21,94 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.custom],
   endpoints: (builder) => ({
-    chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
+    chaim: builder.query<Chain, WalletInfo>({
+      query: ({ chainId }) => `chain/${chainId}`,
+      transformResponse: (res: Chain) => res,
+    }),
+    balance: builder.query<any, Chain & { address: string }>({
+      providesTags: [{ type: apesTags.custom, id: customTags.chain }],
+      async queryFn({ address, ...chain }) {
+        //categorize tokens
+        const tokens = [chain.native_currency]
+          .concat(chain.tokens)
+          .reduce((tokens, token) => {
+            tokens[token.type] ||= [];
+            tokens[token.type].push(token);
+            return tokens;
+          }, {} as CategorizedTokens);
+
+        try {
+          // fetch balances for juno or terra
+          if (chain.type === "juno-native" || chain.type === "terra-native") {
+            const { balances } = await fetch(
+              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+            ).then<{ balances: Coin[] }>((res) => res.json());
+
+            //native and IBCs balances from '/balances' endpoint
+            const natives = tokens["juno-native"]
+              .concat(tokens["ibc"])
+              .map((token) => {
+                //this inner loop can be avoided, but needs N `balance/denom=x` queries
+                const bal = balances.find(
+                  (bal) => bal.denom === token.token_id
+                );
+                token.balance = condenseToNum(
+                  bal?.amount || "0",
+                  token.decimals
+                );
+                return token;
+              });
+
+            const cw20s = await fillCW20Balances(
+              tokens["cw20"],
+              chain.lcd_url,
+              address
+            );
+
+            return { data: natives.concat(cw20s) };
+          }
+
+          if (chain.type === "evm-native") {
+            /**fetch balances for evm-compatible chains */
+            const jsonProvider = new ethers.providers.JsonRpcProvider(
+              chain.rpc_url,
+              { chainId: +chain.chain_id, name: chain.chain_name }
+            );
+            const nativeBalance = await jsonProvider.getBalance(address);
+            const natives = tokens["evm-native"];
+
+            //evm chains 1 native token
+            natives[0].balance = +utils.formatUnits(
+              nativeBalance,
+              chain.native_currency.decimals
+            );
+
+            const erc20s = await fillERC20Holdings(
+              chain.rpc_url,
+              address,
+              tokens["erc20"]
+            );
+
+            return { data: natives.concat(erc20s) };
+          }
+
+          return { data: [] };
+        } catch (error) {
+          return {
+            error: {
+              status: "CUSTOM_ERROR",
+              error: "Error querying balances",
+            },
+          };
+        }
+      },
+    }),
+
+    chain: builder.query<Chain, WalletInfo>({
       providesTags: [{ type: apesTags.custom, id: customTags.chain }],
       async queryFn(args) {
         try {
-          const { address, chainId } = args.providerInfo;
+          const { address, chainId } = args;
           const chainRes = await fetch(`${APIs.apes}/chain/${chainId}`);
 
           const chain: Chain | { message: string } = await chainRes.json();
@@ -103,7 +190,7 @@ export const apes = createApi({
   }),
 });
 
-export const { useChainQuery } = apes;
+export const { useChainQuery, useChaimQuery } = apes;
 export const { invalidateTags: invalidateApesTags } = apes.util;
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
@@ -123,4 +210,27 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
 
   const cw20Balances = await Promise.all(cw20BalancePromises);
   return cw20Balances;
+}
+
+async function fillCW20Balances(
+  cw20s: Token[],
+  lcdUrl: string,
+  address: string
+): Promise<Token[]> {
+  const balanceQueries = cw20s.map((x) =>
+    queryContract("cw20Balance", x.token_id, { addr: address }, lcdUrl).then(
+      (data) => ({
+        denom: x.token_id,
+        amount: data.balance,
+      })
+    )
+  );
+  const results = await Promise.allSettled(balanceQueries);
+  return results.map((result, i) => ({
+    ...cw20s[i],
+    balance:
+      result.status === "fulfilled"
+        ? condenseToNum(result.value.amount, cw20s[i].decimals)
+        : 0,
+  }));
 }

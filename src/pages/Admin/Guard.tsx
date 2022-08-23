@@ -3,26 +3,32 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { WalletInfo, useWalletContext } from "contexts/Wallet";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
+import { chainIds } from "constants/chainIds";
 
 export function Guard(props: PropsWithChildren<{}>) {
-  const { wallet, isLoading: isWalletLoading } = useGetWallet();
+  const { info: walletInfo, isLoading: isWalletLoading } = useWalletContext();
   const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
-      user: wallet?.address!,
+      user: walletInfo?.address!,
       endowmentId: id!,
     },
-    { skip: !wallet || !id }
+    { skip: !walletInfo || !id }
   );
 
   if (isWalletLoading)
     return <GuardPrompt message="Connecting wallet" showLoader />;
 
-  if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
+  if (!walletInfo)
+    return <GuardPrompt message="Your wallet is not connected" />;
+
+  if (walletInfo.chainId !== chainIds.juno) {
+    return <GuardPrompt message="Admin requires Juno compatible wallet" />;
+  }
 
   if (isLoading)
     return <GuardPrompt message="Checking wallet credentials" showLoader />;
@@ -31,11 +37,16 @@ export function Guard(props: PropsWithChildren<{}>) {
 
   if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
 
-  return <context.Provider value={data!}>{props.children}</context.Provider>;
+  return (
+    <context.Provider value={{ ...data, wallet: walletInfo }}>
+      {props.children}
+    </context.Provider>
+  );
 }
 
-const context = createContext({} as AdminResources);
-export const useAdminResources = (): AdminResources => {
+type TAdmin = AdminResources & { wallet: WalletInfo };
+const context = createContext({} as TAdmin);
+export const useAdminResources = (): TAdmin => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {

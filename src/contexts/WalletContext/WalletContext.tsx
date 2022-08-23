@@ -12,6 +12,7 @@ import {
   ProviderInfo,
   ProviderStatuses,
 } from "./types";
+import { WalletInfo } from "contexts/Wallet/types";
 import { Chain, Token } from "types/server/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
@@ -143,10 +144,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
     error,
-  } = useChainQuery(
-    { providerInfo: activeProviderInfo! },
-    { skip: !activeProviderInfo }
-  );
+  } = useChainQuery(activeProviderInfo as unknown as WalletInfo, {
+    skip: !activeProviderInfo,
+  });
 
   useVerifyChain(activeProviderInfo, chain, error, disconnect);
 
