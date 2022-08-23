@@ -5,6 +5,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
 import ModalContext from "contexts/ModalContext";
+import Wallet from "contexts/Wallet";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
 import Footer from "./Footer";
@@ -38,12 +39,12 @@ export default function App() {
       ) : (
         <div className="grid grid-rows-[auto_1fr] w-full h-full">
           <WalletProvider {...chainOptions}>
-            <WalletContext>
+            <Wallet>
               <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
                 <Header />
                 <Views />
               </ModalContext>
-            </WalletContext>
+            </Wallet>
           </WalletProvider>
         </div>
       )}

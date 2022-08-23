@@ -1,10 +1,12 @@
 import { Menu } from "@headlessui/react";
-import { useSetWallet } from "contexts/WalletContext/WalletContext";
+import { Connection } from "contexts/Wallet";
 import Icon from "components/Icon";
 import Connector from "./Connector";
 
-export default function WalletSelector(props: { isLoading: boolean }) {
-  const { connections } = useSetWallet();
+export default function WalletSelector(props: {
+  connections: Connection[];
+  isLoading: boolean;
+}) {
   return (
     <Menu
       className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
@@ -19,7 +21,7 @@ export default function WalletSelector(props: { isLoading: boolean }) {
       </Menu.Button>
 
       <Menu.Items className="absolute z-10 bg-zinc-50 w-max p-3 rounded-md mt-2 right-0">
-        {connections.map((connection) => (
+        {props.connections.map((connection) => (
           <Connector {...connection} key={connection.name} />
         ))}
       </Menu.Items>
