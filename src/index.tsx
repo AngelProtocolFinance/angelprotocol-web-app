@@ -15,7 +15,7 @@ const LoaderComponent = () => (
 );
 
 const container = document.getElementById("root");
-const root = createRoot(container as Element); // createRoot(container!) if you use TypeScript
+const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
