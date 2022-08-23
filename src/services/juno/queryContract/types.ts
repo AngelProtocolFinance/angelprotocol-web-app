@@ -89,12 +89,16 @@ export interface ContractQueries {
   }; //TODO update once to be used
 
   accEndowment: {
-    args: null;
+    args: { id: number };
     res: Q<EndowmentDetails>;
     result: EndowmentDetails;
   };
-  accBalance: { args: null; res: Q<BalanceInfo>; result: BalanceInfo };
-  accProfile: { args: null; res: Q<Profile>; result: Profile };
+  accBalance: {
+    args: { id: number };
+    res: Q<BalanceInfo>;
+    result: BalanceInfo;
+  };
+  accProfile: { args: { id: number }; res: Q<Profile>; result: Profile };
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

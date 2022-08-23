@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
@@ -11,22 +12,33 @@ import FundCreator from "./indexfund/FundCreator/FundCreator";
 import FundDestroyer from "./indexfund/FundDestroyer/FundDestroyer";
 import FundUpdator from "./indexfund/FundUpdator/FundUpdator";
 import IndexFundOwner from "./indexfund/IndexFundOwner/IndexFundOwner";
-import EndowmentUpdator from "./registrar/EndowmentUpdator/EndowmentUpdator";
+import EndowmentUpdator from "./registrar/EndowmentStatus";
 import RegistrarConfigurer from "./registrar/RegistrarConfigurer/RegistrarConfigurer";
 import RegistrarOwner from "./registrar/RegistrarOwner/RegistrarOwner";
 import { routes } from "./routes";
 
 export default function Templates() {
-  const { isAp } = useAdminResources();
+  const { role } = useAdminResources();
+  const routes = useMemo(() => {
+    switch (role) {
+      case "charity":
+        return <CharityTemplates />;
+      case "reviewer":
+        return <ReviewerTemplates />;
+      default:
+        return <ApTemplates />;
+    }
+  }, [role]);
+
   return (
     <div className="grid gap-2 grid-cols-[auto_1fr]">
       <Nav />
-      {isAp ? <ApRoutes /> : <CharityRoutes />}
+      {routes}
     </div>
   );
 }
 
-function ApRoutes() {
+function ApTemplates() {
   return (
     <Routes>
       {/** _index-fund */}
@@ -52,7 +64,7 @@ function ApRoutes() {
   );
 }
 
-function CharityRoutes() {
+function CharityTemplates() {
   return (
     <Routes>
       {/** _endowment */}
@@ -62,6 +74,18 @@ function CharityRoutes() {
       <Route path={routes.cw3_config} element={<CW3Configurer />} />
       <Route path={routes.cw3_transfer} element={<FundSender />} />
 
+      {/**_cw4 */}
+      <Route path={routes.cw4_members} element={<MemberUpdator />} />
+    </Routes>
+  );
+}
+
+function ReviewerTemplates() {
+  return (
+    <Routes>
+      {/**_cw3 */}
+      <Route path={routes.cw3_config} element={<CW3Configurer />} />
+      <Route path={routes.cw3_transfer} element={<FundSender />} />
       {/**_cw4 */}
       <Route path={routes.cw4_members} element={<MemberUpdator />} />
     </Routes>

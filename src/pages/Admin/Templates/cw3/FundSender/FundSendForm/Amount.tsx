@@ -2,8 +2,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import haloLogo from "assets/icons/currencies/halo_outline.png";
-import Label from "pages/Admin/common/Label";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { Label } from "components/admin";
 import Balance from "./Balance";
 import Currency from "./Currency";
 

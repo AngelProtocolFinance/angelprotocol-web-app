@@ -20,20 +20,13 @@ interface FromTCA {
   min_liq?: never;
 }
 
-interface ToFund {
-  to: "fund";
-  receiver?: number;
-  max_liq?: number;
-  min_liq?: number;
-}
-
-interface ToCharity {
-  to: "charity";
-  receiver: string;
+interface ToFundOrCharity {
+  to: "fund" | "charity";
+  receiver: number;
   //doesn't know yet limits on charity donations
   max_liq?: number;
   min_liq?: number;
 }
 
-type FundFlow = ToFund | ToCharity | FromTCA;
+type FundFlow = ToFundOrCharity | FromTCA;
 export type DonaterProps = FundFlow & { isKycDonorOnly?: boolean };

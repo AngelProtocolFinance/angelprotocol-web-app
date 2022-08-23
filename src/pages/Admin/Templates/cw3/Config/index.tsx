@@ -3,9 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { CW3ConfigValues, FormCW3Config } from "pages/Admin/types";
 import { CW3Config } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import FormError from "pages/Admin/common/FormError";
-import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useCw3ConfigQuery } from "services/juno/cw3";
+import { FormError, FormSkeleton } from "components/admin";
 import CW3ConfigForm from "./Form";
 import { schema } from "./schema";
 

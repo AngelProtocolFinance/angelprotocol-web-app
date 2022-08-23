@@ -1,3 +1,5 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { MsgSendEncodeObject } from "@cosmjs/stargate";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import {
   Coin,
@@ -19,13 +21,19 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
+import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
-import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
 import { extractFeeAmount, getProvider, logger } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
+import { denoms } from "constants/currency";
+import { IS_TEST } from "constants/env";
 import estimateTerraFee from "./estimateTerraFee";
 
+//set to true to donate directly to account
+//only available if IS_TEST
+const isSendToContract =
+  IS_TEST && process.env.REACT_APP_DONATION_TYPE === "DIRECT";
 export default function useEstimator() {
   const dispatch = useSetter();
   const {
@@ -74,15 +82,28 @@ export default function useEstimator() {
             selectedToken.type === "juno-native" ||
             selectedToken.type === "ibc"
           ) {
-            const contract = new Contract(wallet);
+            let msg: MsgSendEncodeObject | MsgExecuteContractEncodeObject;
+            const contract = new Account(wallet);
+            if (isSendToContract) {
+              //TODO: remove this once accounts have initial balances for testing
+              alert("you are sending directly to contract");
+              msg = contract.createDepositMsg(
+                {
+                  id: Number(getValues("receiver")),
+                  liquid_percentage: "0.5",
+                  locked_percentage: "0.5",
+                },
+                [{ denom: denoms.juno, amount: "1000000" /** manual */ }]
+              );
+            } else {
+              msg = contract.createTransferNativeMsg(
+                debounced_amount,
+                ap_wallets.juno,
+                selectedToken.token_id
+              );
+            }
 
-            const msg = contract.createTransferNativeMsg(
-              debounced_amount,
-              ap_wallets.juno,
-              selectedToken.token_id
-            );
             const fee = await contract.estimateFee([msg]);
-
             const feeAmount = extractFeeAmount(
               fee,
               wallet.chain.native_currency.token_id

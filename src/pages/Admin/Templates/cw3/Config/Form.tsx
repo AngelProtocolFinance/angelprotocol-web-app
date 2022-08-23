@@ -1,7 +1,5 @@
 import { CW3ConfigValues as CV } from "pages/Admin/types";
-import Submitter from "pages/Admin/common/Submitter";
-import { FormContainer } from "pages/Admin/common/TemplateContainer";
-import TextInput from "pages/Admin/common/TextInput";
+import { FormContainer, Submitter, TextInput } from "components/admin";
 import usePropose from "./usePropose";
 
 export default function Form() {

@@ -1,7 +1,5 @@
 import { IndexFundOwnerValues as IV } from "pages/Admin/types";
-import { FormContainer } from "pages/Admin/common/TemplateContainer";
-import TextInput from "pages/Admin/common/TextInput";
-import Submitter from "../../../common/Submitter";
+import { FormContainer, Submitter, TextInput } from "components/admin";
 import useUpdateOwner from "./useUpdateOwner";
 
 export default function OwnerUpdateForm() {

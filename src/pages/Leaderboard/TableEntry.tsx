@@ -27,7 +27,7 @@ export default function TableEntry(props: Endowment) {
       </td>
       <td>
         <Link
-          to={`../${appRoutes.charity}/${props.endowment_address}`}
+          to={`../${appRoutes.profile}/${props.endowment_address}`}
           className="col-start-2 text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 mb-1"
         >
           {props.charity_name}

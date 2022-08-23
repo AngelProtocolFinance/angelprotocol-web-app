@@ -1,8 +1,5 @@
 import { AllianceEditValues as AV } from "pages/Admin/types";
-import Label from "pages/Admin/common/Label";
-import { DivContainer } from "pages/Admin/common/TemplateContainer";
-import Submitter from "../../../common/Submitter";
-import TextInput from "../../../common/TextInput";
+import { DivContainer, Label, Submitter, TextInput } from "components/admin";
 import AllianceSelection from "./AllianceSelection/AllianceSelection";
 import MemberEditor from "./MemberEditor/MemberEditor";
 import useEditAlliance from "./useEditAlliance";

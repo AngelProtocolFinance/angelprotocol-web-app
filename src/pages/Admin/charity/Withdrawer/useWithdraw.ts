@@ -23,7 +23,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowment } = useAdminResources();
+  const { cw3, endowmentId } = useAdminResources();
   const { wallet } = useGetWallet();
   const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
@@ -49,8 +49,9 @@ export default function useWithdraw() {
     );
 
     const isJuno = data.network === chainIds.juno;
-    const account = new Account(wallet, endowment);
+    const account = new Account(wallet);
     const msg = account.createEmbeddedWithdrawLiqMsg({
+      id: endowmentId,
       beneficiary:
         //if not juno, send to ap wallet (juno)
         isJuno ? data.beneficiary : ap_wallets.juno,
@@ -71,7 +72,7 @@ export default function useWithdraw() {
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "withdraw proposal",
-      `withdraw from endowment: ${endowment}`,
+      `withdraw from endowment: ${endowmentId}`,
       [msg],
       JSON.stringify(meta)
     );
@@ -86,14 +87,18 @@ export default function useWithdraw() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
+        //Juno withdrawal
         successLink: proposalLink,
         successMessage: "Withdraw proposal successfully created!",
-        setLogProcessor: isJuno
+
+        onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno
-          : (rawLog) =>
-              //will run if sendCosmos is success
+          : (response) =>
               logWithdrawProposal({
-                rawLog,
+                res: response,
+                proposalLink,
+                wallet: wallet!, //wallet is defined at this point
+
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,

@@ -5,9 +5,8 @@ import {
   RegistrarConfig,
   RegistrarConfigPayload,
 } from "types/server/contracts";
-import FormError from "pages/Admin/common/FormError";
-import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useRegistrarConfig } from "services/juno/registrar/queriers";
+import { FormError, FormSkeleton } from "components/admin";
 import RegistrarConfigForm from "./RegistrarConfigForm";
 import { registrarConfigSchema } from "./registrarConfigSchema";
 

@@ -74,6 +74,7 @@ export default function WalletSubmission() {
               submit
               className="bg-thin-blue w-48 h-10"
               isLoading={isSubmitting}
+              disabled={isSubmitting}
             >
               Submit
             </Button>

@@ -7,10 +7,9 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
-import { logger } from "helpers";
+import { logger, uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
-import { uploadToIpfs } from "../helpers";
 import routes from "../routes";
 
 export default function useUpload() {

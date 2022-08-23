@@ -1,1 +1,1 @@
-export type ProfileParams = { address: string };
+export type ProfileParams = { id: string };

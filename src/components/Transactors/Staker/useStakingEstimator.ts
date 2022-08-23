@@ -17,7 +17,7 @@ import {
   logger,
   processEstimateError,
 } from "helpers";
-import { denoms, symbols } from "constants/currency";
+import { symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
@@ -53,7 +53,7 @@ export default function useEstimator() {
         if (is_stake && condense(balance).lt(debounced_amount)) {
           //check $HALO balance
           setError("amount", {
-            message: `not enough ${symbols[denoms.halo]} balance`,
+            message: `not enough ${symbols.halo} balance`,
           });
           return;
         } else {

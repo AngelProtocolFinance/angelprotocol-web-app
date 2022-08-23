@@ -5,38 +5,35 @@ import {
   WithdrawLiqPayload,
   WithdrawPayload,
 } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
-  address: string;
+  private static address = contracts.accounts;
 
-  constructor(wallet: WalletState | undefined, address: string) {
-    super(wallet);
-    this.address = address;
-  }
+  //future: add id in constructor once id is outside payload
 
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
-    return this.createEmbeddedWasmMsg(this.address, {
+    return this.createEmbeddedWasmMsg(Account.address, {
       withdraw: payload,
     });
   }
 
   createEmbeddedWithdrawLiqMsg(payload: WithdrawLiqPayload) {
-    return this.createEmbeddedWasmMsg(this.address, {
+    return this.createEmbeddedWasmMsg(Account.address, {
       withdraw_liquid: payload,
     });
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createEmbeddedWasmMsg(this.address, {
+    return this.createEmbeddedWasmMsg(Account.address, {
       update_profile: payload,
     });
   }
 
   createDepositMsg(payload: DepositPayload, funds: Coin[]) {
     return this.createExecuteContractMsg(
-      this.address,
+      Account.address,
       {
         deposit: payload,
       },

@@ -5,7 +5,7 @@ import CW20 from "./CW20";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  private static address = contracts.loop_haloust_lp;
+  private static address = contracts.loop_haloust_pair;
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
     const offer_asset = from_native

@@ -3,21 +3,20 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
 export function Guard(props: PropsWithChildren<{}>) {
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
-  const { address } = useParams<AdminParams>();
+  const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
       user: wallet?.address!,
-      endowment: address!,
+      endowmentId: id!,
     },
-    { skip: !wallet }
+    { skip: !wallet || !id }
   );
 
   if (isWalletLoading)
@@ -38,13 +37,11 @@ export function Guard(props: PropsWithChildren<{}>) {
 const context = createContext({} as AdminResources);
 export const useAdminResources = (): AdminResources => {
   const val = useContext(context);
-  const { handleError } = useErrorContext();
 
-  if (Object.entries(val).length > 0) {
-    return val;
+  if (Object.entries(val).length <= 0) {
+    throw new Error("useAdminResources should only be used inside AdminGuard");
   }
-  handleError("Can't use this hook outside AdminGuard scope");
-  return {} as AdminResources;
+  return val;
 };
 
 export function GuardPrompt(props: { message: string; showLoader?: true }) {

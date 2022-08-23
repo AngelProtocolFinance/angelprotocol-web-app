@@ -27,12 +27,12 @@ import {
   BsHourglassSplit,
   BsSafeFill,
 } from "react-icons/bs";
+import { BsFilterLeft } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
   FaCog,
   FaDiscord,
-  FaExternalLinkAlt,
   FaFacebook,
   FaFacebookF,
   FaLinkedin,
@@ -62,6 +62,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  FilterLeft: BsFilterLeft,
   FileDownload: MdOutlineFileDownload,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
@@ -81,7 +82,6 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Close: IoClose,
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
-  Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
   Parachute: FaParachuteBox,

@@ -1,13 +1,13 @@
 import { UpdateProfileValues as UV } from "pages/Admin/types";
-import Label from "pages/Admin/common/Label";
-import Submitter from "pages/Admin/common/Submitter";
+import CountrySelector from "components/CountrySelector";
+import RichTextEditor from "components/RichTextEditor";
 import {
   FormContainer,
   GroupContainer,
-} from "pages/Admin/common/TemplateContainer";
-import TextInput from "pages/Admin/common/TextInput";
-import CountrySelector from "components/CountrySelector";
-import RichTextEditor from "components/RichTextEditor";
+  Label,
+  Submitter,
+  TextInput,
+} from "components/admin";
 import ImgEditor from "./ImgEditor/ImgEditor";
 import SDGSelector from "./SDGSelector";
 import useEditForm from "./useEditProfile";

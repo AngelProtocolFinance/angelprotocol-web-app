@@ -2,7 +2,7 @@ import { useState } from "react";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ProposalCard from "./ProposalCard";
-import Toolbar from "./Toolbar/Toolbar";
+import Toolbar from "./Toolbar";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,

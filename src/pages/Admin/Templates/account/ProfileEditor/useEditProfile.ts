@@ -4,7 +4,6 @@ import { UpdateProfileValues } from "pages/Admin/types";
 import { UpdateProfilePayload as UP } from "types/server/contracts";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
-import { uploadToIpfs } from "pages/Registration/helpers";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -16,14 +15,16 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import { uploadToIpfs } from "helpers";
 import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
-import optimizeImage from "./optimizeImage";
+
+// import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
 
 export default function useEditProfile() {
-  const { endowment, cw3, proposalLink } = useAdminResources();
+  const { endowmentId, cw3, proposalLink } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -76,11 +77,11 @@ export default function useEditProfile() {
         showModal(Popup, { message: "Uploading image.." });
         const imageRes = await fetch(data.image);
         const imageBlob = await imageRes.blob();
-        const imageFile = new File([imageBlob], `banner_${endowment}`); //use endow address as unique imageName
+        const imageFile = new File([imageBlob], "banner"); //use endow address as unique imageName
 
-        const key = imageFile.name;
-        const file = await optimizeImage(imageFile);
-        const url = await uploadToIpfs(key, file);
+        //TODO: investigate optimizeImage file.name = undefined
+        // const file = await optimizeImage(imageFile);
+        const url = await uploadToIpfs(`endowment_${endowmentId}`, imageFile);
 
         if (url) {
           data.image = url;
@@ -89,7 +90,7 @@ export default function useEditProfile() {
         }
       }
 
-      const accountContract = new Account(wallet, endowment);
+      const accountContract = new Account(wallet);
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject(data)

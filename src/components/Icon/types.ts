@@ -1,5 +1,6 @@
 export type IconTypes =
   | "Discord"
+  | "FilterLeft"
   | "FileDownload"
   | "Telegram"
   | "Twitter"
@@ -10,7 +11,6 @@ export type IconTypes =
   | "Linkedin"
   | "LinkedinIn"
   | "Parachute"
-  | "Link"
   | "ListUl"
   | "ListOl"
   | "Cog"

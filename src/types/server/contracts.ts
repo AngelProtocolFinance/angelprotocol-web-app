@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { EndowmentTierNum } from "types/shared/registration";
 
 /** _ethereum contract */
 export interface ERC20Token {
@@ -55,6 +54,7 @@ export interface BalanceInfo {
 }
 
 export interface DepositPayload {
+  id: number;
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
@@ -65,6 +65,7 @@ export type WithdrawPayload = {
 };
 
 export interface WithdrawLiqPayload {
+  id: number;
   beneficiary: string;
   assets: GenericBalance;
 }
@@ -95,16 +96,16 @@ export interface EndowmentDetails {
 }
 
 export interface Profile {
-  name: string;
+  name: string; // name of the Charity Endowment
   overview: string;
-  un_sdg?: number;
-  tier?: number;
-  logo?: string;
-  image?: string;
+  un_sdg: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  logo: string;
+  image: string;
   url?: string;
   registration_number?: string;
-  street_address?: string;
   country_of_origin?: string;
+  street_address?: string;
   contact_email?: string;
   social_media_urls: {
     facebook?: string;
@@ -115,6 +116,7 @@ export interface Profile {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
+  endow_type: Capitalize<EndowmentType>;
 }
 
 export type Holding = { address: string; amount: string };
@@ -134,13 +136,14 @@ export interface Source {
 
 export interface UpdateProfilePayload {
   //separate shape for update
-  name?: string;
-  overview?: string;
-  un_sdg?: number;
+  id: number;
+  name: string;
+  overview: string;
+  un_sdg: number;
   tier?: number;
-  logo?: string;
-  image?: string;
-  url?: string;
+  logo: string;
+  image: string;
+  url: string;
   registration_number?: string;
   country_of_origin?: string;
   street_address?: string;
@@ -383,14 +386,14 @@ export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
 
 export type EndowmentTier = "Level1" | "Level2" | "Level3";
 export type EndowmentEntry = {
-  address: string;
+  id: number; //int
+  owner: String;
   status: keyof EndowmentStatus;
-  name: string;
+  endow_type: Capitalize<EndowmentType>;
+  name?: string;
   logo?: string;
   image?: string;
-  owner?: string;
   tier?: EndowmentTier;
-  endow_type?: EndowmentType;
   un_sdg?: number;
 };
 
@@ -435,7 +438,7 @@ export type VaultRateInfo = {
 };
 
 export type StatusChangePayload = {
-  endowment_addr: string;
+  endowment_id: number;
   status: EndowmentStatus[keyof EndowmentStatus];
   beneficiary?: string;
 };
@@ -461,36 +464,15 @@ export type RegistrarOwnerPayload = {
   new_owner: string;
 };
 
-type Endow_type = "Charity";
 export type RegistrarCreateEndowmentPayload = {
-  beneficiary: string;
-  cw4_members: [];
-  guardians_multisig_addr: undefined;
-  maturity_time: undefined;
-  maturity_height: undefined;
   owner: string;
+  beneficiary: string;
   withdraw_before_maturity: false;
-  profile: {
-    annual_revenue: undefined; // string value if provided
-    average_annual_budget: undefined; // string value if provided
-    charity_navigator_rating: undefined; // string value if provided
-    contact_email: string;
-    country_of_origin: undefined;
-    endow_type: Endow_type;
-    image: string;
-    logo: string;
-    name: string;
-    number_of_employees: undefined; // int value if provided
-    overview: string;
-    registration_number: undefined; // string of charity reg # if provided
-    social_media_urls: {
-      facebook: undefined; // string of URL if provided
-      twitter: undefined; // string of URL if provided
-      linkedin: undefined; // string of URL if provided
-    };
-    street_address: undefined;
-    tier: EndowmentTierNum;
-    un_sdg: number; // 1 - 17 int
-    url: string; // string of charity website URL if provided
-  };
+  maturity_time: undefined; //don't set maturity for charities
+  maturity_height: undefined; ///don't set maturity for charities
+  profile: Profile;
+  cw4_members: Member[];
+  kyc_donors_only: boolean;
+  cw3_threshold: Threshold;
+  cw3_max_voting_period: 86400; //seconds - 24H
 };

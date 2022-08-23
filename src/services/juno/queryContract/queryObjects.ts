@@ -76,7 +76,13 @@ export const queryObject: {
   },
 
   /** account */
-  accEndowment: { endowment: {} },
-  accBalance: { balance: {} },
-  accProfile: { get_profile: {} },
+  accEndowment({ id }) {
+    return { endowment: { id } };
+  },
+  accBalance({ id }) {
+    return { balance: { id } };
+  },
+  accProfile({ id }) {
+    return { get_profile: { id } };
+  },
 };

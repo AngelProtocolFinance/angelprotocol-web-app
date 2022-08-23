@@ -1,12 +1,12 @@
 import { FundUpdateValues as FV } from "pages/Admin/types";
-import Label from "pages/Admin/common/Label";
+import Loader from "components/Loader";
 import {
   FormContainer,
   GroupContainer,
-} from "pages/Admin/common/TemplateContainer";
-import Loader from "components/Loader";
-import Submitter from "../../../common/Submitter";
-import TextInput from "../../../common/TextInput";
+  Label,
+  Submitter,
+  TextInput,
+} from "components/admin";
 import FundSelection from "../../FundSelection";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";

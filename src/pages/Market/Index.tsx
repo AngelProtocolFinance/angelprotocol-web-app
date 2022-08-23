@@ -21,7 +21,7 @@ export default function Index(props: {
           className="flex gap-4 overflow-x-scroll scroll-hidden py-2"
         >
           {props.profiles.map((profile) => (
-            <CharityCard key={profile.address} {...profile} />
+            <CharityCard key={profile.id} {...profile} />
           ))}
         </div>
         {showBack && (

@@ -1,3 +1,4 @@
+import { ApplicationStatus } from "types/server/aws";
 import { AllianceMember, Member, ProposalStatus } from "types/server/contracts";
 
 export type AllianceMemberWithFlags = AllianceMember & {
@@ -18,3 +19,4 @@ export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";
 
 export type ProposalGroupOptions = ProposalGroup | "all";
 export type ProposalStatusOptions = ProposalStatus | "all";
+export type ApplicationStatusOptions = ApplicationStatus | "all";

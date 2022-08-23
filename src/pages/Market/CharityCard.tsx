@@ -7,7 +7,7 @@ import { appRoutes } from "constants/routes";
 export default function CharityCard(props: EndowmentEntry) {
   return (
     <Link
-      to={`${appRoutes.charity}/${props.address}`}
+      to={`${appRoutes.profile}/${props.id}`}
       className="relative rounded-md hover:shadow-lg hover:bg-bright-blue/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
     >
       <LazyImage

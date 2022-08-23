@@ -5,8 +5,12 @@ import Account from "./Account";
 import Transactions from "./Transactions";
 
 export default function Dashboard() {
-  const { endowment } = useAdminResources();
-  const { data: balance, isLoading, isError } = useBalanceQuery(endowment);
+  const { endowmentId } = useAdminResources();
+  const {
+    data: balance,
+    isLoading,
+    isError,
+  } = useBalanceQuery({ id: endowmentId });
 
   if (isLoading) {
     return (
@@ -45,7 +49,7 @@ export default function Dashboard() {
         <p className="text-lg text-zinc-100">Coming soon!</p>
       </div>
 
-      <Transactions endowmentAddress={endowment} />
+      <Transactions endowmentId={endowmentId} />
     </div>
   );
 }

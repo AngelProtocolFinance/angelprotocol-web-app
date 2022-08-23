@@ -145,7 +145,6 @@ export type RegistrationStatus =
   | "Approved"
   | "Active";
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
-export type ApplicationStatusOptions = ApplicationStatus | "all";
 
 export type ReferralMethods =
   | "angel-alliance"
@@ -171,23 +170,6 @@ export type ContactRoles =
   | "secretary"
   | "treasurer"
   | "vice-president";
-
-export interface CharityApplication {
-  CharityName: string;
-  CharityName_ContactEmail: string;
-  EndowmentAgreement: string;
-  EndowmentAgreementVerified: boolean;
-  PK: string;
-  ProofOfEmployment: string;
-  ProofOfEmploymentVerified: boolean;
-  ProofOfIdentity: string;
-  ProofOfIdentityVerified: boolean;
-  RegistrationDate: string;
-  RegistrationStatus: RegistrationStatus;
-  SK: string;
-  JunoWallet: string;
-  poll_id?: number;
-}
 
 export type ContactPerson = {
   Email: string;
@@ -340,4 +322,9 @@ export type UpdateDocumentationResult = {
   ProofOfRegistration: FileObject;
   FinancialStatements: FileObject[];
   AuditedFinancialReports: FileObject[];
+};
+
+export type CharityApplication = Registration & {
+  PK: string;
+  poll_id?: number;
 };

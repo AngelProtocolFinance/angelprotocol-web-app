@@ -4,21 +4,20 @@ import { UpdateProfileValues } from "pages/Admin/types";
 import { UpdateProfilePayload } from "types/server/contracts";
 import { Profile } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import FormError from "pages/Admin/common/FormError";
-import FormSkeleton from "pages/Admin/common/FormSkeleton";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { FormError, FormSkeleton } from "components/admin";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
   const { wallet } = useGetWallet();
-  const { endowment } = useAdminResources();
+  const { endowmentId } = useAdminResources();
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(endowment);
+  } = useEndowmentProfileQuery({ id: endowmentId });
 
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;
@@ -27,15 +26,16 @@ export default function ProfileEditor() {
     return <FormError errorMessage="Failed to load profile" />;
 
   return (
-    <ProfileEditContext {...(profile || ({} as any))}>
+    <ProfileEditContext {...{ ...profile, id: endowmentId }}>
       <EditForm />
     </ProfileEditContext>
   );
 }
 
-function ProfileEditContext(props: Profile) {
+function ProfileEditContext(props: Profile & { id: number }) {
   //initialize falsy values
   const initialProfile: Required<UpdateProfilePayload> = {
+    id: props.id,
     name: props.name,
     overview: props.overview,
     un_sdg: props.un_sdg || 0,

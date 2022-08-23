@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
+import { Denoms } from "types/lists";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -24,6 +25,7 @@ export default function useTransferFunds() {
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
   const { cw3, proposalLink } = useAdminResources();
+  //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
@@ -32,7 +34,7 @@ export default function useTransferFunds() {
       data.currency === denoms.axlusdc ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
       showModal(Popup, {
-        message: `not enough ${symbols[data.currency]} balance`,
+        message: `not enough ${symbols[data.currency as Denoms]} balance`,
       });
       return;
     }

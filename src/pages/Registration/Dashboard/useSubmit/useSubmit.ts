@@ -9,7 +9,7 @@ import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Registrar from "contracts/Registrar";
 import { logger, processEstimateError } from "helpers";
-import useTransactionResultHandler from "./useTransactionResultHandler";
+import { logEndowmentId } from "./logEndowmentId";
 
 export default function useSubmit() {
   const { wallet } = useGetWallet();
@@ -17,29 +17,22 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
-  // this will submit the endowment contract to AWS
-  // and set 'form_loading' to 'false'
-  useTransactionResultHandler();
-
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        if (!wallet) {
-          dispatch(
-            setStage({ step: "error", message: "Wallet is not connected" })
-          );
-          return;
-        }
-
-        dispatch(setFormLoading(true));
-
         const contract = new Registrar(wallet);
         const msg = contract.createEndowmentCreationMsg(charity);
-
         dispatch(
           sendCosmosTx({
             wallet,
             msgs: [msg],
+            onSuccess(res) {
+              return logEndowmentId({
+                res,
+                wallet: wallet!, //wallet is defined at this point
+                PK: charity.ContactPerson.PK!, //registration data is complete at this point
+              });
+            },
           })
         );
       } catch (err) {

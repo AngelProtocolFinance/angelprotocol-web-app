@@ -1,15 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "types/server/contracts";
 import Icon from "components/Icon";
-import { idParamToNumber } from "helpers";
-import { denoms, symbols } from "constants/currency";
+import { idParamToNum } from "helpers";
+import { symbols } from "constants/currency";
 import { appRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
-  const numPollId = idParamToNumber(pollId);
+  const numPollId = idParamToNum(pollId);
   const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
@@ -42,10 +42,7 @@ export default function PollDetails() {
         </div>
         <div className="grid grid-cols-2 gap-6 mb-10">
           <Item title="Creator" value={details.creator} />
-          <Item
-            title="Amount"
-            value={`${details.amount} ${symbols[denoms.halo]}`}
-          />
+          <Item title="Amount" value={`${details.amount} ${symbols.halo}`} />
           <div className="break-words">
             <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
               end time

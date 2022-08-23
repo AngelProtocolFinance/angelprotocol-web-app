@@ -43,19 +43,19 @@ export const sendCosmosTx = createAsyncThunk(
       const response = await contract.signAndBroadcast(tx);
 
       if (!response.code) {
-        updateStage({
-          step: "success",
-          message: args.successMessage || "Transaction succesful!",
-          txHash: response.transactionHash,
-          rawLog: response.rawLog,
-          chain: args.wallet.chain,
-          successLink: args.successLink,
-        });
-
-        if (args.setLogProcessor) {
-          dispatch(args.setLogProcessor(response.rawLog));
+        if (args.onSuccess) {
+          //success thunk should show user final success msg
+          dispatch(args.onSuccess(response, args.wallet.chain));
+        } else {
+          updateStage({
+            step: "success",
+            message: args.successMessage || "Transaction succesful!",
+            txHash: response.transactionHash,
+            rawLog: response.rawLog,
+            chain: args.wallet.chain,
+            successLink: args.successLink,
+          });
         }
-
         //invalidate cache entries
         for (const tagPayload of args.tagPayloads || []) {
           dispatch(tagPayload);

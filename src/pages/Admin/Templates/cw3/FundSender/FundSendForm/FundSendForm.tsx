@@ -1,6 +1,5 @@
 import { FundSendValues as FS } from "pages/Admin/types";
-import TextInput from "pages/Admin/common/TextInput";
-import Submitter from "../../../../common/Submitter";
+import { Submitter, TextInput } from "components/admin";
 import Amount from "./Amount";
 import useTransferFunds from "./useTransferFunds";
 

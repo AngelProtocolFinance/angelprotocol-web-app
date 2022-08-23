@@ -1,5 +1,6 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/server/aws";
+import { RegistrarCreateEndowmentPayload } from "types/server/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
 
@@ -7,38 +8,10 @@ describe("Registrar tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
     const registrar = new Registrar(PLACEHOLDER_WALLET);
     const payload = registrar.createEndowmentCreationMsg(CHARITY);
-
     expect(payload.value.sender).toBe(PLACEHOLDER_WALLET.address);
     expect(payload.value.msg).toBeDefined();
     expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
-      create_endowment: {
-        beneficiary: PLACEHOLDER_WALLET.address,
-        cw4_members: [],
-        guardians_multisig_addr: undefined,
-        maturity_height: undefined,
-        maturity_time: undefined,
-        owner: PLACEHOLDER_WALLET.address,
-        profile: {
-          annual_revenue: undefined,
-          average_annual_budget: undefined,
-          charity_navigator_rating: undefined,
-          contact_email: "test@test.com",
-          country_of_origin: undefined,
-          endow_type: "Charity",
-          image: "https://www.storage.path/banner",
-          logo: "https://www.storage.path/logo",
-          name: "charity",
-          number_of_employees: undefined,
-          overview: "some overview",
-          registration_number: undefined,
-          social_media_urls: {},
-          street_address: undefined,
-          tier: 1,
-          un_sdg: 0,
-          url: "www.test.com",
-        },
-        withdraw_before_maturity: false,
-      },
+      create_endowment: mockPayload,
     });
   });
 });
@@ -86,4 +59,39 @@ const CHARITY: Charity = {
     JunoWallet: PLACEHOLDER_WALLET.address,
     KycDonorsOnly: false,
   },
+};
+
+const mockPayload: RegistrarCreateEndowmentPayload = {
+  owner: CHARITY.Metadata.JunoWallet,
+  beneficiary: CHARITY.Metadata.JunoWallet,
+  withdraw_before_maturity: false,
+  maturity_time: undefined,
+  maturity_height: undefined,
+  profile: {
+    name: CHARITY.Registration.CharityName, // name of the Charity Endowment
+    overview: CHARITY.Metadata.CharityOverview,
+    un_sdg: CHARITY.Registration.UN_SDG, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+    tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+    logo: CHARITY.Metadata.CharityLogo.publicUrl || "",
+    image: CHARITY.Metadata.Banner.publicUrl || "",
+    url: CHARITY.Registration.Website,
+    registration_number: "",
+    country_of_origin: "",
+    street_address: "",
+    contact_email: CHARITY.Registration.CharityName_ContactEmail?.split("_")[1],
+    social_media_urls: {
+      facebook: "",
+      linkedin: "",
+      twitter: "",
+    },
+    number_of_employees: 1,
+    average_annual_budget: "",
+    annual_revenue: "",
+    charity_navigator_rating: "",
+    endow_type: "Charity",
+  },
+  cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],
+  kyc_donors_only: CHARITY.Metadata.KycDonorsOnly, //set to false initially
+  cw3_threshold: { absolute_percentage: { percentage: "0.5" } }, //set initial 50%
+  cw3_max_voting_period: 86400,
 };

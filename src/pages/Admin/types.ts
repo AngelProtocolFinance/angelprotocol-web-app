@@ -1,3 +1,4 @@
+import { Denoms } from "types/lists";
 import { CharityApplication } from "types/server/aws";
 import {
   AllianceMember,
@@ -11,9 +12,8 @@ import {
   UpdateProfilePayload,
 } from "types/server/contracts";
 import { DiffSet } from "types/utils";
-import { denoms } from "constants/currency";
 
-export type AdminParams = { address: string };
+export type AdminParams = { id: string };
 export type ProposalParams = { id: string };
 
 export type Templates =
@@ -124,6 +124,7 @@ export type RegistrarConfigUpdateMeta = MetaConstructor<
 export type EndowmentStatusMeta = MetaConstructor<
   "reg_endow_status",
   {
+    id: number;
     fromStatus: keyof EndowmentStatus;
     toStatus: EndowmentStatusStrNum;
     beneficiary?: string;
@@ -168,8 +169,8 @@ export type CW3ConfigValues = ProposalBase &
   FormCW3Config & { initial: FormCW3Config; isTime: boolean };
 
 export type EndowmentUpdateValues = ProposalBase & {
-  endowmentAddr: string;
-  status: EndowmentStatusStrNum;
+  id: number;
+  status: Exclude<EndowmentStatusStrNum, "0">;
   //address to transfer funds when endowment will be closed
   beneficiary?: string;
 
@@ -199,7 +200,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: denoms;
+  currency: Denoms; //NOTE: Denoms might contain non-juno denoms
   haloBalance: number;
   usdBalance: number;
 };
@@ -234,5 +235,4 @@ export type SortKey = keyof Pick<
   | "RegistrationDate"
   | "RegistrationStatus"
   | "CharityName_ContactEmail"
-  | "JunoWallet"
 >;

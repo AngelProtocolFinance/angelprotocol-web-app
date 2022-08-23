@@ -4,42 +4,49 @@ import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { Profile as IProfile } from "types/server/contracts";
 import { useEndowmentProfileQuery } from "services/juno/account";
-import { useErrorContext } from "contexts/ErrorContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import { idParamToNum } from "helpers";
 import { appRoutes } from "constants/routes";
 import Content from "./Content";
 import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileWithAddr = IProfile & { address: string };
+type ProfileWithAddr = IProfile & { id: number };
 
 const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
 
 export const useProfile = () => {
   const val = useContext(context);
-  const { handleError } = useErrorContext();
-  if (Object.entries(val).length > 0) {
-    return val;
+  if (Object.entries(val).length <= 0) {
+    throw new Error(
+      "useProfile hook should only be used inside Profile context"
+    );
   }
-  handleError("this hook can only be used inside profile");
+  return val; //val is defined here
 };
 
 export default function Profile() {
-  const { address } = useParams<ProfileParams>();
+  const { id } = useParams<ProfileParams>();
+  const numId = idParamToNum(id);
   const {
     data: profile,
     isLoading,
     isError,
-  } = useEndowmentProfileQuery(address!, { skip: !address });
+  } = useEndowmentProfileQuery({ id: numId }, { skip: numId === 0 });
 
   if (isLoading) return <Skeleton />;
   if (isError || !profile) return <PageError />;
 
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
-      <context.Provider value={{ ...profile, address: address! }}>
+      <context.Provider
+        value={{
+          ...profile,
+          id: numId, //!isError && numId is valid id
+        }}
+      >
         <Nav />
         <Header {...profile} />
         <Content {...profile} classes="row-span-2" />

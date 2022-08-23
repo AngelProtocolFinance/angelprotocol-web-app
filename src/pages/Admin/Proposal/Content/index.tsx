@@ -5,7 +5,7 @@ import {
   Proposal,
 } from "types/server/contracts";
 import Icon from "components/Icon";
-import DetailLabel from "../../common/DetailLabel";
+import { DetailLabel } from "components/admin";
 import Preview from "./Preview/Preview";
 
 export default function ProposalContent(props: Proposal) {

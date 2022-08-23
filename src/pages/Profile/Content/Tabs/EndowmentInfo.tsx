@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { ProfileParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
-import { humanize } from "helpers";
+import { humanize, idParamToNum } from "helpers";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
-  const { address } = useParams<ProfileParams>();
+  const { id } = useParams<ProfileParams>();
+  const numId = idParamToNum(id);
   //this component will not be rendered if address is undefined or incorrect
-  const { data } = useDepositTransactionsQuery(address!);
+  const { data } = useDepositTransactionsQuery(numId, { skip: numId === 0 });
   const accountDetails = [
     {
       type: "Liquid Account",

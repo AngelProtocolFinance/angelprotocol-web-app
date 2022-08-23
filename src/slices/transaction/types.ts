@@ -1,5 +1,5 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { StdFee } from "@cosmjs/stargate";
+import { DeliverTxResponse, StdFee } from "@cosmjs/stargate";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
@@ -97,7 +97,10 @@ type BaseArgs = {
   successMessage?: string;
   successLink?: SuccessLink;
   wallet: WalletState | undefined;
-  setLogProcessor?(rawLogs?: string): AsyncThunkAction<void, any, {}>;
+  onSuccess?(
+    res: DeliverTxResponse,
+    chain: Chain
+  ): AsyncThunkAction<void, any, {}>;
 };
 
 type TerraWithMsg = BaseArgs & {

@@ -5,7 +5,7 @@ import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin"));
-const Charity = lazy(() => import("pages/Profile"));
+const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
 // NOTE: Governance will be reenabled when we relaunch the $HALO token
 // const Governance = lazy(() => import("pages/Governance/Governance"));
@@ -22,16 +22,11 @@ export default function Views() {
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
-        <Route path={`${appRoutes.charity}/:address/*`} element={<Charity />} />
+        <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
         <Route path={appRoutes.login} element={<Login />} />
         <Route path={appRoutes.tca} element={<TCA />} />
         {/* <Route path={`${appRoutes.govern}/*`} element={<Governance />} /> */}
-        <Route path={`${appRoutes.admin}/:address/*`} element={<Admin />} />
-        <Route
-          path={`${appRoutes.donations}/:address`}
-          element={<Donations />}
-        />
-
+        <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
         <Route
           path={`${appRoutes.donations}/:address`}
           element={<Donations />}
