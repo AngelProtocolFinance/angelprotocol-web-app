@@ -16,7 +16,7 @@ const FormInfoSchema = Yup.object().shape({
   refer: Yup.string().required("Please enter your registration reference."),
 });
 
-export default function WelcomeScreen() {
+export default function LandingPage() {
   const { handleError } = useErrorContext();
   const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
   const navigate = useNavigate();
