@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { PropsWithChildren } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -53,42 +54,64 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center">
-      <span className="text-3xl font-bold">
-        Thank you for registering, we'd love to have you on board!
-      </span>
-      <span className="text-xl mb-5">
-        You're just steps away from bringing all the benefits of endowments to
-        your organization.
-      </span>
-      <Button onClick={handleStart} className="bg-orange w-48 h-12">
-        Start
-      </Button>
-      <p className="text-xl font-bold text-thin-blue">OR</p>
-      <form
-        onSubmit={handleSubmit(onResume)}
-        className="flex flex-col items-center gap-2 w-full mb-5"
-      >
-        <input
-          {...register("refer")}
-          className="rounded-md outline-none border-none w-3/5 md:w-2/5 px-3 py-2 text-black"
-          placeholder="Enter your registration reference"
-          type="text"
-        />
-        <p className="text-failed-red">{errors.refer?.message}</p>
-        <Button
-          submit
-          className="bg-thin-blue w-48 h-12"
-          isLoading={isSubmitting}
-        >
-          Resume
+    <div className="grid grid-cols-2 gap-5 w-full">
+      <Section>
+        <Heading>
+          Thank you for registering, we'd love to have you on board!
+        </Heading>
+        <Subheading>
+          You're just steps away from bringing all the benefits of endowments to
+          your organization.
+        </Subheading>
+        <Button onClick={handleStart} className="bg-orange w-48 h-12">
+          Start
         </Button>
-      </form>
-      <ButtonMailTo
-        label="Having trouble resuming your registration?"
-        mailTo="support@angelprotocol.io"
-        subject="Charity Registration: Trouble with confirmation email"
-      />
+      </Section>
+
+      <Section>
+        <Heading>Do you wish to continue your registration?</Heading>
+        <Subheading>
+          Enter your registration reference below and resume where you left off.
+        </Subheading>
+
+        <form
+          onSubmit={handleSubmit(onResume)}
+          className="flex flex-col items-center gap-2 w-5/6 mb-5"
+        >
+          <input
+            {...register("refer")}
+            className="rounded-md outline-none border-none w-full px-3 py-2 text-black"
+            placeholder="Enter your registration reference"
+            type="text"
+          />
+          <p className="text-failed-red">{errors.refer?.message}</p>
+          <Button
+            submit
+            className="bg-thin-blue w-48 h-12"
+            isLoading={isSubmitting}
+          >
+            Resume
+          </Button>
+        </form>
+
+        <ButtonMailTo
+          label="Having trouble resuming your registration?"
+          mailTo="support@angelprotocol.io"
+          subject="Charity Registration: Trouble with confirmation email"
+        />
+      </Section>
     </div>
   );
+}
+
+function Section({ children }: PropsWithChildren<{}>) {
+  return <div className="flex flex-col gap-3 items-center p-4">{children}</div>;
+}
+
+function Heading({ children }: PropsWithChildren<{}>) {
+  return <span className="text-2xl font-bold">{children}</span>;
+}
+
+function Subheading({ children }: PropsWithChildren<{}>) {
+  return <span className="text-xl mb-5">{children}</span>;
 }
