@@ -1,5 +1,5 @@
 import { StrictMode, Suspense, lazy } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import Loader from "components/Loader";
@@ -14,7 +14,10 @@ const LoaderComponent = () => (
   <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container as Element); // createRoot(container!) if you use TypeScript
+
+root.render(
   <StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
@@ -25,8 +28,7 @@ ReactDOM.render(
         </BrowserRouter>
       </Provider>
     </ErrorBoundary>
-  </StrictMode>,
-  document.getElementById("root")
+  </StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
