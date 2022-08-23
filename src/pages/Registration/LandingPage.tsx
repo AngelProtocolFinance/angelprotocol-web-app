@@ -54,7 +54,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-5 w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
       <Section>
         <Heading>
           Thank you for registering, we'd love to have you on board!
