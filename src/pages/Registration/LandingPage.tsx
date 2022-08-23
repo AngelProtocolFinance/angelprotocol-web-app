@@ -73,7 +73,6 @@ export default function LandingPage() {
         <Subheading>
           Enter your registration reference below and resume where you left off.
         </Subheading>
-
         <form
           onSubmit={handleSubmit(onResume)}
           className="flex flex-col items-center gap-2 w-full lg:w-5/6 mb-5"
@@ -93,7 +92,6 @@ export default function LandingPage() {
             Resume
           </Button>
         </form>
-
         <ButtonMailTo
           label="Having trouble resuming your registration?"
           mailTo="support@angelprotocol.io"
