@@ -5,7 +5,7 @@ import VoteOption from "../VoteOption";
 import Amount from "./Amount";
 import useVote from "./useVote";
 
-export default function VoterForm() {
+export default function Form() {
   const { vote, isFormLoading, isSubmitDisabled } = useVote();
   return (
     <form

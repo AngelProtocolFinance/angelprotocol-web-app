@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor from "components/Transactor";
-import ClaimForm from "./ClaimForm";
+import ClaimForm from ".";
 
 export default function useClaimer() {
   const { showModal } = useModalContext();

@@ -1,8 +1,10 @@
 import { useCallback } from "react";
 import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
+import { useChaimQuery } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useWalletContext } from "contexts/Wallet";
+import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
@@ -12,24 +14,38 @@ import { logger, processEstimateError } from "helpers";
 import { logEndowmentId } from "./logEndowmentId";
 
 export default function useSubmit() {
-  const { wallet } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
+  const { info } = useWalletContext();
+  const { data: chain } = useChaimQuery(info!, { skip: !info });
+
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        const contract = new Registrar(wallet);
+        if (!info) {
+          showModal(Popup, { message: "wallet is disconnected" });
+          return;
+        }
+
+        if (!chain) {
+          showModal(Popup, { message: "Network unsupported" });
+          return;
+        }
+
+        const verifiedChain = { ...chain, wallet: info };
+
+        const contract = new Registrar(verifiedChain);
         const msg = contract.createEndowmentCreationMsg(charity);
         dispatch(
           sendCosmosTx({
-            wallet,
+            chain: verifiedChain,
             msgs: [msg],
             onSuccess(res) {
               return logEndowmentId({
                 res,
-                wallet: wallet!, //wallet is defined at this point
+                chain: verifiedChain, //wallet is defined at this point
                 PK: charity.ContactPerson.PK!, //registration data is complete at this point
               });
             },
@@ -43,7 +59,7 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [dispatch, showModal, wallet]
+    [dispatch, showModal, chain, info]
   );
 
   return { submit, isSubmitting: form_loading };

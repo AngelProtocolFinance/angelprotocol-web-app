@@ -1,7 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SuccessLink } from "slices/transaction/types";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { VerifiedChain } from "contexts/ChainGuard";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
@@ -19,12 +19,12 @@ export const logWithdrawProposal = createAsyncThunk(
     {
       res,
       proposalLink,
-      wallet,
+      chain,
       ...payload
     }: {
       res: DeliverTxResponse;
       proposalLink: SuccessLink;
-      wallet: WalletState;
+      chain: VerifiedChain;
 
       endowment_multisig: string;
       proposal_chain_id: string;
@@ -57,7 +57,7 @@ export const logWithdrawProposal = createAsyncThunk(
           step: "success",
           message: "Withdraw proposal submitted",
           txHash: res.transactionHash,
-          chain: wallet.chain,
+          chain: chain,
           successLink: proposalLink,
         })
       );

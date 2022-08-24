@@ -11,7 +11,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: this.wallet?.chain.native_currency.token_id,
+            denom: this.chain.native_currency.token_id,
           },
         }
       : {
@@ -38,7 +38,7 @@ export default class LP extends Contract {
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     // we should never allow creating messages without a connected wallet
-    const denom = this.wallet!.chain.native_currency.token_id;
+    const denom = this.chain.native_currency.token_id;
 
     return this.createExecuteContractMsg(
       LP.address,
@@ -65,7 +65,7 @@ export default class LP extends Contract {
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    const halo = new CW20(this.wallet, contracts.halo_token);
+    const halo = new CW20(this.chain, contracts.halo_token);
     return halo.createSendMsg(halo_amount, LP.address, {
       swap: {
         belief_price,

@@ -1,11 +1,6 @@
 import { Popover } from "@headlessui/react";
-import { WalletInfo, useWalletContext } from "contexts/Wallet";
-import {
-  WalletState,
-  useGetWallet,
-} from "contexts/WalletContext/WalletContext";
-import Icon from "components/Icon";
-import { humanize, maskAddress } from "helpers";
+import { WalletInfo } from "contexts/Wallet";
+import { maskAddress } from "helpers";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected

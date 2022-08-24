@@ -2,19 +2,19 @@ import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { Path, useController } from "react-hook-form";
 import { Token } from "types/server/aws";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import Icon from "./Icon";
 
 type Base = { token: Token };
 export default function TokenSelector<T extends Base>(props: {
   fieldName: Path<T>;
 }) {
-  const { wallet } = useGetWallet();
+  const chain = useChain();
   const {
     field: { onChange: onTokenChange, value: token },
   } = useController<T>({ name: props.fieldName });
 
-  const coins = wallet?.coins || [];
+  const coins = [chain.native_currency].concat(chain.tokens);
   const [symbol, setSymbol] = useState("");
 
   const filteredCoins =

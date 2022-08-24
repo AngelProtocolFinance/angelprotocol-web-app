@@ -118,7 +118,10 @@ export type Chain = {
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: Extract<TokenType, "juno-native" | "terra-native" | "evm-native">;
+  type: Extract<
+    TokenType,
+    "juno-native" | "terra-native" | "evm-native" | "placeholder"
+  >;
 };
 
 /** /leaderboards */

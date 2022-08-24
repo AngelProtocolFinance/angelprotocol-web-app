@@ -5,7 +5,7 @@ import { Commission, Fee, SwapRate } from "./Misc";
 import Output from "./Output";
 import useSwap from "./useSwap";
 
-export default function SwapForm() {
+export default function Form() {
   const { swap, isFormLoading, isSubmitDisabled, switchCurrency } = useSwap();
   return (
     <form

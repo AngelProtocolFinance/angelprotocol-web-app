@@ -7,7 +7,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -17,8 +16,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
-  const { cw3, proposalLink } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, proposalLink, chain } = useAdminResources();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -50,7 +48,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new IndexFund(wallet);
+    const indexFundContract = new IndexFund(chain);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -79,7 +77,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(chain, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -89,7 +87,7 @@ export default function useCreateFund() {
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

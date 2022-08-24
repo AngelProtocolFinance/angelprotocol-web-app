@@ -4,7 +4,7 @@ import Field from "./Field";
 import useCreatePoll from "./useCreatePoll";
 
 export default function PollerForm() {
-  const { createPoll, isSubmitDisabled, isFormLoading } = useCreatePoll();
+  const { createPoll, isSubmitDisabled } = useCreatePoll();
   return (
     <form
       onSubmit={createPoll}
@@ -22,7 +22,7 @@ export default function PollerForm() {
         className="bg-angel-orange disabled:bg-grey-accent p-3 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {isFormLoading ? "estimating fee.." : "proceed"}
+        Proceed
       </button>
     </form>
   );

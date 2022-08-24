@@ -15,7 +15,7 @@ export default function useSwap() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<SwapValues>();
 
-  const { tx, wallet } = useSwapEstimator();
+  const { tx, chain } = useSwapEstimator();
   const dispatch = useSetter();
 
   const isBuy = watch("is_buy");
@@ -26,7 +26,7 @@ export default function useSwap() {
   function swap() {
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([]),

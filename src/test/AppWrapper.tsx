@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
-import WalletContext from "contexts/WalletContext/WalletContext";
+import Wallet from "contexts/Wallet";
 import { store } from "store/store";
 
 const testnet: NetworkInfo = {
@@ -21,9 +21,9 @@ export default function AppWrapper(props: PropsWithChildren<{}>) {
     <MemoryRouter>
       <Provider store={store}>
         <StaticWalletProvider defaultNetwork={testnet}>
-          <WalletContext>
+          <Wallet>
             <ModalContext backdropClasses="">{props.children}</ModalContext>
-          </WalletContext>
+          </Wallet>
         </StaticWalletProvider>
       </Provider>
     </MemoryRouter>

@@ -15,7 +15,6 @@ import {
   registrarTags,
 } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -24,20 +23,19 @@ import { useAdminResources } from "../Guard";
 
 export default function PollAction(props: ProposalDetails) {
   const latestBlock = useLatestBlock();
-  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { cw3 } = useAdminResources();
+  const { cw3, chain } = useAdminResources();
 
   const showAdminVoter = useAdminVoter(props.id);
 
   function executeProposal() {
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(chain, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [execMsg],
         tagPayloads: getTagPayloads(props.meta),
       })
@@ -52,8 +50,8 @@ export default function PollAction(props: ProposalDetails) {
       : +latestBlock > props.expires.at_height;
 
   const userVote = useMemo(
-    () => props.votes.find((vote) => vote.voter === wallet?.address),
-    [props.votes, wallet?.address]
+    () => props.votes.find((vote) => vote.voter === chain.wallet.address),
+    [props.votes, chain.wallet.address]
   );
 
   const EXED = props.status === "executed";

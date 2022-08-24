@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
 
-export default function Catcher(props: { airdrops: Airdrops }) {
+export default function Claimables(props: { airdrops: Airdrops }) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
     <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-[15rem] w-full">

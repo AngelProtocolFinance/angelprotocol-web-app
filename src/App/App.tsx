@@ -6,7 +6,6 @@ import {
 import { useEffect, useState } from "react";
 import ModalContext from "contexts/ModalContext";
 import Wallet from "contexts/Wallet";
-import WalletContext from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
 import Footer from "./Footer";
 import Header from "./Header";

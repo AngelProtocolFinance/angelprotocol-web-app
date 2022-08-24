@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { SwapValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredTokenAmount } from "schemas/number";
-import SwapForm from "./SwapForm";
+import SwapForm from "./Form";
 
 const shape: SchemaShape<SwapValues> = { amount: requiredTokenAmount };
 const schema = Yup.object().shape(shape);

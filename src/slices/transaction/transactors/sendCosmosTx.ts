@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
 import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
-import { WalletDisconnectedError } from "errors/errors";
 import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
@@ -14,29 +12,15 @@ export const sendCosmosTx = createAsyncThunk(
     };
 
     try {
-      if (!args.wallet) {
-        throw new WalletDisconnectedError();
-      }
       updateStage({ step: "submit", message: "Submitting transaction..." });
-      const contract = new Contract(args.wallet);
+      const contract = new Contract(args.chain);
       let tx: TxOptions;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
       } else {
         const fee = await contract.estimateFee(args.msgs);
-
-        const feeAmount = extractFeeAmount(
-          fee,
-          args.wallet.chain.native_currency.token_id
-        );
-        if (feeAmount > args.wallet.displayCoin.balance) {
-          updateStage({
-            step: "error",
-            message: `Not enough balance to pay for fees`,
-          });
-          return;
-        }
+        //let wallet handle fee balance checks
         tx = { msgs: args.msgs, fee };
       }
 
@@ -45,14 +29,14 @@ export const sendCosmosTx = createAsyncThunk(
       if (!response.code) {
         if (args.onSuccess) {
           //success thunk should show user final success msg
-          dispatch(args.onSuccess(response, args.wallet.chain));
+          dispatch(args.onSuccess(response, args.chain));
         } else {
           updateStage({
             step: "success",
             message: args.successMessage || "Transaction succesful!",
             txHash: response.transactionHash,
             rawLog: response.rawLog,
-            chain: args.wallet.chain,
+            chain: args.chain,
             successLink: args.successLink,
           });
         }
@@ -65,7 +49,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.wallet.chain.chain_id,
+          chainId: args.chain.chain_id,
         });
       }
     } catch (err) {

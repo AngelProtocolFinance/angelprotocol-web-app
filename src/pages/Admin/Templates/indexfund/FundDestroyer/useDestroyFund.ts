@@ -4,7 +4,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -19,15 +18,14 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { cw3, proposalLink } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, proposalLink, chain } = useAdminResources();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFundContract = new IndexFund(wallet);
+    const indexFundContract = new IndexFund(chain);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
@@ -39,7 +37,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(chain, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -49,7 +47,7 @@ export default function useDestroyFund() {
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

@@ -8,7 +8,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -20,8 +19,7 @@ type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
 export default function usePropose() {
-  const { cw3, proposalLink } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, proposalLink, chain } = useAdminResources();
   const {
     getValues,
     handleSubmit,
@@ -45,7 +43,7 @@ export default function usePropose() {
       return;
     }
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(chain, cw3);
 
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
@@ -73,7 +71,7 @@ export default function usePropose() {
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

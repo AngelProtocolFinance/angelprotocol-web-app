@@ -6,11 +6,11 @@ import useEstimator from "./useEstimator";
 
 export default function useVote() {
   const dispatch = useSetter();
-  const { tx, wallet } = useEstimator();
+  const { tx, chain } = useEstimator();
   function vote() {
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([

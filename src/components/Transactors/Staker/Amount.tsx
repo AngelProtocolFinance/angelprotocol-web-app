@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
 import { condense, humanize, roundDown } from "helpers";
 import { symbols } from "constants/currency";
 import Balance from "./Balance";
-import useStakerBalance from "./useStakerBalance";
 
 export default function Amount() {
   const {
@@ -14,7 +14,10 @@ export default function Amount() {
     setValue,
   } = useFormContext<HaloStakingValues>();
   const is_stake = watch("is_stake");
-  const { balance, locked } = useStakerBalance(is_stake);
+  //TODO: this value will be moved to Form context level
+  // const { balance, locked } = useStakerBalance(is_stake);
+  const balance = new Decimal(0);
+  const locked = new Decimal(0);
   const onMaxClick = () => {
     setValue("amount", roundDown(condense(balance.sub(locked)), 3), {
       shouldValidate: true,

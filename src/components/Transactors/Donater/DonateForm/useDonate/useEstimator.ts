@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { TxOptions } from "slices/transaction/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useLazyBalanceQuery } from "services/apes";
+import { useChain } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -43,8 +44,9 @@ export default function useEstimator() {
     getFieldState,
     getValues,
   } = useFormContext<DonateValues>();
-  const { wallet } = useGetWallet();
 
+  const [queryBalance] = useLazyBalanceQuery();
+  const chain = useChain();
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const selectedToken = watch("token");
@@ -59,17 +61,22 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          dispatch(setFormError("Wallet is not connected"));
-          return;
-        }
-
         if (!isDirty || !debounced_amount || getFieldState("amount").error) {
           dispatch(setFee(0));
           return;
         }
 
-        if (debounced_amount > +selectedToken.balance) {
+        const { data: tokenBalance = 0 } = await queryBalance({
+          token: selectedToken,
+          chain,
+        });
+
+        const { data: nativeBalance = 0 } = await queryBalance({
+          token: chain.native_currency,
+          chain,
+        });
+
+        if (debounced_amount > tokenBalance) {
           setError("amount", { message: "not enough balance" });
           return;
         }
@@ -77,13 +84,13 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         // juno transaction, send or contract interaction
-        if (wallet.chain.type === "juno-native") {
+        if (chain.type === "juno-native") {
           if (
             selectedToken.type === "juno-native" ||
             selectedToken.type === "ibc"
           ) {
             let msg: MsgSendEncodeObject | MsgExecuteContractEncodeObject;
-            const contract = new Account(wallet);
+            const contract = new Account(chain);
             if (isSendToContract) {
               //TODO: remove this once accounts have initial balances for testing
               alert("you are sending directly to contract");
@@ -106,11 +113,11 @@ export default function useEstimator() {
             const fee = await contract.estimateFee([msg]);
             const feeAmount = extractFeeAmount(
               fee,
-              wallet.chain.native_currency.token_id
+              chain.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
+            if (debounced_amount + feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -118,7 +125,7 @@ export default function useEstimator() {
             }
             setCosmosTx({ msgs: [msg], fee });
           } else {
-            const contract = new CW20(wallet, selectedToken.token_id);
+            const contract = new CW20(chain, selectedToken.token_id);
             const msg = contract.createTransferMsg(
               debounced_amount,
               ap_wallets.juno
@@ -127,12 +134,12 @@ export default function useEstimator() {
 
             const feeAmount = extractFeeAmount(
               fee,
-              wallet.chain.native_currency.token_id
+              chain.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -142,7 +149,7 @@ export default function useEstimator() {
           }
         }
         // terra native transaction, send or contract interaction
-        else if (wallet.chain.type === "terra-native") {
+        else if (chain.type === "terra-native") {
           const amount = new Decimal(debounced_amount)
             .mul(1e6)
             .divToInt(1)
@@ -151,18 +158,18 @@ export default function useEstimator() {
             selectedToken.type === "terra-native" ||
             selectedToken.type === "ibc"
           ) {
-            const msg = new MsgSend(wallet.address, ap_wallets.terra, [
+            const msg = new MsgSend(chain.wallet.address, ap_wallets.terra, [
               new Coin(selectedToken.token_id, amount),
             ]);
-            const fee = await estimateTerraFee(wallet, [msg]);
+            const fee = await estimateTerraFee(chain, [msg]);
 
             const feeAmount = extractFeeAmount(
               fee,
-              wallet.chain.native_currency.token_id
+              chain.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
+            if (debounced_amount + feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -171,7 +178,7 @@ export default function useEstimator() {
             setTerraTx({ msgs: [msg], fee });
           } else {
             const msg = new MsgExecuteContract(
-              wallet.address,
+              chain.wallet.address,
               selectedToken.token_id,
               {
                 transfer: {
@@ -180,14 +187,14 @@ export default function useEstimator() {
                 },
               }
             );
-            const fee = await estimateTerraFee(wallet, [msg]);
+            const fee = await estimateTerraFee(chain, [msg]);
 
             const feeAmount = extractFeeAmount(
               fee,
-              wallet.chain.native_currency.token_id
+              chain.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -199,7 +206,7 @@ export default function useEstimator() {
         // evm transactions
         else {
           const provider = new ethers.providers.Web3Provider(
-            getProvider(wallet.providerId) as any
+            getProvider(chain.wallet.id) as any
           );
           //no network request
           const signer = provider.getSigner();
@@ -221,7 +228,7 @@ export default function useEstimator() {
             );
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
+            if (debounced_amount + feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -244,7 +251,7 @@ export default function useEstimator() {
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= nativeBalance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -270,12 +277,13 @@ export default function useEstimator() {
     debounced_split,
     isDirty,
     selectedToken,
-    wallet,
+    chain,
     dispatch,
     getFieldState,
     setError,
     getValues,
+    queryBalance,
   ]);
 
-  return { evmTx, terraTx, cosmosTx };
+  return { evmTx, terraTx, cosmosTx, chain };
 }

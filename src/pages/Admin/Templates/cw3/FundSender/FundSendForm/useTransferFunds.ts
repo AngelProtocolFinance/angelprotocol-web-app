@@ -7,7 +7,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -24,9 +23,8 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, proposalLink, chain } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
-  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function transferFunds(data: FundSendValues) {
@@ -41,7 +39,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(wallet, contracts.halo_token);
+    const cw20Contract = new CW20(chain, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -59,7 +57,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3(chain, cw3);
     const fundTransferMeta: FundSendMeta = {
       type: "cw3_transfer",
       data: {
@@ -77,7 +75,7 @@ export default function useTransferFunds() {
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

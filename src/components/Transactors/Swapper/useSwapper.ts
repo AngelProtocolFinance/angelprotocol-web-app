@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor from "components/Transactor";
-import Swapper from "./Swapper";
+import Swapper from ".";
 
 export default function useSwapper() {
   const { showModal } = useModalContext();

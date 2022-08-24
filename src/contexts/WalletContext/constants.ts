@@ -54,5 +54,5 @@ export const placeholderChain: Chain = {
       token_id: "utoken",
     },
   ],
-  type: "placeholder",
+  type: "placeholder" as any,
 };

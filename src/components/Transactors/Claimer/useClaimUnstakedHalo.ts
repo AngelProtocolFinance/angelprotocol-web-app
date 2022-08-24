@@ -1,20 +1,23 @@
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useGetter, useSetter } from "store/accessors";
+import { useChain } from "contexts/ChainGuard";
+import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import useClaimEstimator from "./useClaimEstimator";
+import Gov from "contracts/Gov";
 
 export default function useClaimUnstakedHalo() {
-  const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { tx, wallet } = useClaimEstimator();
   const dispatch = useSetter();
+  const chain = useChain();
 
   function claimUnstakedHalo() {
+    const contract = new Gov(chain);
+    const claimMsg = contract.createGovClaimMsg();
+
     dispatch(
       sendCosmosTx({
-        wallet,
-        tx: tx!,
+        chain,
+        msgs: [claimMsg],
         tagPayloads: [
           invalidateJunoTags([
             { type: junoTags.gov, id: govTags.staker },
@@ -28,7 +31,5 @@ export default function useClaimUnstakedHalo() {
 
   return {
     claimUnstakedHalo,
-    isFormLoading: form_loading,
-    isSubmitDisabled: form_loading || form_error !== null,
   };
 }

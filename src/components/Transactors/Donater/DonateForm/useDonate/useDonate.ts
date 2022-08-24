@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { InitialStage } from "slices/transaction/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
 import {
@@ -14,7 +13,6 @@ import {
 import useEstimator from "./useEstimator";
 
 export default function useDonate() {
-  const { wallet, isLoading } = useGetWallet();
   const terraWallet = useConnectedWallet(); // sendTerraDonation requires this wallet to send donations
   const { form_loading, form_error, stage } = useGetter(
     (state) => state.transaction
@@ -28,7 +26,7 @@ export default function useDonate() {
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const dispatch = useSetter();
-  const { evmTx, terraTx, cosmosTx } = useEstimator();
+  const { evmTx, terraTx, cosmosTx, chain } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
 
@@ -37,15 +35,15 @@ export default function useDonate() {
     //   showKycForm();
     //   return;
     // }
-    switch (wallet?.chain.type) {
+    switch (chain.type) {
       case "evm-native":
-        dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
+        dispatch(sendEthDonation({ chain, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
         dispatch(
           sendTerraDonation({
             wallet: terraWallet,
-            chain: wallet.chain,
+            chain,
             tx: terraTx!,
             donateValues: data,
             kycData,
@@ -55,7 +53,7 @@ export default function useDonate() {
       case "juno-native":
         dispatch(
           sendCosmosDonation({
-            wallet,
+            chain,
             tx: cosmosTx!,
             donateValues: data,
             kycData,
@@ -88,7 +86,6 @@ export default function useDonate() {
       form_loading ||
       !isValid ||
       !isDirty ||
-      isLoading ||
       !isKycCompleted,
     isFormLoading: form_loading,
     to: getValues("to"),

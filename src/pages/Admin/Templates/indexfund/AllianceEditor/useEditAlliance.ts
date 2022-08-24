@@ -5,7 +5,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -15,8 +14,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { proposalLink, cw3 } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { proposalLink, cw3, chain } = useAdminResources();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -39,7 +37,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new IndexFund(wallet);
+    const indexFundContract = new IndexFund(chain);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -64,7 +62,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new CW3(wallet, cw3);
+    const adminContract = new CW3(chain, cw3);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {
@@ -88,7 +86,7 @@ export default function useEditAlliance() {
 
     dispatch(
       sendCosmosTx({
-        wallet,
+        chain,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

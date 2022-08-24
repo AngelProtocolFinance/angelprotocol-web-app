@@ -2,10 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { Chain, KYCData, Receiver } from "types/server/aws";
+import { KYCData, Receiver } from "types/server/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
+import { VerifiedChain } from "contexts/ChainGuard";
 import { DonateValues } from "components/Transactors/Donater";
-import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import handleTxError from "../../handleTxError";
 import logDonation from "../../logDonation";
 import transactionSlice, { setStage } from "../../transactionSlice";
@@ -13,7 +14,7 @@ import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
 type TerraDonateArgs = {
   wallet: ConnectedWallet | undefined;
-  chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
+  chain: VerifiedChain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;
@@ -30,14 +31,7 @@ export const sendTerraDonation = createAsyncThunk(
         throw new WalletDisconnectedError();
       }
 
-      if (args.wallet.network.chainID !== args.chain.chain_id) {
-        throw new UnexpectedStateError(
-          `Connected to the Terra Station wallet on '${args.wallet.network.chainID}', but passed chain data on '${args.chain.chain_id}' network`
-        );
-      }
-
       updateStage({ step: "submit", message: "Submitting transaction.." });
-
       const response = await args.wallet.post(args.tx);
 
       if (response.success) {

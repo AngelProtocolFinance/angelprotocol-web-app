@@ -3,30 +3,28 @@ import { CreatePollValues } from "./types";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
-import { useGetter, useSetter } from "store/accessors";
+import { useChain } from "contexts/ChainGuard";
+import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
-import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {
   const {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<CreatePollValues>();
-
-  const { form_error, form_loading } = useGetter((state) => state.transaction);
-  const { maxFee, wallet } = useCreatePollEstimate();
+  const chain = useChain();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Gov(wallet);
+    const contract = new Gov(chain);
     const { amount, title, description, link } = data;
     const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
     dispatch(
       sendCosmosTx({
-        wallet,
-        tx: { msgs: [pollMsg], fee: maxFee! },
+        chain,
+        msgs: [pollMsg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),
           invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
@@ -34,15 +32,8 @@ export default function useCreatePoll() {
       })
     );
   }
-
   return {
     createPoll: handleSubmit(createPoll),
-    isSubmitDisabled:
-      !isValid ||
-      !isDirty ||
-      form_error !== null ||
-      form_loading ||
-      isSubmitting,
-    isFormLoading: form_loading,
+    isSubmitDisabled: !isValid || !isDirty || isSubmitting,
   };
 }

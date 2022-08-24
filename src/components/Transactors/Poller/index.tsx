@@ -19,3 +19,12 @@ export default function Poller(props: Props) {
     </FormProvider>
   );
 }
+
+/** TODO: fetch resources at top level and do checks on schema level
+ * const haloBalance = wallet.getBalance(denoms.halo);
+        if (amount >= haloBalance) {
+          setError("amount", { message: "not enough balance" });
+          return;
+        }
+ * 
+ */

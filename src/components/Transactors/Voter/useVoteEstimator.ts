@@ -4,8 +4,9 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { Vote } from "types/server/contracts";
+import { useLazyBalanceQuery } from "services/apes";
 import { useGovStaker } from "services/juno/gov/queriers";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -25,7 +26,8 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
-  const { wallet } = useGetWallet();
+  const chain = useChain();
+  const [queryBalance] = useLazyBalanceQuery();
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
@@ -35,11 +37,6 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          dispatch(setFormError("Wallet is disconnected"));
-          return;
-        }
-
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
@@ -74,7 +71,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet);
+        const contract = new Gov(chain);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -83,14 +80,16 @@ export default function useVoteEstimator() {
 
         const fee = await contract.estimateFee([voteMsg]);
 
-        const feeAmount = extractFeeAmount(
-          fee,
-          wallet.chain.native_currency.token_id
-        );
+        const feeAmount = extractFeeAmount(fee, chain.native_currency.token_id);
         dispatch(setFee(feeAmount));
 
+        const { data: balance = 0 } = await queryBalance({
+          token: chain.native_currency,
+          chain,
+        });
+
         //2nd balance check including fees
-        if (feeAmount >= wallet.chain.native_currency.balance) {
+        if (feeAmount >= balance) {
           setError("amount", { message: "Not enough balance to pay for fees" });
           return;
         }
@@ -106,7 +105,7 @@ export default function useVoteEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_vote, wallet, govStaker, isValid, isDirty]);
+  }, [debounced_amount, debounced_vote, chain, govStaker, isValid, isDirty]);
 
-  return { tx, wallet };
+  return { tx, chain };
 }

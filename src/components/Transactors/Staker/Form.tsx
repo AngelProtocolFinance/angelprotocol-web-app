@@ -3,8 +3,8 @@ import Status from "../Status";
 import Amount from "./Amount";
 import useStakeUnstake from "./useStakeUnstake";
 
-export default function StakeForm() {
-  const { stakeOrUnstake, isFormLoading, isSubmitDisabled } = useStakeUnstake();
+export default function Form() {
+  const { stakeOrUnstake, isSubmitDisabled } = useStakeUnstake();
   return (
     <form
       onSubmit={stakeOrUnstake}
@@ -19,7 +19,7 @@ export default function StakeForm() {
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {isFormLoading ? "estimating fee.." : "proceed"}
+        Proceed
       </button>
     </form>
   );

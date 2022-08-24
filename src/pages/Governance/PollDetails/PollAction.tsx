@@ -1,21 +1,68 @@
 import { ReactNode } from "react";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
+import {
+  apesTags,
+  customTags,
+  invalidateApesTags,
+  useChaimQuery,
+} from "services/apes";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags } from "services/juno/tags";
+import { VerifiedChain } from "contexts/ChainGuard";
+import { useModalContext } from "contexts/ModalContext";
+import { useWalletContext } from "contexts/Wallet";
+import Popup from "components/Popup";
 import useVoter from "components/Transactors/Voter/useVoter";
+import { useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import Gov from "contracts/Gov";
 import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {
-  const { wallet } = useGetWallet();
+  const { info: walletInfo } = useWalletContext();
+  const { data: chain } = useChaimQuery(walletInfo!, { skip: !walletInfo });
+  const dispatch = useSetter();
+  const { showModal } = useModalContext();
   const details = useDetails(props.poll_id);
-  const showPollEnder = usePollEnder(props.poll_id);
   const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const W = wallet !== undefined;
+  const W = walletInfo !== undefined;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== "in_progress";
-  const C = details.creator === wallet?.address;
+  const C = details.creator === walletInfo?.address;
   let node: ReactNode = null;
+
+  function endPoll() {
+    if (!walletInfo) {
+      showModal(Popup, { message: "Wallet is disconnected" });
+      return;
+    }
+
+    if (!chain) {
+      showModal(Popup, { message: "Network is unsupported" });
+      return;
+    }
+
+    if (props.poll_id === 0) {
+      showModal(Popup, { message: "Poll is invalid" });
+      return;
+    }
+
+    const verifiedChain: VerifiedChain = { ...chain, wallet: walletInfo };
+    const contract = new Gov(verifiedChain);
+    const msg = contract.createEndPollMsg(props.poll_id);
+
+    dispatch(
+      sendCosmosTx({
+        chain: verifiedChain,
+        msgs: [msg],
+        tagPayloads: [
+          invalidateJunoTags([{ type: junoTags.gov }]),
+          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
+        ],
+      })
+    );
+  }
 
   //poll has ended
   if (P) {
@@ -25,7 +72,7 @@ export default function PollAction(props: { poll_id: number }) {
     if (E) {
       //voting period ended
       if (V || C) {
-        node = <Action onClick={showPollEnder}>End Poll</Action>;
+        node = <Action onClick={endPoll}>End Poll</Action>;
       } else {
         node = <Text>vote period has ended</Text>;
       }

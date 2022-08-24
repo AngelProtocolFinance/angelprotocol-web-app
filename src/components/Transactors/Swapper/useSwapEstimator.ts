@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useLazyBalanceQuery } from "services/apes";
+import { useChain } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -18,7 +19,6 @@ import {
   humanize,
   processEstimateError,
 } from "helpers";
-import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
@@ -30,21 +30,20 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
-  const { wallet } = useGetWallet();
+  const chain = useChain();
+  const [queryBalance] = useLazyBalanceQuery();
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
   const [debounced_amount] = useDebouncer(amount, 300);
   const [debounced_slippage] = useDebouncer<string>(slippage, 150);
 
+  const native = chain.native_currency;
+  const halo = chain.native_currency; //TODO: remove this once HALO is in tokens
+
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          dispatch(setFormError("Wallet is not connected"));
-          return;
-        }
-
         if (!isValid || !isDirty) return;
         dispatch(setFormError(null));
 
@@ -53,11 +52,19 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const nativeCoin = wallet.chain.native_currency;
-        const haloBalance = wallet.getBalance(denoms.halo);
+        const { data: nativeBalance = 0 } = await queryBalance({
+          token: native,
+          chain,
+        });
+
+        const { data: haloBalance = 0 } = await queryBalance({
+          token: halo,
+          chain,
+        });
+
         // first balance check
         if (is_buy) {
-          if (amount > nativeCoin.balance) {
+          if (amount > nativeBalance) {
             setError("amount", { message: "not enough balance" });
             return;
           }
@@ -70,7 +77,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(wallet);
+        const contract = new LP(chain);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -100,18 +107,18 @@ export default function useSwapEstimator() {
         const fee = await contract.estimateFee([swapMsg]);
 
         //2nd balance check including fees
-        const feeAmount = extractFeeAmount(fee, nativeCoin.token_id);
+        const feeAmount = extractFeeAmount(fee, native.token_id);
         dispatch(setFee(feeAmount));
 
-        if (is_buy && feeAmount + debounced_amount >= nativeCoin.balance) {
+        if (is_buy && feeAmount + debounced_amount >= nativeBalance) {
           setError("amount", {
-            message: `not enough ${nativeCoin.symbol} to pay for fees`,
+            message: `not enough ${native.symbol} to pay for fees`,
           });
           return;
         }
-        if (!is_buy && feeAmount >= nativeCoin.balance) {
+        if (!is_buy && feeAmount >= nativeBalance) {
           setError("amount", {
-            message: `not enough ${nativeCoin.symbol} to pay for fees`,
+            message: `not enough ${native.symbol} to pay for fees`,
           });
           return;
         }
@@ -129,7 +136,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, is_buy, debounced_slippage, isValid, isDirty]);
+  }, [debounced_amount, chain, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { tx, wallet };
+  return { tx, chain };
 }

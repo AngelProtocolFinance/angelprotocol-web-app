@@ -1,7 +1,6 @@
 import { SuccessLink } from "slices/transaction/types";
 import { Token } from "types/server/aws";
 import { AdminVoteInfo, CW3Config, Proposal } from "types/server/contracts";
-import { WalletInfo } from "contexts/Wallet";
 
 export type ContractQueryArgs<T = object> = {
   address: string;

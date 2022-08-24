@@ -1,12 +1,12 @@
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { VerifiedChain } from "contexts/ChainGuard";
 import { scaleToStr, toBase64 } from "helpers";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
   address: string;
 
-  constructor(wallet: WalletState | undefined, address: string) {
-    super(wallet);
+  constructor(chain: VerifiedChain, address: string) {
+    super(chain);
     this.address = address;
   }
 

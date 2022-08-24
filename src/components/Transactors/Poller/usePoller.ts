@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor from "components/Transactor";
-import Poller from "./Poller";
-import PollerForm from "./PollerForm";
+import Poller from ".";
+import PollerForm from "./Form";
 
 export default function usePoller() {
   const { showModal } = useModalContext();

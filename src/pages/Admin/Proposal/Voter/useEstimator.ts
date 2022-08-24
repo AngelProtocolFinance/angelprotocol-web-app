@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useLazyBalanceQuery } from "services/apes";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -15,8 +15,8 @@ import useDebouncer from "hooks/useDebouncer";
 import { extractFeeAmount } from "helpers";
 
 export default function useEstimator() {
-  const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
+  const { cw3, chain } = useAdminResources();
+  const [queryBalance] = useLazyBalanceQuery();
   const { getValues, watch } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
@@ -26,26 +26,22 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          dispatch(setFormError("Wallet is disconnected"));
-          return;
-        }
-
         const proposalId = getValues("proposalId");
 
         dispatch(setFormLoading(true));
-        const contract = new CW3(wallet, cw3);
+        const contract = new CW3(chain, cw3);
         const voteMsg = contract.createVoteMsg(proposalId, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
 
-        const feeAmount = extractFeeAmount(
-          fee,
-          wallet.chain.native_currency.token_id
-        );
+        const feeAmount = extractFeeAmount(fee, chain.native_currency.token_id);
         dispatch(setFee(feeAmount));
 
+        const { data: balance = 0 } = await queryBalance({
+          token: chain.native_currency,
+          chain,
+        });
         //check if user has enough balance to pay for fees
-        if (feeAmount >= wallet.chain.native_currency.balance) {
+        if (feeAmount >= balance) {
           dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }
@@ -63,5 +59,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_vote]);
 
-  return { tx, wallet };
+  return { tx, chain };
 }

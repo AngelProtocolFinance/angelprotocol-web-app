@@ -16,13 +16,9 @@ import {
 import { TxOptions } from "slices/transaction/types";
 import { Dwindow } from "types/ethereum";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { VerifiedChain } from "contexts/ChainGuard";
 import { scaleToStr, toBase64 } from "helpers";
-import {
-  TxResultFail,
-  WalletDisconnectedError,
-  WrongChainError,
-} from "errors/errors";
+import { TxResultFail } from "errors/errors";
 import { IS_TEST } from "constants/env";
 
 // TODO: uni-3 and juno-1 have diff gas prices for fee display only,
@@ -36,26 +32,24 @@ const GAS_PRICE = IS_TEST
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
 
 export default class Contract {
-  wallet: WalletState | undefined;
+  chain: VerifiedChain;
   walletAddress: string;
 
-  constructor(wallet: WalletState | undefined) {
-    this.wallet = wallet;
-    this.walletAddress = wallet?.address || "";
+  constructor(chain: VerifiedChain) {
+    this.chain = chain;
+    this.walletAddress = chain.wallet.address;
   }
 
   //for on-demand query, use RTK where possible
   async query<T>(to: string, message: Record<string, unknown>) {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
+    const { chain_id, rpc_url } = this.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const jsonObject = await client.queryContractSmart(to, message);
     return JSON.parse(jsonObject) as T;
   }
 
   async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
+    const { chain_id, rpc_url } = this.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const gasEstimation = await client.simulate(
       this.walletAddress,
@@ -66,8 +60,7 @@ export default class Contract {
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
+    const { chain_id, rpc_url } = this.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, chain_id);
@@ -92,7 +85,7 @@ export default class Contract {
   createTransferNativeMsg(
     amount: number,
     recipient: string,
-    denom = this.wallet!.chain.native_currency.token_id
+    denom = this.chain.native_currency.token_id
   ): MsgSendEncodeObject {
     return {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",
@@ -134,15 +127,6 @@ export default class Contract {
         },
       },
     };
-  }
-
-  private verifyWallet() {
-    if (!this.wallet) {
-      throw new WalletDisconnectedError();
-    }
-    if (this.wallet.chain.type !== "juno-native") {
-      throw new WrongChainError("juno");
-    }
   }
 }
 

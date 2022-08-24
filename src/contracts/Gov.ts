@@ -1,5 +1,5 @@
 import { Vote } from "types/server/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { VerifiedChain } from "contexts/ChainGuard";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";
@@ -9,9 +9,9 @@ export default class Gov extends Contract {
   private address: string;
   private cw20Contract: CW20;
 
-  constructor(wallet: WalletState | undefined) {
-    super(wallet);
-    this.cw20Contract = new CW20(wallet, contracts.halo_token);
+  constructor(chain: VerifiedChain) {
+    super(chain);
+    this.cw20Contract = new CW20(chain, contracts.halo_token);
     this.address = contracts.gov;
   }
 
