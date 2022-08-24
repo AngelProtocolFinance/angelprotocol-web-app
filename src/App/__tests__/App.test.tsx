@@ -33,26 +33,19 @@ jest.mock("services/aws/registration", () => ({
   useRegistrationQueryLazyQuery: () => [() => {}],
 }));
 
-function TestApp() {
-  return (
-    <AppWrapper>
-      <App />
-    </AppWrapper>
-  );
-}
-
 describe("App.tsx tests", () => {
   const marketText1 = /angel protocol supports/i;
   const marketText2 = /displaced ukrainians/i;
-  const marketplaceLinkText = /marketplace/i;
-  const leaderboardLinkText = /leaderboard/i;
-  const registerLinkText = /register/i;
   // const governanceLinkText = /governance/i;
 
   window.scrollTo = jest.fn();
 
-  test("App's default page is lazy loaded Marketplace", async () => {
-    render(<TestApp />);
+  test("Routing", async () => {
+    render(
+      <AppWrapper>
+        <App />
+      </AppWrapper>
+    );
 
     // loader is rendered because content is being lazy loaded
     const loader = screen.getByTestId("loader");
@@ -71,94 +64,48 @@ describe("App.tsx tests", () => {
     // role here https://www.w3.org/TR/html-aria/#docconformance
     expect(await screen.findByRole("banner")).toBeInTheDocument();
     expect(loader).not.toBeInTheDocument();
-    expect(screen.getByText(marketText1)).toBeInTheDocument();
-    expect(screen.getByText(marketText2)).toBeInTheDocument();
-    expect(screen.getByText(marketplaceLinkText)).toBeInTheDocument();
-    expect(screen.getByText(leaderboardLinkText)).toBeInTheDocument();
-    expect(screen.getByText(registerLinkText)).toBeInTheDocument();
-    // expect(screen.getByText(governanceLinkText)).toBeInTheDocument();
-  });
 
-  describe("Routing", () => {
-    test("routing to leaderboard", async () => {
-      render(<TestApp />);
-
-      const leaderboardText1 = /total donations/i;
-
-      // wait for Marketplace to load
-      // user goes to leaderboard
-      const leaderboardLink = await screen.findByText(leaderboardLinkText);
-      userEvent.click(leaderboardLink);
-
-      // user is in leaderboard but the view is being lazy loaded
-      const loader3 = screen.getByTestId("loader");
-      expect(loader3).toBeInTheDocument();
-      expect(screen.queryByText(leaderboardText1)).toBeNull();
-
-      //view is finally loaded,
-      expect(await screen.findByText(leaderboardText1)).toBeInTheDocument();
-      expect(loader3).not.toBeInTheDocument();
+    const marketplaceLink = await screen.findByRole("link", {
+      name: /marketplace/i,
+    });
+    const leaderboardLink = await screen.findByRole("link", {
+      name: /leaderboard/i,
     });
 
-    test("routing to marketplace", async () => {
-      render(<TestApp />);
-
-      // user goes to leaderboard once marketplace loads
-      const leaderboardLink = await screen.findByText(leaderboardLinkText);
-      userEvent.click(leaderboardLink);
-
-      // user goes back to marketplace
-      const marketPlaceLink = screen.getByText(marketplaceLinkText);
-      userEvent.click(marketPlaceLink);
-
-      // user is back to marketplace
-      // view is loaded immediately since it's been loaded before
-      expect(screen.getByText(marketText1)).toBeInTheDocument();
-      expect(screen.getByText(marketText2)).toBeInTheDocument();
+    const registerLink = await screen.findByRole("link", {
+      name: /register/i,
     });
 
-    test("routing to register", async () => {
-      render(<TestApp />);
+    //view is finally loaded
+    expect(await screen.findByText(marketText1)).toBeInTheDocument();
+    expect(await screen.findByText(marketText2)).toBeInTheDocument();
+    expect(marketplaceLink).toBeInTheDocument();
+    expect(leaderboardLink).toBeInTheDocument();
+    expect(registerLink).toBeInTheDocument();
 
-      const registerText1 =
-        /Thank you for registering, we'd love to have you on board!/i;
+    //user goes to Leaderboard
+    userEvent.click(leaderboardLink);
+    const loader2 = await screen.findByTestId("loader");
+    expect(loader2).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: /leaderboard/i })
+    ).toBeInTheDocument();
 
-      // wait for Marketplace to load
-      // user goes to register
-      const registerLink = await screen.findByText(registerLinkText);
-      userEvent.click(registerLink);
+    //user goes to Registration
+    userEvent.click(registerLink);
+    expect(
+      await screen.findByRole("button", { name: /start/i })
+    ).toBeInTheDocument();
 
-      // user is in register but the view is being lazy loaded
-      const loader3 = screen.getByTestId("loader");
-      expect(loader3).toBeInTheDocument();
-      expect(screen.queryByText(registerText1)).toBeNull();
+    //user goes to back to Leaderboard
+    userEvent.click(leaderboardLink);
+    expect(
+      await screen.findByRole("heading", { name: /leaderboard/i })
+    ).toBeInTheDocument();
 
-      //view is finally loaded,
-      expect(await screen.findByText(registerText1)).toBeInTheDocument();
-      expect(loader3).not.toBeInTheDocument();
-    });
-
-    // NOTE: Governance will be reenabled when we relaunch the $HALO token
-    // test("routing to governance", async () => {
-    // render(<TestApp />);
-    //
-    // const govText1 = /total staked/i;
-    // const govText2 = /halo price/i;
-    //
-    // // user goes to governance once marketplace is loaded
-    // const govLink = await screen.findByText(governanceLinkText);
-    // userEvent.click(govLink);
-    //
-    // // user is in governance but the view is being lazy loaded
-    // const loader2 = screen.getByTestId("loader");
-    // expect(loader2).toBeInTheDocument();
-    // expect(screen.queryByText(govText1)).toBeNull();
-    // expect(screen.queryByText(govText2)).toBeNull();
-    //
-    // // view is finally loaded,
-    // expect(await screen.findByText(govText1)).toBeInTheDocument();
-    // expect(await screen.findByText(govText2)).toBeInTheDocument();
-    // expect(loader2).not.toBeInTheDocument();
-    // });
+    //user goes back to Marketplace
+    userEvent.click(marketplaceLink);
+    expect(await screen.findByText(marketText1)).toBeInTheDocument();
+    expect(await screen.findByText(marketText2)).toBeInTheDocument();
   });
 });
