@@ -4,9 +4,8 @@ import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
 import { useChain } from "contexts/ChainGuard";
-import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
-import DonateForm from "./DonateForm/DonateForm";
+import DonateForm from "./Form";
 
 const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,

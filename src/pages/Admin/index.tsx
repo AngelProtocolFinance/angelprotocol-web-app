@@ -1,15 +1,16 @@
-import { PropsWithChildren } from "react";
 import ChainGuard from "contexts/ChainGuard";
 import ModalContext from "contexts/ModalContext";
 import { chainIds } from "constants/chainIds";
-import { Guard } from "./Guard";
+import { Guard, GuardPrompt } from "./Guard";
 import Nav from "./Nav";
 import Views from "./Views";
 
 export default function Admin() {
   return (
     <ChainGuard
-      Container={Container}
+      prompt={(node, isLoading) => (
+        <GuardPrompt showLoader={isLoading}>{node}</GuardPrompt>
+      )}
       requiredChain={{ id: chainIds.juno, name: "Juno" }}
     >
       <Guard>
@@ -22,13 +23,5 @@ export default function Admin() {
         </ModalContext>
       </Guard>
     </ChainGuard>
-  );
-}
-
-function Container(props: PropsWithChildren<{}>) {
-  return (
-    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-[15rem] w-full max-w-sm p-4 rounded-md shadow-lg">
-      {props.children}
-    </div>
   );
 }

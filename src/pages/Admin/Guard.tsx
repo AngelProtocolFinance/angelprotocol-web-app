@@ -17,11 +17,12 @@ export function Guard(props: PropsWithChildren<{}>) {
   });
 
   if (isLoading)
-    return <GuardPrompt message="Checking wallet credentials" showLoader />;
+    return <GuardPrompt showLoader>Checking wallet credentials</GuardPrompt>;
 
-  if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
+  if (isError)
+    return <GuardPrompt>Error verifying wallet credentials</GuardPrompt>;
 
-  if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
+  if (!data) return <GuardPrompt>Unauthorized to view this page</GuardPrompt>;
 
   return (
     <context.Provider value={{ ...data, chain }}>
@@ -41,7 +42,9 @@ export const useAdminResources = (): TAdmin => {
   return val;
 };
 
-export function GuardPrompt(props: { message: string; showLoader?: true }) {
+export function GuardPrompt(
+  props: PropsWithChildren<{ showLoader?: boolean }>
+) {
   return (
     <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-[15rem] w-full max-w-sm p-4 rounded-md shadow-lg">
       {props.showLoader ? (
@@ -53,7 +56,7 @@ export function GuardPrompt(props: { message: string; showLoader?: true }) {
       ) : (
         <Icon type="Info" size={30} />
       )}
-      <p className="mt-2">{props.message}</p>
+      <div className="mt-2">{props.children}</div>
     </div>
   );
 }

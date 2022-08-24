@@ -7,7 +7,7 @@ import KYCGuard from "./KYCGuard";
 import Terms from "./Terms";
 import useDonate from "./useDonate";
 
-export default function DonateForm() {
+export default function Form() {
   const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
 

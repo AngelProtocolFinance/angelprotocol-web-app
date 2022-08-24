@@ -1,16 +1,16 @@
-import { FC, ReactNode, createContext, useContext } from "react";
+import { ReactElement, ReactNode, createContext, useContext } from "react";
 import { Chain } from "types/server/aws";
 import { useChainQuery } from "services/apes";
 import { Wallet, useWalletContext } from "./WalletContext";
 
 export default function ChainGuard({
   requiredChain,
-  Container,
+  prompt,
   children,
 }: {
-  Container: FC;
   requiredChain?: { id: string; name: string };
   children: ReactNode;
+  prompt: (node: ReactNode, isLoading?: boolean) => ReactElement;
 }) {
   const { wallet, isLoading: isWalletLoading } = useWalletContext();
   const {
@@ -20,30 +20,27 @@ export default function ChainGuard({
   } = useChainQuery(wallet!, { skip: !wallet });
 
   if (isWalletLoading) {
-    return <Container>Wallet is loading...</Container>;
+    return prompt("Wallet is loading...", true);
   }
 
   if (!wallet) {
-    return <Container>Wallet is disconnected</Container>;
+    return prompt("Wallet is disconnected");
   }
 
   if (requiredChain && wallet.chainId !== requiredChain.id) {
-    return (
-      <Container>
-        Kindly change network to {requiredChain?.name || "required chain"}
-      </Container>
+    return prompt(
+      `Kindly change network to ${requiredChain?.name || "required chain"}`
     );
   }
 
   if (isFetchingChain) {
-    return <Container>Getting form resources</Container>; //show skeleton?
+    return prompt("Fetching chain resources..", true);
   }
 
   if (!chain || isError) {
-    return (
-      <Container>Unsupported chain we only support these chains::</Container>
-    );
+    return prompt("Unsupported chain we only support these chains");
   }
+
   return (
     <context.Provider value={{ ...chain, wallet }}>{children}</context.Provider>
   );
