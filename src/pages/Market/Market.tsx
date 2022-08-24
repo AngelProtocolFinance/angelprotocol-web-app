@@ -1,6 +1,5 @@
 import { useCategorizedEndowmentsQuery } from "services/juno/registrar";
 import Loader from "components/Loader";
-import useDonater from "components/Transactors/Donater/useDonater";
 import Banner from "./Banner";
 import Index from "./Index";
 
@@ -10,11 +9,8 @@ export default function Market() {
     status: "1",
   });
 
-  const showDonater = useDonater({ to: "charity", receiver: 1 });
-
   return (
     <div className="grid content-start padded-container pb-16">
-      <button onClick={showDonater}>donate</button>
       <Banner />
       {(isLoading && (
         <Loader
