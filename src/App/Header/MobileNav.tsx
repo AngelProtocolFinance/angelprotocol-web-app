@@ -1,9 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import Icon from "components/Icon";
-import { AdminLink } from "components/admin";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
@@ -33,8 +31,6 @@ export default function MobileNav() {
         <NavLink to={appRoutes.register} className={styler}>
           Register
         </NavLink>
-        <AdminLink label="admin" className={styler} id={AP_ID} />
-        <AdminLink label="applications" className={styler} id={REVIEWER_ID} />
       </Popover.Panel>
     </Popover>
   );

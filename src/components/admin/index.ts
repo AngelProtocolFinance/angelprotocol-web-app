@@ -1,4 +1,3 @@
-export * from "./AdminLink";
 export * from "./DetailLabel";
 export * from "./FormError";
 export * from "./FormSkeleton";

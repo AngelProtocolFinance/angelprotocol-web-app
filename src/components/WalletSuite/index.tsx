@@ -8,6 +8,5 @@ export default function WalletSuite() {
   if (isLoading || !wallet) {
     return <WalletSelector isLoading={isLoading} connections={connections} />;
   }
-
   return <ConnectedWallet {...wallet} />;
 }
