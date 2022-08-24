@@ -8,7 +8,7 @@ export async function getCosmosBalance(
   decimals = 6
 ) {
   const { balance } = await fetch(
-    `${lcdUrl}/cosmos/bank/v1beta1/balances/${address}/by_denom?=${denom}`
+    `${lcdUrl}/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${denom}`
   ).then<{ balance: Coin }>((res) => res.json());
   return condenseToNum(balance.amount, decimals);
 }

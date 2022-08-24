@@ -66,6 +66,8 @@ export default function useEstimator() {
           return;
         }
 
+        dispatch(setFormLoading(true));
+
         const { data: tokenBalance = 0 } = await queryBalance({
           token: selectedToken,
           chain,
@@ -80,8 +82,6 @@ export default function useEstimator() {
           setError("amount", { message: "not enough balance" });
           return;
         }
-
-        dispatch(setFormLoading(true));
 
         // juno transaction, send or contract interaction
         if (chain.type === "juno-native") {

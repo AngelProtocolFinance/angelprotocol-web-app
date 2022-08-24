@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
+import { WalletInfo, useWalletContext } from "contexts/Wallet";
 import {
   useGetWallet,
   useSetWallet,
@@ -17,15 +18,14 @@ export type Wallet = {
   address: string;
 };
 
-export default function WalletSubmission() {
-  const { wallet } = useGetWallet();
+export default function WalletSubmission(props: { wallet: WalletInfo }) {
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
 
   const methods = useForm<Wallet>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: { address: wallet?.address || "" },
+    defaultValues: { address: props.wallet.address || "" },
     resolver: yupResolver(
       Yup.object({ address: requiredWalletAddr("wallet") })
     ),
@@ -41,12 +41,12 @@ export default function WalletSubmission() {
         Once you have registered your wallet address, we shall be able to create
         your Angel Protocol endowment account. We recommend using a new wallet.
       </p>
-      {wallet && wallet.providerId !== "keplr" ? (
+      {props.wallet.id !== "keplr" ? (
         <div className="text-center bg-angel-orange/20 border border-2 border-angel-orange/80 rounded-md p-4 ">
           <p>
             <span className="text-sm font-bold">connected wallet: </span>
             <span className="font-extrabold uppercase">
-              {wallet.providerId.toLocaleUpperCase()}
+              {props.wallet.id.toLocaleUpperCase()}
             </span>
           </p>
           <p>Only Keplr wallet is allowed!</p>

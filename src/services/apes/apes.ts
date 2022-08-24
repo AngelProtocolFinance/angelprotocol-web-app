@@ -7,7 +7,7 @@ import { queryContract } from "services/juno/queryContract";
 import { VerifiedChain } from "contexts/ChainGuard";
 import { WalletInfo } from "contexts/Wallet";
 import { condenseToNum } from "helpers";
-import { getCosmosBalance } from "helpers/fetchCosmosBalance";
+import { getCosmosBalance } from "helpers/getCosmosBalance";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
 import { fillERC20Holdings } from "./helpers/fillERC20Holdings";
