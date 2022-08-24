@@ -32,9 +32,7 @@ export default function DonateForm() {
       )}
 
       <Terms />
-
       <ReceiptTooltip />
-
       <KYCGuard />
 
       <button
