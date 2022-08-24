@@ -1,7 +1,7 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/server/aws";
-import { PLACEHOLDER_WALLET } from "test/constants";
+import { PLACEHOLDER_CHAIN, PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
 import useSubmit from "../useSubmit";
 
@@ -19,7 +19,13 @@ jest.mock("helpers/processEstimateError", () => ({
 const mockUseGetWallet = jest.fn();
 jest.mock("contexts/WalletContext/WalletContext", () => ({
   __esModule: true,
-  useGetWallet: () => mockUseGetWallet(),
+  useWalletContext: () => mockUseGetWallet(),
+}));
+
+const mockChainQuery = jest.fn();
+jest.mock("services/apes", () => ({
+  __esModule: true,
+  useChainQuery: (..._: any[]) => mockChainQuery(),
 }));
 
 const mockSendCosmosTx = jest.fn();
@@ -41,6 +47,7 @@ describe("useSubmit tests", () => {
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
+    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.submit).toBeDefined();
@@ -48,13 +55,15 @@ describe("useSubmit tests", () => {
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
+    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(true);
   });
-  // wallet check now handled in `sendCosmosTx`
+  //wallet check now handled in `sendCosmosTx`
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
+    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockImplementation((..._: any[]) => {
@@ -80,6 +89,7 @@ describe("useSubmit tests", () => {
   it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
+    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);

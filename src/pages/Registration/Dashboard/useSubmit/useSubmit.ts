@@ -35,17 +35,17 @@ export default function useSubmit() {
           return;
         }
 
-        const ChainWallet: ChainWallet = { ...chain, ...wallet };
-        const contract = new Registrar(ChainWallet);
+        const chainWallet: ChainWallet = { ...chain, ...wallet };
+        const contract = new Registrar(chainWallet);
         const msg = contract.createEndowmentCreationMsg(charity);
         dispatch(
           sendCosmosTx({
-            wallet: ChainWallet,
+            wallet: chainWallet,
             msgs: [msg],
             onSuccess(res) {
               return logEndowmentId({
                 res,
-                chain: ChainWallet, //wallet is defined at this point
+                chain: chainWallet, //wallet is defined at this point
                 PK: charity.ContactPerson.PK!, //registration data is complete at this point
               });
             },
