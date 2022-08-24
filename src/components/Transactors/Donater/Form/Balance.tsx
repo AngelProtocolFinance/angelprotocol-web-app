@@ -1,12 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import { humanize } from "helpers";
+import { useBalanceQuery } from "services/apes";
+import { useChain } from "contexts/ChainGuard";
+import { humanize, roundDown } from "helpers";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
+  const chain = useChain();
   const token = watch("token");
+  const { data = 0, isLoading } = useBalanceQuery({ token, chain });
   function setMaxVal() {
-    setValue("amount", humanize(+token.balance, 4), {
+    setValue("amount", roundDown(data, 4), {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -14,10 +18,11 @@ export default function Balance() {
   return (
     <button
       type="button"
+      disabled={isLoading}
       onClick={setMaxVal}
       className="text-right text-angel-grey/80 hover:text-angel-blue text-xs font-semibold font-mono"
     >
-      BAL: {humanize(+token.balance, 3)} {token.symbol}
+      BAL: {isLoading ? "..." : `${humanize(data, 3)} ${token.symbol}`}
     </button>
   );
 }
