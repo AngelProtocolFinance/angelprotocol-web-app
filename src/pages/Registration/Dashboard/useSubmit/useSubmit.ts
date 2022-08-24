@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
-import { useChaimQuery } from "services/apes";
+import { useChainQuery } from "services/apes";
 import { VerifiedChain } from "contexts/ChainGuard";
 import { useModalContext } from "contexts/ModalContext";
 import { useWalletContext } from "contexts/WalletContext";
@@ -20,7 +20,7 @@ export default function useSubmit() {
   const { showModal } = useModalContext();
 
   const { wallet } = useWalletContext();
-  const { data: chain } = useChaimQuery(wallet!, { skip: !wallet });
+  const { data: chain } = useChainQuery(wallet!, { skip: !wallet });
 
   const submit = useCallback(
     async (charity: Charity) => {

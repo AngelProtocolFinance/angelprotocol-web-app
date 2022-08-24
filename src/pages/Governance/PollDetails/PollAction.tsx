@@ -3,7 +3,7 @@ import {
   apesTags,
   customTags,
   invalidateApesTags,
-  useChaimQuery,
+  useChainQuery,
 } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
@@ -19,7 +19,7 @@ import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {
   const { wallet } = useWalletContext();
-  const { data: chain } = useChaimQuery(wallet!, { skip: !wallet });
+  const { data: chain } = useChainQuery(wallet!, { skip: !wallet });
   const dispatch = useSetter();
   const { showModal } = useModalContext();
   const details = useDetails(props.poll_id);
