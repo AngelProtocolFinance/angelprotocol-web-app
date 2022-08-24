@@ -1,7 +1,7 @@
 import { Airdrops } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import Transactor from "components/Transactor";
+import Transactor, { TxProps } from "components/Transactor";
 import Claimables from "./Claimables";
 
 export default function Airdrop() {
@@ -16,7 +16,7 @@ export default function Airdrop() {
     <div>
       <button
         onClick={() => {
-          showModal(Transactor, {
+          showModal<TxProps<{ airdrops: Airdrops }>>(Transactor, {
             Content: Claimables,
             contentProps: { airdrops },
           });

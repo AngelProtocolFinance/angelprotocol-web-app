@@ -1,6 +1,5 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/server/aws";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";

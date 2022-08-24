@@ -35,7 +35,7 @@ describe("Copier component test:", () => {
     });
 
     // Expects the button to change appearance once clicked
-    expect(screen.getByTitle("Copied!")).toBeInTheDocument();
+    expect(await screen.findByTitle("Copied!")).toBeInTheDocument();
 
     // Expects the button to revert back to it's original appearance
     expect(await screen.findByTitle("Copy Address")).toBeInTheDocument();

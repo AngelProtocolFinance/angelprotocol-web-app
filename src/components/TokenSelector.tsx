@@ -75,7 +75,9 @@ export default function TokenSelector<T extends Base>(props: {
                       {coin.symbol}
                     </span>
                   </>
-                ) : null
+                ) : (
+                  <></>
+                )
               }
             </Combobox.Option>
           ))
