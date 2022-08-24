@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import { useGetter } from "store/accessors";
 import { humanize } from "helpers";
 import { symbols } from "constants/currency";
@@ -17,12 +17,9 @@ function Misc(props: { title: string; value: string; class?: string }) {
 
 export function Fee() {
   const { fee } = useGetter((state) => state.transaction);
-  const { wallet } = useGetWallet();
+  const chain = useChain();
   return (
-    <Misc
-      title="tx fee"
-      value={`${fee} ${wallet?.chain.native_currency.symbol}`}
-    />
+    <Misc title="tx fee" value={`${fee} ${chain.native_currency.symbol}`} />
   );
 }
 
@@ -34,12 +31,12 @@ export function Commission() {
 
 export function SwapRate() {
   const { watch } = useFormContext<SwapValues>();
-  const { wallet } = useGetWallet();
+  const chain = useChain();
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
 
   const formattedRatio = humanize(ratio, 6, true);
-  const nativeSymbol = wallet?.chain.native_currency.symbol;
+  const nativeSymbol = chain.native_currency.symbol;
   const haloSymbol = symbols.halo;
   return (
     <Misc

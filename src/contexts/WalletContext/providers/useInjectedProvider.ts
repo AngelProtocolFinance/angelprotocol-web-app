@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, Wallet, WalletId } from "../types";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -9,16 +9,16 @@ import {
 import { getProvider, logger } from "helpers";
 import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import { providerIcons } from "./constants";
+import { providerIcons } from "../constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
-  providerId: Extract<ProviderId, "metamask" | "binance-wallet" | "xdefi-evm">,
+  id: Extract<WalletId, "metamask" | "binance-wallet" | "xdefi-evm">,
   connectorLogo?: string,
   connectorName?: string
 ) {
-  const actionKey = `${providerId}__pref`;
+  const actionKey = `${id}__pref`;
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
   const shouldReconnect = lastAction === "connect";
@@ -29,7 +29,7 @@ export default function useInjectedProvider(
   useEffect(() => {
     requestAccess();
     return () => {
-      removeAllListeners(providerId);
+      removeAllListeners(id);
     };
     //eslint-disable-next-line
   }, []);
@@ -58,13 +58,13 @@ export default function useInjectedProvider(
       setAddress("");
       setChainId(undefined);
       saveUserAction(actionKey, "disconnect");
-      removeAllListeners(providerId);
+      removeAllListeners(id);
     }
   };
 
   const requestAccess = async (isNewConnection = false) => {
     try {
-      const injectedProvider = getProvider(providerId);
+      const injectedProvider = getProvider(id);
       if (
         injectedProvider &&
         (isNewConnection || shouldReconnect) &&
@@ -102,12 +102,12 @@ export default function useInjectedProvider(
 
   function disconnect() {
     if (!address) return;
-    const injectedProvider = getProvider(providerId);
+    const injectedProvider = getProvider(id);
     if (!injectedProvider) return;
     setAddress("");
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
-    removeAllListeners(providerId);
+    removeAllListeners(id);
   }
 
   // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
@@ -115,11 +115,11 @@ export default function useInjectedProvider(
     try {
       const dwindow = window as Dwindow;
 
-      if (!getProvider(providerId)) {
-        throw new WalletError(`${prettifyId(providerId)} is not installed`, 0);
+      if (!getProvider(id)) {
+        throw new WalletError(`${prettifyId(id)} is not installed`, 0);
       }
       //connecting xdefi
-      if (providerId === "xdefi-evm") {
+      if (id === "xdefi-evm") {
         checkXdefiPriority();
         //connecting other wallet
       } else {
@@ -144,11 +144,11 @@ export default function useInjectedProvider(
   };
 
   //consolidate to one object for diff
-  const providerInfo: ProviderInfo | undefined =
+  const wallet: Wallet | undefined =
     chainId && address
       ? {
-          logo: providerIcons[providerId],
-          providerId,
+          logo: providerIcons[id],
+          id,
           chainId,
           address,
         }
@@ -156,8 +156,8 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: connectorName ?? prettifyId(providerId),
-    logo: connectorLogo ?? providerIcons[providerId],
+    name: connectorName ?? prettifyId(id),
+    logo: connectorLogo ?? providerIcons[id],
     connect,
   };
 
@@ -165,16 +165,16 @@ export default function useInjectedProvider(
     connection,
     disconnect,
     isLoading,
-    providerInfo,
+    wallet,
   };
 }
 
-function removeAllListeners(providerId: ProviderId) {
-  const provider = getProvider(providerId);
+function removeAllListeners(id: WalletId) {
+  const provider = getProvider(id);
   provider?.removeAllListeners && provider.removeAllListeners();
 }
 
-function prettifyId(providerId: ProviderId) {
+function prettifyId(id: WalletId) {
   //e.g xdefi-wallet,
-  return providerId.replace("-", " ");
+  return id.replace("-", " ");
 }

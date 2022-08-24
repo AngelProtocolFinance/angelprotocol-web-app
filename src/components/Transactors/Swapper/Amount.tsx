@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
 import { denoms } from "constants/currency";
@@ -16,7 +16,7 @@ export default function Amount() {
     register,
     formState: { errors },
   } = useFormContext<SwapValues>();
-  const { wallet } = useGetWallet();
+  const chain = useChain();
   const is_buy = watch("is_buy");
 
   function toggle_settings() {
@@ -24,8 +24,8 @@ export default function Amount() {
   }
 
   const buyingWithToken = is_buy
-    ? wallet?.chain.native_currency
-    : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo);
+    ? chain.native_currency
+    : chain.tokens.find((x) => x.token_id === denoms.halo);
 
   const displayToken = buyingWithToken ?? placeholderChain.native_currency;
 

@@ -1,11 +1,8 @@
-export type ProviderId =
+export type WalletId =
   | "binance-wallet"
   | "metamask"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
-  | "leap-wallet"
-  | "falcon-wallet"
-  | "bitkeep-wallet"
   | "station"
   | "walletconnect"
   | "torus"
@@ -16,12 +13,14 @@ type Single = { connect(args?: string): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
 export type Connection = Base & (Single | Multi);
 
-export type ProviderInfo = {
-  providerId: ProviderId;
+export type Wallet = {
+  id: WalletId;
   logo: string;
   chainId: string;
   address: string;
 };
 
-type ProviderStatus = { providerInfo?: ProviderInfo; isLoading: boolean };
-export type ProviderStatuses = ProviderStatus[];
+export type WalletStatus = {
+  wallet: Wallet | undefined;
+  isLoading: boolean;
+};

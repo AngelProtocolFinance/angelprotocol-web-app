@@ -1,9 +1,9 @@
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useWalletContext } from "contexts/WalletContext";
 import { useGovStakerQuery, useGovStakerState } from "./gov";
 import { staker } from "./placeholders";
 
 export function useGovStaker() {
-  const { wallet } = useGetWallet();
+  const { wallet } = useWalletContext();
   const { data = staker } = useGovStakerQuery(
     {
       addr: wallet?.address!,
@@ -14,7 +14,7 @@ export function useGovStaker() {
 }
 
 export function useCachedGovStaker() {
-  const { wallet } = useGetWallet();
+  const { wallet } = useWalletContext();
   const { data = staker } = useGovStakerState(
     {
       addr: wallet?.address!,

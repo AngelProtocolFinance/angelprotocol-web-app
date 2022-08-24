@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Transaction } from "types/server/aws";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import TableSection, { Cells } from "components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 
@@ -9,7 +9,7 @@ export default function TransactionsTable(props: {
   isLoading: boolean;
   isError: boolean;
 }) {
-  const { wallet } = useGetWallet();
+  const chain = useChain();
 
   if (props.isLoading) {
     return <Tooltip>Loading transactions...</Tooltip>;
@@ -47,7 +47,7 @@ export default function TransactionsTable(props: {
             </span>
             <span className="font-mono">{maskAddress(tx.donator)}</span>
             <a
-              href={getTxUrl(wallet!.chain, tx.tx_id)}
+              href={getTxUrl(chain, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

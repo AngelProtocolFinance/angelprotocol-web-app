@@ -1,17 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import { useGetter } from "store/accessors";
 import { humanize } from "helpers";
 
 export default function Breakdown() {
-  const { wallet } = useGetWallet();
+  const chain = useChain();
   const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isNativeCoin =
-    wallet?.chain.native_currency.token_id === token.token_id;
+  const isNativeCoin = chain.native_currency.token_id === token.token_id;
   const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
@@ -19,7 +18,7 @@ export default function Breakdown() {
       <Entry
         title="tx fee"
         amount={fee}
-        symbol={wallet?.chain.native_currency.symbol}
+        symbol={chain.native_currency.symbol}
       />
       <Entry title="total amount" amount={totalAmount} symbol={token.symbol} />
     </div>

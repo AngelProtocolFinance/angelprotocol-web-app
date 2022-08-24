@@ -9,7 +9,7 @@ import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { VerifiedChain } from "contexts/ChainGuard";
 import { useModalContext } from "contexts/ModalContext";
-import { useWalletContext } from "contexts/Wallet";
+import { useWalletContext } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import useVoter from "components/Transactors/Voter/useVoter";
 import { useSetter } from "store/accessors";
@@ -18,22 +18,22 @@ import Gov from "contracts/Gov";
 import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {
-  const { info: walletInfo } = useWalletContext();
-  const { data: chain } = useChaimQuery(walletInfo!, { skip: !walletInfo });
+  const { wallet } = useWalletContext();
+  const { data: chain } = useChaimQuery(wallet!, { skip: !wallet });
   const dispatch = useSetter();
   const { showModal } = useModalContext();
   const details = useDetails(props.poll_id);
   const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const W = walletInfo !== undefined;
+  const W = wallet !== undefined;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== "in_progress";
-  const C = details.creator === walletInfo?.address;
+  const C = details.creator === wallet?.address;
   let node: ReactNode = null;
 
   function endPoll() {
-    if (!walletInfo) {
+    if (!wallet) {
       showModal(Popup, { message: "Wallet is disconnected" });
       return;
     }
@@ -48,7 +48,7 @@ export default function PollAction(props: { poll_id: number }) {
       return;
     }
 
-    const verifiedChain: VerifiedChain = { ...chain, wallet: walletInfo };
+    const verifiedChain: VerifiedChain = { ...chain, wallet: wallet };
     const contract = new Gov(verifiedChain);
     const msg = contract.createEndPollMsg(props.poll_id);
 

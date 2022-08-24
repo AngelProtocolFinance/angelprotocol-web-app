@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import haloLogo from "assets/icons/currencies/halo_outline.png";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useChain } from "contexts/ChainGuard";
 import { Label } from "components/admin";
 import Balance from "./Balance";
 import Currency from "./Currency";
@@ -14,8 +14,8 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<FundSendValues>();
 
-  const { wallet } = useGetWallet();
-  const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
+  const chain = useChain();
+  const native_currency = chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
 
   const denomText =
     watch("currency") === native_currency.token_id

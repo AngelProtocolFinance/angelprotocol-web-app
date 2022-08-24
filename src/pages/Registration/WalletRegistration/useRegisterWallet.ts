@@ -3,7 +3,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Wallet } from "./WalletSubmission";
+import { WalletValues } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
   const { data } = useRegistrationState("");
@@ -13,7 +13,7 @@ export default function useRegisterWallet() {
 
   const { handleError } = useErrorContext();
 
-  const registerWallet = async (data: Wallet) => {
+  const registerWallet = async (data: WalletValues) => {
     const result = await updateMetadata({
       body: { JunoWallet: data.address },
       PK: charity.ContactPerson.PK,

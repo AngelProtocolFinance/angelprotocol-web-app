@@ -5,7 +5,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
 import ModalContext from "contexts/ModalContext";
-import Wallet from "contexts/Wallet";
+import Wallet from "contexts/WalletContext";
 import Loader from "components/Loader";
 import Footer from "./Footer";
 import Header from "./Header";

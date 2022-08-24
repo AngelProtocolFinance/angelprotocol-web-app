@@ -12,7 +12,7 @@ export default function useXdefi() {
     isLoading: isxdefiEVMLoading,
     connection: xdefiEVMConnection,
     disconnect: disconnectEVMxdefi,
-    info: xdefiEVMInfo,
+    wallet: xdefiEVMWallet,
   } = useInjectedProvider("xdefi-evm", evmIcon, "Ethereum");
 
   const connection = availableConnections.find(
@@ -46,7 +46,7 @@ export default function useXdefi() {
     //xdefi terra state is already reflected in useTerra
     isxdefiEVMLoading,
     disconnectEVMxdefi,
-    xdefiEVMInfo,
+    xdefiEVMWallet,
     xdefiConnection,
   };
 }

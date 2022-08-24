@@ -1,4 +1,4 @@
-import { ProviderId } from "./types";
+import { WalletId } from "./types";
 import { Chain } from "types/server/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
@@ -10,16 +10,12 @@ import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
-export const providerIcons: { [key in ProviderId]: string } = {
+export const providerIcons: { [key in WalletId]: string } = {
   "binance-wallet": binanceWalletIcon,
   metamask: metamaskIcon,
   "xdefi-wallet": xdefiIcon,
   "xdefi-evm": xdefiIcon,
   station: terraStationIcon,
-  "leap-wallet": "https://leapwallet.io/icon.png",
-  "falcon-wallet": "https://api.falconwallet.app/assets/images/falcon-logo.png",
-  "bitkeep-wallet":
-    "https://cdn.bitkeep.vip/u_b_6151d430-ae42-11ec-9c39-b7ca284b7fe4.png",
   walletconnect: walletConnectIcon,
   torus: torusIcon,
   keplr,

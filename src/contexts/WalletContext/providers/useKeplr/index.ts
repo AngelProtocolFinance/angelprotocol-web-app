@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
+import { Connection, Wallet } from "../../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError } from "errors/errors";
 import { IS_TEST } from "constants/env";
-import { providerIcons } from "../constants";
+import { providerIcons } from "../../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
@@ -79,11 +79,11 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
-  const providerInfo: ProviderInfo | undefined =
+  const wallet: Wallet | undefined =
     address && chainId
       ? {
           logo: providerIcons.keplr,
-          providerId: "keplr",
+          id: "keplr",
           chainId,
           address,
         }
@@ -100,6 +100,6 @@ export default function useKeplr() {
     connection,
     disconnect,
     isLoading,
-    providerInfo,
+    wallet,
   };
 }

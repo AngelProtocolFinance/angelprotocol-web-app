@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { templates } from "pages/Admin/constants";
 import { useIsMemberQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useWalletContext } from "contexts/WalletContext";
 import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Nav() {
   const { id } = useParams<ProfileParams>();
-  const { wallet } = useGetWallet();
+  const { wallet } = useWalletContext();
   const { data: isMember } = useIsMemberQuery(
     {
       user: wallet?.address!,

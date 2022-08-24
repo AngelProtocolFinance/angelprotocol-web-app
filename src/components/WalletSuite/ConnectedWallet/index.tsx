@@ -1,10 +1,10 @@
 import { Popover } from "@headlessui/react";
-import { WalletInfo } from "contexts/Wallet";
+import { Wallet } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
-export default function ConnectedWallet(props: WalletInfo) {
+export default function ConnectedWallet(props: Wallet) {
   const { address, logo } = props;
   const maskedAddr = maskAddress(address);
 

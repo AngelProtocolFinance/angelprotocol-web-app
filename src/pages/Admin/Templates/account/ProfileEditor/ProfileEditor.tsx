@@ -5,13 +5,11 @@ import { UpdateProfilePayload } from "types/server/contracts";
 import { Profile } from "types/server/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { FormError, FormSkeleton } from "components/admin";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
-  const { wallet } = useGetWallet();
   const { endowmentId } = useAdminResources();
   const {
     data: profile,
@@ -19,8 +17,6 @@ export default function ProfileEditor() {
     isError,
   } = useEndowmentProfileQuery({ id: endowmentId });
 
-  if (!wallet)
-    return <FormError errorMessage="Please connect wallet to view this page" />;
   if (isLoading) return <FormSkeleton />;
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;

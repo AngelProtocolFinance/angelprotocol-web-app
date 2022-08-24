@@ -3,29 +3,25 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
-import { WalletInfo, useWalletContext } from "contexts/Wallet";
-import {
-  useGetWallet,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { Wallet, useWalletContext } from "contexts/WalletContext";
 import { requiredWalletAddr } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
 
-export type Wallet = {
+export type WalletValues = {
   address: string;
 };
 
-export default function WalletSubmission(props: { wallet: WalletInfo }) {
-  const { disconnect } = useSetWallet();
+export default function WalletSubmission(props: Wallet) {
+  const { disconnect } = useWalletContext();
   const navigate = useNavigate();
 
   const methods = useForm<Wallet>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: { address: props.wallet.address || "" },
+    defaultValues: { address: props.address || "" },
     resolver: yupResolver(
       Yup.object({ address: requiredWalletAddr("wallet") })
     ),
@@ -41,12 +37,12 @@ export default function WalletSubmission(props: { wallet: WalletInfo }) {
         Once you have registered your wallet address, we shall be able to create
         your Angel Protocol endowment account. We recommend using a new wallet.
       </p>
-      {props.wallet.id !== "keplr" ? (
+      {props.id !== "keplr" ? (
         <div className="text-center bg-angel-orange/20 border border-2 border-angel-orange/80 rounded-md p-4 ">
           <p>
             <span className="text-sm font-bold">connected wallet: </span>
             <span className="font-extrabold uppercase">
-              {props.wallet.id.toLocaleUpperCase()}
+              {props.id.toLocaleUpperCase()}
             </span>
           </p>
           <p>Only Keplr wallet is allowed!</p>
@@ -64,7 +60,7 @@ export default function WalletSubmission(props: { wallet: WalletInfo }) {
             onSubmit={handleSubmit(registerWallet)}
             className="flex flex-col gap-4 items-center w-[28rem]"
           >
-            <FormInput<Wallet>
+            <FormInput<WalletValues>
               fieldName="address"
               label="Juno Wallet address"
               placeholder="juno1..."

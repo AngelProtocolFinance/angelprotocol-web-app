@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/server/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import { DetailLabel, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
@@ -12,21 +11,17 @@ import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
+  const { cw3, chain } = useAdminResources();
   const params = useParams<ProposalParams>();
   const {
     data: proposal,
     isLoading,
     isError,
-  } = useProposalDetailsQuery(
-    {
-      id: params.id,
-      cw3,
-      voter: wallet?.address!,
-    },
-    { skip: !wallet }
-  );
+  } = useProposalDetailsQuery({
+    id: params.id,
+    cw3,
+    voter: chain.wallet.address,
+  });
 
   if (isLoading) {
     return (

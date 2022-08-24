@@ -1,8 +1,8 @@
-import { ProviderId } from "contexts/WalletContext/types";
+import { WalletId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider } from "types/ethereum";
 
 export function getProvider(
-  providerId: ProviderId
+  providerId: WalletId
 ): InjectedProvider | undefined {
   const dwindow = window as Dwindow;
   switch (providerId) {

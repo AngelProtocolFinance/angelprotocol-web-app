@@ -5,7 +5,7 @@ import { ethers, utils } from "ethers";
 import { Chain, Token, TokenType } from "types/server/aws";
 import { queryContract } from "services/juno/queryContract";
 import { VerifiedChain } from "contexts/ChainGuard";
-import { WalletInfo } from "contexts/Wallet";
+import { Wallet } from "contexts/WalletContext";
 import { condenseToNum } from "helpers";
 import { getCosmosBalance } from "helpers/getCosmosBalance";
 import { UnsupportedNetworkError } from "errors/errors";
@@ -24,7 +24,7 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.custom],
   endpoints: (builder) => ({
-    chaim: builder.query<Chain, WalletInfo>({
+    chaim: builder.query<Chain, Wallet>({
       query: ({ chainId }) => `chain/${chainId}`,
       transformResponse: (res: Chain) => res,
     }),
@@ -172,7 +172,7 @@ export const apes = createApi({
       },
     }),
 
-    chain: builder.query<Chain, WalletInfo>({
+    chain: builder.query<Chain, Wallet>({
       providesTags: [{ type: apesTags.custom, id: customTags.chain }],
       async queryFn(args) {
         try {

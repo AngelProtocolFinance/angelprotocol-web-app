@@ -3,7 +3,7 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connection, WalletId, WalletInfo } from "../types";
+import { Connection, Wallet, WalletId } from "../types";
 
 export default function useTerra() {
   const {
@@ -16,7 +16,7 @@ export default function useTerra() {
     disconnect,
   } = useWallet();
 
-  const info: WalletInfo | undefined = connection
+  const wallet: Wallet | undefined = connection
     ? {
         id:
           //use connect type as Id if no futher connections stems out of the type
@@ -50,6 +50,6 @@ export default function useTerra() {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
     disconnectTerra: disconnect,
-    terraInfo: info,
+    wallet,
   };
 }

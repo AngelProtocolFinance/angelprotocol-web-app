@@ -1,6 +1,5 @@
 import { useRegistrationState } from "services/aws/registration";
-import { useWalletContext } from "contexts/Wallet";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useWalletContext } from "contexts/WalletContext";
 import RegLoader from "../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
@@ -9,7 +8,7 @@ import WalletSubmission from "./WalletSubmission";
 export default function WalletRegistration() {
   const { data } = useRegistrationState("");
   const charity = data!; //
-  const { info, isLoading } = useWalletContext();
+  const { wallet, isLoading } = useWalletContext();
 
   if (charity.Metadata.JunoWallet) {
     return <RegisteredWallet />;
@@ -19,9 +18,9 @@ export default function WalletRegistration() {
     return <RegLoader message="Wallet is loading" />;
   }
 
-  if (!info) {
+  if (!wallet) {
     return <ChooseWallet />;
   }
 
-  return <WalletSubmission wallet={info} />;
+  return <WalletSubmission {...wallet} />;
 }

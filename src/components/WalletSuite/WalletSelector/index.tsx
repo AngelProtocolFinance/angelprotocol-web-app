@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import { Connection } from "contexts/Wallet";
+import { Connection } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Connector from "./Connector";
 

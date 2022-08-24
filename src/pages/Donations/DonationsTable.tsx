@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import useReceipter from "components/Receipter/useReceipter";
 import TableSection, { Cells } from "components/TableSection";
-import { getTxUrl, humanize } from "helpers";
+import { humanize } from "helpers";
 import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {
@@ -13,11 +13,10 @@ export default function DonationsTable(props: {
   isLoading: boolean;
   isError: boolean;
 }) {
+  const { wallet } = useWalletContext();
   const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
     useSortTransactions(props.transactions);
   const showReceiptForm = useReceipter();
-
-  const { wallet } = useGetWallet();
 
   if (!wallet) {
     return <Tooltip>Your wallet is not connected!!!</Tooltip>;
@@ -62,7 +61,9 @@ export default function DonationsTable(props: {
             <>{tx.block_timestamp.substring(0, 10)}</>
             <span className="font-mono">{tx.name}</span>
             <a
-              href={getTxUrl(wallet!.chain, tx.tx_id)}
+              href={
+                "https://google.com" /** TODO: wrap the page with ChainGuard and get chain */
+              }
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

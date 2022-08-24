@@ -1,13 +1,13 @@
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { WalletInfo, useWalletContext } from "contexts/Wallet";
+import { Wallet, useWalletContext } from "contexts/WalletContext";
 import Copier from "components/Copier";
 import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 
-export default function Details({ address }: WalletInfo) {
+export default function Details({ address }: Wallet) {
   const { disconnect } = useWalletContext();
 
   return (

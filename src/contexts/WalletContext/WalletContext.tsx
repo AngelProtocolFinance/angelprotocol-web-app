@@ -3,50 +3,19 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
-  useMemo,
 } from "react";
-import {
-  Connection,
-  ProviderId,
-  ProviderInfo,
-  ProviderStatuses,
-} from "./types";
-import { WalletInfo } from "contexts/Wallet/types";
-import { Chain, Token } from "types/server/aws";
-import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
-import { useErrorContext } from "../ErrorContext";
-import { placeholderChain } from "./constants";
-import useInjectedWallet from "./useInjectedProvider";
-import useKeplr from "./useKeplr";
-import useTerra from "./useTerra";
-import useXdefi from "./useXdefi";
-
-export type WalletState = {
-  walletIcon: string;
-  displayCoin: Token;
-  coins: Token[];
-  address: string;
-  chain: Chain;
-  providerId: ProviderId;
-  getBalance: (token_id: string) => number;
-};
+import { Connection, Wallet, WalletStatus } from "./types";
+import { WalletDisconnectedError } from "errors/errors";
+import useInjectedWallet from "./providers/useInjectedProvider";
+import useKeplr from "./providers/useKeplr";
+import useTerra from "./providers/useTerra";
+import useXdefi from "./providers/useXdefi";
 
 type State = {
-  wallet?: WalletState;
+  wallet: Wallet | undefined;
   isLoading: boolean;
-};
-
-type Setters = {
   disconnect(): void;
   connections: Connection[];
-};
-
-const initialState: State = {
-  wallet: undefined,
-  isLoading: true,
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
@@ -54,61 +23,65 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
     disconnect: disconnectMetamask,
-    providerInfo: metamaskInfo,
+    wallet: metamask,
   } = useInjectedWallet("metamask");
 
   const {
     isLoading: isBinanceWalletLoading,
     connection: binanceWalletConnection,
     disconnect: disconnectBinanceWallet,
-    providerInfo: binanceWalletInfo,
+    wallet: binanceWallet,
   } = useInjectedWallet("binance-wallet");
 
   const {
     isLoading: isKeplrLoading,
     connection: keplrConnection,
     disconnect: disconnectKeplr,
-    providerInfo: keplrWalletInfo,
+    wallet: keplr,
   } = useKeplr();
 
-  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
-    useTerra();
+  const {
+    isTerraLoading,
+    terraConnections,
+    disconnectTerra,
+    wallet: terraWallet,
+  } = useTerra();
 
   const {
     isxdefiEVMLoading,
     xdefiConnection,
     disconnectEVMxdefi,
-    xdefiEVMinfo,
+    xdefiEVMWallet,
   } = useXdefi();
 
-  const providerStatuses: ProviderStatuses = [
+  const wallets: WalletStatus[] = [
     {
-      providerInfo: binanceWalletInfo,
+      wallet: binanceWallet,
       isLoading: isBinanceWalletLoading,
     },
     {
-      providerInfo: metamaskInfo,
+      wallet: metamask,
       isLoading: isMetamaskLoading,
     },
     {
-      providerInfo: xdefiEVMinfo,
+      wallet: xdefiEVMWallet,
       isLoading: isxdefiEVMLoading,
     },
     {
-      providerInfo: terraInfo,
+      wallet: terraWallet,
       isLoading: isTerraLoading,
     },
     {
-      providerInfo: keplrWalletInfo,
+      wallet: keplr,
       isLoading: isKeplrLoading,
     },
   ];
-  const activeProviderInfo = providerStatuses.find(
-    ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
-  )?.providerInfo;
+  const activeWallet = wallets.find(
+    ({ wallet, isLoading }) => !isLoading && wallet !== undefined
+  )?.wallet;
 
   const disconnect = useCallback(() => {
-    switch (activeProviderInfo?.providerId) {
+    switch (activeWallet?.id) {
       case "metamask":
         disconnectMetamask();
         break;
@@ -123,8 +96,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "xdefi-wallet":
       case "station":
-      case "falcon-wallet":
-      case "leap-wallet":
       case "walletconnect":
         disconnectTerra();
         break;
@@ -132,7 +103,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         throw new WalletDisconnectedError();
     }
   }, [
-    activeProviderInfo?.providerId,
+    activeWallet?.id,
     disconnectMetamask,
     disconnectBinanceWallet,
     disconnectEVMxdefi,
@@ -140,102 +111,34 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectTerra,
   ]);
 
-  const {
-    data: chain = placeholderChain,
-    isLoading: isChainLoading,
-    error,
-  } = useChainQuery(activeProviderInfo as unknown as WalletInfo, {
-    skip: !activeProviderInfo,
-  });
-
-  useVerifyChain(activeProviderInfo, chain, error, disconnect);
-
-  const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address } = activeProviderInfo;
-      return {
-        walletIcon: logo,
-        displayCoin: chain.native_currency,
-        coins: [chain.native_currency, ...chain.tokens],
-        address,
-        chain,
-        providerId,
-        getBalance: (token_id: string) =>
-          [chain.native_currency, ...chain.tokens].find(
-            (x) => x.token_id === token_id
-          )?.balance || 0,
-      };
-    }
-  }, [activeProviderInfo, chain]);
-
   return (
-    <getContext.Provider
+    <context.Provider
       value={{
-        wallet: walletState,
-        isLoading: providerStatuses.some((x) => x.isLoading) || isChainLoading,
+        wallet: activeWallet,
+        isLoading: wallets.some((wallet) => wallet.isLoading),
+        disconnect,
+        connections: [
+          keplrConnection,
+          xdefiConnection,
+          metamaskConnection,
+          ...terraConnections,
+          binanceWalletConnection,
+        ],
       }}
     >
-      <setContext.Provider
-        value={{
-          connections: [
-            keplrConnection,
-            xdefiConnection,
-            metamaskConnection,
-            ...terraConnections,
-            binanceWalletConnection,
-          ],
-          disconnect,
-        }}
-      >
-        {props.children}
-      </setContext.Provider>
-    </getContext.Provider>
+      {props.children}
+    </context.Provider>
   );
 }
 
-function useVerifyChain(
-  activeProviderInfo: ProviderInfo | undefined,
-  chain: Chain,
-  chainError: any,
-  disconnect: () => void
-) {
-  const { handleError } = useErrorContext();
+const context = createContext<State>({} as State);
 
-  const handle = useCallback(
-    (error: any) => {
-      handleError(error);
-      try {
-        disconnect();
-      } catch (err) {
-        // when wallet is disconnected, the `disconnect` func is recreated,
-        // causing this hook to rerun and throwing the error below.
-        // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectedError)) {
-          handleError(err);
-        }
-      }
-    },
-    [handleError, disconnect]
-  );
-
-  useEffect(() => {
-    // no active provider === no connected wallet so no need to run hook
-    if (!activeProviderInfo) {
-      return;
-    }
-    if (chainError) {
-      handle(chainError);
-    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
-      handle(new WrongNetworkError());
-    }
-  }, [activeProviderInfo, chain, chainError, handle]);
-}
-
-const getContext = createContext<State>(initialState);
-const setContext = createContext<Setters>({
-  connections: [],
-  disconnect: async () => {},
-});
-
-export const useSetWallet = () => useContext(setContext);
-export const useGetWallet = () => useContext(getContext);
+export const useWalletContext = () => {
+  const val = useContext(context);
+  if (Object.entries(val).length <= 0) {
+    throw new Error(
+      "useWalletContext should only be used inside WalletContext"
+    );
+  }
+  return val;
+};
