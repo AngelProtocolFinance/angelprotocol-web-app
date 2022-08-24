@@ -23,7 +23,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { showModal } = useModalContext();
 
@@ -39,7 +39,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(chain, contracts.halo_token);
+    const cw20Contract = new CW20(wallet, contracts.halo_token);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -57,7 +57,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const contract = new CW3(chain, cw3);
+    const contract = new CW3(wallet, cw3);
     const fundTransferMeta: FundSendMeta = {
       type: "cw3_transfer",
       data: {
@@ -75,7 +75,7 @@ export default function useTransferFunds() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

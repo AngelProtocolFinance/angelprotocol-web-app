@@ -16,7 +16,7 @@ import {
 import { TxOptions } from "slices/transaction/types";
 import { Dwindow } from "types/ethereum";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { scaleToStr, toBase64 } from "helpers";
 import { TxResultFail } from "errors/errors";
 import { IS_TEST } from "constants/env";
@@ -32,24 +32,24 @@ const GAS_PRICE = IS_TEST
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
 
 export default class Contract {
-  chain: VerifiedChain;
+  wallet: ChainWallet;
   walletAddress: string;
 
-  constructor(chain: VerifiedChain) {
-    this.chain = chain;
-    this.walletAddress = chain.wallet.address;
+  constructor(wallet: ChainWallet) {
+    this.wallet = wallet;
+    this.walletAddress = wallet.address;
   }
 
   //for on-demand query, use RTK where possible
   async query<T>(to: string, message: Record<string, unknown>) {
-    const { chain_id, rpc_url } = this.chain;
+    const { chain_id, rpc_url } = this.wallet;
     const client = await getKeplrClient(chain_id, rpc_url);
     const jsonObject = await client.queryContractSmart(to, message);
     return JSON.parse(jsonObject) as T;
   }
 
   async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
-    const { chain_id, rpc_url } = this.chain;
+    const { chain_id, rpc_url } = this.wallet;
     const client = await getKeplrClient(chain_id, rpc_url);
     const gasEstimation = await client.simulate(
       this.walletAddress,
@@ -60,7 +60,7 @@ export default class Contract {
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
-    const { chain_id, rpc_url } = this.chain;
+    const { chain_id, rpc_url } = this.wallet;
     const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, chain_id);
@@ -85,7 +85,7 @@ export default class Contract {
   createTransferNativeMsg(
     amount: number,
     recipient: string,
-    denom = this.chain.native_currency.token_id
+    denom = this.wallet.native_currency.token_id
   ): MsgSendEncodeObject {
     return {
       typeUrl: "/cosmos.bank.v1beta1.MsgSend",

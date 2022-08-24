@@ -4,14 +4,14 @@ import { Airdrops } from "types/server/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Airdrop from "contracts/Airdrop";
 import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
-  const chain = useChain();
+  const wallet = useChainWallet();
   const dispatch = useSetter();
 
   const totalClaimable = useMemo(
@@ -24,7 +24,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   );
 
   const claimAirdrop = (isStake: boolean) => () => {
-    const airdropContract = new Airdrop(chain);
+    const airdropContract = new Airdrop(wallet);
     const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake
@@ -32,7 +32,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: claimAirdropMsgs,
         tagPayloads: [
           invalidateJunoTags([

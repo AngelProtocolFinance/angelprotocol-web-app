@@ -12,7 +12,7 @@ import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 
 export default function useUpdateOwner() {
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -28,7 +28,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const registrarContract = new Registrar(chain);
+    const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
@@ -38,7 +38,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -48,7 +48,7 @@ export default function useUpdateOwner() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

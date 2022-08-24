@@ -18,7 +18,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { proposalLink, cw3, chain } = useAdminResources();
+  const { proposalLink, cw3, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -46,7 +46,7 @@ export default function useConfigureFund() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const indexFundContract = new IndexFund(chain);
+    const indexFundContract = new IndexFund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({
@@ -55,7 +55,7 @@ export default function useConfigureFund() {
       })
     );
 
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -65,7 +65,7 @@ export default function useConfigureFund() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

@@ -1,7 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SuccessLink } from "slices/transaction/types";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
@@ -19,7 +19,7 @@ export const logStatusUpdateProposal = createAsyncThunk(
     args: {
       res: DeliverTxResponse;
       proposalLink: SuccessLink;
-      chain: VerifiedChain;
+      wallet: ChainWallet;
       PK: string;
     },
     { dispatch }
@@ -41,7 +41,7 @@ export const logStatusUpdateProposal = createAsyncThunk(
         method: "PUT",
         headers: { authorization: generatedToken },
         body: JSON.stringify({
-          chain_id: args.chain.chain_id,
+          chain_id: args.wallet.chain_id,
           poll_id: numId,
         }),
       });
@@ -51,7 +51,7 @@ export const logStatusUpdateProposal = createAsyncThunk(
           step: "success",
           message: "Status change proposal submitted",
           txHash: args.res.transactionHash,
-          chain: args.chain,
+          chain: args.wallet,
           successLink: args.proposalLink,
         })
       );

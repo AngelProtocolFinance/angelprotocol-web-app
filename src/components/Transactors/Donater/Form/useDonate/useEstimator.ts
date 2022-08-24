@@ -15,7 +15,7 @@ import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { TxOptions } from "slices/transaction/types";
 import { useLazyBalanceQuery } from "services/apes";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -46,7 +46,7 @@ export default function useEstimator() {
   } = useFormContext<DonateValues>();
 
   const [queryBalance] = useLazyBalanceQuery();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const selectedToken = watch("token");
@@ -70,12 +70,12 @@ export default function useEstimator() {
 
         const { data: tokenBalance = 0 } = await queryBalance({
           token: selectedToken,
-          chain,
+          wallet,
         });
 
         const { data: nativeBalance = 0 } = await queryBalance({
-          token: chain.native_currency,
-          chain,
+          token: wallet.native_currency,
+          wallet,
         });
 
         if (debounced_amount > tokenBalance) {
@@ -84,13 +84,13 @@ export default function useEstimator() {
         }
 
         // juno transaction, send or contract interaction
-        if (chain.type === "juno-native") {
+        if (wallet.type === "juno-native") {
           if (
             selectedToken.type === "juno-native" ||
             selectedToken.type === "ibc"
           ) {
             let msg: MsgSendEncodeObject | MsgExecuteContractEncodeObject;
-            const contract = new Account(chain);
+            const contract = new Account(wallet);
             if (isSendToContract) {
               //TODO: remove this once accounts have initial balances for testing
               alert("you are sending directly to contract");
@@ -113,7 +113,7 @@ export default function useEstimator() {
             const fee = await contract.estimateFee([msg]);
             const feeAmount = extractFeeAmount(
               fee,
-              chain.native_currency.token_id
+              wallet.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
@@ -125,7 +125,7 @@ export default function useEstimator() {
             }
             setCosmosTx({ msgs: [msg], fee });
           } else {
-            const contract = new CW20(chain, selectedToken.token_id);
+            const contract = new CW20(wallet, selectedToken.token_id);
             const msg = contract.createTransferMsg(
               debounced_amount,
               ap_wallets.juno
@@ -134,7 +134,7 @@ export default function useEstimator() {
 
             const feeAmount = extractFeeAmount(
               fee,
-              chain.native_currency.token_id
+              wallet.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
@@ -149,7 +149,7 @@ export default function useEstimator() {
           }
         }
         // terra native transaction, send or contract interaction
-        else if (chain.type === "terra-native") {
+        else if (wallet.type === "terra-native") {
           const amount = new Decimal(debounced_amount)
             .mul(1e6)
             .divToInt(1)
@@ -158,14 +158,14 @@ export default function useEstimator() {
             selectedToken.type === "terra-native" ||
             selectedToken.type === "ibc"
           ) {
-            const msg = new MsgSend(chain.wallet.address, ap_wallets.terra, [
+            const msg = new MsgSend(wallet.address, ap_wallets.terra, [
               new Coin(selectedToken.token_id, amount),
             ]);
-            const fee = await estimateTerraFee(chain, [msg]);
+            const fee = await estimateTerraFee(wallet, [msg]);
 
             const feeAmount = extractFeeAmount(
               fee,
-              chain.native_currency.token_id
+              wallet.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
 
@@ -178,7 +178,7 @@ export default function useEstimator() {
             setTerraTx({ msgs: [msg], fee });
           } else {
             const msg = new MsgExecuteContract(
-              chain.wallet.address,
+              wallet.address,
               selectedToken.token_id,
               {
                 transfer: {
@@ -187,11 +187,11 @@ export default function useEstimator() {
                 },
               }
             );
-            const fee = await estimateTerraFee(chain, [msg]);
+            const fee = await estimateTerraFee(wallet, [msg]);
 
             const feeAmount = extractFeeAmount(
               fee,
-              chain.native_currency.token_id
+              wallet.native_currency.token_id
             );
             dispatch(setFee(feeAmount));
             if (feeAmount >= nativeBalance) {
@@ -206,7 +206,7 @@ export default function useEstimator() {
         // evm transactions
         else {
           const provider = new ethers.providers.Web3Provider(
-            getProvider(chain.wallet.id) as any
+            getProvider(wallet.id) as any
           );
           //no network request
           const signer = provider.getSigner();
@@ -277,7 +277,7 @@ export default function useEstimator() {
     debounced_split,
     isDirty,
     selectedToken,
-    chain,
+    wallet,
     dispatch,
     getFieldState,
     setError,
@@ -285,5 +285,5 @@ export default function useEstimator() {
     queryBalance,
   ]);
 
-  return { evmTx, terraTx, cosmosTx, chain };
+  return { evmTx, terraTx, cosmosTx, wallet };
 }

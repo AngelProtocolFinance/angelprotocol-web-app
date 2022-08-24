@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import haloLogo from "assets/icons/currencies/halo_outline.png";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { symbols } from "constants/currency";
 
 export default function Output() {
   const { watch } = useFormContext<SwapValues>();
-  const chain = useChain();
-  const native_currency = chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
+  const wallet = useChainWallet();
+  const native_currency = wallet.native_currency; // wallet exists, otherwise wouldn't be able to donate
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");

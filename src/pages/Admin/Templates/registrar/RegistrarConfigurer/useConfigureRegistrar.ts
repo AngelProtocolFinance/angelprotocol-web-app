@@ -19,7 +19,7 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -49,7 +49,7 @@ export default function useConfigureRegistrar() {
       split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
-    const registrarContract = new Registrar(chain);
+    const registrarContract = new Registrar(wallet);
     const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(
       cleanObject(finalPayload)
     );
@@ -59,7 +59,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -69,7 +69,7 @@ export default function useConfigureRegistrar() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

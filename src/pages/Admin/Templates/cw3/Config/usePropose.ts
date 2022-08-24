@@ -19,7 +19,7 @@ type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
 export default function usePropose() {
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const {
     getValues,
     handleSubmit,
@@ -43,7 +43,7 @@ export default function usePropose() {
       return;
     }
 
-    const contract = new CW3(chain, cw3);
+    const contract = new CW3(wallet, cw3);
 
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
@@ -71,7 +71,7 @@ export default function usePropose() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

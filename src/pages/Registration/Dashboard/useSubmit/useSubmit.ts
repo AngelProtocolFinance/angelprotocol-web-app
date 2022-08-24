@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { useModalContext } from "contexts/ModalContext";
 import { useWalletContext } from "contexts/WalletContext";
 import Popup from "components/Popup";
@@ -35,17 +35,17 @@ export default function useSubmit() {
           return;
         }
 
-        const verifiedChain: VerifiedChain = { ...chain, wallet };
-        const contract = new Registrar(verifiedChain);
+        const ChainWallet: ChainWallet = { ...chain, ...wallet };
+        const contract = new Registrar(ChainWallet);
         const msg = contract.createEndowmentCreationMsg(charity);
         dispatch(
           sendCosmosTx({
-            chain: verifiedChain,
+            wallet: ChainWallet,
             msgs: [msg],
             onSuccess(res) {
               return logEndowmentId({
                 res,
-                chain: verifiedChain, //wallet is defined at this point
+                chain: ChainWallet, //wallet is defined at this point
                 PK: charity.ContactPerson.PK!, //registration data is complete at this point
               });
             },

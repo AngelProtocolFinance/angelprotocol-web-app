@@ -2,7 +2,7 @@ import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { invalidateAwsTags } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
@@ -17,7 +17,7 @@ import { APIs } from "constants/urls";
 export const logEndowmentId = createAsyncThunk(
   `${transactionSlice.name}/logEndowmentId`,
   async (
-    args: { res: DeliverTxResponse; chain: VerifiedChain; PK: string },
+    args: { res: DeliverTxResponse; chain: ChainWallet; PK: string },
     { dispatch }
   ) => {
     try {

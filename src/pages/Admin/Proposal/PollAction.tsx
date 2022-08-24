@@ -25,17 +25,17 @@ export default function PollAction(props: ProposalDetails) {
   const latestBlock = useLatestBlock();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { cw3, chain } = useAdminResources();
+  const { cw3, wallet } = useAdminResources();
 
   const showAdminVoter = useAdminVoter(props.id);
 
   function executeProposal() {
-    const contract = new CW3(chain, cw3);
+    const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [execMsg],
         tagPayloads: getTagPayloads(props.meta),
       })
@@ -50,8 +50,8 @@ export default function PollAction(props: ProposalDetails) {
       : +latestBlock > props.expires.at_height;
 
   const userVote = useMemo(
-    () => props.votes.find((vote) => vote.voter === chain.wallet.address),
-    [props.votes, chain.wallet.address]
+    () => props.votes.find((vote) => vote.voter === wallet.address),
+    [props.votes, wallet.address]
   );
 
   const EXED = props.status === "executed";

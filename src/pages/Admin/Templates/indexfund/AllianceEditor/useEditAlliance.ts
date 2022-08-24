@@ -14,7 +14,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { proposalLink, cw3, chain } = useAdminResources();
+  const { proposalLink, cw3, wallet } = useAdminResources();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -37,7 +37,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new IndexFund(chain);
+    const indexFundContract = new IndexFund(wallet);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -62,7 +62,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {
@@ -86,7 +86,7 @@ export default function useEditAlliance() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

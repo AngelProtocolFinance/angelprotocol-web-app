@@ -4,13 +4,13 @@ import {
   EmbeddedWasmMsg,
   Vote,
 } from "types/server/contracts";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import Contract from "./Contract";
 
 export default class CW3 extends Contract {
   address: string;
 
-  constructor(chain: VerifiedChain, address: string) {
+  constructor(chain: ChainWallet, address: string) {
     super(chain);
     this.address = address;
   }

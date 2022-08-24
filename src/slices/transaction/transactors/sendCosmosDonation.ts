@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
 import { KYCData, Receiver } from "types/server/aws";
 import { invalidateJunoTags } from "services/juno";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { DonateValues } from "components/Transactors/Donater";
 import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
@@ -10,7 +10,7 @@ import handleTxError from "../handleTxError";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type CosmosDonateArgs = {
-  chain: VerifiedChain;
+  wallet: ChainWallet;
   donateValues: DonateValues;
   tx: TxOptions;
   kycData?: KYCData;
@@ -25,7 +25,7 @@ export const sendCosmosDonation = createAsyncThunk(
     try {
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const contract = new Contract(args.chain);
+      const contract = new Contract(args.wallet);
       const response = await contract.signAndBroadcast(args.tx);
 
       if (!response.code) {
@@ -44,11 +44,11 @@ export const sendCosmosDonation = createAsyncThunk(
             ...args.kycData,
             transactionId: response.transactionHash,
             transactionDate: new Date().toISOString(),
-            chainId: args.chain.chain_id,
+            chainId: args.wallet.chain_id,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
-            walletAddress: args.chain.wallet.address,
+            walletAddress: args.wallet.address,
           });
         }
 
@@ -57,7 +57,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chain: args.chain,
+          chain: args.wallet,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -73,7 +73,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.chain.chain_id,
+          chainId: args.wallet.chain_id,
         });
       }
     } catch (err) {

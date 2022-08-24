@@ -3,7 +3,7 @@ import { CreatePollValues } from "./types";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
@@ -13,17 +13,17 @@ export default function useCreatePoll() {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<CreatePollValues>();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Gov(chain);
+    const contract = new Gov(wallet);
     const { amount, title, description, link } = data;
     const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [pollMsg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),

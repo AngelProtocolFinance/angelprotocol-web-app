@@ -3,16 +3,16 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { VerifiedChain, useChain } from "contexts/ChainGuard";
+import { ChainWallet, useChainWallet } from "contexts/ChainGuard";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
 export function Guard(props: PropsWithChildren<{}>) {
-  const chain = useChain();
+  const wallet = useChainWallet();
   const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery({
-    user: chain.wallet.address,
+    user: wallet.address,
     endowmentId: id!,
   });
 
@@ -25,13 +25,13 @@ export function Guard(props: PropsWithChildren<{}>) {
   if (!data) return <GuardPrompt>Unauthorized to view this page</GuardPrompt>;
 
   return (
-    <context.Provider value={{ ...data, chain }}>
+    <context.Provider value={{ ...data, wallet }}>
       {props.children}
     </context.Provider>
   );
 }
 
-type TAdmin = AdminResources & { chain: VerifiedChain };
+type TAdmin = AdminResources & { wallet: ChainWallet };
 const context = createContext({} as TAdmin);
 export const useAdminResources = (): TAdmin => {
   const val = useContext(context);

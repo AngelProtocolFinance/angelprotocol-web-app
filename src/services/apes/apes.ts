@@ -3,7 +3,7 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers, utils } from "ethers";
 import { Chain, Token } from "types/server/aws";
 import { queryContract } from "services/juno/queryContract";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { Wallet } from "contexts/WalletContext";
 import { condenseToNum } from "helpers";
 import { getCosmosBalance } from "helpers/getCosmosBalance";
@@ -22,9 +22,8 @@ export const apes = createApi({
       query: ({ chainId }) => `chain/${chainId}`,
       transformResponse: (res: Chain) => res,
     }),
-    balance: builder.query<number, { token: Token; chain: VerifiedChain }>({
-      async queryFn({ token, chain }) {
-        const { wallet } = chain;
+    balance: builder.query<number, { token: Token; wallet: ChainWallet }>({
+      async queryFn({ token, wallet }) {
         try {
           if (
             token.type === "juno-native" ||
@@ -35,7 +34,7 @@ export const apes = createApi({
               data: await getCosmosBalance(
                 token.token_id,
                 wallet.address,
-                chain.lcd_url
+                wallet.lcd_url
               ),
             };
           }
@@ -45,20 +44,18 @@ export const apes = createApi({
               "cw20Balance",
               token.token_id,
               { addr: wallet.address },
-              chain.lcd_url
+              wallet.lcd_url
             );
             return { data: condenseToNum(balance, token.decimals) };
           }
 
           if (token.type === "evm-native" || token.type === "erc20") {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
-              chain.rpc_url,
-              { chainId: +chain.chain_id, name: chain.chain_name }
+              wallet.rpc_url,
+              { chainId: +wallet.chain_id, name: wallet.chain_name }
             );
             if (token.type === "evm-native") {
-              const balance = await jsonProvider.getBalance(
-                chain.wallet.address
-              );
+              const balance = await jsonProvider.getBalance(wallet.address);
               return { data: +utils.formatUnits(balance, token.decimals) };
             }
             if (token.type === "erc20") {

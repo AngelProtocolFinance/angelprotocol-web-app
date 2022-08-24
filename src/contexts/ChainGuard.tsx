@@ -42,13 +42,20 @@ export default function ChainGuard({
   }
 
   return (
-    <context.Provider value={{ ...chain, wallet }}>{children}</context.Provider>
+    <context.Provider value={{ ...chain, ...wallet }}>
+      {children}
+    </context.Provider>
   );
 }
 
-export type VerifiedChain = Chain & { wallet: Wallet };
-const context = createContext({} as VerifiedChain);
-export const useChain = () => {
+/**NOTE: ChainWallet is both subset of Chain and Wallet
+ * const chainWallet:ChainWallet;
+ * cosnt wallet:Wallet = chainWallet - no prob
+ * const chain:Chain = chainWallet - no prob
+ */
+export type ChainWallet = Chain & Wallet;
+const context = createContext({} as ChainWallet);
+export const useChainWallet = () => {
   const val = useContext(context);
   if (Object.entries(val).length <= 0) {
     throw new Error("this hook should only be used inside Chain Guard");

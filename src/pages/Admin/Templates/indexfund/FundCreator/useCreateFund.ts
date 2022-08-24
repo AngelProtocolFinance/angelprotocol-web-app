@@ -16,7 +16,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -48,7 +48,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new IndexFund(chain);
+    const indexFundContract = new IndexFund(wallet);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -77,7 +77,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -87,7 +87,7 @@ export default function useCreateFund() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

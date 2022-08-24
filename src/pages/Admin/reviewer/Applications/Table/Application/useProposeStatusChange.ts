@@ -18,7 +18,7 @@ const NUM_ID = 15; //TODO: get this from ap (not yet present)
 export default function useProposeStatusChange(app: CharityApplication) {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
 
   function updateStatus(status: Extract<EndowmentStatusNum, 1 | 3>) {
     const statusChangePayload: StatusChangePayload = {
@@ -27,7 +27,7 @@ export default function useProposeStatusChange(app: CharityApplication) {
     };
     const statusWord = status === 1 ? "Approve" : "Reject";
 
-    const registrarContract = new Registrar(chain);
+    const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -42,7 +42,7 @@ export default function useProposeStatusChange(app: CharityApplication) {
       },
     };
 
-    const contract = new CW3(chain, cw3 /** cw3Reviewer */);
+    const contract = new CW3(wallet, cw3 /** cw3Reviewer */);
     const proposalMsg = contract.createProposalMsg(
       `${statusWord} ${app.CharityName}`,
       `registration id: ${app.PK}`,
@@ -52,12 +52,12 @@ export default function useProposeStatusChange(app: CharityApplication) {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         onSuccess(res) {
           return logStatusUpdateProposal({
             res,
-            chain,
+            wallet,
             proposalLink,
             PK: app.PK,
           });

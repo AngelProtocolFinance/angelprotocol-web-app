@@ -1,14 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { useBalanceQuery } from "services/apes";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { humanize, roundDown } from "helpers";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const token = watch("token");
-  const { data = 0, isLoading } = useBalanceQuery({ token, chain });
+  const { data = 0, isLoading } = useBalanceQuery({ token, wallet });
   function setMaxVal() {
     setValue("amount", roundDown(data, 4), {
       shouldDirty: true,

@@ -3,7 +3,7 @@ import { HaloStakingValues } from "./types";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
@@ -14,17 +14,17 @@ export default function useStakeUnstake() {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<HaloStakingValues>();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const dispatch = useSetter();
 
   function stakeOrUnstake(data: HaloStakingValues) {
-    const contract = new Gov(chain);
+    const contract = new Gov(wallet);
     const govMsg = getValues("is_stake")
       ? contract.createGovStakeMsg(data.amount)
       : contract.createGovUnstakeMsg(+data.amount);
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [govMsg],
         tagPayloads: [
           invalidateJunoTags([

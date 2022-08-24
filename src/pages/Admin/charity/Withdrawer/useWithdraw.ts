@@ -22,7 +22,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, chain } = useAdminResources();
+  const { cw3, endowmentId, wallet } = useAdminResources();
   const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
 
@@ -47,7 +47,7 @@ export default function useWithdraw() {
     );
 
     const isJuno = data.network === chainIds.juno;
-    const account = new Account(chain);
+    const account = new Account(wallet);
     const msg = account.createEmbeddedWithdrawLiqMsg({
       id: endowmentId,
       beneficiary:
@@ -66,7 +66,7 @@ export default function useWithdraw() {
       },
     };
 
-    const cw3contract = new CW3(chain, cw3);
+    const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "withdraw proposal",
@@ -77,7 +77,7 @@ export default function useWithdraw() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposal],
         tagPayloads: [
           invalidateJunoTags([
@@ -95,7 +95,7 @@ export default function useWithdraw() {
               logWithdrawProposal({
                 res: response,
                 proposalLink,
-                chain,
+                wallet,
 
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,

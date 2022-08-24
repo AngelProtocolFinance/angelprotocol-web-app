@@ -19,7 +19,7 @@ export default class Airdrop extends Contract {
         (result, airdrop) => condense(airdrop.haloTokens).add(result),
         new Decimal(0)
       );
-      const govContract = new Gov(this.chain);
+      const govContract = new Gov(this.wallet);
       const stake_msg = govContract.createGovStakeMsg(
         totalClaimable.toString()
       );

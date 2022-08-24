@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
 import { StageUpdater } from "slices/transaction/types";
 import { useRequestReceiptMutation } from "services/apes";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
 
@@ -13,7 +13,7 @@ export default function useRequestReceipt() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<RV>();
   const [submitRequest] = useRequestReceiptMutation();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const updateStage: StageUpdater = (update) => {
     dispatch(setStage(update));
   };
@@ -42,7 +42,7 @@ export default function useRequestReceipt() {
       step: "success",
       message: `Your receipt will be sent to your email.`,
       txHash,
-      chain,
+      chain: wallet,
     });
   };
 

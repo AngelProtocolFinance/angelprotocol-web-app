@@ -20,7 +20,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
@@ -43,7 +43,7 @@ export default function useUpdateStatus() {
       endowment_id: data.id,
     };
 
-    const registrarContract = new Registrar(chain);
+    const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -60,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new CW3(chain, cw3);
+    const adminContract = new CW3(wallet, cw3);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -70,7 +70,7 @@ export default function useUpdateStatus() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { useLazyBalanceQuery } from "services/apes";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -30,7 +30,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
-  const chain = useChain();
+  const wallet = useChainWallet();
   const [queryBalance] = useLazyBalanceQuery();
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
@@ -38,8 +38,8 @@ export default function useSwapEstimator() {
   const [debounced_amount] = useDebouncer(amount, 300);
   const [debounced_slippage] = useDebouncer<string>(slippage, 150);
 
-  const native = chain.native_currency;
-  const halo = chain.native_currency; //TODO: remove this once HALO is in tokens
+  const native = wallet.native_currency;
+  const halo = wallet.native_currency; //TODO: remove this once HALO is in tokens
 
   useEffect(() => {
     (async () => {
@@ -54,12 +54,12 @@ export default function useSwapEstimator() {
 
         const { data: nativeBalance = 0 } = await queryBalance({
           token: native,
-          chain,
+          wallet,
         });
 
         const { data: haloBalance = 0 } = await queryBalance({
           token: halo,
-          chain,
+          wallet,
         });
 
         // first balance check
@@ -77,7 +77,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(chain);
+        const contract = new LP(wallet);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -136,7 +136,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, chain, is_buy, debounced_slippage, isValid, isDirty]);
+  }, [debounced_amount, wallet, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { tx, chain };
+  return { tx, wallet };
 }

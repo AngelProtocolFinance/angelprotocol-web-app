@@ -14,7 +14,7 @@ import CW4 from "contracts/CW4";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, proposalLink, chain } = useAdminResources();
+  const { cw3, cw4, proposalLink, wallet } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -48,8 +48,8 @@ export default function useUpdateMembers() {
       showModal(Popup, { message: "No member changes" });
       return;
     }
-    const cw3Contract = new CW3(chain, cw3);
-    const cw4Contract = new CW4(chain, cw4);
+    const cw3Contract = new CW3(wallet, cw3);
+    const cw4Contract = new CW4(wallet, cw4);
     const embeddedExecuteMsg = cw4Contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove
@@ -76,7 +76,7 @@ export default function useUpdateMembers() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           invalidateJunoTags([

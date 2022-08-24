@@ -23,7 +23,7 @@ const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
 
 export default function useEditProfile() {
-  const { endowmentId, cw3, proposalLink, chain } = useAdminResources();
+  const { endowmentId, cw3, proposalLink, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -88,7 +88,7 @@ export default function useEditProfile() {
         }
       }
 
-      const accountContract = new Account(chain);
+      const accountContract = new Account(wallet);
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject(data)
@@ -99,7 +99,7 @@ export default function useEditProfile() {
         data: genDiffMeta(diffEntries, initialProfile),
       };
 
-      const adminContract = new CW3(chain, cw3);
+      const adminContract = new CW3(wallet, cw3);
       const proposalMsg = adminContract.createProposalMsg(
         title,
         description,
@@ -109,7 +109,7 @@ export default function useEditProfile() {
 
       dispatch(
         sendCosmosTx({
-          chain,
+          wallet,
           msgs: [proposalMsg],
           tagPayloads: [
             invalidateJunoTags([

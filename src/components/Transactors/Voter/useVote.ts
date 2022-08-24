@@ -3,7 +3,7 @@ import { VoteValues } from "./types";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
@@ -15,11 +15,11 @@ export default function useVote() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<VoteValues>();
 
-  const chain = useChain();
+  const wallet = useChainWallet();
   const dispatch = useSetter();
 
   function vote(data: VoteValues) {
-    const contract = new Gov(chain);
+    const contract = new Gov(wallet);
     const voteMsg = contract.createVoteMsg(
       +data.poll_id,
       data.vote,
@@ -28,7 +28,7 @@ export default function useVote() {
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [voteMsg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),

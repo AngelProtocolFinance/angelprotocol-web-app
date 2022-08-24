@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./Form";
 
@@ -16,7 +16,7 @@ const schema = Yup.object().shape(shape);
 export default function Donater(
   props: DonaterProps /** set by opener context */
 ) {
-  const chain = useChain();
+  const wallet = useChainWallet();
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -24,7 +24,7 @@ export default function Donater(
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: chain.native_currency,
+      token: wallet.native_currency,
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

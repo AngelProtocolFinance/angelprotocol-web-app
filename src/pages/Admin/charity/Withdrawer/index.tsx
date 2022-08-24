@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { Amount, Props, WithdrawValues } from "./types";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { condense, roundDown } from "helpers";
 import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Withdrawer({ balance: { cw20, native } }: Props) {
-  const chain = useChain();
+  const wallet = useChainWallet();
   const cw20s: Amount[] = cw20.map((c) => ({
     type: "cw20",
     tokenId: c.address,
@@ -27,7 +27,7 @@ export default function Withdrawer({ balance: { cw20, native } }: Props) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      beneficiary: chain.wallet.address,
+      beneficiary: wallet.address,
       network: chainIds.juno,
       //transform to form format
       amounts: [...natives, ...cw20s],

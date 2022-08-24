@@ -26,7 +26,7 @@ export default function useDonate() {
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const dispatch = useSetter();
-  const { evmTx, terraTx, cosmosTx, chain } = useEstimator();
+  const { evmTx, terraTx, cosmosTx, wallet } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
 
@@ -35,15 +35,15 @@ export default function useDonate() {
     //   showKycForm();
     //   return;
     // }
-    switch (chain.type) {
+    switch (wallet.type) {
       case "evm-native":
-        dispatch(sendEthDonation({ chain, tx: evmTx!, donateValues: data }));
+        dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
         dispatch(
           sendTerraDonation({
             wallet: terraWallet,
-            chain,
+            chain: wallet,
             tx: terraTx!,
             donateValues: data,
             kycData,
@@ -53,7 +53,7 @@ export default function useDonate() {
       case "juno-native":
         dispatch(
           sendCosmosDonation({
-            chain,
+            wallet,
             tx: cosmosTx!,
             donateValues: data,
             kycData,

@@ -7,7 +7,7 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { StageUpdater } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers";
 import logDonation from "../../logDonation";
@@ -15,7 +15,7 @@ import transactionSlice, { setStage } from "../../transactionSlice";
 import handleEthError from "./handleEthError";
 
 type EthDonateArgs = {
-  chain: VerifiedChain;
+  wallet: ChainWallet;
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
@@ -31,14 +31,14 @@ export const sendEthDonation = createAsyncThunk(
       updateStage({ step: "submit", message: "Submitting transaction.." });
       const provider = new ethers.providers.Web3Provider(
         //wallet is connected to send this tx
-        getProvider(args.chain.wallet.id) as any
+        getProvider(args.wallet.id) as any
       );
 
       const signer = provider.getSigner();
       const { receiver, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
-      if (args.chain.native_currency.token_id === token.token_id) {
+      if (args.wallet.native_currency.token_id === token.token_id) {
         response = await signer.sendTransaction(args.tx);
       } else {
         const ER20Contract: any = new ethers.Contract(
@@ -60,18 +60,18 @@ export const sendEthDonation = createAsyncThunk(
           ...receipient,
           transactionId: response.hash,
           transactionDate: new Date().toISOString(),
-          chainId: args.chain.chain_id,
+          chainId: args.wallet.chain_id,
           amount: +amount,
           denomination: token.symbol,
           splitLiq: split_liq,
-          walletAddress: args.chain.wallet.address,
+          walletAddress: args.wallet.address,
         });
       }
       updateStage({
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
-        chain: args.chain,
+        chain: args.wallet, //ChainWallet is a subset of Chain
         isShareEnabled: true,
       });
     } catch (error) {

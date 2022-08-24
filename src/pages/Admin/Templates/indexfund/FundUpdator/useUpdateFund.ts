@@ -15,7 +15,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, proposalLink, chain } = useAdminResources();
+  const { cw3, proposalLink, wallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
@@ -52,7 +52,7 @@ export default function useUpdateFund() {
       if (toRemove.length <= 0 && toAdd.length <= 0) {
         throw new Error("No fund member changes");
       }
-      const indexFundContract = new IndexFund(chain);
+      const indexFundContract = new IndexFund(wallet);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -67,7 +67,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new CW3(chain, cw3);
+      const adminContract = new CW3(wallet, cw3);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
@@ -80,7 +80,7 @@ export default function useUpdateFund() {
 
       dispatch(
         sendCosmosTx({
-          chain,
+          wallet,
           msgs: [proposalMsg],
           tagPayloads: [
             invalidateJunoTags([

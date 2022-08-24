@@ -1,22 +1,22 @@
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useChain } from "contexts/ChainGuard";
+import { useChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
 
 export default function useClaimUnstakedHalo() {
   const dispatch = useSetter();
-  const chain = useChain();
+  const wallet = useChainWallet();
 
   function claimUnstakedHalo() {
-    const contract = new Gov(chain);
+    const contract = new Gov(wallet);
     const claimMsg = contract.createGovClaimMsg();
 
     dispatch(
       sendCosmosTx({
-        chain,
+        wallet,
         msgs: [claimMsg],
         tagPayloads: [
           invalidateJunoTags([

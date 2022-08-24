@@ -13,7 +13,7 @@ export const sendCosmosTx = createAsyncThunk(
 
     try {
       updateStage({ step: "submit", message: "Submitting transaction..." });
-      const contract = new Contract(args.chain);
+      const contract = new Contract(args.wallet);
       let tx: TxOptions;
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
@@ -29,14 +29,14 @@ export const sendCosmosTx = createAsyncThunk(
       if (!response.code) {
         if (args.onSuccess) {
           //success thunk should show user final success msg
-          dispatch(args.onSuccess(response, args.chain));
+          dispatch(args.onSuccess(response, args.wallet));
         } else {
           updateStage({
             step: "success",
             message: args.successMessage || "Transaction succesful!",
             txHash: response.transactionHash,
             rawLog: response.rawLog,
-            chain: args.chain,
+            chain: args.wallet,
             successLink: args.successLink,
           });
         }
@@ -49,7 +49,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.chain.chain_id,
+          chainId: args.wallet.chain_id,
         });
       }
     } catch (err) {

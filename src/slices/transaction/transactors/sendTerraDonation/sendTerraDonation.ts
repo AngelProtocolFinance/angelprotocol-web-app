@@ -2,9 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { KYCData, Receiver } from "types/server/aws";
+import { Chain, KYCData, Receiver } from "types/server/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
-import { VerifiedChain } from "contexts/ChainGuard";
 import { DonateValues } from "components/Transactors/Donater";
 import { WalletDisconnectedError } from "errors/errors";
 import handleTxError from "../../handleTxError";
@@ -14,7 +13,7 @@ import { pollTerraTxInfo } from "./pollTerraTxInfo";
 
 type TerraDonateArgs = {
   wallet: ConnectedWallet | undefined;
-  chain: VerifiedChain; // need to pass this chain object for displaying the Tx URL on successful Tx
+  chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
   kycData?: KYCData;

@@ -7,7 +7,7 @@ import {
 } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 import { useModalContext } from "contexts/ModalContext";
 import { useWalletContext } from "contexts/WalletContext";
 import Popup from "components/Popup";
@@ -48,13 +48,13 @@ export default function PollAction(props: { poll_id: number }) {
       return;
     }
 
-    const verifiedChain: VerifiedChain = { ...chain, wallet: wallet };
-    const contract = new Gov(verifiedChain);
+    const chainWallet: ChainWallet = { ...chain, ...wallet };
+    const contract = new Gov(chainWallet);
     const msg = contract.createEndPollMsg(props.poll_id);
 
     dispatch(
       sendCosmosTx({
-        chain: verifiedChain,
+        wallet: chainWallet,
         msgs: [msg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),

@@ -11,7 +11,7 @@ import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { cw3, chain } = useAdminResources();
+  const { cw3, wallet } = useAdminResources();
   const params = useParams<ProposalParams>();
   const {
     data: proposal,
@@ -20,7 +20,7 @@ export default function Proposal() {
   } = useProposalDetailsQuery({
     id: params.id,
     cw3,
-    voter: chain.wallet.address,
+    voter: wallet.address,
   });
 
   if (isLoading) {

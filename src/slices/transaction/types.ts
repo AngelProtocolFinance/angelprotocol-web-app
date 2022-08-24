@@ -4,7 +4,7 @@ import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain, KYCData } from "types/server/aws";
-import { VerifiedChain } from "contexts/ChainGuard";
+import { ChainWallet } from "contexts/ChainGuard";
 
 type Tag = TagDescription<string>;
 export type Tags = Tag[];
@@ -96,10 +96,10 @@ type BaseArgs = {
   tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
-  chain: VerifiedChain;
+  wallet: ChainWallet;
   onSuccess?(
     res: DeliverTxResponse,
-    chain: VerifiedChain
+    wallet: ChainWallet
   ): AsyncThunkAction<void, any, {}>;
 };
 
