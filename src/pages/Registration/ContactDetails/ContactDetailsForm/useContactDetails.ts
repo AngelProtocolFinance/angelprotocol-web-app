@@ -90,7 +90,7 @@ export default function useSaveContactDetails() {
         },
       });
 
-      navigate(`${appRoutes.register}/${routes.confirm}`);
+      navigate(`${appRoutes.register}/${routes.documentation}`);
     },
     [
       handleError,
