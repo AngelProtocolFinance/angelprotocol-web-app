@@ -4,17 +4,19 @@ import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import RegLoader from "../common/RegLoader";
 import routes from "../routes";
-import { StepTwoCompleteGuard } from "./StepTwoCompleteGuard";
+import { DocumentationCompleteGuard } from "./DocumentationCompleteGuard";
 
 /**
  * Checks if the charity contact details are submitted and only if they are does it allow
  * them to access the component passed in "props.children", otherwise navigates to /app/register page
  */
-export function StepThreeCompleteGuard(props: PropsWithChildren<{}>) {
+export function AdditionalInformationCompleteGuard(
+  props: PropsWithChildren<{}>
+) {
   return (
-    <StepTwoCompleteGuard>
+    <DocumentationCompleteGuard>
       <InternalGuard {...props} />
-    </StepTwoCompleteGuard>
+    </DocumentationCompleteGuard>
   );
 }
 

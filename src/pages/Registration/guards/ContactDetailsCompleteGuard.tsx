@@ -7,7 +7,7 @@ import RegLoader from "../common/RegLoader";
  * Checks if the charity contact details are submitted and only if they are does it allow
  * them to access the component passed in "props.children", otherwise navigates to /app/register page
  */
-export function StepOneCompleteGuard(props: any) {
+export function ContactDetailsCompleteGuard(props: any) {
   const { data: charity, isLoading } = useRegistrationQuery("");
 
   if (isLoading) {

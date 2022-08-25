@@ -2,10 +2,10 @@ import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { appRoutes } from "constants/routes";
 import {
-  StepFourCompleteGuard,
-  StepOneCompleteGuard,
-  StepThreeCompleteGuard,
-  StepTwoCompleteGuard,
+  AdditionalInformationCompleteGuard,
+  ContactDetailsCompleteGuard,
+  DashboardGuard,
+  DocumentationCompleteGuard,
 } from "./guards";
 import routes from "./routes";
 
@@ -25,34 +25,34 @@ export default function Registration() {
         <Route
           path={routes.additionalInformation}
           element={
-            <StepTwoCompleteGuard>
+            <DocumentationCompleteGuard>
               <AdditionalInformation />
-            </StepTwoCompleteGuard>
+            </DocumentationCompleteGuard>
           }
         />
         <Route
           path={routes.confirmEmail}
           element={
-            <StepFourCompleteGuard>
+            <ContactDetailsCompleteGuard>
               <ConfirmEmail />
-            </StepFourCompleteGuard>
+            </ContactDetailsCompleteGuard>
           }
         />
         <Route path={routes.contactDetails} element={<ContactDetails />} />
         <Route
           path={routes.dashboard}
           element={
-            <StepOneCompleteGuard>
+            <DashboardGuard>
               <Dashboard />
-            </StepOneCompleteGuard>
+            </DashboardGuard>
           }
         />
         <Route
           path={routes.documentation}
           element={
-            <StepOneCompleteGuard>
+            <ContactDetailsCompleteGuard>
               <Documentation />
-            </StepOneCompleteGuard>
+            </ContactDetailsCompleteGuard>
           }
         />
 
@@ -60,9 +60,9 @@ export default function Registration() {
         <Route
           path={`${routes.wallet}/*`}
           element={
-            <StepThreeCompleteGuard>
+            <AdditionalInformationCompleteGuard>
               <WalletRegistration />
-            </StepThreeCompleteGuard>
+            </AdditionalInformationCompleteGuard>
           }
         />
         <Route index element={<LandingPage />} />
