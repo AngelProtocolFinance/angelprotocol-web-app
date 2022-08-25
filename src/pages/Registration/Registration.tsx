@@ -4,6 +4,7 @@ import { appRoutes } from "constants/routes";
 import {
   StepOneCompleteGuard,
   StepOneInitiatedGuard,
+  StepThreeCompleteGuard,
   StepTwoCompleteGuard,
 } from "./guards";
 import routes from "./routes";
@@ -59,9 +60,9 @@ export default function Registration() {
         <Route
           path={`${routes.wallet}/*`}
           element={
-            <StepOneCompleteGuard>
+            <StepThreeCompleteGuard>
               <WalletRegistration />
-            </StepOneCompleteGuard>
+            </StepThreeCompleteGuard>
           }
         />
         <Route index element={<LandingPage />} />
