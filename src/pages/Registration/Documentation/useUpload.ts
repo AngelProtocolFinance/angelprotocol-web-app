@@ -8,14 +8,14 @@ import {
 import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { logger, uploadToIpfs } from "helpers";
+import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import routes from "../routes";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { data: charity } = useRegistrationState("");
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();
@@ -23,6 +23,10 @@ export default function useUpload() {
   const upload = useCallback(
     async (values: DocumentationValues) => {
       try {
+        if (!charity) {
+          throw new UnexpectedStateError("Charity data is null");
+        }
+
         const body = await getUploadUrls(charity.ContactPerson.PK!, values);
         const result = await uploadDocumentation({
           PK: charity.ContactPerson.PK,
