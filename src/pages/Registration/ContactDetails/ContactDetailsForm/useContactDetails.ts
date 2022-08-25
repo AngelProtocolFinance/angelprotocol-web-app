@@ -16,7 +16,7 @@ import routes from "../../routes";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
-  const [resendEmail] = useRequestEmailMutation();
+  const [sendVerificationEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
@@ -81,7 +81,7 @@ export default function useSaveContactDetails() {
       //save ref before invalidating empty cache to retrigger fetch
       localStorage.setItem(registrationRefKey, PK || "");
       //sending this email invalidated registration query cache
-      await resendEmail({
+      await sendVerificationEmail({
         uuid: PK,
         type: "verify-email",
         body: {
@@ -92,7 +92,13 @@ export default function useSaveContactDetails() {
 
       navigate(`${appRoutes.register}/${routes.confirm}`);
     },
-    [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
+    [
+      handleError,
+      navigate,
+      registerCharity,
+      sendVerificationEmail,
+      updateContactPerson,
+    ]
   );
 
   return {
