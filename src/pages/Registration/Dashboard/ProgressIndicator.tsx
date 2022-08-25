@@ -5,8 +5,7 @@ const getBackground = (percent: number) =>
   `linear-gradient(to right, #4ca146 0%, #4ca146 ${percent}%, #fff ${percent}%, white 100%)`;
 
 export default function ProgressIndicator() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationState();
   const state = getRegistrationState(charity);
   const progress = [
     state.stepOne.completed,

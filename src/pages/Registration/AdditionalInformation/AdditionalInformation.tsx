@@ -12,8 +12,7 @@ import { additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationState();
   const { submit } = useSubmit();
 
   const methods = useForm<AdditionalInfoValues>({

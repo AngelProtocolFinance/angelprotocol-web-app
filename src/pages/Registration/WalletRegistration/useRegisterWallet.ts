@@ -8,7 +8,7 @@ import { FORM_ERROR } from "../constants";
 import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
-  const { data: charity } = useRegistrationState("");
+  const { charity } = useRegistrationState();
   const [updateMetadata, { isSuccess, isLoading }] =
     useUpdateCharityMetadataMutation();
 

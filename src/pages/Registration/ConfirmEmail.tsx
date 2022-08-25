@@ -15,7 +15,7 @@ import { FORM_ERROR } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
-  const { data: charity } = useRegistrationState("");
+  const { charity } = useRegistrationState();
   const navigate = useNavigate();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;

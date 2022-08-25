@@ -11,8 +11,7 @@ import { Button } from "../common";
 import routes from "../routes";
 
 export default function RegisteredWallet() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //handled by guard
+  const { charity } = useRegistrationState();
 
   const dispatch = useSetter();
 

@@ -13,6 +13,7 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/aws";
+import { placeHolderCharity } from "pages/Registration/constants";
 import { adminTags } from "services/aws/tags";
 import { createAuthToken } from "helpers";
 import { aws } from "./aws";
@@ -193,8 +194,11 @@ export const {
 } = registration_api;
 
 export const {
-  registration: {
-    useQueryState: useRegistrationState,
-    useLazyQuery: useRegistrationLazyQuery,
-  },
+  registration: { useLazyQuery: useRegistrationLazyQuery },
 } = registration_api.endpoints;
+
+export const useRegistrationState = () => {
+  const { data: charity = placeHolderCharity, ...rest } =
+    registration_api.endpoints.registration.useQueryState("");
+  return { charity, ...rest };
+};

@@ -15,7 +15,7 @@ import routes from "../routes";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { data: charity } = useRegistrationState("");
+  const { charity } = useRegistrationState();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();

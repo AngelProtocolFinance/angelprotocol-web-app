@@ -5,13 +5,13 @@ import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 
 export function ContactDetailsCompleteGuard(props: any) {
-  const { data: charity, isLoading } = useRegistrationState("");
+  const { charity, isLoading } = useRegistrationState();
 
   if (isLoading) {
     return <RegLoader />;
   }
 
-  if (!charity || !charity.ContactPerson.Email) {
+  if (!charity.ContactPerson.Email) {
     return <Navigate to={appRoutes.register} />;
   }
 

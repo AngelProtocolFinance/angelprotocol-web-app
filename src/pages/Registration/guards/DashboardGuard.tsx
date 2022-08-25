@@ -15,14 +15,14 @@ export function DashboardGuard(props: PropsWithChildren<{}>) {
 }
 
 function InternalGuard(props: PropsWithChildren<{}>) {
-  const { data: charity, isLoading } = useRegistrationState("");
+  const { charity, isLoading } = useRegistrationState();
 
   if (isLoading) {
     return <RegLoader />;
   }
 
   // No registered Charity wallet set means step 4 wasn't complete
-  if (!charity || !charity.Metadata.JunoWallet) {
+  if (!charity.Metadata.JunoWallet) {
     return <Navigate to={`${appRoutes.register}/${routes.wallet}`} />;
   }
 

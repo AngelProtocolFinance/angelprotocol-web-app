@@ -6,8 +6,7 @@ import { appRoutes } from "constants/routes";
 import routes from "../routes";
 
 export default function RegistrationSuccessful() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationState();
 
   if (!charity.Metadata.JunoWallet) {
     return <Navigate to={routes.index} />;

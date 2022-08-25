@@ -8,8 +8,7 @@ import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //charity is available as checked by guard
+  const { charity } = useRegistrationState();
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 

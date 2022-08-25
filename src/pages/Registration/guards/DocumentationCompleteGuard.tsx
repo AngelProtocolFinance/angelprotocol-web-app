@@ -15,14 +15,14 @@ export function DocumentationCompleteGuard(props: PropsWithChildren<{}>) {
 }
 
 function InternalGuard(props: PropsWithChildren<{}>) {
-  const { data: charity, isLoading } = useRegistrationState("");
+  const { charity, isLoading } = useRegistrationState();
 
   if (isLoading) {
     return <RegLoader />;
   }
 
   // No Charity tier set means documentation step wasn't complete
-  if (!charity || !charity.Registration.Tier) {
+  if (!charity.Registration.Tier) {
     return <Navigate to={`${appRoutes.register}/${routes.documentation}`} />;
   }
 

@@ -22,7 +22,7 @@ export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
-  const { data: charity } = useRegistrationState("");
+  const { charity } = useRegistrationState();
 
   // if email was already verified, that means the user can be safely navigated to the Dashboard
   const continuationLink = charity!.ContactPerson.EmailVerified

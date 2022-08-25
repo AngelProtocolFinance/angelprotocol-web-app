@@ -6,8 +6,7 @@ import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
 export default function WalletRegistration() {
-  const { data } = useRegistrationState("");
-  const charity = data!; // ensured by step validation guard
+  const { charity } = useRegistrationState();
   const { wallet, isLoading } = useGetWallet();
 
   if (charity.Metadata.JunoWallet) {
