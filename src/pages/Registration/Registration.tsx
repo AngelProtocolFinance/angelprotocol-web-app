@@ -8,10 +8,10 @@ const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const ContactDetails = lazy(() => import("./ContactDetails"));
 const Dashboard = lazy(() => import("./Dashboard"));
-const WelcomeScreen = lazy(() => import("./WelcomeScreen"));
+const Documentation = lazy(() => import("./Documentation"));
+const LandingPage = lazy(() => import("./LandingPage"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
-const Documentation = lazy(() => import("./Documentation"));
 
 export default function Registration() {
   return (
@@ -60,7 +60,7 @@ export default function Registration() {
             </StepOneCompleteGuard>
           }
         />
-        <Route index element={<WelcomeScreen />} />
+        <Route index element={<LandingPage />} />
         <Route
           path="*"
           element={
