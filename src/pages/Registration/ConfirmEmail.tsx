@@ -9,6 +9,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { UnexpectedStateError } from "errors/errors";
+import { appRoutes } from "constants/routes";
 import { Button, ButtonMailTo } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
@@ -64,14 +65,16 @@ export default function ConfirmEmail() {
     [charity, handleError, resendEmail, showModal]
   );
 
-  const handleClose = () => {
-    navigate(routes.index);
-  };
-
   if (!charity) {
     handleError(new UnexpectedStateError("Charity data is null"));
     return null;
   }
+
+  // if step 4 is complete, then this was a contact details update, so user can be
+  // navigated to the dashboard
+  const continuationLink = charity.Metadata.JunoWallet
+    ? `${appRoutes.register}/${routes.dashboard}`
+    : `${appRoutes.register}/${routes.documentation}`;
 
   return (
     <div className="flex flex-col gap-4 font-bold">
@@ -110,10 +113,10 @@ export default function ConfirmEmail() {
           Resend verification email
         </Button>
         <Button
-          onClick={handleClose}
+          onClick={() => navigate(continuationLink)}
           className="bg-thin-blue w-48 h-12 text-sm"
         >
-          close
+          continue
         </Button>
         <ButtonMailTo
           label="Having trouble receiving our emails?"
