@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
-import { useRegistrationQuery } from "services/aws/registration";
+import { useRegistrationState } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 
 export function ContactDetailsCompleteGuard(props: any) {
-  const { data: charity, isLoading } = useRegistrationQuery("");
+  const { data: charity, isLoading } = useRegistrationState("");
 
   if (isLoading) {
     return <RegLoader />;
