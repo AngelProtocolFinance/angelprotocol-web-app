@@ -2,8 +2,8 @@ import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { appRoutes } from "constants/routes";
 import {
+  StepFourCompleteGuard,
   StepOneCompleteGuard,
-  StepOneInitiatedGuard,
   StepThreeCompleteGuard,
   StepTwoCompleteGuard,
 } from "./guards";
@@ -33,9 +33,9 @@ export default function Registration() {
         <Route
           path={routes.confirmEmail}
           element={
-            <StepOneInitiatedGuard>
+            <StepFourCompleteGuard>
               <ConfirmEmail />
-            </StepOneInitiatedGuard>
+            </StepFourCompleteGuard>
           }
         />
         <Route path={routes.contactDetails} element={<ContactDetails />} />
