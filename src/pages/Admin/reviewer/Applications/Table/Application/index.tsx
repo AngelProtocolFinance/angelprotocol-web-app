@@ -77,18 +77,6 @@ export default function Application(props: CharityApplication) {
     </Dialog.Panel>
   );
 }
-/**
- * 
- * @param props   {(props.poll_id && (
-        <Link
-          to={adminRoutes.proposal + `/${props.poll_id}`}
-          className="uppercase font-heading font-bold text-sm hover:text-angel-blue"
-        >
-          VOTE
-        </Link>
-      )) || (
- * @returns 
- */
 
 function Label(props: PropsWithChildren<{ classes?: string }>) {
   return (
