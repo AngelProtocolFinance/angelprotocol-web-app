@@ -41,7 +41,9 @@ export default function ContactDetailsForm({ charity }: Props) {
     formState: { errors, isSubmitting },
   } = methods;
 
-  const { isError, saveContactDetails } = useSaveContactDetails();
+  const { isError, saveContactDetails } = useSaveContactDetails(
+    charity.ContactPerson
+  );
   const navigate = useNavigate();
 
   return (

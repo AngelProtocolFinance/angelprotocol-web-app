@@ -2,7 +2,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
-import { ContactDetailsRequest } from "types/aws";
+import { ContactDetailsRequest, ContactPerson } from "types/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import {
   registrationRefKey,
@@ -14,7 +14,9 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
-export default function useSaveContactDetails() {
+export default function useSaveContactDetails(
+  originalContactData: ContactPerson
+) {
   const [registerCharity] = useCreateNewCharityMutation();
   const [sendVerificationEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
@@ -27,6 +29,10 @@ export default function useSaveContactDetails() {
       // call API to add or update contact details information(contactData)
       setError(false);
       const is_create = !contactData?.uniqueID;
+      const isEmailVerified =
+        !!originalContactData.Email &&
+        originalContactData.EmailVerified &&
+        originalContactData.Email === contactData.email;
       const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
         body: {
@@ -43,6 +49,7 @@ export default function useSaveContactDetails() {
             PhoneNumber: contactData.phone,
             ReferralMethod: contactData.referralMethod,
             Role: contactData.role,
+            EmailVerified: isEmailVerified,
           },
         },
       };
@@ -73,7 +80,7 @@ export default function useSaveContactDetails() {
 
       // if the user is updating contact details, that means they navigated to step 1 from the dashboard
       // return them back there
-      if (!is_create) {
+      if (!is_create && isEmailVerified) {
         return navigate(`${appRoutes.register}/${routes.dashboard}`);
       }
 
