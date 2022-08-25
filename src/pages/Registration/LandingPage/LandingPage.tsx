@@ -61,7 +61,7 @@ function StepsDescription() {
   return (
     <div className="text-xl mb-5 flex flex-col items-center gap-3">
       <span>You just need to provide the following data:</span>
-      <ol className="list-decimal list-outside flex flex-col items-start pl-10">
+      <ol className="list-decimal list-outside flex flex-col items-start pl-10 italic">
         <li>Contact Details</li>
         <li>Documentation</li>
         <li>Additional Information</li>
