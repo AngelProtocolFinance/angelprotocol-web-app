@@ -23,7 +23,7 @@ function InternalGuard(props: PropsWithChildren<{}>) {
     return <RegLoader />;
   }
 
-  // No Charity banner set means step 3 wasn't complete
+  // No Charity banner set means additional information step wasn't complete
   if (!charity || !charity.Metadata.Banner) {
     return (
       <Navigate to={`${appRoutes.register}/${routes.additionalInformation}`} />

@@ -21,7 +21,7 @@ function InternalGuard(props: PropsWithChildren<{}>) {
     return <RegLoader />;
   }
 
-  // No Charity tier set means step 2 wasn't complete
+  // No Charity tier set means documentation step wasn't complete
   if (!charity || !charity.Registration.Tier) {
     return <Navigate to={`${appRoutes.register}/${routes.documentation}`} />;
   }
