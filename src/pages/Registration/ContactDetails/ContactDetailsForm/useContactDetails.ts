@@ -71,6 +71,8 @@ export default function useSaveContactDetails() {
         return;
       }
 
+      // if the user is updating contact details, that means they navigated to step 1 from the dashboard
+      // return them back there
       if (!is_create) {
         return navigate(`${appRoutes.register}/${routes.dashboard}`);
       }
