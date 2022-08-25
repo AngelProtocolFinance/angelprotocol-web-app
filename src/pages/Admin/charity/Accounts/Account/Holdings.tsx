@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { CW20, GenericBalance } from "types/server/contracts";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
-import { assets } from "../constants";
+import { assets } from "../../constants";
 
 export default function Holdings(props: { balance: GenericBalance }) {
   return (

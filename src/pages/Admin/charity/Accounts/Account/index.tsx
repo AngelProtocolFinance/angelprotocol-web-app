@@ -1,5 +1,5 @@
 import { GenericBalance } from "types/server/contracts";
-import useWithdrawer from "../Withdrawer/useWithdrawer";
+import useWithdrawer from "../../Withdrawer/useWithdrawer";
 import Holdings from "./Holdings";
 
 type Locked = {

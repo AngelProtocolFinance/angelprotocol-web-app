@@ -118,6 +118,20 @@ export type Chain = {
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
+export type WithdrawLog = {
+  Proposal: {
+    symbol: string;
+    amount: number;
+    target_wallet: string;
+    axelar_transaction_hash: string; //same as Axelar_Transaction.transaction_hash?
+  };
+  Axelar_Transaction?: {
+    transfer_status: string; //OK | ?? | ??
+    expected_output_amount: number;
+    token_symbol: string;
+  };
+};
+
 /** /leaderboards */
 export interface Endowment {
   endowment_address: string;

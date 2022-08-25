@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
-import { Chain } from "types/server/aws";
+import { Chain, WithdrawLog } from "types/server/aws";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
@@ -17,6 +17,9 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.custom],
   endpoints: (builder) => ({
+    withdrawLogs: builder.query<WithdrawLog[], string>({
+      query: (cw3) => `withdraw/${cw3}`,
+    }),
     chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
       providesTags: [{ type: apesTags.custom, id: customTags.chain }],
       async queryFn(args) {
@@ -103,7 +106,7 @@ export const apes = createApi({
   }),
 });
 
-export const { useChainQuery } = apes;
+export const { useChainQuery, useWithdrawLogsQuery } = apes;
 export const { invalidateTags: invalidateApesTags } = apes.util;
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
