@@ -47,7 +47,7 @@ export default function LandingPage() {
 
 function Section({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex flex-col gap-3 items-center justify-center p-4">
+    <div className="flex flex-col gap-3 items-center justify-center p-4 ring-1 ring-angel-blue rounded-md bg-angel-blue/20">
       {children}
     </div>
   );
