@@ -54,15 +54,14 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full h-full">
       <Section>
         <Heading>
           Thank you for registering, we'd love to have you on board!
         </Heading>
-        <Subheading>
-          You're just steps away from bringing all the benefits of endowments to
-          your organization.
-        </Subheading>
+
+        <StepsDescription />
+
         <Button onClick={handleStart} className="bg-orange w-48 h-12">
           Start
         </Button>
@@ -70,9 +69,9 @@ export default function LandingPage() {
 
       <Section>
         <Heading>Do you wish to continue your registration?</Heading>
-        <Subheading>
+        <span className="text-xl mb-5">
           Enter your registration reference below and resume where you left off.
-        </Subheading>
+        </span>
         <form
           onSubmit={handleSubmit(onResume)}
           className="flex flex-col items-center gap-2 w-full lg:w-5/6 mb-5"
@@ -103,13 +102,28 @@ export default function LandingPage() {
 }
 
 function Section({ children }: PropsWithChildren<{}>) {
-  return <div className="flex flex-col gap-3 items-center p-4">{children}</div>;
+  return (
+    <div className="flex flex-col gap-3 items-center justify-center p-4">
+      {children}
+    </div>
+  );
 }
 
 function Heading({ children }: PropsWithChildren<{}>) {
   return <span className="text-2xl font-bold">{children}</span>;
 }
 
-function Subheading({ children }: PropsWithChildren<{}>) {
-  return <span className="text-xl mb-5">{children}</span>;
+function StepsDescription() {
+  return (
+    <div className="text-xl mb-5 flex flex-col items-center gap-3">
+      <span>You just need to provide the following data:</span>
+      <ol className="list-decimal list-outside flex flex-col items-start pl-10">
+        <li>Contact Details</li>
+        <li>Documentation</li>
+        <li>Additional Information</li>
+        <li>Wallet address</li>
+        <li>Verify your email</li>
+      </ol>
+    </div>
+  );
 }
