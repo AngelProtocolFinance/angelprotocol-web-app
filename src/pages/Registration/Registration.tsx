@@ -1,7 +1,11 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { appRoutes } from "constants/routes";
-import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
+import {
+  StepOneCompleteGuard,
+  StepOneInitiatedGuard,
+  StepTwoCompleteGuard,
+} from "./guards";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -20,9 +24,9 @@ export default function Registration() {
         <Route
           path={routes.additionalInformation}
           element={
-            <StepOneCompleteGuard>
+            <StepTwoCompleteGuard>
               <AdditionalInformation />
-            </StepOneCompleteGuard>
+            </StepTwoCompleteGuard>
           }
         />
         <Route

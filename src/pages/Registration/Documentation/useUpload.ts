@@ -37,7 +37,7 @@ export default function useUpload() {
           handleError(result.error, FORM_ERROR);
         }
 
-        navigate(`${appRoutes.register}/${routes.dashboard}`);
+        navigate(`${appRoutes.register}/${routes.additionalInformation}`);
       } catch (error) {
         handleError(error, FORM_ERROR);
       }
