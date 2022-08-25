@@ -2,7 +2,7 @@ enum routes {
   index = "/",
   contactDetails = "contact-details",
   dashboard = "dashboard",
-  confirm = "confirm",
+  confirmEmail = "confirm-email",
   verify = "verify/:token",
   wallet = "wallet",
   charityProfile = "charity-profile",

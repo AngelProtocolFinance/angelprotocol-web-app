@@ -31,7 +31,7 @@ export default function Registration() {
           }
         />
         <Route
-          path={routes.confirm}
+          path={routes.confirmEmail}
           element={
             <StepOneInitiatedGuard>
               <ConfirmEmail />

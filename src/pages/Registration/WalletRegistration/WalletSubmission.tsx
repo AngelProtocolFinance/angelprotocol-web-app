@@ -27,7 +27,7 @@ export default function WalletSubmission() {
   // if email was already verified, that means the user can be safely navigated to the Dashboard
   const continuationLink = charity!.ContactPerson.EmailVerified
     ? `${appRoutes.register}/${routes.dashboard}`
-    : `${appRoutes.register}/${routes.confirm}`;
+    : `${appRoutes.register}/${routes.confirmEmail}`;
 
   const methods = useForm<Wallet>({
     mode: "onChange",
