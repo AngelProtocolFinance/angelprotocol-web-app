@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
+import { useRegistrationState } from "services/aws/registration";
 import {
   useGetWallet,
   useSetWallet,
@@ -21,6 +22,12 @@ export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
+  const { data: charity } = useRegistrationState("");
+
+  // if email was already verified, that means the user can be safely navigated to the Dashboard
+  const continuationLink = charity!.ContactPerson.EmailVerified
+    ? `${appRoutes.register}/${routes.dashboard}`
+    : `${appRoutes.register}/${routes.confirm}`;
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -91,9 +98,9 @@ export default function WalletSubmission() {
       <Button
         className="bg-green-400 w-80 h-10"
         disabled={isSubmitting}
-        onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
+        onClick={() => navigate(continuationLink)}
       >
-        Back to registration dashboard
+        Continue
       </Button>
     </div>
   );
