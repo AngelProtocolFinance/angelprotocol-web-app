@@ -8,13 +8,13 @@ import {
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
+import { UnexpectedStateError } from "errors/errors";
 import { Button, ButtonMailTo } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
-  const { data } = useRegistrationState("");
-  const charity = data!; // data is checked on stepOneInitiated guard
+  const { data: charity } = useRegistrationState("");
   const navigate = useNavigate();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
@@ -24,33 +24,41 @@ export default function ConfirmEmail() {
 
   const sendEmail = useCallback(
     async (emailType: string) => {
-      if (!charity.ContactPerson.PK) {
-        return handleError(
-          "Invalid Data. Please ask the administrator about that."
-        );
-      }
+      try {
+        if (!charity) {
+          throw new UnexpectedStateError("Charity data is null");
+        }
 
-      const emailPayload = {
-        CharityName: charity.Registration.CharityName,
-        Email: charity.ContactPerson.Email,
-        FirstName: charity.ContactPerson.FirstName,
-        LastName: charity.ContactPerson.LastName,
-        Role: charity.ContactPerson.Role,
-        PhoneNumber: charity.ContactPerson.PhoneNumber,
-      };
-      const result = await resendEmail({
-        uuid: charity.ContactPerson.PK,
-        type: emailType,
-        body: emailPayload,
-      });
+        if (!charity.ContactPerson.PK) {
+          throw new UnexpectedStateError(
+            "Invalid Data - primary key is null. Please ask the administrator about that."
+          );
+        }
 
-      if ("error" in result) {
-        handleError(result.error, FORM_ERROR);
-      } else {
-        showModal(Popup, {
-          message:
-            "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
+        const emailPayload = {
+          CharityName: charity.Registration.CharityName,
+          Email: charity.ContactPerson.Email,
+          FirstName: charity.ContactPerson.FirstName,
+          LastName: charity.ContactPerson.LastName,
+          Role: charity.ContactPerson.Role,
+          PhoneNumber: charity.ContactPerson.PhoneNumber,
+        };
+        const result = await resendEmail({
+          uuid: charity.ContactPerson.PK,
+          type: emailType,
+          body: emailPayload,
         });
+
+        if ("error" in result) {
+          handleError(result.error, FORM_ERROR);
+        } else {
+          showModal(Popup, {
+            message:
+              "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
+          });
+        }
+      } catch (error) {
+        handleError(error);
       }
     },
     [charity, handleError, resendEmail, showModal]
@@ -59,6 +67,11 @@ export default function ConfirmEmail() {
   const handleClose = () => {
     navigate(routes.index);
   };
+
+  if (!charity) {
+    handleError(new UnexpectedStateError("Charity data is null"));
+    return null;
+  }
 
   return (
     <div className="flex flex-col gap-4 font-bold">
