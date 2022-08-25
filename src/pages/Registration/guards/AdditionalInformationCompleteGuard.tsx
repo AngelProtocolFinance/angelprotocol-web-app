@@ -6,10 +6,6 @@ import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 import { DocumentationCompleteGuard } from "./DocumentationCompleteGuard";
 
-/**
- * Checks if the charity contact details are submitted and only if they are does it allow
- * them to access the component passed in "props.children", otherwise navigates to /app/register page
- */
 export function AdditionalInformationCompleteGuard(
   props: PropsWithChildren<{}>
 ) {

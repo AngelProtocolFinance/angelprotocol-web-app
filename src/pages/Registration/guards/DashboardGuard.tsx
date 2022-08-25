@@ -4,21 +4,8 @@ import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import RegLoader from "../common/RegLoader";
 import routes from "../routes";
-import { AdditionalInformationCompleteGuard } from "./AdditionalInformationCompleteGuard";
 
-/**
- * Checks if the charity contact details are submitted and only if they are does it allow
- * them to access the component passed in "props.children", otherwise navigates to /app/register page
- */
 export function DashboardGuard(props: PropsWithChildren<{}>) {
-  return (
-    <AdditionalInformationCompleteGuard>
-      <InternalGuard {...props} />
-    </AdditionalInformationCompleteGuard>
-  );
-}
-
-function InternalGuard(props: PropsWithChildren<{}>) {
   const { data: charity, isLoading } = useRegistrationQuery("");
 
   if (isLoading) {
