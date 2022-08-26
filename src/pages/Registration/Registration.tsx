@@ -4,8 +4,8 @@ import { appRoutes } from "constants/routes";
 import {
   AdditionalInformationCompleteGuard,
   ContactDetailsCompleteGuard,
-  DashboardGuard,
   DocumentationCompleteGuard,
+  WalletRegistrationCompleteGuard,
 } from "./guards";
 import routes from "./routes";
 
@@ -42,9 +42,9 @@ export default function Registration() {
         <Route
           path={routes.dashboard}
           element={
-            <DashboardGuard>
+            <WalletRegistrationCompleteGuard>
               <Dashboard />
-            </DashboardGuard>
+            </WalletRegistrationCompleteGuard>
           }
         />
         <Route

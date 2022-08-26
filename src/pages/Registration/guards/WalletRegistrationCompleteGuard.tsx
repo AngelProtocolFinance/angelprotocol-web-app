@@ -6,7 +6,7 @@ import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 import { AdditionalInformationCompleteGuard } from "./AdditionalInformationCompleteGuard";
 
-export function DashboardGuard(props: PropsWithChildren<{}>) {
+export function WalletRegistrationCompleteGuard(props: PropsWithChildren<{}>) {
   return (
     <AdditionalInformationCompleteGuard>
       <InternalGuard {...props} />
