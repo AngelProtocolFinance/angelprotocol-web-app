@@ -2,30 +2,25 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
 import {
-  useRegistrationQuery,
+  useRegistrationState,
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { uploadToIpfs } from "helpers";
-import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
 import { Folders } from "../constants";
 import routes from "../routes";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
-  const { data: charity } = useRegistrationQuery("");
+  const { charity } = useRegistrationState();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit = useCallback(
     async (values: AdditionalInfoValues) => {
       try {
-        if (!charity) {
-          throw new UnexpectedStateError("Charity data is null");
-        }
-
         const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
         const result = await updateMetadata({
