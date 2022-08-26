@@ -1,6 +1,8 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
+import RegLoader from "./common/RegLoader";
 import {
   AdditionalInformationCompleteGuard,
   ContactDetailsCompleteGuard,
@@ -19,6 +21,12 @@ const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Registration() {
+  const { isLoading } = useRegistrationQuery("");
+
+  if (isLoading) {
+    return <RegLoader />;
+  }
+
   return (
     <Container>
       <Routes>
