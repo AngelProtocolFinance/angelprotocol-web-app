@@ -31,7 +31,7 @@ export default function useSaveContactDetails() {
       const is_create = !contactData?.uniqueID;
       const isEmailVerified =
         !!originalCharityData.ContactPerson.Email &&
-        originalCharityData.ContactPerson.EmailVerified &&
+        !!originalCharityData.ContactPerson.EmailVerified &&
         originalCharityData.ContactPerson.Email === contactData.email;
       const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
