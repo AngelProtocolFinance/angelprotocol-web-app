@@ -36,7 +36,7 @@ export default function Details(props: WalletState) {
         to={`${appRoutes.donations}/${props.address}`}
         className={linkStyle + " mt-2"}
       >
-        My donations
+        My Donations
       </Link>
       <AdminLink label="admin" className={linkStyle} id={AP_ID} />
       <AdminLink
