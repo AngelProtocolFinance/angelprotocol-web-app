@@ -14,7 +14,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full h-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full h-full max-h-96 items-center justify-center">
       <Section>
         <Heading>
           Thank you for registering, we'd love to have you on board!
@@ -22,14 +22,14 @@ export default function LandingPage() {
 
         <StepsDescription />
 
-        <Button onClick={handleStart} className="bg-orange w-48 h-12">
+        <Button onClick={handleStart} className="bg-orange w-40 h-10">
           Start
         </Button>
       </Section>
 
       <Section>
         <Heading>Do you wish to continue your registration?</Heading>
-        <span className="text-xl mb-5">
+        <span className="text-base mb-5">
           Enter your registration reference below and resume where you left off.
         </span>
 
@@ -47,19 +47,19 @@ export default function LandingPage() {
 
 function Section({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex flex-col gap-3 items-center justify-center p-4 ring-1 ring-angel-blue rounded-md bg-angel-blue/20">
+    <div className="flex flex-col gap-3 items-center justify-center h-full w-full p-4 ring-1 ring-angel-blue rounded-md bg-angel-blue/20">
       {children}
     </div>
   );
 }
 
 function Heading({ children }: PropsWithChildren<{}>) {
-  return <span className="text-2xl font-bold">{children}</span>;
+  return <span className="text-xl font-bold">{children}</span>;
 }
 
 function StepsDescription() {
   return (
-    <div className="text-xl mb-5 flex flex-col items-center gap-3">
+    <div className="text-base mb-5 flex flex-col items-center gap-3">
       <span>You just need to provide the following data:</span>
       <ol className="list-decimal list-outside flex flex-col items-start pl-10 italic">
         <li>Contact Details</li>
