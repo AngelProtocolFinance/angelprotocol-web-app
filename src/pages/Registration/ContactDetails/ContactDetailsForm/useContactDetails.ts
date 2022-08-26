@@ -33,6 +33,7 @@ export default function useSaveContactDetails() {
         !!originalCharityData.ContactPerson.Email &&
         !!originalCharityData.ContactPerson.EmailVerified &&
         originalCharityData.ContactPerson.Email === contactData.email;
+
       const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
         body: {
@@ -49,7 +50,7 @@ export default function useSaveContactDetails() {
             PhoneNumber: contactData.phone,
             ReferralMethod: contactData.referralMethod,
             Role: contactData.role,
-            EmailVerified: isEmailVerified,
+            ...(is_create ? {} : { EmailVerified: isEmailVerified }),
           },
         },
       };
