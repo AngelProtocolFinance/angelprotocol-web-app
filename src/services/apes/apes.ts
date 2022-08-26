@@ -18,7 +18,7 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.custom],
   endpoints: (builder) => ({
-    Chain: builder.query<Chain, Wallet>({
+    chain: builder.query<Chain, Wallet>({
       query: ({ chainId }) => `chain/${chainId}`,
       transformResponse: (res: Chain) => res,
     }),
