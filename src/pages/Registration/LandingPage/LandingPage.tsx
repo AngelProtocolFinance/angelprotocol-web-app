@@ -14,7 +14,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full h-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full h-full max-h-96 items-center justify-center">
       <Section>
         <Heading>
           Thank you for registering, we'd love to have you on board!
@@ -47,7 +47,7 @@ export default function LandingPage() {
 
 function Section({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex flex-col gap-3 items-center justify-center p-4 ring-1 ring-angel-blue rounded-md bg-angel-blue/20">
+    <div className="flex flex-col gap-3 items-center justify-center h-full w-full p-4 ring-1 ring-angel-blue rounded-md bg-angel-blue/20">
       {children}
     </div>
   );
