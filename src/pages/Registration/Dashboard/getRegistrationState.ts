@@ -1,6 +1,16 @@
-import { RegistrationState } from "pages/Registration/types";
 import { Charity } from "types/aws";
 import { EndowmentTierNum } from "types/contracts";
+
+type RegistrationStep = { completed: boolean };
+type DocumentationStep = RegistrationStep & { tier?: EndowmentTierNum };
+
+type RegistrationState = {
+  stepOne: RegistrationStep;
+  stepTwo: RegistrationStep;
+  stepThree: DocumentationStep;
+  stepFour: RegistrationStep;
+  getIsReadyForSubmit: () => boolean;
+};
 
 export default function getRegistrationState(
   charity: Charity
