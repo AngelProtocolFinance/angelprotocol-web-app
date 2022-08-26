@@ -56,7 +56,7 @@ export default function Registration() {
           }
         />
 
-        <Route path={routes.verify} element={<VerifiedEmail />} />
+        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
           element={

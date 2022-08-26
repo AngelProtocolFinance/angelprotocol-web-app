@@ -3,7 +3,7 @@ enum routes {
   contactDetails = "contact-details",
   dashboard = "dashboard",
   confirmEmail = "confirm-email",
-  verify = "verify/:token",
+  verifyEmail = "verify/:token",
   wallet = "wallet",
   charityProfile = "charity-profile",
   documentation = "documentation",
