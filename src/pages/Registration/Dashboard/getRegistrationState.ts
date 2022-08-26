@@ -9,6 +9,7 @@ type RegistrationState = {
   stepTwo: RegistrationStep;
   stepThree: DocumentationStep;
   stepFour: RegistrationStep;
+  emailVerificationStep: RegistrationStep;
   getIsReadyForSubmit: () => boolean;
 };
 
@@ -25,6 +26,7 @@ export default function getRegistrationState(
         !!charity.Metadata.CharityOverview,
     },
     stepFour: { completed: !!charity.Metadata.JunoWallet },
+    emailVerificationStep: { completed: !!charity.ContactPerson.EmailVerified },
     getIsReadyForSubmit: function () {
       return (
         this.stepOne.completed &&

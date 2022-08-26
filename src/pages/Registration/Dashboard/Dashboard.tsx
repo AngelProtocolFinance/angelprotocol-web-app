@@ -4,8 +4,8 @@ import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
-// import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
+// import ProgressIndicator from "./ProgressIndicator";
 import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
@@ -62,6 +62,14 @@ export default function Dashboard() {
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isDataSubmitted || isSubmitting}
           completed={registrationState.stepFour.completed}
+        />
+        <Step
+          title="Email Verification"
+          onClick={() =>
+            navigate(`${appRoutes.register}/${routes.confirmEmail}`)
+          }
+          disabled={isDataSubmitted || isSubmitting}
+          completed={registrationState.emailVerificationStep.completed}
         />
       </div>
       {isDataSubmitted ? (
