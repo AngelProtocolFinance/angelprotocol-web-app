@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { CW20, GenericBalance } from "types/server/contracts";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
-import { assets } from "../constants";
+import { coinAsset } from "constants/currency";
 
 export default function Holdings(props: { balance: GenericBalance }) {
   return (
@@ -28,8 +28,12 @@ function Balance(props: CW20 | Coin) {
   return (
     <Cells type="td" cellClass="py-2">
       <div className="flex items-center gap-2">
-        <img className="w-6 h-6 object-contain" src={assets[id].icon} alt="" />
-        <span>{assets[id].name}</span>
+        <img
+          className="w-6 h-6 object-contain"
+          src={coinAsset[id].icon}
+          alt=""
+        />
+        <span>{coinAsset[id].name}</span>
       </div>
 
       <>{humanize(condense(props.amount), 4)}</>
