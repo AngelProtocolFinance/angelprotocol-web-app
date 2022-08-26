@@ -1,4 +1,4 @@
-import { Button } from "../../common";
+import { Button } from "../common";
 
 type Props = {
   title: string;
@@ -9,28 +9,26 @@ type Props = {
 };
 
 export default function Step(props: Props) {
-  const { title, completed, disabled, onClick, statusComplete } = props;
-
   return (
     <div className="grid grid-cols-[2fr_1fr_auto] items-center w-full font-bold">
-      <p className="mr-auto text-left">{title}</p>
-      {completed ? (
+      <p className="mr-auto text-left">{props.title}</p>
+      {props.completed ? (
         <p className="uppercase text-green-500 w-40">
-          {statusComplete || "Completed"}
+          {props.statusComplete || "Completed"}
         </p>
       ) : (
         <p className="uppercase text-yellow-500 w-40">Missing</p>
       )}
-      {completed ? (
+      {props.completed ? (
         <Button
           className="bg-yellow-blue w-40 h-10"
-          onClick={onClick}
-          disabled={disabled}
+          onClick={props.onClick}
+          disabled={props.disabled}
         >
           Change
         </Button>
       ) : (
-        <Button className="bg-thin-blue w-40 h-10" onClick={onClick}>
+        <Button className="bg-thin-blue w-40 h-10" onClick={props.onClick}>
           Continue
         </Button>
       )}
