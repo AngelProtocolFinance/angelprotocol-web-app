@@ -2,11 +2,12 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
-import { ContactDetailsRequest, ContactPerson } from "types/aws";
+import { ContactDetailsRequest } from "types/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import {
   registrationRefKey,
   useCreateNewCharityMutation,
+  useRegistrationState,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
@@ -14,12 +15,11 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
-export default function useSaveContactDetails(
-  originalContactData: ContactPerson
-) {
+export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [sendVerificationEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
+  const { charity: originalCharityData } = useRegistrationState();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
   const { handleError } = useErrorContext();
@@ -30,9 +30,9 @@ export default function useSaveContactDetails(
       setError(false);
       const is_create = !contactData?.uniqueID;
       const isEmailVerified =
-        !!originalContactData.Email &&
-        originalContactData.EmailVerified &&
-        originalContactData.Email === contactData.email;
+        !!originalCharityData.ContactPerson.Email &&
+        originalCharityData.ContactPerson.EmailVerified &&
+        originalCharityData.ContactPerson.Email === contactData.email;
       const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
         body: {
@@ -102,6 +102,7 @@ export default function useSaveContactDetails(
       navigate(`${appRoutes.register}/${routes.confirmEmail}`);
     },
     [
+      originalCharityData,
       handleError,
       navigate,
       registerCharity,
