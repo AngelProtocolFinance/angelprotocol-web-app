@@ -1,14 +1,19 @@
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import {
   WalletState,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
 import Copier from "components/Copier";
+import { AdminLink } from "components/admin";
 import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
+
+const linkStyle =
+  "text-angel-blue hover:text-angel-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
 
 export default function Details(props: WalletState) {
   const { coins, address, chain } = props;
@@ -29,10 +34,16 @@ export default function Details(props: WalletState) {
 
       <Link
         to={`${appRoutes.donations}/${props.address}`}
-        className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading px-3 text-left mt-2 mb-4"
+        className={linkStyle + " mt-2"}
       >
-        MY DONATIONS
+        My donations
       </Link>
+      <AdminLink label="admin" className={linkStyle} id={AP_ID} />
+      <AdminLink
+        label="applications"
+        className={linkStyle + " mb-4"}
+        id={REVIEWER_ID}
+      />
       <Filter coins={coins}>
         {(filtered) => <Holdings coins={filtered} />}
       </Filter>
