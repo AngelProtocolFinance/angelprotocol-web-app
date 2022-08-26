@@ -1,5 +1,6 @@
 import { EndowmentTierNum } from "types/shared/registration";
 import { Optional } from "types/utils";
+import { ProposalStatus } from "./contracts";
 
 /**result wrapper */
 export interface AWSQueryRes<T> {
@@ -118,18 +119,52 @@ export type Chain = {
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
+export type WithdrawStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+
+type LogBase = {
+  proposal_status: ProposalStatus;
+  symbol: string;
+  amount: number;
+  proposal_id: number;
+};
+
+type AxelarTx = {
+  bridge_type: "axelar";
+  axelar_transaction_hash?: "string";
+  axelar_transaction_status?: WithdrawStatus;
+  axelar_transaction_output_amount?: number;
+  axelar_token_output_symbol?: string;
+};
+
+type ConnextTx = {
+  bridge_type: "connext";
+  connext_transaction_hash?: "string";
+  connext_transaction_status?: WithdrawStatus;
+  connext_transaction_output_amount?: number;
+  connext_token_output_symbol?: string;
+};
+
 export type WithdrawLog = {
-  Proposal: {
-    symbol: string;
-    amount: number;
-    target_wallet: string;
-    axelar_transaction_hash: string; //same as Axelar_Transaction.transaction_hash?
-  };
-  Axelar_Transaction?: {
-    transfer_status: string; //OK | ?? | ??
-    expected_output_amount: number;
-    token_symbol: string;
-  };
+  proposal_status: ProposalStatus;
+  // endowment_multisig: "string";
+  // proposal_chain_id: "string";
+  // target_chain: "string";
+  target_wallet: "0x56FB95Bd20CC1Db9E0e9847c1C18a927fc284c5B";
+  symbol: "JUNOX";
+  amount: 0.01;
+  proposal_id: number;
+
+  //when in axelar
+  axelar_transaction_hash?: "string";
+  axelar_transaction_status?: WithdrawStatus;
+  axelar_transaction_output_amount?: number;
+  axelar_token_output_symbol?: string;
+
+  //when in connext
+  connext_transaction_hash?: "string";
+  connext_transaction_status?: WithdrawStatus;
+  connext_transaction_output_amount?: number;
+  connext_token_output_symbol?: string;
 };
 
 /** /leaderboards */
