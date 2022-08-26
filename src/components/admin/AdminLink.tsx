@@ -1,12 +1,11 @@
-import { NavLinkProps } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 
 export function AdminLink(props: {
-  className: NavLinkProps["className"];
+  className: string;
   id: number;
   label: string;
 }) {
@@ -19,8 +18,8 @@ export function AdminLink(props: {
   if (!isMember) return null;
 
   return (
-    <NavLink to={`${appRoutes.admin}/${props.id}`} className={props.className}>
+    <Link to={`${appRoutes.admin}/${props.id}`} className={props.className}>
       {props.label}
-    </NavLink>
+    </Link>
   );
 }
