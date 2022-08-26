@@ -8,10 +8,10 @@ export default function ProgressIndicator() {
   const { charity } = useRegistrationState();
   const state = getRegistrationState(charity);
   const progress = [
-    state.stepOne.completed,
-    state.stepTwo.completed,
-    state.stepThree.completed,
-    state.stepFour.completed,
+    state.contactDetails.completed,
+    state.documentation.completed,
+    state.additionalInformation.completed,
+    state.walletRegistration.completed,
   ];
   const completedCount = progress.reduce(
     (total, completed) => (completed ? ++total : total),

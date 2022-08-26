@@ -1,125 +1,47 @@
 import { Charity, RegistrationStatus } from "types/aws";
+import { placeHolderCharity } from "pages/Registration/constants";
 import getRegistrationState from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {
-  it("sets only stepOne to complete", () => {
+  it.each([true, false])(
+    "sets 'contact details' step to complete with EmailVerified === %j",
+    (emailVerified) => {
+      const charity: Charity = {
+        ...placeHolderCharity,
+        ContactPerson: {
+          Email: "test@test.com",
+          EmailVerified: emailVerified,
+          Goals: "i have a goal",
+          FirstName: "first",
+          LastName: "last",
+          PhoneNumber: "+114323888",
+          PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+          ReferralMethod: "angel-alliance",
+          Role: "ceo",
+          SK: "ContactPerson",
+        },
+        Registration: {
+          ...placeHolderCharity.Registration,
+          CharityName: "charity",
+          CharityName_ContactEmail: "CHARITY_test@test.com",
+          RegistrationDate: "2022-05-04T10:10:10Z",
+          RegistrationStatus: "Inactive",
+        },
+      };
+
+      const state = getRegistrationState(charity);
+
+      expect(state.contactDetails.completed).toBe(true);
+      expect(state.documentation.completed).toBe(false);
+      expect(state.additionalInformation.completed).toBe(false);
+      expect(state.walletRegistration.completed).toBe(false);
+      expect(state.getIsReadyForSubmit()).toBe(false);
+    }
+  );
+
+  it("sets 'documentation' step to complete", () => {
     const charity: Charity = {
-      ContactPerson: {
-        Email: "test@test.com",
-        EmailVerified: true,
-        Goals: "i have a goal",
-        FirstName: "first",
-        LastName: "last",
-        PhoneNumber: "+114323888",
-        PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
-        ReferralMethod: "angel-alliance",
-        Role: "ceo",
-        SK: "ContactPerson",
-      },
-      Registration: {
-        CharityName: "charity",
-        CharityName_ContactEmail: "CHARITY_test@test.com",
-        RegistrationDate: "2022-05-04T10:10:10Z",
-        RegistrationStatus: "Inactive",
-        Website: "",
-        UN_SDG: 0,
-        ProofOfIdentity: { name: "" },
-        ProofOfRegistration: { name: "" },
-        Tier: undefined,
-        FinancialStatements: [],
-        AuditedFinancialReports: [],
-        ProofOfIdentityVerified: false,
-        ProofOfRegistrationVerified: false,
-        FinancialStatementsVerified: false,
-        AuditedFinancialReportsVerified: false,
-        SK: "Registration",
-      },
-      Metadata: {
-        Banner: { name: "" },
-        CharityLogo: { name: "" },
-        CharityOverview: "",
-        EndowmentContract: "",
-        SK: "Metadata",
-        JunoWallet: "",
-        KycDonorsOnly: false,
-      },
-    };
-
-    const state = getRegistrationState(charity);
-
-    expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(false);
-    expect(state.stepThree.completed).toBe(false);
-    expect(state.stepFour.completed).toBe(false);
-    expect(state.getIsReadyForSubmit()).toBe(false);
-  });
-
-  it("sets only steps One and Two to complete", () => {
-    const charity: Charity = {
-      ContactPerson: {
-        Email: "test@test.com",
-        EmailVerified: true,
-        Goals: "I have a goal",
-        FirstName: "first",
-        LastName: "last",
-        PhoneNumber: "+114323888",
-        Role: "ceo",
-        ReferralMethod: "angel-alliance",
-        PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
-        SK: "ContactPerson",
-      },
-      Registration: {
-        CharityName: "charity",
-        CharityName_ContactEmail: "CHARITY_test@test.com",
-        RegistrationDate: "2022-05-04T10:10:10Z",
-        RegistrationStatus: "Inactive",
-        Website: "",
-        UN_SDG: 0,
-        ProofOfIdentity: { name: "" },
-        ProofOfRegistration: { name: "" },
-        Tier: undefined,
-        FinancialStatements: [],
-        AuditedFinancialReports: [],
-        ProofOfIdentityVerified: false,
-        ProofOfRegistrationVerified: false,
-        FinancialStatementsVerified: false,
-        AuditedFinancialReportsVerified: false,
-        SK: "Registration",
-      },
-      Metadata: {
-        Banner: { name: "" },
-        CharityLogo: { name: "" },
-        CharityOverview: "",
-        EndowmentContract: "",
-        SK: "Metadata",
-        JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
-        KycDonorsOnly: false,
-      },
-    };
-
-    const state = getRegistrationState(charity);
-
-    expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(false);
-    expect(state.stepThree.completed).toBe(false);
-    expect(state.stepFour.completed).toBe(true);
-    expect(state.getIsReadyForSubmit()).toBe(false);
-  });
-
-  it("sets only steps One and Three to complete", () => {
-    const charity: Charity = {
-      ContactPerson: {
-        Email: "test@test.com",
-        EmailVerified: true,
-        Goals: "this is my goal",
-        FirstName: "first",
-        LastName: "last",
-        PhoneNumber: "+114323888",
-        Role: "ceo",
-        ReferralMethod: "angel-alliance",
-        PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
-        SK: "ContactPerson",
-      },
+      ...placeHolderCharity,
       Registration: {
         CharityName: "charity",
         CharityName_ContactEmail: "CHARITY_test@test.com",
@@ -144,58 +66,20 @@ describe("getRegistrationState tests", () => {
         AuditedFinancialReportsVerified: false,
         SK: "Registration",
       },
-      Metadata: {
-        Banner: { name: "" },
-        CharityLogo: { name: "" },
-        CharityOverview: "",
-        EndowmentContract: "",
-        SK: "Metadata",
-        JunoWallet: "",
-        KycDonorsOnly: false,
-      },
     };
 
     const state = getRegistrationState(charity);
 
-    expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(true);
-    expect(state.stepThree.completed).toBe(false);
-    expect(state.stepFour.completed).toBe(false);
+    expect(state.contactDetails.completed).toBe(false);
+    expect(state.documentation.completed).toBe(true);
+    expect(state.additionalInformation.completed).toBe(false);
+    expect(state.walletRegistration.completed).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
-  it("sets only steps One and Four to complete", () => {
+  it("sets 'additional information' step to complete", () => {
     const charity: Charity = {
-      ContactPerson: {
-        Email: "test@test.com",
-        EmailVerified: true,
-        FirstName: "first",
-        Goals: "i have a goal",
-        LastName: "last",
-        PhoneNumber: "+114323888",
-        Role: "ceo",
-        ReferralMethod: "angel-alliance",
-        PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
-        SK: "ContactPerson",
-      },
-      Registration: {
-        AuditedFinancialReports: [],
-        AuditedFinancialReportsVerified: false,
-        CharityName: "charity",
-        CharityName_ContactEmail: "CHARITY_test@test.com",
-        FinancialStatements: [],
-        FinancialStatementsVerified: false,
-        ProofOfIdentity: { name: "" },
-        ProofOfIdentityVerified: false,
-        ProofOfRegistration: { name: "" },
-        ProofOfRegistrationVerified: false,
-        RegistrationDate: "2022-05-04T10:10:10Z",
-        RegistrationStatus: "Inactive",
-        SK: "Registration",
-        Tier: undefined,
-        UN_SDG: 0,
-        Website: "",
-      },
+      ...placeHolderCharity,
       Metadata: {
         Banner: {
           name: "banner",
@@ -215,10 +99,33 @@ describe("getRegistrationState tests", () => {
 
     const state = getRegistrationState(charity);
 
-    expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(false);
-    expect(state.stepThree.completed).toBe(true);
-    expect(state.stepFour.completed).toBe(false);
+    expect(state.contactDetails.completed).toBe(false);
+    expect(state.documentation.completed).toBe(false);
+    expect(state.additionalInformation.completed).toBe(true);
+    expect(state.walletRegistration.completed).toBe(false);
+    expect(state.getIsReadyForSubmit()).toBe(false);
+  });
+
+  it("sets 'wallet registration' steps to complete", () => {
+    const charity: Charity = {
+      ...placeHolderCharity,
+      Metadata: {
+        Banner: { name: "" },
+        CharityLogo: { name: "" },
+        CharityOverview: "",
+        EndowmentContract: "",
+        SK: "Metadata",
+        JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        KycDonorsOnly: false,
+      },
+    };
+
+    const state = getRegistrationState(charity);
+
+    expect(state.contactDetails.completed).toBe(false);
+    expect(state.documentation.completed).toBe(false);
+    expect(state.additionalInformation.completed).toBe(false);
+    expect(state.walletRegistration.completed).toBe(true);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
@@ -287,10 +194,10 @@ describe("getRegistrationState tests", () => {
 
       const state = getRegistrationState(charity);
 
-      expect(state.stepOne.completed).toBe(true);
-      expect(state.stepTwo.completed).toBe(true);
-      expect(state.stepThree.completed).toBe(true);
-      expect(state.stepFour.completed).toBe(true);
+      expect(state.contactDetails.completed).toBe(true);
+      expect(state.documentation.completed).toBe(true);
+      expect(state.additionalInformation.completed).toBe(true);
+      expect(state.walletRegistration.completed).toBe(true);
       expect(state.getIsReadyForSubmit()).toBe(true);
     }
   );

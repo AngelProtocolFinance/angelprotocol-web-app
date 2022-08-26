@@ -35,7 +35,7 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.contactDetails}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed
+          completed={registrationState.contactDetails.completed}
         />
         <Step
           title="Documentation"
@@ -43,10 +43,10 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.stepTwo.completed}
+          completed={registrationState.documentation.completed}
           statusComplete={
-            registrationState.stepThree.completed &&
-            `Level ${registrationState.stepThree.tier}`
+            registrationState.documentation.completed &&
+            `Level ${registrationState.documentation.tier}`
           }
         />
         <Step
@@ -55,13 +55,13 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.stepThree.completed}
+          completed={registrationState.additionalInformation.completed}
         />
         <Step
           title="Wallet Address"
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.stepFour.completed}
+          completed={registrationState.walletRegistration.completed}
         />
         <Step
           title="Email Verification"

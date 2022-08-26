@@ -5,10 +5,10 @@ type RegistrationStep = { completed: boolean };
 type DocumentationStep = RegistrationStep & { tier?: EndowmentTierNum };
 
 type RegistrationState = {
-  stepOne: RegistrationStep;
-  stepTwo: RegistrationStep;
-  stepThree: DocumentationStep;
-  stepFour: RegistrationStep;
+  contactDetails: RegistrationStep;
+  documentation: DocumentationStep;
+  additionalInformation: RegistrationStep;
+  walletRegistration: RegistrationStep;
   emailVerificationStep: RegistrationStep;
   getIsReadyForSubmit: () => boolean;
 };
@@ -17,28 +17,28 @@ export default function getRegistrationState(
   charity: Charity
 ): RegistrationState {
   return {
-    stepOne: { completed: !!charity.ContactPerson.PK },
-    stepTwo: getStepThree(charity),
-    stepThree: {
+    contactDetails: { completed: !!charity.ContactPerson.PK },
+    documentation: getDocumentationStepState(charity),
+    additionalInformation: {
       completed:
         !!charity.Metadata.CharityLogo.publicUrl &&
         !!charity.Metadata.Banner.publicUrl &&
         !!charity.Metadata.CharityOverview,
     },
-    stepFour: { completed: !!charity.Metadata.JunoWallet },
+    walletRegistration: { completed: !!charity.Metadata.JunoWallet },
     emailVerificationStep: { completed: !!charity.ContactPerson.EmailVerified },
     getIsReadyForSubmit: function () {
       return (
-        this.stepOne.completed &&
-        this.stepTwo.completed &&
-        this.stepThree.completed &&
-        this.stepFour.completed
+        this.contactDetails.completed &&
+        this.documentation.completed &&
+        this.additionalInformation.completed &&
+        this.walletRegistration.completed
       );
     },
   };
 }
 
-function getStepThree(charity: Charity) {
+function getDocumentationStepState(charity: Charity): DocumentationStep {
   const levelOneDataExists =
     !!charity.Registration.ProofOfIdentity.publicUrl &&
     !!charity.Registration.ProofOfRegistration.publicUrl &&
