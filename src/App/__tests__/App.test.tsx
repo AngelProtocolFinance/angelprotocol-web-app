@@ -30,7 +30,7 @@ jest.mock("@terra-money/wallet-provider", () => {
 
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
-  useRegistrationQueryLazyQuery: () => [() => {}],
+  useRegistrationLazyQuery: () => [() => {}],
 }));
 
 describe("App.tsx tests", () => {
