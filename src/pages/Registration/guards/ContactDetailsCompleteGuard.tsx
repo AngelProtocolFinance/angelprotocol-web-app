@@ -1,13 +1,18 @@
 import { PropsWithChildren } from "react";
 import { Navigate } from "react-router-dom";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
+import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 
 export function ContactDetailsCompleteGuard(props: PropsWithChildren<{}>) {
-  const { charity } = useRegistrationState();
+  const { data: charity, isLoading } = useRegistrationQuery("");
 
-  if (!charity.ContactPerson.Email) {
+  if (isLoading) {
+    return <RegLoader />;
+  }
+
+  if (!charity || !charity.ContactPerson.Email) {
     return <Navigate to={appRoutes.register} />;
   }
 
