@@ -100,9 +100,9 @@ describe("getRegistrationState tests", () => {
     const state = getRegistrationState(charity);
 
     expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(true);
+    expect(state.stepTwo.completed).toBe(false);
     expect(state.stepThree.completed).toBe(false);
-    expect(state.stepFour.completed).toBe(false);
+    expect(state.stepFour.completed).toBe(true);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
@@ -158,8 +158,8 @@ describe("getRegistrationState tests", () => {
     const state = getRegistrationState(charity);
 
     expect(state.stepOne.completed).toBe(true);
-    expect(state.stepTwo.completed).toBe(false);
-    expect(state.stepThree.completed).toBe(true);
+    expect(state.stepTwo.completed).toBe(true);
+    expect(state.stepThree.completed).toBe(false);
     expect(state.stepFour.completed).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
@@ -217,8 +217,8 @@ describe("getRegistrationState tests", () => {
 
     expect(state.stepOne.completed).toBe(true);
     expect(state.stepTwo.completed).toBe(false);
-    expect(state.stepThree.completed).toBe(false);
-    expect(state.stepFour.completed).toBe(true);
+    expect(state.stepThree.completed).toBe(true);
+    expect(state.stepFour.completed).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 

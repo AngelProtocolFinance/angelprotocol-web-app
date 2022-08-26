@@ -38,18 +38,12 @@ export default function Dashboard() {
           completed
         />
         <Step
-          title="Wallet Address"
-          onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
-          disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.stepTwo.completed}
-        />
-        <Step
           title="Documentation"
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.stepThree.completed}
+          completed={registrationState.stepTwo.completed}
           statusComplete={
             registrationState.stepThree.completed &&
             `Level ${registrationState.stepThree.tier}`
@@ -60,6 +54,12 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
+          disabled={isDataSubmitted || isSubmitting}
+          completed={registrationState.stepThree.completed}
+        />
+        <Step
+          title="Wallet Address"
+          onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isDataSubmitted || isSubmitting}
           completed={registrationState.stepFour.completed}
         />

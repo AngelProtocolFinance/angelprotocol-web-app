@@ -7,14 +7,14 @@ export default function getRegistrationState(
 ): RegistrationState {
   return {
     stepOne: { completed: !!charity.ContactPerson.PK },
-    stepTwo: { completed: !!charity.Metadata.JunoWallet },
-    stepThree: getStepThree(charity),
-    stepFour: {
+    stepTwo: getStepThree(charity),
+    stepThree: {
       completed:
         !!charity.Metadata.CharityLogo.publicUrl &&
         !!charity.Metadata.Banner.publicUrl &&
         !!charity.Metadata.CharityOverview,
     },
+    stepFour: { completed: !!charity.Metadata.JunoWallet },
     getIsReadyForSubmit: function () {
       return (
         this.stepOne.completed &&
