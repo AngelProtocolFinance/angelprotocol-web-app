@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import {
   useRegistrationState,
@@ -17,11 +17,12 @@ import routes from "./routes";
 export default function ConfirmEmail() {
   const { charity } = useRegistrationState();
   const navigate = useNavigate();
-  const location: any = useLocation();
-  const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
+
+  const isVerificationEmailSent =
+    charity.ContactPerson.Email && !charity.ContactPerson.EmailVerified;
 
   const sendEmail = useCallback(
     async (emailType: string) => {
@@ -78,7 +79,7 @@ export default function ConfirmEmail() {
 
   return (
     <div className="flex flex-col gap-4 font-bold">
-      {is_sent ? (
+      {isVerificationEmailSent ? (
         <>
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
