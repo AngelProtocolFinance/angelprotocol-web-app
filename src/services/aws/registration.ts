@@ -195,6 +195,6 @@ export const {
 export const {
   registration: {
     useQueryState: useRegistrationState,
-    useLazyQuery: useRegistrationQueryLazyQuery,
+    useLazyQuery: useRegistrationLazyQuery,
   },
 } = registration_api.endpoints;

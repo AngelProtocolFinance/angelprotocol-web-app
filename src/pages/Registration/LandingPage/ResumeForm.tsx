@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import {
   registrationRefKey,
-  useRegistrationQueryLazyQuery,
+  useRegistrationLazyQuery,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Button } from "../common";
@@ -18,7 +18,7 @@ const FormInfoSchema = Yup.object().shape({
 export default function ResumeForm() {
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
-  const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
+  const [checkPrevRegistration] = useRegistrationLazyQuery();
 
   const {
     register,
