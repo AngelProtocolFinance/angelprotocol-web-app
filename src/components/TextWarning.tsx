@@ -6,7 +6,7 @@ type Props = PropsWithChildren<{
   classes?: { container?: string; description?: string };
 }>;
 
-export function TextInfo({ children, title, classes }: Props) {
+export function TextWarning({ children, title, classes }: Props) {
   return (
     <div className={`${classes?.container ?? ""}`}>
       <div className="flex items-center gap-2 bg-rose-100 p-2 rounded-md text-rose-500">

@@ -1,15 +1,15 @@
 import { Menu } from "@headlessui/react";
 import {
-  Fragment,
   ReactElement,
   ReactNode,
   createContext,
   useContext,
+  useMemo,
 } from "react";
 import { Chain } from "types/server/aws";
 import { useChainQuery } from "services/apes";
 import { TextLoader } from "components/Loader";
-import { TextInfo } from "components/TextInfo";
+import { TextWarning } from "components/TextWarning";
 import { Connector } from "components/WalletSuite";
 import { Wallet, WalletId, useWalletContext } from "./WalletContext";
 
@@ -20,7 +20,7 @@ type Verified = { id: "verified"; content: ReactNode; wallet: ChainWallet };
 type Status = Loading | Disconnected | Unsupported | Verified;
 type Prompt = { (status: Status): ReactElement };
 
-type Props = {
+export type ChainGuardProps = {
   prompt: Prompt;
   allowedWallets?: WalletId[];
   requiredNetwork?: { id: string; name: string };
@@ -32,7 +32,7 @@ export default function ChainGuard({
   children,
   requiredNetwork,
   allowedWallets,
-}: Props) {
+}: ChainGuardProps) {
   const {
     wallet,
     isLoading: isWalletLoading,
@@ -45,6 +45,14 @@ export default function ChainGuard({
     isLoading: isFetchingChain,
     isError,
   } = useChainQuery(wallet!, { skip: !wallet });
+
+  const allowedConnections = useMemo(
+    () =>
+      allowedWallets
+        ? connections.filter((c) => allowedWallets.includes(c.id))
+        : connections,
+    [connections]
+  );
 
   if (isWalletLoading) {
     return prompt({
@@ -62,13 +70,9 @@ export default function ChainGuard({
             Connect wallet
           </p>
           <Menu.Items static>
-            {connections
-              .filter((c) =>
-                allowedWallets ? allowedWallets.includes(c.id) : true
-              )
-              .map((c) => (
-                <Connector key={c.id} {...c} />
-              ))}
+            {allowedConnections.map((c) => (
+              <Connector key={c.id} {...c} />
+            ))}
           </Menu.Items>
         </Menu>
       ),
@@ -79,9 +83,20 @@ export default function ChainGuard({
     return prompt({
       id: "unsupported",
       content: (
-        <TextInfo title="Incompatible wallet">
-          <p></p>
-        </TextInfo>
+        <TextWarning
+          title="Incompatible wallet"
+          classes={{ container: "grid" }}
+        >
+          <p className="text-zinc-600 mt-4">
+            Connected wallet can't perform this transaction
+          </p>
+          <button
+            onClick={disconnect}
+            className="mt-4 text-angel-orange hover:text-amber-400 justify-self-end text-xs font-heading uppercase font-bold text-zinc-50"
+          >
+            change wallet
+          </button>
+        </TextWarning>
       ),
     });
   }
@@ -97,6 +112,7 @@ export default function ChainGuard({
       ),
     });
   }
+
   if (isFetchingChain) {
     return prompt({
       id: "loading",
@@ -108,9 +124,11 @@ export default function ChainGuard({
     return prompt({
       id: "unsupported",
       content: (
-        <TextInfo title="Wallet network unsupported">
-          <div>hello world</div>
-        </TextInfo>
+        <TextWarning title="Wallet network unsupported">
+          <p className="text-zinc-600 mt-4">
+            NOTE: Show link of supported networks
+          </p>
+        </TextWarning>
       ),
     });
   }
