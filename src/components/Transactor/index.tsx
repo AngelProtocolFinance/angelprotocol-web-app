@@ -20,8 +20,8 @@ export default function Transactor<C>({
 }: TxProps<C>) {
   return (
     <ChainGuard
-      prompt={(node, isLoading) => (
-        <GuardPrompt showLoader={isLoading}>{node}</GuardPrompt>
+      prompt={({ id, message }) => (
+        <GuardPrompt showLoader={id === "loading"}>{message}</GuardPrompt>
       )}
       requiredChain={requiredChain}
     >

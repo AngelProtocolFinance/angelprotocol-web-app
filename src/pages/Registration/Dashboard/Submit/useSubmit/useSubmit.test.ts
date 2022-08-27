@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/server/aws";
 import { PLACEHOLDER_CHAIN, PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
-import useSubmit from "../useSubmit";
+import useSubmit from ".";
 
 const mockShowModal = jest.fn();
 jest.mock("contexts/ModalContext", () => ({

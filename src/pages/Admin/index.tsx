@@ -8,8 +8,8 @@ import Views from "./Views";
 export default function Admin() {
   return (
     <ChainGuard
-      prompt={(node, isLoading) => (
-        <GuardPrompt showLoader={isLoading}>{node}</GuardPrompt>
+      prompt={({ id, message }) => (
+        <GuardPrompt showLoader={id === "loading"}>{message}</GuardPrompt>
       )}
       requiredChain={{ id: chainIds.juno, name: "Juno" }}
     >
