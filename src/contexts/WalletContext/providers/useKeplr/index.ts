@@ -91,6 +91,7 @@ export default function useKeplr() {
 
   //connection object to render <Connector/>
   const connection: Connection = {
+    id: "keplr",
     name: "Keplr",
     logo: providerIcons.keplr,
     connect,

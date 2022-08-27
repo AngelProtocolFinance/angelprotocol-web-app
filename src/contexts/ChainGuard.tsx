@@ -1,26 +1,45 @@
-import { ReactElement, ReactNode, createContext, useContext } from "react";
+import { Menu } from "@headlessui/react";
+import {
+  Fragment,
+  ReactElement,
+  ReactNode,
+  createContext,
+  useContext,
+} from "react";
 import { Chain } from "types/server/aws";
 import { useChainQuery } from "services/apes";
-import { Wallet, useWalletContext } from "./WalletContext";
+import { TextLoader } from "components/Loader";
+import { TextInfo } from "components/TextInfo";
+import { Connector } from "components/WalletSuite";
+import { Wallet, WalletId, useWalletContext } from "./WalletContext";
 
-type Props = {};
-type Loading = { id: "loading"; message: string; wallet?: never };
-type Disconnected = { id: "disconnected"; message: string; wallet?: never };
-type Unsupported = { id: "unsupported"; message: string; wallet?: never };
-type Verified = { id: "verified"; message: string; wallet: ChainWallet };
-type State = Loading | Disconnected | Unsupported | Verified;
-type Prompt = { (state: State): ReactElement };
+type Loading = { id: "loading"; content: ReactNode; wallet?: never };
+type Disconnected = { id: "disconnected"; content: ReactNode; wallet?: never };
+type Unsupported = { id: "unsupported"; content: ReactNode; wallet?: never };
+type Verified = { id: "verified"; content: ReactNode; wallet: ChainWallet };
+type Status = Loading | Disconnected | Unsupported | Verified;
+type Prompt = { (status: Status): ReactElement };
+
+type Props = {
+  prompt: Prompt;
+  allowedWallets?: WalletId[];
+  requiredNetwork?: { id: string; name: string };
+  children?: ReactNode;
+};
 
 export default function ChainGuard({
-  requiredChain,
   prompt,
   children,
-}: {
-  requiredChain?: { id: string; name: string };
-  children?: ReactNode;
-  prompt: Prompt;
-}) {
-  const { wallet, isLoading: isWalletLoading } = useWalletContext();
+  requiredNetwork,
+  allowedWallets,
+}: Props) {
+  const {
+    wallet,
+    isLoading: isWalletLoading,
+    connections,
+    disconnect,
+  } = useWalletContext();
+
   const {
     data: chain,
     isLoading: isFetchingChain,
@@ -28,37 +47,78 @@ export default function ChainGuard({
   } = useChainQuery(wallet!, { skip: !wallet });
 
   if (isWalletLoading) {
-    return prompt({ id: "loading", message: "Wallet is loading.." });
-  }
-
-  if (!wallet) {
-    return prompt({ id: "loading", message: "Wallet is disconnected" });
-  }
-
-  if (requiredChain && wallet.chainId !== requiredChain.id) {
     return prompt({
-      id: "unsupported",
-      message: `Kindly change network to ${
-        requiredChain?.name || "required chain"
-      }`,
+      id: "loading",
+      content: <TextLoader text="Wallet is loading.." />,
     });
   }
 
+  if (!wallet) {
+    return prompt({
+      id: "disconnected",
+      content: (
+        <Menu as="div">
+          <p className="uppercase font-bold font-heading text-zinc-600">
+            Connect wallet
+          </p>
+          <Menu.Items static>
+            {connections
+              .filter((c) =>
+                allowedWallets ? allowedWallets.includes(c.id) : true
+              )
+              .map((c) => (
+                <Connector key={c.id} {...c} />
+              ))}
+          </Menu.Items>
+        </Menu>
+      ),
+    });
+  }
+
+  if (allowedWallets && !allowedWallets.includes(wallet.id)) {
+    return prompt({
+      id: "unsupported",
+      content: (
+        <TextInfo title="Incompatible wallet">
+          <p></p>
+        </TextInfo>
+      ),
+    });
+  }
+
+  if (requiredNetwork && requiredNetwork.id !== wallet.chainId) {
+    return prompt({
+      id: "unsupported",
+      content: (
+        <p>
+          Kindly switch wallet network to{" "}
+          <span className="font-semibold">{requiredNetwork.name}</span>
+        </p>
+      ),
+    });
+  }
   if (isFetchingChain) {
-    return prompt({ id: "loading", message: "Getting chain data" });
+    return prompt({
+      id: "loading",
+      content: <TextLoader text="Getting chain data..." />,
+    });
   }
 
   if (!chain || isError) {
     return prompt({
       id: "unsupported",
-      message: "We only support JUNO, ETHEREUM and BINANCE network",
+      content: (
+        <TextInfo title="Wallet network unsupported">
+          <div>hello world</div>
+        </TextInfo>
+      ),
     });
   }
 
   if (!children) {
     return prompt({
       id: "verified",
-      message: "",
+      content: null,
       wallet: { ...chain, ...wallet },
     });
   }

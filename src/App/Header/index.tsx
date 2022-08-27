@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop";
-import WalletSuite from "components/WalletSuite";
+import { WalletSuite } from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import MobileNav from "./MobileNav";
 import DappMenu from "./Nav";

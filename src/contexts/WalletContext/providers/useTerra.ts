@@ -27,24 +27,23 @@ export default function useTerra() {
       }
     : undefined;
 
-  const terraConnections: Connection[] = availableConnections
+  const terraConnections = availableConnections
     .filter(
       (connection) =>
-        !(
-          connection.identifier === "leap-wallet" ||
-          connection.identifier === "falcon-wallet" ||
-          connection.identifier === "bitkeep-wallet" ||
-          connection.identifier === "xdefi-wallet" ||
-          connection.type === ConnectType.READONLY
-        )
+        connection.identifier === "station" ||
+        connection.type === ConnectType.WALLETCONNECT
     )
-    .map((connection) => ({
-      logo: connection.icon,
-      name: connection.name,
-      connect: async () => {
-        connect(connection.type, connection.identifier);
-      },
-    }));
+    .map(
+      (connection) =>
+        ({
+          id: connection.identifier,
+          logo: connection.icon,
+          name: connection.name,
+          connect: async () => {
+            connect(connection.type, connection.identifier);
+          },
+        } as Connection)
+    );
 
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,

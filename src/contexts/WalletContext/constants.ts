@@ -13,6 +13,7 @@ import { EXPECTED_NETWORK_TYPE } from "constants/env";
 export const providerIcons: { [key in WalletId]: string } = {
   "binance-wallet": binanceWalletIcon,
   metamask: metamaskIcon,
+  xdefi: xdefiIcon,
   "xdefi-wallet": xdefiIcon,
   "xdefi-evm": xdefiIcon,
   station: terraStationIcon,

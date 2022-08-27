@@ -1,6 +1,7 @@
 export type WalletId =
   | "binance-wallet"
   | "metamask"
+  | "xdefi"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
   | "station"
@@ -8,7 +9,7 @@ export type WalletId =
   | "torus"
   | "keplr";
 
-type Base = { logo: string; name: string; network?: true };
+type Base = { id: WalletId; logo: string; name: string; network?: true };
 type Single = { connect(args?: string): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
 export type Connection = Base & (Single | Multi);

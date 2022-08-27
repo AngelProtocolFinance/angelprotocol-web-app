@@ -8,10 +8,13 @@ import Views from "./Views";
 export default function Admin() {
   return (
     <ChainGuard
-      prompt={({ id, message }) => (
-        <GuardPrompt showLoader={id === "loading"}>{message}</GuardPrompt>
+      allowedWallets={["keplr"]}
+      prompt={({ id, content }) => (
+        <div className="bg-zinc-50 place-self-center w-full max-w-sm p-4 rounded-md shadow-lg min-h-[10rem]">
+          {content}
+        </div>
       )}
-      requiredChain={{ id: chainIds.juno, name: "Juno" }}
+      requiredNetwork={{ id: chainIds.juno, name: "Juno" }}
     >
       <Guard>
         {/**modals in this scope can access AdminGuard context value */}

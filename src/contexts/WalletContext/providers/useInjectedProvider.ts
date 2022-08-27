@@ -147,8 +147,8 @@ export default function useInjectedProvider(
   const wallet: Wallet | undefined =
     chainId && address
       ? {
-          logo: providerIcons[id],
           id,
+          logo: providerIcons[id],
           chainId,
           address,
         }
@@ -156,6 +156,7 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
+    id,
     name: connectorName ?? prettifyId(id),
     logo: connectorLogo ?? providerIcons[id],
     connect,

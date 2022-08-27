@@ -19,26 +19,23 @@ export default function useXdefi() {
     (connection) => connection.identifier === "xdefi-wallet"
   );
 
-  const xdefiTerraConnection: Connection = connection
-    ? {
-        logo: terraIcon, //this connector will appear on network selection
-        name: "Terra",
-        connect: async () => {
-          connect(connection.type, connection.identifier);
-        },
+  const xdefiTerraConnection: Connection = {
+    id: "xdefi-wallet",
+    logo: terraIcon, //this connector will appear on network selection
+    name: "Terra",
+    connect: async () => {
+      if (connection) {
+        connect(connection.type, connection.identifier);
+      } else {
+        checkXdefiPriority();
       }
-    : {
-        logo: terraIcon,
-        name: "Terra",
-        connect: async () => {
-          // Errors within handled in src/components/WalletSuite/WalletSelector/Connector.tsx
-          checkXdefiPriority();
-        },
-      };
+    },
+  };
 
   const xdefiConnection: Connection = {
+    id: "xdefi",
     name: "xdefi",
-    logo: providerIcons["xdefi-wallet"],
+    logo: providerIcons["xdefi"],
     networks: [xdefiTerraConnection, xdefiEVMConnection],
   };
 

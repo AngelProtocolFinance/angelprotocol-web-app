@@ -1,7 +1,11 @@
+import { Dialog, Popover } from "@headlessui/react";
+import { PropsWithChildren } from "react";
 import { Charity } from "types/server/aws";
 import { Button } from "pages/Registration/common";
 import { useRegistrationState } from "services/aws/registration";
 import ChainGuard from "contexts/ChainGuard";
+import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
 import { chainIds } from "constants/chainIds";
 import getRegistrationState from "../getRegistrationState";
 
@@ -13,6 +17,7 @@ export default function Submit(props: {
   const charity = data!;
   const status = charity.Registration.RegistrationStatus;
   const state = getRegistrationState(charity);
+  const { showModal } = useModalContext();
 
   if (status !== "Inactive") {
     return (
@@ -28,7 +33,8 @@ export default function Submit(props: {
 
   return (
     <ChainGuard
-      requiredChain={{ id: chainIds.juno, name: "Juno" }}
+      allowedWallets={["keplr", "metamask"]}
+      requiredNetwork={{ id: chainIds.juno, name: "Juno" }}
       prompt={(status) => (
         <>
           <Button
@@ -42,9 +48,24 @@ export default function Submit(props: {
           >
             Submit for review
           </Button>
-          <span>{status.message}</span>
+          <Popover>
+            <Popover.Button>
+              <Icon type="Warning" />
+            </Popover.Button>
+            <Popover.Panel
+              className={"fixed-center z-10 bg-zinc-50 text-zinc-800"}
+            >
+              {status.content}
+            </Popover.Panel>
+          </Popover>
         </>
       )}
     />
+  );
+}
+
+function WalletPrompt(props: PropsWithChildren<{}>) {
+  return (
+    <Dialog.Panel className="fixed-center z-20">{props.children}</Dialog.Panel>
   );
 }
