@@ -144,27 +144,31 @@ type ConnextTx = {
   connext_token_output_symbol?: string;
 };
 
+export type WithdrawRoute = {
+  id: "axelar" | "connext";
+  output_symbol: string;
+  output_amount: number;
+  status: "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+  hash: string;
+};
+
 export type WithdrawLog = {
-  proposal_status: ProposalStatus;
-  // endowment_multisig: "string";
-  // proposal_chain_id: "string";
-  // target_chain: "string";
-  target_wallet: "0x56FB95Bd20CC1Db9E0e9847c1C18a927fc284c5B";
-  symbol: "JUNOX";
-  amount: 0.01;
+  //when submitted, already available
+  //from POST payload
+  endowment_multisig: string;
   proposal_id: number;
+  proposal_chain_id: string;
+  target_wallet: string;
+  target_chain: string;
 
-  //when in axelar
-  axelar_transaction_hash?: "string";
-  axelar_transaction_status?: WithdrawStatus;
-  axelar_transaction_output_amount?: number;
-  axelar_token_output_symbol?: string;
+  //from cw3 query
+  amount: number;
+  symbol: string;
+  proposal_status: ProposalStatus;
 
-  //when in connext
-  connext_transaction_hash?: "string";
-  connext_transaction_status?: WithdrawStatus;
-  connext_transaction_output_amount?: number;
-  connext_token_output_symbol?: string;
+  //only appears when tx is processed
+  num_routes?: number;
+  routes?: WithdrawRoute[];
 };
 
 /** /leaderboards */

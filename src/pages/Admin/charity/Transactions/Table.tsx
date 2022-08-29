@@ -1,13 +1,11 @@
-import { WithdrawLog } from "types/server/aws";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { Popover } from "@headlessui/react";
+import { WithdrawLog, WithdrawRoute } from "types/server/aws";
 import TableSection, { Cells } from "components/TableSection";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import { humanize, maskAddress } from "helpers";
 
 export default function TransactionsTable(props: { withdraws: WithdrawLog[] }) {
-  const { wallet } = useGetWallet();
-
   return (
-    <table className="">
+    <table className="col-span-2">
       <TableSection type="thead" rowClass="">
         <Cells type="th" cellClass="">
           <>Amount</>
@@ -22,24 +20,80 @@ export default function TransactionsTable(props: { withdraws: WithdrawLog[] }) {
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
         {props.withdraws.map((log) => {
-          // const txHash =
-          //   log.axelar_transaction_hash || log.connext_transaction_hash;
-          // const isProcessing = txHash === undefined;
-          // const isAxlr =
-          //   !isProcessing && log.axelar_transaction_hash !== undefined;
-
+          const finalRoute = getFinalRoute(log);
           return (
             <Cells type="td" cellClass="" key={log.proposal_id}>
-              {/* <>
-                {humanize(log.Proposal.amount, 3)} {log.Proposal.symbol}
-              </> */}
-              <></>
-              <></>
-              <></>
+              <span className="flex items-center">
+                {humanize(log.amount, 4)} {log.symbol}
+              </span>
+              <>{maskAddress(log.target_wallet)}</>
+              <Status {...log} />
+              <>
+                {finalRoute
+                  ? `${finalRoute.output_amount} ${finalRoute.output_symbol}`
+                  : "---"}
+              </>
+              <>{finalRoute ? maskAddress(finalRoute.hash) : "---"}</>
             </Cells>
           );
         })}
       </TableSection>
     </table>
+  );
+}
+
+function getFinalRoute({ routes = [], num_routes }: WithdrawLog) {
+  const currRoute = routes.length;
+  if (num_routes && currRoute > 0 && currRoute >= num_routes) {
+    return routes[currRoute - 1];
+  }
+}
+
+function Status({ proposal_status, num_routes, routes = [] }: WithdrawLog) {
+  if (proposal_status === "rejected") {
+    return <span className="text-rose-400">rejected</span>;
+  }
+
+  const currRoute = routes.length;
+  if (num_routes && currRoute > 0) {
+    let status =
+      currRoute >= num_routes && routes[currRoute - 1].status === "OK"
+        ? "completed"
+        : "routing";
+
+    return (
+      <Popover>
+        <Popover.Button>
+          {status} {currRoute}/{num_routes}
+        </Popover.Button>
+        <Popover.Panel as="ul">
+          {Array(num_routes)
+            .fill("")
+            .map((_, i) => (
+              <Route route={routes[i]} key={i} />
+            ))}
+        </Popover.Panel>
+      </Popover>
+    );
+  } else {
+    return <>posted</>;
+  }
+}
+
+function Route(props: { route?: WithdrawRoute }) {
+  if (!props.route) {
+    return <>processing</>;
+  }
+
+  const { id, hash, status, output_amount, output_symbol } = props.route;
+  return (
+    <div>
+      <p>{id}</p>
+      <p>{status}</p>
+      <p>
+        {humanize(output_amount, 4)} {output_symbol}
+      </p>
+      <p>{maskAddress(hash)}</p>
+    </div>
   );
 }
