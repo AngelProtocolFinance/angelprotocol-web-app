@@ -1,5 +1,5 @@
 import { Popover } from "@headlessui/react";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, Fragment } from "react";
 import ChainGuard, { ChainGuardProps, ChainWallet } from "contexts/ChainGuard";
 
 type Props<T> = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> & {
@@ -32,7 +32,7 @@ export default function TxSubmitter<
           );
         }
         return (
-          <Popover>
+          <Popover as={Fragment}>
             <Popover.Button {...props} />
             <Popover.Panel
               className={

@@ -92,7 +92,7 @@ export default function ChainGuard({
           </p>
           <button
             onClick={disconnect}
-            className="mt-4 text-angel-orange hover:text-amber-400 justify-self-end text-xs font-heading uppercase font-bold text-zinc-50"
+            className="mt-4 text-amber-500 hover:text-amber-400 justify-self-end text-xs font-heading uppercase font-bold text-zinc-50"
           >
             change wallet
           </button>
