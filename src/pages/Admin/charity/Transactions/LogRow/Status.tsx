@@ -25,10 +25,18 @@ export default function Status({
     return (
       <Popover as="div" className="relative">
         <Popover.Button className="flex items-center gap-2 uppercase text-sm focus:outline-none">
-          {status}
-          <span className="bg-zinc-50/10 rounded-sm p-1 hover:bg-zinc-50/20">
-            {currRoute}/{num_routes}
-          </span>
+          {({ open }) => (
+            <>
+              {status}
+              <span
+                className={`${
+                  open ? "bg-sky-500/30" : "bg-zinc-50/10 hover:bg-zinc-50/20"
+                } rounded-sm p-1 `}
+              >
+                {currRoute}/{num_routes}
+              </span>
+            </>
+          )}
         </Popover.Button>
         <Popover.Panel
           as="ul"
