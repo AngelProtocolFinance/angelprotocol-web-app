@@ -14,20 +14,19 @@ import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
 
-export type Wallet = {
-  address: string;
-};
+export type Wallet = { address: string };
 
 export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
   const { charity } = useRegistrationState();
+  const { isSubmitting, registerWallet } = useRegisterWallet();
 
   // if email was already verified, that means the user can be safely navigated to the Dashboard
-  const continuationLink = charity!.ContactPerson.EmailVerified
+  const backLink = charity.Metadata.JunoWallet
     ? `${appRoutes.register}/${routes.dashboard}`
-    : `${appRoutes.register}/${routes.confirmEmail}`;
+    : `${appRoutes.register}/${routes.additionalInformation}`;
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -37,9 +36,6 @@ export default function WalletSubmission() {
       Yup.object({ address: requiredWalletAddr("wallet") })
     ),
   });
-
-  const { handleSubmit } = methods;
-  const { isSubmitting, registerWallet } = useRegisterWallet();
 
   return (
     <div className="flex flex-col h-full items-center gap-10 justify-center">
@@ -68,7 +64,7 @@ export default function WalletSubmission() {
       ) : (
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(registerWallet)}
+            onSubmit={methods.handleSubmit(registerWallet)}
             className="flex flex-col gap-4 items-center w-[28rem]"
           >
             <FormInput<Wallet>
@@ -77,31 +73,26 @@ export default function WalletSubmission() {
               placeholder="juno1..."
             />
 
-            <Button
-              submit
-              className="bg-thin-blue w-48 h-10"
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-            >
-              Submit
-            </Button>
-            <Button
-              className="text-sm uppercase hover:text-angel-orange px-2 py-1"
-              disabled={isSubmitting}
-              onClick={disconnect}
-            >
-              change wallet address
-            </Button>
+            <div className="flex justify-center gap-2">
+              <Button
+                className="bg-green-400 w-48 h-10"
+                disabled={isSubmitting}
+                onClick={() => navigate(backLink)}
+              >
+                Back
+              </Button>
+              <Button
+                submit
+                className="bg-thin-blue w-48 h-10"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </FormProvider>
       )}
-      <Button
-        className="bg-green-400 w-80 h-10"
-        disabled={isSubmitting}
-        onClick={() => navigate(continuationLink)}
-      >
-        Continue
-      </Button>
     </div>
   );
 }
