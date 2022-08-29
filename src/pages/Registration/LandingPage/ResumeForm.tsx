@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import {
   registrationRefKey,
-  useRegistrationQueryLazyQuery,
+  useRegistrationLazyQuery,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Button } from "../common";
@@ -18,7 +18,7 @@ const FormInfoSchema = Yup.object().shape({
 export default function ResumeForm() {
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
-  const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
+  const [checkPrevRegistration] = useRegistrationLazyQuery();
 
   const {
     register,
@@ -53,14 +53,14 @@ export default function ResumeForm() {
     >
       <input
         {...register("refer")}
-        className="rounded-md outline-none border-none w-full px-3 py-2 text-black"
+        className="rounded-md outline-none border-none w-11/12 px-3 py-2 mb-3 text-black"
         placeholder="Enter your registration reference"
         type="text"
       />
       <p className="text-failed-red">{errors.refer?.message}</p>
       <Button
         submit
-        className="bg-thin-blue w-48 h-12"
+        className="bg-thin-blue w-40 h-10"
         isLoading={isSubmitting}
       >
         Resume

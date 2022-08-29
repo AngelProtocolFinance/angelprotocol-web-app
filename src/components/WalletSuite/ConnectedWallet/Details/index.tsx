@@ -26,7 +26,7 @@ export default function Details({ address }: Wallet) {
         to={`${appRoutes.donations}/${address}`}
         className={linkStyle + " mt-4"}
       >
-        MY DONATIONS
+        My Donations
       </Link>
       <AdminLink label="Admin" className={linkStyle} id={AP_ID} />
       <AdminLink label="Applications" className={linkStyle} id={REVIEWER_ID} />

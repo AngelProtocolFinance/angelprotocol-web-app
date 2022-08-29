@@ -14,7 +14,7 @@ export default function Header() {
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </Link>
       <DappMenu />
-      <div className="ml-auto grid grid-cols-[auto_1fr_auto] gap-1">
+      <div className="ml-auto grid grid-cols-[auto_1fr_auto]">
         <TransactionHint />
         <WalletSuite />
         <Airdrop />

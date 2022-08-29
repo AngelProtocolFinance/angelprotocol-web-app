@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { humanize } from "helpers";
-import { assets } from "../constants";
+import { coinAsset } from "constants/currency";
 
 export default function Amounts() {
   const {
@@ -34,7 +34,7 @@ export default function Amounts() {
               bal: {humanize(+field.balance, 4)}
             </button>
             <img
-              src={assets[field.tokenId].icon}
+              src={coinAsset[field.tokenId].icon}
               alt=""
               className="h-5 w-5 object-contain mr-1"
             />
@@ -42,7 +42,7 @@ export default function Amounts() {
               htmlFor={field.id}
               className="uppercase font-heading text-sm"
             >
-              {assets[field.tokenId].name}
+              {coinAsset[field.tokenId].name}
             </label>
             <input
               {...register(fieldName)}
