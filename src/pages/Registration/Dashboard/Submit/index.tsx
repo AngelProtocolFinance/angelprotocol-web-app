@@ -1,23 +1,22 @@
-import { Dialog, Popover } from "@headlessui/react";
-import { PropsWithChildren } from "react";
+import { Popover } from "@headlessui/react";
+import { ButtonHTMLAttributes } from "react";
+import { Submitter } from "../types";
 import { Charity } from "types/server/aws";
 import { Button } from "pages/Registration/common";
 import { useRegistrationState } from "services/aws/registration";
-import ChainGuard from "contexts/ChainGuard";
-import { useModalContext } from "contexts/ModalContext";
+import ChainGuard, { ChainGuardProps } from "contexts/ChainGuard";
 import Icon from "components/Icon";
-import { chainIds } from "constants/chainIds";
+import { chainIds, chainNames } from "constants/chainIds";
 import getRegistrationState from "../getRegistrationState";
 
 export default function Submit(props: {
-  onSubmit(charity: Charity): Promise<void>;
+  onSubmit: Submitter;
   isSubmitting?: boolean;
 }) {
   const { data } = useRegistrationState("");
   const charity = data!;
   const status = charity.Registration.RegistrationStatus;
   const state = getRegistrationState(charity);
-  const { showModal } = useModalContext();
 
   if (status !== "Inactive") {
     return (
@@ -33,13 +32,13 @@ export default function Submit(props: {
 
   return (
     <ChainGuard
-      allowedWallets={["keplr", "metamask"]}
-      requiredNetwork={{ id: chainIds.juno, name: "Juno" }}
+      allowedWallets={["keplr"]}
+      requiredNetwork={{ id: chainIds.juno, name: chainNames.juno }}
       prompt={(status) => (
-        <>
+        <div className="relative w-full md:w-2/3 mt-5">
           <Button
-            className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
-            onClick={() => props.onSubmit(charity)}
+            className="w-full h-10 bg-yellow-blue"
+            onClick={() => props.onSubmit(charity, status.wallet!)}
             disabled={
               !state.getIsReadyForSubmit() ||
               props.isSubmitting ||
@@ -48,24 +47,73 @@ export default function Submit(props: {
           >
             Submit for review
           </Button>
-          <Popover>
-            <Popover.Button>
-              <Icon type="Warning" />
-            </Popover.Button>
-            <Popover.Panel
-              className={"fixed-center z-10 bg-zinc-50 text-zinc-800"}
-            >
-              {status.content}
-            </Popover.Panel>
-          </Popover>
-        </>
+          {status.id !== "verified" && (
+            <Popover>
+              <Popover.Button className="absolute top-1/2 right-4 transform -translate-y-1/2">
+                <Icon
+                  type="Warning"
+                  size={18}
+                  className="text-rose-400 hover:text-rose-300"
+                />
+              </Popover.Button>
+              <Popover.Panel
+                className={
+                  "fixed-center z-10 bg-zinc-50 text-zinc-800 p-4 rounded-md"
+                }
+              >
+                {status.content}
+              </Popover.Panel>
+            </Popover>
+          )}
+        </div>
       )}
     />
   );
 }
 
-function WalletPrompt(props: PropsWithChildren<{}>) {
+function WalletButton(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <Dialog.Panel className="fixed-center z-20">{props.children}</Dialog.Panel>
+    <ChainGuard
+      allowedWallets={["keplr"]}
+      requiredNetwork={{ id: chainIds.juno, name: chainNames.juno }}
+      prompt={(status) => {
+        if (status.id === "verified") {
+          return <></>;
+        }
+
+        return <></>;
+        // <div className="relative w-full md:w-2/3 mt-5">
+        //   <Button
+        //     className="w-full h-10 bg-yellow-blue"
+        //     onClick={() => props.onSubmit(charity, status.wallet!)}
+        //     disabled={
+        //       !state.getIsReadyForSubmit() ||
+        //       props.isSubmitting ||
+        //       status.id !== "verified"
+        //     }
+        //   >
+        //     Submit for review
+        //   </Button>
+        //   {status.id !== "verified" && (
+        //     <Popover>
+        //       <Popover.Button className="absolute top-1/2 right-4 transform -translate-y-1/2">
+        //         <Icon
+        //           type="Warning"
+        //           size={18}
+        //           className="text-rose-400 hover:text-rose-300"
+        //         />
+        //       </Popover.Button>
+        //       <Popover.Panel
+        //         className={
+        //           "fixed-center z-10 bg-zinc-50 text-zinc-800 p-4 rounded-md"
+        //         }
+        //       >
+        //         {status.content}
+        //       </Popover.Panel>
+        //     </Popover>
+        //   )}
+        // </div>
+      }}
+    />
   );
 }

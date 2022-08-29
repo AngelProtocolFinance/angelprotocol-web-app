@@ -1,6 +1,6 @@
 import ChainGuard from "contexts/ChainGuard";
 import ModalContext from "contexts/ModalContext";
-import { chainIds } from "constants/chainIds";
+import { chainIds, chainNames } from "constants/chainIds";
 import { Guard, GuardPrompt } from "./Guard";
 import Nav from "./Nav";
 import Views from "./Views";
@@ -14,7 +14,7 @@ export default function Admin() {
           {content}
         </div>
       )}
-      requiredNetwork={{ id: chainIds.juno, name: "Juno" }}
+      requiredNetwork={{ id: chainIds.juno, name: chainNames.juno }}
     >
       <Guard>
         {/**modals in this scope can access AdminGuard context value */}

@@ -7,7 +7,7 @@ import getRegistrationState from "./getRegistrationState";
 export default function Dashboard() {
   const { data } = useRegistrationState("");
   const charity = data!; //charity is available as checked by guard
-  const { submit, isSubmitting } = useSubmit();
+  const { submit } = useSubmit();
 
   const isDataSubmitted =
     charity.Registration.RegistrationStatus !== "Inactive";
@@ -20,11 +20,8 @@ export default function Dashboard() {
         Please complete all the following steps to be able to create your
         endowment
       </span>
-      <Steps
-        disabled={isDataSubmitted || isSubmitting}
-        registrationState={state}
-      />
-      <Submit onSubmit={submit} isSubmitting={isSubmitting} />
+      <Steps disabled={isDataSubmitted} registrationState={state} />
+      <Submit onSubmit={submit} />
     </div>
   );
 }

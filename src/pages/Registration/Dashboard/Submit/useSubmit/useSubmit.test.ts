@@ -1,7 +1,7 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/server/aws";
-import { PLACEHOLDER_CHAIN, PLACEHOLDER_WALLET } from "test/constants";
+import { ChainWallet } from "contexts/ChainGuard";
 import Registrar from "contracts/Registrar";
 import useSubmit from ".";
 
@@ -11,23 +11,6 @@ jest.mock("contexts/ModalContext", () => ({
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
-jest.mock("helpers/processEstimateError", () => ({
-  __esModule: true,
-  processEstimateError: (_: any) => {},
-}));
-
-const mockUseGetWallet = jest.fn();
-jest.mock("contexts/WalletContext/WalletContext", () => ({
-  __esModule: true,
-  useWalletContext: () => mockUseGetWallet(),
-}));
-
-const mockChainQuery = jest.fn();
-jest.mock("services/apes", () => ({
-  __esModule: true,
-  useChainQuery: (..._: any[]) => mockChainQuery(),
-}));
-
 const mockSendCosmosTx = jest.fn();
 jest.mock("slices/transaction/transactors/sendCosmosTx", () => ({
   __esModule: true,
@@ -35,66 +18,19 @@ jest.mock("slices/transaction/transactors/sendCosmosTx", () => ({
 }));
 
 const mockDispatch = jest.fn();
-const mockUseGetter = jest.fn();
 
 jest.mock("store/accessors", () => ({
   __esModule: true,
-  useGetter: (..._: any[]) => mockUseGetter(),
   useSetter: () => mockDispatch,
 }));
 
 describe("useSubmit tests", () => {
-  it("initializes correctly", () => {
-    mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
-    const { result } = renderHook(() => useSubmit());
-    expect(result.current.isSubmitting).toBe(false);
-    expect(result.current.submit).toBeDefined();
-  });
-  it("assigns 'isSubmitting' value correctly", () => {
-    mockUseGetter.mockReturnValue({ form_loading: true });
-    mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
-    const { result } = renderHook(() => useSubmit());
-    expect(result.current.isSubmitting).toBe(true);
-  });
-  //wallet check now handled in `sendCosmosTx`
-  it("handles thrown errors", async () => {
-    mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
-    jest
-      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
-      .mockImplementation((..._: any[]) => {
-        throw new Error();
-      });
-    const { result } = renderHook(() => useSubmit());
-    await act(() => result.current.submit(CHARITY));
-    //sendCosmosTx sets loading state
-    expect(mockDispatch).toBeCalledWith({
-      type: "transaction/setStage",
-      payload: {
-        step: "error",
-        message:
-          "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io",
-      },
-    });
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: "transaction/setFormLoading",
-      payload: false,
-    });
-    expect(mockShowModal).toBeCalled();
-  });
   it("dispatches action sending a Juno Tx", async () => {
-    mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
-    mockChainQuery.mockReturnValue({ data: PLACEHOLDER_CHAIN });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
-    await act(() => result.current.submit(CHARITY));
+    act(() => result.current.submit(CHARITY, {} as ChainWallet));
     //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
