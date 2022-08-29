@@ -3,7 +3,7 @@ import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "slices/admin/types";
-import { PageOptions, Proposal } from "types/server/contracts";
+import { PageOptions, Proposal } from "types/contracts";
 import { useProposalsQuery } from "services/juno/cw3";
 import { useAdminResources } from "../Guard";
 

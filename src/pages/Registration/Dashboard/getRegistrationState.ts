@@ -1,6 +1,6 @@
 import { RegistrationState } from "pages/Registration/types";
-import { Charity } from "types/server/aws";
-import { EndowmentTierNum } from "types/shared/registration";
+import { Charity } from "types/aws";
+import { EndowmentTierNum } from "types/contracts";
 
 export default function getRegistrationState(
   charity: Charity

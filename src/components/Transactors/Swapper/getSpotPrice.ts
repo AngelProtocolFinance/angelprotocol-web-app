@@ -1,5 +1,5 @@
 import Decimal from "decimal.js";
-import { Simulation } from "types/server/contracts";
+import { Simulation } from "types/contracts";
 import { scale } from "helpers";
 
 export function getSpotPrice(simul: Simulation, offer = 1) {

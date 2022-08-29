@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Airdrops } from "types/server/aws";
+import { Airdrops } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor, { TxProps } from "components/Transactor";
 import Catcher from "./Catcher";

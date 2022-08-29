@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";

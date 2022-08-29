@@ -1,16 +1,16 @@
-import { Denoms } from "types/lists";
-import { CharityApplication } from "types/server/aws";
+import { CharityApplication } from "types/aws";
 import {
   AllianceMember,
+  CW4Member,
   EndowmentStatus,
   EndowmentStatusStrNum,
   FundConfig,
   FundDetails,
-  Member,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   UpdateProfilePayload,
-} from "types/server/contracts";
+} from "types/contracts";
+import { Denoms } from "types/lists";
 import { DiffSet } from "types/utils";
 
 export type AdminParams = { id: string };
@@ -87,7 +87,7 @@ export type FundConfigUpdateMeta = MetaConstructor<
 export type CW4MemberUpdateMeta = MetaConstructor<
   "cw4_members",
   {
-    toAdd: Member[];
+    toAdd: CW4Member[];
     toRemove: string[];
   }
 >;

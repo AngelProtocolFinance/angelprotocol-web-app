@@ -1,4 +1,4 @@
-import { Vote } from "types/server/contracts";
+import { Vote } from "types/contracts";
 
 export interface VoteValues {
   vote: Vote;

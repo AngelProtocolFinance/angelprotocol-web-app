@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
-import { Transaction } from "types/server/aws";
+import { Transaction } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import useReceipter from "components/Receipter/useReceipter";

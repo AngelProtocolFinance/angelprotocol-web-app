@@ -1,4 +1,4 @@
-import { Member } from "types/server/contracts";
+import { CW4Member } from "types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 
@@ -10,7 +10,7 @@ export default class CW4 extends Contract {
     this.address = address;
   }
 
-  createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
+  createEmbeddedUpdateMembersMsg(to_add: CW4Member[], to_remove: string[]) {
     return this.createEmbeddedWasmMsg(this.address, {
       update_members: {
         add: to_add,

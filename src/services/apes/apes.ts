@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
-import { Chain } from "types/server/aws";
+import { Chain } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";

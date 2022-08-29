@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { GenericBalance } from "types/server/contracts";
+import { GenericBalance } from "types/contracts";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor, { TxProps } from "components/Transactor";
 import Withdrawer from ".";

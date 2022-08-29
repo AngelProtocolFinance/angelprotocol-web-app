@@ -5,7 +5,7 @@ import {
   PropsWithChildren,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { CharityApplication, FileObject } from "types/server/aws";
+import { CharityApplication, FileObject } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";

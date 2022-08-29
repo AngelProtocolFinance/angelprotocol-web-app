@@ -1,4 +1,4 @@
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 import { humanize } from "helpers";
 
 export default function Holdings(props: { coins: Token[] }) {

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { Transaction } from "types/server/aws";
+import { Transaction } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TableSection, { Cells } from "components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "helpers";

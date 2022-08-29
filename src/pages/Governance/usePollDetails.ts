@@ -1,7 +1,7 @@
 // import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
-import { Vote } from "types/server/contracts";
-import { PollStatus } from "types/server/contracts";
+import { Vote } from "types/contracts";
+import { PollStatus } from "types/contracts";
 // import { useLatestBlock } from "services/juno/queriers";
 import { humanize } from "helpers";
 

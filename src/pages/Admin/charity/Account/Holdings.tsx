@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { CW20, GenericBalance } from "types/server/contracts";
+import { CW20, GenericBalance } from "types/contracts";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { coinAsset } from "constants/currency";

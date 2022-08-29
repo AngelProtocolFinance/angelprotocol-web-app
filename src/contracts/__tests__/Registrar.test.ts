@@ -1,6 +1,6 @@
 import { fromUtf8 } from "@cosmjs/encoding";
-import { Charity } from "types/server/aws";
-import { RegistrarCreateEndowmentPayload } from "types/server/contracts";
+import { Charity } from "types/aws";
+import { RegistrarCreateEndowmentPayload } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
 

@@ -1,3 +1,3 @@
-import { PollStatus } from "types/server/contracts";
+import { PollStatus } from "types/contracts";
 
 export type PollFilterOptions = PollStatus | "all";

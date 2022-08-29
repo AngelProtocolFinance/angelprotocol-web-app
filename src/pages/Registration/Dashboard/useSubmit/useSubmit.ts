@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Charity } from "types/server/aws";
+import { Charity } from "types/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";

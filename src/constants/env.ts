@@ -1,4 +1,4 @@
-import { NetworkType } from "types/server/aws";
+import { NetworkType } from "types/aws";
 
 export const IS_TEST = process.env.REACT_APP_NETWORK === "TESTNET";
 

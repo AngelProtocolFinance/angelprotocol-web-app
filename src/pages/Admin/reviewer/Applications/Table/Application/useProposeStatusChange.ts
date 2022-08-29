@@ -1,9 +1,6 @@
 import { EndowmentStatusMeta } from "pages/Admin/types";
-import { CharityApplication } from "types/server/aws";
-import {
-  EndowmentStatusNum,
-  StatusChangePayload,
-} from "types/server/contracts";
+import { CharityApplication } from "types/aws";
+import { EndowmentStatusNum, StatusChangePayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";

@@ -1,4 +1,4 @@
-import { Simulation } from "types/server/contracts";
+import { Simulation } from "types/contracts";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";

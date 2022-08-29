@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
 import { UpdateProfileValues } from "pages/Admin/types";
-import { UpdateProfilePayload as UP } from "types/server/contracts";
+import { UpdateProfilePayload as UP } from "types/contracts";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";

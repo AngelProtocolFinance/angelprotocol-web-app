@@ -4,7 +4,7 @@ import {
   Multicall,
 } from "ethereum-multicall";
 import { utils } from "ethers";
-import { ERC20Token } from "types/server/contracts";
+import { ERC20Token } from "types/contracts";
 import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
 export async function getERC20Holdings(

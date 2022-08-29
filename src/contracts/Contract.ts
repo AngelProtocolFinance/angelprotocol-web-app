@@ -14,8 +14,8 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { TxOptions } from "slices/transaction/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { scaleToStr, toBase64 } from "helpers";
 import {

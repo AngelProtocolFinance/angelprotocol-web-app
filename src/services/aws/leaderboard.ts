@@ -1,4 +1,4 @@
-import { AWSQueryRes, Endowment, Update } from "types/server/aws";
+import { AWSQueryRes, Endowment, Update } from "types/aws";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { aws } from "./aws";
 

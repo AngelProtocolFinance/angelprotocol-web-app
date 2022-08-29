@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { UpdateProfileValues } from "pages/Admin/types";
-import { UpdateProfilePayload } from "types/server/contracts";
-import { Profile } from "types/server/contracts";
+import { UpdateProfilePayload } from "types/contracts";
+import { Profile } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";

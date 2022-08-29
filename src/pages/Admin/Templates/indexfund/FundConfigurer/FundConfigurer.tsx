@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfigValues } from "pages/Admin/types";
-import { FundConfig, IndexFundConfig } from "types/server/contracts";
+import { FundConfig, IndexFundConfig } from "types/contracts";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
 import { condenseToStr } from "helpers";

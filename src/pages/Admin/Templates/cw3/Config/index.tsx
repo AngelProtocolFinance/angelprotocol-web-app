@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { CW3ConfigValues, FormCW3Config } from "pages/Admin/types";
-import { CW3Config } from "types/server/contracts";
+import { CW3Config } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useCw3ConfigQuery } from "services/juno/cw3";
 import { FormError, FormSkeleton } from "components/admin";

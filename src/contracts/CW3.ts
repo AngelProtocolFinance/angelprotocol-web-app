@@ -3,7 +3,7 @@ import {
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   Vote,
-} from "types/server/contracts";
+} from "types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import Contract from "./Contract";
 

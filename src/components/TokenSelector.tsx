@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { Path, useController } from "react-hook-form";
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "./Icon";
 

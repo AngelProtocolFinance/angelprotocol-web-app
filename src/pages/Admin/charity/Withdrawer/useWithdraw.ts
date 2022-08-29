@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawLiqMeta } from "pages/Admin/types";
-import { CW20 } from "types/server/contracts";
+import { CW20 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { logWithdrawProposal } from "pages/Admin/charity/Withdrawer/logWithdrawProposal";
 import { invalidateJunoTags } from "services/juno";

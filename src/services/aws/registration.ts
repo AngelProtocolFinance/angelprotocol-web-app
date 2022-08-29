@@ -12,7 +12,7 @@ import {
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
-} from "types/server/aws";
+} from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { createAuthToken } from "helpers";
 import { aws } from "./aws";

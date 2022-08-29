@@ -3,6 +3,7 @@ import {
   AllianceMember,
   BalanceInfo,
   CW3Config,
+  CW4Member,
   CW20Balance,
   CW20Info,
   CategorizedEndowments,
@@ -15,7 +16,6 @@ import {
   GovState,
   IndexFundConfig,
   InquiredMember,
-  Member,
   PageOptions,
   Polls,
   Profile,
@@ -24,7 +24,7 @@ import {
   RegistrarConfig,
   Simulation,
   VotesPageOptions,
-} from "types/server/contracts";
+} from "types/contracts";
 
 type EndowmentListRes = { endowments: EndowmentEntry[] };
 
@@ -65,7 +65,11 @@ export interface ContractQueries {
   cw20Info: { args: null; res: Q<CW20Info>; result: CW20Info };
   cw20Balance: { args: Addr; res: Q<CW20Balance>; result: number };
 
-  cw4Members: { args: null; res: Q<{ members: Member[] }>; result: Member[] };
+  cw4Members: {
+    args: null;
+    res: Q<{ members: CW4Member[] }>;
+    result: CW4Member[];
+  };
   cw4Member: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
 
   cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };

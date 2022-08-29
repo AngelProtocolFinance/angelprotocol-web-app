@@ -1,4 +1,4 @@
-import { RegistrationStatus } from "types/server/aws";
+import { RegistrationStatus } from "types/aws";
 
 export const statusColors: { [key in RegistrationStatus]: { text: string } } = {
   Inactive: { text: "text-grey-accent" },

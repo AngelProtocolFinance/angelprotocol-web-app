@@ -1,5 +1,5 @@
-import { ApplicationStatus } from "types/server/aws";
-import { AllianceMember, Member, ProposalStatus } from "types/server/contracts";
+import { ApplicationStatus } from "types/aws";
+import { AllianceMember, CW4Member, ProposalStatus } from "types/contracts";
 
 export type AllianceMemberWithFlags = AllianceMember & {
   isDeleted: boolean;
@@ -12,7 +12,7 @@ export type AddressWithFlags = {
   isDeleted: boolean;
   isAdded: boolean;
 };
-export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };
+export type MemberCopy = CW4Member & { is_deleted: boolean; is_added: boolean };
 
 /** proposals filter */
 export type ProposalGroup = "if" | "cw3" | "cw4" | "reg" | "acc";

@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { IndexFundOwnerValues } from "pages/Admin/types";
-import { IndexFundConfig } from "types/server/contracts";
+import { IndexFundConfig } from "types/contracts";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
 import OwnerUpdateForm from "./OwnerUpdateForm";

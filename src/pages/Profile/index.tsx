@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
-import { Profile as IProfile } from "types/server/contracts";
+import { Profile as IProfile } from "types/contracts";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
