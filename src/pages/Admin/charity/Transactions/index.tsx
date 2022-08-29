@@ -1,21 +1,10 @@
-import { Transaction } from "types/server/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
-import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
-import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import TransactionsTable from "./Table";
 
-const headers: { key: keyof Transaction; label: string }[] = [
-  { key: "name", label: "Name" },
-  { key: "usd_amount", label: "Amount" },
-  { key: "block_timestamp", label: "Date" },
-  { key: "donator", label: "Donator" },
-  { key: "tx_id", label: "Transaction Hash" },
-];
-
 export default function Transactions() {
-  const { endowmentId, cw3 } = useAdminResources();
+  const { cw3 } = useAdminResources();
   const { data = [], isLoading, isError } = useWithdrawLogsQuery(cw3);
 
   if (isLoading) {

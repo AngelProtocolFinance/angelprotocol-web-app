@@ -119,36 +119,14 @@ export type Chain = {
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
-export type WithdrawStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
-
-type LogBase = {
-  proposal_status: ProposalStatus;
-  symbol: string;
-  amount: number;
-  proposal_id: number;
-};
-
-type AxelarTx = {
-  bridge_type: "axelar";
-  axelar_transaction_hash?: "string";
-  axelar_transaction_status?: WithdrawStatus;
-  axelar_transaction_output_amount?: number;
-  axelar_token_output_symbol?: string;
-};
-
-type ConnextTx = {
-  bridge_type: "connext";
-  connext_transaction_hash?: "string";
-  connext_transaction_status?: WithdrawStatus;
-  connext_transaction_output_amount?: number;
-  connext_token_output_symbol?: string;
-};
+export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+export type RouterId = "axelar" | "connext";
 
 export type WithdrawRoute = {
-  id: "axelar" | "connext";
+  id: RouterId;
   output_symbol: string;
   output_amount: number;
-  status: "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+  status: RouteStatus;
   hash: string;
 };
 

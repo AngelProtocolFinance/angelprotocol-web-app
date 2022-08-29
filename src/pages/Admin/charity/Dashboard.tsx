@@ -8,8 +8,8 @@ export default function Dashboard() {
       <h3 className="mt-8 col-span-2 text-xl font-bold text-zinc-50 my-1 uppercase">
         Strategies
       </h3>
-      <div className="grid place-items-center col-span-2 h-60 bg-zinc-50/10 rounded-md shadow-inner">
-        <p className="text-lg text-zinc-100">Coming soon!</p>
+      <div className="grid place-items-center col-span-2 h-60 rounded-md border-2 border-zinc-50/20 rounded-md p-4">
+        <p className="text-lg text-zinc-100/70">Coming soon!</p>
       </div>
 
       <Transactions />
