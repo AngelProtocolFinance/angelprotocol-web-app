@@ -3,6 +3,7 @@ import { Button } from "../common";
 type Props = {
   title: string;
   completed?: true | boolean;
+  completedButtonLabel?: string;
   disabled: boolean;
   statusComplete?: string | false;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -25,7 +26,7 @@ export default function Step(props: Props) {
           onClick={props.onClick}
           disabled={props.disabled}
         >
-          Change
+          {props.completedButtonLabel ?? "Change"}
         </Button>
       ) : (
         <Button className="bg-thin-blue w-40 h-10" onClick={props.onClick}>

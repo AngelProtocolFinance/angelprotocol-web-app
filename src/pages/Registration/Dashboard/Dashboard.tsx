@@ -75,8 +75,13 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.confirmEmail}`)
           }
-          disabled={isDataSubmitted || isSubmitting}
+          disabled={
+            charity.ContactPerson.EmailVerified ||
+            isDataSubmitted ||
+            isSubmitting
+          }
           completed={registrationState.emailVerificationStep.completed}
+          completedButtonLabel="Resend"
         />
       </div>
       {isDataSubmitted ? (
