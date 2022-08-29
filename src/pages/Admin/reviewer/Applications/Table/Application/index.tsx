@@ -53,14 +53,14 @@ export default function Application(props: CharityApplication) {
         <Button
           onClick={() => updateStatus(1)}
           className="text-emerald-500 hover:bg-emerald-500/20"
-          // disabled={props.poll_id !== undefined}
+          disabled={props.poll_id !== undefined}
         >
           Approve
         </Button>
         <Button
           onClick={() => updateStatus(3)}
           className="text-rose-500 hover:bg-rose-500/20"
-          // disabled={props.poll_id !== undefined}
+          disabled={props.poll_id !== undefined}
         >
           Reject
         </Button>
@@ -77,18 +77,6 @@ export default function Application(props: CharityApplication) {
     </Dialog.Panel>
   );
 }
-/**
- * 
- * @param props   {(props.poll_id && (
-        <Link
-          to={adminRoutes.proposal + `/${props.poll_id}`}
-          className="uppercase font-heading font-bold text-sm hover:text-angel-blue"
-        >
-          VOTE
-        </Link>
-      )) || (
- * @returns 
- */
 
 function Label(props: PropsWithChildren<{ classes?: string }>) {
   return (
