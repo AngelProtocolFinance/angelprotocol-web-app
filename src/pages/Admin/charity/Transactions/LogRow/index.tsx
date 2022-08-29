@@ -16,7 +16,7 @@ export default function LogRow(props: WithdrawLog) {
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
       <Status {...props} />
 
-      {finalRoute ? (
+      {finalRoute && finalRoute.status === "OK" ? (
         <div className="flex items-center gap-2">
           <span>{humanize(finalRoute.output_amount, 4)} </span>
           <span className="text-xs">{finalRoute.output_symbol}</span>
@@ -24,7 +24,7 @@ export default function LogRow(props: WithdrawLog) {
       ) : (
         <>---</>
       )}
-      {finalRoute ? (
+      {finalRoute && finalRoute.status === "OK" ? (
         <a
           className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600"
           href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}

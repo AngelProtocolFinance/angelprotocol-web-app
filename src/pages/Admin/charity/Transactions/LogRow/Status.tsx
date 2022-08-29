@@ -1,4 +1,5 @@
 import { Popover } from "@headlessui/react";
+import { PropsWithChildren } from "react";
 import { WithdrawLog, WithdrawRoute } from "types/server/aws";
 import { humanize, maskAddress } from "helpers";
 import { explorerUrls } from "./constants";
@@ -36,7 +37,12 @@ export default function Status({
           {Array(num_routes)
             .fill("")
             .map((_, i) => (
-              <Route route={routes[i]} key={i} />
+              <Route
+                route={routes[i]}
+                key={i}
+                routeNum={i + 1}
+                numRoutes={num_routes}
+              />
             ))}
         </Popover.Panel>
       </Popover>
@@ -46,30 +52,52 @@ export default function Status({
   }
 }
 
-function Route(props: { route?: WithdrawRoute }) {
+function Route(props: {
+  route?: WithdrawRoute;
+  numRoutes: number;
+  routeNum: number;
+}) {
+  const progress = `${props.routeNum}/${props.numRoutes}`;
   if (!props.route) {
-    return <>processing</>;
+    return (
+      <Container classes="flex items-center gap-1">
+        <span>{progress}</span>
+        <span>waiting</span>
+      </Container>
+    );
   }
 
   const { id, hash, status, output_amount, output_symbol } = props.route;
   return (
-    <li className="mt-2 first:mt-0 border-b last:border-none text-sm grid gap-y-1">
+    <Container classes="grid gap-y-2">
       <div className="flex justify-between items-center">
         <span className="font-bold uppercase">{id}</span>
-        <span className="text-xs font-bold">{status}</span>
+        <span className="text-xs">{progress}</span>
       </div>
+      <span className="text-xs font-bold">{status}</span>
       <div className="flex items-center gap-2">
         <span>{humanize(output_amount, 4)} </span>
         <span className="text-xs">{output_symbol}</span>
       </div>
       <a
-        className="font-mono text-sky-500 hover:text-sky-400 active:text-sky-600"
+        className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600 mt-4"
         href={`${explorerUrls[id]}/${hash}`}
         target="_blank"
         rel="noopener noreferrer"
       >
         {maskAddress(hash)}
       </a>
-    </li>
+    </Container>
+  );
+}
+
+function Container(props: PropsWithChildren<{ classes?: string }>) {
+  return (
+    <li
+      {...props}
+      className={`mt-2 first:mt-0 border-b last:border-none text-sm${
+        props.classes ?? ""
+      }`}
+    />
   );
 }
