@@ -94,7 +94,7 @@ export default function useSaveContactDetails() {
       storeRegistrationReference(PK || "");
       //sending this email invalidated registration query cache
       await sendVerificationEmail({
-        uuid: PK,
+        uuid: PK!,
         type: "verify-email",
         body: {
           ...contactPerson,

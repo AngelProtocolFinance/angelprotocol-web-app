@@ -111,7 +111,10 @@ const registration_api = aws.injectEndpoints({
         response.Items,
     }),
     //TODO:proper typings
-    requestEmail: builder.mutation<any, any>({
+    requestEmail: builder.mutation<
+      any,
+      { uuid: string; type: string; body: any }
+    >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, type, body }) => {
         return {
