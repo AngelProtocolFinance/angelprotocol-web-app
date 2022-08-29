@@ -1,6 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SuccessLink } from "slices/transaction/types";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import transactionSlice, {
   setStage,
@@ -61,8 +62,10 @@ export const logWithdrawProposal = createAsyncThunk(
           successLink: proposalLink,
         })
       );
-      //success = 2xx
-      if (response.status < 200 || response.status > 299) {
+
+      dispatch(invalidateApesTags([apesTags.withdraw_logs]));
+
+      if (!response.ok) {
         throw new Error(`Non-success response status: ${response.status}`);
       }
     } catch (err) {

@@ -15,9 +15,10 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: [apesTags.custom],
+  tagTypes: [apesTags.custom, apesTags.withdraw_logs],
   endpoints: (builder) => ({
     withdrawLogs: builder.query<WithdrawLog[], string>({
+      providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `withdraw/${cw3}`,
     }),
     chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
@@ -106,8 +107,11 @@ export const apes = createApi({
   }),
 });
 
-export const { useChainQuery, useWithdrawLogsQuery } = apes;
-export const { invalidateTags: invalidateApesTags } = apes.util;
+export const {
+  useChainQuery,
+  useWithdrawLogsQuery,
+  util: { invalidateTags: invalidateApesTags },
+} = apes;
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
   const cw20BalancePromises = chain.tokens
