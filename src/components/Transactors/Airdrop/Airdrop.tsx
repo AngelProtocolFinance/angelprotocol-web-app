@@ -11,7 +11,7 @@ export default function Airdrop() {
     <div>
       <button
         onClick={showDetails}
-        className="w-full px-3 h-full border border-white/40 hover:bg-white/10 rounded-md"
+        className="ml-1 w-full px-3 h-full border border-white/40 hover:bg-white/10 rounded-md"
       >
         <Icon type="Parachute" className="text-lg text-white" />
       </button>

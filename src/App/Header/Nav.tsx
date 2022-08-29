@@ -1,6 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { AP_ID, REVIEWER_ID } from "services/juno/custom";
-import { AdminLink } from "components/admin";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
@@ -21,8 +19,6 @@ export default function Nav() {
       <NavLink to={appRoutes.register} className={styler}>
         Register
       </NavLink>
-      <AdminLink className={styler} id={AP_ID} label={"Admin"} />
-      <AdminLink className={styler} id={REVIEWER_ID} label={"Applications"} />
     </nav>
   );
 }

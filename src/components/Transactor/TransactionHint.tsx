@@ -27,7 +27,7 @@ function StatusButton(props: { iconType: IconTypes; iconClass?: string }) {
   return (
     <button
       onClick={showPrompt}
-      className="grid place-items-center border border-white/40 hover:bg-white/10 rounded-md px-4 text-white-grey/80"
+      className="grid place-items-center border border-white/40 hover:bg-white/10 rounded-md px-4 text-white-grey/80 mr-1"
     >
       <Icon type={props.iconType} className={props.iconClass || ""} />
     </button>
