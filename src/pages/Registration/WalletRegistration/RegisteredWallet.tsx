@@ -24,6 +24,10 @@ export default function RegisteredWallet() {
     );
   }
 
+  const continueUrl = charity.ContactPerson.EmailVerified
+    ? `${appRoutes.register}/${routes.dashboard}`
+    : `${appRoutes.register}/${routes.confirmEmail}`;
+
   return (
     <div className="flex flex-col h-full items-center">
       <div className="flex flex-col items-center gap-4 mb-4">
@@ -48,10 +52,10 @@ export default function RegisteredWallet() {
         change wallet
       </Button>
       <Link
-        to={`${appRoutes.register}/${routes.dashboard}`}
+        to={continueUrl}
         className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
       >
-        Back to registration dashboard
+        Continue
       </Link>
     </div>
   );
