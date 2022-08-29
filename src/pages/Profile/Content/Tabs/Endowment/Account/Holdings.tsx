@@ -26,7 +26,7 @@ export default function Holdings(props: { balance: GenericBalance }) {
 function Balance(props: CW20 | Coin) {
   const id = "address" in props ? props.address : props.denom;
   return (
-    <Cells type="td" cellClass="py-2 font-mono uppercase">
+    <Cells type="td" cellClass="py-2">
       <div className="flex items-center gap-2">
         <img
           className="w-6 h-6 object-contain"
@@ -36,7 +36,7 @@ function Balance(props: CW20 | Coin) {
         <span>{coinAsset[id].name}</span>
       </div>
 
-      <>{humanize(condense(props.amount), 4)}</>
+      <div className="text-right">{humanize(condense(props.amount), 4)}</div>
     </Cells>
   );
 }
