@@ -1,6 +1,4 @@
 import { Submitter } from "../../types";
-import { Charity } from "types/server/aws";
-import { ChainWallet } from "contexts/ChainGuard";
 import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -12,7 +10,7 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
-  const submit: Submitter = (charity, wallet) => {
+  const submit: Submitter = (wallet, charity) => {
     const contract = new Registrar(wallet);
     const msg = contract.createEndowmentCreationMsg(charity);
     dispatch(

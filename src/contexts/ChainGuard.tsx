@@ -51,7 +51,7 @@ export default function ChainGuard({
       allowedWallets
         ? connections.filter((c) => allowedWallets.includes(c.id))
         : connections,
-    [connections]
+    [connections, allowedWallets]
   );
 
   if (isWalletLoading) {

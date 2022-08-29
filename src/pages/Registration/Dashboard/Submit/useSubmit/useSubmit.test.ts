@@ -30,7 +30,7 @@ describe("useSubmit tests", () => {
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
-    act(() => result.current.submit(CHARITY, {} as ChainWallet));
+    act(() => result.current.submit({} as ChainWallet, CHARITY));
     //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();

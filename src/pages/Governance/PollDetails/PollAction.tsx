@@ -1,10 +1,5 @@
 import { ReactNode } from "react";
-import {
-  apesTags,
-  customTags,
-  invalidateApesTags,
-  useChainQuery,
-} from "services/apes";
+import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { ChainWallet } from "contexts/ChainGuard";
@@ -12,14 +7,15 @@ import { useModalContext } from "contexts/ModalContext";
 import { useWalletContext } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import useVoter from "components/Transactors/Voter/useVoter";
+import TxSubmitter from "components/TxSubmitter";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Gov from "contracts/Gov";
+import { chainIds, chainNames } from "constants/chainIds";
 import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {
   const { wallet } = useWalletContext();
-  const { data: chain } = useChainQuery(wallet!, { skip: !wallet });
   const dispatch = useSetter();
   const { showModal } = useModalContext();
   const details = useDetails(props.poll_id);
@@ -32,29 +28,18 @@ export default function PollAction(props: { poll_id: number }) {
   const C = details.creator === wallet?.address;
   let node: ReactNode = null;
 
-  function endPoll() {
-    if (!wallet) {
-      showModal(Popup, { message: "Wallet is disconnected" });
-      return;
-    }
-
-    if (!chain) {
-      showModal(Popup, { message: "Network is unsupported" });
-      return;
-    }
-
+  function endPoll(wallet: ChainWallet) {
     if (props.poll_id === 0) {
       showModal(Popup, { message: "Poll is invalid" });
       return;
     }
 
-    const chainWallet: ChainWallet = { ...chain, ...wallet };
-    const contract = new Gov(chainWallet);
+    const contract = new Gov(wallet);
     const msg = contract.createEndPollMsg(props.poll_id);
 
     dispatch(
       sendCosmosTx({
-        wallet: chainWallet,
+        wallet,
         msgs: [msg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),
@@ -72,7 +57,17 @@ export default function PollAction(props: { poll_id: number }) {
     if (E) {
       //voting period ended
       if (V || C) {
-        node = <Action onClick={endPoll}>End Poll</Action>;
+        node = (
+          <TxSubmitter
+            allowedWallets={["keplr"]}
+            requiredNetwork={{ id: chainIds.juno, name: chainNames.juno }}
+            submitFn={endPoll}
+            submitArgs={[]}
+            className={buttonStyle}
+          >
+            End Poll
+          </TxSubmitter>
+        );
       } else {
         node = <Text>vote period has ended</Text>;
       }
@@ -104,13 +99,10 @@ export default function PollAction(props: { poll_id: number }) {
  * poll has ended = P
  */
 
+const buttonStyle =
+  "text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-white/30";
 function Action(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-white/30"
-    />
-  );
+  return <button {...props} className={buttonStyle} />;
 }
 
 function Text(props: { children: ReactNode }) {

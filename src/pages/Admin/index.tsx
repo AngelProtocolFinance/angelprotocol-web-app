@@ -1,7 +1,7 @@
 import ChainGuard from "contexts/ChainGuard";
 import ModalContext from "contexts/ModalContext";
 import { chainIds, chainNames } from "constants/chainIds";
-import { Guard, GuardPrompt } from "./Guard";
+import { Guard } from "./Guard";
 import Nav from "./Nav";
 import Views from "./Views";
 
@@ -9,7 +9,7 @@ export default function Admin() {
   return (
     <ChainGuard
       allowedWallets={["keplr"]}
-      prompt={({ id, content }) => (
+      prompt={({ content }) => (
         <div className="bg-zinc-50 place-self-center w-full max-w-sm p-4 rounded-md shadow-lg min-h-[10rem]">
           {content}
         </div>

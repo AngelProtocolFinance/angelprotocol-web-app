@@ -3,7 +3,6 @@ import { VoteValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, customTags, junoTags } from "services/juno/tags";
-import { ChainWallet } from "contexts/ChainGuard";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
