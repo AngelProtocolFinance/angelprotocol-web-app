@@ -40,7 +40,7 @@ export default function Transactions() {
 
   return (
     <>
-      <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white mt-4 mb-2">
+      <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white mt-10 mb-2">
         Transactions
       </h3>
 

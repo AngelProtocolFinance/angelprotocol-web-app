@@ -83,9 +83,9 @@ function Route(props: {
         <span className="text-xs">{progress}</span>
       </div>
       <span className="text-xs font-bold">{status}</span>
-      <div className="flex items-center gap-2">
+      <div className="flex gap-1 items-baseline">
         <span>{humanize(output_amount, 4)} </span>
-        <span className="text-xs">{output_symbol}</span>
+        <span className="text-xs font-mono">{output_symbol}</span>
       </div>
       <a
         className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600 mt-4"

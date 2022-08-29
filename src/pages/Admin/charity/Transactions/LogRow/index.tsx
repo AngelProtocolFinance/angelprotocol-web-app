@@ -9,17 +9,17 @@ export default function LogRow(props: WithdrawLog) {
   const finalRoute = getFinalRoute(props);
   return (
     <Cells type="td" cellClass="p-2 text-zinc-50/80" key={proposal_id}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-baseline gap-1">
         <span>{humanize(amount, 4)} </span>
-        <span className="text-xs">{symbol}</span>
+        <span className="text-xs font-mono">{symbol}</span>
       </div>
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
       <Status {...props} />
 
       {finalRoute && finalRoute.status === "OK" ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-baseline gap-1">
           <span>{humanize(finalRoute.output_amount, 4)} </span>
-          <span className="text-xs">{finalRoute.output_symbol}</span>
+          <span className="text-xs font-mono">{finalRoute.output_symbol}</span>
         </div>
       ) : (
         <>---</>
