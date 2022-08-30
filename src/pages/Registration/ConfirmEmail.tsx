@@ -71,9 +71,12 @@ export default function ConfirmEmail() {
 
   // if step 4 is complete, then this was a contact details update, so user can be
   // navigated to the dashboard
-  const continuationLink = charity.Metadata.JunoWallet
-    ? `${appRoutes.register}/${routes.dashboard}`
-    : `${appRoutes.register}/${routes.documentation}`;
+  const onContinueClick = () => {
+    const route = charity.Metadata.JunoWallet
+      ? routes.dashboard
+      : routes.documentation;
+    navigate(`${appRoutes.register}/${route}`);
+  };
 
   return (
     <div className="flex flex-col gap-4 font-bold">
@@ -110,7 +113,7 @@ export default function ConfirmEmail() {
           Resend verification email
         </Button>
         <Button
-          onClick={() => navigate(continuationLink)}
+          onClick={onContinueClick}
           className="bg-thin-blue w-48 h-12 text-sm"
         >
           continue
