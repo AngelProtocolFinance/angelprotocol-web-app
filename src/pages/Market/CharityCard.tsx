@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { EndowmentEntry } from "types/server/contracts";
+import { EndowmentEntry } from "types/contracts";
 import defaultBanner from "assets/images/home-banner.jpg";
 import LazyImage from "components/LazyImage";
 import { appRoutes } from "constants/routes";

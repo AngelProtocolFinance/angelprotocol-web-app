@@ -1,6 +1,6 @@
 import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { Airdrops } from "types/server/aws";
+import { Airdrops } from "types/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";

@@ -12,7 +12,7 @@ import {
   ProviderInfo,
   ProviderStatuses,
 } from "./types";
-import { Chain, Token } from "types/server/aws";
+import { Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";

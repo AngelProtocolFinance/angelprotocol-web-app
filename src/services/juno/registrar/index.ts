@@ -1,5 +1,5 @@
 import { Args, Res, Result } from "../queryContract/types";
-import { CategorizedEndowments } from "types/server/contracts";
+import { CategorizedEndowments } from "types/contracts";
 import { junoTags, registrarTags } from "services/juno/tags";
 import { contracts } from "constants/contracts";
 import { junoApi } from "..";

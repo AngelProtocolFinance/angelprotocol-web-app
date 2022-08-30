@@ -1,6 +1,6 @@
 import { Switch } from "@headlessui/react";
 import { ReactElement, useMemo, useState } from "react";
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 
 const criterionAmount = 0.001;
 

@@ -1,10 +1,10 @@
-import { Charity } from "types/server/aws";
+import { Charity } from "types/aws";
 import {
   RegistrarConfigPayload,
   RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
-} from "types/server/contracts";
+} from "types/contracts";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 

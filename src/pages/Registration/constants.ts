@@ -1,4 +1,4 @@
-import { Charity } from "types/server/aws";
+import { Charity } from "types/aws";
 
 export enum Folders {
   AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",

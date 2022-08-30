@@ -1,4 +1,4 @@
-import { ReceiptPayload } from "types/server/aws";
+import { ReceiptPayload } from "types/aws";
 
 export type PrevTxDetails = { txHash: string; chainId: string };
 export type ReceipterValues = ReceiptPayload & { prevTx?: PrevTxDetails };

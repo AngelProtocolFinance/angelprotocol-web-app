@@ -1,4 +1,4 @@
-import { VotesPageOptions } from "types/server/contracts";
+import { VotesPageOptions } from "types/contracts";
 import { useVotesQuery } from "services/juno/cw3";
 import { useAdminResources } from "../../Guard";
 

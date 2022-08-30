@@ -2,7 +2,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
-import { ContactDetailsRequest } from "types/server/aws";
+import { ContactDetailsRequest } from "types/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import {
   registrationRefKey,

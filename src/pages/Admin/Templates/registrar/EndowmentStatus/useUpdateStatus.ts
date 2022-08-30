@@ -4,7 +4,7 @@ import {
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
-} from "types/server/contracts";
+} from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";

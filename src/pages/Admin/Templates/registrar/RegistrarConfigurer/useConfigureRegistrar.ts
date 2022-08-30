@@ -3,7 +3,7 @@ import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
 } from "pages/Admin/types";
-import { RegistrarConfigPayload } from "types/server/contracts";
+import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";

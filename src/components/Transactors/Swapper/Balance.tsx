@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 import { humanize } from "helpers";
 
 export default function Balance({ token }: { token: Token }) {

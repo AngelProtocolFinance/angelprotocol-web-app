@@ -1,4 +1,4 @@
-import { WithdrawLog } from "types/server/aws";
+import { WithdrawLog } from "types/aws";
 import { Cells } from "components/TableSection";
 import { humanize, maskAddress } from "helpers";
 import Status from "./Status";

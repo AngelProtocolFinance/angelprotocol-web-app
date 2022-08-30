@@ -1,4 +1,4 @@
-import { Charity, RegistrationStatus } from "types/server/aws";
+import { Charity, RegistrationStatus } from "types/aws";
 import getRegistrationState from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {

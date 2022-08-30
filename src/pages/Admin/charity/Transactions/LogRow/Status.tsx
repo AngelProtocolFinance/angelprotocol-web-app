@@ -1,6 +1,6 @@
 import { Popover } from "@headlessui/react";
 import { PropsWithChildren } from "react";
-import { WithdrawLog, WithdrawRoute } from "types/server/aws";
+import { WithdrawLog, WithdrawRoute } from "types/aws";
 import { humanize, maskAddress } from "helpers";
 import { explorerUrls } from "./constants";
 

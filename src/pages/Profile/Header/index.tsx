@@ -1,4 +1,4 @@
-import { Profile } from "types/server/contracts";
+import { Profile } from "types/contracts";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
 import { useProfile } from "..";

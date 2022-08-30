@@ -1,6 +1,6 @@
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { UnprocessedCharity } from "types/server/aws";
+import { UnprocessedCharity } from "types/aws";
 import { registrationRefKey } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";

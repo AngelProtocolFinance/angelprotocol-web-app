@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { PollStatus } from "types/server/contracts";
+import { PollStatus } from "types/contracts";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
 import { symbols } from "constants/currency";

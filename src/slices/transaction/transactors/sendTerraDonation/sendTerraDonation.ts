@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { Chain, KYCData, Receiver } from "types/server/aws";
+import { Chain, KYCData, Receiver } from "types/aws";
 import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";

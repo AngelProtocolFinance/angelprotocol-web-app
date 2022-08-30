@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { CharityApplication } from "types/server/aws";
+import { CharityApplication } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Expiration, Proposal } from "types/server/contracts";
+import { Expiration, Proposal } from "types/contracts";
 import Icon from "components/Icon";
 import { Status } from "components/admin";
 import { adminRoutes } from "constants/routes";

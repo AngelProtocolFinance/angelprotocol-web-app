@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
-import { KYCData, Receiver } from "types/server/aws";
+import { KYCData, Receiver } from "types/aws";
 import { invalidateJunoTags } from "services/juno";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";

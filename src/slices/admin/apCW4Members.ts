@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MemberCopy } from "slices/admin/types";
-import { Member } from "types/server/contracts";
+import { CW4Member } from "types/contracts";
 
 const initialState: MemberCopy[] = [];
 
@@ -15,7 +15,7 @@ const apCW4MembersSlice = createSlice({
       //markDelete is triggered from list rendered by this state
       memberToMark!.is_deleted = !memberToMark!.is_deleted;
     },
-    addMember: (state, { payload }: PayloadAction<Member>) => {
+    addMember: (state, { payload }: PayloadAction<CW4Member>) => {
       state.push({ ...payload, is_deleted: false, is_added: true });
     },
     undoAddMember: (state, { payload }: PayloadAction<string>) => {

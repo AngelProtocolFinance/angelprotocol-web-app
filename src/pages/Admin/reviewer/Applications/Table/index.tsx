@@ -1,4 +1,4 @@
-import { CharityApplication } from "types/server/aws";
+import { CharityApplication } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import AppRow from "./AppRow";
 import Header from "./Header";

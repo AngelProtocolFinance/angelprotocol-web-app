@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
-import { Member } from "types/server/contracts";
+import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -28,10 +28,10 @@ export default function useUpdateMembers() {
     if (!isValid) return;
 
     //check if there are changes
-    type Diffs = [Member[], string[]];
+    type Diffs = [CW4Member[], string[]];
     const [to_add, to_remove]: Diffs = apCW4Members.reduce(
       ([to_add, to_remove]: Diffs, memberCopy) => {
-        const member: Member = {
+        const member: CW4Member = {
           addr: memberCopy.addr,
           weight: memberCopy.weight,
         };

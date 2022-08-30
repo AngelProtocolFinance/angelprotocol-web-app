@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import { UnprocessedCharity } from "types/server/aws";
+import { UnprocessedCharity } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { logger } from "helpers";
 import LinkExpired from "./LinkExpired";

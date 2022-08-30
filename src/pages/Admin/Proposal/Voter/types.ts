@@ -1,4 +1,4 @@
-import { Vote } from "types/server/contracts";
+import { Vote } from "types/contracts";
 
 export type VoteValues = {
   vote: Vote;

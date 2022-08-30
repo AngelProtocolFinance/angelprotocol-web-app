@@ -1,4 +1,4 @@
-import { Profile } from "types/server/contracts";
+import { Profile } from "types/contracts";
 
 //toDO
 export default function CharityStats(props: Profile & { classes?: string }) {

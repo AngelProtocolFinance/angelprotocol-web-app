@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
-import { Vote } from "types/server/contracts";
+import { Vote } from "types/contracts";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";

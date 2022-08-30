@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";

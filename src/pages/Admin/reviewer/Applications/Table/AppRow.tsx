@@ -1,4 +1,4 @@
-import { CharityApplication } from "types/server/aws";
+import { CharityApplication } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { Cells } from "components/TableSection";
 import { statusColors } from "../constants";

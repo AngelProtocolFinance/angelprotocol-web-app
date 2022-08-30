@@ -1,4 +1,4 @@
-import { Transaction } from "types/server/aws";
+import { Transaction } from "types/aws";
 import { flipside } from "./flipslide";
 
 const endowment_admin_api = flipside.injectEndpoints({

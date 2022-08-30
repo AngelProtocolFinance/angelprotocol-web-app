@@ -2,7 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { PrevTxDetails, ReceipterValues } from "./types";
-import { KYCData } from "types/server/aws";
+import { KYCData } from "types/aws";
 import ReceiptForm from "./ReceiptForm";
 import { schema } from "./schema";
 

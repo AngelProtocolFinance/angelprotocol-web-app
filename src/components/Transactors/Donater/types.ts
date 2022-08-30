@@ -1,4 +1,4 @@
-import { Token } from "types/server/aws";
+import { Token } from "types/aws";
 
 export interface DonateValues {
   amount: string;

@@ -1,4 +1,4 @@
-import { GenericBalance } from "types/server/contracts";
+import { GenericBalance } from "types/contracts";
 import useWithdrawer from "../../Withdrawer/useWithdrawer";
 import Holdings from "./Holdings";
 

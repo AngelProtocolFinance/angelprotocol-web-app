@@ -1,10 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { RegistrarConfigValues } from "pages/Admin/types";
-import {
-  RegistrarConfig,
-  RegistrarConfigPayload,
-} from "types/server/contracts";
+import { RegistrarConfig, RegistrarConfigPayload } from "types/contracts";
 import { useRegistrarConfig } from "services/juno/registrar/queriers";
 import { FormError, FormSkeleton } from "components/admin";
 import RegistrarConfigForm from "./RegistrarConfigForm";

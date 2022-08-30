@@ -1,8 +1,8 @@
-import { Member } from "types/server/contracts";
+import { CW4Member } from "types/contracts";
 import Icon, { IconTypes } from "components/Icon";
 
 export default function MemberItem(props: {
-  member: Member | string;
+  member: CW4Member | string;
   iconType?: IconTypes;
 }) {
   if (typeof props.member === "string") {

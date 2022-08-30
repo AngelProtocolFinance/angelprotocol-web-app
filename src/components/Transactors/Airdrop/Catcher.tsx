@@ -1,4 +1,4 @@
-import { Airdrops } from "types/server/aws";
+import { Airdrops } from "types/aws";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
