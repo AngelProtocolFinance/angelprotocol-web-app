@@ -29,7 +29,7 @@ export default function useSubmit() {
         });
 
         if ("error" in result) {
-          handleError(result.error, "Error updating profile ❌");
+          return handleError(result.error, "Error updating profile ❌");
         }
         navigate(`${appRoutes.register}/${routes.wallet}`);
       } catch (error) {
