@@ -7,7 +7,7 @@ import { coinAsset } from "constants/currency";
 export default function Holdings(props: { balance: GenericBalance }) {
   return (
     <table>
-      <TableSection type="tbody" rowClass="border-b border-zinc-50/20">
+      <TableSection type="tbody" rowClass="">
         <>
           {props.balance.native.map((bal) => (
             <Balance {...bal} key={bal.denom} />
@@ -26,7 +26,7 @@ export default function Holdings(props: { balance: GenericBalance }) {
 function Balance(props: CW20 | Coin) {
   const id = "address" in props ? props.address : props.denom;
   return (
-    <Cells type="td" cellClass="py-2">
+    <Cells type="td" cellClass="py-2 font-mono uppercase">
       <div className="flex items-center gap-2">
         <img
           className="w-6 h-6 object-contain"
