@@ -29,8 +29,10 @@ export default function useSaveContactDetails() {
       // call API to add or update contact details information(contactData)
       setError(false);
       const is_create = !contactData?.uniqueID;
+      // the submitted email is considered 'verified' only if it:
+      // 1. was already verified
+      // 2. is the same as the the pre-contact-details-update email
       const isEmailVerified =
-        !!originalCharityData.ContactPerson.Email &&
         !!originalCharityData.ContactPerson.EmailVerified &&
         originalCharityData.ContactPerson.Email === contactData.email;
 
