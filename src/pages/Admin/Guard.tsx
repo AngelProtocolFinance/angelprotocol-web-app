@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
@@ -7,7 +7,9 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
-export function Guard(props: PropsWithChildren<{}>) {
+export function Guard(props: {
+  children(resources: AdminResources): ReactNode;
+}) {
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const { id } = useParams<AdminParams>();
 
@@ -31,7 +33,9 @@ export function Guard(props: PropsWithChildren<{}>) {
 
   if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
 
-  return <context.Provider value={data!}>{props.children}</context.Provider>;
+  return (
+    <context.Provider value={data}>{props.children(data)}</context.Provider>
+  );
 }
 
 const context = createContext({} as AdminResources);

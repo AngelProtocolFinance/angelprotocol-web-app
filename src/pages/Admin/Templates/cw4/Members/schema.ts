@@ -1,13 +1,14 @@
 import * as Yup from "yup";
-import { CW3ConfigValues } from "pages/Admin/types";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { requiredPositiveNumber } from "schemas/number";
+import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../../constants";
 
-const shape: SchemaShape<CW3ConfigValues> = {
+const shape: SchemaShape<MemberUpdatorValues> = {
   ...proposalShape,
-  threshold: requiredPositiveNumber,
-  duration: requiredPositiveNumber,
+  addr: requiredWalletAddr(),
+  weight: requiredPositiveNumber,
 };
 
 export const schema = Yup.object(shape);
