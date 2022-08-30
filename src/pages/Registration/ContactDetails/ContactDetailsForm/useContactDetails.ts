@@ -52,7 +52,7 @@ export default function useSaveContactDetails() {
             PhoneNumber: contactData.phone,
             ReferralMethod: contactData.referralMethod,
             Role: contactData.role,
-            ...(is_create ? {} : { EmailVerified: isEmailVerified }),
+            EmailVerified: is_create ? undefined : isEmailVerified,
           },
         },
       };
