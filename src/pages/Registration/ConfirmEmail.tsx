@@ -82,9 +82,7 @@ export default function ConfirmEmail() {
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
             <p>Hi {charity.ContactPerson.FirstName}!</p>
-            <span>
-              We're still waiting for you to confirm your email address.
-            </span>
+            <span>We're waiting for you to confirm your email address.</span>
           </div>
         </>
       ) : (
