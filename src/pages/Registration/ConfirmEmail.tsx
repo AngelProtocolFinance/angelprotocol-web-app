@@ -69,8 +69,8 @@ export default function ConfirmEmail() {
     return null;
   }
 
-  // if step 4 is complete, then this was a contact details update, so user can be
-  // navigated to the dashboard
+  // if wallet registration step is already complete, then this was just data update,
+  // so user can be navigated to the dashboard
   const onContinueClick = () => {
     const route = charity.Metadata.JunoWallet
       ? routes.dashboard

@@ -23,10 +23,14 @@ export default function WalletSubmission() {
   const { charity } = useRegistrationState();
   const { isSubmitting, registerWallet } = useRegisterWallet();
 
-  // if email was already verified, that means the user can be safely navigated to the Dashboard
-  const backLink = charity.Metadata.JunoWallet
-    ? `${appRoutes.register}/${routes.dashboard}`
-    : `${appRoutes.register}/${routes.additionalInformation}`;
+  // if wallet registration step is already complete, then this was just data update,
+  // so user can be navigated to the dashboard
+  const onBackClick = () => {
+    const route = charity.Metadata.JunoWallet
+      ? routes.dashboard
+      : routes.additionalInformation;
+    navigate(`${appRoutes.register}/${route}`);
+  };
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -77,7 +81,7 @@ export default function WalletSubmission() {
               <Button
                 className="bg-green-400 w-48 h-10"
                 disabled={isSubmitting}
-                onClick={() => navigate(backLink)}
+                onClick={onBackClick}
               >
                 Back
               </Button>

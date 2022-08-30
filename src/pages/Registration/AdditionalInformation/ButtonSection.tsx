@@ -13,7 +13,9 @@ export default function ButtonSection() {
     formState: { isSubmitting },
   } = useFormContext();
 
-  const onClick = () => {
+  // if wallet registration step is already complete, then this was just data update,
+  // so user can be navigated to the dashboard
+  const onBackClick = () => {
     const route = charity.Metadata.JunoWallet
       ? routes.dashboard
       : routes.documentation;
@@ -26,7 +28,7 @@ export default function ButtonSection() {
         <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (
         <>
-          <Button className="bg-green-400 w-48 h-12 mr-2" onClick={onClick}>
+          <Button className="bg-green-400 w-48 h-12 mr-2" onClick={onBackClick}>
             Back
           </Button>
           <Button submit className="bg-thin-blue w-48 h-12">
