@@ -39,19 +39,26 @@ interface RebalanceDetails {
 
 interface StrategyComponent {
   vault: string; // Vault SC Address
-  locked_percentage: string; // percentage of funds to invest
-  liquid_percentage: string; // percentage of funds to invest
+  percentage: string; // percentage of funds to invest
+}
+
+interface AccountStrategies {
+  locked: StrategyComponent[];
+  liquid: StrategyComponent[];
 }
 
 export interface EndowmentDetails {
   owner: string;
-  beneficiary: string;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
-  strategies: StrategyComponent[];
+  strategies: AccountStrategies;
   rebalance: RebalanceDetails;
-  guardians: string[];
+  kyc_donors_only: boolean;
+  deposit_approved: boolean;
+  withdraw_approved: boolean;
+  pending_redemptions: number;
+  auto_invest: boolean;
 }
 
 export interface Profile {

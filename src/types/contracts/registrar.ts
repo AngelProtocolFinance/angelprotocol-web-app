@@ -66,6 +66,31 @@ export type VaultRateInfo = {
   fx_rate: string; //"1.206784043460040765"
 };
 
+type AccountType = "locked" | "liquid";
+
+export type VaultListOptions = {
+  network?: string;
+  endowment_type?: EndowmentType;
+  acct_type?: AccountType;
+  approved?: boolean;
+  start_after?: string;
+  limit?: number;
+};
+
+export type YieldVault = {
+  address: string;
+  network: string; // Points to key in NetworkConnections storage map
+  input_denom: string;
+  yield_token: string;
+  approved: boolean;
+  restricted_from: EndowmentType[];
+  acct_type: AccountType;
+};
+
+export type VaultListRes = {
+  vaults: YieldVault[];
+};
+
 export type StatusChangePayload = {
   endowment_id: number;
   status: EndowmentStatus[keyof EndowmentStatus];

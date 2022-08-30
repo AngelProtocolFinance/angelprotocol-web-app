@@ -24,6 +24,15 @@ export const registrar_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
+    vaultList: builder.query<Result<"regVaultList">, Args<"regVaultList">>({
+      providesTags: [
+        { type: junoTags.registrar, id: registrarTags.vault_list },
+      ],
+      query: (args) => genQueryPath("regVaultList", args, reg),
+      transformResponse: (res: Res<"regVaultList">) => {
+        return res.data.vaults;
+      },
+    }),
 
     categorizedEndowments: builder.query<
       Result<"regCategorizedEndows">,
@@ -55,4 +64,5 @@ export const {
   useCategorizedEndowmentsQuery,
   useEndowmentsQuery,
   useRegistrarConfigQuery,
+  useVaultListQuery,
 } = registrar_api;

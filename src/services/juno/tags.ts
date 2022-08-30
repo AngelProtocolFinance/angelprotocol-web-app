@@ -37,6 +37,7 @@ export enum indexfundTags {
 export enum registrarTags {
   endowments = "endowments",
   config = "config",
+  vault_list = "vault-list",
 }
 
 export enum endowmentTags {

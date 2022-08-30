@@ -23,7 +23,10 @@ import {
   QueryRes as Q,
   RegistrarConfig,
   Simulation,
+  VaultListOptions,
+  VaultListRes,
   VotesPageOptions,
+  YieldVault,
 } from "types/contracts";
 
 type EndowmentListRes = { endowments: EndowmentEntry[] };
@@ -41,6 +44,11 @@ export interface ContractQueries {
     result: CategorizedEndowments;
   };
   regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
+  regVaultList: {
+    args: VaultListOptions;
+    res: Q<VaultListRes>;
+    result: YieldVault[];
+  };
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
   ifFunds: {

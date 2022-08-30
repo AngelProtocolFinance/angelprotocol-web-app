@@ -1,5 +1,6 @@
 import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
 import { SuccessLink } from "slices/transaction/types";
+import { EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
@@ -84,6 +85,7 @@ export const customApi = junoApi.injectEndpoints({
                 cw3: cw3Addr,
                 cw4: cw4Addr,
                 endowmentId: numId,
+                endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 proposalLink,
                 role,
@@ -116,6 +118,7 @@ export const customApi = junoApi.injectEndpoints({
               cw3: endowment.owner,
               cw4: cw3config.group_addr,
               endowmentId: numId,
+              endowment,
               cw3config,
               proposalLink,
               role: "charity",

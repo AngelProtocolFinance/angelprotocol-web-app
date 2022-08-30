@@ -1,6 +1,11 @@
 import { SuccessLink } from "slices/transaction/types";
 import { Token } from "types/aws";
-import { AdminVoteInfo, CW3Config, Proposal } from "types/contracts";
+import {
+  AdminVoteInfo,
+  CW3Config,
+  EndowmentDetails,
+  Proposal,
+} from "types/contracts";
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -20,7 +25,8 @@ export type AdminRoles = "ap" | "reviewer" | "charity";
 export type AdminResources = {
   cw3: string;
   cw4: string;
-  endowmentId: number; //reaching this means id is valid and can be safely converted to number
+  endowmentId: number;
+  endowment: EndowmentDetails;
   cw3config: CW3Config;
   proposalLink: SuccessLink;
   role: AdminRoles;
