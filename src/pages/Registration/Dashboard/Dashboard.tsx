@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useRegistrationQuery } from "services/aws/registration";
+import { useRegistrationState } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
-import RegLoader from "../common/RegLoader";
-import { placeHolderCharity } from "../constants";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -13,8 +11,7 @@ import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const { data: charity = placeHolderCharity, isLoading } =
-    useRegistrationQuery("");
+  const { charity } = useRegistrationState();
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
@@ -23,10 +20,6 @@ export default function Dashboard() {
     charity.Registration.RegistrationStatus !== "Inactive";
 
   const registrationState = getRegistrationState(charity);
-
-  if (isLoading) {
-    return <RegLoader />;
-  }
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
