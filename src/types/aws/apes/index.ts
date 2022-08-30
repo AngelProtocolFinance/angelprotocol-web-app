@@ -1,3 +1,5 @@
+import { ProposalStatus } from "../../contracts";
+
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
@@ -32,4 +34,34 @@ export type Chain = {
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
+};
+
+export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
+export type RouterId = "axelar" | "connext";
+
+export type WithdrawRoute = {
+  id: RouterId;
+  output_symbol: string;
+  output_amount: number;
+  status: RouteStatus;
+  hash: string;
+};
+
+export type WithdrawLog = {
+  //when submitted, already available
+  //from POST payload
+  endowment_multisig: string;
+  proposal_id: number;
+  proposal_chain_id: string;
+  target_wallet: string;
+  target_chain: string;
+
+  //from cw3 query
+  amount: number;
+  symbol: string;
+  proposal_status: ProposalStatus;
+
+  //only appears when tx is processed
+  num_routes?: number;
+  routes?: WithdrawRoute[];
 };
