@@ -31,7 +31,7 @@ export default function useSendVerificationEmail() {
         logger.info(response.data.message);
       }
     },
-    [handleError]
+    [handleError, sendEmail]
   );
 
   return { sendVerificationEmail, isLoading };
