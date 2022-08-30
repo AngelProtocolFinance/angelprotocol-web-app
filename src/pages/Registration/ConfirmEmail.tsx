@@ -32,9 +32,7 @@ export default function ConfirmEmail() {
         }
 
         if (!charity.ContactPerson.PK) {
-          throw new UnexpectedStateError(
-            "Invalid Data - primary key is null. Please ask the administrator about that."
-          );
+          throw new UnexpectedStateError("Primary key is null");
         }
 
         const emailPayload = {
