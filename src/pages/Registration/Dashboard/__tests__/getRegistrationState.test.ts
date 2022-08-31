@@ -1,5 +1,5 @@
 import { Charity, RegistrationStatus } from "types/aws";
-import { placeHolderCharity } from "pages/Registration/constants";
+import { placeholderCharity } from "services/aws/registration";
 import getRegistrationState from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {
@@ -7,7 +7,7 @@ describe("getRegistrationState tests", () => {
     "sets 'contact details' step to complete with EmailVerified === %j",
     (emailVerified) => {
       const charity: Charity = {
-        ...placeHolderCharity,
+        ...placeholderCharity,
         ContactPerson: {
           Email: "test@test.com",
           EmailVerified: emailVerified,
@@ -21,7 +21,7 @@ describe("getRegistrationState tests", () => {
           SK: "ContactPerson",
         },
         Registration: {
-          ...placeHolderCharity.Registration,
+          ...placeholderCharity.Registration,
           CharityName: "charity",
           CharityName_ContactEmail: "CHARITY_test@test.com",
           RegistrationDate: "2022-05-04T10:10:10Z",
@@ -41,7 +41,7 @@ describe("getRegistrationState tests", () => {
 
   it("sets 'documentation' step to complete", () => {
     const charity: Charity = {
-      ...placeHolderCharity,
+      ...placeholderCharity,
       Registration: {
         CharityName: "charity",
         CharityName_ContactEmail: "CHARITY_test@test.com",
@@ -79,7 +79,7 @@ describe("getRegistrationState tests", () => {
 
   it("sets 'additional information' step to complete", () => {
     const charity: Charity = {
-      ...placeHolderCharity,
+      ...placeholderCharity,
       Metadata: {
         Banner: {
           name: "banner",
@@ -108,7 +108,7 @@ describe("getRegistrationState tests", () => {
 
   it("sets 'wallet registration' steps to complete", () => {
     const charity: Charity = {
-      ...placeHolderCharity,
+      ...placeholderCharity,
       Metadata: {
         Banner: { name: "" },
         CharityLogo: { name: "" },

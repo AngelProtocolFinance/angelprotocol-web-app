@@ -13,11 +13,11 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/aws";
-import { placeHolderCharity } from "pages/Registration/constants";
 import { adminTags } from "services/aws/tags";
 import { createAuthToken } from "helpers";
-import { aws } from "./aws";
-import { awsTags } from "./tags";
+import { aws } from "../aws";
+import { awsTags } from "../tags";
+import { placeholderCharity } from "./placeholders";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
@@ -198,7 +198,7 @@ export const {
 } = registration_api.endpoints;
 
 export const useRegistrationState = () => {
-  const { data: charity = placeHolderCharity, ...rest } =
+  const { data: charity = placeholderCharity, ...rest } =
     registration_api.endpoints.registration.useQueryState("");
   return { charity, ...rest };
 };
