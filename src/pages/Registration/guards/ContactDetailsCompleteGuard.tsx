@@ -16,7 +16,11 @@ export function ContactDetailsCompleteGuard(props: PropsWithChildren<{}>) {
     return <Navigate to={appRoutes.register} />;
   }
 
-  if (charity.Registration.RegistrationStatus !== "Inactive") {
+  if (
+    charity.Registration.RegistrationStatus === "Under Review" ||
+    charity.Registration.RegistrationStatus === "Approved" ||
+    charity.Registration.RegistrationStatus === "Active"
+  ) {
     return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 
