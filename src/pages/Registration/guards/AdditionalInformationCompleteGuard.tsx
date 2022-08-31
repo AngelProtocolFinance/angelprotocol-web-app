@@ -19,7 +19,7 @@ function InternalGuard(props: PropsWithChildren<{}>) {
   const { charity } = useRegistrationState(); // charity is loaded, ensured by root guard
 
   // No Charity banner set means additional information step wasn't complete
-  if (!charity.Metadata.Banner) {
+  if (!charity.Metadata.Banner.publicUrl) {
     return (
       <Navigate to={`${appRoutes.register}/${routes.additionalInformation}`} />
     );
