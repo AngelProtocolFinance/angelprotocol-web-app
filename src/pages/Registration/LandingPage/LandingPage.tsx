@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
-import { registrationRefKey } from "services/aws/registration";
 import { Button, ButtonMailTo } from "../common";
+import { removeSavedRegistrationReference } from "../registrationReferenceHelpers";
 import routes from "../routes";
 import ResumeForm from "./ResumeForm";
 
@@ -9,8 +9,8 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    localStorage.removeItem(registrationRefKey);
-    navigate(routes.contactDetails, { state: { is_new: true } });
+    removeSavedRegistrationReference();
+    navigate(routes.contactDetails);
   };
 
   return (

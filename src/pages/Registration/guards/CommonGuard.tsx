@@ -6,19 +6,22 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
+import { getSavedRegistrationReference } from "../registrationReferenceHelpers";
 
 export function CommonGuard(
   props: PropsWithChildren<{
     guardLogic(charity: Charity, children?: ReactNode | undefined): JSX.Element;
   }>
 ) {
+  const regRef = getSavedRegistrationReference();
+  console.log("regRef", regRef, !regRef);
   const {
     data: charity = placeholderCharity,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useRegistrationQuery("");
+  } = useRegistrationQuery(regRef, { skip: !regRef });
   const { handleError } = useErrorContext();
 
   useEffect(() => {

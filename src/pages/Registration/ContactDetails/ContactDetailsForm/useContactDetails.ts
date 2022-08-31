@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
+import { storeRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import {
-  registrationRefKey,
   useCreateNewCharityMutation,
   useRegistrationState,
   useRequestEmailMutation,
@@ -91,7 +91,7 @@ export default function useSaveContactDetails() {
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
       const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
       //save ref before invalidating empty cache to retrigger fetch
-      localStorage.setItem(registrationRefKey, PK || "");
+      storeRegistrationReference(PK || "");
       //sending this email invalidated registration query cache
       await sendVerificationEmail({
         uuid: PK,

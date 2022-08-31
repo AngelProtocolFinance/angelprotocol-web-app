@@ -2,12 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import {
-  registrationRefKey,
-  useRegistrationLazyQuery,
-} from "services/aws/registration";
+import { useRegistrationLazyQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Button } from "../common";
+import {
+  getSavedRegistrationReference,
+  storeRegistrationReference,
+} from "../registrationReferenceHelpers";
 import routes from "../routes";
 
 type ResumeValues = { refer: string };
@@ -27,7 +28,7 @@ export default function ResumeForm() {
   } = useForm<ResumeValues>({
     defaultValues: {
       //pre-fill with old registartion reference
-      refer: localStorage.getItem(registrationRefKey) || "",
+      refer: getSavedRegistrationReference() || "",
     },
     resolver: yupResolver(FormInfoSchema),
   });
@@ -41,7 +42,7 @@ export default function ResumeForm() {
       );
       return;
     }
-    localStorage.setItem(registrationRefKey, val.refer);
+    storeRegistrationReference(val.refer);
     //go to dashboard and let guard handle further routing
     navigate(routes.dashboard);
   };

@@ -23,16 +23,14 @@ const headers = {
   authorization: createAuthToken("charity-owner"),
 };
 
-export const registrationRefKey = "__registration_ref";
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string>({
+    registration: builder.query<Charity, string | undefined | null>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: (explicitRef /** pass "" to use savedRef */) => {
-        const savedRef = localStorage.getItem(registrationRefKey) || "";
+      query: (uuid) => {
         return {
           url: "registration",
-          params: { uuid: explicitRef || savedRef },
+          params: { uuid },
           headers,
         };
       },
