@@ -3,7 +3,6 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { UnexpectedStateError } from "errors/errors";
 import { FORM_ERROR } from "../constants";
 import { Wallet } from "./WalletSubmission";
 
@@ -15,10 +14,6 @@ export default function useRegisterWallet() {
 
   const registerWallet = async (data: Wallet) => {
     try {
-      if (!charity) {
-        throw new UnexpectedStateError("Charity data is null");
-      }
-
       const result = await updateMetadata({
         body: { JunoWallet: data.address },
         PK: charity.ContactPerson.PK,
