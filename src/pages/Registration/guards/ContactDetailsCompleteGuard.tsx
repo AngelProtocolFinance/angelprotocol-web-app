@@ -6,9 +6,9 @@ import RegLoader from "../common/RegLoader";
 import routes from "../routes";
 
 export function ContactDetailsCompleteGuard(props: PropsWithChildren<{}>) {
-  const { data: charity, isLoading } = useRegistrationQuery("");
+  const { data: charity, isLoading, isFetching } = useRegistrationQuery("");
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <RegLoader />;
   }
 
