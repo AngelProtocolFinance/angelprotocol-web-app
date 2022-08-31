@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import { Denoms } from "types/lists";
 import { denoms } from "constants/currency";
-import FundSendForm from "./Form";
+import Form from "./Form";
 import { schema } from "./schema";
 
 export default function FundSender() {
@@ -20,7 +20,7 @@ export default function FundSender() {
 
   return (
     <FormProvider {...methods}>
-      <FundSendForm />
+      <Form />
     </FormProvider>
   );
 }

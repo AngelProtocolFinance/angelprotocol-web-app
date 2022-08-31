@@ -4,8 +4,8 @@ import { IndexFundOwnerValues } from "pages/Admin/types";
 import { IndexFundConfig } from "types/contracts";
 import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
-import OwnerUpdateForm from "./OwnerUpdateForm";
-import { updateOwnerSchema } from "./updateOwnerSchema";
+import Form from "./Form";
+import { schema } from "./schema";
 
 export default function IndexFundOwner() {
   const {
@@ -16,12 +16,12 @@ export default function IndexFundOwner() {
   if (isLoading) return <FormSkeleton />;
   if (isError || !indexFundConfig)
     return <FormError errorMessage="failed to load registrar config" />;
-  return <IndexFundOwnerContext {...indexFundConfig} />;
+  return <FormWithContext {...indexFundConfig} />;
 }
 
-function IndexFundOwnerContext(props: IndexFundConfig) {
+function FormWithContext(props: IndexFundConfig) {
   const methods = useForm<IndexFundOwnerValues>({
-    resolver: yupResolver(updateOwnerSchema),
+    resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: { initialOwner: props.owner },
@@ -29,7 +29,7 @@ function IndexFundOwnerContext(props: IndexFundConfig) {
 
   return (
     <FormProvider {...methods}>
-      <OwnerUpdateForm />
+      <Form />
     </FormProvider>
   );
 }

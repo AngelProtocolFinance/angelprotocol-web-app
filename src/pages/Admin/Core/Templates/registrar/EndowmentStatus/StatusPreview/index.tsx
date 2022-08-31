@@ -1,6 +1,6 @@
 import useStatusPreview from "./useStatusPreview";
 
-export default function EndowmentPreview() {
+export default function StatusPreview() {
   const { isRenderPreview, isPreviewLoading, endowmentStatus } =
     useStatusPreview();
 

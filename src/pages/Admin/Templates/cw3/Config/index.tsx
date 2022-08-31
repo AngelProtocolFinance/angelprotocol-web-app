@@ -5,7 +5,7 @@ import { CW3Config } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useCw3ConfigQuery } from "services/juno/cw3";
 import { FormError, FormSkeleton } from "components/admin";
-import CW3ConfigForm from "./Form";
+import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Config() {
@@ -43,7 +43,7 @@ function CW3ConfigContext({ max_voting_period, threshold }: CW3Config) {
 
   return (
     <FormProvider {...methods}>
-      <CW3ConfigForm />
+      <Form />
     </FormProvider>
   );
 }

@@ -7,7 +7,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { FormError, FormSkeleton } from "components/admin";
-import EditForm from "./Form";
+import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Profile() {
@@ -25,14 +25,10 @@ export default function Profile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return (
-    <ProfileEditContext {...{ ...profile, id: endowmentId }}>
-      <EditForm />
-    </ProfileEditContext>
-  );
+  return <FormWithContext {...{ ...profile, id: endowmentId }} />;
 }
 
-function ProfileEditContext(props: TProfile & { id: number }) {
+function FormWithContext(props: TProfile & { id: number }) {
   //initialize falsy values
   const initialProfile: Required<UpdateProfilePayload> = {
     id: props.id,
@@ -65,7 +61,7 @@ function ProfileEditContext(props: TProfile & { id: number }) {
   });
   return (
     <FormProvider {...methods}>
-      <EditForm />
+      <Form />
     </FormProvider>
   );
 }

@@ -6,7 +6,7 @@ import { useIndexFundConfigQuery } from "services/juno/indexFund";
 import { FormError, FormSkeleton } from "components/admin";
 import { condenseToStr } from "helpers";
 import Form from "./Form";
-import { fundConfigSchema } from "./schema";
+import { schema } from "./schema";
 
 export default function Config() {
   const {
@@ -28,7 +28,7 @@ function FundConfigContext(props: IndexFundConfig) {
     funding_goal: props.funding_goal && condenseToStr(props.funding_goal),
   };
   const methods = useForm<FundConfigValues>({
-    resolver: yupResolver(fundConfigSchema),
+    resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: { ...initialConfigPayload, initialConfigPayload },

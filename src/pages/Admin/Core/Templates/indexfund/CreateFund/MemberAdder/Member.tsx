@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { removeFundMember } from "slices/admin/newFundMembers";
 
-export default function MemberItem(props: { address: string }) {
+export default function Member(props: { address: string }) {
   const dispatch = useSetter();
 
   function deleteSelf() {

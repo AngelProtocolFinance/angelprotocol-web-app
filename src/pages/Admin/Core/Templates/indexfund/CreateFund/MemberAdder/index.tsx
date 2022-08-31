@@ -1,6 +1,6 @@
 import { FundCreatorValues as V } from "pages/Admin/types";
 import { TextInput } from "components/admin";
-import MemberItem from "./Member";
+import Member from "./Member";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
@@ -11,7 +11,7 @@ export default function MemberAdder() {
       {newFundMembers.length > 0 && (
         <div className="flex flex-wrap mb-4 gap-2">
           {newFundMembers.map((addr) => (
-            <MemberItem key={addr} address={addr} />
+            <Member key={addr} address={addr} />
           ))}
         </div>
       )}

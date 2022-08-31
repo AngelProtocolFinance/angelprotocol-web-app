@@ -3,8 +3,8 @@ import { FundDestroyValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../../../../constants";
 
-const fundDestroyerShape: SchemaShape<FundDestroyValues> = {
+const shape: SchemaShape<FundDestroyValues> = {
   ...proposalShape,
 };
 
-export const fundDestroyerSchema = Yup.object(fundDestroyerShape);
+export const schema = Yup.object(shape);

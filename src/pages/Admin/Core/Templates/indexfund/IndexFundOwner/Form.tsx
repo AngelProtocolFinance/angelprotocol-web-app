@@ -2,7 +2,7 @@ import { IndexFundOwnerValues as IV } from "pages/Admin/types";
 import { FormContainer, Submitter, TextInput } from "components/admin";
 import useUpdateOwner from "./useUpdateOwner";
 
-export default function OwnerUpdateForm() {
+export default function Form() {
   const { updateOwner, isSubmitDisabled } = useUpdateOwner();
   return (
     <FormContainer onSubmit={updateOwner}>

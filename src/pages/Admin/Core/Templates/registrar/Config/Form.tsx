@@ -8,7 +8,7 @@ import {
 } from "components/admin";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
-export default function RegistrarConfigForm() {
+export default function Form() {
   const { configureRegistrar, isSubmitDisabled } = useConfigureRegistrar();
 
   return (

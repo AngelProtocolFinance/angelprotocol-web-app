@@ -6,7 +6,7 @@ import {
   undoAddMember,
 } from "slices/admin/apCW4Members";
 
-export default function MemberItem(props: MemberCopy) {
+export default function Member(props: MemberCopy) {
   const dispatch = useSetter();
   function memberItemAction() {
     if (props.is_added) {

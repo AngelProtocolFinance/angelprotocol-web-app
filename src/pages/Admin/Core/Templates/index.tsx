@@ -6,7 +6,7 @@ import Members from "../../templates/cw4/Members";
 import Alliance from "./indexfund/Alliance";
 import FundConfig from "./indexfund/Config";
 import CreateFund from "./indexfund/CreateFund";
-import IndexFundOwner from "./indexfund/IndexFundOwner/IndexFundOwner";
+import IndexFundOwner from "./indexfund/IndexFundOwner";
 import FundMembers from "./indexfund/Members";
 import RemoveFund from "./indexfund/RemoveFund";
 import RegistrarConfig from "./registrar/Config";

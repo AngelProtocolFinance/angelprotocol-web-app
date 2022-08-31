@@ -36,10 +36,10 @@ export default function Alliance() {
   if (isError)
     return <FormError errorMessage="failed to load alliance members" />;
 
-  return <AllianceEditContext />;
+  return <FormWithContext />;
 }
 
-function AllianceEditContext() {
+function FormWithContext() {
   const methods = useForm<AllianceEditValues>({
     mode: "onChange",
     reValidateMode: "onChange",

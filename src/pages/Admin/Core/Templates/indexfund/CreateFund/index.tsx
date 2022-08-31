@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundCreatorValues } from "pages/Admin/types";
-import FundCreatorForm from "./Form";
+import Form from "./Form";
 import { schema } from "./schema";
 
 export const INIT_SPLIT = "-1";
@@ -18,7 +18,7 @@ export default function CreateFund() {
 
   return (
     <FormProvider {...methods}>
-      <FundCreatorForm />
+      <Form />
     </FormProvider>
   );
 }

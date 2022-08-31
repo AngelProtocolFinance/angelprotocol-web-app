@@ -1,7 +1,7 @@
 import { AllianceEditValues as AV } from "pages/Admin/types";
 import { DivContainer, Label, Submitter, TextInput } from "components/admin";
 import AllianceSelection from "./AllianceSelection";
-import MemberEditor from "./MemberEditor/MemberEditor";
+import MemberEditor from "./MemberEditor";
 import useEditAlliance from "./useEditAlliance";
 
 export default function Form() {

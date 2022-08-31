@@ -4,7 +4,7 @@ import { EndowmentUpdateValues } from "pages/Admin/types";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function EndowmentUpdator() {
+export default function EndowmentStatus() {
   const methods = useForm<EndowmentUpdateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
