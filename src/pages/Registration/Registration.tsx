@@ -2,10 +2,11 @@ import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { appRoutes } from "constants/routes";
 import {
-  AdditionalInformationCompleteGuard,
-  ContactDetailsCompleteGuard,
-  DocumentationCompleteGuard,
-  WalletRegistrationCompleteGuard,
+  AdditionalInformationGuard,
+  ContactDetailsGuard,
+  DashboardGuard,
+  DocumentationGuard,
+  WalletRegistrationGuard,
 } from "./guards";
 import routes from "./routes";
 
@@ -25,34 +26,43 @@ export default function Registration() {
         <Route
           path={routes.additionalInformation}
           element={
-            <DocumentationCompleteGuard>
+            <AdditionalInformationGuard>
               <AdditionalInformation />
-            </DocumentationCompleteGuard>
+            </AdditionalInformationGuard>
           }
         />
         <Route
           path={routes.confirmEmail}
           element={
-            <ContactDetailsCompleteGuard>
+            // Documentation and ConfirmEmail pages have the same requirements to access the page
+            // which is - Contact Details step must have been submitted
+            <DocumentationGuard>
               <ConfirmEmail />
-            </ContactDetailsCompleteGuard>
+            </DocumentationGuard>
           }
         />
-        <Route path={routes.contactDetails} element={<ContactDetails />} />
+        <Route
+          path={routes.contactDetails}
+          element={
+            <ContactDetailsGuard>
+              <ContactDetails />
+            </ContactDetailsGuard>
+          }
+        />
         <Route
           path={routes.dashboard}
           element={
-            <WalletRegistrationCompleteGuard>
+            <DashboardGuard>
               <Dashboard />
-            </WalletRegistrationCompleteGuard>
+            </DashboardGuard>
           }
         />
         <Route
           path={routes.documentation}
           element={
-            <ContactDetailsCompleteGuard>
+            <DocumentationGuard>
               <Documentation />
-            </ContactDetailsCompleteGuard>
+            </DocumentationGuard>
           }
         />
 
@@ -60,9 +70,9 @@ export default function Registration() {
         <Route
           path={`${routes.wallet}/*`}
           element={
-            <AdditionalInformationCompleteGuard>
+            <WalletRegistrationGuard>
               <WalletRegistration />
-            </AdditionalInformationCompleteGuard>
+            </WalletRegistrationGuard>
           }
         />
         <Route index element={<LandingPage />} />
