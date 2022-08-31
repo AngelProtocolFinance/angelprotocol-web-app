@@ -4,7 +4,7 @@ import LogRow from "./LogRow";
 
 export default function TransactionsTable(props: { withdraws: WithdrawLog[] }) {
   return (
-    <table className="col-span-2">
+    <table className="w-full">
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/20">
         <Cells
           type="th"

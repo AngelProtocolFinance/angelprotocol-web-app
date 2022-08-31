@@ -1,7 +1,8 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
 import Icon from "components/Icon";
-import TransactionsTable from "./Table";
+import TableSection, { Cells } from "components/TableSection";
+import LogRow from "./LogRow";
 
 export default function Transactions() {
   const { cw3 } = useAdminResources();
@@ -39,12 +40,24 @@ export default function Transactions() {
   }
 
   return (
-    <>
-      <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white mt-10 mb-2">
-        Transactions
-      </h3>
-
-      <TransactionsTable withdraws={data} />
-    </>
+    <table className="w-full mt-6 self-start">
+      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/20">
+        <Cells
+          type="th"
+          cellClass="text-left font-heading text-zinc-50/80 uppercase p-2"
+        >
+          <>Amount</>
+          <>Receiver</>
+          <>Status</>
+          <>Amount Received</>
+          <>Transaction hash</>
+        </Cells>
+      </TableSection>
+      <TableSection type="tbody" rowClass="border-b border-zinc-50/10">
+        {data.map((log, i) => (
+          <LogRow {...log} key={i} />
+        ))}
+      </TableSection>
+    </table>
   );
 }

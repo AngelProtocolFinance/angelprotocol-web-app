@@ -4,6 +4,7 @@ import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
+import { routes } from "./routes";
 
 export default function Nav() {
   const { endowmentId } = useAdminResources();
@@ -19,6 +20,9 @@ export default function Nav() {
       </Link>
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
+      </NavLink>
+      <NavLink end to={routes.transactions} className={styler}>
+        Transactions
       </NavLink>
       <NavLink end to={adminRoutes.proposals} className={styler}>
         proposals
