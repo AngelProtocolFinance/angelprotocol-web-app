@@ -31,6 +31,7 @@ export function CommonGuard(
     return <RegLoader />;
   }
 
+  // Error popup will be displayed, so render nothing
   if (isError) {
     return null;
   }
