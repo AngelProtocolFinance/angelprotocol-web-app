@@ -34,7 +34,7 @@ export default function useUpload() {
         });
 
         if ("error" in result) {
-          handleError(result.error, FORM_ERROR);
+          return handleError(result.error, FORM_ERROR);
         }
 
         navigate(`${appRoutes.register}/${routes.additionalInformation}`);
