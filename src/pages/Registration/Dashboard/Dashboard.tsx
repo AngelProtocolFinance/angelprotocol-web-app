@@ -19,6 +19,8 @@ export default function Dashboard() {
   const isDataSubmitted =
     charity.Registration.RegistrationStatus !== "Inactive";
 
+  const isStepDisabled = isDataSubmitted || isSubmitting;
+
   const registrationState = getRegistrationState(charity);
 
   return (
@@ -34,7 +36,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.contactDetails}`)
           }
-          disabled={isDataSubmitted || isSubmitting}
+          disabled={isStepDisabled}
           completed={registrationState.contactDetails.isComplete}
         />
         <Step
@@ -42,7 +44,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
-          disabled={isDataSubmitted || isSubmitting}
+          disabled={isStepDisabled}
           completed={registrationState.documentation.isComplete}
           statusComplete={
             registrationState.documentation.isComplete &&
@@ -54,13 +56,13 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
-          disabled={isDataSubmitted || isSubmitting}
+          disabled={isStepDisabled}
           completed={registrationState.additionalInformation.isComplete}
         />
         <Step
           title="Wallet Address"
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
-          disabled={isDataSubmitted || isSubmitting}
+          disabled={isStepDisabled}
           completed={registrationState.walletRegistration.isComplete}
         />
         <Step
@@ -68,11 +70,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${appRoutes.register}/${routes.confirmEmail}`)
           }
-          disabled={
-            charity.ContactPerson.EmailVerified ||
-            isDataSubmitted ||
-            isSubmitting
-          }
+          disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
           completed={registrationState.emailVerification.isComplete}
           completedButtonLabel="Resend"
         />
