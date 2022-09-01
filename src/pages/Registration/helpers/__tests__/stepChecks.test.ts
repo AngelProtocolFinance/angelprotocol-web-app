@@ -1,11 +1,16 @@
 import { Charity } from "types/aws";
+import routes from "pages/Registration/routes";
 import { placeholderCharity } from "services/aws/registration";
-import { getContactDetailsStepData } from "../stepChecks";
+import { appRoutes } from "constants/routes";
+import {
+  getContactDetailsStepData,
+  getDocumentationStepData,
+} from "../stepChecks";
 
 describe("stepChecks tests", () => {
   describe("getContactDetailsStepData tests", () => {
     it.each([true, false])(
-      "returns completed result when Contact Details data is validly set even when EmailVerified === %j",
+      "returns 'completed' result when Contact Details data is validly set even when EmailVerified === %j",
       (emailVerified) => {
         const charity: Charity = {
           ...placeholderCharity,
@@ -31,6 +36,57 @@ describe("stepChecks tests", () => {
         expect(stepData.urlToPreviousStep).toBeUndefined();
       }
     );
+  });
+
+  describe("getDocumentationStepData tests", () => {
+    test("returns 'completed' result when Documentation and previous steps' data are validly set", () => {
+      const charity: Charity = {
+        ...placeholderCharity,
+        ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
+        Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
+      };
+
+      const stepData = getDocumentationStepData(charity);
+
+      expect(stepData.isComplete).toBeTruthy();
+      expect(stepData.urlToPreviousStep).toBeUndefined();
+    });
+
+    test("returns 'incomplete' result when previous step is incomplete with the previous step's URL to previous step", () => {
+      const charity: Charity = {
+        ...placeholderCharity,
+        Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
+      };
+
+      const stepData = getDocumentationStepData(charity);
+
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
+    });
+
+    test("returns 'incomplete' result when Documentation data is incomplete", () => {
+      const charity: Charity = {
+        ...placeholderCharity,
+        ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
+        Registration: {
+          ...placeholderCharity.Registration,
+          CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
+          CharityName_ContactEmail:
+            VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
+          RegistrationDate:
+            VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
+          RegistrationStatus:
+            VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
+        },
+      };
+
+      const stepData = getDocumentationStepData(charity);
+
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.documentation}`
+      );
+    });
   });
 });
 
