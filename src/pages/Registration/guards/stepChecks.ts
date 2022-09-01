@@ -13,7 +13,12 @@ type StepData =
     };
 
 export function getContactDetailsStepData(charity: Charity): StepData {
-  return !!charity.ContactPerson.Email
+  return !!charity.ContactPerson.Email &&
+    !!charity.ContactPerson.FirstName &&
+    !!charity.ContactPerson.LastName &&
+    !!charity.ContactPerson.Goals &&
+    !!charity.ContactPerson.Role &&
+    !!charity.Registration.CharityName
     ? createComplete()
     : createIncomplete(appRoutes.register);
 }
@@ -25,8 +30,10 @@ export function getDocumentationStepData(charity: Charity): StepData {
     return contactDetailsStepData;
   }
 
-  // No Charity tier set means documentation step wasn't complete
-  return !!charity.Registration.Tier
+  return !!charity.Registration.Tier &&
+    !!charity.Registration.Website &&
+    !!charity.Registration.ProofOfIdentity.publicUrl &&
+    !!charity.Registration.ProofOfRegistration.publicUrl
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.documentation}`);
 }
@@ -38,8 +45,9 @@ export function getAdditionalInformationStepData(charity: Charity): StepData {
     return documentationStepData;
   }
 
-  // No Charity banner public URL set means additional information step wasn't complete
-  return !!charity.Metadata.Banner.publicUrl
+  return !!charity.Metadata.Banner.publicUrl &&
+    !!charity.Metadata.CharityLogo.publicUrl &&
+    !!charity.Metadata.CharityOverview
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.additionalInformation}`);
 }
@@ -52,7 +60,6 @@ export function getWalletRegistrationStepData(charity: Charity): StepData {
     return additionalInformationStepData;
   }
 
-  // No registered Charity wallet set means step 4 wasn't complete
   return !!charity.Metadata.JunoWallet
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.wallet}`);
