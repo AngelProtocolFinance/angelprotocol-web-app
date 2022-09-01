@@ -11,7 +11,6 @@ jest.mock("services/aws/registration", () => ({
   __esModule: true,
   useActivateCharityMutation: () => mockUseActivateCharityMutation(),
   useRegistrationQuery: (..._: any[]) => mockRegistrationQuery(_),
-  useRegistrationQuery: (..._: any[]) => mockRegistrationQuery(_),
 }));
 
 const mockHandleError = jest.fn();
