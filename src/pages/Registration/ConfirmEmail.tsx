@@ -101,13 +101,15 @@ export default function ConfirmEmail() {
         Protocol.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
-        <Button
-          onClick={() => sendEmail("verify-email")}
-          className="bg-orange w-64 h-12 text-sm"
-          isLoading={isLoading}
-        >
-          Resend verification email
-        </Button>
+        {!charity.ContactPerson.EmailVerified && (
+          <Button
+            onClick={() => sendEmail("verify-email")}
+            className="bg-orange w-64 h-12 text-sm"
+            isLoading={isLoading}
+          >
+            Resend verification email
+          </Button>
+        )}
         <Button
           onClick={onContinueClick}
           className="bg-thin-blue w-48 h-12 text-sm"
