@@ -1,9 +1,9 @@
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
+import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
-import { storeRegistrationReference } from "../helpers";
 import routes from "../routes";
 
 export default function VerificationSuccessful({

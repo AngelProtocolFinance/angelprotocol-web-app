@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
-import { storeRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import {
   useCreateNewCharityMutation,
   useRegistrationQuery,
@@ -12,6 +11,7 @@ import {
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 

@@ -13,8 +13,8 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/aws";
-import { getSavedRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import { adminTags } from "services/aws/tags";
+import { getSavedRegistrationReference } from "helpers";
 import { createAuthToken } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";

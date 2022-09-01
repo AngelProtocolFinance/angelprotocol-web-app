@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useRegistrationLazyQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Button } from "../common";
 import {
   getSavedRegistrationReference,
   storeRegistrationReference,
-} from "../helpers";
+} from "helpers";
+import { Button } from "../common";
 import routes from "../routes";
 
 type ResumeValues = { refer: string };
