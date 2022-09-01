@@ -27,10 +27,6 @@ export default function ConfirmEmail() {
   const sendEmail = useCallback(
     async (emailType: string) => {
       try {
-        if (!charity) {
-          throw new UnexpectedStateError("Charity data is null");
-        }
-
         if (!charity.ContactPerson.PK) {
           throw new UnexpectedStateError("Primary key is null");
         }
