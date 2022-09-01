@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
-import { storeRegistrationReference } from "../registrationReferenceHelpers";
+import { storeRegistrationReference } from "../helpers";
 import routes from "../routes";
 
 export default function VerificationSuccessful({

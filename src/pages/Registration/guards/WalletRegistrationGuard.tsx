@@ -2,9 +2,9 @@ import { PropsWithChildren, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { Charity } from "types/aws";
 import { appRoutes } from "constants/routes";
+import { getAdditionalInformationStepData } from "../helpers";
 import routes from "../routes";
 import { CommonGuard } from "./CommonGuard";
-import { getAdditionalInformationStepData } from "./stepChecks";
 
 export function WalletRegistrationGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;

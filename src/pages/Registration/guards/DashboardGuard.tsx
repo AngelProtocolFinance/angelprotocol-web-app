@@ -2,8 +2,8 @@ import { PropsWithChildren, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { Charity } from "types/aws";
 import { appRoutes } from "constants/routes";
+import { getWalletRegistrationStepData } from "../helpers";
 import { CommonGuard } from "./CommonGuard";
-import { getWalletRegistrationStepData } from "./stepChecks";
 
 export function DashboardGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;

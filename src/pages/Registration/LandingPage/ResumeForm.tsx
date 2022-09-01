@@ -8,7 +8,7 @@ import { Button } from "../common";
 import {
   getSavedRegistrationReference,
   storeRegistrationReference,
-} from "../registrationReferenceHelpers";
+} from "../helpers";
 import routes from "../routes";
 
 type ResumeValues = { refer: string };

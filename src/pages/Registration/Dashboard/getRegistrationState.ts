@@ -5,7 +5,7 @@ import {
   getDocumentationStepData,
   getEmailVerificationStepData,
   getWalletRegistrationStepData,
-} from "../guards/stepChecks";
+} from "../helpers";
 
 type RegistrationStep = { isComplete: boolean };
 

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, ButtonMailTo } from "../common";
-import { removeSavedRegistrationReference } from "../registrationReferenceHelpers";
+import { removeSavedRegistrationReference } from "../helpers";
 import routes from "../routes";
 import ResumeForm from "./ResumeForm";
 
