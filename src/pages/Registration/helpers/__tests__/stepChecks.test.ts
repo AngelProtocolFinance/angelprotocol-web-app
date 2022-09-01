@@ -54,100 +54,100 @@ describe("stepChecks tests", () => {
         `${appRoutes.register}/${routes.documentation}`
       );
     });
+  });
 
-    describe("getAdditionalInformationStepData tests", () => {
-      test("returns 'completed' result when Additional Information and previous steps' data are validly set", () => {
-        const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
+  describe("getAdditionalInformationStepData tests", () => {
+    test("returns 'completed' result when Additional Information and previous steps' data are validly set", () => {
+      const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
 
-        const stepData = getAdditionalInformationStepData(charity);
+      const stepData = getAdditionalInformationStepData(charity);
 
-        expect(stepData.isComplete).toBeTruthy();
-        expect(stepData.urlToPreviousStep).toBeUndefined();
-      });
-
-      test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
-        const charity: Charity = { ...placeholderCharity };
-
-        const stepData = getAdditionalInformationStepData(charity);
-
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
-      });
-
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
-
-        const stepData = getAdditionalInformationStepData(charity);
-
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(
-          `${appRoutes.register}/${routes.documentation}`
-        );
-      });
-
-      test("returns 'incomplete' result when Additional Information data is incomplete", () => {
-        const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
-
-        const stepData = getAdditionalInformationStepData(charity);
-
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(
-          `${appRoutes.register}/${routes.additionalInformation}`
-        );
-      });
+      expect(stepData.isComplete).toBeTruthy();
+      expect(stepData.urlToPreviousStep).toBeUndefined();
     });
 
-    describe("getWalletRegistrationStepData tests", () => {
-      test("returns 'completed' result when all steps' data is validly set", () => {
-        const charity: Charity = { ...VALIDLY_FILLED_CHARITY };
+    test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
+      const charity: Charity = { ...placeholderCharity };
 
-        const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getAdditionalInformationStepData(charity);
 
-        expect(stepData.isComplete).toBeTruthy();
-        expect(stepData.urlToPreviousStep).toBeUndefined();
-      });
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
+    });
 
-      test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
-        const charity: Charity = { ...placeholderCharity };
+    test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
+      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
 
-        const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getAdditionalInformationStepData(charity);
 
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
-      });
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.documentation}`
+      );
+    });
 
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+    test("returns 'incomplete' result when Additional Information data is incomplete", () => {
+      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
 
-        const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getAdditionalInformationStepData(charity);
 
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(
-          `${appRoutes.register}/${routes.documentation}`
-        );
-      });
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.additionalInformation}`
+      );
+    });
+  });
 
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Additional Info step", () => {
-        const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
+  describe("getWalletRegistrationStepData tests", () => {
+    test("returns 'completed' result when all steps' data is validly set", () => {
+      const charity: Charity = { ...VALIDLY_FILLED_CHARITY };
 
-        const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(charity);
 
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(
-          `${appRoutes.register}/${routes.additionalInformation}`
-        );
-      });
+      expect(stepData.isComplete).toBeTruthy();
+      expect(stepData.urlToPreviousStep).toBeUndefined();
+    });
 
-      test("returns 'incomplete' result when Wallet Registration data is incomplete", () => {
-        const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
+    test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
+      const charity: Charity = { ...placeholderCharity };
 
-        const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(charity);
 
-        expect(stepData.isComplete).toBeFalsy();
-        expect(stepData.urlToPreviousStep).toBe(
-          `${appRoutes.register}/${routes.wallet}`
-        );
-      });
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
+    });
+
+    test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
+      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+
+      const stepData = getWalletRegistrationStepData(charity);
+
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.documentation}`
+      );
+    });
+
+    test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Additional Info step", () => {
+      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
+
+      const stepData = getWalletRegistrationStepData(charity);
+
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.additionalInformation}`
+      );
+    });
+
+    test("returns 'incomplete' result when Wallet Registration data is incomplete", () => {
+      const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
+
+      const stepData = getWalletRegistrationStepData(charity);
+
+      expect(stepData.isComplete).toBeFalsy();
+      expect(stepData.urlToPreviousStep).toBe(
+        `${appRoutes.register}/${routes.wallet}`
+      );
     });
   });
 });
