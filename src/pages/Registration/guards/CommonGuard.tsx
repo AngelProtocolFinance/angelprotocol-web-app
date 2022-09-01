@@ -6,6 +6,7 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
+import { FORM_ERROR } from "../constants";
 import { getSavedRegistrationReference } from "../registrationReferenceHelpers";
 
 type Props = PropsWithChildren<{
@@ -29,7 +30,7 @@ export function CommonGuard(props: Props) {
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
-      handleError(error);
+      handleError(error, FORM_ERROR);
     }
   }, [isLoading, isFetching, isError, error, handleError]);
 
