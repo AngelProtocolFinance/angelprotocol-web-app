@@ -46,7 +46,7 @@ export default function Dashboard() {
           completed={registrationState.documentation.completed}
           statusComplete={
             registrationState.documentation.completed &&
-            `Level ${registrationState.documentation.tier}`
+            `Level ${charity.Registration.Tier}`
           }
         />
         <Step
