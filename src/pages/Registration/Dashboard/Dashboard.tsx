@@ -73,7 +73,7 @@ export default function Dashboard() {
             isDataSubmitted ||
             isSubmitting
           }
-          completed={registrationState.emailVerificationStep.isComplete}
+          completed={registrationState.emailVerification.isComplete}
           completedButtonLabel="Resend"
         />
       </div>

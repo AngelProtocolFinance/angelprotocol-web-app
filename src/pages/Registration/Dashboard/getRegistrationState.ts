@@ -1,4 +1,11 @@
 import { Charity } from "types/aws";
+import {
+  getAdditionalInformationStepData,
+  getContactDetailsStepData,
+  getDocumentationStepData,
+  getEmailVerificationStepData,
+  getWalletRegistrationStepData,
+} from "../guards/stepChecks";
 
 type RegistrationStep = { isComplete: boolean };
 
@@ -7,7 +14,7 @@ type RegistrationState = {
   documentation: RegistrationStep;
   additionalInformation: RegistrationStep;
   walletRegistration: RegistrationStep;
-  emailVerificationStep: RegistrationStep;
+  emailVerification: RegistrationStep;
   getIsReadyForSubmit: () => boolean;
 };
 
@@ -15,29 +22,18 @@ export default function getRegistrationState(
   charity: Charity
 ): RegistrationState {
   return {
-    contactDetails: { isComplete: !!charity.ContactPerson.PK },
-    documentation: {
-      isComplete:
-        !!charity.Registration.ProofOfIdentity.publicUrl &&
-        !!charity.Registration.ProofOfRegistration.publicUrl &&
-        !!charity.Registration.Website,
-    },
-    additionalInformation: {
-      isComplete:
-        !!charity.Metadata.CharityLogo.publicUrl &&
-        !!charity.Metadata.Banner.publicUrl &&
-        !!charity.Metadata.CharityOverview,
-    },
-    walletRegistration: { isComplete: !!charity.Metadata.JunoWallet },
-    emailVerificationStep: {
-      isComplete: !!charity.ContactPerson.EmailVerified,
-    },
+    contactDetails: getContactDetailsStepData(charity),
+    documentation: getDocumentationStepData(charity),
+    additionalInformation: getAdditionalInformationStepData(charity),
+    walletRegistration: getWalletRegistrationStepData(charity),
+    emailVerification: getEmailVerificationStepData(charity),
     getIsReadyForSubmit: function () {
       return (
         this.contactDetails.isComplete &&
         this.documentation.isComplete &&
         this.additionalInformation.isComplete &&
-        this.walletRegistration.isComplete
+        this.walletRegistration.isComplete &&
+        this.emailVerification.isComplete
       );
     },
   };
