@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { AccountStrategies } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
 import Form from "./Form";
 import { StrategyFormValues, schema } from "./schema";
 
@@ -40,19 +39,4 @@ export default function Strategies() {
       <Form />
     </FormProvider>
   );
-
-  // return (
-  //   <div>
-  //     <p>selected</p>
-  //     <div></div>
-  //     <p>selection</p>
-  //     <div className="flex gap-1">
-  //       {strategies.liquid.map((s) => (
-  //         <button key={s.vault} className="w-16 border aspect-square">
-  //           {s.vault}
-  //         </button>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
 }

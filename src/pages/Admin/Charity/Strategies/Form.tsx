@@ -1,17 +1,16 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import Icon from "components/Icon";
-import { roundDown, roundDownToNum } from "helpers";
+import PieChart from "./PieChart";
 import RemainingAllocation from "./RemainingAllocation";
 import Selection from "./Selection";
 import { StrategyFormValues } from "./schema";
 
 export default function Form() {
   const { register } = useFormContext<StrategyFormValues>();
-  const { fields, append, prepend, remove, swap, move, insert } =
-    useFieldArray<StrategyFormValues>({
-      name: "allocations", // unique name for your Field Array
-    });
+  const { fields, append, remove } = useFieldArray<StrategyFormValues>({
+    name: "allocations", // unique name for your Field Array
+  });
 
   return (
     <form className="mt-6 col-span-2 grid grid-cols-2">
@@ -19,7 +18,7 @@ export default function Form() {
         Strategies
       </h3>
       {(fields.length > 0 && (
-        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-start">
+        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-start self-start">
           {fields.map((field, i) => (
             <div
               key={field.id}
@@ -55,6 +54,7 @@ export default function Form() {
           ))}
         </div>
       )) || <p>select strategies below</p>}
+      <PieChart />
       <RemainingAllocation />
       <Selection selected={fields} select={append} />
     </form>
