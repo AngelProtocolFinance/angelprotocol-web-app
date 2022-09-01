@@ -11,6 +11,7 @@ import {
   AiOutlineInfoCircle,
   AiOutlineLike,
   AiOutlineMedium,
+  AiOutlinePlus,
   AiOutlineTwitter,
   AiOutlineUpload,
 } from "react-icons/ai";
@@ -72,6 +73,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Facebook: FaFacebookF,
   FacebookCircle: FaFacebook,
   Discord: FaDiscord,
+  Plus: AiOutlinePlus,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
   Youtube: AiFillYoutube,

@@ -11,6 +11,7 @@ export type IconTypes =
   | "Linkedin"
   | "LinkedinIn"
   | "Parachute"
+  | "Plus"
   | "ListUl"
   | "ListOl"
   | "Cog"

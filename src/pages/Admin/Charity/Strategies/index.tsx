@@ -1,29 +1,11 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { AccountStrategies } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
+import Form from "./Form";
+import { StrategyFormValues, schema } from "./schema";
 
-export default function Strategies() {
-  const { endowment } = useAdminResources();
-
-  // if (
-  //   endowment.strategies.liquid.length <= 0 &&
-  //   endowment.strategies.locked.length <= 0
-  // ) {
-  //   return <div>add a strategy</div>;
-  // }
-
-  return <div>strategies</div>;
-}
-
-interface StrategyComponent {
-  vault: string; // Vault SC Address
-  percentage: string; // percentage of funds to invest
-}
-
-interface AccountStrategies {
-  locked: StrategyComponent[];
-  liquid: StrategyComponent[];
-}
-
-const strategies: AccountStrategies = {
+export const strategies: AccountStrategies = {
   locked: [
     { vault: "a", percentage: "0.5" },
     { vault: "b", percentage: "0.5" },
@@ -33,3 +15,44 @@ const strategies: AccountStrategies = {
     { vault: "b", percentage: "0.5" },
   ],
 };
+
+export default function Strategies() {
+  // const { endowment } = useAdminResources();
+
+  //query strategies from registrar
+  //if loading,
+  //if strategies
+
+  const methods = useForm<StrategyFormValues>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      allocations: strategies.liquid.map((l) => ({
+        ...l,
+        percentage: +l.percentage,
+      })),
+    },
+  });
+
+  return (
+    <FormProvider {...methods}>
+      <Form />
+    </FormProvider>
+  );
+
+  // return (
+  //   <div>
+  //     <p>selected</p>
+  //     <div></div>
+  //     <p>selection</p>
+  //     <div className="flex gap-1">
+  //       {strategies.liquid.map((s) => (
+  //         <button key={s.vault} className="w-16 border aspect-square">
+  //           {s.vault}
+  //         </button>
+  //       ))}
+  //     </div>
+  //   </div>
+  // );
+}

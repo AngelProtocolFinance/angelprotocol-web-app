@@ -37,12 +37,12 @@ interface RebalanceDetails {
   principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
 }
 
-interface StrategyComponent {
+export interface StrategyComponent {
   vault: string; // Vault SC Address
   percentage: string; // percentage of funds to invest
 }
 
-interface AccountStrategies {
+export interface AccountStrategies {
   locked: StrategyComponent[];
   liquid: StrategyComponent[];
 }
