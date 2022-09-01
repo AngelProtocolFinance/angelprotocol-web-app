@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import { percentString } from "schemas/number";
 
-type Allocation = {
+export type Allocation = {
   percentage: number;
   vault: string;
 };

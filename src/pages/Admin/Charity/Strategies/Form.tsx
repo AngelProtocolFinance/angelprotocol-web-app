@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import Icon from "components/Icon";
+import { roundDownToNum } from "helpers";
 import PieChart from "./PieChart";
-import RemainingAllocation from "./RemainingAllocation";
 import Selection from "./Selection";
 import { StrategyFormValues } from "./schema";
 
@@ -18,7 +18,7 @@ export default function Form() {
         Strategies
       </h3>
       {(fields.length > 0 && (
-        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-start self-start">
+        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-end self-center mr-4">
           {fields.map((field, i) => (
             <div
               key={field.id}
@@ -34,7 +34,16 @@ export default function Form() {
               <input
                 className="block w-fit bg-transparent focus:outline-none border-b border-zinc-50/10 text-right text-lg"
                 {...register(`allocations.${i}.percentage`, {
-                  valueAsNumber: true,
+                  setValueAs(value) {
+                    const num = Number(value);
+                    if (!isNaN(num)) {
+                      //limit to 2 digits saved in form context for submission
+                      return roundDownToNum(num, 2);
+                    } else {
+                      //return original so can be catched with validation
+                      return num;
+                    }
+                  },
                 })}
               />
               <span>%</span>
@@ -53,9 +62,9 @@ export default function Form() {
             </div>
           ))}
         </div>
-      )) || <p>select strategies below</p>}
+      )) || <p className="text-zinc-50/80">select strategies below</p>}
       <PieChart />
-      <RemainingAllocation />
+      {/* <RemainingAllocation /> */}
       <Selection selected={fields} select={append} />
     </form>
   );

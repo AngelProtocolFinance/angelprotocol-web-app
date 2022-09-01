@@ -8,15 +8,25 @@ import {
 } from "chart.js";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { StrategyFormValues } from "./schema";
+import { roundDownToNum } from "helpers";
+import { Allocation, StrategyFormValues } from "./schema";
+
+const bgColors = [
+  "#f0f9ff",
+  "#bae6fd",
+  "#38bdf8",
+  "#0284c7",
+  "#075985",
+  "#064e3b",
+  "#0f766e",
+  "#14b8a6",
+  "#5eead4",
+];
 
 export default function PieChart() {
-  const { watch, getFieldState } = useFormContext<StrategyFormValues>();
+  const { watch } = useFormContext<StrategyFormValues>();
   const allocations = watch("allocations");
-  const total = allocations.reduce(
-    (total, curr) => (isNaN(curr.percentage) ? 0 : curr.percentage + total),
-    0
-  );
+
   // const numAllocationsRef = useRef<number>(allocations.length);
   const chartRef = useRef<Chart>();
 
@@ -30,16 +40,25 @@ export default function PieChart() {
         },
       ],
     };
+    const total = allocations.reduce(
+      (total, curr) => (isNaN(curr.percentage) ? 0 : curr.percentage + total),
+      0
+    );
 
     if (chartRef.current && total <= 100) {
+      const unallocated = roundDownToNum(100 - total, 2);
+
       for (const { vault, percentage } of allocations) {
-        chartData.labels?.push(vault);
+        chartData.labels?.push(`${vault.toUpperCase()} (${percentage}%)`);
         chartData.datasets[0].data.push(percentage);
       }
 
-      chartData.datasets[0].backgroundColor = allocations.map(
-        (_) => `hsla(198, 100%, ${Math.floor(Math.random() * 100)}%, 1)`
-      );
+      if (unallocated > 0) {
+        chartData.labels?.push(`UNALLOCATED (${unallocated}%)`);
+        chartData.datasets[0].data.push(unallocated);
+      }
+
+      chartData.datasets[0].backgroundColor = bgColors;
 
       chartRef.current.data = chartData;
       chartRef.current.update("none");
@@ -66,8 +85,8 @@ export default function PieChart() {
                 onClick: () => {},
                 labels: {
                   font: {
-                    size: 16,
-                    family: "Montserrat",
+                    size: 12,
+                    family: "monospace",
                   },
                   color: "white",
                   boxWidth: 10,
@@ -88,7 +107,7 @@ export default function PieChart() {
   }, []);
 
   return (
-    <div className="max-w-sm">
+    <div className={`max-w-sm ${allocations.length <= 0 ? "hidden" : "block"}`}>
       <canvas ref={canvasRef} className="bg-transparent" />
     </div>
   );
