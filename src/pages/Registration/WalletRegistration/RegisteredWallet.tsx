@@ -3,7 +3,7 @@ import { BsCheck2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import {
   updateRegQueryData,
-  useRegistrationState,
+  useRegistrationQuery,
 } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
@@ -11,7 +11,7 @@ import { Button } from "../common";
 import routes from "../routes";
 
 export default function RegisteredWallet() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
 
   const dispatch = useSetter();
 

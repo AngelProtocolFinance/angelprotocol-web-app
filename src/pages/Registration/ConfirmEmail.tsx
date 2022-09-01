@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import {
-  useRegistrationState,
+  useRegistrationQuery,
   useRequestEmailMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -15,7 +15,7 @@ import { GENERIC_ERROR_MESSAGE } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();

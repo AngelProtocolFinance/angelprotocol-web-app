@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
@@ -11,7 +11,7 @@ import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();

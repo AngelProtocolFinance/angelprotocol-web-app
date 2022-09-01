@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 import KeplrConnector from "./KeplrConnector";
@@ -8,7 +8,7 @@ import Title from "./Title";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
 
   // if wallet registration step is already complete, then this was just data update,
   // so user can be navigated to the dashboard

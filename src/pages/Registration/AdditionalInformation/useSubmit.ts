@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
 import {
-  useRegistrationState,
+  useRegistrationQuery,
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -14,7 +14,7 @@ import routes from "../routes";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 

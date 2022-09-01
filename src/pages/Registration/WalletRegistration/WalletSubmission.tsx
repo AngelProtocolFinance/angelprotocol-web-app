@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import {
   useGetWallet,
   useSetWallet,
@@ -20,7 +20,7 @@ export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const { isSubmitting, registerWallet } = useRegisterWallet();
 
   // if wallet registration step is already complete, then this was just data update,

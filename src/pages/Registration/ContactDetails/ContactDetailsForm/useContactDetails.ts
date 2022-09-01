@@ -7,7 +7,7 @@ import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { storeRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import {
   useCreateNewCharityMutation,
-  useRegistrationState,
+  useRegistrationQuery,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
@@ -19,7 +19,7 @@ export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [sendVerificationEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
-  const { charity: originalCharityData } = useRegistrationState();
+  const { charity: originalCharityData } = useRegistrationQuery();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
   const { handleError } = useErrorContext();

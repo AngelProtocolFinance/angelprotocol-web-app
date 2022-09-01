@@ -1,13 +1,9 @@
 import { PropsWithChildren, ReactNode, useEffect } from "react";
 import { Charity } from "types/aws";
-import {
-  placeholderCharity,
-  useRegistrationQuery,
-} from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
-import { getSavedRegistrationReference } from "../registrationReferenceHelpers";
 
 type Props = PropsWithChildren<{
   guardLogic: (
@@ -17,15 +13,8 @@ type Props = PropsWithChildren<{
 }>;
 
 export function CommonGuard(props: Props) {
-  const regRef = getSavedRegistrationReference();
-  console.log("regRef", regRef, !regRef);
-  const {
-    data: charity = placeholderCharity,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useRegistrationQuery(regRef, { skip: !regRef });
+  const { charity, isLoading, isFetching, isError, error } =
+    useRegistrationQuery();
   const { handleError } = useErrorContext();
 
   useEffect(() => {

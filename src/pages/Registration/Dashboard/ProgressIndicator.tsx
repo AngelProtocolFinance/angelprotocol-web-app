@@ -1,11 +1,11 @@
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import getRegistrationState from "./getRegistrationState";
 
 const getBackground = (percent: number) =>
   `linear-gradient(to right, #4ca146 0%, #4ca146 ${percent}%, #fff ${percent}%, white 100%)`;
 
 export default function ProgressIndicator() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const state = getRegistrationState(charity);
   const progress = [
     state.contactDetails.completed,

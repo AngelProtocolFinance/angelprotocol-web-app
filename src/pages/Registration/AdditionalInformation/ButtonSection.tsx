@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
 export default function ButtonSection() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
   const {
     formState: { isSubmitting },

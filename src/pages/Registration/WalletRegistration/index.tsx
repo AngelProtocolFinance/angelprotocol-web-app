@@ -1,4 +1,4 @@
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import RegLoader from "../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
@@ -6,7 +6,7 @@ import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
 export default function WalletRegistration() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const { wallet, isLoading } = useGetWallet();
 
   if (charity.Metadata.JunoWallet) {

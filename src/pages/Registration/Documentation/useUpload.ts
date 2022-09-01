@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { DocumentationValues } from "pages/Registration/types";
 import {
-  useRegistrationState,
+  useRegistrationQuery,
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -14,7 +14,7 @@ import routes from "../routes";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();

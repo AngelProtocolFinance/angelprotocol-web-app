@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
@@ -12,7 +12,7 @@ import { additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
   const { submit } = useSubmit();
 
   const methods = useForm<AdditionalInfoValues>({

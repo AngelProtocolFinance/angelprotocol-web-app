@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox/Checkbox";
 
 export default function AuthorityToCreateCheckbox() {
@@ -9,7 +9,7 @@ export default function AuthorityToCreateCheckbox() {
     formState: { errors, isSubmitting },
   } = useFormContext<DocumentationValues>();
 
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
 
   return (
     <Checkbox

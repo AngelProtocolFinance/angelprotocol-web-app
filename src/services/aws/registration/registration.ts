@@ -13,6 +13,7 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/aws";
+import { getSavedRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import { adminTags } from "services/aws/tags";
 import { createAuthToken } from "helpers";
 import { aws } from "../aws";
@@ -84,7 +85,7 @@ const registration_api = aws.injectEndpoints({
       ContactDetailsResult,
       ContactDetailsRequest
     >({
-      //no tags to invalidate since registration still has to be confirmed
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
@@ -179,7 +180,6 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useRegistrationQuery,
   useActivateCharityMutation,
   useCreateNewCharityMutation,
   useCharityApplicationsQuery,
@@ -191,12 +191,15 @@ export const {
   util: { updateQueryData: updateRegQueryData },
 } = registration_api;
 
+export const useRegistrationQuery = () => {
+  const regRef = getSavedRegistrationReference();
+  const { data: charity = placeholderCharity, ...rest } =
+    registration_api.useRegistrationQuery(regRef, {
+      skip: !regRef,
+    });
+  return { charity, ...rest };
+};
+
 export const {
   registration: { useLazyQuery: useRegistrationLazyQuery },
 } = registration_api.endpoints;
-
-export const useRegistrationState = () => {
-  const { data: charity = placeholderCharity, ...rest } =
-    registration_api.endpoints.registration.useQueryState("");
-  return { charity, ...rest };
-};

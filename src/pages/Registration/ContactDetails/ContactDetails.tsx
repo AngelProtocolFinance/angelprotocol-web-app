@@ -1,8 +1,8 @@
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
-  const { charity } = useRegistrationState();
+  const { charity } = useRegistrationQuery();
 
   return (
     <div>
