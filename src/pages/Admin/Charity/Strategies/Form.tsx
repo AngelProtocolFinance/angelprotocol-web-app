@@ -7,13 +7,24 @@ import Selection from "./Selection";
 import { StrategyFormValues } from "./schema";
 
 export default function Form() {
-  const { register } = useFormContext<StrategyFormValues>();
+  const { register, watch, handleSubmit } =
+    useFormContext<StrategyFormValues>();
   const { fields, append, remove } = useFieldArray<StrategyFormValues>({
     name: "allocations", // unique name for your Field Array
   });
 
+  const allocations = watch("allocations");
+  const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
+
+  function propose(data: StrategyFormValues) {
+    console.log(data);
+  }
+
   return (
-    <form className="mt-6 col-span-2 grid grid-cols-2">
+    <form
+      className="mt-6 col-span-2 grid grid-cols-2"
+      onSubmit={handleSubmit(propose)}
+    >
       <h3 className="text-xl font-bold uppercase text-zinc-50 mb-2 col-span-2">
         Strategies
       </h3>
@@ -40,14 +51,13 @@ export default function Form() {
                       //limit to 2 digits saved in form context for submission
                       return roundDownToNum(num, 2);
                     } else {
-                      //return original so can be catched with validation
-                      return num;
+                      return 0;
                     }
                   },
                 })}
               />
               <span>%</span>
-              <button type="button" onClick={() => remove(i)}>
+              <button type="button" onClick={() => remove(i)} tabIndex={-1}>
                 <Icon
                   size={18}
                   type="Close"
@@ -61,6 +71,24 @@ export default function Form() {
               />
             </div>
           ))}
+          {(total > 100 && (
+            <div className="g">
+              <p className="text-left text-rose-400 font-bold font-heading uppercase">
+                <span className="text-sm pr-2">total</span>
+                <span>{total}%</span>
+              </p>
+              <p className="text-sm text-rose-300 text-left">
+                Total allocation should not be greater than 100%
+              </p>
+            </div>
+          )) || (
+            <button
+              type="submit"
+              className="justify-self-end text-xs font-bold px-4 py-2 bg-sky-500 hover:bg-sky-400 uppercase rounded-md text-zinc-50"
+            >
+              propose changes
+            </button>
+          )}
         </div>
       )) || <p className="text-zinc-50/80">select strategies below</p>}
       <PieChart />

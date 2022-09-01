@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
-import { percentString } from "schemas/number";
 
 export type Allocation = {
   percentage: number;
@@ -13,7 +12,9 @@ export type StrategyFormValues = {
 };
 
 const allocationShape: SchemaShape<Allocation> = {
-  percentage: percentString,
+  percentage: Yup.number()
+    .moreThan(0, "must be at least 0.01%")
+    .max(100, "can't be more than 100%"),
 };
 
 const shape: SchemaShape<StrategyFormValues> = {

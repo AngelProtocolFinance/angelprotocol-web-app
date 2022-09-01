@@ -9,7 +9,7 @@ import {
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { roundDownToNum } from "helpers";
-import { Allocation, StrategyFormValues } from "./schema";
+import { StrategyFormValues } from "./schema";
 
 const bgColors = [
   "#f0f9ff",
@@ -26,8 +26,10 @@ const bgColors = [
 export default function PieChart() {
   const { watch } = useFormContext<StrategyFormValues>();
   const allocations = watch("allocations");
-
-  // const numAllocationsRef = useRef<number>(allocations.length);
+  const total = allocations.reduce(
+    (total, curr) => (isNaN(curr.percentage) ? 0 : curr.percentage + total),
+    0
+  );
   const chartRef = useRef<Chart>();
 
   useEffect(() => {
@@ -40,10 +42,6 @@ export default function PieChart() {
         },
       ],
     };
-    const total = allocations.reduce(
-      (total, curr) => (isNaN(curr.percentage) ? 0 : curr.percentage + total),
-      0
-    );
 
     if (chartRef.current && total <= 100) {
       const unallocated = roundDownToNum(100 - total, 2);
@@ -63,9 +61,7 @@ export default function PieChart() {
       chartRef.current.data = chartData;
       chartRef.current.update("none");
     }
-
-    //eslint-disable-next-line
-  }, [allocations.map((a) => a.percentage)]);
+  }, [total, allocations]);
 
   const canvasRef = useCallback((node: HTMLCanvasElement | null) => {
     Chart.register(PieController, ArcElement, Legend, Tooltip);

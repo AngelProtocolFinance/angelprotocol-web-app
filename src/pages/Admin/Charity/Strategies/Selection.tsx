@@ -38,7 +38,7 @@ export default function Selection({ selected, select }: Props) {
               type="button"
               className="disabled:text-emerald-400"
               onClick={() => {
-                select({ percentage: +percentage, vault });
+                select({ percentage: 0, vault }, { shouldFocus: true });
               }}
             >
               {/**   TODO: better way to determine if vault is selected */}
