@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
-import isRegistrationEditable from "../helpers/isRegistrationEditable";
+import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";

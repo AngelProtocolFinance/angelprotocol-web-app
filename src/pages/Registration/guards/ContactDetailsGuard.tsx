@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { Charity } from "types/aws";
 import { appRoutes } from "constants/routes";
-import isRegistrationEditable from "../helpers/isRegistrationEditable";
+import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import { CommonGuard } from "./CommonGuard";
 

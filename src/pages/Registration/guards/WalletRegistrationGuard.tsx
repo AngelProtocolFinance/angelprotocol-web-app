@@ -2,8 +2,10 @@ import { PropsWithChildren, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { Charity } from "types/aws";
 import { appRoutes } from "constants/routes";
-import { getAdditionalInformationStepData } from "../helpers";
-import isRegistrationEditable from "../helpers/isRegistrationEditable";
+import {
+  getAdditionalInformationStepData,
+  isRegistrationEditable,
+} from "../helpers";
 import routes from "../routes";
 import { CommonGuard } from "./CommonGuard";
 
