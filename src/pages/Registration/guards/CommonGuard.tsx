@@ -8,11 +8,14 @@ import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
 import { getSavedRegistrationReference } from "../registrationReferenceHelpers";
 
-export function CommonGuard(
-  props: PropsWithChildren<{
-    guardLogic(charity: Charity, children?: ReactNode | undefined): JSX.Element;
-  }>
-) {
+type Props = PropsWithChildren<{
+  guardLogic: (
+    charity: Charity,
+    children?: ReactNode | undefined
+  ) => JSX.Element;
+}>;
+
+export function CommonGuard(props: Props) {
   const regRef = getSavedRegistrationReference();
   console.log("regRef", regRef, !regRef);
   const {
