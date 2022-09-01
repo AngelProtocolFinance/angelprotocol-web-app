@@ -5,11 +5,13 @@ import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
 
+export type GuardLogicFunc = (
+  charity: Charity,
+  children?: ReactNode | undefined
+) => JSX.Element;
+
 type Props = PropsWithChildren<{
-  guardLogic: (
-    charity: Charity,
-    children?: ReactNode | undefined
-  ) => JSX.Element;
+  guardLogic: GuardLogicFunc;
 }>;
 
 export function CommonGuard(props: Props) {
