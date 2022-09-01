@@ -1,6 +1,6 @@
 import { Charity } from "types/aws";
 
-type RegistrationStep = { completed: boolean };
+type RegistrationStep = { isComplete: boolean };
 
 type RegistrationState = {
   contactDetails: RegistrationStep;
@@ -15,27 +15,29 @@ export default function getRegistrationState(
   charity: Charity
 ): RegistrationState {
   return {
-    contactDetails: { completed: !!charity.ContactPerson.PK },
+    contactDetails: { isComplete: !!charity.ContactPerson.PK },
     documentation: {
-      completed:
+      isComplete:
         !!charity.Registration.ProofOfIdentity.publicUrl &&
         !!charity.Registration.ProofOfRegistration.publicUrl &&
         !!charity.Registration.Website,
     },
     additionalInformation: {
-      completed:
+      isComplete:
         !!charity.Metadata.CharityLogo.publicUrl &&
         !!charity.Metadata.Banner.publicUrl &&
         !!charity.Metadata.CharityOverview,
     },
-    walletRegistration: { completed: !!charity.Metadata.JunoWallet },
-    emailVerificationStep: { completed: !!charity.ContactPerson.EmailVerified },
+    walletRegistration: { isComplete: !!charity.Metadata.JunoWallet },
+    emailVerificationStep: {
+      isComplete: !!charity.ContactPerson.EmailVerified,
+    },
     getIsReadyForSubmit: function () {
       return (
-        this.contactDetails.completed &&
-        this.documentation.completed &&
-        this.additionalInformation.completed &&
-        this.walletRegistration.completed
+        this.contactDetails.isComplete &&
+        this.documentation.isComplete &&
+        this.additionalInformation.isComplete &&
+        this.walletRegistration.isComplete
       );
     },
   };

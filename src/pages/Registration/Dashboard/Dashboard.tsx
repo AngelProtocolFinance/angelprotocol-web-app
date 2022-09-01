@@ -35,7 +35,7 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.contactDetails}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.contactDetails.completed}
+          completed={registrationState.contactDetails.isComplete}
         />
         <Step
           title="Documentation"
@@ -43,9 +43,9 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.documentation.completed}
+          completed={registrationState.documentation.isComplete}
           statusComplete={
-            registrationState.documentation.completed &&
+            registrationState.documentation.isComplete &&
             `Level ${charity.Registration.Tier}`
           }
         />
@@ -55,13 +55,13 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.additionalInformation.completed}
+          completed={registrationState.additionalInformation.isComplete}
         />
         <Step
           title="Wallet Address"
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isDataSubmitted || isSubmitting}
-          completed={registrationState.walletRegistration.completed}
+          completed={registrationState.walletRegistration.isComplete}
         />
         <Step
           title="Email Verification"
@@ -73,7 +73,7 @@ export default function Dashboard() {
             isDataSubmitted ||
             isSubmitting
           }
-          completed={registrationState.emailVerificationStep.completed}
+          completed={registrationState.emailVerificationStep.isComplete}
           completedButtonLabel="Resend"
         />
       </div>

@@ -31,10 +31,10 @@ describe("getRegistrationState tests", () => {
 
       const state = getRegistrationState(charity);
 
-      expect(state.contactDetails.completed).toBe(true);
-      expect(state.documentation.completed).toBe(false);
-      expect(state.additionalInformation.completed).toBe(false);
-      expect(state.walletRegistration.completed).toBe(false);
+      expect(state.contactDetails.isComplete).toBe(true);
+      expect(state.documentation.isComplete).toBe(false);
+      expect(state.additionalInformation.isComplete).toBe(false);
+      expect(state.walletRegistration.isComplete).toBe(false);
       expect(state.getIsReadyForSubmit()).toBe(false);
     }
   );
@@ -70,10 +70,10 @@ describe("getRegistrationState tests", () => {
 
     const state = getRegistrationState(charity);
 
-    expect(state.contactDetails.completed).toBe(false);
-    expect(state.documentation.completed).toBe(true);
-    expect(state.additionalInformation.completed).toBe(false);
-    expect(state.walletRegistration.completed).toBe(false);
+    expect(state.contactDetails.isComplete).toBe(false);
+    expect(state.documentation.isComplete).toBe(true);
+    expect(state.additionalInformation.isComplete).toBe(false);
+    expect(state.walletRegistration.isComplete).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
@@ -99,10 +99,10 @@ describe("getRegistrationState tests", () => {
 
     const state = getRegistrationState(charity);
 
-    expect(state.contactDetails.completed).toBe(false);
-    expect(state.documentation.completed).toBe(false);
-    expect(state.additionalInformation.completed).toBe(true);
-    expect(state.walletRegistration.completed).toBe(false);
+    expect(state.contactDetails.isComplete).toBe(false);
+    expect(state.documentation.isComplete).toBe(false);
+    expect(state.additionalInformation.isComplete).toBe(true);
+    expect(state.walletRegistration.isComplete).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
@@ -122,10 +122,10 @@ describe("getRegistrationState tests", () => {
 
     const state = getRegistrationState(charity);
 
-    expect(state.contactDetails.completed).toBe(false);
-    expect(state.documentation.completed).toBe(false);
-    expect(state.additionalInformation.completed).toBe(false);
-    expect(state.walletRegistration.completed).toBe(true);
+    expect(state.contactDetails.isComplete).toBe(false);
+    expect(state.documentation.isComplete).toBe(false);
+    expect(state.additionalInformation.isComplete).toBe(false);
+    expect(state.walletRegistration.isComplete).toBe(true);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
@@ -194,10 +194,10 @@ describe("getRegistrationState tests", () => {
 
       const state = getRegistrationState(charity);
 
-      expect(state.contactDetails.completed).toBe(true);
-      expect(state.documentation.completed).toBe(true);
-      expect(state.additionalInformation.completed).toBe(true);
-      expect(state.walletRegistration.completed).toBe(true);
+      expect(state.contactDetails.isComplete).toBe(true);
+      expect(state.documentation.isComplete).toBe(true);
+      expect(state.additionalInformation.isComplete).toBe(true);
+      expect(state.walletRegistration.isComplete).toBe(true);
       expect(state.getIsReadyForSubmit()).toBe(true);
     }
   );
