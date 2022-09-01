@@ -35,7 +35,7 @@ describe("stepChecks tests", () => {
       expect(stepData.urlToPreviousStep).toBeUndefined();
     });
 
-    test("returns 'incomplete' result when previous step is incomplete with the previous step's URL to previous step", () => {
+    test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
       const charity: Charity = { ...placeholderCharity };
 
       const stepData = getDocumentationStepData(charity);
@@ -65,7 +65,7 @@ describe("stepChecks tests", () => {
         expect(stepData.urlToPreviousStep).toBeUndefined();
       });
 
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
+      test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
         const charity: Charity = { ...placeholderCharity };
 
         const stepData = getAdditionalInformationStepData(charity);
@@ -107,7 +107,7 @@ describe("stepChecks tests", () => {
         expect(stepData.urlToPreviousStep).toBeUndefined();
       });
 
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
+      test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
         const charity: Charity = { ...placeholderCharity };
 
         const stepData = getWalletRegistrationStepData(charity);
@@ -127,7 +127,7 @@ describe("stepChecks tests", () => {
         );
       });
 
-      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
+      test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Additional Info step", () => {
         const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
 
         const stepData = getWalletRegistrationStepData(charity);
