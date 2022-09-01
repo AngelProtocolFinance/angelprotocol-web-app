@@ -12,6 +12,7 @@ export default function ProgressIndicator() {
     state.documentation.isComplete,
     state.additionalInformation.isComplete,
     state.walletRegistration.isComplete,
+    state.emailVerification.isComplete,
   ];
   const completedCount = progress.reduce(
     (total, completed) => (completed ? ++total : total),
