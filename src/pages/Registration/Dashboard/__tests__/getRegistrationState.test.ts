@@ -39,7 +39,7 @@ describe("getRegistrationState tests", () => {
     }
   );
 
-  it("sets 'documentation' step to complete", () => {
+  it("sets 'documentation' step to incomplete when previous steps are incomplete", () => {
     const charity: Charity = {
       ...placeholderCharity,
       Registration: {
@@ -71,13 +71,13 @@ describe("getRegistrationState tests", () => {
     const state = getRegistrationState(charity);
 
     expect(state.contactDetails.isComplete).toBe(false);
-    expect(state.documentation.isComplete).toBe(true);
+    expect(state.documentation.isComplete).toBe(false);
     expect(state.additionalInformation.isComplete).toBe(false);
     expect(state.walletRegistration.isComplete).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
-  it("sets 'additional information' step to complete", () => {
+  it("sets 'additional information' step to incomplete when previous steps are incomplete", () => {
     const charity: Charity = {
       ...placeholderCharity,
       Metadata: {
@@ -101,12 +101,12 @@ describe("getRegistrationState tests", () => {
 
     expect(state.contactDetails.isComplete).toBe(false);
     expect(state.documentation.isComplete).toBe(false);
-    expect(state.additionalInformation.isComplete).toBe(true);
+    expect(state.additionalInformation.isComplete).toBe(false);
     expect(state.walletRegistration.isComplete).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
-  it("sets 'wallet registration' steps to complete", () => {
+  it("sets 'wallet registration' step to incomplete when previous steps are incomplete", () => {
     const charity: Charity = {
       ...placeholderCharity,
       Metadata: {
@@ -125,7 +125,7 @@ describe("getRegistrationState tests", () => {
     expect(state.contactDetails.isComplete).toBe(false);
     expect(state.documentation.isComplete).toBe(false);
     expect(state.additionalInformation.isComplete).toBe(false);
-    expect(state.walletRegistration.isComplete).toBe(true);
+    expect(state.walletRegistration.isComplete).toBe(false);
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
