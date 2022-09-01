@@ -8,30 +8,20 @@ import {
   getDocumentationStepData,
   getWalletRegistrationStepData,
 } from "../stepChecks";
-import { VALIDLY_FILLED_CHARITY } from "./data";
+import {
+  ADDITIONAL_INFO_STEP_COMPLETE_CHARITY,
+  CONTACT_DETAILS_STEP_COMPLETE_CHARITY,
+  DOCUMENTATION_STEP_COMPLETE_CHARITY,
+  VALIDLY_FILLED_CHARITY,
+} from "./data";
 
 describe("stepChecks tests", () => {
   describe("getContactDetailsStepData tests", () => {
     it.each([true, false])(
       "returns 'completed' result when Contact Details data is validly set even when EmailVerified === %j",
       (emailVerified) => {
-        const charity: Charity = {
-          ...placeholderCharity,
-          ContactPerson: {
-            ...VALIDLY_FILLED_CHARITY.ContactPerson,
-            EmailVerified: emailVerified,
-          },
-          Registration: {
-            ...placeholderCharity.Registration,
-            CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
-            CharityName_ContactEmail:
-              VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
-            RegistrationDate:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
-            RegistrationStatus:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
-          },
-        };
+        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+        charity.ContactPerson.EmailVerified = emailVerified;
 
         const stepData = getContactDetailsStepData(charity);
 
@@ -43,11 +33,7 @@ describe("stepChecks tests", () => {
 
   describe("getDocumentationStepData tests", () => {
     test("returns 'completed' result when Documentation and previous steps' data are validly set", () => {
-      const charity: Charity = {
-        ...placeholderCharity,
-        ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-        Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
-      };
+      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
 
       const stepData = getDocumentationStepData(charity);
 
@@ -56,10 +42,7 @@ describe("stepChecks tests", () => {
     });
 
     test("returns 'incomplete' result when previous step is incomplete with the previous step's URL to previous step", () => {
-      const charity: Charity = {
-        ...placeholderCharity,
-        Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
-      };
+      const charity: Charity = { ...placeholderCharity };
 
       const stepData = getDocumentationStepData(charity);
 
@@ -68,20 +51,7 @@ describe("stepChecks tests", () => {
     });
 
     test("returns 'incomplete' result when Documentation data is incomplete", () => {
-      const charity: Charity = {
-        ...placeholderCharity,
-        ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-        Registration: {
-          ...placeholderCharity.Registration,
-          CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
-          CharityName_ContactEmail:
-            VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
-          RegistrationDate:
-            VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
-          RegistrationStatus:
-            VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
-        },
-      };
+      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
 
       const stepData = getDocumentationStepData(charity);
 
@@ -93,16 +63,7 @@ describe("stepChecks tests", () => {
 
     describe("getAdditionalInformationStepData tests", () => {
       test("returns 'completed' result when Additional Information and previous steps' data are validly set", () => {
-        const charity: Charity = {
-          ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-          Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
-          Metadata: {
-            ...placeholderCharity.Metadata,
-            Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner },
-            CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo },
-            CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
-          },
-        };
+        const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
 
         const stepData = getAdditionalInformationStepData(charity);
 
@@ -111,9 +72,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = {
-          ...placeholderCharity,
-        };
+        const charity: Charity = { ...placeholderCharity };
 
         const stepData = getAdditionalInformationStepData(charity);
 
@@ -122,20 +81,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = {
-          ...placeholderCharity,
-          ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-          Registration: {
-            ...placeholderCharity.Registration,
-            CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
-            CharityName_ContactEmail:
-              VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
-            RegistrationDate:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
-            RegistrationStatus:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
-          },
-        };
+        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
 
         const stepData = getAdditionalInformationStepData(charity);
 
@@ -146,12 +92,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when Additional Information data is incomplete", () => {
-        const charity: Charity = {
-          ...VALIDLY_FILLED_CHARITY,
-          Metadata: {
-            ...placeholderCharity.Metadata,
-          },
-        };
+        const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
 
         const stepData = getAdditionalInformationStepData(charity);
 
@@ -173,9 +114,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = {
-          ...placeholderCharity,
-        };
+        const charity: Charity = { ...placeholderCharity };
 
         const stepData = getWalletRegistrationStepData(charity);
 
@@ -184,20 +123,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = {
-          ...placeholderCharity,
-          ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-          Registration: {
-            ...placeholderCharity.Registration,
-            CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
-            CharityName_ContactEmail:
-              VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
-            RegistrationDate:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
-            RegistrationStatus:
-              VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
-          },
-        };
+        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
 
         const stepData = getWalletRegistrationStepData(charity);
 
@@ -208,10 +134,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-        const charity: Charity = {
-          ...VALIDLY_FILLED_CHARITY,
-          Metadata: { ...placeholderCharity.Metadata },
-        };
+        const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
 
         const stepData = getWalletRegistrationStepData(charity);
 
@@ -222,15 +145,7 @@ describe("stepChecks tests", () => {
       });
 
       test("returns 'incomplete' result when Wallet Registration data is incomplete", () => {
-        const charity: Charity = {
-          ...VALIDLY_FILLED_CHARITY,
-          Metadata: {
-            ...placeholderCharity.Metadata,
-            Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner },
-            CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo },
-            CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
-          },
-        };
+        const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
 
         const stepData = getWalletRegistrationStepData(charity);
 

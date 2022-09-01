@@ -1,4 +1,5 @@
 import { Charity } from "types/aws";
+import { placeholderCharity } from "services/aws/registration";
 
 export const VALIDLY_FILLED_CHARITY: Charity = {
   ContactPerson: {
@@ -41,5 +42,34 @@ export const VALIDLY_FILLED_CHARITY: Charity = {
     EndowmentContract: "juno1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
     KycDonorsOnly: false,
+  },
+};
+
+export const CONTACT_DETAILS_STEP_COMPLETE_CHARITY: Charity = {
+  ...placeholderCharity,
+  ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
+  Registration: {
+    ...placeholderCharity.Registration,
+    CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
+    CharityName_ContactEmail:
+      VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
+    RegistrationDate: VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
+    RegistrationStatus: VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
+  },
+};
+
+export const DOCUMENTATION_STEP_COMPLETE_CHARITY: Charity = {
+  ...VALIDLY_FILLED_CHARITY,
+  Metadata: { ...placeholderCharity.Metadata },
+};
+
+export const ADDITIONAL_INFO_STEP_COMPLETE_CHARITY: Charity = {
+  ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
+  Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
+  Metadata: {
+    ...placeholderCharity.Metadata,
+    Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner },
+    CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo },
+    CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
   },
 };
