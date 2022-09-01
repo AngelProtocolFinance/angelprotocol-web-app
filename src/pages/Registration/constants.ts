@@ -27,5 +27,5 @@ export const UN_SDGS = [
   "Partnership for the goals",
 ];
 
-export const FORM_ERROR =
+export const GENERIC_ERROR_MESSAGE =
   "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io";

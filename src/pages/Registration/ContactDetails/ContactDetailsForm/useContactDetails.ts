@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
-import { FORM_ERROR } from "pages/Registration/constants";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { storeRegistrationReference } from "pages/Registration/registrationReferenceHelpers";
 import {
   useCreateNewCharityMutation,
@@ -75,7 +75,7 @@ export default function useSaveContactDetails() {
             handleError(fetchError, `${fetchError.data}`);
           }
         } else {
-          handleError(result.error, FORM_ERROR);
+          handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
         return;

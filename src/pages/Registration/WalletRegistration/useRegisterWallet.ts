@@ -3,7 +3,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FORM_ERROR } from "../constants";
+import { GENERIC_ERROR_MESSAGE } from "../constants";
 import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
@@ -23,7 +23,7 @@ export default function useRegisterWallet() {
         handleError(result.error, "Error updating wallet ❌");
       }
     } catch (err) {
-      handleError(err, FORM_ERROR);
+      handleError(err, GENERIC_ERROR_MESSAGE);
     }
   };
 

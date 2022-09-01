@@ -11,7 +11,7 @@ import Popup from "components/Popup";
 import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
 import { Button, ButtonMailTo } from "./common";
-import { FORM_ERROR } from "./constants";
+import { GENERIC_ERROR_MESSAGE } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
@@ -50,7 +50,7 @@ export default function ConfirmEmail() {
         });
 
         if ("error" in result) {
-          handleError(result.error, FORM_ERROR);
+          handleError(result.error, GENERIC_ERROR_MESSAGE);
         } else {
           showModal(Popup, {
             message:

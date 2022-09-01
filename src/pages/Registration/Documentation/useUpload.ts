@@ -9,7 +9,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { logger, uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
-import { FORM_ERROR, Folders } from "../constants";
+import { Folders, GENERIC_ERROR_MESSAGE } from "../constants";
 import routes from "../routes";
 
 export default function useUpload() {
@@ -29,12 +29,12 @@ export default function useUpload() {
         });
 
         if ("error" in result) {
-          return handleError(result.error, FORM_ERROR);
+          return handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
         navigate(`${appRoutes.register}/${routes.additionalInformation}`);
       } catch (error) {
-        handleError(error, FORM_ERROR);
+        handleError(error, GENERIC_ERROR_MESSAGE);
       }
     },
     [charity, handleError, uploadDocumentation, navigate]
