@@ -65,6 +65,12 @@ export function getWalletRegistrationStepData(charity: Charity): StepData {
     : createIncomplete(`${appRoutes.register}/${routes.wallet}`);
 }
 
+export function getEmailVerificationStepData(charity: Charity): StepData {
+  return charity.ContactPerson.EmailVerified
+    ? createComplete()
+    : createIncomplete(`${appRoutes.register}/${routes.confirmEmail}`);
+}
+
 const createComplete = (): StepData => ({
   isComplete: true,
   urlToPreviousStep: undefined,
