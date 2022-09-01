@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
+import isRegistrationEditable from "../helpers/isRegistrationEditable";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -16,8 +17,7 @@ export default function Dashboard() {
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
 
-  const isDataSubmitted =
-    charity.Registration.RegistrationStatus !== "Inactive";
+  const isDataSubmitted = !isRegistrationEditable(charity);
 
   const isStepDisabled = isDataSubmitted || isSubmitting;
 

@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Charity } from "types/aws";
 import { appRoutes } from "constants/routes";
 import { getDocumentationStepData } from "../helpers";
+import isRegistrationEditable from "../helpers/isRegistrationEditable";
 import routes from "../routes";
 import { CommonGuard } from "./CommonGuard";
 
@@ -17,11 +18,7 @@ const guardLogic = (charity: Charity, children?: ReactNode | undefined) => {
     return <Navigate to={urlToPreviousStep} />;
   }
 
-  if (
-    charity.Registration.RegistrationStatus === "Under Review" ||
-    charity.Registration.RegistrationStatus === "Approved" ||
-    charity.Registration.RegistrationStatus === "Active"
-  ) {
+  if (!isRegistrationEditable(charity)) {
     return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 
