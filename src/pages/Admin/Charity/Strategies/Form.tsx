@@ -14,12 +14,12 @@ export default function Form() {
     });
 
   return (
-    <form className="mt-6 justify-self-start">
-      <h3 className="text-xl font-bold uppercase text-zinc-50 mb-2">
+    <form className="mt-6 col-span-2 grid grid-cols-2">
+      <h3 className="text-xl font-bold uppercase text-zinc-50 mb-2 col-span-2">
         Strategies
       </h3>
       {(fields.length > 0 && (
-        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md">
+        <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-start">
           {fields.map((field, i) => (
             <div
               key={field.id}
@@ -49,7 +49,7 @@ export default function Form() {
               <ErrorMessage
                 name={`allocations.${i}.percentage`}
                 as="span"
-                className="absolute right-0 -bottom-4"
+                className="absolute right-4 -bottom-2 text-xs text-rose-300"
               />
             </div>
           ))}
