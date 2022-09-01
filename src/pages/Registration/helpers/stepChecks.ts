@@ -18,7 +18,8 @@ export function getContactDetailsStepData(charity: Charity): StepData {
     !!charity.ContactPerson.LastName &&
     !!charity.ContactPerson.Goals &&
     !!charity.ContactPerson.Role &&
-    !!charity.Registration.CharityName
+    !!charity.Registration.CharityName &&
+    !!charity.Registration.CharityName_ContactEmail
     ? createComplete()
     : createIncomplete(appRoutes.register);
 }
