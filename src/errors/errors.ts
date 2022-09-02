@@ -92,6 +92,13 @@ export class UnsupportedNetworkError extends APError {
     );
   }
 }
+export class CosmosTxSimulationFail extends APError {
+  constructor(
+    message = "Submission aborted. This transaction is likely to fail"
+  ) {
+    super("CosmosTxSimulationFail", message);
+  }
+}
 
 export class TxResultFail extends Error {
   chain: Chain;

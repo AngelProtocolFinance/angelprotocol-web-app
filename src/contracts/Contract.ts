@@ -18,8 +18,9 @@ import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { scaleToStr, toBase64 } from "helpers";
+import { logger, scaleToStr, toBase64 } from "helpers";
 import {
+  CosmosTxSimulationFail,
   TxResultFail,
   WalletDisconnectedError,
   WrongChainError,
@@ -56,15 +57,20 @@ export default class Contract {
   }
 
   async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
-    this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(chain_id, rpc_url);
-    const gasEstimation = await client.simulate(
-      this.walletAddress,
-      msgs,
-      undefined
-    );
-    return calculateFee(Math.round(gasEstimation * GAS_ADJUSTMENT), GAS_PRICE);
+    try {
+      this.verifyWallet();
+      const { chain_id, rpc_url } = this.wallet!.chain;
+      const client = await getKeplrClient(chain_id, rpc_url);
+      const gasEstimation = await client.simulate(
+        this.walletAddress,
+        msgs,
+        undefined
+      );
+      return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
+    } catch (err) {
+      logger.error(err);
+      throw new CosmosTxSimulationFail();
+    }
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
