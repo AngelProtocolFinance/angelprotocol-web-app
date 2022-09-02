@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Location, useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import RegLoader from "../common/RegLoader";
@@ -27,13 +27,10 @@ export default function VerifiedEmail() {
 
   useEffect(() => {
     try {
-      const pathNames = location.pathname.split("/");
-      const jwtToken = pathNames[pathNames.length - 1];
-      const jwtData = jwtDecode<JwtData>(jwtToken);
-      const { authorization, exp, iat, user, ...newCharity } = jwtData;
-      const is_expired = Math.floor(Date.now() / 1000) >= exp;
-      setEmailExpired(is_expired);
-      setCharity(newCharity);
+      const jwtData = extractJwtData(location);
+
+      setEmailExpired(jwtData.isEmailExpired);
+      setCharity(jwtData.charity);
       setLoading(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
@@ -61,4 +58,13 @@ export default function VerifiedEmail() {
     );
   }
   return <VerificationSuccessful newCharity={charity!} />;
+}
+
+function extractJwtData(location: Location) {
+  const pathNames = location.pathname.split("/");
+  const jwtToken = pathNames[pathNames.length - 1];
+  const jwtData = jwtDecode<JwtData>(jwtToken);
+  const { authorization, exp, iat, user, ...charity } = jwtData;
+  const isEmailExpired = Math.floor(Date.now() / 1000) >= exp;
+  return { charity, isEmailExpired };
 }
