@@ -1,22 +1,18 @@
 import { useCallback } from "react";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import { logger } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 
 export default function useSendVerificationEmail() {
-  const { handleError } = useErrorContext();
   const [sendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendVerificationEmail = useCallback(
     async (uuid: string, body: any) => {
       if (!uuid) {
-        handleError(new UnexpectedStateError("Email UUID is null"));
-        return;
+        throw new UnexpectedStateError("Email UUID is null");
       }
       if (!body) {
-        handleError(new UnexpectedStateError("Email body is null"));
-        return;
+        throw new UnexpectedStateError("Email body is null");
       }
 
       const response: any = await sendEmail({
@@ -26,12 +22,12 @@ export default function useSendVerificationEmail() {
       });
 
       if (!response.data) {
-        handleError(response.error);
+        throw new Error(response.error);
       } else {
         logger.info(response.data.message);
       }
     },
-    [handleError, sendEmail]
+    [sendEmail]
   );
 
   return { sendVerificationEmail, isLoading };

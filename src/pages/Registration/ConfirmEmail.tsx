@@ -11,54 +11,45 @@ import Popup from "components/Popup";
 import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
 import { Button, ButtonMailTo } from "./common";
+import useSendVerificationEmail from "./common/useSendVerificationEmail";
 import { GENERIC_ERROR_MESSAGE } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
   const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
-  const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const { sendVerificationEmail, isLoading } = useSendVerificationEmail();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
   const isVerificationEmailSent =
     charity.ContactPerson.Email && !charity.ContactPerson.EmailVerified;
 
-  const sendEmail = useCallback(
-    async (emailType: string) => {
-      try {
-        if (!charity.ContactPerson.PK) {
-          throw new UnexpectedStateError("Primary key is null");
-        }
-
-        const emailPayload = {
-          CharityName: charity.Registration.CharityName,
-          Email: charity.ContactPerson.Email,
-          FirstName: charity.ContactPerson.FirstName,
-          LastName: charity.ContactPerson.LastName,
-          Role: charity.ContactPerson.Role,
-          PhoneNumber: charity.ContactPerson.PhoneNumber,
-        };
-        const result = await resendEmail({
-          uuid: charity.ContactPerson.PK,
-          type: emailType,
-          body: emailPayload,
-        });
-
-        if ("error" in result) {
-          handleError(result.error, GENERIC_ERROR_MESSAGE);
-        } else {
-          showModal(Popup, {
-            message:
-              "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
-          });
-        }
-      } catch (error) {
-        handleError(error);
+  const sendEmail = useCallback(async () => {
+    try {
+      if (!charity.ContactPerson.PK) {
+        throw new UnexpectedStateError("Primary key is null");
       }
-    },
-    [charity, handleError, resendEmail, showModal]
-  );
+
+      const emailPayload = {
+        CharityName: charity.Registration.CharityName,
+        Email: charity.ContactPerson.Email,
+        FirstName: charity.ContactPerson.FirstName,
+        LastName: charity.ContactPerson.LastName,
+        Role: charity.ContactPerson.Role,
+        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      };
+
+      await sendVerificationEmail(charity.ContactPerson.PK, emailPayload);
+
+      showModal(Popup, {
+        message:
+          "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
+      });
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    }
+  }, [charity, handleError, sendVerificationEmail, showModal]);
 
   if (!charity) {
     handleError(new UnexpectedStateError("Charity data is null"));
@@ -103,7 +94,7 @@ export default function ConfirmEmail() {
       <div className="flex flex-col gap-1 items-center mt-3">
         {!charity.ContactPerson.EmailVerified && (
           <Button
-            onClick={() => sendEmail("verify-email")}
+            onClick={sendEmail}
             className="bg-orange w-64 h-12 text-sm"
             isLoading={isLoading}
           >
