@@ -6,12 +6,6 @@ export const queryObject: {
     : (args: Q[K]["args"]) => object;
 } = {
   /** registrar */
-  regEndowList(options) {
-    return { endowment_list: options };
-  },
-  regCategorizedEndows(options) {
-    return { endowment_list: options };
-  },
   regVaultRates: { approved_vault_rate_list: {} },
   regConfig: { config: {} },
 
@@ -76,6 +70,13 @@ export const queryObject: {
   },
 
   /** account */
+  accEndowList(options) {
+    return { endowment_list: options };
+  },
+  accCategorizedEndows(options) {
+    return { endowment_list: options };
+  },
+
   accEndowment({ id }) {
     return { endowment: { id } };
   },

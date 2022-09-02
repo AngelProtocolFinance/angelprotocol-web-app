@@ -1,19 +1,12 @@
-import { CW4Member, Threshold } from ".";
+import {
+  CW4Member,
+  EndowmentStatus,
+  EndowmentTier,
+  EndowmentType,
+  Threshold,
+} from ".";
 import { Profile } from "./account";
 
-export type EndowmentStatus = {
-  Inactive: 0;
-  Approved: 1;
-  Frozen: 2;
-  Closed: 3;
-};
-
-export type EndowmentType = "charity" | "normal";
-export type EndowmentStatusNum = EndowmentStatus[keyof EndowmentStatus];
-export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
-
-export type EndowmentTier = "Level1" | "Level2" | "Level3";
-export type EndowmentTierNum = 1 | 2 | 3;
 export type EndowmentEntry = {
   id: number; //int
   owner: String;
@@ -29,21 +22,6 @@ export type EndowmentEntry = {
 export type CategorizedEndowments = {
   [index: number]: EndowmentEntry[];
 };
-
-export type EndowmentQueryOptions = {
-  name?: string;
-  owner?: string;
-  status?: EndowmentStatusStrNum;
-  tier?: EndowmentTier;
-  endow_type?: EndowmentType;
-};
-
-export interface EndowmentQueryMsg {
-  address: string;
-  msg: {
-    endowment_list: EndowmentQueryOptions;
-  };
-}
 
 export type RegistrarConfig = {
   owner: string;

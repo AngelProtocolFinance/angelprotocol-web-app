@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { EndowmentType } from ".";
+import { EndowmentStatusStrNum, EndowmentTier, EndowmentType } from ".";
 import { CW20 } from "./cw20";
 
 export interface GenericBalance {
@@ -116,3 +116,11 @@ export interface UpdateProfilePayload {
   charity_navigator_rating?: string;
   endow_type?: string;
 }
+
+export type EndowmentQueryOptions = {
+  name?: string;
+  owner?: string;
+  status?: EndowmentStatusStrNum;
+  tier?: EndowmentTier;
+  endow_type?: EndowmentType;
+};

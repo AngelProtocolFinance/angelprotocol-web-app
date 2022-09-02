@@ -35,11 +35,11 @@ export enum indexfundTags {
 }
 
 export enum registrarTags {
-  endowments = "endowments",
   config = "config",
 }
 
-export enum endowmentTags {
+export enum accountTags {
+  endowments = "endowments",
   profile = "profile",
   balance = "balance",
 }
