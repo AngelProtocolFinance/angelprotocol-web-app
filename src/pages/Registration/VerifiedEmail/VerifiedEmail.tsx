@@ -61,7 +61,7 @@ export default function VerifiedEmail() {
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     }
-  }, [charity, handleError, sendVerificationEmail]);
+  }, [charity, handleError, navigate, sendVerificationEmail]);
 
   if (isLoading) {
     return <RegLoader />;
