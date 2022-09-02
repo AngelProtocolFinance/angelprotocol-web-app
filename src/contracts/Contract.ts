@@ -66,7 +66,7 @@ export default class Contract {
         msgs,
         undefined
       );
-      return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
+      return calculateFee(Math.round(gasEstimation * GAS_ADJUSTMENT), GAS_PRICE);
     } catch (err) {
       logger.error(err);
       throw new CosmosTxSimulationFail();
