@@ -1,3 +1,21 @@
+.toolbar-hidden .ql-toolbar {
+  display: none;
+}
+
+.toolbar-hidden .ql-editor {
+  padding: 0;
+}
+
+.toolbar-icons-white .ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: #fff;
+}
+
+.toolbar-icons-dark .ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: #00000080;
+}
+
 .ql-container.ql-snow {
   padding: 0;
   border: none;

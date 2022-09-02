@@ -56,7 +56,7 @@ export default function EditForm() {
         placeHolder="a short overview of your charity"
         classes={{
           container:
-            "grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
+            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
           error:
             "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
         }}

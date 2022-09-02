@@ -15,9 +15,11 @@ type Editable = {
   placeHolder: string;
 };
 
+export type EditorClasses = { container?: string; count?: string };
+
 type Props = (ReadOnly | Editable) & {
   content: string;
-  classes?: { container?: string };
+  classes?: EditorClasses;
 };
 
 export default function RichText(props: Props) {
@@ -73,14 +75,22 @@ export default function RichText(props: Props) {
   }, []);
 
   return (
-    <div className={`relative border-none ${props.classes?.container || ""}`}>
+    <div
+      className={`relative border-none ${props.classes?.container || ""} ${
+        props.readOnly ? "toolbar-hidden" : ""
+      }`}
+    >
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}
         className="w-full h-full bg-red text-base "
         ref={containerRef}
       />
       {!props.readOnly && (
-        <span className="absolute top-4 right-4 text-xs text-angel-grey uppercase font-mono">
+        <span
+          className={`absolute top-4 right-4 text-xs uppercase font-mono ${
+            props.classes?.count ?? ""
+          }`}
+        >
           chars:{numChars}
         </span>
       )}
