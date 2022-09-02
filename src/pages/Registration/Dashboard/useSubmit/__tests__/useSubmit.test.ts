@@ -2,7 +2,7 @@ import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/aws";
 import { PLACEHOLDER_WALLET } from "test/constants";
-import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
@@ -56,7 +56,7 @@ describe("useSubmit tests", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .spyOn(Account.prototype, "createEndowmentCreationMsg")
       .mockImplementation((..._: any[]) => {
         throw new Error();
       });
@@ -81,7 +81,7 @@ describe("useSubmit tests", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .spyOn(Account.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
     await act(() => result.current.submit(CHARITY));
