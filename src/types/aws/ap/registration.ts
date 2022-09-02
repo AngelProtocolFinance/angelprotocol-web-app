@@ -132,7 +132,7 @@ export type ContactDetailsData = {
 export type ContactDetailsRequest = {
   PK?: string;
   body: {
-    ContactPerson: Omit<ContactPerson, "SK">;
+    ContactPerson: Omit<ContactPerson, "SK" | "EmailVerificationLastSentDate">;
     Registration: Pick<Registration, "CharityName">;
   };
 };
