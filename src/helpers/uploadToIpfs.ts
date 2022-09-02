@@ -14,9 +14,8 @@ export async function uploadToIpfs(
   return genPublicUrl(cid, file.name.replace(/\s/g, ""));
   //let caller handle errors
 }
-
 //https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
-export const IPFS_GATEWAY = "ipfs.w3s.link"; //public
+export const IPFS_GATEWAY = "https://cloudflare-ipfs.com/ipfs"; //public
 function genPublicUrl(cid: string, fileName: string) {
-  return `https://${cid}.${IPFS_GATEWAY}/${fileName.trim()}`;
+  return `${IPFS_GATEWAY}/${cid}/${fileName}`;
 }
