@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
+import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
@@ -16,10 +17,12 @@ export default function Dashboard() {
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
+  const { sendVerificationEmail, isLoading: isSendingEmail } =
+    useSendVerificationEmail();
 
   const isDataSubmitted = !isRegistrationEditable(charity);
 
-  const isStepDisabled = isDataSubmitted || isSubmitting;
+  const isStepDisabled = isDataSubmitted || isSubmitting || isSendingEmail;
 
   const registrationState = getRegistrationState(charity);
 
@@ -61,7 +64,14 @@ export default function Dashboard() {
         <Step
           title="Email Verification"
           onClick={() =>
-            navigate(`${appRoutes.register}/${routes.confirmEmail}`)
+            sendVerificationEmail(charity.ContactPerson.PK, {
+              CharityName: charity.Registration.CharityName,
+              Email: charity.ContactPerson.Email,
+              FirstName: charity.ContactPerson.FirstName,
+              LastName: charity.ContactPerson.LastName,
+              Role: charity.ContactPerson.Role,
+              PhoneNumber: charity.ContactPerson.PhoneNumber,
+            })
           }
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
           buttonLabel="Resend"
