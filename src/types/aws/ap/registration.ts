@@ -36,6 +36,7 @@ export type ContactRoles =
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
+  EmailVerificationLastSentDate: string;
   Goals: string;
   FirstName: string;
   LastName: string;

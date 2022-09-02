@@ -156,6 +156,7 @@ const VALIDLY_FILLED_CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
+    EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
     Goals: "i have a goal",
     FirstName: "first",
     LastName: "last",

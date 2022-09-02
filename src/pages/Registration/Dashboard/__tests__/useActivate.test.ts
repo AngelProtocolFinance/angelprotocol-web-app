@@ -87,6 +87,7 @@ const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
+    EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",

@@ -11,6 +11,7 @@ describe("getRegistrationState tests", () => {
         ContactPerson: {
           Email: "test@test.com",
           EmailVerified: emailVerified,
+          EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
           Goals: "i have a goal",
           FirstName: "first",
           LastName: "last",
@@ -142,6 +143,7 @@ describe("getRegistrationState tests", () => {
         ContactPerson: {
           Email: "test@test.com",
           EmailVerified: true,
+          EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
           FirstName: "first",
           LastName: "last",
           Goals: "hello world",

@@ -4,6 +4,7 @@ export const placeholderCharity: Charity = {
   ContactPerson: {
     Email: "",
     EmailVerified: false,
+    EmailVerificationLastSentDate: new Date(0).toISOString(),
     FirstName: "",
     Goals: "",
     LastName: "",
