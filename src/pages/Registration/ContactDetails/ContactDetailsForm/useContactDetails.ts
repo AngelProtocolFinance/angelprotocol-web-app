@@ -3,11 +3,11 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
+import useSendVerificationEmail from "pages/Registration/common/useSendVerificationEmail";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import {
   useCreateNewCharityMutation,
   useRegistrationQuery,
-  useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -17,7 +17,7 @@ import routes from "../../routes";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
-  const [sendVerificationEmail] = useRequestEmailMutation();
+  const { sendVerificationEmail } = useSendVerificationEmail();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const { charity: originalCharityData } = useRegistrationQuery();
   const navigate = useNavigate();
@@ -93,13 +93,9 @@ export default function useSaveContactDetails() {
       //save ref before invalidating empty cache to retrigger fetch
       storeRegistrationReference(PK || "");
       //sending this email invalidated registration query cache
-      await sendVerificationEmail({
-        uuid: PK!,
-        type: "verify-email",
-        body: {
-          ...contactPerson,
-          CharityName: data.Registration.CharityName,
-        },
+      await sendVerificationEmail(PK!, {
+        ...contactPerson,
+        CharityName: data.Registration.CharityName,
       });
 
       navigate(`${appRoutes.register}/${routes.confirmEmail}`);

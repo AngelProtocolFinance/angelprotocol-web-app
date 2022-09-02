@@ -1,10 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import {
-  useRegistrationQuery,
-  useRequestEmailMutation,
-} from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";

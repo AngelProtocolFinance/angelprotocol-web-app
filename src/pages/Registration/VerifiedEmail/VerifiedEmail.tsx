@@ -2,8 +2,8 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
-import { useRequestEmailMutation } from "services/aws/registration";
 import { logger } from "helpers";
+import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
@@ -16,7 +16,7 @@ type JwtData = UnprocessedCharity & {
 
 export default function VerifiedEmail() {
   const location = useLocation();
-  const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const { sendVerificationEmail, isLoading } = useSendVerificationEmail();
   const pathNames = location.pathname.split("/");
   const jwtToken = pathNames[pathNames.length - 1];
   const jwtData = jwtDecode<JwtData>(jwtToken);
@@ -30,15 +30,8 @@ export default function VerifiedEmail() {
       return;
     }
 
-    const response: any = await resendEmail({
-      uuid: newCharity.ContactPerson.PK,
-      type: "verify-email",
-      body: newCharity,
-    });
-    response.data
-      ? logger.info(response.data?.message)
-      : logger.error(response.error?.data.message);
-  }, [newCharity, resendEmail]);
+    await sendVerificationEmail(newCharity.ContactPerson.PK, newCharity);
+  }, [newCharity, sendVerificationEmail]);
 
   if (is_expired) {
     return (

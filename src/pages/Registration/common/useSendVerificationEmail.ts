@@ -7,12 +7,12 @@ export default function useSendVerificationEmail() {
   const [sendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendVerificationEmail = useCallback(
-    async (uuid: string, body: any) => {
+    async (uuid: string | undefined, body: any) => {
       if (!uuid) {
-        throw new UnexpectedStateError("Email UUID is null");
+        throw new UnexpectedStateError("Email UUID is undefined");
       }
       if (!body) {
-        throw new UnexpectedStateError("Email body is null");
+        throw new UnexpectedStateError("Email body is undefined");
       }
 
       const response: any = await sendEmail({
