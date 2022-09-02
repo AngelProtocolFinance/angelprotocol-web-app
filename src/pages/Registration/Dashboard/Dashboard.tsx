@@ -37,7 +37,6 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.contactDetails}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.contactDetails.isComplete}
         />
         <Step
           title="Documentation"
@@ -45,11 +44,7 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.documentation.isComplete}
-          statusComplete={
-            registrationState.documentation.isComplete &&
-            `Level ${charity.Registration.Tier}`
-          }
+          customStatus={`Level ${charity.Registration.Tier}`}
         />
         <Step
           title="Additional Information"
@@ -57,13 +52,11 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.additionalInformation.isComplete}
         />
         <Step
           title="Wallet Address"
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isStepDisabled}
-          completed={registrationState.walletRegistration.isComplete}
         />
         <Step
           title="Email Verification"
@@ -71,8 +64,7 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.confirmEmail}`)
           }
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
-          completed={registrationState.emailVerification.isComplete}
-          completedButtonLabel="Resend"
+          buttonLabel="Resend"
         />
       </div>
       {isDataSubmitted ? (
