@@ -2,12 +2,12 @@ import { fromUtf8 } from "@cosmjs/encoding";
 import { Charity } from "types/aws";
 import { RegistrarCreateEndowmentPayload } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
-import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 
-describe("Registrar tests", () => {
+describe("Account tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const registrar = new Registrar(PLACEHOLDER_WALLET);
-    const payload = registrar.createEndowmentCreationMsg(CHARITY);
+    const contract = new Account(PLACEHOLDER_WALLET);
+    const payload = contract.createEndowmentCreationMsg(CHARITY);
     expect(payload.value.sender).toBe(PLACEHOLDER_WALLET.address);
     expect(payload.value.msg).toBeDefined();
     expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
