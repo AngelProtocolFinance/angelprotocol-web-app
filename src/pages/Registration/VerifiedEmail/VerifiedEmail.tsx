@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Location, useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
+import { UnexpectedStateError } from "errors/errors";
 import RegLoader from "../common/RegLoader";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
@@ -39,7 +40,19 @@ export default function VerifiedEmail() {
 
   const resendVerificationEmail = useCallback(async () => {
     try {
-      await sendVerificationEmail(charity!.ContactPerson.PK, charity);
+      if (!charity) {
+        throw new UnexpectedStateError("Charity is undefined");
+      }
+
+      const emailPayload = {
+        CharityName: charity.Registration.CharityName,
+        Email: charity.ContactPerson.Email,
+        FirstName: charity.ContactPerson.FirstName,
+        LastName: charity.ContactPerson.LastName,
+        Role: charity.ContactPerson.Role,
+        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      };
+      await sendVerificationEmail(charity.ContactPerson.PK, emailPayload);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     }
