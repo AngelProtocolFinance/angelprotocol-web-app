@@ -22,7 +22,9 @@ export default function Dashboard() {
 
   const isDataSubmitted = !isRegistrationEditable(charity);
 
-  const isStepDisabled = isDataSubmitted || isSubmitting || isSendingEmail;
+  const isLoading = isSubmitting || isSendingEmail || isActivateSubmitting;
+
+  const isStepDisabled = isDataSubmitted || isLoading;
 
   const registrationState = getRegistrationState(charity);
 
@@ -81,7 +83,7 @@ export default function Dashboard() {
       {isDataSubmitted ? (
         <EndowmentStatus
           charity={charity}
-          isLoading={isActivateSubmitting}
+          isLoading={isLoading}
           onActivate={() => activate(charity.ContactPerson.PK)}
         />
       ) : (
@@ -89,6 +91,7 @@ export default function Dashboard() {
           className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
           onClick={() => submit(charity)}
           disabled={!registrationState.getIsReadyForSubmit() || isSubmitting}
+          isLoading={isLoading}
         >
           Submit for review
         </Button>
