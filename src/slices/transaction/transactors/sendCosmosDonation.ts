@@ -75,7 +75,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chainId: args.wallet.chain.chain_id,
+          chain: args.wallet.chain,
         });
       }
     } catch (err) {

@@ -14,6 +14,7 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { TxOptions } from "slices/transaction/types";
+import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
 import { WalletState } from "contexts/WalletContext/WalletContext";
@@ -34,6 +35,7 @@ const GAS_PRICE = IS_TEST
 
 // This is the multiplier used when auto-calculating the fees
 // https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
+const GAS_ADJUSTMENT = 1.3;
 
 export default class Contract {
   wallet: WalletState | undefined;
@@ -62,7 +64,7 @@ export default class Contract {
       msgs,
       undefined
     );
-    return calculateFee(Math.round(gasEstimation * 1.3), GAS_PRICE);
+    return calculateFee(Math.round(gasEstimation * GAS_ADJUSTMENT), GAS_PRICE);
   }
 
   async signAndBroadcast({ msgs, fee }: TxOptions) {
@@ -70,7 +72,7 @@ export default class Contract {
     const { chain_id, rpc_url } = this.wallet!.chain;
     const client = await getKeplrClient(chain_id, rpc_url);
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
-    return validateTransactionSuccess(result, chain_id);
+    return validateTransactionSuccess(result, this.wallet!.chain);
   }
 
   createExecuteContractMsg(
@@ -148,15 +150,14 @@ export default class Contract {
 
 function validateTransactionSuccess(
   result: DeliverTxResponse,
-  chain_id: string
+  chain: Chain
 ): DeliverTxResponse {
   if (isDeliverTxFailure(result)) {
     throw new TxResultFail(
-      chain_id,
-      result.transactionHash,
-      result.height,
-      result.code,
-      result.rawLog
+      //DeliverTxResponse already has a hash, link of tx should be available to user
+      //pass Chain so getTxUrl can get appropriate explorer link
+      chain,
+      result.transactionHash
     );
   }
 
