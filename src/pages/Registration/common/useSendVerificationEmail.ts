@@ -20,14 +20,14 @@ export default function useSendVerificationEmail() {
     async (uuid: string | undefined, lastSentDate: string, body: Body) => {
       verifyParams(uuid, lastSentDate, body);
 
-      const response: any = await sendEmail({
+      const response = await sendEmail({
         type: "verify-email",
         body,
         uuid: uuid!,
       });
 
-      if (!response.data) {
-        throw new Error(response.error);
+      if ("error" in response) {
+        throw response.error;
       } else {
         logger.info(response.data.message);
       }
