@@ -94,10 +94,14 @@ export default function useSaveContactDetails() {
         //save ref before invalidating empty cache to retrigger fetch
         storeRegistrationReference(PK || "");
         //sending this email invalidated registration query cache
-        await sendVerificationEmail(PK!, {
-          ...contactPerson,
-          CharityName: data.Registration.CharityName,
-        });
+        await sendVerificationEmail(
+          PK!,
+          contactPerson.EmailVerificationLastSentDate,
+          {
+            ...contactPerson,
+            CharityName: data.Registration.CharityName,
+          }
+        );
 
         navigate(`${appRoutes.register}/${routes.confirmEmail}`);
       } catch (error) {
