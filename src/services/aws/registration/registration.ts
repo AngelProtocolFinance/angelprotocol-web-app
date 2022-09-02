@@ -128,6 +128,7 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: { data: any }) => response,
     }),
     submit: builder.mutation<SubmitResult, SubmitData>({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, EndowmentContract }) => ({
         url: `registration/${PK}/submit`,
         method: "POST",
