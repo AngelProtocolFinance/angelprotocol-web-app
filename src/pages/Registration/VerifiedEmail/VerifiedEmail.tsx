@@ -1,8 +1,9 @@
 import jwtDecode from "jwt-decode";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { UnprocessedCharity } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
+import RegLoader from "../common/RegLoader";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
 import LinkExpired from "./LinkExpired";
@@ -17,27 +18,47 @@ type JwtData = UnprocessedCharity & {
 
 export default function VerifiedEmail() {
   const location = useLocation();
-  const { sendVerificationEmail, isLoading } = useSendVerificationEmail();
+  const { sendVerificationEmail, isLoading: isSendingEmail } =
+    useSendVerificationEmail();
   const { handleError } = useErrorContext();
+  const [isLoading, setLoading] = useState(true);
+  const [isEmailExpired, setEmailExpired] = useState(false);
+  const [charity, setCharity] = useState<UnprocessedCharity>();
 
-  const pathNames = location.pathname.split("/");
-  const jwtToken = pathNames[pathNames.length - 1];
-  const jwtData = jwtDecode<JwtData>(jwtToken);
-  const { authorization, exp, iat, user, ...newCharity } = jwtData;
-  const is_expired = Math.floor(Date.now() / 1000) >= exp;
-
-  const resendVerificationEmail = useCallback(async () => {
+  useEffect(() => {
     try {
-      await sendVerificationEmail(newCharity.ContactPerson.PK, newCharity);
+      const pathNames = location.pathname.split("/");
+      const jwtToken = pathNames[pathNames.length - 1];
+      const jwtData = jwtDecode<JwtData>(jwtToken);
+      const { authorization, exp, iat, user, ...newCharity } = jwtData;
+      const is_expired = Math.floor(Date.now() / 1000) >= exp;
+      setEmailExpired(is_expired);
+      setCharity(newCharity);
+      setLoading(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     }
-  }, [newCharity, sendVerificationEmail]);
+  }, [location, handleError]);
 
-  if (is_expired) {
+  const resendVerificationEmail = useCallback(async () => {
+    try {
+      await sendVerificationEmail(charity!.ContactPerson.PK, charity);
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    }
+  }, [charity, handleError, sendVerificationEmail]);
+
+  if (isLoading) {
+    return <RegLoader />;
+  }
+
+  if (isEmailExpired) {
     return (
-      <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
+      <LinkExpired
+        onClick={resendVerificationEmail}
+        isLoading={isSendingEmail}
+      />
     );
   }
-  return <VerificationSuccessful newCharity={newCharity} />;
+  return <VerificationSuccessful newCharity={charity!} />;
 }
