@@ -59,7 +59,7 @@ export default function EditForm() {
             "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
           error:
             "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
-          count: "text-angel-grey",
+          charCounter: "text-angel-grey",
         }}
       />
 

@@ -15,7 +15,7 @@ type Editable = {
   placeHolder: string;
 };
 
-export type EditorClasses = { container?: string; count?: string };
+export type EditorClasses = { container?: string; charCounter?: string };
 
 type Props = (ReadOnly | Editable) & {
   content: string;
@@ -88,7 +88,7 @@ export default function RichText(props: Props) {
       {!props.readOnly && (
         <span
           className={`absolute top-4 right-4 text-xs uppercase font-mono ${
-            props.classes?.count ?? ""
+            props.classes?.charCounter ?? ""
           }`}
         >
           chars:{numChars}
