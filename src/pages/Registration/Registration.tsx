@@ -1,7 +1,13 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { appRoutes } from "constants/routes";
-import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
+import {
+  AdditionalInformationGuard,
+  ContactDetailsGuard,
+  DashboardGuard,
+  DocumentationGuard,
+  WalletRegistrationGuard,
+} from "./guards";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -20,44 +26,53 @@ export default function Registration() {
         <Route
           path={routes.additionalInformation}
           element={
-            <StepOneCompleteGuard>
+            <AdditionalInformationGuard>
               <AdditionalInformation />
-            </StepOneCompleteGuard>
+            </AdditionalInformationGuard>
           }
         />
         <Route
-          path={routes.confirm}
+          path={routes.confirmEmail}
           element={
-            <StepOneInitiatedGuard>
+            // Documentation and ConfirmEmail pages have the same requirements to access the page
+            // which is - Contact Details step must have been submitted
+            <DocumentationGuard>
               <ConfirmEmail />
-            </StepOneInitiatedGuard>
+            </DocumentationGuard>
           }
         />
-        <Route path={routes.contactDetails} element={<ContactDetails />} />
+        <Route
+          path={routes.contactDetails}
+          element={
+            <ContactDetailsGuard>
+              <ContactDetails />
+            </ContactDetailsGuard>
+          }
+        />
         <Route
           path={routes.dashboard}
           element={
-            <StepOneCompleteGuard>
+            <DashboardGuard>
               <Dashboard />
-            </StepOneCompleteGuard>
+            </DashboardGuard>
           }
         />
         <Route
           path={routes.documentation}
           element={
-            <StepOneCompleteGuard>
+            <DocumentationGuard>
               <Documentation />
-            </StepOneCompleteGuard>
+            </DocumentationGuard>
           }
         />
 
-        <Route path={routes.verify} element={<VerifiedEmail />} />
+        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
           element={
-            <StepOneCompleteGuard>
+            <WalletRegistrationGuard>
               <WalletRegistration />
-            </StepOneCompleteGuard>
+            </WalletRegistrationGuard>
           }
         />
         <Route index element={<LandingPage />} />

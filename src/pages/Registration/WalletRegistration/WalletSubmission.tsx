@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
+import { useRegistrationQuery } from "services/aws/registration";
 import {
   useGetWallet,
   useSetWallet,
@@ -13,14 +14,23 @@ import { Button } from "../common";
 import routes from "../routes";
 import useRegisterWallet from "./useRegisterWallet";
 
-export type Wallet = {
-  address: string;
-};
+export type Wallet = { address: string };
 
 export default function WalletSubmission() {
   const { wallet } = useGetWallet();
   const { disconnect } = useSetWallet();
   const navigate = useNavigate();
+  const { charity } = useRegistrationQuery();
+  const { isSubmitting, registerWallet } = useRegisterWallet();
+
+  // if wallet registration step is already complete, then this was just data update,
+  // so user can be navigated to the dashboard
+  const onBackClick = () => {
+    const route = charity.Metadata.JunoWallet
+      ? routes.dashboard
+      : routes.additionalInformation;
+    navigate(`${appRoutes.register}/${route}`);
+  };
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -30,9 +40,6 @@ export default function WalletSubmission() {
       Yup.object({ address: requiredWalletAddr("wallet") })
     ),
   });
-
-  const { handleSubmit } = methods;
-  const { isSubmitting, registerWallet } = useRegisterWallet();
 
   return (
     <div className="flex flex-col h-full items-center gap-10 justify-center">
@@ -61,7 +68,7 @@ export default function WalletSubmission() {
       ) : (
         <FormProvider {...methods}>
           <form
-            onSubmit={handleSubmit(registerWallet)}
+            onSubmit={methods.handleSubmit(registerWallet)}
             className="flex flex-col gap-4 items-center w-[28rem]"
           >
             <FormInput<Wallet>
@@ -70,31 +77,26 @@ export default function WalletSubmission() {
               placeholder="juno1..."
             />
 
-            <Button
-              submit
-              className="bg-thin-blue w-48 h-10"
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-            >
-              Submit
-            </Button>
-            <Button
-              className="text-sm uppercase hover:text-angel-orange px-2 py-1"
-              disabled={isSubmitting}
-              onClick={disconnect}
-            >
-              change wallet address
-            </Button>
+            <div className="flex justify-center gap-2">
+              <Button
+                className="bg-green-400 w-48 h-10"
+                disabled={isSubmitting}
+                onClick={onBackClick}
+              >
+                Back
+              </Button>
+              <Button
+                submit
+                className="bg-thin-blue w-48 h-10"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </FormProvider>
       )}
-      <Button
-        className="bg-green-400 w-80 h-10"
-        disabled={isSubmitting}
-        onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
-      >
-        Back to registration dashboard
-      </Button>
     </div>
   );
 }

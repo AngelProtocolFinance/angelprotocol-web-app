@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useActivateCharityMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FORM_ERROR } from "../constants";
+import { GENERIC_ERROR_MESSAGE } from "../constants";
 
 export default function useActivate() {
   const [activateCharity, { isLoading }] = useActivateCharityMutation();
@@ -12,7 +12,7 @@ export default function useActivate() {
       const result = await activateCharity(primaryKey);
 
       if ("error" in result) {
-        handleError(result.error, FORM_ERROR);
+        handleError(result.error, GENERIC_ERROR_MESSAGE);
       }
     },
     [activateCharity, handleError]

@@ -14,24 +14,24 @@ import {
   UpdateDocumentationResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
+import { getSavedRegistrationReference } from "helpers";
 import { createAuthToken } from "helpers";
-import { aws } from "./aws";
-import { awsTags } from "./tags";
+import { aws } from "../aws";
+import { awsTags } from "../tags";
+import { placeholderCharity } from "./placeholders";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
 };
 
-export const registrationRefKey = "__registration_ref";
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string>({
+    registration: builder.query<Charity, string | undefined | null>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: (explicitRef /** pass "" to use savedRef */) => {
-        const savedRef = localStorage.getItem(registrationRefKey) || "";
+      query: (uuid) => {
         return {
           url: "registration",
-          params: { uuid: explicitRef || savedRef },
+          params: { uuid },
           headers,
         };
       },
@@ -85,7 +85,7 @@ const registration_api = aws.injectEndpoints({
       ContactDetailsResult,
       ContactDetailsRequest
     >({
-      //no tags to invalidate since registration still has to be confirmed
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
@@ -180,7 +180,6 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useRegistrationQuery,
   useActivateCharityMutation,
   useCreateNewCharityMutation,
   useCharityApplicationsQuery,
@@ -192,9 +191,15 @@ export const {
   util: { updateQueryData: updateRegQueryData },
 } = registration_api;
 
+export const useRegistrationQuery = () => {
+  const regRef = getSavedRegistrationReference();
+  const { data: charity = placeholderCharity, ...rest } =
+    registration_api.useRegistrationQuery(regRef, {
+      skip: !regRef,
+    });
+  return { charity, ...rest };
+};
+
 export const {
-  registration: {
-    useQueryState: useRegistrationState,
-    useLazyQuery: useRegistrationLazyQuery,
-  },
+  registration: { useLazyQuery: useRegistrationLazyQuery },
 } = registration_api.endpoints;

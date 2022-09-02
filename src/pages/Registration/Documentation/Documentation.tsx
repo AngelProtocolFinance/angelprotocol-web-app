@@ -2,8 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import { useRegistrationState } from "services/aws/registration";
-import { placeHolderCharity } from "../constants";
+import { useRegistrationQuery } from "services/aws/registration";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -20,7 +19,7 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
-  const { data: charity = placeHolderCharity } = useRegistrationState("");
+  const { charity } = useRegistrationQuery();
 
   const methods = useForm<DocumentationValues>({
     resolver: yupResolver(documentationSchema),

@@ -41,7 +41,7 @@ export default function ContactDetailsForm({ charity }: Props) {
     formState: { errors, isSubmitting },
   } = methods;
 
-  const { isError, saveContactDetails } = useSaveContactDetails();
+  const { saveContactDetails } = useSaveContactDetails();
   const navigate = useNavigate();
 
   return (
@@ -97,7 +97,8 @@ export default function ContactDetailsForm({ charity }: Props) {
           centerError
         />
         <div className="flex justify-center">
-          {(charity.ContactPerson.EmailVerified || isError) && (
+          {/* If JunoWallet field is set, we can assume ContactDetails update form has been navigated to from the Dashboard*/}
+          {charity.Metadata.JunoWallet && (
             <Button
               className="bg-green-400 w-48 h-12 mr-2"
               disabled={isSubmitting}

@@ -3,21 +3,23 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
-import { FORM_ERROR } from "pages/Registration/constants";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import {
-  registrationRefKey,
   useCreateNewCharityMutation,
+  useRegistrationQuery,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
-  const [resendEmail] = useRequestEmailMutation();
+  const [sendVerificationEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
+  const { charity: originalCharityData } = useRegistrationQuery();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
   const { handleError } = useErrorContext();
@@ -27,6 +29,13 @@ export default function useSaveContactDetails() {
       // call API to add or update contact details information(contactData)
       setError(false);
       const is_create = !contactData?.uniqueID;
+      // the submitted email is considered 'verified' only if it:
+      // 1. was already verified
+      // 2. is the same as the the pre-contact-details-update email
+      const isEmailVerified =
+        !!originalCharityData.ContactPerson.EmailVerified &&
+        originalCharityData.ContactPerson.Email === contactData.email;
+
       const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
         body: {
@@ -43,6 +52,7 @@ export default function useSaveContactDetails() {
             PhoneNumber: contactData.phone,
             ReferralMethod: contactData.referralMethod,
             Role: contactData.role,
+            EmailVerified: is_create ? undefined : isEmailVerified,
           },
         },
       };
@@ -65,13 +75,15 @@ export default function useSaveContactDetails() {
             handleError(fetchError, `${fetchError.data}`);
           }
         } else {
-          handleError(result.error, FORM_ERROR);
+          handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
         return;
       }
 
-      if (!is_create) {
+      // if the user is updating contact details, that means they navigated to step 1 from the dashboard
+      // return them back there
+      if (!is_create && isEmailVerified) {
         return navigate(`${appRoutes.register}/${routes.dashboard}`);
       }
 
@@ -79,9 +91,9 @@ export default function useSaveContactDetails() {
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
       const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
       //save ref before invalidating empty cache to retrigger fetch
-      localStorage.setItem(registrationRefKey, PK || "");
+      storeRegistrationReference(PK || "");
       //sending this email invalidated registration query cache
-      await resendEmail({
+      await sendVerificationEmail({
         uuid: PK,
         type: "verify-email",
         body: {
@@ -90,9 +102,16 @@ export default function useSaveContactDetails() {
         },
       });
 
-      navigate(`${appRoutes.register}/${routes.confirm}`);
+      navigate(`${appRoutes.register}/${routes.confirmEmail}`);
     },
-    [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
+    [
+      originalCharityData,
+      handleError,
+      navigate,
+      registerCharity,
+      sendVerificationEmail,
+      updateContactPerson,
+    ]
   );
 
   return {

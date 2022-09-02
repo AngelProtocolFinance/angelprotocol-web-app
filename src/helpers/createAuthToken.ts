@@ -24,6 +24,10 @@ export function createAuthToken(userType: UserTypes) {
     expiresIn = 3600;
   }
 
+  if (process.env.NODE_ENV === "test" && !secret) {
+    secret = "secret";
+  }
+
   const token = jwt.sign(payload, secret, { expiresIn });
 
   return token;

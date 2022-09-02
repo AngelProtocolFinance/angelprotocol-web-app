@@ -1,18 +1,18 @@
-import { useRegistrationState } from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import getRegistrationState from "./getRegistrationState";
 
 const getBackground = (percent: number) =>
   `linear-gradient(to right, #4ca146 0%, #4ca146 ${percent}%, #fff ${percent}%, white 100%)`;
 
 export default function ProgressIndicator() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationQuery();
   const state = getRegistrationState(charity);
   const progress = [
-    state.stepOne.completed,
-    state.stepTwo.completed,
-    state.stepThree.completed,
-    state.stepFour.completed,
+    state.contactDetails.isComplete,
+    state.documentation.isComplete,
+    state.additionalInformation.isComplete,
+    state.walletRegistration.isComplete,
+    state.emailVerification.isComplete,
   ];
   const completedCount = progress.reduce(
     (total, completed) => (completed ? ++total : total),

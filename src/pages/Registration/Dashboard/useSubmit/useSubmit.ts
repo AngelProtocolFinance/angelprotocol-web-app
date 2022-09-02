@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Charity } from "types/aws";
-import { FORM_ERROR } from "pages/Registration/constants";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
@@ -37,7 +37,7 @@ export default function useSubmit() {
         );
       } catch (err) {
         logger.error(processEstimateError(err));
-        dispatch(setStage({ step: "error", message: FORM_ERROR }));
+        dispatch(setStage({ step: "error", message: GENERIC_ERROR_MESSAGE }));
         dispatch(setFormLoading(false));
       } finally {
         showModal(TransactionPrompt, {});
