@@ -19,9 +19,6 @@ export default function ConfirmEmail() {
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
-  const isVerificationEmailSent =
-    charity.ContactPerson.Email && !charity.ContactPerson.EmailVerified;
-
   const sendEmail = useCallback(async () => {
     try {
       if (!charity.ContactPerson.PK) {
@@ -48,11 +45,6 @@ export default function ConfirmEmail() {
     }
   }, [charity, handleError, sendVerificationEmail, showModal]);
 
-  if (!charity) {
-    handleError(new UnexpectedStateError("Charity data is null"));
-    return null;
-  }
-
   // if wallet registration step is already complete, then this was just data update,
   // so user can be navigated to the dashboard
   const onContinueClick = () => {
@@ -64,13 +56,18 @@ export default function ConfirmEmail() {
 
   return (
     <div className="flex flex-col gap-4 font-bold">
-      {isVerificationEmailSent ? (
+      {!charity.ContactPerson.EmailVerified ? (
         <>
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
             <p>Hi {charity.ContactPerson.FirstName}!</p>
             <span>We're waiting for you to confirm your email address.</span>
           </div>
+          <span className="font-normal">
+            Please click on the link in the email and you'll be able to continue
+            with the registration of {charity.Registration.CharityName} on Angel
+            Protocol.
+          </span>
         </>
       ) : (
         <div className="text-2xl">
@@ -79,15 +76,12 @@ export default function ConfirmEmail() {
             {charity.Registration.CharityName},{" "}
             {charity.ContactPerson.FirstName}!
           </p>
-          <p>Your registration reference is</p>
-          <p className="text-orange">{charity.ContactPerson.PK}</p>
         </div>
       )}
-      <span className="font-normal">
-        Please click on the link in the email and you'll be able to continue
-        with the registration of {charity.Registration.CharityName} on Angel
-        Protocol.
-      </span>
+      <div className="text-2xl">
+        <p>Your registration reference is</p>
+        <p className="text-orange">{charity.ContactPerson.PK}</p>
+      </div>
       <div className="flex flex-col gap-1 items-center mt-3">
         {!charity.ContactPerson.EmailVerified && (
           <Button
