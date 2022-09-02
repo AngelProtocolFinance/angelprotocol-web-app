@@ -75,6 +75,7 @@ export default function Dashboard() {
           }
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
           buttonLabel="Resend"
+          isIncomplete={!charity.ContactPerson.EmailVerified}
         />
       </div>
       {isDataSubmitted ? (
