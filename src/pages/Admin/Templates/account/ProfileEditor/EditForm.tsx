@@ -53,8 +53,10 @@ export default function EditForm() {
       <Label className="text-angel-grey -mb-2">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"
+        placeHolder="a short overview of your charity"
         classes={{
-          container: "p-3 rounded-md bg-light-grey shadow-inner-white-grey",
+          container:
+            "grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
           error:
             "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
         }}

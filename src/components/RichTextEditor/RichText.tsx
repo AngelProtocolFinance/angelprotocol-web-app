@@ -1,5 +1,5 @@
 import Quill from "quill";
-import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.snow.css";
 import { useCallback, useState } from "react";
 import "./richtext.css";
 
@@ -29,7 +29,7 @@ export default function RichText(props: Props) {
     const quill = new Quill(container, {
       placeholder: props.placeHolder,
       readOnly: props.readOnly,
-      theme: "bubble",
+      theme: "snow",
       formats: ["bold", "italic", "indent", "list"],
       modules: {
         toolbar: [
@@ -73,14 +73,14 @@ export default function RichText(props: Props) {
   }, []);
 
   return (
-    <div className={`relative ${props.classes?.container || ""}`}>
+    <div className={`relative border-none ${props.classes?.container || ""}`}>
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}
-        className="w-full h-full bg-transparent text-base"
+        className="w-full h-full bg-red text-base "
         ref={containerRef}
       />
       {!props.readOnly && (
-        <span className="absolute bottom-1 right-1 text-xs text-angel-grey uppercase font-mono">
+        <span className="absolute top-4 right-4 text-xs text-angel-grey uppercase font-mono">
           chars:{numChars}
         </span>
       )}
