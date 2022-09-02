@@ -54,10 +54,15 @@ export interface EndowmentDetails {
   guardians: string[];
 }
 
+type Categories = {
+  sdgs: number[]; // u8 maps one of the 17 UN SDG
+  general: number[]; //??
+};
+
 export interface Profile {
   name: string; // name of the Charity Endowment
   overview: string;
-  un_sdg: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  categories: Categories;
   tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   logo: string;
   image: string;
@@ -98,7 +103,7 @@ export interface UpdateProfilePayload {
   id: number;
   name: string;
   overview: string;
-  un_sdg: number;
+  categories: Categories;
   tier?: number;
   logo: string;
   image: string;

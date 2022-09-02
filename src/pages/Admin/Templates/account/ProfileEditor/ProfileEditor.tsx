@@ -38,7 +38,7 @@ function ProfileEditContext(props: Profile & { id: number }) {
     id: props.id,
     name: props.name,
     overview: props.overview,
-    un_sdg: props.un_sdg || 0,
+    categories: props.categories,
     tier: props.tier || 0,
     logo: props.logo || "",
     image: props.image || "",

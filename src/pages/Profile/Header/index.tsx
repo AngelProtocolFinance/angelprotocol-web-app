@@ -12,13 +12,15 @@ export default function CharityHeader(props: Profile) {
     receiver: profile.id,
   });
 
-  const sdg = unsdgs[props.un_sdg || 0];
+  //TODO: show multiple SDGs
+  const sdgNum = props.categories.sdgs[0] || 0;
+  const sdg = unsdgs[sdgNum];
 
   return (
     <div className="flex flex-col items-start gap-2">
-      {props.un_sdg && (
+      {sdgNum && (
         <p className="p-3 max-w-[250px] text-center bg-angel-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl">
-          SDG #{props.un_sdg}: {sdg?.title}
+          SDG #{sdgNum}: {sdg?.title}
         </p>
       )}
 
