@@ -95,6 +95,7 @@ export default function ConfirmEmail() {
         <Button
           onClick={onContinueClick}
           className="bg-thin-blue w-48 h-12 text-sm"
+          disabled={isLoading}
         >
           continue
         </Button>
