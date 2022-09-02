@@ -82,7 +82,7 @@ export default function RichText(props: Props) {
     >
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}
-        className="w-full h-full bg-red text-base "
+        className="w-full h-full text-base"
         ref={containerRef}
       />
       {!props.readOnly && (
