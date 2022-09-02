@@ -29,9 +29,13 @@ export enum charityRoutes {
 }
 
 export enum adminRoutes {
+  //base routes
   index = "",
-  charity_applications = "charity-applications",
   proposal = "proposal",
   proposals = "proposals",
   templates = "templates",
+
+  //reviewer
+  charity_applications = "charity-applications",
+  //charity
 }
