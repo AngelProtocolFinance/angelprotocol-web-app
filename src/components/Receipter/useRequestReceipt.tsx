@@ -26,7 +26,7 @@ export default function useRequestReceipt() {
       updateStage({ step: "initial", kycData: kycData });
       return;
     }
-    const { chainId, txHash } = prevTxDetails;
+    const { txHash } = prevTxDetails;
     updateStage({ step: "submit", message: "Submitting receipt request" });
     const response = await submitRequest(data);
 
@@ -34,8 +34,8 @@ export default function useRequestReceipt() {
       updateStage({
         step: "error",
         message: `Error processing your receipt`,
-        txHash,
-        chainId,
+        //TODO: include Chain in PrevTxDetails
+        //can't show prev tx link with just txHash and chainId, needs Chain
       });
       return;
     }

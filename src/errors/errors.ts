@@ -1,3 +1,4 @@
+import { Chain } from "types/aws";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
@@ -100,21 +101,14 @@ export class CosmosTxSimulationFail extends APError {
 }
 
 export class TxResultFail extends Error {
-  chainId: string;
+  chain: Chain;
   txHash: string;
-  constructor(
-    chainId: string,
-    txHash: string,
-    height: number,
-    code: number,
-    rawLog?: string
-  ) {
-    super(
-      `Error when broadcasting tx ${txHash} at height ${height}. Code: ${code}; Raw log: ${rawLog}`
-    );
-    this.chainId = chainId;
+  constructor(chain: Chain, txHash: string) {
+    //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
+    super("Failed to broadcast transaction");
+    this.chain = chain;
     this.txHash = txHash;
-    this.name = "TxResultFailt";
+    this.name = "TxResultFail";
   }
 }
 

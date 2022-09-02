@@ -100,7 +100,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: args.wallet.network.chainID,
+            chain: args.chain,
           });
         }
       }
