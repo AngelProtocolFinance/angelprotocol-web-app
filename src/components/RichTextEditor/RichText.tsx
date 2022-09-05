@@ -1,5 +1,5 @@
 import Quill from "quill";
-import "quill/dist/quill.bubble.css";
+import "quill/dist/quill.snow.css";
 import { useCallback, useState } from "react";
 import "./richtext.css";
 
@@ -15,9 +15,11 @@ type Editable = {
   placeHolder: string;
 };
 
+export type EditorClasses = { container?: string; charCounter?: string };
+
 type Props = (ReadOnly | Editable) & {
   content: string;
-  classes?: { container?: string };
+  classes?: EditorClasses;
 };
 
 export default function RichText(props: Props) {
@@ -29,7 +31,7 @@ export default function RichText(props: Props) {
     const quill = new Quill(container, {
       placeholder: props.placeHolder,
       readOnly: props.readOnly,
-      theme: "bubble",
+      theme: "snow",
       formats: ["bold", "italic", "indent", "list"],
       modules: {
         toolbar: [
@@ -73,14 +75,22 @@ export default function RichText(props: Props) {
   }, []);
 
   return (
-    <div className={`relative ${props.classes?.container || ""}`}>
+    <div
+      className={`relative border-none ${props.classes?.container || ""} ${
+        props.readOnly ? "toolbar-hidden" : ""
+      }`}
+    >
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}
-        className="w-full h-full bg-transparent text-base"
+        className="w-full h-full text-base"
         ref={containerRef}
       />
       {!props.readOnly && (
-        <span className="absolute bottom-1 right-1 text-xs text-angel-grey uppercase font-mono">
+        <span
+          className={`absolute top-4 right-4 text-xs uppercase font-mono ${
+            props.classes?.charCounter ?? ""
+          }`}
+        >
           chars:{numChars}
         </span>
       )}
