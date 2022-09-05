@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import { useRegistrationQuery } from "services/aws/registration";
+import ProgressIndicator from "../ProgressIndicator";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -38,6 +39,8 @@ export default function Documentation() {
 
   return (
     <Container>
+      <ProgressIndicator />
+
       <Title level={currentLevel} />
 
       <FormProvider {...methods}>
@@ -103,7 +106,7 @@ export default function Documentation() {
 }
 
 const Container = ({ children }: PropsWithChildren<{}>) => (
-  <div className="flex flex-col gap-2 w-full h-full items-center text-left">
+  <div className="flex flex-col gap-5 w-full h-full items-center text-left">
     {children}
   </div>
 );
