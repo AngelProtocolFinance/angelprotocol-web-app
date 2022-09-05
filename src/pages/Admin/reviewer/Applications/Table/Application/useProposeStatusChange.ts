@@ -25,11 +25,10 @@ export default function useProposeStatusChange(app: CharityApplication) {
     };
     const statusWord = status === 1 ? "Approve" : "Reject";
 
-    const registrarContract = new Account(wallet);
-    const embeddedMsg =
-      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload)
-      );
+    const accountContract = new Account(wallet);
+    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload)
+    );
 
     const statusUpdateMeta: EndowmentStatusMeta = {
       type: "acc_endow_status",

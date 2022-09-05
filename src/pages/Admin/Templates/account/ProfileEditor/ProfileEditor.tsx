@@ -27,8 +27,6 @@ export default function ProfileEditor() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  console.log(profile);
-
   return (
     <ProfileEditContext {...{ ...profile, id: endowmentId }}>
       <EditForm />

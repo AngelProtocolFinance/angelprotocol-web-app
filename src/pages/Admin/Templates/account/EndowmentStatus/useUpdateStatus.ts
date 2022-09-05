@@ -72,11 +72,10 @@ export default function useUpdateStatus() {
       endowment_id: data.id,
     };
 
-    const registrarContract = new Account(wallet);
-    const embeddedMsg =
-      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload)
-      );
+    const accountContract = new Account(wallet);
+    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload)
+    );
 
     //construct endowment payload preview
     const statusUpdateMeta: EndowmentStatusMeta = {
