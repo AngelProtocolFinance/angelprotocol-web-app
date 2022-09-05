@@ -1,7 +1,10 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
+import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
@@ -16,12 +19,32 @@ export default function Dashboard() {
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
+  const { sendVerificationEmail, isLoading: isSendingEmail } =
+    useSendVerificationEmail();
+  const { handleError } = useErrorContext();
 
   const isDataSubmitted = !isRegistrationEditable(charity);
 
-  const isStepDisabled = isDataSubmitted || isSubmitting;
+  const isLoading = isSubmitting || isSendingEmail || isActivateSubmitting;
+
+  const isStepDisabled = isDataSubmitted || isLoading;
 
   const registrationState = getRegistrationState(charity);
+
+  const resendVerificationEmail = useCallback(async () => {
+    try {
+      await sendVerificationEmail(charity.ContactPerson.PK, {
+        CharityName: charity.Registration.CharityName,
+        Email: charity.ContactPerson.Email,
+        FirstName: charity.ContactPerson.FirstName,
+        LastName: charity.ContactPerson.LastName,
+        Role: charity.ContactPerson.Role,
+        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      });
+    } catch (error) {
+      handleError(error);
+    }
+  }, [charity, handleError, sendVerificationEmail]);
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -37,7 +60,6 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.contactDetails}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.contactDetails.isComplete}
         />
         <Step
           title="Documentation"
@@ -45,11 +67,7 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.documentation}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.documentation.isComplete}
-          statusComplete={
-            registrationState.documentation.isComplete &&
-            `Level ${charity.Registration.Tier}`
-          }
+          customStatus={`Level ${charity.Registration.Tier}`}
         />
         <Step
           title="Additional Information"
@@ -57,28 +75,24 @@ export default function Dashboard() {
             navigate(`${appRoutes.register}/${routes.additionalInformation}`)
           }
           disabled={isStepDisabled}
-          completed={registrationState.additionalInformation.isComplete}
         />
         <Step
           title="Wallet Address"
           onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
           disabled={isStepDisabled}
-          completed={registrationState.walletRegistration.isComplete}
         />
         <Step
           title="Email Verification"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.confirmEmail}`)
-          }
+          onClick={resendVerificationEmail}
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
-          completed={registrationState.emailVerification.isComplete}
-          completedButtonLabel="Resend"
+          buttonLabel="Resend"
+          isIncomplete={!charity.ContactPerson.EmailVerified}
         />
       </div>
       {isDataSubmitted ? (
         <EndowmentStatus
           charity={charity}
-          isLoading={isActivateSubmitting}
+          isLoading={isLoading}
           onActivate={() => activate(charity.ContactPerson.PK)}
         />
       ) : (
@@ -86,6 +100,7 @@ export default function Dashboard() {
           className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
           onClick={() => submit(charity)}
           disabled={!registrationState.getIsReadyForSubmit() || isSubmitting}
+          isLoading={isLoading}
         >
           Submit for review
         </Button>

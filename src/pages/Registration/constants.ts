@@ -28,4 +28,4 @@ export const UN_SDGS = [
 ];
 
 export const GENERIC_ERROR_MESSAGE =
-  "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io";
+  "An error occured. Please try again later. If the error persists, please contact support@angelprotocol.io";
