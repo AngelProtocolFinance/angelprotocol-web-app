@@ -14,7 +14,11 @@ export default function WalletRegistration() {
   if (charity.Metadata.JunoWallet) {
     content = <RegisteredWallet />;
   } else if (isLoading) {
-    content = <RegLoader message="Wallet is loading" />;
+    content = (
+      <div className="flex items-center justify-center h-full">
+        <RegLoader message="Wallet is loading" />
+      </div>
+    );
   } else if (!wallet) {
     content = <ChooseWallet />;
   }
