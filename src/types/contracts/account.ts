@@ -13,8 +13,8 @@ export interface GenericBalance {
 }
 
 export interface BalanceInfo {
-  locked_balance: GenericBalance;
-  liquid_balance: GenericBalance;
+  locked: GenericBalance;
+  liquid: GenericBalance;
 }
 
 interface RebalanceDetails {
