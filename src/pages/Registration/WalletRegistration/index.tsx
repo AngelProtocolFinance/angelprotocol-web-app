@@ -1,6 +1,6 @@
 import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import ProgressIndicator from "../ProgressIndicator";
+import { ProgressIndicator } from "../common";
 import RegLoader from "../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";

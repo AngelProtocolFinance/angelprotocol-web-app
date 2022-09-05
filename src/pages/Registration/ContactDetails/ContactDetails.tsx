@@ -1,5 +1,5 @@
 import { useRegistrationQuery } from "services/aws/registration";
-import ProgressIndicator from "../ProgressIndicator";
+import { ProgressIndicator } from "../common";
 import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
