@@ -140,7 +140,7 @@ export interface DepositPayload {
 }
 
 type Asset = {
-  info: { denom: string } | { contract_addr: string };
+  info: { native: string } | { cw20: string };
   amount: string;
 };
 

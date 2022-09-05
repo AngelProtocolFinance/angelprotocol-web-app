@@ -55,15 +55,15 @@ export default function useWithdraw() {
       beneficiary:
         //if not juno, send to ap wallet (juno)
         isJuno ? data.beneficiary : ap_wallets.juno,
-      acct_type: "liquid",
+      acct_type: "locked",
       assets: [
         ...cw20s.map((c) => ({
           amount: c.amount,
-          info: { contract_addr: c.address },
+          info: { cw20: c.address },
         })),
         ...natives.map((c) => ({
           amount: c.amount,
-          info: { denom: c.denom },
+          info: { native: c.denom },
         })),
       ],
     });
