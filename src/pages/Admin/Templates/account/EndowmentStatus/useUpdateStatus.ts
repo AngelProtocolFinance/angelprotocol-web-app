@@ -21,16 +21,23 @@ import { cleanObject } from "helpers/admin/cleanObject";
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, proposalLink, role } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
+    console.log(data.prevStatus);
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
     } else if (data.prevStatus === "Closed") {
       showModal(Popup, { message: "Endowment is closed and can't be changed" });
+      //only review team can change status from "Inactive"
+    } else if (data.prevStatus === "Inactive" && role === "ap") {
+      showModal(Popup, {
+        message: "This group is not authorized to change Inactive endowments",
+      });
+      return;
     } else {
       const prevStatusNum = endowmentStatus[data.prevStatus];
       if (+data.status === prevStatusNum) {
