@@ -1,5 +1,5 @@
 import { useRegistrationQuery } from "services/aws/registration";
-import getRegistrationState from "./getRegistrationState";
+import getRegistrationState from "./Dashboard/getRegistrationState";
 
 const getBackground = (percent: number) =>
   `linear-gradient(to right, #4ca146 0%, #4ca146 ${percent}%, #fff ${percent}%, white 100%)`;
