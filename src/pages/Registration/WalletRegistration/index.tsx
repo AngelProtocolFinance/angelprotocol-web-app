@@ -20,7 +20,7 @@ export default function WalletRegistration() {
   }
 
   return (
-    <div className="flex flex-col gap-5 w-full h-full">
+    <div className="flex flex-col gap-5 w-full h-full items-center justify-center">
       <ProgressIndicator />
       {content}
     </div>

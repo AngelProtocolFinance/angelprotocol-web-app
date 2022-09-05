@@ -20,7 +20,7 @@ export default function ChooseWallet() {
   };
 
   return (
-    <div className="flex flex-col gap-5 items-center">
+    <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
       <Title />
       <KeplrConnector />
       <Button className="bg-green-400 w-80 h-10" onClick={onBackClick}>
