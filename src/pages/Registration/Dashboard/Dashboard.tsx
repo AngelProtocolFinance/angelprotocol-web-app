@@ -66,18 +66,14 @@ export default function Dashboard() {
         <Step
           title="Email Verification"
           onClick={() =>
-            sendVerificationEmail(
-              charity.ContactPerson.PK,
-              charity.ContactPerson.EmailVerificationLastSentDate,
-              {
-                CharityName: charity.Registration.CharityName,
-                Email: charity.ContactPerson.Email,
-                FirstName: charity.ContactPerson.FirstName,
-                LastName: charity.ContactPerson.LastName,
-                Role: charity.ContactPerson.Role,
-                PhoneNumber: charity.ContactPerson.PhoneNumber,
-              }
-            )
+            sendVerificationEmail(charity.ContactPerson.PK, {
+              CharityName: charity.Registration.CharityName,
+              Email: charity.ContactPerson.Email,
+              FirstName: charity.ContactPerson.FirstName,
+              LastName: charity.ContactPerson.LastName,
+              Role: charity.ContactPerson.Role,
+              PhoneNumber: charity.ContactPerson.PhoneNumber,
+            })
           }
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
           buttonLabel="Resend"

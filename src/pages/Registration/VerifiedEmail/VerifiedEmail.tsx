@@ -55,11 +55,7 @@ export default function VerifiedEmail() {
         Role: charity.ContactPerson.Role,
         PhoneNumber: charity.ContactPerson.PhoneNumber,
       };
-      await sendVerificationEmail(
-        charity.ContactPerson.PK,
-        charity.ContactPerson.EmailVerificationLastSentDate,
-        emailPayload
-      );
+      await sendVerificationEmail(charity.ContactPerson.PK, emailPayload);
 
       navigate(`${appRoutes.register}/${routes.confirmEmail}`);
     } catch (error) {
