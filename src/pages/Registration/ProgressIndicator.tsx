@@ -21,7 +21,7 @@ export default function ProgressIndicator() {
   const percent = (completedCount / progress.length) * 100;
 
   return (
-    <div className="w-full mb-5">
+    <div className="w-full">
       <div className="flex justify-between items-center mb-2">
         <p>
           {completedCount} of {progress.length} Steps
