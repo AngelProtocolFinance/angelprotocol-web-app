@@ -18,9 +18,7 @@ type RegistrationState = {
   getIsReadyForSubmit: () => boolean;
 };
 
-export default function getRegistrationState(
-  charity: Charity
-): RegistrationState {
+export function getRegistrationState(charity: Charity): RegistrationState {
   return {
     contactDetails: getContactDetailsStepData(charity),
     documentation: getDocumentationStepData(charity),
