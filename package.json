@@ -74,7 +74,7 @@
     "@babel/plugin-syntax-flow": "^7.16.7",
     "@babel/plugin-transform-react-jsx": "^7.17.3",
     "@peculiar/webcrypto": "^1.1.7",
-    "@tailwindcss/line-clamp": "^0.3.0",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
