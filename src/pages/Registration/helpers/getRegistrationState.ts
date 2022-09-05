@@ -5,7 +5,7 @@ import {
   getDocumentationStepData,
   getEmailVerificationStepData,
   getWalletRegistrationStepData,
-} from ".";
+} from "./stepChecks";
 
 type RegistrationStep = { isComplete: boolean };
 
