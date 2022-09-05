@@ -7,10 +7,10 @@ import ProgressIndicator from "../ProgressIndicator";
 import { Button } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
 import { isRegistrationEditable } from "../helpers";
+import getRegistrationState from "../helpers/getRegistrationState";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
-import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
