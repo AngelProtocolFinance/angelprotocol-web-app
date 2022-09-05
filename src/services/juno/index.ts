@@ -31,7 +31,7 @@ export const junoApi = createApi({
     junoTags.indexfund,
     junoTags.registrar,
     junoTags.admin,
-    junoTags.endowment,
+    junoTags.account,
     junoTags.custom,
   ],
   endpoints: (builder) => ({

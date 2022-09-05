@@ -36,15 +36,14 @@ export default function Preview(props: ProposalMeta) {
       return <CWMemberUpdate {...props.data} />;
 
     /** _account */
-
     case "acc_withdraw_liq":
       return <WithdrawLiq {...props.data} />;
     case "acc_profile":
       return <DiffTable diffSet={props.data} />;
+    case "acc_endow_status":
+      return <EndowmentStatusUpdate {...props.data} />;
 
     /** _registrar */
-    case "reg_endow_status":
-      return <EndowmentStatusUpdate {...props.data} />;
     case "reg_config":
       return <DiffTable diffSet={props.data} />;
     case "reg_owner":

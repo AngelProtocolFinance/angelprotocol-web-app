@@ -4,7 +4,7 @@ export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",
   admin: "admin",
   indexfund: "indexfund",
-  endowment: "endowment",
+  account: "account",
   registrar: "registrar",
   custom: "custom",
 };

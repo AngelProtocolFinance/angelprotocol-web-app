@@ -14,8 +14,8 @@ import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
+import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import { cleanObject } from "helpers/admin/cleanObject";
 
 export default function useUpdateStatus() {
@@ -45,7 +45,7 @@ export default function useUpdateStatus() {
       endowment_id: data.id,
     };
 
-    const registrarContract = new Registrar(wallet);
+    const registrarContract = new Account(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -53,7 +53,7 @@ export default function useUpdateStatus() {
 
     //construct endowment payload preview
     const statusUpdateMeta: EndowmentStatusMeta = {
-      type: "reg_endow_status",
+      type: "acc_endow_status",
       data: {
         id: data.id,
         fromStatus: data.prevStatus,

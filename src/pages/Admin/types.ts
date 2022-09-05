@@ -36,9 +36,9 @@ export type Templates =
   | "acc_withdraw"
   | "acc_withdraw_liq"
   | "acc_profile"
+  | "acc_endow_status"
 
   //registrar
-  | "reg_endow_status"
   | "reg_config"
   | "reg_owner";
 
@@ -116,19 +116,20 @@ export type EndowmentProfileUpdateMeta = MetaConstructor<
   DiffSet<FlatUpdateProfilePayload>
 >;
 
-/** _registrar */
-export type RegistrarConfigUpdateMeta = MetaConstructor<
-  "reg_config",
-  DiffSet<RegistrarConfigPayload>
->;
 export type EndowmentStatusMeta = MetaConstructor<
-  "reg_endow_status",
+  "acc_endow_status",
   {
     id: number;
     fromStatus: keyof EndowmentStatus;
     toStatus: EndowmentStatusStrNum;
     beneficiary?: string;
   }
+>;
+
+/** _registrar */
+export type RegistrarConfigUpdateMeta = MetaConstructor<
+  "reg_config",
+  DiffSet<RegistrarConfigPayload>
 >;
 
 export type ProposalMeta =

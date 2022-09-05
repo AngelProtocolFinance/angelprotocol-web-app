@@ -37,14 +37,14 @@ export const account_api = junoApi.injectEndpoints({
       },
     }),
     endowmentProfile: builder.query<Result<"accProfile">, Args<"accProfile">>({
-      providesTags: [{ type: junoTags.endowment, id: accountTags.profile }],
+      providesTags: [{ type: junoTags.account, id: accountTags.profile }],
       query: (args) => genQueryPath("accProfile", args, accounts),
       transformResponse: (res: Res<"accProfile">) => {
         return res.data;
       },
     }),
     balance: builder.query<Result<"accBalance">, Args<"accBalance">>({
-      providesTags: [{ type: junoTags.endowment, id: accountTags.balance }],
+      providesTags: [{ type: junoTags.account, id: accountTags.balance }],
       query: (args) => genQueryPath("accBalance", args, accounts),
       transformResponse: (res: Res<"accBalance">) => {
         return res.data;

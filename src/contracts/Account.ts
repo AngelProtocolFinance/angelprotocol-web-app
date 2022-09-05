@@ -3,6 +3,7 @@ import { Charity } from "types/aws";
 import {
   DepositPayload,
   RegistrarCreateEndowmentPayload,
+  StatusChangePayload,
   UpdateProfilePayload,
   WithdrawPayload,
 } from "types/contracts";
@@ -13,6 +14,12 @@ export default class Account extends Contract {
   private static address = contracts.accounts;
 
   //future: add id in constructor once id is outside payload
+
+  createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_endowment_status: payload,
+    });
+  }
 
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {

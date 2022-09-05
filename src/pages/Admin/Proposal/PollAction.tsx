@@ -162,7 +162,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "acc_withdraw_liq":
       tagsToInvalidate.push(
         {
-          type: junoTags.endowment,
+          type: junoTags.account,
           id: accountTags.balance,
         },
         { type: apesTags.custom, id: apesCustomTags.chain }
@@ -172,14 +172,14 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
 
     case "acc_profile":
       tagsToInvalidate.push({
-        type: junoTags.endowment,
+        type: junoTags.account,
         id: accountTags.profile,
       });
       break;
 
-    case "reg_endow_status":
+    case "acc_endow_status":
       tagsToInvalidate.push({
-        type: junoTags.registrar,
+        type: junoTags.account,
         id: accountTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
       });
       break;
