@@ -139,13 +139,14 @@ export interface DepositPayload {
   liquid_percentage: string; //"0.3"
 }
 
-export type WithdrawPayload = {
-  sources: Source[];
-  beneficiary: string;
+type Asset = {
+  info: { denom: string } | { contract_addr: string };
+  amount: string;
 };
 
-export interface WithdrawLiqPayload {
+export interface WithdrawPayload {
   id: number;
+  acct_type: "locked" | "liquid";
   beneficiary: string;
-  assets: GenericBalance;
+  assets: Asset[];
 }

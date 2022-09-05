@@ -4,7 +4,6 @@ import {
   DepositPayload,
   RegistrarCreateEndowmentPayload,
   UpdateProfilePayload,
-  WithdrawLiqPayload,
   WithdrawPayload,
 } from "types/contracts";
 import { contracts } from "constants/contracts";
@@ -18,12 +17,6 @@ export default class Account extends Contract {
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       withdraw: payload,
-    });
-  }
-
-  createEmbeddedWithdrawLiqMsg(payload: WithdrawLiqPayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      withdraw_liquid: payload,
     });
   }
 
