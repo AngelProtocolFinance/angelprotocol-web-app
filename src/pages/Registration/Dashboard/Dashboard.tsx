@@ -1,5 +1,7 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
@@ -19,6 +21,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { sendVerificationEmail, isLoading: isSendingEmail } =
     useSendVerificationEmail();
+  const { handleError } = useErrorContext();
 
   const isDataSubmitted = !isRegistrationEditable(charity);
 
@@ -27,6 +30,21 @@ export default function Dashboard() {
   const isStepDisabled = isDataSubmitted || isLoading;
 
   const registrationState = getRegistrationState(charity);
+
+  const resendVerificationEmail = useCallback(async () => {
+    try {
+      await sendVerificationEmail(charity.ContactPerson.PK, {
+        CharityName: charity.Registration.CharityName,
+        Email: charity.ContactPerson.Email,
+        FirstName: charity.ContactPerson.FirstName,
+        LastName: charity.ContactPerson.LastName,
+        Role: charity.ContactPerson.Role,
+        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      });
+    } catch (error) {
+      handleError(error);
+    }
+  }, [charity, handleError, sendVerificationEmail]);
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -65,16 +83,7 @@ export default function Dashboard() {
         />
         <Step
           title="Email Verification"
-          onClick={() =>
-            sendVerificationEmail(charity.ContactPerson.PK, {
-              CharityName: charity.Registration.CharityName,
-              Email: charity.ContactPerson.Email,
-              FirstName: charity.ContactPerson.FirstName,
-              LastName: charity.ContactPerson.LastName,
-              Role: charity.ContactPerson.Role,
-              PhoneNumber: charity.ContactPerson.PhoneNumber,
-            })
-          }
+          onClick={resendVerificationEmail}
           disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
           buttonLabel="Resend"
           isIncomplete={!charity.ContactPerson.EmailVerified}
