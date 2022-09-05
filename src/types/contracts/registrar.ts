@@ -1,6 +1,3 @@
-import { CW4Member, Threshold } from ".";
-import { Profile } from "./account";
-
 export type RegistrarConfig = {
   owner: string;
   guardians_multisig_addr?: string;
@@ -41,17 +38,4 @@ export type RegistrarConfigPayload = {
 
 export type RegistrarOwnerPayload = {
   new_owner: string;
-};
-
-export type RegistrarCreateEndowmentPayload = {
-  owner: string;
-  beneficiary: string;
-  withdraw_before_maturity: false;
-  maturity_time: undefined; //don't set maturity for charities
-  maturity_height: undefined; ///don't set maturity for charities
-  profile: Profile;
-  cw4_members: CW4Member[];
-  kyc_donors_only: boolean;
-  cw3_threshold: Threshold;
-  cw3_max_voting_period: 86400; //seconds - 24H
 };

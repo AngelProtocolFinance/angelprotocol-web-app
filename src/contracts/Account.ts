@@ -1,8 +1,8 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Charity } from "types/aws";
 import {
+  CreateEndowmentPayload,
   DepositPayload,
-  RegistrarCreateEndowmentPayload,
   StatusChangePayload,
   UpdateProfilePayload,
   WithdrawPayload,
@@ -52,7 +52,7 @@ export default class Account extends Contract {
 
 function createEndowmentCreationMsgPayload(
   charity: Charity
-): RegistrarCreateEndowmentPayload {
+): CreateEndowmentPayload {
   return {
     owner: charity.Metadata.JunoWallet,
     beneficiary: charity.Metadata.JunoWallet,

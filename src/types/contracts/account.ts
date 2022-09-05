@@ -1,11 +1,13 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { CW20 } from "./cw20";
 import {
+  CW4Member,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentTier,
   EndowmentType,
-} from ".";
-import { CW20 } from "./cw20";
+  Threshold,
+} from "./index";
 
 export interface GenericBalance {
   native: Coin[];
@@ -160,4 +162,17 @@ export type StatusChangePayload = {
   endowment_id: number;
   status: EndowmentStatus[keyof EndowmentStatus];
   beneficiary?: Beneficiary;
+};
+
+export type CreateEndowmentPayload = {
+  owner: string;
+  beneficiary: string;
+  withdraw_before_maturity: false;
+  maturity_time: undefined; //don't set maturity for charities
+  maturity_height: undefined; ///don't set maturity for charities
+  profile: Profile;
+  cw4_members: CW4Member[];
+  kyc_donors_only: boolean;
+  cw3_threshold: Threshold;
+  cw3_max_voting_period: 86400; //seconds - 24H
 };
