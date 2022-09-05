@@ -1,6 +1,7 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/aws";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import Registrar from "contracts/Registrar";
 import useSubmit from "../useSubmit";
@@ -45,12 +46,14 @@ describe("useSubmit tests", () => {
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.submit).toBeDefined();
   });
+
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(true);
   });
+
   // wallet check now handled in `sendCosmosTx`
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
@@ -67,8 +70,7 @@ describe("useSubmit tests", () => {
       type: "transaction/setStage",
       payload: {
         step: "error",
-        message:
-          "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io",
+        message: GENERIC_ERROR_MESSAGE,
       },
     });
     expect(mockDispatch).toHaveBeenCalledWith({
@@ -77,6 +79,7 @@ describe("useSubmit tests", () => {
     });
     expect(mockShowModal).toBeCalled();
   });
+
   it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
