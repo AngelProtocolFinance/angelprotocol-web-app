@@ -1,4 +1,4 @@
-import { CW4Member, EndowmentStatus, Threshold } from ".";
+import { CW4Member, Threshold } from ".";
 import { Profile } from "./account";
 
 export type RegistrarConfig = {
@@ -20,12 +20,6 @@ export type RegistrarConfig = {
 export type VaultRateInfo = {
   vault_addr: string; //"juno172u..
   fx_rate: string; //"1.206784043460040765"
-};
-
-export type StatusChangePayload = {
-  endowment_id: number;
-  status: EndowmentStatus[keyof EndowmentStatus];
-  beneficiary?: string;
 };
 
 export type RegistrarConfigPayload = {

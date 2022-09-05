@@ -150,3 +150,14 @@ export interface WithdrawPayload {
   beneficiary: string;
   assets: Asset[];
 }
+
+export type Beneficiary =
+  | { endowment: { id: number } }
+  | { indexfund: { id: number } }
+  | { wallet: { address: string } };
+
+export type StatusChangePayload = {
+  endowment_id: number;
+  status: EndowmentStatus[keyof EndowmentStatus];
+  beneficiary?: Beneficiary;
+};

@@ -173,7 +173,14 @@ export type EndowmentUpdateValues = ProposalBase & {
   id: number;
   status: Exclude<EndowmentStatusStrNum, "0">;
   //address to transfer funds when endowment will be closed
-  beneficiary?: string;
+
+  //beneficiary type
+  beneficiaryType: "wallet" | "endowment" | "index fund";
+
+  //beneficiary
+  wallet: string;
+  endowmentId: number;
+  indexFund: number;
 
   //metadata
   prevStatus?: keyof EndowmentStatus;

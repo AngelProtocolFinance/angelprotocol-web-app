@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import {
+  Beneficiary,
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
@@ -26,7 +27,6 @@ export default function useUpdateStatus() {
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
-    console.log(data.prevStatus);
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
@@ -46,8 +46,28 @@ export default function useUpdateStatus() {
       }
     }
 
+    const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
+      switch (data.beneficiaryType) {
+        case "index fund":
+          return [
+            { indexfund: { id: data.indexFund } },
+            `index fund sdg: ${data.indexFund}`,
+          ];
+        case "endowment":
+          return [
+            { endowment: { id: data.endowmentId } },
+            `endowment id: ${data.endowmentId}`,
+          ];
+        default:
+          return [
+            { wallet: { address: data.wallet } },
+            `wallet addr: ${data.wallet}`,
+          ];
+      }
+    })();
+
     const statusChangePayload: StatusChangePayload = {
-      beneficiary: data.beneficiary,
+      beneficiary,
       status: +data.status as EndowmentStatusNum,
       endowment_id: data.id,
     };
@@ -65,7 +85,7 @@ export default function useUpdateStatus() {
         id: data.id,
         fromStatus: data.prevStatus,
         toStatus: data.status,
-        beneficiary: data.beneficiary,
+        beneficiary: beneficiaryMeta,
       },
     };
 
