@@ -1,5 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { EndowmentStatusStrNum, EndowmentTier, EndowmentType } from ".";
+import {
+  EndowmentStatus,
+  EndowmentStatusStrNum,
+  EndowmentTier,
+  EndowmentType,
+} from ".";
 import { CW20 } from "./cw20";
 
 export interface GenericBalance {
@@ -10,23 +15,6 @@ export interface GenericBalance {
 export interface BalanceInfo {
   locked_balance: GenericBalance;
   liquid_balance: GenericBalance;
-}
-
-export interface DepositPayload {
-  id: number;
-  locked_percentage: string; //"0.7"
-  liquid_percentage: string; //"0.3"
-}
-
-export type WithdrawPayload = {
-  sources: Source[];
-  beneficiary: string;
-};
-
-export interface WithdrawLiqPayload {
-  id: number;
-  beneficiary: string;
-  assets: GenericBalance;
 }
 
 interface RebalanceDetails {
@@ -98,6 +86,30 @@ export interface Source {
   vault: string; //"juno123addr.."
 }
 
+export type EndowmentQueryOptions = {
+  name?: string;
+  owner?: string;
+  status?: EndowmentStatusStrNum;
+  tier?: EndowmentTier;
+  endow_type?: EndowmentType;
+};
+
+export type EndowmentEntry = {
+  id: number; //int
+  owner: String;
+  status: keyof EndowmentStatus;
+  endow_type: Capitalize<EndowmentType>;
+  name?: string;
+  logo?: string;
+  image?: string;
+  tier?: EndowmentTier;
+  categories: Categories;
+};
+
+export type CategorizedEndowments = {
+  [index: number]: EndowmentEntry[];
+};
+
 export interface UpdateProfilePayload {
   //separate shape for update
   id: number;
@@ -121,11 +133,19 @@ export interface UpdateProfilePayload {
   charity_navigator_rating?: string;
   endow_type?: string;
 }
+export interface DepositPayload {
+  id: number;
+  locked_percentage: string; //"0.7"
+  liquid_percentage: string; //"0.3"
+}
 
-export type EndowmentQueryOptions = {
-  name?: string;
-  owner?: string;
-  status?: EndowmentStatusStrNum;
-  tier?: EndowmentTier;
-  endow_type?: EndowmentType;
+export type WithdrawPayload = {
+  sources: Source[];
+  beneficiary: string;
 };
+
+export interface WithdrawLiqPayload {
+  id: number;
+  beneficiary: string;
+  assets: GenericBalance;
+}

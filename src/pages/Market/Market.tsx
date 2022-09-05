@@ -5,8 +5,8 @@ import Index from "./Index";
 
 export default function Market() {
   const { data: endowments = {}, isLoading } = useCategorizedEndowmentsQuery({
-    endow_type: "charity",
-    status: "1",
+    // endow_type: "charity",
+    // status: "1",
   });
 
   return (

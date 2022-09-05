@@ -1,27 +1,5 @@
-import {
-  CW4Member,
-  EndowmentStatus,
-  EndowmentTier,
-  EndowmentType,
-  Threshold,
-} from ".";
+import { CW4Member, EndowmentStatus, Threshold } from ".";
 import { Profile } from "./account";
-
-export type EndowmentEntry = {
-  id: number; //int
-  owner: String;
-  status: keyof EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
-  name?: string;
-  logo?: string;
-  image?: string;
-  tier?: EndowmentTier;
-  un_sdg?: number;
-};
-
-export type CategorizedEndowments = {
-  [index: number]: EndowmentEntry[];
-};
 
 export type RegistrarConfig = {
   owner: string;

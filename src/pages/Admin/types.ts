@@ -113,7 +113,7 @@ export type WithdrawLiqMeta = MetaConstructor<
 
 export type EndowmentProfileUpdateMeta = MetaConstructor<
   "acc_profile",
-  DiffSet<UpdateProfilePayload>
+  DiffSet<FlatUpdateProfilePayload>
 >;
 
 /** _registrar */
@@ -225,8 +225,14 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
+export type FlatUpdateProfilePayload = Omit<
+  UpdateProfilePayload,
+  "categories"
+> & {
+  sdgNums: number[];
+};
 export type UpdateProfileValues = ProposalBase &
-  UpdateProfilePayload & { initialProfile: UpdateProfilePayload };
+  FlatUpdateProfilePayload & { initialProfile: FlatUpdateProfilePayload };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

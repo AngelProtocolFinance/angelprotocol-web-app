@@ -10,7 +10,7 @@ const profileEditShape: SchemaShape<UpdateProfileValues> = {
   ...proposalShape,
   name: stringByteSchema("name", 4, 64),
   overview: stringByteSchema("overview", 4, 1024),
-  un_sdg: Yup.number(), //cast to number
+  sdgNums: Yup.array().required("sdg is required"), //cast to number
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
   //image: no need to validate, url is auto generated

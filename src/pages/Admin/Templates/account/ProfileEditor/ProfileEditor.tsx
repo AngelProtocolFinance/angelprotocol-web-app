@@ -1,7 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { UpdateProfileValues } from "pages/Admin/types";
-import { UpdateProfilePayload } from "types/contracts";
+import {
+  FlatUpdateProfilePayload,
+  UpdateProfileValues,
+} from "pages/Admin/types";
 import { Profile } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
@@ -34,11 +36,11 @@ export default function ProfileEditor() {
 
 function ProfileEditContext(props: Profile & { id: number }) {
   //initialize falsy values
-  const initialProfile: Required<UpdateProfilePayload> = {
+  const initialProfile: Required<FlatUpdateProfilePayload> = {
     id: props.id,
     name: props.name,
     overview: props.overview,
-    categories: props.categories,
+    sdgNums: props.categories.sdgs,
     tier: props.tier || 0,
     logo: props.logo || "",
     image: props.image || "",

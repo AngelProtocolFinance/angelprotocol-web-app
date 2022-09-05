@@ -22,15 +22,15 @@ export const account_api = junoApi.injectEndpoints({
       providesTags: [{ type: junoTags.registrar, id: accountTags.endowments }],
       query: (args) => genQueryPath("accCategorizedEndows", args, accounts),
       transformResponse: (res: Res<"accCategorizedEndows">) => {
-        return res.data.endowments.reduce((result, profile) => {
-          const { un_sdg, tier } = profile;
-          if (un_sdg === undefined || tier === "Level1") {
+        return res.data.endowments.reduce((result, entry) => {
+          const { categories, tier } = entry;
+          //TODO: this structure allows endowment to be listed in only 1 sdg row
+          const sdgNum = categories.sdgs[0] || 0;
+          if (tier === "Level1") {
             return result;
           } else {
-            if (!result[un_sdg]) {
-              result[un_sdg] = [];
-            }
-            result[un_sdg].push(profile);
+            result[sdgNum] ||= [];
+            result[sdgNum].push(entry);
             return result;
           }
         }, {} as CategorizedEndowments);

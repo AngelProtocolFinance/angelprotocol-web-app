@@ -1,7 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
-import { UpdateProfileValues } from "pages/Admin/types";
-import { UpdateProfilePayload as UP } from "types/contracts";
+import {
+  FlatUpdateProfilePayload,
+  UpdateProfileValues,
+} from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -65,7 +67,9 @@ export default function useEditProfile() {
         }
       }
 
-      const diffEntries = Object.entries(diff) as ObjectEntries<UP>;
+      const diffEntries = Object.entries(
+        diff
+      ) as ObjectEntries<FlatUpdateProfilePayload>;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }
@@ -91,9 +95,10 @@ export default function useEditProfile() {
       }
 
       const accountContract = new Account(wallet);
+      const { sdgNums, ...restData } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-        cleanObject(data)
+        cleanObject({ ...restData, categories: { sdgs: sdgNums, general: [] } })
       );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
