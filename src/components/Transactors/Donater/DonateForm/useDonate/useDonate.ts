@@ -33,10 +33,6 @@ export default function useDonate() {
   const token = watch("token");
 
   function sendTx(data: DonateValues) {
-    // if (isKycRequired && !isKycCompleted) {
-    //   showKycForm();
-    //   return;
-    // }
     switch (wallet?.chain.type) {
       case "evm-native":
         dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
@@ -78,8 +74,8 @@ export default function useDonate() {
   }, [token?.symbol]);
 
   const { kycData } = stage as InitialStage;
-  const isKycRequired = getValues("isKycDonorOnly") === true;
-  const isKycCompleted = isKycRequired ? kycData !== undefined : true;
+  const isKycRequired = !!getValues("isKycDonorOnly");
+  const isKycCompleted = isKycRequired && !!kycData;
 
   return {
     donate: handleSubmit(sendTx),

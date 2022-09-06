@@ -1,3 +1,5 @@
+import { useFormContext } from "react-hook-form";
+import { DonateValues } from "../types";
 import { InitialStage } from "slices/transaction/types";
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
@@ -6,10 +8,10 @@ import { setStage } from "slices/transaction/transactionSlice";
 export default function KYCGuard() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
+  const { getValues } = useFormContext<DonateValues>();
   const { kycData } = stage as InitialStage;
-  // const isKycRequired = getValues("isKycDonorOnly") === true;
-  const isKycRequired = true;
-  const isKycCompleted = isKycRequired ? kycData !== undefined : true;
+  const isKycRequired = !!getValues("isKycDonorOnly");
+  const isKycCompleted = isKycRequired && !!kycData;
 
   function showKycForm() {
     dispatch(
