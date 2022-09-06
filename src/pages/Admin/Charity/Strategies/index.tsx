@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { AccountStrategies } from "types/contracts";
+import { useAdminResources } from "pages/Admin/Guard";
 import Form from "./Form";
 import { StrategyFormValues, schema } from "./schema";
 
@@ -16,7 +17,7 @@ export const strategies: AccountStrategies = {
 };
 
 export default function Strategies() {
-  // const { endowment } = useAdminResources();
+  const { endowment } = useAdminResources();
 
   //query strategies from registrar
   //if loading,
@@ -27,7 +28,7 @@ export default function Strategies() {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      allocations: strategies.liquid.map((l) => ({
+      allocations: endowment.strategies.liquid.map((l) => ({
         ...l,
         percentage: +l.percentage,
       })),

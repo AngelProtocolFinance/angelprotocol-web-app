@@ -1,44 +1,12 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { QueryLoader } from "components/admin";
 import LogRow from "./LogRow";
 
 export default function Transactions() {
   const { cw3 } = useAdminResources();
-  const { data = [], isLoading, isError } = useWithdrawLogsQuery(cw3);
-
-  if (isLoading) {
-    return (
-      <p className="mt-6 flex gap-2 text-zinc-50/90">
-        <Icon
-          type="Loading"
-          size={20}
-          className="animate-spin relative top-1"
-        />
-        <span className="text-lg">Loading transactions..</span>
-      </p>
-    );
-  }
-
-  if (isError) {
-    return (
-      <p className="mt-6 flex gap-2 text-rose-200">
-        <Icon type="Warning" size={20} className="relative top-1" />
-        <span className="text-lg">Failed to get account info</span>
-      </p>
-    );
-  }
-
-  if (data.length <= 0) {
-    return (
-      <p className="mt-6 flex gap-2 text-zinc-50/90">
-        <Icon type="Info" size={20} className="relative top-1" />
-        <span className="text-lg">No transactions found.</span>
-      </p>
-    );
-  }
-
+  const queryState = useWithdrawLogsQuery(cw3);
   return (
     <table className="w-full mt-6 self-start">
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/20">
@@ -53,11 +21,26 @@ export default function Transactions() {
           <>Transaction hash</>
         </Cells>
       </TableSection>
-      <TableSection type="tbody" rowClass="border-b border-zinc-50/10">
-        {data.map((log, i) => (
-          <LogRow {...log} key={i} />
-        ))}
-      </TableSection>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Loading transactions...",
+          error: "Failed to get transactions",
+        }}
+        classes={{ container: "mt-4" }}
+      >
+        {(logs) =>
+          logs.length > 0 ? (
+            <TableSection type="tbody" rowClass="border-b border-zinc-50/10">
+              {logs.map((log, i) => (
+                <LogRow {...log} key={i} />
+              ))}
+            </TableSection>
+          ) : (
+            <div className="text-zinc-50/80">No transactions found</div>
+          )
+        }
+      </QueryLoader>
     </table>
   );
 }

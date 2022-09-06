@@ -25,7 +25,7 @@ type AccountType = "locked" | "liquid";
 
 export type VaultListOptions = {
   network?: string;
-  endowment_type?: EndowmentType;
+  endowment_type?: Capitalize<EndowmentType>;
   acct_type?: AccountType;
   approved?: boolean;
   start_after?: string;
