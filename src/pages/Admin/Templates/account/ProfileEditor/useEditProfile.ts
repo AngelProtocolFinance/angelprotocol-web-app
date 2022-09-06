@@ -95,10 +95,13 @@ export default function useEditProfile() {
       }
 
       const accountContract = new Account(wallet);
-      const { sdgNums, ...restData } = data;
+      const { sdgNum, ...restData } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-        cleanObject({ ...restData, categories: { sdgs: sdgNums, general: [] } })
+        cleanObject({
+          ...restData,
+          categories: { sdgs: [sdgNum], general: [] },
+        })
       );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {

@@ -40,7 +40,7 @@ function ProfileEditContext(props: Profile & { id: number }) {
     id: props.id,
     name: props.name,
     overview: props.overview,
-    sdgNums: props.categories.sdgs,
+    sdgNum: props.categories.sdgs[0] || 0,
     tier: props.tier || 0,
     logo: props.logo || "",
     image: props.image || "",

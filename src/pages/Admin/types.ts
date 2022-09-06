@@ -237,7 +237,7 @@ export type FlatUpdateProfilePayload = Omit<
   UpdateProfilePayload,
   "categories"
 > & {
-  sdgNums: number[];
+  sdgNum: number;
 };
 export type UpdateProfileValues = ProposalBase &
   FlatUpdateProfilePayload & { initialProfile: FlatUpdateProfilePayload };
