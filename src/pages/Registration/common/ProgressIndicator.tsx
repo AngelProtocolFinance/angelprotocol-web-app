@@ -1,10 +1,10 @@
 import { useRegistrationQuery } from "services/aws/registration";
-import getRegistrationState from "./getRegistrationState";
+import { getRegistrationState } from "../helpers";
 
 const getBackground = (percent: number) =>
-  `linear-gradient(to right, #4ca146 0%, #4ca146 ${percent}%, #fff ${percent}%, white 100%)`;
+  `linear-gradient(to right, #3fa9f5 0%, #3fa9f5 ${percent}%, #fff ${percent}%, white 100%)`;
 
-export default function ProgressIndicator() {
+export function ProgressIndicator() {
   const { charity } = useRegistrationQuery();
   const state = getRegistrationState(charity);
   const progress = [
@@ -21,7 +21,7 @@ export default function ProgressIndicator() {
   const percent = (completedCount / progress.length) * 100;
 
   return (
-    <div className="w-full mb-5">
+    <div className="w-full">
       <div className="flex justify-between items-center mb-2">
         <p>
           {completedCount} of {progress.length} Steps

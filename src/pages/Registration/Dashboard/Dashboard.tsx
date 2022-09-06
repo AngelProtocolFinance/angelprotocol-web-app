@@ -3,14 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
+import { Button, ProgressIndicator } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
-import { isRegistrationEditable } from "../helpers";
+import { getRegistrationState, isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
-// import ProgressIndicator from "./ProgressIndicator";
-import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
@@ -48,6 +46,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
+      <ProgressIndicator />
       <h3 className="text-3xl font-bold">Necessary Information</h3>
       <span>
         Please complete all the following steps to be able to create your

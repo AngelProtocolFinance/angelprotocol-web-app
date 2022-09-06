@@ -1,6 +1,6 @@
 import { Charity, RegistrationStatus } from "types/aws";
 import { placeholderCharity } from "services/aws/registration";
-import getRegistrationState from "../getRegistrationState";
+import { getRegistrationState } from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {
   it.each([true, false])(
