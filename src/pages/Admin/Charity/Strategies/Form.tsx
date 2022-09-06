@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import Icon from "components/Icon";
-import { roundDownToNum } from "helpers";
+import { maskAddress, roundDownToNum } from "helpers";
 import PieChart from "./PieChart";
 import Selection from "./Selection";
 import { StrategyFormValues } from "./schema";
@@ -37,9 +37,7 @@ export default function Form() {
             >
               <p className="flex items-center gap-2">
                 <Icon type="Safe" size={36} />
-                <span className="uppercase text-2xl font-extrabold">
-                  {field.vault}
-                </span>
+                <span className="font-mono">{maskAddress(field.vault)}</span>
               </p>
 
               <input

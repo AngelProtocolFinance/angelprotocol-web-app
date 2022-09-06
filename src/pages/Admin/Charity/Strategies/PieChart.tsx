@@ -8,7 +8,7 @@ import {
 } from "chart.js";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { roundDownToNum } from "helpers";
+import { maskAddress, roundDownToNum } from "helpers";
 import { StrategyFormValues } from "./schema";
 
 const bgColors = [
@@ -47,7 +47,7 @@ export default function PieChart() {
       const unallocated = roundDownToNum(100 - total, 2);
 
       for (const { vault, percentage } of allocations) {
-        chartData.labels?.push(`${vault.toUpperCase()} (${percentage}%)`);
+        chartData.labels?.push(`${maskAddress(vault)} (${percentage}%)`);
         chartData.datasets[0].data.push(percentage);
       }
 

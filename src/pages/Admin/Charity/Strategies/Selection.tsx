@@ -1,23 +1,9 @@
 import { FieldArrayWithId, UseFieldArrayAppend } from "react-hook-form";
-import { AccountStrategies } from "types/contracts";
 import { useVaultListQuery } from "services/juno/registrar";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { maskAddress } from "helpers";
 import { StrategyFormValues } from "./schema";
-
-export const strategies: AccountStrategies = {
-  locked: [
-    { vault: "a", percentage: "0.5" },
-    { vault: "b", percentage: "0.5" },
-    { vault: "c", percentage: "0.5" },
-  ],
-  liquid: [
-    { vault: "a", percentage: "0.5" },
-    { vault: "b", percentage: "0.5" },
-    { vault: "c", percentage: "0.5" },
-  ],
-};
 
 type Props = {
   select: UseFieldArrayAppend<StrategyFormValues, "allocations">;
@@ -50,9 +36,7 @@ export default function Selection({ selected, select }: Props) {
                   className="flex gap-2 p-2 items-center relative text-zinc-50/80 font-heading"
                 >
                   <Icon type="Safe" size={36} />
-                  <span className="uppercase font-mono">
-                    {maskAddress(address)}
-                  </span>
+                  <span className="font-mono">{maskAddress(address)}</span>
                   <button
                     disabled={isSelected}
                     type="button"
