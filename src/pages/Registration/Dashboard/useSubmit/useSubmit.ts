@@ -7,7 +7,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 import { logger, processEstimateError } from "helpers";
 import { logEndowmentId } from "./logEndowmentId";
 
@@ -20,7 +20,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        const contract = new Registrar(wallet);
+        const contract = new Account(wallet);
         const msg = contract.createEndowmentCreationMsg(charity);
         dispatch(
           sendCosmosTx({

@@ -1,6 +1,13 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { EndowmentType } from ".";
 import { CW20 } from "./cw20";
+import {
+  CW4Member,
+  EndowmentStatus,
+  EndowmentStatusStrNum,
+  EndowmentTier,
+  EndowmentType,
+  Threshold,
+} from "./index";
 
 export interface GenericBalance {
   native: Coin[];
@@ -8,25 +15,8 @@ export interface GenericBalance {
 }
 
 export interface BalanceInfo {
-  locked_balance: GenericBalance;
-  liquid_balance: GenericBalance;
-}
-
-export interface DepositPayload {
-  id: number;
-  locked_percentage: string; //"0.7"
-  liquid_percentage: string; //"0.3"
-}
-
-export type WithdrawPayload = {
-  sources: Source[];
-  beneficiary: string;
-};
-
-export interface WithdrawLiqPayload {
-  id: number;
-  beneficiary: string;
-  assets: GenericBalance;
+  locked: GenericBalance;
+  liquid: GenericBalance;
 }
 
 interface RebalanceDetails {
@@ -54,10 +44,15 @@ export interface EndowmentDetails {
   guardians: string[];
 }
 
+type Categories = {
+  sdgs: number[]; // u8 maps one of the 17 UN SDG
+  general: number[]; //??
+};
+
 export interface Profile {
   name: string; // name of the Charity Endowment
   overview: string;
-  un_sdg: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  categories: Categories;
   tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   logo: string;
   image: string;
@@ -93,12 +88,36 @@ export interface Source {
   vault: string; //"juno123addr.."
 }
 
+export type EndowmentQueryOptions = {
+  name?: string;
+  owner?: string;
+  status?: EndowmentStatusStrNum;
+  tier?: EndowmentTier;
+  endow_type?: EndowmentType;
+};
+
+export type EndowmentEntry = {
+  id: number; //int
+  owner: String;
+  status: keyof EndowmentStatus;
+  endow_type: Capitalize<EndowmentType>;
+  name?: string;
+  logo?: string;
+  image?: string;
+  tier?: EndowmentTier;
+  categories: Categories;
+};
+
+export type CategorizedEndowments = {
+  [index: number]: EndowmentEntry[];
+};
+
 export interface UpdateProfilePayload {
   //separate shape for update
   id: number;
   name: string;
   overview: string;
-  un_sdg: number;
+  categories: Categories;
   tier?: number;
   logo: string;
   image: string;
@@ -116,3 +135,44 @@ export interface UpdateProfilePayload {
   charity_navigator_rating?: string;
   endow_type?: string;
 }
+export interface DepositPayload {
+  id: number;
+  locked_percentage: string; //"0.7"
+  liquid_percentage: string; //"0.3"
+}
+
+type Asset = {
+  info: { native: string } | { cw20: string };
+  amount: string;
+};
+
+export interface WithdrawPayload {
+  id: number;
+  acct_type: "locked" | "liquid";
+  beneficiary: string;
+  assets: Asset[];
+}
+
+export type Beneficiary =
+  | { endowment: { id: number } }
+  | { indexfund: { id: number } }
+  | { wallet: { address: string } };
+
+export type StatusChangePayload = {
+  endowment_id: number;
+  status: EndowmentStatus[keyof EndowmentStatus];
+  beneficiary?: Beneficiary;
+};
+
+export type CreateEndowmentPayload = {
+  owner: string;
+  beneficiary: string;
+  withdraw_before_maturity: false;
+  maturity_time: undefined; //don't set maturity for charities
+  maturity_height: undefined; ///don't set maturity for charities
+  profile: Profile;
+  cw4_members: CW4Member[];
+  kyc_donors_only: boolean;
+  cw3_threshold: Threshold;
+  cw3_max_voting_period: 86400; //seconds - 24H
+};

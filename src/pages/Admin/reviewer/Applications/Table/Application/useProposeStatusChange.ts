@@ -7,8 +7,8 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
+import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import { cleanObject } from "helpers/admin/cleanObject";
 import { logStatusUpdateProposal } from "./logStatusUpdateProposal";
 
@@ -25,14 +25,13 @@ export default function useProposeStatusChange(app: CharityApplication) {
     };
     const statusWord = status === 1 ? "Approve" : "Reject";
 
-    const registrarContract = new Registrar(wallet);
-    const embeddedMsg =
-      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload)
-      );
+    const accountContract = new Account(wallet);
+    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload)
+    );
 
     const statusUpdateMeta: EndowmentStatusMeta = {
-      type: "reg_endow_status",
+      type: "acc_endow_status",
       data: {
         id: app.EndowmentId,
         fromStatus: "Inactive",

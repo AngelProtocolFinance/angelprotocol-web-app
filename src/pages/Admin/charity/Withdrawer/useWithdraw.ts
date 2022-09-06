@@ -50,15 +50,22 @@ export default function useWithdraw() {
 
     const isJuno = data.network === chainIds.juno;
     const account = new Account(wallet);
-    const msg = account.createEmbeddedWithdrawLiqMsg({
+    const msg = account.createEmbeddedWithdrawMsg({
       id: endowmentId,
       beneficiary:
         //if not juno, send to ap wallet (juno)
         isJuno ? data.beneficiary : ap_wallets.juno,
-      assets: {
-        cw20: cw20s,
-        native: natives,
-      },
+      acct_type: "locked",
+      assets: [
+        ...cw20s.map((c) => ({
+          amount: c.amount,
+          info: { cw20: c.address },
+        })),
+        ...natives.map((c) => ({
+          amount: c.amount,
+          info: { native: c.denom },
+        })),
+      ],
     });
 
     const meta: WithdrawLiqMeta = {

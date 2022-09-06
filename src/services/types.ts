@@ -34,7 +34,7 @@ export type JunoTags =
   | "gov"
   | "indexfund"
   | "admin"
-  | "endowment"
+  | "account"
   | "registrar"
   | "custom";
 

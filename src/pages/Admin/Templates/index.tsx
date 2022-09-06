@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
+import EndowmentUpdator from "./account/EndowmentStatus";
 import ProfileEditor from "./account/ProfileEditor/ProfileEditor";
 import CW3Configurer from "./cw3/Config";
 import FundSender from "./cw3/FundSender/FundSender";
@@ -12,7 +13,6 @@ import FundCreator from "./indexfund/FundCreator/FundCreator";
 import FundDestroyer from "./indexfund/FundDestroyer/FundDestroyer";
 import FundUpdator from "./indexfund/FundUpdator/FundUpdator";
 import IndexFundOwner from "./indexfund/IndexFundOwner/IndexFundOwner";
-import EndowmentUpdator from "./registrar/EndowmentStatus";
 import RegistrarConfigurer from "./registrar/RegistrarConfigurer/RegistrarConfigurer";
 import RegistrarOwner from "./registrar/RegistrarOwner/RegistrarOwner";
 import { routes } from "./routes";
@@ -49,8 +49,10 @@ function ApTemplates() {
       <Route path={routes.if_config} element={<FundConfigurer />} />
       <Route path={routes.if_owner} element={<IndexFundOwner />} />
 
+      {/** _account */}
+      <Route path={routes.acc_endow_status} element={<EndowmentUpdator />} />
+
       {/** _registrar */}
-      <Route path={routes.reg_endow_status} element={<EndowmentUpdator />} />
       <Route path={routes.reg_config} element={<RegistrarConfigurer />} />
       <Route path={routes.reg_owner} element={<RegistrarOwner />} />
 

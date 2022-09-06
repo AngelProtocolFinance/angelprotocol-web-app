@@ -32,13 +32,14 @@ export default function Accounts() {
       </p>
     );
   }
+
   return (
     <>
       <h3 className="mt-4 col-span-2 text-xl font-bold text-zinc-50 my-1 uppercase">
         Balances
       </h3>
-      <Account type="liquid" balance={balance.liquid_balance} />
-      <Account type="locked" balance={balance.locked_balance} />
+      <Account type="liquid" balance={balance.liquid} />
+      <Account type="locked" balance={balance.locked} />
     </>
   );
 }
