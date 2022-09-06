@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import { UseFormReturn, useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import { FileWrapper } from "components/FileDropzone";
 
-export default function useCurrentLevel(
-  methods: UseFormReturn<DocumentationValues, any>
-) {
-  const [level, setLevel] = useState(0);
+export default function useCurrentLevel() {
+  const methods = useFormContext<DocumentationValues>();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const currentLevel = getCurrentLevel(methods);
-
-    // this check prevents the danger of infinite useEffect runs
-    if (currentLevel !== level) {
-      setLevel(currentLevel);
-    }
-  });
+  const level = getCurrentLevel(methods);
 
   return level;
 }

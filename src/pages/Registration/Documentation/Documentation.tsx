@@ -24,7 +24,6 @@ export default function Documentation() {
 
   const methods = useForm<DocumentationValues>({
     resolver: yupResolver(documentationSchema),
-    mode: "onChange",
     defaultValues: {
       un_sdg: charity.Registration.UN_SDG,
       website: charity.Registration.Website,
@@ -34,7 +33,6 @@ export default function Documentation() {
       auditedFinancialReports: charity.Registration.AuditedFinancialReports,
     },
   });
-  const currentLevel = useCurrentLevel(methods);
   const upload = useUpload();
 
   return (
@@ -42,7 +40,7 @@ export default function Documentation() {
       <Container>
         <ProgressIndicator />
 
-        <Title level={currentLevel} />
+        <Title />
 
         <form
           className="flex flex-col w-full h-full gap-4 items-center"
@@ -68,7 +66,7 @@ export default function Documentation() {
             </Column>
             <Column className="border-8 border-white/20 w-full px-2">
               {" "}
-              <Column colored={currentLevel >= 1}>
+              <HighlightColumn level={1}>
                 <Header>Level 1</Header>
                 <p>
                   Your organization is eligible to create its endowment. Donors
@@ -76,22 +74,22 @@ export default function Documentation() {
                   Angel Protocol’s interface. Your organization is not displayed
                   on the marketplace and cannot be found through the search bar.
                 </p>
-              </Column>{" "}
-              <Column className="mt-14" colored={currentLevel >= 2}>
+              </HighlightColumn>{" "}
+              <HighlightColumn className="mt-14" level={2}>
                 <Header>Level 2</Header>
                 <p>
                   All benefits from Level 1 + your organization will be visible
                   in the marketplace.
                 </p>
-              </Column>
-              <Column className="mt-20" colored={currentLevel === 3}>
+              </HighlightColumn>
+              <HighlightColumn className="mt-20" level={3}>
                 <Header>Level 3</Header>
                 <p>
                   All benefits from Level 2 + your organization will be able to
                   receive automatic donations from members of the Angel
                   Alliance.
                 </p>
-              </Column>
+              </HighlightColumn>
             </Column>
           </RowContainer>
           <div className="flex flex-col gap-1 w-full mt-5">
@@ -111,16 +109,20 @@ const Container = ({ children }: PropsWithChildren<{}>) => (
   </div>
 );
 
-const Title = ({ level }: { level: number }) => (
-  <div className="flex justify-center w-full gap-2">
-    <Header className="w-full ml-2">
-      {level < 3
-        ? "Upload the relevant documentation to apply for the next level."
-        : "Upload to proceed..."}
-    </Header>
-    <Header className="w-2/3 ml-0">What are levels?</Header>
-  </div>
-);
+const Title = () => {
+  const level = useCurrentLevel();
+
+  return (
+    <div className="flex justify-center w-full gap-2">
+      <Header className="w-full ml-2">
+        {level < 3
+          ? "Upload the relevant documentation to apply for the next level."
+          : "Upload to proceed..."}
+      </Header>
+      <Header className="w-2/3 ml-0">What are levels?</Header>
+    </div>
+  );
+};
 
 const Header = ({
   children,
@@ -133,9 +135,16 @@ const RowContainer = ({ children }: PropsWithChildren<{}>) => (
   <div className="grid grid-cols-[3fr_2fr] gap-3 text-sm">{children}</div>
 );
 
-type ColumnProps = PropsWithChildren<{ colored?: boolean; className?: string }>;
+type ColumnProps = PropsWithChildren<{ className?: string }>;
+type HighlightColumnProps = ColumnProps & { level: number };
+type ColoredColumnProps = ColumnProps & { colored?: boolean };
 
-const Column = ({ colored, children, className }: ColumnProps) => {
+const HighlightColumn = ({ level, ...rest }: HighlightColumnProps) => {
+  const currentLevel = useCurrentLevel();
+  return <Column {...rest} colored={currentLevel >= level} />;
+};
+
+const Column = ({ colored, children, className }: ColoredColumnProps) => {
   const styles = colored
     ? "ring ring-angel-blue rounded-md bg-angel-blue/50"
     : "";
