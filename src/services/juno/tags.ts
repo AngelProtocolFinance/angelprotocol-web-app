@@ -4,7 +4,7 @@ export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",
   admin: "admin",
   indexfund: "indexfund",
-  endowment: "endowment",
+  account: "account",
   registrar: "registrar",
   custom: "custom",
 };
@@ -35,12 +35,12 @@ export enum indexfundTags {
 }
 
 export enum registrarTags {
-  endowments = "endowments",
   config = "config",
   vault_list = "vault-list",
 }
 
-export enum endowmentTags {
+export enum accountTags {
+  endowments = "endowments",
   profile = "profile",
   balance = "balance",
 }

@@ -1,0 +1,43 @@
+import { Charity } from "types/aws";
+
+export const placeholderCharity: Charity = {
+  ContactPerson: {
+    Email: "",
+    EmailVerified: false,
+    EmailVerificationLastSentDate: new Date(0).toISOString(),
+    FirstName: "",
+    Goals: "",
+    LastName: "",
+    PhoneNumber: "",
+    PK: "",
+    ReferralMethod: "angel-alliance",
+    Role: "ceo",
+    SK: "ContactPerson",
+  },
+  Registration: {
+    CharityName: "",
+    CharityName_ContactEmail: "",
+    RegistrationDate: "",
+    RegistrationStatus: "Inactive",
+    Website: "",
+    UN_SDG: 0,
+    ProofOfIdentity: { name: "" },
+    ProofOfRegistration: { name: "" },
+    FinancialStatements: [],
+    AuditedFinancialReports: [],
+    ProofOfIdentityVerified: false,
+    ProofOfRegistrationVerified: false,
+    FinancialStatementsVerified: false,
+    AuditedFinancialReportsVerified: false,
+    SK: "Registration",
+  },
+  Metadata: {
+    Banner: { name: "" },
+    CharityLogo: { name: "" },
+    CharityOverview: "",
+    EndowmentContract: "",
+    KycDonorsOnly: false,
+    SK: "Metadata",
+    JunoWallet: "",
+  },
+};

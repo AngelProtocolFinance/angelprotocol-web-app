@@ -13,3 +13,4 @@ export * from "./maskAddress";
 export * from "./processEstimateError";
 export * from "./toBase64";
 export * from "./uploadToIpfs";
+export * from "./registration";

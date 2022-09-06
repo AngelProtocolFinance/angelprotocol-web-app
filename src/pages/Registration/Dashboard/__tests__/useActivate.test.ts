@@ -11,7 +11,6 @@ jest.mock("services/aws/registration", () => ({
   __esModule: true,
   useActivateCharityMutation: () => mockUseActivateCharityMutation(),
   useRegistrationQuery: (..._: any[]) => mockRegistrationQuery(_),
-  useRegistrationState: (..._: any[]) => mockRegistrationQuery(_),
 }));
 
 const mockHandleError = jest.fn();
@@ -88,6 +87,7 @@ const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
+    EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",

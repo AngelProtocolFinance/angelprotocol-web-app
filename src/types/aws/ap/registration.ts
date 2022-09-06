@@ -36,6 +36,7 @@ export type ContactRoles =
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
+  EmailVerificationLastSentDate: string;
   Goals: string;
   FirstName: string;
   LastName: string;
@@ -131,7 +132,7 @@ export type ContactDetailsData = {
 export type ContactDetailsRequest = {
   PK?: string;
   body: {
-    ContactPerson: Omit<ContactPerson, "EmailVerified" | "SK">;
+    ContactPerson: Omit<ContactPerson, "SK" | "EmailVerificationLastSentDate">;
     Registration: Pick<Registration, "CharityName">;
   };
 };
@@ -190,4 +191,5 @@ export type UpdateDocumentationResult = {
 export type CharityApplication = Registration & {
   PK: string;
   poll_id?: number;
+  EndowmentId: number;
 };

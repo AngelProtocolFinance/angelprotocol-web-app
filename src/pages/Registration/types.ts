@@ -1,20 +1,9 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { EndowmentTierNum } from "types/contracts";
 import { FileWrapper } from "components/FileDropzone";
-
-export type RegistrationStep = { completed: boolean };
-export type DocumentationStep = RegistrationStep & { tier?: EndowmentTierNum };
-
-export type RegistrationState = {
-  stepOne: RegistrationStep;
-  stepTwo: RegistrationStep;
-  stepThree: DocumentationStep;
-  stepFour: RegistrationStep;
-  getIsReadyForSubmit: () => boolean;
-};
 
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };
+
 /**forms */
 export type DocumentationValues = {
   // Expects an array because FileDropzone component always returns an array of Files,

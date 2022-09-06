@@ -36,9 +36,9 @@ export type Templates =
   | "acc_withdraw"
   | "acc_withdraw_liq"
   | "acc_profile"
+  | "acc_endow_status"
 
   //registrar
-  | "reg_endow_status"
   | "reg_config"
   | "reg_owner";
 
@@ -113,22 +113,23 @@ export type WithdrawLiqMeta = MetaConstructor<
 
 export type EndowmentProfileUpdateMeta = MetaConstructor<
   "acc_profile",
-  DiffSet<UpdateProfilePayload>
+  DiffSet<FlatUpdateProfilePayload>
 >;
 
-/** _registrar */
-export type RegistrarConfigUpdateMeta = MetaConstructor<
-  "reg_config",
-  DiffSet<RegistrarConfigPayload>
->;
 export type EndowmentStatusMeta = MetaConstructor<
-  "reg_endow_status",
+  "acc_endow_status",
   {
     id: number;
     fromStatus: keyof EndowmentStatus;
     toStatus: EndowmentStatusStrNum;
     beneficiary?: string;
   }
+>;
+
+/** _registrar */
+export type RegistrarConfigUpdateMeta = MetaConstructor<
+  "reg_config",
+  DiffSet<RegistrarConfigPayload>
 >;
 
 export type ProposalMeta =
@@ -172,7 +173,14 @@ export type EndowmentUpdateValues = ProposalBase & {
   id: number;
   status: Exclude<EndowmentStatusStrNum, "0">;
   //address to transfer funds when endowment will be closed
-  beneficiary?: string;
+
+  //beneficiary type
+  beneficiaryType: "wallet" | "endowment" | "index fund";
+
+  //beneficiary
+  wallet: string;
+  endowmentId: number;
+  indexFund: number;
 
   //metadata
   prevStatus?: keyof EndowmentStatus;
@@ -225,8 +233,14 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
+export type FlatUpdateProfilePayload = Omit<
+  UpdateProfilePayload,
+  "categories"
+> & {
+  sdgNum: number;
+};
 export type UpdateProfileValues = ProposalBase &
-  UpdateProfilePayload & { initialProfile: UpdateProfilePayload };
+  FlatUpdateProfilePayload & { initialProfile: FlatUpdateProfilePayload };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

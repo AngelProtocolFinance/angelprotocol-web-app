@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { TextInput } from "components/admin";
+import Beneficiary from "./Beneficiary";
 
 const statuses: V["status"][] = ["1", "2", "3"];
 const text: { [key in V["status"]]: string } = {
@@ -46,15 +46,7 @@ export default function StatusOptions() {
         name="status"
         className="font-mono font-semibold text-right text-red-400 text-xs m-1"
       />
-      {status === "3" && (
-        <TextInput<V>
-          title="Beneficiary"
-          name="beneficiary"
-          placeholder="juno123abc..."
-          required
-          mono
-        />
-      )}
+      {status === "3" && <Beneficiary />}
     </>
   );
 }

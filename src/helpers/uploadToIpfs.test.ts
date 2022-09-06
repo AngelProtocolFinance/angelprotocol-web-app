@@ -10,15 +10,13 @@ describe("uploadToIpfs tests", () => {
 
     const result = await uploadToIpfs(path, file);
     expect(mockedUpload).toHaveBeenCalledWith([file], { name: path });
-    expect(result).toStrictEqual(`https://${cid}.${IPFS_GATEWAY}/${file.name}`);
+    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/${fileName}`);
   });
   it("whitespace is removed from file name in url", async () => {
     const file2 = new File([], " hello to the world.jpg ");
 
     const result = await uploadToIpfs(path, file2);
     expect(mockedUpload).toHaveBeenCalledWith([file2], { name: path });
-    expect(result).toStrictEqual(
-      `https://${cid}.${IPFS_GATEWAY}/${"hellototheworld.jpg"}`
-    );
+    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/hellototheworld.jpg`);
   });
 });

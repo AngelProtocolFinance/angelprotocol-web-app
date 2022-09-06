@@ -1,8 +1,9 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/aws";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { PLACEHOLDER_WALLET } from "test/constants";
-import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
@@ -45,18 +46,20 @@ describe("useSubmit tests", () => {
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.submit).toBeDefined();
   });
+
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(true);
   });
+
   // wallet check now handled in `sendCosmosTx`
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .spyOn(Account.prototype, "createEndowmentCreationMsg")
       .mockImplementation((..._: any[]) => {
         throw new Error();
       });
@@ -67,8 +70,7 @@ describe("useSubmit tests", () => {
       type: "transaction/setStage",
       payload: {
         step: "error",
-        message:
-          "An error occured. Please try again. If the error persists, please contact support@angelprotocol.io",
+        message: GENERIC_ERROR_MESSAGE,
       },
     });
     expect(mockDispatch).toHaveBeenCalledWith({
@@ -77,11 +79,12 @@ describe("useSubmit tests", () => {
     });
     expect(mockShowModal).toBeCalled();
   });
+
   it("dispatches action sending a Juno Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .spyOn(Account.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
     await act(() => result.current.submit(CHARITY));
@@ -95,6 +98,7 @@ const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
+    EmailVerificationLastSentDate: "2022-05-04T10:01:10Z",
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",

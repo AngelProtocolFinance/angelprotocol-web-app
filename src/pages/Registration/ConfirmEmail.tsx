@@ -1,33 +1,28 @@
 import { useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import {
-  useRegistrationState,
-  useRequestEmailMutation,
-} from "services/aws/registration";
+import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
+import { UnexpectedStateError } from "errors/errors";
+import { appRoutes } from "constants/routes";
 import { Button, ButtonMailTo } from "./common";
-import { FORM_ERROR } from "./constants";
+import useSendVerificationEmail from "./common/useSendVerificationEmail";
+import { GENERIC_ERROR_MESSAGE } from "./constants";
 import routes from "./routes";
 
 export default function ConfirmEmail() {
-  const { data } = useRegistrationState("");
-  const charity = data!; // data is checked on stepOneInitiated guard
+  const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
-  const location: any = useLocation();
-  const is_sent = location.state?.is_sent;
-  const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const { sendVerificationEmail, isLoading } = useSendVerificationEmail();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
-  const sendEmail = useCallback(
-    async (emailType: string) => {
+  const sendEmail = useCallback(async () => {
+    try {
       if (!charity.ContactPerson.PK) {
-        return handleError(
-          "Invalid Data. Please ask the administrator about that."
-        );
+        throw new UnexpectedStateError("Primary key is null");
       }
 
       const emailPayload = {
@@ -38,39 +33,41 @@ export default function ConfirmEmail() {
         Role: charity.ContactPerson.Role,
         PhoneNumber: charity.ContactPerson.PhoneNumber,
       };
-      const result = await resendEmail({
-        uuid: charity.ContactPerson.PK,
-        type: emailType,
-        body: emailPayload,
+
+      await sendVerificationEmail(charity.ContactPerson.PK, emailPayload);
+
+      showModal(Popup, {
+        message:
+          "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
       });
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+    }
+  }, [charity, handleError, sendVerificationEmail, showModal]);
 
-      if ("error" in result) {
-        handleError(result.error, FORM_ERROR);
-      } else {
-        showModal(Popup, {
-          message:
-            "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
-        });
-      }
-    },
-    [charity, handleError, resendEmail, showModal]
-  );
-
-  const handleClose = () => {
-    navigate(routes.index);
+  // if wallet registration step is already complete, then this was just data update,
+  // so user can be navigated to the dashboard
+  const onContinueClick = () => {
+    const route = charity.Metadata.JunoWallet
+      ? routes.dashboard
+      : routes.documentation;
+    navigate(`${appRoutes.register}/${route}`);
   };
 
   return (
     <div className="flex flex-col gap-4 font-bold">
-      {is_sent ? (
+      {!charity.ContactPerson.EmailVerified ? (
         <>
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
             <p>Hi {charity.ContactPerson.FirstName}!</p>
-            <span>
-              We're still waiting for you to confirm your email address.
-            </span>
+            <span>We're waiting for you to confirm your email address.</span>
           </div>
+          <span className="font-normal">
+            Please click on the link in the email and you'll be able to continue
+            with the registration of {charity.Registration.CharityName} on Angel
+            Protocol.
+          </span>
         </>
       ) : (
         <div className="text-2xl">
@@ -79,28 +76,28 @@ export default function ConfirmEmail() {
             {charity.Registration.CharityName},{" "}
             {charity.ContactPerson.FirstName}!
           </p>
-          <p>Your registration reference is</p>
-          <p className="text-orange">{charity.ContactPerson.PK}</p>
         </div>
       )}
-      <span className="font-normal">
-        Please click on the link in the email and you'll be able to continue
-        with the registration of {charity.Registration.CharityName} on Angel
-        Protocol.
-      </span>
+      <div className="text-2xl">
+        <p>Your registration reference is</p>
+        <p className="text-orange">{charity.ContactPerson.PK}</p>
+      </div>
       <div className="flex flex-col gap-1 items-center mt-3">
+        {!charity.ContactPerson.EmailVerified && (
+          <Button
+            onClick={sendEmail}
+            className="bg-orange w-64 h-12 text-sm"
+            isLoading={isLoading}
+          >
+            Resend verification email
+          </Button>
+        )}
         <Button
-          onClick={() => sendEmail("verify-email")}
-          className="bg-orange w-64 h-12 text-sm"
-          isLoading={isLoading}
-        >
-          Resend verification email
-        </Button>
-        <Button
-          onClick={handleClose}
+          onClick={onContinueClick}
           className="bg-thin-blue w-48 h-12 text-sm"
+          disabled={isLoading}
         >
-          close
+          continue
         </Button>
         <ButtonMailTo
           label="Having trouble receiving our emails?"

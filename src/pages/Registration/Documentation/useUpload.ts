@@ -2,20 +2,19 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { DocumentationValues } from "pages/Registration/types";
 import {
-  useRegistrationState,
+  useRegistrationQuery,
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { logger, uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
-import { FORM_ERROR, Folders } from "../constants";
+import { Folders, GENERIC_ERROR_MESSAGE } from "../constants";
 import routes from "../routes";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { data } = useRegistrationState("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();
@@ -30,12 +29,12 @@ export default function useUpload() {
         });
 
         if ("error" in result) {
-          handleError(result.error, FORM_ERROR);
+          return handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
-        navigate(`${appRoutes.register}/${routes.dashboard}`);
+        navigate(`${appRoutes.register}/${routes.additionalInformation}`);
       } catch (error) {
-        handleError(error, FORM_ERROR);
+        handleError(error, GENERIC_ERROR_MESSAGE);
       }
     },
     [charity, handleError, uploadDocumentation, navigate]

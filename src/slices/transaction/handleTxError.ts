@@ -9,6 +9,7 @@ import {
 import { StageUpdater } from "slices/transaction/types";
 import { logger } from "helpers";
 import {
+  CosmosTxSimulationFail,
   LogApplicationUpdateError,
   LogDonationFail,
   TxResultFail,
@@ -32,20 +33,18 @@ export default function handleTxError(error: any, handler: StageUpdater) {
       step: "error",
       message: error.message,
       txHash: error.txHash,
-      chainId: error.chainId,
+      chain: error.chain,
     });
   } else if (error instanceof LogDonationFail) {
     handler({
       step: "error",
       message: error.message,
       txHash: error.txHash,
-      chainId: error.chainId,
     });
   } else if (error instanceof LogApplicationUpdateError) {
     handler({
       step: "error",
       message: error.message,
-      chainId: error.chainId,
     });
   } else if (error instanceof Timeout || error instanceof TimeoutError) {
     handler({ step: "error", message: error.message });
@@ -53,11 +52,10 @@ export default function handleTxError(error: any, handler: StageUpdater) {
     handler({ step: "error", message: "Unspecified error occured" });
   } else if (error instanceof UnexpectedStateError) {
     handler({ step: "error", message: error.message });
-  } else if (error instanceof Error) {
-    handler({
-      step: "error",
-      message: error.message || "Unknown error occured",
-    });
+  } else if (error instanceof CosmosTxSimulationFail) {
+    handler({ step: "error", message: error.message });
+    //any error we are not sure the contents of should just be defaulted to `unknown`
+    //to avoid dumping to user long Error.message
   } else {
     handler({ step: "error", message: "Unknown error occured" });
   }

@@ -1,17 +1,8 @@
-import { useLocation } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
-import RegLoader from "../common/RegLoader";
-import { placeHolderCharity } from "../constants";
 import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
-  const location = useLocation();
-  const { data: charity = placeHolderCharity, isLoading } =
-    useRegistrationQuery((location.state as any)?.is_new ? "new" : "");
-
-  if (isLoading) {
-    return <RegLoader />;
-  }
+  const { charity } = useRegistrationQuery();
 
   return (
     <div>

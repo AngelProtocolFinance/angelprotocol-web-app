@@ -14,8 +14,7 @@ import routes from "../routes";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
-  const { data } = useRegistrationQuery("");
-  const charity = data!; //ensured by guard
+  const { charity } = useRegistrationQuery();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
@@ -30,9 +29,9 @@ export default function useSubmit() {
         });
 
         if ("error" in result) {
-          handleError(result.error, "Error updating profile ❌");
+          return handleError(result.error, "Error updating profile ❌");
         }
-        navigate(`${appRoutes.register}/${routes.dashboard}`);
+        navigate(`${appRoutes.register}/${routes.wallet}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }

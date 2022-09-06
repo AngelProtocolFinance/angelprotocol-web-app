@@ -7,9 +7,9 @@ import { customTags as apesCustomTags, apesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { useLatestBlock } from "services/juno/queriers";
 import {
+  accountTags,
   adminTags,
   customTags,
-  endowmentTags,
   indexfundTags,
   junoTags,
   registrarTags,
@@ -162,8 +162,8 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
     case "acc_withdraw_liq":
       tagsToInvalidate.push(
         {
-          type: junoTags.endowment,
-          id: endowmentTags.balance,
+          type: junoTags.account,
+          id: accountTags.balance,
         },
         { type: apesTags.custom, id: apesCustomTags.chain }
         // edge: beneficiary is user wallet
@@ -172,15 +172,15 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
 
     case "acc_profile":
       tagsToInvalidate.push({
-        type: junoTags.endowment,
-        id: endowmentTags.profile,
+        type: junoTags.account,
+        id: accountTags.profile,
       });
       break;
 
-    case "reg_endow_status":
+    case "acc_endow_status":
       tagsToInvalidate.push({
-        type: junoTags.registrar,
-        id: registrarTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
+        type: junoTags.account,
+        id: accountTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
       });
       break;
 

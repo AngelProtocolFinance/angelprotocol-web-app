@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues } from "pages/Admin/types";
-import { useEndowmentsQuery } from "services/juno/registrar";
+import { useEndowmentsQuery } from "services/juno/account";
 import useDebouncer from "hooks/useDebouncer";
 
 export default function useStatusPreview() {

@@ -22,7 +22,7 @@ export default function Nav() {
       </NavLink>
 
       <Category title="Endowment" classes="mt-4" />
-      <NavLink to={routes.reg_endow_status} className={styler}>
+      <NavLink to={routes.acc_endow_status} className={styler}>
         Change Endowment Status
       </NavLink>
 

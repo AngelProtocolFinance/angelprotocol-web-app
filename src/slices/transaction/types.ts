@@ -70,9 +70,9 @@ export type SuccessStage = {
 export type ErrorStage = {
   step: "error";
   message: string;
+  //supply these two if want to show tx link
   txHash?: string;
-  chainId?: string;
-  chain?: never;
+  chain?: Chain;
 };
 
 export type KYCStage = {

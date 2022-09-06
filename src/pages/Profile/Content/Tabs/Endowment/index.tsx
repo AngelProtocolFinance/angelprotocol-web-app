@@ -28,8 +28,8 @@ export default function Endowment() {
 
   return (
     <div className="grid md:grid-cols-2 gap-3 content-start">
-      <Account type="liquid" balance={balance.liquid_balance} />
-      <Account type="locked" balance={balance.locked_balance} />
+      <Account type="liquid" balance={balance.liquid} />
+      <Account type="locked" balance={balance.locked} />
     </div>
   );
 }

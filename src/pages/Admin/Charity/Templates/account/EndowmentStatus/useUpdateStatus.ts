@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import {
+  Beneficiary,
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
@@ -14,14 +15,14 @@ import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
+import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import { cleanObject } from "helpers/admin/cleanObject";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, proposalLink, role } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
@@ -31,6 +32,12 @@ export default function useUpdateStatus() {
       return;
     } else if (data.prevStatus === "Closed") {
       showModal(Popup, { message: "Endowment is closed and can't be changed" });
+      //only review team can change status from "Inactive"
+    } else if (data.prevStatus === "Inactive" && role === "ap") {
+      showModal(Popup, {
+        message: "This group is not authorized to change Inactive endowments",
+      });
+      return;
     } else {
       const prevStatusNum = endowmentStatus[data.prevStatus];
       if (+data.status === prevStatusNum) {
@@ -39,26 +46,45 @@ export default function useUpdateStatus() {
       }
     }
 
+    const [beneficiary, beneficiaryMeta] = (function (): [Beneficiary, string] {
+      switch (data.beneficiaryType) {
+        case "index fund":
+          return [
+            { indexfund: { id: data.indexFund } },
+            `index fund sdg: ${data.indexFund}`,
+          ];
+        case "endowment":
+          return [
+            { endowment: { id: data.endowmentId } },
+            `endowment id: ${data.endowmentId}`,
+          ];
+        default:
+          return [
+            { wallet: { address: data.wallet } },
+            `wallet addr: ${data.wallet}`,
+          ];
+      }
+    })();
+
     const statusChangePayload: StatusChangePayload = {
-      beneficiary: data.beneficiary,
+      beneficiary,
       status: +data.status as EndowmentStatusNum,
       endowment_id: data.id,
     };
 
-    const registrarContract = new Registrar(wallet);
-    const embeddedMsg =
-      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload)
-      );
+    const accountContract = new Account(wallet);
+    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload)
+    );
 
     //construct endowment payload preview
     const statusUpdateMeta: EndowmentStatusMeta = {
-      type: "reg_endow_status",
+      type: "acc_endow_status",
       data: {
         id: data.id,
         fromStatus: data.prevStatus,
         toStatus: data.status,
-        beneficiary: data.beneficiary,
+        beneficiary: beneficiaryMeta,
       },
     };
 

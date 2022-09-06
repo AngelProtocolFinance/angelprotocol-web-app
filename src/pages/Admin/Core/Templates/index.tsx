@@ -10,7 +10,6 @@ import IndexFundOwner from "./index-fund/IndexFundOwner";
 import FundMembers from "./index-fund/Members";
 import RemoveFund from "./index-fund/RemoveFund";
 import RegistrarConfig from "./registrar/Config";
-import EndowmentStatus from "./registrar/EndowmentStatus";
 import RegistrarOwner from "./registrar/Owner";
 
 export default function Templates() {
@@ -25,7 +24,6 @@ export default function Templates() {
       <Route path={routes.if_owner} element={<IndexFundOwner />} />
 
       {/** _registrar */}
-      <Route path={routes.reg_endow_status} element={<EndowmentStatus />} />
       <Route path={routes.reg_config} element={<RegistrarConfig />} />
       <Route path={routes.reg_owner} element={<RegistrarOwner />} />
 

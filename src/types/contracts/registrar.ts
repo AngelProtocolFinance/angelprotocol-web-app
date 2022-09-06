@@ -1,49 +1,4 @@
-import { CW4Member, Threshold } from ".";
-import { Profile } from "./account";
-
-export type EndowmentStatus = {
-  Inactive: 0;
-  Approved: 1;
-  Frozen: 2;
-  Closed: 3;
-};
-
-export type EndowmentType = "charity" | "normal";
-export type EndowmentStatusNum = EndowmentStatus[keyof EndowmentStatus];
-export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
-
-export type EndowmentTier = "Level1" | "Level2" | "Level3";
-export type EndowmentTierNum = 1 | 2 | 3;
-export type EndowmentEntry = {
-  id: number; //int
-  owner: String;
-  status: keyof EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
-  name?: string;
-  logo?: string;
-  image?: string;
-  tier?: EndowmentTier;
-  un_sdg?: number;
-};
-
-export type CategorizedEndowments = {
-  [index: number]: EndowmentEntry[];
-};
-
-export type EndowmentQueryOptions = {
-  name?: string;
-  owner?: string;
-  status?: EndowmentStatusStrNum;
-  tier?: EndowmentTier;
-  endow_type?: EndowmentType;
-};
-
-export interface EndowmentQueryMsg {
-  address: string;
-  msg: {
-    endowment_list: EndowmentQueryOptions;
-  };
-}
+import { EndowmentType } from ".";
 
 export type RegistrarConfig = {
   owner: string;
@@ -91,12 +46,6 @@ export type VaultListRes = {
   vaults: YieldVault[];
 };
 
-export type StatusChangePayload = {
-  endowment_id: number;
-  status: EndowmentStatus[keyof EndowmentStatus];
-  beneficiary?: string;
-};
-
 export type RegistrarConfigPayload = {
   accounts_code_id?: number;
   index_fund_contract?: string; //addr
@@ -116,17 +65,4 @@ export type RegistrarConfigPayload = {
 
 export type RegistrarOwnerPayload = {
   new_owner: string;
-};
-
-export type RegistrarCreateEndowmentPayload = {
-  owner: string;
-  beneficiary: string;
-  withdraw_before_maturity: false;
-  maturity_time: undefined; //don't set maturity for charities
-  maturity_height: undefined; ///don't set maturity for charities
-  profile: Profile;
-  cw4_members: CW4Member[];
-  kyc_donors_only: boolean;
-  cw3_threshold: Threshold;
-  cw3_max_voting_period: 86400; //seconds - 24H
 };

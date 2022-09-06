@@ -33,16 +33,6 @@ type EndowmentListRes = { endowments: EndowmentEntry[] };
 
 type Addr = { addr: string };
 export interface ContractQueries {
-  regEndowList: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: EndowmentEntry[];
-  };
-  regCategorizedEndows: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: CategorizedEndowments;
-  };
   regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
   regVaultList: {
     args: VaultListOptions;
@@ -100,6 +90,16 @@ export interface ContractQueries {
     result: any;
   }; //TODO update once to be used
 
+  accEndowList: {
+    args: EndowmentQueryOptions;
+    res: Q<EndowmentListRes>;
+    result: EndowmentEntry[];
+  };
+  accCategorizedEndows: {
+    args: EndowmentQueryOptions;
+    res: Q<EndowmentListRes>;
+    result: CategorizedEndowments;
+  };
   accEndowment: {
     args: { id: number };
     res: Q<EndowmentDetails>;

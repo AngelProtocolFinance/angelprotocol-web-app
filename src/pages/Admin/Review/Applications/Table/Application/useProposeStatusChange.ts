@@ -7,12 +7,11 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
+import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
 import { cleanObject } from "helpers/admin/cleanObject";
 import { logStatusUpdateProposal } from "./logStatusUpdateProposal";
 
-const NUM_ID = 15; //TODO: get this from ap (not yet present)
 export default function useProposeStatusChange(app: CharityApplication) {
   const dispatch = useSetter();
   const { wallet } = useGetWallet();
@@ -22,20 +21,19 @@ export default function useProposeStatusChange(app: CharityApplication) {
   function updateStatus(status: Extract<EndowmentStatusNum, 1 | 3>) {
     const statusChangePayload: StatusChangePayload = {
       status,
-      endowment_id: NUM_ID,
+      endowment_id: app.EndowmentId,
     };
     const statusWord = status === 1 ? "Approve" : "Reject";
 
-    const registrarContract = new Registrar(wallet);
-    const embeddedMsg =
-      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload)
-      );
+    const accountContract = new Account(wallet);
+    const embeddedMsg = accountContract.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload)
+    );
 
     const statusUpdateMeta: EndowmentStatusMeta = {
-      type: "reg_endow_status",
+      type: "acc_endow_status",
       data: {
-        id: NUM_ID,
+        id: app.EndowmentId,
         fromStatus: "Inactive",
         toStatus: `${status}`,
       },

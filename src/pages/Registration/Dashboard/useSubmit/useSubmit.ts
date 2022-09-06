@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 import { Charity } from "types/aws";
-import { FORM_ERROR } from "pages/Registration/constants";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 import { logger, processEstimateError } from "helpers";
 import { logEndowmentId } from "./logEndowmentId";
 
@@ -20,7 +20,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        const contract = new Registrar(wallet);
+        const contract = new Account(wallet);
         const msg = contract.createEndowmentCreationMsg(charity);
         dispatch(
           sendCosmosTx({
@@ -37,7 +37,7 @@ export default function useSubmit() {
         );
       } catch (err) {
         logger.error(processEstimateError(err));
-        dispatch(setStage({ step: "error", message: FORM_ERROR }));
+        dispatch(setStage({ step: "error", message: GENERIC_ERROR_MESSAGE }));
         dispatch(setFormLoading(false));
       } finally {
         showModal(TransactionPrompt, {});
