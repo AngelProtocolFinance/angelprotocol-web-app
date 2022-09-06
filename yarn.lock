@@ -3478,12 +3478,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/line-clamp@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@tailwindcss/line-clamp@npm:0.4.0"
+"@tailwindcss/line-clamp@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@tailwindcss/line-clamp@npm:0.4.2"
   peerDependencies:
     tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
-  checksum: 71ba25a4a18323496a7af34e55871121b8459530b0e5696c4173fd65a76162675619f1d1158a8a32e1ace2069333949bef6f1061b17f49fef98dc2291a979dcd
+  checksum: 26b8135df24fff51c3d3790ae795bdc12bc4a7113fa22dcab80568ae6ee00710e2ed4154048958c472bb654061f0f1573b7ac5e004ae6222cbd5ac6fcf199478
   languageName: node
   linkType: hard
 
@@ -3498,7 +3498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/terra.js@npm:^3.1.5":
+"@terra-money/terra.js@npm:^3.1.6":
   version: 3.1.6
   resolution: "@terra-money/terra.js@npm:3.1.6"
   dependencies:
@@ -5083,8 +5083,8 @@ __metadata:
     "@keplr-wallet/types": ^0.10.5
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.8.5
-    "@tailwindcss/line-clamp": ^0.4.0
-    "@terra-money/terra.js": ^3.1.5
+    "@tailwindcss/line-clamp": ^0.4.2
+    "@terra-money/terra.js": ^3.1.6
     "@terra-money/wallet-provider": ^3.11.1
     "@testing-library/dom": ^8.13.0
     "@testing-library/jest-dom": ^5.14.1
@@ -5134,7 +5134,7 @@ __metadata:
     stream-browserify: ^3.0.0
     tailwindcss: ^3.1.8
     ts-node: ^10.9.1
-    typescript: ^4.4.2
+    typescript: <4.8.0
     util: ^0.12.4
     web-vitals: ^3.0.0
     web3.storage: ^4.3.0
@@ -16458,7 +16458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.4.2":
+"typescript@npm:<4.8.0":
   version: 4.7.4
   resolution: "typescript@npm:4.7.4"
   bin:
@@ -16468,7 +16468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.4.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@<4.8.0#~builtin<compat/typescript>":
   version: 4.7.4
   resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=7ad353"
   bin:
