@@ -25,10 +25,9 @@ import {
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
+  BsFilterLeft,
   BsHourglassSplit,
-  BsSafeFill,
 } from "react-icons/bs";
-import { BsFilterLeft } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
@@ -47,6 +46,7 @@ import {
   FaUserCircle,
   FaUsersCog,
 } from "react-icons/fa";
+import { FcSafe } from "react-icons/fc";
 import { FiMenu } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
@@ -117,7 +117,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   MoneyBill: FaMoneyBillWave,
   User: FaUserCircle,
   PieChart: GiPieChart,
-  Safe: BsSafeFill,
+  Safe: FcSafe,
   Admin: FaUsersCog,
   Crop: IoCrop,
   Save: BiSave,
