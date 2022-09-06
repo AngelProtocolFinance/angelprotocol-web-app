@@ -38,12 +38,12 @@ export default function Documentation() {
   const upload = useUpload();
 
   return (
-    <Container>
-      <ProgressIndicator />
+    <FormProvider {...methods}>
+      <Container>
+        <ProgressIndicator />
 
-      <Title level={currentLevel} />
+        <Title level={currentLevel} />
 
-      <FormProvider {...methods}>
         <form
           className="flex flex-col w-full h-full gap-4 items-center"
           onSubmit={methods.handleSubmit(upload)}
@@ -100,8 +100,8 @@ export default function Documentation() {
           </div>
           <ButtonSection />
         </form>
-      </FormProvider>
-    </Container>
+      </Container>
+    </FormProvider>
   );
 }
 
