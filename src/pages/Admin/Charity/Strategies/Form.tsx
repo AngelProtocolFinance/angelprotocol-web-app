@@ -1,29 +1,17 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useFieldArray, useFormContext } from "react-hook-form";
 import Icon from "components/Icon";
 import { maskAddress, roundDownToNum } from "helpers";
 import PieChart from "./PieChart";
 import Selection from "./Selection";
-import { StrategyFormValues } from "./schema";
+import useUpdateStrategy from "./useUpdateStrategy";
 
 export default function Form() {
-  const { register, watch, handleSubmit } =
-    useFormContext<StrategyFormValues>();
-  const { fields, append, remove } = useFieldArray<StrategyFormValues>({
-    name: "allocations", // unique name for your Field Array
-  });
-
-  const allocations = watch("allocations");
-  const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
-
-  function propose(data: StrategyFormValues) {
-    console.log(data);
-  }
-
+  const { proposeStrategyUpdate, total, fields, append, remove, register } =
+    useUpdateStrategy();
   return (
     <form
       className="mt-6 col-span-2 grid grid-cols-2"
-      onSubmit={handleSubmit(propose)}
+      onSubmit={proposeStrategyUpdate}
     >
       <h3 className="text-xl font-bold uppercase text-zinc-50 mb-2 col-span-2">
         Strategies

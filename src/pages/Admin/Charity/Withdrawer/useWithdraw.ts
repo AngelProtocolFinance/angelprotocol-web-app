@@ -8,7 +8,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
@@ -17,7 +17,6 @@ import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 
 export default function useWithdraw() {
-  const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
@@ -116,12 +115,6 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    isSubmitDisabled:
-      !isValid ||
-      !isDirty ||
-      form_loading ||
-      form_error !== null ||
-      isSubmitting,
-    isFormLoading: form_loading,
+    isSubmitDisabled: !isValid || !isDirty || isSubmitting,
   };
 }

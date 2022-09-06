@@ -1,20 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { AccountStrategies } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import Form from "./Form";
 import { StrategyFormValues, schema } from "./schema";
-
-export const strategies: AccountStrategies = {
-  locked: [
-    { vault: "a", percentage: "0.5" },
-    { vault: "b", percentage: "0.5" },
-  ],
-  liquid: [
-    { vault: "a", percentage: "0.5" },
-    { vault: "b", percentage: "0.5" },
-  ],
-};
 
 export default function Strategies() {
   const { endowment } = useAdminResources();
@@ -30,7 +18,7 @@ export default function Strategies() {
     defaultValues: {
       allocations: endowment.strategies.liquid.map((l) => ({
         ...l,
-        percentage: +l.percentage,
+        percentage: +l.percentage * 100,
       })),
     },
   });

@@ -27,14 +27,14 @@ interface RebalanceDetails {
   principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
 }
 
-export interface StrategyComponent {
+export interface Strategy {
   vault: string; // Vault SC Address
   percentage: string; // percentage of funds to invest
 }
 
 export interface AccountStrategies {
-  locked: StrategyComponent[];
-  liquid: StrategyComponent[];
+  locked: Strategy[];
+  liquid: Strategy[];
 }
 
 export interface EndowmentDetails {
@@ -153,9 +153,11 @@ type Asset = {
   amount: string;
 };
 
+type AccountType = "locked" | "liquid";
+
 export interface WithdrawPayload {
   id: number;
-  acct_type: "locked" | "liquid";
+  acct_type: AccountType;
   beneficiary: string;
   assets: Asset[];
 }
@@ -182,4 +184,10 @@ export type CreateEndowmentPayload = {
   kyc_donors_only: boolean;
   cw3_threshold: Threshold;
   cw3_max_voting_period: 86400; //seconds - 24H
+};
+
+export type UpdateStategyPayload = {
+  id: number;
+  acct_type: AccountType;
+  strategies: Strategy[];
 };
