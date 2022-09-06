@@ -23,9 +23,8 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId } = useAdminResources();
+  const { cw3, endowmentId, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
-  const { proposalLink } = useAdminResources();
   const dispatch = useSetter();
 
   function withdraw(data: WithdrawValues) {
