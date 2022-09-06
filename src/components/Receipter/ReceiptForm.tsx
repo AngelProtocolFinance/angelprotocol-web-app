@@ -34,22 +34,23 @@ export default function ReceiptForm() {
           </span>
         </p>
       )}
-      <TextInput name="email" id="email" label="Email Address" />
-      <TextInput name="fullName" id="fullName" label="Full Name" />
+      <TextInput name="email" id="email" label="Email Address" required />
+      <TextInput name="fullName" id="fullName" label="Full Name" required />
       <TextInput
         name="streetAddress"
         id="streetAddress"
         label="Street Address"
+        required
       />
-      <TextInput name="city" id="city" label="City" />
+      <TextInput name="city" id="city" label="City" required />
       <TextInput name="state" id="state" label="State" />
-      <TextInput name="zipCode" id="zipCode" label="Zip Code" />
+      <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
       <div className="grid">
         <label
           htmlFor="country"
           className="text-angel-grey text-xs uppercase font-bold mb-1"
         >
-          Country
+          Country <span className="text-rose-400"> *</span>
         </label>
         <div className="form-control rounded-md grid bg-white-grey">
           <CountrySelector

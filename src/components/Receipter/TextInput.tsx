@@ -6,6 +6,7 @@ export default function TextInput(props: {
   id: string;
   name: keyof RV;
   label: string;
+  required?: true;
 }) {
   const {
     register,
@@ -18,6 +19,7 @@ export default function TextInput(props: {
         className="ml-0.5 text-angel-grey text-xs uppercase font-bold mb-1"
       >
         {props.label}
+        {props.required && <span className="text-rose-400"> *</span>}
       </label>
       <input
         {...register(props.name)}
