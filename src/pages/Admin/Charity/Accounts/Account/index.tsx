@@ -1,19 +1,13 @@
-import { GenericBalance } from "types/contracts";
+import { AccountType, GenericBalance } from "types/contracts";
 import useWithdrawer from "../../Withdrawer/useWithdrawer";
 import Holdings from "./Holdings";
 
-type Locked = {
-  type: "locked";
+type Props = {
+  type: AccountType;
   balance: GenericBalance;
 };
 
-type Liquid = {
-  type: "liquid";
-  balance: GenericBalance;
-};
-
-type TAcount = Locked | Liquid;
-export default function Account(props: TAcount) {
+export default function Account(props: Props) {
   const title = props.type === "liquid" ? "Liquid" : "Locked";
 
   const showWithdraw = useWithdrawer(props.balance);
@@ -25,7 +19,7 @@ export default function Account(props: TAcount) {
         {props.type === "liquid" && (
           <button
             onClick={showWithdraw}
-            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-sm font-heading"
+            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent px-2 py-1 rounded-md uppercase text-sm font-heading"
           >
             withdraw
           </button>

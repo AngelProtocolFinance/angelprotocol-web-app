@@ -153,7 +153,7 @@ type Asset = {
   amount: string;
 };
 
-type AccountType = "locked" | "liquid";
+export type AccountType = "locked" | "liquid";
 
 export interface WithdrawPayload {
   id: number;

@@ -19,7 +19,7 @@ export default function Nav() {
         back to profile
       </Link>
       <NavLink end to={adminRoutes.index} className={styler}>
-        Dashboard
+        Accounts
       </NavLink>
       <NavLink end to={routes.transactions} className={styler}>
         Transactions
