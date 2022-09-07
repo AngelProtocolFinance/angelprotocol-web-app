@@ -66,7 +66,6 @@ export default function Documentation() {
               </Column>
             </Column>
             <Column className="border-8 border-white/20 w-full px-2">
-              {" "}
               <HighlightColumn level={1}>
                 <Header>Level 1</Header>
                 <p>
@@ -75,7 +74,7 @@ export default function Documentation() {
                   Angel Protocol’s interface. Your organization is not displayed
                   on the marketplace and cannot be found through the search bar.
                 </p>
-              </HighlightColumn>{" "}
+              </HighlightColumn>
               <HighlightColumn className="mt-14" level={2}>
                 <Header>Level 2</Header>
                 <p>
