@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { StrategyFormValues } from "./types";
 import { roundDownToNum } from "helpers";
-import { StrategyFormValues } from "./schema";
 
 export default function RemainingAllocation() {
   const { watch } = useFormContext<StrategyFormValues>();

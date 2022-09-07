@@ -1,9 +1,9 @@
 import { FieldArrayWithId, UseFieldArrayAppend } from "react-hook-form";
+import { StrategyFormValues } from "./types";
 import { useVaultListQuery } from "services/juno/registrar";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { maskAddress } from "helpers";
-import { StrategyFormValues } from "./schema";
 
 type Props = {
   select: UseFieldArrayAppend<StrategyFormValues, "allocations">;

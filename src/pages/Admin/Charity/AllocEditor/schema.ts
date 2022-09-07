@@ -1,15 +1,6 @@
 import * as Yup from "yup";
+import { Allocation, StrategyFormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-
-export type Allocation = {
-  percentage: number;
-  vault: string;
-};
-
-export type StrategyFormValues = {
-  allocations: Allocation[];
-  unallocated: number;
-};
 
 const allocationShape: SchemaShape<Allocation> = {
   percentage: Yup.number()

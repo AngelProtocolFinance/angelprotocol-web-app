@@ -1,15 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { StrategyFormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import Form from "./Form";
-import { StrategyFormValues, schema } from "./schema";
+import { schema } from "./schema";
 
-export default function Strategies() {
+export default function AllocEditor() {
   const { endowment } = useAdminResources();
-
-  //query strategies from registrar
-  //if loading,
-  //if strategies
 
   const methods = useForm<StrategyFormValues>({
     resolver: yupResolver(schema),

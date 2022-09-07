@@ -1,5 +1,5 @@
 import Accounts from "./Accounts";
-import Strategies from "./Strategies";
+import Strategies from "./AllocEditor";
 
 export default function Dashboard() {
   return (
