@@ -33,6 +33,7 @@ export default function Documentation() {
       auditedFinancialReports: charity.Registration.AuditedFinancialReports,
     },
   });
+
   const upload = useUpload();
 
   return (
