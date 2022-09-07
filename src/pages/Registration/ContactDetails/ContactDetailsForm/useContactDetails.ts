@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
-import useSendVerificationEmail from "pages/Registration/common/useSendVerificationEmail";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import {
   useCreateNewCharityMutation,
@@ -17,7 +16,6 @@ import routes from "../../routes";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
-  const { sendVerificationEmail } = useSendVerificationEmail();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const { charity: originalCharityData } = useRegistrationQuery();
   const navigate = useNavigate();
@@ -88,17 +86,9 @@ export default function useSaveContactDetails() {
           return navigate(`${appRoutes.register}/${routes.dashboard}`);
         }
 
-        const { data } = result;
-        // Extracting SK, EmailVerified so that 'contactPerson' does not include them
-        const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
-        //save ref before invalidating empty cache to retrigger fetch
-        storeRegistrationReference(PK || "");
-        //sending this email invalidated registration query cache
-        await sendVerificationEmail(PK!, {
-          ...contactPerson,
-          CharityName: data.Registration.CharityName,
-        });
-
+        // otherwise they are submitting the data for the first time, so save the reg. reference
+        // and navigate to the next registration step
+        storeRegistrationReference(result.data.ContactPerson.PK || "");
         navigate(`${appRoutes.register}/${routes.confirmEmail}`);
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
@@ -109,7 +99,6 @@ export default function useSaveContactDetails() {
       handleError,
       navigate,
       registerCharity,
-      sendVerificationEmail,
       updateContactPerson,
     ]
   );
