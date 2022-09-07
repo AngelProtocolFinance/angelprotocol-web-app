@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { AdminParams } from "../types";
-import { AccountType, YieldVault } from "types/contracts";
+import { YieldVault } from "types/contracts";
 import { useVaultListQuery } from "services/juno/registrar";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { maskAddress } from "helpers";
 import { useAdminResources } from "../Guard";
+import { getAccounType } from "./helpers";
 
 export default function Investments() {
   const { endowment } = useAdminResources();
@@ -75,10 +76,4 @@ function Vault({ address, isAdded }: YieldVault & { isAdded: boolean }) {
       </button>
     </div>
   );
-}
-
-function getAccounType(typeParam?: string): AccountType {
-  const locked: AccountType = "locked";
-  const liquid: AccountType = "liquid";
-  return typeParam === locked ? locked : liquid;
 }

@@ -1,4 +1,4 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { StrategyFormValues } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -12,17 +12,7 @@ import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 
 export default function useUpdateStrategy() {
-  const {
-    handleSubmit,
-    formState: { isValid, isDirty, isSubmitting },
-    register,
-    watch,
-  } = useFormContext<StrategyFormValues>();
-
-  const { fields, append, remove } = useFieldArray<StrategyFormValues>({
-    name: "allocations", // unique name for your Field Array
-  });
-
+  const { watch } = useFormContext<StrategyFormValues>();
   const { cw3, endowmentId, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
@@ -67,14 +57,8 @@ export default function useUpdateStrategy() {
   }
 
   return {
-    proposeStrategyUpdate: handleSubmit(proposeStrategyUpdate),
-    isSubmitDisabled: !isValid || !isDirty || isSubmitting,
-    fields,
-    remove,
-    append,
-    watch,
-    register,
     total,
     allocations,
+    proposeStrategyUpdate,
   };
 }

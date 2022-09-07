@@ -4,6 +4,7 @@ import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { maskAddress, roundDown } from "helpers";
 import Pie, { UNALLOCATED_COLOR, pieColors } from "../Pie";
+import { routes } from "../routes";
 
 export default function Allocation(props: { type: AccountType }) {
   const { endowment } = useAdminResources();
@@ -36,7 +37,10 @@ export default function Allocation(props: { type: AccountType }) {
 
   return (
     <Tab.Panel className="grid grid-cols-[auto_1fr] items-center gap-x-4 p-4">
-      <Link to="edit-allocations" className="col-span-2 justify-self-end">
+      <Link
+        to={`../${routes.edit_allocations}/${props.type}`}
+        className="col-span-2 justify-self-end"
+      >
         edit
       </Link>
       <Pie

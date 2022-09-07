@@ -18,7 +18,7 @@ export default function Selection({ selected, select }: Props) {
   });
 
   return (
-    <div className="flex gap-4 p-4 border-2 border-zinc-50/20 rounded-md col-span-2 mt-6">
+    <div className="flex gap-4 p-4 border-2 border-zinc-50/20 rounded-md col-span-2">
       <QueryLoader
         messages={{
           error: "Failed to get strategy options",
