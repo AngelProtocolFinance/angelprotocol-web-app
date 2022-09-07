@@ -13,7 +13,7 @@ import {
 import { Denoms } from "types/lists";
 import { DiffSet } from "types/utils";
 
-export type AdminParams = { id: string };
+export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
 
 export type Templates =

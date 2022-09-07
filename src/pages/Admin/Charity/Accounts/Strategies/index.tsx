@@ -1,6 +1,5 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { maskAddress } from "helpers";
 import Pie from "../../Pie";
 
 export default function Strategies(props: { type: AccountType }) {

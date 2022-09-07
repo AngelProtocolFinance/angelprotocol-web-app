@@ -1,54 +1,11 @@
-# ACCOUNTS UPDATE
-
-### done
-
-- update [contract addresses](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-ad347a63010488ecb7e42f17461bb113a3491dd784ec91d253f0040e631d0098)
-- [reflect](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-d864f54f89ecf07eb507757abd61f5e46591f718fd3c65e33f72506be72b4b3eL16) moved registrar methods to accounts
-- included [categories](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-d864f54f89ecf07eb507757abd61f5e46591f718fd3c65e33f72506be72b4b3eR65) field in create endowment payload
-- create [Beneficiary](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-ce85087d6285d5a7b922331cb634797b711441dafa392aff3ff998071788a817) component to allow selecting between `wallet`, `endowment` and `index-fund` as beneficiary
-- update [sdg selector](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-eb52585db1265f4891bf482782eb6c1a459d6bfa1aafe79edc958ea6d05b839cL13) to accept multiple sdg nums
-- [reflect](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-df6c72367ae2ab30182afc4df1181a71ee9c1389be4691c7120f76e4397aa3b6R11) moved registrar queries to accounts
-- [update](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-e3977ebc8089e1d4e27f2be36f9c08d669348afd103cc6d1a06c6b28fdb1dffaL11) balance query result
-
-### bug fixes
-
-- [add](https://github.com/AngelProtocolFinance/angelprotocol-web-app/pull/1202/files#diff-d6d0ca35fabb204fc52cc13ef9e78a8210f586dc46315735e5f7d8c0bc3157f1R49) check for AP team to not change status of `Inactive` endowments
-
-### queries tested
-
-- [x] endowlist & categorized
-- [x] profile
-- [x] balance queries
-
-### tx tested
-
-- [x] update profile
-- [x] withdraw liquid `acc_type = "liquid"`, type `"locked"` can only be performed by `config.owner` atm
-- [x] update endowment status(approval | rejection) in registration
-- [x] update endowment status via ap admin, `msg` format okay and getting unauthorized
-
-### todos
-
-- [] registration
-
-  - allow multiple sdgs to be selected and reflect on `msg.categories`
-  - `categories.general` field ?
-
-- [] marketplace
-
-  - need to change layout of marketplace since categorized by single endowment, now each charity have multiple sdgs, they can appear on multiple rows
-
-- [] proposal meta
-
-  - diffs of nested objects
-
-- [] queries with `[]` result shoudn't throw `404`
-
-- [] `/widthdraw` endpoint: withdraw proposal `msg` format is changed
-
 # STRATEGY UPDATE
 
 - editing strategies for liquid and locked is separate
+
+### questions
+
+- profile.strategies = should just be YieldVault & {percentage}
+- where to query
 
 ### Setting up1
 
@@ -184,22 +141,3 @@ await sendTransaction(wallet!); // NOTE: wallet is defined here
 ```
 
 ## (3) Chain requirement not handled upfront
-
-```rust
- if !(
-  //reviewer condition
-  (
-   info.sender == registrar_config.applications_review
-   && endowment.status == EndowmentStatus::Inactive
-   && (msg.status == 1 || msg.status == 3)
-  )
-  ||
-  //ap-team condition
-  (
-   info.sender == config.owner
-   && endowment.status != EndowmentStatus::Inactive
-  )
-) {
-  //throw Unauthorized
-}
-```
