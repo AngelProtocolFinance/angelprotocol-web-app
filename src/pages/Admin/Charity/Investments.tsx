@@ -22,7 +22,7 @@ export default function Investments() {
 
   return (
     <div className="grid content-start">
-      <h3 className="mt-6 uppercase text-2xl font-extrabold text-zinc-50/80">
+      <h3 className="mt-6 mb-4 uppercase text-2xl font-extrabold text-zinc-50/80">
         {accounType} investments
       </h3>
       <QueryLoader

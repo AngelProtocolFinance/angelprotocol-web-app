@@ -21,6 +21,9 @@ export default function Nav() {
       <NavLink end to={adminRoutes.index} className={styler}>
         Accounts
       </NavLink>
+      <NavLink end to={routes.allocations} className={styler}>
+        Allocations
+      </NavLink>
       <NavLink end to={routes.transactions} className={styler}>
         Transactions
       </NavLink>

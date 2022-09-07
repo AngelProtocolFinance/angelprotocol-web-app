@@ -3,6 +3,7 @@ import { adminRoutes } from "constants/routes";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import Accounts from "./Accounts";
+import Allocations from "./Allocations";
 import Investments from "./Investments";
 import Templates from "./Templates";
 import Transactions from "./Transactions";
@@ -16,6 +17,7 @@ export default function Views() {
       <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
       <Route path={routes.transactions} element={<Transactions />} />
       <Route path={`${routes.investments}/:type`} element={<Investments />} />
+      <Route path={routes.allocations} element={<Allocations />} />
       <Route index element={<Accounts />} />
     </Routes>
   );
