@@ -1,9 +1,10 @@
 type Props = {
   series: number[];
   max?: number; //must be greater than series total
+  classes?: string;
 };
 
-export default function Pie({ series, max }: Props) {
+export default function Pie({ series, max, classes }: Props) {
   function getArcCoord(pct: number) {
     const x = Math.cos(2 * Math.PI * pct);
     const y = Math.sin(2 * Math.PI * pct);
@@ -43,14 +44,14 @@ export default function Pie({ series, max }: Props) {
         <path
           key={idxAfterLastEl}
           d={`M ${startX} ${startY} A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY} L 0 0`}
-          className="fill-emerald-400"
+          className={UNALLOCATED_COLOR.fill}
         />
       );
     }
     return paths;
   }
 
-  if (series.length <= 0) {
+  if (series.length <= 0 && !max) {
     return null;
   }
 
@@ -58,14 +59,15 @@ export default function Pie({ series, max }: Props) {
     <svg
       viewBox="-1 -1 2 2"
       style={{ transform: "rotate(-0.25turn)" }}
-      className="max-w-sm"
+      className={classes}
     >
       {getPaths()}
     </svg>
   );
 }
 
-export const pieColors = [
+type PieColor = { bg: string; fill: string };
+export const pieColors: PieColor[] = [
   { bg: "bg-sky-50", fill: "fill-sky-50" },
   { bg: "bg-sky-200", fill: "fill-sky-200" },
   { bg: "bg-sky-400", fill: "fill-sky-400" },
@@ -77,3 +79,8 @@ export const pieColors = [
   { bg: "bg-fuchsia-400", fill: "fill-fuchsia-400" },
   { bg: "bg-fuchsia-600", fill: "fill-fuchsia-600" },
 ];
+
+export const UNALLOCATED_COLOR: PieColor = {
+  bg: "bg-emerald-400",
+  fill: "fill-emerald-400",
+};

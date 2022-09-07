@@ -1,4 +1,5 @@
 import { Tab } from "@headlessui/react";
+import Allocation from "./Allocation";
 
 const tabs = ["liquid", "locked"];
 export default function Allocations() {
@@ -15,7 +16,7 @@ export default function Allocations() {
       <p className="text-zinc-50/80">
         how funds received in each account is allocated
       </p>
-      <Tab.Group as="div" className="mt-2 mb-4">
+      <Tab.Group as="div" className="grid content-start mt-4 mb-4">
         <Tab.List className="flex justify-self-start bg-zinc-50/20 rounded-sm overflow-hidden">
           {tabs.map((tab) => (
             <Tab
@@ -31,10 +32,8 @@ export default function Allocations() {
           ))}
         </Tab.List>
         <Tab.Panels className="p-3 shadow-inner bg-zinc-50/5 rounded-md">
-          <Tab.Panel>hello</Tab.Panel>
-          <Tab.Panel>world</Tab.Panel>
-          {/* <Account type="liquid" />
-        <Account type="locked" /> */}
+          <Allocation type="liquid" />
+          <Allocation type="locked" />
         </Tab.Panels>
       </Tab.Group>
     </div>
