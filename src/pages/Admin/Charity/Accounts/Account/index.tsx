@@ -16,8 +16,7 @@ export default function Account(props: {
 }) {
   const { endowmentId, endowment } = useAdminResources();
   const queryState = useBalanceQuery({ id: endowmentId });
-  const showWithdraw = useWithdrawer({ cw20: [], native: [] });
-
+  const showWithdraw = useWithdrawer();
   const strats = endowment.strategies[props.type];
 
   return (
@@ -37,17 +36,22 @@ export default function Account(props: {
             loading: "Getting balances",
           }}
         >
-          {(balance) => (
-            <>
-              <Holdings balance={balance.liquid} />
-              <button
-                onClick={showWithdraw}
-                className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent px-2 py-1 rounded-md uppercase text-sm font-heading"
-              >
-                withdraw
-              </button>
-            </>
-          )}
+          {(balance) =>
+            balance[props.type].cw20.length <= 0 &&
+            balance[props.type].native.length <= 0 ? (
+              <p>No investable assets</p>
+            ) : (
+              <>
+                <Holdings balance={balance[props.type]} />
+                <button
+                  onClick={() => showWithdraw(balance[props.type])}
+                  className="mt-6 justify-self-start bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent px-2 py-1 rounded-md uppercase text-sm font-heading"
+                >
+                  withdraw
+                </button>
+              </>
+            )
+          }
         </QueryLoader>
       </div>
       <div
