@@ -1,13 +1,20 @@
 import { ErrorMessage } from "@hookform/error-message";
 import Icon from "components/Icon";
 import { maskAddress, roundDownToNum } from "helpers";
-import PieChart from "./PieChart";
+import Pie from "../Pie";
 import Selection from "./Selection";
 import useUpdateStrategy from "./useUpdateStrategy";
 
 export default function Form() {
-  const { proposeStrategyUpdate, total, fields, append, remove, register } =
-    useUpdateStrategy();
+  const {
+    proposeStrategyUpdate,
+    allocations,
+    total,
+    fields,
+    append,
+    remove,
+    register,
+  } = useUpdateStrategy();
   return (
     <form
       className="mt-6 col-span-2 grid grid-cols-2"
@@ -77,7 +84,12 @@ export default function Form() {
           )}
         </div>
       )) || <p className="text-zinc-50/80">select strategies below</p>}
-      <PieChart />
+      <Pie
+        series={allocations.map(({ percentage }) =>
+          isNaN(percentage) ? 0 : percentage
+        )}
+        max={100}
+      />
       {/* <RemainingAllocation /> */}
       <Selection selected={fields} select={append} />
     </form>

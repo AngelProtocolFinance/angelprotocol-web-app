@@ -75,5 +75,6 @@ export default function useUpdateStrategy() {
     watch,
     register,
     total,
+    allocations,
   };
 }
