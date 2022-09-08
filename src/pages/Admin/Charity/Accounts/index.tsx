@@ -20,7 +20,7 @@ export default function Accounts() {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels className="p-3 shadow-inner bg-zinc-50/5 rounded-md">
+      <Tab.Panels className="shadow-inner bg-zinc-50/5 rounded-md p-3">
         <Account type="liquid" />
         <Account type="locked" />
       </Tab.Panels>

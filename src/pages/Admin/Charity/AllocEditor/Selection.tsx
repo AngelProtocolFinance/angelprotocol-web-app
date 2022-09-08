@@ -2,9 +2,8 @@ import { FieldArrayWithId, UseFieldArrayAppend } from "react-hook-form";
 import { StrategyFormValues } from "./types";
 import { AccountType } from "types/contracts";
 import { useVaultListQuery } from "services/juno/registrar";
-import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
-import { maskAddress } from "helpers";
+import Vault from "./Vault";
 
 type Props = {
   select: UseFieldArrayAppend<StrategyFormValues, "allocations">;
@@ -28,36 +27,21 @@ export default function Selection({ selected, select, type }: Props) {
         }}
         queryState={queryState}
       >
-        {(vaults) => (
-          <>
-            {vaults.map(({ address }) => {
-              const isSelected = selected.some((s) => s.vault === address);
-              return (
-                <div
-                  key={address}
-                  className="flex gap-2 p-2 items-center relative text-zinc-50/80 font-heading"
-                >
-                  <Icon type="Safe" size={36} />
-                  <span className="font-mono">{maskAddress(address)}</span>
-                  <button
-                    disabled={isSelected}
-                    type="button"
-                    className="disabled:text-emerald-400"
-                    onClick={() => {
-                      select(
-                        { percentage: 0, vault: address },
-                        { shouldFocus: true }
-                      );
-                    }}
-                  >
-                    {/**   TODO: better way to determine if vault is selected */}
-                    <Icon type={isSelected ? "CheckCircle" : "Plus"} />
-                  </button>
-                </div>
-              );
-            })}
-          </>
-        )}
+        {(vaults) =>
+          (vaults.length > 0 && (
+            <>
+              {vaults.map((v) => (
+                <Vault
+                  {...v}
+                  isSelected={selected.some(
+                    (field) => field.vault === v.address
+                  )}
+                  select={select}
+                />
+              ))}
+            </>
+          )) || <p className="text-zinc-50/80">No investment options found.</p>
+        }
       </QueryLoader>
     </div>
   );

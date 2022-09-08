@@ -68,7 +68,6 @@ export default function Pie({ series, max, classes }: Props) {
 
 type PieColor = { bg: string; fill: string };
 export const pieColors: PieColor[] = [
-  { bg: "bg-sky-50", fill: "fill-sky-50" },
   { bg: "bg-sky-200", fill: "fill-sky-200" },
   { bg: "bg-sky-400", fill: "fill-sky-400" },
   { bg: "bg-sky-500", fill: "fill-sky-600" },

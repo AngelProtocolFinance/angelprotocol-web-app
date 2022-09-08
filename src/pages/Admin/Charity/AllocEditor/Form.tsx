@@ -83,7 +83,7 @@ export default function Form() {
         max={100}
         classes="w-[15rem]"
       />
-      <h4 className="text-lg uppercase text-zinc-50/80 mt-10">
+      <h4 className="text-lg uppercase text-zinc-50/80 mt-10 mb-4">
         Investment options
       </h4>
       <Selection selected={fields} select={append} type={accountType} />
