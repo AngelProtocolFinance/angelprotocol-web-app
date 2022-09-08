@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { StrategyFormValues } from "./types";
+import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -11,7 +12,7 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 
-export default function useUpdateStrategy() {
+export default function useUpdateStrategy(type: AccountType) {
   const { watch } = useFormContext<StrategyFormValues>();
   const { cw3, endowmentId, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
@@ -25,7 +26,7 @@ export default function useUpdateStrategy() {
     const account = new Account(wallet);
     const msg = account.createEmbeddedStrategyUpdateMsg({
       id: endowmentId,
-      acct_type: "liquid",
+      acct_type: type,
       strategies: data.allocations.map((alloc) => ({
         percentage: `${alloc.percentage / 100}`,
         vault: alloc.vault,

@@ -48,7 +48,7 @@ export default function Allocation(props: { type: AccountType }) {
         max={1}
         classes="w-[15rem]"
       />
-      <div className="justify-self-start">{renderVaults()}</div>
+      <div className="justify-self-start grid gap-y-2">{renderVaults()}</div>
     </Tab.Panel>
   );
 }

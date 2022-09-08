@@ -2,9 +2,9 @@ import { WithdrawLog } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import LogRow from "./LogRow";
 
-export default function TransactionsTable(props: { withdraws: WithdrawLog[] }) {
+export default function Table(props: { withdraws: WithdrawLog[] }) {
   return (
-    <table className="w-full">
+    <table className="w-full mt-6">
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/20">
         <Cells
           type="th"

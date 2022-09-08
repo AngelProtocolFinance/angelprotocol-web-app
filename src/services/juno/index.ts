@@ -8,7 +8,7 @@ import { IS_TEST } from "constants/env";
 import { junoTags } from "./tags";
 
 export const baseUrl = IS_TEST
-  ? "https://api.uni.junonetwork.io"
+  ? "https://lcd.uni.juno.deuslabs.fi"
   : "https://lcd-juno.itastakers.com";
 
 const customBaseQuery: BaseQueryFn = retry(

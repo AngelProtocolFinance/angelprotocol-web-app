@@ -11,24 +11,24 @@ export function QueryLoader<T>(props: {
 
   if (isLoading) {
     return (
-      <p
+      <div
         className={`flex gap-2 text-zinc-50/80 ${
           props.classes?.container || ""
         }`}
       >
         <Icon type="Loading" className="animate-spin relative top-1" />
         <span>{props.messages.loading || "Loading.."}</span>
-      </p>
+      </div>
     );
   }
   if (isError || !data) {
     return (
-      <p
+      <div
         className={`flex gap-2 text-rose-300 ${props.classes?.container || ""}`}
       >
         <Icon type="Info" className="relative top-1" />
         <span>{props.messages.error || "Failed to get data"}</span>
-      </p>
+      </div>
     );
   }
 

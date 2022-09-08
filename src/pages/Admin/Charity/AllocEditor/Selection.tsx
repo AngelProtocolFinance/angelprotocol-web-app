@@ -1,5 +1,6 @@
 import { FieldArrayWithId, UseFieldArrayAppend } from "react-hook-form";
 import { StrategyFormValues } from "./types";
+import { AccountType } from "types/contracts";
 import { useVaultListQuery } from "services/juno/registrar";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
@@ -8,17 +9,18 @@ import { maskAddress } from "helpers";
 type Props = {
   select: UseFieldArrayAppend<StrategyFormValues, "allocations">;
   selected: FieldArrayWithId<StrategyFormValues, "allocations", "id">[];
+  type: AccountType;
 };
 
-export default function Selection({ selected, select }: Props) {
+export default function Selection({ selected, select, type }: Props) {
   const queryState = useVaultListQuery({
-    acct_type: "liquid",
+    acct_type: type,
     approved: true,
     endowment_type: "Charity",
   });
 
   return (
-    <div className="flex gap-4 p-4 border-2 border-zinc-50/20 rounded-md col-span-2">
+    <div className="flex gap-4 col-span-2 mb-6">
       <QueryLoader
         messages={{
           error: "Failed to get strategy options",

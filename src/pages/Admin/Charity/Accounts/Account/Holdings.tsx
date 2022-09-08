@@ -4,20 +4,13 @@ import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { coinAsset } from "constants/currency";
 
-export default function Holdings(props: { balance: GenericBalance }) {
+export default function Holdings({ cw20, native }: GenericBalance) {
   return (
     <table>
       <TableSection type="tbody" rowClass="">
-        <>
-          {props.balance.native.map((bal) => (
-            <Balance {...bal} key={bal.denom} />
-          ))}
-        </>
-        <>
-          {props.balance.cw20.map((bal) => (
-            <Balance {...bal} key={bal.address} />
-          ))}
-        </>
+        {native
+          .map((bal) => <Balance {...bal} key={bal.denom} />)
+          .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
       </TableSection>
     </table>
   );

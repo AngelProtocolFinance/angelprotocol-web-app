@@ -1,9 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import {
-  FieldArrayWithId,
-  UseFieldArrayRemove,
-  useFormContext,
-} from "react-hook-form";
+import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { StrategyFormValues } from "./types";
 import Icon from "components/Icon";
 import { roundDownToNum } from "helpers";
@@ -12,16 +8,17 @@ type Props = {
   name: string;
   idx: number;
   remove: UseFieldArrayRemove;
+  color: string;
 };
 
-export default function VaultField({ name, idx, remove }: Props) {
+export default function VaultField({ name, idx, color, remove }: Props) {
   const { register } = useFormContext<StrategyFormValues>();
   return (
     <div className="flex gap-2 p-2 items-center relative text-zinc-50/80 font-heading">
-      <p className="flex items-center gap-2">
-        <Icon type="Safe" size={36} />
+      <div className="flex items-center gap-2">
+        <div className={`${color} w-4 h-4 rounded-full`} />
         <span className="font-mono">{name}</span>
-      </p>
+      </div>
 
       <input
         className="block w-fit bg-transparent focus:outline-none border-b border-zinc-50/10 text-right text-lg"
