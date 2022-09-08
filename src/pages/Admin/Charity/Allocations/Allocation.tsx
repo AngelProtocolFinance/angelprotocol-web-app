@@ -2,6 +2,7 @@ import { Tab } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
+import Icon from "components/Icon";
 import { maskAddress, roundDown } from "helpers";
 import Pie, { UNALLOCATED_COLOR, pieColors } from "../Pie";
 import { routes } from "../routes";
@@ -39,9 +40,10 @@ export default function Allocation(props: { type: AccountType }) {
     <Tab.Panel className="grid grid-cols-[auto_1fr] items-center gap-x-4 p-4">
       <Link
         to={`../${routes.edit_allocations}/${props.type}`}
-        className="col-span-2 justify-self-end"
+        className="col-span-2 justify-self-end flex items-center gap-1 text-zinc-50/80 uppercase font-heading text-sm hover:text-angel-orange"
       >
-        edit
+        <Icon type="Edit" />
+        <span>Edit</span>
       </Link>
       <Pie
         series={strats.map((s) => +s.percentage)}

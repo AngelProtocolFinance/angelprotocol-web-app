@@ -51,9 +51,6 @@ export default function Investments() {
 }
 
 function Vault({ address, isAdded }: YieldVault & { isAdded: boolean }) {
-  //don't show in available investments
-  if (isAdded) return null;
-
   return (
     <div
       key={address}

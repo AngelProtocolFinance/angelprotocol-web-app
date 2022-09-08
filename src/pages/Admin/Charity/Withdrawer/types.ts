@@ -1,4 +1,4 @@
-import { GenericBalance } from "types/contracts";
+import { AccountType, GenericBalance } from "types/contracts";
 
 export type Amount = {
   tokenId: string; //
@@ -14,9 +14,11 @@ export type WithdrawValues = {
 
   //meta
   _amounts: string; //collective amounts error
+  type: AccountType;
 };
 
 export type Props = {
   balance: GenericBalance;
+  type: AccountType;
 };
 //form meta

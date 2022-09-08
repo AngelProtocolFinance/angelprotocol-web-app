@@ -7,7 +7,7 @@ import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Withdrawer({ balance: { cw20, native } }: Props) {
+export default function Withdrawer({ balance: { cw20, native }, type }: Props) {
   const { wallet } = useGetWallet();
 
   const cw20s: Amount[] = cw20.map((c) => ({
@@ -32,6 +32,7 @@ export default function Withdrawer({ balance: { cw20, native } }: Props) {
       network: chainIds.juno,
       //transform to form format
       amounts: [...natives, ...cw20s],
+      type,
     },
     resolver: yupResolver(schema),
   });

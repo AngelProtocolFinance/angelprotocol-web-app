@@ -10,22 +10,20 @@ import useWithdrawer from "../../Withdrawer/useWithdrawer";
 import { routes } from "../../routes";
 import Holdings from "./Holdings";
 
-export default function Account(props: {
+type Props = {
   classes?: string;
   type: AccountType;
-}) {
+};
+
+export default function Account({ classes = "", type }: Props) {
   const { endowmentId, endowment } = useAdminResources();
   const queryState = useBalanceQuery({ id: endowmentId });
   const showWithdraw = useWithdrawer();
-  const strats = endowment.strategies[props.type];
+  const strats = endowment.strategies[type];
 
   return (
     <Tab.Panel className="grid grid-cols-2">
-      <div
-        className={`grid content-start text-white/80 p-3 ${
-          props.classes ?? ""
-        }`}
-      >
+      <div className={`grid content-start text-white/80 p-3 ${classes}`}>
         <h3 className="text-2xl font-extrabold text-zinc-50/80 uppercase mb-4">
           Investable assets
         </h3>
@@ -37,14 +35,19 @@ export default function Account(props: {
           }}
         >
           {(balance) =>
-            balance[props.type].cw20.length <= 0 &&
-            balance[props.type].native.length <= 0 ? (
+            balance[type].cw20.length <= 0 &&
+            balance[type].native.length <= 0 ? (
               <p>No investable assets</p>
             ) : (
               <>
-                <Holdings {...balance[props.type]} />
+                <Holdings {...balance[type]} />
                 <button
-                  onClick={() => showWithdraw(balance[props.type])}
+                  onClick={() =>
+                    showWithdraw({
+                      balance: balance[type],
+                      type,
+                    })
+                  }
                   className="mt-6 justify-self-start bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent px-2 py-1 rounded-md uppercase text-sm font-heading"
                 >
                   withdraw
@@ -55,16 +58,14 @@ export default function Account(props: {
         </QueryLoader>
       </div>
       <div
-        className={`grid content-start text-white/80 p-3 border-l border-zinc-50/30 ${
-          props.classes ?? ""
-        }`}
+        className={`grid content-start text-white/80 p-3 border-l border-zinc-50/30 ${classes}`}
       >
         <div className="mb-4 flex items-center gap-2">
           <h3 className="text-2xl font-extrabold text-zinc-50/80 uppercase ">
             Investments
           </h3>
           <Link
-            to={`${routes.investments}/${props.type}`}
+            to={`${routes.investments}/${type}`}
             className="uppercase text-xs text-emerald-300"
           >
             + add investment

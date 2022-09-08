@@ -49,17 +49,13 @@ export default function Form() {
 
   return (
     <form
-      className="mt-6 grid content-start"
+      className="mt-6 grid content-start gap-x-4"
       onSubmit={handleSubmit(proposeStrategyUpdate)}
     >
-      <h3 className="text-2xl font-extrabold uppercase text-zinc-50 mb-2 col-span-2">
+      <h3 className="text-2xl font-extrabold uppercase text-zinc-50 mb-10 col-span-2">
         Edit {accountType} allocations
       </h3>
-      <h4 className="text-lg uppercase text-zinc-50/80 mt-8 mb-4">
-        Investment options
-      </h4>
-      <Selection selected={fields} select={append} type={accountType} />
-      <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-end self-center mr-4">
+      <div className="grid gap-4 p-4 border-2 border-zinc-50/20 rounded-md justify-self-end self-center">
         {renderFields()}
         {total > 100 && (
           <div className="g">
@@ -87,6 +83,10 @@ export default function Form() {
         max={100}
         classes="w-[15rem]"
       />
+      <h4 className="text-lg uppercase text-zinc-50/80 mt-10">
+        Investment options
+      </h4>
+      <Selection selected={fields} select={append} type={accountType} />
     </form>
   );
 }

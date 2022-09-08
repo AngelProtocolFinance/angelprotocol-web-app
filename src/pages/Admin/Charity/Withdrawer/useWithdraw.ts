@@ -31,15 +31,19 @@ export default function useWithdraw() {
     const [cw20s, natives] = data.amounts.reduce(
       (result, amount) => {
         if (amount.type === "cw20") {
-          result[0].push({
-            address: amount.tokenId,
-            amount: scaleToStr(amount.value),
-          });
+          if (amount.value /** empty "" */) {
+            result[0].push({
+              address: amount.tokenId,
+              amount: scaleToStr(amount.value),
+            });
+          }
         } else {
-          result[1].push({
-            denom: amount.tokenId,
-            amount: scaleToStr(amount.value),
-          });
+          if (amount.value) {
+            result[1].push({
+              denom: amount.tokenId,
+              amount: scaleToStr(amount.value),
+            });
+          }
         }
         return result;
       },
@@ -53,7 +57,7 @@ export default function useWithdraw() {
       beneficiary:
         //if not juno, send to ap wallet (juno)
         isJuno ? data.beneficiary : ap_wallets.juno,
-      acct_type: "locked",
+      acct_type: data.type,
       assets: [
         ...cw20s.map((c) => ({
           amount: c.amount,
