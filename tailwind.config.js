@@ -83,6 +83,9 @@ module.exports = {
           "&:hover": {
             backgroundColor: theme("colors.thin-blue"),
           },
+          "&:disabled": {
+            borderStyle: "none",
+          },
         },
       });
     }),
