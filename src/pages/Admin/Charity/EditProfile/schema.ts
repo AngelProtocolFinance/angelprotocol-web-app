@@ -3,7 +3,7 @@ import { UpdateProfileValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
-import { proposalShape } from "../../../../constants";
+import { proposalShape } from "../../constants";
 
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<UpdateProfileValues> = {

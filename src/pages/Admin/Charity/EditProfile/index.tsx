@@ -12,7 +12,7 @@ import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Profile() {
+export default function EditProfile() {
   const { wallet } = useGetWallet();
   const { endowmentId } = useAdminResources();
   const {
