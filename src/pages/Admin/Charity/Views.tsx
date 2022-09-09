@@ -15,7 +15,7 @@ export default function Views() {
       <Route path={adminRoutes.proposals} element={<Proposals />} />
       <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
       <Route path={routes.withdraws} element={<Withdraws />} />
-      <Route path={routes.edit_profile} element={<EditProfile />} />
+      <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
       <Route index element={<Dashboard />} />
     </Routes>
   );

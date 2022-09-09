@@ -7,13 +7,11 @@ import {
 import { Profile as TProfile } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { wallet } = useGetWallet();
   const { endowmentId } = useAdminResources();
   const {
     data: profile,
@@ -21,9 +19,7 @@ export default function EditProfile() {
     isError,
   } = useEndowmentProfileQuery({ id: endowmentId });
 
-  if (!wallet)
-    return <FormError errorMessage="Please connect wallet to view this page" />;
-  if (isLoading) return <FormSkeleton />;
+  if (isLoading) return <FormSkeleton classes="max-w-4xl" />;
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 

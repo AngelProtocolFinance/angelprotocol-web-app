@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
-import { templates } from "pages/Admin/constants";
 import { useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon, { IconTypes } from "components/Icon";
@@ -26,7 +25,7 @@ export default function Nav() {
       </LinkIcon>
       {isMember && (
         <LinkIcon
-          to={`${appRoutes.admin}/${id}/${adminRoutes.templates}/${templates.acc_profile}`} //change to multisig edit
+          to={`${appRoutes.admin}/${id}/${adminRoutes.edit_profile}`} //change to multisig edit
           _iconType="Edit"
           className="ml-auto border-r border-white/30 pr-2"
         >

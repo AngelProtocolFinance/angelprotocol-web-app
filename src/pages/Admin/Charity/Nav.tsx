@@ -12,7 +12,7 @@ export default function Nav() {
       <NavLink end to={routes.withdraws} className={styler}>
         Withdraws
       </NavLink>
-      <NavLink end to={routes.edit_profile} className={styler}>
+      <NavLink end to={adminRoutes.edit_profile} className={styler}>
         Edit Profile
       </NavLink>
       <NavLink end to={adminRoutes.proposals} className={styler}>
