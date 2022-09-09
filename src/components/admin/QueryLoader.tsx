@@ -1,36 +1,72 @@
 import { ReactElement } from "react";
 import Icon from "components/Icon";
 
-export function QueryLoader<T>(props: {
+type Props<T> = {
   queryState: { data?: T; isLoading: boolean; isError: boolean };
-  messages: { loading?: string; error?: string };
+  messages: {
+    loading?: string;
+    error?: string;
+    empty?: T extends any[] ? string : never;
+  };
   classes?: { container?: string };
+  filterFn?: T extends (infer Item)[]
+    ? (item: Item, idx: number) => boolean
+    : never;
   children(data: NonNullable<T>): ReactElement;
-}) {
-  const { isLoading, isError, data } = props.queryState;
+};
+
+export function QueryLoader<T>({
+  queryState,
+  classes,
+  messages,
+  children,
+  filterFn,
+}: Props<T>) {
+  const { isLoading, isError, data } = queryState;
 
   if (isLoading) {
     return (
-      <div
-        className={`flex gap-2 text-zinc-50/80 ${
-          props.classes?.container || ""
-        }`}
-      >
+      <div className={`flex gap-2 text-zinc-50/80 ${classes?.container || ""}`}>
         <Icon type="Loading" className="animate-spin relative top-1" />
-        <span>{props.messages.loading || "Loading.."}</span>
+        <span>{messages.loading || "Loading.."}</span>
       </div>
     );
   }
   if (isError || !data) {
     return (
-      <div
-        className={`flex gap-2 text-rose-300 ${props.classes?.container || ""}`}
-      >
+      <div className={`flex gap-2 text-rose-300 ${classes?.container || ""}`}>
         <Icon type="Info" className="relative top-1" />
-        <span>{props.messages.error || "Failed to get data"}</span>
+        <span>{messages.error || "Failed to get data"}</span>
       </div>
     );
   }
 
-  return props.children(data as NonNullable<T>);
+  if (Array.isArray(data) && data.length <= 0) {
+    if (data.length <= 0) {
+      return (
+        <div
+          className={`flex gap-2 text-zinc-50/80 ${classes?.container || ""}`}
+        >
+          <Icon type="Info" className="relative top-1" />
+          <span>{messages.empty || "No data"}</span>
+        </div>
+      );
+    }
+
+    if (filterFn) {
+      const filtered = data.filter(filterFn);
+      if (filtered.length <= 0) {
+        return (
+          <div
+            className={`flex gap-2 text-zinc-50/80 ${classes?.container || ""}`}
+          >
+            <Icon type="Info" className="relative top-1" />
+            <span>{messages.empty || "No data"}</span>
+          </div>
+        );
+      }
+    }
+  }
+
+  return children(data as NonNullable<T>);
 }

@@ -12,7 +12,7 @@ export default function Views() {
       <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
       <Route path={adminRoutes.proposals} element={<Proposals />} />
       <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
-      <Route index element={<Proposals />} />
+      <Route index element={<Dashboard />} />
     </Routes>
   );
 }
