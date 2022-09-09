@@ -4,8 +4,9 @@ import { aws } from "services/aws/aws";
 import { countriesApi } from "services/countries";
 import { flipside } from "services/flipslide/flipslide";
 import { junoApi } from "services/juno";
-import { adminReducer } from "slices/admin/root";
+import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
+import { componentReducer } from "slices/components";
 import transactionReducer from "slices/transaction/transactionSlice";
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     transaction: transactionReducer,
     admin: adminReducer,
     auth: authReducer,
+    component: componentReducer,
     [aws.reducerPath]: aws.reducer,
     [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,

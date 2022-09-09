@@ -5,7 +5,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { coinAsset } from "constants/currency";
-import { routes } from "./routes";
+import { adminRoutes } from "constants/routes";
 
 export default function Holdings({ cw20, native }: GenericBalance) {
   if (cw20.length <= 0 && native.length <= 0) {
@@ -34,7 +34,7 @@ export default function Holdings({ cw20, native }: GenericBalance) {
 function WithdrawLink(props: { classes?: string }) {
   return (
     <Link
-      to={routes.withdraws}
+      to={adminRoutes.withdraws}
       className={`flex justify-end items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
     >
       <span>withraw</span>
