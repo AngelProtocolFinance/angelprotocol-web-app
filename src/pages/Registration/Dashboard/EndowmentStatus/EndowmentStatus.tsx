@@ -1,11 +1,15 @@
+import { MouseEventHandler } from "react";
 import { Charity } from "types/aws";
 import Loader from "components/Loader";
 import { maskAddress } from "helpers";
+import { Button } from "../../common";
 import EndowmentCreated from "./EndowmentCreated";
 
 type Props = {
   charity: Charity;
   isLoading: boolean;
+  isSubmitDisabled: boolean;
+  onSubmit: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function EndowmentStatus(props: Props) {
@@ -24,6 +28,20 @@ export default function EndowmentStatus(props: Props) {
           <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-yellow-500">
             Under Review
           </p>
+        )}
+        {RegistrationStatus === "Inactive" && (
+          <>
+            <p className="uppercase text-green-500 w-40">
+              {RegistrationStatus}
+            </p>
+            <Button
+              className="w-full md:w-2/3 h-10 mt-5 btn-primary"
+              onClick={props.onSubmit}
+              disabled={props.isSubmitDisabled}
+            >
+              Submit for review
+            </Button>
+          </>
         )}
         {RegistrationStatus === "Active" && (
           <p className="flex items-center h-10 ml-14 mr-auto text-green-500 uppercase">

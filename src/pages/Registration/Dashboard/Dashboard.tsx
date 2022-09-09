@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
-import { Button, ProgressIndicator } from "../common";
+import { ProgressIndicator } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
-import { getRegistrationState, isRegistrationEditable } from "../helpers";
+import { getRegistrationState } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -19,11 +19,12 @@ export default function Dashboard() {
     useSendVerificationEmail();
   const { handleError } = useErrorContext();
 
-  const isDataSubmitted = !isRegistrationEditable(charity);
-
   const isLoading = isSubmitting || isSendingEmail;
 
-  const isStepDisabled = isDataSubmitted || isLoading;
+  const isStepDisabled =
+    isLoading ||
+    charity.Registration.RegistrationStatus === "Under Review" ||
+    charity.Registration.RegistrationStatus === "Active";
 
   const registrationState = getRegistrationState(charity);
 
@@ -86,18 +87,14 @@ export default function Dashboard() {
           isIncomplete={!charity.ContactPerson.EmailVerified}
         />
       </div>
-      {isDataSubmitted ? (
-        <EndowmentStatus charity={charity} isLoading={isLoading} />
-      ) : (
-        <Button
-          className="w-full md:w-2/3 h-10 mt-5 btn-primary"
-          onClick={() => submit(charity)}
-          disabled={!registrationState.getIsReadyForSubmit() || isSubmitting}
-          isLoading={isLoading}
-        >
-          Submit for review
-        </Button>
-      )}
+      <EndowmentStatus
+        charity={charity}
+        isLoading={isLoading}
+        isSubmitDisabled={
+          !registrationState.getIsReadyForSubmit() || isSubmitting
+        }
+        onSubmit={() => submit(charity)}
+      />
     </div>
   );
 }
