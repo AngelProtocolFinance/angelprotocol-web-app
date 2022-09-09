@@ -13,7 +13,7 @@ export default function Dashboard() {
       <h3 className="uppercase font-extrabold text-2xl mb-1 text-zinc-50/80">
         Balances
       </h3>
-      <div className="grid gap-x-4 grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         <Balance type="liquid" />
         <Balance type="locked" />
       </div>
