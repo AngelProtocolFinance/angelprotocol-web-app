@@ -20,10 +20,9 @@ export default function Dashboard() {
 
   const isLoading = isSubmitting || isSendingEmail;
 
+  // not checking if RegistrationStatus === "Active" as the Dashboard is inaccessible when the Endowment is active
   const isStepDisabled =
-    isLoading ||
-    charity.Registration.RegistrationStatus === "Under Review" ||
-    charity.Registration.RegistrationStatus === "Active";
+    isLoading || charity.Registration.RegistrationStatus === "Under Review";
 
   const resendVerificationEmail = useCallback(async () => {
     try {
