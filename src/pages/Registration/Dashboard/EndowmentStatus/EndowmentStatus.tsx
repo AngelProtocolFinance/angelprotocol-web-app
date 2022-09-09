@@ -27,7 +27,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
         <p className="ml-3 mr-auto">Status of Your Endowment</p>
         {Registration.RegistrationStatus === "Inactive" && (
           <>
-            <p className="uppercase text-green-500 w-40">
+            <p className="uppercase text-green-500 w-40 mr-2">
               {Registration.RegistrationStatus}
             </p>
             <Button
