@@ -1,6 +1,7 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/cw3";
 import { QueryLoader } from "components/admin";
+import Balance from "./Balance";
 import Table from "./Table";
 
 export default function Dashboard() {
@@ -9,8 +10,13 @@ export default function Dashboard() {
 
   return (
     <div className="grid content-start">
+      <h3>Balances</h3>
+      <div>
+        <Balance type="liquid" />
+        <Balance type="locked" />
+      </div>
       <h3 className="uppercase text-2xl text-zinc-50 font-bold mt-6">
-        Recent proposals
+        New proposals
       </h3>
       <QueryLoader
         queryState={queryState}

@@ -32,17 +32,17 @@ export default function Account({ classes = "", type }: Props) {
             loading: "Getting balances",
           }}
         >
-          {(balance) =>
-            balance[type].cw20.length <= 0 &&
-            balance[type].native.length <= 0 ? (
+          {(balance) => {
+            const { cw20, native } = balance.tokens_on_hand[type];
+            return cw20.length <= 0 && native.length <= 0 ? (
               <p>No investable assets</p>
             ) : (
               <>
-                <Holdings {...balance[type]} />
+                <Holdings {...{ cw20, native }} />
                 <button
                   onClick={() =>
                     showWithdraw({
-                      balance: balance[type],
+                      balance: { cw20, native },
                       type,
                     })
                   }
@@ -51,8 +51,8 @@ export default function Account({ classes = "", type }: Props) {
                   withdraw
                 </button>
               </>
-            )
-          }
+            );
+          }}
         </QueryLoader>
       </div>
       <Customs strats={[]} type={type} />

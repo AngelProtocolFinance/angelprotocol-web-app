@@ -7,6 +7,7 @@ import {
   CW20Balance,
   CW20Info,
   CategorizedEndowments,
+  EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
   EndowmentQueryOptions,
@@ -107,8 +108,8 @@ export interface ContractQueries {
   };
   accBalance: {
     args: { id: number };
-    res: Q<BalanceInfo>;
-    result: BalanceInfo;
+    res: Q<EndowmentBalance>;
+    result: EndowmentBalance;
   };
   accProfile: { args: { id: number }; res: Q<Profile>; result: Profile };
 }

@@ -19,6 +19,16 @@ export interface BalanceInfo {
   liquid: GenericBalance;
 }
 
+type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
+
+export interface EndowmentBalance {
+  tokens_on_hand: BalanceInfo;
+  oneoff_locked: VaultWithBalance[];
+  oneoff_liquid: VaultWithBalance[];
+  strategies_locked: VaultWithBalance[];
+  strategies_liquid: VaultWithBalance[];
+}
+
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
