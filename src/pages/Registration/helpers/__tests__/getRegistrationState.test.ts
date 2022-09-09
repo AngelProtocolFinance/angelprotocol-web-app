@@ -133,7 +133,7 @@ describe("getRegistrationState tests", () => {
   const statuses: RegistrationStatus[] = [
     "Inactive",
     "Under Review",
-    "Approved",
+    "Rejected",
     "Active",
   ];
   test.each(statuses)(
