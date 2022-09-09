@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawLiqMeta } from "pages/Admin/types";
 import { CW20 } from "types/contracts";
-import { logWithdrawProposal } from "pages/Admin/Charity/Withdrawer/logWithdrawProposal";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -15,6 +14,7 @@ import CW3 from "contracts/CW3";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
+import { logWithdrawProposal } from "./logWithdrawProposal";
 
 export default function useWithdraw() {
   const {

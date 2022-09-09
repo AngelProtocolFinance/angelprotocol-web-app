@@ -1,8 +1,8 @@
 import { Tab } from "@headlessui/react";
 import { Fragment } from "react";
-import { AccountType, EndowmentBalance, GenericBalance } from "types/contracts";
+import { AccountType, EndowmentBalance } from "types/contracts";
 import Transactor from "components/Transactor";
-import Withdrawer from "../Withdrawer";
+import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
 export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
