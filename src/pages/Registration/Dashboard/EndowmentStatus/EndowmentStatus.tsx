@@ -36,7 +36,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
               {Registration.RegistrationStatus}
             </p>
             <Button
-              className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
+              className="w-full md:w-2/3 h-10 mt-5 bg-angel-orange"
               onClick={onSubmit}
               disabled={!registrationState.getIsReadyForSubmit() || isLoading}
             >
