@@ -30,6 +30,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
             <Transactor
               Content={Withdrawer}
               contentProps={{ balance: tokens_on_hand[t], type: t }}
+              inModal={false}
             />
           </Tab.Panel>
         ))}

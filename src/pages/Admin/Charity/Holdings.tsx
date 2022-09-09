@@ -19,7 +19,7 @@ export default function Holdings({ cw20, native }: GenericBalance) {
 
   return (
     <>
-      <table>
+      <table className="w-full">
         <TableSection type="tbody" rowClass="">
           {native
             .map((bal) => <Balance {...bal} key={bal.denom} />)
@@ -35,7 +35,7 @@ function WithdrawLink(props: { classes?: string }) {
   return (
     <Link
       to={routes.withdraws}
-      className={`justify-self-end flex items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
+      className={`flex justify-end items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
     >
       <span>withraw</span>
       <Icon type="Forward" />
@@ -46,7 +46,7 @@ function WithdrawLink(props: { classes?: string }) {
 function Balance(props: CW20 | Coin) {
   const id = "address" in props ? props.address : props.denom;
   return (
-    <Cells type="td" cellClass="py-2 font-mono uppercase">
+    <Cells type="td" cellClass="py-2 font-mono uppercase text-zinc-50/80">
       <div className="flex items-center gap-2">
         <img
           className="w-6 h-6 object-contain"

@@ -17,7 +17,7 @@ export default function Dashboard() {
         <Balance type="liquid" />
         <Balance type="locked" />
       </div>
-      <h3 className="mt-10 uppercase font-extrabold text-2xl mb-1 text-zinc-50/80">
+      <h3 className="mt-10 mb-4 uppercase font-extrabold text-2xl mb-1 text-zinc-50/80">
         New Proposals
       </h3>
       <QueryLoader
