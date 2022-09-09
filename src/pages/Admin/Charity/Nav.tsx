@@ -11,13 +11,6 @@ export default function Nav() {
 
   return (
     <div className="flex justify-end">
-      <Link
-        to={`${appRoutes.profile}/${endowmentId}`}
-        className="uppercase text-sm text-center font-semibold font-heading text-white mr-auto flex items-center"
-      >
-        <Icon size={15} type="ArrowBack" />
-        back to profile
-      </Link>
       <NavLink end to={adminRoutes.index} className={styler}>
         Accounts
       </NavLink>
