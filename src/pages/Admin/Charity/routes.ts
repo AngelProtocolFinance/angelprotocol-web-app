@@ -1,5 +1,5 @@
 export enum routes {
-  transactions = "transactions",
   investments = "investments",
-  edit_allocations = "edit-allocations",
+  withdraws = "withdraws",
+  edit_profile = "edit-profile",
 }

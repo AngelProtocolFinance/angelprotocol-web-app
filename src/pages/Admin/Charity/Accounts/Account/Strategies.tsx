@@ -55,7 +55,7 @@ export default function Strategies({ strats, type }: Props) {
           AUTO-INVESTMENTS
         </h3>
         <Link
-          to={`${routes.edit_allocations}/${type}`}
+          to={`${routes.edit_profile}/${type}`}
           className="uppercase text-xs text-emerald-300"
         >
           edit strategies
