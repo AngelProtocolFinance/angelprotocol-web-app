@@ -79,7 +79,7 @@ module.exports = {
         ".btn-outline-secondary": {
           borderStyle: "solid",
           borderColor: theme("colors.thin-blue"),
-          borderWidth: "2px",
+          borderWidth: "3px",
           "&:hover": {
             backgroundColor: theme("colors.thin-blue"),
           },
