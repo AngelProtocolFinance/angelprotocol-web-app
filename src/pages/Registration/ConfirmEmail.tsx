@@ -86,7 +86,7 @@ export default function ConfirmEmail() {
         {!charity.ContactPerson.EmailVerified && (
           <Button
             onClick={sendEmail}
-            className="bg-orange w-64 h-12 text-sm"
+            className="btn-outline-secondary w-64 h-12 text-sm"
             isLoading={isLoading}
           >
             Resend verification email
