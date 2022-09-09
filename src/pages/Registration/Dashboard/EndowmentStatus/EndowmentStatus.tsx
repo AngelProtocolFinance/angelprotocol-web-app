@@ -32,7 +32,7 @@ export default function EndowmentStatus(props: Props) {
           <>
             <p className="uppercase text-green-500 w-40">Available</p>
             <Button
-              className="w-40 h-10 bg-thin-blue"
+              className="w-40 h-10 btn-primary"
               onClick={props.onActivate}
             >
               Create

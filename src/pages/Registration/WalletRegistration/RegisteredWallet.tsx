@@ -1,6 +1,6 @@
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   updateRegQueryData,
   useRegistrationQuery,
@@ -12,7 +12,7 @@ import routes from "../routes";
 
 export default function RegisteredWallet() {
   const { charity } = useRegistrationQuery();
-
+  const navigate = useNavigate();
   const dispatch = useSetter();
 
   function clearCachedWallet() {
@@ -24,9 +24,12 @@ export default function RegisteredWallet() {
     );
   }
 
-  const continueUrl = charity.ContactPerson.EmailVerified
-    ? `${appRoutes.register}/${routes.dashboard}`
-    : `${appRoutes.register}/${routes.confirmEmail}`;
+  const onClick = () => {
+    const continueUrl = charity.ContactPerson.EmailVerified
+      ? `${appRoutes.register}/${routes.dashboard}`
+      : `${appRoutes.register}/${routes.confirmEmail}`;
+    navigate(continueUrl);
+  };
 
   return (
     <div className="flex flex-col h-full items-center">
@@ -47,16 +50,16 @@ export default function RegisteredWallet() {
       {/**TODO: must be disabled at some registration point */}
       <Button
         onClick={clearCachedWallet}
-        className="uppercase font-heading text-xs bg-angel-orange px-2 py-1"
+        className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"
       >
         change wallet
       </Button>
-      <Link
-        to={continueUrl}
-        className="flex justify-center items-center w-80 h-10 mt-8 bg-angel-blue rounded-xl uppercase font-bold text-white"
+      <Button
+        className="btn-primary w-80 h-10 mt-8 rounded-xl uppercase font-bold"
+        onClick={onClick}
       >
         Continue
-      </Link>
+      </Button>
     </div>
   );
 }

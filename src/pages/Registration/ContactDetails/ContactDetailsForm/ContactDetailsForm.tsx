@@ -100,7 +100,7 @@ export default function ContactDetailsForm({ charity }: Props) {
           {/* If JunoWallet field is set, we can assume ContactDetails update form has been navigated to from the Dashboard*/}
           {charity.Metadata.JunoWallet && (
             <Button
-              className="bg-green-400 w-48 h-12 mr-2"
+              className="btn-outline-secondary w-48 h-12 mr-2"
               disabled={isSubmitting}
               onClick={() =>
                 navigate(`${appRoutes.register}/${routes.dashboard}`)
@@ -111,7 +111,7 @@ export default function ContactDetailsForm({ charity }: Props) {
           )}
           <Button
             submit
-            className="bg-thin-blue w-48 h-12"
+            className="btn-primary w-48 h-12"
             isLoading={isSubmitting}
           >
             Continue

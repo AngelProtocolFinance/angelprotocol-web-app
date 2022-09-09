@@ -22,7 +22,7 @@ export default function LandingPage() {
 
         <StepsDescription />
 
-        <Button onClick={handleStart} className="bg-orange w-40 h-10">
+        <Button onClick={handleStart} className="btn-primary w-40 h-10">
           Start
         </Button>
       </Section>

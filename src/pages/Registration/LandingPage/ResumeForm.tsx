@@ -61,7 +61,7 @@ export default function ResumeForm() {
       <p className="text-failed-red">{errors.refer?.message}</p>
       <Button
         submit
-        className="bg-thin-blue w-40 h-10"
+        className="btn-secondary w-40 h-10"
         isLoading={isSubmitting}
       >
         Resume
