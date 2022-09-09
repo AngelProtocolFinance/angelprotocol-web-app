@@ -1,24 +1,26 @@
 import { MouseEventHandler } from "react";
-import { Charity } from "types/aws";
+import { getRegistrationState } from "pages/Registration/helpers";
+import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
 import { maskAddress } from "helpers";
 import { Button } from "../../common";
 import EndowmentCreated from "./EndowmentCreated";
 
 type Props = {
-  charity: Charity;
   isLoading: boolean;
-  isSubmitDisabled: boolean;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function EndowmentStatus(props: Props) {
-  const { RegistrationStatus, CharityName } = props.charity.Registration;
-  const { JunoWallet } = props.charity.Metadata;
+  const { charity } = useRegistrationQuery();
+  const { RegistrationStatus, CharityName } = charity.Registration;
+  const { JunoWallet } = charity.Metadata;
 
   if (props.isLoading) {
     return <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-2" />;
   }
+
+  const registrationState = getRegistrationState(charity);
 
   return (
     <div className="flex flex-col w-full gap-4 items-center">
@@ -37,7 +39,9 @@ export default function EndowmentStatus(props: Props) {
             <Button
               className="w-full md:w-2/3 h-10 mt-5 btn-primary"
               onClick={props.onSubmit}
-              disabled={props.isSubmitDisabled}
+              disabled={
+                !registrationState.getIsReadyForSubmit() || props.isLoading
+              }
             >
               Submit for review
             </Button>

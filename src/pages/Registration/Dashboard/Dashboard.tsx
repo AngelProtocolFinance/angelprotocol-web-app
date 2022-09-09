@@ -5,7 +5,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import { ProgressIndicator } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
-import { getRegistrationState } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -25,8 +24,6 @@ export default function Dashboard() {
     isLoading ||
     charity.Registration.RegistrationStatus === "Under Review" ||
     charity.Registration.RegistrationStatus === "Active";
-
-  const registrationState = getRegistrationState(charity);
 
   const resendVerificationEmail = useCallback(async () => {
     try {
@@ -87,14 +84,7 @@ export default function Dashboard() {
           isIncomplete={!charity.ContactPerson.EmailVerified}
         />
       </div>
-      <EndowmentStatus
-        charity={charity}
-        isLoading={isLoading}
-        isSubmitDisabled={
-          !registrationState.getIsReadyForSubmit() || isSubmitting
-        }
-        onSubmit={() => submit(charity)}
-      />
+      <EndowmentStatus isLoading={isLoading} onSubmit={() => submit(charity)} />
     </div>
   );
 }
