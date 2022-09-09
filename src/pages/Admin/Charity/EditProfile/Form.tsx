@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { UpdateProfileValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
+import Icon from "components/Icon";
 import RichTextEditor from "components/RichTextEditor";
 import {
   FormContainer,
@@ -8,17 +10,25 @@ import {
   Submitter,
   TextInput,
 } from "components/admin";
+import { appRoutes } from "constants/routes";
 import ImgEditor from "./ImgEditor";
 import SDGSelector from "./SDGSelector";
 import useEditForm from "./useEditProfile";
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled } = useEditForm();
+  const { editProfile, isSubmitDisabled, id } = useEditForm();
   return (
     <FormContainer
       onSubmit={editProfile}
       className="max-w-4xl justify-self-center mt-6"
     >
+      <Link
+        to={`${appRoutes.profile}/${id}`}
+        className="text-angel-blue hover:text-sky-300 text-sm font-semibold flex items-center gap-1"
+      >
+        <Icon type="Back" />
+        <span>Back to profile</span>
+      </Link>
       <TextInput<UV> title="Proposal Title" name="title" required />
       <TextInput<UV>
         title="proposal description"

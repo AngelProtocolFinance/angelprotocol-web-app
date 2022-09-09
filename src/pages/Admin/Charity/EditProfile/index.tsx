@@ -19,7 +19,8 @@ export default function EditProfile() {
     isError,
   } = useEndowmentProfileQuery({ id: endowmentId });
 
-  if (isLoading) return <FormSkeleton classes="max-w-4xl" />;
+  if (isLoading)
+    return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
