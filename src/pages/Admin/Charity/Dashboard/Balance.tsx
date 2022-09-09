@@ -19,7 +19,9 @@ export default function Balance({ type }: Props) {
           error: "Failed to get balances",
         }}
       >
-        {(balance) => <Holdings {...balance.tokens_on_hand[type]} />}
+        {(balance) => (
+          <Holdings {...balance.tokens_on_hand[type]} type={type} />
+        )}
       </QueryLoader>
     </div>
   );

@@ -1,18 +1,19 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
-import { CW20, GenericBalance } from "types/contracts";
+import { AccountType, CW20, GenericBalance } from "types/contracts";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { coinAsset } from "constants/currency";
 import { adminRoutes } from "constants/routes";
 
-export default function Holdings({ cw20, native }: GenericBalance) {
+type Props = GenericBalance & { type: AccountType };
+export default function Holdings({ cw20, native, type }: Props) {
   if (cw20.length <= 0 && native.length <= 0) {
     return (
       <div className="grid">
         <p className="text-zinc-50/80 text-lg font-heading">0.000</p>
-        <WithdrawLink classes="mt-4" />
+        {type === "liquid" && <WithdrawLink classes="mt-4" />}
       </div>
     );
   }
@@ -26,7 +27,7 @@ export default function Holdings({ cw20, native }: GenericBalance) {
             .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
         </TableSection>
       </table>
-      <WithdrawLink classes="mt-4" />
+      {type === "liquid" && <WithdrawLink classes="mt-4" />}
     </>
   );
 }
