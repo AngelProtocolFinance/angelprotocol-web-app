@@ -96,7 +96,7 @@ export default function Dashboard() {
         />
       ) : (
         <Button
-          className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
+          className="w-full md:w-2/3 h-10 mt-5 btn-primary"
           onClick={() => submit(charity)}
           disabled={!registrationState.getIsReadyForSubmit() || isSubmitting}
           isLoading={isLoading}

@@ -16,7 +16,7 @@ export default function LinkExpired({ onClick, isLoading }: Props) {
         email.
       </p>
       <Button
-        className="bg-thin-blue w-64 h-12 text-sm"
+        className="btn-primary w-64 h-12 text-sm"
         onClick={onClick}
         isLoading={isLoading}
       >

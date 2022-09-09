@@ -16,7 +16,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
         the Angel Protocol family!
       </p>
       <Button
-        className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
+        className="btn-secondary min-w-fit h-10 px-5 mt-5"
         onClick={() =>
           navigate(`${appRoutes.register}/${routes.charityProfile}`)
         }
