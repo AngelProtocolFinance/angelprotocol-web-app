@@ -1,13 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Amount, Props, WithdrawValues } from "./types";
+import { Amount, WithdrawValues, WithdrawerProps } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { condense, roundDown } from "helpers";
 import { chainIds } from "constants/chainIds";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Withdrawer({ balance: { cw20, native }, type }: Props) {
+export default function Withdrawer({
+  balance: { cw20, native },
+  type,
+}: WithdrawerProps) {
   const { wallet } = useGetWallet();
 
   const cw20s: Amount[] = cw20.map((c) => ({

@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
+import Icon from "components/Icon";
 import { humanize } from "helpers";
 import { coinAsset } from "constants/currency";
 
@@ -12,10 +13,20 @@ export default function Amounts() {
   } = useFormContext<WithdrawValues>();
   const { fields } = useFieldArray<WithdrawValues>({ name: "amounts" });
 
+  if (fields.length <= 0) {
+    return (
+      <div className="flex items-center gap-2 text-rose-400 mb-4">
+        <Icon type="Info" />
+        <p>No tokens found</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {fields.map((field, i) => {
         const fieldName = `amounts.${i}.value` as const;
+
         return (
           <div
             className="flex relative mb-6 border-b border-zinc-900/10 pr-2 pb-1 pt-6 items-center"

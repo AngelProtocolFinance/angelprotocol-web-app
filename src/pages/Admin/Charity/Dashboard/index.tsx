@@ -9,14 +9,16 @@ export default function Dashboard() {
   const queryState = useProposalsQuery({ contract: cw3, limit: 5 });
 
   return (
-    <div className="grid content-start">
-      <h3>Balances</h3>
-      <div>
+    <div className="grid content-start mt-6">
+      <h3 className="uppercase font-extrabold text-2xl mb-1 text-zinc-50/80">
+        Balances
+      </h3>
+      <div className="grid gap-x-4 grid-cols-2">
         <Balance type="liquid" />
         <Balance type="locked" />
       </div>
-      <h3 className="uppercase text-2xl text-zinc-50 font-bold mt-6">
-        New proposals
+      <h3 className="mt-10 uppercase font-extrabold text-2xl mb-1 text-zinc-50/80">
+        New Proposals
       </h3>
       <QueryLoader
         queryState={queryState}

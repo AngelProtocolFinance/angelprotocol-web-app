@@ -17,7 +17,7 @@ export type WithdrawValues = {
   type: AccountType;
 };
 
-export type Props = {
+export type WithdrawerProps = {
   balance: GenericBalance;
   type: AccountType;
 };

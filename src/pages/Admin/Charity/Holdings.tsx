@@ -1,18 +1,45 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { Link } from "react-router-dom";
 import { CW20, GenericBalance } from "types/contracts";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
 import { coinAsset } from "constants/currency";
+import { routes } from "./routes";
 
 export default function Holdings({ cw20, native }: GenericBalance) {
+  if (cw20.length <= 0 && native.length <= 0) {
+    return (
+      <div className="grid">
+        <p className="text-zinc-50/80 text-lg font-heading">0.000</p>
+        <WithdrawLink classes="mt-4" />
+      </div>
+    );
+  }
+
   return (
-    <table>
-      <TableSection type="tbody" rowClass="">
-        {native
-          .map((bal) => <Balance {...bal} key={bal.denom} />)
-          .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
-      </TableSection>
-    </table>
+    <>
+      <table>
+        <TableSection type="tbody" rowClass="">
+          {native
+            .map((bal) => <Balance {...bal} key={bal.denom} />)
+            .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
+        </TableSection>
+      </table>
+      <WithdrawLink classes="mt-4" />
+    </>
+  );
+}
+
+function WithdrawLink(props: { classes?: string }) {
+  return (
+    <Link
+      to={routes.withdraws}
+      className={`justify-self-end flex items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
+    >
+      <span>withraw</span>
+      <Icon type="Forward" />
+    </Link>
   );
 }
 

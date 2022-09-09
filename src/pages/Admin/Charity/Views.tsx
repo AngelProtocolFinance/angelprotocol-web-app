@@ -4,6 +4,8 @@ import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import Dashboard from "./Dashboard";
 import Templates from "./Templates";
+import Withdraws from "./Withdraws";
+import { routes } from "./routes";
 
 export default function Views() {
   return (
@@ -11,6 +13,7 @@ export default function Views() {
       <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
       <Route path={adminRoutes.proposals} element={<Proposals />} />
       <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+      <Route path={routes.withdraws} element={<Withdraws />} />
       <Route index element={<Dashboard />} />
     </Routes>
   );

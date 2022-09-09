@@ -1,7 +1,6 @@
 import {
   AdminVoteInfo,
   AllianceMember,
-  BalanceInfo,
   CW3Config,
   CW4Member,
   CW20Balance,

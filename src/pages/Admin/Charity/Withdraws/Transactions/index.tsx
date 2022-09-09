@@ -13,7 +13,7 @@ export default function Transactions() {
         loading: "Loading transactions...",
         error: "Failed to get transactions",
       }}
-      classes={{ container: "mt-6" }}
+      classes={{ container: "mt-2" }}
     >
       {(logs) =>
         logs.length > 0 ? (
