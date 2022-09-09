@@ -1,4 +1,3 @@
-import { MouseEventHandler } from "react";
 import { Charity } from "types/aws";
 import Loader from "components/Loader";
 import { maskAddress } from "helpers";
@@ -7,7 +6,6 @@ import EndowmentCreated from "./EndowmentCreated";
 type Props = {
   charity: Charity;
   isLoading: boolean;
-  onActivate: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function EndowmentStatus(props: Props) {

@@ -9,13 +9,11 @@ import { getRegistrationState, isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
-import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const { charity } = useRegistrationQuery();
   const { submit, isSubmitting } = useSubmit();
-  const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
   const { sendVerificationEmail, isLoading: isSendingEmail } =
     useSendVerificationEmail();
@@ -23,7 +21,7 @@ export default function Dashboard() {
 
   const isDataSubmitted = !isRegistrationEditable(charity);
 
-  const isLoading = isSubmitting || isSendingEmail || isActivateSubmitting;
+  const isLoading = isSubmitting || isSendingEmail;
 
   const isStepDisabled = isDataSubmitted || isLoading;
 
@@ -89,11 +87,7 @@ export default function Dashboard() {
         />
       </div>
       {isDataSubmitted ? (
-        <EndowmentStatus
-          charity={charity}
-          isLoading={isLoading}
-          onActivate={() => activate(charity.ContactPerson.PK)}
-        />
+        <EndowmentStatus charity={charity} isLoading={isLoading} />
       ) : (
         <Button
           className="w-full md:w-2/3 h-10 mt-5 btn-primary"
