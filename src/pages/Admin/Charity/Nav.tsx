@@ -1,24 +1,24 @@
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
-import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
-import { adminRoutes, appRoutes } from "constants/routes";
-import { useAdminResources } from "../Guard";
-import { routes } from "./routes";
+import { adminRoutes } from "constants/routes";
 
 export default function Nav() {
-  const { endowmentId } = useAdminResources();
-
   return (
     <div className="flex justify-end">
       <NavLink end to={adminRoutes.index} className={styler}>
-        Accounts
+        Dashboard
       </NavLink>
-      <NavLink end to={routes.transactions} className={styler}>
-        Transactions
+      <NavLink end to={adminRoutes.index} className={styler}>
+        Investments
+      </NavLink>
+      <NavLink end to={adminRoutes.index} className={styler}>
+        Withdraws
+      </NavLink>
+      <NavLink end to={adminRoutes.index} className={styler}>
+        Edit Profile
       </NavLink>
       <NavLink end to={adminRoutes.proposals} className={styler}>
-        proposals
+        Proposals
       </NavLink>
     </div>
   );
