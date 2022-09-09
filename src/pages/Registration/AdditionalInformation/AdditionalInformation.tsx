@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
-import { InputRow } from "../common";
+import { InputRow, ProgressIndicator } from "../common";
 import ButtonSection from "./ButtonSection";
 import ImageInput from "./ImageInput";
 import OverviewInput from "./OverviewInput";
@@ -33,6 +33,8 @@ export default function AdditionalInformation() {
 
   return (
     <div className="flex flex-col gap-5 items-center w-full">
+      <ProgressIndicator />
+
       <Title />
 
       <FormProvider {...methods}>

@@ -25,7 +25,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels>
+      <Tab.Panels className="w-full max-w-md">
         {tabs.map((t) => (
           <Tab.Panel key={t} as={Fragment}>
             <Transactor

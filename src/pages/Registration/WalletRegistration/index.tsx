@@ -1,5 +1,6 @@
 import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { ProgressIndicator } from "../common";
 import RegLoader from "../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
@@ -9,17 +10,23 @@ export default function WalletRegistration() {
   const { charity } = useRegistrationQuery();
   const { wallet, isLoading } = useGetWallet();
 
+  let content = <WalletSubmission />;
   if (charity.Metadata.JunoWallet) {
-    return <RegisteredWallet />;
+    content = <RegisteredWallet />;
+  } else if (isLoading) {
+    content = (
+      <div className="flex items-center justify-center h-full">
+        <RegLoader message="Wallet is loading" />
+      </div>
+    );
+  } else if (!wallet) {
+    content = <ChooseWallet />;
   }
 
-  if (isLoading) {
-    return <RegLoader message="Wallet is loading" />;
-  }
-
-  if (!wallet) {
-    return <ChooseWallet />;
-  }
-
-  return <WalletSubmission />;
+  return (
+    <div className="flex flex-col gap-5 w-full h-full items-center justify-center">
+      <ProgressIndicator />
+      {content}
+    </div>
+  );
 }

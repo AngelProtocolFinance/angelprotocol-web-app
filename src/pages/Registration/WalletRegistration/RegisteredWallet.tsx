@@ -53,7 +53,7 @@ export default function RegisteredWallet() {
       </Button>
       <Link
         to={continueUrl}
-        className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
+        className="flex justify-center items-center w-80 h-10 mt-8 bg-angel-blue rounded-xl uppercase font-bold text-white"
       >
         Continue
       </Link>
