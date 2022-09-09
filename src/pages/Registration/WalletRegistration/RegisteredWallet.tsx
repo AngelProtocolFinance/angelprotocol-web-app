@@ -50,7 +50,7 @@ export default function RegisteredWallet() {
       {/**TODO: must be disabled at some registration point */}
       <Button
         onClick={clearCachedWallet}
-        className="btn-secondary uppercase font-heading text-xs px-2 py-1"
+        className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"
       >
         change wallet
       </Button>
