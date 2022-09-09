@@ -15,7 +15,10 @@ import useEditForm from "./useEditProfile";
 export default function Form() {
   const { editProfile, isSubmitDisabled } = useEditForm();
   return (
-    <FormContainer onSubmit={editProfile}>
+    <FormContainer
+      onSubmit={editProfile}
+      className="max-w-4xl justify-self-center mt-6"
+    >
       <TextInput<UV> title="Proposal Title" name="title" required />
       <TextInput<UV>
         title="proposal description"

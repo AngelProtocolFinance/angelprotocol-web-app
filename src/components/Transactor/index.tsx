@@ -1,16 +1,16 @@
 import { FC } from "react";
 import TransactionPrompt from "./TransactionPrompt";
 
-export type TxProps<C> = {
+export type TxProps<C extends object> = {
   Content: FC<C>;
   contentProps: C;
-  inModal?: false;
+  inModal?: boolean;
 };
 
-export default function Transactor<C>({
+export default function Transactor<C extends object>({
   Content,
   contentProps,
-  inModal,
+  inModal = true,
 }: TxProps<C>) {
   return (
     <TransactionPrompt inModal={inModal}>

@@ -9,9 +9,6 @@ export default function Nav() {
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
       </NavLink>
-      <NavLink end to={routes.investments} className={styler}>
-        Investments
-      </NavLink>
       <NavLink end to={routes.withdraws} className={styler}>
         Withdraws
       </NavLink>

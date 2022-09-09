@@ -58,7 +58,10 @@ function FormWithContext(props: TProfile & { id: number }) {
   const methods = useForm<UpdateProfileValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: { ...initialProfile, initialProfile },
+    defaultValues: {
+      ...initialProfile,
+      initialProfile,
+    },
     resolver: yupResolver(schema),
   });
   return (

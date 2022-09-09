@@ -20,11 +20,6 @@ export default function Nav() {
       <NavLink to={routes.cw3_transfer} className={styler}>
         Fund transfer
       </NavLink>
-
-      <Category title="Endowment" classes="mt-4" />
-      <NavLink to={routes.acc_profile} className={styler}>
-        Edit profile
-      </NavLink>
     </div>
   );
 }

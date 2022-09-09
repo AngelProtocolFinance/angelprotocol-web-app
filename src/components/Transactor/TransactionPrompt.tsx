@@ -51,16 +51,18 @@ export default function TransactionPrompt({
   }
 
   if (inModal) {
-    <Dialog.Panel className={containerClasses + " fixed-center z-20"}>
-      <button
-        onClick={closePrompt}
-        className="absolute right-2 top-2 text-angel-grey hover:text-black"
-      >
-        <Icon type="Close" size={25} />
-      </button>
+    return (
+      <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
+        <button
+          onClick={closePrompt}
+          className="absolute right-2 top-2 text-angel-grey hover:text-black"
+        >
+          <Icon type="Close" size={25} />
+        </button>
 
-      {prompt}
-    </Dialog.Panel>;
+        {prompt}
+      </Dialog.Panel>
+    );
   }
 
   return <div className={containerClasses}>{prompt}</div>;

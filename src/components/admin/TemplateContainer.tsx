@@ -7,10 +7,11 @@ export function DivContainer(props: PropsWithChildren<{}>) {
   return <div className={containerClass}>{props.children}</div>;
 }
 
-export function FormContainer(
-  props: React.FormHTMLAttributes<HTMLFormElement>
-) {
-  return <form {...props} className={containerClass} />;
+export function FormContainer({
+  className,
+  ...props
+}: React.FormHTMLAttributes<HTMLFormElement>) {
+  return <form {...props} className={containerClass + " " + className} />;
 }
 
 export function GroupContainer(
