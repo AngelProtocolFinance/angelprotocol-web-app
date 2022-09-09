@@ -1,11 +1,8 @@
 import { EndowmentTierNum } from "../../contracts";
 import { Optional } from "../../utils";
 
-export type RegistrationStatus =
-  | "Inactive"
-  | "Under Review"
-  | "Approved"
-  | "Active";
+export type RegistrationStatus = "Inactive" | "Under Review" | "Active";
+
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
 export type ReferralMethods =
