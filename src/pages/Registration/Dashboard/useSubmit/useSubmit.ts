@@ -7,7 +7,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import Account from "contracts/Account";
+import CW3Review from "contracts/CW3/CW3Review";
 import { logger, processEstimateError } from "helpers";
 import { logEndowmentId } from "./logEndowmentId";
 
@@ -20,8 +20,11 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        const contract = new Account(wallet);
-        const msg = contract.createEndowmentCreationMsg(charity);
+        const contract = new CW3Review(wallet);
+        const msg = contract.createProposeApplicationMsg(
+          charity.ContactPerson.PK!,
+          charity
+        );
         dispatch(
           sendCosmosTx({
             wallet,
