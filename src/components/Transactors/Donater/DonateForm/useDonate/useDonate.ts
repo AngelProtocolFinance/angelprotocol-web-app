@@ -75,7 +75,7 @@ export default function useDonate() {
 
   const { kycData } = stage as InitialStage;
   const isKycRequired = !!getValues("isKycDonorOnly");
-  const isKycCompleted = isKycRequired && !!kycData;
+  const isKycCompleted = isKycRequired ? !!kycData : true; //pass this flag if kyc is not required
 
   return {
     donate: handleSubmit(sendTx),

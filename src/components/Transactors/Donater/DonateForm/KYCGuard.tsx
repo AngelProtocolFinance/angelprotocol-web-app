@@ -11,7 +11,7 @@ export default function KYCGuard() {
   const { getValues } = useFormContext<DonateValues>();
   const { kycData } = stage as InitialStage;
   const isKycRequired = !!getValues("isKycDonorOnly");
-  const isKycCompleted = isKycRequired && !!kycData;
+  const isKycCompleted = isKycRequired ? !!kycData : true; //pass this flag if kyc is not required;
 
   function showKycForm() {
     dispatch(
