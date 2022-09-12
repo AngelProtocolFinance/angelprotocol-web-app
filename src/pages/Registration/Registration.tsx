@@ -1,6 +1,7 @@
 import { lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { appRoutes } from "constants/routes";
+import ProgressIndicator from "./ProgressIndicator";
 import {
   AdditionalInformationGuard,
   ContactDetailsGuard,
@@ -20,8 +21,18 @@ const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Registration() {
+  const location = useLocation();
+
+  const isLandingPage = location.pathname.endsWith(appRoutes.register);
+
+  const containerClasses = `grid grid-rows-[${
+    isLandingPage ? "1fr" : "auto_1fr"
+  }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
+
   return (
-    <Container>
+    <section className={containerClasses}>
+      {!isLandingPage && <ProgressIndicator />}
+
       <Routes>
         <Route
           path={routes.additionalInformation}
@@ -83,12 +94,6 @@ export default function Registration() {
           }
         />
       </Routes>
-    </Container>
+    </section>
   );
 }
-
-const Container = (props: any) => (
-  <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">
-    {props.children}
-  </section>
-);

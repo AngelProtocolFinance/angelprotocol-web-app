@@ -2,10 +2,11 @@ import { Charity, RegistrationStatus } from "types/aws";
 import { placeholderCharity } from "services/aws/registration";
 import { isRegistrationEditable } from "../isRegistrationEditable";
 
-const statuses: RegistrationStatus[] = ["Under Review", "Approved", "Active"];
+const editableStatuses: RegistrationStatus[] = ["Inactive", "Rejected"];
+const nonEditableStatuses: RegistrationStatus[] = ["Under Review", "Active"];
 
 describe("isRegistrationEditable tests", () => {
-  it.each(statuses)(
+  it.each(nonEditableStatuses)(
     "returns 'false' when charity registration status is '%j'",
     (status) => {
       const charity: Charity = {
@@ -22,17 +23,20 @@ describe("isRegistrationEditable tests", () => {
     }
   );
 
-  test("returns 'true' when charity registration status is '%j'", () => {
-    const charity: Charity = {
-      ...placeholderCharity,
-      Registration: {
-        ...placeholderCharity.Registration,
-        RegistrationStatus: "Inactive",
-      },
-    };
+  it.each(editableStatuses)(
+    "returns 'true' when charity registration status is '%j'",
+    (status) => {
+      const charity: Charity = {
+        ...placeholderCharity,
+        Registration: {
+          ...placeholderCharity.Registration,
+          RegistrationStatus: status,
+        },
+      };
 
-    const isEditable = isRegistrationEditable(charity);
+      const isEditable = isRegistrationEditable(charity);
 
-    expect(isEditable).toBe(true);
-  });
+      expect(isEditable).toBe(true);
+    }
+  );
 });

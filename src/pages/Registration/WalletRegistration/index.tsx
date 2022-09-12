@@ -1,6 +1,5 @@
 import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { ProgressIndicator } from "../common";
 import RegLoader from "../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
@@ -24,8 +23,7 @@ export default function WalletRegistration() {
   }
 
   return (
-    <div className="flex flex-col gap-5 w-full h-full items-center justify-center">
-      <ProgressIndicator />
+    <div className="flex flex-col gap-5 w-full h-full items-center">
       {content}
     </div>
   );

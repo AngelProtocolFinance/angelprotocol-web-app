@@ -32,7 +32,7 @@ export default function RegisteredWallet() {
   };
 
   return (
-    <div className="flex flex-col h-full items-center">
+    <div className="flex flex-col h-full w-full items-center">
       <div className="flex flex-col items-center gap-4 mb-4">
         <IconContext.Provider value={{ className: "text-7xl" }}>
           <BsCheck2 />

@@ -73,14 +73,6 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    activateCharity: builder.mutation<any, string | undefined>({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: (PK) => ({
-        url: `registration/${PK}/activate`,
-        method: "POST",
-        headers,
-      }),
-    }),
     createNewCharity: builder.mutation<
       ContactDetailsResult,
       ContactDetailsRequest
@@ -184,7 +176,6 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useActivateCharityMutation,
   useCreateNewCharityMutation,
   useCharityApplicationsQuery,
   useRequestEmailMutation,
