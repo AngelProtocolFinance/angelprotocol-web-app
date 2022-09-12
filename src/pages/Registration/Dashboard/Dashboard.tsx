@@ -37,7 +37,7 @@ export default function Dashboard() {
   }, [charity, handleError, sendVerificationEmail]);
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center h-full w-full">
+    <div className="flex flex-col gap-4 items-center h-full w-full">
       {isSubmitted && (
         <>
           <h3 className="text-3xl fond-bold">

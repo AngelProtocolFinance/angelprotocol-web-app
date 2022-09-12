@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
-import { InputRow, ProgressIndicator } from "../common";
+import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
 import ImageInput from "./ImageInput";
 import OverviewInput from "./OverviewInput";
@@ -32,34 +32,27 @@ export default function AdditionalInformation() {
   } = methods;
 
   return (
-    <div className="grid grid-rows-[auto_1fr] gap-5 w-full h-full">
-      <ProgressIndicator />
+    <div className="flex flex-col gap-5 items-center w-full">
+      <Title />
 
-      <div className="flex flex-col gap-5 items-center w-full">
-        <Title />
-
-        <FormProvider {...methods}>
-          <form
-            className="flex flex-col justify-center w-5/6 h-full gap-4"
-            onSubmit={methods.handleSubmit(submit)}
-          >
-            <OrganizationName value={charity.Registration.CharityName} />
-            <ImageInput
-              name="banner"
-              label="Banner image of your organization"
-            />
-            <ImageSizeInfo limit="1MB" />
-            <ImageInput name="charityLogo" label="Logo of your organization" />
-            <ImageSizeInfo limit="1MB" />
-            <OverviewInput />
-            <KycDonorsOnlyCheckbox
-              disabled={isSubmitting}
-              {...register("kycDonorsOnly")}
-            />
-            <ButtonSection />
-          </form>
-        </FormProvider>
-      </div>
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col justify-center w-5/6 h-full gap-4"
+          onSubmit={methods.handleSubmit(submit)}
+        >
+          <OrganizationName value={charity.Registration.CharityName} />
+          <ImageInput name="banner" label="Banner image of your organization" />
+          <ImageSizeInfo limit="1MB" />
+          <ImageInput name="charityLogo" label="Logo of your organization" />
+          <ImageSizeInfo limit="1MB" />
+          <OverviewInput />
+          <KycDonorsOnlyCheckbox
+            disabled={isSubmitting}
+            {...register("kycDonorsOnly")}
+          />
+          <ButtonSection />
+        </form>
+      </FormProvider>
     </div>
   );
 }
