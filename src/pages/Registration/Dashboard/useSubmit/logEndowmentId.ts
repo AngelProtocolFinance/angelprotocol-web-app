@@ -23,7 +23,7 @@ export const logEndowmentId = createAsyncThunk(
     try {
       dispatch(setStage({ step: "submit", message: "Saving endowment id" }));
 
-      const parsedId = getWasmAttribute("endow_id", args.res.rawLog);
+      const parsedId = getWasmAttribute("proposal_id", args.res.rawLog);
       const numId = idParamToNum(parsedId);
       if (numId === 0) throw new Error("Failed to get endowment id");
 
