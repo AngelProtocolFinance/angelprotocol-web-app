@@ -2,9 +2,14 @@ import { WithdrawLog } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import LogRow from "./LogRow";
 
-export default function Table(props: { withdraws: WithdrawLog[] }) {
+type Props = {
+  withdraws: WithdrawLog[];
+  classes?: string;
+};
+
+export default function Table({ withdraws, classes = "" }: Props) {
   return (
-    <table className="w-full mt-6">
+    <table className={`w-full mt-6 ${classes}`}>
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/20">
         <Cells
           type="th"
@@ -18,7 +23,7 @@ export default function Table(props: { withdraws: WithdrawLog[] }) {
         </Cells>
       </TableSection>
       <TableSection type="tbody" rowClass="border-b border-zinc-50/10">
-        {props.withdraws.map((log, i) => (
+        {withdraws.map((log, i) => (
           <LogRow {...log} key={i} />
         ))}
       </TableSection>

@@ -1,6 +1,7 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useWithdrawLogsQuery } from "services/apes";
 import { QueryLoader } from "components/admin";
+import List from "./List";
 import Table from "./Table";
 
 export default function Transactions() {
@@ -12,16 +13,17 @@ export default function Transactions() {
       messages={{
         loading: "Loading transactions...",
         error: "Failed to get transactions",
+        empty: "No transactions found",
       }}
       classes={{ container: "mt-2" }}
     >
-      {(logs) =>
-        logs.length > 0 ? (
-          <Table withdraws={logs} />
-        ) : (
-          <div className="text-zinc-50/80">No transactions found</div>
-        )
-      }
+      {(logs) => (
+        <>
+          <List withdraws={logs} classes="flex md:hidden" />
+          <Table withdraws={logs} classes="hidden md:table" />
+        </>
+      )}
     </QueryLoader>
   );
+  // return <Table withdraws={logs} classes="hidden md:table" />;
 }
