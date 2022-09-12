@@ -4,8 +4,9 @@ import { Optional } from "../../utils";
 export type RegistrationStatus =
   | "Inactive"
   | "Under Review"
-  | "Approved"
-  | "Active";
+  | "Active"
+  | "Rejected";
+
 export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 
 export type ReferralMethods =

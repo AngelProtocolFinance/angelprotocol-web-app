@@ -3,31 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
-import { Button, ProgressIndicator } from "../common";
+import { ProgressIndicator } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
-import { getRegistrationState, isRegistrationEditable } from "../helpers";
+import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
-import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const { charity } = useRegistrationQuery();
   const { submit, isSubmitting } = useSubmit();
-  const { activate, isSubmitting: isActivateSubmitting } = useActivate();
   const navigate = useNavigate();
   const { sendVerificationEmail, isLoading: isSendingEmail } =
     useSendVerificationEmail();
   const { handleError } = useErrorContext();
 
-  const isDataSubmitted = !isRegistrationEditable(charity);
-
-  const isLoading = isSubmitting || isSendingEmail || isActivateSubmitting;
-
-  const isStepDisabled = isDataSubmitted || isLoading;
-
-  const registrationState = getRegistrationState(charity);
+  const isLoading = isSubmitting || isSendingEmail;
+  const isSubmitted = !isRegistrationEditable(charity);
 
   const resendVerificationEmail = useCallback(async () => {
     try {
@@ -45,65 +38,75 @@ export default function Dashboard() {
   }, [charity, handleError, sendVerificationEmail]);
 
   return (
-    <div className="flex flex-col gap-4 items-center w-full">
+    <div className="grid grid-rows-[auto_1fr] items-center h-full w-full">
       <ProgressIndicator />
-      <h3 className="text-3xl font-bold">Necessary Information</h3>
-      <span>
-        Please complete all the following steps to be able to create your
-        endowment
-      </span>
-      <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
-        <Step
-          title="Contact Details"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.contactDetails}`)
-          }
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Documentation"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.documentation}`)
-          }
-          disabled={isStepDisabled}
-          customStatus={`Level ${charity.Registration.Tier}`}
-        />
-        <Step
-          title="Additional Information"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.additionalInformation}`)
-          }
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Wallet Address"
-          onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Email Verification"
-          onClick={resendVerificationEmail}
-          disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
-          buttonLabel="Resend"
-          isIncomplete={!charity.ContactPerson.EmailVerified}
+      <div className="flex flex-col gap-4 items-center justify-center h-full w-full">
+        {isSubmitted && (
+          <>
+            <h3 className="text-3xl fond-bold">
+              Thank you for submitting your application!
+            </h3>
+            <span>We will notify you by email once the review is complete</span>
+            <div className="text-xl mb-10">
+              <p>Your registration reference is:</p>
+              <p className="text-orange">{charity.ContactPerson.PK}</p>
+            </div>
+          </>
+        )}
+        {!isSubmitted && (
+          <>
+            <h3 className="text-3xl font-bold">Necessary Information</h3>
+            <span>
+              Please complete all the following steps to be able to create your
+              endowment
+            </span>
+            <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
+              <Step
+                title="Contact Details"
+                onClick={() =>
+                  navigate(`${appRoutes.register}/${routes.contactDetails}`)
+                }
+                disabled={isLoading}
+              />
+              <Step
+                title="Documentation"
+                onClick={() =>
+                  navigate(`${appRoutes.register}/${routes.documentation}`)
+                }
+                disabled={isLoading}
+                customStatus={`Level ${charity.Registration.Tier}`}
+              />
+              <Step
+                title="Additional Information"
+                onClick={() =>
+                  navigate(
+                    `${appRoutes.register}/${routes.additionalInformation}`
+                  )
+                }
+                disabled={isLoading}
+              />
+              <Step
+                title="Wallet Address"
+                onClick={() =>
+                  navigate(`${appRoutes.register}/${routes.wallet}`)
+                }
+                disabled={isLoading}
+              />
+              <Step
+                title="Email Verification"
+                onClick={resendVerificationEmail}
+                disabled={charity.ContactPerson.EmailVerified || isLoading}
+                buttonLabel="Resend"
+                isIncomplete={!charity.ContactPerson.EmailVerified}
+              />
+            </div>
+          </>
+        )}
+        <EndowmentStatus
+          isLoading={isLoading}
+          onSubmit={() => submit(charity)}
         />
       </div>
-      {isDataSubmitted ? (
-        <EndowmentStatus
-          charity={charity}
-          isLoading={isLoading}
-          onActivate={() => activate(charity.ContactPerson.PK)}
-        />
-      ) : (
-        <Button
-          className="w-full md:w-2/3 h-10 mt-5 btn-primary"
-          onClick={() => submit(charity)}
-          disabled={!registrationState.getIsReadyForSubmit() || isSubmitting}
-          isLoading={isLoading}
-        >
-          Submit for review
-        </Button>
-      )}
     </div>
   );
 }
