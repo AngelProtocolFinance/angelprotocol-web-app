@@ -32,29 +32,34 @@ export default function AdditionalInformation() {
   } = methods;
 
   return (
-    <div className="flex flex-col gap-5 items-center w-full">
+    <div className="grid grid-rows-[auto_1fr] gap-5 w-full h-full">
       <ProgressIndicator />
 
-      <Title />
+      <div className="flex flex-col gap-5 items-center w-full">
+        <Title />
 
-      <FormProvider {...methods}>
-        <form
-          className="flex flex-col justify-center w-5/6 h-full gap-4"
-          onSubmit={methods.handleSubmit(submit)}
-        >
-          <OrganizationName value={charity.Registration.CharityName} />
-          <ImageInput name="banner" label="Banner image of your organization" />
-          <ImageSizeInfo limit="1MB" />
-          <ImageInput name="charityLogo" label="Logo of your organization" />
-          <ImageSizeInfo limit="1MB" />
-          <OverviewInput />
-          <KycDonorsOnlyCheckbox
-            disabled={isSubmitting}
-            {...register("kycDonorsOnly")}
-          />
-          <ButtonSection />
-        </form>
-      </FormProvider>
+        <FormProvider {...methods}>
+          <form
+            className="flex flex-col justify-center w-5/6 h-full gap-4"
+            onSubmit={methods.handleSubmit(submit)}
+          >
+            <OrganizationName value={charity.Registration.CharityName} />
+            <ImageInput
+              name="banner"
+              label="Banner image of your organization"
+            />
+            <ImageSizeInfo limit="1MB" />
+            <ImageInput name="charityLogo" label="Logo of your organization" />
+            <ImageSizeInfo limit="1MB" />
+            <OverviewInput />
+            <KycDonorsOnlyCheckbox
+              disabled={isSubmitting}
+              {...register("kycDonorsOnly")}
+            />
+            <ButtonSection />
+          </form>
+        </FormProvider>
+      </div>
     </div>
   );
 }
