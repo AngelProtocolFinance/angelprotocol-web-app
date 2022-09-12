@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { WithdrawLog } from "types/aws";
 import { maskAddress } from "helpers";
 import Amount from "../Amount";
@@ -9,31 +10,52 @@ export default function Log(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
   const finalRoute = getFinalRoute(props);
   return (
-    <li className="grid shadow-inner bg-zinc-50/5 p-3 rounded-md text-zinc-50/80">
-      <Amount val={amount} symbol={symbol} />
-      <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
-      <Status {...props} />
+    <li className="grid gap-2 shadow-inner bg-zinc-50/5 p-3 rounded-md text-zinc-50/80">
+      <KeyVal title="amount">
+        <Amount val={amount} symbol={symbol} />
+      </KeyVal>
+      <KeyVal title="receiver">
+        <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
+      </KeyVal>
 
-      {finalRoute && finalRoute.status === "OK" ? (
-        <Amount
-          val={finalRoute.output_amount}
-          symbol={finalRoute.output_symbol}
-        />
-      ) : (
-        <>---</>
-      )}
-      {finalRoute && finalRoute.status === "OK" ? (
-        <a
-          className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600"
-          href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {maskAddress(finalRoute.hash)}
-        </a>
-      ) : (
-        <>---</>
-      )}
+      <KeyVal title="status">
+        <Status {...props} />
+      </KeyVal>
+
+      <KeyVal title="to receive">
+        {finalRoute && finalRoute.status === "OK" ? (
+          <Amount
+            val={finalRoute.output_amount}
+            symbol={finalRoute.output_symbol}
+          />
+        ) : (
+          <>---</>
+        )}
+      </KeyVal>
+
+      <KeyVal title="tx hash">
+        {finalRoute && finalRoute.status === "OK" ? (
+          <a
+            className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600"
+            href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {maskAddress(finalRoute.hash)}
+          </a>
+        ) : (
+          <>---</>
+        )}
+      </KeyVal>
     </li>
+  );
+}
+
+function KeyVal({ title, children }: PropsWithChildren<{ title: string }>) {
+  return (
+    <div className="grid">
+      <span className="text-xs">{title}</span>
+      <div className="text-sky-200">{children}</div>
+    </div>
   );
 }

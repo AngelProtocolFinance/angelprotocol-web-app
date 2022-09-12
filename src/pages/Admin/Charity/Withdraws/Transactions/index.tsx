@@ -19,7 +19,7 @@ export default function Transactions() {
     >
       {(logs) => (
         <>
-          <List withdraws={logs} classes="flex md:hidden" />
+          <List withdraws={logs} classes="grid md:hidden mt-4" />
           <Table withdraws={logs} classes="hidden md:table" />
         </>
       )}

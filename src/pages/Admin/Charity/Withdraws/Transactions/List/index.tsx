@@ -7,7 +7,7 @@ type Props = {
 };
 export default function List({ classes = "", withdraws }: Props) {
   return (
-    <ul className={`${classes} gap-2`}>
+    <ul className={`${classes} gap-2 sm:grid-cols-3`}>
       {withdraws.map((w) => (
         <Log {...w} key={w.proposal_id} />
       ))}

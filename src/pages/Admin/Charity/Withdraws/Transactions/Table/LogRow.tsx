@@ -12,6 +12,7 @@ export default function LogRow(props: WithdrawLog) {
   return (
     <Cells type="td" cellClass="p-2 text-zinc-50/80">
       <Amount val={amount} symbol={symbol} />
+
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
       <Status {...props} />
 
