@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { appRoutes } from "constants/routes";
-import { ProgressIndicator } from "./common";
+import ProgressIndicator from "./ProgressIndicator";
 import {
   AdditionalInformationGuard,
   ContactDetailsGuard,

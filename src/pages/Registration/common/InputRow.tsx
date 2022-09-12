@@ -9,7 +9,7 @@ type InputRowProps = PropsWithChildren<{
   infoModal?: FC<{}>;
 }>;
 
-export default function InputRow(props: InputRowProps) {
+export function InputRow(props: InputRowProps) {
   const { htmlFor: id, label, required, infoModal, children } = props;
 
   return (
