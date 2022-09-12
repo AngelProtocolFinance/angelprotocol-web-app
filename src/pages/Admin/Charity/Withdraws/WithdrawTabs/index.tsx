@@ -1,5 +1,4 @@
 import { Tab } from "@headlessui/react";
-import { Fragment } from "react";
 import { AccountType, EndowmentBalance } from "types/contracts";
 import Transactor from "components/Transactor";
 import Withdrawer from "./Withdrawer";
@@ -27,7 +26,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
       </Tab.List>
       <Tab.Panels className="w-full max-w-md">
         {tabs.map((t) => (
-          <Tab.Panel key={t} as={Fragment}>
+          <Tab.Panel key={t}>
             <Transactor
               Content={Withdrawer}
               contentProps={{ balance: tokens_on_hand[t], type: t }}
