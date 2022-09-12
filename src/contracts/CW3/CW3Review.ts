@@ -10,9 +10,9 @@ export default class CW3Review extends CW3 {
   constructor(wallet: WalletState | undefined) {
     super(wallet, CW3Review.address);
   }
-  createProposeApplicationMsg(refId: string, charity: Charity) {
+  createProposeApplicationMsg(charity: Charity) {
     return this.createExecuteContractMsg(this.address, {
-      propose_application: createApplicationProposalPayload(refId, charity),
+      propose_application: createApplicationProposalPayload(charity),
     });
   }
   createVoteApplicationMsg(payload: ApplicationVote) {
@@ -23,11 +23,10 @@ export default class CW3Review extends CW3 {
 }
 
 function createApplicationProposalPayload(
-  refId: string,
   charity: Charity
 ): ApplicationProposal {
   return {
-    ref_id: refId,
+    ref_id: charity.ContactPerson.PK!,
     msg: {
       owner: charity.Metadata.JunoWallet,
       beneficiary: charity.Metadata.JunoWallet,

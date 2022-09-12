@@ -21,10 +21,7 @@ export default function useSubmit() {
     async (charity: Charity) => {
       try {
         const contract = new CW3Review(wallet);
-        const msg = contract.createProposeApplicationMsg(
-          charity.ContactPerson.PK!,
-          charity
-        );
+        const msg = contract.createProposeApplicationMsg(charity);
         dispatch(
           sendCosmosTx({
             wallet,
