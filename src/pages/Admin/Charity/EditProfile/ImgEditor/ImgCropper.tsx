@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon, { IconTypes } from "components/Icon";
 
@@ -14,19 +14,15 @@ export default function ImgCropper(props: {
   const cropperRef = useRef<Cropper>();
   const imageRef = useRef<HTMLImageElement>(null);
 
-  //init cropper
-  useEffect(() => {
-    //imageRef.current is available when this effect runs
-    cropperRef.current = new Cropper(imageRef.current!, {
-      aspectRatio: 4 / 1,
-      viewMode: 1,
-      zoomable: false,
-      scalable: false,
-    });
-
-    return () => {
-      setError(undefined);
-    };
+  const imgRef = useCallback((node: HTMLImageElement | null) => {
+    if (node && !cropperRef.current) {
+      cropperRef.current = new Cropper(imageRef.current!, {
+        aspectRatio: 4 / 1,
+        viewMode: 1,
+        zoomable: false,
+        scalable: false,
+      });
+    }
   }, []);
 
   function handleSave() {
@@ -47,7 +43,7 @@ export default function ImgCropper(props: {
         <Button iconType={"Save"} onClick={handleSave} />
         <Button iconType={"Close"} onClick={closeModal} />
       </div>
-      <img ref={imageRef} src={props.src} className="w-full" alt="banner" />
+      <img ref={imgRef} src={props.src} className="w-full" alt="banner" />
     </Dialog.Panel>
   );
 }

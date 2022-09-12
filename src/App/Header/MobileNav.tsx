@@ -9,14 +9,12 @@ import { createNavLinkStyler } from "helpers";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function MobileNav() {
-  const dispatch = useSetter();
   return (
     <Popover className="relative">
       <Popover.Button className="text-white-grey ml-2 lg:hidden">
-        {({ open }) => {
-          !open && dispatch(setIsMobileNavOpen(open)); //save close state to store
-          return <Icon type={open ? "Close" : "Menu"} className="text-2xl" />;
-        }}
+        {({ open }) => (
+          <Icon type={open ? "Close" : "Menu"} className="text-2xl" />
+        )}
       </Popover.Button>
       <Popover.Panel
         as="nav"
@@ -39,6 +37,10 @@ function AppLinks() {
   useEffect(() => {
     //set open state after portal node has been mounted
     dispatch(setIsMobileNavOpen(true));
+
+    return () => {
+      dispatch(setIsMobileNavOpen(false));
+    };
   }, [dispatch]);
 
   return (
