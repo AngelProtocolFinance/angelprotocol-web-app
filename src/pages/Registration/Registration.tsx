@@ -27,7 +27,7 @@ export default function Registration() {
 
   const containerClasses = `grid grid-rows-[${
     isLandingPage ? "1fr" : "auto_1fr"
-  }] items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
+  }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
 
   return (
     <section className={containerClasses}>
