@@ -5,6 +5,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
 import { ProgressIndicator } from "../common";
 import useSendVerificationEmail from "../common/useSendVerificationEmail";
+import { isRegistrationEditable } from "../helpers";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -19,10 +20,6 @@ export default function Dashboard() {
   const { handleError } = useErrorContext();
 
   const isLoading = isSubmitting || isSendingEmail;
-
-  // not checking if RegistrationStatus === "Active" as the Dashboard is inaccessible when the Endowment is active
-  const isStepDisabled =
-    isLoading || charity.Registration.RegistrationStatus === "Under Review";
 
   const resendVerificationEmail = useCallback(async () => {
     try {
@@ -47,42 +44,44 @@ export default function Dashboard() {
         Please complete all the following steps to be able to create your
         endowment
       </span>
-      <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
-        <Step
-          title="Contact Details"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.contactDetails}`)
-          }
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Documentation"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.documentation}`)
-          }
-          disabled={isStepDisabled}
-          customStatus={`Level ${charity.Registration.Tier}`}
-        />
-        <Step
-          title="Additional Information"
-          onClick={() =>
-            navigate(`${appRoutes.register}/${routes.additionalInformation}`)
-          }
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Wallet Address"
-          onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
-          disabled={isStepDisabled}
-        />
-        <Step
-          title="Email Verification"
-          onClick={resendVerificationEmail}
-          disabled={charity.ContactPerson.EmailVerified || isStepDisabled}
-          buttonLabel="Resend"
-          isIncomplete={!charity.ContactPerson.EmailVerified}
-        />
-      </div>
+      {isRegistrationEditable(charity) && (
+        <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
+          <Step
+            title="Contact Details"
+            onClick={() =>
+              navigate(`${appRoutes.register}/${routes.contactDetails}`)
+            }
+            disabled={isLoading}
+          />
+          <Step
+            title="Documentation"
+            onClick={() =>
+              navigate(`${appRoutes.register}/${routes.documentation}`)
+            }
+            disabled={isLoading}
+            customStatus={`Level ${charity.Registration.Tier}`}
+          />
+          <Step
+            title="Additional Information"
+            onClick={() =>
+              navigate(`${appRoutes.register}/${routes.additionalInformation}`)
+            }
+            disabled={isLoading}
+          />
+          <Step
+            title="Wallet Address"
+            onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
+            disabled={isLoading}
+          />
+          <Step
+            title="Email Verification"
+            onClick={resendVerificationEmail}
+            disabled={charity.ContactPerson.EmailVerified || isLoading}
+            buttonLabel="Resend"
+            isIncomplete={!charity.ContactPerson.EmailVerified}
+          />
+        </div>
+      )}
       <EndowmentStatus isLoading={isLoading} onSubmit={() => submit(charity)} />
     </div>
   );
