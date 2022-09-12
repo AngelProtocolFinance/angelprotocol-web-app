@@ -5,6 +5,7 @@ import {
   DepositPayload,
   StatusChangePayload,
   UpdateProfilePayload,
+  UpdateStategyPayload,
   WithdrawPayload,
 } from "types/contracts";
 import { contracts } from "constants/contracts";
@@ -24,6 +25,12 @@ export default class Account extends Contract {
   createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       withdraw: payload,
+    });
+  }
+
+  createEmbeddedStrategyUpdateMsg(payload: UpdateStategyPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_strategies: payload,
     });
   }
 

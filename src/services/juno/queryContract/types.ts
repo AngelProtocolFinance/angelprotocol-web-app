@@ -1,12 +1,12 @@
 import {
   AdminVoteInfo,
   AllianceMember,
-  BalanceInfo,
   CW3Config,
   CW4Member,
   CW20Balance,
   CW20Info,
   CategorizedEndowments,
+  EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
   EndowmentQueryOptions,
@@ -23,7 +23,10 @@ import {
   QueryRes as Q,
   RegistrarConfig,
   Simulation,
+  VaultListOptions,
+  VaultListRes,
   VotesPageOptions,
+  YieldVault,
 } from "types/contracts";
 
 type EndowmentListRes = { endowments: EndowmentEntry[] };
@@ -31,6 +34,11 @@ type EndowmentListRes = { endowments: EndowmentEntry[] };
 type Addr = { addr: string };
 export interface ContractQueries {
   regVaultRates: { args: null; res: Q<any>; result: any }; //TODO update this
+  regVaultList: {
+    args: VaultListOptions;
+    res: Q<VaultListRes>;
+    result: YieldVault[];
+  };
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
   ifFunds: {
@@ -99,8 +107,8 @@ export interface ContractQueries {
   };
   accBalance: {
     args: { id: number };
-    res: Q<BalanceInfo>;
-    result: BalanceInfo;
+    res: Q<EndowmentBalance>;
+    result: EndowmentBalance;
   };
   accProfile: { args: { id: number }; res: Q<Profile>; result: Profile };
 }

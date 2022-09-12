@@ -50,23 +50,23 @@ export default function TransactionPrompt({
     closeModal();
   }
 
-  return (
-    <Dialog.Panel
-      className={`w-full max-w-md ${
-        inModal
-          ? "bg-white-grey rounded-md overflow-visible pt-4 fixed-center z-20"
-          : "relative"
-      }`}
-    >
-      {inModal && (
+  if (inModal) {
+    return (
+      <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
         <button
           onClick={closePrompt}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
           <Icon type="Close" size={25} />
         </button>
-      )}
-      {prompt}
-    </Dialog.Panel>
-  );
+
+        {prompt}
+      </Dialog.Panel>
+    );
+  }
+
+  return <div className={containerClasses}>{prompt}</div>;
 }
+
+const containerClasses =
+  "w-full max-w-md bg-white-grey rounded-md overflow-visible pt-4";

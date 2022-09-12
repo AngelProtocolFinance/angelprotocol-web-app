@@ -19,6 +19,16 @@ export interface BalanceInfo {
   liquid: GenericBalance;
 }
 
+type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
+
+export interface EndowmentBalance {
+  tokens_on_hand: BalanceInfo;
+  oneoff_locked: VaultWithBalance[];
+  oneoff_liquid: VaultWithBalance[];
+  strategies_locked: VaultWithBalance[];
+  strategies_liquid: VaultWithBalance[];
+}
+
 interface RebalanceDetails {
   rebalance_liquid_invested_profits: boolean; // should invested portions of the liquid account be rebalanced?
   locked_interests_to_liquid: boolean; // should Locked acct interest earned be distributed to the Liquid Acct?
@@ -27,21 +37,28 @@ interface RebalanceDetails {
   principle_distribution: string; // % of Locked acct principle to be distributed to the Liquid Acct
 }
 
-interface StrategyComponent {
+export interface Strategy {
   vault: string; // Vault SC Address
-  locked_percentage: string; // percentage of funds to invest
-  liquid_percentage: string; // percentage of funds to invest
+  percentage: string; // percentage of funds to invest
+}
+
+export interface AccountStrategies {
+  locked: Strategy[];
+  liquid: Strategy[];
 }
 
 export interface EndowmentDetails {
   owner: string;
-  beneficiary: string;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
-  strategies: StrategyComponent[];
+  strategies: AccountStrategies;
   rebalance: RebalanceDetails;
-  guardians: string[];
+  kyc_donors_only: boolean;
+  deposit_approved: boolean;
+  withdraw_approved: boolean;
+  pending_redemptions: number;
+  auto_invest: boolean;
 }
 
 type Categories = {
@@ -146,9 +163,11 @@ type Asset = {
   amount: string;
 };
 
+export type AccountType = "locked" | "liquid";
+
 export interface WithdrawPayload {
   id: number;
-  acct_type: "locked" | "liquid";
+  acct_type: AccountType;
   beneficiary: string;
   assets: Asset[];
 }
@@ -175,4 +194,10 @@ export type CreateEndowmentPayload = {
   kyc_donors_only: boolean;
   cw3_threshold: Threshold;
   cw3_max_voting_period: 86400; //seconds - 24H
+};
+
+export type UpdateStategyPayload = {
+  id: number;
+  acct_type: AccountType;
+  strategies: Strategy[];
 };

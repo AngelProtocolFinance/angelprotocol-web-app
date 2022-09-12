@@ -14,7 +14,14 @@ export const registrar_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
+    vaultList: builder.query<Result<"regVaultList">, Args<"regVaultList">>({
+      providesTags: [{ type: junoTags.registrar, id: registrarTags.config }],
+      query: (args) => genQueryPath("regVaultList", args, reg),
+      transformResponse: (res: Res<"regVaultList">) => {
+        return res.data.vaults;
+      },
+    }),
   }),
 });
 
-export const { useRegistrarConfigQuery } = registrar_api;
+export const { useRegistrarConfigQuery, useVaultListQuery } = registrar_api;
