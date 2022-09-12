@@ -1,5 +1,4 @@
 import { useRegistrationQuery } from "services/aws/registration";
-import { ProgressIndicator } from "../common";
 import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
@@ -7,7 +6,6 @@ export default function ContactDetails() {
 
   return (
     <div className="flex flex-col gap-5 w-full h-full">
-      <ProgressIndicator />
       <h3 className="text-3xl font-bold mb-5">
         {charity.ContactPerson.PK
           ? "Update your contact details."

@@ -3,7 +3,6 @@ import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import { useRegistrationQuery } from "services/aws/registration";
-import { ProgressIndicator } from "../common";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -39,8 +38,6 @@ export default function Documentation() {
   return (
     <FormProvider {...methods}>
       <Container>
-        <ProgressIndicator />
-
         <Title />
 
         <form
