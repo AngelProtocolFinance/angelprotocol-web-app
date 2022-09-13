@@ -1,3 +1,4 @@
+import { CharityApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
 import { ApplicationProposal, ApplicationVote } from "types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
@@ -24,6 +25,11 @@ export default class CW3Review extends CW3 {
 function createApplicationProposalPayload(
   charity: Charity
 ): ApplicationProposal {
+  const meta: CharityApplicationMeta = {
+    type: "cw3_application",
+    data: charity.Registration,
+  };
+
   return {
     ref_id: charity.ContactPerson.PK!,
     msg: {
@@ -61,5 +67,6 @@ function createApplicationProposalPayload(
       cw3_threshold: { absolute_percentage: { percentage: "0.5" } }, //set initial 50%
       cw3_max_voting_period: 86400,
     },
+    meta: JSON.stringify(meta),
   };
 }

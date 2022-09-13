@@ -1,4 +1,4 @@
-import { CharityApplication } from "types/aws";
+import { CharityApplication, Registration } from "types/aws";
 import {
   AllianceMember,
   CW4Member,
@@ -28,6 +28,7 @@ export type Templates =
   //cw3
   | "cw3_config"
   | "cw3_transfer"
+  | "cw3_application"
 
   //cw4
   | "cw4_members"
@@ -93,6 +94,11 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
+export type CharityApplicationMeta = MetaConstructor<
+  "cw3_application",
+  Registration
+>;
+
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
   DiffSet<FormCW3Config>
@@ -145,6 +151,7 @@ export type ProposalMeta =
   //cw4
   | CW4MemberUpdateMeta
   //cw3
+  | CharityApplicationMeta
   | CW3ConfigUpdateMeta
   | FundSendMeta
   //endowment

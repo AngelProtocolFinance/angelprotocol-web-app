@@ -1,27 +1,16 @@
-import { Dialog } from "@headlessui/react";
 import { AnchorHTMLAttributes, PropsWithChildren } from "react";
-import { useNavigate } from "react-router-dom";
-import { CharityApplication, FileObject } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
+import { FileObject, Registration } from "types/aws";
 import Icon from "components/Icon";
-import { adminRoutes } from "constants/routes";
+import PreviewContainer from "./common/PreviewContainer";
 
-export default function Application(props: CharityApplication) {
-  const { closeModal } = useModalContext();
-  const navigate = useNavigate();
+export default function CharityApplication(props: Registration) {
   const email = props.CharityName_ContactEmail!.split("_")[1];
-  function goToPoll() {
-    navigate(adminRoutes.proposal + `/${props.poll_id}`);
-    closeModal();
-  }
+
   return (
-    <Dialog.Panel
-      className="fixed-center z-20 bg-white-grey text-angel-grey grid p-4 rounded-md w-full max-w-sm max-h-[75vh] overflow-y-auto"
-      data-testid="application-preview"
-    >
+    <PreviewContainer classes="grid">
       <h3 className="text-xl font-semibold">{props.CharityName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
-        <Url href={props.Website} className="hover:text-angel-blue">
+        <Url href={props.Website}>
           <Icon type="Globe" size={16} />
         </Url>
         <span>{email}</span>
@@ -41,24 +30,13 @@ export default function Application(props: CharityApplication) {
         label="Audited Financial Report"
         docs={props.AuditedFinancialReports}
       />
-
-      <button
-        onClick={goToPoll}
-        className="text-sky-600 hover:text-sky-400 uppercase text-sm mt-4 flex items-center justify-end"
-      >
-        <span>go to poll</span>
-        <Icon type="Forward" size={12} />
-      </button>
-    </Dialog.Panel>
+    </PreviewContainer>
   );
 }
 
 function Label(props: PropsWithChildren<{ classes?: string }>) {
   return (
-    <span
-      {...props}
-      className={`text-xs text-angel-grey uppercase ${props.classes || ""}`}
-    />
+    <span {...props} className={`text-xs uppercase ${props.classes || ""}`} />
   );
 }
 
@@ -69,7 +47,7 @@ function Documents({ docs, label }: { docs: FileObject[]; label: string }) {
         <Url
           href={doc.publicUrl}
           key={i}
-          className="font-heading uppercase text-sm flex items-center gap-1 text-sky-900 hover:text-sky-500 mb-1"
+          className="font-heading uppercase text-sm flex items-center gap-1 text-sky-100 hover:text-sky-400 mb-1"
         >
           <Icon type="ExternalLink" />
           <span>
