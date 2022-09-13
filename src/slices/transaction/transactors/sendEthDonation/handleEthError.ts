@@ -28,6 +28,12 @@ export default function handleEthError(error: any, handler: StageUpdater) {
         message: "Transaction timed out.",
       });
       break;
+    case errors.ACTION_REJECTED:
+      handler({
+        step: "error",
+        message: "Transaction cancelled.",
+      });
+      break;
     default:
       handler({
         step: "error",
