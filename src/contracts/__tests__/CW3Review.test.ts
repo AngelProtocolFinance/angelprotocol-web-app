@@ -1,4 +1,5 @@
 import { fromUtf8 } from "@cosmjs/encoding";
+import { CharityApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
 import { ApplicationProposal, CreateEndowmentPayload } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
@@ -97,7 +98,13 @@ const endowmentMsg: CreateEndowmentPayload = {
   cw3_max_voting_period: 86400,
 };
 
+const meta: CharityApplicationMeta = {
+  type: "cw3_application",
+  data: CHARITY.Registration,
+};
+
 const mockPayload: ApplicationProposal = {
   ref_id: CHARITY.ContactPerson.PK!,
   msg: endowmentMsg,
+  meta: JSON.stringify(meta),
 };
