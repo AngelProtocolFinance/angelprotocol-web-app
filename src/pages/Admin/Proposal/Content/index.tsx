@@ -2,9 +2,9 @@ import { useState } from "react";
 import { EmbeddedBankMsg, EmbeddedWasmMsg, Proposal } from "types/contracts";
 import Icon from "components/Icon";
 import { DetailLabel } from "components/admin";
-import Preview from "./Preview/Preview";
+import Preview from "./Preview";
 
-export default function ProposalContent(props: Proposal) {
+export default function Content(props: Proposal) {
   const [isRawBlocksShown, setIsRawBlockShown] = useState(false);
 
   function toggleRawMessage() {
@@ -44,7 +44,7 @@ export default function ProposalContent(props: Proposal) {
 function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
   const isWASM = "wasm" in props;
   const codeString = isWASM
-    ? JSON.stringify(JSON.parse(atob(props.wasm.execute.msg)), null, 2)
+    ? JSON.stringify(JSON.parse(window.atob(props.wasm.execute.msg)), null, 2)
     : JSON.stringify(props, null, 2);
 
   return (

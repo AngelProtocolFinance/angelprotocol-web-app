@@ -1,11 +1,11 @@
+import { Link } from "react-router-dom";
 import { CharityApplication } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
+import { adminRoutes } from "constants/routes";
 import { statusColors } from "../constants";
-import Application from "./Application";
 
 export default function AppRow(props: CharityApplication) {
-  const { showModal } = useModalContext();
   return (
     <Cells type="td" cellClass="px-2 py-3" key={props.PK}>
       <>{props.CharityName}</>
@@ -19,12 +19,13 @@ export default function AppRow(props: CharityApplication) {
         {props.RegistrationStatus}
       </span>
 
-      <button
-        onClick={() => showModal(Application, props)}
-        className="uppercase font-heading font-bold text-sm hover:text-angel-blue active:text-angel-orange"
+      <Link
+        to={`${adminRoutes.proposal}/${props.poll_id}`}
+        className="uppercase font-heading text-sm hover:text-angel-blue active:text-angel-orange flex gap-1 items-center"
       >
-        Review
-      </button>
+        <span>Review</span>
+        <Icon type="Forward" />
+      </Link>
     </Cells>
   );
 }

@@ -1,9 +1,10 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/aws";
+import { ApplicationProposal, CreateEndowmentPayload } from "types/contracts";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { PLACEHOLDER_WALLET } from "test/constants";
-import Account from "contracts/Account";
+import CW3Review from "contracts/CW3/CW3Review";
 import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
@@ -59,7 +60,7 @@ describe("useSubmit tests", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Account.prototype, "createEndowmentCreationMsg")
+      .spyOn(CW3Review.prototype, "createProposeApplicationMsg")
       .mockImplementation((..._: any[]) => {
         throw new Error();
       });
@@ -84,7 +85,7 @@ describe("useSubmit tests", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseGetWallet.mockReturnValue({ wallet: PLACEHOLDER_WALLET });
     jest
-      .spyOn(Account.prototype, "createEndowmentCreationMsg")
+      .spyOn(CW3Review.prototype, "createProposeApplicationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
     await act(() => result.current.submit(CHARITY));
@@ -141,41 +142,51 @@ const CHARITY: Charity = {
   },
 };
 
+const createEndowmentMsg: CreateEndowmentPayload = {
+  owner: CHARITY.Metadata.JunoWallet,
+  beneficiary: CHARITY.Metadata.JunoWallet,
+  withdraw_before_maturity: false,
+  maturity_height: undefined,
+  maturity_time: undefined,
+
+  profile: {
+    annual_revenue: undefined,
+    average_annual_budget: undefined,
+    charity_navigator_rating: undefined,
+    contact_email: CHARITY.ContactPerson.Email,
+    country_of_origin: undefined,
+    endow_type: "Charity",
+    image: CHARITY.Metadata.Banner.publicUrl!,
+    logo: CHARITY.Metadata.CharityLogo.publicUrl!,
+    name: CHARITY.Registration.CharityName,
+    number_of_employees: undefined,
+    overview: CHARITY.Metadata.CharityOverview,
+    registration_number: undefined,
+    social_media_urls: {
+      facebook: undefined,
+      linkedin: undefined,
+      twitter: undefined,
+    },
+    street_address: undefined,
+    tier: 1,
+    categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] },
+    url: CHARITY.Registration.Website,
+  },
+
+  cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],
+  kyc_donors_only: CHARITY.Metadata.KycDonorsOnly,
+  cw3_threshold: { absolute_percentage: { percentage: "0.5" } },
+  cw3_max_voting_period: 86400, //seconds - 24H
+};
+
+const applicationProposal: ApplicationProposal = {
+  ref_id: CHARITY.ContactPerson.PK!,
+  msg: createEndowmentMsg,
+};
+
 const MSG_EXECUTE_CONTRACT = {
   typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
   value: {
-    create_endowment: {
-      beneficiary:
-        "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
-      cw4_members: [],
-      guardians_multisig_addr: undefined,
-      maturity_height: undefined,
-      maturity_time: undefined,
-      owner: "juno1qsn67fzym4hak4aly07wvcjxyzcld0n4s726r2fs9km2tlahlc5qg2drvn",
-      profile: {
-        annual_revenue: undefined,
-        average_annual_budget: undefined,
-        charity_navigator_rating: undefined,
-        contact_email: "test@test.com",
-        country_of_origin: undefined,
-        endow_type: "Charity",
-        image: "https://www.storage.path/banner",
-        logo: "https://www.storage.path/logo",
-        name: "charity",
-        number_of_employees: undefined,
-        overview: "some overview",
-        registration_number: undefined,
-        social_media_urls: {
-          facebook: undefined,
-          linkedin: undefined,
-          twitter: undefined,
-        },
-        street_address: undefined,
-        tier: 1,
-        un_sdg: 0,
-        url: "www.test.com",
-      },
-      withdraw_before_maturity: false,
-    },
+    propose_application: applicationProposal,
   },
 } as MsgExecuteContractEncodeObject;

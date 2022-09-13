@@ -1,6 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SuccessLink } from "slices/transaction/types";
+import { invalidateAwsTags } from "services/aws/aws";
+import { adminTags, awsTags } from "services/aws/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import transactionSlice, {
   setStage,
@@ -13,61 +14,60 @@ import {
 } from "helpers";
 import { APIs } from "constants/urls";
 
-export const logStatusUpdateProposal = createAsyncThunk(
-  `${transactionSlice.name}/logStatusUpdateProposal`,
+export const logProposalId = createAsyncThunk(
+  `${transactionSlice.name}/logProposalId`,
   async (
-    args: {
-      res: DeliverTxResponse;
-      proposalLink: SuccessLink;
-      wallet: WalletState;
-      PK: string;
-    },
+    args: { res: DeliverTxResponse; wallet: WalletState; PK: string },
     { dispatch }
   ) => {
     try {
       dispatch(
-        setStage({
-          step: "submit",
-          message: "Saving proposal information",
-        })
+        setStage({ step: "submit", message: "Saving endowment proposal" })
       );
-      //set to helper
+
       const parsedId = getWasmAttribute("proposal_id", args.res.rawLog);
       const numId = idParamToNum(parsedId);
-
       if (numId === 0) throw new Error("Failed to get proposal id");
+
       const generatedToken = createAuthToken("charity-owner");
-      const response = await fetch(`${APIs.aws}/registration?uuid=${args.PK}`, {
-        method: "PUT",
-        headers: { authorization: generatedToken },
-        body: JSON.stringify({
-          chain_id: args.wallet.chain.chain_id,
-          poll_id: numId,
-        }),
-      });
+      const response = await fetch(
+        `${APIs.aws}/registration/${args.PK}/submit`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            poll_id: numId,
+            chain_id: args.wallet.chain.chain_id,
+          }),
+          headers: { authorization: generatedToken },
+        }
+      );
 
       dispatch(
         setStage({
           step: "success",
-          message: "Status change proposal submitted",
+          message: "Endowment submitted for review",
           txHash: args.res.transactionHash,
           chain: args.wallet.chain,
-          successLink: args.proposalLink,
         })
+      );
+
+      dispatch(
+        invalidateAwsTags([{ type: awsTags.admin, id: adminTags.registration }])
       );
       //success = 2xx
       if (response.status < 200 || response.status > 299) {
-        throw new Error(`Non-success response status: ${response.status}`);
+        throw new Error("Request failed");
       }
     } catch (err) {
       logger.error(err);
       dispatch(
         setStage({
           step: "error",
-          message: `Failed to log status change proposal. Contact support@angelprotocol.io`,
-          txHash: args.res.transactionHash,
+          message:
+            "Failed to create endowment. Contact support@angelprotocol.io",
         })
       );
     }
+    //parse endowment id
   }
 );

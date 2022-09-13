@@ -191,6 +191,5 @@ export type UpdateDocumentationResult = {
 
 export type CharityApplication = Registration & {
   PK: string;
-  poll_id?: number;
-  EndowmentId: number;
+  poll_id: number;
 };

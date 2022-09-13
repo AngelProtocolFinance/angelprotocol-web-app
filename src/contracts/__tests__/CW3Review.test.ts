@@ -1,17 +1,18 @@
 import { fromUtf8 } from "@cosmjs/encoding";
+import { CharityApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
-import { CreateEndowmentPayload } from "types/contracts";
+import { ApplicationProposal, CreateEndowmentPayload } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
-import Account from "contracts/Account";
+import CW3Review from "contracts/CW3/CW3Review";
 
 describe("Account tests", () => {
   test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
-    const contract = new Account(PLACEHOLDER_WALLET);
-    const payload = contract.createEndowmentCreationMsg(CHARITY);
+    const contract = new CW3Review(PLACEHOLDER_WALLET);
+    const payload = contract.createProposeApplicationMsg(CHARITY);
     expect(payload.value.sender).toBe(PLACEHOLDER_WALLET.address);
     expect(payload.value.msg).toBeDefined();
     expect(JSON.parse(fromUtf8(payload.value.msg!))).toEqual({
-      create_endowment: mockPayload,
+      propose_application: mockPayload,
     });
   });
 });
@@ -62,7 +63,7 @@ const CHARITY: Charity = {
   },
 };
 
-const mockPayload: CreateEndowmentPayload = {
+const endowmentMsg: CreateEndowmentPayload = {
   owner: CHARITY.Metadata.JunoWallet,
   beneficiary: CHARITY.Metadata.JunoWallet,
   withdraw_before_maturity: false,
@@ -95,4 +96,15 @@ const mockPayload: CreateEndowmentPayload = {
   kyc_donors_only: CHARITY.Metadata.KycDonorsOnly, //set to false initially
   cw3_threshold: { absolute_percentage: { percentage: "0.5" } }, //set initial 50%
   cw3_max_voting_period: 86400,
+};
+
+const meta: CharityApplicationMeta = {
+  type: "cw3_application",
+  data: CHARITY.Registration,
+};
+
+const mockPayload: ApplicationProposal = {
+  ref_id: CHARITY.ContactPerson.PK!,
+  msg: endowmentMsg,
+  meta: JSON.stringify(meta),
 };

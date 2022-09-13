@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { CharityApplication } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
@@ -67,26 +66,10 @@ describe("Charity Applications", () => {
     const rows = screen.getAllByRole("row");
     expect(rows.length).toBe(4); //header row, +3 app rows
     expect(
-      screen.getAllByRole("button", {
-        name: /^review$/i,
+      screen.getAllByRole("link", {
+        name: /review/i,
       })
     ).toHaveLength(3); //3 rows rendered with review button
-  });
-  test("Open application modal", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
-      data: mockApplications,
-    });
-    mockAdminContext.mockReturnValue({ cw3: "", proposalsLink: "" });
-    render(
-      <AppWrapper>
-        <Applications />
-      </AppWrapper>
-    );
-    // const rows = screen.getAllByRole("row");
-    const openers = screen.getAllByRole("button", { name: /^review$/i });
-    userEvent.click(openers[0]);
-    expect(screen.getByTestId("application-preview")).toBeInTheDocument();
-    //FUTURE: test Application modal in /Application
   });
 });
 
@@ -137,6 +120,7 @@ const mockApplications: CharityApplication[] = [
       },
     ],
     FinancialStatementsVerified: false,
+    poll_id: 1,
   },
   {
     ProofOfIdentityVerified: false,
@@ -184,6 +168,7 @@ const mockApplications: CharityApplication[] = [
       },
     ],
     FinancialStatementsVerified: false,
+    poll_id: 2,
   },
   {
     ProofOfIdentityVerified: false,
@@ -207,7 +192,6 @@ const mockApplications: CharityApplication[] = [
     },
     ProofOfRegistrationVerified: false,
     CharityName_ContactEmail: "testCharity3_testCharity3@mail.com",
-    poll_id: 3,
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -232,5 +216,6 @@ const mockApplications: CharityApplication[] = [
       },
     ],
     FinancialStatementsVerified: false,
+    poll_id: 3,
   },
 ];
