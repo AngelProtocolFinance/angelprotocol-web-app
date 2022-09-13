@@ -9,7 +9,7 @@ import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3Review from "contracts/CW3/CW3Review";
 import { logger, processEstimateError } from "helpers";
-import { logEndowmentId } from "./logEndowmentId";
+import { logProposalId } from "./logProposalId";
 
 export default function useSubmit() {
   const { wallet } = useGetWallet();
@@ -27,7 +27,7 @@ export default function useSubmit() {
             wallet,
             msgs: [msg],
             onSuccess(res) {
-              return logEndowmentId({
+              return logProposalId({
                 res,
                 wallet: wallet!, //wallet is defined at this point
                 PK: charity.ContactPerson.PK!, //registration data is complete at this point

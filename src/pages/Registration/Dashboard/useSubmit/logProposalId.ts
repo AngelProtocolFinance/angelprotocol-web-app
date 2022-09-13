@@ -14,8 +14,8 @@ import {
 } from "helpers";
 import { APIs } from "constants/urls";
 
-export const logEndowmentId = createAsyncThunk(
-  `${transactionSlice.name}/logEndowmentId`,
+export const logProposalId = createAsyncThunk(
+  `${transactionSlice.name}/logProposalId`,
   async (
     args: { res: DeliverTxResponse; wallet: WalletState; PK: string },
     { dispatch }
