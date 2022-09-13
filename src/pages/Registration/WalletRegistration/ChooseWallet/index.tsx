@@ -22,6 +22,9 @@ export default function ChooseWallet() {
   return (
     <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
       <Title />
+      <h3>
+        You may need to refresh the page once you have downloaded the wallet
+      </h3>
       <KeplrConnector />
       <Button className="btn-outline-secondary w-80 h-10" onClick={onBackClick}>
         Back
