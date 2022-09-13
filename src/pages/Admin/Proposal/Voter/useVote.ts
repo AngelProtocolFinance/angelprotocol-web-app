@@ -13,7 +13,7 @@ import CW3Review from "contracts/CW3/CW3Review";
 export default function useVote() {
   const {
     handleSubmit,
-    formState: { isValid, isDirty },
+    formState: { isValid },
   } = useFormContext<VV>();
   const { wallet } = useGetWallet();
   const { cw3 } = useAdminResources();
@@ -47,5 +47,5 @@ export default function useVote() {
     );
   }
 
-  return { vote: handleSubmit(vote), isSubmitDisabled: !isValid || !isDirty };
+  return { vote: handleSubmit(vote), isSubmitDisabled: !isValid };
 }

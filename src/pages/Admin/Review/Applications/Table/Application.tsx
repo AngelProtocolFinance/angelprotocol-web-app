@@ -1,18 +1,12 @@
 import { Dialog } from "@headlessui/react";
-import {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  PropsWithChildren,
-} from "react";
+import { AnchorHTMLAttributes, PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
 import { CharityApplication, FileObject } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";
-import useProposeStatusChange from "./useProposeStatusChange";
 
 export default function Application(props: CharityApplication) {
-  const { updateStatus } = useProposeStatusChange(props);
   const { closeModal } = useModalContext();
   const navigate = useNavigate();
   const email = props.CharityName_ContactEmail!.split("_")[1];
@@ -20,7 +14,6 @@ export default function Application(props: CharityApplication) {
     navigate(adminRoutes.proposal + `/${props.poll_id}`);
     closeModal();
   }
-
   return (
     <Dialog.Panel
       className="fixed-center z-20 bg-white-grey text-angel-grey grid p-4 rounded-md w-full max-w-sm max-h-[75vh] overflow-y-auto"
@@ -49,31 +42,13 @@ export default function Application(props: CharityApplication) {
         docs={props.AuditedFinancialReports}
       />
 
-      <div className="grid grid-cols-2 gap-1 mt-4">
-        <Button
-          onClick={() => updateStatus(1)}
-          className="text-emerald-500 hover:bg-emerald-500/20"
-          disabled={props.poll_id !== undefined}
-        >
-          Approve
-        </Button>
-        <Button
-          onClick={() => updateStatus(3)}
-          className="text-rose-500 hover:bg-rose-500/20"
-          disabled={props.poll_id !== undefined}
-        >
-          Reject
-        </Button>
-      </div>
-      {props.poll_id && (
-        <button
-          onClick={goToPoll}
-          className="text-sky-600 hover:text-sky-400 uppercase text-sm mt-4 flex items-center justify-end"
-        >
-          <span>go to poll</span>
-          <Icon type="Forward" size={12} />
-        </button>
-      )}
+      <button
+        onClick={goToPoll}
+        className="text-sky-600 hover:text-sky-400 uppercase text-sm mt-4 flex items-center justify-end"
+      >
+        <span>go to poll</span>
+        <Icon type="Forward" size={12} />
+      </button>
     </Dialog.Panel>
   );
 }
@@ -111,16 +86,5 @@ function Url(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
     <a {...props} target="_blank" rel="noopener noreferrer">
       {props.children}
     </a>
-  );
-}
-
-function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className={`${
-        props.className || ""
-      } uppercase font-heading text-sm font-bold border py-2 border-zinc-800/30 rounded-sm disabled:bg-zinc-200 disabled:text-zinc-400`}
-    />
   );
 }

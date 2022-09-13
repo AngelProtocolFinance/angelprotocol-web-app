@@ -21,11 +21,13 @@ export const logProposalId = createAsyncThunk(
     { dispatch }
   ) => {
     try {
-      dispatch(setStage({ step: "submit", message: "Saving endowment id" }));
+      dispatch(
+        setStage({ step: "submit", message: "Saving endowment proposal" })
+      );
 
       const parsedId = getWasmAttribute("proposal_id", args.res.rawLog);
       const numId = idParamToNum(parsedId);
-      if (numId === 0) throw new Error("Failed to get endowment id");
+      if (numId === 0) throw new Error("Failed to get proposal id");
 
       const generatedToken = createAuthToken("charity-owner");
       const response = await fetch(
@@ -33,7 +35,8 @@ export const logProposalId = createAsyncThunk(
         {
           method: "POST",
           body: JSON.stringify({
-            EndowmentId: numId,
+            poll_id: numId,
+            chain_id: args.wallet.chain.chain_id,
           }),
           headers: { authorization: generatedToken },
         }

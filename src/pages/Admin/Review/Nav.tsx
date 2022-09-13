@@ -6,7 +6,7 @@ export default function Nav() {
   return (
     <div className="flex justify-end">
       <NavLink end to={adminRoutes.index} className={styler}>
-        Dashboard
+        Applications
       </NavLink>
       <NavLink end to={adminRoutes.proposals} className={styler}>
         proposals
