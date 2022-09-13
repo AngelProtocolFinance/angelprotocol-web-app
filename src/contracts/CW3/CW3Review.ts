@@ -5,11 +5,10 @@ import { contracts } from "constants/contracts";
 import CW3 from ".";
 
 export default class CW3Review extends CW3 {
-  private static address = contracts.cw3ReviewTeam;
-
   constructor(wallet: WalletState | undefined) {
-    super(wallet, CW3Review.address);
+    super(wallet, contracts.cw3ReviewTeam);
   }
+
   createProposeApplicationMsg(charity: Charity) {
     return this.createExecuteContractMsg(this.address, {
       propose_application: createApplicationProposalPayload(charity),

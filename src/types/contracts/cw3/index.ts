@@ -31,6 +31,7 @@ export type ProposalStatus =
 
 export type Expiration = { at_time: number } | { at_height: number };
 
+export type ProposalType = "normal" | "application";
 export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
@@ -40,6 +41,7 @@ export type Proposal = {
   status: ProposalStatus;
   expires: Expiration;
   threshold: ThresholdRes;
+  type: ProposalType;
 };
 
 export type CW3Config = {

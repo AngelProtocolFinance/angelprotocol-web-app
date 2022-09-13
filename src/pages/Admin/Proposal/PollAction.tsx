@@ -29,7 +29,10 @@ export default function PollAction(props: ProposalDetails) {
   const dispatch = useSetter();
   const { cw3 } = useAdminResources();
 
-  const showAdminVoter = useAdminVoter(props.id);
+  const showAdminVoter = useAdminVoter({
+    proposalId: props.id,
+    type: "application",
+  });
 
   function executeProposal() {
     const contract = new CW3(wallet, cw3);

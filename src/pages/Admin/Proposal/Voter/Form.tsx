@@ -1,19 +1,14 @@
-import { useFormContext } from "react-hook-form";
 import { VoteValues as V } from "./types";
-import Fee from "components/Transactors/Fee";
 import Status from "components/Transactors/Status";
 import VoteOption from "components/Transactors/VoteOption";
-import { useGetter } from "store/accessors";
+import Reason from "./Reason";
 import useVote from "./useVote";
 
 export default function Form() {
-  const { handleSubmit } = useFormContext<V>();
-  const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const vote = useVote();
-  const isDisabled = form_loading || !!form_error;
+  const { vote, isSubmitDisabled } = useVote();
   return (
     <form
-      onSubmit={handleSubmit(vote)}
+      onSubmit={vote}
       className="bg-white-grey grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >
@@ -22,13 +17,14 @@ export default function Form() {
         <VoteOption<V> label="yes" vote="yes" />
         <VoteOption<V> label="no" vote="no" />
       </div>
-      <Fee />
+      <Reason />
+
       <button
-        disabled={isDisabled}
+        disabled={isSubmitDisabled}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {form_loading ? "estimating fee.." : "proceed"}
+        proceed
       </button>
     </form>
   );

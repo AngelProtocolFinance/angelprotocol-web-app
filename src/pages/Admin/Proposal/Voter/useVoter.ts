@@ -1,17 +1,15 @@
-import { useCallback } from "react";
+import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor, { TxProps } from "components/Transactor";
 import Voter from ".";
 
-export default function useAdminVoter(proposalId: number) {
+export default function useAdminVoter(props: Props) {
   const { showModal } = useModalContext();
-  const showVoter = useCallback(() => {
-    showModal<TxProps<{ proposalId: number }>>(Transactor, {
+  const showVoter = () => {
+    showModal<TxProps<Props>>(Transactor, {
       Content: Voter,
-      contentProps: { proposalId },
+      contentProps: props,
     });
-    //eslint-disable-next-line
-  }, [proposalId]);
-
+  };
   return showVoter;
 }
