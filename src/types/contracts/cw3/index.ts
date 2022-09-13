@@ -41,7 +41,7 @@ export type Proposal = {
   status: ProposalStatus;
   expires: Expiration;
   threshold: ThresholdRes;
-  type: ProposalType;
+  proposal_type: ProposalType;
 };
 
 export type CW3Config = {

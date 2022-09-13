@@ -31,7 +31,7 @@ export default function PollAction(props: ProposalDetails) {
 
   const showAdminVoter = useAdminVoter({
     proposalId: props.id,
-    type: "application",
+    type: props.proposal_type,
   });
 
   function executeProposal() {
