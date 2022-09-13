@@ -32,6 +32,7 @@ export default function PollAction(props: ProposalDetails) {
   const showAdminVoter = useAdminVoter({
     proposalId: props.id,
     type: props.proposal_type,
+    existingReason: props.description, //prev NO reason is saved in proposal description
   });
 
   function executeProposal() {

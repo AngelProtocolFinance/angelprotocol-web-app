@@ -12,7 +12,10 @@ export default function Voter(props: Props) {
     defaultValues: {
       vote: "yes",
       proposalId: props.proposalId,
+
+      //meta
       type: props.type,
+      existingReason: props.existingReason,
     },
   });
   return (

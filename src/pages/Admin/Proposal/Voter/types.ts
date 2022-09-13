@@ -6,6 +6,7 @@ export type VoteValues = {
   reason: string; //type === "application",
   //meta
   type: ProposalType;
+  existingReason: string;
 };
 
-export type Props = { proposalId: number; type: ProposalType };
+export type Props = Pick<VoteValues, "proposalId" | "type" | "existingReason">;
