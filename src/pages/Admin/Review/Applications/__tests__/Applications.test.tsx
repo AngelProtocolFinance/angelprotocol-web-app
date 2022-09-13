@@ -92,6 +92,7 @@ describe("Charity Applications", () => {
 
 const mockApplications: CharityApplication[] = [
   {
+    EndowmentId: 1,
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -139,6 +140,7 @@ const mockApplications: CharityApplication[] = [
     FinancialStatementsVerified: false,
   },
   {
+    EndowmentId: 2,
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -186,6 +188,7 @@ const mockApplications: CharityApplication[] = [
     FinancialStatementsVerified: false,
   },
   {
+    EndowmentId: 3,
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
