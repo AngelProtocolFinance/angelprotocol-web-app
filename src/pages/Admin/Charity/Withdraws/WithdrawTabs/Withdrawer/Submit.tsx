@@ -29,8 +29,7 @@ export default function Submit() {
         error: "Failed to get authorization info",
       }}
     >
-      {(endowment) => {
-        console.log(endowment);
+      {() => {
         return (
           <Button type="submit" disabled={isValid || !isDirty}>
             create withdraw proposal

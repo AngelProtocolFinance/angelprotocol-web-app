@@ -4,6 +4,7 @@ import {
   Categories,
   EndowmentStatus,
   EndowmentStatusStrNum,
+  EndowmentStatusText,
   EndowmentTier,
   EndowmentType,
 } from "./index";
@@ -41,23 +42,28 @@ export interface Strategy {
   percentage: string; // percentage of funds to invest
 }
 
-export interface AccountStrategies {
-  locked: Strategy[];
-  liquid: Strategy[];
-}
+type Vaults<T> = {
+  liquid: T;
+  locked: T;
+};
+
+export type AccountStrategies = Vaults<Strategy[]>;
+type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
+  status: EndowmentStatusText;
+  endow_type: Capitalize<EndowmentType>;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
   strategies: AccountStrategies;
+  oneoff_vaults: OneOffVaults;
   rebalance: RebalanceDetails;
   kyc_donors_only: boolean;
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
-  auto_invest: boolean;
 }
 
 export type Holding = { address: string; amount: string };

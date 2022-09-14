@@ -4,6 +4,7 @@ import {
   CW4Member,
   EndowmentStatus,
   EndowmentStatusStrNum,
+  EndowmentStatusText,
   FundConfig,
   FundDetails,
   RegistrarConfigPayload,
@@ -190,7 +191,7 @@ export type EndowmentUpdateValues = ProposalBase & {
   indexFund: number;
 
   //metadata
-  prevStatus?: keyof EndowmentStatus;
+  prevStatus?: EndowmentStatusText;
 };
 export type FundConfigValues = ProposalBase &
   FundConfig & { initialConfigPayload: FundConfig };
