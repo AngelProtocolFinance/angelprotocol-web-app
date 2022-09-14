@@ -1,11 +1,14 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset, EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
+import { invalidateJunoTags, useLazyLatestBlockQuery } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
@@ -22,13 +25,15 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, proposalLink } = useAdminResources();
+  const { cw3, endowmentId, proposalLink, endowment } = useAdminResources();
   const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
+  const [getLatestBlock] = useLazyLatestBlockQuery();
   const dispatch = useSetter();
 
   const type = getValues("type");
 
-  function withdraw(data: WithdrawValues) {
+  async function withdraw(data: WithdrawValues) {
     //filter + map
     const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
       info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
@@ -39,8 +44,9 @@ export default function useWithdraw() {
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
 
+    //used when withdraw doesn't need to go thru AP
     const account = new Account(wallet);
-    const msg = account.createEmbeddedWithdrawMsg({
+    const embeddedWithdrawMsg = account.createEmbeddedWithdrawMsg({
       id: endowmentId,
       beneficiary,
       acct_type: data.type,
@@ -54,19 +60,31 @@ export default function useWithdraw() {
       },
     };
 
-    const cw3contract = new CW3(wallet, cw3);
-    //proposal meta for preview
-    const proposal = cw3contract.createProposalMsg(
-      "withdraw proposal",
-      `withdraw from endowment: ${endowmentId}`,
-      [msg],
-      JSON.stringify(meta)
-    );
+    let proposal: MsgExecuteContractEncodeObject;
+    if (type === "liquid") {
+      const cw3contract = new CW3(wallet, cw3);
+      //proposal meta for preview
+      proposal = cw3contract.createProposalMsg(
+        "withdraw proposal",
+        `withdraw from endowment: ${endowmentId}`,
+        [embeddedWithdrawMsg],
+        JSON.stringify(meta)
+      );
+      //lock withdraws
+    } else {
+      showModal(Popup, { message: "Checking withdraw authorization.." });
+
+      const { data: height = "0" } = await getLatestBlock(null);
+      if (isNeedApPermission(endowment, +height)) {
+      }
+    }
 
     dispatch(
       sendCosmosTx({
         wallet,
-        msgs: [proposal],
+        msgs: [
+          /** proposal */
+        ],
         tagPayloads: [
           invalidateJunoTags([
             //no need to invalidate balance, since this is just proposal
