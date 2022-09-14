@@ -36,7 +36,6 @@ export type Templates =
 
   //account
   | "acc_withdraw"
-  | "acc_withdraw_liq"
   | "acc_profile"
   | "acc_endow_status"
 
@@ -111,8 +110,8 @@ export type FundSendMeta = MetaConstructor<
 >;
 
 /** _endowment */
-export type WithdrawLiqMeta = MetaConstructor<
-  "acc_withdraw_liq",
+export type WithdrawMeta = MetaConstructor<
+  "acc_withdraw",
   {
     beneficiary: string;
   }
@@ -157,7 +156,7 @@ export type ProposalMeta =
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
-  | WithdrawLiqMeta
+  | WithdrawMeta
   | EndowmentProfileUpdateMeta
   //registrar
   | RegistrarConfigUpdateMeta;

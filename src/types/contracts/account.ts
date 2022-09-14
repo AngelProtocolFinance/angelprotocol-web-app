@@ -134,7 +134,7 @@ export interface DepositPayload {
   liquid_percentage: string; //"0.3"
 }
 
-type Asset = {
+export type Asset = {
   info: { native: string } | { cw20: string };
   amount: string;
 };

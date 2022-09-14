@@ -39,7 +39,7 @@ export default function Preview(props: ProposalMeta) {
       return <CWMemberUpdate {...props.data} />;
 
     /** _account */
-    case "acc_withdraw_liq":
+    case "acc_withdraw":
       return <WithdrawLiq {...props.data} />;
     case "acc_profile":
       return <DiffTable diffSet={props.data} />;

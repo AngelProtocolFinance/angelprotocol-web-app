@@ -1,8 +1,8 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { WithdrawLiqMeta } from "pages/Admin/types";
-import { CW20 } from "types/contracts";
+import { WithdrawMeta } from "pages/Admin/types";
+import { Asset, CW20, EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -28,6 +28,7 @@ export default function useWithdraw() {
   const dispatch = useSetter();
 
   const type = getValues("type");
+
   function withdraw(data: WithdrawValues) {
     //filter + map
     const [cw20s, natives] = data.amounts.reduce(
@@ -52,28 +53,31 @@ export default function useWithdraw() {
       [[], []] as [CW20[], Coin[]]
     );
 
+    const assets: Asset[] = [
+      ...cw20s.map((c) => ({
+        amount: c.amount,
+        info: { cw20: c.address },
+      })),
+      ...natives.map((c) => ({
+        amount: c.amount,
+        info: { native: c.denom },
+      })),
+    ];
+
     const isJuno = data.network === chainIds.juno;
+    //if not juno, send to ap wallet (juno)
+    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
+
     const account = new Account(wallet);
     const msg = account.createEmbeddedWithdrawMsg({
       id: endowmentId,
-      beneficiary:
-        //if not juno, send to ap wallet (juno)
-        isJuno ? data.beneficiary : ap_wallets.juno,
+      beneficiary,
       acct_type: data.type,
-      assets: [
-        ...cw20s.map((c) => ({
-          amount: c.amount,
-          info: { cw20: c.address },
-        })),
-        ...natives.map((c) => ({
-          amount: c.amount,
-          info: { native: c.denom },
-        })),
-      ],
+      assets,
     });
 
-    const meta: WithdrawLiqMeta = {
-      type: "acc_withdraw_liq",
+    const meta: WithdrawMeta = {
+      type: "acc_withdraw",
       data: {
         beneficiary: data.beneficiary,
       },
@@ -124,4 +128,15 @@ export default function useWithdraw() {
     isSubmitDisabled: !isValid || !isDirty || isSubmitting,
     type,
   };
+}
+
+function isNeedApPermission(
+  { maturity_height = 0, withdraw_before_maturity }: EndowmentDetails,
+  height: number
+) {
+  /**
+   * TODO: factor in maturity_time, once AIF is integrated with which maturity_time can be set
+   *.NOTE: for endow_type(Charity), withdraw_before_maturity is currently defaulted to False
+   */
+  return maturity_height < height && !withdraw_before_maturity;
 }

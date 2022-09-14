@@ -22,7 +22,6 @@ export const templates: { [key in Templates]: string } = {
 
   //account
   acc_withdraw: "acc_withdraw",
-  acc_withdraw_liq: "acc_withdraw_liq",
   acc_profile: "acc_profile",
   acc_endow_status: "acc_endow_status",
 
