@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
-import { WalletError } from "errors/errors";
+import { WalletError, WalletErrorCodes } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
@@ -56,7 +56,10 @@ export default function useKeplr() {
   const connect = async () => {
     try {
       if (!dwindow.keplr) {
-        throw new WalletError("Keplr is not installed", 0);
+        throw new WalletError(
+          "Keplr is not installed",
+          WalletErrorCodes.NOT_INSTALLED
+        );
       }
       //connecting xdefi
       setIsLoading(true);

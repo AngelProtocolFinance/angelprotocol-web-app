@@ -7,7 +7,7 @@ import {
   InjectedProvider,
 } from "types/ethereum";
 import { getProvider, logger } from "helpers";
-import { WalletError } from "errors/errors";
+import { WalletError, WalletErrorCodes } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
@@ -116,7 +116,10 @@ export default function useInjectedProvider(
       const dwindow = window as Dwindow;
 
       if (!getProvider(providerId)) {
-        throw new WalletError(`${prettifyId(providerId)} is not installed`, 0);
+        throw new WalletError(
+          `${prettifyId(providerId)} is not installed`,
+          WalletErrorCodes.NOT_INSTALLED
+        );
       }
       //connecting xdefi
       if (providerId === "xdefi-evm") {

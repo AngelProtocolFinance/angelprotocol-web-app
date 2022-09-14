@@ -1,3 +1,4 @@
+import { errors } from "ethers";
 import { Chain } from "types/aws";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
@@ -112,11 +113,19 @@ export class TxResultFail extends Error {
   }
 }
 
+export enum WalletErrorCodes {
+  NOT_INSTALLED = "NOT_INSTALLED",
+}
+
 export class WalletError extends APError {
   //based on EIP1193 error spec
-  code: number;
+  code: WalletErrorCodes | number;
   data?: unknown;
-  constructor(message: string, code: number, data?: unknown) {
+  constructor(
+    message: string,
+    code: WalletErrorCodes | number,
+    data?: unknown
+  ) {
     super("WalletError", message);
     this.code = code;
     this.data = data;
