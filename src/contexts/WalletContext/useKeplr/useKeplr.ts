@@ -3,6 +3,7 @@ import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletErrorCodes } from "errors/errors";
 import { IS_TEST } from "constants/env";
+import { KEPLR_INSTALL_LINK } from "constants/urls";
 import { providerIcons } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
@@ -95,6 +96,8 @@ export default function useKeplr() {
   //connection object to render <Connector/>
   const connection: Connection = {
     name: "Keplr",
+    displayName: "Keplr",
+    installUrl: KEPLR_INSTALL_LINK,
     logo: providerIcons.keplr,
     connect,
   };

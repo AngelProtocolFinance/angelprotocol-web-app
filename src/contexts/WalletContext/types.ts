@@ -10,7 +10,13 @@ export type ProviderId =
   | "walletconnect"
   | "keplr";
 
-type Base = { logo: string; name: string; network?: true };
+type Base = {
+  logo: string;
+  name: string;
+  network?: true;
+  displayName: string;
+  installUrl: string;
+};
 type Single = { connect(args?: string): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
 export type Connection = Base & (Single | Multi);
