@@ -13,6 +13,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import CW3Ap from "contracts/CW3/CW3Ap";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
@@ -73,9 +74,10 @@ export default function useWithdraw() {
       //lock withdraws
     } else {
       showModal(Popup, { message: "Checking withdraw authorization.." });
-
       const { data: height = "0" } = await getLatestBlock(null);
+
       if (isNeedApPermission(endowment, +height)) {
+        const contract = new CW3Ap(wallet);
       }
     }
 

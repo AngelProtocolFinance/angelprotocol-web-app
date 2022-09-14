@@ -11,6 +11,7 @@ export type WithdrawValues = {
   amounts: Amount[];
   network: string;
   beneficiary: string;
+  reason: string;
 
   //meta
   _amounts: string; //collective amounts error
