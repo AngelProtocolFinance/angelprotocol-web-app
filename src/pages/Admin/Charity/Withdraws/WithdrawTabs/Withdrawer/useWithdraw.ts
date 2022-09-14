@@ -1,8 +1,7 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
-import { Asset, CW20, EndowmentDetails } from "types/contracts";
+import { Asset, EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -31,38 +30,10 @@ export default function useWithdraw() {
 
   function withdraw(data: WithdrawValues) {
     //filter + map
-    const [cw20s, natives] = data.amounts.reduce(
-      (result, amount) => {
-        if (amount.type === "cw20") {
-          if (amount.value /** empty "" */) {
-            result[0].push({
-              address: amount.tokenId,
-              amount: scaleToStr(amount.value),
-            });
-          }
-        } else {
-          if (amount.value) {
-            result[1].push({
-              denom: amount.tokenId,
-              amount: scaleToStr(amount.value),
-            });
-          }
-        }
-        return result;
-      },
-      [[], []] as [CW20[], Coin[]]
-    );
-
-    const assets: Asset[] = [
-      ...cw20s.map((c) => ({
-        amount: c.amount,
-        info: { cw20: c.address },
-      })),
-      ...natives.map((c) => ({
-        amount: c.amount,
-        info: { native: c.denom },
-      })),
-    ];
+    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
+      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
+      amount: scaleToStr(value /** empty "" */ || "0"),
+    }));
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
