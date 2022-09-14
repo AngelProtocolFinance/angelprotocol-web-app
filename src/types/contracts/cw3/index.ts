@@ -1,4 +1,4 @@
-import { EmbeddedBankMsg, EmbeddedWasmMsg, Threshold, Vote } from "../index";
+import { EmbeddedBankMsg, EmbeddedWasmMsg, Threshold, Vote } from "../common";
 
 type Duration = { time: number } | { height: number };
 type PercentageRes = {

@@ -1,4 +1,4 @@
-import { CW4Member } from ".";
+import { CW4Member } from "./common";
 
 export type InquiredMember = {
   weight: number | null;

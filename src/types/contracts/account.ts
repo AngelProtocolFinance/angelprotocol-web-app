@@ -1,13 +1,14 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { CW20 } from "./cw20";
 import {
+  Asset,
   Categories,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
   EndowmentTier,
   EndowmentType,
-} from "./index";
+} from "./common";
+import { CW20 } from "./cw20";
 
 export interface GenericBalance {
   native: Coin[];
@@ -133,11 +134,6 @@ export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
-
-export type Asset = {
-  info: { native: string } | { cw20: string };
-  amount: string;
-};
 
 export type AccountType = "locked" | "liquid";
 

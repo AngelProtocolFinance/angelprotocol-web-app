@@ -1,4 +1,4 @@
-import { Vote } from ".";
+import { Vote } from "./common";
 
 export type PollStatus =
   | "in_progress"
