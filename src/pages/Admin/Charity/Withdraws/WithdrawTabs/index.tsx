@@ -10,7 +10,6 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
       <Tab.List className="grid grid-cols-2 rounded-md mb-1 overflow-hidden">
         {tabs.map((t) => (
           <Tab
-            disabled={t === "locked"}
             key={t}
             className={({ selected }) =>
               `${

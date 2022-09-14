@@ -50,6 +50,13 @@ export const account_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
+    endowment: builder.query<Result<"accEndowment">, Args<"accEndowment">>({
+      providesTags: [{ type: junoTags.account, id: accountTags.balance }],
+      query: (args) => genQueryPath("accEndowment", args, accounts),
+      transformResponse: (res: Res<"accEndowment">) => {
+        return res.data;
+      },
+    }),
   }),
 });
 
@@ -58,4 +65,5 @@ export const {
   useBalanceQuery,
   useCategorizedEndowmentsQuery,
   useEndowmentsQuery,
+  useEndowmentQuery,
 } = account_api;

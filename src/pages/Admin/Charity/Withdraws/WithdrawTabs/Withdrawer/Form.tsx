@@ -2,10 +2,11 @@ import Icon from "components/Icon";
 import Amounts from "./Amounts";
 import Beneficiary from "./Beneficiary";
 import Network from "./Network";
+import Submit from "./Submit";
 import useWithdraw from "./useWithdraw";
 
 export default function Form() {
-  const { withdraw, isSubmitDisabled } = useWithdraw();
+  const { withdraw } = useWithdraw();
 
   return (
     <form
@@ -25,14 +26,7 @@ export default function Form() {
           are not responsible for the loss of funds.
         </span>
       </div>
-
-      <button
-        type="submit"
-        className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
-        disabled={isSubmitDisabled}
-      >
-        {"Create withdraw proposal"}
-      </button>
+      <Submit />
     </form>
   );
 }

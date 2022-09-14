@@ -19,6 +19,7 @@ import { logWithdrawProposal } from "./logWithdrawProposal";
 export default function useWithdraw() {
   const {
     handleSubmit,
+    getValues,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
@@ -26,6 +27,7 @@ export default function useWithdraw() {
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
+  const type = getValues("type");
   function withdraw(data: WithdrawValues) {
     //filter + map
     const [cw20s, natives] = data.amounts.reduce(
@@ -120,5 +122,6 @@ export default function useWithdraw() {
   return {
     withdraw: handleSubmit(withdraw),
     isSubmitDisabled: !isValid || !isDirty || isSubmitting,
+    type,
   };
 }
