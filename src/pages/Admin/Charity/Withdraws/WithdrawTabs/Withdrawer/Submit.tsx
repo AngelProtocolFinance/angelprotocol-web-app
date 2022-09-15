@@ -63,10 +63,13 @@ function SubmitWithReason(props: {
     <>
       {isNeedApPermission(props.endowment, props.height) && (
         <>
-          <p>
-            <Icon type="Info" className="inline" /> You are proposing to
-            withdrawing locked funds before maturity. Angel protocol team will
-            vote to approve this transaction after execution.
+          <p className="p-2 text-sm bg-amber-50 text-amber-600">
+            <Icon
+              type="Info"
+              className="inline-block relative bottom-0.5 mr-1"
+            />
+            You are proposing to withdrawing locked funds before maturity. Angel
+            protocol team will vote to approve this transaction after execution.
           </p>
           <TextInput<WV> name="reason" title="Reason" />
         </>
