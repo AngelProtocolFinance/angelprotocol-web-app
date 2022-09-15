@@ -7,7 +7,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
   const { installUrl, logo, name } = WALLET_METADATA[props.providerId];
 
   return (
-    <Dialog.Panel className="fixed-center z-20 max-w-md outline-none w-[90%] p-5 bg-blue-accent rounded-2xl z-50 flex flex-col gap-5">
+    <Dialog.Panel className="flex flex-col gap-5 fixed-center z-20 max-w-md outline-none w-[90%] p-5 bg-blue-accent rounded-2xl">
       <h2 className="text-lg md:text-xl text-white-grey font-bold font-heading">
         Install Wallet
       </h2>
