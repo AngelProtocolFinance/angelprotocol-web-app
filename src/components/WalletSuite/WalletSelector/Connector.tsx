@@ -2,15 +2,11 @@ import { Menu } from "@headlessui/react";
 import { PropsWithChildren, useState } from "react";
 import { Connection } from "contexts/WalletContext/types";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import InstallWalletPopup from "components/InstallWalletPopup";
-import { WalletError, WalletErrorCodes } from "errors/errors";
 
 export default function Connector(props: Connection) {
   const [isOpen, setIsOpen] = useState(false);
   const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
 
   const isMulti = "networks" in props;
 
@@ -27,14 +23,7 @@ export default function Connector(props: Connection) {
       if (isMulti) throw new Error("Need to choose network first");
       await props.connect();
     } catch (error: any) {
-      if (
-        error instanceof WalletError &&
-        error.code === WalletErrorCodes.NOT_INSTALLED
-      ) {
-        showModal<Connection>(InstallWalletPopup, props);
-      } else {
-        handleError(error);
-      }
+      handleError(error);
     }
   }
 

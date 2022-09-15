@@ -1,9 +1,14 @@
 import { PropsWithChildren, useCallback, useContext } from "react";
 import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
+import InstallWalletPopup from "components/InstallWalletPopup";
 import Popup from "components/Popup";
 import { logger } from "helpers";
-import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
+import {
+  APError,
+  AP_ERROR_DISCRIMINATOR,
+  WalletNotInstalledError,
+} from "errors/errors";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -23,7 +28,11 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else if (typeof error === "string") {
         showModal(Popup, { message: error });
       } else if (instanceOfAPError(error)) {
-        showModal(Popup, { message: error.message });
+        if (error instanceof WalletNotInstalledError) {
+          showModal(InstallWalletPopup, { ...error });
+        } else {
+          showModal(Popup, { message: error.message });
+        }
       } else if (instanceOfAPError(error.data)) {
         handleError(error.data);
       } else if ("message" in error) {
