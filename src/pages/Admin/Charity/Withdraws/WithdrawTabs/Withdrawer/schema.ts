@@ -11,7 +11,7 @@ type TNetwork = WV["network"];
 const balKey: keyof Amount = "balance";
 const netKey: keyof WV = "network";
 const amountsKey: keyof WV = "amounts";
-const endowTypeKey: keyof WV = "type";
+const isRequiredKey: keyof WV = "isReasonRequired";
 
 const amount: SchemaShape<Amount> = {
   value: Yup.lazy((val: TVal) =>
@@ -36,8 +36,8 @@ const shape: SchemaShape<WV> = {
   beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
   ),
-  reason: Yup.string().when(endowTypeKey, (network: TNetwork) =>
-    requiredWalletAddr(network)
+  reason: Yup.string().when(isRequiredKey, (isRequired, schema) =>
+    isRequired ? schema.required("reason required") : schema.optional()
   ),
 };
 

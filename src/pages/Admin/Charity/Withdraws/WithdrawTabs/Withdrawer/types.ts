@@ -14,6 +14,7 @@ export type WithdrawValues = {
   reason: string;
 
   //meta
+  isReasonRequired: boolean; //need to dynamically set
   _amounts: string; //collective amounts error
   type: AccountType;
 };

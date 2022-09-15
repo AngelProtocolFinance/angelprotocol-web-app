@@ -18,6 +18,7 @@ import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
 import { logWithdrawProposal } from "./logWithdrawProposal";
+import isNeedApPermission from "./isNeedApPermission";
 
 export default function useWithdraw() {
   const {
@@ -119,15 +120,4 @@ export default function useWithdraw() {
     isSubmitDisabled: !isValid || !isDirty || isSubmitting,
     type,
   };
-}
-
-function isNeedApPermission(
-  { maturity_height = 0, withdraw_before_maturity }: EndowmentDetails,
-  height: number
-) {
-  /**
-   * TODO: factor in maturity_time, once AIF is integrated with which maturity_time can be set
-   *.NOTE: for endow_type(Charity), withdraw_before_maturity is currently defaulted to False
-   */
-  return maturity_height < height && !withdraw_before_maturity;
 }
