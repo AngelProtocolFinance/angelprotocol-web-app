@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
-import { WalletError, WalletErrorCodes } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
-import { KEPLR_INSTALL_LINK } from "constants/urls";
-import { providerIcons } from "../constants";
+import { providerIcons, walletInstallUrls } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
 const CHAIN_ID = IS_TEST ? "uni-3" : "juno-1";
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
+const CONNECTOR_NAME = "Keplr";
 
 export default function useKeplr() {
   //connect only if there's no active wallet
@@ -57,10 +57,7 @@ export default function useKeplr() {
   const connect = async () => {
     try {
       if (!dwindow.keplr) {
-        throw new WalletError(
-          "Keplr is not installed",
-          WalletErrorCodes.NOT_INSTALLED
-        );
+        throw new WalletNotInstalledError(CONNECTOR_NAME, "keplr");
       }
       //connecting xdefi
       setIsLoading(true);
@@ -95,9 +92,8 @@ export default function useKeplr() {
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: "Keplr",
-    displayName: "Keplr",
-    installUrl: KEPLR_INSTALL_LINK,
+    name: CONNECTOR_NAME,
+    installUrl: walletInstallUrls.keplr,
     logo: providerIcons.keplr,
     connect,
   };

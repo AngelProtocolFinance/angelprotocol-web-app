@@ -7,16 +7,15 @@ import {
   InjectedProvider,
 } from "types/ethereum";
 import { getProvider, logger } from "helpers";
-import { WalletError, WalletErrorCodes } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import { providerIcons } from "./constants";
+import { providerIcons, walletInstallUrls } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "binance-wallet" | "xdefi-evm">,
-  connectorLogo?: string,
-  connectorName?: string
+  connectorName = prettifyId(providerId)
 ) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
@@ -116,10 +115,7 @@ export default function useInjectedProvider(
       const dwindow = window as Dwindow;
 
       if (!getProvider(providerId)) {
-        throw new WalletError(
-          `${prettifyId(providerId)} is not installed`,
-          WalletErrorCodes.NOT_INSTALLED
-        );
+        throw new WalletNotInstalledError(connectorName, providerId);
       }
       //connecting xdefi
       if (providerId === "xdefi-evm") {
@@ -159,8 +155,9 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: connectorName ?? prettifyId(providerId),
-    logo: connectorLogo ?? providerIcons[providerId],
+    name: connectorName,
+    logo: providerIcons[providerId],
+    installUrl: walletInstallUrls[providerId],
     connect,
   };
 
@@ -178,6 +175,7 @@ function removeAllListeners(providerId: ProviderId) {
 }
 
 function prettifyId(providerId: ProviderId) {
-  //e.g xdefi-wallet,
-  return providerId.replace("-", " ");
+  //e.g 'xdefi-wallet' --> 'xdefi wallet',
+  const strSpaced = providerId.replace("-", " ");
+  return strSpaced[0].toUpperCase() + strSpaced.slice(1);
 }
