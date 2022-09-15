@@ -12,10 +12,9 @@ export type ProviderId =
 
 type Base = {
   logo: string;
+  installUrl: string;
   name: string;
   network?: true;
-  displayName: string;
-  installUrl: string;
 };
 type Single = { connect(args?: string): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
