@@ -16,9 +16,9 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileWithAddr = IProfile & { id: number; kyc_donors_only: boolean };
+type ProfileExtended = IProfile & { id: number; kyc_donors_only: boolean };
 
-const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
+const context = createContext<ProfileExtended>({} as ProfileExtended);
 
 export const useProfile = () => {
   const val = useContext(context);
