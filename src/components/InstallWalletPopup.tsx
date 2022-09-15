@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { Connection } from "contexts/WalletContext/types";
 import Icon from "./Icon";
 
-export default function WalletInstallation(props: Connection) {
+export default function InstallWalletPopup(props: Connection) {
   return (
     <Dialog.Panel className="fixed-center z-20 max-w-md outline-none md:w-[90%] w-full md:p-4 p-8 bg-blue-accent rounded-2xl z-50 flex flex-col gap-5">
       <h2 className="text-xl text-white-grey font-bold font-heading">

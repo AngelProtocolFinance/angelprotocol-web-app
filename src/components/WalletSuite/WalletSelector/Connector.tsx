@@ -4,7 +4,7 @@ import { Connection } from "contexts/WalletContext/types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import WalletInstallation from "components/WalletInstallation";
+import InstallWalletPopup from "components/InstallWalletPopup";
 import { WalletError, WalletErrorCodes } from "errors/errors";
 
 export default function Connector(props: Connection) {
@@ -31,7 +31,7 @@ export default function Connector(props: Connection) {
         error instanceof WalletError &&
         error.code === WalletErrorCodes.NOT_INSTALLED
       ) {
-        showModal<Connection>(WalletInstallation, props);
+        showModal<Connection>(InstallWalletPopup, props);
       } else {
         handleError(error);
       }
