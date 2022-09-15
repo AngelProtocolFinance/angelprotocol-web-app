@@ -1,6 +1,7 @@
 import { ProviderId } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
+import evmIcon from "assets/icons/evm.webp";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplr from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -13,7 +14,7 @@ export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
   metamask: metamaskIcon,
   "xdefi-wallet": xdefiIcon,
-  "xdefi-evm": xdefiIcon,
+  "xdefi-evm": evmIcon,
   station: terraStationIcon,
   "leap-wallet": "https://leapwallet.io/icon.png",
   "falcon-wallet": "https://api.falconwallet.app/assets/images/falcon-logo.png",
