@@ -1,5 +1,6 @@
 import { useWallet } from "@terra-money/wallet-provider";
 import { Connection } from "./types";
+import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
 import { providerIcons, walletInstallUrls } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
@@ -12,7 +13,7 @@ export default function useXdefi() {
     connection: xdefiEVMConnection,
     disconnect: disconnectEVMxdefi,
     providerInfo: xdefiEVMinfo,
-  } = useInjectedProvider("xdefi-evm", "Ethereum");
+  } = useInjectedProvider("xdefi-evm", "Ethereum", evmIcon);
 
   const connection = availableConnections.find(
     (connection) => connection.identifier === "xdefi-wallet"

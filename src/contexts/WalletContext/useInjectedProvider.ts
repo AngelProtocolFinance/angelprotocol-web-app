@@ -15,7 +15,8 @@ import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "binance-wallet" | "xdefi-evm">,
-  connectorName = prettifyId(providerId)
+  connectorName = prettifyId(providerId),
+  connectorLogo?: string
 ) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
@@ -157,7 +158,7 @@ export default function useInjectedProvider(
   //connection object to render <Connector/>
   const connection: Connection = {
     name: connectorName,
-    logo: providerIcons[providerId],
+    logo: connectorLogo ?? providerIcons[providerId],
     installUrl: walletInstallUrls[providerId],
     connect,
   };
