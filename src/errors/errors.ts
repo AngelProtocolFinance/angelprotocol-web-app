@@ -113,19 +113,23 @@ export class TxResultFail extends Error {
   }
 }
 
-export enum WalletErrorCodes {
-  NOT_INSTALLED = "NOT_INSTALLED",
+export class WalletNotInstalledError extends APError {
+  installUrl: string;
+  logo: string;
+  walletName: string;
+  constructor(walletName: string, installUrl: string, logo: string) {
+    super("WalletNotInstalledError", `Wallet ${walletName} not installed`);
+    this.installUrl = installUrl;
+    this.logo = logo;
+    this.walletName = walletName;
+  }
 }
 
 export class WalletError extends APError {
   //based on EIP1193 error spec
-  code: WalletErrorCodes | number;
+  code: number;
   data?: unknown;
-  constructor(
-    message: string,
-    code: WalletErrorCodes | number,
-    data?: unknown
-  ) {
+  constructor(message: string, code: number, data?: unknown) {
     super("WalletError", message);
     this.code = code;
     this.data = data;
