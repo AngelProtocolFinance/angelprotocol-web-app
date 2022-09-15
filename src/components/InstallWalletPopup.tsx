@@ -12,7 +12,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
         Install Wallet
       </h2>
       <a
-        className="bg-blue-dark rounded-2xl p-5 flex items-center"
+        className="bg-blue-dark hover:bg-angel-blue rounded-2xl p-5 flex items-center"
         rel="noreferrer"
         target="_blank"
         href={installUrl}
