@@ -29,10 +29,9 @@ export default function Connector(props: Connection) {
     } catch (error: any) {
       if (
         error instanceof WalletError &&
-        error.code === WalletErrorCodes.NOT_INSTALLED &&
-        props.name === "Keplr"
+        error.code === WalletErrorCodes.NOT_INSTALLED
       ) {
-        showModal(WalletInstallation, {});
+        showModal<Connection>(WalletInstallation, props);
       } else {
         handleError(error);
       }
