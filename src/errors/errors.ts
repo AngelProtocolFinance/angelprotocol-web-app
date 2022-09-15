@@ -1,4 +1,3 @@
-import { errors } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Chain } from "types/aws";
 import {
