@@ -24,6 +24,22 @@ export const providerIcons: { [key in ProviderId]: string } = {
   keplr,
 };
 
+export const walletInstallUrls: { [key in ProviderId]: string } = {
+  "binance-wallet": "https://www.bnbchain.org/en/binance-wallet",
+  metamask: "https://metamask.io/",
+  "xdefi-wallet": "https://www.xdefi.io/",
+  "xdefi-evm": "https://www.xdefi.io/",
+  "leap-wallet": "https://www.leapwallet.io/",
+  "falcon-wallet": "https://www.falconwallet.app/",
+  "bitkeep-wallet": "https://bitkeep.com/",
+  walletconnect: "", // --> shouldn't be used anyway
+  torus: "https://app.tor.us/",
+  station:
+    "https://chrome.google.com/webstore/detail/terra-station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp",
+
+  keplr: "https://www.keplr.app/",
+};
+
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
   chain_id: "placeholder",
