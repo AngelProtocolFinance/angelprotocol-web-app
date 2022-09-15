@@ -3,7 +3,7 @@ import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
-import { providerIcons, walletInstallUrls } from "../constants";
+import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
@@ -84,7 +84,7 @@ export default function useKeplr() {
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
-          logo: providerIcons.keplr,
+          logo: WALLET_METADATA.keplr.logo,
           providerId: "keplr",
           chainId,
           address,
@@ -94,8 +94,8 @@ export default function useKeplr() {
   //connection object to render <Connector/>
   const connection: Connection = {
     name: CONNECTOR_NAME,
-    installUrl: walletInstallUrls.keplr,
-    logo: providerIcons.keplr,
+    installUrl: WALLET_METADATA.keplr.installUrl,
+    logo: WALLET_METADATA.keplr.logo,
     connect,
   };
 

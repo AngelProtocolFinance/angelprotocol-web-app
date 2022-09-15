@@ -2,7 +2,7 @@ import { useWallet } from "@terra-money/wallet-provider";
 import { Connection } from "./types";
 import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
-import { providerIcons, walletInstallUrls } from "./constants";
+import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import useInjectedProvider from "./useInjectedProvider";
 
@@ -22,7 +22,7 @@ export default function useXdefi() {
   const xdefiTerraConnection: Connection = {
     logo: terraIcon, //this connector will appear on network selection
     name: "Terra",
-    installUrl: walletInstallUrls["xdefi-wallet"],
+    installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     connect: async () => {
       if (connection) {
         connect(connection.type, connection.identifier);
@@ -35,8 +35,8 @@ export default function useXdefi() {
 
   const xdefiConnection: Connection = {
     name: "xdefi",
-    logo: providerIcons["xdefi-wallet"],
-    installUrl: walletInstallUrls["xdefi-wallet"],
+    logo: WALLET_METADATA["xdefi-wallet"].logo,
+    installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     networks: [xdefiTerraConnection, xdefiEVMConnection],
   };
 

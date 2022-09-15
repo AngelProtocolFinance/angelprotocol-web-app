@@ -9,7 +9,7 @@ import {
 import { getProvider, logger } from "helpers";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import { providerIcons, walletInstallUrls } from "./constants";
+import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
@@ -148,7 +148,7 @@ export default function useInjectedProvider(
   const providerInfo: ProviderInfo | undefined =
     chainId && address
       ? {
-          logo: providerIcons[providerId],
+          logo: WALLET_METADATA[providerId].logo,
           providerId,
           chainId,
           address,
@@ -158,8 +158,8 @@ export default function useInjectedProvider(
   //connection object to render <Connector/>
   const connection: Connection = {
     name: connectorName,
-    logo: connectorLogo ?? providerIcons[providerId],
-    installUrl: walletInstallUrls[providerId],
+    logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
+    installUrl: WALLET_METADATA[providerId].installUrl,
     connect,
   };
 

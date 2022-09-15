@@ -1,9 +1,6 @@
 import { ProviderId } from "contexts/WalletContext/types";
 import { Chain } from "types/aws";
-import {
-  providerIcons,
-  walletInstallUrls,
-} from "contexts/WalletContext/constants";
+import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
@@ -123,8 +120,8 @@ export class WalletNotInstalledError extends APError {
   walletName: string;
   constructor(walletName: string, providerId: ProviderId) {
     super("WalletNotInstalledError", `Wallet ${walletName} not installed`);
-    this.installUrl = walletInstallUrls[providerId];
-    this.logo = providerIcons[providerId];
+    this.installUrl = WALLET_METADATA[providerId].installUrl;
+    this.logo = WALLET_METADATA[providerId].logo;
     this.walletName = walletName;
   }
 }

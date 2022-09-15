@@ -4,7 +4,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { walletInstallUrls } from "./constants";
+import { WALLET_METADATA } from "./constants";
 
 export default function useTerra() {
   const {
@@ -40,7 +40,8 @@ export default function useTerra() {
     .map((connection) => ({
       logo: connection.icon,
       name: connection.name,
-      installUrl: walletInstallUrls[connection.identifier as ProviderId],
+      installUrl:
+        WALLET_METADATA[connection.identifier as ProviderId].installUrl,
       connect: async () => {
         connect(connection.type, connection.identifier);
       },
