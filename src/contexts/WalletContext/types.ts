@@ -12,7 +12,7 @@ export type ProviderId =
 
 type Base = {
   logo: string;
-  installUrl: string;
+  installUrl?: string;
   name: string;
   network?: true;
 };
