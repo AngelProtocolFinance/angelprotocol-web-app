@@ -115,7 +115,7 @@ export default function useInjectedProvider(
     const dwindow = window as Dwindow;
 
     if (!getProvider(providerId)) {
-      throw new WalletNotInstalledError(connectorName, providerId);
+      throw new WalletNotInstalledError(providerId);
     }
 
     try {

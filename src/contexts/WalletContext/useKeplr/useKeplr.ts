@@ -10,7 +10,6 @@ import { juno_test_chain_info } from "./chains";
 const CHAIN_ID = IS_TEST ? "uni-3" : "juno-1";
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
-const CONNECTOR_NAME = "Keplr";
 
 export default function useKeplr() {
   //connect only if there's no active wallet
@@ -56,7 +55,7 @@ export default function useKeplr() {
 
   const connect = async () => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError(CONNECTOR_NAME, "keplr");
+      throw new WalletNotInstalledError("keplr");
     }
 
     try {
@@ -92,12 +91,7 @@ export default function useKeplr() {
       : undefined;
 
   //connection object to render <Connector/>
-  const connection: Connection = {
-    name: CONNECTOR_NAME,
-    installUrl: WALLET_METADATA.keplr.installUrl,
-    logo: WALLET_METADATA.keplr.logo,
-    connect,
-  };
+  const connection: Connection = { ...WALLET_METADATA.keplr, connect };
 
   return {
     connection,

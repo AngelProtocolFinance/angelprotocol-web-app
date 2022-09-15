@@ -29,7 +29,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         showModal(Popup, { message: error });
       } else if (instanceOfAPError(error)) {
         if (error instanceof WalletNotInstalledError) {
-          showModal(InstallWalletPopup, { ...error });
+          showModal(InstallWalletPopup, { providerId: error.providerId });
         } else {
           showModal(Popup, { message: error.message });
         }

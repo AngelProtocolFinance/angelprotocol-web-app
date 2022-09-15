@@ -115,14 +115,13 @@ export class TxResultFail extends Error {
 }
 
 export class WalletNotInstalledError extends APError {
-  installUrl: string;
-  logo: string;
-  walletName: string;
-  constructor(walletName: string, providerId: ProviderId) {
-    super("WalletNotInstalledError", `Wallet ${walletName} not installed`);
-    this.installUrl = WALLET_METADATA[providerId].installUrl;
-    this.logo = WALLET_METADATA[providerId].logo;
-    this.walletName = walletName;
+  providerId: ProviderId;
+  constructor(providerId: ProviderId) {
+    super(
+      "WalletNotInstalledError",
+      `Wallet ${WALLET_METADATA[providerId].name} not installed`
+    );
+    this.providerId = providerId;
   }
 }
 
