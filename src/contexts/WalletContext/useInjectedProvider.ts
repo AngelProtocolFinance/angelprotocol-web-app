@@ -111,12 +111,13 @@ export default function useInjectedProvider(
 
   // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
   const connect = async () => {
-    try {
-      const dwindow = window as Dwindow;
+    const dwindow = window as Dwindow;
 
-      if (!getProvider(providerId)) {
-        throw new WalletNotInstalledError(connectorName, providerId);
-      }
+    if (!getProvider(providerId)) {
+      throw new WalletNotInstalledError(connectorName, providerId);
+    }
+
+    try {
       //connecting xdefi
       if (providerId === "xdefi-evm") {
         checkXdefiPriority();

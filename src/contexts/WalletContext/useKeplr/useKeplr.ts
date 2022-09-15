@@ -55,10 +55,11 @@ export default function useKeplr() {
   };
 
   const connect = async () => {
+    if (!dwindow.keplr) {
+      throw new WalletNotInstalledError(CONNECTOR_NAME, "keplr");
+    }
+
     try {
-      if (!dwindow.keplr) {
-        throw new WalletNotInstalledError(CONNECTOR_NAME, "keplr");
-      }
       //connecting xdefi
       setIsLoading(true);
       await requestAccess(true);
