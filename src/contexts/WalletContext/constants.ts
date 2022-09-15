@@ -23,7 +23,7 @@ export const WALLET_METADATA: {
     name: "Metamask",
   },
   "xdefi-wallet": {
-    logo: binanceWalletIcon,
+    logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
     name: "XDEFI",
   },
