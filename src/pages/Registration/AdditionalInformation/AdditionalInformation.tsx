@@ -74,7 +74,7 @@ const ImageSizeInfo = (props: { limit: string }) => (
 const KycDonorsOnlyCheckbox = forwardRef(
   (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
     <Checkbox {...props} ref={ref}>
-      <span className="text-base">Only accept donations from KYC Donors.</span>
+        <span className="text-base">Only accept donations from donors who have provided their personal information(Name & address).</span>
     </Checkbox>
   )
 );
