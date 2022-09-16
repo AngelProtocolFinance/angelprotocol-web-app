@@ -28,13 +28,6 @@ export default function RegisteredWallet() {
     );
   }
 
-  const onClick = () => {
-    const continueUrl = charity.ContactPerson.EmailVerified
-      ? `${appRoutes.register}/${routes.dashboard}`
-      : `${appRoutes.register}/${routes.confirmEmail}`;
-    navigate(continueUrl);
-  };
-
   return (
     <div className="flex flex-col h-full w-full items-center">
       <div className="flex flex-col items-center gap-4 mb-4">
@@ -60,7 +53,7 @@ export default function RegisteredWallet() {
       </Button>
       <Button
         className="btn-primary w-80 h-10 mt-8 rounded-xl uppercase font-bold"
-        onClick={onClick}
+        onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
       >
         Continue
       </Button>
