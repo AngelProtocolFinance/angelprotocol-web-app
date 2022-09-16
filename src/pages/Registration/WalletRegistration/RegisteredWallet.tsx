@@ -6,9 +6,7 @@ import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
-type Props = { onChange: () => void };
-
-export default function RegisteredWallet({ onChange }: Props) {
+export default function RegisteredWallet(props: { onChange: () => void }) {
   const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
 
@@ -30,7 +28,7 @@ export default function RegisteredWallet({ onChange }: Props) {
       </div>
       {/**TODO: must be disabled at some registration point */}
       <Button
-        onClick={onChange}
+        onClick={props.onChange}
         className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"
       >
         change wallet
