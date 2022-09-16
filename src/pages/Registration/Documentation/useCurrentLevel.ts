@@ -65,7 +65,7 @@ const getIsLevelTwo = (
   !getFieldState("un_sdg").error &&
   !getFieldState("financialStatements").error &&
   // values inserted
-  un_sdg >= 0 &&
+  un_sdg > 0 &&
   financialStatements.some((fs: FileWrapper) => fs.name);
 
 const getIsLevelThree = (

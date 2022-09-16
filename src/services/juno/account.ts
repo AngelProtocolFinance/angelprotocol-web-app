@@ -25,7 +25,7 @@ export const account_api = junoApi.injectEndpoints({
         return res.data.endowments.reduce((result, entry) => {
           const { categories, tier } = entry;
           //TODO: this structure allows endowment to be listed in only 1 sdg row
-          const sdgNum = categories.sdgs[0] || 0;
+          const sdgNum = categories.sdgs[0] ?? 1;
           if (tier === "Level1") {
             return result;
           } else {

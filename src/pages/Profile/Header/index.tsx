@@ -14,7 +14,7 @@ export default function CharityHeader(props: Profile) {
   });
 
   //TODO: show multiple SDGs
-  const sdgNum = props.categories.sdgs[0] || 0;
+  const sdgNum = props.categories.sdgs[0] || 1;
   const sdg = unsdgs[sdgNum];
 
   return (

@@ -1,4 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { UNSDG_NUMS } from "constants/unsdgs";
 import { CW20 } from "./cw20";
 import {
   Categories,
@@ -96,7 +97,7 @@ export type EndowmentEntry = {
 };
 
 export type CategorizedEndowments = {
-  [index: number]: EndowmentEntry[];
+  [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
 export interface UpdateProfilePayload {
