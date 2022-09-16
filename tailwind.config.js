@@ -93,9 +93,12 @@ module.exports = {
         ".btn-outline-secondary": {
           borderStyle: "solid",
           borderColor: theme("colors.thin-blue"),
-          borderWidth: "3px",
+          borderWidth: "2px",
           "&:hover": {
-            backgroundColor: theme("colors.thin-blue"),
+            backgroundColor: `${theme("colors.thin-blue")}33`,
+          },
+          "&:active": {
+            backgroundColor: `${theme("colors.thin-blue")}99`,
           },
           "&:disabled": {
             borderStyle: "none",
