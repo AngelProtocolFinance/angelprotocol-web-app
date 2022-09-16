@@ -31,7 +31,11 @@ export default function useSubmit() {
         if ("error" in result) {
           return handleError(result.error, "Error updating profile ❌");
         }
-        navigate(`${appRoutes.register}/${routes.wallet}`);
+
+        const route = charity.Metadata.JunoWallet
+          ? routes.dashboard
+          : routes.wallet;
+        navigate(`${appRoutes.register}/${route}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }
