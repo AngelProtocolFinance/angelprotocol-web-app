@@ -1,32 +1,14 @@
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import {
-  updateRegQueryData,
-  useRegistrationQuery,
-} from "services/aws/registration";
-import { useSetter } from "store/accessors";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
-export default function RegisteredWallet() {
+export default function RegisteredWallet(props: { onChange: () => void }) {
   const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
-  const dispatch = useSetter();
-
-  function clearCachedWallet() {
-    /**refreshing the page refetches registration and updates cache with wallet in db */
-    dispatch(
-      updateRegQueryData(
-        "registration",
-        charity.ContactPerson.PK,
-        (charity) => {
-          charity.Metadata.JunoWallet = "";
-        }
-      )
-    );
-  }
 
   return (
     <div className="flex flex-col h-full w-full items-center">
@@ -46,7 +28,7 @@ export default function RegisteredWallet() {
       </div>
       {/**TODO: must be disabled at some registration point */}
       <Button
-        onClick={clearCachedWallet}
+        onClick={props.onChange}
         className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"
       >
         change wallet
