@@ -44,7 +44,9 @@ export default function Connector(props: Connection) {
           />
         </button>
         {isOpen &&
-          (props?.networks || []).map((c) => <Connector {...c} network />)}
+          (props?.networks || []).map((c) => (
+            <Connector {...c} network key={c.name} />
+          ))}
       </div>
     );
   }

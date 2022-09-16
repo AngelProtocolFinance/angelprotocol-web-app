@@ -7,16 +7,16 @@ import {
   InjectedProvider,
 } from "types/ethereum";
 import { getProvider, logger } from "helpers";
-import { WalletError } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import { providerIcons } from "./constants";
+import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "binance-wallet" | "xdefi-evm">,
-  connectorLogo?: string,
-  connectorName?: string
+  connectorName = prettifyId(providerId),
+  connectorLogo?: string
 ) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
@@ -112,12 +112,13 @@ export default function useInjectedProvider(
 
   // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
   const connect = async () => {
-    try {
-      const dwindow = window as Dwindow;
+    const dwindow = window as Dwindow;
 
-      if (!getProvider(providerId)) {
-        throw new WalletError(`${prettifyId(providerId)} is not installed`, 0);
-      }
+    if (!getProvider(providerId)) {
+      throw new WalletNotInstalledError(providerId);
+    }
+
+    try {
       //connecting xdefi
       if (providerId === "xdefi-evm") {
         checkXdefiPriority();
@@ -147,7 +148,7 @@ export default function useInjectedProvider(
   const providerInfo: ProviderInfo | undefined =
     chainId && address
       ? {
-          logo: providerIcons[providerId],
+          logo: WALLET_METADATA[providerId].logo,
           providerId,
           chainId,
           address,
@@ -156,8 +157,9 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: connectorName ?? prettifyId(providerId),
-    logo: connectorLogo ?? providerIcons[providerId],
+    name: connectorName,
+    logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
+    installUrl: WALLET_METADATA[providerId].installUrl,
     connect,
   };
 
@@ -175,6 +177,7 @@ function removeAllListeners(providerId: ProviderId) {
 }
 
 function prettifyId(providerId: ProviderId) {
-  //e.g xdefi-wallet,
-  return providerId.replace("-", " ");
+  //e.g 'xdefi-wallet' --> 'xdefi wallet',
+  const strSpaced = providerId.replace("-", " ");
+  return strSpaced[0].toUpperCase() + strSpaced.slice(1);
 }

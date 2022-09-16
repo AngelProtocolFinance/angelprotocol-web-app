@@ -18,7 +18,7 @@ import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
-import useInjectedWallet from "./useInjectedProvider";
+import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 import useXdefi from "./useXdefi";
@@ -54,14 +54,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     connection: metamaskConnection,
     disconnect: disconnectMetamask,
     providerInfo: metamaskInfo,
-  } = useInjectedWallet("metamask");
+  } = useInjectedProvider("metamask");
 
   const {
     isLoading: isBinanceWalletLoading,
     connection: binanceWalletConnection,
     disconnect: disconnectBinanceWallet,
     providerInfo: binanceWalletInfo,
-  } = useInjectedWallet("binance-wallet");
+  } = useInjectedProvider("binance-wallet");
 
   const {
     isLoading: isKeplrLoading,

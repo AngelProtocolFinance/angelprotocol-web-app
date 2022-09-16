@@ -4,6 +4,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { WALLET_METADATA } from "./constants";
 
 export default function useTerra() {
   const {
@@ -39,6 +40,9 @@ export default function useTerra() {
     .map((connection) => ({
       logo: connection.icon,
       name: connection.name,
+      installUrl: connection.identifier
+        ? WALLET_METADATA[connection.identifier as ProviderId]?.installUrl // --> if the connection.identifier is unsupported, we do not fill out the install URL field
+        : undefined,
       connect: async () => {
         connect(connection.type, connection.identifier);
       },
