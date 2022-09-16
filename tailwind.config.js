@@ -81,7 +81,7 @@ module.exports = {
             backgroundColor: `${theme("colors.angel-orange")}33`,
           },
           "&:active": {
-            backgroundColor: `${theme("colors.angel-orange")}99`,
+            backgroundColor: `${theme("colors.angel-orange")}b2`,
           },
           "&:disabled": {
             borderStyle: "none",
@@ -98,7 +98,7 @@ module.exports = {
             backgroundColor: `${theme("colors.thin-blue")}33`,
           },
           "&:active": {
-            backgroundColor: `${theme("colors.thin-blue")}99`,
+            backgroundColor: `${theme("colors.thin-blue")}b2`,
           },
           "&:disabled": {
             borderStyle: "none",
