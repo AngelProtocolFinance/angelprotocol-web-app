@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import RegLoader from "../common/RegLoader";
@@ -8,10 +9,14 @@ import WalletSubmission from "./WalletSubmission";
 export default function WalletRegistration() {
   const { charity } = useRegistrationQuery();
   const { wallet, isLoading } = useGetWallet();
+  const [submittedWallet, setSubmittedWallet] = useState(
+    charity.Metadata.JunoWallet
+  );
 
   let content = <WalletSubmission />;
-  if (charity.Metadata.JunoWallet) {
-    content = <RegisteredWallet />;
+
+  if (submittedWallet) {
+    content = <RegisteredWallet onChange={() => setSubmittedWallet("")} />;
   } else if (isLoading) {
     content = (
       <div className="flex items-center justify-center h-full">
