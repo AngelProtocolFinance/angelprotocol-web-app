@@ -18,9 +18,13 @@ export default function RegisteredWallet() {
   function clearCachedWallet() {
     /**refreshing the page refetches registration and updates cache with wallet in db */
     dispatch(
-      updateRegQueryData("registration", "", (charity) => {
-        charity.Metadata.JunoWallet = "";
-      })
+      updateRegQueryData(
+        "registration",
+        charity.ContactPerson.PK,
+        (charity) => {
+          charity.Metadata.JunoWallet = "";
+        }
+      )
     );
   }
 
