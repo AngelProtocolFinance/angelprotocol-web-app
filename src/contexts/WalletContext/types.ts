@@ -8,7 +8,6 @@ export type ProviderId =
   | "bitkeep-wallet"
   | "station"
   | "walletconnect"
-  | "torus"
   | "keplr";
 
 type Base = { logo: string; name: string; network?: true };
