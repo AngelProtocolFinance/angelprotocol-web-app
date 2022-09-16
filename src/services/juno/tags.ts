@@ -40,6 +40,7 @@ export enum registrarTags {
 }
 
 export enum accountTags {
+  endowment = "endowment",
   endowments = "endowments",
   profile = "profile",
   balance = "balance",
