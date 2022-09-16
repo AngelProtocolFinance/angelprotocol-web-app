@@ -32,7 +32,10 @@ export default function useUpload() {
           return handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
-        navigate(`${appRoutes.register}/${routes.additionalInformation}`);
+        const route = charity.Metadata.JunoWallet
+          ? routes.dashboard
+          : routes.additionalInformation;
+        navigate(`${appRoutes.register}/${route}`);
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
