@@ -20,7 +20,7 @@ export const placeholderCharity: Charity = {
     RegistrationDate: "",
     RegistrationStatus: "Inactive",
     Website: "",
-    UN_SDG: 0,
+    UN_SDG: 1,
     ProofOfIdentity: { name: "" },
     ProofOfRegistration: { name: "" },
     FinancialStatements: [],

@@ -49,7 +49,7 @@ describe("getRegistrationState tests", () => {
         RegistrationDate: "2022-05-04T10:10:10Z",
         RegistrationStatus: "Inactive",
         Website: "www.test.com",
-        UN_SDG: 0,
+        UN_SDG: 1,
         ProofOfIdentity: {
           name: "poi",
           publicUrl: "https://www.storage.path/poi",
@@ -174,7 +174,7 @@ describe("getRegistrationState tests", () => {
           RegistrationStatus: status,
           SK: "Registration",
           Tier: 1,
-          UN_SDG: 0,
+          UN_SDG: 1,
           Website: "www.test.com",
         },
         Metadata: {

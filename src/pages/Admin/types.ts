@@ -12,6 +12,7 @@ import {
 } from "types/contracts";
 import { Denoms } from "types/lists";
 import { DiffSet } from "types/utils";
+import { UNSDG_NUMS } from "constants/unsdgs";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -244,7 +245,7 @@ export type FlatUpdateProfilePayload = Omit<
   UpdateProfilePayload,
   "categories"
 > & {
-  sdgNum: number;
+  sdgNum: UNSDG_NUMS;
 };
 export type UpdateProfileValues = ProposalBase &
   FlatUpdateProfilePayload & { initialProfile: FlatUpdateProfilePayload };

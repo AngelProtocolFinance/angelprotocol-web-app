@@ -1,13 +1,16 @@
+import { CategorizedEndowments } from "types/contracts";
 import { useCategorizedEndowmentsQuery } from "services/juno/account";
 import Loader from "components/Loader";
+import { UNSDG_NUMS } from "constants/unsdgs";
 import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
-  const { data: endowments = {}, isLoading } = useCategorizedEndowmentsQuery({
-    endow_type: "charity",
-    status: "1",
-  });
+  const { data: endowments = {} as CategorizedEndowments, isLoading } =
+    useCategorizedEndowmentsQuery({
+      endow_type: "charity",
+      status: "1",
+    });
 
   return (
     <div className="grid content-start padded-container pb-16">
@@ -21,7 +24,11 @@ export default function Market() {
       )) || (
         <>
           {Object.entries(endowments).map(([sdg_number, profiles]) => (
-            <Index key={sdg_number} id={+sdg_number} profiles={profiles} />
+            <Index
+              key={sdg_number}
+              id={+sdg_number as UNSDG_NUMS}
+              profiles={profiles}
+            />
           ))}
         </>
       )}

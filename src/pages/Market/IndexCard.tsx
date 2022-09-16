@@ -1,6 +1,6 @@
-import { unsdgs } from "constants/unsdgs";
+import { UNSDG_NUMS, unsdgs } from "constants/unsdgs";
 
-export default function IndexCard(props: { id: number }) {
+export default function IndexCard(props: { id: UNSDG_NUMS }) {
   const sdg = unsdgs[props.id];
 
   return (

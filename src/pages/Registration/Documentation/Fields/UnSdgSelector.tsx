@@ -20,7 +20,11 @@ export default function UnSdgSelector() {
       htmlFor="un_sdg"
       label="Which UN SDG is your org’s mission aligned with?"
     >
-      <Selector<DV> name="un_sdg" placeholder="[UN SDG]" options={OPTIONS} />
+      <Selector<DV>
+        name="un_sdg"
+        placeholder="Select an SDG"
+        options={OPTIONS}
+      />
       <ErrorMessage
         errors={errors}
         as="p"

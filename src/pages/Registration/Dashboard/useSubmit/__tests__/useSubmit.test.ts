@@ -115,7 +115,7 @@ const CHARITY: Charity = {
     RegistrationDate: "2022-05-04T10:10:10Z",
     RegistrationStatus: "Inactive",
     Website: "www.test.com",
-    UN_SDG: 0,
+    UN_SDG: 1,
     ProofOfIdentity: { name: "poi", publicUrl: "https://www.storage.path/poi" },
     ProofOfRegistration: {
       name: "por",
