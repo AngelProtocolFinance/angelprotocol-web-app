@@ -40,3 +40,11 @@ export enum adminRoutes {
   withdraws = "withdraws",
   investments = "investments",
 }
+
+export enum investmentRoutes {
+  index = "",
+  balances = "balances",
+  invest_redeem = "invest-redeem",
+  withdraw = "withdraw",
+  strategies = "strategies",
+}
