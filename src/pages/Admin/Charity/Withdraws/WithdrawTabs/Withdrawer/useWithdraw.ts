@@ -40,15 +40,26 @@ export default function useWithdraw() {
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
+    const isSendToApCW3 =
+      type === "locked" && isNeedApPermission(endowment, +getValues("height"));
 
     //used when withdraw doesn't need to go thru AP
     const account = new Account(wallet);
-    const embeddedWithdrawMsg = account.createEmbeddedWithdrawMsg({
-      id: endowmentId,
-      beneficiary,
-      acct_type: data.type,
-      assets,
-    });
+    const apCW3 = new CW3Ap(wallet);
+
+    const embeddedWithdrawMsg = isSendToApCW3
+      ? apCW3.createEmbeddedWithdrawLockMsg({
+          assets,
+          beneficiary,
+          description: data.reason,
+          endowment_id: endowmentId,
+        })
+      : account.createEmbeddedWithdrawMsg({
+          id: endowmentId,
+          beneficiary,
+          acct_type: data.type,
+          assets,
+        });
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -58,25 +69,16 @@ export default function useWithdraw() {
     };
 
     const endowCW3 = new CW3(wallet, cw3);
-    let proposal = endowCW3.createProposalMsg(
+    const proposal = endowCW3.createProposalMsg(
       "withdraw proposal",
-      `withdraw from endowment: ${endowmentId}`,
+      `withdraw ${type} assets from endowment id: ${endowmentId}${
+        isSendToApCW3
+          ? ". Note: Withdrawing lock assets before maturity; proposal contents will be reviewed further by Angel Protocol team for approval"
+          : ""
+      }`,
       [embeddedWithdrawMsg],
       JSON.stringify(meta)
     );
-
-    //overwrite proposal if locked and need AP permission
-    if (type === "locked") {
-      if (isNeedApPermission(endowment, +getValues("height"))) {
-        const contract = new CW3Ap(wallet);
-        proposal = contract.createProposeWithdrawMsg({
-          assets,
-          beneficiary,
-          description: data.reason,
-          endowment_id: endowmentId,
-        });
-      }
-    }
 
     dispatch(
       sendCosmosTx({

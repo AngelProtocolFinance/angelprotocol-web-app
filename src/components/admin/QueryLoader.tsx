@@ -65,6 +65,8 @@ export function QueryLoader<T>({
           </div>
         );
       }
+
+      return children(filtered as unknown as NonNullable<T>);
     }
   }
 

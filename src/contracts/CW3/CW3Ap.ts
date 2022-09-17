@@ -8,8 +8,8 @@ export default class CW3Ap extends CW3 {
     super(wallet, contracts.cw3ApTeam);
   }
 
-  createProposeWithdrawMsg(payload: WithdrawLockPayload) {
-    return this.createExecuteContractMsg(this.address, {
+  createEmbeddedWithdrawLockMsg(payload: WithdrawLockPayload) {
+    return this.createEmbeddedWasmMsg(this.address, {
       propose_locked_withdraw: payload,
     });
   }
