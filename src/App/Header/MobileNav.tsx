@@ -81,6 +81,13 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
             </NavLink>
             <NavLink
               end
+              to={`${appRoutes.admin}/${id}/${adminRoutes.investments}`}
+              className={styler}
+            >
+              Investments
+            </NavLink>
+            <NavLink
+              end
               to={`${appRoutes.admin}/${id}/${adminRoutes.edit_profile}`}
               className={styler}
             >
