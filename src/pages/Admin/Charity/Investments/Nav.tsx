@@ -11,7 +11,7 @@ export default function Nav() {
       <NavLink end to={investmentRoutes.invest_redeem} className={styler}>
         Invest/redeem
       </NavLink>
-      <NavLink end to={investmentRoutes.invest_redeem} className={styler}>
+      <NavLink end to={investmentRoutes.withdraw} className={styler}>
         withdraw
       </NavLink>
       <NavLink end to={investmentRoutes.strategies} className={styler}>
@@ -23,5 +23,5 @@ export default function Nav() {
 
 const styler = createNavLinkStyler(
   "uppercase text-sm text-center font-semibold font-heading text-white-grey p-3",
-  "text-angel-orange"
+  "bg-zinc-50/10"
 );
