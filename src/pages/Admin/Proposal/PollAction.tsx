@@ -4,8 +4,7 @@ import { ProposalDetails } from "services/types";
 import { Tags } from "slices/transaction/types";
 import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
 import { customTags as apesCustomTags, apesTags } from "services/apes";
-import { invalidateJunoTags } from "services/juno";
-import { useLatestBlock } from "services/juno/queriers";
+import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
 import {
   accountTags,
   adminTags,
@@ -23,7 +22,7 @@ import CW3 from "contracts/CW3";
 import { useAdminResources } from "../Guard";
 
 export default function PollAction(props: ProposalDetails) {
-  const latestBlock = useLatestBlock();
+  const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -163,7 +162,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
       });
       break;
 
-    case "acc_withdraw_liq":
+    case "acc_withdraw":
       tagsToInvalidate.push(
         {
           type: junoTags.account,

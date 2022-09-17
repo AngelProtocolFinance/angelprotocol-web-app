@@ -1,8 +1,7 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { WithdrawLiqMeta } from "pages/Admin/types";
-import { CW20 } from "types/contracts";
+import { WithdrawMeta } from "pages/Admin/types";
+import { Asset } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -11,9 +10,11 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import CW3Ap from "contracts/CW3/CW3Ap";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
+import isNeedApPermission from "./isNeedApPermission";
 import { logWithdrawProposal } from "./logWithdrawProposal";
 
 export default function useWithdraw() {
@@ -23,70 +24,59 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, proposalLink } = useAdminResources();
+  const { cw3, endowmentId, proposalLink, endowment } = useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
   const type = getValues("type");
+
   function withdraw(data: WithdrawValues) {
     //filter + map
-    const [cw20s, natives] = data.amounts.reduce(
-      (result, amount) => {
-        if (amount.type === "cw20") {
-          if (amount.value /** empty "" */) {
-            result[0].push({
-              address: amount.tokenId,
-              amount: scaleToStr(amount.value),
-            });
-          }
-        } else {
-          if (amount.value) {
-            result[1].push({
-              denom: amount.tokenId,
-              amount: scaleToStr(amount.value),
-            });
-          }
-        }
-        return result;
-      },
-      [[], []] as [CW20[], Coin[]]
-    );
+    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
+      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
+      amount: scaleToStr(value /** empty "" */ || "0"),
+    }));
 
     const isJuno = data.network === chainIds.juno;
+    //if not juno, send to ap wallet (juno)
+    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
+
+    //used when withdraw doesn't need to go thru AP
     const account = new Account(wallet);
-    const msg = account.createEmbeddedWithdrawMsg({
+    const embeddedWithdrawMsg = account.createEmbeddedWithdrawMsg({
       id: endowmentId,
-      beneficiary:
-        //if not juno, send to ap wallet (juno)
-        isJuno ? data.beneficiary : ap_wallets.juno,
+      beneficiary,
       acct_type: data.type,
-      assets: [
-        ...cw20s.map((c) => ({
-          amount: c.amount,
-          info: { cw20: c.address },
-        })),
-        ...natives.map((c) => ({
-          amount: c.amount,
-          info: { native: c.denom },
-        })),
-      ],
+      assets,
     });
 
-    const meta: WithdrawLiqMeta = {
-      type: "acc_withdraw_liq",
+    const meta: WithdrawMeta = {
+      type: "acc_withdraw",
       data: {
         beneficiary: data.beneficiary,
       },
     };
 
-    const cw3contract = new CW3(wallet, cw3);
-    //proposal meta for preview
-    const proposal = cw3contract.createProposalMsg(
+    const endowCW3 = new CW3(wallet, cw3);
+    let proposal = endowCW3.createProposalMsg(
       "withdraw proposal",
       `withdraw from endowment: ${endowmentId}`,
-      [msg],
+      [embeddedWithdrawMsg],
       JSON.stringify(meta)
     );
+
+    //overwrite proposal if locked and need AP permission
+    if (type === "locked") {
+      if (isNeedApPermission(endowment, +getValues("height"))) {
+        const contract = new CW3Ap(wallet);
+        proposal = contract.createProposeWithdrawMsg({
+          assets,
+          beneficiary,
+          description: data.reason,
+          endowment_id: endowmentId,
+        });
+      }
+    }
 
     dispatch(
       sendCosmosTx({

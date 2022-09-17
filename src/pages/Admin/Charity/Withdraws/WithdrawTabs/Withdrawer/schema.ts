@@ -1,16 +1,17 @@
 import * as Yup from "yup";
-import { Amount, WithdrawValues } from "./types";
+import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
-type TNetwork = WithdrawValues["network"];
+type TNetwork = WV["network"];
 
 const balKey: keyof Amount = "balance";
-const netKey: keyof WithdrawValues = "network";
-const amountsKey: keyof WithdrawValues = "amounts";
+const netKey: keyof WV = "network";
+const amountsKey: keyof WV = "amounts";
+const heightKey: keyof WV = "height";
 
 const amount: SchemaShape<Amount> = {
   value: Yup.lazy((val: TVal) =>
@@ -24,7 +25,7 @@ const amount: SchemaShape<Amount> = {
   ),
 };
 
-const shape: SchemaShape<WithdrawValues> = {
+const shape: SchemaShape<WV> = {
   amounts: Yup.array(Yup.object().shape(amount)),
   //test if at least one amount is filled
   _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
@@ -35,7 +36,9 @@ const shape: SchemaShape<WithdrawValues> = {
   beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
   ),
-  //add other vault fields here
+  reason: Yup.string().when(heightKey, (height, schema) =>
+    height > 0 ? schema.required("reason required") : schema.optional()
+  ),
 };
 
 export const schema = Yup.object(shape);

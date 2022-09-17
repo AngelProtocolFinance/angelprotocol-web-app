@@ -1,13 +1,15 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "constants/unsdgs";
-import { CW20 } from "./cw20";
+import { UNSDG_NUMS } from "../lists";
 import {
+  Asset,
   Categories,
   EndowmentStatus,
   EndowmentStatusStrNum,
+  EndowmentStatusText,
   EndowmentTier,
   EndowmentType,
-} from "./index";
+} from "./common";
+import { CW20 } from "./cw20";
 
 export interface GenericBalance {
   native: Coin[];
@@ -42,23 +44,28 @@ export interface Strategy {
   percentage: string; // percentage of funds to invest
 }
 
-export interface AccountStrategies {
-  locked: Strategy[];
-  liquid: Strategy[];
-}
+type Vaults<T> = {
+  liquid: T;
+  locked: T;
+};
+
+export type AccountStrategies = Vaults<Strategy[]>;
+type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
+  status: EndowmentStatusText;
+  endow_type: Capitalize<EndowmentType>;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
   strategies: AccountStrategies;
+  oneoff_vaults: OneOffVaults;
   rebalance: RebalanceDetails;
   kyc_donors_only: boolean;
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
-  auto_invest: boolean;
 }
 
 export type Holding = { address: string; amount: string };
@@ -128,11 +135,6 @@ export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
-
-type Asset = {
-  info: { native: string } | { cw20: string };
-  amount: string;
-};
 
 export type AccountType = "locked" | "liquid";
 

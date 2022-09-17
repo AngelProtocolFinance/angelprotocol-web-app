@@ -1,7 +1,7 @@
 import { EndowmentEntry } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
 import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
-import { UNSDG_NUMS } from "constants/unsdgs";
 import CharityCard from "./CharityCard";
 import IndexCard from "./IndexCard";
 

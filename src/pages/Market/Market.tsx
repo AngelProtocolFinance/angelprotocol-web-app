@@ -1,7 +1,7 @@
 import { CategorizedEndowments } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
 import { useCategorizedEndowmentsQuery } from "services/juno/account";
 import Loader from "components/Loader";
-import { UNSDG_NUMS } from "constants/unsdgs";
 import Banner from "./Banner";
 import Index from "./Index";
 

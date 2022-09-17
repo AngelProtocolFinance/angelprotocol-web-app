@@ -1,4 +1,4 @@
-import { EndowmentType } from ".";
+import { EndowmentType } from "./common";
 
 export type RegistrarConfig = {
   owner: string;

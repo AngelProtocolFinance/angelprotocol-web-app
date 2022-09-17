@@ -1,43 +1,83 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { WithdrawValues as WV } from "./types";
+import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useEndowmentQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import { useLatestBlockQuery } from "services/juno";
+import Icon from "components/Icon";
+import { QueryLoader, TextInput } from "components/admin";
+import isNeedApPermission from "./isNeedApPermission";
 
 export default function Submit() {
-  const { endowmentId } = useAdminResources();
+  const { endowment } = useAdminResources();
   const {
     getValues,
-    formState: { isValid, isDirty },
-  } = useFormContext<WithdrawValues>();
-  const queryState = useEndowmentQuery({ id: endowmentId });
-  const type = getValues("type");
+    formState: { isDirty, isValid, isSubmitting },
+  } = useFormContext<WV>();
+  const queryState = useLatestBlockQuery(null);
 
+  const isSubmitDisabled = !isDirty || !isValid || isSubmitting;
+
+  const type = getValues("type");
   if (type === "liquid") {
     return (
-      <Button type="submit" disabled={isValid || !isDirty}>
-        create withdraw proposal
+      <Button type="submit" disabled={isSubmitDisabled}>
+        Create withdraw proposal
       </Button>
     );
   }
+
+  //check maturity when locked
   return (
     <QueryLoader
       queryState={queryState}
       messages={{
-        loading: "Getting authorization info",
-        error: "Failed to get authorization info",
+        loading: "Checking account maturity...",
+        error: "Failed to check account maturity",
       }}
     >
-      {(endowment) => {
-        console.log(endowment);
-        return (
-          <Button type="submit" disabled={isValid || !isDirty}>
-            create withdraw proposal
-          </Button>
-        );
-      }}
+      {(height) => (
+        <SubmitWithReason
+          endowment={endowment}
+          height={+height}
+          isSubmitDisabled={isSubmitDisabled}
+        />
+      )}
     </QueryLoader>
+  );
+}
+
+function SubmitWithReason(props: {
+  isSubmitDisabled: boolean;
+  endowment: EndowmentDetails;
+  height: number;
+}) {
+  const { setValue } = useFormContext<WV>();
+
+  useEffect(() => {
+    //set to activate reason validation
+    setValue("height", props.height);
+  }, [props.height, setValue]);
+
+  return (
+    <>
+      {isNeedApPermission(props.endowment, props.height) && (
+        <>
+          <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
+            <Icon
+              type="Info"
+              className="inline-block relative bottom-0.5 mr-1"
+            />
+            You are proposing to withdrawing locked funds before maturity. Angel
+            protocol team will vote to approve this transaction after execution.
+          </p>
+          <TextInput<WV> name="reason" title="Reason" />
+        </>
+      )}
+      <Button type="submit" disabled={props.isSubmitDisabled}>
+        Create withdraw proposal
+      </Button>
+    </>
   );
 }
 

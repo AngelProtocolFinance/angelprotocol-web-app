@@ -33,7 +33,7 @@ function FormWithContext(props: TProfile & { id: number }) {
     id: props.id,
     name: props.name,
     overview: props.overview,
-    sdgNum: props.categories.sdgs[0] || 0,
+    sdgNum: props.categories.sdgs[0] || 1,
     tier: props.tier || 0,
     logo: props.logo || "",
     image: props.image || "",

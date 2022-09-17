@@ -1,5 +1,5 @@
 import { PollFilterOptions } from "../types";
-import { useLatestBlock } from "services/juno/queriers";
+import { useLatestBlockQuery } from "services/juno";
 import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
 import { humanize } from "helpers";
@@ -10,7 +10,7 @@ export default function Toolbar(props: {
   pollFilter: PollFilterOptions;
   setPollFilter: React.Dispatch<React.SetStateAction<PollFilterOptions>>;
 }) {
-  const block_height = useLatestBlock();
+  const { data: block_height = "0" } = useLatestBlockQuery(null);
   const showPoller = usePoller();
 
   return (

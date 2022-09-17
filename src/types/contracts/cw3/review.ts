@@ -1,4 +1,4 @@
-import { CreateEndowmentPayload, Vote } from "../index";
+import { CreateEndowmentPayload, Vote } from "../common";
 import { Expiration } from "./index";
 
 export interface ApplicationProposal {

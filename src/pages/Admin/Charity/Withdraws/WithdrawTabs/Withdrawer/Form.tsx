@@ -19,12 +19,10 @@ export default function Form() {
       <Network />
       <Beneficiary />
 
-      <div className="grid grid-cols-[auto_1fr] items-center gap-1 bg-yellow-400/20 p-2 rounded-md text-angel-grey mb-2">
-        <Icon type="Warning" />
-        <span className="font-mono text-xs ml-1">
-          We recommend not using crypto exchange addresses for withdrawals. We
-          are not responsible for the loss of funds.
-        </span>
+      <div className="bg-amber-50 p-2 rounded-md text-amber-600 mb-2 text-sm">
+        <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
+        We recommend not using crypto exchange addresses for withdrawals. We are
+        not responsible for the loss of funds.
       </div>
       <Submit />
     </form>
