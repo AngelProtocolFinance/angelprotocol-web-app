@@ -1,5 +1,6 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { FileWrapper } from "components/FileDropzone";
+import { UNSDG_NUMS } from "constants/unsdgs";
 
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };
@@ -15,7 +16,7 @@ export type DocumentationValues = {
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
-  un_sdg: number;
+  un_sdg: UNSDG_NUMS;
 };
 
 export type AdditionalInfoValues = {

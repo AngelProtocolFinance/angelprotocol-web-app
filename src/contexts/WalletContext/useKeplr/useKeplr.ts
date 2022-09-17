@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
-import { WalletError } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
-import { providerIcons } from "../constants";
+import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
@@ -54,10 +54,11 @@ export default function useKeplr() {
   };
 
   const connect = async () => {
+    if (!dwindow.keplr) {
+      throw new WalletNotInstalledError("keplr");
+    }
+
     try {
-      if (!dwindow.keplr) {
-        throw new WalletError("Keplr is not installed", 0);
-      }
       //connecting xdefi
       setIsLoading(true);
       await requestAccess(true);
@@ -82,7 +83,7 @@ export default function useKeplr() {
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
-          logo: providerIcons.keplr,
+          logo: WALLET_METADATA.keplr.logo,
           providerId: "keplr",
           chainId,
           address,
@@ -90,11 +91,7 @@ export default function useKeplr() {
       : undefined;
 
   //connection object to render <Connector/>
-  const connection: Connection = {
-    name: "Keplr",
-    logo: providerIcons.keplr,
-    connect,
-  };
+  const connection: Connection = { ...WALLET_METADATA.keplr, connect };
 
   return {
     connection,

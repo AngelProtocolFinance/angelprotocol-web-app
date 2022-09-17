@@ -8,10 +8,14 @@ export type ProviderId =
   | "bitkeep-wallet"
   | "station"
   | "walletconnect"
-  | "torus"
   | "keplr";
 
-type Base = { logo: string; name: string; network?: true };
+type Base = {
+  logo: string;
+  installUrl?: string;
+  name: string;
+  network?: true;
+};
 type Single = { connect(args?: string): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
 export type Connection = Base & (Single | Multi);

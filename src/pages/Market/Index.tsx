@@ -1,11 +1,12 @@
 import { EndowmentEntry } from "types/contracts";
 import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
+import { UNSDG_NUMS } from "constants/unsdgs";
 import CharityCard from "./CharityCard";
 import IndexCard from "./IndexCard";
 
 export default function Index(props: {
-  id: number;
+  id: UNSDG_NUMS;
   profiles: EndowmentEntry[];
 }) {
   const { ref, forward, backward, showBack, showForward } =

@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
 import { Profile as IProfile } from "types/contracts";
-import { useEndowmentProfileQuery } from "services/juno/account";
+import {
+  useEndowmentDetailsQuery,
+  useEndowmentProfileQuery,
+} from "services/juno/account";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
@@ -13,9 +16,9 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileWithAddr = IProfile & { id: number };
+type ProfileExtended = IProfile & { id: number; kyc_donors_only: boolean };
 
-const context = createContext<ProfileWithAddr>({} as ProfileWithAddr);
+const context = createContext<ProfileExtended>({} as ProfileExtended);
 
 export const useProfile = () => {
   const val = useContext(context);
@@ -36,8 +39,14 @@ export default function Profile() {
     isError,
   } = useEndowmentProfileQuery({ id: numId }, { skip: numId === 0 });
 
-  if (isLoading) return <Skeleton />;
-  if (isError || !profile) return <PageError />;
+  const {
+    data: endowment,
+    isLoading: isEndowLoading,
+    isError: isEndowError,
+  } = useEndowmentDetailsQuery({ id: numId }, { skip: numId === 0 });
+
+  if (isLoading || isEndowLoading) return <Skeleton />;
+  if (isError || isEndowError || !endowment || !profile) return <PageError />;
 
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
@@ -45,6 +54,7 @@ export default function Profile() {
         value={{
           ...profile,
           id: numId, //!isError && numId is valid id
+          kyc_donors_only: endowment.kyc_donors_only,
         }}
       >
         <Nav />

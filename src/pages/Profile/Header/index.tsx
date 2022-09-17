@@ -10,10 +10,11 @@ export default function CharityHeader(props: Profile) {
   const showDonater = useDonater({
     to: "charity",
     receiver: profile.id,
+    isKycDonorOnly: profile.kyc_donors_only,
   });
 
   //TODO: show multiple SDGs
-  const sdgNum = props.categories.sdgs[0] || 0;
+  const sdgNum = props.categories.sdgs[0] || 1;
   const sdg = unsdgs[sdgNum];
 
   return (

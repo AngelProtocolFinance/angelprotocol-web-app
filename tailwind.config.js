@@ -73,15 +73,32 @@ module.exports = {
         ".btn-primary": {
           backgroundColor: theme("colors.angel-orange"),
         },
+        ".btn-outline-primary": {
+          borderStyle: "solid",
+          borderColor: theme("colors.angel-orange"),
+          borderWidth: "2px",
+          "&:hover": {
+            backgroundColor: `${theme("colors.angel-orange")}33`,
+          },
+          "&:active": {
+            backgroundColor: `${theme("colors.angel-orange")}b2`,
+          },
+          "&:disabled": {
+            borderStyle: "none",
+          },
+        },
         ".btn-secondary": {
           backgroundColor: theme("colors.thin-blue"),
         },
         ".btn-outline-secondary": {
           borderStyle: "solid",
           borderColor: theme("colors.thin-blue"),
-          borderWidth: "3px",
+          borderWidth: "2px",
           "&:hover": {
-            backgroundColor: theme("colors.thin-blue"),
+            backgroundColor: `${theme("colors.thin-blue")}33`,
+          },
+          "&:active": {
+            backgroundColor: `${theme("colors.thin-blue")}b2`,
           },
           "&:disabled": {
             borderStyle: "none",

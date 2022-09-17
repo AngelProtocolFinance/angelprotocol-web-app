@@ -25,7 +25,7 @@ export const account_api = junoApi.injectEndpoints({
         return res.data.endowments.reduce((result, entry) => {
           const { categories, tier } = entry;
           //TODO: this structure allows endowment to be listed in only 1 sdg row
-          const sdgNum = categories.sdgs[0] || 0;
+          const sdgNum = categories.sdgs[0] ?? 1;
           if (tier === "Level1") {
             return result;
           } else {
@@ -34,6 +34,16 @@ export const account_api = junoApi.injectEndpoints({
             return result;
           }
         }, {} as CategorizedEndowments);
+      },
+    }),
+    endowmentDetails: builder.query<
+      Result<"accEndowment">,
+      Args<"accEndowment">
+    >({
+      providesTags: [{ type: junoTags.account, id: accountTags.endowment }],
+      query: (args) => genQueryPath("accEndowment", args, accounts),
+      transformResponse: (res: Res<"accEndowment">) => {
+        return res.data;
       },
     }),
     endowmentProfile: builder.query<Result<"accProfile">, Args<"accProfile">>({
@@ -61,6 +71,7 @@ export const account_api = junoApi.injectEndpoints({
 });
 
 export const {
+  useEndowmentDetailsQuery,
   useEndowmentProfileQuery,
   useBalanceQuery,
   useCategorizedEndowmentsQuery,

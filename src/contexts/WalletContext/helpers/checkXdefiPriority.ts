@@ -1,10 +1,10 @@
 import { Dwindow } from "types/ethereum";
-import { WalletError } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "errors/errors";
 
 export default function checkXdefiPriority() {
   const dwindow = window as Dwindow;
   if (!dwindow?.xfi) {
-    throw new WalletError("Xdefi is not installed", 0);
+    throw new WalletNotInstalledError("xdefi-wallet");
   }
   if (!dwindow?.xfi?.ethereum?.isMetaMask) {
     throw new WalletError("Kindly prioritize Xdefi and reload the page", 0);

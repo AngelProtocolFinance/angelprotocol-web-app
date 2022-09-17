@@ -14,7 +14,6 @@ import life_water from "assets/icons/unsdg/life_water.png";
 import no_poverty from "assets/icons/unsdg/no_poverty.png";
 import partnership from "assets/icons/unsdg/partnership.png";
 import sustainable from "assets/icons/unsdg/sustainable_communities.png";
-import unsdg from "assets/icons/unsdg/unsdg.png";
 import zero_hunger from "assets/icons/unsdg/zero_hunger.png";
 
 type S = string;
@@ -32,19 +31,26 @@ type UNSDG = {
   website: S;
 };
 
-export const unsdgs: { [index: number]: UNSDG } = {
-  0: {
-    text_light: "text-white-grey",
-    text_dark: "text-angel-grey",
-    text_hover: "hover:text-sdg",
-    bg: "bg-white",
-    border: "border-black",
-    icon: unsdg,
-    title: "uncategorized",
-    desc: "",
-    youtube: "",
-    website: "",
-  },
+export type UNSDG_NUMS =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17;
+
+export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   1: {
     text_light: "text-white-grey",
     text_dark: "text-sdg1",

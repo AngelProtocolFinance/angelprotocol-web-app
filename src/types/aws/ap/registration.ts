@@ -1,3 +1,4 @@
+import { UNSDG_NUMS } from "constants/unsdgs";
 import { EndowmentTierNum } from "../../contracts";
 import { Optional } from "../../utils";
 
@@ -83,7 +84,7 @@ export type Registration = {
   RegistrationStatus: RegistrationStatus;
   SK: "Registration";
   Tier?: EndowmentTierNum;
-  UN_SDG: number;
+  UN_SDG: UNSDG_NUMS;
   Website: string;
 };
 

@@ -1,4 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { UNSDG_NUMS } from "constants/unsdgs";
 
 export interface ERC20Token {
   contractAddress: string;
@@ -54,7 +55,7 @@ export type EndowmentTier = "Level1" | "Level2" | "Level3";
 export type EndowmentTierNum = 1 | 2 | 3;
 
 export type Categories = {
-  sdgs: number[]; // u8 maps one of the 17 UN SDG
+  sdgs: UNSDG_NUMS[]; // u8 maps one of the 17 UN SDG
   general: number[]; //??
 };
 
