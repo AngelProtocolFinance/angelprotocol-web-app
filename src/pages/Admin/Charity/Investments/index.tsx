@@ -8,8 +8,8 @@ import Withdraw from "./Widthdraw";
 
 export default function Investments() {
   return (
-    <div className="border border-zinc-50/30 mt-4">
-      <Nav />
+    <div className="grid grid-rows-[auto_1fr] mt-4">
+      <Nav classes="mb-4" />
       <Routes>
         <Route path={investmentRoutes.strategies} element={<Strategies />} />
         <Route path={investmentRoutes.withdraw} element={<Withdraw />} />

@@ -2,16 +2,19 @@ import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
-import Holdings from "../Holdings";
+import Holdings from "./Holdings";
 
-type Props = { type: AccountType };
-export default function Balance({ type }: Props) {
+type Props = {
+  classes?: string;
+  type: AccountType;
+};
+
+export default function Assets({ classes = "", type }: Props) {
   const { endowmentId } = useAdminResources();
   const queryState = useBalanceQuery({ id: endowmentId });
-
   return (
-    <div className="shadow-inner bg-zinc-50/5 rounded-md p-3">
-      <h4 className="uppercase text-zinc-50/80 font-extrabold">{type}</h4>
+    <div className={`${classes} p-4 border border-zinc-50/10`}>
+      <h3 className="uppercase font-semibold text-center">Investable assets</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -20,7 +23,11 @@ export default function Balance({ type }: Props) {
         }}
       >
         {(balance) => (
-          <Holdings {...balance.tokens_on_hand[type]} type={type} />
+          <Holdings
+            {...balance.tokens_on_hand[type]}
+            type={type}
+            classes="mt-4"
+          />
         )}
       </QueryLoader>
     </div>

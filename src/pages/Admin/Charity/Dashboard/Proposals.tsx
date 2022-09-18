@@ -5,7 +5,7 @@ import TableSection, { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 
 type Props = { proposals: Proposal[] };
-export default function Table({ proposals }: Props) {
+export default function Proposals({ proposals }: Props) {
   return (
     <table>
       <TableSection rowClass="border-b border-zinc-50/30" type="thead">

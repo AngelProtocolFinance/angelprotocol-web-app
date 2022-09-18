@@ -2,9 +2,11 @@ import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { investmentRoutes } from "constants/routes";
 
-export default function Nav() {
+export default function Nav({ classes = "" }: { classes?: string }) {
   return (
-    <div className="grid grid-cols-4 divide-x divide-zinc-50/30 border-b border-zinc-50/30">
+    <div
+      className={`grid grid-cols-4 divide-x divide-zinc-50/30 border border-zinc-50/30 ${classes}`}
+    >
       <NavLink end to={investmentRoutes.index} className={styler}>
         Balances
       </NavLink>
