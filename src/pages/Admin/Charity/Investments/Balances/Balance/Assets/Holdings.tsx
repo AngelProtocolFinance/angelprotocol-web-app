@@ -15,27 +15,25 @@ export default function Holdings({ cw20, native, classes = "" }: Props) {
   }
 
   return (
-    <>
-      <table className={`w-full border border-zinc-50/30 ${classes}`}>
-        <TableSection
-          type="thead"
-          rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30"
-        >
-          <Cells type="th" cellClass="p-2 uppercase font-normal">
-            <>token</>
-            <>Balance</>
-          </Cells>
-        </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30 last:border-none"
-        >
-          {native
-            .map((bal) => <Balance {...bal} key={bal.denom} />)
-            .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
-        </TableSection>
-      </table>
-    </>
+    <table className={`w-full border border-zinc-50/30 ${classes}`}>
+      <TableSection
+        type="thead"
+        rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30"
+      >
+        <Cells type="th" cellClass="p-2 uppercase font-normal">
+          <>token</>
+          <>Balance</>
+        </Cells>
+      </TableSection>
+      <TableSection
+        type="tbody"
+        rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30 last:border-none"
+      >
+        {native
+          .map((bal) => <Balance {...bal} key={bal.denom} />)
+          .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
+      </TableSection>
+    </table>
   );
 }
 

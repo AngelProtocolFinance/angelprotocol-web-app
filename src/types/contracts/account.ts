@@ -21,7 +21,10 @@ export interface BalanceInfo {
   liquid: GenericBalance;
 }
 
-type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
+export type VaultWithBalance = [
+  string /** vauld addr */,
+  string /** vault balance */
+];
 
 export interface EndowmentBalance {
   tokens_on_hand: BalanceInfo;
@@ -42,6 +45,9 @@ interface RebalanceDetails {
 export interface Strategy {
   vault: string; // Vault SC Address
   percentage: string; // percentage of funds to invest
+}
+export interface StrategyWithBalance extends Strategy {
+  balance: number;
 }
 
 type Vaults<T> = {
