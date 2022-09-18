@@ -17,6 +17,7 @@ export default function Assets({ classes = "", type }: Props) {
       <h3 className="uppercase font-semibold text-center">Investable assets</h3>
       <QueryLoader
         queryState={queryState}
+        classes={{ container: "justify-center mt-4" }}
         messages={{
           loading: "Fetching balances",
           error: "Failed to get balances",
