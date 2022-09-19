@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "../lists";
 
 export interface ERC20Token {
   contractAddress: string;
