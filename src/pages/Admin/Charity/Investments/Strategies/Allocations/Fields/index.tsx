@@ -1,16 +1,29 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { OnVaultSelect } from "../../Vaults/types";
 import { StrategyFormValues as SF } from "../types";
+import { useModalContext } from "contexts/ModalContext";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";
+import useVaultSelection from "../../Vaults/useVaultSelection";
 import VaultField from "./VaultField";
 
 type Props = { classes?: string };
 export default function Fields({ classes = "" }: Props) {
   const { watch } = useFormContext<SF>();
-  const { fields, remove } = useFieldArray<SF>({
+  const { fields, remove, append } = useFieldArray<SF>({
     name: "allocations", // unique name for your Field Array
   });
+  const onSelect: OnVaultSelect = (addr) => {
+    append({ percentage: 0, vault: addr });
+  };
+
+  const showVaults = useVaultSelection({
+    onSelect,
+    selected: fields.map((f) => f.vault),
+    type: "liquid",
+  });
+
   const allocations = watch("allocations");
   const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
 
@@ -70,6 +83,9 @@ export default function Fields({ classes = "" }: Props) {
           </p>
         </div>
       )}
+      <button onClick={showVaults} type="button">
+        add vault
+      </button>
     </>
   );
 }

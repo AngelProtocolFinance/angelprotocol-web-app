@@ -1,7 +1,5 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { StrategyFormValues } from "../types";
-import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { roundDownToNum } from "helpers";
 
@@ -33,7 +31,7 @@ export default function VaultField({
 
       {(!staticVal && (
         <input
-          className="block w-fit bg-transparent focus:outline-none border-b border-zinc-50/10 text-right text-lg"
+          className="bg-transparent focus:outline-none text-lg"
           {...register(`allocations.${idx}.percentage`, {
             setValueAs(value) {
               const num = Number(value);

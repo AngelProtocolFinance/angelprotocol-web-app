@@ -1,17 +1,10 @@
-import { FieldArrayWithId, UseFieldArrayAppend } from "react-hook-form";
-import { StrategyFormValues } from "./types";
-import { AccountType } from "types/contracts";
+import { Dialog } from "@headlessui/react";
+import { VaultsProps } from "./types";
 import { useVaultListQuery } from "services/juno/registrar";
 import { QueryLoader } from "components/admin";
 import Vault from "./Vault";
 
-type Props = {
-  select: UseFieldArrayAppend<StrategyFormValues, "allocations">;
-  selected: FieldArrayWithId<StrategyFormValues, "allocations", "id">[];
-  type: AccountType;
-};
-
-export default function Selection({ selected, select, type }: Props) {
+export default function Vaults({ type, selected, onSelect }: VaultsProps) {
   const queryState = useVaultListQuery({
     acct_type: type,
     approved: true,
@@ -19,10 +12,10 @@ export default function Selection({ selected, select, type }: Props) {
   });
 
   return (
-    <div className="flex gap-4 col-span-2 mb-6">
+    <Dialog.Panel className="flex gap-4 col-span-2 mb-6 fixed-center z-20 bg-zinc-50 p-3 rounded-md">
       <QueryLoader
         messages={{
-          error: "Failed to get strategy options",
+          error: "Fetching vault options",
           loading: "Getting strategy options...",
         }}
         queryState={queryState}
@@ -32,17 +25,15 @@ export default function Selection({ selected, select, type }: Props) {
             <>
               {vaults.map((v) => (
                 <Vault
-                  {...v}
-                  isSelected={selected.some(
-                    (field) => field.vault === v.address
-                  )}
-                  select={select}
+                  address={v.address}
+                  isSelected={selected.some((addr) => addr === v.address)}
+                  onSelect={onSelect}
                 />
               ))}
             </>
           )) || <p className="text-zinc-50/80">No investment options found.</p>
         }
       </QueryLoader>
-    </div>
+    </Dialog.Panel>
   );
 }
