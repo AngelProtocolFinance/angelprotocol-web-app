@@ -2,19 +2,24 @@ import { VaultProps } from "./types";
 import Icon from "components/Icon";
 import { maskAddress } from "helpers";
 
-export default function Vault({ isSelected, onSelect, address }: VaultProps) {
+export default function Vault({
+  isPreselected,
+  isSelected,
+  handleVaultSelect,
+  address,
+}: VaultProps) {
   return (
-    <div className="flex flex-col gap-2 p-2 items-center relative text-zinc-700 rounded-md aspect-square font-heading bg-zinc-50">
-      <div className="flex items-center gap-2">
-        <Icon type="Safe" size={36} />
-        <span className="font-mono">{maskAddress(address)}</span>
-      </div>
+    <div className="flex flex-col gap-2 p-2 pt-8 items-center relative text-zinc-700 rounded-md font-heading border border-zinc-600/30">
+      <p className="uppercase">Vault</p>
+      <span className="font-mono text-sm">{maskAddress(address)}</span>
 
       <button
-        disabled={isSelected}
+        disabled={isSelected || isPreselected}
         type="button"
-        className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-sky-400 p-0.5 rounded-full disabled:bg-emerald-400"
-        onClick={() => onSelect(address)}
+        className={`absolute top-2 left-2 bg-sky-400 p-0.5 rounded-full ${
+          isPreselected ? "disabled:bg-zinc-400" : "disabled:bg-emerald-400"
+        }`}
+        onClick={handleVaultSelect}
       >
         {/**   TODO: better way to determine if vault is selected */}
         <Icon type={isSelected ? "CheckCircle" : "Plus"} />

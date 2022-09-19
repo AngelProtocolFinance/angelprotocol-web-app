@@ -20,7 +20,7 @@ export default function Fields({ classes = "" }: Props) {
 
   const showVaults = useVaultSelection({
     onSelect,
-    selected: fields.map((f) => f.vault),
+    preSelected: fields.map((f) => f.vault),
     type: "liquid",
   });
 

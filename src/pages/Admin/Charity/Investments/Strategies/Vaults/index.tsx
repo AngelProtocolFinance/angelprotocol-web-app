@@ -1,10 +1,19 @@
 import { Dialog } from "@headlessui/react";
+import { useState } from "react";
 import { VaultsProps } from "./types";
 import { useVaultListQuery } from "services/juno/registrar";
 import { QueryLoader } from "components/admin";
 import Vault from "./Vault";
 
-export default function Vaults({ type, selected, onSelect }: VaultsProps) {
+export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
+  const [selected, setSelected] = useState<VaultsProps["preSelected"]>([]);
+
+  const handleVaultSelect = (addr: string) => () => {
+    setSelected([...selected, addr]);
+  };
+
+  function saveSelection() {}
+
   const queryState = useVaultListQuery({
     acct_type: type,
     approved: true,
@@ -17,6 +26,7 @@ export default function Vaults({ type, selected, onSelect }: VaultsProps) {
         messages={{
           error: "Failed to get vault list",
           loading: "Loading vault list..",
+          empty: "No investments options found",
         }}
         classes={{
           container: "place-self-center",
@@ -24,20 +34,21 @@ export default function Vaults({ type, selected, onSelect }: VaultsProps) {
         }}
         queryState={queryState}
       >
-        {(vaults) =>
-          (vaults.length > 0 && (
-            <>
-              {vaults.map((v) => (
-                <Vault
-                  address={v.address}
-                  isSelected={selected.some((addr) => addr === v.address)}
-                  onSelect={onSelect}
-                />
-              ))}
-            </>
-          )) || <p className="text-zinc-50/80">No investment options found.</p>
-        }
+        {(vaults) => (
+          <div className="w-full flex gap-2s flex-wrap gap-2">
+            {vaults.map((v) => (
+              <Vault
+                key={v.address}
+                address={v.address}
+                isPreselected={preSelected.some((addr) => addr === v.address)}
+                isSelected={selected.some((addr) => addr === v.address)}
+                handleVaultSelect={handleVaultSelect(v.address)}
+              />
+            ))}
+          </div>
+        )}
       </QueryLoader>
+      <button>add vaults</button>
     </Dialog.Panel>
   );
 }
