@@ -29,6 +29,7 @@ export default function useWithdraw() {
 
   const type = getValues("type");
 
+  //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
     //filter + map
     const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
@@ -72,7 +73,7 @@ export default function useWithdraw() {
       "withdraw proposal",
       `withdraw ${type} assets from endowment id: ${endowmentId}${
         isSendToApCW3
-          ? ". Note: Withdrawing from locked funds requires Angel Protocol team approval. After execution of this proposal, withdraw transaction will be further voted upon."
+          ? ". Note: Proposal contents will be sent to Angel Protocol team for approval"
           : ""
       }`,
       [embeddedWithdrawMsg],

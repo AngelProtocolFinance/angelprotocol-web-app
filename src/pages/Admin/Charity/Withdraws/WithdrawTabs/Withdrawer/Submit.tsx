@@ -65,7 +65,7 @@ function SubmitWithReason({
   if (endowment.endow_type === "Charity") {
     return (
       <>
-        <Warning message="Note: Withdrawing from locked funds requires Angel Protocol team approval. After execution of this proposal, withdraw transaction will be further voted upon." />
+        <Warning message="Withdrawing from locked funds requires Angel Protocol team approval." />
         <TextInput<WV> name="reason" title="Reason" />
         <Button type="submit" disabled={isSubmitDisabled}>
           Create withdraw proposal
