@@ -74,10 +74,14 @@ function SubmitWithReason({
     );
   }
 
+  //normal endowments
+  const isMatured = height >= (endowment.maturity_height || 0);
   return (
     <>
-      <Warning message="Withdrawing locked funds before maturity is not allowed." />
-      <Button type="submit" disabled={true}>
+      {!isMatured && (
+        <Warning message="Withdrawing locked funds before maturity is not allowed." />
+      )}
+      <Button type="submit" disabled={!isMatured}>
         Create withdraw proposal
       </Button>
     </>

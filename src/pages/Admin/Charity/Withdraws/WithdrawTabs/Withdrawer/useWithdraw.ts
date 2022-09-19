@@ -14,7 +14,6 @@ import CW3Ap from "contracts/CW3/CW3Ap";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
-import isNeedApPermission from "./isNeedApPermission";
 import { logWithdrawProposal } from "./logWithdrawProposal";
 
 export default function useWithdraw() {
