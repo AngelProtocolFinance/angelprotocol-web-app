@@ -1,7 +1,6 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { OnVaultSelect } from "../../Vaults/types";
 import { StrategyFormValues as SF } from "../types";
-import { useModalContext } from "contexts/ModalContext";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";

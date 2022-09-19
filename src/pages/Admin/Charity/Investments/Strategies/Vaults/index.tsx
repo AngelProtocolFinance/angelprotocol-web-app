@@ -2,17 +2,22 @@ import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { VaultsProps } from "./types";
 import { useVaultListQuery } from "services/juno/registrar";
+import { useModalContext } from "contexts/ModalContext";
 import { QueryLoader } from "components/admin";
 import Vault from "./Vault";
 
 export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
-  const [selected, setSelected] = useState<VaultsProps["preSelected"]>([]);
+  const { closeModal } = useModalContext();
+  const [selected, setSelected] = useState<string[]>([]);
 
   const handleVaultSelect = (addr: string) => () => {
     setSelected([...selected, addr]);
   };
 
-  function saveSelection() {}
+  function saveSelection() {
+    selected.forEach((addr) => onSelect(addr));
+    closeModal();
+  }
 
   const queryState = useVaultListQuery({
     acct_type: type,
@@ -48,7 +53,13 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
           </div>
         )}
       </QueryLoader>
-      <button>add vaults</button>
+      <button
+        type="button"
+        onClick={saveSelection}
+        disabled={selected.length <= 0}
+      >
+        add vaults
+      </button>
     </Dialog.Panel>
   );
 }

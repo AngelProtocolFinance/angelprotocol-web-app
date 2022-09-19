@@ -22,7 +22,7 @@ export default function Vault({
         onClick={handleVaultSelect}
       >
         {/**   TODO: better way to determine if vault is selected */}
-        <Icon type={isSelected ? "CheckCircle" : "Plus"} />
+        <Icon type={isSelected || isPreselected ? "CheckCircle" : "Plus"} />
       </button>
     </div>
   );
