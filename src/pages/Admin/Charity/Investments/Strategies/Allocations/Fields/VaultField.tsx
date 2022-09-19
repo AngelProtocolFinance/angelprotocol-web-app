@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
-import { StrategyFormValues } from "./types";
+import { StrategyFormValues } from "../types";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { roundDownToNum } from "helpers";
@@ -10,10 +10,16 @@ type Props = {
   idx: number;
   remove: UseFieldArrayRemove;
   color: string;
-  static?: true;
+  staticVal?: number;
 };
 
-export default function VaultField({ name, idx, color, remove }: Props) {
+export default function VaultField({
+  name,
+  idx,
+  color,
+  remove,
+  staticVal,
+}: Props) {
   const { register } = useFormContext<StrategyFormValues>();
   return (
     <Cells
@@ -25,20 +31,23 @@ export default function VaultField({ name, idx, color, remove }: Props) {
         <span className="font-mono">{name}</span>
       </div>
 
-      <input
-        className="block w-fit bg-transparent focus:outline-none border-b border-zinc-50/10 text-right text-lg"
-        {...register(`allocations.${idx}.percentage`, {
-          setValueAs(value) {
-            const num = Number(value);
-            if (!isNaN(num)) {
-              //limit to 2 digits saved in form context for submission
-              return roundDownToNum(num, 2);
-            } else {
-              return 0;
-            }
-          },
-        })}
-      />
+      {(!staticVal && (
+        <input
+          className="block w-fit bg-transparent focus:outline-none border-b border-zinc-50/10 text-right text-lg"
+          {...register(`allocations.${idx}.percentage`, {
+            setValueAs(value) {
+              const num = Number(value);
+              if (!isNaN(num)) {
+                //limit to 2 digits saved in form context for submission
+                return roundDownToNum(num, 2);
+              } else {
+                return 0;
+              }
+            },
+          })}
+        />
+      )) || <p>{staticVal}</p>}
+
       {/* <button type="button" onClick={() => remove(idx)} tabIndex={-1}>
         <Icon
           size={18}
@@ -46,11 +55,11 @@ export default function VaultField({ name, idx, color, remove }: Props) {
           className="text-rose-400 hover:text-rose-300 active:text-rose-500"
         />
       </button> */}
-      <ErrorMessage
+      {/* <ErrorMessage
         name={`allocations.${idx}.percentage`}
         as="span"
         className="absolute right-4 -bottom-2 text-xs text-rose-300"
-      />
+      /> */}
     </Cells>
   );
 }
