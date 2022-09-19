@@ -12,11 +12,15 @@ export default function Vaults({ type, selected, onSelect }: VaultsProps) {
   });
 
   return (
-    <Dialog.Panel className="flex gap-4 col-span-2 mb-6 fixed-center z-20 bg-zinc-50 p-3 rounded-md">
+    <Dialog.Panel className="grid fixed-center z-20 bg-zinc-50 p-3 rounded-md min-h-[15rem] min-w-[15rem]">
       <QueryLoader
         messages={{
-          error: "Fetching vault options",
-          loading: "Getting strategy options...",
+          error: "Failed to get vault list",
+          loading: "Loading vault list..",
+        }}
+        classes={{
+          container: "place-self-center",
+          loadingText: "text-zinc-600",
         }}
         queryState={queryState}
       >
