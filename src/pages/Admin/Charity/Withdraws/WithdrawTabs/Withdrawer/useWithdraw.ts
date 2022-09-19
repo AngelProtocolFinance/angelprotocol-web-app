@@ -41,7 +41,7 @@ export default function useWithdraw() {
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
     const isSendToApCW3 =
-      type === "locked" && isNeedApPermission(endowment, +getValues("height"));
+      endowment.endow_type === "Charity" && type === "locked";
 
     //used when withdraw doesn't need to go thru AP
     const account = new Account(wallet);
@@ -73,7 +73,7 @@ export default function useWithdraw() {
       "withdraw proposal",
       `withdraw ${type} assets from endowment id: ${endowmentId}${
         isSendToApCW3
-          ? ". Note: Withdrawing lock assets before maturity; proposal contents will be reviewed further by Angel Protocol team for approval"
+          ? ". Note: Withdrawing from locked funds requires Angel Protocol team approval. After execution of this proposal, withdraw transaction will be further voted upon."
           : ""
       }`,
       [embeddedWithdrawMsg],

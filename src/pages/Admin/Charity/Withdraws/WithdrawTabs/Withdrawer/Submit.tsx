@@ -6,7 +6,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import Icon from "components/Icon";
 import { QueryLoader, TextInput } from "components/admin";
-import isNeedApPermission from "./isNeedApPermission";
 
 export default function Submit() {
   const { endowment } = useAdminResources();
@@ -15,7 +14,6 @@ export default function Submit() {
     formState: { isDirty, isValid, isSubmitting },
   } = useFormContext<WV>();
   const queryState = useLatestBlockQuery(null);
-
   const isSubmitDisabled = !isDirty || !isValid || isSubmitting;
 
   const type = getValues("type");
@@ -26,7 +24,6 @@ export default function Submit() {
       </Button>
     );
   }
-
   //check maturity when locked
   return (
     <QueryLoader
@@ -47,37 +44,52 @@ export default function Submit() {
   );
 }
 
-function SubmitWithReason(props: {
+type SubmitWithReasonProps = {
   isSubmitDisabled: boolean;
   endowment: EndowmentDetails;
   height: number;
-}) {
+};
+
+function SubmitWithReason({
+  height = 0,
+  isSubmitDisabled,
+  endowment,
+}: SubmitWithReasonProps) {
   const { setValue } = useFormContext<WV>();
 
   useEffect(() => {
     //set to activate reason validation
-    setValue("height", props.height);
-  }, [props.height, setValue]);
+    setValue("height", height);
+  }, [height, setValue]);
+
+  if (endowment.endow_type === "Charity") {
+    return (
+      <>
+        <Warning message="Note: Withdrawing from locked funds requires Angel Protocol team approval. After execution of this proposal, withdraw transaction will be further voted upon." />
+        <TextInput<WV> name="reason" title="Reason" />
+        <Button type="submit" disabled={isSubmitDisabled}>
+          Create withdraw proposal
+        </Button>
+      </>
+    );
+  }
 
   return (
     <>
-      {isNeedApPermission(props.endowment, props.height) && (
-        <>
-          <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
-            <Icon
-              type="Info"
-              className="inline-block relative bottom-0.5 mr-1"
-            />
-            You are proposing to withdrawing locked funds before maturity. Angel
-            protocol team will vote to approve this transaction after execution.
-          </p>
-          <TextInput<WV> name="reason" title="Reason" />
-        </>
-      )}
-      <Button type="submit" disabled={props.isSubmitDisabled}>
+      <Warning message="Withdrawing locked funds before maturity is not allowed." />
+      <Button type="submit" disabled={true}>
         Create withdraw proposal
       </Button>
     </>
+  );
+}
+
+function Warning({ message }: { message: string }) {
+  return (
+    <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
+      <Icon type="Info" className="inline-block relative bottom-0.5 mr-1" />
+      {message}
+    </p>
   );
 }
 
