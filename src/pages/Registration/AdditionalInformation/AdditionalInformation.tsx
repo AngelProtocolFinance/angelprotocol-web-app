@@ -7,6 +7,7 @@ import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
 import ImageInput from "./ImageInput";
+import ImgEditor from "./ImgEditor";
 import OverviewInput from "./OverviewInput";
 import { additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
@@ -41,7 +42,8 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName value={charity.Registration.CharityName} />
-          <ImageInput name="banner" label="Banner image of your organization" />
+          <ImgEditor />
+          {/* <ImageInput name="banner" label="Banner image of your organization" /> */}
           <ImageSizeInfo limit="1MB" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <ImageSizeInfo limit="1MB" />
