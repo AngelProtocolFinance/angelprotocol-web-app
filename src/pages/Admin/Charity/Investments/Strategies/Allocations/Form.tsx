@@ -24,7 +24,7 @@ export default function Form({ type }: FormProps) {
 
   return (
     <form
-      className="mt-6 grid content-start gap-x-4 text-zinc-50/80 p-3"
+      className="mt-6 grid content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner"
       onSubmit={handleSubmit(proposeStrategyUpdate)}
     >
       <Pie
