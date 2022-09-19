@@ -1,16 +1,26 @@
 import { useFormContext } from "react-hook-form";
-import { StrategyFormValues } from "./types";
+import { FormProps, StrategyFormValues } from "./types";
 import { AccountType } from "types/contracts";
 import Pie from "../Pie";
 import Fields from "./Fields";
 import useUpdateStrategy from "./Fields/useUpdateStrategy";
 
-type Props = { type: AccountType };
-export default function Form({ type }: Props) {
-  const { handleSubmit, watch } = useFormContext<StrategyFormValues>();
+export default function Form({ type }: FormProps) {
+  const {
+    handleSubmit,
+    watch,
+    formState: { isDirty, isValid },
+    getValues,
+  } = useFormContext<StrategyFormValues>();
   const { proposeStrategyUpdate } = useUpdateStrategy(type);
 
-  const allocations = watch("allocations");
+  const currAllocations = watch("allocations");
+  const initialAllocations = getValues("initialAllocations");
+
+  const isReadOnly = getValues("isReadOnly");
+  const allocations = isReadOnly ? initialAllocations : currAllocations;
+
+  const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
 
   return (
     <form
@@ -26,15 +36,15 @@ export default function Form({ type }: Props) {
       />
       <Fields classes="mt-4" />
 
-      {/* <button
-        disabled={!isDirty || !isValid || total > 100}
-        type="submit"
-        className="justify-self-end text-xs font-bold px-4 py-2 bg-sky-500 disabled:bg-zinc-300 hover:bg-sky-400 uppercase rounded-md text-zinc-50"
-      >
-        propose changes
-      </button> */}
-
-      {/* <Selection selected={fields} select={append} type={type} /> */}
+      {!isReadOnly && (
+        <button
+          disabled={!isDirty || !isValid || total > 100}
+          type="submit"
+          className="justify-self-end text-xs font-bold px-4 py-2 bg-sky-500 disabled:bg-zinc-300 hover:bg-sky-400 uppercase rounded-md text-zinc-50"
+        >
+          propose changes
+        </button>
+      )}
     </form>
   );
 }

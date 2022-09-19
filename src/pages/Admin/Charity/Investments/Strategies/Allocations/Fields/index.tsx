@@ -1,6 +1,7 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { OnVaultSelect } from "../../Vaults/types";
 import { StrategyFormValues as SF } from "../types";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";
@@ -9,7 +10,7 @@ import VaultField from "./VaultField";
 
 type Props = { classes?: string };
 export default function Fields({ classes = "" }: Props) {
-  const { watch } = useFormContext<SF>();
+  const { watch, getValues } = useFormContext<SF>();
   const { fields, remove, append } = useFieldArray<SF>({
     name: "allocations", // unique name for your Field Array
   });
@@ -25,6 +26,7 @@ export default function Fields({ classes = "" }: Props) {
 
   const allocations = watch("allocations");
   const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
+  const isReadOnly = getValues("isReadOnly");
 
   function renderFields() {
     const _fields = fields.map((field, i) => (
@@ -82,9 +84,16 @@ export default function Fields({ classes = "" }: Props) {
           </p>
         </div>
       )}
-      <button onClick={showVaults} type="button">
-        add vault
-      </button>
+      {!isReadOnly && (
+        <button
+          onClick={showVaults}
+          type="button"
+          className="uppercase text-angel-blue justify-self-start mt-2 text-sm"
+        >
+          <Icon type="Plus" className="relative bottom-0.5 inline mr-1" />
+          add vault
+        </button>
+      )}
     </>
   );
 }

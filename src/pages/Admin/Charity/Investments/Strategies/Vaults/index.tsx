@@ -26,7 +26,7 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
   });
 
   return (
-    <Dialog.Panel className="grid fixed-center z-20 bg-zinc-50 p-3 rounded-md min-h-[15rem] min-w-[15rem]">
+    <Dialog.Panel className="flex flex-col fixed-center z-20 bg-zinc-50 p-3 rounded-md min-h-[15rem] min-w-[15rem]">
       <QueryLoader
         messages={{
           error: "Failed to get vault list",
@@ -57,6 +57,7 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
         type="button"
         onClick={saveSelection}
         disabled={selected.length <= 0}
+        className="mt-auto uppercase font-heading text-sm font-bold px-4 py-2 bg-angel-blue disabled:bg-grey-accent self-center rounded-md text-white-grey"
       >
         add vaults
       </button>

@@ -20,20 +20,39 @@ export default function VaultField({
   remove,
   staticVal,
 }: Props) {
-  const { register } = useFormContext<StrategyFormValues>();
+  const { register, getValues } = useFormContext<StrategyFormValues>();
+  const isReadOnly = getValues("isReadOnly");
   return (
     <Cells
       type="td"
       cellClass="p-2 items-center relative text-zinc-50/80 font-heading"
     >
       <div className="flex items-center gap-2">
-        <div className={`${color} w-4 h-4 rounded-full`} />
+        <div
+          className={`${color} w-5 h-5 rounded-full grid place-items-center`}
+        >
+          {!isReadOnly && !staticVal && (
+            <button
+              disabled={isReadOnly}
+              type="button"
+              onClick={() => remove(idx)}
+              tabIndex={-1}
+            >
+              <Icon
+                size={16}
+                type="Close"
+                className="hover:text-rose-600 text-zinc-600  active:text-zinc-700"
+              />
+            </button>
+          )}
+        </div>
         <span className="font-mono">{name}</span>
       </div>
 
       {(staticVal && <p>{staticVal}</p>) || (
         <div className="relative w-full">
           <input
+            disabled={isReadOnly}
             className="w-full bg-transparent focus:outline-none text-lg"
             {...register(`allocations.${idx}.percentage`, {
               setValueAs(value) {
@@ -52,14 +71,6 @@ export default function VaultField({
             as="span"
             className="absolute right-0 bottom-0 text-xs text-rose-300"
           />
-
-          <button type="button" onClick={() => remove(idx)} tabIndex={-1}>
-            <Icon
-              size={18}
-              type="Close"
-              className="text-rose-400 hover:text-rose-300 active:text-rose-500 absolute right-0 top-1/2 transform -translate-y-1/2"
-            />
-          </button>
         </div>
       )}
     </Cells>
