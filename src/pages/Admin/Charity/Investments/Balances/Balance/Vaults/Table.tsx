@@ -5,10 +5,13 @@ import {
   VaultWithBalance,
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { condenseToNum } from "helpers";
+import Icon from "components/Icon";
+import TableSection, { Cells } from "components/TableSection";
+import { condense, condenseToNum, humanize, maskAddress } from "helpers";
 
-type Props = EndowmentBalance & { type: AccountType };
+type Props = EndowmentBalance & { type: AccountType; classes?: string };
 export default function Table({
+  classes = "",
   type,
   oneoff_liquid,
   oneoff_locked,
@@ -22,13 +25,49 @@ export default function Table({
   const strats = endowment.strategies[type];
   const oneOffs = endowment.oneoff_vaults[type];
 
-  return <></>;
+  return (
+    <table className={`w-full border border-zinc-50/30 ${classes}`}>
+      <TableSection
+        type="thead"
+        rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30"
+      >
+        <Cells type="th" cellClass="p-2 uppercase font-normal">
+          <>token</>
+          <>Balance</>
+        </Cells>
+      </TableSection>
+      <TableSection
+        type="tbody"
+        rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30 last:border-none"
+      >
+        {withBalances(strats, stratsBal)
+          .map((vault) => <Row key={vault.address} {...vault} />)
+          .concat(
+            withBalances(oneOffs, oneOffsBal).map((vault) => (
+              <Row key={vault.address} {...vault} />
+            ))
+          )}
+      </TableSection>
+    </table>
+  );
 }
 
 type Vault = {
   address: string;
   balance: number;
 };
+
+function Row({ balance, address }: Vault) {
+  return (
+    <Cells type="td" cellClass="p-2 font-mono uppercase text-zinc-50/80">
+      <div className="flex items-center gap-2">
+        <Icon type="Safe" />
+        <span>{maskAddress(address)}</span>
+      </div>
+      <>{humanize(condense(balance), 4)}</>
+    </Cells>
+  );
+}
 
 function withBalances(
   vaults: Strategy[] | string[],

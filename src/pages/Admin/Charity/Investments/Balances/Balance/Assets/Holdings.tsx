@@ -30,14 +30,14 @@ export default function Holdings({ cw20, native, classes = "" }: Props) {
         rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30 last:border-none"
       >
         {native
-          .map((bal) => <Balance {...bal} key={bal.denom} />)
-          .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
+          .map((bal) => <Row {...bal} key={bal.denom} />)
+          .concat(cw20.map((bal) => <Row {...bal} key={bal.address} />))}
       </TableSection>
     </table>
   );
 }
 
-function Balance(props: CW20 | Coin) {
+function Row(props: CW20 | Coin) {
   const id = "address" in props ? props.address : props.denom;
   return (
     <Cells type="td" cellClass="p-2 font-mono uppercase text-zinc-50/80">
