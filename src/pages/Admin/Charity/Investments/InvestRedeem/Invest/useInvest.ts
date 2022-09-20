@@ -1,4 +1,4 @@
-import { FormValues } from "../types";
+import { FormValues } from "./types";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
