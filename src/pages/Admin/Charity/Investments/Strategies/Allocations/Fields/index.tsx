@@ -1,6 +1,7 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { OnVaultSelect } from "../../../Vaults/types";
 import { StrategyFormValues as SF } from "../types";
+import { AccountType } from "types/contracts";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
@@ -8,8 +9,8 @@ import useVaultSelection from "../../../Vaults/useVaultSelection";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";
 import VaultField from "./VaultField";
 
-type Props = { classes?: string };
-export default function Fields({ classes = "" }: Props) {
+type Props = { classes?: string; type: AccountType };
+export default function Fields({ classes = "", type }: Props) {
   const { watch, getValues } = useFormContext<SF>();
   const { fields, remove, append } = useFieldArray<SF>({
     name: "allocations", // unique name for your Field Array
@@ -21,7 +22,7 @@ export default function Fields({ classes = "" }: Props) {
   const showVaults = useVaultSelection({
     onSelect,
     preSelected: fields.map((f) => f.vault),
-    type: "liquid",
+    type,
   });
 
   const allocations = watch("allocations");

@@ -3,7 +3,6 @@ import { AccountType } from "types/contracts";
 import Allocations from "./Allocations";
 
 const tabs: AccountType[] = ["locked", "liquid"];
-const panels = tabs;
 
 export default function Strategies() {
   return (
@@ -26,7 +25,7 @@ export default function Strategies() {
         ))}
       </Tab.List>
       <Tab.Panels>
-        {panels.map((type) => (
+        {tabs.map((type) => (
           <Tab.Panel key={type} className="grid grid-cols-2 rounded-sm gap-3">
             <Allocations type={type} readonly />
             <Allocations type={type} />

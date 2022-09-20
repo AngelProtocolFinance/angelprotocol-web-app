@@ -37,7 +37,7 @@ export default function Form({ type }: FormProps) {
         max={100}
         classes="w-[13rem] justify-self-center"
       />
-      <Fields classes="mt-4" />
+      <Fields classes="mt-4" type={type} />
 
       {!isReadOnly && (
         <button
