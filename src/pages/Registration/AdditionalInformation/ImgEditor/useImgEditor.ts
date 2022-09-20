@@ -1,18 +1,23 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { AdditionalInfoValues } from "pages/Registration/types";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
 import { FileWrapper } from "components/FileDropzone";
 import { logger } from "helpers";
 import ImgCropper from "./ImgCropper";
 
-export default function useImgEditor() {
+export default function useImgEditor<T extends FieldValues>(
+  fieldName: Path<T> & keyof T
+) {
   const { showModal } = useModalContext();
-  const { watch, setValue } = useFormContext<AdditionalInfoValues>();
+  const {
+    watch,
+    setValue,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
 
-  const banner = watch("banner");
+  const banner = watch(fieldName);
 
-  const initialImageRef = useRef<AdditionalInfoValues["banner"]>(banner); //use to reset input internal state
+  const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isLoading, setLoading] = useState(false);
@@ -84,10 +89,10 @@ export default function useImgEditor() {
     showModal(ImgCropper, {
       src: uncroppedImgUrl,
       setCropedImage: (blob) => {
-        setValue("banner", {
+        setValue(fieldName, {
           file: new File([blob], fileWrapper.name),
           name: fileWrapper.name,
-        });
+        } as any);
       },
     });
   }
@@ -104,7 +109,7 @@ export default function useImgEditor() {
     handleFileChange,
     handleImageReset,
     handleOpenCropper,
-    isLoading,
+    isLoading: isLoading || isSubmitting,
     error,
     isInitial: !initialImageRef.current.name,
     inputRef,
