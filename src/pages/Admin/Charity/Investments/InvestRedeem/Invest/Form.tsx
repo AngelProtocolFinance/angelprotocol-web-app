@@ -10,7 +10,7 @@ export default function Form() {
 
   return (
     <form
-      className="mt-6 grid content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner"
+      className="grid content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner"
       onSubmit={handleSubmit(() => {})}
     >
       <Fields classes="mt-4" />
