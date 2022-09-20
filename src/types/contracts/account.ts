@@ -151,6 +151,12 @@ export interface WithdrawPayload {
   assets: Asset[];
 }
 
+export interface InvestPayload {
+  id: number;
+  acct_type: AccountType;
+  vaults: [string /**vault addr */, Asset][];
+}
+
 export type Beneficiary =
   | { endowment: { id: number } }
   | { indexfund: { id: number } }

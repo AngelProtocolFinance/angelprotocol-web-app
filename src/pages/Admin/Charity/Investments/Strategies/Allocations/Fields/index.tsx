@@ -1,11 +1,11 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { OnVaultSelect } from "../../Vaults/types";
+import { OnVaultSelect } from "../../../Vaults/types";
 import { StrategyFormValues as SF } from "../types";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
+import useVaultSelection from "../../../Vaults/useVaultSelection";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";
-import useVaultSelection from "../../Vaults/useVaultSelection";
 import VaultField from "./VaultField";
 
 type Props = { classes?: string };
