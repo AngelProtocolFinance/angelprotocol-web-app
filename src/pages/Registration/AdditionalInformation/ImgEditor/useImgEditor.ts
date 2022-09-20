@@ -7,36 +7,42 @@ import { logger } from "helpers";
 import ImgCropper from "./ImgCropper";
 
 export default function useImgEditor() {
-  //TODO: make this reusable with other image changer on different context
   const { showModal } = useModalContext();
   const { watch, setValue } = useFormContext<AdditionalInfoValues>();
 
   const banner = watch("banner");
-  //use to reset input internal state
-  const initialImageRef = useRef<AdditionalInfoValues["banner"]>(banner);
+
+  const initialImageRef = useRef<AdditionalInfoValues["banner"]>(banner); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fileWrapper, setFileWrapper] = useState<FileWrapper>(
-    initialImageRef.current
-  );
+  const [fileWrapper, setFileWrapper] = useState<FileWrapper>(banner);
   const [imageUrl, setImageUrl] = useState("");
+  const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
 
   const fileReader = useMemo(() => {
     const fr = new FileReader();
+
     fr.onload = (e) => {
-      // fileReader.readAsDataURL is only ran if there's file
-      setImageUrl(e.target?.result?.toString() ?? "");
+      const newImgUrl = e.target?.result?.toString() ?? "";
+
+      setImageUrl(newImgUrl);
+      if (!uncroppedImgUrl) {
+        setUncroppedImgUrl(newImgUrl);
+      }
+
       setLoading(false);
     };
+
     fr.onerror = (e) => {
       logger.error("Failed to load image", e.target?.error?.message);
       setError("failed to load image");
       setLoading(false);
     };
+
     return fr;
-  }, []);
+  }, [uncroppedImgUrl]);
 
   useEffect(() => {
     if (banner !== fileWrapper) {
@@ -63,8 +69,8 @@ export default function useImgEditor() {
       }
     })();
 
-    //no need to remove  for will be garbage collected
-  }, [fileReader, fileWrapper, setValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileWrapper]);
 
   function handleImageReset() {
     if (inputRef.current) {
@@ -76,7 +82,7 @@ export default function useImgEditor() {
   function handleOpenCropper() {
     //cropper is disabled when imageFile is null
     showModal(ImgCropper, {
-      src: imageUrl,
+      src: uncroppedImgUrl,
       setCropedImage: (blob) => {
         setValue("banner", {
           file: new File([blob], fileWrapper?.name),
@@ -89,6 +95,7 @@ export default function useImgEditor() {
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       setFileWrapper({ file: e.target.files[0], name: e.target.files[0].name });
+      setUncroppedImgUrl("");
     }
   }
 
