@@ -8,20 +8,20 @@ export default function ImgEditor() {
     handleFileChange,
     handleImageReset,
     handleOpenCropper,
-    loading,
+    isLoading,
     isInitial,
     inputRef,
-    currentImage,
+    imageUrl,
   } = useImgEditor();
 
   return (
     <div
       className="grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey"
       style={{
-        background: `no-repeat center/cover url(${currentImage})`,
+        background: `no-repeat center/cover url(${imageUrl})`,
       }}
     >
-      {(loading && <LoadingOverlay />) || (
+      {(isLoading && <LoadingOverlay />) || (
         <div className="hidden absolute group-hover:flex">
           <Label htmlFor="file__image">
             <Icon type="Upload" />
@@ -29,20 +29,20 @@ export default function ImgEditor() {
           <Button
             type="button"
             onClick={handleImageReset}
-            disabled={isInitial || loading}
+            disabled={isInitial || isLoading}
           >
             <Icon type="Undo" />
           </Button>
           <Button
             type="button"
             onClick={handleOpenCropper}
-            disabled={isInitial || loading}
+            disabled={isInitial || isLoading}
           >
             <Icon type="Crop" />
           </Button>
           <input
             ref={inputRef}
-            disabled={loading}
+            disabled={isLoading}
             id="file__image"
             type="file"
             onChange={handleFileChange}

@@ -85,7 +85,7 @@ export default function useImgEditor() {
       src: uncroppedImgUrl,
       setCropedImage: (blob) => {
         setValue("banner", {
-          file: new File([blob], fileWrapper?.name),
+          file: new File([blob], fileWrapper.name),
           name: fileWrapper.name,
         });
       },
@@ -94,8 +94,9 @@ export default function useImgEditor() {
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
-      setFileWrapper({ file: e.target.files[0], name: e.target.files[0].name });
-      setUncroppedImgUrl("");
+      const file = e.target.files[0];
+      setFileWrapper({ file, name: file.name });
+      setUncroppedImgUrl(""); // will be read once the new file is read in FileReader
     }
   }
 
@@ -103,10 +104,10 @@ export default function useImgEditor() {
     handleFileChange,
     handleImageReset,
     handleOpenCropper,
-    loading: isLoading,
+    isLoading,
     error,
-    isInitial: !fileWrapper.name,
+    isInitial: !initialImageRef.current.name,
     inputRef,
-    currentImage: imageUrl,
+    imageUrl,
   };
 }
