@@ -21,11 +21,6 @@ export default function Nav() {
         Fund transfer
       </NavLink>
 
-      <Category title="Endowment" classes="mt-4" />
-      <NavLink to={routes.acc_endow_status} className={styler}>
-        Change Endowment Status
-      </NavLink>
-
       <Category title="Index fund" classes="mt-4" />
       <NavLink to={routes.if_alliance} className={styler}>
         Edit Alliance List

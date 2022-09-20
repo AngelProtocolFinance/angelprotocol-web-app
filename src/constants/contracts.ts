@@ -30,14 +30,14 @@ export const contracts: Contracts = IS_TEST
 
       // Admin
       cw3ApTeam:
-        "juno1vqwwnmzzgeat62rja9e390fe79aqq56lpamtxcq2c7jzsxxtvwpsc8q5mv",
-      cw4GrpApTeam:
         "juno1ytnpxkfnt2qeynyspwzu7hzlyulpu4far5gtu9xppalg2p4neecsgdthpj",
+      cw4GrpApTeam:
+        "juno1vqwwnmzzgeat62rja9e390fe79aqq56lpamtxcq2c7jzsxxtvwpsc8q5mv",
 
       cw3ReviewTeam:
-        "juno1nn0k4sf330qvzk797y068c9hdy75ng9tg3fzpkmafgrepnqcwk3sh5nqer",
-      cw4GrpReviewTeam:
         "juno1sa3mzc7mg7ndlxz0laph3lnvx2v5uwmn286grgyxqurgrztz02hsnnltmx",
+      cw4GrpReviewTeam:
+        "juno1nn0k4sf330qvzk797y068c9hdy75ng9tg3fzpkmafgrepnqcwk3sh5nqer",
 
       //terraswap
       halo_token: "",
