@@ -9,15 +9,14 @@ import ImgCropper from "./ImgCropper";
 export default function useImgEditor() {
   //TODO: make this reusable with other image changer on different context
   const { showModal } = useModalContext();
-  const { getValues, setValue } = useFormContext<AdditionalInfoValues>();
+  const { watch, setValue } = useFormContext<AdditionalInfoValues>();
 
+  const banner = watch("banner");
   //use to reset input internal state
-  const initialImageRef = useRef<AdditionalInfoValues["banner"]>(
-    getValues("banner")
-  );
+  const initialImageRef = useRef<AdditionalInfoValues["banner"]>(banner);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fileWrapper, setFileWrapper] = useState<FileWrapper>(
     initialImageRef.current
@@ -38,6 +37,12 @@ export default function useImgEditor() {
     };
     return fr;
   }, []);
+
+  useEffect(() => {
+    if (banner !== fileWrapper) {
+      setFileWrapper(banner);
+    }
+  }, [banner, fileWrapper]);
 
   useEffect(() => {
     (async function () {
@@ -73,14 +78,10 @@ export default function useImgEditor() {
     showModal(ImgCropper, {
       src: imageUrl,
       setCropedImage: (blob) => {
-        setValue(
-          "banner",
-          {
-            file: new File([blob], fileWrapper?.name),
-            name: fileWrapper.name,
-          },
-          { shouldDirty: true }
-        );
+        setValue("banner", {
+          file: new File([blob], fileWrapper?.name),
+          name: fileWrapper.name,
+        });
       },
     });
   }
@@ -95,7 +96,7 @@ export default function useImgEditor() {
     handleFileChange,
     handleImageReset,
     handleOpenCropper,
-    loading,
+    loading: isLoading,
     error,
     isInitial: !fileWrapper.name,
     inputRef,
