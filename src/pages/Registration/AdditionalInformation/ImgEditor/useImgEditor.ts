@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AdditionalInfoValues } from "pages/Registration/types";
 import { useModalContext } from "contexts/ModalContext";
@@ -24,6 +24,21 @@ export default function useImgEditor() {
   );
   const [imageUrl, setImageUrl] = useState("");
 
+  const fileReader = useMemo(() => {
+    const fr = new FileReader();
+    fr.onload = (e) => {
+      // fileReader.readAsDataURL is only ran if there's file
+      setImageUrl(e.target?.result?.toString() ?? "");
+      setLoading(false);
+    };
+    fr.onerror = (e) => {
+      logger.error("Failed to load image", e.target?.error?.message);
+      setError("failed to load image");
+      setLoading(false);
+    };
+    return fr;
+  }, []);
+
   useEffect(() => {
     (async function () {
       if (!fileWrapper.name) {
@@ -31,18 +46,6 @@ export default function useImgEditor() {
       }
 
       setLoading(true);
-
-      const fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        // fileReader.readAsDataURL is only ran if there's file
-        setImageUrl(e.target?.result as string);
-        setLoading(false);
-      };
-      fileReader.onerror = (e) => {
-        logger.error("Failed to load image", e.target?.error?.message);
-        setError("failed to load image");
-        setLoading(false);
-      };
 
       if (fileWrapper.file) {
         fileReader.readAsDataURL(fileWrapper.file);
@@ -56,7 +59,7 @@ export default function useImgEditor() {
     })();
 
     //no need to remove  for will be garbage collected
-  }, [fileWrapper, setValue]);
+  }, [fileReader, fileWrapper, setValue]);
 
   function handleImageReset() {
     if (inputRef.current) {
@@ -70,10 +73,14 @@ export default function useImgEditor() {
     showModal(ImgCropper, {
       src: imageUrl,
       setCropedImage: (blob) => {
-        setValue("banner", {
-          file: new File([blob], fileWrapper?.name),
-          name: fileWrapper.name,
-        });
+        setValue(
+          "banner",
+          {
+            file: new File([blob], fileWrapper?.name),
+            name: fileWrapper.name,
+          },
+          { shouldDirty: true }
+        );
       },
     });
   }
