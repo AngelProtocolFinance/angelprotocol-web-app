@@ -4,6 +4,7 @@ import { FormValues } from "./types";
 import { AccountType } from "types/contracts";
 import { humanize } from "helpers";
 import Fields from "./Fields";
+import useInvest from "./useInvest";
 
 const tabs: AccountType[] = ["liquid", "locked"];
 export default function Form() {
@@ -12,10 +13,12 @@ export default function Form() {
     formState: { isDirty, isValid },
   } = useFormContext<FormValues>();
 
+  const { invest } = useInvest();
+
   return (
     <form
       className="grid content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner"
-      onSubmit={handleSubmit(() => {})}
+      onSubmit={handleSubmit(invest)}
     >
       <Tab.Group>
         <h3 className="text-lg uppercase font-bold mb-4">

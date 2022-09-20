@@ -1,5 +1,5 @@
-import { FormValues } from "./types";
-import { AccountType } from "types/contracts";
+import { FormValues, Investment } from "./types";
+import { AccountType, EmbeddedWasmMsg, InvestPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -12,7 +12,7 @@ import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import { scaleToStr } from "helpers";
 
-export default function useInvest(type: AccountType) {
+export default function useInvest() {
   const { cw3, endowmentId, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
@@ -20,21 +20,44 @@ export default function useInvest(type: AccountType) {
 
   function invest(data: FormValues) {
     const account = new Account(wallet);
-    const msg = account.createEmbeddedInvestMsg({
-      id: endowmentId,
-      acct_type: type,
-      vaults: data.investments.map((inv) => [
-        inv.vault,
-        //NOTE: assumed native, since asset type is not indicated in EndowmentBalance
-        { info: { native: "ujunox" }, amount: scaleToStr(inv.amount) },
-      ]),
-    });
+
+    let msgs: EmbeddedWasmMsg[] = [];
+    const liquidInvestments = getInvestmentsWithType(
+      data.investments,
+      "liquid"
+    );
+    const lockedInvestments = getInvestmentsWithType(
+      data.investments,
+      "locked"
+    );
+
+    //at least one of investment types is filled prior to submission
+    if (liquidInvestments.length > 0) {
+      msgs.push(
+        account.createEmbeddedInvestMsg({
+          id: endowmentId,
+          acct_type: "liquid",
+          vaults: getInvestmentsWithType(data.investments, "liquid"),
+        })
+      );
+    }
+
+    if (lockedInvestments.length > 0) {
+      msgs.push(
+        account.createEmbeddedInvestMsg({
+          id: endowmentId,
+          acct_type: "locked",
+          vaults: getInvestmentsWithType(data.investments, "locked"),
+        })
+      );
+    }
+
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "Update strategy",
       `update stratey of endowment: ${endowmentId}`,
-      [msg]
+      msgs
     );
 
     dispatch(
@@ -57,4 +80,17 @@ export default function useInvest(type: AccountType) {
   return {
     invest,
   };
+}
+
+function getInvestmentsWithType(
+  investments: Investment[],
+  type: AccountType
+): InvestPayload["vaults"] {
+  return investments
+    .filter((inv) => inv.type === type)
+    .map((inv) => [
+      inv.vault,
+      //NOTE: assumed native, since asset type is not indicated in EndowmentBalance
+      { info: { native: "ujunox" }, amount: scaleToStr(inv.amount) },
+    ]);
 }
