@@ -15,6 +15,7 @@ export default function Field({ name, idx, remove }: Props) {
   return (
     <div className="grid grid-cols-2 p-3 rounded-md border border-zinc-50/30 gap-x-4 relative">
       <button
+        tabIndex={-1}
         onClick={() => remove(idx)}
         type="button"
         className="grid place-items-center rounded-full w-5 h-5 bg-rose-400 text-white absolute top-2 right-2"
@@ -39,7 +40,7 @@ export default function Field({ name, idx, remove }: Props) {
           })}
         />
         <ErrorMessage
-          name={`allocations.${idx}.percentage`}
+          name={`investments.${idx}.amount`}
           as="span"
           className="absolute right-0 bottom-0 text-xs text-rose-300"
         />

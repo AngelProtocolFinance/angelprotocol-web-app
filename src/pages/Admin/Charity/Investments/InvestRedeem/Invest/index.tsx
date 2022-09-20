@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
+import { Balance, FormValues } from "./types";
 import { EndowmentBalance } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
@@ -27,20 +27,18 @@ export default function Invest() {
 }
 
 function FormContext(props: EndowmentBalance) {
-  const methods = useForm<FormValues>({
+  const balance: Balance = {
+    locked: condenseToNum(props.tokens_on_hand.locked.native[0].amount || "0"),
+    liquid: condenseToNum(props.tokens_on_hand.liquid.native[0].amount || "0"),
+  };
+  const methods = useForm<FormValues, { balance: Balance }>({
     resolver: yupResolver(schema),
+    context: { balance },
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       investments: [],
-      balance: {
-        locked: condenseToNum(
-          props.tokens_on_hand.locked.native[0].amount || "0"
-        ),
-        liquid: condenseToNum(
-          props.tokens_on_hand.liquid.native[0].amount || "0"
-        ),
-      },
+      balance,
     },
   });
 

@@ -6,9 +6,12 @@ export type Investment = {
   type: AccountType;
 };
 
-type Balance = { [key in AccountType]: number };
+export type Balance = { [key in AccountType]: number };
 
 export type FormValues = {
   investments: Investment[];
+
+  //meta
   balance: Balance;
+  type: AccountType;
 };
