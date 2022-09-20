@@ -6,6 +6,7 @@ export type IconTypes =
   | "Twitter"
   | "Youtube"
   | "Medium"
+  | "Minus"
   | "Facebook"
   | "FacebookCircle"
   | "Linkedin"

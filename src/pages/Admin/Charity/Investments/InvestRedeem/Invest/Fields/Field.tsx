@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import Icon from "components/Icon";
-import { Cells } from "components/TableSection";
 import { roundDownToNum } from "helpers";
 
 type Props = {
@@ -12,14 +11,21 @@ type Props = {
 };
 
 export default function Field({ name, idx, remove }: Props) {
-  const { register, getValues } = useFormContext<FormValues>();
+  const { register } = useFormContext<FormValues>();
   return (
-    <div className="grid grid-cols-2">
-      <h5 className="col-span-2">Vault investment ticket</h5>
-      <p>{name}</p>
+    <div className="grid grid-cols-2 p-3 rounded-md border border-zinc-50/30 gap-x-4 relative">
+      <button
+        onClick={() => remove(idx)}
+        type="button"
+        className="grid place-items-center rounded-full w-5 h-5 bg-rose-400 text-white absolute top-2 right-2"
+      >
+        <Icon type="Minus" size={11} />
+      </button>
+      <h5 className="col-span-2 text-sm mb-2">Vault Investment Ticket</h5>
+      <p className="p-3 rounded-md bg-zinc-50/5 shadow-inner">{name}</p>
       <div className="relative w-full">
         <input
-          className="w-full bg-transparent focus:outline-none text-lg"
+          className="w-full bg-zinc-50/5 shadow-inner p-3 focus:outline-none text-lg"
           {...register(`investments.${idx}.amount`, {
             setValueAs(value) {
               const num = Number(value);
