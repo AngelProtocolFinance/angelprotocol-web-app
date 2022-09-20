@@ -3,6 +3,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
+import Table from "./Table";
 
 type Props = {
   classes?: string;
@@ -19,7 +20,7 @@ export default function Vaults({ classes = "", type }: Props) {
 
   return (
     <div
-      className={`${classes} p-4 border border-zinc-50/10 grid-content-start`}
+      className={`${classes} p-4 bg-zinc-50/5 shadow-innner rounded-sm grid-content-start`}
     >
       <h3 className="uppercase font-semibold text-center">Invested vaults</h3>
       {haveNoInvestments ? (
@@ -36,7 +37,7 @@ export default function Vaults({ classes = "", type }: Props) {
           classes={{ container: "justify-center" }}
           messages={{ loading: "", error: "Failed to get vault balances" }}
         >
-          {(balance) => <>vaults with balance</>}
+          {(balance) => <Table {...balance} type={type} classes="mt-4" />}
         </QueryLoader>
       )}
     </div>

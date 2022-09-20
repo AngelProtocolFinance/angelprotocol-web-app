@@ -13,7 +13,7 @@ export default function Assets({ classes = "", type }: Props) {
   const { endowmentId } = useAdminResources();
   const queryState = useBalanceQuery({ id: endowmentId });
   return (
-    <div className={`${classes} p-4 border border-zinc-50/10`}>
+    <div className={`${classes} p-4 bg-zinc-50/5 shadow-inner rounded-sm`}>
       <h3 className="uppercase font-semibold text-center">Investable assets</h3>
       <QueryLoader
         queryState={queryState}

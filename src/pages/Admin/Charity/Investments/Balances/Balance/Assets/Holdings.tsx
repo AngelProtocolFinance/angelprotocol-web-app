@@ -15,7 +15,7 @@ export default function Holdings({ cw20, native, classes = "" }: Props) {
   }
 
   return (
-    <table className={`w-full border border-zinc-50/30 ${classes}`}>
+    <table className={`w-full border border-zinc-50/30 ${classes} table-fixed`}>
       <TableSection
         type="thead"
         rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30"

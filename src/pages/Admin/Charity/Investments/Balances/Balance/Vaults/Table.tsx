@@ -26,13 +26,13 @@ export default function Table({
   const oneOffs = endowment.oneoff_vaults[type];
 
   return (
-    <table className={`w-full border border-zinc-50/30 ${classes}`}>
+    <table className={`w-full border border-zinc-50/30 ${classes} table-fixed`}>
       <TableSection
         type="thead"
         rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30"
       >
         <Cells type="th" cellClass="p-2 uppercase font-normal">
-          <>token</>
+          <>vault</>
           <>Balance</>
         </Cells>
       </TableSection>
@@ -59,12 +59,12 @@ type Vault = {
 
 function Row({ balance, address }: Vault) {
   return (
-    <Cells type="td" cellClass="p-2 font-mono uppercase text-zinc-50/80">
+    <Cells type="td" cellClass="p-2 font-mono text-zinc-50/80">
       <div className="flex items-center gap-2">
-        <Icon type="Safe" />
+        <Icon type="Safe" size={18} />
         <span>{maskAddress(address)}</span>
       </div>
-      <>{humanize(condense(balance), 4)}</>
+      <>{humanize(balance, 4)}</>
     </Cells>
   );
 }
@@ -80,6 +80,7 @@ function withBalances(
           ? vault === vaultAddr
           : vault.vault === vaultAddr
       ) || [];
+
     const balance = condenseToNum(vaultBalance);
     return {
       address: typeof vault === "string" ? vault : vault.vault,
