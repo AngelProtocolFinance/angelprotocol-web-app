@@ -6,7 +6,8 @@ import { logger } from "helpers";
 import ImgCropper from "./ImgCropper";
 
 export default function useImgEditor<T extends FieldValues>(
-  fieldName: Path<T> & keyof T
+  fieldName: Path<T> & keyof T,
+  aspectRatio: number
 ) {
   const { showModal } = useModalContext();
   const {
@@ -88,6 +89,7 @@ export default function useImgEditor<T extends FieldValues>(
     //cropper is disabled when imageFile is null
     showModal(ImgCropper, {
       src: uncroppedImgUrl,
+      aspectRatio,
       setCropedImage: (blob) => {
         setValue(fieldName, {
           file: new File([blob], fileWrapper.name),

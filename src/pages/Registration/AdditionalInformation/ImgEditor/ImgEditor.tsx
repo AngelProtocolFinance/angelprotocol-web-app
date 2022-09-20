@@ -10,6 +10,7 @@ type Props<T extends FieldValues> = {
   // (Path<T> returns all possible paths through T)
   name: Path<T> & keyof T;
   label: string;
+  aspectRatio: number;
 };
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
@@ -22,7 +23,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
     isInitial,
     inputRef,
     imageUrl,
-  } = useImgEditor<T>(props.name);
+  } = useImgEditor<T>(props.name, props.aspectRatio);
 
   return (
     <div className="flex flex-col gap-2 w-full h-full">

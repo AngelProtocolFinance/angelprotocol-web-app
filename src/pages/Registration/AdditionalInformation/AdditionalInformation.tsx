@@ -42,7 +42,11 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName value={charity.Registration.CharityName} />
-          <ImgEditor name="banner" label="Banner image of your organization" />
+          <ImgEditor
+            name="banner"
+            label="Banner image of your organization"
+            aspectRatio={4 / 1}
+          />
           <ImageSizeInfo limit="1MB" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <ImageSizeInfo limit="1MB" />

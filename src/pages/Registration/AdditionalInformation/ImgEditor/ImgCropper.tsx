@@ -7,22 +7,26 @@ import Icon, { IconTypes } from "components/Icon";
 
 export default function ImgCropper(props: {
   src: string;
+  aspectRatio: number;
   setCropedImage: (blob: Blob) => void;
 }) {
   const { closeModal } = useModalContext();
   const [error, setError] = useState<string>();
   const cropperRef = useRef<Cropper>();
 
-  const imgRef = useCallback((node: HTMLImageElement | null) => {
-    if (node && !cropperRef.current) {
-      cropperRef.current = new Cropper(node, {
-        aspectRatio: 4 / 1,
-        viewMode: 1,
-        zoomable: false,
-        scalable: false,
-      });
-    }
-  }, []);
+  const imgRef = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node && !cropperRef.current) {
+        cropperRef.current = new Cropper(node, {
+          aspectRatio: props.aspectRatio,
+          viewMode: 1,
+          zoomable: false,
+          scalable: false,
+        });
+      }
+    },
+    [props.aspectRatio]
+  );
 
   function handleSave() {
     setError(undefined);
