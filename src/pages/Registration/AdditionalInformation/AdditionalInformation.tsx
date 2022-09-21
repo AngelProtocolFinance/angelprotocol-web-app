@@ -6,7 +6,6 @@ import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
-import ImageInput from "./ImageInput";
 import ImgEditor from "./ImgEditor";
 import OverviewInput from "./OverviewInput";
 import { additionalInfoSchema } from "./additionalnfoSchema";
@@ -42,13 +41,17 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName value={charity.Registration.CharityName} />
-          <ImgEditor
+          <ImgEditor<AdditionalInfoValues>
             name="banner"
             label="Banner image of your organization"
             aspectRatio={4 / 1}
           />
           <ImageSizeInfo limit="1MB" />
-          <ImageInput name="charityLogo" label="Logo of your organization" />
+          <ImgEditor<AdditionalInfoValues>
+            name="charityLogo"
+            label="Logo of your organization"
+            aspectRatio={1 / 1}
+          />
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
           <KycDonorsOnlyCheckbox
