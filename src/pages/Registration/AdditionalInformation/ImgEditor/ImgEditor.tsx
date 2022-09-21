@@ -30,7 +30,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const banner: FileWrapper = watch(props.name);
 
   const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
-  const inputRef = useRef<HTMLInputElement | null>();
+  const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
 
   const [isLoading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -143,16 +143,16 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                   id={props.name}
                   type="file"
                   onChange={(e) => {
+                    let fileWrapper: FileWrapper | undefined;
                     if (e.target.files && e.target.files.length > 0) {
-                      const fileWrapper: FileWrapper = {
+                      fileWrapper = {
                         file: e.target.files[0],
                         name: e.target.files[0].name,
                       };
-                      onChange(fileWrapper);
-                      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-                    } else {
-                      onChange(undefined);
                     }
+
+                    onChange(fileWrapper);
+                    setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                   }}
                   accept="image/png, image/jpeg, image/svg"
                   className="w-0 h-0 appearance-none"
