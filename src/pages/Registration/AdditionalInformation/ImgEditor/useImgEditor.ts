@@ -13,6 +13,7 @@ export default function useImgEditor<T extends FieldValues>(
   const {
     watch,
     setValue,
+    control,
     formState: { isSubmitting },
   } = useFormContext<T>();
 
@@ -111,10 +112,11 @@ export default function useImgEditor<T extends FieldValues>(
     handleFileChange,
     handleImageReset,
     handleOpenCropper,
-    isLoading: isLoading || isSubmitting,
+    control,
     error,
-    isInitial: !initialImageRef.current.name,
     inputRef,
     imageUrl,
+    isLoading: isLoading || isSubmitting,
+    isInitial: !initialImageRef.current.name,
   };
 }

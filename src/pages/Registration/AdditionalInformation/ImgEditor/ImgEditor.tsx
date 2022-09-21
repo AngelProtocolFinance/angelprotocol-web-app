@@ -1,8 +1,11 @@
-import React from "react";
-import { FieldValues, Path } from "react-hook-form";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { useModalContext } from "contexts/ModalContext";
+import { FileWrapper } from "components/FileDropzone";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import useImgEditor from "./useImgEditor";
+import { logger } from "helpers";
+import ImgCropper from "./ImgCropper";
 
 type Props<T extends FieldValues> = {
   // we get common props with this intersection,
@@ -14,16 +17,92 @@ type Props<T extends FieldValues> = {
 };
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
+  const { showModal } = useModalContext();
   const {
-    handleFileChange,
-    handleImageReset,
-    handleOpenCropper,
-    error,
-    isLoading,
-    isInitial,
-    inputRef,
-    imageUrl,
-  } = useImgEditor<T>(props.name, props.aspectRatio);
+    watch,
+    setValue,
+    control,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
+
+  const banner = watch(props.name);
+
+  const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
+  const inputRef = useRef<HTMLInputElement | null>();
+
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fileWrapper, setFileWrapper] = useState<FileWrapper>(banner);
+  const [imageUrl, setImageUrl] = useState("");
+  const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
+
+  const fileReader = useMemo(() => {
+    const fr = new FileReader();
+
+    fr.onload = (e) => {
+      const newImgUrl = e.target?.result?.toString() ?? "";
+
+      setImageUrl(newImgUrl);
+      if (!uncroppedImgUrl) {
+        setUncroppedImgUrl(newImgUrl);
+      }
+
+      setLoading(false);
+    };
+
+    fr.onerror = (e) => {
+      logger.error("Failed to load image", e.target?.error?.message);
+      setError("failed to load image");
+      setLoading(false);
+    };
+
+    return fr;
+  }, [uncroppedImgUrl]);
+
+  useEffect(() => {
+    if (banner !== fileWrapper) {
+      setFileWrapper(banner);
+    }
+  }, [banner, fileWrapper]);
+
+  useEffect(() => {
+    (async function () {
+      if (!fileWrapper.name) {
+        return;
+      }
+
+      setLoading(true);
+
+      if (fileWrapper.file) {
+        fileReader.readAsDataURL(fileWrapper.file);
+        return;
+      }
+
+      if (fileWrapper.publicUrl) {
+        const blob = await fetch(fileWrapper.publicUrl).then((x) => x.blob());
+        fileReader.readAsDataURL(blob);
+      }
+    })();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileWrapper]);
+
+  function handleOpenCropper() {
+    //cropper is disabled when imageFile is null
+    showModal(ImgCropper, {
+      src: uncroppedImgUrl,
+      aspectRatio: props.aspectRatio,
+      setCropedImage: (blob) => {
+        setValue(props.name, {
+          file: new File([blob], fileWrapper.name),
+          name: fileWrapper.name,
+        } as any);
+      },
+    });
+  }
+
+  const isInitial = !initialImageRef.current.name;
+  const isDisabled = isSubmitting || isLoading;
 
   return (
     <div className="flex flex-col gap-2 w-full h-full">
@@ -41,38 +120,60 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
         }}
       >
         {(isLoading && <LoadingOverlay />) || (
-          <div className="hidden absolute group-hover:flex">
-            <Button
-              type="button"
-              onClick={() => inputRef.current?.click()}
-              disabled={isLoading}
-            >
-              <Icon type="Upload" />
-            </Button>
-            <Button
-              type="button"
-              onClick={handleImageReset}
-              disabled={isInitial || isLoading}
-            >
-              <Icon type="Undo" />
-            </Button>
-            <Button
-              type="button"
-              onClick={handleOpenCropper}
-              disabled={isInitial || isLoading}
-            >
-              <Icon type="Crop" />
-            </Button>
-            <input
-              ref={inputRef}
-              disabled={isLoading}
-              id={props.name}
-              type="file"
-              onChange={handleFileChange}
-              accept="image/png, image/jpeg, image/svg"
-              className="w-0 h-0 appearance-none"
-            />
-          </div>
+          <Controller
+            name={props.name}
+            control={control}
+            render={({ field: { onChange, ref } }) => (
+              <div className="hidden absolute group-hover:flex">
+                <Button
+                  type="button"
+                  onClick={() => inputRef.current?.click()}
+                  disabled={isDisabled}
+                >
+                  <Icon type="Upload" />
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    if (inputRef.current) {
+                      inputRef.current.value = "";
+                    }
+                    setFileWrapper(initialImageRef.current);
+                    onChange(initialImageRef.current);
+                  }}
+                  disabled={isInitial || isDisabled}
+                >
+                  <Icon type="Undo" />
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleOpenCropper}
+                  disabled={isInitial || isDisabled}
+                >
+                  <Icon type="Crop" />
+                </Button>
+                <input
+                  ref={(e) => {
+                    ref(e);
+                    inputRef.current = e;
+                  }}
+                  disabled={isDisabled}
+                  id={props.name}
+                  type="file"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      const file = e.target.files[0];
+                      setFileWrapper({ file, name: file.name });
+                      setUncroppedImgUrl(""); // will be read once the new file is read in FileReader
+                    }
+                    onChange(e.target.value);
+                  }}
+                  accept="image/png, image/jpeg, image/svg"
+                  className="w-0 h-0 appearance-none"
+                />
+              </div>
+            )}
+          />
         )}
       </div>
       {error && <p className="text-sm text-failed-red">{error}</p>}
