@@ -5,7 +5,7 @@ import { APIs } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {
   const generatedToken = createAuthToken("angelprotocol-web-app");
-  const response = await fetch(APIs.apes + "/donation", {
+  const response = await fetch(APIs.apes + "/v1/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
     body: JSON.stringify({ ...payload, ...payload.kycData }),

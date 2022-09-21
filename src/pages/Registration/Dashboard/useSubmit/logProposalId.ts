@@ -31,7 +31,7 @@ export const logProposalId = createAsyncThunk(
 
       const generatedToken = createAuthToken("charity-owner");
       const response = await fetch(
-        `${APIs.aws}/registration/${args.PK}/submit`,
+        `${APIs.aws}/v1/registration/${args.PK}/submit`,
         {
           method: "POST",
           body: JSON.stringify({

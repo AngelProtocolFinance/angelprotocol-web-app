@@ -1,6 +1,6 @@
 export const APIs = {
-  aws: "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com",
-  apes: "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com",
+  aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com/",
+  apes: "https://fctqkloitc.execute-api.us-east-1.amazonaws.com",
   flipside: "https://flipside.leslug.com/angel",
 };
 

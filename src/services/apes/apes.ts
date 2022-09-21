@@ -26,7 +26,7 @@ export const apes = createApi({
       async queryFn(args) {
         try {
           const { address, chainId } = args.providerInfo;
-          const chainRes = await fetch(`${APIs.apes}/chain/${chainId}`);
+          const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
 
           const chain: Chain | { message: string } = await chainRes.json();
 
