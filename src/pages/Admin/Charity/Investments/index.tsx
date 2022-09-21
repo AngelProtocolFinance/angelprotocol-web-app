@@ -4,7 +4,6 @@ import Balances from "./Balances";
 import InvestRedeem from "./InvestRedeem";
 import Nav from "./Nav";
 import Strategies from "./Strategies";
-import Withdraw from "./Widthdraw";
 
 export default function Investments() {
   return (
@@ -12,7 +11,6 @@ export default function Investments() {
       <Nav classes="mb-4" />
       <Routes>
         <Route path={investmentRoutes.strategies} element={<Strategies />} />
-        <Route path={investmentRoutes.withdraw} element={<Withdraw />} />
         <Route
           path={investmentRoutes.invest_redeem}
           element={<InvestRedeem />}

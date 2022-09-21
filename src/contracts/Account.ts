@@ -2,6 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
   InvestPayload,
+  RedeemPayload,
   StatusChangePayload,
   UpdateProfilePayload,
   UpdateStategyPayload,
@@ -30,6 +31,12 @@ export default class Account extends Contract {
   createEmbeddedInvestMsg(payload: InvestPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       vaults_invest: payload,
+    });
+  }
+
+  createEmbeddedRedeemMsg(payload: RedeemPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      vaults_redeem: payload,
     });
   }
 

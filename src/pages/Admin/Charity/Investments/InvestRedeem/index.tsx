@@ -1,5 +1,6 @@
 import { Tab } from "@headlessui/react";
 import Invest from "./Invest";
+import Redeem from "./Redeem";
 
 const tabs = ["invest", "redeem"];
 export default function InvestRedeem() {
@@ -34,7 +35,9 @@ export default function InvestRedeem() {
           <Tab.Panel>
             <Invest />
           </Tab.Panel>
-          <Tab.Panel>Content 2</Tab.Panel>
+          <Tab.Panel>
+            <Redeem />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>

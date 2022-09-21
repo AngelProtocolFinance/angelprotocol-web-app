@@ -45,6 +45,5 @@ export enum investmentRoutes {
   index = "",
   balances = "balances",
   invest_redeem = "invest-redeem",
-  withdraw = "withdraw",
   strategies = "strategies",
 }

@@ -157,6 +157,12 @@ export interface InvestPayload {
   vaults: [string /**vault addr */, Asset][];
 }
 
+export interface RedeemPayload {
+  id: number;
+  acct_type: AccountType;
+  vaults: VaultWithBalance[];
+}
+
 export type Beneficiary =
   | { endowment: { id: number } }
   | { indexfund: { id: number } }
