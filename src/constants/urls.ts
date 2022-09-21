@@ -1,8 +1,10 @@
 export const APIs = {
-  aws: "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com",
-  apes: "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com",
+  aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
+  apes: "https://fctqkloitc.execute-api.us-east-1.amazonaws.com",
   flipside: "https://flipside.leslug.com/angel",
 };
 
 export const PRIVACY_POLICY =
-  "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).pdf";
+  "https://ipfs.w3s.link/ipfs/bafybeieor6a2tierwwjhhpogapwquoems7br2x73jsyxakwbjrvwfir2ha/Website%20and%20WebApp%20Privacy%20Policy%20%28v.110121%29.docx";
+export const LITEPAPER =
+  "https://ipfs.w3s.link/ipfs/bafybeihvkpjghhzr6uyjf6bvfl6v67yptxea36gfsix6lquqp5eb3mjcbu/ap-litepaper-v3.pdf";
