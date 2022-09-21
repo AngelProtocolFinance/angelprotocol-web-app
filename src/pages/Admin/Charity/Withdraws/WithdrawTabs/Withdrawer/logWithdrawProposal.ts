@@ -1,6 +1,7 @@
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SuccessLink } from "slices/transaction/types";
+import { AccountType } from "types/contracts";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import transactionSlice, {
@@ -14,26 +15,23 @@ import {
 } from "helpers";
 import { APIs } from "constants/urls";
 
-export const logWithdrawProposal = createAsyncThunk(
-  `${transactionSlice.name}/logWithdrawProposal`,
-  async (
-    {
-      res,
-      proposalLink,
-      wallet,
-      ...payload
-    }: {
-      res: DeliverTxResponse;
-      proposalLink: SuccessLink;
-      wallet: WalletState;
+type ProposalInfo = {
+  endowment_multisig: string;
+  proposal_chain_id: string;
+  target_chain: string;
+  target_wallet: string;
+  type: AccountType;
+};
 
-      endowment_multisig: string;
-      proposal_chain_id: string;
-      target_chain: string;
-      target_wallet: string;
-    },
-    { dispatch }
-  ) => {
+type Params = ProposalInfo & {
+  res: DeliverTxResponse;
+  proposalLink: SuccessLink;
+  wallet: WalletState;
+};
+
+export const logWithdrawProposal = createAsyncThunk<void, Params>(
+  `${transactionSlice.name}/logWithdrawProposal`,
+  async ({ res, proposalLink, wallet, ...payload }, { dispatch }) => {
     try {
       dispatch(
         setStage({
