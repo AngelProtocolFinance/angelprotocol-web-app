@@ -30,7 +30,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
         return {
-          url: "registration",
+          url: "v1/registration",
           params: { uuid },
           headers,
         };
@@ -79,7 +79,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ body }) => ({
-        url: "registration",
+        url: "v1/registration",
         method: "POST",
         headers,
         body,
@@ -110,7 +110,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, type, body }) => {
         return {
-          url: "registration/build-email",
+          url: "v1/registration/build-email",
           method: "POST",
           params: { uuid, type },
           headers,
@@ -135,7 +135,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "registration",
+          url: "v1/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -150,7 +150,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "registration",
+          url: "v1/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -165,7 +165,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "registration",
+          url: "v1/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,

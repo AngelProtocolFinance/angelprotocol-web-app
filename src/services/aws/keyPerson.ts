@@ -5,7 +5,7 @@ const keyPerson_api = aws.injectEndpoints({
     updateKeyPersonData: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity/key-person`,
+          url: `v1/charity/key-person`,
           params: { uuid: data.uuid },
           method: "PUT",
           body: data,
@@ -16,7 +16,7 @@ const keyPerson_api = aws.injectEndpoints({
     addNewKeyCharity: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity/key-person`,
+          url: `v1/charity/key-person`,
           params: { uuid: data.uuid },
           method: "POST",
           body: data,

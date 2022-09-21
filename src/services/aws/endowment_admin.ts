@@ -7,13 +7,13 @@ interface DonationQueryRes<T> {
 const endowment_admin_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     depositTransactions: builder.query<Transaction[], string>({
-      query: (endowmentAddr) => `transactions/${endowmentAddr}`,
+      query: (endowmentAddr) => `v1/transactions/${endowmentAddr}`,
       transformResponse: (res: AWSQueryRes<Transaction[]>) => {
         return res.Items;
       },
     }),
     donationTransactions: builder.query<Transaction[], string>({
-      query: (walletAddr) => `transactions/user/${walletAddr}`,
+      query: (walletAddr) => `v1/transactions/user/${walletAddr}`,
       transformResponse: (res: DonationQueryRes<Transaction[]>) => {
         return res.transactions;
       },
