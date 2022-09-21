@@ -32,7 +32,7 @@ const investment: InvestmentSchema = (investments) => ({
     return schema.min(min, "invalid amount").test(
       "enough surplus",
       "not enough balance", //when test evaluates to false
-      () => balance[type] - total >= 0
+      () => balance[type] >= total
     );
   }),
 });

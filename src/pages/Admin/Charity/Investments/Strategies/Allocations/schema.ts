@@ -14,7 +14,7 @@ const allocation: AllocationSchema = (allocations) => ({
         (total, alloc) => total + alloc.percentage,
         0
       );
-      return 100 - total >= 0;
+      return total <= 100;
     }),
 });
 
