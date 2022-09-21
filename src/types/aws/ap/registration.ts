@@ -53,7 +53,7 @@ export type ContactPerson = {
 
 export type FileObject = {
   name: string;
-  publicUrl?: string;
+  publicUrl: string;
 };
 
 type InitialRegistration = Optional<
