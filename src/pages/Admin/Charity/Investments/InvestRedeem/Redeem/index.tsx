@@ -1,7 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
-import { EndowmentBalance } from "types/contracts";
+import { FormValues, Redeem as TRedeem } from "./types";
+import {
+  AccountType,
+  EndowmentBalance,
+  VaultWithBalance,
+} from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
@@ -37,20 +41,12 @@ function FormContext({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      locked: strategies_locked
-        .concat(oneoff_locked)
-        .map(([addr, balance]) => ({
-          addr,
-          balance: condenseToNum(balance),
-          amount: 0,
-        })),
-      liquid: strategies_liquid
-        .concat(oneoff_liquid)
-        .map(([addr, balance]) => ({
-          addr,
-          balance: condenseToNum(balance),
-          amount: 0,
-        })),
+      redeems: [
+        ...toRedeem(strategies_liquid, "liquid"),
+        ...toRedeem(oneoff_liquid, "liquid"),
+        ...toRedeem(strategies_locked, "locked"),
+        ...toRedeem(oneoff_locked, "locked"),
+      ],
     },
   });
 
@@ -59,4 +55,13 @@ function FormContext({
       <Form />
     </FormProvider>
   );
+}
+
+function toRedeem(vaults: VaultWithBalance[], type: AccountType): TRedeem[] {
+  return vaults.map(([addr, balance]) => ({
+    vault: addr,
+    balance: condenseToNum(balance),
+    amount: "",
+    type,
+  }));
 }

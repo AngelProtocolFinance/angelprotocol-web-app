@@ -1,29 +1,39 @@
 import * as Yup from "yup";
 import { FormValues, Redeem } from "./types";
 import { SchemaShape } from "schemas/types";
-import { FIELD_PRECISION } from "./Fields/Field";
+import { tokenConstraint } from "schemas/number";
 
 type Key = keyof FormValues | keyof Redeem;
 const balance: Key = "balance";
+const redeems: Key = "redeems";
 
 const redeem: SchemaShape<Redeem> = {
-  amount: Yup.number().when(balance, (balance: number, schema) => {
-    const min = 9 * Math.pow(10, -FIELD_PRECISION - 1);
-    return schema
-      .min(min, "invalid amount")
-      .test(
-        "enough balance",
-        "not enough balance",
-        (amount: number) => balance > amount
-      );
-  }),
+  amount: Yup.lazy((val: Redeem["amount"]) =>
+    val === ""
+      ? Yup.string() //at least one required handled in shape.redeems
+      : tokenConstraint.when(balance, (balance: Redeem["balance"], schema) =>
+          schema.test("enough balance", "not enough balance", () => {
+            return balance >= +val;
+          })
+        )
+  ),
 };
 
-const redeems = Yup.array(Yup.object().shape(redeem));
-
 const shape: SchemaShape<FormValues> = {
-  liquid: redeems,
-  locked: redeems,
+  redeems: Yup.array(Yup.object().shape(redeem)),
+  //test if at least one amount is filled
+  _redeems: Yup.mixed().when(redeems, (redeems: Redeem[], schema) =>
+    schema.test("at least one is filled", "", () =>
+      redeems.some((r) => r.amount)
+    )
+  ),
 };
 
 export const schema = Yup.object(shape);
+/**
+ * test(
+    "at least one is filled",
+    "no redeem amount",
+    (redeems) => (redeems as unknown as Redeem[]).some((r: any) => r.amount)
+  ),
+ */

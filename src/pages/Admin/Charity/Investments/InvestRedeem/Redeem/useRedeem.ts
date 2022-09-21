@@ -1,5 +1,5 @@
-import { FormValues } from "./types";
-import { EmbeddedWasmMsg } from "types/contracts";
+import { FormValues, Redeem } from "./types";
+import { AccountType, EmbeddedWasmMsg, RedeemPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -23,29 +23,26 @@ export default function useRedeem() {
 
     let msgs: EmbeddedWasmMsg[] = [];
 
+    const liquidVaults = getVaultsWithType("liquid", data.redeems);
+    const lockedVaults = getVaultsWithType("locked", data.redeems);
+
     //at least one of investment types is filled prior to submission
-    if (data.liquid.length > 0) {
+    if (liquidVaults.length > 0) {
       msgs.push(
         account.createEmbeddedRedeemMsg({
           id: endowmentId,
           acct_type: "liquid",
-          vaults: data.liquid.map(({ vault, amount }) => [
-            vault,
-            scaleToStr(amount),
-          ]),
+          vaults: liquidVaults,
         })
       );
     }
 
-    if (data.locked.length > 0) {
+    if (lockedVaults.length > 0) {
       msgs.push(
         account.createEmbeddedRedeemMsg({
           id: endowmentId,
           acct_type: "locked",
-          vaults: data.locked.map(({ vault, amount }) => [
-            vault,
-            scaleToStr(amount),
-          ]),
+          vaults: lockedVaults,
         })
       );
     }
@@ -78,4 +75,13 @@ export default function useRedeem() {
   return {
     invest,
   };
+}
+
+function getVaultsWithType(
+  type: AccountType,
+  vaults: Redeem[]
+): RedeemPayload["vaults"] {
+  return vaults
+    .filter((v) => v.type === type)
+    .map(({ vault, amount }) => [vault, scaleToStr(amount)]);
 }

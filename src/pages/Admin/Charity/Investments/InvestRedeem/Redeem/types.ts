@@ -1,9 +1,14 @@
 import { AccountType } from "types/contracts";
 
 export type Redeem = {
-  amount: number;
+  amount: string;
   vault: string;
   balance: number;
+  type: AccountType;
 };
 
-export type FormValues = { [key in AccountType]: Redeem[] };
+export type FormValues = {
+  redeems: Redeem[];
+  //meta,
+  _redeems: any; //for validating whole redeems
+};

@@ -8,13 +8,10 @@ import useInvest from "./useRedeem";
 const tabs: AccountType[] = ["liquid", "locked"];
 export default function Form() {
   const {
-    watch,
     handleSubmit,
     formState: { isDirty, isValid },
   } = useFormContext<FormValues>();
 
-  const locked = watch("liquid");
-  console.log(locked);
   const { invest } = useInvest();
 
   return (
@@ -37,7 +34,6 @@ export default function Form() {
           ))}
         </Tab.Panels>
       </Tab.Group>
-
       <button
         disabled={!isDirty || !isValid}
         type="submit"

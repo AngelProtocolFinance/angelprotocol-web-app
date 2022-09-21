@@ -7,24 +7,26 @@ import Field from "./Field";
 
 type Props = { classes?: string; type: AccountType };
 export default function Fields({ classes = "", type }: Props) {
-  const { fields } = useFieldArray<FV>({
-    name: type,
+  const { fields } = useFieldArray<Pick<FV, "redeems">>({
+    name: "redeems",
   });
 
-  if (fields.length <= 0) {
+  const typeFields = fields.filter((f) => f.type === type);
+
+  if (typeFields.length <= 0) {
     return <p>You don't have any {type} investments</p>;
   }
 
   return (
     <Tab.Panel className={`grid grid-cols-2 gap-x-4 ${classes}`}>
-      {fields.map((field, i) => (
-        <Field
-          key={field.id}
-          name={maskAddress(field.vault)}
-          idx={i}
-          type={type}
-        />
-      ))}
+      {fields.map(
+        (field, i) =>
+          //preseve field idx
+          (field.type === type && (
+            <Field key={field.id} name={maskAddress(field.vault)} idx={i} />
+          )) ||
+          null
+      )}
     </Tab.Panel>
   );
 }
