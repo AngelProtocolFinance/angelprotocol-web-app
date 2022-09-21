@@ -19,7 +19,7 @@ export const apes = createApi({
   endpoints: (builder) => ({
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
-      query: (cw3) => `withdraw/${cw3}`,
+      query: (cw3) => `v1/withdraw/${cw3}`,
     }),
     chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
       providesTags: [{ type: apesTags.custom, id: customTags.chain }],

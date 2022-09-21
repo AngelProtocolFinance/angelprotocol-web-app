@@ -92,7 +92,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
       query: (status) => {
         return {
-          url: `registration/list${
+          url: `v1/registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
           method: "Get",
@@ -122,7 +122,7 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, SubmitData>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, EndowmentContract }) => ({
-        url: `registration/${PK}/submit`,
+        url: `v1/registration/${PK}/submit`,
         method: "POST",
         headers,
         body: { EndowmentContract },
