@@ -7,6 +7,7 @@ import { FileWrapper } from "components/FileDropzone";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { logger } from "helpers";
+import { VALID_MIME_TYPES } from "../additionalnfoSchema";
 import ImgCropper from "./ImgCropper";
 
 type Props<T extends FieldValues> = {
@@ -91,7 +92,10 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
       <div
         className="grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey"
         style={{
-          background: `no-repeat center/cover url(${imageUrl})`,
+          background: `no-repeat center/cover url(${imageUrl}) ${
+            isDisabled ? "rgba(0, 0, 0, 0.5)" : ""
+          }`,
+          backgroundBlendMode: "darken",
         }}
       >
         {(isLoading && <LoadingOverlay />) || (
@@ -158,7 +162,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                     onChange(fileWrapper);
                     setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                   }}
-                  accept="image/png, image/jpeg, image/svg"
+                  accept={VALID_MIME_TYPES.join(", ")}
                   className="w-0 h-0 appearance-none"
                 />
               </div>

@@ -4,7 +4,11 @@ import { FileWrapper } from "components/FileDropzone/types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
+export const VALID_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp, image/svg",
+];
 
 const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   .test({
