@@ -31,7 +31,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fileWrapper, setFileWrapper] = useState<FileWrapper>(banner);
   const [imageUrl, setImageUrl] = useState("");
   const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
 
@@ -59,32 +58,26 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   }, [uncroppedImgUrl]);
 
   useEffect(() => {
-    if (banner !== fileWrapper) {
-      setFileWrapper(banner);
-    }
-  }, [banner, fileWrapper]);
-
-  useEffect(() => {
     (async function () {
-      if (!fileWrapper.name) {
+      if (!banner.name) {
         return;
       }
 
       setLoading(true);
 
-      if (fileWrapper.file) {
-        fileReader.readAsDataURL(fileWrapper.file);
+      if (banner.file) {
+        fileReader.readAsDataURL(banner.file);
         return;
       }
 
-      if (fileWrapper.publicUrl) {
-        const blob = await fetch(fileWrapper.publicUrl).then((x) => x.blob());
+      if (banner.publicUrl) {
+        const blob = await fetch(banner.publicUrl).then((x) => x.blob());
         fileReader.readAsDataURL(blob);
       }
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fileWrapper]);
+  }, [banner]);
 
   const isInitial = !initialImageRef.current.name;
   const isDisabled = isSubmitting || isLoading;
@@ -120,8 +113,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                 <Button
                   type="button"
                   onClick={() => {
-                    setFileWrapper(initialImageRef.current);
-                    setUncroppedImgUrl("");
+                    setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                     onChange(initialImageRef.current);
                   }}
                   disabled={isInitial || isDisabled}
@@ -137,10 +129,9 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                       aspectRatio: props.aspectRatio,
                       setCropedImage: (croppedBlob) => {
                         const croppedValue: FileWrapper = {
-                          file: new File([croppedBlob], fileWrapper.name),
-                          name: fileWrapper.name,
+                          file: new File([croppedBlob], banner.name),
+                          name: banner.name,
                         };
-                        setFileWrapper(croppedValue);
                         onChange(croppedValue);
                       },
                     });
@@ -163,9 +154,8 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                         file: e.target.files[0],
                         name: e.target.files[0].name,
                       };
-                      setFileWrapper(fileWrapper);
-                      setUncroppedImgUrl(""); // will be read once the new file is read in FileReader
                       onChange(fileWrapper);
+                      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                     } else {
                       onChange(undefined);
                     }
