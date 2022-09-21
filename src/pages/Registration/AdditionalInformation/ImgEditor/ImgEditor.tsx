@@ -59,7 +59,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
   useEffect(() => {
     (async function () {
-      if (!banner.name) {
+      if (!banner) {
         return;
       }
 
