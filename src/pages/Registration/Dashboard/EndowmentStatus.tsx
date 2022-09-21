@@ -1,7 +1,9 @@
 import { MouseEventHandler } from "react";
+import { Link } from "react-router-dom";
 import { getRegistrationState } from "pages/Registration/helpers";
 import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
+import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 
 type Props = {
@@ -58,6 +60,12 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           </p>
         )}
       </div>
+      <Link
+        to={`${appRoutes.profile}/${endowmentId}`}
+        className="flex w-full text-center gap-1 font-heading uppercase font-bold text-sm text-white hover:underline"
+      >
+        Check out your new Endowment's profile page here
+      </Link>
     </div>
   );
 }
