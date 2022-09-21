@@ -1,5 +1,6 @@
 import Links from "./Links";
 import Socials from "./Socials";
+import { LITEPAPER } from "constants/urls";
 
 export default function Footer() {
   return (
@@ -24,6 +25,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const LITEPAPER =
-  "https://storageapi.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/ap-litepaper-v3.pdf";
