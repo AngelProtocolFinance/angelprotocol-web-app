@@ -11,8 +11,7 @@ const logDonation = async (payload: TxLogPayload) => {
     body: JSON.stringify({ ...payload, ...payload.kycData }),
   });
 
-  //success = 2xx
-  if (response.status < 200 || response.status > 299) {
+  if (!response.ok) {
     throw new LogDonationFail(payload.chainId, payload.transactionId);
   }
 };

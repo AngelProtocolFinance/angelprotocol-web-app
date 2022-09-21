@@ -54,8 +54,8 @@ export const logProposalId = createAsyncThunk(
       dispatch(
         invalidateAwsTags([{ type: awsTags.admin, id: adminTags.registration }])
       );
-      //success = 2xx
-      if (response.status < 200 || response.status > 299) {
+
+      if (!response.ok) {
         throw new Error("Request failed");
       }
     } catch (err) {
