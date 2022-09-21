@@ -112,6 +112,7 @@ export default function useWithdraw() {
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,
+                type: data.type,
               }),
       })
     );

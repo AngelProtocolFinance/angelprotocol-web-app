@@ -24,7 +24,7 @@ export default function useLogin() {
   async function login(values: { password: string }) {
     //start request
     try {
-      const response = await fetch(APIs.aws + "/tca-login", {
+      const response = await fetch(APIs.aws + "/v1/tca-login", {
         method: "POST",
         body: JSON.stringify(values),
       });
@@ -37,7 +37,7 @@ export default function useLogin() {
       } else if (response.status === 403) {
         throw new Error("Unauthorized");
       } else {
-        throw new Error("Something wen't wrong");
+        throw new Error("Something went wrong");
       }
     } catch (error) {
       handleError(error);

@@ -31,7 +31,7 @@ export const logProposalId = createAsyncThunk(
 
       const generatedToken = createAuthToken("charity-owner");
       const response = await fetch(
-        `${APIs.aws}/registration/${args.PK}/submit`,
+        `${APIs.aws}/v1/registration/${args.PK}/submit`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -54,8 +54,8 @@ export const logProposalId = createAsyncThunk(
       dispatch(
         invalidateAwsTags([{ type: awsTags.admin, id: adminTags.registration }])
       );
-      //success = 2xx
-      if (response.status < 200 || response.status > 299) {
+
+      if (!response.ok) {
         throw new Error("Request failed");
       }
     } catch (err) {
