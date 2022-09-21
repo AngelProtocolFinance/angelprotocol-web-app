@@ -47,7 +47,7 @@ export const logWithdrawProposal = createAsyncThunk(
 
       if (numId === 0) throw new Error("Failed to get proposal id");
       const generatedToken = createAuthToken("angelprotocol-web-app");
-      const response = await fetch(APIs.apes + "/withdraw", {
+      const response = await fetch(APIs.apes + "/v1/withdraw", {
         method: "POST",
         headers: { authorization: generatedToken },
         body: JSON.stringify({ ...payload, proposal_id: numId }),
