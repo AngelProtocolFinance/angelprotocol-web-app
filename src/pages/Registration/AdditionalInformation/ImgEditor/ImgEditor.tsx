@@ -120,9 +120,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                 <Button
                   type="button"
                   onClick={() => {
-                    if (inputRef.current) {
-                      inputRef.current.value = "";
-                    }
                     setFileWrapper(initialImageRef.current);
                     setUncroppedImgUrl("");
                     onChange(initialImageRef.current);
