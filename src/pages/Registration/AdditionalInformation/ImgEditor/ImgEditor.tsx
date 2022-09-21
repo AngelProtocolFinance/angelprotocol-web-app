@@ -124,6 +124,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                       inputRef.current.value = "";
                     }
                     setFileWrapper(initialImageRef.current);
+                    setUncroppedImgUrl("");
                     onChange(initialImageRef.current);
                   }}
                   disabled={isInitial || isDisabled}
