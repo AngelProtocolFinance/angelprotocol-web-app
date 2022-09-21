@@ -24,7 +24,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
     formState: { isSubmitting },
   } = useFormContext<T>();
 
-  const banner = watch(props.name);
+  const banner: FileWrapper = watch(props.name);
 
   const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement | null>();
@@ -65,15 +65,10 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
       setLoading(true);
 
-      if (banner.file) {
-        fileReader.readAsDataURL(banner.file);
-        return;
-      }
+      const blob: Blob =
+        banner.file ?? (await fetch(banner.publicUrl).then((x) => x.blob()));
 
-      if (banner.publicUrl) {
-        const blob = await fetch(banner.publicUrl).then((x) => x.blob());
-        fileReader.readAsDataURL(blob);
-      }
+      fileReader.readAsDataURL(blob);
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
