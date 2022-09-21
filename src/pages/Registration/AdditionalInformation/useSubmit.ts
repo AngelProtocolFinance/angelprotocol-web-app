@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
+import { FileObject } from "types/aws";
 import {
   useRegistrationQuery,
   useUpdateCharityMetadataMutation,
@@ -79,7 +80,7 @@ async function uploadIfNecessary(
   primaryKey: string,
   fileWrapper: FileWrapper,
   folder: Folders
-) {
+): Promise<FileObject> {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
