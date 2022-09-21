@@ -76,9 +76,9 @@ export type Registration = {
   CharityName_ContactEmail?: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
-  ProofOfIdentity: FileObject;
+  ProofOfIdentity?: FileObject;
   ProofOfIdentityVerified: boolean;
-  ProofOfRegistration: FileObject;
+  ProofOfRegistration?: FileObject;
   ProofOfRegistrationVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
@@ -99,8 +99,8 @@ type InitialMetaData = Optional<
   | "KycDonorsOnly"
 >;
 export type Metadata = {
-  Banner: FileObject;
-  CharityLogo: FileObject;
+  Banner?: FileObject;
+  CharityLogo?: FileObject;
   CharityOverview: string;
   EndowmentContract: string;
   EndowmentId: number;

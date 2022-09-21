@@ -72,12 +72,12 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
       setLoading(true);
 
-      if ("file" in fileWrapper && fileWrapper.file) {
+      if (fileWrapper.file) {
         fileReader.readAsDataURL(fileWrapper.file);
         return;
       }
 
-      if ("publicUrl" in fileWrapper && fileWrapper.publicUrl) {
+      if (fileWrapper.publicUrl) {
         const blob = await fetch(fileWrapper.publicUrl).then((x) => x.blob());
         fileReader.readAsDataURL(blob);
       }
@@ -169,8 +169,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                       setUncroppedImgUrl(""); // will be read once the new file is read in FileReader
                       onChange(fileWrapper);
                     } else {
-                      const fileWrapper: FileWrapper = { name: "" };
-                      onChange(fileWrapper);
+                      onChange(undefined);
                     }
                   }}
                   accept="image/png, image/jpeg, image/svg"

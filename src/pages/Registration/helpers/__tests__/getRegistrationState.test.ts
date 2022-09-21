@@ -111,8 +111,8 @@ describe("getRegistrationState tests", () => {
     const charity: Charity = {
       ...placeholderCharity,
       Metadata: {
-        Banner: { name: "", publicUrl: "" },
-        CharityLogo: { name: "", publicUrl: "" },
+        Banner: undefined,
+        CharityLogo: undefined,
         CharityOverview: "",
         EndowmentContract: "",
         SK: "Metadata",

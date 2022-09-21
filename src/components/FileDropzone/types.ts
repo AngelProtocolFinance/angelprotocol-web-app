@@ -11,4 +11,6 @@ export type BaseProps<T extends FieldValues> = {
   disabled?: boolean;
 };
 
-export type FileWrapper = FileObject | { name: string; file?: File };
+export type FileWrapper =
+  | (FileObject & { file?: never })
+  | { name: string; file: File; publicUrl?: never };
