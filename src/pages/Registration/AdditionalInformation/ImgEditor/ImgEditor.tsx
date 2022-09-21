@@ -76,7 +76,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [banner]);
 
-  const isInitial = !initialImageRef.current.name;
+  const isInitial = initialImageRef.current === banner;
   const isDisabled = isSubmitting || isLoading;
 
   return (
@@ -106,34 +106,38 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                 >
                   <Icon type="Upload" />
                 </Button>
-                <Button
-                  onClick={() => {
-                    setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-                    onChange(initialImageRef.current);
-                  }}
-                  disabled={isInitial || isDisabled}
-                >
-                  <Icon type="Undo" />
-                </Button>
-                <Button
-                  onClick={() => {
-                    //cropper is disabled when imageFile is null
-                    showModal(ImgCropper, {
-                      src: uncroppedImgUrl,
-                      aspectRatio: props.aspectRatio,
-                      setCropedImage: (croppedBlob) => {
-                        const croppedValue: FileWrapper = {
-                          file: new File([croppedBlob], banner.name),
-                          name: banner.name,
-                        };
-                        onChange(croppedValue);
-                      },
-                    });
-                  }}
-                  disabled={isInitial || isDisabled}
-                >
-                  <Icon type="Crop" />
-                </Button>
+                {!isInitial && (
+                  <Button
+                    onClick={() => {
+                      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
+                      onChange(initialImageRef.current);
+                    }}
+                    disabled={isDisabled}
+                  >
+                    <Icon type="Undo" />
+                  </Button>
+                )}
+                {!isInitial && (
+                  <Button
+                    onClick={() => {
+                      //cropper is disabled when imageFile is null
+                      showModal(ImgCropper, {
+                        src: uncroppedImgUrl,
+                        aspectRatio: props.aspectRatio,
+                        setCropedImage: (croppedBlob) => {
+                          const croppedValue: FileWrapper = {
+                            file: new File([croppedBlob], banner.name),
+                            name: banner.name,
+                          };
+                          onChange(croppedValue);
+                        },
+                      });
+                    }}
+                    disabled={isDisabled}
+                  >
+                    <Icon type="Crop" />
+                  </Button>
+                )}
                 <input
                   ref={(e) => {
                     ref(e);
