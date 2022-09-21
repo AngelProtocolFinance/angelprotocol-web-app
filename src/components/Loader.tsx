@@ -12,8 +12,14 @@ export default function Loader({ bgColorClass, widthClass, gapClass }: Props) {
       className={`w-full h-full bg-none-400 flex items-center justify-center ${gapClass}`}
     >
       <div className={`${boxStyles}`}></div>
-      <div className={`${boxStyles} box-delay-1`}></div>
-      <div className={`${boxStyles} box-delay-2`}></div>
+      <div
+        className={`${boxStyles} box-delay-1`}
+        style={{ animationDelay: "300ms" }}
+      />
+      <div
+        className={`${boxStyles} box-delay-2`}
+        style={{ animationDelay: "600ms" }}
+      />
     </div>
   );
 }

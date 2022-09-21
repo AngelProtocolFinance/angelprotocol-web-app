@@ -26,10 +26,13 @@ export default function Fields({ classes = "", type }: Props) {
   });
 
   const allocations = watch("allocations");
-  const total = allocations.reduce((total, curr) => total + curr.percentage, 0);
   const isReadOnly = getValues("isReadOnly");
 
   function renderFields() {
+    const total = allocations.reduce(
+      (total, curr) => total + curr.percentage,
+      0
+    );
     const _fields = fields.map((field, i) => (
       <VaultField
         key={field.id}
@@ -74,17 +77,6 @@ export default function Fields({ classes = "", type }: Props) {
           {renderFields()}
         </TableSection>
       </table>
-      {total > 100 && (
-        <div className="g">
-          <p className="text-left text-rose-400 font-bold font-heading uppercase">
-            <span className="text-sm pr-2">total</span>
-            <span>{total}%</span>
-          </p>
-          <p className="text-sm text-rose-300 text-left">
-            Total allocation should not be greater than 100%
-          </p>
-        </div>
-      )}
       {!isReadOnly && (
         <button
           onClick={showVaults}

@@ -1,16 +1,28 @@
 import * as Yup from "yup";
 import { Allocation, StrategyFormValues } from "./types";
 import { SchemaShape } from "schemas/types";
+import { FIELD_PRECISION } from "./Fields/VaultField";
 
-const allocationShape: SchemaShape<Allocation> = {
+type AllocationSchema = (allocations: Allocation[]) => SchemaShape<Allocation>;
+const allocation: AllocationSchema = (allocations) => ({
   percentage: Yup.number()
-    .moreThan(0, "must be at least 0.01%")
-    .max(100, "can't be more than 100%"),
-};
+    //pct must be greater than 0.009 or be rounded down to 0
+    .min(9 * Math.pow(10, -FIELD_PRECISION - 1), "invalid percentage")
+    .max(100, "can't be more than 100%")
+    .test("total doesn't exceed 100%", "total must not exceed 100%", () => {
+      const total = allocations.reduce(
+        (total, alloc) => total + alloc.percentage,
+        0
+      );
+      return 100 - total >= 0;
+    }),
+});
 
 const shape: SchemaShape<StrategyFormValues> = {
-  allocations: Yup.array(Yup.object().shape(allocationShape)),
-  //add other vault fields here
+  allocations: Yup.lazy(
+    (_a: Allocation[]) =>
+      Yup.array(Yup.object().shape(((a: Allocation[]) => allocation(a))(_a))) //supply latest inputs
+  ),
 };
 
 export const schema = Yup.object(shape);

@@ -10,6 +10,7 @@ type Props = {
   remove: UseFieldArrayRemove;
 };
 
+export const FIELD_PRECISION = 6;
 export default function Field({ name, idx, remove }: Props) {
   const { register } = useFormContext<FormValues>();
   return (
@@ -31,8 +32,7 @@ export default function Field({ name, idx, remove }: Props) {
             setValueAs(value) {
               const num = Number(value);
               if (!isNaN(num)) {
-                //limit to 4 digits saved in form context for submission
-                return roundDownToNum(num, 4);
+                return roundDownToNum(num, FIELD_PRECISION);
               } else {
                 return 0;
               }
@@ -42,7 +42,7 @@ export default function Field({ name, idx, remove }: Props) {
         <ErrorMessage
           name={`investments.${idx}.amount`}
           as="span"
-          className="absolute right-0 bottom-0 text-xs text-rose-300"
+          className="absolute right-1 bottom-1 text-xs text-rose-300"
         />
       </div>
     </div>

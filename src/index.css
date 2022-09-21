@@ -16,13 +16,6 @@
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 
-  .box-delay-1 {
-    animation-delay: 300ms;
-  }
-  .box-delay-2 {
-    animation-delay: 600ms;
-  }
-
   .img-no-drag {
     -webkit-user-drag: none;
     -khtml-user-drag: none;
@@ -46,6 +39,19 @@
   .shadow-outer-white-grey {
     box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
   }
+
+  .text-field {
+    -moz-appearance: textfield;
+  }
+  .text-field:hover,
+  .text-field:focus {
+    -moz-appearance: number-input;
+  }
+  .text-field::-webkit-inner-spin-button,
+  .text-field::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @layer base {
@@ -63,47 +69,6 @@
   }
 }
 
-.slippage-input::-webkit-outer-spin-button,
-.slippage-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.slippage-input[type="number"] {
-  width: 20px;
-  max-width: 30px;
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.currency-input::-webkit-outer-spin-button,
-.currency-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.currency-input[type="number"] {
-  /* width: 20px;
-  max-width: 30px; */
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.css-qc6sy-singleValue {
-  color: hsl(0, 0%, 0%) !important;
-}
-
-.css-1pahdxg-control {
-  box-shadow: none !important;
-  border-color: rgba(153, 153, 153, var(--tw-border-opacity)) !important;
-  --tw-border-opacity: 0.6;
-}
-
-#react-select-3-listbox {
-  color: black !important;
-}
-
-
 .indicator {
   position: relative;
   height: 20px;
@@ -114,7 +79,13 @@ input.indicator {
   /* position: absolute;
   top: 2px;
   height: 0; */
-  background: linear-gradient(to right, #E80F6D 0%, #E80F6D 50%, #fff 50%, white 100%);
+  background: linear-gradient(
+    to right,
+    #e80f6d 0%,
+    #e80f6d 50%,
+    #fff 50%,
+    white 100%
+  );
   -webkit-appearance: none;
   border-radius: 25px;
 }
@@ -127,23 +98,23 @@ input.indicator::-moz-range-thumb {
   display: none;
 }
 input.indicator::-ms-thumb {
- display: none;
+  display: none;
 }
 
 input.indicator::-webkit-slider-runnable-track {
   width: 100%;
-  height: 18px; 
+  height: 18px;
   border-radius: 25px;
 }
 input.indicator::-moz-range-track {
   width: 100%;
   height: 2px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 input.indicator::-ms-track {
   width: 100%;
   height: 2px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 input.indicator:focus {
   background: none;

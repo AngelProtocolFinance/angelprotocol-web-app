@@ -53,7 +53,7 @@ function TabWithBalance({ type }: TabProps) {
   const investments = watch("investments");
   const total = investments
     .filter((inv) => inv.type === type)
-    .reduce((t, inv) => (t + inv.amount >= 0 ? inv.amount : 0), 0);
+    .reduce((t, inv) => t + inv.amount, 0);
 
   const balance = getValues(`balance.${type}`);
   const remaining = balance - total;

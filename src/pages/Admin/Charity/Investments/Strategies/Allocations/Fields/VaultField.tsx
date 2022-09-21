@@ -13,6 +13,7 @@ type Props = {
   staticVal?: number;
 };
 
+export const FIELD_PRECISION = 2;
 export default function VaultField({
   name,
   idx,
@@ -49,17 +50,18 @@ export default function VaultField({
         <span className="font-mono">{name}</span>
       </div>
 
-      {(staticVal && <p>{staticVal}</p>) || (
+      {(staticVal && <p className="text-zinc-400">{staticVal}</p>) || (
         <div className="relative w-full">
           <input
+            type="number"
             disabled={isReadOnly}
-            className="w-full bg-transparent focus:outline-none text-lg"
+            className="text-field w-full bg-transparent focus:outline-none text-lg disabled:text-zinc-400"
             {...register(`allocations.${idx}.percentage`, {
               setValueAs(value) {
                 const num = Number(value);
                 if (!isNaN(num)) {
                   //limit to 2 digits saved in form context for submission
-                  return roundDownToNum(num, 2);
+                  return roundDownToNum(num, FIELD_PRECISION);
                 } else {
                   return 0;
                 }
