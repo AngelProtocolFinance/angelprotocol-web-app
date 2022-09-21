@@ -1,5 +1,7 @@
+import { ErrorMessage } from "@hookform/error-message";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, useFormContext } from "react-hook-form";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { FileWrapper } from "components/FileDropzone";
 import Icon from "components/Icon";
@@ -11,18 +13,19 @@ type Props<T extends FieldValues> = {
   // we get common props with this intersection,
   // which are only props from T
   // (Path<T> returns all possible paths through T)
-  name: Path<T> & keyof T;
+  name: keyof T & string;
   label: string;
   aspectRatio: number;
 };
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const {
     watch,
     control,
-    formState: { isSubmitting },
-  } = useFormContext<T>();
+    formState: { isSubmitting, errors },
+  } = useFormContext();
 
   const banner: FileWrapper = watch(props.name);
 
@@ -30,7 +33,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const inputRef = useRef<HTMLInputElement | null>();
 
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
 
@@ -50,7 +52,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
     fr.onerror = (e) => {
       logger.error("Failed to load image", e.target?.error?.message);
-      setError("failed to load image");
+      handleError("failed to load image");
       setLoading(false);
     };
 
@@ -93,20 +95,18 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
         }}
       >
         {(isLoading && <LoadingOverlay />) || (
-          <Controller<T>
+          <Controller
             name={props.name}
             control={control}
             render={({ field: { onChange, ref } }) => (
               <div className="hidden absolute group-hover:flex">
                 <Button
-                  type="button"
                   onClick={() => inputRef.current?.click()}
                   disabled={isDisabled}
                 >
                   <Icon type="Upload" />
                 </Button>
                 <Button
-                  type="button"
                   onClick={() => {
                     setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                     onChange(initialImageRef.current);
@@ -116,7 +116,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                   <Icon type="Undo" />
                 </Button>
                 <Button
-                  type="button"
                   onClick={() => {
                     //cropper is disabled when imageFile is null
                     showModal(ImgCropper, {
@@ -163,16 +162,24 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
           />
         )}
       </div>
-      {error && <p className="text-sm text-failed-red">{error}</p>}
+      <ErrorMessage
+        errors={errors}
+        as="p"
+        name={props.name}
+        className="w-full text-xs text-failed-red text-center"
+      />
     </div>
   );
 }
 
-const btnStyle =
-  "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg";
-
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...props} className={btnStyle} />;
+  return (
+    <button
+      {...props}
+      type="button"
+      className="cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg"
+    />
+  );
 }
 
 function LoadingOverlay() {
