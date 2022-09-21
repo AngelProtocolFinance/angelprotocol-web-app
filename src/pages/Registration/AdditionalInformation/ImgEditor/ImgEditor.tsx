@@ -20,7 +20,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const { showModal } = useModalContext();
   const {
     watch,
-    setValue,
     control,
     formState: { isSubmitting },
   } = useFormContext<T>();
@@ -73,12 +72,12 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
       setLoading(true);
 
-      if (fileWrapper.file) {
+      if ("file" in fileWrapper && fileWrapper.file) {
         fileReader.readAsDataURL(fileWrapper.file);
         return;
       }
 
-      if (fileWrapper.publicUrl) {
+      if ("publicUrl" in fileWrapper && fileWrapper.publicUrl) {
         const blob = await fetch(fileWrapper.publicUrl).then((x) => x.blob());
         fileReader.readAsDataURL(blob);
       }
@@ -86,20 +85,6 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileWrapper]);
-
-  function handleOpenCropper() {
-    //cropper is disabled when imageFile is null
-    showModal(ImgCropper, {
-      src: uncroppedImgUrl,
-      aspectRatio: props.aspectRatio,
-      setCropedImage: (blob) => {
-        setValue(props.name, {
-          file: new File([blob], fileWrapper.name),
-          name: fileWrapper.name,
-        } as any);
-      },
-    });
-  }
 
   const isInitial = !initialImageRef.current.name;
   const isDisabled = isSubmitting || isLoading;
@@ -120,7 +105,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
         }}
       >
         {(isLoading && <LoadingOverlay />) || (
-          <Controller
+          <Controller<T>
             name={props.name}
             control={control}
             render={({ field: { onChange, ref } }) => (
@@ -147,7 +132,21 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                 </Button>
                 <Button
                   type="button"
-                  onClick={handleOpenCropper}
+                  onClick={() => {
+                    //cropper is disabled when imageFile is null
+                    showModal(ImgCropper, {
+                      src: uncroppedImgUrl,
+                      aspectRatio: props.aspectRatio,
+                      setCropedImage: (croppedBlob) => {
+                        const croppedValue: FileWrapper = {
+                          file: new File([croppedBlob], fileWrapper.name),
+                          name: fileWrapper.name,
+                        };
+                        setFileWrapper(croppedValue);
+                        onChange(croppedValue);
+                      },
+                    });
+                  }}
                   disabled={isInitial || isDisabled}
                 >
                   <Icon type="Crop" />
@@ -162,11 +161,17 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                   type="file"
                   onChange={(e) => {
                     if (e.target.files && e.target.files.length > 0) {
-                      const file = e.target.files[0];
-                      setFileWrapper({ file, name: file.name });
+                      const fileWrapper: FileWrapper = {
+                        file: e.target.files[0],
+                        name: e.target.files[0].name,
+                      };
+                      setFileWrapper(fileWrapper);
                       setUncroppedImgUrl(""); // will be read once the new file is read in FileReader
+                      onChange(fileWrapper);
+                    } else {
+                      const fileWrapper: FileWrapper = { name: "" };
+                      onChange(fileWrapper);
                     }
-                    onChange(e.target.value);
                   }}
                   accept="image/png, image/jpeg, image/svg"
                   className="w-0 h-0 appearance-none"
