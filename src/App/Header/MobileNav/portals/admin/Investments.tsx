@@ -15,7 +15,7 @@ export function Investments({ id }: { id: number }) {
           <h4 className="uppercase text-sm font-bold text-angel-grey mb-2">
             Investments
           </h4>
-          <div className="grid justify-items-start uppercase text-sm font-heading gap-1">
+          <div className="grid grid-cols-2 justify-items-start uppercase text-sm font-heading gap-y-1 gap-x-4">
             <NavLink end to={baseLink} className={styler}>
               Balances
             </NavLink>

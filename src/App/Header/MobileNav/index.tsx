@@ -16,11 +16,17 @@ export default function MobileNav() {
       </Popover.Button>
       <Popover.Panel
         as="nav"
-        className="lg:hidden absolute rounded-sm min-w-max flex flex-col sm:flex-row gap-1 p-4 z-20 bg-zinc-50 rounded-lg shadow-xl"
+        className="lg:hidden min-w-max absolute top-full right-0 mt-1 p-4 z-20 bg-zinc-50 rounded-lg shadow-xl"
       >
         <AppLinks />
-        <div id={ADMIN_NAV_PORTAL_ID} />
-        <div id={ADMIN_INVESTMENTS_PORTAL_ID} />
+        <div
+          id={ADMIN_NAV_PORTAL_ID}
+          className="empty:hidden border-t mt-4 pt-2"
+        />
+        <div
+          id={ADMIN_INVESTMENTS_PORTAL_ID}
+          className="empty:hidden border-t mt-4 pt-2"
+        />
       </Popover.Panel>
     </Popover>
   );
