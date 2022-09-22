@@ -24,6 +24,7 @@ export default function Field({ name, idx, balance }: Props) {
   return (
     <div className="grid grid-cols-2 p-3 rounded-md border border-zinc-50/30 gap-x-4 relative">
       <button
+        type="button"
         onClick={setMax}
         className="col-span-2 text-sm mb-2 justify-self-end hover:text-sky-500"
       >

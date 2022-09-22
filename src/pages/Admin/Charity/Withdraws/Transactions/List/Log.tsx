@@ -8,7 +8,6 @@ import { getFinalRoute } from "../getFinalRoute";
 
 export default function Log(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
-  console.log(props);
   const finalRoute = getFinalRoute(props);
   return (
     <li className="grid gap-2 shadow-inner bg-zinc-50/5 p-3 rounded-md text-zinc-50/80">

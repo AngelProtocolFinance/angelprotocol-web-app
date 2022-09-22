@@ -20,17 +20,24 @@ export default function Form() {
       onSubmit={handleSubmit(invest)}
     >
       <Tab.Group>
-        <h3 className="text-lg uppercase font-bold mb-4">
-          Select account type
-        </h3>
-        <Tab.List className="grid justify-self-start">
+        <h3 className="uppercase font-bold mb-2">Select account type</h3>
+        <Tab.List className="flex justify-self-start gap-2">
           {tabs.map((tab) => (
-            <Tab key={tab}>{tab}</Tab>
+            <Tab
+              key={tab}
+              className={({ selected }) =>
+                `p-2 rounded-md uppercase font-heading font-bold text-sm border-2 ${
+                  selected ? "border-angel-blue" : "border-zinc-50/20"
+                }`
+              }
+            >
+              {tab}
+            </Tab>
           ))}
         </Tab.List>
         <Tab.Panels>
           {tabs.map((tab) => (
-            <Fields key={tab} classes="mt-4" type={tab} />
+            <Fields key={tab} classes="mt-4 mb-6" type={tab} />
           ))}
         </Tab.Panels>
       </Tab.Group>

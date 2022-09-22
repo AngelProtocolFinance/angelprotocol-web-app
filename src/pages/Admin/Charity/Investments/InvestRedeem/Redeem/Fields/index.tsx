@@ -14,7 +14,11 @@ export default function Fields({ classes = "", type }: Props) {
   const typeFields = fields.filter((f) => f.type === type);
 
   if (typeFields.length <= 0) {
-    return <p>You don't have any {type} investments</p>;
+    return (
+      <Tab.Panel className="text-center mt-4 mb-10">
+        You don't have any {type} investments
+      </Tab.Panel>
+    );
   }
 
   return (
