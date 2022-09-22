@@ -1,9 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ForwardedRef, forwardRef } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
-import Checkbox, { CheckboxProps } from "components/Checkbox";
+import Checkbox from "components/Checkbox";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
 import ImgEditor from "./ImgEditor";
@@ -68,10 +67,7 @@ export default function AdditionalInformation() {
           </div>
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
-          <KycDonorsOnlyCheckbox
-            disabled={methods.formState.isSubmitting}
-            {...methods.register("kycDonorsOnly")}
-          />
+          <KycDonorsOnlyCheckbox />
           <ButtonSection />
         </form>
       </FormProvider>
@@ -93,16 +89,21 @@ const ImageSizeInfo = (props: { limit: string }) => (
   </p>
 );
 
-const KycDonorsOnlyCheckbox = forwardRef(
-  (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
-    <Checkbox {...props} ref={ref}>
+function KycDonorsOnlyCheckbox() {
+  const {
+    formState: { isSubmitting },
+    register,
+  } = useFormContext<AdditionalInfoValues>();
+
+  return (
+    <Checkbox {...register("kycDonorsOnly")} disabled={isSubmitting}>
       <span className="text-base">
         Only accept donations from donors who have provided their personal
         information(Name & address).
       </span>
     </Checkbox>
-  )
-);
+  );
+}
 
 const OrganizationName = ({ value }: { value: string }) => (
   <InputRow htmlFor="charityName" label="Name of your organization">
