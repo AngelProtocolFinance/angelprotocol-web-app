@@ -18,7 +18,7 @@ export default function useRedeem() {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
-  function invest(data: FormValues) {
+  function redeem(data: FormValues) {
     const account = new Account(wallet);
 
     let msgs: EmbeddedWasmMsg[] = [];
@@ -26,7 +26,7 @@ export default function useRedeem() {
     const liquidVaults = getVaultsWithType("liquid", data.redeems);
     const lockedVaults = getVaultsWithType("locked", data.redeems);
 
-    //at least one of investment types is filled prior to submission
+    //at least one of account types is filled prior to submission
     if (liquidVaults.length > 0) {
       msgs.push(
         account.createEmbeddedRedeemMsg({
@@ -73,7 +73,7 @@ export default function useRedeem() {
   }
 
   return {
-    invest,
+    redeem,
   };
 }
 
@@ -83,5 +83,8 @@ function getVaultsWithType(
 ): RedeemPayload["vaults"] {
   return vaults
     .filter((v) => v.type === type)
-    .map(({ vault, amount }) => [vault, scaleToStr(amount)]);
+    .map(({ vault, amount }) => [
+      vault,
+      scaleToStr(amount || 0 /** blank fields have amount set to "" */),
+    ]);
 }

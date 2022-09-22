@@ -18,7 +18,10 @@ export default function Field({ name, idx, balance }: Props) {
   } = useFormContext<FormValues>();
 
   function setMax() {
-    setValue(`redeems.${idx}.amount`, roundDown(balance));
+    setValue(`redeems.${idx}.amount`, roundDown(balance), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   }
 
   return (

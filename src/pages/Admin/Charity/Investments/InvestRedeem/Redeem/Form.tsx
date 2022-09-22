@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 import { AccountType } from "types/contracts";
 import Fields from "./Fields";
-import useInvest from "./useRedeem";
+import useRedeem from "./useRedeem";
 
 const tabs: AccountType[] = ["liquid", "locked"];
 export default function Form() {
@@ -12,12 +12,12 @@ export default function Form() {
     formState: { isDirty, isValid },
   } = useFormContext<FormValues>();
 
-  const { invest } = useInvest();
+  const { redeem } = useRedeem();
 
   return (
     <form
       className="grid content-start text-zinc-50/80"
-      onSubmit={handleSubmit(invest)}
+      onSubmit={handleSubmit(redeem)}
     >
       <Tab.Group>
         <h3 className="uppercase font-bold mb-2">Select account type</h3>
