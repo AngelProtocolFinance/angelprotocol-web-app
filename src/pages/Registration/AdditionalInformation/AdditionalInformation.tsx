@@ -17,8 +17,6 @@ export default function AdditionalInformation() {
 
   const methods = useForm<AdditionalInfoValues>({
     resolver: yupResolver(additionalInfoSchema),
-    mode: "onChange",
-    reValidateMode: "onChange",
     defaultValues: {
       banner: charity.Metadata.Banner,
       charityOverview: charity.Metadata.CharityOverview,
@@ -64,11 +62,13 @@ export default function AdditionalInformation() {
               Logo of your organization
               <span className="ml-0.5 text-failed-red">*</span>
             </label>
-            <ImgEditor<AdditionalInfoValues>
-              name="charityLogo"
-              aspectRatioX={1}
-              aspectRatioY={1}
-            />
+            <div className="w-32 h-32 sm:w-40 sm:h-40">
+              <ImgEditor<AdditionalInfoValues>
+                name="charityLogo"
+                aspectRatioX={1}
+                aspectRatioY={1}
+              />
+            </div>
           </div>
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
