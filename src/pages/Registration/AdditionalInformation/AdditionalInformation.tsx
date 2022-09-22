@@ -34,38 +34,8 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName value={charity.Registration.CharityName} />
-          <div className="flex flex-col gap-2 w-full h-full">
-            <label
-              htmlFor="banner"
-              className="cursor-pointer text-dark-grey text-left"
-            >
-              Banner image of your organization
-              <span className="ml-0.5 text-failed-red">*</span>
-            </label>
-            <ImgEditor<AdditionalInfoValues>
-              name="banner"
-              aspectRatioX={4}
-              aspectRatioY={1}
-            />
-          </div>
-          <ImageSizeInfo limit="1MB" />
-          <div className="flex flex-col gap-2 w-full h-full">
-            <label
-              htmlFor="charityLogo"
-              className="cursor-pointer text-dark-grey text-left"
-            >
-              Logo of your organization
-              <span className="ml-0.5 text-failed-red">*</span>
-            </label>
-            <div className="w-32 h-32 sm:w-40 sm:h-40">
-              <ImgEditor<AdditionalInfoValues>
-                name="charityLogo"
-                aspectRatioX={1}
-                aspectRatioY={1}
-              />
-            </div>
-          </div>
-          <ImageSizeInfo limit="1MB" />
+          <Banner />
+          <CharityLogo />
           <OverviewInput />
           <KycDonorsOnlyCheckbox />
           <ButtonSection />
@@ -109,4 +79,39 @@ const OrganizationName = ({ value }: { value: string }) => (
   <InputRow htmlFor="charityName" label="Name of your organization">
     <span className="flex w-full font-bold">{value}</span>
   </InputRow>
+);
+
+const Banner = () => (
+  <div className="flex flex-col gap-2 w-full h-full">
+    <label htmlFor="banner" className="cursor-pointer text-dark-grey text-left">
+      Banner image of your organization
+      <span className="ml-0.5 text-failed-red">*</span>
+    </label>
+    <ImgEditor<AdditionalInfoValues>
+      name="banner"
+      aspectRatioX={4}
+      aspectRatioY={1}
+    />
+    <ImageSizeInfo limit="1MB" />
+  </div>
+);
+
+const CharityLogo = () => (
+  <div className="flex flex-col gap-2 w-full h-full">
+    <label
+      htmlFor="charityLogo"
+      className="cursor-pointer text-dark-grey text-left"
+    >
+      Logo of your organization
+      <span className="ml-0.5 text-failed-red">*</span>
+    </label>
+    <div className="w-32 h-32 sm:w-40 sm:h-40">
+      <ImgEditor<AdditionalInfoValues>
+        name="charityLogo"
+        aspectRatioX={1}
+        aspectRatioY={1}
+      />
+    </div>
+    <ImageSizeInfo limit="1MB" />
+  </div>
 );
