@@ -104,14 +104,14 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
             control={control}
             render={({ field: { onChange, ref } }) => (
               <div className="hidden absolute group-hover:flex">
-                <Button
+                <IconButton
                   onClick={() => inputRef.current?.click()}
                   disabled={isDisabled}
                 >
                   <Icon type="Upload" />
-                </Button>
+                </IconButton>
                 {!isInitial && (
-                  <Button
+                  <IconButton
                     onClick={() => {
                       setUncroppedImgUrl(""); // will be read once the file is read in FileReader
                       onChange(initialImageRef.current);
@@ -119,10 +119,10 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                     disabled={isDisabled}
                   >
                     <Icon type="Undo" />
-                  </Button>
+                  </IconButton>
                 )}
                 {!isInitial && (
-                  <Button
+                  <IconButton
                     onClick={() => {
                       //cropper is disabled when imageFile is null
                       showModal(ImgCropper, {
@@ -140,7 +140,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                     disabled={isDisabled}
                   >
                     <Icon type="Crop" />
-                  </Button>
+                  </IconButton>
                 )}
                 <input
                   ref={(e) => {
@@ -180,7 +180,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   );
 }
 
-function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
