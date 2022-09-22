@@ -7,7 +7,8 @@ import { stringByteSchema } from "schemas/string";
 export const VALID_MIME_TYPES = [
   "image/jpeg",
   "image/png",
-  "image/webp, image/svg",
+  "image/webp",
+  "image/svg",
 ];
 
 const FILE_SCHEMA = Yup.mixed<FileWrapper>()
@@ -18,6 +19,11 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
       fileWrapper?.file
         ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
         : true,
+  })
+  .test({
+    name: "fileSize",
+    message: "Image size must be smaller than 1MB",
+    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
   })
   .test({
     name: "invalidState",
@@ -33,16 +39,8 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
   charityOverview: stringByteSchema("overview", 4, 1024),
-  charityLogo: FILE_SCHEMA.test({
-    name: "fileSize",
-    message: "Image size must be smaller than 1MB",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
-  }),
-  banner: FILE_SCHEMA.test({
-    name: "fileSize",
-    message: "Image size must be smaller than 1MB",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
-  }),
+  charityLogo: FILE_SCHEMA,
+  banner: FILE_SCHEMA,
 };
 
 export const additionalInfoSchema = Yup.object().shape(additionalnfoShape);
