@@ -102,6 +102,7 @@ export type Metadata = {
   CharityLogo: FileObject;
   CharityOverview: string;
   EndowmentContract: string;
+  EndowmentId: number;
   SK: "Metadata";
   JunoWallet: string;
   KycDonorsOnly: boolean;
