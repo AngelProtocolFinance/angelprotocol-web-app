@@ -4,7 +4,6 @@ import { Controller, FieldValues } from "react-hook-form";
 import { Props } from "./types";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import { VALID_MIME_TYPES } from "../additionalnfoSchema";
 import useImgEditor from "./useImgEditor";
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
@@ -65,7 +64,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                   id={props.name}
                   type="file"
                   onChange={onInputChange(onChange)}
-                  accept={VALID_MIME_TYPES.join(", ")}
+                  accept={props.accept.join(", ")}
                   className="w-0 h-0 appearance-none"
                 />
               </div>

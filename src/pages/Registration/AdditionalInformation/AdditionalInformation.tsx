@@ -3,11 +3,11 @@ import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
+import ImgEditor from "components/ImgEditor";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
-import ImgEditor from "./ImgEditor";
 import OverviewInput from "./OverviewInput";
-import { additionalInfoSchema } from "./additionalnfoSchema";
+import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
@@ -89,6 +89,7 @@ const Banner = () => (
       name="banner"
       aspectRatioX={4}
       aspectRatioY={1}
+      accept={VALID_MIME_TYPES}
     />
     <ImageSizeInfo limit="1MB" />
   </div>
@@ -108,6 +109,7 @@ const CharityLogo = () => (
         name="charityLogo"
         aspectRatioX={1}
         aspectRatioY={1}
+        accept={VALID_MIME_TYPES}
       />
     </div>
     <ImageSizeInfo limit="1MB" />
