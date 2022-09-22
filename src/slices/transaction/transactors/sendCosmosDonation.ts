@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
 import { KYCData, Receiver } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateJunoTags } from "services/juno";
+import { accountTags, junoTags } from "services/juno/tags";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import logDonation from "slices/transaction/logDonation";
@@ -64,8 +66,15 @@ export const sendCosmosDonation = createAsyncThunk(
           isShareEnabled: true,
         });
 
-        //invalidate user balance and endowment balance
+        //invalidate user balance
         dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+
+        //invalidate endowment balance
+        dispatch(
+          invalidateJunoTags([
+            { type: junoTags.account, id: accountTags.balance },
+          ])
+        );
       } else {
         updateStage({
           step: "error",
