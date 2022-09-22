@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes } from "constants/routes";
 
-export default function Nav() {
+export default function Nav({ classes = "" }: { classes?: string }) {
   return (
-    <div className="hidden lg:flex justify-end">
+    <div className={`${classes} justify-end`}>
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
       </NavLink>

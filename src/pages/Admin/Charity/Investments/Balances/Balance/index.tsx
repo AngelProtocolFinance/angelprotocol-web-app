@@ -6,7 +6,7 @@ type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const title = type === "liquid" ? "Current" : "Endowment";
   return (
-    <div className="grid text-zinc-50/80 content-start p-4">
+    <div className="grid grid-rows-[auto_1fr_1fr] text-zinc-50/80 p-4">
       <h3 className="uppercase text-center font-extrabold text-xl my-4">
         {title} ({type})
       </h3>

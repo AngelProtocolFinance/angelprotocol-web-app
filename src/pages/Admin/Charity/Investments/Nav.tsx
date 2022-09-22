@@ -5,7 +5,7 @@ import { investmentRoutes } from "constants/routes";
 export default function Nav({ classes = "" }: { classes?: string }) {
   return (
     <div
-      className={`grid grid-cols-3 divide-x divide-zinc-50/30 border border-zinc-50/30 ${classes}`}
+      className={`grid-cols-3 divide-x divide-zinc-50/30 border border-zinc-50/30 ${classes}`}
     >
       <NavLink end to={investmentRoutes.index} className={styler}>
         Balances
@@ -21,6 +21,6 @@ export default function Nav({ classes = "" }: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "uppercase text-sm text-center font-semibold font-heading text-white-grey p-3",
+  "grid place-items-center uppercase text-sm text-center font-semibold font-heading text-white-grey p-3",
   "bg-zinc-50/10"
 );
