@@ -44,13 +44,15 @@ export default function AdditionalInformation() {
           <ImgEditor<AdditionalInfoValues>
             name="banner"
             label="Banner image of your organization"
-            aspectRatio={4 / 1}
+            aspectRatioX={4}
+            aspectRatioY={1}
           />
           <ImageSizeInfo limit="1MB" />
           <ImgEditor<AdditionalInfoValues>
             name="charityLogo"
             label="Logo of your organization"
-            aspectRatio={1 / 1}
+            aspectRatioX={1}
+            aspectRatioY={1}
           />
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />

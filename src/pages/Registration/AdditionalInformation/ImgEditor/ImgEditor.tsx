@@ -16,7 +16,8 @@ type Props<T extends FieldValues> = {
   // (Path<T> returns all possible paths through T)
   name: keyof T & string;
   label: string;
-  aspectRatio: number;
+  aspectRatioX: number;
+  aspectRatioY: number;
 };
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
@@ -127,7 +128,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                       //cropper is disabled when imageFile is null
                       showModal(ImgCropper, {
                         src: uncroppedImgUrl,
-                        aspectRatio: props.aspectRatio,
+                        aspectRatio: props.aspectRatioX / props.aspectRatioY,
                         setCropedImage: (croppedBlob) => {
                           const croppedValue: FileWrapper = {
                             file: new File([croppedBlob], banner.name),
