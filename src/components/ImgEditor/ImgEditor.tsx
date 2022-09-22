@@ -24,7 +24,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const isDisabled = isSubmitting || isLoading;
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div className="flex flex-col w-full h-full">
       <div
         className={`grid place-items-center relative group aspect-[${
           props.aspectRatioX
