@@ -16,7 +16,7 @@ export default function MobileNav() {
       </Popover.Button>
       <Popover.Panel
         as="nav"
-        className="lg:hidden rounded-sm min-w-max max-w-[90vw] flex flex-wrap gap-1 absolute p-4 z-10 bg-zinc-50 right-0 top-full mt-1 rounded-lg shadow-xl"
+        className="lg:hidden absolute rounded-sm min-w-max flex flex-col sm:flex-row gap-1 p-4 z-20 bg-zinc-50 rounded-lg shadow-xl"
       >
         <AppLinks />
         <div id={ADMIN_NAV_PORTAL_ID} />
