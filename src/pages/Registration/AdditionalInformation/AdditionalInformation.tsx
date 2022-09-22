@@ -41,19 +41,35 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName value={charity.Registration.CharityName} />
-          <ImgEditor<AdditionalInfoValues>
-            name="banner"
-            label="Banner image of your organization"
-            aspectRatioX={4}
-            aspectRatioY={1}
-          />
+          <div className="flex flex-col gap-2 w-full h-full">
+            <label
+              htmlFor="banner"
+              className="cursor-pointer text-dark-grey text-left"
+            >
+              Banner image of your organization
+              <span className="ml-0.5 text-failed-red">*</span>
+            </label>
+            <ImgEditor<AdditionalInfoValues>
+              name="banner"
+              aspectRatioX={4}
+              aspectRatioY={1}
+            />
+          </div>
           <ImageSizeInfo limit="1MB" />
-          <ImgEditor<AdditionalInfoValues>
-            name="charityLogo"
-            label="Logo of your organization"
-            aspectRatioX={1}
-            aspectRatioY={1}
-          />
+          <div className="flex flex-col gap-2 w-full h-full">
+            <label
+              htmlFor="charityLogo"
+              className="cursor-pointer text-dark-grey text-left"
+            >
+              Logo of your organization
+              <span className="ml-0.5 text-failed-red">*</span>
+            </label>
+            <ImgEditor<AdditionalInfoValues>
+              name="charityLogo"
+              aspectRatioX={1}
+              aspectRatioY={1}
+            />
+          </div>
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
           <KycDonorsOnlyCheckbox

@@ -15,7 +15,6 @@ type Props<T extends FieldValues> = {
   // which are only props from T
   // (Path<T> returns all possible paths through T)
   name: keyof T & string;
-  label: string;
   aspectRatioX: number;
   aspectRatioY: number;
 };
@@ -83,15 +82,8 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
 
   return (
     <div className="flex flex-col gap-2 w-full h-full">
-      <label
-        htmlFor={props.name}
-        className="cursor-pointer text-dark-grey text-left"
-      >
-        {props.label}
-        <span className="ml-0.5 text-failed-red">*</span>
-      </label>
       <div
-        className={`grid place-items-center relative group w-full aspect-[${props.aspectRatioX}/${props.aspectRatioY}] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
+        className={`grid place-items-center relative group w-full h-full aspect-[${props.aspectRatioX}/${props.aspectRatioY}] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
         style={{
           background: `no-repeat center/cover url(${imageUrl}) ${
             isDisabled ? "rgba(0, 0, 0, 0.5)" : ""
