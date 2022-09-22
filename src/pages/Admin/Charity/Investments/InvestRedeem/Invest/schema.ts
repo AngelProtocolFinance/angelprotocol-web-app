@@ -13,7 +13,7 @@ const balance: Keys = "balance";
 type InvestmentSchema = (investments: Investments) => SchemaShape<Investment>;
 const investment: InvestmentSchema = (investments) => ({
   //access $balance context
-  amount: Yup.number().when([`\$${balance}`, type], (...args: any[]) => {
+  amount: Yup.number().when([`$${balance}`, type], (...args: any[]) => {
     const [balance, type, schema] = args as [
       Balance,
       AccountType,

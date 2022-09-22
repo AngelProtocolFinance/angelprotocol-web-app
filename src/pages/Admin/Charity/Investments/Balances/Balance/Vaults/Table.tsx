@@ -7,7 +7,7 @@ import {
 import { useAdminResources } from "pages/Admin/Guard";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { condense, condenseToNum, humanize, maskAddress } from "helpers";
+import { condenseToNum, humanize, maskAddress } from "helpers";
 
 type Props = EndowmentBalance & { type: AccountType; classes?: string };
 export default function Table({
@@ -74,7 +74,7 @@ function withBalances(
   balances: VaultWithBalance[]
 ): Vault[] {
   return vaults.map((vault) => {
-    const [_, vaultBalance = "0"] =
+    const [, vaultBalance = "0"] =
       balances.find(([vaultAddr]) =>
         typeof vault === "string"
           ? vault === vaultAddr

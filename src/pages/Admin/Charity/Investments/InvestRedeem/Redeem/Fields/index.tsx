@@ -23,7 +23,12 @@ export default function Fields({ classes = "", type }: Props) {
         (field, i) =>
           //preseve field idx
           (field.type === type && (
-            <Field key={field.id} name={maskAddress(field.vault)} idx={i} />
+            <Field
+              key={field.id}
+              balance={field.balance}
+              name={maskAddress(field.vault)}
+              idx={i}
+            />
           )) ||
           null
       )}

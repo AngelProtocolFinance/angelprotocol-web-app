@@ -6,7 +6,6 @@ import { AccountType } from "types/contracts";
 import Icon from "components/Icon";
 import { maskAddress } from "helpers";
 import useVaultSelection from "../../../Vaults/useVaultSelection";
-import VaultField from "./Field";
 import Field from "./Field";
 
 type Props = { classes?: string; type: AccountType };

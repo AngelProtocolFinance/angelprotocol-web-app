@@ -27,6 +27,7 @@ export default function Field({ name, idx, remove }: Props) {
       <p className="p-3 rounded-md bg-zinc-50/5 shadow-inner">{name}</p>
       <div className="relative w-full">
         <input
+          placeholder="0.0000"
           className="w-full bg-zinc-50/5 shadow-inner p-3 focus:outline-none text-lg"
           {...register(`investments.${idx}.amount`, {
             setValueAs(value) {

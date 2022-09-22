@@ -1,6 +1,5 @@
 import { useFormContext } from "react-hook-form";
 import { FormProps, StrategyFormValues } from "./types";
-import { AccountType } from "types/contracts";
 import Pie from "../Pie";
 import Fields from "./Fields";
 import useUpdateStrategy from "./useUpdateStrategy";
