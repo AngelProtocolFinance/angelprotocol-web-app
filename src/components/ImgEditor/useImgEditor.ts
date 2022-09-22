@@ -24,9 +24,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     formState: { isSubmitting, errors },
   } = useFormContext();
 
-  const banner: FileWrapper = watch(props.name);
+  const banner: FileWrapper | undefined = watch(props.name);
 
-  const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
+  const initialImageRef = useRef<FileWrapper | undefined>(banner); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
 
   const [isLoading, setLoading] = useState(false);
@@ -90,11 +90,12 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         src: uncroppedImgUrl,
         aspectRatio: props.aspectRatioX / props.aspectRatioY,
         setCropedImage: (croppedBlob) => {
+          // banner!.name !== undefined, because banner has to be set for it to be croppable
           const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], banner.name, {
+            file: new File([croppedBlob], banner!.name, {
               type: croppedBlob.type,
             }),
-            name: banner.name,
+            name: banner!.name,
           };
           onChange(croppedValue);
         },
