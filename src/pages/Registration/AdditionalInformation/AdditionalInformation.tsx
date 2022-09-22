@@ -24,10 +24,6 @@ export default function AdditionalInformation() {
       kycDonorsOnly: charity.Metadata.KycDonorsOnly,
     },
   });
-  const {
-    register,
-    formState: { isSubmitting },
-  } = methods;
 
   return (
     <div className="flex flex-col gap-5 items-center w-full">
@@ -73,8 +69,8 @@ export default function AdditionalInformation() {
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
           <KycDonorsOnlyCheckbox
-            disabled={isSubmitting}
-            {...register("kycDonorsOnly")}
+            disabled={methods.formState.isSubmitting}
+            {...methods.register("kycDonorsOnly")}
           />
           <ButtonSection />
         </form>
