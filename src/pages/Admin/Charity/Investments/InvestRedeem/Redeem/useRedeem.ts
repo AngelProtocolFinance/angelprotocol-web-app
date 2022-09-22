@@ -50,8 +50,8 @@ export default function useRedeem() {
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
-      "Update strategy",
-      `update stratey of endowment: ${endowmentId}`,
+      "Redeem",
+      `redeem funds for endowment: ${endowmentId}`,
       msgs
     );
 
@@ -66,7 +66,7 @@ export default function useRedeem() {
         ],
         //Juno withdrawal
         successLink: proposalLink,
-        successMessage: "Strategy update proposal successfully created!",
+        successMessage: "Redeem proposal created!",
       })
     );
     showModal(TransactionPrompt, {});

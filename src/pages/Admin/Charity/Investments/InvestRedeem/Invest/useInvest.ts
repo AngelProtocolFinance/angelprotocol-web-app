@@ -55,8 +55,8 @@ export default function useInvest() {
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
-      "Update strategy",
-      `update stratey of endowment: ${endowmentId}`,
+      "Invest",
+      `Redeem funds for endowment: ${endowmentId}`,
       msgs
     );
 
@@ -71,7 +71,7 @@ export default function useInvest() {
         ],
         //Juno withdrawal
         successLink: proposalLink,
-        successMessage: "Strategy update proposal successfully created!",
+        successMessage: "Investment proposal created!",
       })
     );
     showModal(TransactionPrompt, {});
