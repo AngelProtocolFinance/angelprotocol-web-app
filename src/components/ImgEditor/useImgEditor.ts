@@ -73,17 +73,14 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [banner]);
 
-  const onUpload = useCallback(
-    () => inputRef.current?.click(),
-    [inputRef.current]
-  );
+  const onUpload = useCallback(() => inputRef.current?.click(), []);
 
   const onUndo = useCallback(
     (onChange: OnChangeFunc) => () => {
       setUncroppedImgUrl(""); // will be read once the file is read in FileReader
       onChange(initialImageRef.current);
     },
-    [initialImageRef.current]
+    []
   );
 
   const onCrop = useCallback(
