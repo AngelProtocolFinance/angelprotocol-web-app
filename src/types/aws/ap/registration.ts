@@ -94,6 +94,7 @@ type InitialMetaData = Optional<
   | "CharityLogo"
   | "CharityOverview"
   | "EndowmentContract"
+  | "EndowmentId"
   | "JunoWallet"
   | "KycDonorsOnly"
 >;
