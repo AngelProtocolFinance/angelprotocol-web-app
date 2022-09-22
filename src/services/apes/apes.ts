@@ -7,7 +7,7 @@ import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
-import { apesTags, customTags } from "./tags";
+import { apesTags } from "./tags";
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -15,14 +15,14 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: [apesTags.custom, apesTags.withdraw_logs],
+  tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
     chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
-      providesTags: [{ type: apesTags.custom, id: customTags.chain }],
+      providesTags: [{ type: apesTags.chain }],
       async queryFn(args) {
         try {
           const { address, chainId } = args.providerInfo;

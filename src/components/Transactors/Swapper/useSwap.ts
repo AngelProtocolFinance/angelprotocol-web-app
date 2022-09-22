@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { apesTags, customTags, invalidateApesTags } from "services/apes";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -30,7 +30,7 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           invalidateJunoTags([]),
-          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
+          invalidateApesTags([{ type: apesTags.chain }]),
         ],
       })
     );

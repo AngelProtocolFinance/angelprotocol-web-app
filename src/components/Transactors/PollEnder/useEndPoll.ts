@@ -1,4 +1,4 @@
-import { apesTags, customTags, invalidateApesTags } from "services/apes";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
@@ -28,7 +28,7 @@ export default function useEndPoll(pollId: number) {
         msgs: [msg],
         tagPayloads: [
           invalidateJunoTags([{ type: junoTags.gov }]),
-          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
+          invalidateApesTags([{ type: apesTags.chain }]),
         ],
       })
     );
