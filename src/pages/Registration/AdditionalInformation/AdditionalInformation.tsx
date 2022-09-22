@@ -33,7 +33,7 @@ export default function AdditionalInformation() {
           className="flex flex-col justify-center w-5/6 h-full gap-4"
           onSubmit={methods.handleSubmit(submit)}
         >
-          <OrganizationName value={charity.Registration.CharityName} />
+          <OrganizationName />
           <Banner />
           <CharityLogo />
           <OverviewInput />
@@ -45,18 +45,10 @@ export default function AdditionalInformation() {
   );
 }
 
-function Title() {
-  return (
-    <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
-      Your logo and description will be used to populate your public profile
-    </h2>
-  );
-}
-
-const ImageSizeInfo = (props: { limit: string }) => (
-  <p className="text-xs -mt-5 text-left font-thin text-white/70">
-    should be less than {props.limit}
-  </p>
+const Title = () => (
+  <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
+    Your logo and description will be used to populate your public profile
+  </h2>
 );
 
 function KycDonorsOnlyCheckbox() {
@@ -75,11 +67,17 @@ function KycDonorsOnlyCheckbox() {
   );
 }
 
-const OrganizationName = ({ value }: { value: string }) => (
-  <InputRow htmlFor="charityName" label="Name of your organization">
-    <span className="flex w-full font-bold">{value}</span>
-  </InputRow>
-);
+function OrganizationName() {
+  const { charity } = useRegistrationQuery();
+
+  return (
+    <InputRow htmlFor="charityName" label="Name of your organization">
+      <span className="flex w-full font-bold">
+        {charity.Registration.CharityName}
+      </span>
+    </InputRow>
+  );
+}
 
 const Banner = () => (
   <div className="flex flex-col gap-2 w-full h-full">
@@ -114,4 +112,10 @@ const CharityLogo = () => (
     </div>
     <ImageSizeInfo limit="1MB" />
   </div>
+);
+
+const ImageSizeInfo = ({ limit }: { limit: string }) => (
+  <p className="text-xs -mt-5 text-left font-thin text-white/70">
+    should be less than {limit}
+  </p>
 );
