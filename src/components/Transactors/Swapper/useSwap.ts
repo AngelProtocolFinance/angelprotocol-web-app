@@ -27,7 +27,6 @@ export default function useSwap() {
       sendCosmosTx({
         wallet,
         tx: tx!,
-        tagPayloads: [invalidateJunoTags([])],
       })
     );
   }
