@@ -104,14 +104,13 @@ const CharityLogo = () => (
       Logo of your organization
       <span className="ml-0.5 text-failed-red">*</span>
     </label>
-    <div className="w-32 h-32 sm:w-40 sm:h-40">
-      <ImgEditor<AdditionalInfoValues>
-        name="charityLogo"
-        aspectRatioX={1}
-        aspectRatioY={1}
-        accept={VALID_MIME_TYPES}
-      />
-    </div>
+    <ImgEditor<AdditionalInfoValues>
+      name="charityLogo"
+      aspectRatioX={1}
+      aspectRatioY={1}
+      accept={VALID_MIME_TYPES}
+      className="w-32 h-32 sm:w-40 sm:h-40"
+    />
     <ImageSizeInfo limit="1MB" />
   </div>
 );

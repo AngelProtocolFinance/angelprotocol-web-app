@@ -24,7 +24,9 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const isDisabled = isSubmitting || isLoading;
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div
+      className={`flex flex-col gap-2 w-full h-full ${props.className ?? ""}`}
+    >
       <div
         className={`grid place-items-center relative group w-full h-full aspect-[${props.aspectRatioX}/${props.aspectRatioY}] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
         style={{
