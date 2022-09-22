@@ -60,12 +60,14 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           </p>
         )}
       </div>
-      <Link
-        to={`${appRoutes.profile}/${charity.Metadata.EndowmentId}`}
-        className="flex w-full text-center gap-1 font-heading uppercase font-bold text-sm text-white hover:underline"
-      >
-        Check out your new Endowment's profile page here
-      </Link>
+      {status === "Active" && (
+        <Link
+          to={`${appRoutes.profile}/${charity.Metadata.EndowmentId}`}
+          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-thin-blue underline hover:text-bright-blue"
+        >
+          Check out your new Endowment's profile page here
+        </Link>
+      )}
     </div>
   );
 }
