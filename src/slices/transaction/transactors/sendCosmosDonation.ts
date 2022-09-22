@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
 import { KYCData, Receiver } from "types/aws";
-import { invalidateJunoTags } from "services/juno";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import logDonation from "slices/transaction/logDonation";
@@ -65,11 +65,7 @@ export const sendCosmosDonation = createAsyncThunk(
         });
 
         //invalidate user balance and endowment balance
-        dispatch(
-          invalidateJunoTags([
-            /** invalidate future balance queriers */
-          ])
-        );
+        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
       } else {
         updateStage({
           step: "error",
