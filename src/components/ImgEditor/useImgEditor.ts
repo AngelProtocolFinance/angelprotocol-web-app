@@ -91,7 +91,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         aspectRatio: props.aspectRatioX / props.aspectRatioY,
         setCropedImage: (croppedBlob) => {
           const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], banner.name),
+            file: new File([croppedBlob], banner.name, {
+              type: croppedBlob.type,
+            }),
             name: banner.name,
           };
           onChange(croppedValue);
