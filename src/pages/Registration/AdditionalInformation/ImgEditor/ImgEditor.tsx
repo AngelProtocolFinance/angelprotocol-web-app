@@ -59,7 +59,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
     };
 
     return fr;
-  }, [uncroppedImgUrl]);
+  }, [uncroppedImgUrl, handleError]);
 
   useEffect(() => {
     (async function () {
@@ -91,7 +91,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
       <div
-        className="grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey"
+        className={`grid place-items-center relative group w-full aspect-[${props.aspectRatioX}/${props.aspectRatioY}] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
         style={{
           background: `no-repeat center/cover url(${imageUrl}) ${
             isDisabled ? "rgba(0, 0, 0, 0.5)" : ""
