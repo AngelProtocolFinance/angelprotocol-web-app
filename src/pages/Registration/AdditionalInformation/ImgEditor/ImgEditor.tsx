@@ -1,83 +1,27 @@
 import { ErrorMessage } from "@hookform/error-message";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Controller, FieldValues, useFormContext } from "react-hook-form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { FileWrapper } from "components/FileDropzone";
+import React from "react";
+import { Controller, FieldValues } from "react-hook-form";
+import { Props } from "./types";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
-import { logger } from "helpers";
 import { VALID_MIME_TYPES } from "../additionalnfoSchema";
-import ImgCropper from "./ImgCropper";
-
-type Props<T extends FieldValues> = {
-  // we get common props with this intersection,
-  // which are only props from T
-  // (Path<T> returns all possible paths through T)
-  name: keyof T & string;
-  aspectRatioX: number;
-  aspectRatioY: number;
-};
+import useImgEditor from "./useImgEditor";
 
 export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
   const {
-    watch,
     control,
-    formState: { isSubmitting, errors },
-  } = useFormContext();
+    errors,
+    inputRef,
+    imageUrl,
+    isInitial,
+    isLoading,
+    isSubmitting,
+    onUpload,
+    onUndo,
+    onCrop,
+    onInputChange,
+  } = useImgEditor(props);
 
-  const banner: FileWrapper = watch(props.name);
-
-  const initialImageRef = useRef<FileWrapper>(banner); //use to reset input internal state
-  const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
-
-  const [isLoading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
-
-  const fileReader = useMemo(() => {
-    const fr = new FileReader();
-
-    fr.onload = (e) => {
-      const newImgUrl = e.target?.result?.toString() ?? "";
-
-      setImageUrl(newImgUrl);
-      if (!uncroppedImgUrl) {
-        setUncroppedImgUrl(newImgUrl);
-      }
-
-      setLoading(false);
-    };
-
-    fr.onerror = (e) => {
-      logger.error("Failed to load image", e.target?.error?.message);
-      handleError("failed to load image");
-      setLoading(false);
-    };
-
-    return fr;
-  }, [uncroppedImgUrl, handleError]);
-
-  useEffect(() => {
-    (async function () {
-      if (!banner) {
-        return;
-      }
-
-      setLoading(true);
-
-      const blob: Blob =
-        banner.file ?? (await fetch(banner.publicUrl).then((x) => x.blob()));
-
-      fileReader.readAsDataURL(blob);
-    })();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [banner]);
-
-  const isInitial = initialImageRef.current === banner;
   const isDisabled = isSubmitting || isLoading;
 
   return (
@@ -91,47 +35,24 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
           backgroundBlendMode: "darken",
         }}
       >
-        {(isLoading && <LoadingOverlay />) || (
+        {isLoading ? (
+          <LoadingOverlay />
+        ) : (
           <Controller
             name={props.name}
             control={control}
             render={({ field: { onChange, ref } }) => (
               <div className="hidden absolute group-hover:flex">
-                <IconButton
-                  onClick={() => inputRef.current?.click()}
-                  disabled={isDisabled}
-                >
+                <IconButton onClick={onUpload} disabled={isDisabled}>
                   <Icon type="Upload" />
                 </IconButton>
                 {!isInitial && (
-                  <IconButton
-                    onClick={() => {
-                      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-                      onChange(initialImageRef.current);
-                    }}
-                    disabled={isDisabled}
-                  >
+                  <IconButton onClick={onUndo(onChange)} disabled={isDisabled}>
                     <Icon type="Undo" />
                   </IconButton>
                 )}
                 {!isInitial && (
-                  <IconButton
-                    onClick={() => {
-                      //cropper is disabled when imageFile is null
-                      showModal(ImgCropper, {
-                        src: uncroppedImgUrl,
-                        aspectRatio: props.aspectRatioX / props.aspectRatioY,
-                        setCropedImage: (croppedBlob) => {
-                          const croppedValue: FileWrapper = {
-                            file: new File([croppedBlob], banner.name),
-                            name: banner.name,
-                          };
-                          onChange(croppedValue);
-                        },
-                      });
-                    }}
-                    disabled={isDisabled}
-                  >
+                  <IconButton onClick={onCrop(onChange)} disabled={isDisabled}>
                     <Icon type="Crop" />
                   </IconButton>
                 )}
@@ -143,18 +64,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                   disabled={isDisabled}
                   id={props.name}
                   type="file"
-                  onChange={(e) => {
-                    let fileWrapper: FileWrapper | undefined;
-                    if (e.target.files && e.target.files.length > 0) {
-                      fileWrapper = {
-                        file: e.target.files[0],
-                        name: e.target.files[0].name,
-                      };
-                    }
-
-                    onChange(fileWrapper);
-                    setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-                  }}
+                  onChange={onInputChange(onChange)}
                   accept={VALID_MIME_TYPES.join(", ")}
                   className="w-0 h-0 appearance-none"
                 />
