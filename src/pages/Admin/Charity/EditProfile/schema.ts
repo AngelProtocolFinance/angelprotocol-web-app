@@ -1,9 +1,17 @@
 import * as Yup from "yup";
 import { UpdateProfileValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
+import { FileWrapper } from "components/FileDropzone";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
 import { proposalShape } from "../../constants";
+
+export const VALID_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/svg",
+];
 
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<UpdateProfileValues> = {
@@ -13,7 +21,21 @@ const shape: SchemaShape<UpdateProfileValues> = {
   //sdgNum: no need to validate, selected from dropdown with default value
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
-  //image: no need to validate, url is auto generated
+  image: Yup.mixed<FileWrapper>()
+    .required("Charity banner required")
+    .test({
+      name: "fileType",
+      message: "Valid file types are JPG, PNG and WEBP",
+      test: (fileWrapper) =>
+        fileWrapper?.file
+          ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
+          : true,
+    })
+    .test({
+      name: "fileSize",
+      message: "Image size must be smaller than 1MB",
+      test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
+    }),
   url: url,
   // registration_number: no need to validate
   // country_city_origin: no need to validate

@@ -74,8 +74,8 @@ const endowmentMsg: CreateEndowmentPayload = {
     overview: CHARITY.Metadata.CharityOverview,
     categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
     tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-    logo: CHARITY.Metadata.CharityLogo.publicUrl || "",
-    image: CHARITY.Metadata.Banner.publicUrl || "",
+    logo: CHARITY.Metadata.CharityLogo!.publicUrl,
+    image: CHARITY.Metadata.Banner!.publicUrl,
     url: CHARITY.Registration.Website,
     registration_number: "",
     country_of_origin: "",
