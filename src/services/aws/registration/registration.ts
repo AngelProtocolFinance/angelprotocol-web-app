@@ -189,10 +189,12 @@ export const {
 
 export const useRegistrationQuery = () => {
   const regRef = getSavedRegistrationReference();
-  const { data: charity = placeholderCharity, ...rest } =
-    registration_api.useRegistrationQuery(regRef, {
-      skip: !regRef,
-    });
+  const { data, ...rest } = registration_api.useRegistrationQuery(regRef, {
+    skip: !regRef,
+  });
+
+  const charity = !regRef || !data ? placeholderCharity : data;
+
   return { charity, ...rest };
 };
 
