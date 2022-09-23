@@ -24,9 +24,9 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   const isDisabled = isSubmitting || isLoading;
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col">
       <div
-        className={`grid place-items-center relative group aspect-[${
+        className={`grid place-items-center group aspect-[${
           props.aspectRatioX
         }/${
           props.aspectRatioY
@@ -47,7 +47,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
             name={props.name}
             control={control}
             render={({ field: { onChange, ref } }) => (
-              <div className="hidden absolute group-hover:flex">
+              <div className="hidden group-hover:flex">
                 <IconButton onClick={onUpload} disabled={isDisabled}>
                   <Icon type="Upload" />
                 </IconButton>
