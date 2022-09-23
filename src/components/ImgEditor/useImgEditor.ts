@@ -23,9 +23,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     formState: { isSubmitting, errors },
   } = useFormContext();
 
-  const banner: FileWrapper | undefined = watch(props.name);
+  const imageFile: FileWrapper | undefined = watch(props.name);
 
-  const initialImageRef = useRef<FileWrapper | undefined>(banner); //use to reset input internal state
+  const initialImageRef = useRef<FileWrapper | undefined>(imageFile); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
 
   const [isLoading, setLoading] = useState(false);
@@ -54,24 +54,25 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
 
   useEffect(() => {
     (async function () {
-      if (!banner) {
+      if (!imageFile) {
         return;
       }
 
       // when first uploading an image on creation
       if (!initialImageRef.current) {
-        initialImageRef.current = banner;
+        initialImageRef.current = imageFile;
       }
 
       setLoading(true);
 
       const blob: Blob =
-        banner.file ?? (await fetch(banner.publicUrl).then((x) => x.blob()));
+        imageFile.file ??
+        (await fetch(imageFile.publicUrl).then((x) => x.blob()));
 
       fileReader.readAsDataURL(blob);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [banner]);
+  }, [imageFile]);
 
   const onUpload = useCallback(() => inputRef.current?.click(), []);
 
@@ -92,16 +93,22 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         setCropedImage: (croppedBlob) => {
           // banner!.name !== undefined, because banner has to be set for it to be croppable
           const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], banner!.name, {
+            file: new File([croppedBlob], imageFile!.name, {
               type: croppedBlob.type,
             }),
-            name: banner!.name,
+            name: imageFile!.name,
           };
           onChange(croppedValue);
         },
       });
     },
-    [props.aspectRatioX, props.aspectRatioY, banner, uncroppedImgUrl, showModal]
+    [
+      props.aspectRatioX,
+      props.aspectRatioY,
+      imageFile,
+      uncroppedImgUrl,
+      showModal,
+    ]
   );
 
   const onInputChange = useCallback(
@@ -125,7 +132,7 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     errors,
     inputRef,
     imageUrl,
-    isInitial: initialImageRef.current === banner,
+    isInitial: initialImageRef.current === imageFile,
     isLoading,
     isSubmitting,
     onUpload,
