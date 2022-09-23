@@ -58,6 +58,11 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         return;
       }
 
+      // when first uploading an image on creation
+      if (!initialImageRef.current) {
+        initialImageRef.current = banner;
+      }
+
       setLoading(true);
 
       const blob: Blob =
