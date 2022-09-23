@@ -10,7 +10,6 @@ import { Props } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { FileWrapper } from "components/FileDropzone";
-import { logger } from "helpers";
 import ImgCropper from "./ImgCropper";
 
 type OnChangeFunc = (...event: any[]) => void;
@@ -38,18 +37,15 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
 
     fr.onload = (e) => {
       const newImgUrl = e.target?.result?.toString() ?? "";
-
       setImageUrl(newImgUrl);
       if (!uncroppedImgUrl) {
         setUncroppedImgUrl(newImgUrl);
       }
-
       setLoading(false);
     };
 
     fr.onerror = (e) => {
-      logger.error("Failed to load image", e.target?.error?.message);
-      handleError("failed to load image");
+      handleError(e.target?.error, "failed to load image");
       setLoading(false);
     };
 
@@ -69,7 +65,6 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
 
       fileReader.readAsDataURL(blob);
     })();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [banner]);
 
