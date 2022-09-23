@@ -1,15 +1,8 @@
-import { FC, PropsWithChildren } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
+import { InputProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 
-type InputRowProps = PropsWithChildren<{
-  htmlFor?: string;
-  label: string;
-  required?: true | boolean;
-  infoModal?: FC<{}>;
-}>;
-
-export function InputRow(props: InputRowProps) {
+export function InputRow(props: InputProps) {
   const { htmlFor: id, label, required, infoModal, children } = props;
 
   return (
@@ -28,7 +21,7 @@ export function InputRow(props: InputRowProps) {
   );
 }
 
-function InfoIcon({ modal }: { modal: FC<{}> }) {
+function InfoIcon({ modal }: { modal: React.FC<{}> }) {
   const { showModal } = useModalContext();
   return (
     <BsQuestionCircle
