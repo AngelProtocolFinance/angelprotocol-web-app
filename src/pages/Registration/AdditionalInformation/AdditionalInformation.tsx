@@ -4,9 +4,9 @@ import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
 import ImgEditor from "components/ImgEditor";
+import RichTextEditor from "components/RichTextEditor";
 import InputColumn from "../common/InputColumn";
 import ButtonSection from "./ButtonSection";
-import OverviewInput from "./OverviewInput";
 import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
@@ -118,3 +118,23 @@ const ImageSizeInfo = ({ limit }: { limit: string }) => (
     should be less than {limit}
   </p>
 );
+
+function OverviewInput() {
+  return (
+    <InputColumn
+      htmlFor="charityOverview"
+      label="Description of your organization"
+      required
+    >
+      <RichTextEditor<AdditionalInfoValues>
+        fieldName="charityOverview"
+        classes={{
+          container:
+            "text-white/80 p-3 rounded-md bg-white/10 shadow-inner w-full text-left",
+          error: "text-sm text-failed-red ml-1",
+        }}
+        placeHolder="an overview of your organization"
+      />
+    </InputColumn>
+  );
+}
