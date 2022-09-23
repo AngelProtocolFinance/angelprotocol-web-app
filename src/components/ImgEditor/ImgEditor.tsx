@@ -52,7 +52,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
                     <Icon type="Undo" />
                   </IconButton>
                 )}
-                {!isInitial && (
+                {!imageUrl && (
                   <IconButton onClick={onCrop(onChange)} disabled={isDisabled}>
                     <Icon type="Crop" />
                   </IconButton>
