@@ -1,5 +1,8 @@
 import { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
+import { invalidateAwsTags } from "services/aws/aws";
+import { adminTags, awsTags } from "services/aws/tags";
+import { useSetter } from "store/accessors";
 import { removeSavedRegistrationReference } from "helpers";
 import { Button, ButtonMailTo } from "../common";
 import routes from "../routes";
@@ -7,9 +10,13 @@ import ResumeForm from "./ResumeForm";
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const dispatch = useSetter();
 
   const handleStart = () => {
     removeSavedRegistrationReference();
+    dispatch(
+      invalidateAwsTags([{ type: awsTags.admin, id: adminTags.registration }])
+    );
     navigate(routes.contactDetails);
   };
 
