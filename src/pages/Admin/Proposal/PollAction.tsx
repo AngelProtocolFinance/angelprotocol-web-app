@@ -3,7 +3,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { Tags } from "slices/transaction/types";
 import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
-import { customTags as apesCustomTags, apesTags } from "services/apes";
+import { apesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { useLatestBlock } from "services/juno/queriers";
 import {
@@ -151,8 +151,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
 
     case "cw3_transfer":
       tagsToInvalidate.push({
-        type: apesTags.custom,
-        id: apesCustomTags.chain,
+        type: apesTags.chain,
       });
       break;
 
@@ -169,7 +168,7 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
           type: junoTags.account,
           id: accountTags.balance,
         },
-        { type: apesTags.custom, id: apesCustomTags.chain }
+        { type: apesTags.chain }
         // edge: beneficiary is user wallet
       );
       break;

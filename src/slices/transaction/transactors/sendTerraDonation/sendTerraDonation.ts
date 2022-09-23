@@ -3,7 +3,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
 import { Chain, KYCData, Receiver } from "types/aws";
-import { apesTags, customTags, invalidateApesTags } from "services/apes";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
 import handleTxError from "../../handleTxError";
@@ -90,11 +90,7 @@ export const sendTerraDonation = createAsyncThunk(
           });
 
           //invalidate user balance and endowment balance
-          dispatch(
-            invalidateApesTags([
-              { type: apesTags.custom, id: customTags.chain },
-            ])
-          );
+          dispatch(invalidateApesTags([{ type: apesTags.chain }]));
         } else {
           updateStage({
             step: "error",
