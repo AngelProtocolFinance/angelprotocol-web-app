@@ -36,13 +36,13 @@ export const juno_test_chain_info: ChainInfo = {
       coinDenom: "JUNOX",
       coinMinimalDenom: "ujunox",
       coinDecimals: 6,
+      gasPriceStep: {
+        low: 0.03,
+        average: 0.04,
+        high: 0.05,
+      },
     },
   ],
   coinType: 118,
-  gasPriceStep: {
-    low: 0.03,
-    average: 0.04,
-    high: 0.05,
-  },
   features: ["cosmwasm", "ibc-transfer"],
 };
