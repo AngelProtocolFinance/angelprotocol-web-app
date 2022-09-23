@@ -15,12 +15,10 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   .test({
     name: "fileType",
     message: "Valid file types are JPG, PNG, WEBP and SVG",
-    test: (fileWrapper) => {
-      console.log(fileWrapper);
-      return fileWrapper?.file
+    test: (fileWrapper) =>
+      fileWrapper?.file
         ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
-        : true;
-    },
+        : true,
   })
   .test({
     name: "fileSize",
