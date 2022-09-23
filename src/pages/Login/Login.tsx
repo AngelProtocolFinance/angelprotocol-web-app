@@ -2,8 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import eyeSlashIcon from "assets/images/eye-slash.png";
-import eyeIcon from "assets/images/eye.png";
+import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import useLogin from "./useLogin";
 
@@ -42,12 +41,15 @@ const Login = () => {
                 placeholder="Enter your password."
                 name="password"
               />
-              <img
-                alt=""
-                src={isShowPassword ? eyeIcon : eyeSlashIcon}
-                width="16px"
+              <button
                 onClick={togglePasswordView}
-              />
+                className="grid place-items-center"
+              >
+                <Icon
+                  type={isShowPassword ? "Eye" : "EyeInvisible"}
+                  size={16}
+                />
+              </button>
             </div>
             <ErrorMessage
               errors={errors}
