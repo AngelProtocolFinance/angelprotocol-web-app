@@ -4,7 +4,7 @@ import { AdditionalInfoValues } from "../types";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
 import ImgEditor from "components/ImgEditor";
-import { InputRow } from "../common";
+import InputColumn from "../common/InputColumn";
 import ButtonSection from "./ButtonSection";
 import OverviewInput from "./OverviewInput";
 import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
@@ -30,7 +30,7 @@ export default function AdditionalInformation() {
 
       <FormProvider {...methods}>
         <form
-          className="flex flex-col justify-center w-5/6 h-full gap-4"
+          className="flex flex-col justify-center w-5/6 h-full gap-10"
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName />
@@ -71,49 +71,46 @@ function OrganizationName() {
   const { charity } = useRegistrationQuery();
 
   return (
-    <InputRow htmlFor="charityName" label="Name of your organization">
+    <InputColumn htmlFor="charityName" label="Name of your organization">
       <span className="flex w-full font-bold">
         {charity.Registration.CharityName}
       </span>
-    </InputRow>
+    </InputColumn>
   );
 }
 
 const Banner = () => (
-  <div className="flex flex-col gap-2 w-full h-full">
-    <label htmlFor="banner" className="cursor-pointer text-dark-grey text-left">
-      Banner image of your organization
-      <span className="ml-0.5 text-failed-red">*</span>
-    </label>
-    <ImgEditor<AdditionalInfoValues>
-      name="banner"
-      aspectRatioX={4}
-      aspectRatioY={1}
-      accept={VALID_MIME_TYPES}
-      className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
-    />
-    <ImageSizeInfo limit="1MB" />
-  </div>
+  <InputColumn
+    htmlFor="banner"
+    label="Banner image of your organization"
+    required
+  >
+    <div className="flex flex-col gap-2">
+      <ImgEditor<AdditionalInfoValues>
+        name="banner"
+        aspectRatioX={4}
+        aspectRatioY={1}
+        accept={VALID_MIME_TYPES}
+        className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
+      />
+      <ImageSizeInfo limit="1MB" />
+    </div>
+  </InputColumn>
 );
 
 const CharityLogo = () => (
-  <div className="flex flex-col gap-2 w-full h-full">
-    <label
-      htmlFor="charityLogo"
-      className="cursor-pointer text-dark-grey text-left"
-    >
-      Logo of your organization
-      <span className="ml-0.5 text-failed-red">*</span>
-    </label>
-    <ImgEditor<AdditionalInfoValues>
-      name="charityLogo"
-      aspectRatioX={1}
-      aspectRatioY={1}
-      accept={VALID_MIME_TYPES}
-      className="h-20 sm:h-40 w-20 sm:w-40"
-    />
-    <ImageSizeInfo limit="1MB" />
-  </div>
+  <InputColumn htmlFor="charityLogo" label="Logo of your organization" required>
+    <div className="flex flex-col gap-2">
+      <ImgEditor<AdditionalInfoValues>
+        name="charityLogo"
+        aspectRatioX={1}
+        aspectRatioY={1}
+        accept={VALID_MIME_TYPES}
+        className="h-20 sm:h-40 w-20 sm:w-40"
+      />
+      <ImageSizeInfo limit="1MB" />
+    </div>
+  </InputColumn>
 );
 
 const ImageSizeInfo = ({ limit }: { limit: string }) => (
