@@ -90,7 +90,7 @@ const Banner = () => (
       aspectRatioX={4}
       aspectRatioY={1}
       accept={VALID_MIME_TYPES}
-      className="min-h-[5rem] sm:min-h-[10rem]"
+      className="h-[5rem] sm:h-[10rem] w-[20rem] sm:w-[40rem]"
     />
     <ImageSizeInfo limit="1MB" />
   </div>
@@ -110,7 +110,7 @@ const CharityLogo = () => (
       aspectRatioX={1}
       aspectRatioY={1}
       accept={VALID_MIME_TYPES}
-      className="w-32 sm:w-40"
+      className="h-[5rem] sm:h-[10rem] w-[5rem] sm:w-[10rem]"
     />
     <ImageSizeInfo limit="1MB" />
   </div>

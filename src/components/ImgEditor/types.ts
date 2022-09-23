@@ -8,5 +8,5 @@ export type Props<T extends FieldValues> = {
   accept: string[];
   aspectRatioX: number;
   aspectRatioY: number;
-  className: string;
+  className?: string;
 };

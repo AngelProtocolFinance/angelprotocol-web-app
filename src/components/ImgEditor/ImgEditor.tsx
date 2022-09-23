@@ -26,11 +26,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   return (
     <div className="flex flex-col">
       <div
-        className={`grid place-items-center group aspect-[${
-          props.aspectRatioX
-        }/${
-          props.aspectRatioY
-        }] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey ${
+        className={`grid place-items-center group p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey ${
           props.className ?? ""
         }`}
         style={{
