@@ -7,6 +7,7 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { StageUpdater } from "slices/transaction/types";
 import { Receiver } from "types/aws";
+import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers";
@@ -51,6 +52,8 @@ export const sendEthDonation = createAsyncThunk(
         );
         response = await ER20Contract.transfer(args.tx.to, args.tx.value);
       }
+
+      dispatch(invalidateApesTags([{ type: apesTags.chain }]));
 
       updateStage({ step: "submit", message: "Saving donation info.." });
       const receipient: Receiver =

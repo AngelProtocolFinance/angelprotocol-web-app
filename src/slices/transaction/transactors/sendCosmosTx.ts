@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
+import { apesTags, invalidateApesTags } from "services/apes";
 import Contract from "contracts/Contract";
 import { extractFeeAmount } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
@@ -56,7 +57,9 @@ export const sendCosmosTx = createAsyncThunk(
             successLink: args.successLink,
           });
         }
-        //invalidate cache entries
+        //always invalidate cached chain data to reflect balance changes from fee deduction
+        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+        //invalidate custom cache entries
         for (const tagPayload of args.tagPayloads || []) {
           dispatch(tagPayload);
         }

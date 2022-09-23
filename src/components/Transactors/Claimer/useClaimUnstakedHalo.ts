@@ -1,4 +1,3 @@
-import { apesTags, customTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
@@ -20,7 +19,6 @@ export default function useClaimUnstakedHalo() {
             { type: junoTags.gov, id: govTags.staker },
             { type: junoTags.gov, id: govTags.halo_balance },
           ]),
-          invalidateApesTags([{ type: apesTags.custom, id: customTags.chain }]),
         ],
       })
     );
