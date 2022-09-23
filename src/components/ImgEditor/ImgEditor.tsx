@@ -26,9 +26,9 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   return (
     <div className="flex flex-col">
       <div
-        className={`grid place-items-center group p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey ${
-          props.className ?? ""
-        }`}
+        className={`grid place-items-center group p-1 rounded-md mb-4 bg-light-grey shadow-inner ${
+          errors[props.name] ? "shadow-red-500" : "shadow-white-grey"
+        } ${props.className ?? ""}`}
         style={{
           background: `no-repeat center/cover url(${imageUrl}) ${
             isDisabled ? "rgba(0, 0, 0, 0.5)" : ""
