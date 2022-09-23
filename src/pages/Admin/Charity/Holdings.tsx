@@ -39,7 +39,7 @@ function WithdrawLink(props: { classes?: string; type: AccountType }) {
       state={props.type}
       className={`flex justify-end items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
     >
-      <span>withraw</span>
+      <span>withdraw</span>
       <Icon type="Forward" />
     </Link>
   );
