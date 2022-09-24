@@ -50,6 +50,7 @@ function FormWithContext(props: TProfile & { id: number }) {
     annual_revenue: props.annual_revenue || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
     endow_type: "",
+    kyc_donors_only: false,
     // endow_type: prof,
   };
   const methods = useForm<UpdateProfileValues>({

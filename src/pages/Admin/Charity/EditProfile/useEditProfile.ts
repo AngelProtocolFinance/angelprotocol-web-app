@@ -96,7 +96,7 @@ export default function useEditProfile() {
 
       const accountContract = new Account(wallet);
       const { sdgNum, ...restData } = data;
-      const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
+      const profileUpdateMsgs = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
           ...restData,
@@ -113,7 +113,7 @@ export default function useEditProfile() {
       const proposalMsg = adminContract.createProposalMsg(
         title,
         description,
-        [profileUpdateMsg],
+        profileUpdateMsgs,
         JSON.stringify(profileUpdateMeta)
       );
 

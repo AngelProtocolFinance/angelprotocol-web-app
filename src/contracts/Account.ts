@@ -33,9 +33,14 @@ export default class Account extends Contract {
   }
 
   createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
-    return this.createEmbeddedWasmMsg(Account.address, {
-      update_profile: payload,
-    });
+    return [
+      this.createEmbeddedWasmMsg(Account.address, {
+        update_profile: payload,
+      }),
+      this.createEmbeddedWasmMsg(Account.address, {
+        update_endowment_settings: payload,
+      }),
+    ];
   }
 
   createDepositMsg(payload: DepositPayload, funds: Coin[]) {

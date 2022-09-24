@@ -18,7 +18,6 @@ import {
   InquiredMember,
   PageOptions,
   Polls,
-  Profile,
   ProfileResponse,
   Proposal,
   QueryRes as Q,
@@ -111,7 +110,11 @@ export interface ContractQueries {
     res: Q<EndowmentBalance>;
     result: EndowmentBalance;
   };
-  accProfile: { args: { id: number }; res: Q<ProfileResponse>; result: ProfileResponse };
+  accProfile: {
+    args: { id: number };
+    res: Q<ProfileResponse>;
+    result: ProfileResponse;
+  };
 }
 
 export type ContractQueryTypes = keyof ContractQueries;

@@ -47,6 +47,11 @@ export interface AccountStrategies {
   liquid: Strategy[];
 }
 
+export interface OneOffVaults {
+  locked: string[];
+  liquid: string[];
+}
+
 export interface EndowmentDetails {
   owner: string;
   withdraw_before_maturity: boolean;
@@ -58,7 +63,16 @@ export interface EndowmentDetails {
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
-  auto_invest: boolean;
+  status: EndowmentStatus;
+  endow_type: EndowmentType;
+  oneoff_vaults: OneOffVaults;
+  categories: Categories;
+  logo?: String;
+  image?: String;
+  name: String;
+  tier?: number;
+  copycat_strategy?: number;
+  proposal_link?: number;
 }
 
 export type Holding = { address: string; amount: string };
@@ -82,6 +96,7 @@ export type EndowmentQueryOptions = {
   status?: EndowmentStatusStrNum;
   tier?: EndowmentTier;
   endow_type?: EndowmentType;
+  proposal_link?: number;
 };
 
 export type EndowmentEntry = {
@@ -103,12 +118,7 @@ export type CategorizedEndowments = {
 export interface UpdateProfilePayload {
   //separate shape for update
   id: number;
-  name: string;
   overview: string;
-  categories: Categories;
-  tier?: number;
-  logo: string;
-  image: string;
   url: string;
   registration_number?: string;
   country_of_origin?: string;
@@ -121,8 +131,17 @@ export interface UpdateProfilePayload {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
+  // below items can only be updated by config.owner (AP Team CW3)
+  tier?: number;
   endow_type?: string;
+  // below items can only be updated by endowment owner CW3
+  name: string;
+  categories: Categories;
+  logo: string;
+  image: string;
+  kyc_donors_only: boolean;
 }
+
 export interface DepositPayload {
   id: number;
   locked_percentage: string; //"0.7"
