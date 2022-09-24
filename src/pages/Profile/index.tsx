@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
-import { Profile as IProfile } from "types/contracts";
+import { ProfileResponse as IProfile } from "types/contracts";
 import {
   useEndowmentDetailsQuery,
   useEndowmentProfileQuery,

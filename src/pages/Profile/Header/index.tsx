@@ -1,10 +1,10 @@
-import { Profile } from "types/contracts";
+import { ProfileResponse } from "types/contracts";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
 import { useProfile } from "..";
 import CharityLinks from "./Links";
 
-export default function CharityHeader(props: Profile) {
+export default function CharityHeader(props: ProfileResponse) {
   const profile = useProfile();
 
   const showDonater = useDonater({

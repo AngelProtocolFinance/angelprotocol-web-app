@@ -144,10 +144,15 @@ const CHARITY: Charity = {
 
 const createEndowmentMsg: CreateEndowmentPayload = {
   owner: CHARITY.Metadata.JunoWallet,
-  beneficiary: CHARITY.Metadata.JunoWallet,
+  tier: 1,
+  categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] },
   withdraw_before_maturity: false,
   maturity_height: undefined,
   maturity_time: undefined,
+  endow_type: "Charity",
+  image: CHARITY.Metadata.Banner!.publicUrl,
+  logo: CHARITY.Metadata.CharityLogo!.publicUrl,
+  name: CHARITY.Registration.CharityName,
 
   profile: {
     annual_revenue: undefined,
@@ -155,10 +160,8 @@ const createEndowmentMsg: CreateEndowmentPayload = {
     charity_navigator_rating: undefined,
     contact_email: CHARITY.ContactPerson.Email,
     country_of_origin: undefined,
-    endow_type: "Charity",
-    image: CHARITY.Metadata.Banner!.publicUrl,
-    logo: CHARITY.Metadata.CharityLogo!.publicUrl,
-    name: CHARITY.Registration.CharityName,
+    street_address: undefined,
+    url: CHARITY.Registration.Website,
     number_of_employees: undefined,
     overview: CHARITY.Metadata.CharityOverview,
     registration_number: undefined,
@@ -167,10 +170,6 @@ const createEndowmentMsg: CreateEndowmentPayload = {
       linkedin: undefined,
       twitter: undefined,
     },
-    street_address: undefined,
-    tier: 1,
-    categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] },
-    url: CHARITY.Registration.Website,
   },
 
   cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],

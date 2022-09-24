@@ -4,7 +4,7 @@ import {
   FlatUpdateProfilePayload,
   UpdateProfileValues,
 } from "pages/Admin/types";
-import { Profile as TProfile } from "types/contracts";
+import { ProfileResponse as TProfile } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { FormError, FormSkeleton } from "components/admin";
