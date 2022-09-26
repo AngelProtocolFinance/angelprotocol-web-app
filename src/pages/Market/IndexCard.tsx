@@ -1,4 +1,5 @@
-import { UNSDG_NUMS, unsdgs } from "constants/unsdgs";
+import { UNSDG_NUMS } from "types/lists";
+import { unsdgs } from "constants/unsdgs";
 
 export default function IndexCard(props: { id: UNSDG_NUMS }) {
   const sdg = unsdgs[props.id];

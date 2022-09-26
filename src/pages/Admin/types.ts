@@ -5,15 +5,15 @@ import {
   EndowmentSettingsPayload,
   EndowmentStatus,
   EndowmentStatusStrNum,
+  EndowmentStatusText,
   FundConfig,
   FundDetails,
-  ProfilePayload,
+  ProfileUpdate,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
-import { Denoms } from "types/lists";
+import { Denoms, UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
-import { UNSDG_NUMS } from "constants/unsdgs";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -37,7 +37,6 @@ export type Templates =
 
   //account
   | "acc_withdraw"
-  | "acc_withdraw_liq"
   | "acc_profile"
   | "acc_endow_status"
 
@@ -112,8 +111,8 @@ export type FundSendMeta = MetaConstructor<
 >;
 
 /** _endowment */
-export type WithdrawLiqMeta = MetaConstructor<
-  "acc_withdraw_liq",
+export type WithdrawMeta = MetaConstructor<
+  "acc_withdraw",
   {
     beneficiary: string;
   }
@@ -158,7 +157,7 @@ export type ProposalMeta =
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
-  | WithdrawLiqMeta
+  | WithdrawMeta
   | EndowmentProfileUpdateMeta
   //registrar
   | RegistrarConfigUpdateMeta;
@@ -192,7 +191,7 @@ export type EndowmentUpdateValues = ProposalBase & {
   indexFund: number;
 
   //metadata
-  prevStatus?: keyof EndowmentStatus;
+  prevStatus?: EndowmentStatusText;
 };
 export type FundConfigValues = ProposalBase &
   FundConfig & { initialConfigPayload: FundConfig };
@@ -242,7 +241,7 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type ProfileWithSettings = ProfilePayload &
+export type ProfileWithSettings = ProfileUpdate &
   Omit<
     //only include settings fields related to profile form
     Pick<EndowmentSettingsPayload, "categories" | "image" | "logo" | "name">,

@@ -1,3 +1,4 @@
+import { UNSDG_NUMS } from "types/lists";
 import clean_water from "assets/icons/unsdg/clean_water.png";
 import climate from "assets/icons/unsdg/climate.png";
 import consumption from "assets/icons/unsdg/consumption.png";
@@ -30,25 +31,6 @@ type UNSDG = {
   youtube: S;
   website: S;
 };
-
-export type UNSDG_NUMS =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17;
 
 export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   1: {

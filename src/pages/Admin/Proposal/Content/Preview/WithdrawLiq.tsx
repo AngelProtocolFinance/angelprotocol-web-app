@@ -1,8 +1,8 @@
-import { WithdrawLiqMeta } from "pages/Admin/types";
+import { WithdrawMeta } from "pages/Admin/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function WithdrawLiq(props: WithdrawLiqMeta["data"]) {
+export default function WithdrawLiq(props: WithdrawMeta["data"]) {
   return (
     <PreviewContainer>
       <KeyValue _key="beneficiary">

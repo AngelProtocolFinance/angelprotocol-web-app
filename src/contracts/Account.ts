@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
   EndowmentSettingsPayload,
-  ProfilePayload,
+  ProfileUpdate,
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
@@ -33,7 +33,7 @@ export default class Account extends Contract {
     });
   }
 
-  createEmbeddedUpdateProfileMsg(payload: ProfilePayload) {
+  createEmbeddedUpdateProfileMsg(payload: ProfileUpdate) {
     return this.createEmbeddedWasmMsg(Account.address, {
       update_profile: payload,
     });

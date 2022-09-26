@@ -1,13 +1,15 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "constants/unsdgs";
-import { CW20 } from "./cw20";
+import { UNSDG_NUMS } from "../lists";
 import {
+  Asset,
   Categories,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentTier,
   EndowmentType,
-} from "./index";
+  SocialMedialUrls,
+} from "./common";
+import { CW20 } from "./cw20";
 
 export interface GenericBalance {
   native: Coin[];
@@ -42,20 +44,18 @@ export interface Strategy {
   percentage: string; // percentage of funds to invest
 }
 
-export interface AccountStrategies {
-  locked: Strategy[];
-  liquid: Strategy[];
-}
+type Vaults<T> = {
+  liquid: T;
+  locked: T;
+};
 
-export interface OneOffVaults {
-  locked: string[];
-  liquid: string[];
-}
+export type AccountStrategies = Vaults<Strategy[]>;
+type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
   status: EndowmentStatus;
-  endow_type: EndowmentType;
+  endow_type: Capitalize<EndowmentType>;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
@@ -115,7 +115,26 @@ export type CategorizedEndowments = {
   [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
-export interface ProfilePayload {
+export interface ProfileResponse {
+  name: string; // name of the Charity Endowment
+  overview: string;
+  categories: Categories;
+  tier: number;
+  logo: string;
+  image: string;
+  url?: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: SocialMedialUrls;
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+}
+
+export interface ProfileUpdate {
   //separate shape for update
   id: number;
   overview: string;
@@ -150,11 +169,6 @@ export interface DepositPayload {
   locked_percentage: string; //"0.7"
   liquid_percentage: string; //"0.3"
 }
-
-type Asset = {
-  info: { native: string } | { cw20: string };
-  amount: string;
-};
 
 export type AccountType = "locked" | "liquid";
 

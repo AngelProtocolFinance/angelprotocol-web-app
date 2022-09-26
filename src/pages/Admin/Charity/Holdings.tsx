@@ -13,7 +13,7 @@ export default function Holdings({ cw20, native, type }: Props) {
     return (
       <div className="grid">
         <p className="text-zinc-50/80 text-lg font-heading">0.000</p>
-        {type === "liquid" && <WithdrawLink classes="mt-4" />}
+        <WithdrawLink type={type} classes="mt-4" />
       </div>
     );
   }
@@ -27,18 +27,19 @@ export default function Holdings({ cw20, native, type }: Props) {
             .concat(cw20.map((bal) => <Balance {...bal} key={bal.address} />))}
         </TableSection>
       </table>
-      {type === "liquid" && <WithdrawLink classes="mt-4" />}
+      <WithdrawLink type={type} classes="mt-4" />
     </>
   );
 }
 
-function WithdrawLink(props: { classes?: string }) {
+function WithdrawLink(props: { classes?: string; type: AccountType }) {
   return (
     <Link
       to={adminRoutes.withdraws}
+      state={props.type}
       className={`flex justify-end items-center gap-2 uppercase text-sm text-sky-200 ${props.classes}`}
     >
-      <span>withraw</span>
+      <span>withdraw</span>
       <Icon type="Forward" />
     </Link>
   );

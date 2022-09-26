@@ -1,16 +1,22 @@
 import { Tab } from "@headlessui/react";
+import { useLocation } from "react-router-dom";
 import { AccountType, EndowmentBalance } from "types/contracts";
 import Transactor from "components/Transactor";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
 export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
+  const { state } = useLocation(); //state is set from dashboard withdraw link
+  const type = state as AccountType;
   return (
-    <Tab.Group as="div" className="mt-6 justify-self-center">
+    <Tab.Group
+      as="div"
+      className="mt-6 justify-self-center"
+      defaultIndex={type === "locked" ? 1 : 0}
+    >
       <Tab.List className="grid grid-cols-2 rounded-md mb-1 overflow-hidden">
         {tabs.map((t) => (
           <Tab
-            disabled={t === "locked"}
             key={t}
             className={({ selected }) =>
               `${

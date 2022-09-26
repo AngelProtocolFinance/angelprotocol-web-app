@@ -35,6 +35,7 @@ export default function Withdrawer({
       network: chainIds.juno,
       //transform to form format
       amounts: [...natives, ...cw20s],
+      height: 0,
       type,
     },
     resolver: yupResolver(schema),

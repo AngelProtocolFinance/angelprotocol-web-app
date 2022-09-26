@@ -1,7 +1,7 @@
 import { fromUtf8 } from "@cosmjs/encoding";
 import { CharityApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
-import { ApplicationProposal, CreateEndowmentPayload } from "types/contracts";
+import { ApplicationProposal, NewEndowment } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import CW3Review from "contracts/CW3/CW3Review";
 
@@ -53,6 +53,7 @@ const CHARITY: Charity = {
     SK: "Registration",
   },
   Metadata: {
+    EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
@@ -63,7 +64,7 @@ const CHARITY: Charity = {
   },
 };
 
-const endowmentMsg: CreateEndowmentPayload = {
+const endowmentMsg: NewEndowment = {
   owner: CHARITY.Metadata.JunoWallet,
   name: CHARITY.Registration.CharityName, // name of the Charity Endowment
   categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)

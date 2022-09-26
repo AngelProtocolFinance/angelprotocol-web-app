@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { templates } from "pages/Admin/constants";
-import { useLatestBlock } from "services/juno/queriers";
+import { useLatestBlockQuery } from "services/juno";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 import { adminRoutes } from "constants/routes";
@@ -8,7 +8,9 @@ import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
 export default function Toolbar(props: { classes?: string }) {
-  const block_height = useLatestBlock(10_000);
+  const { data: block_height = "0" } = useLatestBlockQuery(null, {
+    pollingInterval: 10_000, //ms
+  });
   return (
     <div className={`flex items-center gap-3 ${props.classes || ""}`}>
       <StatusSelector />

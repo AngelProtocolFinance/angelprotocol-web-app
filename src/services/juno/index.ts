@@ -44,4 +44,10 @@ export const junoApi = createApi({
   }),
 });
 
-export const { invalidateTags: invalidateJunoTags } = junoApi.util;
+export const {
+  useLatestBlockQuery,
+  util: { invalidateTags: invalidateJunoTags },
+  endpoints: {
+    latestBlock: { useLazyQuery: useLazyLatestBlockQuery },
+  },
+} = junoApi;

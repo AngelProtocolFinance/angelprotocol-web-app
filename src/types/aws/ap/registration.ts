@@ -1,4 +1,4 @@
-import { UNSDG_NUMS } from "constants/unsdgs";
+import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
 import { Optional } from "../../utils";
 
