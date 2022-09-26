@@ -30,81 +30,79 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
-    try {
-      const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
-        info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
-        amount: scaleToStr(value /** empty "" */ || "0"),
-      }));
+    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
+      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
+      amount: scaleToStr(value /** empty "" */ || "0"),
+    }));
 
-      const isJuno = data.network === chainIds.juno;
-      //if not juno, send to ap wallet (juno)
-      const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
-      const isSendToApCW3 =
-        endowment.endow_type === "Charity" && type === "locked";
+    const isJuno = data.network === chainIds.juno;
+    //if not juno, send to ap wallet (juno)
+    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
+    const isSendToApCW3 =
+      endowment.endow_type === "Charity" && type === "locked";
 
-      const meta: WithdrawMeta = {
-        type: "acc_withdraw",
-        data: {
-          beneficiary: data.beneficiary,
-        },
-      };
+    const meta: WithdrawMeta = {
+      type: "acc_withdraw",
+      data: {
+        beneficiary: data.beneficiary,
+      },
+    };
 
-      const account = new Account(wallet);
-      const endowCW3 = new CW3Endowment(wallet, cw3);
+    const account = new Account(wallet);
+    const endowCW3 = new CW3Endowment(wallet, cw3);
 
-      const proposal = isSendToApCW3
-        ? endowCW3.createWithdrawProposalMsg({
-            endowment_id: endowmentId,
-            assets,
-            beneficiary,
-            description: data.reason,
-          })
-        : //normal proposal when withdraw doesn't need to go thru AP
-          endowCW3.createProposalMsg(
-            "withdraw proposal",
-            `withdraw ${type} assets from endowment id: ${endowmentId}`,
-            [
-              account.createEmbeddedWithdrawMsg({
-                id: endowmentId,
-                beneficiary,
-                acct_type: data.type,
-                assets,
-              }),
-            ],
-            JSON.stringify(meta)
-          );
-
-      dispatch(
-        sendCosmosTx({
-          wallet,
-          msgs: [proposal],
-          tagPayloads: [
-            invalidateJunoTags([
-              //no need to invalidate balance, since this is just proposal
-              { type: junoTags.admin, id: adminTags.proposals },
-            ]),
-          ],
-          //Juno withdrawal
-          successLink: proposalLink,
-          successMessage: "Withdraw proposal successfully created!",
-
-          onSuccess: isJuno
-            ? undefined //no need to POST to AWS if destination is juno
-            : (response) =>
-                logWithdrawProposal({
-                  res: response,
-                  proposalLink,
-                  wallet: wallet!, //wallet is defined at this point
-
-                  endowment_multisig: cw3,
-                  proposal_chain_id: chainIds.juno,
-                  target_chain: data.network,
-                  target_wallet: data.beneficiary,
-                  type: data.type,
-                }),
+    const proposal = isSendToApCW3
+      ? endowCW3.createWithdrawProposalMsg({
+          endowment_id: endowmentId,
+          assets,
+          beneficiary,
+          description: data.reason,
         })
-      );
-    } catch (err) {}
+      : //normal proposal when withdraw doesn't need to go thru AP
+        endowCW3.createProposalMsg(
+          "withdraw proposal",
+          `withdraw ${type} assets from endowment id: ${endowmentId}`,
+          [
+            account.createEmbeddedWithdrawMsg({
+              id: endowmentId,
+              beneficiary,
+              acct_type: data.type,
+              assets,
+            }),
+          ],
+          JSON.stringify(meta)
+        );
+
+    dispatch(
+      sendCosmosTx({
+        wallet,
+        msgs: [proposal],
+        tagPayloads: [
+          invalidateJunoTags([
+            //no need to invalidate balance, since this is just proposal
+            { type: junoTags.admin, id: adminTags.proposals },
+          ]),
+        ],
+        //Juno withdrawal
+        successLink: proposalLink,
+        successMessage: "Withdraw proposal successfully created!",
+
+        onSuccess: isJuno
+          ? undefined //no need to POST to AWS if destination is juno
+          : (response) =>
+              logWithdrawProposal({
+                res: response,
+                proposalLink,
+                wallet: wallet!, //wallet is defined at this point
+
+                endowment_multisig: cw3,
+                proposal_chain_id: chainIds.juno,
+                target_chain: data.network,
+                target_wallet: data.beneficiary,
+                type: data.type,
+              }),
+      })
+    );
   }
 
   return {
