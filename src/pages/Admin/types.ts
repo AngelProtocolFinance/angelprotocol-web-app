@@ -2,14 +2,15 @@ import { CharityApplication, Registration } from "types/aws";
 import {
   AllianceMember,
   CW4Member,
+  EndowmentSettingsPayload,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
   FundConfig,
   FundDetails,
+  ProfileUpdate,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
-  UpdateProfilePayload,
 } from "types/contracts";
 import { Denoms, UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
@@ -119,7 +120,7 @@ export type WithdrawMeta = MetaConstructor<
 
 export type EndowmentProfileUpdateMeta = MetaConstructor<
   "acc_profile",
-  DiffSet<FlatUpdateProfilePayload>
+  DiffSet<ProfileWithSettings>
 >;
 
 export type EndowmentStatusMeta = MetaConstructor<
@@ -240,14 +241,20 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type FlatUpdateProfilePayload = Omit<
-  UpdateProfilePayload,
-  "categories"
-> & {
-  sdgNum: UNSDG_NUMS;
-};
-export type UpdateProfileValues = ProposalBase &
-  FlatUpdateProfilePayload & { initialProfile: FlatUpdateProfilePayload };
+export type ProfileWithSettings = ProfileUpdate &
+  Omit<
+    //only include settings fields related to profile form
+    Pick<EndowmentSettingsPayload, "categories" | "image" | "logo" | "name">,
+    //replace categories field with flat sdgNum field
+    "categories"
+  > & {
+    sdgNum: UNSDG_NUMS;
+  };
+
+export type ProfileFormValues = ProposalBase &
+  ProfileWithSettings & {
+    initial: ProfileWithSettings;
+  };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

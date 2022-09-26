@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { UpdateProfileValues as UV } from "pages/Admin/types";
+import { ProfileFormValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
+import ImgEditor from "components/ImgEditor";
 import RichTextEditor from "components/RichTextEditor";
 import {
   FormContainer,
@@ -11,8 +12,8 @@ import {
   TextInput,
 } from "components/admin";
 import { appRoutes } from "constants/routes";
-import ImgEditor from "./ImgEditor";
 import SDGSelector from "./SDGSelector";
+import { VALID_MIME_TYPES } from "./schema";
 import useEditForm from "./useEditProfile";
 
 export default function Form() {
@@ -37,7 +38,13 @@ export default function Form() {
         required
       />
       <Label className="text-angel-grey -mb-2">Banner</Label>
-      <ImgEditor />
+      <ImgEditor<UV>
+        name="image"
+        accept={VALID_MIME_TYPES}
+        aspectRatioX={4}
+        aspectRatioY={1}
+        className="w-full aspect-[4/1]"
+      />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
       <TextInput<UV>

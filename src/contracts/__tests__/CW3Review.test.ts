@@ -65,17 +65,17 @@ const CHARITY: Charity = {
 
 const endowmentMsg: CreateEndowmentPayload = {
   owner: CHARITY.Metadata.JunoWallet,
-  beneficiary: CHARITY.Metadata.JunoWallet,
+  name: CHARITY.Registration.CharityName, // name of the Charity Endowment
+  categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  logo: CHARITY.Metadata.CharityLogo!.publicUrl,
+  image: CHARITY.Metadata.Banner!.publicUrl,
+  endow_type: "Charity",
   withdraw_before_maturity: false,
   maturity_time: undefined,
   maturity_height: undefined,
   profile: {
-    name: CHARITY.Registration.CharityName, // name of the Charity Endowment
     overview: CHARITY.Metadata.CharityOverview,
-    categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-    tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-    logo: CHARITY.Metadata.CharityLogo.publicUrl || "",
-    image: CHARITY.Metadata.Banner.publicUrl || "",
     url: CHARITY.Registration.Website,
     registration_number: "",
     country_of_origin: "",
@@ -90,7 +90,6 @@ const endowmentMsg: CreateEndowmentPayload = {
     average_annual_budget: "",
     annual_revenue: "",
     charity_navigator_rating: "",
-    endow_type: "Charity",
   },
   cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],
   kyc_donors_only: CHARITY.Metadata.KycDonorsOnly, //set to false initially

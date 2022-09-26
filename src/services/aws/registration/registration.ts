@@ -50,9 +50,9 @@ const registration_api = aws.injectEndpoints({
             CharityName_ContactEmail: r.CharityName_ContactEmail || "",
             FinancialStatements: r.FinancialStatements || [],
             FinancialStatementsVerified: r.FinancialStatementsVerified || false,
-            ProofOfIdentity: r.ProofOfIdentity || { name: "" },
+            ProofOfIdentity: r.ProofOfIdentity,
             ProofOfIdentityVerified: r.ProofOfIdentityVerified || false,
-            ProofOfRegistration: r.ProofOfRegistration || { name: "" },
+            ProofOfRegistration: r.ProofOfRegistration,
             ProofOfRegistrationVerified: r.ProofOfRegistrationVerified || false,
             RegistrationDate: r.RegistrationDate,
             RegistrationStatus: r.RegistrationStatus,
@@ -62,8 +62,8 @@ const registration_api = aws.injectEndpoints({
             Website: r.Website || "",
           },
           Metadata: {
-            Banner: m.Banner || { name: "" },
-            CharityLogo: m.CharityLogo || { name: "" },
+            Banner: m.Banner,
+            CharityLogo: m.CharityLogo,
             CharityOverview: m.CharityOverview || "",
             EndowmentContract: m.EndowmentContract || "",
             EndowmentId: m.EndowmentId || 0,
@@ -189,10 +189,21 @@ export const {
 
 export const useRegistrationQuery = () => {
   const regRef = getSavedRegistrationReference();
-  const { data: charity = placeholderCharity, ...rest } =
-    registration_api.useRegistrationQuery(regRef, {
-      skip: !regRef,
-    });
+  const { data, ...rest } = registration_api.useRegistrationQuery(regRef, {
+    skip: !regRef,
+  });
+
+  // necessary to assign the placeholderCharity this way to avoid a bug when reading Charity
+  // data in Registration.tsx, because the following happens:
+  // 1. continue a registration using a ref ID
+  // 2. charity data read in Registration using this ref ID
+  // 3. charity data read in any step of the flow using this ref ID
+  // 4. go back to Landing page (https://.../register)
+  // 5. click "Start" to start new registration -> ref ID is cleared and charity data cache should be cleared, but
+  //    due to some race condition, the Registration page reads the cached data before the clearing
+  // 6. different charity data is read in Registration.tsx than in other steps
+  const charity = !regRef || !data ? placeholderCharity : data;
+
   return { charity, ...rest };
 };
 

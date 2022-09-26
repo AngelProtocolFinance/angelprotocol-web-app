@@ -7,30 +7,38 @@ import Icon, { IconTypes } from "components/Icon";
 
 export default function ImgCropper(props: {
   src: string;
-  setCropedImage: (dataUrl: string) => void;
+  aspectRatio: number;
+  setCropedImage: (blob: Blob) => void;
 }) {
   const { closeModal } = useModalContext();
   const [error, setError] = useState<string>();
   const cropperRef = useRef<Cropper>();
-  const imageRef = useRef<HTMLImageElement>(null);
 
-  const imgRef = useCallback((node: HTMLImageElement | null) => {
-    if (node && !cropperRef.current) {
-      cropperRef.current = new Cropper(imageRef.current!, {
-        aspectRatio: 4 / 1,
-        viewMode: 1,
-        zoomable: false,
-        scalable: false,
-      });
-    }
-  }, []);
+  const imgRef = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node && !cropperRef.current) {
+        cropperRef.current = new Cropper(node, {
+          aspectRatio: props.aspectRatio,
+          viewMode: 1,
+          zoomable: false,
+          scalable: false,
+        });
+      }
+    },
+    [props.aspectRatio]
+  );
 
   function handleSave() {
     setError(undefined);
     if (cropperRef.current) {
-      const dataUrl = cropperRef.current.getCroppedCanvas().toDataURL();
-      props.setCropedImage(dataUrl);
-      closeModal();
+      cropperRef.current.getCroppedCanvas().toBlob((blob) => {
+        if (!blob) {
+          setError("Cropping the file failed.");
+        } else {
+          props.setCropedImage(blob);
+          closeModal();
+        }
+      });
     }
   }
 

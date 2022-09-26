@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
 import {
-  FlatUpdateProfilePayload,
-  UpdateProfileValues,
+  EndowmentProfileUpdateMeta,
+  ProfileWithSettings,
 } from "pages/Admin/types";
+import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
@@ -30,7 +30,7 @@ export default function useEditProfile() {
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
-  } = useFormContext<UpdateProfileValues>();
+  } = useFormContext<ProfileFormValues>();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -39,22 +39,22 @@ export default function useEditProfile() {
   const editProfile = async ({
     title,
     description,
-    initialProfile,
+    initial,
     ...data
-  }: UpdateProfileValues) => {
+  }: ProfileFormValues) => {
     try {
       //extract [code]
       if (data.country_of_origin) {
         data.country_of_origin = data.country_of_origin.split(" ")[0];
       }
-      const diff = getPayloadDiff(initialProfile, data);
+      const diff = getPayloadDiff(initial, data);
 
       //if overview has changed, and is set to something
       if ("overview" in diff && data.overview) {
         //truncate to reduce proposalMsg size
         diff.overview = PLACEHOLDER_OVERVIEW;
-        if (initialProfile.image) {
-          initialProfile.overview = PLACEHOLDER_OVERVIEW;
+        if (initial.image) {
+          initial.overview = PLACEHOLDER_OVERVIEW;
         }
       }
 
@@ -62,14 +62,14 @@ export default function useEditProfile() {
       if ("image" in diff && data.image) {
         //truncate to reduce proposalMsg size
         diff.image = PLACEHOLDER_IMAGE;
-        if (initialProfile.image) {
-          initialProfile.image = PLACEHOLDER_IMAGE;
+        if (initial.image) {
+          initial.image = PLACEHOLDER_IMAGE;
         }
       }
 
       const diffEntries = Object.entries(
         diff
-      ) as ObjectEntries<FlatUpdateProfilePayload>;
+      ) as ObjectEntries<ProfileWithSettings>;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }
@@ -95,25 +95,35 @@ export default function useEditProfile() {
       }
 
       const accountContract = new Account(wallet);
-      const { sdgNum, ...restData } = data;
+      const { sdgNum, name, logo, image, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
-          ...restData,
-          categories: { sdgs: [sdgNum], general: [] },
+          ...profilePayload,
         })
       );
 
+      const settingsUpdateMsg =
+        accountContract.createEmbeddedUpdateSetttingsMsg(
+          cleanObject({
+            id: profilePayload.id,
+            name,
+            image,
+            logo,
+            categories: { sdgs: [sdgNum], general: [] },
+          })
+        );
+
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
         type: "acc_profile",
-        data: genDiffMeta(diffEntries, initialProfile),
+        data: genDiffMeta(diffEntries, initial),
       };
 
       const adminContract = new CW3(wallet, cw3);
       const proposalMsg = adminContract.createProposalMsg(
         title,
         description,
-        [profileUpdateMsg],
+        [profileUpdateMsg, settingsUpdateMsg],
         JSON.stringify(profileUpdateMeta)
       );
 

@@ -1,9 +1,9 @@
 import { InputProps } from "./types";
 import InfoIcon from "./InfoIcon";
 
-export function InputRow(props: InputProps) {
+export default function InputColumn(props: InputProps) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="flex flex-col gap-2 w-full items-start">
       <div className="flex items-center gap-2 h-8">
         <label
           htmlFor={props.htmlFor}
@@ -14,9 +14,7 @@ export function InputRow(props: InputProps) {
         </label>
         {!!props.infoModal && <InfoIcon modal={props.infoModal} />}
       </div>
-      <div className="flex flex-col justify-center gap-1 w-full">
-        {props.children}
-      </div>
+      {props.children}
     </div>
   );
 }
