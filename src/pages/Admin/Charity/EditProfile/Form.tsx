@@ -43,7 +43,7 @@ export default function Form() {
         accept={VALID_MIME_TYPES}
         aspectRatioX={4}
         aspectRatioY={1}
-        className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
+        className="w-full aspect-[4/1]"
       />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
