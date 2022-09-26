@@ -10,7 +10,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
-import { Folders } from "../constants";
 import routes from "../routes";
 
 export default function useSubmit() {
@@ -22,7 +21,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (values: AdditionalInfoValues) => {
       try {
-        const body = await getUploadBody(charity.ContactPerson.PK!, values);
+        const body = await getUploadBody(values);
 
         const result = await updateMetadata({
           PK: charity.ContactPerson.PK,
@@ -47,17 +46,9 @@ export default function useSubmit() {
   return { submit };
 }
 
-async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
-  const logoPromise = uploadIfNecessary(
-    primaryKey,
-    values.charityLogo,
-    Folders.CharityProfileImageLogo
-  );
-  const bannerPromise = uploadIfNecessary(
-    primaryKey,
-    values.banner,
-    Folders.CharityProfileImageBanners
-  );
+async function getUploadBody(values: AdditionalInfoValues) {
+  const logoPromise = uploadIfNecessary(values.charityLogo);
+  const bannerPromise = uploadIfNecessary(values.banner);
   const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
   if (!CharityLogo.publicUrl || !Banner.publicUrl) {
@@ -77,9 +68,7 @@ async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
 }
 
 async function uploadIfNecessary(
-  primaryKey: string,
-  fileWrapper: FileWrapper,
-  folder: Folders
+  fileWrapper: FileWrapper
 ): Promise<FileObject> {
   if (!fileWrapper.file) {
     return {
@@ -88,8 +77,7 @@ async function uploadIfNecessary(
     };
   }
 
-  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
-  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
+  const publicUrl = await uploadToIpfs(fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,
