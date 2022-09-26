@@ -115,7 +115,7 @@ export type CategorizedEndowments = {
   [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
-export interface UpdateProfilePayload {
+export interface ProfilePayload {
   //separate shape for update
   id: number;
   overview: string;
@@ -131,15 +131,18 @@ export interface UpdateProfilePayload {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
-  // below items can only be updated by config.owner (AP Team CW3)
-  tier?: number;
-  endow_type?: string;
-  // below items can only be updated by endowment owner CW3
-  name: string;
-  categories: Categories;
-  logo: string;
-  image: string;
-  kyc_donors_only: boolean;
+}
+
+export interface EndowmentSettingsPayload {
+  id: number;
+  owner?: string;
+  kyc_donors_only?: boolean;
+  endow_type?: EndowmentType; //editable by config.owner
+  name?: string;
+  categories?: Categories;
+  tier?: number; //editable by config.owner
+  logo?: string;
+  image?: string;
 }
 
 export interface DepositPayload {

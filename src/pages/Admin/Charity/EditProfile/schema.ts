@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { UpdateProfileValues } from "pages/Admin/types";
+import { ProfileFormValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { FileWrapper } from "components/FileDropzone";
 import { positiveNumber } from "schemas/number";
@@ -14,7 +14,7 @@ export const VALID_MIME_TYPES = [
 ];
 
 //construct strict shape to avoid hardcoding shape keys
-const shape: SchemaShape<UpdateProfileValues> = {
+const shape: SchemaShape<ProfileFormValues> = {
   ...proposalShape,
   name: stringByteSchema("name", 4, 64),
   overview: stringByteSchema("overview", 4, 1024),

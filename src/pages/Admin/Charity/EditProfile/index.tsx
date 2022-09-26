@@ -1,10 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import {
-  FlatUpdateProfilePayload,
-  UpdateProfileValues,
-} from "pages/Admin/types";
-import { ProfileResponse as TProfile } from "types/contracts";
+import { ProfileFormValues, ProfileWithSettings } from "pages/Admin/types";
+import { ProfileResponse } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { FormError, FormSkeleton } from "components/admin";
@@ -27,16 +24,11 @@ export default function EditProfile() {
   return <FormWithContext {...{ ...profile, id: endowmentId }} />;
 }
 
-function FormWithContext(props: TProfile & { id: number }) {
+function FormWithContext(props: ProfileResponse & { id: number }) {
   //initialize falsy values
-  const initialProfile: Required<FlatUpdateProfilePayload> = {
+  const initial: Required<ProfileWithSettings> = {
     id: props.id,
-    name: props.name,
     overview: props.overview,
-    sdgNum: props.categories.sdgs[0] || 0,
-    tier: props.tier || 0,
-    logo: props.logo || "",
-    image: props.image || "",
     url: props.url || "",
     registration_number: props.registration_number || "",
     street_address: props.street_address || "",
@@ -49,16 +41,19 @@ function FormWithContext(props: TProfile & { id: number }) {
     average_annual_budget: props.average_annual_budget || "",
     annual_revenue: props.annual_revenue || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
-    endow_type: "",
-    kyc_donors_only: false,
-    // endow_type: prof,
+
+    //endowment settings
+    name: props.name,
+    logo: props.logo || "",
+    image: props.image || "",
+    sdgNum: props.categories.sdgs[0] || 0,
   };
-  const methods = useForm<UpdateProfileValues>({
+  const methods = useForm<ProfileFormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      ...initialProfile,
-      initialProfile,
+      ...initial,
+      initial,
     },
     resolver: yupResolver(schema),
   });

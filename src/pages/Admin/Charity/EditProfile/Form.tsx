@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UpdateProfileValues as UV } from "pages/Admin/types";
+import { ProfileFormValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
