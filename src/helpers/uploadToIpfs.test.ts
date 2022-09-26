@@ -1,22 +1,14 @@
 import { cid, mockedUpload } from "setupTests";
 import { IPFS_GATEWAY, uploadToIpfs } from "./uploadToIpfs";
 
-const path = "pathThatDoesntMatterInResult";
-
 describe("uploadToIpfs tests", () => {
   it("returns correctly extracted data after successful upload", async () => {
-    const fileName = "test";
-    const file = new File([], fileName);
+    const file = new File([], "test");
 
     const result = await uploadToIpfs(file);
-    expect(mockedUpload).toHaveBeenCalledWith([file], { name: path });
-    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/${fileName}`);
-  });
-  it("whitespace is removed from file name in url", async () => {
-    const file2 = new File([], " hello to the world.jpg ");
-
-    const result = await uploadToIpfs(file2);
-    expect(mockedUpload).toHaveBeenCalledWith([file2], { name: path });
-    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/hellototheworld.jpg`);
+    expect(mockedUpload).toHaveBeenCalledWith([file], {
+      wrapWithDirectory: false,
+    });
+    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}`);
   });
 });
