@@ -78,14 +78,14 @@ export interface Profile {
 }
 
 export interface ProfileResponse {
-  overview: string;
   name: string; // name of the Charity Endowment
+  overview: string;
   categories: Categories;
-  tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  tier: number;
   logo: string;
   image: string;
-  endow_type: Capitalize<EndowmentType>;
   url?: string;
+  endow_type: Capitalize<EndowmentType>;
   registration_number?: string;
   country_of_origin?: string;
   street_address?: string;

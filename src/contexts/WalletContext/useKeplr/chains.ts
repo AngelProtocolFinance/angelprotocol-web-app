@@ -6,8 +6,8 @@ export const juno_test_chain_info: ChainInfo = {
   // modified denoms
   chainId: "uni-5",
   chainName: "Juno Testnet",
-  rpc: "https://rpc.uni.juno.deuslabs.fi",
-  rest: "https://lcd.uni.juno.deuslabs.fi",
+  rpc: "https://rpc.uni.junonetwork.io",
+  rest: "https://api.uni.junonetwork.io",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",
