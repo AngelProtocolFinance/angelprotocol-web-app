@@ -54,22 +54,22 @@ export interface OneOffVaults {
 
 export interface EndowmentDetails {
   owner: string;
+  status: EndowmentStatus;
+  endow_type: EndowmentType;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
   strategies: AccountStrategies;
+  oneoff_vaults: OneOffVaults;
   rebalance: RebalanceDetails;
   kyc_donors_only: boolean;
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
-  status: EndowmentStatus;
-  endow_type: EndowmentType;
-  oneoff_vaults: OneOffVaults;
+  logo?: string;
+  image?: string;
+  name: string;
   categories: Categories;
-  logo?: String;
-  image?: String;
-  name: String;
   tier?: number;
   copycat_strategy?: number;
   proposal_link?: number;
