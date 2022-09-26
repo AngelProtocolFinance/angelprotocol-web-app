@@ -1,7 +1,7 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
 import { Charity } from "types/aws";
-import { ApplicationProposal, CreateEndowmentPayload } from "types/contracts";
+import { ApplicationProposal, NewEndowment } from "types/contracts";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { PLACEHOLDER_WALLET } from "test/constants";
 import CW3Review from "contracts/CW3/CW3Review";
@@ -131,6 +131,7 @@ const CHARITY: Charity = {
     SK: "Registration",
   },
   Metadata: {
+    EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
@@ -142,7 +143,7 @@ const CHARITY: Charity = {
   },
 };
 
-const createEndowmentMsg: CreateEndowmentPayload = {
+const createEndowmentMsg: NewEndowment = {
   owner: CHARITY.Metadata.JunoWallet,
   tier: 1,
   categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] },
