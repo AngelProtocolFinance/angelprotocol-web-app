@@ -26,7 +26,9 @@ export default function Registration() {
   const { charity } = useRegistrationQuery();
 
   const isLandingPage =
-    location.pathname.search(`${appRoutes.register}/?$`) !== -1;
+    location.pathname.search(
+      `${appRoutes.register}(/${routes.confirmEmail})/?$`
+    ) !== -1;
 
   const containerClasses = `grid grid-rows-[${
     isLandingPage ? "1fr" : "auto_1fr"
