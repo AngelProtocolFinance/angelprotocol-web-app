@@ -1,9 +1,9 @@
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 
 type Props = {
   title: string;
   value: number;
-  denom: string;
+  symbol: string | undefined;
   percent?: number;
   position?: string;
   precision?: number;
@@ -12,7 +12,7 @@ type Props = {
 export default function Figure(props: Props) {
   return (
     <div
-      className={`border border-white/10 bg-white/10 shadow-xl text-angel-grey w-full rounded-md p-6 ${
+      className={`bg-white/10 shadow-inner text-angel-grey w-full rounded-md p-6 ${
         props.position || ""
       }`}
     >
@@ -20,13 +20,11 @@ export default function Figure(props: Props) {
         {props.title}
       </p>
       <p className="text-4xl font-heading text-white-grey/80">
-        <span className="">
-          {toCurrency(props.value, props.precision || 2, true)}
-        </span>
-        <span className=""> {props.denom}</span>
+        <span>{humanize(props.value, props.precision || 2, true)}</span>
+        <span> {props.symbol}</span>
         {/* {(props.percent && (
           <span className="text-lg pl-2 font-body">
-            ( {toCurrency(props.percent)}% )
+            ( {humanize(props.percent)}% )
           </span>
         )) ||
           null} */}

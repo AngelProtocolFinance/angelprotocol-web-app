@@ -1,58 +1,31 @@
-import bnb from "assets/icons/currencies/bnb.png";
-import ether from "assets/icons/currencies/ether.png";
-import halo from "assets/icons/currencies/halo_outline.png";
-import luna from "assets/icons/currencies/luna.svg";
-import ustc from "assets/icons/currencies/ustc.png";
-import coin from "assets/icons/currencies/coin.png";
+import { Denoms } from "types/lists";
+import junoIcon from "assets/icons/currencies/juno.svg";
+import unknownTokenIcon from "assets/icons/currencies/token.svg";
+import { IS_TEST } from "./env";
 
-export enum denoms {
-  bnb = "bnb",
-  ether = "ether",
-  uusd = "uusd",
-  uhalo = "uhalo",
-  uluna = "uluna",
-}
-
-type Currency = {
-  denom: denoms;
-  ticker: string;
-  icon: string;
+export const denoms: { [key in Denoms]: string } = {
+  axlusdc:
+    "ibc/EAC38D55372F38F1AFD68DF7FE9EF762DCF69F26520643CF3F9D292A738D8034",
+  halo: "halo",
+  juno: IS_TEST ? "ujunox" : "ujuno",
 };
 
-const _CURRENCIES: Record<denoms, Currency> = {
-  [denoms.bnb]: {
-    denom: denoms.bnb,
-    ticker: "BNB",
-    icon: bnb,
-  },
-  [denoms.ether]: {
-    denom: denoms.ether,
-    ticker: "ETH",
-    icon: ether,
-  },
-  [denoms.uhalo]: {
-    denom: denoms.uhalo,
-    ticker: "HALO",
-    icon: halo,
-  },
-  [denoms.uusd]: {
-    denom: denoms.uusd,
-    ticker: "UST",
-    icon: ustc,
-  },
-  [denoms.uluna]: {
-    denom: denoms.uluna,
-    ticker: "LUNC",
-    icon: luna,
-  },
+export const symbols: { [key in Denoms]: string } = {
+  axlusdc: "axlUSDC",
+  halo: "HALO",
+  juno: IS_TEST ? "JUNOX" : "JUNO",
 };
 
-export const CURRENCIES = new Proxy(_CURRENCIES, {
-  get(currencies, denom: denoms) {
-    return (
-      currencies[denom] || { denom, ticket: denom.toUpperCase(), icon: coin }
-    );
+//need to update this to expected result of `{balance:{}}` query
+//better include that data in said query
+
+type CoinAsset = { name: string; icon: string };
+const _assets: { [index: string]: CoinAsset } = {
+  [denoms.juno]: { icon: junoIcon, name: symbols.juno },
+};
+
+export const coinAsset = new Proxy(_assets, {
+  get(target, key: string) {
+    return target[key] ?? { icon: unknownTokenIcon, name: "Token" };
   },
 });
-
-export const MAIN_DENOM = denoms.uusd;

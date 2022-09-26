@@ -1,6 +1,6 @@
 import { NavLinkProps } from "react-router-dom";
 
-export default function createNavLinkStyler(
+export function createNavLinkStyler(
   className: string,
   activeClassName: string
 ): NavLinkProps["className"] {

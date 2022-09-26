@@ -1,21 +1,13 @@
-import { CURRENCIES, denoms } from "constants/currency";
-import getTokenBalance from "helpers/getTokenBalance";
-import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
 import { SwapValues } from "./types";
+import { Token } from "types/aws";
+import { humanize } from "helpers";
 
-export default function Balance() {
-  const { watch, setValue } = useFormContext<SwapValues>();
-  const { displayCoin, coins } = useGetter((state) => state.wallet);
-  const haloBalance = getTokenBalance(coins, denoms.uhalo);
-  const is_buy = watch("is_buy");
-  const balance = is_buy
-    ? displayCoin
-    : { amount: haloBalance, denom: denoms.uhalo };
+export default function Balance({ token }: { token: Token }) {
+  const { setValue } = useFormContext<SwapValues>();
 
   function setAmount() {
-    setValue("amount", `${balance}`, {
+    setValue("amount", `${token.balance}`, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -29,7 +21,7 @@ export default function Balance() {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(balance.amount, 3, true)} {CURRENCIES[balance.denom].ticker}
+        {humanize(token.balance, 3, true)} {token.symbol}
       </button>
     </p>
   );

@@ -1,22 +1,24 @@
+import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { Dec } from "@terra-money/terra.js";
-import { useGovStaker } from "services/terra/gov/queriers";
-import toCurrency from "helpers/toCurrency";
-import Icon from "components/Icons/Icons";
+import { useGovStaker } from "services/juno/gov/queriers";
+import Icon from "components/Icon";
+import { condense, humanize } from "helpers";
+import { symbols } from "constants/currency";
 
 export default function Claims() {
   const staker = useGovStaker();
-
   const total_claims = useMemo(
     () =>
       staker.claims
         ?.filter((claim) => +claim.release_at.at_time <= +Date.now() * 1e6)
-        .reduce((prev, curr) => prev.add(new Dec(curr.amount)), new Dec(0)) ||
-      new Dec(0),
+        .reduce(
+          (prev, curr) => prev.add(new Decimal(curr.amount)),
+          new Decimal(0)
+        ) || new Decimal(0),
     [staker]
   );
 
-  const amount = toCurrency(total_claims.div(1e6).toNumber(), 2, true);
+  const amount = humanize(condense(total_claims), 2, true);
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
@@ -43,7 +45,9 @@ export default function Claims() {
             {" "}
             Total claimable
           </span>
-          <span className="font-heading">{amount} HALO</span>
+          <span className="font-heading">
+            {amount} {symbols.halo}
+          </span>
         </p>
       )}
     </div>
@@ -53,7 +57,6 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Dec(props.amount).div(1e6).toNumber();
   return (
     <li className="flex justify-between">
       <p
@@ -61,8 +64,10 @@ function Claim(props: { time: string; amount: string }) {
           claimable ? "text-angel-blue" : "text-grey-accent"
         }`}
       >
-        <span className="mr-1">{toCurrency(amount, 2, true)}</span>
-        <span className="text-xs font-semibold">HALO</span>
+        <span className="mr-1">
+          {humanize(condense(props.amount), 2, true)}
+        </span>
+        <span className="text-xs font-semibold">{symbols.halo}</span>
       </p>
       <p className="text-xs font-semibold">
         {claimable ? (

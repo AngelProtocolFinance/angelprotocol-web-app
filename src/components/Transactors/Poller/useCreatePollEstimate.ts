@@ -1,39 +1,33 @@
-import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
-import { CreatePollValues } from "./types";
-import { Fee } from "@terra-money/terra.js";
-import { CURRENCIES, denoms } from "constants/currency";
-import Halo from "contracts/Halo";
-import extractFeeData from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
-import useWalletContext from "hooks/useWalletContext";
+import { StdFee } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { CreatePollValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import getTokenBalance from "helpers/getTokenBalance";
+} from "slices/transaction/transactionSlice";
+import Gov from "contracts/Gov";
+import { extractFeeAmount, processEstimateError } from "helpers";
+import { denoms } from "constants/currency";
 
 export default function useCreatePollEstimate() {
   const {
+    setError,
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { displayCoin: mainBalance, coins } = useGetter(
-    (state) => state.wallet
-  );
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
-
-  const [maxFee, setMaxFee] = useState<Fee>();
+  const [maxFee, setMaxFee] = useState<StdFee>();
+  const { wallet } = useGetWallet();
 
   useEffect(() => {
     (async () => {
       try {
         if (!wallet) {
-          dispatch(setFormError("Terra wallet is not connected"));
+          dispatch(setFormError("Wallet not connected"));
           return;
         }
 
@@ -41,38 +35,39 @@ export default function useCreatePollEstimate() {
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
-        const haloBalance = getTokenBalance(coins, denoms.uhalo);
+
+        const haloBalance = wallet.getBalance(denoms.halo);
         if (amount >= haloBalance) {
-          dispatch(setFormError("Not enough halo balance"));
+          setError("amount", { message: "not enough balance" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
-        const pollMsgs = await contract.createPollMsgs(
+        const contract = new Gov(wallet);
+        const pollMsgs = contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
-          create_placeholder(max_title_bytes),
-          create_placeholder(max_desc_bytes),
-          create_placeholder(max_link_bytes)
+          create_placeholder(64),
+          create_placeholder(1024),
+          create_placeholder(128)
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee(pollMsgs);
-        const feeData = extractFeeData(fee);
+        const fee = await contract.estimateFee([pollMsgs]);
 
         //2nd balance check including fees
-        if (feeData.amount >= mainBalance.amount) {
-          dispatch(
-            setFormError(
-              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
-            )
-          );
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
+
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          setError("amount", { message: "Not enough balance to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -84,9 +79,9 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, coins, mainBalance, isDirty, isValid]);
+  }, [wallet, isDirty, isValid]);
 
-  return { wallet, maxFee };
+  return { maxFee, wallet };
 
   //return estimated fee computed using max constraints
 }

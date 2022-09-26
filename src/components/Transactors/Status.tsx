@@ -1,5 +1,5 @@
-import Icon from "components/Icons/Icons";
 import { ReactNode, useState } from "react";
+import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 
 export default function Status() {
@@ -47,11 +47,11 @@ export default function Status() {
 
 function StatusDiv(props: { children: ReactNode }) {
   return (
-    <div className="relative grid grid-cols-a1 items-center bg-red-400/20 p-2 rounded-md text-angel-grey mb-2">
+    <div className="relative grid grid-cols-[auto_1fr] items-center bg-red-400/20 p-2 rounded-md text-angel-grey mb-2">
       {props.children}
     </div>
   );
 }
 function StatusTitle(props: { text: string }) {
-  return <span className="font-mono text-sm ml-1">{props.text}</span>;
+  return <span className="font-mono text-xs ml-1">{props.text}</span>;
 }

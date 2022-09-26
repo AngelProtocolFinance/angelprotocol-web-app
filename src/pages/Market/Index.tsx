@@ -1,16 +1,20 @@
+import { EndowmentEntry } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
+import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
-import IndexCard from "./IndexCard";
 import CharityCard from "./CharityCard";
-import { Profile } from "services/aws/endowments/types";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import IndexCard from "./IndexCard";
 
-export default function Index(props: { id: number; profiles: Profile[] }) {
+export default function Index(props: {
+  id: UNSDG_NUMS;
+  profiles: EndowmentEntry[];
+}) {
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
   //remove infinite scroll temporarily
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-a1 border-t border-white/10">
+    <section className="grid grid-cols-1 sm:grid-cols-[auto_1fr] border-t border-white/10">
       <IndexCard id={props.id} />
       <section className="overflow-hidden relative group">
         <div
@@ -18,7 +22,7 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
           className="flex gap-4 overflow-x-scroll scroll-hidden py-2"
         >
           {props.profiles.map((profile) => (
-            <CharityCard key={profile.endowment_address} {...profile} />
+            <CharityCard key={profile.id} {...profile} />
           ))}
         </div>
         {showBack && (

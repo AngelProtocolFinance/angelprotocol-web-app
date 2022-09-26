@@ -1,12 +1,10 @@
 import { useFormContext } from "react-hook-form";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
-import { tags, user } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { useGetter, useSetter } from "store/accessors";
-import useVoteEstimator from "./useVoteEstimator";
 import { VoteValues } from "./types";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags } from "services/juno/tags";
+import { useGetter, useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import useVoteEstimator from "./useVoteEstimator";
 
 export default function useVote() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
@@ -15,24 +13,17 @@ export default function useVote() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<VoteValues>();
 
-  const { wallet, tx } = useVoteEstimator();
-  const { showModal } = useSetModal();
+  const { tx, wallet } = useVoteEstimator();
   const dispatch = useSetter();
 
   function vote() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
-        tagPayloads: [
-          terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.user, id: user.halo_balance },
-          ]),
-        ],
+        tagPayloads: [invalidateJunoTags([{ type: junoTags.gov }])],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

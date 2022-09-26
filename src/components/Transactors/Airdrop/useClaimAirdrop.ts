@@ -1,53 +1,46 @@
-import { Dec } from "@terra-money/terra.js";
-import { useSetModal } from "components/Modal/Modal";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import Halo from "contracts/Halo";
-import useWalletContext from "hooks/useWalletContext";
+import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { Airdrops } from "services/aws/airdrop/types";
-import { aws } from "services/aws/aws";
-import { tags as awsTags } from "services/aws/tags";
-import { gov, tags, user } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { Airdrops } from "types/aws";
+import { invalidateJunoTags } from "services/juno";
+import { govTags, junoTags } from "services/juno/tags";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import Airdrop from "contracts/Airdrop";
+import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
-  const { showModal } = useSetModal();
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
-        new Dec(0)
+        (result, airdrop) => condense(airdrop.haloTokens).add(result),
+        new Decimal(0)
       ),
     [airdrops]
   );
 
   const claimAirdrop = (isStake: boolean) => () => {
-    const haloContract = new Halo(wallet);
-    const claimAirdropMsgs = haloContract.createAirdropClaimMsg(
+    const airdropContract = new Airdrop(wallet);
+    const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake
     );
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: claimAirdropMsgs,
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: tags.gov, id: gov.staker },
-            { type: tags.gov, id: gov.halo_balance },
-            { type: tags.user, id: user.halo_balance },
+          invalidateJunoTags([
+            { type: junoTags.gov, id: govTags.staker },
+            { type: junoTags.gov, id: govTags.halo_balance },
           ]),
-          aws.util.invalidateTags([{ type: awsTags.airdrop }]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   };
 
   return { totalClaimable: totalClaimable.toNumber(), claimAirdrop };

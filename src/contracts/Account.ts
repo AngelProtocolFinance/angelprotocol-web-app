@@ -1,55 +1,57 @@
+import { Coin } from "@cosmjs/proto-signing";
+import {
+  DepositPayload,
+  EndowmentSettingsPayload,
+  ProfileUpdate,
+  StatusChangePayload,
+  UpdateStategyPayload,
+  WithdrawPayload,
+} from "types/contracts";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { Source } from "./types";
-import { MsgExecuteContract } from "@terra-money/terra.js";
-import { WalletProxy } from "providers/WalletProvider";
-import { ContractQueryArgs } from "services/terra/types";
 
 export default class Account extends Contract {
-  address: string;
-  balance: ContractQueryArgs;
+  private static address = contracts.accounts;
 
-  constructor(accountAddr: string, wallet?: WalletProxy) {
-    super(wallet);
-    this.address = accountAddr;
+  //future: add id in constructor once id is outside payload
 
-    this.balance = {
-      address: accountAddr,
-      msg: { balance: {} },
-    };
+  createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_endowment_status: payload,
+    });
   }
 
-  // async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
-  //   this.checkWallet();
-  //   const pctLiquid = new Dec(splitToLiquid).div(100);
-  //   const pctLocked = new Dec(1).sub(pctLiquid);
-
-  //   const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
-  //   return new MsgExecuteContract(
-  //     this.walletAddr!,
-  //     this.address,
-  //     {
-  //       deposit: {
-  //         locked_percentage: pctLocked.toFixed(2),
-  //         liquid_percentage: pctLiquid.toFixed(2),
-  //       },
-  //     },
-  //     [new Coin(denoms.uusd, micro_UST_Amount)]
-  //   );
-  // }
-
-  createWithdrawMsg({
-    sources,
-    beneficiary,
-  }: {
-    sources: Source[];
-    beneficiary: string;
-  }) {
-    this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.address, {
-      withdraw: {
-        sources: sources,
-        beneficiary,
-      },
+  createEmbeddedWithdrawMsg(payload: WithdrawPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      withdraw: payload,
     });
+  }
+
+  createEmbeddedStrategyUpdateMsg(payload: UpdateStategyPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_strategies: payload,
+    });
+  }
+
+  createEmbeddedUpdateProfileMsg(payload: ProfileUpdate) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_profile: payload,
+    });
+  }
+
+  createEmbeddedUpdateSetttingsMsg(payload: EndowmentSettingsPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      update_endowment_settings: payload,
+    });
+  }
+
+  createDepositMsg(payload: DepositPayload, funds: Coin[]) {
+    return this.createExecuteContractMsg(
+      Account.address,
+      {
+        deposit: payload,
+      },
+      funds
+    );
   }
 }

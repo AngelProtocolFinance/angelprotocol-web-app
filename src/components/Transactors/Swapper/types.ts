@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 export interface SwapValues {
   is_buy: boolean;
   amount: string;
@@ -8,7 +6,3 @@ export interface SwapValues {
   pct_commission: string;
   ratio: number;
 }
-
-export type Props = {
-  Form: FC;
-};

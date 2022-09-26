@@ -1,19 +1,18 @@
-import toCurrency from "helpers/toCurrency";
-import { Airdrops } from "services/aws/airdrop/types";
+import { Airdrops } from "types/aws";
+import Icon from "components/Icon";
+import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
-import Icon from "components/Icons/Icons";
 
-export type Props = { airdrops: Airdrops };
-export default function Catcher(props: Props) {
+export default function Catcher(props: { airdrops: Airdrops }) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
-    <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
+    <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-[15rem] w-full">
       <Icon type="Parachute" className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop
       </h2>
       <p className="text-angel-blue font-heading text-2xl mt-4 mb-6">
-        {toCurrency(totalClaimable)} HALO
+        {humanize(totalClaimable)} HALO
       </p>
 
       <Action onClick={claimAirdrop(true)} className="text-sm">

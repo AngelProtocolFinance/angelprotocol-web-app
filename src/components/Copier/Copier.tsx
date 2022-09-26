@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useCopier from "./useCopier";
 
 export default function Copier(props: { text: string; colorClass: string }) {
@@ -14,7 +14,8 @@ export default function Copier(props: { text: string; colorClass: string }) {
       )) || (
         <Icon
           type="Copy"
-          className={`${props.colorClass} hover:text-orange" title="Copy Address`}
+          className={`${props.colorClass} hover:text-orange`}
+          title="Copy Address"
         />
       )}
     </button>

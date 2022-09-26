@@ -1,85 +1,183 @@
 import {
-  AccAddress,
+  MsgExecuteContractEncodeObject,
+  SigningCosmWasmClient,
+} from "@cosmjs/cosmwasm-stargate";
+import { toUtf8 } from "@cosmjs/encoding";
+import { EncodeObject } from "@cosmjs/proto-signing";
+import {
   Coin,
-  Fee,
-  LCDClient,
-  Msg,
-  TxInfo,
-} from "@terra-money/terra.js";
-import { chainIDs } from "constants/chainIDs";
-import { denoms, MAIN_DENOM } from "constants/currency";
-import { terra_lcds } from "constants/urls";
-import { WalletProxy } from "providers/WalletProvider";
-import { Disconnected, TxResultFail } from "./Errors";
+  DeliverTxResponse,
+  GasPrice,
+  MsgSendEncodeObject,
+  StdFee,
+  calculateFee,
+  isDeliverTxFailure,
+} from "@cosmjs/stargate";
+import { TxOptions } from "slices/transaction/types";
+import { Chain } from "types/aws";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import { Dwindow } from "types/ethereum";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import { logger, scaleToStr, toBase64 } from "helpers";
+import {
+  CosmosTxSimulationFail,
+  TxResultFail,
+  WalletDisconnectedError,
+  WrongChainError,
+} from "errors/errors";
+import { IS_TEST } from "constants/env";
+
+// TODO: uni-5 and juno-1 have diff gas prices for fee display only,
+// actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
+// NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
+const GAS_PRICE = IS_TEST
+  ? GasPrice.fromString("0.025ujunox")
+  : GasPrice.fromString("0.0025ujuno");
+
+// This is the multiplier used when auto-calculating the fees
+// https://github.com/cosmos/cosmjs/blob/5bd6c3922633070dbb0d68dd653dc037efdf3280/packages/stargate/src/signingstargateclient.ts#L290
+const GAS_ADJUSTMENT = 1.3;
 
 export default class Contract {
-  client: LCDClient;
-  chainID: string;
-  url: string;
-  walletAddr?: AccAddress;
+  wallet: WalletState | undefined;
+  walletAddress: string;
 
-  constructor(wallet?: WalletProxy) {
-    this.chainID = wallet?.network.chainID || chainIDs.terra_classic;
-    this.url = terra_lcds[this.chainID];
-    this.walletAddr = wallet?.address;
-    this.client = new LCDClient({
-      chainID: this.chainID,
-      URL: this.url,
-      gasAdjustment: Contract.gasAdjustment, //use gas units 20% greater than estimate
-      gasPrices: Contract.gasPrices,
-    });
-
-    this.pollTxInfo = this.pollTxInfo.bind(this);
+  constructor(wallet: WalletState | undefined) {
+    this.wallet = wallet;
+    this.walletAddress = wallet?.address || "";
   }
 
-  static gasAdjustment = 1.6; //use gas units 60% greater than estimate
-
-  // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [
-    new Coin(MAIN_DENOM, 0.15),
-    new Coin(denoms.uluna, 5.665),
-  ];
-
-  async query<T>(source: AccAddress, message: object) {
-    return this.client.wasm.contractQuery<T>(source, message);
+  //for on-demand query, use RTK where possible
+  async query<T>(to: string, message: Record<string, unknown>) {
+    this.verifyWallet();
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getKeplrClient(chain_id, rpc_url);
+    const jsonObject = await client.queryContractSmart(to, message);
+    return JSON.parse(jsonObject) as T;
   }
 
-  async estimateFee(msgs: Msg[], denom = MAIN_DENOM): Promise<Fee> {
-    this.checkWallet();
-    const account = await this.client.auth.accountInfo(this.walletAddr!);
-    return this.client.tx.estimateFee(
-      [{ sequenceNumber: account.getSequenceNumber() }],
-      { msgs, feeDenoms: [denom] }
+  async estimateFee(msgs: readonly EncodeObject[]): Promise<StdFee> {
+    try {
+      this.verifyWallet();
+      const { chain_id, rpc_url } = this.wallet!.chain;
+      const client = await getKeplrClient(chain_id, rpc_url);
+      const gasEstimation = await client.simulate(
+        this.walletAddress,
+        msgs,
+        undefined
+      );
+      return calculateFee(
+        Math.round(gasEstimation * GAS_ADJUSTMENT),
+        GAS_PRICE
+      );
+    } catch (err) {
+      logger.error(err);
+      throw new CosmosTxSimulationFail();
+    }
+  }
+
+  async signAndBroadcast({ msgs, fee }: TxOptions) {
+    this.verifyWallet();
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getKeplrClient(chain_id, rpc_url);
+    const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
+    return validateTransactionSuccess(result, this.wallet!.chain);
+  }
+
+  createExecuteContractMsg(
+    to: string,
+    msg: object,
+    funds: Coin[] = []
+  ): MsgExecuteContractEncodeObject {
+    return {
+      typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
+      value: {
+        contract: to,
+        sender: this.walletAddress,
+        msg: toUtf8(JSON.stringify(msg)),
+        funds,
+      },
+    };
+  }
+
+  createTransferNativeMsg(
+    amount: number,
+    recipient: string,
+    denom = this.wallet!.chain.native_currency.token_id
+  ): MsgSendEncodeObject {
+    return {
+      typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+      value: {
+        fromAddress: this.walletAddress,
+        toAddress: recipient,
+        amount: [
+          {
+            denom,
+            amount: scaleToStr(amount),
+          },
+        ],
+      },
+    };
+  }
+
+  createEmbeddedWasmMsg(
+    to: string,
+    msg: object,
+    funds: Coin[] = []
+  ): EmbeddedWasmMsg {
+    return {
+      wasm: {
+        execute: {
+          contract_addr: to,
+          funds,
+          msg: toBase64(msg),
+        },
+      },
+    };
+  }
+
+  createEmbeddedBankMsg(funds: Coin[], to: string): EmbeddedBankMsg {
+    return {
+      bank: {
+        send: {
+          to_address: to,
+          amount: funds,
+        },
+      },
+    };
+  }
+
+  private verifyWallet() {
+    if (!this.wallet) {
+      throw new WalletDisconnectedError();
+    }
+    if (this.wallet.chain.type !== "juno-native") {
+      throw new WrongChainError("juno");
+    }
+  }
+}
+
+function validateTransactionSuccess(
+  result: DeliverTxResponse,
+  chain: Chain
+): DeliverTxResponse {
+  if (isDeliverTxFailure(result)) {
+    throw new TxResultFail(
+      //DeliverTxResponse already has a hash, link of tx should be available to user
+      //pass Chain so getTxUrl can get appropriate explorer link
+      chain,
+      result.transactionHash
     );
   }
 
-  async pollTxInfo(
-    txhash: string,
-    retries: number,
-    interval: number
-  ): Promise<TxInfo> {
-    const req = new Request(`${this.url}/txs/${txhash}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    await new Promise((r) => {
-      setTimeout(r, interval);
-    });
-    return fetch(req).then((res) => {
-      if (res.status === 200) {
-        return res.json() as unknown as TxInfo;
-      }
-      if (retries > 0 || res.status === 400) {
-        return this.pollTxInfo(txhash, retries - 1, interval);
-      }
-      throw new TxResultFail(this.chainID, txhash);
-    });
-  }
+  return result;
+}
 
-  checkWallet() {
-    if (!this.walletAddr) {
-      throw new Disconnected();
-    }
-  }
+async function getKeplrClient(
+  chain_id: string,
+  rpc_url: string
+): Promise<SigningCosmWasmClient> {
+  const signer = (window as Dwindow).keplr!.getOfflineSigner(chain_id);
+  const client = await SigningCosmWasmClient.connectWithSigner(rpc_url, signer);
+  return client;
 }

@@ -1,11 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
-import eyeIcon from "assets/images/eye.png";
-import eyeSlashIcon from "assets/images/eye-slash.png";
-import useLogin from "./useLogin";
-import { Navigate } from "react-router-dom";
-import { site, app } from "constants/routes";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Icon from "components/Icon";
+import { appRoutes } from "constants/routes";
+import useLogin from "./useLogin";
 
 const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -15,11 +14,11 @@ const Login = () => {
   const { tcaToken, isSubmitting, errors, register, login } = useLogin();
 
   if (tcaToken) {
-    return <Navigate to={`${app.tca}`} />;
+    return <Navigate to={appRoutes.tca} />;
   }
 
   return (
-    <section className="grid grid-rows-a1 place-items-center">
+    <section className="grid grid-rows-[auto_1fr] place-items-center">
       <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
@@ -42,12 +41,15 @@ const Login = () => {
                 placeholder="Enter your password."
                 name="password"
               />
-              <img
-                alt=""
-                src={isShowPassword ? eyeIcon : eyeSlashIcon}
-                width="16px"
+              <button
                 onClick={togglePasswordView}
-              />
+                className="grid place-items-center"
+              >
+                <Icon
+                  type={isShowPassword ? "Eye" : "EyeInvisible"}
+                  size={16}
+                />
+              </button>
             </div>
             <ErrorMessage
               errors={errors}
@@ -66,7 +68,7 @@ const Login = () => {
         </form>
 
         <Link
-          to={site.home}
+          to={appRoutes.index}
           className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-thin-blue/75"
         >
           learn more about angel protocol

@@ -1,10 +1,10 @@
-import { CURRENCIES, denoms } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
+import { useCachedGovStaker } from "services/juno/gov/queriers";
+import { condense, humanize, roundDown } from "helpers";
+import { symbols } from "constants/currency";
 import Balance from "../Staker/Balance";
-import { Dec } from "@terra-money/terra.js";
-import { useGovStakerState } from "services/terra/gov/states";
 
 export default function Amount() {
   const {
@@ -12,10 +12,8 @@ export default function Amount() {
     formState: { errors },
     setValue,
   } = useFormContext<VoteValues>();
-  const govStakerState = useGovStakerState();
-  const govStakedHalo = new Dec(govStakerState.balance)
-    .div(1e6)
-    .toFixed(3, Dec.ROUND_DOWN);
+  const govStakerState = useCachedGovStaker();
+  const govStakedHalo = roundDown(condense(govStakerState.balance), 3);
 
   const onMaxClick = () => {
     setValue("amount", govStakedHalo, {
@@ -28,10 +26,10 @@ export default function Amount() {
     <div className="grid mb-1">
       <label
         htmlFor="amount"
-        className="uppercase mb-2 flex justify-between text-angel-grey font-bold items-end"
+        className="text-angel-grey uppercase font-bold mb-2"
       >
         <span>Deposit amount</span>
-        <Balance amount={+govStakedHalo} title="Balance" />
+        <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
       <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <input
@@ -39,7 +37,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={CURRENCIES[denoms.uhalo].ticker}
+          placeholder={symbols.halo}
           className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div

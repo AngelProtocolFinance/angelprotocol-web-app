@@ -1,55 +1,50 @@
-import AppFoot from "components/AppFoot/AppFoot";
-import DappHead from "components/DappHead/DappHead";
-import Modal from "components/Modal/Modal";
-import { chainIDs } from "constants/chainIDs";
-import useWalletContext from "hooks/useWalletContext";
+import {
+  WalletControllerChainOptions,
+  WalletProvider,
+  getChainOptions,
+} from "@terra-money/wallet-provider";
+import { useEffect, useState } from "react";
+import ModalContext from "contexts/ModalContext";
+import WalletContext from "contexts/WalletContext/WalletContext";
+import Loader from "components/Loader";
+import Footer from "./Footer";
+import Header from "./Header";
 import Views from "./Views";
 
 export default function App() {
-  const { wallet } = useWalletContext();
-  const chainId = wallet?.network.chainID;
+  const [chainOptions, setChainOptions] =
+    useState<WalletControllerChainOptions>();
 
-  if (wallet !== undefined && chainId !== chainIDs.terra_classic) {
-    return <NetworkGuard />;
-  }
-  //TODO: refactor non-terra providers to redux
+  useEffect(() => {
+    (async () => {
+      const fetchedChainOptions = await getChainOptions();
+      setChainOptions(fetchedChainOptions);
+    })();
+  }, []);
+
   return (
-    <div className="grid grid-rows-a1a bg-gradient-to-b from-blue-accent to-black-blue relative pt-6">
-      <p className="transition-shadow fixed z-20 top-0 inset-x-0 font-heading font-bold bg-angel-orange w-full p-2 text-center text-angel-grey text-xs">
-        Please note: Donations are currently disabled. V2 coming soon!
-      </p>
-
-      <Modal classes="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
-        <DappHead />
-        <Views />
-      </Modal>
-      <AppFoot />
-    </div>
-  );
-}
-
-function NetworkGuard() {
-  const { wallet } = useWalletContext();
-  return (
-    <div className="grid gap-2 place-self-center bg-white-grey font-heading border border-angel-grey/30 w-full max-w-xs h-46 rounded-md p-6 leading-normal">
-      <p className="text-center mb-4">
-        Kindly switch wallet network to{" "}
-        <span className="font-semibold font-mono">Terra Classic</span> and
-        reload the page.
-      </p>
-      <button
-        onClick={() => window.location.reload()}
-        className="uppercase bg-angel-blue text-white text-sm px-4 py-2 rounded-md font-bold"
-      >
-        Reload
-      </button>
-
-      <button
-        onClick={() => wallet?.disconnect()}
-        className="uppercase bg-angel-orange text-white text-sm px-4 py-2 rounded-md font-bold"
-      >
-        disconnect wallet
-      </button>
+    <div className="grid grid-rows-[1fr_auto] bg-gradient-to-b from-blue-accent to-black-blue bg-fixed">
+      {!chainOptions ? (
+        <div className="flex justify-center items-center w-full h-full">
+          <Loader
+            bgColorClass="bg-white-grey"
+            gapClass="gap-2"
+            widthClass="w-4"
+          />
+        </div>
+      ) : (
+        <div className="grid grid-rows-[auto_1fr] w-full h-full">
+          <WalletProvider {...chainOptions}>
+            <WalletContext>
+              <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+                <Header />
+                <Views />
+              </ModalContext>
+            </WalletContext>
+          </WalletProvider>
+        </div>
+      )}
+      <Footer />
     </div>
   );
 }

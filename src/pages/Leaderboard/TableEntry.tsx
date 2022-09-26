@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
+import { Endowment } from "types/aws";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
-import { Endowment } from "services/aws/leaderboard/types";
-import LazyImage from "components/LazyImage/LazyImage";
-import { app } from "constants/routes";
-import projectFunds from "./projectFunds";
+import LazyImage from "components/LazyImage";
+import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
+import projectFunds from "./projectFunds";
 
 export default function TableEntry(props: Endowment) {
   const { locked, liquid } = projectFunds(
@@ -27,7 +27,7 @@ export default function TableEntry(props: Endowment) {
       </td>
       <td>
         <Link
-          to={`../${app.charity}/${props.endowment_address}`}
+          to={`../${appRoutes.profile}/${props.endowment_address}`}
           className="col-start-2 text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 mb-1"
         >
           {props.charity_name}

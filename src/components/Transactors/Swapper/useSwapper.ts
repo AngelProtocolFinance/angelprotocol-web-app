@@ -1,17 +1,14 @@
 import { useCallback } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor from "components/Transactor";
 import Swapper from "./Swapper";
-import SwapForm from "./SwapForm";
-import { Props } from "./types";
-import Transactor, { TxProps } from "../Transactor";
 
 export default function useSwapper() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const showSwapper = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
-      inModal: true,
+    showModal(Transactor, {
       Content: Swapper,
-      contentProps: { Form: SwapForm },
+      contentProps: {},
     });
     //eslint-disable-next-line
   }, []);

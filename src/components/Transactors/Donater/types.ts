@@ -1,15 +1,16 @@
-import { denoms } from "constants/currency";
-import { FC } from "react";
+import { Token } from "types/aws";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  currency: denoms.ether | denoms.uluna | denoms.bnb | denoms.uusd;
+  token: Token;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
+  isAgreedToTerms: boolean;
+  isKycDonorOnly?: boolean;
 }
 
 interface FromTCA {
@@ -19,20 +20,13 @@ interface FromTCA {
   min_liq?: never;
 }
 
-interface ToFund {
-  to: "fund";
-  receiver?: number;
-  max_liq?: number;
-  min_liq?: number;
-}
-
-interface ToCharity {
-  to: "charity";
-  receiver: string;
+interface ToFundOrCharity {
+  to: "fund" | "charity";
+  receiver: number;
   //doesn't know yet limits on charity donations
   max_liq?: number;
   min_liq?: number;
 }
 
-export type FundFlow = ToFund | ToCharity | FromTCA;
-export type Props = FundFlow & { Form: FC };
+type FundFlow = ToFundOrCharity | FromTCA;
+export type DonaterProps = FundFlow & { isKycDonorOnly?: boolean };

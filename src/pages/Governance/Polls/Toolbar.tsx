@@ -1,20 +1,20 @@
+import { PollFilterOptions } from "../types";
+import { useLatestBlockQuery } from "services/juno";
+import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
-import { useLatestBlock } from "services/terra/queriers";
-import toCurrency from "helpers/toCurrency";
+import { humanize } from "helpers";
 import Button from "../Button";
-import { PollFilterOptions } from "./Polls";
 import PollSelector from "./PollSelector";
-import Icon from "components/Icons/Icons";
 
 export default function Toolbar(props: {
   pollFilter: PollFilterOptions;
   setPollFilter: React.Dispatch<React.SetStateAction<PollFilterOptions>>;
 }) {
-  const block_height = useLatestBlock();
+  const { data: block_height = "0" } = useLatestBlockQuery(null);
   const showPoller = usePoller();
 
   return (
-    <div className="flex items-center gap-2 border border-white/10 px-6 py-2 mb-3 bg-white/10 shadow-md rounded-md">
+    <div className="flex items-center gap-2 mb-2 rounded-md">
       <p className="uppercase text-2xl font-bold text-white-grey mr-1">Polls</p>
 
       <PollSelector
@@ -25,7 +25,7 @@ export default function Toolbar(props: {
       <p className="ml-auto text-white-grey/80 font-heading text-sm flex items-center px-3">
         <span className="font-heading uppercase text-2xs">current block </span>
         <Icon type="Blockchain" className="mr-1" />
-        <span>{toCurrency(+block_height, 0)}</span>
+        <span>{humanize(+block_height, 0)}</span>
       </p>
 
       <Button

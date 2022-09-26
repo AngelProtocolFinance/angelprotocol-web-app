@@ -1,24 +1,19 @@
+import { RegistrarConfigPayload, RegistrarOwnerPayload } from "types/contracts";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
-import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
-  address: string;
-  vaultsRate: ContractQueryArgs;
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.address = contracts[this.chainID][sc.registrar];
+  private static address = contracts.registrar;
 
-    this.vaultsRate = {
-      address: this.address,
-      msg: {
-        approved_vault_rate_list: {},
-      },
-    };
+  createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
+      update_config: payload,
+    });
+  }
+
+  createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
+    return this.createEmbeddedWasmMsg(Registrar.address, {
+      update_owner: payload,
+    });
   }
 }
-
-export interface R extends Registrar {}
-export type T = typeof Registrar;

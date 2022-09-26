@@ -1,33 +1,35 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
-import { terra } from "services/terra/terra";
-import { apes } from "services/apes/apes";
-import userReducer from "../services/user/userSlice";
-import chainReducer from "../services/chain/chainSlice";
-import walletReducer from "../services/wallet/walletSlice";
-import providerReducer from "../services/provider/providerSlice";
-import transactionReducer from "../services/transaction/transactionSlice";
-import authReducer from "../services/auth/authSlice";
+import { countriesApi } from "services/countries";
+import { flipside } from "services/flipslide/flipslide";
+import { junoApi } from "services/juno";
+import { adminReducer } from "slices/admin";
+import authReducer from "slices/authSlice";
+import { componentReducer } from "slices/components";
+import transactionReducer from "slices/transaction/transactionSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
     transaction: transactionReducer,
-    chain: chainReducer,
-    provider: providerReducer,
-    wallet: walletReducer,
+    admin: adminReducer,
     auth: authReducer,
+    component: componentReducer,
     [aws.reducerPath]: aws.reducer,
-    [terra.reducerPath]: terra.reducer,
+    [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,
+    [flipside.reducerPath]: flipside.reducer,
+    [countriesApi.reducerPath]: countriesApi.reducer,
     //auth: authReducer,
     //future: futureReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       aws.middleware,
-      terra.middleware,
       apes.middleware,
+      junoApi.middleware,
+      flipside.middleware,
+      countriesApi.middleware,
     ]),
 });
 export type RootState = ReturnType<typeof store.getState>;

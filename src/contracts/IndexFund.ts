@@ -1,32 +1,71 @@
-import Contract from "./Contract";
+import {
+  AllianceMember,
+  FundConfig,
+  FundDetails,
+  IndexFundOwnerPayload,
+} from "types/contracts";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
+import Contract from "./Contract";
 
-export default class Indexfund extends Contract {
-  fund_id?: number;
-  address: string;
-  //contract address
-  //may need to re-implement to handle multiple currencies in the future
-  constructor(wallet?: WalletProxy, fund_id?: number) {
-    super(wallet);
-    this.fund_id = fund_id;
-    this.address = contracts[this.chainID][sc.index_fund];
+export default class IndexFund extends Contract {
+  private static address = contracts.index_fund;
+
+  createEmbeddedFundConfigMsg(config: FundConfig) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      update_config: config,
+    });
   }
 
-  // async createDepositMsg(UST_amount: number | string, splitToLiquid?: number) {
-  //   this.checkWallet(); //throws error when no wallet
-  //   const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
-  //   return new MsgExecuteContract(
-  //     this.walletAddr!,
-  //     this.address,
-  //     {
-  //       deposit: {
-  //         fund_id: this.fund_id,
-  //         split: `${splitToLiquid}`,
-  //       },
-  //     },
-  //     [new Coin(denoms.uusd, micro_UST_Amount)]
-  //   );
-  // }
+  createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      update_owner: payload,
+    });
+  }
+
+  async getFundDetails(fundId: number) {
+    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
+      IndexFund.address,
+      {
+        fund_details: { fund_id: fundId },
+      }
+    );
+    return fundDetailsRes.fund;
+  }
+
+  createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      create_fund: { ...fundDetails },
+    });
+  }
+
+  createEmbeddedRemoveFundMsg(fundId: number) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      remove_fund: { fund_id: fundId },
+    });
+  }
+
+  createEmbeddedUpdateMembersMsg(
+    fundId: number,
+    toAdd: string[],
+    toRemove: string[]
+  ) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
+    });
+  }
+
+  createEmbeddedAAListUpdateMsg(
+    member: AllianceMember,
+    action: "add" | "remove"
+  ) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      update_alliance_member_list: { address: member.wallet, member, action },
+    });
+  }
+
+  createEmbeddedAAMemberEditMsg(member: AllianceMember) {
+    return this.createEmbeddedWasmMsg(IndexFund.address, {
+      update_alliance_member: { address: member.wallet, member },
+    });
+  }
 }

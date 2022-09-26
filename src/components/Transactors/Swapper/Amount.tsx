@@ -1,11 +1,13 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
-import { ErrorMessage } from "@hookform/error-message";
 import { SwapValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { placeholderChain } from "contexts/WalletContext/constants";
+import Icon from "components/Icon";
+import { denoms } from "constants/currency";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
-import Icon from "components/Icons/Icons";
 
 export default function Amount() {
   const [settings_shown, show_settings] = useState(false);
@@ -14,18 +16,22 @@ export default function Amount() {
     register,
     formState: { errors },
   } = useFormContext<SwapValues>();
+  const { wallet } = useGetWallet();
+  const is_buy = watch("is_buy");
 
   function toggle_settings() {
     show_settings((p) => !p);
   }
 
-  const is_buy = watch("is_buy");
+  const buyingWithToken = is_buy
+    ? wallet?.chain.native_currency
+    : wallet?.chain.tokens.find((x) => x.token_id === denoms.halo);
 
-  const currency = is_buy ? CURRENCIES[MAIN_DENOM] : CURRENCIES[denoms.uhalo];
+  const displayToken = buyingWithToken ?? placeholderChain.native_currency;
 
   return (
     <div className="grid mt-2">
-      <div className="grid grid-cols-1a mb-1">
+      <div className="grid grid-cols-[1fr_auto] mb-1">
         {settings_shown && <Slippage />}
         <button
           onClick={toggle_settings}
@@ -38,11 +44,11 @@ export default function Amount() {
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-a1 text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
+      <div className="grid grid-cols-[auto_1fr] text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
-        <Balance />
+        <Balance token={displayToken} />
         <label
           htmlFor="amount"
           className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading rounded-md"
@@ -51,10 +57,12 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={currency.icon}
+            src={displayToken.logo}
             alt=""
           />
-          <span className="block font-bold text-2xl">{currency.ticker}</span>
+          <span className="block font-bold text-2xl">
+            {displayToken.symbol}
+          </span>
         </label>
 
         <input
@@ -70,7 +78,7 @@ export default function Amount() {
         errors={errors}
         name="amount"
         as="span"
-        className="text-right text-red-400 text-sm mb-1 mt-1 mr-1"
+        className="text-right text-red-400 text-xs font-semibold font-mono m-1"
       />
     </div>
   );

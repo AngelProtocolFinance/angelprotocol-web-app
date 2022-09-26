@@ -1,19 +1,18 @@
-import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
-import { useSetModal } from "components/Modal/Modal";
 import { useCallback } from "react";
+import { DonaterProps } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactor";
 import Donater from "./Donater";
-import { FundFlow, Props } from "./types";
-import Transactor, { TxProps } from "../Transactor";
 
-export default function useDonater(args: FundFlow) {
-  const { showModal } = useSetModal();
+export default function useDonater(args: DonaterProps) {
+  const { showModal } = useModalContext();
+
   const showDonater = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
-      inModal: true,
+    showModal<TxProps<DonaterProps>>(Transactor, {
       Content: Donater,
-      contentProps: { Form: DonateForm, ...args },
+      contentProps: args,
     });
-    //eslint-disable-next-line
-  }, [args]);
+  }, [args, showModal]);
+
   return showDonater;
 }

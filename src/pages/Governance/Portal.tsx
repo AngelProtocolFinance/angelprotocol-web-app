@@ -1,8 +1,9 @@
-import { CURRENCIES, denoms } from "constants/currency";
+import haloLogo from "assets/icons/currencies/halo_outline.png";
 import { useStakingAPRQuery } from "services/aws/governance";
-import useSwapper from "components/Transactors/Swapper/useSwapper";
-import useStaker from "components/Transactors/Staker/useStaker";
 import useClaimer from "components/Transactors/Claimer/useClaimer";
+import useStaker from "components/Transactors/Staker/useStaker";
+import useSwapper from "components/Transactors/Swapper/useSwapper";
+import { symbols } from "constants/currency";
 import Button from "./Button";
 
 export default function Portal() {
@@ -12,17 +13,19 @@ export default function Portal() {
   const showClaimer = useClaimer();
 
   return (
-    <div className="bg-white/10 border border-white/10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
+    <div className="bg-white/10 shadow-inner w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-[auto_1fr]">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
         <div className="relative">
           <div className="absolute w-full h-full border-4 border-white/80 rounded-full animate-pulse shadow-md"></div>
           <img
-            src={CURRENCIES[denoms.uhalo].icon}
+            src={haloLogo}
             alt=""
             className="w-14 h-14 m-2 opacity-90 shadow-lg rounded-full"
           />
         </div>
-        <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
+        <span className="text-6xl text-white-grey font-bold -mr-1">
+          {symbols.halo}
+        </span>
         <span className="sm:ml-auto text-3xl text-white-grey/90">
           {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>

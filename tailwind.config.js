@@ -1,35 +1,10 @@
+const plugin = require("tailwindcss/plugin");
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
-      animation: {
-        iconPing: "ping 100ms",
-      },
-      backgroundImage: {
-        banner:
-          "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
-        process:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/home-process.jpg')",
-        portal:
-          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('assets/images/teamwork2.jpg')",
-        contact:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/volunteers2.jpg')",
-        "banner-charity":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
-        "banner-charities":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/deliveries.jpg')",
-        "banner-donors":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/hand.jpg')",
-        comet: "url('assets/images/comet.jpg')",
-        auction: "linear-gradient(67deg, #9cc9e924, #66accd59)",
-      },
-      boxShadow: {
-        "3xl": "0 1px 9px 1px  rgba(0, 0, 0, 0.3)",
-      },
-      cursor: {
-        grab: "grab",
-        grabbing: "grabbing",
-      },
       colors: {
         "bright-green": "#6ED482",
         "angel-orange": "#FAAC2E",
@@ -47,7 +22,6 @@ module.exports = {
         orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
-        "dark-grey": "#999999",
         "failed-red": "#FE4454",
         "light-blue": "#1b9cef",
         "bright-blue": "#64c1fc",
@@ -87,86 +61,50 @@ module.exports = {
         heading: ["Montserrat", "serif"],
         body: ["Open Sans", "sans-serif"],
       },
-      height: {
-        "fixed-content-height": "calc(100vh - 7rem);",
-        "donate-content-height": "calc(100% - 7.5rem)",
-        info: "28rem",
-        process: "36rem",
-        banner: "calc(100vh - 6rem);",
-        "banner-sm": "35rem",
-        "leader-table": "50rem",
-        "withdraw-table": "36rem",
-      },
-      gridTemplateRows: {
-        "1a": "1fr auto",
-        a1: "auto 1fr",
-        a1a: "auto 1fr auto",
-        a11: "auto 1fr 1fr",
-        aa1: "auto auto 1fr",
-        dashboard: "auto 1fr auto",
-        wallet: "auto 1fr 1fr",
-        "2a": "repeat(2,auto)",
-        fund: "18rem auto",
-      },
-      gridTemplateColumns: {
-        "1a": "1fr auto",
-        a1: "auto 1fr",
-        a1a: "auto 1fr auto",
-        aa1: "auto auto 1fr",
-      },
-      inset: {
-        12: "12px",
-        69: "69px",
-      },
-      maxWidth: {
-        "4/5": "80%",
-        500: "500px",
-        450: "450px",
-        600: "600px",
-        250: "250px",
-      },
-      minWidth: {
-        36: "36",
-        200: "200px",
-        250: "250px",
-        300: "300px",
-        450: "450px",
-        600: "600px",
-        136: "36rem",
-      },
-      minHeight: {
-        115: "15rem",
-        modal: "300px",
-        "leader-table": "50rem",
-        "withdraw-table": "36rem",
-        110: "10rem",
-        "1/3": "25%",
-        "1/2": "50%",
-        "3/4": "75%",
-      },
-      maxHeight: {
-        "1/3": "25%",
-        "1/2": "50%",
-        "3/4": "75%",
-        116: "16rem",
-        600: "600px",
-        modal: "300px",
-        280: "280px",
-        "75vh": "75vh",
-        350: "350px",
-      },
       width: {
-        115: "15rem",
-        120: "20rem",
-        128: "28rem",
-        130: "30rem",
-        135: "35rem",
-        "1/3": "25%",
-        "1/2": "50%",
         "3/4": "75%",
-        fill: "-webkit-fill-available",
       },
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    plugin(function ({ addComponents, theme }) {
+      addComponents({
+        ".btn-primary": {
+          backgroundColor: theme("colors.angel-orange"),
+        },
+        ".btn-outline-primary": {
+          borderStyle: "solid",
+          borderColor: theme("colors.angel-orange"),
+          borderWidth: "2px",
+          "&:hover": {
+            backgroundColor: `${theme("colors.angel-orange")}33`,
+          },
+          "&:active": {
+            backgroundColor: `${theme("colors.angel-orange")}b2`,
+          },
+          "&:disabled": {
+            borderStyle: "none",
+          },
+        },
+        ".btn-secondary": {
+          backgroundColor: theme("colors.thin-blue"),
+        },
+        ".btn-outline-secondary": {
+          borderStyle: "solid",
+          borderColor: theme("colors.thin-blue"),
+          borderWidth: "2px",
+          "&:hover": {
+            backgroundColor: `${theme("colors.thin-blue")}33`,
+          },
+          "&:active": {
+            backgroundColor: `${theme("colors.thin-blue")}b2`,
+          },
+          "&:disabled": {
+            borderStyle: "none",
+          },
+        },
+      });
+    }),
+  ],
 };

@@ -1,6 +1,5 @@
 import React from "react";
-import { PollStatus } from "services/terra/gov/types";
-import { PollFilterOptions } from "./Polls";
+import { PollFilterOptions } from "../types";
 
 export default function PollSelector(props: {
   pollFilter: PollFilterOptions;
@@ -21,7 +20,7 @@ export default function PollSelector(props: {
           <option
             key={optionValue}
             value={optionValue}
-            className={`text-sm text-angel-grey uppercase p-1`}
+            className="text-sm text-angel-grey uppercase p-1"
           >
             {optionDescription}
           </option>
@@ -33,11 +32,10 @@ export default function PollSelector(props: {
 
 const pollFilterOptions: { [key in PollFilterOptions]: string } = {
   all: "all",
-  [PollStatus.executed]: "executed",
-  [PollStatus.executed]: "executed",
-  [PollStatus.expired]: "expired",
-  [PollStatus.failed]: "failed",
-  [PollStatus.in_progress]: "in progress",
-  [PollStatus.passed]: "passed",
-  [PollStatus.rejected]: "rejected",
+  executed: "executed",
+  expired: "expired",
+  failed: "failed",
+  in_progress: "in progress",
+  passed: "passed",
+  rejected: "rejected",
 };

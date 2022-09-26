@@ -1,16 +1,15 @@
-import { useSetModal } from "components/Modal/Modal";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import Halo from "contracts/Halo";
-import useWalletContext from "hooks/useWalletContext";
-import { tags, user } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags } from "services/juno/tags";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import Gov from "contracts/Gov";
 
 export default function useEndPoll(pollId: number) {
-  const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { wallet } = useGetWallet();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function endPoll() {
@@ -19,22 +18,16 @@ export default function useEndPoll(pollId: number) {
       return;
     }
 
-    const contract = new Halo(wallet);
+    const contract = new Gov(wallet);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         msgs: [msg],
-        tagPayloads: [
-          terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.user, id: user.halo_balance },
-          ]),
-        ],
+        tagPayloads: [invalidateJunoTags([{ type: junoTags.gov }])],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return { endPoll };

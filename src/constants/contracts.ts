@@ -1,39 +1,79 @@
-import { sc } from "constants/sc";
-import { chainIDs } from "constants/chainIDs";
+import { IS_TEST } from "./env";
+
+type SC =
+  | "index_fund"
+  | "registrar"
+  | "accounts"
+  | "cw3ApTeam"
+  | "cw4GrpApTeam"
+  | "cw3ReviewTeam"
+  | "cw4GrpReviewTeam"
+  | "halo_token"
+  | "gov"
+  | "airdrop"
+  | "loop_haloust_pair";
 
 type Contracts = {
-  [index: string]: {
-    [key in sc]: string;
-  };
+  [key in SC]: string;
 };
 
-export const contracts: Contracts = {
-  [chainIDs.terra_classic]: {
-    //core
-    [sc.anchor_vault1]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
-    [sc.anchor_vault2]: "",
+export const contracts: Contracts = IS_TEST
+  ? {
+      //TESTNET CONTRACTS
+      //core
+      index_fund:
+        "juno107zpvrdyww48d0fylez3lxjf87qwwh8r5nphcdzlwnepnm2kga5q36quta",
+      registrar:
+        "juno13ufhg4xjdzylk9mhayc8khmgg25tl2vs42pzala9x53vxa8ppjkschfr0x",
+      accounts:
+        "juno1prqanslytzwtrext3qpfy4p83ld7yw04ga06n6yufg53fukf4x0q0udwj2",
 
-    [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
-    [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
+      // Admin
+      cw3ApTeam:
+        "juno1pgedpd8m0g76ckxd6fduwpnm6x4g6fzsg0xj4u3xdchvjdxuzckqdhjv9a",
+      cw4GrpApTeam:
+        "juno13mk4dzwc5qdz7fxcrnkyj448lvap06rp7aw5h34xkcudrm98yv2sz4fysa",
+      cw3ReviewTeam:
+        "juno13mlk69qjx2cm8upx3d04h9dxh78mzhfksxrrnuyjk2l5s5wknl8skvkjhp",
+      cw4GrpReviewTeam:
+        "juno1h94wjgxv32zsg64f34retxudwd4nppslwm4glvu2jld9vrqh7k6srzjhcj",
 
-    //terraswap
-    [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
+      //terraswap
+      halo_token: "",
 
-    //halo
-    [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
-    [sc.airdrop]: "terra1pe6mnf0ursz0h80h2hwk690hvrph8vgt9pnw0w",
+      //halo
+      gov: "",
+      airdrop: "",
 
-    //lbp
-    [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
-    [sc.lbp_pair]: "terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e",
-    [sc.lbp_router]: "terra1l32eafhapmn9c8m7epyraxa2yty4xngamvewfs",
-    [sc.lbp_lp]: "terra1kt26adtzwu4yefw37snr73n393vsu8w0hmazxc",
+      //loop
+      loop_haloust_pair: "",
+    }
+  : {
+      //MAINNET CONTRACTS
+      //core
+      index_fund:
+        "juno1yrahlxavwr7juyrty580d24mgvmhknn6h3sgepjtkyg7udvj2l2sujdlqn",
+      registrar:
+        "juno17emcut72n6ycmf54qd0l4mzsefqxnqdhqxzlczxstlkkatdlst5qf9s3qr",
+      accounts:
+        "juno1e0w8892n60v0juuugvwptj8f6v3ad56ydr3cgxstmpkggjrqzfhsaqh38c",
 
-    //loop
-    [sc.loop_factory]: "terra16hdjuvghcumu6prg22cdjl96ptuay6r0hc6yns",
-    [sc.loop_router]: "",
-    [sc.loop_haloust_pair]: "terra1yjg0tuhc6kzwz9jl8yqgxnf2ctwlfumnvscupp",
-    [sc.loop_haloust_lp]: "terra17pzt8t2hmx6587zn6yh5ensylm3s9mm4m72v2n",
-    // terra12aazc56hv7aj2fcvmhuxve0l4pmayhpn794m0p /// HALO-LOOP PAIR
-  },
-};
+      // Admin
+      cw3ApTeam:
+        "juno1sae4p8crnac0h9m27psn205d6k586f7cnm4eshws623v05g95teqvj2s8q",
+      cw4GrpApTeam:
+        "juno15g9u395kprfhxxzfqhfw56rvwfhjzg8k6mjq82u3yg7fxkhprv8stsu8mm",
+      cw3ReviewTeam:
+        "juno1vp2q50smgzw64xm2j2ksntej34pnnedaz4qkwdh8zah9kjcaas6s8g92t8",
+      cw4GrpReviewTeam:
+        "juno1a22f8dxevu3er7vs4lkrca9n8rgf8uvgjd8s2p5eq787vmczq59syuplqx",
+
+      //terraswap
+      halo_token: "",
+
+      gov: "",
+      airdrop: "",
+
+      //loop
+      loop_haloust_pair: "",
+    };

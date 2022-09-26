@@ -1,12 +1,12 @@
-import TableEntry from "./TableEntry";
+import { Endowment } from "types/aws";
 import Heading from "./Heading";
-import { Endowment } from "services/aws/leaderboard/types";
+import TableEntry from "./TableEntry";
 
 export default function TableView(props: { endowments: Endowment[] }) {
   return (
-    <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
+    <div className="self-start w-full h-[50rem] pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">
-        <thead className="">
+        <thead>
           <tr>
             <Heading text="" />
             <Heading text="" />

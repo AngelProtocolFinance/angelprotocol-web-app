@@ -1,41 +1,37 @@
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { CURRENCIES } from "constants/currency";
-import Halo from "contracts/Halo";
-import { Vote } from "contracts/types";
-import extractFeeData from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGovStaker } from "services/terra/gov/queriers";
+import { VoteValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
+import { Vote } from "types/contracts";
+import { useGovStaker } from "services/juno/gov/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import { VoteValues } from "./types";
+} from "slices/transaction/transactionSlice";
+import Gov from "contracts/Gov";
+import useDebouncer from "hooks/useDebouncer";
+import { extractFeeAmount, processEstimateError, scale } from "helpers";
 
 export default function useVoteEstimator() {
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
-  const { displayCoin: mainBalance, coins } = useGetter(
-    (state) => state.wallet
-  );
-  const { wallet } = useWalletContext();
+  const { wallet } = useGetWallet();
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const [debounced_amount] = useDebouncer(amount, 300);
   const [debounced_vote] = useDebouncer<Vote>(vote, 300);
 
-  //TODO: check also if voter already voted
   useEffect(() => {
     (async () => {
       try {
@@ -68,16 +64,17 @@ export default function useVoteEstimator() {
           return;
         }
 
-        const staked_amount = new Dec(govStaker.balance);
-        const vote_amount = new Dec(debounced_amount).mul(1e6);
+        //check if voter has enough staked and not yet used to vote for other polls
+        const staked_amount = new Decimal(govStaker.balance);
+        const vote_amount = scale(debounced_amount);
 
         if (staked_amount.lt(vote_amount)) {
-          dispatch(setFormError(`Not enough staked`));
+          setError("amount", { message: "not enough staked" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -85,19 +82,19 @@ export default function useVoteEstimator() {
         );
 
         const fee = await contract.estimateFee([voteMsg]);
-        const feeData = extractFeeData(fee);
+
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
 
         //2nd balance check including fees
-        if (feeData.amount >= mainBalance.amount) {
-          dispatch(
-            setFormError(
-              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
-            )
-          );
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          setError("amount", { message: "Not enough balance to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -109,7 +106,7 @@ export default function useVoteEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_vote, wallet, mainBalance, govStaker, coins]);
+  }, [debounced_amount, debounced_vote, wallet, govStaker, isValid, isDirty]);
 
   return { tx, wallet };
 }

@@ -1,12 +1,10 @@
-import { useMemo } from "react";
-import countryList from "react-select-country-list";
-import { useFormContext } from "react-hook-form";
-import { Selector } from "components/Selector";
 import { ErrorMessage } from "@hookform/error-message";
-import useReceiptForm from "components/Receipter/useReceiptForm";
-import maskAddress from "helpers/maskAddress";
+import { useFormContext } from "react-hook-form";
+import { ReceipterValues } from "./types";
+import CountrySelector from "components/CountrySelector";
+import useReceiptForm from "components/Receipter/useRequestReceipt";
+import { maskAddress } from "helpers";
 import TextInput from "./TextInput";
-import { Values } from "./types";
 
 export default function ReceiptForm() {
   const {
@@ -14,58 +12,54 @@ export default function ReceiptForm() {
     handleSubmit,
     register,
     formState: { errors },
-    control,
-  } = useFormContext<Values>();
-  const { submitHandler, processing } = useReceiptForm();
-  const countries = useMemo(() => countryList().getData(), []);
-
+  } = useFormContext<ReceipterValues>();
+  const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
   const transactionId = getValues("transactionId");
+  const isKYConly = transactionId === "";
 
   return (
     <form
-      onSubmit={handleSubmit(submitHandler)}
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
+      onSubmit={handleSubmit(requestReceipt)}
+      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >
-      <h1 className="font-heading font-bold text-angel-grey uppercase">
-        Request Receipt
-      </h1>
-      <p>
-        <span className="text-angel-grey text-xs uppercase font-bold mb-1">
-          Transaction ID:
-        </span>
-        <span className="font-normal text-sm text-angel-grey ml-2">
-          {maskAddress(transactionId)}
-        </span>
-      </p>
-      <TextInput name="email" id="email" label="Email Address" />
-      <TextInput name="fullName" id="fullName" label="Full Name" />
+      {!isKYConly && (
+        <p>
+          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+            Transaction ID:
+          </span>
+          <span className="font-normal text-sm text-angel-grey ml-2">
+            {maskAddress(transactionId)}
+          </span>
+        </p>
+      )}
+      <TextInput name="email" id="email" label="Email Address" required />
+      <TextInput name="fullName" id="fullName" label="Full Name" required />
       <TextInput
         name="streetAddress"
         id="streetAddress"
         label="Street Address"
+        required
       />
-      <TextInput name="city" id="city" label="City" />
+      <TextInput name="city" id="city" label="City" required />
       <TextInput name="state" id="state" label="State" />
-      <TextInput name="zipCode" id="zipCode" label="Zip Code" />
+      <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
       <div className="grid">
         <label
           htmlFor="country"
           className="text-angel-grey text-xs uppercase font-bold mb-1"
         >
-          Country
+          Country <span className="text-rose-400"> *</span>
         </label>
         <div className="form-control rounded-md grid bg-white-grey">
-          <Selector
-            name="country"
-            options={countries.map((item) => ({
-              value: item.label,
-              label: item.label,
-            }))}
-            control={control}
-            register={register}
-            menuPlacement="top"
+          <CountrySelector
+            fieldName="country"
+            classes={{
+              container:
+                "p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey",
+              input: "bg-transparent",
+            }}
           />
           <ErrorMessage
             errors={errors}
@@ -106,11 +100,11 @@ export default function ReceiptForm() {
         </label>
       </div>
       <button
-        disabled={processing}
+        disabled={isSubmitDisabled}
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {processing ? "Processing..." : "Submit"}
+        {isSubmitting ? "Processing..." : "Proceed"}
       </button>
     </form>
   );

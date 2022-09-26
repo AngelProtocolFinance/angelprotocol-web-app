@@ -1,7 +1,15 @@
-import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./schema";
-import { Props, HaloStakingValues } from "./types";
+import { FormProvider, useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { HaloStakingValues, Props } from "./types";
+import { SchemaShape } from "schemas/types";
+import { requiredTokenAmount } from "schemas/number";
+import StakeForm from "./StakeForm";
+
+const shape: SchemaShape<HaloStakingValues> = {
+  amount: requiredTokenAmount,
+};
+const schema = Yup.object().shape(shape);
 
 export default function Staker(props: Props) {
   const methods = useForm<HaloStakingValues>({
@@ -9,13 +17,13 @@ export default function Staker(props: Props) {
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",
-      is_stake: !!props.stake,
+      is_stake: !!props.isStake,
     },
     resolver: yupResolver(schema),
   });
   return (
     <FormProvider {...methods}>
-      <props.Form />
+      <StakeForm />
     </FormProvider>
   );
 }

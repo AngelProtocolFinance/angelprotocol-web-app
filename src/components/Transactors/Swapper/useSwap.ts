@@ -1,12 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
-import { lbp, tags, user } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { useGetter, useSetter } from "store/accessors";
-import useSwapEstimator from "./useSwapEstimator";
 import { SwapValues } from "./types";
+import { useGetter, useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import useSwapEstimator from "./useSwapEstimator";
 
 export default function useSwap() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
@@ -17,8 +13,7 @@ export default function useSwap() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<SwapValues>();
 
-  const { wallet, tx } = useSwapEstimator();
-  const { showModal } = useSetModal();
+  const { tx, wallet } = useSwapEstimator();
   const dispatch = useSetter();
 
   const isBuy = watch("is_buy");
@@ -28,19 +23,11 @@ export default function useSwap() {
 
   function swap() {
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
         tx: tx!,
-        tagPayloads: [
-          terra.util.invalidateTags([
-            { type: tags.lbp, id: lbp.pool },
-            { type: tags.user, id: user.halo_balance },
-            { type: tags.user, id: user.terra_balance },
-          ]),
-        ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

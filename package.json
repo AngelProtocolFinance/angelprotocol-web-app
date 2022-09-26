@@ -2,37 +2,14 @@
   "name": "angelprotocol-web-app",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@hookform/error-message": "^2.0.0",
-    "@hookform/resolvers": "^2.8.3",
-    "@reduxjs/toolkit": "^1.7.1",
-    "@terra-money/terra.js": "^3.0.7",
-    "@terra-money/wallet-provider": "^3.8.0",
-    "@toruslabs/openlogin": "^1.7.1",
-    "bip39": "^3.0.4",
-    "compress.js": "^1.2.2",
-    "draft-js": "^0.11.7",
-    "ethers": "^5.5.4",
-    "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^3.1.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-hook-form": "^7.27.1",
-    "react-icons": "^4.2.0",
-    "react-redux": "^7.2.5",
-    "react-router-dom": "^6.2.0",
-    "react-select": "^5.3.0",
-    "react-select-country-list": "^2.2.3",
-    "recharts": "^2.1.9",
-    "yup": "^0.32.9"
-  },
   "scripts": {
-    "build": "react-app-rewired build",
-    "start": "react-app-rewired start",
+    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
     "test": "react-app-rewired test --colors",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200"
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -45,17 +22,7 @@
     ],
     "rules": {
       "prettier/prettier": "error"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
+    }
   },
   "browserslist": {
     "production": [
@@ -69,46 +36,82 @@
       "last 1 safari version"
     ]
   },
+  "packageManager": "yarn@3.2.1",
+  "engines": {
+    "node": "16.13.2"
+  },
+  "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.28.9",
+    "@cosmjs/encoding": "^0.28.10",
+    "@cosmjs/proto-signing": "^0.28.10",
+    "@cosmjs/stargate": "^0.28.10",
+    "@headlessui/react": "^1.6.6",
+    "@hookform/error-message": "^2.0.0",
+    "@hookform/resolvers": "^2.9.8",
+    "@keplr-wallet/types": "^0.11.3",
+    "@reduxjs/toolkit": "^1.8.5",
+    "@terra-money/terra.js": "^3.1.7",
+    "@terra-money/wallet-provider": "^3.11.1",
+    "compress.js": "^1.2.2",
+    "cropperjs": "^1.5.12",
+    "decimal.js": "^10.3.1",
+    "ethereum-multicall": "^2.12.0",
+    "ethers": "^5.7.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "quill": "^1.3.7",
+    "react": "^18.2.0",
+    "react-csv": "^2.2.2",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^12.0.4",
+    "react-hook-form": "^7.35.0",
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.2.0",
+    "react-scripts": "5.0.1",
+    "web3.storage": "^4.3.0",
+    "yup": "^0.32.9"
+  },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/plugin-syntax-flow": "^7.16.7",
-    "@babel/plugin-transform-react-jsx": "^7.17.3",
-    "@peculiar/webcrypto": "^1.1.7",
-    "@tailwindcss/line-clamp": "^0.3.0",
+    "@babel/core": "^7.19.1",
+    "@babel/plugin-syntax-flow": "^7.18.6",
+    "@babel/plugin-transform-react-jsx": "^7.19.0",
+    "@peculiar/webcrypto": "^1.4.0",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/dom": "^8.13.0",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.3",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/compress.js": "^1.1.1",
-    "@types/draft-js": "^0.11.9",
-    "@types/jest": "^26.0.15",
+    "@types/jest": "^29.0.3",
     "@types/jsonwebtoken": "^8.5.5",
-    "@types/node": "^17.0.19",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
+    "@types/node": "^18.7.18",
+    "@types/quill": "^2.0.9",
+    "@types/react": "^18.0.0",
+    "@types/react-csv": "^1.1.2",
+    "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.1.8",
-    "@types/react-select-country-list": "^2.2.0",
+    "@types/react-test-renderer": "17.0.2",
     "autoprefixer": "^10.0.2",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
-    "eslint": "^8.12.0",
+    "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "path-browserify": "^1.0.1",
     "postcss": "^8.4.8",
-    "prettier": "^2.6.0",
+    "prettier": "^2.7.1",
     "process": "^0.11.10",
-    "prop-types": "^15.8.1",
     "react-app-rewired": "^2.2.1",
-    "react-scripts": "^5.0.0",
+    "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0",
+    "source-map-explorer": "^2.5.2",
     "stream-browserify": "^3.0.0",
-    "tailwindcss": "^3.0.23",
-    "ts-node": "^10.6.0",
-    "typescript": "^4.1.2",
+    "tailwindcss": "^3.1.8",
+    "ts-node": "^10.9.1",
+    "typescript": "<4.8.0",
     "util": "^0.12.4",
-    "web-vitals": "^1.0.1"
-  },
-  "packageManager": "yarn@3.1.1",
-  "engines": {
-    "node": "16.13.2"
+    "web-vitals": "^3.0.2"
   }
 }

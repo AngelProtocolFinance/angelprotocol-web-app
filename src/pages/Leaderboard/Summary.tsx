@@ -1,22 +1,24 @@
-import { useSetModal } from "components/Modal/Modal";
-import toCurrency from "helpers/toCurrency";
+import { Dialog } from "@headlessui/react";
+import { useModalContext } from "contexts/ModalContext";
+import { humanize } from "helpers";
 
-export type SummaryProps = { type: string; principal: number; impact: number };
+type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md grid content-start">
+    <Dialog.Panel className="bg-white fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md grid content-start">
       <Amount title="principal" value={props.principal} />
       <Amount title="impact" value={props.impact} />
       <button
-        onClick={hideModal}
+        onClick={closeModal}
         className="my-4 bg-angel-blue hover:bg-angel-blue/90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
       >
         ok
       </button>
+
       <Text type={props.type} title="Principal" />
       <Text type={props.type} title="Impact" />
-    </div>
+    </Dialog.Panel>
   );
 }
 
@@ -55,7 +57,7 @@ function Amount(props: { title: string; value: number }) {
       <span className="text-base text-right justify-self-end ">
         {props.title}
       </span>
-      <span className="">$ {toCurrency(props.value, 0)}</span>
+      <span>$ {humanize(props.value, 0)}</span>
     </p>
   );
 }

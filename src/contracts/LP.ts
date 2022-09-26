@@ -1,84 +1,30 @@
-import Contract from "./Contract";
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Simulation } from "types/contracts";
+import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
-import { MAIN_DENOM } from "constants/currency";
-import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
-import { Simulation } from "services/terra/lp/types";
-import { ContractQueryArgs } from "services/terra/types";
+import CW20 from "./CW20";
+import Contract from "./Contract";
 
 export default class LP extends Contract {
-  factory_address: string;
-  pair_address: string;
-  router_adddress: string;
-  lp_address: string;
-  halo_address: string;
-
-  simul: ContractQueryArgs;
-  pool: ContractQueryArgs;
-  pairInfo: ContractQueryArgs;
-
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.factory_address = contracts[this.chainID][sc.loop_factory];
-    this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
-    this.router_adddress = contracts[this.chainID][sc.loop_router];
-    this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
-    this.halo_address = contracts[this.chainID][sc.halo_token];
-
-    //query args
-    this.simul = {
-      address: this.pair_address,
-      msg: {
-        simulation: {
-          offer_asset: {
-            info: {
-              native_token: {
-                denom: MAIN_DENOM,
-              },
-            },
-            amount: "1000000",
-          },
-          block_time: Math.round(new Date().getTime() / 1000 + 10),
-        },
-      },
-    };
-
-    this.pool = { address: this.pair_address, msg: { pool: {} } };
-
-    this.pairInfo = {
-      address: this.pair_address,
-      msg: {
-        pair: {
-          asset_infos: [
-            { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: MAIN_DENOM } },
-          ],
-        },
-      },
-    };
-  }
-
+  private static address = contracts.loop_haloust_pair;
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
-    const offer_uamount = new Dec(offer_amount).mul(1e6).toInt().toString();
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: MAIN_DENOM,
+            denom: this.wallet?.chain.native_currency.token_id,
           },
         }
       : {
           token: {
-            contract_addr: this.halo_address,
+            contract_addr: contracts.halo_token,
           },
         };
 
-    const result = await this.query<Simulation>(this.pair_address, {
+    const result = await this.query<Simulation>(LP.address, {
       simulation: {
         offer_asset: {
           info: offer_asset,
-          amount: offer_uamount,
+          amount: scaleToStr(offer_amount),
         },
         block_time: Math.round(new Date().getTime() / 1000 + 10),
       },
@@ -87,31 +33,30 @@ export default class LP extends Contract {
   }
 
   createBuyMsg(
-    ust_amount: number,
+    juno_amount: number,
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    this.checkWallet();
-    const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
-    return new MsgExecuteContract(
-      this.walletAddr!,
-      this.pair_address,
+    // we should never allow creating messages without a connected wallet
+    const denom = this.wallet!.chain.native_currency.token_id;
+
+    return this.createExecuteContractMsg(
+      LP.address,
       {
         swap: {
           offer_asset: {
             info: {
               native_token: {
-                denom: MAIN_DENOM,
+                denom,
               },
             },
-            amount: uust_amount,
+            amount: scaleToStr(juno_amount),
           },
           belief_price,
           max_spread,
-          // to: Option<HumanAddr>
         },
       },
-      [new Coin(MAIN_DENOM, uust_amount)]
+      [{ denom, amount: scaleToStr(juno_amount) }]
     );
   }
 
@@ -120,21 +65,12 @@ export default class LP extends Contract {
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
-    this.checkWallet();
-    const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
-    return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
-      send: {
-        contract: this.pair_address,
-        amount: uhalo_amount,
-        msg: btoa(
-          JSON.stringify({
-            swap: { belief_price, max_spread },
-          })
-        ),
+    const halo = new CW20(this.wallet, contracts.halo_token);
+    return halo.createSendMsg(halo_amount, LP.address, {
+      swap: {
+        belief_price,
+        max_spread,
       },
     });
   }
 }
-
-export interface L extends LP {}
-export type T = typeof LP;

@@ -1,24 +1,23 @@
-import { useParams } from "react-router-dom";
-import { PollStatus } from "services/terra/gov/types";
-import idParamToNumber from "helpers/idParamToNum";
+import { Link, useParams } from "react-router-dom";
+import { PollStatus } from "types/contracts";
+import Icon from "components/Icon";
+import { idParamToNum } from "helpers";
+import { symbols } from "constants/currency";
+import { appRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
-import Icon from "components/Icons/Icons";
-import { Link } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
-import { app, site } from "constants/routes";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
-  const numPollId = idParamToNumber(pollId);
+  const numPollId = idParamToNum(pollId);
   const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
       <Link
-        to={`${site.app}/${app.govern}`}
+        to={appRoutes.govern}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
-        <BiArrowBack size={15} /> back to proposals
+        <Icon type="ArrowBack" size={15} /> back to proposals
       </Link>
       <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
@@ -31,7 +30,7 @@ export default function PollDetails() {
               } mr-1`}
             ></span>
             <span className={`${statusColors[details.status].text}`}>
-              {details.vote_ended && details.status === PollStatus.in_progress
+              {details.vote_ended && details.status === "in_progress"
                 ? "vote period ended"
                 : details.status.replace("_", " ")}
             </span>
@@ -43,7 +42,7 @@ export default function PollDetails() {
         </div>
         <div className="grid grid-cols-2 gap-6 mb-10">
           <Item title="Creator" value={details.creator} />
-          <Item title="Amount" value={`${details.amount} HALO`} />
+          <Item title="Amount" value={`${details.amount} ${symbols.halo}`} />
           <div className="break-words">
             <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
               end time
@@ -62,10 +61,11 @@ export default function PollDetails() {
           <p className="text-white font-heading uppercase text-xs font-bold mb-2">
             Description
           </p>
-          <p className="">{details.description}</p>
+          <p>{details.description}</p>
         </div>
       </div>
-      <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/70">
+
+      <div className="bg-white/10 p-6 shadow-inner rounded-md text-white/70">
         <h3 className="uppercase text-sm text-white/100 font-semibold mb-6">
           Vote details
         </h3>
@@ -94,12 +94,12 @@ export default function PollDetails() {
 }
 
 const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
-  [PollStatus.executed]: { bg: "bg-green-400", text: "text-green-400" },
-  [PollStatus.expired]: { bg: "bg-white", text: "text-white-grey" },
-  [PollStatus.failed]: { bg: "bg-red-300", text: "text-red-300" },
-  [PollStatus.in_progress]: { bg: "bg-white", text: "text-white-grey" },
-  [PollStatus.passed]: { bg: "bg-green-400", text: "text-green-400" },
-  [PollStatus.rejected]: { bg: "bg-red-300", text: "text-red-300" },
+  executed: { bg: "bg-green-400", text: "text-green-400" },
+  expired: { bg: "bg-white", text: "text-white-grey" },
+  failed: { bg: "bg-red-300", text: "text-red-300" },
+  in_progress: { bg: "bg-white", text: "text-white-grey" },
+  passed: { bg: "bg-green-400", text: "text-green-400" },
+  rejected: { bg: "bg-red-300", text: "text-red-300" },
 };
 
 function Count(props: {
@@ -125,7 +125,7 @@ function Item(props: { title: string; value: string }) {
       <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
         {props.title}
       </h4>
-      <p className="">{props.value}</p>
+      <p>{props.value}</p>
     </div>
   );
 }

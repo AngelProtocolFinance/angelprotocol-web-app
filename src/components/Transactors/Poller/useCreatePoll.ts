@@ -1,13 +1,12 @@
 import { useFormContext } from "react-hook-form";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
-import { terra } from "services/terra/terra";
-import { tags, user } from "services/terra/tags";
-import { useGetter, useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
-import useCreatePollEstimate from "./useCreatePollEstimate";
 import { CreatePollValues } from "./types";
+import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateJunoTags } from "services/juno";
+import { junoTags } from "services/juno/tags";
+import { useGetter, useSetter } from "store/accessors";
+import { sendCosmosTx } from "slices/transaction/transactors";
+import Gov from "contracts/Gov";
+import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {
   const {
@@ -16,33 +15,24 @@ export default function useCreatePoll() {
   } = useFormContext<CreatePollValues>();
 
   const { form_error, form_loading } = useGetter((state) => state.transaction);
-  const { wallet, maxFee } = useCreatePollEstimate();
-  const { showModal } = useSetModal();
+  const { maxFee, wallet } = useCreatePollEstimate();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Halo(wallet);
+    const contract = new Gov(wallet);
     const { amount, title, description, link } = data;
-    const pollMsgs = await contract.createPollMsgs(
-      +amount,
-      title,
-      description,
-      link
-    );
+    const pollMsg = contract.createPollMsgs(+amount, title, description, link);
 
     dispatch(
-      sendTerraTx({
+      sendCosmosTx({
         wallet,
-        tx: { msgs: pollMsgs, fee: maxFee },
+        tx: { msgs: [pollMsg], fee: maxFee! },
         tagPayloads: [
-          terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.user, id: user.halo_balance },
-          ]),
+          invalidateJunoTags([{ type: junoTags.gov }]),
+          invalidateApesTags([{ type: apesTags.chain }]),
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

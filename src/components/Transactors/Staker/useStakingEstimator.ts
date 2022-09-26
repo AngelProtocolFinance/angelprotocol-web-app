@@ -1,32 +1,35 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { CURRENCIES } from "constants/currency";
-import Halo from "contracts/Halo";
-import extractFeeData from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-// import useTerraBalance from "hooks/useTerraBalance";
+import { HaloStakingValues } from "./types";
+import { TxOptions } from "slices/transaction/types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import { HaloStakingValues } from "./types";
+} from "slices/transaction/transactionSlice";
+import Gov from "contracts/Gov";
+import useDebouncer from "hooks/useDebouncer";
+import {
+  condense,
+  extractFeeAmount,
+  logger,
+  processEstimateError,
+} from "helpers";
+import { symbols } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const { wallet } = useWalletContext();
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
-  const { displayCoin } = useGetter((state) => state.wallet);
+  const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -47,48 +50,49 @@ export default function useEstimator() {
           return;
         }
 
-        if (is_stake) {
+        if (is_stake && condense(balance).lt(debounced_amount)) {
           //check $HALO balance
-          if (balance.div(1e6).lt(debounced_amount)) {
-            dispatch(setFormError("Not enough Halo balance"));
-            return;
-          }
+          setError("amount", {
+            message: `not enough ${symbols.halo} balance`,
+          });
+          return;
         } else {
-          if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
-            dispatch(setFormError("Not enough staked halo less locked"));
+          if (condense(balance.sub(locked)).lt(debounced_amount)) {
+            setError("amount", {
+              message: "not enough unlocked staked balance",
+            });
             return;
           }
         }
 
         dispatch(setFormLoading(true));
 
-        let govMsg: MsgExecuteContract;
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
 
-        if (is_stake) {
-          govMsg = contract.createGovStakeMsg(debounced_amount);
-        } else {
-          govMsg = contract.createGovUnstakeMsg(debounced_amount);
-        }
+        const govMsg = is_stake
+          ? contract.createGovStakeMsg(debounced_amount)
+          : contract.createGovUnstakeMsg(debounced_amount);
 
         const fee = await contract.estimateFee([govMsg]);
-        const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeData.amount >= displayCoin.amount) {
-          dispatch(
-            setFormError(
-              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
-            )
-          );
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
+
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          setError("amount", {
+            message: "Not enough balance to pay for fees",
+          });
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
+        logger.error(err);
         dispatch(setFormError(processEstimateError(err)));
       }
     })();
@@ -97,7 +101,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, displayCoin, balance, locked]);
+  }, [debounced_amount, wallet, balance, locked, isValid, isDirty]);
 
   return { tx, wallet };
 }

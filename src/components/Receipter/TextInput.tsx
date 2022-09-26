@@ -1,18 +1,17 @@
-import { Values } from "./types";
-import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
+import { ReceipterValues as RV } from "./types";
 
-type TextInputProps = {
+export default function TextInput(props: {
   id: string;
-  name: keyof Values;
+  name: keyof RV;
   label: string;
-};
-
-export default function TextInput(props: TextInputProps) {
+  required?: true;
+}) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<RV>();
   return (
     <div className="grid mb-3">
       <label
@@ -20,6 +19,7 @@ export default function TextInput(props: TextInputProps) {
         className="ml-0.5 text-angel-grey text-xs uppercase font-bold mb-1"
       >
         {props.label}
+        {props.required && <span className="text-rose-400"> *</span>}
       </label>
       <input
         {...register(props.name)}

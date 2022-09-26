@@ -1,37 +1,42 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { CURRENCIES, denoms } from "constants/currency";
-import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "../types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
+import { humanize } from "helpers";
 
 export default function Breakdown() {
+  const { wallet } = useGetWallet();
   const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
-  const currency = watch("currency");
+  const token = watch("token");
+  const isNativeCoin =
+    wallet?.chain.native_currency.token_id === token.token_id;
+  const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
-    <div className="">
-      <Entry title="tx fee" amount={fee} currency={currency} />
-      <Entry title="total amount" amount={amount + fee} currency={currency} />
+    <div className="m-1">
+      <Entry
+        title="tx fee"
+        amount={fee}
+        symbol={wallet?.chain.native_currency.symbol}
+      />
+      <Entry title="total amount" amount={totalAmount} symbol={token.symbol} />
     </div>
   );
 }
 
-function Entry(props: { title: string; amount: number; currency: denoms }) {
+function Entry(props: {
+  title: string;
+  amount: number;
+  symbol: string | undefined;
+}) {
   return (
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
-        {toCurrency(props.amount, decimals[props.currency])}{" "}
-        {CURRENCIES[props.currency].ticker}
+        {humanize(props.amount, 6)} {props.symbol}
       </p>
     </div>
   );
 }
-
-const decimals: Partial<{ [index in denoms]: number }> = {
-  [denoms.ether]: 6,
-  [denoms.uluna]: 6,
-  [denoms.bnb]: 6,
-};

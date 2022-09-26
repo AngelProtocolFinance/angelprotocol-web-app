@@ -1,7 +1,7 @@
-import { useSetModal } from "components/Modal/Modal";
-import toCurrency from "helpers/toCurrency";
-import Summary, { SummaryProps } from "./Summary";
-import Icon from "components/Icons/Icons";
+import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
+import { humanize } from "helpers";
+import Summary from "./Summary";
 
 type Props = {
   type: string;
@@ -9,9 +9,9 @@ type Props = {
   liquid: number;
 };
 export default function Amount(props: Props) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   function showSummary() {
-    showModal<SummaryProps>(Summary, {
+    showModal(Summary, {
       type: props.type,
       principal: props.locked,
       impact: props.liquid,
@@ -26,7 +26,7 @@ export default function Amount(props: Props) {
         />
       </button>
       <p className="text-angel-grey">
-        ${toCurrency(props.locked + props.liquid, 0)}
+        ${humanize(props.locked + props.liquid, 0)}
       </p>
     </div>
   );

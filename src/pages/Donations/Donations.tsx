@@ -1,16 +1,42 @@
 import { useParams } from "react-router-dom";
-import { RouteParam } from "./types";
-import DonationList from "./DonationList";
+import { Transaction } from "types/aws";
+import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
+import CsvExporter from "components/CsvExporter";
+import DonationsTable from "./DonationsTable";
+
+const headers: { key: keyof Transaction; label: string }[] = [
+  { key: "name", label: "Name" },
+  { key: "usd_amount", label: "Amount" },
+  { key: "block_timestamp", label: "Date" },
+  { key: "donator", label: "Donator" },
+  { key: "tx_id", label: "Transaction Hash" },
+];
 
 export default function Donations() {
-  const { address } = useParams<RouteParam>();
+  const { address } = useParams<{ address: string }>();
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useDonationTransactionsQuery(address!, {
+    skip: !address,
+  });
 
   return (
-    <div className="grid grid-cols-2 gap-4 content-start padded-container justify-center">
-      <h1 className="text-2xl font-bold uppercase flex items-center justify-start text-white">
-        My Donations
-      </h1>
-      <DonationList address={address!} />
+    <div className="grid content-start padded-container p-4 mt-10 bg-white/10 overflow-auto h-36 rounded-md shadow-md shadow-inner">
+      <div className="flex justify-between items-center">
+        <h1 className="text-lg font-bold uppercase text-white mb-4">
+          My Donations
+        </h1>
+        {!isLoading && data.length > 0 && (
+          <CsvExporter headers={headers} data={data} filename="donations.csv" />
+        )}
+      </div>
+      <DonationsTable
+        transactions={data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </div>
   );
 }

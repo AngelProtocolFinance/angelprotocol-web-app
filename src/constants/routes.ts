@@ -1,42 +1,26 @@
-export enum web {
-  index = "",
-  charities = "for-charities",
-  donors = "for-donors",
-  about = "about",
-  contact = "contact",
-}
-
-export enum site {
-  home = "/",
-  app = "/app",
-  admin = "/admin",
-}
-
-export enum app {
+export enum appRoutes {
   index = "/",
-  dashboard = "dashboard",
-  marketplace = "marketplace",
-  leaderboard = "leaderboard",
-  admin = "admin",
-  register = "register",
-  login = "login",
-  unsdgs = "unsdgs",
-  charity = "charity",
-  charity_edit = "charity-edit",
-  tca = "tca",
-  fund = "fund",
-  govern = "govern",
-  auction = "auction",
-  endowment = "endowment",
-  donation = "donation",
+  dashboard = "/dashboard",
+  marketplace = "/marketplace",
+  leaderboard = "/leaderboard",
+  admin = "/admin",
+  register = "/register",
+  login = "/login",
+  unsdgs = "/unsdgs",
+  profile = "/profile",
+  tca = "/tca",
+  fund = "/fund",
+  govern = "/govern",
+  endowment_admin = "/endowment-admin",
+  donations = "/donations",
 }
 
-export enum govern {
+export enum governRoutes {
   index = "",
   pollDetails = "pollDetails",
 }
 
-export enum charity {
+export enum charityRoutes {
   overview = "overview",
   endowment = "endowment",
   programs = "programs",
@@ -44,4 +28,15 @@ export enum charity {
   governance = "governance",
 }
 
-export type Handler = () => void;
+export enum adminRoutes {
+  //base routes
+  index = "",
+  proposal = "proposal",
+  proposals = "proposals",
+  templates = "templates",
+
+  //charity
+  edit_profile = "edit-profile",
+  withdraws = "withdraws",
+  investments = "investments",
+}

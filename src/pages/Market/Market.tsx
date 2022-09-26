@@ -1,15 +1,21 @@
-import Index from "./Index";
-import Loader from "components/Loader/Loader";
-import { useCategorizedProfiles } from "services/aws/endowments/queriers";
+import { CategorizedEndowments } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
+import { useCategorizedEndowmentsQuery } from "services/juno/account";
+import Loader from "components/Loader";
 import Banner from "./Banner";
+import Index from "./Index";
 
 export default function Market() {
-  const { categorizedProfiles, isProfilesLoading } = useCategorizedProfiles();
+  const { data: endowments = {} as CategorizedEndowments, isLoading } =
+    useCategorizedEndowmentsQuery({
+      endow_type: "charity",
+      status: "1",
+    });
 
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />
-      {(isProfilesLoading && (
+      {(isLoading && (
         <Loader
           bgColorClass="bg-white-grey/80"
           gapClass="gap-2"
@@ -17,8 +23,12 @@ export default function Market() {
         />
       )) || (
         <>
-          {Object.entries(categorizedProfiles).map(([sdg_number, profiles]) => (
-            <Index key={sdg_number} id={+sdg_number} profiles={profiles} />
+          {Object.entries(endowments).map(([sdg_number, profiles]) => (
+            <Index
+              key={sdg_number}
+              id={+sdg_number as UNSDG_NUMS}
+              profiles={profiles}
+            />
           ))}
         </>
       )}

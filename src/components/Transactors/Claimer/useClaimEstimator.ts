@@ -1,24 +1,21 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { CURRENCIES } from "constants/currency";
-import Halo from "contracts/Halo";
-import extractFeeData from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
-import { useGovStaker } from "services/terra/gov/queriers";
+import { TxOptions } from "slices/transaction/types";
+import { useGovStaker } from "services/juno/gov/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+} from "slices/transaction/transactionSlice";
+import Gov from "contracts/Gov";
+import { extractFeeAmount, processEstimateError } from "helpers";
 
 export default function useClaimEstimator() {
-  const [tx, setTx] = useState<CreateTxOptions>();
+  const [tx, setTx] = useState<TxOptions>();
   const dispatch = useSetter();
+  const { wallet } = useGetWallet();
   const gov_staker = useGovStaker();
-  const { wallet } = useWalletContext();
-  const { displayCoin } = useGetter((state) => state.wallet);
 
   useEffect(() => {
     (async () => {
@@ -43,22 +40,22 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
-        const feeData = extractFeeData(fee);
+
+        const feeAmount = extractFeeAmount(
+          fee,
+          wallet.chain.native_currency.token_id
+        );
+        dispatch(setFee(feeAmount));
 
         //2nd balance check including fees
-        if (feeData.amount >= displayCoin.amount) {
-          dispatch(
-            setFormError(
-              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
-            )
-          );
+        if (feeAmount >= wallet.chain.native_currency.balance) {
+          dispatch(setFormError("Not enough balance to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeData.amount));
         setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -71,7 +68,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, displayCoin, gov_staker]);
+  }, [wallet, gov_staker]);
 
-  return { wallet, tx };
+  return { tx, wallet };
 }

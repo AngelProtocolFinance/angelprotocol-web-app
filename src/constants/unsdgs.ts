@@ -1,21 +1,21 @@
-import no_poverty from "assets/icons/unsdg/no_poverty.png";
-import zero_hunger from "assets/icons/unsdg/zero_hunger.png";
-import good_health from "assets/icons/unsdg/good_health.png";
-import education from "assets/icons/unsdg/education.png";
-import gender_equality from "assets/icons/unsdg/gender_equality.png";
+import { UNSDG_NUMS } from "types/lists";
 import clean_water from "assets/icons/unsdg/clean_water.png";
-import energy from "assets/icons/unsdg/energy.png";
-import decent_work from "assets/icons/unsdg/decent_work.png";
-import industry from "assets/icons/unsdg/industry.png";
-import sustainable from "assets/icons/unsdg/sustainable_communities.png";
-import consumption from "assets/icons/unsdg/consumption.png";
 import climate from "assets/icons/unsdg/climate.png";
-import life_water from "assets/icons/unsdg/life_water.png";
-import life_land from "assets/icons/unsdg/life_land.png";
-import partnership from "assets/icons/unsdg/partnership.png";
-import justice from "assets/icons/unsdg/justice.png";
+import consumption from "assets/icons/unsdg/consumption.png";
+import decent_work from "assets/icons/unsdg/decent_work.png";
+import education from "assets/icons/unsdg/education.png";
+import energy from "assets/icons/unsdg/energy.png";
+import gender_equality from "assets/icons/unsdg/gender_equality.png";
+import good_health from "assets/icons/unsdg/good_health.png";
+import industry from "assets/icons/unsdg/industry.png";
 import inequalities from "assets/icons/unsdg/inequalities.png";
-import unsdg from "assets/icons/unsdg/unsdg.png";
+import justice from "assets/icons/unsdg/justice.png";
+import life_land from "assets/icons/unsdg/life_land.png";
+import life_water from "assets/icons/unsdg/life_water.png";
+import no_poverty from "assets/icons/unsdg/no_poverty.png";
+import partnership from "assets/icons/unsdg/partnership.png";
+import sustainable from "assets/icons/unsdg/sustainable_communities.png";
+import zero_hunger from "assets/icons/unsdg/zero_hunger.png";
 
 type S = string;
 
@@ -32,19 +32,7 @@ type UNSDG = {
   website: S;
 };
 
-export const unsdgs: { [index: number]: UNSDG } = {
-  0: {
-    text_light: "text-white-grey",
-    text_dark: "text-angel-grey",
-    text_hover: "hover:text-sdg",
-    bg: "bg-white",
-    border: "border-black",
-    icon: unsdg,
-    title: "uncategorized",
-    desc: "",
-    youtube: "",
-    website: "",
-  },
+export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   1: {
     text_light: "text-white-grey",
     text_dark: "text-sdg1",

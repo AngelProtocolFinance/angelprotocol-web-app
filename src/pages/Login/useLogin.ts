@@ -1,11 +1,10 @@
-import { useForm } from "react-hook-form";
-import { aws_endpoint } from "constants/urls";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "./loginSchema";
-import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { useForm } from "react-hook-form";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter, useSetter } from "store/accessors";
-import { saveToken } from "services/auth/authSlice";
+import { saveToken } from "slices/authSlice";
+import { APIs } from "constants/urls";
+import { loginSchema } from "./loginSchema";
 
 export default function useLogin() {
   const {
@@ -20,12 +19,12 @@ export default function useLogin() {
 
   const { tca: tcaToken } = useGetter((state) => state.auth);
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { handleError } = useErrorContext();
 
   async function login(values: { password: string }) {
     //start request
     try {
-      const response = await fetch(aws_endpoint + "/tca-login", {
+      const response = await fetch(APIs.aws + "/v1/tca-login", {
         method: "POST",
         body: JSON.stringify(values),
       });
@@ -36,12 +35,12 @@ export default function useLogin() {
         dispatch(saveToken(data.accessToken));
         //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
-        showModal<PopupProps>(Popup, { message: "Unauthorized" });
+        throw new Error("Unauthorized");
       } else {
-        showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
+        throw new Error("Something went wrong");
       }
     } catch (error) {
-      showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
+      handleError(error);
     }
   }
 

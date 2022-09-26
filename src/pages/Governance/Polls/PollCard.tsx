@@ -1,27 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import { govern } from "constants/routes";
-import toCurrency from "helpers/toCurrency";
+import Icon from "components/Icon";
+import { humanize } from "helpers";
+import { governRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
-import { PollStatus } from "services/terra/gov/types";
-import Icon from "components/Icons/Icons";
 
 export default function PollCard(props: { poll_id: number }) {
   const navigate = useNavigate();
   const details = usePollDetails(props.poll_id);
 
   function goToPollDetail() {
-    navigate(`${govern.pollDetails}/${props.poll_id}`);
+    navigate(`${governRoutes.pollDetails}/${props.poll_id}`);
   }
 
   return (
     <div
       onClick={goToPollDetail}
-      className="cursor-pointer border border-white/10 bg-white/10 hover:bg-white/20 rounded-md p-6 text-white-grey/80 shadow-lg"
+      className="bg-white/10 hover:bg-white/20 cursor-pointer rounded-md p-6 text-white-grey/80 shadow-inner"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
         <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
-          {details.vote_ended && details.status === PollStatus.in_progress
+          {details.vote_ended && details.status === "in_progress"
             ? "vote period ended"
             : details.status.replace("_", " ")}
         </p>
@@ -53,7 +52,7 @@ export default function PollCard(props: { poll_id: number }) {
             </span>
             <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+details.end_height, 0)}
+              {humanize(+details.end_height, 0)}
             </span>
           </p>
         </div>
@@ -65,7 +64,7 @@ export default function PollCard(props: { poll_id: number }) {
           <p className="flex items-center justify-end">
             <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+details.blocks_remaining, 0)}
+              {humanize(+details.blocks_remaining, 0)}
             </span>
             <span className="font-heading uppercase text-2xs ml-1">blocks</span>
           </p>

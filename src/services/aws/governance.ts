@@ -1,6 +1,6 @@
 import { aws } from "./aws";
 
-export interface StakingAPRQueryResult {
+interface StakingAPRQueryResult {
   message: string;
   stakingAPR: number;
   stakingAPY: number;
@@ -12,7 +12,7 @@ const governance_api = aws.injectEndpoints({
     stakingAPR: builder.query<StakingAPRQueryResult, any>({
       query: () => {
         return {
-          url: "gov-data",
+          url: "v1/gov-data",
           method: "Get",
         };
       },

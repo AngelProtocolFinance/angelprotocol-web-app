@@ -1,24 +1,10 @@
-import { chainIDs } from "constants/chainIDs";
-
-export const aws_endpoint =
-  "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com";
-export const apes_endpoint =
-  "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com";
-
-//terra urls
-export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_classic]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  //when wallet is not connected network === phoenix-1
-  //query classis endpoint when wallet is not connected
-  [chainIDs.terra_main]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  //
-  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
+export const APIs = {
+  aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
+  apes: "https://fctqkloitc.execute-api.us-east-1.amazonaws.com",
+  flipside: "https://flipside.leslug.com/angel",
 };
 
-export const TERRA_FINDER = "https://finder.terra.money/";
-
-type URL_GROUP = {
-  [index: string]: string;
-};
+export const PRIVACY_POLICY =
+  "https://ipfs.w3s.link/ipfs/bafybeieor6a2tierwwjhhpogapwquoems7br2x73jsyxakwbjrvwfir2ha/Website%20and%20WebApp%20Privacy%20Policy%20%28v.110121%29.docx";
+export const LITEPAPER =
+  "https://ipfs.w3s.link/ipfs/bafybeihvkpjghhzr6uyjf6bvfl6v67yptxea36gfsix6lquqp5eb3mjcbu/ap-litepaper-v3.pdf";
