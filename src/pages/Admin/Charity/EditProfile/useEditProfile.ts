@@ -85,7 +85,7 @@ export default function useEditProfile() {
 
         //TODO: investigate optimizeImage file.name = undefined
         // const file = await optimizeImage(imageFile);
-        const url = await uploadToIpfs(`endowment_${endowmentId}`, imageFile);
+        const url = await uploadToIpfs(imageFile);
 
         if (url) {
           data.image = url;
