@@ -51,15 +51,22 @@ export const contracts: Contracts = IS_TEST
   : {
       //MAINNET CONTRACTS
       //core
-      index_fund: "",
-      registrar: "",
-      accounts: "",
+      index_fund:
+        "juno1ycpml96cru0ln20zv7qxkc6xuass8lerpk0cfwvgmvyn6zjux55srqkah5",
+      registrar:
+        "juno16uva5mgmzj78rdwf5hcqv688lyenms6s32zfjectg8zkr4vc3xfq95eueu",
+      accounts:
+        "juno148s6297wzl42cm2l44wnl5xs5m45qe6a2e945c0px8jgq860yfhqq56e9g",
 
       // Admin
-      cw3ApTeam: "",
-      cw4GrpApTeam: "",
-      cw3ReviewTeam: "",
-      cw4GrpReviewTeam: "",
+      cw3ApTeam:
+        "juno1dftgv4yhy8yqx95c7a3jar9dg5nnq4p2m50nzk6wdlkahd2h4hms3js63a",
+      cw4GrpApTeam:
+        "juno1ucjmf3nztyq4a6q8tzja9thefq7092s9r4a2yk8267spr2fays2qks9rl4",
+      cw3ReviewTeam:
+        "juno1w5uypgtrm03k7qrrj4pf6cf8aj6tnglm4ze2mxv94f2xgy97muyswfcd9j",
+      cw4GrpReviewTeam:
+        "juno1yv9rs87s6f4ql5mnuu0hmg4ehpdc7urdhty8ja8992hhc8dgxscsygwt9t",
 
       //terraswap
       halo_token: "",
