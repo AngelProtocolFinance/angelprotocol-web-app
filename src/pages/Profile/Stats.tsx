@@ -1,7 +1,9 @@
-import { Profile } from "types/contracts";
+import { ProfileResponse } from "types/contracts";
 
 //toDO
-export default function CharityStats(props: Profile & { classes?: string }) {
+export default function CharityStats(
+  props: ProfileResponse & { classes?: string }
+) {
   return (
     <ul className={`${props.classes || ""} `}>
       <StatsItem title="Registration#" value={props.registration_number} />

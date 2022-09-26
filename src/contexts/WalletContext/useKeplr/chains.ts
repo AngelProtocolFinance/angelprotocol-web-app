@@ -4,10 +4,10 @@ import { ChainInfo } from "@keplr-wallet/types";
 export const juno_test_chain_info: ChainInfo = {
   //FROM: https://github.com/CosmosContracts/junoswap-asset-list/blob/main/chain_info.json
   // modified denoms
-  chainId: "uni-3",
+  chainId: "uni-5",
   chainName: "Juno Testnet",
-  rpc: "https://rpc.uni.juno.deuslabs.fi",
-  rest: "https://lcd.uni.juno.deuslabs.fi",
+  rpc: "https://rpc.uni.junonetwork.io",
+  rest: "https://api.uni.junonetwork.io",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",

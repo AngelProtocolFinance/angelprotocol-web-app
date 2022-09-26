@@ -60,12 +60,7 @@ export type Categories = {
 };
 
 export interface Profile {
-  name: string; // name of the Charity Endowment
   overview: string;
-  categories: Categories;
-  tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-  logo: string;
-  image: string;
   url?: string;
   registration_number?: string;
   country_of_origin?: string;
@@ -80,11 +75,40 @@ export interface Profile {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
-  endow_type: Capitalize<EndowmentType>;
 }
+
+export interface ProfileResponse {
+  name: string; // name of the Charity Endowment
+  overview: string;
+  categories: Categories;
+  tier: number;
+  logo: string;
+  image: string;
+  url?: string;
+  endow_type: Capitalize<EndowmentType>;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: {
+    facebook?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+}
+
 export type CreateEndowmentPayload = {
   owner: string;
-  beneficiary: string;
+  name: string; // name of the Charity Endowment
+  categories: Categories;
+  tier: number; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
+  logo: string;
+  image: string;
+  endow_type: Capitalize<EndowmentType>;
   withdraw_before_maturity: false;
   maturity_time: undefined; //don't set maturity for charities
   maturity_height: undefined; ///don't set maturity for charities

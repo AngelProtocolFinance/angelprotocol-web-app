@@ -1,6 +1,5 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { invalidateJunoTags } from "services/juno";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import useSwapEstimator from "./useSwapEstimator";

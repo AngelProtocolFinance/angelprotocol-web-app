@@ -47,18 +47,32 @@ export interface AccountStrategies {
   liquid: Strategy[];
 }
 
+export interface OneOffVaults {
+  locked: string[];
+  liquid: string[];
+}
+
 export interface EndowmentDetails {
   owner: string;
+  status: EndowmentStatus;
+  endow_type: EndowmentType;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
   strategies: AccountStrategies;
+  oneoff_vaults: OneOffVaults;
   rebalance: RebalanceDetails;
   kyc_donors_only: boolean;
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
-  auto_invest: boolean;
+  logo?: string;
+  image?: string;
+  name: string;
+  categories: Categories;
+  tier?: number;
+  copycat_strategy?: number;
+  proposal_link?: number;
 }
 
 export type Holding = { address: string; amount: string };
@@ -82,6 +96,7 @@ export type EndowmentQueryOptions = {
   status?: EndowmentStatusStrNum;
   tier?: EndowmentTier;
   endow_type?: EndowmentType;
+  proposal_link?: number;
 };
 
 export type EndowmentEntry = {
@@ -100,15 +115,10 @@ export type CategorizedEndowments = {
   [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
-export interface UpdateProfilePayload {
+export interface ProfilePayload {
   //separate shape for update
   id: number;
-  name: string;
   overview: string;
-  categories: Categories;
-  tier?: number;
-  logo: string;
-  image: string;
   url: string;
   registration_number?: string;
   country_of_origin?: string;
@@ -121,8 +131,20 @@ export interface UpdateProfilePayload {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
-  endow_type?: string;
 }
+
+export interface EndowmentSettingsPayload {
+  id: number;
+  owner?: string;
+  kyc_donors_only?: boolean;
+  endow_type?: EndowmentType; //editable by config.owner
+  name?: string;
+  categories?: Categories;
+  tier?: number; //editable by config.owner
+  logo?: string;
+  image?: string;
+}
+
 export interface DepositPayload {
   id: number;
   locked_percentage: string; //"0.7"

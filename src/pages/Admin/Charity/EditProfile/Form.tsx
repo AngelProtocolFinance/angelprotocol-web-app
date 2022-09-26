@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UpdateProfileValues as UV } from "pages/Admin/types";
+import { ProfileFormValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
@@ -43,7 +43,7 @@ export default function Form() {
         accept={VALID_MIME_TYPES}
         aspectRatioX={4}
         aspectRatioY={1}
-        className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
+        className="w-full aspect-[4/1]"
       />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
