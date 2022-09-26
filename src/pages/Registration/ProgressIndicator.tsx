@@ -1,9 +1,6 @@
 import { useRegistrationQuery } from "services/aws/registration";
 import { getRegistrationState } from "./helpers";
 
-const getBackground = (percent: number) =>
-  `linear-gradient(to right, #3fa9f5 0%, #3fa9f5 ${percent}%, #fff ${percent}%, white 100%)`;
-
 export default function ProgressIndicator() {
   const { charity } = useRegistrationQuery();
   const state = getRegistrationState(charity);
@@ -28,16 +25,11 @@ export default function ProgressIndicator() {
         </p>
         <p>{percent}%</p>
       </div>
-      <input
-        type="range"
-        className="w-full indicator"
-        min="0"
-        max="100"
-        step="1"
-        defaultValue={percent}
-        disabled
-        style={{ background: getBackground(percent) }}
-      />
+      <div className="h-4 w-full bg-white-grey rounded-3xl">
+        <div
+          className={`h-full w-${completedCount}/${progress.length} bg-angel-blue rounded-3xl`}
+        />
+      </div>
     </div>
   );
 }
