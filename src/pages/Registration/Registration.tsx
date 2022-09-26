@@ -25,16 +25,18 @@ export default function Registration() {
   const location = useLocation();
   const { charity } = useRegistrationQuery();
 
-  const isLandingPage =
-    location.pathname.search(`${appRoutes.register}/?$`) !== -1;
+  const shouldShowProgressBar =
+    location.pathname.search(
+      `${appRoutes.register}(/${routes.confirmEmail})?/?$`
+    ) === -1;
 
   const containerClasses = `grid grid-rows-[${
-    isLandingPage ? "1fr" : "auto_1fr"
+    !shouldShowProgressBar ? "1fr" : "auto_1fr"
   }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
 
   return (
     <section className={containerClasses}>
-      {!isLandingPage && (
+      {shouldShowProgressBar && (
         <div className="flex flex-col w-full gap-2">
           <ProgressIndicator />
           {!!charity.ContactPerson.PK && (

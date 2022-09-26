@@ -44,10 +44,6 @@ export default function Dashboard() {
             Thank you for submitting your application!
           </h3>
           <span>We will notify you by email once the review is complete</span>
-          <div className="text-xl mb-10">
-            <p>Your registration reference is:</p>
-            <p className="text-orange">{charity.ContactPerson.PK}</p>
-          </div>
         </>
       )}
       {!isSubmitted && (

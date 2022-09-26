@@ -42,35 +42,45 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
           <Controller
             name={props.name}
             control={control}
-            render={({ field: { onChange, ref } }) => (
-              <div className="hidden group-hover:flex">
-                <IconButton onClick={onUpload} disabled={isDisabled}>
-                  <Icon type="Upload" />
-                </IconButton>
-                {!isInitial && (
-                  <IconButton onClick={onUndo(onChange)} disabled={isDisabled}>
-                    <Icon type="Undo" />
+            render={({ field: { onChange, ref } }) =>
+              !isSubmitting ? (
+                <div className="hidden group-hover:flex">
+                  <IconButton onClick={onUpload} disabled={isDisabled}>
+                    <Icon type="Upload" />
                   </IconButton>
-                )}
-                {!!imageUrl && (
-                  <IconButton onClick={onCrop(onChange)} disabled={isDisabled}>
-                    <Icon type="Crop" />
-                  </IconButton>
-                )}
-                <input
-                  ref={(e) => {
-                    ref(e);
-                    inputRef.current = e;
-                  }}
-                  disabled={isDisabled}
-                  id={props.name}
-                  type="file"
-                  onChange={onInputChange(onChange)}
-                  accept={props.accept.join(", ")}
-                  className="w-0 h-0 appearance-none"
-                />
-              </div>
-            )}
+                  {!isInitial && (
+                    <IconButton
+                      onClick={onUndo(onChange)}
+                      disabled={isDisabled}
+                    >
+                      <Icon type="Undo" />
+                    </IconButton>
+                  )}
+                  {!!imageUrl && (
+                    <IconButton
+                      onClick={onCrop(onChange)}
+                      disabled={isDisabled}
+                    >
+                      <Icon type="Crop" />
+                    </IconButton>
+                  )}
+                  <input
+                    ref={(e) => {
+                      ref(e);
+                      inputRef.current = e;
+                    }}
+                    disabled={isDisabled}
+                    id={props.name}
+                    type="file"
+                    onChange={onInputChange(onChange)}
+                    accept={props.accept.join(", ")}
+                    className="w-0 h-0 appearance-none"
+                  />
+                </div>
+              ) : (
+                <></>
+              )
+            }
           />
         )}
       </div>
