@@ -5,7 +5,7 @@ enum routes {
   confirmEmail = "confirm-email",
   verifyEmail = "verify/:token",
   wallet = "wallet",
-  charityProfile = "charity-profile",
+  profile = "profile",
   documentation = "documentation",
   additionalInformation = "additional-information",
 }
