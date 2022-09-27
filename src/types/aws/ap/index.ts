@@ -2,7 +2,7 @@
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
 export interface Endowment {
-  endowment_address: string;
+  endowment_id: string;
   charity_owner: string;
   charity_name: string;
   total_liq: number;
