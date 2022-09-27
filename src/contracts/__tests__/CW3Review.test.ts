@@ -56,7 +56,7 @@ const CHARITY: Charity = {
     EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     Logo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
-    CharityOverview: "some overview",
+    Overview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
     JunoWallet: PLACEHOLDER_WALLET.address,
@@ -76,7 +76,7 @@ const endowmentMsg: NewEndowment = {
   maturity_time: undefined,
   maturity_height: undefined,
   profile: {
-    overview: CHARITY.Metadata.CharityOverview,
+    overview: CHARITY.Metadata.Overview,
     url: CHARITY.Registration.Website,
     registration_number: "",
     country_of_origin: "",

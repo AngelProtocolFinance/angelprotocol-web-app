@@ -18,7 +18,7 @@ export default function AdditionalInformation() {
     resolver: yupResolver(additionalInfoSchema),
     defaultValues: {
       banner: charity.Metadata.Banner,
-      charityOverview: charity.Metadata.CharityOverview,
+      overview: charity.Metadata.Overview,
       logo: charity.Metadata.Logo,
       kycDonorsOnly: charity.Metadata.KycDonorsOnly,
     },
@@ -122,12 +122,12 @@ const ImageSizeInfo = ({ limit }: { limit: string }) => (
 function OverviewInput() {
   return (
     <InputColumn
-      htmlFor="charityOverview"
+      htmlFor="overview"
       label="Description of your organization"
       required
     >
       <RichTextEditor<AdditionalInfoValues>
-        fieldName="charityOverview"
+        fieldName="overview"
         classes={{
           container:
             "text-white/80 p-3 rounded-md bg-white/10 shadow-inner w-full text-left",

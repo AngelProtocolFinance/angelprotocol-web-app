@@ -92,7 +92,7 @@ type InitialMetaData = Optional<
   Metadata,
   | "Banner"
   | "Logo"
-  | "CharityOverview"
+  | "Overview"
   | "EndowmentContract"
   | "EndowmentId"
   | "JunoWallet"
@@ -101,7 +101,7 @@ type InitialMetaData = Optional<
 export type Metadata = {
   Banner?: FileObject;
   Logo?: FileObject;
-  CharityOverview: string;
+  Overview: string;
   EndowmentContract: string;
   EndowmentId: number;
   SK: "Metadata";
@@ -158,7 +158,7 @@ export type UpdateCharityMetadataData = {
   body: {
     Banner?: FileObject;
     Logo?: FileObject;
-    CharityOverview?: string;
+    Overview?: string;
     JunoWallet?: string;
   };
 };
@@ -166,7 +166,7 @@ export type UpdateCharityMetadataData = {
 export type UpdateCharityMetadataResult = {
   Banner: FileObject;
   Logo: FileObject;
-  CharityOverview: string;
+  Overview: string;
   JunoWallet: string;
 };
 

@@ -62,7 +62,7 @@ async function getUploadBody(values: AdditionalInfoValues) {
   return {
     Banner,
     Logo,
-    CharityOverview: values.charityOverview,
+    Overview: values.overview,
     KycDonorsOnly: values.kycDonorsOnly,
   };
 }

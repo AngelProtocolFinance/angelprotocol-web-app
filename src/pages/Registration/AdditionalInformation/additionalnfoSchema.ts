@@ -27,7 +27,7 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   });
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
-  charityOverview: stringByteSchema("overview", 4, 1024),
+  overview: stringByteSchema("overview", 4, 1024),
   logo: FILE_SCHEMA.required("Logo is required"),
   banner: FILE_SCHEMA.required("Banner is required"),
 };

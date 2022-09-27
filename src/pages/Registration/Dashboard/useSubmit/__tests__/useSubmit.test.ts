@@ -134,7 +134,7 @@ const CHARITY: Charity = {
     EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     Logo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
-    CharityOverview: "some overview",
+    Overview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
     JunoWallet:
@@ -164,7 +164,7 @@ const createEndowmentMsg: NewEndowment = {
     street_address: undefined,
     url: CHARITY.Registration.Website,
     number_of_employees: undefined,
-    overview: CHARITY.Metadata.CharityOverview,
+    overview: CHARITY.Metadata.Overview,
     registration_number: undefined,
     social_media_urls: {
       facebook: undefined,

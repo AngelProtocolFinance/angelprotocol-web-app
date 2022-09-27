@@ -44,7 +44,7 @@ function createApplicationProposalPayload(
       maturity_time: undefined,
       maturity_height: undefined,
       profile: {
-        overview: charity.Metadata.CharityOverview,
+        overview: charity.Metadata.Overview,
         url: charity.Registration.Website,
         registration_number: "",
         country_of_origin: "",
