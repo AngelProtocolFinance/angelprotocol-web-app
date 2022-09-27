@@ -30,7 +30,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
             </h6>
             <Icon type="ExternalLink" size={20} />
           </div>
-          <p className="text-sm md:text-base text-grey-accent mt-1 truncate w-40 md:w-72">
+          <p className="text-sm md:text-base text-gray mt-1 truncate w-40 md:w-72">
             {installUrl}
           </p>
         </div>

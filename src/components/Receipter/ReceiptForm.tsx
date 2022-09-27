@@ -101,7 +101,7 @@ export default function ReceiptForm() {
       </div>
       <button
         disabled={isSubmitDisabled}
-        className="bg-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isSubmitting ? "Processing..." : "Proceed"}

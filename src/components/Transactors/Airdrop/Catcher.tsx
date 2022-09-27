@@ -35,7 +35,7 @@ function Action({
   return (
     <button
       {...restProps}
-      className={`bg-blue text-white hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${className}`}
+      className={`bg-blue text-white hover:opacity-80 disabled:bg-gray w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${className}`}
     />
   );
 }

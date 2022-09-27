@@ -34,7 +34,7 @@ export function TextInput<T extends FieldValues>(props: {
         id: id,
         className: `${
           props.mono ? "font-mono text-sm" : ""
-        } text-black disabled:text-grey-accent focus:outline-none ${
+        } text-black disabled:text-gray focus:outline-none ${
           props.plain
             ? "bg-gray-l2 border-b-2 border-gray-d2/25 rounded-none pb-1"
             : "bg-gray-l2 shadow-inner-white rounded-md p-3"

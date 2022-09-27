@@ -37,7 +37,7 @@ export default function DonateForm() {
 
       <button
         disabled={isSubmitDisabled}
-        className="w-full bg-orange hover:bg-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="w-full bg-orange hover:bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

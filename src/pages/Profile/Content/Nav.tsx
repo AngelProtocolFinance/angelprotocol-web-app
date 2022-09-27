@@ -50,7 +50,7 @@ const styler = createNavLinkStyler(
 );
 
 const disabledClass =
-  "text-white font-semibold bg-grey-accent uppercase py-3 text-center pointer-events-none";
+  "text-white font-semibold bg-gray uppercase py-3 text-center pointer-events-none";
 
 function Button({
   _iconType,

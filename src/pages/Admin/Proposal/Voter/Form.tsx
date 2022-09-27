@@ -21,7 +21,7 @@ export default function Form() {
 
       <button
         disabled={isSubmitDisabled}
-        className="bg-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-orange disabled:bg-gray p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         proceed

@@ -99,7 +99,7 @@ function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
     <button
       {...props}
       type="button"
-      className="cursor-pointer text-white text-lg bg-blue hover:bg-blue-d1 disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg"
+      className="cursor-pointer text-white text-lg bg-blue hover:bg-blue-d1 disabled:bg-gray/90 p-2 m-1 rounded-md shadow-lg"
     />
   );
 }

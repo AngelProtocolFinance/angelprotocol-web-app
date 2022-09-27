@@ -59,11 +59,7 @@ function Claim(props: { time: string; amount: string }) {
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
   return (
     <li className="flex justify-between">
-      <p
-        className={`font-heading ${
-          claimable ? "text-blue" : "text-grey-accent"
-        }`}
-      >
+      <p className={`font-heading ${claimable ? "text-blue" : "text-gray"}`}>
         <span className="mr-1">
           {humanize(condense(props.amount), 2, true)}
         </span>
@@ -75,7 +71,7 @@ function Claim(props: { time: string; amount: string }) {
             <Icon type="Check" className="mr-0.5" /> claimable
           </span>
         ) : (
-          <span className="flex items-center text-grey-accent">
+          <span className="flex items-center text-gray">
             <Icon type="HourglassSplit" className="mr-0.5" />
             {claim_date}
           </span>
