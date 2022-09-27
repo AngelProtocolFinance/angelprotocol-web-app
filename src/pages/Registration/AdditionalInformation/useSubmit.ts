@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
 import {
   useRegistrationQuery,
-  useUpdateCharityMetadataMutation,
+  useUpdateMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
@@ -11,7 +11,7 @@ import routes from "../routes";
 import getUploadBody from "./getUploadBody";
 
 export default function useSubmit() {
-  const [updateMetadata] = useUpdateCharityMetadataMutation();
+  const [updateMetadata] = useUpdateMetadataMutation();
   const { charity } = useRegistrationQuery();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();

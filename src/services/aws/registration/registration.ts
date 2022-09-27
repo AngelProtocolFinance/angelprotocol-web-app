@@ -130,7 +130,7 @@ const registration_api = aws.injectEndpoints({
         body: { EndowmentContract },
       }),
     }),
-    updateCharityMetadata: builder.mutation<
+    updateMetadata: builder.mutation<
       UpdateMetadataResult,
       UpdateMetadataRequest
     >({
@@ -182,7 +182,7 @@ export const {
   useEndowmentApplicationsQuery,
   useRequestEmailMutation,
   useSubmitMutation,
-  useUpdateCharityMetadataMutation,
+  useUpdateMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
   util: { updateQueryData: updateRegQueryData },
