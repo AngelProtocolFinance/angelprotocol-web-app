@@ -15,7 +15,7 @@ type Props = PropsWithChildren<{
 }>;
 
 export function CommonGuard(props: Props) {
-  const { charity, isLoading, isFetching, isError, error } =
+  const { application, isLoading, isFetching, isError, error } =
     useRegistrationQuery();
   const { handleError } = useErrorContext();
 
@@ -34,5 +34,5 @@ export function CommonGuard(props: Props) {
     return null;
   }
 
-  return props.guardLogic(charity, props.children);
+  return props.guardLogic(application, props.children);
 }

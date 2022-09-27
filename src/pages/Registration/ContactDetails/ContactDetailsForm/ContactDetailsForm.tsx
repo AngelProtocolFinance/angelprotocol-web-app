@@ -3,8 +3,8 @@ import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails as CD } from "pages/Registration/types";
-import { Application } from "types/aws";
 import FormInput from "pages/Registration/common/FormInput";
+import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
@@ -15,9 +15,9 @@ import RoleSelector from "./RoleSelector";
 import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 
-type Props = { application: Application };
+export default function ContactDetailsForm() {
+  const { application } = useRegistrationQuery();
 
-export default function ContactDetailsForm({ application }: Props) {
   const methods = useForm<CD>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {

@@ -1,20 +1,14 @@
 import { useCallback } from "react";
-import { ContactPerson, Registration } from "types/aws";
+import { VerifEmailBody } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { logger } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
-
-type Body = Pick<
-  ContactPerson,
-  "Email" | "FirstName" | "LastName" | "Role" | "PhoneNumber"
-> &
-  Pick<Registration, "OrganizationName">;
 
 export default function useSendVerificationEmail() {
   const [sendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendVerificationEmail = useCallback(
-    async (uuid: string | undefined, body: Body) => {
+    async (uuid: string | undefined, body: VerifEmailBody) => {
       if (!uuid) {
         throw new UnexpectedStateError("Email UUID is undefined");
       }

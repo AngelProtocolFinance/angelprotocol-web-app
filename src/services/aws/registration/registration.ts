@@ -203,9 +203,9 @@ export const useRegistrationQuery = () => {
   // 5. click "Start" to start new registration -> ref ID is cleared and charity data cache should be cleared, but
   //    due to some race condition, the Registration page reads the cached data before the clearing
   // 6. different charity data is read in Registration.tsx than in other steps
-  const charity = !regRef || !data ? placeholderApplication : data;
+  const application = !regRef || !data ? placeholderApplication : data;
 
-  return { charity, ...rest };
+  return { application, ...rest };
 };
 
 export const {

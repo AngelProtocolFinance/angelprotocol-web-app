@@ -13,16 +13,16 @@ type Props = {
 
 // NOTE: not handling `RegistrationStatus === "Active"` as the Dashboard is inaccessible when the Endowment is active
 export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const {
     Registration: { RegistrationStatus: status },
-  } = charity;
+  } = application;
 
   if (isLoading) {
     return <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-2" />;
   }
 
-  const registrationState = getRegistrationState(charity);
+  const registrationState = getRegistrationState(application);
 
   return (
     <div className="flex flex-col w-full gap-4 items-center">
@@ -62,7 +62,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
       </div>
       {status === "Active" && (
         <Link
-          to={`${appRoutes.profile}/${charity.Metadata.EndowmentId}`}
+          to={`${appRoutes.profile}/${application.Metadata.EndowmentId}`}
           className="flex w-full justify-center font-heading uppercase font-bold text-sm text-thin-blue underline hover:text-bright-blue"
         >
           Check out your new Endowment's profile page here

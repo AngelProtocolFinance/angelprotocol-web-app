@@ -17,7 +17,7 @@ import routes from "../../routes";
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewApplicationMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
-  const { charity: originalCharityData } = useRegistrationQuery();
+  const { application: originalApplication } = useRegistrationQuery();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
   const { handleError } = useErrorContext();
@@ -32,8 +32,8 @@ export default function useSaveContactDetails() {
         // 1. was already verified
         // 2. is the same as the the pre-contact-details-update email
         const isEmailVerified =
-          !!originalCharityData.ContactPerson.EmailVerified &&
-          originalCharityData.ContactPerson.Email === contactData.email;
+          !!originalApplication.ContactPerson.EmailVerified &&
+          originalApplication.ContactPerson.Email === contactData.email;
 
         const postData: ContactDetailsRequest = {
           PK: contactData.uniqueID,
@@ -95,7 +95,7 @@ export default function useSaveContactDetails() {
       }
     },
     [
-      originalCharityData,
+      originalApplication,
       handleError,
       navigate,
       registerCharity,

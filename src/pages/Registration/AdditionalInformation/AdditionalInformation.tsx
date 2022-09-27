@@ -11,16 +11,16 @@ import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const { submit } = useSubmit();
 
   const methods = useForm<AdditionalInfoValues>({
     resolver: yupResolver(additionalInfoSchema),
     defaultValues: {
-      banner: charity.Metadata.Banner,
-      overview: charity.Metadata.Overview,
-      logo: charity.Metadata.Logo,
-      kycDonorsOnly: charity.Metadata.KycDonorsOnly,
+      banner: application.Metadata.Banner,
+      overview: application.Metadata.Overview,
+      logo: application.Metadata.Logo,
+      kycDonorsOnly: application.Metadata.KycDonorsOnly,
     },
   });
 
@@ -68,12 +68,12 @@ function KycDonorsOnlyCheckbox() {
 }
 
 function OrganizationName() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
 
   return (
     <InputColumn htmlFor="name" label="Name of your organization">
       <span className="flex w-full font-bold">
-        {charity.Registration.OrganizationName}
+        {application.Registration.OrganizationName}
       </span>
     </InputColumn>
   );

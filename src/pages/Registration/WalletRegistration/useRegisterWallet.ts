@@ -7,7 +7,7 @@ import { GENERIC_ERROR_MESSAGE } from "../constants";
 import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const [updateMetadata, { isSuccess, isLoading }] =
     useUpdateMetadataMutation();
   const { handleError } = useErrorContext();
@@ -16,7 +16,7 @@ export default function useRegisterWallet() {
     try {
       const result = await updateMetadata({
         body: { JunoWallet: data.address },
-        PK: charity.ContactPerson.PK,
+        PK: application.ContactPerson.PK,
       });
 
       if ("error" in result) {

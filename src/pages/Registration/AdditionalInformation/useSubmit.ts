@@ -12,7 +12,7 @@ import getUploadBody from "./getUploadBody";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateMetadataMutation();
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function useSubmit() {
         const body = await getUploadBody(values);
 
         const result = await updateMetadata({
-          PK: charity.ContactPerson.PK,
+          PK: application.ContactPerson.PK,
           body,
         });
 
@@ -30,7 +30,7 @@ export default function useSubmit() {
           return handleError(result.error, "Error updating profile ❌");
         }
 
-        const route = charity.Metadata.JunoWallet
+        const route = application.Metadata.JunoWallet
           ? routes.dashboard
           : routes.wallet;
         navigate(`${appRoutes.register}/${route}`);
@@ -38,7 +38,7 @@ export default function useSubmit() {
         handleError(error, "Error updating profile ❌");
       }
     },
-    [charity, handleError, updateMetadata, navigate]
+    [application, handleError, updateMetadata, navigate]
   );
 
   return { submit };
