@@ -3,7 +3,7 @@ import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails as CD } from "pages/Registration/types";
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 import FormInput from "pages/Registration/common/FormInput";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { appRoutes } from "constants/routes";
@@ -15,24 +15,24 @@ import RoleSelector from "./RoleSelector";
 import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 
-type Props = { charity: Charity };
+type Props = { application: Application };
 
-export default function ContactDetailsForm({ charity }: Props) {
+export default function ContactDetailsForm({ application }: Props) {
   const methods = useForm<CD>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
-      organizationName: charity.Registration.OrganizationName,
-      firstName: charity.ContactPerson.FirstName,
-      lastName: charity.ContactPerson.LastName,
-      email: charity.ContactPerson.Email,
-      goals: charity.ContactPerson.Goals,
-      phone: charity.ContactPerson.PhoneNumber,
-      referralMethod: charity.ContactPerson.ReferralMethod,
-      otherReferralMethod: charity.ContactPerson.OtherReferralMethod,
-      role: charity.ContactPerson.Role,
-      otherRole: charity.ContactPerson.OtherRole,
+      organizationName: application.Registration.OrganizationName,
+      firstName: application.ContactPerson.FirstName,
+      lastName: application.ContactPerson.LastName,
+      email: application.ContactPerson.Email,
+      goals: application.ContactPerson.Goals,
+      phone: application.ContactPerson.PhoneNumber,
+      referralMethod: application.ContactPerson.ReferralMethod,
+      otherReferralMethod: application.ContactPerson.OtherReferralMethod,
+      role: application.ContactPerson.Role,
+      otherRole: application.ContactPerson.OtherRole,
       checkedPolicy: false,
-      uniqueID: charity.ContactPerson.PK,
+      uniqueID: application.ContactPerson.PK,
     },
   });
   const {
@@ -98,7 +98,7 @@ export default function ContactDetailsForm({ charity }: Props) {
         />
         <div className="flex justify-center">
           {/* If JunoWallet field is set, we can assume ContactDetails update form has been navigated to from the Dashboard*/}
-          {charity.Metadata.JunoWallet && (
+          {application.Metadata.JunoWallet && (
             <Button
               className="btn-outline-secondary w-48 h-12 mr-2"
               disabled={isSubmitting}

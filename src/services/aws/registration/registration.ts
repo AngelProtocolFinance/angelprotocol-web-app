@@ -1,13 +1,13 @@
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
-  Charity,
+  Application,
   ContactDetailsRequest,
   ContactDetailsResult,
   EndowmentApplication,
   SubmitData,
   SubmitResult,
-  UnprocessedCharity,
+  UnprocessedApplication,
   UpdateDocumentationData,
   UpdateDocumentationResult,
   UpdateMetadataRequest,
@@ -18,7 +18,7 @@ import { getSavedRegistrationReference } from "helpers";
 import { createAuthToken } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";
-import { placeholderCharity } from "./placeholders";
+import { placeholderApplication } from "./placeholders";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
@@ -26,7 +26,7 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string | undefined | null>({
+    registration: builder.query<Application, string | undefined | null>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
         return {
@@ -39,7 +39,7 @@ const registration_api = aws.injectEndpoints({
         ContactPerson: cp,
         Registration: r,
         Metadata: m,
-      }: UnprocessedCharity) => {
+      }: UnprocessedApplication) => {
         return {
           ContactPerson: cp,
           Registration: {
@@ -203,7 +203,7 @@ export const useRegistrationQuery = () => {
   // 5. click "Start" to start new registration -> ref ID is cleared and charity data cache should be cleared, but
   //    due to some race condition, the Registration page reads the cached data before the clearing
   // 6. different charity data is read in Registration.tsx than in other steps
-  const charity = !regRef || !data ? placeholderCharity : data;
+  const charity = !regRef || !data ? placeholderApplication : data;
 
   return { charity, ...rest };
 };

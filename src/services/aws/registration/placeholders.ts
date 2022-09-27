@@ -1,6 +1,6 @@
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 
-export const placeholderCharity: Charity = {
+export const placeholderApplication: Application = {
   ContactPerson: {
     Email: "",
     EmailVerified: false,

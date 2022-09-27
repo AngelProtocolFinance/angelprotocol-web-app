@@ -109,13 +109,13 @@ export type Metadata = {
   KycDonorsOnly: boolean;
 };
 
-export type Charity = {
+export type Application = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
 };
 
-export type UnprocessedCharity = {
+export type UnprocessedApplication = {
   ContactPerson: ContactPerson;
   Registration: InitialRegistration;
   Metadata: InitialMetaData;

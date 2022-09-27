@@ -1,6 +1,6 @@
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { act, renderHook } from "@testing-library/react";
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 import { ApplicationProposal, NewEndowment } from "types/contracts";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { PLACEHOLDER_WALLET } from "test/constants";
@@ -65,7 +65,7 @@ describe("useSubmit tests", () => {
         throw new Error();
       });
     const { result } = renderHook(() => useSubmit());
-    await act(() => result.current.submit(CHARITY));
+    await act(() => result.current.submit(APPLICATION));
     //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
@@ -88,14 +88,14 @@ describe("useSubmit tests", () => {
       .spyOn(CW3Review.prototype, "createProposeApplicationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
     const { result } = renderHook(() => useSubmit());
-    await act(() => result.current.submit(CHARITY));
+    await act(() => result.current.submit(APPLICATION));
     //sendCosmosTx sets loading state
     expect(mockDispatch).toBeCalledWith(mockSendCosmosTx);
     expect(mockShowModal).toBeCalled();
   });
 });
 
-const CHARITY: Charity = {
+const APPLICATION: Application = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -144,27 +144,27 @@ const CHARITY: Charity = {
 };
 
 const createEndowmentMsg: NewEndowment = {
-  owner: CHARITY.Metadata.JunoWallet,
+  owner: APPLICATION.Metadata.JunoWallet,
   tier: 1,
-  categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] },
+  categories: { sdgs: [APPLICATION.Registration.UN_SDG], general: [] },
   withdraw_before_maturity: false,
   maturity_height: undefined,
   maturity_time: undefined,
   endow_type: "Charity",
-  image: CHARITY.Metadata.Banner!.publicUrl,
-  logo: CHARITY.Metadata.Logo!.publicUrl,
-  name: CHARITY.Registration.OrganizationName,
+  image: APPLICATION.Metadata.Banner!.publicUrl,
+  logo: APPLICATION.Metadata.Logo!.publicUrl,
+  name: APPLICATION.Registration.OrganizationName,
 
   profile: {
     annual_revenue: undefined,
     average_annual_budget: undefined,
     navigator_rating: undefined,
-    contact_email: CHARITY.ContactPerson.Email,
+    contact_email: APPLICATION.ContactPerson.Email,
     country_of_origin: undefined,
     street_address: undefined,
-    url: CHARITY.Registration.Website,
+    url: APPLICATION.Registration.Website,
     number_of_employees: undefined,
-    overview: CHARITY.Metadata.Overview,
+    overview: APPLICATION.Metadata.Overview,
     registration_number: undefined,
     social_media_urls: {
       facebook: undefined,
@@ -173,14 +173,14 @@ const createEndowmentMsg: NewEndowment = {
     },
   },
 
-  cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],
-  kyc_donors_only: CHARITY.Metadata.KycDonorsOnly,
+  cw4_members: [{ addr: APPLICATION.Metadata.JunoWallet, weight: 1 }],
+  kyc_donors_only: APPLICATION.Metadata.KycDonorsOnly,
   cw3_threshold: { absolute_percentage: { percentage: "0.5" } },
   cw3_max_voting_period: 86400, //seconds - 24H
 };
 
 const applicationProposal: ApplicationProposal = {
-  ref_id: CHARITY.ContactPerson.PK!,
+  ref_id: APPLICATION.ContactPerson.PK!,
   msg: createEndowmentMsg,
 };
 

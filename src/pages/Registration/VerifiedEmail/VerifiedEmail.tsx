@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect, useState } from "react";
 import { Location, useLocation, useNavigate } from "react-router-dom";
-import { UnprocessedCharity } from "types/aws";
+import { UnprocessedApplication } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
@@ -12,7 +12,7 @@ import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
-type JwtData = UnprocessedCharity & {
+type JwtData = UnprocessedApplication & {
   authorization: string;
   exp: number;
   iat: number;
@@ -27,7 +27,7 @@ export default function VerifiedEmail() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [isEmailExpired, setEmailExpired] = useState(false);
-  const [charity, setCharity] = useState<UnprocessedCharity>();
+  const [charity, setCharity] = useState<UnprocessedApplication>();
 
   useEffect(() => {
     try {

@@ -1,13 +1,13 @@
-import { Charity, RegistrationStatus } from "types/aws";
-import { placeholderCharity } from "services/aws/registration";
+import { Application, RegistrationStatus } from "types/aws";
+import { placeholderApplication } from "services/aws/registration";
 import { getRegistrationState } from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {
   it.each([true, false])(
     "sets 'contact details' step to complete with EmailVerified === %j",
     (emailVerified) => {
-      const charity: Charity = {
-        ...placeholderCharity,
+      const application: Application = {
+        ...placeholderApplication,
         ContactPerson: {
           Email: "test@test.com",
           EmailVerified: emailVerified,
@@ -22,7 +22,7 @@ describe("getRegistrationState tests", () => {
           SK: "ContactPerson",
         },
         Registration: {
-          ...placeholderCharity.Registration,
+          ...placeholderApplication.Registration,
           OrganizationName: "charity",
           OrganizationName_ContactEmail: "CHARITY_test@test.com",
           RegistrationDate: "2022-05-04T10:10:10Z",
@@ -30,7 +30,7 @@ describe("getRegistrationState tests", () => {
         },
       };
 
-      const state = getRegistrationState(charity);
+      const state = getRegistrationState(application);
 
       expect(state.contactDetails.isComplete).toBe(true);
       expect(state.documentation.isComplete).toBe(false);
@@ -41,8 +41,8 @@ describe("getRegistrationState tests", () => {
   );
 
   it("sets 'documentation' step to incomplete when previous steps are incomplete", () => {
-    const charity: Charity = {
-      ...placeholderCharity,
+    const charity: Application = {
+      ...placeholderApplication,
       Registration: {
         OrganizationName: "charity",
         OrganizationName_ContactEmail: "CHARITY_test@test.com",
@@ -79,8 +79,8 @@ describe("getRegistrationState tests", () => {
   });
 
   it("sets 'additional information' step to incomplete when previous steps are incomplete", () => {
-    const charity: Charity = {
-      ...placeholderCharity,
+    const charity: Application = {
+      ...placeholderApplication,
       Metadata: {
         Banner: {
           name: "banner",
@@ -92,6 +92,7 @@ describe("getRegistrationState tests", () => {
         },
         Overview: "some overview",
         EndowmentContract: "",
+        EndowmentId: 0,
         SK: "Metadata",
         JunoWallet: "",
         KycDonorsOnly: false,
@@ -108,13 +109,14 @@ describe("getRegistrationState tests", () => {
   });
 
   it("sets 'wallet registration' step to incomplete when previous steps are incomplete", () => {
-    const charity: Charity = {
-      ...placeholderCharity,
+    const charity: Application = {
+      ...placeholderApplication,
       Metadata: {
         Banner: undefined,
         Logo: undefined,
         Overview: "",
         EndowmentContract: "",
+        EndowmentId: 0,
         SK: "Metadata",
         JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
         KycDonorsOnly: false,
@@ -130,16 +132,16 @@ describe("getRegistrationState tests", () => {
     expect(state.getIsReadyForSubmit()).toBe(false);
   });
 
-  const statuses: RegistrationStatus[] = [
-    "Inactive",
-    "Under Review",
-    "Rejected",
-    "Active",
+  const cases: { status: RegistrationStatus; endowmentId: number }[] = [
+    { status: "Inactive", endowmentId: 0 },
+    { status: "Under Review", endowmentId: 0 },
+    { status: "Rejected", endowmentId: 0 },
+    { status: "Active", endowmentId: 1 },
   ];
-  test.each(statuses)(
+  test.each(cases)(
     "sets all steps to complete even when registration status is %j",
-    (status) => {
-      const charity: Charity = {
+    (data) => {
+      const charity: Application = {
         ContactPerson: {
           Email: "test@test.com",
           EmailVerified: true,
@@ -171,7 +173,7 @@ describe("getRegistrationState tests", () => {
           },
           ProofOfRegistrationVerified: true,
           RegistrationDate: "2022-05-04T10:10:10Z",
-          RegistrationStatus: status,
+          RegistrationStatus: data.status,
           SK: "Registration",
           Tier: 1,
           UN_SDG: 1,
@@ -188,6 +190,7 @@ describe("getRegistrationState tests", () => {
           },
           Overview: "some overview",
           EndowmentContract: "juno1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+          EndowmentId: data.endowmentId,
           SK: "Metadata",
           JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
           KycDonorsOnly: false,
