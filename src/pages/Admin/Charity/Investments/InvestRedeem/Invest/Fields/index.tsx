@@ -31,8 +31,8 @@ export default function Fields({ classes = "", type }: Props) {
     .reduce((total, inv) => total + inv.amount, 0);
 
   return (
-    <Tab.Panel className={`grid ${classes}`}>
-      <div className="grid md:grid-cols-2 gap-4">
+    <Tab.Panel className={`grid w-full ${classes}`}>
+      <div className="w-full grid md:grid-cols-2 gap-4">
         {fields.map((field, i) =>
           //not filterd to preseve field idx
           field.type === type ? (
@@ -50,7 +50,7 @@ export default function Fields({ classes = "", type }: Props) {
         disabled={total > balance}
         onClick={showVaults}
         type="button"
-        className={`col-span-2 uppercase text-angel-blue hover:text-sky-400 justify-self-center my-4`}
+        className={`uppercase text-angel-blue hover:text-sky-400 justify-self-center my-4`}
       >
         <Icon type="Plus" className="relative bottom-0.5 inline mr-1" />
         add vault
