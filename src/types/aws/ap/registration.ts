@@ -121,7 +121,7 @@ export type UnprocessedCharity = {
   Metadata: InitialMetaData;
 };
 
-export type ContactDetailsData = {
+export type ContactDetailsResult = {
   ContactPerson: ContactPerson;
   Registration: Pick<
     Registration,

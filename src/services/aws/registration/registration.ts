@@ -3,7 +3,7 @@ import {
   AWSQueryRes,
   Charity,
   ContactDetailsRequest,
-  ContactDetailsData as ContactDetailsResult,
+  ContactDetailsResult,
   EndowmentApplication,
   SubmitData,
   SubmitResult,
