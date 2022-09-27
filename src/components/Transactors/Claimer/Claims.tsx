@@ -24,7 +24,7 @@ export default function Claims() {
   return (
     <div
       className={`grid ${
-        hasClaim ? "p-2 shadow-inner-white bg-light-grey rounded-md" : ""
+        hasClaim ? "p-2 shadow-inner-white bg-gray-l2 rounded-md" : ""
       }`}
     >
       {(hasClaim && (

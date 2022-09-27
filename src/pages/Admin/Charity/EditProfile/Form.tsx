@@ -66,7 +66,7 @@ export default function Form() {
       <CountrySelector<UV>
         fieldName="country_of_origin"
         classes={{
-          container: "bg-light-grey shadow-inner-white rounded-md p-3",
+          container: "bg-gray-l2 shadow-inner-white rounded-md p-3",
           input: "bg-transparent",
         }}
       />
@@ -76,7 +76,7 @@ export default function Form() {
         placeHolder="a short overview of your charity"
         classes={{
           container:
-            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white p-3",
+            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-gray-l2 shadow-inner-white p-3",
           error:
             "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
           charCounter: "text-gray-d2",

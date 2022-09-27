@@ -7,7 +7,7 @@ export default function MemberAdder() {
   const { addMember, newFundMembers } = useAddMember();
 
   return (
-    <div className="shadow-inner-white bg-light-grey rounded-md p-3 grid">
+    <div className="shadow-inner-white bg-gray-l2 rounded-md p-3 grid">
       {newFundMembers.length > 0 && (
         <div className="flex flex-wrap mb-4 gap-2">
           {newFundMembers.map((addr) => (

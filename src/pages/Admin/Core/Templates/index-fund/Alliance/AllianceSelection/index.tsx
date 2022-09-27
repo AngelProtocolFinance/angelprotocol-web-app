@@ -9,7 +9,7 @@ export default function AllianceSelection() {
     useAllianceSelection();
 
   return (
-    <div className="h-96 overflow-auto bg-light-grey shadow-inner-white rounded-md relative">
+    <div className="h-96 overflow-auto bg-gray-l2 shadow-inner-white rounded-md relative">
       <Toolbar
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}

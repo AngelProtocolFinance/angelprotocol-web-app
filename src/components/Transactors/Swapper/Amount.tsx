@@ -44,7 +44,7 @@ export default function Amount() {
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-[auto_1fr] text-gray-d2 p-3 bg-light-grey shadow-inner-white rounded-md">
+      <div className="grid grid-cols-[auto_1fr] text-gray-d2 p-3 bg-gray-l2 shadow-inner-white rounded-md">
         <p className="text-gray-d2 uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
@@ -71,7 +71,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-gray-d2 bg-light-grey text-2xl w-full focus:outline-none"
+          className="text-right p-2 text-gray-d2 bg-gray-l2 text-2xl w-full focus:outline-none"
         />
       </div>
       <ErrorMessage

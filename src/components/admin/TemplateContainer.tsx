@@ -21,7 +21,7 @@ export function GroupContainer(
 ) {
   return (
     <div
-      className={`p-3 rounded-md bg-light-grey shadow-inner-white ${
+      className={`p-3 rounded-md bg-gray-l2 shadow-inner-white ${
         props.className || ""
       }`}
     >

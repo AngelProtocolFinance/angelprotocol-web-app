@@ -6,11 +6,11 @@ export default function Toolbar(props: {
 }) {
   return (
     <div className="flex justify-end bg-gray-d2/10 p-3 sticky top-0 backdrop-filter backdrop-blur-sm">
-      <div className="flex bg-light-grey text-gray-d2 shadow-inner-white p-1.5 rounded-md">
+      <div className="flex bg-gray-l2 text-gray-d2 shadow-inner-white p-1.5 rounded-md">
         <input
           id="__allianceSearch"
           placeholder="name or address"
-          className="font-mono focus:outline-none bg-light-grey text-sm"
+          className="font-mono focus:outline-none bg-gray-l2 text-sm"
           type="text"
           value={props.searchText}
           onChange={props.handleSearchTextChange}

@@ -9,7 +9,7 @@ export default function AdvancedOptions(props: {
     <div
       className={`grid -ml-0.5 mt-6 ${
         props.isOptionsShown
-          ? "p-3 rounded-md bg-light-grey shadow-inner-white"
+          ? "p-3 rounded-md bg-gray-l2 shadow-inner-white"
           : ""
       }`}
     >

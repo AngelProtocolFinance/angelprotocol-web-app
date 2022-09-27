@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         "grey-accent": "#ADB7BE",
-        "light-grey": "#EFEFEF",
+        "gray-l2": "#EFEFEF",
         "thin-grey": "#ECEDEE",
         "black-blue": "#252626",
         "dark-red": "#8A3F30",
@@ -98,7 +98,7 @@ module.exports = {
         "angel-orange": "#FAAC2E",
         blue: "#3FA9F5",
         blue: "#54A3D9",
-        "light-grey": "#f5f5f5",
+        "gray-l2": "#f5f5f5",
       },
 
       fontSize: {
