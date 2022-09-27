@@ -30,7 +30,7 @@ export default function SDGSelector() {
             {({ selected }) => (
               <div
                 className={`text-gray-d4 table-row hover:bg-blue-l1/30 ${
-                  selected ? "bg-amber-500/30" : ""
+                  selected ? "bg-amber-orange/30" : ""
                 } cursor-pointer p-1`}
               >
                 <span className="table-cell pr-2 p-1">{sdg.num}</span>

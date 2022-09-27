@@ -36,7 +36,7 @@ export default function Log(props: WithdrawLog) {
       <KeyVal title="tx hash">
         {finalRoute && finalRoute.status === "OK" ? (
           <a
-            className="text-sm font-mono text-blue hover:text-blue-l1 active:text-sky-600"
+            className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
             href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
             target="_blank"
             rel="noopener noreferrer"

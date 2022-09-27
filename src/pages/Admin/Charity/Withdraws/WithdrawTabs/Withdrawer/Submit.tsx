@@ -90,7 +90,7 @@ function SubmitWithReason({
 
 function Warning({ message }: { message: string }) {
   return (
-    <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
+    <p className="p-2 text-sm bg-orangel-l5 text-orange-d1 mb-4">
       <Icon type="Info" className="inline-block relative bottom-0.5 mr-1" />
       {message}
     </p>

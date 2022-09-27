@@ -19,7 +19,7 @@ export default function Form() {
       <Network />
       <Beneficiary />
 
-      <div className="bg-amber-50 p-2 rounded-md text-amber-600 mb-2 text-sm">
+      <div className="bg-orange-l5 p-2 rounded-md text-orange-d1 mb-2 text-sm">
         <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
         We recommend not using crypto exchange addresses for withdrawals. We are
         not responsible for the loss of funds.

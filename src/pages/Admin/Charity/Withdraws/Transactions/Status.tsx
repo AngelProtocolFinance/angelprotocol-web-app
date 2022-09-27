@@ -88,7 +88,7 @@ function Route(props: {
         <span className="text-xs font-mono">{output_symbol}</span>
       </div>
       <a
-        className="text-sm font-mono text-blue hover:text-blue-l1 active:text-sky-600 mt-4"
+        className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1 mt-4"
         href={`${explorerUrls[id]}/${hash}`}
         target="_blank"
         rel="noopener noreferrer"

@@ -67,7 +67,7 @@ export default function Connector(props: Connection) {
 
 function Name(props: PropsWithChildren<{}>) {
   return (
-    <p className="uppercase text-sm text-gray-d2 group-hover:text-blue group-active:text-amber-500">
+    <p className="uppercase text-sm text-gray-d2 group-hover:text-blue group-active:text-orange">
       {props.children}
     </p>
   );

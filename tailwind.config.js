@@ -85,13 +85,6 @@ module.exports = {
         sdg17: "#13496b",
       },
 
-      borderColor: {
-        orange: "#FAAC2E",
-        blue: "#3FA9F5",
-        blue: "#54A3D9",
-        "gray-l2": "#f5f5f5",
-      },
-
       fontSize: {
         "2xs": ["0.56rem", "0.7rem"],
         "4.5xl": "2.625rem",
