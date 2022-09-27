@@ -43,7 +43,7 @@ export default function MemberEditor() {
           {isEditingMember ? "save changes" : "+ add member"}
         </Button>
         {isEditingMember && (
-          <Button type="button" onClick={resetEdit} _accent="bg-red-400">
+          <Button type="button" onClick={resetEdit} _accent="bg-red-l1">
             cancel
           </Button>
         )}

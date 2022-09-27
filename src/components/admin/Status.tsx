@@ -16,5 +16,5 @@ export const statusClasses: { [key in ProposalStatus]: string } = {
   open: "bg-white text-gray-d2",
   passed: "bg-green-l1",
   pending: "bg-orange",
-  rejected: "bg-red-400/50",
+  rejected: "bg-red-l1/50",
 };

@@ -65,7 +65,7 @@ export default function ReceiptForm() {
             errors={errors}
             name="country"
             as="span"
-            className="text-right text-red-400 my-1 text-xs mr-1"
+            className="text-right text-red-l1 my-1 text-xs mr-1"
           />
         </div>
       </div>

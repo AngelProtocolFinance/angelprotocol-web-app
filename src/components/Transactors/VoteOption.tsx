@@ -60,8 +60,8 @@ const vote_colors: { [key in Vote]: { [index: string]: string } } = {
     text: "text-green-l1",
   },
   no: {
-    bg: "bg-red-400/10",
-    icon: "text-red-400",
-    text: "text-red-400",
+    bg: "bg-red-l1/10",
+    icon: "text-red-l1",
+    text: "text-red-l1",
   },
 };

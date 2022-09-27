@@ -49,7 +49,7 @@ export default function Amount() {
           errors={errors}
           name="amount"
           as="span"
-          className="font-mono font-semibold text-red-400 text-xs mb-1 mt-0.5 text-right"
+          className="font-mono font-semibold text-red-l1 text-xs mb-1 mt-0.5 text-right"
         />
       </div>
     </div>

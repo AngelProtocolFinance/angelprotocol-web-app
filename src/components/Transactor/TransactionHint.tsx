@@ -8,7 +8,7 @@ export default function TransactionHint() {
 
   switch (step) {
     case "error":
-      return <StatusButton iconType="Exclamation" iconClass="text-red-300" />;
+      return <StatusButton iconType="Exclamation" iconClass="text-red-l2" />;
     case "broadcast":
     case "submit":
       return <StatusButton iconType="Loading" iconClass="animate-spin" />;

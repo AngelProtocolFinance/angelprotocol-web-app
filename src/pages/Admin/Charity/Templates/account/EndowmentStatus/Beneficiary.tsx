@@ -22,7 +22,7 @@ export default function Beneficiary() {
         as="p"
         errors={errors}
         name="beneficiaryType"
-        className="font-mono font-semibold text-left text-red-400 text-xs mb-2"
+        className="font-mono font-semibold text-left text-red-l1 text-xs mb-2"
       />
       <RadioGroup
         value={type}

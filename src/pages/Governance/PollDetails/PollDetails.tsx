@@ -85,7 +85,7 @@ export default function PollDetails() {
             title="no"
             percent={details.no_pct}
             value={details.no_val}
-            colorClass="text-red-400"
+            colorClass="text-red-l1"
           />
         </div>
       </div>

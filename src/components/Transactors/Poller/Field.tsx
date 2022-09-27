@@ -33,7 +33,7 @@ export default function Title(props: {
         errors={errors}
         name={props.id}
         as="p"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
     </div>
   );

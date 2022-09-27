@@ -31,7 +31,7 @@ export default function Form() {
 
       {isFundSelected && (
         <>
-          <Label className="text-red-400 mt-6 -mb-2">Remove member</Label>
+          <Label className="text-red-l1 mt-6 -mb-2">Remove member</Label>
           <GroupContainer>
             {(isFundMembersLoading && (
               <Loader

@@ -46,7 +46,7 @@ export default function ImgCropper(props: {
     <Dialog.Panel className="grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
       <div className="bg-white flex items-center justify-end gap-2 p-1">
         {error && (
-          <p className="mr-auto text-red-400 font-mono text-xs">{error}</p>
+          <p className="mr-auto text-red-l1 font-mono text-xs">{error}</p>
         )}
         <Button iconType={"Save"} onClick={handleSave} />
         <Button iconType={"Close"} onClick={closeModal} />

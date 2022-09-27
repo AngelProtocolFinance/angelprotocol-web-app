@@ -44,7 +44,7 @@ export default function StatusOptions() {
         as="p"
         errors={errors}
         name="status"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
       {status === "3" && <Beneficiary />}
     </>

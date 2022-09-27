@@ -26,7 +26,7 @@ export function TextInput<T extends FieldValues>(props: {
         htmlFor={id}
       >
         {props.title}
-        {props.required && <span className="text-red-400 ml-1">*</span>}
+        {props.required && <span className="text-red-l1 ml-1">*</span>}
       </label>
 
       {React.createElement(props.wide ? "textarea" : "input", {
@@ -48,7 +48,7 @@ export function TextInput<T extends FieldValues>(props: {
         errors={errors}
         name={props.name as string}
         as="span"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
     </div>
   );

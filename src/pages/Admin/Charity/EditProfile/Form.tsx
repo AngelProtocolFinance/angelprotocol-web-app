@@ -78,7 +78,7 @@ export default function Form() {
           container:
             "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-gray-l2 shadow-inner-white p-3",
           error:
-            "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
+            "font-mono font-semibold text-right text-red-l1 text-xs m-1 -mt-3",
           charCounter: "text-gray-d2",
         }}
       />

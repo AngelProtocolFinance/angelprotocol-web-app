@@ -39,7 +39,11 @@ export default function PollCard(props: { poll_id: number }) {
           percent={details.yes_pct}
           colorClass="text-green-l1"
         />
-        <Figure title="no" percent={details.no_pct} colorClass="text-red-200" />
+        <Figure
+          title="no"
+          percent={details.no_pct}
+          colorClass="text-red-l400"
+        />
       </div>
       {details.vote_ended ? (
         <div>

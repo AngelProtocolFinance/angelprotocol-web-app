@@ -39,7 +39,7 @@ export default function Amount() {
         errors={errors}
         name="amount"
         as="p"
-        className="font-mono font-semibold text-red-400 text-xs m-1 text-left"
+        className="font-mono font-semibold text-red-l1 text-xs m-1 text-left"
       />
     </div>
   );

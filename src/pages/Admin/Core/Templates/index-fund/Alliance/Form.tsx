@@ -16,7 +16,7 @@ export default function Form() {
         required
       />
       <Label className="-mb-2 text-gray-d2">
-        <span className="text-red-400">Remove</span> |{" "}
+        <span className="text-red-l1">Remove</span> |{" "}
         <span className="text-orange">Edit</span> existing member
       </Label>
       <AllianceSelection />

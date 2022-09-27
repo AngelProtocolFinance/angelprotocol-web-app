@@ -124,7 +124,7 @@ function DateInput() {
         errors={errors}
         name={"expiryTime"}
         as="span"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
     </div>
   );

@@ -37,7 +37,7 @@ export default function ErrPop(props: ErrorStage) {
           href={getTxUrl(chain, txHash)}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-center text-red-400 cursor-pointer mb-6 text-sm"
+          className="text-center text-red-l1 cursor-pointer mb-6 text-sm"
         >
           view transaction details
         </a>

@@ -14,7 +14,7 @@ export default function Member(props: { address: string }) {
     rounded-md flex items-center"
     >
       <span>{props.address}</span>
-      <button type="button" onClick={deleteSelf} className="ml-1 text-red-400">
+      <button type="button" onClick={deleteSelf} className="ml-1 text-red-l1">
         <Icon type="Close" />
       </button>
     </div>

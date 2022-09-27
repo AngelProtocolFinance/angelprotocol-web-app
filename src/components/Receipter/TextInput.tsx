@@ -33,7 +33,7 @@ export default function TextInput(props: {
         errors={errors}
         name={props.name}
         as="span"
-        className="text-right text-red-400 text-xs mt-1 mr-1"
+        className="text-right text-red-l1 text-xs mt-1 mr-1"
       />
     </div>
   );
