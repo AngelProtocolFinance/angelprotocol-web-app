@@ -34,7 +34,7 @@ function createApplicationProposalPayload(
     ref_id: charity.ContactPerson.PK!,
     msg: {
       owner: charity.Metadata.JunoWallet,
-      name: charity.Registration.CharityName, // name of the Charity Endowment
+      name: charity.Registration.Name, // name of the Charity Endowment
       tier: charity.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
       logo: charity.Metadata.Logo!.publicUrl,
       image: charity.Metadata.Banner!.publicUrl,
@@ -49,8 +49,7 @@ function createApplicationProposalPayload(
         registration_number: "",
         country_of_origin: "",
         street_address: "",
-        contact_email:
-          charity.Registration.CharityName_ContactEmail?.split("_")[1],
+        contact_email: charity.Registration.Name_ContactEmail?.split("_")[1],
         social_media_urls: {
           facebook: "",
           linkedin: "",

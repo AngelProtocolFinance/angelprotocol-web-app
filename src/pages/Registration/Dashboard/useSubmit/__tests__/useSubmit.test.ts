@@ -110,8 +110,8 @@ const CHARITY: Charity = {
     ReferralMethod: "angel-alliance",
   },
   Registration: {
-    CharityName: "charity",
-    CharityName_ContactEmail: "CHARITY_test@test.com",
+    Name: "charity",
+    Name_ContactEmail: "CHARITY_test@test.com",
     RegistrationDate: "2022-05-04T10:10:10Z",
     RegistrationStatus: "Inactive",
     Website: "www.test.com",
@@ -153,7 +153,7 @@ const createEndowmentMsg: NewEndowment = {
   endow_type: "Charity",
   image: CHARITY.Metadata.Banner!.publicUrl,
   logo: CHARITY.Metadata.Logo!.publicUrl,
-  name: CHARITY.Registration.CharityName,
+  name: CHARITY.Registration.Name,
 
   profile: {
     annual_revenue: undefined,

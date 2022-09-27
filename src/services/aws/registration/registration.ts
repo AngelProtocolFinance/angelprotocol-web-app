@@ -46,8 +46,8 @@ const registration_api = aws.injectEndpoints({
             AuditedFinancialReports: r.AuditedFinancialReports || [],
             AuditedFinancialReportsVerified:
               r.AuditedFinancialReportsVerified || false,
-            CharityName: r.CharityName,
-            CharityName_ContactEmail: r.CharityName_ContactEmail || "",
+            Name: r.Name,
+            Name_ContactEmail: r.Name_ContactEmail || "",
             FinancialStatements: r.FinancialStatements || [],
             FinancialStatementsVerified: r.FinancialStatementsVerified || false,
             ProofOfIdentity: r.ProofOfIdentity,

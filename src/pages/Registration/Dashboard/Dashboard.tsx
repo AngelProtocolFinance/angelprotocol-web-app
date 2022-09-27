@@ -24,7 +24,7 @@ export default function Dashboard() {
   const resendVerificationEmail = useCallback(async () => {
     try {
       await sendVerificationEmail(charity.ContactPerson.PK, {
-        CharityName: charity.Registration.CharityName,
+        Name: charity.Registration.Name,
         Email: charity.ContactPerson.Email,
         FirstName: charity.ContactPerson.FirstName,
         LastName: charity.ContactPerson.LastName,

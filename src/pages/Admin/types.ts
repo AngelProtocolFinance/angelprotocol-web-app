@@ -261,8 +261,5 @@ export type ProfileFormValues = ProposalBase &
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
   CharityApplication,
-  | "CharityName"
-  | "RegistrationDate"
-  | "RegistrationStatus"
-  | "CharityName_ContactEmail"
+  "Name" | "RegistrationDate" | "RegistrationStatus" | "Name_ContactEmail"
 >;

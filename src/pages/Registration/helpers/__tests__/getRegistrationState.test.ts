@@ -23,8 +23,8 @@ describe("getRegistrationState tests", () => {
         },
         Registration: {
           ...placeholderCharity.Registration,
-          CharityName: "charity",
-          CharityName_ContactEmail: "CHARITY_test@test.com",
+          Name: "charity",
+          Name_ContactEmail: "CHARITY_test@test.com",
           RegistrationDate: "2022-05-04T10:10:10Z",
           RegistrationStatus: "Inactive",
         },
@@ -44,8 +44,8 @@ describe("getRegistrationState tests", () => {
     const charity: Charity = {
       ...placeholderCharity,
       Registration: {
-        CharityName: "charity",
-        CharityName_ContactEmail: "CHARITY_test@test.com",
+        Name: "charity",
+        Name_ContactEmail: "CHARITY_test@test.com",
         RegistrationDate: "2022-05-04T10:10:10Z",
         RegistrationStatus: "Inactive",
         Website: "www.test.com",
@@ -156,8 +156,8 @@ describe("getRegistrationState tests", () => {
         Registration: {
           AuditedFinancialReports: [],
           AuditedFinancialReportsVerified: false,
-          CharityName: "charity",
-          CharityName_ContactEmail: "CHARITY_test@test.com",
+          Name: "charity",
+          Name_ContactEmail: "CHARITY_test@test.com",
           FinancialStatements: [],
           FinancialStatementsVerified: false,
           ProofOfIdentity: {

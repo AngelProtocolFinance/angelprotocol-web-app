@@ -32,8 +32,8 @@ const CHARITY: Charity = {
     ReferralMethod: "angel-alliance",
   },
   Registration: {
-    CharityName: "charity",
-    CharityName_ContactEmail: "CHARITY_test@test.com",
+    Name: "charity",
+    Name_ContactEmail: "CHARITY_test@test.com",
     RegistrationDate: "2022-05-04T10:10:10Z",
     RegistrationStatus: "Inactive",
     Website: "www.test.com",
@@ -66,7 +66,7 @@ const CHARITY: Charity = {
 
 const endowmentMsg: NewEndowment = {
   owner: CHARITY.Metadata.JunoWallet,
-  name: CHARITY.Registration.CharityName, // name of the Charity Endowment
+  name: CHARITY.Registration.Name, // name of the Charity Endowment
   categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   logo: CHARITY.Metadata.Logo!.publicUrl,
@@ -81,7 +81,7 @@ const endowmentMsg: NewEndowment = {
     registration_number: "",
     country_of_origin: "",
     street_address: "",
-    contact_email: CHARITY.Registration.CharityName_ContactEmail?.split("_")[1],
+    contact_email: CHARITY.Registration.Name_ContactEmail?.split("_")[1],
     social_media_urls: {
       facebook: "",
       linkedin: "",

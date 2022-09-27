@@ -21,7 +21,7 @@ export default function ContactDetailsForm({ charity }: Props) {
   const methods = useForm<CD>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
-      charityName: charity.Registration.CharityName,
+      name: charity.Registration.Name,
       firstName: charity.ContactPerson.FirstName,
       lastName: charity.ContactPerson.LastName,
       email: charity.ContactPerson.Email,
@@ -76,7 +76,7 @@ export default function ContactDetailsForm({ charity }: Props) {
             placeholder="Phone number"
           />
           <FormInput<CD>
-            fieldName="charityName"
+            fieldName="name"
             label="Name of your organization"
             placeholder="Organization"
             required

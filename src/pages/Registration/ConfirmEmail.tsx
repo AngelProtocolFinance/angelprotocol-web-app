@@ -26,7 +26,7 @@ export default function ConfirmEmail() {
       }
 
       const emailPayload = {
-        CharityName: charity.Registration.CharityName,
+        Name: charity.Registration.Name,
         Email: charity.ContactPerson.Email,
         FirstName: charity.ContactPerson.FirstName,
         LastName: charity.ContactPerson.LastName,
@@ -67,16 +67,15 @@ export default function ConfirmEmail() {
             You can continue to the next registration step, but please note that
             you will need to verify your email by clicking on the link in the
             email we've sent you, before the final application submission, in
-            order to be able to register {charity.Registration.CharityName} on
-            Angel Protocol.
+            order to be able to register {charity.Registration.Name} on Angel
+            Protocol.
           </span>
         </>
       ) : (
         <div className="text-2xl">
           <p>Thank you for registering</p>
           <p className="mb-10">
-            {charity.Registration.CharityName},{" "}
-            {charity.ContactPerson.FirstName}!
+            {charity.Registration.Name}, {charity.ContactPerson.FirstName}!
           </p>
         </div>
       )}

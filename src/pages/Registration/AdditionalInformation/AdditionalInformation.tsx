@@ -71,10 +71,8 @@ function OrganizationName() {
   const { charity } = useRegistrationQuery();
 
   return (
-    <InputColumn htmlFor="charityName" label="Name of your organization">
-      <span className="flex w-full font-bold">
-        {charity.Registration.CharityName}
-      </span>
+    <InputColumn htmlFor="name" label="Name of your organization">
+      <span className="flex w-full font-bold">{charity.Registration.Name}</span>
     </InputColumn>
   );
 }

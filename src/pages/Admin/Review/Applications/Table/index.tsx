@@ -16,16 +16,16 @@ export default function Table(props: { applications: CharityApplication[] }) {
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName"}
-            onClick={handleHeaderClick("CharityName")}
+            sortKey={"Name"}
+            onClick={handleHeaderClick("Name")}
           >
             name
           </Header>
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName_ContactEmail"}
-            onClick={handleHeaderClick("CharityName_ContactEmail")}
+            sortKey={"Name_ContactEmail"}
+            onClick={handleHeaderClick("Name_ContactEmail")}
           >
             email
           </Header>

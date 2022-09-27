@@ -24,7 +24,7 @@ export type AdditionalInfoValues = {
 };
 
 export type ContactDetails = {
-  charityName: string;
+  name: string;
   firstName: string;
   lastName: string;
   email: string;

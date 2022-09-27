@@ -15,8 +15,8 @@ export const placeholderCharity: Charity = {
     SK: "ContactPerson",
   },
   Registration: {
-    CharityName: "",
-    CharityName_ContactEmail: "",
+    Name: "",
+    Name_ContactEmail: "",
     RegistrationDate: "",
     RegistrationStatus: "Inactive",
     Website: "",
