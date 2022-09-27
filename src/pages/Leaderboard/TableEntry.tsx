@@ -15,7 +15,7 @@ export default function TableEntry(props: Endowment) {
     5
   );
   return (
-    <tr className="border-b">
+    <tr className="border-b border-black/10">
       <td>
         <LazyImage
           src={props.charity_logo || defaultIcon}

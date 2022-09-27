@@ -37,7 +37,7 @@ export default function Votes(props: { proposalId: number }) {
               <p className="pl-2">{vote.voter}</p>
               <p
                 className={`pl-2 ${
-                  vote.vote === "yes" ? "text-bright-green" : "text-failed-red"
+                  vote.vote === "yes" ? "text-green-l1" : "text-failed-red"
                 }`}
               >
                 {vote.vote}

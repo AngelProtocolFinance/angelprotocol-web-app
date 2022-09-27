@@ -20,7 +20,7 @@ export default function VerificationSuccessful({
 
   return (
     <div className="flex flex-col gap-10 items-center">
-      <FaCheck className="text-4xl text-yellow-blue" />
+      <FaCheck className="text-4xl text-green-l1" />
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
