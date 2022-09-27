@@ -1,7 +1,7 @@
 import Icon, { IconTypes } from "components/Icon";
 import { useProfile } from "..";
 
-export default function CharityLinks(props: { classes?: string }) {
+export default function Links(props: { classes?: string }) {
   const profile = useProfile();
   return (
     <div className={`${props.classes || ""} flex gap-2 items-center`}>
