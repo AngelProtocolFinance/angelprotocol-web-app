@@ -27,7 +27,7 @@ function Text(props: { type: string; title: string }) {
   if (props.type === "10years") {
     if (props.title === "Principal") {
       textBlob =
-        "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded at 20% per year.";
+        "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded over the year.";
     }
     if (props.title === "Impact") {
       textBlob =
