@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { CharityApplication } from "types/aws";
+import { EndowmentApplication } from "types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 import { statusColors } from "../constants";
 
-export default function AppRow(props: CharityApplication) {
+export default function AppRow(props: EndowmentApplication) {
   return (
     <Cells type="td" cellClass="px-2 py-3" key={props.PK}>
       <>{props.OrganizationName}</>

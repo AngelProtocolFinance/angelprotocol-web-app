@@ -192,7 +192,7 @@ export type UpdateDocumentationResult = {
   AuditedFinancialReports: FileObject[];
 };
 
-export type CharityApplication = Registration & {
+export type EndowmentApplication = Registration & {
   PK: string;
   poll_id: number;
 };

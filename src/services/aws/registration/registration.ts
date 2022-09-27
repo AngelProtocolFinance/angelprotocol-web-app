@@ -2,9 +2,9 @@ import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
   Charity,
-  CharityApplication,
   ContactDetailsRequest,
   ContactDetailsData as ContactDetailsResult,
+  EndowmentApplication,
   SubmitData,
   SubmitResult,
   UnprocessedCharity,
@@ -88,7 +88,7 @@ const registration_api = aws.injectEndpoints({
       }),
     }),
     charityApplications: builder.query<
-      CharityApplication[],
+      EndowmentApplication[],
       ApplicationStatusOptions
     >({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
@@ -101,7 +101,7 @@ const registration_api = aws.injectEndpoints({
           headers,
         };
       },
-      transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
+      transformResponse: (response: AWSQueryRes<EndowmentApplication[]>) =>
         response.Items,
     }),
     //TODO:proper typings

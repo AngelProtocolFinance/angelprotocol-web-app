@@ -1,4 +1,4 @@
-import { CharityApplication, Registration } from "types/aws";
+import { EndowmentApplication, Registration } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -257,7 +257,7 @@ export type ProfileFormValues = ProposalBase &
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  CharityApplication,
+  EndowmentApplication,
   | "OrganizationName"
   | "RegistrationDate"
   | "RegistrationStatus"

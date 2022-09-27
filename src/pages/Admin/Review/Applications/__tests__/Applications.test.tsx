@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { CharityApplication } from "types/aws";
+import { EndowmentApplication } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
 
@@ -73,7 +73,7 @@ describe("Charity Applications", () => {
   });
 });
 
-const mockApplications: CharityApplication[] = [
+const mockApplications: EndowmentApplication[] = [
   {
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
