@@ -3,7 +3,7 @@ import { FileObject, Registration } from "types/aws";
 import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function CharityApplication(props: Registration) {
+export default function EndowmentApplication(props: Registration) {
   const email = props.OrganizationName_ContactEmail!.split("_")[1];
 
   return (
