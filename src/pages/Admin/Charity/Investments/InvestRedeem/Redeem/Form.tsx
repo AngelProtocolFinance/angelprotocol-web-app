@@ -20,7 +20,7 @@ export default function Form() {
       onSubmit={handleSubmit(redeem)}
     >
       <Tab.Group>
-        <h3 className="uppercase font-bold mb-2">Select account type</h3>
+        <h3 className="uppercase font-bold mt-4 mb-2">Select account type</h3>
         <Tab.List className="flex justify-self-start gap-2">
           {tabs.map((tab) => (
             <Tab

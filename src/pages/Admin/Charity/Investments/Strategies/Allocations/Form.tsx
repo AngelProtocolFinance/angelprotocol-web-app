@@ -4,7 +4,7 @@ import Pie from "../Pie";
 import Fields from "./Fields";
 import useUpdateStrategy from "./useUpdateStrategy";
 
-export default function Form({ type }: FormProps) {
+export default function Form({ type, classes = "" }: FormProps) {
   const {
     handleSubmit,
     watch,
@@ -23,7 +23,7 @@ export default function Form({ type }: FormProps) {
 
   return (
     <form
-      className="mt-6 grid content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner"
+      className={`mt-6 ${classes} content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner`}
       onSubmit={handleSubmit(proposeStrategyUpdate)}
     >
       <h3 className="text-center mb-4 uppercase font-bold">
@@ -34,7 +34,7 @@ export default function Form({ type }: FormProps) {
           isNaN(percentage) ? 0 : percentage
         )}
         max={100}
-        classes="w-[13rem] justify-self-center"
+        classes="w-48 md:w-56 justify-self-center"
       />
       <Fields classes="mt-4" type={type} />
 

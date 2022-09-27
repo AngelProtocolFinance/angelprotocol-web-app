@@ -40,9 +40,12 @@ export default function Strategies() {
         </Tab.List>
         <Tab.Panels>
           {tabs.map((type) => (
-            <Tab.Panel key={type} className="grid grid-cols-2 rounded-sm gap-3">
-              <Allocations type={type} readonly />
-              <Allocations type={type} />
+            <Tab.Panel
+              key={type}
+              className="grid md:grid-cols-2 rounded-sm gap-3"
+            >
+              <Allocations type={type} readonly classes="hidden md:grid" />
+              <Allocations type={type} classes="grid" />
             </Tab.Panel>
           ))}
         </Tab.Panels>

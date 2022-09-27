@@ -3,6 +3,7 @@ import { AccountType } from "types/contracts";
 export type AllocationsProps = {
   type: AccountType;
   readonly?: true;
+  classes?: string;
 };
 
 export type FormProps = AllocationsProps;

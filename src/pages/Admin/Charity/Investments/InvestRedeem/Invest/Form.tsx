@@ -21,7 +21,7 @@ export default function Form() {
       onSubmit={handleSubmit(invest)}
     >
       <Tab.Group>
-        <h3 className="text-lg uppercase font-bold mb-4">
+        <h3 className="text-lg uppercase font-bold my-4">
           Investable balance (USDC)
         </h3>
         <Tab.List className="grid justify-self-start">

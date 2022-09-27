@@ -26,7 +26,7 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
   });
 
   return (
-    <Dialog.Panel className="flex flex-col fixed-center z-20 bg-zinc-50 p-3 rounded-md min-h-[15rem] min-w-[15rem]">
+    <Dialog.Panel className="w-[90%] md:w-full max-w-lg flex flex-col fixed-center z-20 bg-zinc-50 p-3 rounded-md min-h-[15rem] min-w-[15rem]">
       <QueryLoader
         messages={{
           error: "Failed to get vault list",
@@ -39,7 +39,7 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
         queryState={queryState}
       >
         {(vaults) => (
-          <div className="w-full flex gap-2s flex-wrap gap-2">
+          <div className="grid sm:flex flex-wrap gap-3 mb-4">
             {vaults.map((v) => (
               <Vault
                 key={v.address}

@@ -26,7 +26,7 @@ export default function VaultField({
   return (
     <Cells
       type="td"
-      cellClass="p-2 items-center relative text-zinc-50/80 font-heading"
+      cellClass="text-sm md:text-base p-2 items-center relative text-zinc-50/80 font-heading"
     >
       <div className="flex items-center gap-2">
         <div

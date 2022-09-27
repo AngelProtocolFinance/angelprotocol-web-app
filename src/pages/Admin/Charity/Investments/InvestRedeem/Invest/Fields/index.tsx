@@ -31,18 +31,20 @@ export default function Fields({ classes = "", type }: Props) {
     .reduce((total, inv) => total + inv.amount, 0);
 
   return (
-    <Tab.Panel className={`grid grid-cols-2 gap-x-4 ${classes}`}>
-      {fields.map((field, i) =>
-        //not filterd to preseve field idx
-        field.type === type ? (
-          <Field
-            key={field.id}
-            name={maskAddress(field.vault)}
-            remove={remove}
-            idx={i}
-          />
-        ) : null
-      )}
+    <Tab.Panel className={`grid ${classes}`}>
+      <div className="grid md:grid-cols-2 gap-4">
+        {fields.map((field, i) =>
+          //not filterd to preseve field idx
+          field.type === type ? (
+            <Field
+              key={field.id}
+              name={maskAddress(field.vault)}
+              remove={remove}
+              idx={i}
+            />
+          ) : null
+        )}
+      </div>
 
       <button
         disabled={total > balance}
