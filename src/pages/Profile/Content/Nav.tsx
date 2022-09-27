@@ -4,7 +4,7 @@ import useHorizontalScroll from "hooks/useHorizontalScroll";
 import { createNavLinkStyler } from "helpers";
 import { profileRoutes } from "constants/routes";
 
-export default function CharityNav(props: { classes?: string }) {
+export default function Nav(props: { classes?: string }) {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(
     { duration: 300 }
   );

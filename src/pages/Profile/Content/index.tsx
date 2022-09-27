@@ -1,11 +1,9 @@
 import { ProfileResponse } from "types/contracts";
 import ImageWrapper from "components/ImageWrapper";
-import CharityNav from "./Nav";
-import CharityTabs from "./Tabs";
+import Nav from "./Nav";
+import Tabs from "./Tabs";
 
-export default function CharityContent(
-  props: ProfileResponse & { classes?: string }
-) {
+export default function Content(props: ProfileResponse & { classes?: string }) {
   return (
     <div className={`${props.classes || ""} w-full`}>
       <ImageWrapper
@@ -13,8 +11,8 @@ export default function CharityContent(
         alt="charity image"
         className="w-full h-[300px] rounded-2xl shadow-md object-cover object-center"
       />
-      <CharityNav />
-      <CharityTabs />
+      <Nav />
+      <Tabs />
     </div>
   );
 }
