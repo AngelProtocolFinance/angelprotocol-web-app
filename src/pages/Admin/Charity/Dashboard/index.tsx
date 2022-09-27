@@ -2,7 +2,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/cw3";
 import { QueryLoader } from "components/admin";
 import Balance from "./Balance";
-import Proposals from "./Proposals";
+import Table from "./Table";
 
 export default function Dashboard() {
   const { cw3 } = useAdminResources();
@@ -30,7 +30,7 @@ export default function Dashboard() {
         classes={{ container: "mt-2" }}
         filterFn={(proposal) => proposal.status === "open"}
       >
-        {(proposals) => <Proposals proposals={proposals} />}
+        {(proposals) => <Table proposals={proposals} />}
       </QueryLoader>
     </div>
   );

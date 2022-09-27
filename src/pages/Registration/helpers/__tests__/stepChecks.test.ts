@@ -220,8 +220,8 @@ const ADDITIONAL_INFO_STEP_COMPLETE_CHARITY: Charity = {
   Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
   Metadata: {
     ...placeholderCharity.Metadata,
-    Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner },
-    CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo },
+    Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner! },
+    CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo! },
     CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
   },
 };

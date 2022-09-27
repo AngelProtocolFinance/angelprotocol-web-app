@@ -7,7 +7,7 @@ import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
-const CHAIN_ID = IS_TEST ? "uni-3" : "juno-1";
+const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 

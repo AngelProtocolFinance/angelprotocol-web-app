@@ -3216,16 +3216,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keplr-wallet/types@npm:^0.10.5":
-  version: 0.10.18
-  resolution: "@keplr-wallet/types@npm:0.10.18"
+"@keplr-wallet/types@npm:^0.11.3":
+  version: 0.11.3
+  resolution: "@keplr-wallet/types@npm:0.11.3"
   dependencies:
     "@cosmjs/launchpad": ^0.24.0-alpha.25
     "@cosmjs/proto-signing": ^0.24.0-alpha.25
-    axios: ^0.21.4
+    axios: ^0.27.2
     long: ^4.0.0
-    secretjs: ^0.17.0
-  checksum: 39b35620a3c0676b94e8216c2d4ad4ae8347eb99c4e79c7ad5d549c29780f6575eca467aaa30185a90cb363150b6e7a8d28c8288fd6e9d0086c574346681874f
+    secretjs: 0.17.7
+  checksum: c507267f76ae3985409c52cadd0d515b4ebc4775d9cd82ae9c166cd310ee916d3edb9e7811649a542da35d616f94df656614649f0c751842e789939aed5ec337
   languageName: node
   linkType: hard
 
@@ -5314,7 +5314,7 @@ __metadata:
     "@headlessui/react": ^1.6.6
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": ^2.9.8
-    "@keplr-wallet/types": ^0.10.5
+    "@keplr-wallet/types": ^0.11.3
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.8.5
     "@tailwindcss/line-clamp": ^0.4.2
@@ -5708,7 +5708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.1, axios@npm:^0.21.2, axios@npm:^0.21.4":
+"axios@npm:^0.21.1, axios@npm:^0.21.2":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
   dependencies:
@@ -14308,7 +14308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.10.2, protobufjs@npm:^6.11.2, protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.2, protobufjs@npm:~6.11.3":
+"protobufjs@npm:6.11.3, protobufjs@npm:^6.10.2, protobufjs@npm:^6.11.2, protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.2, protobufjs@npm:~6.11.3":
   version: 6.11.3
   resolution: "protobufjs@npm:6.11.3"
   dependencies:
@@ -15510,9 +15510,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secretjs@npm:^0.17.0":
-  version: 0.17.5
-  resolution: "secretjs@npm:0.17.5"
+"secretjs@npm:0.17.7":
+  version: 0.17.7
+  resolution: "secretjs@npm:0.17.7"
   dependencies:
     "@iov/crypto": 2.1.0
     "@iov/encoding": 2.1.0
@@ -15523,9 +15523,9 @@ __metadata:
     js-crypto-hkdf: 0.7.3
     miscreant: 0.3.2
     pako: 1.0.11
-    protobufjs: ^6.11.2
+    protobufjs: 6.11.3
     secure-random: 1.1.2
-  checksum: d66728ea74dcf464c4c0a47ce333fa9f5a6c84041e883ddb3dbfc56d77fa5f772ace9f84958d29eb3555470e0447415ca5c23a74a15238da52d36843629cb58a
+  checksum: 7d6fb503a6af0a43838bc06fe5b6d84f3ce1a800daf7e8083ab83cb61217d201996abc397c298e16b7b1694a37a379984d26f42929d553f20fe75be6d52ee5a9
   languageName: node
   linkType: hard
 

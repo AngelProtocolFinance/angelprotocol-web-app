@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ProfileParams } from "./types";
-import { Profile as IProfile } from "types/contracts";
+import { ProfileResponse } from "types/contracts";
 import {
   useEndowmentDetailsQuery,
   useEndowmentProfileQuery,
@@ -16,7 +16,10 @@ import Header from "./Header";
 import Nav from "./Nav";
 import Stats from "./Stats";
 
-type ProfileExtended = IProfile & { id: number; kyc_donors_only: boolean };
+type ProfileExtended = ProfileResponse & {
+  id: number;
+  kyc_donors_only: boolean;
+};
 
 const context = createContext<ProfileExtended>({} as ProfileExtended);
 

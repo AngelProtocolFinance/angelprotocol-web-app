@@ -33,8 +33,8 @@ export function getDocumentationStepData(charity: Charity): StepData {
 
   return !!charity.Registration.Tier &&
     !!charity.Registration.Website &&
-    !!charity.Registration.ProofOfIdentity.publicUrl &&
-    !!charity.Registration.ProofOfRegistration.publicUrl
+    !!charity.Registration.ProofOfIdentity &&
+    !!charity.Registration.ProofOfRegistration
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.documentation}`);
 }
@@ -46,8 +46,8 @@ export function getAdditionalInformationStepData(charity: Charity): StepData {
     return documentationStepData;
   }
 
-  return !!charity.Metadata.Banner.publicUrl &&
-    !!charity.Metadata.CharityLogo.publicUrl &&
+  return !!charity.Metadata.Banner &&
+    !!charity.Metadata.CharityLogo &&
     !!charity.Metadata.CharityOverview
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.additionalInformation}`);

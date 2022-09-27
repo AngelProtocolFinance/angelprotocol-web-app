@@ -1,16 +1,16 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { UpdateProfileValues } from "pages/Admin/types";
+import { ProfileFormValues } from "pages/Admin/types";
 import { useModalContext } from "contexts/ModalContext";
 import ImgCropper from "./ImgCropper";
 
 export default function useImgEditor() {
   //TODO: make this reusable with other image changer on different context
   const { showModal } = useModalContext();
-  const { getValues, setValue, watch } = useFormContext<UpdateProfileValues>();
+  const { getValues, setValue, watch } = useFormContext<ProfileFormValues>();
 
   //use to reset input internal state
-  const initialImageRef = useRef<UpdateProfileValues["image"]>(
+  const initialImageRef = useRef<ProfileFormValues["image"]>(
     getValues("image")
   );
   const imageUrl = watch("image");

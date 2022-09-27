@@ -20,10 +20,13 @@ export default function CharityApplication(props: Registration) {
       <span>{new Date(props.RegistrationDate).toLocaleDateString()}</span>
 
       <Label classes="mt-4 mb-1">Documents</Label>
-      <Documents label="Proof of Identity" docs={[props.ProofOfIdentity]} />
+      <Documents
+        label="Proof of Identity"
+        docs={props.ProofOfIdentity ? [props.ProofOfIdentity] : []}
+      />
       <Documents
         label="Proof of Registration"
-        docs={[props.ProofOfRegistration]}
+        docs={props.ProofOfRegistration ? [props.ProofOfRegistration] : []}
       />
       <Documents label="Financial Statement" docs={props.FinancialStatements} />
       <Documents

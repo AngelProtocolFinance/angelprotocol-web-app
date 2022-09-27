@@ -35,7 +35,6 @@ export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {
         }}
         classes={{
           container: "place-self-center",
-          loadingText: "text-zinc-600",
         }}
         queryState={queryState}
       >

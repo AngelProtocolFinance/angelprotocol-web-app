@@ -1,39 +1,22 @@
-import { FC, PropsWithChildren } from "react";
-import { BsQuestionCircle } from "react-icons/bs";
-import { useModalContext } from "contexts/ModalContext";
+import { InputProps } from "./types";
+import InfoIcon from "./InfoIcon";
 
-type InputRowProps = PropsWithChildren<{
-  htmlFor?: string;
-  label: string;
-  required?: true | boolean;
-  infoModal?: FC<{}>;
-}>;
-
-export function InputRow(props: InputRowProps) {
-  const { htmlFor: id, label, required, infoModal, children } = props;
-
+export function InputRow(props: InputProps) {
   return (
     <div className="grid grid-cols-2 gap-2">
       <div className="flex items-center gap-2 h-8">
-        <label htmlFor={id} className="cursor-pointer">
-          {label}
-          {required && <span className="text-failed-red ml-0.5">*</span>}
+        <label
+          htmlFor={props.htmlFor}
+          className="cursor-pointer text-dark-grey"
+        >
+          {props.label}
+          {props.required && <span className="text-failed-red ml-0.5">*</span>}
         </label>
-        {!!infoModal && <InfoIcon modal={infoModal} />}
+        {!!props.infoModal && <InfoIcon modal={props.infoModal} />}
       </div>
       <div className="flex flex-col justify-center gap-1 w-full">
-        {children}
+        {props.children}
       </div>
     </div>
-  );
-}
-
-function InfoIcon({ modal }: { modal: FC<{}> }) {
-  const { showModal } = useModalContext();
-  return (
-    <BsQuestionCircle
-      className="text-thin-blue cursor-pointer"
-      onClick={() => showModal(modal, {})}
-    />
   );
 }

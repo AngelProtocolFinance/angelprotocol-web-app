@@ -8,6 +8,7 @@ import {
   EndowmentStatusText,
   EndowmentTier,
   EndowmentType,
+  SocialMedialUrls,
 } from "./common";
 import { CW20 } from "./cw20";
 
@@ -72,6 +73,13 @@ export interface EndowmentDetails {
   deposit_approved: boolean;
   withdraw_approved: boolean;
   pending_redemptions: number;
+  logo?: string;
+  image?: string;
+  name: string;
+  categories: Categories;
+  tier?: number;
+  copycat_strategy?: number;
+  proposal_link?: number;
 }
 
 export type Holding = { address: string; amount: string };
@@ -95,6 +103,7 @@ export type EndowmentQueryOptions = {
   status?: EndowmentStatusStrNum;
   tier?: EndowmentTier;
   endow_type?: EndowmentType;
+  proposal_link?: number;
 };
 
 export type EndowmentEntry = {
@@ -113,15 +122,29 @@ export type CategorizedEndowments = {
   [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
-export interface UpdateProfilePayload {
-  //separate shape for update
-  id: number;
-  name: string;
+export interface ProfileResponse {
+  name: string; // name of the Charity Endowment
   overview: string;
   categories: Categories;
-  tier?: number;
+  tier: number;
   logo: string;
   image: string;
+  url?: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: SocialMedialUrls;
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+}
+
+export interface ProfileUpdate {
+  //separate shape for update
+  id: number;
+  overview: string;
   url: string;
   registration_number?: string;
   country_of_origin?: string;
@@ -134,8 +157,20 @@ export interface UpdateProfilePayload {
   average_annual_budget?: string;
   annual_revenue?: string;
   charity_navigator_rating?: string;
-  endow_type?: string;
 }
+
+export interface EndowmentSettingsPayload {
+  id: number;
+  owner?: string;
+  kyc_donors_only?: boolean;
+  endow_type?: EndowmentType; //editable by config.owner
+  name?: string;
+  categories?: Categories;
+  tier?: number; //editable by config.owner
+  logo?: string;
+  image?: string;
+}
+
 export interface DepositPayload {
   id: number;
   locked_percentage: string; //"0.7"

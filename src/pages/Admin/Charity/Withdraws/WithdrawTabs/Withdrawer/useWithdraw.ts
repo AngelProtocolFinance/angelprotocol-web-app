@@ -9,12 +9,10 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import CW3Ap from "contracts/CW3/CW3Ap";
+import CW3Endowment from "contracts/CW3/CW3Endowment";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
-import isNeedApPermission from "./isNeedApPermission";
 import { logWithdrawProposal } from "./logWithdrawProposal";
 
 export default function useWithdraw() {
@@ -30,8 +28,8 @@ export default function useWithdraw() {
 
   const type = getValues("type");
 
+  //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
-    //filter + map
     const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
       info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
       amount: scaleToStr(value /** empty "" */ || "0"),
@@ -41,25 +39,7 @@ export default function useWithdraw() {
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
     const isSendToApCW3 =
-      type === "locked" && isNeedApPermission(endowment, +getValues("height"));
-
-    //used when withdraw doesn't need to go thru AP
-    const account = new Account(wallet);
-    const apCW3 = new CW3Ap(wallet);
-
-    const embeddedWithdrawMsg = isSendToApCW3
-      ? apCW3.createEmbeddedWithdrawLockMsg({
-          assets,
-          beneficiary,
-          description: data.reason,
-          endowment_id: endowmentId,
-        })
-      : account.createEmbeddedWithdrawMsg({
-          id: endowmentId,
-          beneficiary,
-          acct_type: data.type,
-          assets,
-        });
+      endowment.endow_type === "Charity" && type === "locked";
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -68,17 +48,30 @@ export default function useWithdraw() {
       },
     };
 
-    const endowCW3 = new CW3(wallet, cw3);
-    const proposal = endowCW3.createProposalMsg(
-      "withdraw proposal",
-      `withdraw ${type} assets from endowment id: ${endowmentId}${
-        isSendToApCW3
-          ? ". Note: Withdrawing lock assets before maturity; proposal contents will be reviewed further by Angel Protocol team for approval"
-          : ""
-      }`,
-      [embeddedWithdrawMsg],
-      JSON.stringify(meta)
-    );
+    const account = new Account(wallet);
+    const endowCW3 = new CW3Endowment(wallet, cw3);
+
+    const proposal = isSendToApCW3
+      ? endowCW3.createWithdrawProposalMsg({
+          endowment_id: endowmentId,
+          assets,
+          beneficiary,
+          description: data.reason,
+        })
+      : //normal proposal when withdraw doesn't need to go thru AP
+        endowCW3.createProposalMsg(
+          "withdraw proposal",
+          `withdraw ${type} assets from endowment id: ${endowmentId}`,
+          [
+            account.createEmbeddedWithdrawMsg({
+              id: endowmentId,
+              beneficiary,
+              acct_type: data.type,
+              assets,
+            }),
+          ],
+          JSON.stringify(meta)
+        );
 
     dispatch(
       sendCosmosTx({

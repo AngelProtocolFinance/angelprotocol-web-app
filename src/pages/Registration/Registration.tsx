@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import ProgressIndicator from "./ProgressIndicator";
 import {
@@ -22,16 +23,29 @@ const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Registration() {
   const location = useLocation();
+  const { charity } = useRegistrationQuery();
 
-  const isLandingPage = location.pathname.endsWith(appRoutes.register);
+  const shouldShowProgressBar =
+    location.pathname.search(
+      `${appRoutes.register}(/${routes.confirmEmail})?/?$`
+    ) === -1;
 
   const containerClasses = `grid grid-rows-[${
-    isLandingPage ? "1fr" : "auto_1fr"
+    !shouldShowProgressBar ? "1fr" : "auto_1fr"
   }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
 
   return (
     <section className={containerClasses}>
-      {!isLandingPage && <ProgressIndicator />}
+      {shouldShowProgressBar && (
+        <div className="flex flex-col w-full gap-2">
+          <ProgressIndicator />
+          {!!charity.ContactPerson.PK && (
+            <div className="flex w-full justify-start">
+              Ref ID: {charity.ContactPerson.PK}
+            </div>
+          )}
+        </div>
+      )}
 
       <Routes>
         <Route

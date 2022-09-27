@@ -46,33 +46,33 @@ const getIsLevelOne = (
   website: string,
   proofOfRegistration: FileWrapper,
   { getFieldState }: UseFormReturn<DocumentationValues, any>
-) =>
+): boolean =>
   // no errors
   !getFieldState("proofOfIdentity").error &&
   !getFieldState("website").error &&
   !getFieldState("proofOfRegistration").error &&
   // values inserted
-  proofOfIdentity.name &&
-  website &&
-  proofOfRegistration.name;
+  !!proofOfIdentity &&
+  !!website &&
+  !!proofOfRegistration;
 
 const getIsLevelTwo = (
   un_sdg: number,
   financialStatements: FileWrapper[],
   { getFieldState }: UseFormReturn<DocumentationValues, any>
-) =>
+): boolean =>
   // no errors
   !getFieldState("un_sdg").error &&
   !getFieldState("financialStatements").error &&
   // values inserted
   un_sdg > 0 &&
-  financialStatements.some((fs: FileWrapper) => fs.name);
+  financialStatements.some((fs) => !!fs);
 
 const getIsLevelThree = (
   auditedFinancialReports: FileWrapper[],
   { getFieldState }: UseFormReturn<DocumentationValues, any>
-) =>
+): boolean =>
   // no errors
   !getFieldState("auditedFinancialReports").error &&
   // values inserted
-  auditedFinancialReports.some((fs: FileWrapper) => fs.name);
+  auditedFinancialReports.some((fs) => !!fs);

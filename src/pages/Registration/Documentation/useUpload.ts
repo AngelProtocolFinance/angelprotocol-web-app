@@ -9,7 +9,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { FileWrapper } from "components/FileDropzone";
 import { logger, uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
-import { Folders, GENERIC_ERROR_MESSAGE } from "../constants";
+import { GENERIC_ERROR_MESSAGE } from "../constants";
 import routes from "../routes";
 
 export default function useUpload() {
@@ -22,7 +22,7 @@ export default function useUpload() {
   const upload = useCallback(
     async (values: DocumentationValues) => {
       try {
-        const body = await getUploadUrls(charity.ContactPerson.PK!, values);
+        const body = await getUploadUrls(values);
         const result = await uploadDocumentation({
           PK: charity.ContactPerson.PK,
           body,
@@ -46,29 +46,17 @@ export default function useUpload() {
   return upload;
 }
 
-async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
-  const poiPromise = uploadIfNecessary(
-    primaryKey,
-    values.proofOfIdentity,
-    Folders.ProofOfIdentity
-  );
-  const porPromise = uploadIfNecessary(
-    primaryKey,
-    values.proofOfRegistration,
-    Folders.ProofOfRegistration
-  );
+async function getUploadUrls(values: DocumentationValues) {
+  const poiPromise = uploadIfNecessary(values.proofOfIdentity);
+  const porPromise = uploadIfNecessary(values.proofOfRegistration);
   const fsPromise = Promise.all(
     values.financialStatements.map((fileWrapper) =>
-      uploadIfNecessary(primaryKey, fileWrapper, Folders.FinancialStatements)
+      uploadIfNecessary(fileWrapper)
     )
   );
   const afrPromise = Promise.all(
     values.auditedFinancialReports.map((fileWrapper) =>
-      uploadIfNecessary(
-        primaryKey,
-        fileWrapper,
-        Folders.AuditedFinancialReports
-      )
+      uploadIfNecessary(fileWrapper)
     )
   );
 
@@ -103,11 +91,7 @@ async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
   };
 }
 
-async function uploadIfNecessary(
-  primaryKey: string,
-  fileWrapper: FileWrapper,
-  folder: Folders
-) {
+async function uploadIfNecessary(fileWrapper: FileWrapper) {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
@@ -115,8 +99,7 @@ async function uploadIfNecessary(
     };
   }
 
-  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
-  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
+  const publicUrl = await uploadToIpfs(fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,

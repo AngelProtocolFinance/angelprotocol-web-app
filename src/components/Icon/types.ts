@@ -25,6 +25,8 @@ export type IconTypes =
   | "Info"
   | "CheckCircle"
   | "Exclamation"
+  | "Eye"
+  | "EyeInvisible"
   | "CaretLeft"
   | "Like"
   | "Dislike"

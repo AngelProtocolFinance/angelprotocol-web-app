@@ -22,22 +22,21 @@ export const contracts: Contracts = IS_TEST
       //TESTNET CONTRACTS
       //core
       index_fund:
-        "juno1wg3f833gp0qze6g5exsc3wfe4rhjd6w7j8u000usyekngt8aku6sfp32z0",
+        "juno107zpvrdyww48d0fylez3lxjf87qwwh8r5nphcdzlwnepnm2kga5q36quta",
       registrar:
-        "juno1junqfhptf0tnx843eepl8pksk25wvcgapfhsz6v97u87ax0qjpus55qsga",
+        "juno13ufhg4xjdzylk9mhayc8khmgg25tl2vs42pzala9x53vxa8ppjkschfr0x",
       accounts:
-        "juno1gfrzmrs9qj6av5r4q9d5sdysl9m84a2c8ls8yv8lqg4qm6aftfkql2v6df",
+        "juno1prqanslytzwtrext3qpfy4p83ld7yw04ga06n6yufg53fukf4x0q0udwj2",
 
       // Admin
       cw3ApTeam:
-        "juno16esez5e20tqwah87cujkscxqt37zf48vyhqhj9m8ney64m9mwucqz6dr6f",
+        "juno1pgedpd8m0g76ckxd6fduwpnm6x4g6fzsg0xj4u3xdchvjdxuzckqdhjv9a",
       cw4GrpApTeam:
-        "juno1zzzj2l20ma43v0296ey453j00ju2uy9havdmavyp6kqeke2pvdysrf3cps",
-
+        "juno13mk4dzwc5qdz7fxcrnkyj448lvap06rp7aw5h34xkcudrm98yv2sz4fysa",
       cw3ReviewTeam:
-        "juno1g4s92cezesughqge4m9atmp96nykh6dr5244z4y4gl2suvzcjfvqh6e0ma",
+        "juno13mlk69qjx2cm8upx3d04h9dxh78mzhfksxrrnuyjk2l5s5wknl8skvkjhp",
       cw4GrpReviewTeam:
-        "juno1pgcp5q80wappe4dc0zurugft88k82t70znznsphpyeweyz5vsjvq2e6dt7",
+        "juno1h94wjgxv32zsg64f34retxudwd4nppslwm4glvu2jld9vrqh7k6srzjhcj",
 
       //terraswap
       halo_token: "",
@@ -52,15 +51,22 @@ export const contracts: Contracts = IS_TEST
   : {
       //MAINNET CONTRACTS
       //core
-      index_fund: "",
-      registrar: "",
-      accounts: "",
+      index_fund:
+        "juno1yrahlxavwr7juyrty580d24mgvmhknn6h3sgepjtkyg7udvj2l2sujdlqn",
+      registrar:
+        "juno17emcut72n6ycmf54qd0l4mzsefqxnqdhqxzlczxstlkkatdlst5qf9s3qr",
+      accounts:
+        "juno1e0w8892n60v0juuugvwptj8f6v3ad56ydr3cgxstmpkggjrqzfhsaqh38c",
 
       // Admin
-      cw3ApTeam: "",
-      cw4GrpApTeam: "",
-      cw3ReviewTeam: "",
-      cw4GrpReviewTeam: "",
+      cw3ApTeam:
+        "juno1sae4p8crnac0h9m27psn205d6k586f7cnm4eshws623v05g95teqvj2s8q",
+      cw4GrpApTeam:
+        "juno15g9u395kprfhxxzfqhfw56rvwfhjzg8k6mjq82u3yg7fxkhprv8stsu8mm",
+      cw3ReviewTeam:
+        "juno1vp2q50smgzw64xm2j2ksntej34pnnedaz4qkwdh8zah9kjcaas6s8g92t8",
+      cw4GrpReviewTeam:
+        "juno1a22f8dxevu3er7vs4lkrca9n8rgf8uvgjd8s2p5eq787vmczq59syuplqx",
 
       //terraswap
       halo_token: "",

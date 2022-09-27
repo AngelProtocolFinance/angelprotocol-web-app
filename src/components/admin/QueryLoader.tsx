@@ -8,7 +8,7 @@ type Props<T> = {
     error?: string;
     empty?: T extends any[] ? string : never;
   };
-  classes?: { container?: string; loadingText?: string };
+  classes?: { container?: string };
   filterFn?: T extends (infer Item)[]
     ? (item: Item, idx: number) => boolean
     : never;
@@ -26,11 +26,7 @@ export function QueryLoader<T>({
 
   if (isLoading) {
     return (
-      <div
-        className={`flex gap-2 ${classes?.loadingText ?? "text-zinc-50/80"} ${
-          classes?.container ?? ""
-        }`}
-      >
+      <div className={`flex gap-2 text-zinc-50/80 ${classes?.container || ""}`}>
         <Icon type="Loading" className="animate-spin relative top-1" />
         <span>{messages.loading || "Loading.."}</span>
       </div>
