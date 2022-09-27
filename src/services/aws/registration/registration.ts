@@ -8,10 +8,10 @@ import {
   SubmitData,
   SubmitResult,
   UnprocessedCharity,
-  UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
+  UpdateMetadataRequest,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { getSavedRegistrationReference } from "helpers";
@@ -132,7 +132,7 @@ const registration_api = aws.injectEndpoints({
     }),
     updateCharityMetadata: builder.mutation<
       UpdateCharityMetadataResult,
-      UpdateCharityMetadataData
+      UpdateMetadataRequest
     >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {

@@ -153,7 +153,7 @@ export type SubmitResult = {
   EndowmentContract: string;
 };
 
-export type UpdateCharityMetadataData = {
+export type UpdateMetadataRequest = {
   PK?: string;
   body: {
     Banner?: FileObject;
