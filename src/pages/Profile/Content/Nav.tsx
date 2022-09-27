@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import { createNavLinkStyler } from "helpers";
-import { charityRoutes } from "constants/routes";
+import { profileRoutes } from "constants/routes";
 
 export default function CharityNav(props: { classes?: string }) {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(
@@ -14,21 +14,21 @@ export default function CharityNav(props: { classes?: string }) {
     <div className={`relative ${props.classes || ""} my-3`}>
       <div ref={ref} className="overflow-hidden overflow-x-auto scroll-hidden">
         <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(4,_minmax(8rem,_1fr))] divide-x">
-          <NavLink end to={charityRoutes.overview} className={styler}>
+          <NavLink end to={profileRoutes.overview} className={styler}>
             overview
           </NavLink>
-          <NavLink to={charityRoutes.endowment} className={styler}>
+          <NavLink to={profileRoutes.endowment} className={styler}>
             endowment
           </NavLink>
-          <NavLink to={charityRoutes.programs} className={disabledClass}>
+          <NavLink to={profileRoutes.programs} className={disabledClass}>
             programs
           </NavLink>
-          <NavLink to={charityRoutes.media} className={disabledClass}>
+          <NavLink to={profileRoutes.media} className={disabledClass}>
             media
           </NavLink>
           {/* 
             NOTE: Governance will be reenabled when we relaunch the $HALO token 
-            <NavLink to={charityRoutes.governance} className={disabledClass}>
+            <NavLink to={profileRoutes.governance} className={disabledClass}>
               governance
             </NavLink> 
           */}
