@@ -11,7 +11,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 export default function MobileNav() {
   return (
     <Popover className="relative">
-      <Popover.Button className="text-white-grey ml-2 lg:hidden">
+      <Popover.Button className="text-white ml-2 lg:hidden">
         {({ open }) => (
           <Icon type={open ? "Close" : "Menu"} className="text-2xl" />
         )}
@@ -29,7 +29,7 @@ export default function MobileNav() {
 
 const styler = createNavLinkStyler(
   "text-zinc-600 inline-flex items-center",
-  "text-angel-orange"
+  "text-orange"
 );
 
 function AppLinks() {

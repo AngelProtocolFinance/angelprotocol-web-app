@@ -11,13 +11,13 @@ export default function Footer() {
           <Socials classes="mt-4 lg:mt-0" />
           <a
             href={LITEPAPER}
-            className=" font-semibold text-xs font-heading uppercase text-white-grey my-4 hover:text-sky-300"
+            className=" font-semibold text-xs font-heading uppercase text-white my-4 hover:text-sky-300"
             target="_blank"
             rel="noreferrer"
           >
             Download Litepaper
           </a>
-          <p className="text-white-grey/70 text-center text-xs uppercase ">
+          <p className="text-white/70 text-center text-xs uppercase ">
             Copyright {new Date().getFullYear()} Angel Protocol. All rights
             reserved
           </p>

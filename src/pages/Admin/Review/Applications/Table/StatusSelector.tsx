@@ -29,7 +29,7 @@ export default function StatusSelector() {
     <Listbox value={activeStatus} onChange={handleStatusChange}>
       <div className="relative">
         <Listbox.Button
-          className={`text-white-grey flex items-center gap-1 text-sm uppercase cursor-pointer font-heading`}
+          className={`text-white flex items-center gap-1 text-sm uppercase cursor-pointer font-heading`}
         >
           <span>{activeStatus === "all" ? "status" : texts[activeStatus]}</span>
           <Icon type="FilterLeft" size={20} />

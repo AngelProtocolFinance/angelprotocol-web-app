@@ -22,7 +22,7 @@ export default function GroupSelector() {
         value={activeGroup}
         onChange={handleGroupChange}
         id="group_selector"
-        className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
+        className="bg-white/10 text-white p-2 text-sm rounded-md focus:outline-none uppercase "
       >
         {Object.entries(groupOptions).map(
           ([optionValue, optionDescription]) => (

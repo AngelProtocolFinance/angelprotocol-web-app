@@ -13,7 +13,7 @@ export default function PollSelector(props: {
       value={props.pollFilter}
       onChange={handlePollFilterChange}
       id="poll_filter"
-      className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
+      className="bg-white/10 text-white p-2 text-sm rounded-md focus:outline-none uppercase "
     >
       {Object.entries(pollFilterOptions).map(
         ([optionValue, optionDescription]) => (

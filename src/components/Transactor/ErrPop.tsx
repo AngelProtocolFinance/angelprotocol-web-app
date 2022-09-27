@@ -29,7 +29,7 @@ export default function ErrPop(props: ErrorStage) {
   }
 
   return (
-    <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
+    <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
       <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
       <p className="text-center text-angel-grey mb-2 ">{message}</p>
       {chain && txHash && (
@@ -44,7 +44,7 @@ export default function ErrPop(props: ErrorStage) {
       )}
       <button
         onClick={acknowledge}
-        className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 mt-4"
+        className="bg-orange text-white rounded-md uppercase py-1 px-4 mt-4"
       >
         ok
       </button>

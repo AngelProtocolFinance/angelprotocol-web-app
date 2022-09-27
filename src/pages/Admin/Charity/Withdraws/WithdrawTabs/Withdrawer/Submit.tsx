@@ -101,7 +101,7 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
+      className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white text-sm font-bold disabled:bg-grey-accent mt-4"
     />
   );
 }

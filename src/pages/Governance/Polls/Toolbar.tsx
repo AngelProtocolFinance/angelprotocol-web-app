@@ -15,14 +15,14 @@ export default function Toolbar(props: {
 
   return (
     <div className="flex items-center gap-2 mb-2 rounded-md">
-      <p className="uppercase text-2xl font-bold text-white-grey mr-1">Polls</p>
+      <p className="uppercase text-2xl font-bold text-white mr-1">Polls</p>
 
       <PollSelector
         pollFilter={props.pollFilter}
         setPollFilter={props.setPollFilter}
       />
 
-      <p className="ml-auto text-white-grey/80 font-heading text-sm flex items-center px-3">
+      <p className="ml-auto text-white/80 font-heading text-sm flex items-center px-3">
         <span className="font-heading uppercase text-2xs">current block </span>
         <Icon type="Blockchain" className="mr-1" />
         <span>{humanize(+block_height, 0)}</span>

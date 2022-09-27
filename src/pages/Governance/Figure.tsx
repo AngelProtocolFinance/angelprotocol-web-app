@@ -16,10 +16,10 @@ export default function Figure(props: Props) {
         props.position || ""
       }`}
     >
-      <p className="font-heading font-bold mb-1 uppercase text-white-grey">
+      <p className="font-heading font-bold mb-1 uppercase text-white">
         {props.title}
       </p>
-      <p className="text-4xl font-heading text-white-grey/80">
+      <p className="text-4xl font-heading text-white/80">
         <span>{humanize(props.value, props.precision || 2, true)}</span>
         <span> {props.symbol}</span>
         {/* {(props.percent && (

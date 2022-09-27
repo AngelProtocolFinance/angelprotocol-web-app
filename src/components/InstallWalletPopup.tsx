@@ -8,7 +8,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
 
   return (
     <Dialog.Panel className="flex flex-col gap-5 fixed-center z-20 max-w-md outline-none w-[90%] p-5 bg-blue-accent rounded-2xl">
-      <h2 className="text-lg md:text-xl text-white-grey font-bold font-heading">
+      <h2 className="text-lg md:text-xl text-white font-bold font-heading">
         Install Wallet
       </h2>
       <a
@@ -24,7 +24,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
         />
 
         <div className="flex flex-col text-left ml-3 md:ml-5">
-          <div className="flex items-center gap-2 text-white-grey font-bold">
+          <div className="flex items-center gap-2 text-white font-bold">
             <h6 className="text-base md:text-lg font-heading">
               Install {name}
             </h6>

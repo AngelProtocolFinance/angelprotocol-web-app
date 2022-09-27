@@ -38,7 +38,7 @@ export default function MemberEditor() {
         <Button
           type="button"
           onClick={editMember}
-          _accent={` ${isEditingMember ? "bg-angel-orange" : "bg-green-400"}`}
+          _accent={` ${isEditingMember ? "bg-orange" : "bg-green-400"}`}
         >
           {isEditingMember ? "save changes" : "+ add member"}
         </Button>

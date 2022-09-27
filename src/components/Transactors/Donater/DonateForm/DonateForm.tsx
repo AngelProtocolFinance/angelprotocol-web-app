@@ -17,7 +17,7 @@ export default function DonateForm() {
   return (
     <form
       onSubmit={donate}
-      className="bg-white-grey grid p-4 rounded-md w-full"
+      className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -37,7 +37,7 @@ export default function DonateForm() {
 
       <button
         disabled={isSubmitDisabled}
-        className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="w-full bg-orange hover:bg-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

@@ -35,7 +35,7 @@ export default function KYCGuard() {
           KYC completed
         </button>
       ) : (
-        <p className="flex gap-1 items-center text-xs text-angel-orange">
+        <p className="flex gap-1 items-center text-xs text-orange">
           <Icon type="Info" size={14} />
           This charity only accepts donations with KYC data
         </p>

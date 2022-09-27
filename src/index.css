@@ -39,11 +39,11 @@
     display: none; /* for Chrome, Safari, and Opera */
   }
 
-  .shadow-inner-white-grey {
+  .shadow-inner-white {
     box-shadow: inset -2px 2px 2px #c1c1c6, inset 2px -2px 2px #fff;
   }
 
-  .shadow-outer-white-grey {
+  .shadow-outer-white {
     box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
   }
 }

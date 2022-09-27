@@ -43,7 +43,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options className="z-10 mt-2 w-full h-[15rem] overflow-y-auto absolute top-full right-0 bg-white-grey rounded-md shadow-md">
+      <Listbox.Options className="z-10 mt-2 w-full h-[15rem] overflow-y-auto absolute top-full right-0 bg-white rounded-md shadow-md">
         {props.options.map((option) => (
           <Listbox.Option
             key={option.value}

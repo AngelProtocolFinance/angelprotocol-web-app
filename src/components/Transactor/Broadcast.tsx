@@ -4,7 +4,7 @@ import { getTxUrl } from "helpers";
 
 export default function Broadcast({ chain, message, txHash }: BroadcastStage) {
   return (
-    <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center">
+    <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center">
       <p className="text-center text-angel-grey mb-2">{message}</p>
       <a
         href={getTxUrl(chain, txHash)}

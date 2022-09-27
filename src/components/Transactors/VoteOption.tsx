@@ -28,7 +28,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
           is_active
             ? `${
                 vote_colors[props.vote].bg
-              } shadow-inner-white-grey pointer-events-none`
+              } shadow-inner-white pointer-events-none`
             : "bg-light-grey"
         }`}
         htmlFor={`__${props.vote}`}

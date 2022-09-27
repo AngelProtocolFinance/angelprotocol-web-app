@@ -37,7 +37,7 @@ export function TextInput<T extends FieldValues>(props: {
         } text-black disabled:text-grey-accent focus:outline-none ${
           props.plain
             ? "bg-light-grey border-b-2 border-angel-grey/25 rounded-none pb-1"
-            : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
+            : "bg-light-grey shadow-inner-white rounded-md p-3"
         }`,
         disabled: props.disabled,
         placeholder: props.placeholder,

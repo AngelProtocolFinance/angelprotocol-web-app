@@ -13,7 +13,7 @@ import Filter from "./Filter";
 import Holdings from "./Holdings";
 
 const linkStyle =
-  "text-angel-blue hover:text-angel-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
+  "text-angel-blue hover:text-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
 
 export default function Details(props: WalletState) {
   const { coins, address, chain } = props;
@@ -50,7 +50,7 @@ export default function Details(props: WalletState) {
 
       <button
         onClick={disconnect}
-        className="mt-4 uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+        className="mt-4 uppercase text-sm bg-orange hover:text-angel-grey p-2 text-white"
       >
         disconnect
       </button>

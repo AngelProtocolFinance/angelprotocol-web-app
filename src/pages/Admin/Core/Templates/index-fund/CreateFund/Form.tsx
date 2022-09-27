@@ -62,7 +62,7 @@ function Slider() {
           reset
         </button>
       </label>
-      <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+      <div className="p-3 rounded-md bg-light-grey shadow-inner-white">
         <input
           {...register("splitToLiquid")}
           className="w-full"
@@ -81,7 +81,7 @@ function CheckInput() {
   return (
     <div
       className="text-angel-grey flex items-center p-3 rounded-md 
-    shadow-inner-white-grey bg-light-grey my-6"
+    shadow-inner-white bg-light-grey my-6"
     >
       <input
         {...register("isFundRotating")}
@@ -117,7 +117,7 @@ function DateInput() {
         {...register("expiryTime")}
         id="__dateInput"
         type="datetime-local"
-        className="font-mono uppercase bg-light-grey shadow-inner-white-grey 
+        className="font-mono uppercase bg-light-grey shadow-inner-white 
         rounded-md p-3 focus:outline-none"
       />
       <ErrorMessage

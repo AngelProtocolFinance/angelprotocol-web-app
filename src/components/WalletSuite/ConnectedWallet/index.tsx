@@ -17,7 +17,7 @@ export default function ConnectedWallet(props: WalletState) {
     <Popover as="div" className="relative">
       <Popover.Button
         disabled={isLoading}
-        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent focus:outline-none"
+        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white disabled:text-grey-accent focus:outline-none"
       >
         {(!isLoading && (
           <img

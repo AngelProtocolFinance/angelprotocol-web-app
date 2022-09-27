@@ -4,12 +4,12 @@ import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(
   "text-angel-grey px-4 py-1",
-  "bg-angel-blue text-white-grey pointer-events-none"
+  "bg-angel-blue text-white pointer-events-none"
 );
 
 export default function Nav() {
   return (
-    <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
+    <div className="bg-white flex flex-col py-4 shadow-md rounded-md">
       <Category title="Admin" />
       <NavLink end to={routes.cw4_members} className={styler}>
         Update group members

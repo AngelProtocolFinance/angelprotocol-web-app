@@ -26,7 +26,7 @@ export default function Title(props: {
         ...register(props.id),
         id: props.id,
         className:
-          "shadow-inner-white-grey bg-light-grey rounded-md p-3 text-angel-grey focus:outline-none",
+          "shadow-inner-white bg-light-grey rounded-md p-3 text-angel-grey focus:outline-none",
         disabled: props.frozen,
       })}
       <ErrorMessage

@@ -20,7 +20,7 @@ export default function Withdraws() {
         {(balance) => <WithdrawTabs {...balance} />}
       </QueryLoader>
 
-      <h3 className="uppercase font-extrabold text-white-grey text-2xl mt-6 border-t border-zinc-50/20 pt-2">
+      <h3 className="uppercase font-extrabold text-white text-2xl mt-6 border-t border-zinc-50/20 pt-2">
         Transactions
       </h3>
       <Transactions />

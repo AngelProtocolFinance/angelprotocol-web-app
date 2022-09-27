@@ -49,7 +49,7 @@ export default function WalletSubmission() {
         your Angel Protocol endowment account. We recommend using a new wallet.
       </p>
       {wallet && wallet.providerId !== "keplr" ? (
-        <div className="text-center bg-angel-orange/20 border border-2 border-angel-orange/80 rounded-md p-4 ">
+        <div className="text-center bg-orange/20 border border-2 border-orange/80 rounded-md p-4 ">
           <p>
             <span className="text-sm font-bold">connected wallet: </span>
             <span className="font-extrabold uppercase">
@@ -58,7 +58,7 @@ export default function WalletSubmission() {
           </p>
           <p>Only Keplr wallet is allowed!</p>
           <Button
-            className="text-sm uppercase text-angel-orange hover:text-orange px-2 py-1 mt-2"
+            className="text-sm uppercase text-orange hover:text-orange px-2 py-1 mt-2"
             disabled={isSubmitting}
             onClick={disconnect}
           >

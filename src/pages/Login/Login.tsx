@@ -60,7 +60,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+            className="disabled:bg-grey-accent bg-orange hover:bg-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
             disabled={isSubmitting}
           >
             Enter

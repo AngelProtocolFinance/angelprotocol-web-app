@@ -47,5 +47,5 @@ export default function Views() {
 }
 
 const LoaderComponent = () => (
-  <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
+  <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
 );

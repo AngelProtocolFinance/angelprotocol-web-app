@@ -69,4 +69,4 @@ export default function TransactionPrompt({
 }
 
 const containerClasses =
-  "w-full max-w-md bg-white-grey rounded-md overflow-visible pt-4";
+  "w-full max-w-md bg-white rounded-md overflow-visible pt-4";

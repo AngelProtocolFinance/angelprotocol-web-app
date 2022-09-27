@@ -14,7 +14,7 @@ export default function Applications() {
 
   if (isLoading) {
     return (
-      <p className="text-white-grey place-self-center flex items-center gap-1">
+      <p className="text-white place-self-center flex items-center gap-1">
         <Icon type="Loading" className="animate-spin" />
         <span>Loading applications</span>
       </p>

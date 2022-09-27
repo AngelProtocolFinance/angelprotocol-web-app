@@ -8,7 +8,7 @@ export default function PollerForm() {
   return (
     <form
       onSubmit={createPoll}
-      className="bg-white-grey grid p-4 rounded-md w-full"
+      className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -19,7 +19,7 @@ export default function PollerForm() {
       <Fee />
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-3 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-orange disabled:bg-grey-accent p-3 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

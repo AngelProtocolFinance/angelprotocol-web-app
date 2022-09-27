@@ -8,14 +8,14 @@ export default function ClaimForm() {
     useClaimUnstakedHalo();
 
   return (
-    <div className="bg-white-grey grid p-4 rounded-md w-full">
+    <div className="bg-white grid p-4 rounded-md w-full">
       <Status />
       <Claims />
       <Fee />
       <button
         onClick={claimUnstakedHalo}
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "claim"}

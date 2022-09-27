@@ -39,12 +39,12 @@ export default function Amount() {
           style={{ animationDuration: "4s" }}
           className={`${
             settings_shown ? "text-angel-blue animate-spin" : "text-angel-grey"
-          }  ml-0.5 text-xl hover:text-angel-orange justify-self-end`}
+          }  ml-0.5 text-xl hover:text-orange justify-self-end`}
         >
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-[auto_1fr] text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
+      <div className="grid grid-cols-[auto_1fr] text-angel-grey p-3 bg-light-grey shadow-inner-white rounded-md">
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>

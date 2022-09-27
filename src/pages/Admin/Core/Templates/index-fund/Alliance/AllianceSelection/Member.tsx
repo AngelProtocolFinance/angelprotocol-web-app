@@ -17,7 +17,7 @@ export default function Member(props: AllianceMemberWithFlags) {
           : props.isDeleted
           ? "bg-red-400/10"
           : props.edits
-          ? "bg-angel-orange/20"
+          ? "bg-orange/20"
           : ""
       }`}
     >
@@ -31,7 +31,7 @@ export default function Member(props: AllianceMemberWithFlags) {
       <div>
         {isEditable && (
           <Button
-            _accent="hover:text-angel-orange"
+            _accent="hover:text-orange"
             type="button"
             onClick={memberToggleEdit}
           >

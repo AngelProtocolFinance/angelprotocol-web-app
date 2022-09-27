@@ -24,7 +24,7 @@ export default function Polls() {
           filteredPolls.map((poll) => (
             <PollCard key={poll.id} poll_id={poll.id} />
           ))) || (
-          <p className="font-mono text-white-grey ml-3">
+          <p className="font-mono text-white ml-3">
             {isLoading ? "Loading polls.." : "no polls found"}
           </p>
         )}

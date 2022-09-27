@@ -20,7 +20,7 @@ export default function ReceiptForm() {
   return (
     <form
       onSubmit={handleSubmit(requestReceipt)}
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
+      className="bg-white grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >
@@ -52,12 +52,12 @@ export default function ReceiptForm() {
         >
           Country <span className="text-rose-400"> *</span>
         </label>
-        <div className="form-control rounded-md grid bg-white-grey">
+        <div className="form-control rounded-md grid bg-white">
           <CountrySelector
             fieldName="country"
             classes={{
               container:
-                "p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey",
+                "p-3 text-angel-grey rounded-md shadow-inner-white bg-light-grey",
               input: "bg-transparent",
             }}
           />
@@ -101,7 +101,7 @@ export default function ReceiptForm() {
       </div>
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isSubmitting ? "Processing..." : "Proceed"}

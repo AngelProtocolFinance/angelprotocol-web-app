@@ -36,4 +36,4 @@ export default function Links(props: { classes?: string }) {
 }
 
 const linkStyle =
-  "text-white-grey hover:text-sky-300 text-sm px-3 lg:text-base font-heading uppercase font-semibold lg:px-2";
+  "text-white hover:text-sky-300 text-sm px-3 lg:text-base font-heading uppercase font-semibold lg:px-2";

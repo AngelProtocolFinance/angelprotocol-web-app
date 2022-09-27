@@ -77,7 +77,7 @@ function Logo(props: { logo: string }) {
   return (
     <img
       src={props.logo}
-      className="w-8 h-8 object-contain p-1.5 bg-white-grey"
+      className="w-8 h-8 object-contain p-1.5 bg-white"
       alt=""
     />
   );

@@ -21,7 +21,7 @@ export default function Board() {
       {isLoading && (
         <div className="h-40 bg-white/5 rounded-lg grid place-items-center">
           <Loader
-            bgColorClass="bg-white-grey/80"
+            bgColorClass="bg-white/80"
             gapClass="gap-2"
             widthClass="w-4"
           />

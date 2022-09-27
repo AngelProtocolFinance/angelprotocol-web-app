@@ -95,9 +95,9 @@ export default function PollDetails() {
 
 const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
   executed: { bg: "bg-green-400", text: "text-green-400" },
-  expired: { bg: "bg-white", text: "text-white-grey" },
+  expired: { bg: "bg-white", text: "text-white" },
   failed: { bg: "bg-red-300", text: "text-red-300" },
-  in_progress: { bg: "bg-white", text: "text-white-grey" },
+  in_progress: { bg: "bg-white", text: "text-white" },
   passed: { bg: "bg-green-400", text: "text-green-400" },
   rejected: { bg: "bg-red-300", text: "text-red-300" },
 };

@@ -39,7 +39,7 @@ export default function CharityHeader(props: ProfileResponse) {
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+      className="disabled:bg-grey-accent uppercase bg-orange hover:bg-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
       {...props}
     />
   );

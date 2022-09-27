@@ -26,11 +26,7 @@ export default function App() {
     <div className="grid grid-rows-[1fr_auto] bg-gradient-to-b from-blue-accent to-black-blue bg-fixed">
       {!chainOptions ? (
         <div className="flex justify-center items-center w-full h-full">
-          <Loader
-            bgColorClass="bg-white-grey"
-            gapClass="gap-2"
-            widthClass="w-4"
-          />
+          <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
         </div>
       ) : (
         <div className="grid grid-rows-[auto_1fr] w-full h-full">
