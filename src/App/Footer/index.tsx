@@ -18,7 +18,8 @@ export default function Footer() {
             Download Litepaper
           </a>
           <p className="text-white-grey/70 text-center text-xs uppercase ">
-            Copyright 2021 Angel Protocol. All rights reserved
+            Copyright {new Date().getFullYear()} Angel Protocol. All rights
+            reserved
           </p>
         </div>
       </nav>
