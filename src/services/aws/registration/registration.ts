@@ -75,7 +75,7 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    createNewCharity: builder.mutation<
+    createNewApplication: builder.mutation<
       ContactDetailsResult,
       ContactDetailsRequest
     >({
@@ -178,7 +178,7 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useCreateNewCharityMutation,
+  useCreateNewApplicationMutation,
   useEndowmentApplicationsQuery,
   useRequestEmailMutation,
   useSubmitMutation,

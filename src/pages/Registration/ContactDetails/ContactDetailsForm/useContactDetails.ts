@@ -5,7 +5,7 @@ import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import {
-  useCreateNewCharityMutation,
+  useCreateNewApplicationMutation,
   useRegistrationQuery,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
@@ -15,7 +15,7 @@ import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
 export default function useSaveContactDetails() {
-  const [registerCharity] = useCreateNewCharityMutation();
+  const [registerCharity] = useCreateNewApplicationMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const { charity: originalCharityData } = useRegistrationQuery();
   const navigate = useNavigate();
