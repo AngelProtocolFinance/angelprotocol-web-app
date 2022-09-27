@@ -8,16 +8,13 @@ export default function Holdings(props: { balance: GenericBalance }) {
   return (
     <table>
       <TableSection type="tbody" rowClass="">
-        <>
-          {props.balance.native.map((bal) => (
-            <Balance {...bal} key={bal.denom} />
-          ))}
-        </>
-        <>
-          {props.balance.cw20.map((bal) => (
-            <Balance {...bal} key={bal.address} />
-          ))}
-        </>
+        {props.balance.native
+          .map((bal) => <Balance {...bal} key={bal.denom} />)
+          .concat(
+            props.balance.cw20.map((bal) => (
+              <Balance {...bal} key={bal.address} />
+            ))
+          )}
       </TableSection>
     </table>
   );

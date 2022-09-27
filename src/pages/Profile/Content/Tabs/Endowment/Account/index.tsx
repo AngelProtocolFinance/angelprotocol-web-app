@@ -19,7 +19,7 @@ export default function Account({ type, balance }: TAcount) {
       <h3 className="mb-2 text-lg w-full font-bold uppercase flex items-center justify-self-start">
         <span>{type}</span>
       </h3>
-      {(cw20.length > 0 && native.length > 0 && (
+      {((cw20.length > 0 || native.length > 0) && (
         <Holdings balance={balance} />
       )) || <p>0.000</p>}
     </div>
