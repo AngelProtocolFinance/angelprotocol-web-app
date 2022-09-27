@@ -15,7 +15,7 @@ jest.mock("pages/Admin/Guard", () => ({
   useAdminResources: () => mockAdminContext(),
 }));
 
-describe("Charity Applications", () => {
+describe("Applications", () => {
   test("Loading applications", () => {
     mockEndowmentApplicationsQuery.mockReturnValue({
       isLoading: true,
