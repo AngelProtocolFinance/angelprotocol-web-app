@@ -40,7 +40,7 @@ export default function Connector(props: Connection) {
           <Name>{isOpen ? "Select network" : props.name}</Name>
           <Icon
             type={isOpen ? "Up" : "Down"}
-            className="ml-auto text-angel-grey"
+            className="ml-auto text-gray-d2"
           />
         </button>
         {isOpen &&
@@ -67,7 +67,7 @@ export default function Connector(props: Connection) {
 
 function Name(props: PropsWithChildren<{}>) {
   return (
-    <p className="uppercase text-sm text-angel-grey group-hover:text-sky-500 group-active:text-amber-500">
+    <p className="uppercase text-sm text-gray-d2 group-hover:text-sky-500 group-active:text-amber-500">
       {props.children}
     </p>
   );

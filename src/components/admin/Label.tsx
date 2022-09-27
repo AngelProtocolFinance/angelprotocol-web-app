@@ -8,7 +8,7 @@ export function Label(
   const {
     children,
     //default font color
-    className = "text-angel-grey",
+    className = "text-gray-d2",
     _required,
     ...restProps
   } = props;

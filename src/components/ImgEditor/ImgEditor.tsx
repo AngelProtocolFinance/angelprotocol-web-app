@@ -107,7 +107,7 @@ function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function LoadingOverlay() {
   return (
     <div className="absolute z-10">
-      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-angel-grey" />
+      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-gray-d2" />
     </div>
   );
 }

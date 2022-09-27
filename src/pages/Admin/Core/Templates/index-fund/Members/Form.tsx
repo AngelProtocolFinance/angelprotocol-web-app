@@ -37,7 +37,7 @@ export default function Form() {
               <Loader
                 gapClass="gap-1"
                 widthClass="w-2"
-                bgColorClass="bg-angel-grey"
+                bgColorClass="bg-gray-d2"
               />
             )) ||
               (fundMembersCopy.length > 0 && (
@@ -47,7 +47,7 @@ export default function Form() {
                   ))}
                 </div>
               )) || (
-                <p className="text-angel-grey font-mono text-sm">
+                <p className="text-gray-d2 font-mono text-sm">
                   this fund doesn't have any members yet
                 </p>
               )}

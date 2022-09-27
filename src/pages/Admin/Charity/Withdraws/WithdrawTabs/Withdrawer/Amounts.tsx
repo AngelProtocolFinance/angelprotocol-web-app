@@ -61,7 +61,7 @@ export default function Amounts() {
               type="text"
               autoComplete="off"
               placeholder="0.000000"
-              className="bg-transparent text-right w-full outline-none text-angel-grey font-mono text-xl"
+              className="bg-transparent text-right w-full outline-none text-gray-d2 font-mono text-xl"
             />
             <ErrorMessage
               errors={errors}

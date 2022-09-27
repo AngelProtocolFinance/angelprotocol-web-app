@@ -3,7 +3,7 @@ import { createNavLinkStyler } from "helpers";
 import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(
-  "text-angel-grey px-4 py-1",
+  "text-gray-d2 px-4 py-1",
   "bg-blue text-white pointer-events-none"
 );
 
@@ -26,7 +26,7 @@ export default function Nav() {
 
 function Category(props: { title: string; classes?: string }) {
   return (
-    <h3 className={`px-4 font-bold text-angel-grey ${props.classes || ""}`}>
+    <h3 className={`px-4 font-bold text-gray-d2 ${props.classes || ""}`}>
       {props.title}
     </h3>
   );

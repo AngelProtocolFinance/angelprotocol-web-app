@@ -5,7 +5,7 @@ type Props = { text: string };
 export default function Warning(props: Props) {
   const { closeModal } = useModalContext();
   return (
-    <div className="grid justify-items-center p-5 text-angel-grey">
+    <div className="grid justify-items-center p-5 text-gray-d2">
       <Icon type="Info" className="text-3xl  mb-2" />
       <p className="text-center">{props.text}</p>
       <button

@@ -15,7 +15,7 @@ export default function Beneficiary() {
 
   return (
     <div className="mt-6">
-      <Label _required className="mb-2 text-angel-grey">
+      <Label _required className="mb-2 text-gray-d2">
         Beneficiary
       </Label>
       <ErrorMessage
@@ -36,7 +36,7 @@ export default function Beneficiary() {
               <span
                 className={`${
                   checked ? "bg-blue/20" : ""
-                } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
+                } text-gray-d2 w-36 cursor-pointer rounded-sm border border-gray-d2/40 px-3 py-1 text-center text-sm uppercase`}
               >
                 {type}
               </span>

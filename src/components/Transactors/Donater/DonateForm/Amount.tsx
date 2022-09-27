@@ -15,14 +15,14 @@ export default function Amount() {
       <div className="flex items-baseline justify-between mb-1">
         <label
           htmlFor="amount"
-          className="text-angel-grey text-lg uppercase font-bold"
+          className="text-gray-d2 text-lg uppercase font-bold"
         >
           Donation Amount
         </label>
         <Balance />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 shadow-inner-white rounded-md text-xl bg-light-grey/80 text-angel-grey">
+      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 shadow-inner-white rounded-md text-xl bg-light-grey/80 text-gray-d2">
         <input
           {...register("amount")}
           autoComplete="off"

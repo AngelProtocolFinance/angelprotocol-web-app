@@ -67,7 +67,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
               <Combobox.Option
                 key={country.name}
                 value={country.name}
-                className="cursor-button flex gap-2 p-2 text-sm hover:bg-sky-100/50 cursor-button text-angel-grey"
+                className="cursor-button flex gap-2 p-2 text-sm hover:bg-sky-100/50 cursor-button text-gray-d2"
               >
                 <img
                   src={country.flag}
@@ -77,7 +77,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
                 <span>{country.name}</span>
               </Combobox.Option>
             ))) || (
-            <div className="p-2 text-sm text-angel-grey">
+            <div className="p-2 text-sm text-gray-d2">
               {debouncedQuery} not found
             </div>
           )}

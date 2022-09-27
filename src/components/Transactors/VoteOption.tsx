@@ -11,7 +11,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
   const is_active = vote === props.vote;
 
   const iconClasses = `opacity-90 ${
-    is_active ? vote_colors[props.vote].icon : "text-angel-grey "
+    is_active ? vote_colors[props.vote].icon : "text-gray-d2 "
   }`;
 
   const icon =
@@ -35,7 +35,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
       >
         <span
           className={`text-xl font-heading uppercase text-center ${
-            is_active ? vote_colors[props.vote].text : "text-angel-grey"
+            is_active ? vote_colors[props.vote].text : "text-gray-d2"
           }`}
         >
           {props.label}

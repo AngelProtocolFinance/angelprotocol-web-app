@@ -10,7 +10,7 @@ export default function Member(props: { address: string }) {
   }
   return (
     <div
-      className="font-mono text-sm text-angel-grey bg-green-100 shadow-inner p-1.5 
+      className="font-mono text-sm text-gray-d2 bg-green-100 shadow-inner p-1.5 
     rounded-md flex items-center"
     >
       <span>{props.address}</span>

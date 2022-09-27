@@ -20,7 +20,7 @@ export default function Catcher(props: { airdrops: Airdrops }) {
       </Action>
       <Action
         onClick={claimAirdrop(false)}
-        className="bg-angel-grey font-semibold tracking-wide text-xs"
+        className="bg-gray-d2 font-semibold tracking-wide text-xs"
       >
         Claim
       </Action>

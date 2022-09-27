@@ -12,7 +12,7 @@ type Props = {
 export default function Figure(props: Props) {
   return (
     <div
-      className={`bg-white/10 shadow-inner text-angel-grey w-full rounded-md p-6 ${
+      className={`bg-white/10 shadow-inner text-gray-d2 w-full rounded-md p-6 ${
         props.position || ""
       }`}
     >

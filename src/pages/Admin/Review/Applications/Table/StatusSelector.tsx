@@ -34,7 +34,7 @@ export default function StatusSelector() {
           <span>{activeStatus === "all" ? "status" : texts[activeStatus]}</span>
           <Icon type="FilterLeft" size={20} />
         </Listbox.Button>
-        <Listbox.Options className="absolute w-max rounded-sm bg-zinc-50 text-angel-grey ">
+        <Listbox.Options className="absolute w-max rounded-sm bg-zinc-50 text-gray-d2 ">
           {options.map((status) => (
             <Listbox.Option key={status} value={status} as={Fragment}>
               {({ selected }) =>

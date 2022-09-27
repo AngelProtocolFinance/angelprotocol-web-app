@@ -38,7 +38,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             <span>{display}</span>
             <Icon
               type={open ? "Down" : "CaretLeft"}
-              className="text-angel-grey ml-auto"
+              className="text-gray-d2 ml-auto"
             />
           </>
         )}
@@ -50,7 +50,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             value={option.value}
             className={({ selected }) =>
               `cursor-pointer p-1 px-2 hover:bg-sky-200/50 ${
-                selected ? "bg-sky-500 text-zinc-50" : "text-angel-grey"
+                selected ? "bg-sky-500 text-zinc-50" : "text-gray-d2"
               }`
             }
           >

@@ -26,10 +26,10 @@ export default function ReceiptForm() {
     >
       {!isKYConly && (
         <p>
-          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+          <span className="text-gray-d2 text-xs uppercase font-bold mb-1">
             Transaction ID:
           </span>
-          <span className="font-normal text-sm text-angel-grey ml-2">
+          <span className="font-normal text-sm text-gray-d2 ml-2">
             {maskAddress(transactionId)}
           </span>
         </p>
@@ -48,7 +48,7 @@ export default function ReceiptForm() {
       <div className="grid">
         <label
           htmlFor="country"
-          className="text-angel-grey text-xs uppercase font-bold mb-1"
+          className="text-gray-d2 text-xs uppercase font-bold mb-1"
         >
           Country <span className="text-rose-400"> *</span>
         </label>
@@ -57,7 +57,7 @@ export default function ReceiptForm() {
             fieldName="country"
             classes={{
               container:
-                "p-3 text-angel-grey rounded-md shadow-inner-white bg-light-grey",
+                "p-3 text-gray-d2 rounded-md shadow-inner-white bg-light-grey",
               input: "bg-transparent",
             }}
           />
@@ -78,7 +78,7 @@ export default function ReceiptForm() {
         />
         <label
           htmlFor="consent_marketing"
-          className="text-angel-grey font-light text-xs"
+          className="text-gray-d2 font-light text-xs"
         >
           I consent to my details being used only by Angel Protocol and the
           Charity to keep me informed of their progress and news.
@@ -93,7 +93,7 @@ export default function ReceiptForm() {
         />
         <label
           htmlFor="consent_tax"
-          className="text-angel-grey font-light text-xs"
+          className="text-gray-d2 font-light text-xs"
         >
           I consent to allow my information to be shared with the charity for
           tax receipt processing purposes.

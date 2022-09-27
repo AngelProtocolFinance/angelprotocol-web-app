@@ -11,10 +11,7 @@ export default function Terms() {
         id="confirmRole"
         {...register("isAgreedToTerms")}
       />
-      <label
-        htmlFor="confirmRole"
-        className="text-angel-grey font-light text-xs"
-      >
+      <label htmlFor="confirmRole" className="text-gray-d2 font-light text-xs">
         By clicking this button and donating with Angel Protocol, you
         acknowledge that you have read and accept the{" "}
         <a

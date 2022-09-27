@@ -55,7 +55,7 @@ export default function TransactionPrompt({
       <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
         <button
           onClick={closePrompt}
-          className="absolute right-2 top-2 text-angel-grey hover:text-black"
+          className="absolute right-2 top-2 text-gray-d2 hover:text-black"
         >
           <Icon type="Close" size={25} />
         </button>

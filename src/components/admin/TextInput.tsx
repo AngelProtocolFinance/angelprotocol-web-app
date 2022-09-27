@@ -22,7 +22,7 @@ export function TextInput<T extends FieldValues>(props: {
   return (
     <div className="flex flex-col mb-6">
       <label
-        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey"
+        className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2"
         htmlFor={id}
       >
         {props.title}
@@ -36,7 +36,7 @@ export function TextInput<T extends FieldValues>(props: {
           props.mono ? "font-mono text-sm" : ""
         } text-black disabled:text-grey-accent focus:outline-none ${
           props.plain
-            ? "bg-light-grey border-b-2 border-angel-grey/25 rounded-none pb-1"
+            ? "bg-light-grey border-b-2 border-gray-d2/25 rounded-none pb-1"
             : "bg-light-grey shadow-inner-white rounded-md p-3"
         }`,
         disabled: props.disabled,

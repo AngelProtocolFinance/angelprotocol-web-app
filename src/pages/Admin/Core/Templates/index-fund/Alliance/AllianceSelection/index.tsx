@@ -17,7 +17,7 @@ export default function AllianceSelection() {
       {(filteredMembers.length > 0 && (
         <MemberTable members={filteredMembers} />
       )) || (
-        <p className="pl-4 pt-4 font-mono text-sm text-angel-grey">
+        <p className="pl-4 pt-4 font-mono text-sm text-gray-d2">
           {`${
             isDebouncing
               ? `searching ${searchText}...`
@@ -35,7 +35,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"
-          cellClass="text-left uppercase text-angel-grey font-heading"
+          cellClass="text-left uppercase text-gray-d2 font-heading"
         >
           <></>
           <>name</>
@@ -44,7 +44,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b text-angel-grey hover:bg-blue hover:bg-blue/10"
+        rowClass="border-b text-gray-d2 hover:bg-blue hover:bg-blue/10"
       >
         {props.members.map((member) => (
           <Member key={member.wallet} {...member} />

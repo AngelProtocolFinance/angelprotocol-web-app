@@ -37,7 +37,7 @@ export default function Form() {
         wide
         required
       />
-      <Label className="text-angel-grey -mb-2">Banner</Label>
+      <Label className="text-gray-d2 -mb-2">Banner</Label>
       <ImgEditor<UV>
         name="image"
         accept={VALID_MIME_TYPES}
@@ -45,7 +45,7 @@ export default function Form() {
         aspectRatioY={1}
         className="w-full aspect-[4/1]"
       />
-      <Label className="text-angel-grey -mb-2">SDG#</Label>
+      <Label className="text-gray-d2 -mb-2">SDG#</Label>
       <SDGSelector />
       <TextInput<UV>
         name="name"
@@ -62,7 +62,7 @@ export default function Form() {
         title="Street address"
         placeholder="Manila, Philippines"
       />
-      <Label className="text-angel-grey -mb-2">Country</Label>
+      <Label className="text-gray-d2 -mb-2">Country</Label>
       <CountrySelector<UV>
         fieldName="country_of_origin"
         classes={{
@@ -70,7 +70,7 @@ export default function Form() {
           input: "bg-transparent",
         }}
       />
-      <Label className="text-angel-grey -mb-2">Overview</Label>
+      <Label className="text-gray-d2 -mb-2">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"
         placeHolder="a short overview of your charity"
@@ -79,11 +79,11 @@ export default function Form() {
             "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white p-3",
           error:
             "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
-          charCounter: "text-angel-grey",
+          charCounter: "text-gray-d2",
         }}
       />
 
-      <Label className="text-angel-grey -mb-2">Organization</Label>
+      <Label className="text-gray-d2 -mb-2">Organization</Label>
       <GroupContainer>
         <TextInput<UV>
           name="average_annual_budget"
@@ -105,7 +105,7 @@ export default function Form() {
         />
       </GroupContainer>
 
-      <Label className="text-angel-grey -mb-2">Social Media</Label>
+      <Label className="text-gray-d2 -mb-2">Social Media</Label>
       <GroupContainer>
         <TextInput<UV>
           name="url"

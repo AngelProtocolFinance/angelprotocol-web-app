@@ -16,7 +16,7 @@ export default function TextInput(props: {
     <div className="grid mb-3">
       <label
         htmlFor={props.id}
-        className="ml-0.5 text-angel-grey text-xs uppercase font-bold mb-1"
+        className="ml-0.5 text-gray-d2 text-xs uppercase font-bold mb-1"
       >
         {props.label}
         {props.required && <span className="text-rose-400"> *</span>}
@@ -26,7 +26,7 @@ export default function TextInput(props: {
         autoComplete="off"
         id={props.id}
         type="text"
-        className="p-3 text-angel-grey rounded-md shadow-inner-white bg-light-grey
+        className="p-3 text-gray-d2 rounded-md shadow-inner-white bg-light-grey
          focus:outline-none"
       />
       <ErrorMessage

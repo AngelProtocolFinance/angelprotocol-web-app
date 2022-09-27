@@ -44,7 +44,7 @@ export default function KYCGuard() {
         <button
           onClick={showKycForm}
           type="button"
-          className="text-xs text-angel-grey flex gap-1 items-center p-1 border-2 border-orange/30 hover:bg-orange/30 active:bg-orange/60 active:text-white rounded-md font-heading uppercase mt-1"
+          className="text-xs text-gray-d2 flex gap-1 items-center p-1 border-2 border-orange/30 hover:bg-orange/30 active:bg-orange/60 active:text-white rounded-md font-heading uppercase mt-1"
         >
           <Icon type="User" size={14} />
           KYC FORM

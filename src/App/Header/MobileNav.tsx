@@ -65,7 +65,7 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
     (isMobileNavOpen &&
       createPortal(
         <div className="border-l border-zinc-600/20 pl-4 ml-4">
-          <h4 className="uppercase text-sm font-bold text-angel-grey mb-2">
+          <h4 className="uppercase text-sm font-bold text-gray-d2 mb-2">
             Admin
           </h4>
           <div className="grid justify-items-start uppercase text-sm font-heading gap-1">

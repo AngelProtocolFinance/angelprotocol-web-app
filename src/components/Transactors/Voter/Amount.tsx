@@ -24,10 +24,7 @@ export default function Amount() {
 
   return (
     <div className="grid mb-1">
-      <label
-        htmlFor="amount"
-        className="text-angel-grey uppercase font-bold mb-2"
-      >
+      <label htmlFor="amount" className="text-gray-d2 uppercase font-bold mb-2">
         <span>Deposit amount</span>
         <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
@@ -38,7 +35,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder={symbols.halo}
-          className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-gray-d2 text-lg"
         />
         <div
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"

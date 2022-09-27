@@ -25,7 +25,7 @@ const Login = () => {
         </p>
         <div className="text-center my-5 text-gray-400">
           <p className="text-sm sm:text-base">Access Restricted to</p>
-          <p className="text-base sm:text-lg font-bold  text-angel-grey">
+          <p className="text-base sm:text-lg font-bold  text-gray-d2">
             Angel Alliance Members
           </p>
         </div>

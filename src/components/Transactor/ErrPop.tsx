@@ -30,8 +30,8 @@ export default function ErrPop(props: ErrorStage) {
 
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
-      <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
-      <p className="text-center text-angel-grey mb-2 ">{message}</p>
+      <Icon type="Info" className="text-gray-d2 text-2xl mb-2" />
+      <p className="text-center text-gray-d2 mb-2 ">{message}</p>
       {chain && txHash && (
         <a
           href={getTxUrl(chain, txHash)}

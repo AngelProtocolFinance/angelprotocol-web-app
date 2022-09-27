@@ -14,7 +14,7 @@ export default function Balance({ token }: { token: Token }) {
   }
 
   return (
-    <p className="ml-auto mr-1 text-xs font-light font-heading flex items-baseline text-angel-grey">
+    <p className="ml-auto mr-1 text-xs font-light font-heading flex items-baseline text-gray-d2">
       <span className="mr-1 text-2xs font-semibold uppercase">balance</span>
       <button
         type="button"

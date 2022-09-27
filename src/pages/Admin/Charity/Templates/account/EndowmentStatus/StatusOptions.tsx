@@ -32,7 +32,7 @@ export default function StatusOptions() {
               <span
                 className={`${
                   checked ? "bg-blue/20" : ""
-                } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
+                } text-gray-d2 w-36 cursor-pointer rounded-sm border border-gray-d2/40 px-3 py-1 text-center text-sm uppercase`}
               >
                 {text[status]}
               </span>

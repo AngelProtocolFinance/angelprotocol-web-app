@@ -12,7 +12,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
   return (
     <table
       className="table-auto bg-light-grey shadow-inner-white 
-    rounded-md text-angel-grey text-left"
+    rounded-md text-gray-d2 text-left"
     >
       <TableSection type="thead" rowClass="border-b">
         <Cells type="th" cellClass="px-4 py-2 uppercase">

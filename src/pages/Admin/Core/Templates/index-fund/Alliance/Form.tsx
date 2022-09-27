@@ -15,7 +15,7 @@ export default function Form() {
         wide
         required
       />
-      <Label className="-mb-2 text-angel-grey">
+      <Label className="-mb-2 text-gray-d2">
         <span className="text-red-400">Remove</span> |{" "}
         <span className="text-orange">Edit</span> existing member
       </Label>

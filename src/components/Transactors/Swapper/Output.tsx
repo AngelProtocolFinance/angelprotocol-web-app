@@ -13,11 +13,11 @@ export default function Output() {
   const is_buy = watch("is_buy");
 
   return (
-    <div className="grid grid-cols-[auto_1fr] bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white mb-2">
-      <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
+    <div className="grid grid-cols-[auto_1fr] bg-light-grey text-gray-d2 p-3 rounded-md shadow-inner-white mb-2">
+      <p className="text-gray-d2 uppercase text-md font-semibold font-heading ml-1">
         To:
       </p>
-      <div className="row-start-2 flex items-center justify-center text-angel-grey text-lg uppercase font-heading rounded-md">
+      <div className="row-start-2 flex items-center justify-center text-gray-d2 text-lg uppercase font-heading rounded-md">
         <img
           className={`${is_buy ? "w-9 h-9" : "w-10 h-10"} mr-1 object-contain`}
           src={is_buy ? haloLogo : native_currency.logo}
@@ -28,7 +28,7 @@ export default function Output() {
         </span>
       </div>
 
-      <div className="row-start-2 text-right p-2 text-angel-grey text-2xl w-full">
+      <div className="row-start-2 text-right p-2 text-gray-d2 text-2xl w-full">
         {return_amount}
       </div>
     </div>

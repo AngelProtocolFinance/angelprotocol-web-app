@@ -25,7 +25,7 @@ export default function Amount() {
     <div className="grid">
       <label
         htmlFor="amount"
-        className="flex justify-between text-angel-grey font-bold items-end"
+        className="flex justify-between text-gray-d2 font-bold items-end"
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance
@@ -39,7 +39,7 @@ export default function Amount() {
           title="Vote Locked"
         />
       )}
-      <span className="my-3 text-angel-grey italic text-xs">
+      <span className="my-3 text-gray-d2 italic text-xs">
         There is a 7 day wait period to unstake {symbols.halo}. You will not be
         able to claim your {symbols.halo} until this period has passed.
       </span>
@@ -50,7 +50,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder={symbols.halo}
-          className="flex-auto p-1 pl-0 focus:outline-none text-angel-grey bg-light-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-light-grey text-lg"
         />
         <div
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"

@@ -4,7 +4,7 @@ import Slider from "./Slider";
 export default function Split() {
   return (
     <div className="grid ml-1">
-      <p className="text-angel-grey uppercase text-sm font-bold mt-2 mb-1">
+      <p className="text-gray-d2 uppercase text-sm font-bold mt-2 mb-1">
         Split
       </p>
       <div className="grid grid-cols-2 gap-2 mb-2">
@@ -25,7 +25,7 @@ export default function Split() {
           <Slider />
         </Portion>
       </div>
-      <p className="text-xs text-angel-grey text-center">
+      <p className="text-xs text-gray-d2 text-center">
         Note: Donations into the endowment provide sustainable financial runaway
         and allow your gift to give forever
       </p>

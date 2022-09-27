@@ -52,8 +52,8 @@ function Slider() {
   }
 
   return (
-    <div className="text-angel-grey grid mt-6">
-      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none">
+    <div className="text-gray-d2 grid mt-6">
+      <label className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2 select-none">
         <span>SPLIT TO LIQUID ACCOUNT</span>
         <span className="font-mono font-bold text-green-500 ml-2 text-base">
           {splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}
@@ -80,7 +80,7 @@ function CheckInput() {
   const { register } = useFormContext<V>();
   return (
     <div
-      className="text-angel-grey flex items-center p-3 rounded-md 
+      className="text-gray-d2 flex items-center p-3 rounded-md 
     shadow-inner-white bg-light-grey my-6"
     >
       <input
@@ -91,7 +91,7 @@ function CheckInput() {
       />
       <label
         htmlFor="__checkInput"
-        className="text-xs font-heading uppercase font-bold text-angel-grey
+        className="text-xs font-heading uppercase font-bold text-gray-d2
         select-none cursor-pointer"
       >
         included on fund rotation
@@ -106,10 +106,10 @@ function DateInput() {
     formState: { errors },
   } = useFormContext<V>();
   return (
-    <div className="text-angel-grey grid">
+    <div className="text-gray-d2 grid">
       <label
         htmlFor="__dateInput"
-        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none"
+        className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2 select-none"
       >
         Expiry time
       </label>

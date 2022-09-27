@@ -25,7 +25,7 @@ export default function Amount(props: Props) {
           className="mt-0.5 block text-blue hover:text-orange"
         />
       </button>
-      <p className="text-angel-grey">
+      <p className="text-gray-d2">
         ${humanize(props.locked + props.liquid, 0)}
       </p>
     </div>
