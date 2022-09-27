@@ -9,7 +9,7 @@ import { junoTags } from "./tags";
 
 export const baseUrl = IS_TEST
   ? "https://api.uni.junonetwork.io"
-  : "https://juno-api.lavenderfive.com"; // "https://juno-lcd.wildsage.io"
+  : "https://api.juno.bh.rocks"; // "https://juno-lcd.wildsage.io"
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
