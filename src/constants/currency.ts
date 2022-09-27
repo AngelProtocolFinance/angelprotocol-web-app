@@ -37,7 +37,7 @@ type CoinAsset = { name: string; icon: string };
 
 const _assets: { [index: string]: CoinAsset } = {
   [denoms.juno]: { icon: junoIcon, name: symbols.juno },
-  [denoms.axlusdc]: { icon: usdcIcon, name: symbols.juno },
+  [denoms.axlusdc]: { icon: usdcIcon, name: symbols.axlusdc },
   [denoms.halo]: { icon: haloIcon, name: symbols.halo },
 };
 
