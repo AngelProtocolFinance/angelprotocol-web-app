@@ -21,7 +21,7 @@ export default function FinancialStatements() {
         disabled={isSubmitting}
       />
       <ErrorMessage
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
         errors={errors}
         as="p"
         name="financialStatements"

@@ -29,7 +29,7 @@ export default function UnSdgSelector() {
         errors={errors}
         as="p"
         name="un_sdg"
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
       />
     </InputRow>
   );

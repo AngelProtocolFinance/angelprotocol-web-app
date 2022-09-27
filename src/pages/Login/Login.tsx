@@ -55,7 +55,7 @@ const Login = () => {
               errors={errors}
               name="password"
               as="div"
-              className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
+              className="text-xs sm:text-sm text-red mt-1 pl-1"
             />
           </div>
           <button

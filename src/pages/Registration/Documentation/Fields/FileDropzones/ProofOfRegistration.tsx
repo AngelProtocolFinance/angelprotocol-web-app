@@ -24,7 +24,7 @@ export default function ProofOfRegistration() {
         errors={errors}
         as="p"
         name="proofOfRegistration"
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
       />
     </InputRow>
   );

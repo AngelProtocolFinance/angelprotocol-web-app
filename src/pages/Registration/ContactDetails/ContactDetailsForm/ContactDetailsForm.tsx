@@ -134,7 +134,7 @@ const PrivacyPolicyCheckbox = forwardRef(
       >
         Privacy Policy
       </a>
-      <span className="text-failed-red ml-0.5">*</span>
+      <span className="text-red ml-0.5">*</span>
     </Checkbox>
   )
 );

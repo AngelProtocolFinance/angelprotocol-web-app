@@ -58,7 +58,7 @@ export default function ResumeForm() {
         placeholder="Enter your registration reference"
         type="text"
       />
-      <p className="text-failed-red">{errors.refer?.message}</p>
+      <p className="text-red">{errors.refer?.message}</p>
       <Button
         submit
         className="btn-secondary w-40 h-10"

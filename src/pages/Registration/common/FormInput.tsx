@@ -34,7 +34,7 @@ export default function FormInput<T extends FieldValues>(
     >
       <label htmlFor={props.fieldName} className="text-dark-grey">
         {label}
-        {required && <span className="ml-0.5 text-failed-red">*</span>}
+        {required && <span className="ml-0.5 text-red">*</span>}
       </label>
       <input
         {...rest}
@@ -50,7 +50,7 @@ export default function FormInput<T extends FieldValues>(
         errors={errors}
         as="p"
         name={props.fieldName as any}
-        className={`text-sm text-failed-red ${classes?.error || ""}`}
+        className={`text-sm text-red ${classes?.error || ""}`}
       />
     </div>
   );

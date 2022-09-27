@@ -28,7 +28,7 @@ export default function ProofOfIdentity() {
         errors={errors}
         name="proofOfIdentity"
         as="p"
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
       />
     </InputRow>
   );

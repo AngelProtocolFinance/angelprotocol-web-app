@@ -22,7 +22,7 @@ export default function WebsiteInput() {
         as="p"
         name="website"
         errors={errors}
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
       />
     </InputRow>
   );

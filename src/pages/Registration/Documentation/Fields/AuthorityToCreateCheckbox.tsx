@@ -19,7 +19,7 @@ export default function AuthorityToCreateCheckbox() {
     >
       {`By checking this box, you declare that you have the authority to create an
         endowment in the name of ${charity.Registration.CharityName} through Angel Protocol`}
-      <span className="text-failed-red ml-0.5">*</span>
+      <span className="text-red ml-0.5">*</span>
     </Checkbox>
   );
 }

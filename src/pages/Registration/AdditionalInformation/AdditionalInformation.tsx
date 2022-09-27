@@ -131,7 +131,7 @@ function OverviewInput() {
         classes={{
           container:
             "text-white/80 p-3 rounded-md bg-white/10 shadow-inner w-full text-left",
-          error: "text-sm text-failed-red ml-1",
+          error: "text-sm text-red ml-1",
         }}
         placeHolder="an overview of your organization"
       />

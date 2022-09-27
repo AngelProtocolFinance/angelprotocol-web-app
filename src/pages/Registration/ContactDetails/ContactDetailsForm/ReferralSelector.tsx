@@ -13,7 +13,7 @@ export default function ReferralSelector() {
     <div className="flex flex-col gap-1 w-full text-left">
       <label className="text-dark-grey">
         How did you find out about us?
-        <span className="text-failed-red ml-0.5">*</span>
+        <span className="text-red ml-0.5">*</span>
       </label>
       <Selector<CD> name="referralMethod" options={referralMethodOptions} />
       {method === "other" && (
