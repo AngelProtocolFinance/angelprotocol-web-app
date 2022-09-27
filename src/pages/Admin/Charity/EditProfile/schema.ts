@@ -46,7 +46,7 @@ const shape: SchemaShape<ProfileFormValues> = {
   number_of_employees: positiveNumber,
   // average_annual_budget: render string as is
   // annual_revenue: render string as is
-  // charity_navigator_rating: render string as is
+  // navigator_rating: render string as is
   // endow_type: TODO: this field, like tier, is for config owner
 };
 

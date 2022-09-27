@@ -40,7 +40,7 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
     number_of_employees: props.number_of_employees || 1,
     average_annual_budget: props.average_annual_budget || "",
     annual_revenue: props.annual_revenue || "",
-    charity_navigator_rating: props.charity_navigator_rating || "",
+    navigator_rating: props.navigator_rating || "",
 
     //endowment settings
     name: props.name,

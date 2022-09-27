@@ -18,7 +18,7 @@ export default function CharityStats(
       <StatsItem
         title="navigator rating"
         classes="text-leaf-green"
-        value={props.charity_navigator_rating}
+        value={props.navigator_rating}
       />
     </ul>
   );

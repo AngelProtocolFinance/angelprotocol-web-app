@@ -20,7 +20,7 @@ export type NewProfile = {
   number_of_employees?: number;
   average_annual_budget?: string;
   annual_revenue?: string;
-  charity_navigator_rating?: string;
+  navigator_rating?: string;
 };
 
 export type NewEndowment = {
