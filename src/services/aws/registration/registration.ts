@@ -87,7 +87,7 @@ const registration_api = aws.injectEndpoints({
         body,
       }),
     }),
-    charityApplications: builder.query<
+    endowmentApplications: builder.query<
       EndowmentApplication[],
       ApplicationStatusOptions
     >({
@@ -179,7 +179,7 @@ const registration_api = aws.injectEndpoints({
 });
 export const {
   useCreateNewCharityMutation,
-  useCharityApplicationsQuery,
+  useEndowmentApplicationsQuery,
   useRequestEmailMutation,
   useSubmitMutation,
   useUpdateCharityMetadataMutation,

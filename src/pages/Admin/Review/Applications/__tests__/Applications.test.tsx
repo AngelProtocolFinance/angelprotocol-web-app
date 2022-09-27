@@ -3,12 +3,12 @@ import { EndowmentApplication } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
 
-const mockCharityApplicationsQuery = jest.fn();
+const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
-  useCharityApplicationsQuery: () => mockCharityApplicationsQuery(),
+  useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
 jest.mock("pages/Admin/Guard", () => ({
   __esModule: true,
@@ -17,7 +17,7 @@ jest.mock("pages/Admin/Guard", () => ({
 
 describe("Charity Applications", () => {
   test("Loading applications", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       isLoading: true,
     });
     render(
@@ -25,11 +25,11 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/loading applications/i)).toBeInTheDocument();
   });
   test("Error getting applications", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       isError: true,
     });
     render(
@@ -37,11 +37,11 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/failed to get applications/i)).toBeInTheDocument();
   });
   test("No applications found", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       data: [],
     });
     render(
@@ -49,13 +49,13 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("cell", { name: /no applications found/i })
     ).toBeInTheDocument();
   });
   test("AppRows with poll id shows link to proposal page", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       data: mockApplications,
     });
     render(
