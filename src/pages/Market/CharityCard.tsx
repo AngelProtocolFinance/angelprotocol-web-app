@@ -8,7 +8,7 @@ export default function CharityCard(props: EndowmentEntry) {
   return (
     <Link
       to={`${appRoutes.profile}/${props.id}`}
-      className="relative rounded-md hover:shadow-lg hover:bg-bright-blue/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
+      className="relative rounded-md hover:shadow-lg hover:bg-blue-l1/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
     >
       <LazyImage
         classes="mt-2 mx-2 w-64 h-32 bg-white rounded-lg img-no-drag object-cover object-center rounded-md"

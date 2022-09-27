@@ -25,7 +25,7 @@ export default function Toolbar(props: { classes?: string }) {
 
       <Link
         to={`../${adminRoutes.templates}/${templates.cw4_members}`}
-        className="px-3 pt-1.5 pb-1 text-white bg-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
+        className="px-3 pt-1.5 pb-1 text-white bg-blue hover:bg-blue-l1 font-heading text-sm uppercase text-center rounded-md"
       >
         + Create a proposal
       </Link>
