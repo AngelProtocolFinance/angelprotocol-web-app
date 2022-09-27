@@ -8,7 +8,7 @@ type Body = Pick<
   ContactPerson,
   "Email" | "FirstName" | "LastName" | "Role" | "PhoneNumber"
 > &
-  Pick<Registration, "Name">;
+  Pick<Registration, "OrganizationName">;
 
 export default function useSendVerificationEmail() {
   const [sendEmail, { isLoading }] = useRequestEmailMutation();
