@@ -55,7 +55,7 @@ const CHARITY: Charity = {
   Metadata: {
     EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
-    CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
+    Logo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
@@ -69,7 +69,7 @@ const endowmentMsg: NewEndowment = {
   name: CHARITY.Registration.CharityName, // name of the Charity Endowment
   categories: { sdgs: [CHARITY.Registration.UN_SDG], general: [] }, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   tier: CHARITY.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-  logo: CHARITY.Metadata.CharityLogo!.publicUrl,
+  logo: CHARITY.Metadata.Logo!.publicUrl,
   image: CHARITY.Metadata.Banner!.publicUrl,
   endow_type: "Charity",
   withdraw_before_maturity: false,

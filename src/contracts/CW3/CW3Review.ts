@@ -36,7 +36,7 @@ function createApplicationProposalPayload(
       owner: charity.Metadata.JunoWallet,
       name: charity.Registration.CharityName, // name of the Charity Endowment
       tier: charity.Registration.Tier!, // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-      logo: charity.Metadata.CharityLogo!.publicUrl,
+      logo: charity.Metadata.Logo!.publicUrl,
       image: charity.Metadata.Banner!.publicUrl,
       endow_type: "Charity",
       categories: { sdgs: [charity.Registration.UN_SDG], general: [] },

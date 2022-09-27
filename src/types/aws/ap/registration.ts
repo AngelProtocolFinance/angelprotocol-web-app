@@ -91,7 +91,7 @@ export type Registration = {
 type InitialMetaData = Optional<
   Metadata,
   | "Banner"
-  | "CharityLogo"
+  | "Logo"
   | "CharityOverview"
   | "EndowmentContract"
   | "EndowmentId"
@@ -100,7 +100,7 @@ type InitialMetaData = Optional<
 >;
 export type Metadata = {
   Banner?: FileObject;
-  CharityLogo?: FileObject;
+  Logo?: FileObject;
   CharityOverview: string;
   EndowmentContract: string;
   EndowmentId: number;
@@ -157,7 +157,7 @@ export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
     Banner?: FileObject;
-    CharityLogo?: FileObject;
+    Logo?: FileObject;
     CharityOverview?: string;
     JunoWallet?: string;
   };
@@ -165,7 +165,7 @@ export type UpdateCharityMetadataData = {
 
 export type UpdateCharityMetadataResult = {
   Banner: FileObject;
-  CharityLogo: FileObject;
+  Logo: FileObject;
   CharityOverview: string;
   JunoWallet: string;
 };

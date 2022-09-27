@@ -19,7 +19,7 @@ export default function AdditionalInformation() {
     defaultValues: {
       banner: charity.Metadata.Banner,
       charityOverview: charity.Metadata.CharityOverview,
-      charityLogo: charity.Metadata.CharityLogo,
+      logo: charity.Metadata.Logo,
       kycDonorsOnly: charity.Metadata.KycDonorsOnly,
     },
   });
@@ -35,7 +35,7 @@ export default function AdditionalInformation() {
         >
           <OrganizationName />
           <Banner />
-          <CharityLogo />
+          <Logo />
           <OverviewInput />
           <KycDonorsOnlyCheckbox />
           <ButtonSection />
@@ -98,11 +98,11 @@ const Banner = () => (
   </InputColumn>
 );
 
-const CharityLogo = () => (
-  <InputColumn htmlFor="charityLogo" label="Logo of your organization" required>
+const Logo = () => (
+  <InputColumn htmlFor="logo" label="Logo of your organization" required>
     <div className="flex flex-col gap-2">
       <ImgEditor<AdditionalInfoValues>
-        name="charityLogo"
+        name="logo"
         aspectRatioX={1}
         aspectRatioY={1}
         accept={VALID_MIME_TYPES}

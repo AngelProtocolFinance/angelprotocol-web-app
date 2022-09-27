@@ -86,7 +86,7 @@ describe("getRegistrationState tests", () => {
           name: "banner",
           publicUrl: "https://www.storage.path/banner",
         },
-        CharityLogo: {
+        Logo: {
           name: "logo",
           publicUrl: "https://www.storage.path/logo",
         },
@@ -112,7 +112,7 @@ describe("getRegistrationState tests", () => {
       ...placeholderCharity,
       Metadata: {
         Banner: undefined,
-        CharityLogo: undefined,
+        Logo: undefined,
         CharityOverview: "",
         EndowmentContract: "",
         SK: "Metadata",
@@ -182,7 +182,7 @@ describe("getRegistrationState tests", () => {
             name: "banner",
             publicUrl: "https://www.storage.path/banner",
           },
-          CharityLogo: {
+          Logo: {
             name: "logo",
             publicUrl: "https://www.storage.path/logo",
           },

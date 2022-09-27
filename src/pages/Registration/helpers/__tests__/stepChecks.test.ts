@@ -189,7 +189,7 @@ const VALIDLY_FILLED_CHARITY: Charity = {
   Metadata: {
     SK: "Metadata",
     Banner: { name: "banner.png", publicUrl: "https://path.to.banner" },
-    CharityLogo: { name: "logo.png", publicUrl: "https://path.to.logo" },
+    Logo: { name: "logo.png", publicUrl: "https://path.to.logo" },
     CharityOverview: "text",
     EndowmentContract: "juno1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
@@ -221,7 +221,7 @@ const ADDITIONAL_INFO_STEP_COMPLETE_CHARITY: Charity = {
   Metadata: {
     ...placeholderCharity.Metadata,
     Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner! },
-    CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo! },
+    Logo: { ...VALIDLY_FILLED_CHARITY.Metadata.Logo! },
     CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
   },
 };

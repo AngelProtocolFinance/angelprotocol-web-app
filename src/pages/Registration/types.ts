@@ -18,7 +18,7 @@ export type DocumentationValues = {
 
 export type AdditionalInfoValues = {
   charityOverview: string;
-  charityLogo: FileWrapper;
+  logo: FileWrapper;
   banner: FileWrapper;
   kycDonorsOnly: boolean;
 };

@@ -63,7 +63,7 @@ const registration_api = aws.injectEndpoints({
           },
           Metadata: {
             Banner: m.Banner,
-            CharityLogo: m.CharityLogo,
+            Logo: m.Logo,
             CharityOverview: m.CharityOverview || "",
             EndowmentContract: m.EndowmentContract || "",
             EndowmentId: m.EndowmentId || 0,

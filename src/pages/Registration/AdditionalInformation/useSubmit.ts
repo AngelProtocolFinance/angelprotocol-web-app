@@ -47,21 +47,21 @@ export default function useSubmit() {
 }
 
 async function getUploadBody(values: AdditionalInfoValues) {
-  const logoPromise = uploadIfNecessary(values.charityLogo);
+  const logoPromise = uploadIfNecessary(values.logo);
   const bannerPromise = uploadIfNecessary(values.banner);
-  const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
+  const [Logo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
-  if (!CharityLogo.publicUrl || !Banner.publicUrl) {
+  if (!Logo.publicUrl || !Banner.publicUrl) {
     throw new Error(
       `Error uploading file ${
-        !CharityLogo.publicUrl ? values.charityLogo.name : values.banner.name
+        !Logo.publicUrl ? values.logo.name : values.banner.name
       }`
     );
   }
 
   return {
     Banner,
-    CharityLogo,
+    Logo,
     CharityOverview: values.charityOverview,
     KycDonorsOnly: values.kycDonorsOnly,
   };

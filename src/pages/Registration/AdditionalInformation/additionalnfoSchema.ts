@@ -28,8 +28,8 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
   charityOverview: stringByteSchema("overview", 4, 1024),
-  charityLogo: FILE_SCHEMA.required("Charity logo required"),
-  banner: FILE_SCHEMA.required("Charity banner required"),
+  logo: FILE_SCHEMA.required("Logo is required"),
+  banner: FILE_SCHEMA.required("Banner is required"),
 };
 
 export const additionalInfoSchema = Yup.object().shape(additionalnfoShape);

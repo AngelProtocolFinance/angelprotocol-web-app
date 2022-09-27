@@ -47,7 +47,7 @@ export function getAdditionalInformationStepData(charity: Charity): StepData {
   }
 
   return !!charity.Metadata.Banner &&
-    !!charity.Metadata.CharityLogo &&
+    !!charity.Metadata.Logo &&
     !!charity.Metadata.CharityOverview
     ? createComplete()
     : createIncomplete(`${appRoutes.register}/${routes.additionalInformation}`);

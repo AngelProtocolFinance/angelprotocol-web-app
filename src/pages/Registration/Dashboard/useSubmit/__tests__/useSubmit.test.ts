@@ -133,7 +133,7 @@ const CHARITY: Charity = {
   Metadata: {
     EndowmentId: 0,
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
-    CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
+    Logo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "",
     SK: "Metadata",
@@ -152,7 +152,7 @@ const createEndowmentMsg: NewEndowment = {
   maturity_time: undefined,
   endow_type: "Charity",
   image: CHARITY.Metadata.Banner!.publicUrl,
-  logo: CHARITY.Metadata.CharityLogo!.publicUrl,
+  logo: CHARITY.Metadata.Logo!.publicUrl,
   name: CHARITY.Registration.CharityName,
 
   profile: {
