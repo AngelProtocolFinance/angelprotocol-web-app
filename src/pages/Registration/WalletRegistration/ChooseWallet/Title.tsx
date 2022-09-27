@@ -19,7 +19,7 @@ function InfoIcon() {
   return (
     <Icon
       type="ExclamationCircle"
-      className="text-thin-blue cursor-pointer text-5xl md:text-2xl"
+      className="text-blue cursor-pointer text-5xl md:text-2xl"
       onClick={() => showModal(WalletInfoModal, {})}
     />
   );

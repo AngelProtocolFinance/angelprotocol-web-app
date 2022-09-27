@@ -6,7 +6,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "thin-blue": "#54A3D9",
         "blue-accent": "#3385BD",
         "blue-dark": "#1a4f72",
         "angel-grey": "#4F5F6F",
@@ -101,7 +100,7 @@ module.exports = {
       borderColor: {
         "angel-orange": "#FAAC2E",
         blue: "#3FA9F5",
-        "thin-blue": "#54A3D9",
+        blue: "#54A3D9",
         "light-grey": "#f5f5f5",
       },
 
@@ -140,17 +139,17 @@ module.exports = {
           },
         },
         ".btn-secondary": {
-          backgroundColor: theme("colors.thin-blue"),
+          backgroundColor: theme("colors.blue"),
         },
         ".btn-outline-secondary": {
           borderStyle: "solid",
-          borderColor: theme("colors.thin-blue"),
+          borderColor: theme("colors.blue"),
           borderWidth: "2px",
           "&:hover": {
-            backgroundColor: `${theme("colors.thin-blue")}33`,
+            backgroundColor: `${theme("colors.blue")}33`,
           },
           "&:active": {
-            backgroundColor: `${theme("colors.thin-blue")}b2`,
+            backgroundColor: `${theme("colors.blue")}b2`,
           },
           "&:disabled": {
             borderStyle: "none",

@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <section className="grid grid-rows-[auto_1fr] place-items-center">
       <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
-        <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
+        <p className="text-3xl sm:text-4.5xl font-bold uppercase text-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
         </p>
         <div className="text-center my-5 text-gray-400">
@@ -69,7 +69,7 @@ const Login = () => {
 
         <Link
           to={appRoutes.index}
-          className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-thin-blue/75"
+          className="block w-48 mx-auto my-10 text-center text-blue font-bold text-md uppercase hover:text-blue/75"
         >
           learn more about angel protocol
         </Link>

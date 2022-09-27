@@ -35,7 +35,7 @@ export default function InstallWalletPopup(props: { providerId: ProviderId }) {
           </p>
         </div>
       </a>
-      <div className="p-3 md:p-5 rounded-2xl bg-thin-blue">
+      <div className="p-3 md:p-5 rounded-2xl bg-blue">
         <p className="text-white/70 text-xs md:text-sm">
           You may need to refresh the page once you have downloaded the wallet.
         </p>

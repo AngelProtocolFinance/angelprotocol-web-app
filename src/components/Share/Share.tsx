@@ -3,7 +3,7 @@ import Icon, { IconTypes } from "components/Icon";
 export default function Share() {
   return (
     <div className="md:p-4">
-      <div className="text-3xl md:text-5xl uppercase text-thin-blue text-center font-bold">
+      <div className="text-3xl md:text-5xl uppercase text-blue text-center font-bold">
         <p className="md:mb-2">let the</p>
         <p className="mb-3 md:mb-6">world know!</p>
       </div>
@@ -39,7 +39,7 @@ const IconLink = ({ link, iconType }: IconLinkProps) => {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1 text-3xl text-thin-blue"
+      className="flex justify-center items-center rounded-full border-blue p-2 border-2 border-solid mx-1 text-3xl text-blue"
     >
       <Icon type={iconType} />
     </a>

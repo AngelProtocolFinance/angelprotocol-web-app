@@ -63,7 +63,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
       {status === "Active" && (
         <Link
           to={`${appRoutes.profile}/${charity.Metadata.EndowmentId}`}
-          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-thin-blue underline hover:text-bright-blue"
+          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-blue underline hover:text-bright-blue"
         >
           Check out your new Endowment's profile page here
         </Link>
