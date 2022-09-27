@@ -67,7 +67,7 @@ export default function Form() {
         <TextInput<RV> title="governance" name="gov_contract" plain mono />
         <TextInput<RV>
           title="charity shares"
-          name="charity_shares_contract"
+          name="shares_contract"
           plain
           mono
         />

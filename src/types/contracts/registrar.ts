@@ -13,7 +13,7 @@ export type RegistrarConfig = {
   split_to_liquid: { min: string; max: string; default: string };
   halo_token?: string;
   gov_contract?: string;
-  charity_shares_contract?: string;
+  shares_contract?: string;
 };
 
 export type VaultRateInfo = {
@@ -60,7 +60,7 @@ export type RegistrarConfigPayload = {
   split_default?: string; //decimal string
   halo_token?: string;
   gov_contract?: string;
-  charity_shares_contract?: string;
+  shares_contract?: string;
 };
 
 export type RegistrarOwnerPayload = {
