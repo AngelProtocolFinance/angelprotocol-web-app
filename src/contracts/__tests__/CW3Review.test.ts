@@ -1,5 +1,5 @@
 import { fromUtf8 } from "@cosmjs/encoding";
-import { CharityApplicationMeta } from "pages/Admin/types";
+import { ApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
 import { ApplicationProposal, NewEndowment } from "types/contracts";
 import { PLACEHOLDER_WALLET } from "test/constants";
@@ -99,7 +99,7 @@ const endowmentMsg: NewEndowment = {
   cw3_max_voting_period: 86400,
 };
 
-const meta: CharityApplicationMeta = {
+const meta: ApplicationMeta = {
   type: "cw3_application",
   data: CHARITY.Registration,
 };

@@ -1,4 +1,4 @@
-import { CharityApplicationMeta } from "pages/Admin/types";
+import { ApplicationMeta } from "pages/Admin/types";
 import { Charity } from "types/aws";
 import { ApplicationProposal, ApplicationVote } from "types/contracts";
 import { WalletState } from "contexts/WalletContext/WalletContext";
@@ -25,7 +25,7 @@ export default class CW3Review extends CW3 {
 function createApplicationProposalPayload(
   charity: Charity
 ): ApplicationProposal {
-  const meta: CharityApplicationMeta = {
+  const meta: ApplicationMeta = {
     type: "cw3_application",
     data: charity.Registration,
   };
