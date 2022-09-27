@@ -1,16 +1,14 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
-import { FileObject } from "types/aws";
 import {
   useRegistrationQuery,
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FileWrapper } from "components/FileDropzone";
-import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes from "../routes";
+import getUploadBody from "./getUploadBody";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
@@ -44,43 +42,4 @@ export default function useSubmit() {
   );
 
   return { submit };
-}
-
-async function getUploadBody(values: AdditionalInfoValues) {
-  const logoPromise = uploadIfNecessary(values.logo);
-  const bannerPromise = uploadIfNecessary(values.banner);
-  const [Logo, Banner] = await Promise.all([logoPromise, bannerPromise]);
-
-  if (!Logo.publicUrl || !Banner.publicUrl) {
-    throw new Error(
-      `Error uploading file ${
-        !Logo.publicUrl ? values.logo.name : values.banner.name
-      }`
-    );
-  }
-
-  return {
-    Banner,
-    Logo,
-    Overview: values.overview,
-    KycDonorsOnly: values.kycDonorsOnly,
-  };
-}
-
-async function uploadIfNecessary(
-  fileWrapper: FileWrapper
-): Promise<FileObject> {
-  if (!fileWrapper.file) {
-    return {
-      name: fileWrapper.name,
-      publicUrl: fileWrapper.publicUrl,
-    };
-  }
-
-  const publicUrl = await uploadToIpfs(fileWrapper.file);
-
-  return {
-    name: fileWrapper.file.name,
-    publicUrl,
-  };
 }
