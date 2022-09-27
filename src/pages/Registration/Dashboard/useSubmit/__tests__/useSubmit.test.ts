@@ -158,7 +158,7 @@ const createEndowmentMsg: NewEndowment = {
   profile: {
     annual_revenue: undefined,
     average_annual_budget: undefined,
-    charity_navigator_rating: undefined,
+    navigator_rating: undefined,
     contact_email: CHARITY.ContactPerson.Email,
     country_of_origin: undefined,
     street_address: undefined,

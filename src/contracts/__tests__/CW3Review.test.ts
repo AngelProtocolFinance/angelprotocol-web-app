@@ -91,7 +91,7 @@ const endowmentMsg: NewEndowment = {
     number_of_employees: 1,
     average_annual_budget: "",
     annual_revenue: "",
-    charity_navigator_rating: "",
+    navigator_rating: "",
   },
   cw4_members: [{ addr: CHARITY.Metadata.JunoWallet, weight: 1 }],
   kyc_donors_only: CHARITY.Metadata.KycDonorsOnly, //set to false initially

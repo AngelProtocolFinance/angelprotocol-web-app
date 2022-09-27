@@ -59,7 +59,7 @@ function createApplicationProposalPayload(
         number_of_employees: 1,
         average_annual_budget: "",
         annual_revenue: "",
-        charity_navigator_rating: "",
+        navigator_rating: "",
       },
       cw4_members: [{ addr: charity.Metadata.JunoWallet, weight: 1 }],
       kyc_donors_only: charity.Metadata.KycDonorsOnly, //set to false initially
