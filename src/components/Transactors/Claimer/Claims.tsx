@@ -40,7 +40,7 @@ export default function Claims() {
       )) ||
         null}
       {total_claims.gt(0) && (
-        <p className="uppercase mb-1.5 text-angel-blue">
+        <p className="uppercase mb-1.5 text-blue">
           <span className="text-xs font-heading font-bold mr-1">
             {" "}
             Total claimable
@@ -61,7 +61,7 @@ function Claim(props: { time: string; amount: string }) {
     <li className="flex justify-between">
       <p
         className={`font-heading ${
-          claimable ? "text-angel-blue" : "text-grey-accent"
+          claimable ? "text-blue" : "text-grey-accent"
         }`}
       >
         <span className="mr-1">
@@ -71,7 +71,7 @@ function Claim(props: { time: string; amount: string }) {
       </p>
       <p className="text-xs font-semibold">
         {claimable ? (
-          <span className="flex items-center text-angel-blue">
+          <span className="flex items-center text-blue">
             <Icon type="Check" className="mr-0.5" /> claimable
           </span>
         ) : (

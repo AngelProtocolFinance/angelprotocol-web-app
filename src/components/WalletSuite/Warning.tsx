@@ -10,7 +10,7 @@ export default function Warning(props: Props) {
       <p className="text-center">{props.text}</p>
       <button
         onClick={closeModal}
-        className="text-sm bg-blue-accent hover:bg-angel-blue px-8 py-0.5 rounded-full text-white mt-3"
+        className="text-sm bg-blue-accent hover:bg-blue px-8 py-0.5 rounded-full text-white mt-3"
       >
         OK
       </button>

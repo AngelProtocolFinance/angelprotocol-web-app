@@ -4,7 +4,7 @@ import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(
   "text-angel-grey px-4 py-1",
-  "bg-angel-blue text-white pointer-events-none"
+  "bg-blue text-white pointer-events-none"
 );
 
 export default function Nav() {

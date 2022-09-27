@@ -26,7 +26,7 @@ export default function Votes(props: { proposalId: number }) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border border-white/10 divide-x divide-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+          rowClass="border border-white/10 divide-x divide-white/10 hover:bg-blue hover:bg-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
         >
           {votes.map((vote, i) => (
             <Cells
@@ -49,7 +49,7 @@ export default function Votes(props: { proposalId: number }) {
       {isLoadMoreShown && (
         <button
           disabled={isVoteListLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
           onClick={loadMoreVotes}
         >
           {isVoteListLoading ? (

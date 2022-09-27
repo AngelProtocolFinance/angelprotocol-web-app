@@ -53,7 +53,7 @@ function LinkIcon({
   return (
     <Link
       {...restProps}
-      className={`flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue ${className}`}
+      className={`flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-blue ${className}`}
     >
       <Icon type={_iconType} className="text-xl" />
       <span className="hidden sm:inline">{children}</span>

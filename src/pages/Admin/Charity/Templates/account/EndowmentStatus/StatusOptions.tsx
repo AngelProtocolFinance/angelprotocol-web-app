@@ -31,7 +31,7 @@ export default function StatusOptions() {
             {({ checked }) => (
               <span
                 className={`${
-                  checked ? "bg-angel-blue/20" : ""
+                  checked ? "bg-blue/20" : ""
                 } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
               >
                 {text[status]}

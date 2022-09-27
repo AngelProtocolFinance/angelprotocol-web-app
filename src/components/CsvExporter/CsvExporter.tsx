@@ -12,7 +12,7 @@ export default function CsvExporter(props: Props) {
   return (
     <CSVLink
       {...props}
-      className="flex gap-1 items-center max-h-10 bg-angel-blue hover:bg-bright-blue px-2 py-1 rounded-md uppercase text-sm text-white/80 font-heading"
+      className="flex gap-1 items-center max-h-10 bg-blue hover:bg-bright-blue px-2 py-1 rounded-md uppercase text-sm text-white/80 font-heading"
     >
       Save to CSV <Icon type="FileDownload" className="text-2xl" />
     </CSVLink>

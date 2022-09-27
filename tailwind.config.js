@@ -7,19 +7,15 @@ module.exports = {
     extend: {
       colors: {
         "bright-green": "#6ED482",
-        "angel-orange": "#FAAC2E",
-        "angel-blue": "#3FA9F5",
         "thin-blue": "#54A3D9",
         "blue-accent": "#3385BD",
         "blue-dark": "#1a4f72",
         "angel-grey": "#4F5F6F",
         "grey-accent": "#ADB7BE",
-        white: "#FAFAFA",
         "light-grey": "#EFEFEF",
         "thin-grey": "#ECEDEE",
         "black-blue": "#252626",
         "leaf-green": "#88B752",
-        orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
         "failed-red": "#FE4454",
@@ -107,7 +103,7 @@ module.exports = {
 
       borderColor: {
         "angel-orange": "#FAAC2E",
-        "angel-blue": "#3FA9F5",
+        blue: "#3FA9F5",
         "thin-blue": "#54A3D9",
         "light-grey": "#f5f5f5",
       },

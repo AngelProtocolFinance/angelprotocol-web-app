@@ -13,7 +13,7 @@ import Filter from "./Filter";
 import Holdings from "./Holdings";
 
 const linkStyle =
-  "text-angel-blue hover:text-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
+  "text-blue hover:text-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
 
 export default function Details(props: WalletState) {
   const { coins, address, chain } = props;

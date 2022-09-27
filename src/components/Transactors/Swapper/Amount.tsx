@@ -38,7 +38,7 @@ export default function Amount() {
           type="button"
           style={{ animationDuration: "4s" }}
           className={`${
-            settings_shown ? "text-angel-blue animate-spin" : "text-angel-grey"
+            settings_shown ? "text-blue animate-spin" : "text-angel-grey"
           }  ml-0.5 text-xl hover:text-orange justify-self-end`}
         >
           <Icon type="Settings" />

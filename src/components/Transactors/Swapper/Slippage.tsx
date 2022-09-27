@@ -27,8 +27,8 @@ function Option(props: OptionProps) {
       <label
         htmlFor={props.id}
         className={`px-2 py-1 font-mono font-semibold cursor-pointer text-xs 
-        hover:bg-angel-blue/10 ${
-          is_active ? "bg-angel-blue/10 shadow-inner-white rounded-sm" : ""
+        hover:bg-blue/10 ${
+          is_active ? "bg-blue/10 shadow-inner-white rounded-sm" : ""
         }`}
       >
         {props.value}%

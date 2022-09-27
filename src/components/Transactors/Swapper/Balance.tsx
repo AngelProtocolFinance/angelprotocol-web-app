@@ -19,7 +19,7 @@ export default function Balance({ token }: { token: Token }) {
       <button
         type="button"
         onClick={setAmount}
-        className="inline hover:text-angel-blue"
+        className="inline hover:text-blue"
       >
         {humanize(token.balance, 3, true)} {token.symbol}
       </button>

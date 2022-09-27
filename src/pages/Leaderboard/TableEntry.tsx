@@ -21,14 +21,14 @@ export default function TableEntry(props: Endowment) {
           src={props.charity_logo || defaultIcon}
           alt=""
           classes={`self-center row-span-2 w-32 h-24 bg-white ${
-            props.iconLight ? "bg-angel-blue" : ""
+            props.iconLight ? "bg-blue" : ""
           } rounded-sm object-contain mr-4 m-1`}
         />
       </td>
       <td>
         <Link
           to={`../${appRoutes.profile}/${props.endowment_address}`}
-          className="col-start-2 text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 mb-1"
+          className="col-start-2 text-lg text-angel-grey hover:text-blue active:text-blue font-bold pt-2 mb-1"
         >
           {props.charity_name}
         </Link>

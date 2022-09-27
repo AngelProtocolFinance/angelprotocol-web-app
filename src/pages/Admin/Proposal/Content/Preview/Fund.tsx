@@ -17,7 +17,7 @@ export default function Fund(props: FundPreview) {
       <KeyValue _key="rotating fund?">
         <span
           className={`${
-            true ? "text-angel-blue" : "text-red-400"
+            true ? "text-blue" : "text-red-400"
           } font-bold uppercase`}
         >
           {props.rotating_fund ? "yes" : "no"}

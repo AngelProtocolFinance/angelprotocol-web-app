@@ -25,7 +25,7 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.profile}/${id}`}
-        className="text-angel-blue hover:text-sky-300 text-sm font-semibold flex items-center gap-1"
+        className="text-blue hover:text-sky-300 text-sm font-semibold flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>

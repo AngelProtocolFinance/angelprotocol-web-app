@@ -29,7 +29,7 @@ export default function Table({ proposals }: Props) {
             <Expiry {...expires} />
             <Link
               to={`${adminRoutes.proposal}/${id}`}
-              className="flex items-center uppercase text-xs hover:text-angel-blue"
+              className="flex items-center uppercase text-xs hover:text-blue"
             >
               <span>Details</span>
               <Icon type="Forward" />

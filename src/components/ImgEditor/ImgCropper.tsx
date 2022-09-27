@@ -65,7 +65,7 @@ function Button({
     <button
       {...restProps}
       type="button"
-      className="text-angel-grey hover:text-angel-blue"
+      className="text-angel-grey hover:text-blue"
     >
       <Icon type={iconType} size={24} />
     </button>

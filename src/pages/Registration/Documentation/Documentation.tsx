@@ -142,9 +142,7 @@ const HighlightColumn = ({ level, ...rest }: HighlightColumnProps) => {
 };
 
 const Column = ({ colored, children, className }: ColoredColumnProps) => {
-  const styles = colored
-    ? "ring ring-angel-blue rounded-md bg-angel-blue/50"
-    : "";
+  const styles = colored ? "ring ring-blue rounded-md bg-blue/50" : "";
   return (
     <div
       className={`flex flex-col text-left p-1 gap-3 ${styles} ${

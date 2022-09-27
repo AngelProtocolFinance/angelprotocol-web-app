@@ -41,7 +41,7 @@ export default function Success(props: SuccessStage) {
           href={getTxUrl(chain, txHash)}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+          className="text-center text-blue cursor-pointer mb-6 text-sm"
         >
           view transaction details
         </a>
@@ -69,7 +69,7 @@ export default function Success(props: SuccessStage) {
 }
 
 function Button({
-  _bg = "bg-angel-blue",
+  _bg = "bg-blue",
   ...restProps
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { _bg?: string }) {
   return (

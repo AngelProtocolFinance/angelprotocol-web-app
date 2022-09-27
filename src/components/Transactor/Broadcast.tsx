@@ -10,7 +10,7 @@ export default function Broadcast({ chain, message, txHash }: BroadcastStage) {
         href={getTxUrl(chain, txHash)}
         target="_blank"
         rel="noreferrer noopener"
-        className="text-center text-angel-blue cursor-pointer mb-6"
+        className="text-center text-blue cursor-pointer mb-6"
       >
         view transaction status
       </a>

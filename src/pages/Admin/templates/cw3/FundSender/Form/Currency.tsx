@@ -9,7 +9,7 @@ function Currency(props: { currency: string; text: string; icon: string }) {
   return (
     <div
       className={`cursor-pointer flex items-center ${
-        isActive ? "bg-angel-blue/10 shadow-inner-white" : ""
+        isActive ? "bg-blue/10 shadow-inner-white" : ""
       } p-2 rounded-md`}
     >
       <input

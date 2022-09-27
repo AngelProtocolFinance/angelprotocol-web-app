@@ -27,7 +27,7 @@ export default function ProgressIndicator() {
       </div>
       <div className="h-4 w-full bg-white rounded-3xl">
         <div
-          className={`h-full w-${completedCount}/${progress.length} bg-angel-blue rounded-3xl`}
+          className={`h-full w-${completedCount}/${progress.length} bg-blue rounded-3xl`}
         />
       </div>
     </div>

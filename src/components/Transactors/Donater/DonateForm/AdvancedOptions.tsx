@@ -16,7 +16,7 @@ export default function AdvancedOptions(props: {
       <button
         type="button"
         onClick={props.toggleAdvancedOptions}
-        className="justify-self-start flex items-center text-angel-grey hover:text-angel-blue font-semibold  cursor-pointer"
+        className="justify-self-start flex items-center text-angel-grey hover:text-blue font-semibold  cursor-pointer"
       >
         <Icon
           type="Settings"

@@ -45,8 +45,8 @@ export default function CharityNav(props: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "hover:text-white hover:bg-angel-blue font-semibold uppercase py-3 text-center",
-  "bg-angel-blue text-white"
+  "hover:text-white hover:bg-blue font-semibold uppercase py-3 text-center",
+  "bg-blue text-white"
 );
 
 const disabledClass =

@@ -54,7 +54,7 @@ export default function DonationsTable(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
+        rowClass="border-b border-white/10 hover:bg-blue hover:bg-blue/10"
       >
         {sortedTransactions.map((tx) => (
           <Cells key={tx.tx_id} type="td" cellClass="p-2 first:pl-0 last:pr-0">
@@ -65,14 +65,14 @@ export default function DonationsTable(props: {
               href={getTxUrl(wallet!.chain, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+              className="text-center text-blue cursor-pointer mb-6 text-sm"
             >
               <span className="inline-block text-base w-36 truncate">
                 {tx.tx_id}
               </span>
             </a>
             <button
-              className="font-heading text-sm text-white bg-angel-blue hover:bg-bright-blue  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
+              className="font-heading text-sm text-white bg-blue hover:bg-bright-blue  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
               onClick={() =>
                 showReceiptForm({ chainId: tx.chain_id!, txHash: tx.tx_id! })
               }

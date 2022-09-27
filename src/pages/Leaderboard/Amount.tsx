@@ -22,7 +22,7 @@ export default function Amount(props: Props) {
       <button onClick={showSummary}>
         <Icon
           type="Info"
-          className="mt-0.5 block text-angel-blue hover:text-orange"
+          className="mt-0.5 block text-blue hover:text-orange"
         />
       </button>
       <p className="text-angel-grey">
