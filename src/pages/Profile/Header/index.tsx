@@ -7,7 +7,7 @@ import { unsdgs } from "constants/unsdgs";
 import { useProfile } from "..";
 import Links from "./Links";
 
-export default function CharityHeader(props: ProfileResponse) {
+export default function Header(props: ProfileResponse) {
   const { wallet } = useGetWallet();
   const profile = useProfile();
 
