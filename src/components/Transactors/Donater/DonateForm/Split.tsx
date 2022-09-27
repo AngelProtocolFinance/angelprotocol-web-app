@@ -18,7 +18,7 @@ export default function Split() {
         <Portion
           type="liquid"
           border_class="border-blue/80"
-          text_class="text-blue-accent uppercase"
+          text_class="text-blue-d1 uppercase"
           title="Liquid"
           action="Instantly available"
         >

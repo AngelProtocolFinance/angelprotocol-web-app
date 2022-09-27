@@ -33,8 +33,8 @@ export default function Success(props: SuccessStage) {
 
   return (
     <div className="bg-white grid gap-y-4 p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
-      <Icon type="CheckCircle" className="text-blue-accent text-3xl mb-1" />
-      <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
+      <Icon type="CheckCircle" className="text-blue-d1 text-3xl mb-1" />
+      <p className="text-center text-blue-d1 mb-2 font-bold">{message}</p>
 
       {chain && txHash && (
         <a

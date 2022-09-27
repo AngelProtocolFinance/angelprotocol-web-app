@@ -50,7 +50,7 @@ export default function Landing() {
 //       <div className="w-full flex justify-center">
 //         <button
 //           onClick={() => navigate(`${site.app}/${app.marketplace}`)}
-//           className="w-[20rem] px-10 py-3 font-heading text-sm text-white bg-blue-accent hover:bg-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+//           className="w-[20rem] px-10 py-3 font-heading text-sm text-white bg-blue-d1 hover:bg-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
 //         >
 //           Donate now
 //         </button>

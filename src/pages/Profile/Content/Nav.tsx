@@ -64,7 +64,7 @@ function Button({
       {...restProps}
       className={`absolute top-0 ${
         className || ""
-      } p-1 bg-blue-accent/50 group-hover:flex hover:bg-blue-accent/100 w-10 h-10 flex rounded-full items-center justify-center group`}
+      } p-1 bg-blue-d1/50 group-hover:flex hover:bg-blue-d1/100 w-10 h-10 flex rounded-full items-center justify-center group`}
     >
       <Icon type={_iconType} className="text-white text-2xl " />
     </button>

@@ -4,7 +4,7 @@ export default function Tooltip() {
       10-year projection of endowment's principal and cumulative donations.
       Assumes <span className="text-angel-grey font-bold">20%</span> yield,
       split as follows: <span className="text-green-600 font-bold">75%</span> to
-      charity and <span className="text-blue-accent font-bold">25% </span>
+      charity and <span className="text-blue-d1 font-bold">25% </span>
       reinvested
     </p>
   );
