@@ -23,7 +23,7 @@ export default function Applications() {
 
   if (isError) {
     return (
-      <p className="text-rose-400 place-self-center flex items-center gap-1">
+      <p className="text-red-l1 place-self-center flex items-center gap-1">
         <Icon type="Warning" />
         <span>Failed to get applications</span>
       </p>

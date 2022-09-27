@@ -34,7 +34,7 @@ export function QueryLoader<T>({
   }
   if (isError || !data) {
     return (
-      <div className={`flex gap-2 text-rose-300 ${classes?.container || ""}`}>
+      <div className={`flex gap-2 text-red-l2 ${classes?.container || ""}`}>
         <Icon type="Info" className="relative top-1" />
         <span>{messages.error || "Failed to get data"}</span>
       </div>

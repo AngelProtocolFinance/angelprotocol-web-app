@@ -10,16 +10,16 @@ export default function Status({
   routes = [],
 }: WithdrawLog) {
   if (proposal_status === "rejected") {
-    return <span className="text-rose-400 uppercase text-sm">rejected</span>;
+    return <span className="text-red-l1 uppercase text-sm">rejected</span>;
   }
 
   const currRoute = routes.length;
   if (num_routes && currRoute > 0) {
     let status =
       currRoute >= num_routes && routes[currRoute - 1].status === "OK" ? (
-        <span className="text-emerald-400">completed</span>
+        <span className="text-green-l1">completed</span>
       ) : (
-        <span className="text-amber-400">routing</span>
+        <span className="text-orange-l1">routing</span>
       );
 
     return (

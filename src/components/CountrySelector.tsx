@@ -43,7 +43,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
           <Icon type="Loading" className="animate-spin" />
         ) : countryName ? (
           <button
-            className="text-rose-500 hover:text-rose-400 active:text-rose-600"
+            className="text-red hover:text-red-l1 active:text-red-d1"
             onClick={() => {
               onCountryNameChange("");
             }}

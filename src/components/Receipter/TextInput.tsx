@@ -19,7 +19,7 @@ export default function TextInput(props: {
         className="ml-0.5 text-gray-d2 text-xs uppercase font-bold mb-1"
       >
         {props.label}
-        {props.required && <span className="text-rose-400"> *</span>}
+        {props.required && <span className="text-red-l1"> *</span>}
       </label>
       <input
         {...register(props.name)}

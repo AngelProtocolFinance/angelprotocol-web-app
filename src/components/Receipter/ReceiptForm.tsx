@@ -50,7 +50,7 @@ export default function ReceiptForm() {
           htmlFor="country"
           className="text-gray-d2 text-xs uppercase font-bold mb-1"
         >
-          Country <span className="text-rose-400"> *</span>
+          Country <span className="text-red-l1"> *</span>
         </label>
         <div className="form-control rounded-md grid bg-white">
           <CountrySelector

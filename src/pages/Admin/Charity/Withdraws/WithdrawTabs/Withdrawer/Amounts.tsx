@@ -15,7 +15,7 @@ export default function Amounts() {
 
   if (fields.length <= 0) {
     return (
-      <div className="flex items-center gap-2 text-rose-400 mb-4">
+      <div className="flex items-center gap-2 text-red-l1 mb-4">
         <Icon type="Info" />
         <p>No tokens found</p>
       </div>
@@ -67,7 +67,7 @@ export default function Amounts() {
               errors={errors}
               name={fieldName}
               as="span"
-              className="text-right text-rose-400 text-xs absolute -bottom-5 right-2"
+              className="text-right text-red-l1 text-xs absolute -bottom-5 right-2"
             />
           </div>
         );

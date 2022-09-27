@@ -28,7 +28,7 @@ export default function Beneficiary() {
         errors={errors}
         name="beneficiary"
         as="span"
-        className="text-right text-rose-400 text-xs absolute -bottom-5 right-2"
+        className="text-right text-red-l1 text-xs absolute -bottom-5 right-2"
       />
     </div>
   );
