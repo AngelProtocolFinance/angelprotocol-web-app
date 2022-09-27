@@ -13,7 +13,7 @@ export default function TransactionHint() {
     case "submit":
       return <StatusButton iconType="Loading" iconClass="animate-spin" />;
     case "success":
-      return <StatusButton iconType="Check" iconClass="text-green-300" />;
+      return <StatusButton iconType="Check" iconClass="text-green-l2" />;
     default:
       return null;
   }

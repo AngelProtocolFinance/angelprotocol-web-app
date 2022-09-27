@@ -18,8 +18,8 @@ export default function Member(props: AddressWithFlags) {
   return (
     <li
       className={`flex gap-1 text-gray-d2 items-center ${
-        props.isDeleted ? "bg-red-400/30" : ""
-      } ${props.isAdded ? "bg-green-400/30" : ""} rounded-md p-2 w-full`}
+        props.isDeleted ? "bg-red/30" : ""
+      } ${props.isAdded ? "bg-green/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
       <span

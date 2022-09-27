@@ -8,7 +8,7 @@ export default function WalletInfoModal() {
   return (
     <div className="fixed-center w-full max-w-sm p-3 pb-5 z-20 rounded-xl shadow-lg text-center bg-white text-blue">
       <BsX
-        className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
+        className="text-gray-l1 text-2xl ml-auto hover:cursor-pointer"
         onClick={closeModal}
       />
       <p className="p-4">

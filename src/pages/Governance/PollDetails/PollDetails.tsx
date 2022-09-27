@@ -79,7 +79,7 @@ export default function PollDetails() {
             title="yes"
             percent={details.yes_pct}
             value={details.yes_val}
-            colorClass="text-green-500"
+            colorClass="text-green"
           />
           <Count
             title="no"
@@ -94,12 +94,12 @@ export default function PollDetails() {
 }
 
 const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
-  executed: { bg: "bg-green-400", text: "text-green-400" },
+  executed: { bg: "bg-green-l1", text: "text-green-l1" },
   expired: { bg: "bg-white", text: "text-white" },
-  failed: { bg: "bg-red-300", text: "text-red-300" },
+  failed: { bg: "bg-red-l2", text: "text-red-l2" },
   in_progress: { bg: "bg-white", text: "text-white" },
-  passed: { bg: "bg-green-400", text: "text-green-400" },
-  rejected: { bg: "bg-red-300", text: "text-red-300" },
+  passed: { bg: "bg-green-l1", text: "text-green-l1" },
+  rejected: { bg: "bg-red-l2", text: "text-red-l2" },
 };
 
 function Count(props: {

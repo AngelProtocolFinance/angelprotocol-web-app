@@ -10,7 +10,7 @@ export default function Beneficiary() {
   } = useFormContext<WithdrawValues>();
 
   return (
-    <div className="relative grid mt-6 mb-6 border-b border-zinc-900/10">
+    <div className="relative grid mt-6 mb-6 border-b border-black/10">
       <label
         htmlFor={id}
         className="text-gray-d2 font-bold font-heading text-sm uppercase mb-2"

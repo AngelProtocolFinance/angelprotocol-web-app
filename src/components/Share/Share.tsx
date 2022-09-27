@@ -8,7 +8,7 @@ export default function Share() {
         <p className="mb-3 md:mb-6">world know!</p>
       </div>
       <div className="rounded-xl bg-white p-3 w-2/3 flex justify-center mx-auto">
-        <span className="text-gray-400 text-sm">
+        <span className="text-gray text-sm">
           {decodeURIComponent(ENCODED_TEXT)}
         </span>
       </div>

@@ -34,13 +34,13 @@ export default function StatusSelector() {
           <span>{activeStatus === "all" ? "status" : texts[activeStatus]}</span>
           <Icon type="FilterLeft" size={20} />
         </Listbox.Button>
-        <Listbox.Options className="absolute w-max rounded-sm bg-zinc-50 text-gray-d2 ">
+        <Listbox.Options className="absolute w-max rounded-sm bg-white text-gray-d2 ">
           {options.map((status) => (
             <Listbox.Option key={status} value={status} as={Fragment}>
               {({ selected }) =>
                 (!selected && (
                   <li
-                    className={`font-normal px-2 py-0.5 text-sm uppercase hover:bg-sky-300/30 text-left cursor-pointer`}
+                    className={`font-normal px-2 py-0.5 text-sm uppercase hover:bg-blue-l2/30 text-left cursor-pointer`}
                   >
                     {texts[status]}
                   </li>

@@ -30,7 +30,7 @@ export default function VerificationSuccessful({
       </div>
       <div className="text-2xl font-bold">
         <p>Your registration reference is</p>
-        <p className="text-yellow-600">{newCharity.ContactPerson.PK}</p>
+        <p className="text-orange">{newCharity.ContactPerson.PK}</p>
       </div>
       <Button className="btn-primary w-48 h-12" onClick={handleContinue}>
         Continue

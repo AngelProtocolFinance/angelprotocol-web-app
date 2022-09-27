@@ -25,7 +25,7 @@ export default function Form() {
         </div>
       </div>
 
-      <Label className="text-green-400 -mb-2">add member</Label>
+      <Label className="text-green-l1 -mb-2">add member</Label>
       <Adder />
 
       <Submitter type="button" onClick={updateMembers} _classes="mt-4">

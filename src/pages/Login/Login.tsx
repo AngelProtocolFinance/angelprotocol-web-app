@@ -23,7 +23,7 @@ const Login = () => {
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
         </p>
-        <div className="text-center my-5 text-gray-400">
+        <div className="text-center my-5 text-gray">
           <p className="text-sm sm:text-base">Access Restricted to</p>
           <p className="text-base sm:text-lg font-bold  text-gray-d2">
             Angel Alliance Members
@@ -32,12 +32,12 @@ const Login = () => {
 
         <form className="text-center" onSubmit={login}>
           <div className="my-10 text-left relative">
-            <p className="text-sm text-gray-400 font-bold mb-1">Password</p>
-            <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+            <p className="text-sm text-gray font-bold mb-1">Password</p>
+            <div className="form-control rounded-md bg-gray-l2 p-2 flex justify-between items-center">
               <input
                 {...register("password")}
                 type={isShowPassword ? "text" : "password"}
-                className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
+                className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-l2"
                 placeholder="Enter your password."
                 name="password"
               />

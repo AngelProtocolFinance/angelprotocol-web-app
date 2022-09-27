@@ -21,7 +21,7 @@ export default function Details(props: WalletState) {
 
   return (
     <Popover.Panel className="w-max z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
-      <div className="bg-gray-d2 text-zinc-50 text-xs p-2">
+      <div className="bg-gray-d2 text-white text-xs p-2">
         <p className="uppercase">network : {chain.chain_name}</p>
       </div>
 

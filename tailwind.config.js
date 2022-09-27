@@ -86,7 +86,7 @@ module.exports = {
       },
 
       borderColor: {
-        "angel-orange": "#FAAC2E",
+        orange: "#FAAC2E",
         blue: "#3FA9F5",
         blue: "#54A3D9",
         "gray-l2": "#f5f5f5",
@@ -110,17 +110,17 @@ module.exports = {
     plugin(function ({ addComponents, theme }) {
       addComponents({
         ".btn-primary": {
-          backgroundColor: theme("colors.angel-orange"),
+          backgroundColor: theme("colors.orange"),
         },
         ".btn-outline-primary": {
           borderStyle: "solid",
-          borderColor: theme("colors.angel-orange"),
+          borderColor: theme("colors.orange"),
           borderWidth: "2px",
           "&:hover": {
-            backgroundColor: `${theme("colors.angel-orange")}33`,
+            backgroundColor: `${theme("colors.orange")}33`,
           },
           "&:active": {
-            backgroundColor: `${theme("colors.angel-orange")}b2`,
+            backgroundColor: `${theme("colors.orange")}b2`,
           },
           "&:disabled": {
             borderStyle: "none",

@@ -10,8 +10,8 @@ export default function Split() {
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="locked"
-          border_class="border-green-500/80"
-          text_class="text-green-500 uppercase"
+          border_class="border-green/80"
+          text_class="text-green uppercase"
           title="Endowment"
           action="Compounded forever"
         />

@@ -50,12 +50,12 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           </>
         )}
         {status === "Under Review" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-yellow-500">
+          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-orange-l1">
             Under Review
           </p>
         )}
         {status === "Active" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-green-500">
+          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-green">
             Active
           </p>
         )}

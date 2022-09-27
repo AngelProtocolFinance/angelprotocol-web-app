@@ -55,9 +55,9 @@ export default function VoteOption<T extends VoteOptionContextType>(
 
 const vote_colors: { [key in Vote]: { [index: string]: string } } = {
   yes: {
-    bg: "bg-green-400/10",
-    icon: "text-green-400",
-    text: "text-green-400",
+    bg: "bg-green-l1/10",
+    icon: "text-green-l1",
+    text: "text-green-l1",
   },
   no: {
     bg: "bg-red-400/10",

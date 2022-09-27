@@ -18,7 +18,7 @@ export default function MobileNav() {
       </Popover.Button>
       <Popover.Panel
         as="nav"
-        className="lg:hidden rounded-sm min-w-max gap-1 absolute p-4 z-10 bg-zinc-50 right-0 top-full mt-1 rounded-lg shadow-xl grid grid-cols-2"
+        className="lg:hidden rounded-sm min-w-max gap-1 absolute p-4 z-10 bg-white right-0 top-full mt-1 rounded-lg shadow-xl grid grid-cols-2"
       >
         <AppLinks />
         <div id={adminMobileNavId} />
@@ -28,7 +28,7 @@ export default function MobileNav() {
 }
 
 const styler = createNavLinkStyler(
-  "text-zinc-600 inline-flex items-center",
+  "text-gray-d2 inline-flex items-center",
   "text-orange"
 );
 
@@ -64,7 +64,7 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
   return (
     (isMobileNavOpen &&
       createPortal(
-        <div className="border-l border-zinc-600/20 pl-4 ml-4">
+        <div className="border-l border-gray-d2/20 pl-4 ml-4">
           <h4 className="uppercase text-sm font-bold text-gray-d2 mb-2">
             Admin
           </h4>

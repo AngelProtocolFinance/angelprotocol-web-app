@@ -18,8 +18,8 @@ export default function Member(props: MemberCopy) {
   return (
     <li
       className={`flex gap-1 text-gray-d2 items-center ${
-        props.is_deleted ? "bg-red-400/30" : ""
-      } ${props.is_added ? "bg-green-400/30" : ""} rounded-md p-2 w-full`}
+        props.is_deleted ? "bg-red-l1/30" : ""
+      } ${props.is_added ? "bg-green-l1/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
       <span

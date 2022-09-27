@@ -17,7 +17,7 @@ export default function ConnectedWallet(props: WalletState) {
     <Popover as="div" className="relative">
       <Popover.Button
         disabled={isLoading}
-        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white disabled:text-gray focus:outline-none"
+        className="border border-white/30 rounded-md flex items-center py-2 px-3 text-white disabled:text-gray focus:outline-none"
       >
         {(!isLoading && (
           <img
@@ -27,7 +27,7 @@ export default function ConnectedWallet(props: WalletState) {
           />
         )) || <Icon type="Loading" className="animate-spin mr-1" />}
         <span className="px-2 text-sm">{maskedAddr}</span>
-        <span className="pl-2 hidden sm:block border-l border-zinc-50/20 text-sm ">
+        <span className="pl-2 hidden sm:block border-l border-white/20 text-sm ">
           {humanize(wallet?.displayCoin.balance || 0, 3)}
         </span>
         <span className="text-xs pl-1 hidden sm:block">

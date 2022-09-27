@@ -22,7 +22,7 @@ export default function Form() {
       <AllianceSelection />
       {(isEditingMember && (
         <Label className="mt-4 -mb-2 text-orange">Edit Member</Label>
-      )) || <Label className="mt-4 -mb-2 text-green-400">Add member</Label>}
+      )) || <Label className="mt-4 -mb-2 text-green-l1">Add member</Label>}
       <MemberEditor />
       <Submitter type="button" className="mt-4 " onClick={editAlliance}>
         Propose Changes

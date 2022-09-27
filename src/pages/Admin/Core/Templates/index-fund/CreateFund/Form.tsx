@@ -33,7 +33,7 @@ export default function Form() {
       <DateInput />
       <Slider />
       <CheckInput />
-      <Label className="text-green-400">Add members</Label>
+      <Label className="text-green-l1">Add members</Label>
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">
@@ -55,7 +55,7 @@ function Slider() {
     <div className="text-gray-d2 grid mt-6">
       <label className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2 select-none">
         <span>SPLIT TO LIQUID ACCOUNT</span>
-        <span className="font-mono font-bold text-green-500 ml-2 text-base">
+        <span className="font-mono font-bold text-green-d1 ml-2 text-base">
           {splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}
         </span>
         <button onClick={unspecifySplit} className="font-mono ml-1">

@@ -32,7 +32,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
       as="div"
       className="relative"
     >
-      <Listbox.Button className="flex items-center bg-zinc-50 disabled:bg-zinc-50/10 text-left rounded-md outline-none border-none w-full px-3 py-2 text-black">
+      <Listbox.Button className="flex items-center bg-white disabled:bg-white/10 text-left rounded-md outline-none border-none w-full px-3 py-2 text-black">
         {({ open }) => (
           <>
             <span>{display}</span>
@@ -49,8 +49,8 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             key={option.value}
             value={option.value}
             className={({ selected }) =>
-              `cursor-pointer p-1 px-2 hover:bg-sky-200/50 ${
-                selected ? "bg-sky-500 text-zinc-50" : "text-gray-d2"
+              `cursor-pointer p-1 px-2 hover:bg-blue-l3/50 ${
+                selected ? "bg-blue text-white" : "text-gray-d2"
               }`
             }
           >

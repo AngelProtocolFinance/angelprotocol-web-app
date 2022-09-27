@@ -29,7 +29,7 @@ export default function Amounts() {
 
         return (
           <div
-            className="flex relative mb-6 border-b border-zinc-900/10 pr-2 pb-1 pt-6 items-center"
+            className="flex relative mb-6 border-b border-black/10 pr-2 pb-1 pt-6 items-center"
             key={field.id}
           >
             <button
@@ -40,7 +40,7 @@ export default function Amounts() {
                 });
               }}
               type="button"
-              className="absolute top-1 right-2 text-sky-400 uppercase text-xs"
+              className="absolute top-1 right-2 text-blue-l1 uppercase text-xs"
             >
               bal: {humanize(+field.balance, 4)}
             </button>

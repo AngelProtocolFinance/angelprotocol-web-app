@@ -25,7 +25,7 @@ export default function MemberAdder() {
       <button
         type="button"
         onClick={addMember}
-        className="justify-self-end text-green-400 font-bold text-sm"
+        className="justify-self-end text-green-l1 font-bold text-sm"
       >
         + add member
       </button>

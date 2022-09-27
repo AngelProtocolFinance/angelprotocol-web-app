@@ -11,7 +11,7 @@ export default function Table(props: { applications: CharityApplication[] }) {
 
   return (
     <table className="w-full text-white/80 self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
+      <TableSection type="thead" rowClass="border-b-2 border-white/30">
         <Cells type="th" cellClass="p-2">
           <Header
             sortDirection={sortDirection}
@@ -43,7 +43,7 @@ export default function Table(props: { applications: CharityApplication[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-zinc-50/10 hover:bg-zinc-50/5"
+        rowClass="border-b border-white/10 hover:bg-white/5"
       >
         {sortedApplications.length <= 0 ? (
           <Cells type="td" cellClass="px-2 py-3">

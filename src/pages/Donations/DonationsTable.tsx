@@ -72,7 +72,7 @@ export default function DonationsTable(props: {
               </span>
             </a>
             <button
-              className="font-heading text-sm text-white bg-blue hover:bg-blue-l1  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
+              className="font-heading text-sm text-white bg-blue hover:bg-blue-l1  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray disabled:cursor-default"
               onClick={() =>
                 showReceiptForm({ chainId: tx.chain_id!, txHash: tx.tx_id! })
               }

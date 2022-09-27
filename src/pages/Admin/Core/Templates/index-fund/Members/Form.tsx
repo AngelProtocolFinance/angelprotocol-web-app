@@ -56,7 +56,7 @@ export default function Form() {
       )}
       {isFundSelected && (
         <>
-          <Label className="text-green-400 mt-6 -mb-2">add member</Label>
+          <Label className="text-green mt-6 -mb-2">add member</Label>
           <Adder />
         </>
       )}

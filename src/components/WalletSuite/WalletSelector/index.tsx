@@ -18,7 +18,7 @@ export default function WalletSelector(props: { isLoading: boolean }) {
         <span>{props.isLoading ? "Loading" : "Connect"}</span>
       </Menu.Button>
 
-      <Menu.Items className="absolute z-10 bg-zinc-50 w-max p-3 rounded-md mt-2 right-0">
+      <Menu.Items className="absolute z-10 bg-white w-max p-3 rounded-md mt-2 right-0">
         {connections.map((connection) => (
           <Connector {...connection} key={connection.name} />
         ))}

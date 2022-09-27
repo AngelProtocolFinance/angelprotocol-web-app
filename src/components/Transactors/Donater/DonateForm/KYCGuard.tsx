@@ -29,7 +29,7 @@ export default function KYCGuard() {
       {isKycCompleted ? (
         <button
           onClick={showKycForm}
-          className="flex gap-1 items-center text-xs text-green-400 font-semibold"
+          className="flex gap-1 items-center text-xs text-green-l1 font-semibold"
         >
           <Icon type="CheckCircle" size={15} />
           KYC completed
