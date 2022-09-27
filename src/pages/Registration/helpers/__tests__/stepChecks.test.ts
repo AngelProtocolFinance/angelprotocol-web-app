@@ -167,8 +167,8 @@ const VALIDLY_FILLED_CHARITY: Charity = {
     SK: "ContactPerson",
   },
   Registration: {
-    Name: "charity",
-    Name_ContactEmail: "CHARITY_test@test.com",
+    OrganizationName: "charity",
+    OrganizationName_ContactEmail: "CHARITY_test@test.com",
     RegistrationDate: "2022-05-04T10:10:10Z",
     RegistrationStatus: "Inactive",
     SK: "Registration",
@@ -202,8 +202,9 @@ const CONTACT_DETAILS_STEP_COMPLETE_CHARITY: Charity = {
   ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
   Registration: {
     ...placeholderCharity.Registration,
-    Name: VALIDLY_FILLED_CHARITY.Registration.Name,
-    Name_ContactEmail: VALIDLY_FILLED_CHARITY.Registration.Name_ContactEmail,
+    OrganizationName: VALIDLY_FILLED_CHARITY.Registration.OrganizationName,
+    OrganizationName_ContactEmail:
+      VALIDLY_FILLED_CHARITY.Registration.OrganizationName_ContactEmail,
     RegistrationDate: VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
     RegistrationStatus: VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
   },

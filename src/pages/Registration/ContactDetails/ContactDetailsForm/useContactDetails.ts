@@ -39,7 +39,7 @@ export default function useSaveContactDetails() {
           PK: contactData.uniqueID,
           body: {
             Registration: {
-              Name: contactData.name,
+              OrganizationName: contactData.organizationName,
             },
             ContactPerson: {
               FirstName: contactData.firstName,

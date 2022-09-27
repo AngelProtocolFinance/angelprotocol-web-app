@@ -18,7 +18,7 @@ export default function AuthorityToCreateCheckbox() {
       disabled={isSubmitting}
     >
       {`By checking this box, you declare that you have the authority to create an
-        endowment in the name of ${charity.Registration.Name} through Angel Protocol`}
+        endowment in the name of ${charity.Registration.OrganizationName} through Angel Protocol`}
       <span className="text-failed-red ml-0.5">*</span>
     </Checkbox>
   );

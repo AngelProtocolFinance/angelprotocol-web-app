@@ -8,8 +8,8 @@ import { statusColors } from "../constants";
 export default function AppRow(props: CharityApplication) {
   return (
     <Cells type="td" cellClass="px-2 py-3" key={props.PK}>
-      <>{props.Name}</>
-      <>{props.Name_ContactEmail?.split("_")[1]}</>
+      <>{props.OrganizationName}</>
+      <>{props.OrganizationName_ContactEmail?.split("_")[1]}</>
       <>{new Date(props.RegistrationDate).toDateString()}</>
       <span
         className={`${

@@ -24,7 +24,7 @@ export type AdditionalInfoValues = {
 };
 
 export type ContactDetails = {
-  name: string;
+  organizationName: string;
   firstName: string;
   lastName: string;
   email: string;

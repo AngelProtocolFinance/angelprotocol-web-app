@@ -24,7 +24,8 @@ export default function VerificationSuccessful({
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
-          {newCharity.Registration.Name}, {newCharity.ContactPerson.FirstName}!
+          {newCharity.Registration.OrganizationName},{" "}
+          {newCharity.ContactPerson.FirstName}!
         </p>
       </div>
       <div className="text-2xl font-bold">

@@ -4,11 +4,11 @@ import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function CharityApplication(props: Registration) {
-  const email = props.Name_ContactEmail!.split("_")[1];
+  const email = props.OrganizationName_ContactEmail!.split("_")[1];
 
   return (
     <PreviewContainer classes="grid">
-      <h3 className="text-xl font-semibold">{props.Name}</h3>
+      <h3 className="text-xl font-semibold">{props.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
         <Url href={props.Website}>
           <Icon type="Globe" size={16} />

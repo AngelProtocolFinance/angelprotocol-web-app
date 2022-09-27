@@ -72,8 +72,8 @@ type InitialRegistration = Optional<
 export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
-  Name: string;
-  Name_ContactEmail?: string;
+  OrganizationName: string;
+  OrganizationName_ContactEmail?: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
   ProofOfIdentity?: FileObject;
@@ -125,7 +125,10 @@ export type ContactDetailsData = {
   ContactPerson: ContactPerson;
   Registration: Pick<
     Registration,
-    "Name" | "Name_ContactEmail" | "RegistrationDate" | "RegistrationStatus"
+    | "OrganizationName"
+    | "OrganizationName_ContactEmail"
+    | "RegistrationDate"
+    | "RegistrationStatus"
   >;
 };
 
@@ -134,7 +137,7 @@ export type ContactDetailsRequest = {
   PK?: string;
   body: {
     ContactPerson: Omit<ContactPerson, "SK" | "EmailVerificationLastSentDate">;
-    Registration: Pick<Registration, "Name">;
+    Registration: Pick<Registration, "OrganizationName">;
   };
 };
 

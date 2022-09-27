@@ -78,7 +78,7 @@ const mockApplications: CharityApplication[] = [
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    Name: "testCharity1",
+    OrganizationName: "testCharity1",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -95,7 +95,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    Name_ContactEmail: "testCharity1_testCharity1@mail.com",
+    OrganizationName_ContactEmail: "testCharity1_testCharity1@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -126,7 +126,7 @@ const mockApplications: CharityApplication[] = [
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    Name: "testCharity2",
+    OrganizationName: "testCharity2",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -143,7 +143,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    Name_ContactEmail: "testCharity2_testCharity2@mail.com",
+    OrganizationName_ContactEmail: "testCharity2_testCharity2@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -174,7 +174,7 @@ const mockApplications: CharityApplication[] = [
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    Name: "testCharity3",
+    OrganizationName: "testCharity3",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -191,7 +191,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    Name_ContactEmail: "testCharity3_testCharity3@mail.com",
+    OrganizationName_ContactEmail: "testCharity3_testCharity3@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",

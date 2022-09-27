@@ -48,7 +48,7 @@ export default function VerifiedEmail() {
       }
 
       const emailPayload = {
-        Name: charity.Registration.Name,
+        Name: charity.Registration.OrganizationName,
         Email: charity.ContactPerson.Email,
         FirstName: charity.ContactPerson.FirstName,
         LastName: charity.ContactPerson.LastName,
