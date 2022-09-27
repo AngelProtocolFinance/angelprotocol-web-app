@@ -4,7 +4,7 @@ import defaultBanner from "assets/images/home-banner.jpg";
 import LazyImage from "components/LazyImage";
 import { appRoutes } from "constants/routes";
 
-export default function CharityCard(props: EndowmentEntry) {
+export default function EndowmentCard(props: EndowmentEntry) {
   return (
     <Link
       to={`${appRoutes.profile}/${props.id}`}
