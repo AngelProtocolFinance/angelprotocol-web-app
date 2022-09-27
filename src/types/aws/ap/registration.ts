@@ -163,7 +163,7 @@ export type UpdateMetadataRequest = {
   };
 };
 
-export type UpdateCharityMetadataResult = {
+export type UpdateMetadataResult = {
   Banner: FileObject;
   Logo: FileObject;
   Overview: string;
