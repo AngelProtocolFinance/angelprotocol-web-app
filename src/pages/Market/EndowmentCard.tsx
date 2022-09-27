@@ -13,7 +13,7 @@ export default function EndowmentCard(props: EndowmentEntry) {
       <LazyImage
         classes="mt-2 mx-2 w-64 h-32 bg-white rounded-lg img-no-drag object-cover object-center rounded-md"
         src={props.image || defaultBanner}
-        alt="charity banner"
+        alt="endowment banner"
       />
       <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-sm uppercase my-2.5">
         {props.name}

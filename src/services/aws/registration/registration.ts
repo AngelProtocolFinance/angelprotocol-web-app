@@ -194,15 +194,15 @@ export const useRegistrationQuery = () => {
     skip: !regRef,
   });
 
-  // necessary to assign the placeholderCharity this way to avoid a bug when reading Charity
+  // necessary to assign the placeholderApplication this way to avoid a bug when reading Charity
   // data in Registration.tsx, because the following happens:
   // 1. continue a registration using a ref ID
-  // 2. charity data read in Registration using this ref ID
-  // 3. charity data read in any step of the flow using this ref ID
+  // 2. application data read in Registration using this ref ID
+  // 3. application data read in any step of the flow using this ref ID
   // 4. go back to Landing page (https://.../register)
-  // 5. click "Start" to start new registration -> ref ID is cleared and charity data cache should be cleared, but
+  // 5. click "Start" to start new registration -> ref ID is cleared and application data cache should be cleared, but
   //    due to some race condition, the Registration page reads the cached data before the clearing
-  // 6. different charity data is read in Registration.tsx than in other steps
+  // 6. different application data is read in Registration.tsx than in other steps
   const application = !regRef || !data ? placeholderApplication : data;
 
   return { application, ...rest };

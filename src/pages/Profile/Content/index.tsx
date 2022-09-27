@@ -8,7 +8,7 @@ export default function Content(props: ProfileResponse & { classes?: string }) {
     <div className={`${props.classes || ""} w-full`}>
       <ImageWrapper
         src={props.image}
-        alt="charity image"
+        alt="endowment image"
         className="w-full h-[300px] rounded-2xl shadow-md object-cover object-center"
       />
       <Nav />

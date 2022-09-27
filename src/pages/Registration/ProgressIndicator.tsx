@@ -3,7 +3,7 @@ import { getRegistrationState } from "./helpers";
 
 export default function ProgressIndicator() {
   const { application } = useRegistrationQuery();
-  const state = getRegistrationState(charity);
+  const state = getRegistrationState(application);
   const progress = [
     state.contactDetails.isComplete,
     state.documentation.isComplete,

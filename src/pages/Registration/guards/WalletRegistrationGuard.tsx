@@ -12,15 +12,15 @@ export function WalletRegistrationGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;
 }
 
-const guardLogic: GuardLogicFunc = (charity, children) => {
+const guardLogic: GuardLogicFunc = (application, children) => {
   const { isComplete, urlToPreviousStep } =
-    getAdditionalInformationStepData(charity);
+    getAdditionalInformationStepData(application);
 
   if (!isComplete) {
     return <Navigate to={urlToPreviousStep} />;
   }
 
-  if (!isRegistrationEditable(charity)) {
+  if (!isRegistrationEditable(application)) {
     return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 
