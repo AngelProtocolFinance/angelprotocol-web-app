@@ -1,4 +1,4 @@
-import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
+import betaWhiteLogo from "assets/images/angelprotocol-horiz-wht.png";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite";
