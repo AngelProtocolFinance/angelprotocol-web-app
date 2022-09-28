@@ -21,7 +21,7 @@ export default function Banner() {
             further, connections run deeper, and access is available to all.
           </span>{" "}
           <span className="md:leading-normal xl:leading-relaxed font-bold">
-            Donate below or
+            Donate below or{" "}
             <a
               href="https://app.angelprotocol.io/register"
               target="_blank"
