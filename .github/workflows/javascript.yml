@@ -6,6 +6,9 @@ on:
     branches:
     - master
 
+env:
+  REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+  
 jobs:
   lint:
     name: "Lint codebase"
@@ -30,7 +33,8 @@ jobs:
   test:
     name: "Test codebase"
     runs-on: ubuntu-latest
-
+    env:
+      REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
     steps:
       - name: Check out repo
         uses: actions/checkout@v2
