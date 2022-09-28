@@ -15,7 +15,7 @@ export default function Banner() {
         <p className="font-heading text-white font-extrabold text-3xl md:text-4xl lg:text-5xl">
           ANGEL PROTOCOL REDEFINES
         </p>
-        <p className="font-heading text-orange font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
+        <p className="font-heading text-orange-l1 font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
           GLOBAL IMPACT FINANCING.
         </p>
         {/*</a>*/}
