@@ -81,7 +81,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ body }) => ({
-        url: "v1/registration",
+        url: "v2/registration",
         method: "POST",
         headers,
         body,
@@ -94,7 +94,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
       query: (status) => {
         return {
-          url: `v1/registration/list${
+          url: `v2/registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
           method: "Get",
@@ -112,7 +112,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, type, body }) => {
         return {
-          url: "v1/registration/build-email",
+          url: "v2/registration/build-email",
           method: "POST",
           params: { uuid, type },
           headers,
@@ -124,7 +124,7 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, SubmitData>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, EndowmentContract }) => ({
-        url: `v1/registration/${PK}/submit`,
+        url: `v2/registration/${PK}/submit`,
         method: "POST",
         headers,
         body: { EndowmentContract },
@@ -137,7 +137,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -152,7 +152,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -167,7 +167,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
