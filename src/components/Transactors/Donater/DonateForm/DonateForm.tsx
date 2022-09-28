@@ -8,7 +8,7 @@ import Terms from "./Terms";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
-  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
+  const { donate, isFormLoading, isSubmitDisabled } = useDonate();
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
 
   const toggleAdvancedOptions = () => setIsAdvancedOptionShown((prev) => !prev);
@@ -30,7 +30,6 @@ export default function DonateForm() {
       />
 
       <Terms classes="my-3" />
-      <ReceiptTooltip classes="mb-5" />
 
       <button
         disabled={isSubmitDisabled}
