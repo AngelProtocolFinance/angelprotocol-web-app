@@ -16,7 +16,7 @@ export default function TableView(props: { endowments: Endowment[] }) {
         </thead>
         <tbody>
           {props.endowments.map((endowment) => (
-            <TableEntry key={endowment.endowment_address} {...endowment} />
+            <TableEntry key={endowment.endowment_id} {...endowment} />
           ))}
         </tbody>
       </table>

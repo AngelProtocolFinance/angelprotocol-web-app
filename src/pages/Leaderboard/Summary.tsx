@@ -27,7 +27,7 @@ function Text(props: { type: string; title: string }) {
   if (props.type === "10years") {
     if (props.title === "Principal") {
       textBlob =
-        "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded at 20% per year.";
+        "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded over the year.";
     }
     if (props.title === "Impact") {
       textBlob =
@@ -36,7 +36,7 @@ function Text(props: { type: string; title: string }) {
   } else {
     if (props.title === "Principal") {
       textBlob =
-        "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Current Account for immediate use. Of the 20% yield, 75% goes to the Current Account, 25% reinvested";
+        "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Current Account for immediate use. Of the yield, 75% goes to the Current Account, 25% reinvested.";
     }
     if (props.title === "Impact") {
       textBlob =

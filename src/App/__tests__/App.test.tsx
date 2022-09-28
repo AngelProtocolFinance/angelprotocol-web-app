@@ -36,8 +36,8 @@ jest.mock("services/aws/registration", () => ({
 }));
 
 describe("App.tsx tests", () => {
-  const marketText1 = /angel protocol supports/i;
-  const marketText2 = /displaced ukrainians/i;
+  const marketText1 = /angel protocol redefines/i;
+  const marketText2 = /global impact financing/i;
   // const governanceLinkText = /governance/i;
 
   window.scrollTo = jest.fn();
