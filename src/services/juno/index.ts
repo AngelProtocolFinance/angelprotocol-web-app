@@ -7,9 +7,7 @@ import {
 import { IS_TEST } from "constants/env";
 import { junoTags } from "./tags";
 
-export const baseUrl = IS_TEST
-  ? "https://api.uni.junonetwork.io"
-  : "https://api.juno.bh.rocks"; // "https://juno-lcd.wildsage.io"
+export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
