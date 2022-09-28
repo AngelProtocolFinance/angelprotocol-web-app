@@ -16,7 +16,7 @@ export default function Stats(props: ProfileResponse & { classes?: string }) {
       <StatsItem
         title="navigator rating"
         classes="text-leaf-green"
-        value={props.navigator_rating}
+        value={props.charity_navigator_rating}
       />
     </ul>
   );
