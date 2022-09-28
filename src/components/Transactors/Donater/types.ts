@@ -7,10 +7,8 @@ export interface DonateValues {
   token: Token;
   min_liq: number;
   max_liq: number;
-  to: "tca" | "fund" | "charity";
   charityId: number;
   isAgreedToTerms: boolean;
-  isKycDonorOnly?: boolean;
 }
 
 export type DonaterProps = Pick<DonateValues, "charityId"> & {
