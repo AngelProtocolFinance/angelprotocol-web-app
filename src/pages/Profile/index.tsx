@@ -91,7 +91,7 @@ function PageError() {
       <p className="text-red-l1 text-lg">Failed to load charity profile</p>
       <Link
         to={`${appRoutes.index}`}
-        className="text-white/80 hover:text-blue text-sm"
+        className="text-blue-l4 hover:text-blue text-sm"
       >
         back to Marketplace
       </Link>
