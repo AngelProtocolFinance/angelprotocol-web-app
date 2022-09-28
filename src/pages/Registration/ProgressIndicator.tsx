@@ -27,7 +27,7 @@ export default function ProgressIndicator() {
       </div>
       <div className="h-4 w-full bg-white rounded-3xl">
         <div
-          style={{ width: `${(completedCount / progress.length) * 100}%` }}
+          style={{ width: `${percent}%` }}
           className={`h-full bg-blue rounded-3xl`}
         />
       </div>

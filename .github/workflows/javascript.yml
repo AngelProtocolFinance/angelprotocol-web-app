@@ -9,6 +9,7 @@ on:
 jobs:
   lint:
     name: "Lint codebase"
+    environment: production
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +30,8 @@ jobs:
         
   test:
     name: "Test codebase"
+    environment: production
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repo
         uses: actions/checkout@v2
@@ -46,3 +47,5 @@ jobs:
 
       - name: Test codebase
         run: yarn run test
+        env:
+          REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
