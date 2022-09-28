@@ -29,7 +29,6 @@ export default function CharityHeader(props: ProfileResponse) {
 
       <div className="flex items-center gap-2 flex-wrap">
         <Button onClick={showDonater}>DONATE NOW</Button>
-
         <CharityLinks />
       </div>
     </div>
@@ -39,7 +38,7 @@ export default function CharityHeader(props: ProfileResponse) {
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className="disabled:bg-gray uppercase bg-orange hover:bg-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+      className="disabled:bg-gray uppercase bg-orange hover:bg-orange-l1 font-heading text-white font-semibold rounded-xl px-6 py-3"
       {...props}
     />
   );
