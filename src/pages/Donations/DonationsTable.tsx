@@ -31,16 +31,6 @@ export default function DonationsTable(props: {
     return <Tooltip>Failed to get transactions..</Tooltip>;
   }
 
-  // TEMP OVERRIDE UNTIL WE GET OUR APES API WORKING!
-  return (
-    <Tooltip classes="mt-10">
-      Hang tight! Donation records are coming very soon.
-    </Tooltip>
-  );
-  // if (!props.isError && !props.isLoading && props.transactions.length === 0) {
-  //   return <Tooltip classes="mt-10">You have not made any donations.</Tooltip>;
-  // }
-
   return (
     <table className="w-full text-white/80 border-collapse">
       <TableSection type="thead" rowClass="">
@@ -99,7 +89,7 @@ const headers: { key: SortKey; name: string }[] = [
   { key: "tx_id", name: "transaction hash" },
 ];
 
-function Tooltip(props: PropsWithChildren<{ classes?: string }>) {
+export function Tooltip(props: PropsWithChildren<{ classes?: string }>) {
   return (
     <p
       className={`text-white font-mono text-sm text-center ${
