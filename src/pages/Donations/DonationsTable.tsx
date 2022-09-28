@@ -32,7 +32,11 @@ export default function DonationsTable(props: {
   }
 
   // TEMP OVERRIDE UNTIL WE GET OUR APES API WORKING!
-  return <Tooltip classes="mt-10">Hang tight! Donation records are coming very soon.</Tooltip>;
+  return (
+    <Tooltip classes="mt-10">
+      Hang tight! Donation records are coming very soon.
+    </Tooltip>
+  );
   // if (!props.isError && !props.isLoading && props.transactions.length === 0) {
   //   return <Tooltip classes="mt-10">You have not made any donations.</Tooltip>;
   // }
