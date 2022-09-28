@@ -28,7 +28,7 @@ const shape: SchemaShape<RegistrarConfigValues> = {
   endowment_owners_group_addr: contractAddrSchema,
   halo_token: contractAddrSchema,
   gov_contract: contractAddrSchema,
-  shares_contract: contractAddrSchema,
+  charity_shares_contract: contractAddrSchema,
 };
 
 export const schema = Yup.object(shape);

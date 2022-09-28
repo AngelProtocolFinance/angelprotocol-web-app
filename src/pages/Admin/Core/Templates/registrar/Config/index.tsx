@@ -34,7 +34,7 @@ function RegistrarConfigContext(props: RegistrarConfig) {
     split_default: pctSplitLiqDefault,
     halo_token: props.halo_token,
     gov_contract: props.gov_contract,
-    shares_contract: props.shares_contract,
+    charity_shares_contract: props.charity_shares_contract,
   };
 
   const methods = useForm<RegistrarConfigValues>({
