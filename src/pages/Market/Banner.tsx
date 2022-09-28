@@ -7,18 +7,12 @@ export default function Banner() {
         className="rounded-lg"
       />
       <div className="order-first lg:order-none self-center">
-        {/*<a
-          href="https://ukraine.angelprotocol.io/"
-          target="_blank"
-          rel="noreferrer"
-        >*/}
         <p className="font-heading text-white-grey font-extrabold text-3xl md:text-4xl lg:text-5xl">
           ANGEL PROTOCOL REDEFINES
         </p>
         <p className="font-heading text-angel-orange font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
           GLOBAL IMPACT FINANCING.
         </p>
-        {/*</a>*/}
         <p className="font-heading text-white-grey text-xl xl:text-2xl mb-0">
           <span className="md:leading-normal xl:leading-relaxed">
             We provide impact stakeholders like non-profits and social
@@ -27,14 +21,15 @@ export default function Banner() {
             further, connections run deeper, and access is available to all.
           </span>{" "}
           <span className="md:leading-normal xl:leading-relaxed font-bold">
-            {/*<a
-              href="https://ukraine.angelprotocol.io/"W
+            Donate below or{" "}
+            <a
+              href="https://app.angelprotocol.io/register"
               target="_blank"
               rel="noreferrer"
               className="underline"
-            >*/}
-            Donate below or register today!
-            {/*</a>*/}
+            >
+              register today!
+            </a>
           </span>
         </p>
       </div>
