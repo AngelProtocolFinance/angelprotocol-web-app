@@ -8,8 +8,7 @@ export default function CharityHeader(props: ProfileResponse) {
   const profile = useProfile();
 
   const showDonater = useDonater({
-    to: "charity",
-    receiver: profile.id,
+    charityId: profile.id,
     isKycDonorOnly: profile.kyc_donors_only,
   });
 

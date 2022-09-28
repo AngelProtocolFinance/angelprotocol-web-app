@@ -6,7 +6,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { StageUpdater } from "slices/transaction/types";
-import { Receiver } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
@@ -39,7 +38,7 @@ export const sendEthDonation = createAsyncThunk(
       );
 
       const signer = provider.getSigner();
-      const { receiver, token, amount, split_liq } = args.donateValues;
+      const { charityId, token, amount, split_liq } = args.donateValues;
 
       let response: TransactionResponse;
       if (args.wallet.chain.native_currency.token_id === token.token_id) {
@@ -56,23 +55,18 @@ export const sendEthDonation = createAsyncThunk(
       dispatch(invalidateApesTags([{ type: apesTags.chain }]));
 
       updateStage({ step: "submit", message: "Saving donation info.." });
-      const receipient: Receiver =
-        typeof receiver === "string"
-          ? { charityId: receiver }
-          : { fundId: receiver };
 
-      if (typeof receiver !== "undefined") {
-        await logDonation({
-          ...receipient,
-          transactionId: response.hash,
-          transactionDate: new Date().toISOString(),
-          chainId: args.wallet.chain.chain_id,
-          amount: +amount,
-          denomination: token.symbol,
-          splitLiq: split_liq,
-          walletAddress: args.wallet.address,
-        });
-      }
+      await logDonation({
+        transactionId: response.hash,
+        transactionDate: new Date().toISOString(),
+        chainId: args.wallet.chain.chain_id,
+        amount: +amount,
+        denomination: token.symbol,
+        splitLiq: split_liq,
+        walletAddress: args.wallet.address,
+        charityId,
+      });
+
       updateStage({
         step: "success",
         message: "Thank you for your donation!",

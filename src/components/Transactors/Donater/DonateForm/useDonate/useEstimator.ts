@@ -89,7 +89,7 @@ export default function useEstimator() {
               alert("you are sending directly to contract");
               msg = contract.createDepositMsg(
                 {
-                  id: Number(getValues("receiver")),
+                  id: getValues("charityId"),
                   liquid_percentage: "0.5",
                   locked_percentage: "0.5",
                 },
