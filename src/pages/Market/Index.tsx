@@ -48,7 +48,7 @@ function Button({
       {...restProps}
       className={`${
         className || ""
-      } w-22 h-22 p-2 flex rounded-full absolute top-1/2 -translate-y-1/2  group-hover:flex bg-blue-d1/60 hover:bg-blue/60 items-center justify-center group`}
+      } w-22 h-22 p-2 flex rounded-full absolute top-1/2 -translate-y-1/2  group-hover:flex bg-blue/60 hover:bg-blue items-center justify-center group`}
     >
       <Icon type={_iconType} className="text-white text-4xl " />
     </button>
