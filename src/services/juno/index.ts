@@ -4,9 +4,13 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import { IS_TEST } from "constants/env";
 import { junoTags } from "./tags";
 
-export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
+export const baseUrl =
+  process.env.REACT_APP_JUNO_LCD_NODE || IS_TEST
+    ? "https://lcd.uni.juno.deuslabs.fi"
+    : "https://api.juno.bh.rocks";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
