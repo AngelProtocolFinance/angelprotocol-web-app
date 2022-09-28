@@ -30,8 +30,6 @@ jobs:
   test:
     name: "Test codebase"
     runs-on: ubuntu-latest
-    env:
-      REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
     steps:
       - name: Check out repo
         uses: actions/checkout@v2
@@ -47,3 +45,5 @@ jobs:
 
       - name: Test codebase
         run: yarn run test
+        env:
+          REACT_APP_JUNO_LCD_NODE: `${{ secrets.REACT_APP_JUNO_LCD_NODE }}`
