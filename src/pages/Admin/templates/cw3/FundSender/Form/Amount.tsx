@@ -34,7 +34,7 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={denomText}
-        className="shadow-inner-white focus:outline-none p-3 rounded-md text-xl bg-gray-l2/80 text-gray-d2"
+        className="shadow-inner-white focus:outline-none p-3 rounded-md text-xl bg-gray-l3 text-gray-d3"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">

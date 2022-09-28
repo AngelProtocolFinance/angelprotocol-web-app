@@ -28,7 +28,7 @@ export default function Amount() {
         <span>Deposit amount</span>
         <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
-      <div className="flex flex-wrap items-stretch p-3 bg-gray-l2 shadow-inner-white rounded-md">
+      <div className="flex flex-wrap items-stretch p-3 bg-gray-l3 shadow-inner-white rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"

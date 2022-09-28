@@ -43,7 +43,7 @@ export default function Amount() {
         There is a 7 day wait period to unstake {symbols.halo}. You will not be
         able to claim your {symbols.halo} until this period has passed.
       </span>
-      <div className="flex bg-gray-l2 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
+      <div className="flex bg-gray-l3 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"

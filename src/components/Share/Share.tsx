@@ -7,10 +7,8 @@ export default function Share() {
         <p className="md:mb-2">let the</p>
         <p className="mb-3 md:mb-6">world know!</p>
       </div>
-      <div className="rounded-xl bg-white p-3 w-2/3 flex justify-center mx-auto">
-        <span className="text-gray text-sm">
-          {decodeURIComponent(ENCODED_TEXT)}
-        </span>
+      <div className="rounded-xl bg-white p-3 text-black">
+        {decodeURIComponent(ENCODED_TEXT)}
       </div>
       <div className="flex justify-center my-5 ">
         <IconLink link={TWITTER_SHARE_URL} iconType="Twitter" />
@@ -39,7 +37,7 @@ const IconLink = ({ link, iconType }: IconLinkProps) => {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="flex justify-center items-center rounded-full border-blue p-2 border-2 border-solid mx-1 text-3xl text-blue"
+      className="flex justify-center items-center rounded-full border-blue p-2 border-2 border-solid mx-1 text-3xl text-blue hover:text-blue-d2 hover:border-blue-d2"
     >
       <Icon type={iconType} />
     </a>

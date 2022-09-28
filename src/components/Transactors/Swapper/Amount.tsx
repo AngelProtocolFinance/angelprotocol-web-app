@@ -44,7 +44,7 @@ export default function Amount() {
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-[auto_1fr] text-gray-d2 p-3 bg-gray-l2 shadow-inner-white rounded-md">
+      <div className="grid grid-cols-[auto_1fr] text-gray-d2 p-3 bg-gray-l3 shadow-inner-white rounded-md">
         <p className="text-gray-d2 uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>

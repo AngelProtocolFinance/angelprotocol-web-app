@@ -22,7 +22,7 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 shadow-inner-white rounded-md text-xl bg-gray-l2/80 text-gray-d2">
+      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 rounded-md shadow-inner-white bg-gray-l3">
         <input
           {...register("amount")}
           autoComplete="off"
@@ -35,12 +35,14 @@ export default function Amount() {
         <TokensSelector<DV> fieldName="token" />
       </div>
 
-      <ErrorMessage
-        errors={errors}
-        name="amount"
-        as="p"
-        className="font-mono font-semibold text-red-l1 text-xs m-1 text-left"
-      />
+      <div className="empty:mb-2">
+        <ErrorMessage
+          errors={errors}
+          name="amount"
+          as="p"
+          className="text-red text-xs m-1 text-left"
+        />
+      </div>
     </div>
   );
 }

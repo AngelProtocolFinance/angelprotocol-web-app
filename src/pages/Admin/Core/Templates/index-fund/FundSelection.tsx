@@ -11,7 +11,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
   );
   return (
     <table
-      className="table-auto bg-gray-l2 shadow-inner-white 
+      className="table-auto bg-gray-l3 shadow-inner-white 
     rounded-md text-gray-d2 text-left"
     >
       <TableSection type="thead" rowClass="border-b">

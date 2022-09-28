@@ -20,7 +20,7 @@ export default function CharityHeader(props: ProfileResponse) {
   return (
     <div className="flex flex-col items-start gap-2">
       {sdgNum && (
-        <p className="p-3 max-w-[250px] text-center bg-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl">
+        <p className="p-3 max-w-[250px] text-center bg-blue text-white text-sm uppercase font-heading font-bold rounded-xl">
           SDG #{sdgNum}: {sdg?.title}
         </p>
       )}

@@ -57,7 +57,7 @@ export default function ReceiptForm() {
             fieldName="country"
             classes={{
               container:
-                "p-3 text-gray-d2 rounded-md shadow-inner-white bg-gray-l2",
+                "p-3 text-gray-d3 rounded-md shadow-inner-white bg-gray-l3",
               input: "bg-transparent",
             }}
           />
