@@ -45,7 +45,7 @@ function Text(props: { type: string; title: string }) {
   }
 
   return (
-    <p className="font-semibold text-xs text-gray leading-snug mb-2">
+    <p className="font-semibold text-xs text-gray-d2 leading-snug mb-2">
       <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );
