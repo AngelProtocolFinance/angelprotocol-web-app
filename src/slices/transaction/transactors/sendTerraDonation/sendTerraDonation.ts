@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { Chain, KYCData, Receiver } from "types/aws";
+import { Chain, KYCData } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
@@ -43,26 +43,19 @@ export const sendTerraDonation = createAsyncThunk(
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
 
-        const { receiver, token, amount, split_liq } = args.donateValues;
+        const { charityId, token, amount, split_liq } = args.donateValues;
 
-        const receipient: Receiver =
-          typeof receiver === "string"
-            ? { charityId: receiver }
-            : { fundId: receiver };
-
-        if (typeof receiver !== "undefined") {
-          await logDonation({
-            ...receipient,
-            ...args.kycData,
-            transactionId: response.result.txhash,
-            transactionDate: new Date().toISOString(),
-            chainId: args.wallet.network.chainID,
-            amount: +amount,
-            denomination: token.symbol,
-            splitLiq: split_liq,
-            walletAddress: args.wallet.walletAddress,
-          });
-        }
+        await logDonation({
+          ...args.kycData,
+          transactionId: response.result.txhash,
+          transactionDate: new Date().toISOString(),
+          chainId: args.wallet.network.chainID,
+          amount: +amount,
+          denomination: token.symbol,
+          splitLiq: split_liq,
+          walletAddress: args.wallet.walletAddress,
+          charityId,
+        });
 
         updateStage({
           step: "broadcast",

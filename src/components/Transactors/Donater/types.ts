@@ -8,25 +8,15 @@ export interface DonateValues {
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
-  receiver?: number | string;
+  charityId: number;
   isAgreedToTerms: boolean;
   isKycDonorOnly?: boolean;
 }
 
-interface FromTCA {
-  to: "tca";
-  receiver?: never;
-  max_liq?: never;
-  min_liq?: never;
-}
-
-interface ToFundOrCharity {
-  to: "fund" | "charity";
-  receiver: number;
-  //doesn't know yet limits on charity donations
+export type DonaterProps = Pick<DonateValues, "charityId"> & {
+  //NOTE: fill this if there's limit on donation splits to be enforce
   max_liq?: number;
   min_liq?: number;
-}
-
-type FundFlow = ToFundOrCharity | FromTCA;
-export type DonaterProps = FundFlow & { isKycDonorOnly?: boolean };
+} & {
+  isKycDonorOnly?: boolean;
+};

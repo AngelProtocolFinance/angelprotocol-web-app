@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdater, TxOptions } from "../types";
-import { KYCData, Receiver } from "types/aws";
+import { KYCData } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { accountTags, junoTags } from "services/juno/tags";
@@ -35,22 +35,19 @@ export const sendCosmosDonation = createAsyncThunk(
       if (!response.code) {
         updateStage({ step: "submit", message: "Saving donation details" });
 
-        const { receiver, token, amount, split_liq } = args.donateValues;
-        const receipient: Receiver = { charityId: receiver };
+        const { charityId, token, amount, split_liq } = args.donateValues;
 
-        if (typeof receiver !== "undefined") {
-          await logDonation({
-            ...receipient,
-            ...args.kycData,
-            transactionId: response.transactionHash,
-            transactionDate: new Date().toISOString(),
-            chainId: args.wallet.chain.chain_id,
-            amount: +amount,
-            denomination: token.symbol,
-            splitLiq: split_liq,
-            walletAddress: args.wallet.address,
-          });
-        }
+        await logDonation({
+          ...args.kycData,
+          transactionId: response.transactionHash,
+          transactionDate: new Date().toISOString(),
+          chainId: args.wallet.chain.chain_id,
+          amount: +amount,
+          denomination: token.symbol,
+          splitLiq: split_liq,
+          walletAddress: args.wallet.address,
+          charityId,
+        });
 
         updateStage({
           step: "success",
