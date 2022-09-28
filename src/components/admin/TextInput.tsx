@@ -48,7 +48,7 @@ export function TextInput<T extends FieldValues>(props: {
         errors={errors}
         name={props.name as string}
         as="span"
-        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
+        className="text-right text-red text-xs m-1"
       />
     </div>
   );
