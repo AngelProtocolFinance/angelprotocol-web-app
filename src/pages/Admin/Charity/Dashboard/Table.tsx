@@ -19,7 +19,7 @@ export default function Table({ proposals }: Props) {
         </Cells>
       </TableSection>
       <TableSection
-        rowClass="last:border-none border-b border-white/10 hover:bg-white/5"
+        rowClass="last:border-none border-b border-white/10 hover:bg-white/10"
         type="tbody"
       >
         {proposals.map(({ title, status, expires, id }) => (

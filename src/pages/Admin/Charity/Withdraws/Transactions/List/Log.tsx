@@ -10,7 +10,7 @@ export default function Log(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
   const finalRoute = getFinalRoute(props);
   return (
-    <li className="grid gap-2 shadow-inner bg-white/5 p-3 rounded-md text-white/80">
+    <li className="grid gap-2 shadow-inner bg-white/10 p-3 rounded-md text-white/80">
       <KeyVal title="amount">
         <Amount val={amount} symbol={symbol} />
       </KeyVal>

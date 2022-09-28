@@ -43,7 +43,7 @@ export default function Table(props: { applications: CharityApplication[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-white/5"
+        rowClass="border-b border-white/10 hover:bg-white/10"
       >
         {sortedApplications.length <= 0 ? (
           <Cells type="td" cellClass="px-2 py-3">

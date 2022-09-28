@@ -10,7 +10,7 @@ export default function Balance({ type }: Props) {
   const queryState = useBalanceQuery({ id: endowmentId });
 
   return (
-    <div className="shadow-inner bg-white/5 rounded-md p-3">
+    <div className="shadow-inner bg-white/10 rounded-md p-3">
       <h4 className="uppercase text-white/80 font-extrabold">{type}</h4>
       <QueryLoader
         queryState={queryState}
