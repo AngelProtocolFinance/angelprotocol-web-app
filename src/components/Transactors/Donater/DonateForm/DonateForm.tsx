@@ -3,7 +3,6 @@ import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
-import ReceiptTooltip from "./ReceiptTooltip";
 import Terms from "./Terms";
 import useDonate from "./useDonate";
 

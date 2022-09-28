@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 
