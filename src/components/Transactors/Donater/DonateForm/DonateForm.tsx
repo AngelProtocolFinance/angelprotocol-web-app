@@ -3,7 +3,6 @@ import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
-import KYCGuard from "./KYCGuard";
 import ReceiptTooltip from "./ReceiptTooltip";
 import Terms from "./Terms";
 import useDonate from "./useDonate";
@@ -20,20 +19,18 @@ export default function DonateForm() {
       className="bg-white-grey grid p-4 rounded-md w-full"
       autoComplete="off"
     >
-      <Status />
+      <Status classes="mb-2" />
       <Amount />
-      <Breakdown />
+      <Breakdown classes="m-1" />
 
-      {to !== "tca" && (
-        <AdvancedOptions
-          toggleAdvancedOptions={toggleAdvancedOptions}
-          isOptionsShown={isAdvancedOptionShown}
-        />
-      )}
+      <AdvancedOptions
+        classes="-ml-0.5 mt-6"
+        toggleAdvancedOptions={toggleAdvancedOptions}
+        isOptionsShown={isAdvancedOptionShown}
+      />
 
-      <Terms />
-      <ReceiptTooltip />
-      <KYCGuard />
+      <Terms classes="my-3" />
+      <ReceiptTooltip classes="mb-5" />
 
       <button
         disabled={isSubmitDisabled}
