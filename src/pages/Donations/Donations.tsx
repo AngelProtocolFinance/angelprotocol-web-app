@@ -2,7 +2,9 @@ import { useParams } from "react-router-dom";
 import { Transaction } from "types/aws";
 import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
 import CsvExporter from "components/CsvExporter";
-import DonationsTable from "./DonationsTable";
+import { Tooltip } from "./DonationsTable";
+
+// import DonationsTable from "./DonationsTable";
 
 const headers: { key: keyof Transaction; label: string }[] = [
   { key: "name", label: "Name" },
@@ -17,7 +19,7 @@ export default function Donations() {
   const {
     data = [],
     isLoading,
-    isError,
+    // isError,
   } = useDonationTransactionsQuery(address!, {
     skip: !address,
   });
@@ -32,11 +34,15 @@ export default function Donations() {
           <CsvExporter headers={headers} data={data} filename="donations.csv" />
         )}
       </div>
-      <DonationsTable
+      {/** // TEMP OVERRIDE UNTIL WE GET OUR APES API WORKING! */}
+      <Tooltip classes="mt-10">
+        Hang tight! Donation records are coming very soon.
+      </Tooltip>
+      {/* <DonationsTable
         transactions={data}
         isLoading={isLoading}
         isError={isError}
-      />
+      /> */}
     </div>
   );
 }
