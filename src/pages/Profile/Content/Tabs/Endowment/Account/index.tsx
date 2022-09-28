@@ -1,4 +1,5 @@
 import { GenericBalance } from "types/contracts";
+import { coinAsset, denoms } from "constants/currency";
 import Holdings from "./Holdings";
 
 type Locked = {
@@ -21,7 +22,16 @@ export default function Account({ type, balance }: TAcount) {
       </h3>
       {((cw20.length > 0 || native.length > 0) && (
         <Holdings balance={balance} />
-      )) || <p>0.000</p>}
+      )) || (
+        <span className="flex items-center gap-2">
+          <img
+            className="w-6 h-6 object-contain"
+            src={coinAsset[denoms.axlusdc].icon}
+            alt="axlUSDC"
+          />
+          0.000
+        </span>
+      )}
     </div>
   );
 }
