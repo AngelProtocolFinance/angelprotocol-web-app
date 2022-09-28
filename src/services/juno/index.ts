@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { junoTags } from "./tags";
 
-export const baseUrl = "https://api.uni.junonetwork.io";
+export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
