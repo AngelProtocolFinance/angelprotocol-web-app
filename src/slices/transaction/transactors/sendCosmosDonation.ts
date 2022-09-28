@@ -36,11 +36,7 @@ export const sendCosmosDonation = createAsyncThunk(
         updateStage({ step: "submit", message: "Saving donation details" });
 
         const { receiver, token, amount, split_liq } = args.donateValues;
-
-        const receipient: Receiver =
-          typeof receiver === "string"
-            ? { charityId: receiver }
-            : { fundId: receiver };
+        const receipient: Receiver = { charityId: receiver };
 
         if (typeof receiver !== "undefined") {
           await logDonation({
