@@ -1,16 +1,16 @@
 import { useCallback } from "react";
-import { PrevTxDetails } from "./types";
+import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Receipter from "components/Receipter/Receipter";
 import Transactor, { TxProps } from "components/Transactor";
+import Receipter from "./index";
 
 export default function useReceipter() {
   const { showModal } = useModalContext();
 
-  const showDonor = useCallback((prevTx?: PrevTxDetails) => {
-    showModal<TxProps<{ prevTx?: PrevTxDetails }>>(Transactor, {
+  const showDonor = useCallback((props: Props) => {
+    showModal<TxProps<Props>>(Transactor, {
       Content: Receipter,
-      contentProps: { prevTx },
+      contentProps: props,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

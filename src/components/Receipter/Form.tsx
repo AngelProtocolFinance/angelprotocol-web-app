@@ -1,21 +1,18 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { ReceipterValues } from "./types";
+import { Props, ReceipterValues } from "./types";
 import CountrySelector from "components/CountrySelector";
 import useReceiptForm from "components/Receipter/useRequestReceipt";
 import { maskAddress } from "helpers";
 import TextInput from "./TextInput";
 
-export default function ReceiptForm() {
+export default function Form(props: Props) {
   const {
-    getValues,
     handleSubmit,
     register,
     formState: { errors },
   } = useFormContext<ReceipterValues>();
   const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
-  const transactionId = getValues("transactionId");
-  const isKYConly = transactionId === "";
 
   return (
     <form
@@ -24,13 +21,13 @@ export default function ReceiptForm() {
       autoComplete="off"
       autoSave="off"
     >
-      {!isKYConly && (
+      {props.type === "post-donation" && (
         <p>
           <span className="text-angel-grey text-xs uppercase font-bold mb-1">
             Transaction ID:
           </span>
           <span className="font-normal text-sm text-angel-grey ml-2">
-            {maskAddress(transactionId)}
+            {maskAddress(props.txHash)}
           </span>
         </p>
       )}
