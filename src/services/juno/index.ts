@@ -4,7 +4,6 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { IS_TEST } from "constants/env";
 import { junoTags } from "./tags";
 
 export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
