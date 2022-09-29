@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Transaction } from "types/aws";
 import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import CsvExporter from "components/CsvExporter";
 import { Tooltip } from "./DonationsTable";
 
@@ -16,14 +15,13 @@ const headers: { key: keyof Transaction; label: string }[] = [
 ];
 
 export default function Donations() {
-  const wallet = useGetWallet();
   const { address } = useParams<{ address: string }>();
   const {
     data = [],
     isLoading,
     // isError,
   } = useDonationTransactionsQuery(address!, {
-    skip: !address || !wallet,
+    skip: !address,
   });
 
   return (
