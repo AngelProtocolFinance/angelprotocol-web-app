@@ -12,17 +12,17 @@ const VALID_MIME_TYPES = [
 
 const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   .test({
-    name: "fileSize",
-    message: "File size must be smaller than 25Mb",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25e6,
-  })
-  .test({
     name: "fileType",
     message: "Valid file types are PDF, JPG, PNG and WEBP",
     test: (fileWrapper) =>
       fileWrapper?.file
         ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
         : true,
+  })
+  .test({
+    name: "fileSize",
+    message: "File size must be smaller than 25Mb",
+    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25e6,
   })
   .test({
     name: "invalidState",
