@@ -9,7 +9,6 @@ export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
   if (!props.errors || !props.errors[props.name]) {
     return null;
   }
-  console.log(props.errors);
 
   const fieldErrors =
     (props.errors[props.name] as unknown as FieldError[]) ?? [];
