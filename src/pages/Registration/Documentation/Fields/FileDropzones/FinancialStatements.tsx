@@ -5,7 +5,7 @@ import { ErrorMessage, InputRow } from "../../../common";
 
 export default function FinancialStatements() {
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useFormContext<DocumentationValues>();
 
   return (
