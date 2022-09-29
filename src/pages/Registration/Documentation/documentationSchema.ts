@@ -23,17 +23,6 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
     name: "fileSize",
     message: "File size must be smaller than 25Mb",
     test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25e6,
-  })
-  .test({
-    name: "invalidState",
-    message: "Invalid internal state",
-    test: (fileWrapper) =>
-      // fileWrapper must be instantiated
-      !!fileWrapper &&
-      // file name must be set
-      !!fileWrapper.name &&
-      // either new file is uploaded or source URL to file is set
-      (!!fileWrapper.file || !!fileWrapper.publicUrl),
   });
 
 const documentationShape: SchemaShape<DocumentationValues> = {
