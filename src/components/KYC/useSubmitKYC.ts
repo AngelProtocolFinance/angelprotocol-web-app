@@ -34,7 +34,7 @@ export default function useSubmitKYC(props: Props) {
     }
 
     //show donater and pass KYC data, atm donation is only tx that may require KYC data
-    showDonater(props.donaterProps);
+    showDonater({ ...props.donaterProps, kycData: data });
   };
 
   return {

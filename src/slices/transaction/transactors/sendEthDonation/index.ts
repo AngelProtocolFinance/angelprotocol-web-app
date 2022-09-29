@@ -38,7 +38,9 @@ export const sendEthDonation = createAsyncThunk(
       );
 
       const signer = provider.getSigner();
-      const { charityId, token, amount, split_liq } = args.donateValues;
+
+      const { charityId, token, amount, split_liq, kycData } =
+        args.donateValues;
 
       let response: TransactionResponse;
       if (args.wallet.chain.native_currency.token_id === token.token_id) {
@@ -54,7 +56,10 @@ export const sendEthDonation = createAsyncThunk(
 
       dispatch(invalidateApesTags([{ type: apesTags.chain }]));
 
-      updateStage({ step: "submit", message: "Saving donation info.." });
+      updateStage({
+        step: "submit",
+        message: kycData ? "Requesting receipt.." : "Saving donation details",
+      });
 
       await logDonation({
         transactionId: response.hash,

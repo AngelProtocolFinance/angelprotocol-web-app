@@ -1,10 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FormValues, Props } from "./types";
+import { FormValues, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import useSubmitKYC from "components/KYC/useSubmitKYC";
 import { maskAddress } from "helpers";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
+import Tooltip from "./Tooltip";
 
 export default function Form(props: Props) {
   const {
@@ -17,20 +18,25 @@ export default function Form(props: Props) {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto"
+      className="w-full bg-white-grey grid gap-2 p-4 text-angel-grey"
       autoComplete="off"
       autoSave="off"
     >
-      {props.type === "post-donation" && (
+      {props.type === "post-donation" ? (
         <p>
-          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+          <span className="text-xs uppercase font-bold mb-1">
             Transaction ID:
           </span>
-          <span className="font-normal text-sm text-angel-grey ml-2">
+          <span className="font-normal text-sm ml-2">
             {maskAddress(props.txHash)}
           </span>
         </p>
+      ) : (
+        //on-donation KYC
+        //use ternary to narrow type of props
+        <Tooltip {...props} isKYCRequired={props.isKYCRequired} />
       )}
+
       <TextInput name="email" id="email" label="Email Address" required />
       <TextInput name="fullName" id="fullName" label="Full Name" required />
       <TextInput
@@ -43,18 +49,14 @@ export default function Form(props: Props) {
       <TextInput name="state" id="state" label="State" />
       <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
       <div className="grid">
-        <label
-          htmlFor="country"
-          className="text-angel-grey text-xs uppercase font-bold mb-1"
-        >
+        <label htmlFor="country" className="text-xs uppercase font-bold mb-1">
           Country <span className="text-rose-400"> *</span>
         </label>
         <div className="form-control rounded-md grid bg-white-grey">
           <CountrySelector
             fieldName="country"
             classes={{
-              container:
-                "p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey",
+              container: "p-3 rounded-md shadow-inner-white-grey bg-light-grey",
               input: "bg-transparent",
             }}
           />
@@ -73,10 +75,7 @@ export default function Form(props: Props) {
           id="consent_marketing"
           {...register("consent_marketing")}
         />
-        <label
-          htmlFor="consent_marketing"
-          className="text-angel-grey font-light text-xs"
-        >
+        <label htmlFor="consent_marketing" className="font-light text-xs">
           I consent to my details being used only by Angel Protocol and the
           Charity to keep me informed of their progress and news.
         </label>
@@ -88,10 +87,7 @@ export default function Form(props: Props) {
           id="consent_tax"
           {...register("consent_tax")}
         />
-        <label
-          htmlFor="consent_tax"
-          className="text-angel-grey font-light text-xs"
-        >
+        <label htmlFor="consent_tax" className="font-light text-xs">
           I consent to allow my information to be shared with the charity for
           tax receipt processing purposes.
         </label>
