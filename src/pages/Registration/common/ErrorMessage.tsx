@@ -1,17 +1,19 @@
-import { FieldError, FieldErrors, FieldValues } from "react-hook-form";
+import { FieldError, FieldValues, useFormContext } from "react-hook-form";
 
 type Props<T extends FieldValues> = {
-  errors: FieldErrors<T>;
   name: keyof T & string;
 };
 
 export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
-  if (!props.errors || !props.errors[props.name]) {
+  const {
+    formState: { errors },
+  } = useFormContext<T>();
+
+  if (!errors || !errors[props.name]) {
     return null;
   }
 
-  const fieldErrors =
-    (props.errors[props.name] as unknown as FieldError[]) ?? [];
+  const fieldErrors = (errors[props.name] as unknown as FieldError[]) ?? [];
 
   return (
     <div className="flex flex-col gap-1 items-center">

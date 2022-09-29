@@ -6,7 +6,7 @@ import { InputRow } from "../../../common";
 
 export default function AuditedFinancialReport() {
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useFormContext<DocumentationValues>();
 
   return (
@@ -20,10 +20,7 @@ export default function AuditedFinancialReport() {
         multiple
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues>
-        errors={errors}
-        name="auditedFinancialReports"
-      />
+      <ErrorMessage<DocumentationValues> name="auditedFinancialReports" />
     </InputRow>
   );
 }
