@@ -32,8 +32,6 @@ export type InitialStage = {
   message?: never;
   txHash?: never;
   chain?: never;
-  //re-start form with KYC data from receipter
-  kycData?: KYCData;
 };
 
 export type SubmitStage = {

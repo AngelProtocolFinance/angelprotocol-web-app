@@ -97,7 +97,7 @@ export default function Form(props: Props) {
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {isSubmitting ? "Processing..." : "Proceed"}
+        {isSubmitting ? "Processing..." : "Submit"}
       </button>
     </form>
   );
