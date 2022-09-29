@@ -2,7 +2,6 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
-import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
@@ -16,15 +15,12 @@ import useEstimator from "./useEstimator";
 export default function useDonate() {
   const { wallet, isLoading } = useGetWallet();
   const terraWallet = useConnectedWallet(); // sendTerraDonation requires this wallet to send donations
-  const { form_loading, form_error, stage } = useGetter(
-    (state) => state.transaction
-  );
+  const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const {
     watch,
     handleSubmit,
     setValue,
-    getValues,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const dispatch = useSetter();
@@ -44,7 +40,6 @@ export default function useDonate() {
             chain: wallet.chain,
             tx: terraTx!,
             donateValues: data,
-            kycData,
           })
         );
         break;
@@ -54,7 +49,6 @@ export default function useDonate() {
             wallet,
             tx: cosmosTx!,
             donateValues: data,
-            kycData,
           })
         );
         break;
@@ -73,20 +67,10 @@ export default function useDonate() {
     //eslint-disable-next-line
   }, [token?.symbol]);
 
-  const { kycData } = stage as InitialStage;
-  const isKycRequired = !!getValues("isKycDonorOnly");
-  const isKycCompleted = isKycRequired ? !!kycData : true; //pass this flag if kyc is not required
-
   return {
     donate: handleSubmit(sendTx),
     isSubmitDisabled:
-      form_error !== null ||
-      form_loading ||
-      !isValid ||
-      !isDirty ||
-      isLoading ||
-      !isKycCompleted,
+      form_error !== null || form_loading || !isValid || !isDirty || isLoading,
     isFormLoading: form_loading,
-    to: getValues("to"),
   };
 }

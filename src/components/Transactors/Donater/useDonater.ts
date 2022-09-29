@@ -1,18 +1,14 @@
-import { useCallback } from "react";
 import { DonaterProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Transactor, { TxProps } from "components/Transactor";
 import Donater from "./Donater";
 
-export default function useDonater(args: DonaterProps) {
+export default function useDonater() {
   const { showModal } = useModalContext();
-
-  const showDonater = useCallback(() => {
+  return (props: DonaterProps) => {
     showModal<TxProps<DonaterProps>>(Transactor, {
       Content: Donater,
-      contentProps: args,
+      contentProps: props,
     });
-  }, [args, showModal]);
-
-  return showDonater;
+  };
 }

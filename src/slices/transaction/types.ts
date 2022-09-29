@@ -10,13 +10,7 @@ type Tag = TagDescription<string>;
 export type Tags = Tag[];
 export type TagPayload = PayloadAction<Tags, string>;
 export type TagPayloads = TagPayload[];
-export type Step =
-  | "form"
-  | "submit"
-  | "broadcast"
-  | "success"
-  | "error"
-  | "receipt";
+export type Step = "form" | "submit" | "broadcast" | "success" | "error";
 
 export type FormError =
   | {
@@ -38,8 +32,6 @@ export type InitialStage = {
   message?: never;
   txHash?: never;
   chain?: never;
-  //re-start form with KYC data from receipter
-  kycData?: KYCData;
 };
 
 export type SubmitStage = {
@@ -75,17 +67,8 @@ export type ErrorStage = {
   chain?: Chain;
 };
 
-export type KYCStage = {
-  step: "kyc";
-  message?: never;
-  txHash?: never;
-  chain?: never;
-  kycData?: KYCData;
-};
-
 export type Stage =
   | InitialStage
-  | KYCStage
   | SubmitStage
   | BroadcastStage
   | SuccessStage

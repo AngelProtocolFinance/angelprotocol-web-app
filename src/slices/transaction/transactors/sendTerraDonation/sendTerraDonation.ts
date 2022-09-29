@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { Chain, KYCData } from "types/aws";
+import { Chain } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
@@ -16,7 +16,6 @@ type TerraDonateArgs = {
   chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
-  kycData?: KYCData;
 };
 
 export const sendTerraDonation = createAsyncThunk(
@@ -41,12 +40,16 @@ export const sendTerraDonation = createAsyncThunk(
       const response = await args.wallet.post(args.tx);
 
       if (response.success) {
-        updateStage({ step: "submit", message: "Saving donation details" });
+        const { charityId, token, amount, split_liq, kycData } =
+          args.donateValues;
 
-        const { charityId, token, amount, split_liq } = args.donateValues;
+        updateStage({
+          step: "submit",
+          message: kycData ? "Requesting receipt.." : "Saving donation details",
+        });
 
         await logDonation({
-          ...args.kycData,
+          ...kycData,
           transactionId: response.result.txhash,
           transactionDate: new Date().toISOString(),
           chainId: args.wallet.network.chainID,

@@ -1,39 +1,42 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { ReceipterValues } from "./types";
+import { FormValues, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
-import useReceiptForm from "components/Receipter/useRequestReceipt";
+import useSubmitKYC from "components/KYC/useSubmitKYC";
 import { maskAddress } from "helpers";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
+import Tooltip from "./Tooltip";
 
-export default function ReceiptForm() {
+export default function Form(props: Props) {
   const {
-    getValues,
     handleSubmit,
     register,
     formState: { errors },
-  } = useFormContext<ReceipterValues>();
-  const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
-  const transactionId = getValues("transactionId");
-  const isKYConly = transactionId === "";
+  } = useFormContext<FormValues>();
+  const { submit, isSubmitDisabled, isSubmitting } = useSubmitKYC(props);
 
   return (
     <form
-      onSubmit={handleSubmit(requestReceipt)}
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
+      onSubmit={handleSubmit(submit)}
+      className="w-full bg-white-grey grid gap-2 p-4 text-angel-grey"
       autoComplete="off"
       autoSave="off"
     >
-      {!isKYConly && (
+      {props.type === "post-donation" ? (
         <p>
-          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+          <span className="text-xs uppercase font-bold mb-1">
             Transaction ID:
           </span>
-          <span className="font-normal text-sm text-angel-grey ml-2">
-            {maskAddress(transactionId)}
+          <span className="font-normal text-sm ml-2">
+            {maskAddress(props.txHash)}
           </span>
         </p>
+      ) : (
+        //on-donation KYC
+        //use ternary to narrow type of props
+        <Tooltip {...props} isKYCRequired={props.isKYCRequired} />
       )}
+
       <TextInput name="email" id="email" label="Email Address" required />
       <TextInput name="fullName" id="fullName" label="Full Name" required />
       <TextInput
@@ -46,18 +49,14 @@ export default function ReceiptForm() {
       <TextInput name="state" id="state" label="State" />
       <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
       <div className="grid">
-        <label
-          htmlFor="country"
-          className="text-angel-grey text-xs uppercase font-bold mb-1"
-        >
+        <label htmlFor="country" className="text-xs uppercase font-bold mb-1">
           Country <span className="text-rose-400"> *</span>
         </label>
         <div className="form-control rounded-md grid bg-white-grey">
           <CountrySelector
             fieldName="country"
             classes={{
-              container:
-                "p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey",
+              container: "p-3 rounded-md shadow-inner-white-grey bg-light-grey",
               input: "bg-transparent",
             }}
           />
@@ -76,10 +75,7 @@ export default function ReceiptForm() {
           id="consent_marketing"
           {...register("consent_marketing")}
         />
-        <label
-          htmlFor="consent_marketing"
-          className="text-angel-grey font-light text-xs"
-        >
+        <label htmlFor="consent_marketing" className="font-light text-xs">
           I consent to my details being used only by Angel Protocol and the
           Charity to keep me informed of their progress and news.
         </label>
@@ -91,10 +87,7 @@ export default function ReceiptForm() {
           id="consent_tax"
           {...register("consent_tax")}
         />
-        <label
-          htmlFor="consent_tax"
-          className="text-angel-grey font-light text-xs"
-        >
+        <label htmlFor="consent_tax" className="font-light text-xs">
           I consent to allow my information to be shared with the charity for
           tax receipt processing purposes.
         </label>
@@ -104,7 +97,7 @@ export default function ReceiptForm() {
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {isSubmitting ? "Processing..." : "Proceed"}
+        {isSubmitting ? "Processing..." : "Submit"}
       </button>
     </form>
   );

@@ -1,10 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 
-export default function Terms() {
+export default function Terms({ classes = "" }: { classes?: string }) {
   const { register } = useFormContext<DonateValues>();
   return (
-    <div className="my-3 flex items-start">
+    <div className={`${classes} flex items-start`}>
       <input
         type="checkbox"
         className="mr-2 mt-0.5"
