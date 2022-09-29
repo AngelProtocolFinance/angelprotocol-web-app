@@ -34,6 +34,7 @@ import estimateTerraFee from "./estimateTerraFee";
 //only available if IS_TEST
 const isSendToContract =
   IS_TEST && process.env.REACT_APP_DONATION_TYPE === "DIRECT";
+
 export default function useEstimator() {
   const dispatch = useSetter();
   const {
@@ -76,6 +77,8 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
+        const { native_currency } = wallet.chain;
+
         // juno transaction, send or contract interaction
         if (wallet.chain.type === "juno-native") {
           if (
@@ -104,17 +107,23 @@ export default function useEstimator() {
             }
 
             const fee = await contract.estimateFee([msg]);
-            const feeAmount = extractFeeAmount(
-              fee,
-              wallet.chain.native_currency.token_id
-            );
+            const feeAmount = extractFeeAmount(fee, native_currency.token_id);
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
-              setError("amount", {
-                message: "not enough balance to pay for fees",
-              });
-              return;
+            if (selectedToken.token_id === native_currency.token_id) {
+              if (debounced_amount + feeAmount >= native_currency.balance) {
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
+                return;
+              }
+            } else {
+              if (feeAmount >= native_currency.balance) {
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
+                return;
+              }
             }
             setCosmosTx({ msgs: [msg], fee });
           } else {
@@ -125,14 +134,11 @@ export default function useEstimator() {
             );
             const fee = await contract.estimateFee([msg]);
 
-            const feeAmount = extractFeeAmount(
-              fee,
-              wallet.chain.native_currency.token_id
-            );
+            const feeAmount = extractFeeAmount(fee, native_currency.token_id);
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= native_currency.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -156,17 +162,23 @@ export default function useEstimator() {
             ]);
             const fee = await estimateTerraFee(wallet, [msg]);
 
-            const feeAmount = extractFeeAmount(
-              fee,
-              wallet.chain.native_currency.token_id
-            );
+            const feeAmount = extractFeeAmount(fee, native_currency.token_id);
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
-              setError("amount", {
-                message: "not enough balance to pay for fees",
-              });
-              return;
+            if (selectedToken.token_id === native_currency.token_id) {
+              if (debounced_amount + feeAmount >= native_currency.balance) {
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
+                return;
+              }
+            } else {
+              if (feeAmount >= native_currency.balance) {
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
+                return;
+              }
             }
             setTerraTx({ msgs: [msg], fee });
           } else {
@@ -182,12 +194,9 @@ export default function useEstimator() {
             );
             const fee = await estimateTerraFee(wallet, [msg]);
 
-            const feeAmount = extractFeeAmount(
-              fee,
-              wallet.chain.native_currency.token_id
-            );
+            const feeAmount = extractFeeAmount(fee, native_currency.token_id);
             dispatch(setFee(feeAmount));
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= native_currency.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -221,7 +230,7 @@ export default function useEstimator() {
             );
             dispatch(setFee(feeAmount));
 
-            if (debounced_amount + feeAmount >= wallet.displayCoin.balance) {
+            if (debounced_amount + feeAmount >= native_currency.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
@@ -244,7 +253,7 @@ export default function useEstimator() {
             dispatch(setFee(feeAmount));
 
             // not paying in native currency, so just check if there's enough balance for fees
-            if (feeAmount >= wallet.displayCoin.balance) {
+            if (feeAmount >= native_currency.balance) {
               setError("amount", {
                 message: "not enough balance to pay for fees",
               });
