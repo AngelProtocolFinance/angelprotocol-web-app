@@ -263,11 +263,11 @@ export default function useEstimator() {
 
           setEVMtx(tx);
         }
-
-        dispatch(setFormLoading(false));
       } catch (err) {
         logger.error(err);
         dispatch(setFormError("tx simulation failed"));
+      } finally {
+        dispatch(setFormLoading(false));
       }
     })();
 
