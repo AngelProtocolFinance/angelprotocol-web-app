@@ -1,6 +1,6 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
+import { ErrorMessage } from "pages/Registration/common";
 import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../../../common";
 
@@ -20,10 +20,8 @@ export default function AuditedFinancialReport() {
         multiple
         disabled={isSubmitting}
       />
-      <ErrorMessage
-        className="w-full text-xs text-failed-red text-center"
+      <ErrorMessage<DocumentationValues>
         errors={errors}
-        as="p"
         name="auditedFinancialReports"
       />
     </InputRow>
