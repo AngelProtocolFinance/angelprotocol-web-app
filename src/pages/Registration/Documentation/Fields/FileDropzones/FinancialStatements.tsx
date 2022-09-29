@@ -19,7 +19,10 @@ export default function FinancialStatements() {
         multiple
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues> name="financialStatements" />
+      <ErrorMessage<DocumentationValues>
+        name="financialStatements"
+        fieldType="array"
+      />
     </InputRow>
   );
 }

@@ -19,7 +19,10 @@ export default function AuditedFinancialReport() {
         multiple
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues> name="auditedFinancialReports" />
+      <ErrorMessage<DocumentationValues>
+        name="auditedFinancialReports"
+        fieldType="array"
+      />
     </InputRow>
   );
 }
