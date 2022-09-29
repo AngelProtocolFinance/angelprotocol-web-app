@@ -17,9 +17,24 @@ export default function Tooltip(
   }
   return (
     <>
-      <h3 className="text-2xl font-bold text-center my-2">Need tax receipt?</h3>
-      <div className="text-center">
-        Tax receipts can be requested and amended at any time from your
+      <h3 className="text-2xl font-bold text-center mt-2">Need tax receipt?</h3>
+      {props.isKYCRequired ? (
+        <p className="text-amber-600 bg-amber-100 p-3 rounded-md">
+          <Icon type="Info" className="inline relative bottom-0.5 mr-2" />
+          This charity requires KYC data
+        </p>
+      ) : (
+        <button
+          className="text-angel-blue underline hover:text-bright-blue mb-2"
+          onClick={() => {
+            showDonater(props.donaterProps);
+          }}
+        >
+          No tax receipt needed, thanks*
+        </button>
+      )}
+      <div className="text-center font-light text-sm mb-2">
+        *Tax receipts can be requested and amended at any time from your
         <button
           onClick={goToMyDonations}
           className="text-angel-blue inline mx-1 hover:text-bright-blue"
@@ -28,21 +43,6 @@ export default function Tooltip(
         </button>
         table.
       </div>
-      {props.isKYCRequired ? (
-        <p className="text-amber-500 bg-amber-100 p-3 rounded-md mb-4">
-          <Icon type="Info" className="inline relative bottom-0.5 mr-2" />
-          This charity requires KYC data
-        </p>
-      ) : (
-        <button
-          className="text-angel-blue underline mb-4 hover:text-bright-blue"
-          onClick={() => {
-            showDonater(props.donaterProps);
-          }}
-        >
-          No tax receipt needed
-        </button>
-      )}
     </>
   );
 }
