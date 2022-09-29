@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { Props, ReceipterValues } from "./types";
+import { FormValues, Props } from "./types";
 import CountrySelector from "components/CountrySelector";
-import useReceiptForm from "components/Receipter/useRequestReceipt";
+import useSubmitKYC from "components/KYC/useSubmitKYC";
 import { maskAddress } from "helpers";
 import TextInput from "./TextInput";
 
@@ -11,13 +11,13 @@ export default function Form(props: Props) {
     handleSubmit,
     register,
     formState: { errors },
-  } = useFormContext<ReceipterValues>();
-  const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
+  } = useFormContext<FormValues>();
+  const { submit, isSubmitDisabled, isSubmitting } = useSubmitKYC(props);
 
   return (
     <form
-      onSubmit={handleSubmit(requestReceipt)}
-      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-[75vh] overflow-y-auto"
+      onSubmit={handleSubmit(submit)}
+      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >

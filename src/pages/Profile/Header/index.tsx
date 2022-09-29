@@ -7,10 +7,7 @@ import CharityLinks from "./Links";
 export default function CharityHeader(props: ProfileResponse) {
   const profile = useProfile();
 
-  const showDonater = useDonater({
-    charityId: profile.id,
-    isKycDonorOnly: profile.kyc_donors_only,
-  });
+  const showDonater = useDonater();
 
   //TODO: show multiple SDGs
   const sdgNum = props.categories.sdgs[0] || 1;
@@ -27,7 +24,16 @@ export default function CharityHeader(props: ProfileResponse) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button onClick={showDonater}>DONATE NOW</Button>
+        <Button
+          onClick={() => {
+            showDonater({
+              charityId: profile.id,
+              isKycDonorOnly: profile.kyc_donors_only,
+            });
+          }}
+        >
+          DONATE NOW
+        </Button>
 
         <CharityLinks />
       </div>

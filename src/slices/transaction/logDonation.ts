@@ -3,6 +3,7 @@ import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
 import { APIs } from "constants/urls";
 
+//log donation, with optional receipt
 const logDonation = async (payload: TxLogPayload) => {
   const generatedToken = createAuthToken("angelprotocol-web-app");
   const response = await fetch(APIs.apes + "/v1/donation", {
