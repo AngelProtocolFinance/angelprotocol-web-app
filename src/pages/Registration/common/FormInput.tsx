@@ -1,12 +1,12 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { InputHTMLAttributes } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { ErrorMessage } from "./ErrorMessage";
 
 export default function FormInput<T extends FieldValues>(
   props: Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
     fieldName: Path<T>;
     label: string;
-    classes?: { error?: string; container?: string };
+    classes?: { container?: string };
     mono?: true;
   }
 ) {
@@ -46,12 +46,7 @@ export default function FormInput<T extends FieldValues>(
         }`}
         {...register(props.fieldName)}
       />
-      <ErrorMessage
-        errors={errors}
-        as="p"
-        name={props.fieldName as any}
-        className={`text-sm text-failed-red ${classes?.error || ""}`}
-      />
+      <ErrorMessage<T> name={props.fieldName} />
     </div>
   );
 }
