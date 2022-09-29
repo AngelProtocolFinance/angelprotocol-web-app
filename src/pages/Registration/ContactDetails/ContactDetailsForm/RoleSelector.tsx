@@ -21,7 +21,7 @@ export default function RoleSelector() {
           label="Specify your role"
           placeholder="Specify your role"
           required
-          classes={{ container: "mt-3" }}
+          classes="mt-3"
         />
       )}
     </div>
