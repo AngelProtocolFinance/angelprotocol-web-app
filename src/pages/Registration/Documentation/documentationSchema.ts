@@ -37,8 +37,8 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   });
 
 const documentationShape: SchemaShape<DocumentationValues> = {
-  proofOfIdentity: FILE_SCHEMA,
-  proofOfRegistration: FILE_SCHEMA,
+  proofOfIdentity: FILE_SCHEMA.required("Proof of identity required"),
+  proofOfRegistration: FILE_SCHEMA.required("Proof of registration required"),
   financialStatements: Yup.array<FileWrapper>().of(FILE_SCHEMA),
   auditedFinancialReports: Yup.array<FileWrapper>().of(FILE_SCHEMA),
   website: Yup.string()
