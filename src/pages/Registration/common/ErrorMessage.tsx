@@ -35,7 +35,15 @@ export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
 function getUniqueFieldErrors<T>(
   errors: FieldErrorsImpl<DeepRequired<T>>[keyof T & string]
 ): FieldError[] {
-  const fieldErrors = (errors as unknown as FieldError[]) ?? [];
+  // the way hookforms works with array values is that it sets the `errors` values by the index of the inserted value.
+  // example:
+  // - input file1 -> valid, file2 -> invalid
+  // - errors value: [[0]: undefined, [1]: {message: "invalid", type: "sometype"}]
+  // because the first file was valid, the first element in the `errors` array is `undefined`,
+  // so we filter those out for easier handling
+  const fieldErrors = ((errors as unknown as FieldError[]) ?? []).filter(
+    (err) => !!err
+  );
 
   return fieldErrors.reduceRight(
     (prev, curr) =>
