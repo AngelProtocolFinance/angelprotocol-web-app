@@ -6,10 +6,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-type Props<T extends FieldValues> = {
-  name: keyof T & string;
-  fieldType?: "plain" | "array";
-};
+type Props<T extends FieldValues> = { name: keyof T & string };
 
 export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
   const {
@@ -20,10 +17,9 @@ export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
     return null;
   }
 
-  const fieldErrors =
-    props.fieldType === "array"
-      ? getUniqueFieldErrors(errors[props.name])
-      : [errors[props.name] as FieldError];
+  const fieldErrors = Array.isArray(errors[props.name])
+    ? getUniqueFieldErrors(errors[props.name])
+    : [errors[props.name] as FieldError];
 
   return (
     <div className="flex flex-col gap-1 items-center">
