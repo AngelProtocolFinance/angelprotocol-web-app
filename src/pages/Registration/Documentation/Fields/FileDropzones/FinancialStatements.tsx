@@ -1,12 +1,11 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
-import { InputRow } from "../../../common";
+import { ErrorMessage, InputRow } from "../../../common";
 
 export default function FinancialStatements() {
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useFormContext<DocumentationValues>();
 
   return (
@@ -20,12 +19,7 @@ export default function FinancialStatements() {
         multiple
         disabled={isSubmitting}
       />
-      <ErrorMessage
-        className="w-full text-xs text-failed-red text-center"
-        errors={errors}
-        as="p"
-        name="financialStatements"
-      />
+      <ErrorMessage<DocumentationValues> name="financialStatements" />
     </InputRow>
   );
 }
