@@ -3,7 +3,7 @@ import { SwapValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import { humanize } from "helpers";
-import { symbols } from "constants/currency";
+import { denoms, symbols } from "constants/tokens";
 
 function Misc(props: { title: string; value: string; class?: string }) {
   const classes = `text-xs font-light ${props.class}`;
@@ -40,7 +40,7 @@ export function SwapRate() {
 
   const formattedRatio = humanize(ratio, 6, true);
   const nativeSymbol = wallet?.chain.native_currency.symbol;
-  const haloSymbol = symbols.halo;
+  const haloSymbol = symbols[denoms.halo];
   return (
     <Misc
       title="Rate"
