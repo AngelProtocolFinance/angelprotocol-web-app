@@ -23,10 +23,7 @@ export default function Views() {
         <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
         {/* <Route path={`${appRoutes.govern}/*`} element={<Governance />} /> */}
         <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-        <Route
-          path={`${appRoutes.donations}/:address`}
-          element={<Donations />}
-        />
+        <Route path={`${appRoutes.donations}/:id`} element={<Donations />} />
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
         <Route index element={<Market />} />
         <Route path={`${appRoutes.register}/*`} element={<Registration />} />

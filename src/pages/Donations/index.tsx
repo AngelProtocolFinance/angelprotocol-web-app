@@ -1,28 +1,31 @@
 import { useParams } from "react-router-dom";
-import { Transaction } from "types/aws";
-import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
+import { DonationsParams } from "./types";
+import { Donation } from "types/aws";
+import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
-import { Tooltip } from "./Table";
+import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
 
-const headers: { key: keyof Transaction; label: string }[] = [
-  { key: "name", label: "Name" },
-  { key: "usd_amount", label: "Amount" },
-  { key: "block_timestamp", label: "Date" },
-  { key: "donator", label: "Donator" },
-  { key: "tx_id", label: "Transaction Hash" },
+const headers: { key: keyof Donation; label: string }[] = [
+  { key: "amount", label: "Amount" },
+  { key: "symbol", label: "Currency" },
+  { key: "date", label: "Date" },
+  { key: "hash", label: "Transaction Hash" },
 ];
 
 export default function Donations() {
-  const { address } = useParams<{ address: string }>();
+  const { address } = useParams<DonationsParams>();
   const {
     data = [],
     isLoading,
-    // isError,
-  } = useDonationTransactionsQuery(address!, {
-    skip: !address,
-  });
+    isError,
+  } = useDonationsQuery(
+    { id: address! },
+    {
+      skip: !address,
+    }
+  );
 
   return (
     <div className="grid content-start padded-container p-4 mt-10 bg-white/10 overflow-auto h-36 rounded-md shadow-md shadow-inner">
@@ -34,15 +37,8 @@ export default function Donations() {
           <CsvExporter headers={headers} data={data} filename="donations.csv" />
         )}
       </div>
-      {/** // TEMP OVERRIDE UNTIL WE GET OUR APES API WORKING! */}
-      <Tooltip classes="mt-10">
-        Hang tight! Donation records are coming very soon.
-      </Tooltip>
-      {/* <DonationsTable
-        transactions={data}
-        isLoading={isLoading}
-        isError={isError}
-      /> */}
+
+      <Table donations={data} isLoading={isLoading} isError={isError} />
     </div>
   );
 }

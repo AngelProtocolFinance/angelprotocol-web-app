@@ -91,7 +91,7 @@ const headers: { key: SortKey; name: string }[] = [
   { key: "date", name: "date" },
 ];
 
-export function Tooltip(props: PropsWithChildren<{ classes?: string }>) {
+function Tooltip(props: PropsWithChildren<{ classes?: string }>) {
   return (
     <p
       className={`text-white font-mono text-sm text-center ${

@@ -20,7 +20,7 @@ const donations_api = apes.injectEndpoints({
       },
     }),
     donations: builder.query<
-      [Donation[], string | undefined],
+      Donation[],
       { id: string | number /** TODO: use key when bug is removed in AWS */ }
     >({
       query: ({ id }) => ({
@@ -28,7 +28,7 @@ const donations_api = apes.injectEndpoints({
         // headers: { key },
       }),
       transformResponse(res: AWSQueryRes<any>) {
-        return [res.Items, res.LastEvaluatedKey];
+        return res.Items;
       },
     }),
   }),
