@@ -101,7 +101,7 @@ export default function useEstimator() {
             } else {
               msg = contract.createTransferNativeMsg(
                 debounced_amount,
-                ap_wallets.juno,
+                ap_wallets.juno_deposit,
                 selectedToken.token_id
               );
             }
@@ -130,7 +130,7 @@ export default function useEstimator() {
             const contract = new CW20(wallet, selectedToken.token_id);
             const msg = contract.createTransferMsg(
               debounced_amount,
-              ap_wallets.juno
+              ap_wallets.juno_deposit
             );
             const fee = await contract.estimateFee([msg]);
 
