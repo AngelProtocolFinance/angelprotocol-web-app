@@ -1,11 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import haloLogo from "assets/icons/currencies/halo_outline.png";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { Label } from "components/admin";
+import { denoms, symbols } from "constants/tokens";
 import Balance from "./Balance";
-import Currency from "./Currency";
+import Denom from "./Denom";
 
 export default function Amount() {
   const {
@@ -18,9 +18,9 @@ export default function Amount() {
   const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
 
   const denomText =
-    watch("currency") === native_currency.token_id
+    watch("denom") === native_currency.token_id
       ? native_currency.symbol
-      : "HALO";
+      : symbols[denoms.halo];
 
   return (
     <div className="grid mb-4">
@@ -38,12 +38,8 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency
-            currency={native_currency.token_id}
-            icon={native_currency.logo}
-            text={native_currency.symbol}
-          />
-          <Currency currency="halo" icon={haloLogo} text="HALO" />
+          <Denom denom={native_currency.token_id} />
+          <Denom denom={denoms.halo} />
         </div>
         <ErrorMessage
           errors={errors}

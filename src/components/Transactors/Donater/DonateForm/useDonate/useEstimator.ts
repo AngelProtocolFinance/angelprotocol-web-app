@@ -26,8 +26,8 @@ import CW20 from "contracts/CW20";
 import useDebouncer from "hooks/useDebouncer";
 import { extractFeeAmount, getProvider, logger } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
 import { IS_TEST } from "constants/env";
+import { junoDenom } from "constants/tokens";
 import estimateTerraFee from "./estimateTerraFee";
 
 //set to true to donate directly to account
@@ -96,7 +96,7 @@ export default function useEstimator() {
                   liquid_percentage: "0.5",
                   locked_percentage: "0.5",
                 },
-                [{ denom: denoms.juno, amount: "1000000" /** manual */ }]
+                [{ denom: junoDenom, amount: "1000000" /** manual */ }]
               );
             } else {
               msg = contract.createTransferNativeMsg(

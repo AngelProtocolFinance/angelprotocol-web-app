@@ -45,6 +45,7 @@ export default function useWithdraw() {
       type: "acc_withdraw",
       data: {
         beneficiary: data.beneficiary,
+        assets,
       },
     };
 

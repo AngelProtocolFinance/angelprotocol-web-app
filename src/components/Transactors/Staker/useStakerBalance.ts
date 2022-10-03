@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { scale } from "helpers";
-import { denoms } from "constants/currency";
+import { denoms } from "constants/tokens";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();
