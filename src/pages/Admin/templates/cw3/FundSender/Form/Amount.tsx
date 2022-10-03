@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { Label } from "components/admin";
-import { denoms } from "constants/tokens";
+import { denoms, symbols } from "constants/tokens";
 import Balance from "./Balance";
 import Denom from "./Denom";
 
@@ -20,7 +20,7 @@ export default function Amount() {
   const denomText =
     watch("denom") === native_currency.token_id
       ? native_currency.symbol
-      : "HALO";
+      : symbols[denoms.halo];
 
   return (
     <div className="grid mb-4">
