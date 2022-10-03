@@ -11,7 +11,7 @@ export default function Withdraw({
 }: WithdrawMeta["data"]) {
   return (
     <PreviewContainer>
-      <KeyValue _key="beneficiary">
+      <KeyValue _key="beneficiary" _classes="flex-col gap-2 mt-1">
         <span className="font-mono text-sm">{beneficiary}</span>
       </KeyValue>
 
