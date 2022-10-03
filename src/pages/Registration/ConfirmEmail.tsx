@@ -64,8 +64,8 @@ export default function ConfirmEmail() {
             <span>We're waiting for you to confirm your email address.</span>
           </div>
           <span className="font-normal">
-            You can continue to the next registration step, but please verify
-            your email by clicking on the link in the email we've sent you to be
+            You can continue to the next registration step, but please note that you will need to verify
+            your email by clicking on the link in the email we've sent you, before the final application submission, in order to be
             able to register {charity.Registration.CharityName} on Angel
             Protocol.
           </span>
