@@ -18,7 +18,7 @@ import {
   humanize,
   processEstimateError,
 } from "helpers";
-import { denoms } from "constants/currency";
+import { denoms } from "constants/tokens";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {

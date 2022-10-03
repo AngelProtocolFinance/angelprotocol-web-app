@@ -2,8 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "types/contracts";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
-import { symbols } from "constants/currency";
 import { appRoutes } from "constants/routes";
+import { denoms, symbols } from "constants/tokens";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 
@@ -42,7 +42,10 @@ export default function PollDetails() {
         </div>
         <div className="grid grid-cols-2 gap-6 mb-10">
           <Item title="Creator" value={details.creator} />
-          <Item title="Amount" value={`${details.amount} ${symbols.halo}`} />
+          <Item
+            title="Amount"
+            value={`${details.amount} ${symbols[denoms.halo]}`}
+          />
           <div className="break-words">
             <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
               end time
