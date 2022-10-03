@@ -47,7 +47,7 @@ export const logProposalId = createAsyncThunk(
           step: "success",
           message: "Endowment submitted for review",
           txHash: args.res.transactionHash,
-          chain: args.wallet.chain,
+          chainId: args.wallet.chain.chain_id,
         })
       );
 

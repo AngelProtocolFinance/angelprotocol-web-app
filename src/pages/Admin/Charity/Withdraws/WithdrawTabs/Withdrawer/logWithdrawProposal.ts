@@ -56,7 +56,7 @@ export const logWithdrawProposal = createAsyncThunk<void, Params>(
           step: "success",
           message: "Withdraw proposal submitted",
           txHash: res.transactionHash,
-          chain: wallet.chain,
+          chainId: wallet.chain.chain_id,
           successLink: proposalLink,
         })
       );

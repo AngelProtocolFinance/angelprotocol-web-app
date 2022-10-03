@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
-const Donations = lazy(() => import("pages/Donations/Donations"));
+const Donations = lazy(() => import("pages/Donations"));
 // NOTE: Governance will be reenabled when we relaunch the $HALO token
 // const Governance = lazy(() => import("pages/Governance/Governance"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));

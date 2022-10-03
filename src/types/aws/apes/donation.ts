@@ -1,3 +1,11 @@
+export type Donation = {
+  amount: number;
+  chainId: string;
+  date: string;
+  hash: string;
+  symbol: string;
+};
+
 export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"

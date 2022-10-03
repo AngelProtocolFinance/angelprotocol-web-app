@@ -76,7 +76,7 @@ export const sendEthDonation = createAsyncThunk(
         step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
-        chain: args.wallet.chain,
+        chainId: args.wallet.chain.chain_id,
         isShareEnabled: true,
       });
     } catch (error) {
