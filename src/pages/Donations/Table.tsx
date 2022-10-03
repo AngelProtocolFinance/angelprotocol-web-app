@@ -1,20 +1,21 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
-import { Transaction } from "types/aws";
+import { Donation } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import { getTxUrl, humanize } from "helpers";
-import useSortTransactions from "./useSortTransactions";
+import useSort from "./useSort";
 
-export default function DonationsTable(props: {
-  transactions: Transaction[];
+export default function Table(props: {
+  donations: Donation[];
   isLoading: boolean;
   isError: boolean;
 }) {
-  const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
-    useSortTransactions(props.transactions);
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+    props.donations
+  );
   const showKYCForm = useKYC();
 
   const { wallet } = useGetWallet();
@@ -52,19 +53,19 @@ export default function DonationsTable(props: {
         type="tbody"
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
-        {sortedTransactions.map((tx) => (
-          <Cells key={tx.tx_id} type="td" cellClass="p-2 first:pl-0 last:pr-0">
-            <p className="text-base font-bold">$ {humanize(tx.usd_amount)}</p>
-            <>{tx.block_timestamp.substring(0, 10)}</>
-            <span className="font-mono">{tx.name}</span>
+        {sorted.map(({ hash, amount, symbol, chainId, date }) => (
+          <Cells key={hash} type="td" cellClass="p-2 first:pl-0 last:pr-0">
+            <p className="text-base font-bold">$ {humanize(amount)}</p>
+            <>{new Date(date).toLocaleDateString()}</>
+            <span className="font-mono">{symbol}</span>
             <a
-              href={getTxUrl(wallet!.chain, tx.tx_id)}
+              href={getTxUrl(chainId, hash)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
             >
               <span className="inline-block text-base w-36 truncate">
-                {tx.tx_id}
+                {chainId}
               </span>
             </a>
             <button
@@ -72,7 +73,7 @@ export default function DonationsTable(props: {
               onClick={() =>
                 showKYCForm({
                   type: "post-donation",
-                  txHash: tx.tx_id,
+                  txHash: hash,
                 })
               }
             >
@@ -86,10 +87,8 @@ export default function DonationsTable(props: {
 }
 
 const headers: { key: SortKey; name: string }[] = [
-  { key: "usd_amount", name: "amount" },
-  { key: "block_timestamp", name: "date" },
-  { key: "name", name: "Charity" },
-  { key: "tx_id", name: "transaction hash" },
+  { key: "amount", name: "amount" },
+  { key: "date", name: "date" },
 ];
 
 export function Tooltip(props: PropsWithChildren<{ classes?: string }>) {

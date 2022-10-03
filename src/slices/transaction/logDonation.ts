@@ -1,6 +1,7 @@
 import { TxLogPayload } from "types/aws";
 import { createAuthToken } from "helpers";
 import { LogDonationFail } from "errors/errors";
+import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
 //log donation, with optional receipt
@@ -9,7 +10,12 @@ const logDonation = async (payload: TxLogPayload) => {
   const response = await fetch(APIs.apes + "/v1/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
-    body: JSON.stringify({ ...payload, ...payload.kycData }),
+    body: JSON.stringify({
+      ...payload,
+      ...payload.kycData,
+      //helps AWS determine which txs are testnet and mainnet without checking all chainIDs
+      network: IS_TEST ? "testnet" : "mainnet",
+    }),
   });
 
   if (!response.ok) {

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Transaction } from "types/aws";
 import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
 import CsvExporter from "components/CsvExporter";
-import { Tooltip } from "./DonationsTable";
+import { Tooltip } from "./Table";
 
 // import DonationsTable from "./DonationsTable";
 

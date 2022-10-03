@@ -64,7 +64,7 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chain: args.chain,
+          chainId: args.chain.chain_id,
         });
 
         const getTxInfo = pollTerraTxInfo(
@@ -80,7 +80,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chain: args.chain,
+            chainId: args.chain.chain_id,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -92,7 +92,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chain: args.chain,
+            chainId: args.chain.chain_id,
           });
         }
       }

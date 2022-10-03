@@ -56,7 +56,7 @@ export const sendCosmosDonation = createAsyncThunk(
           message: "Thank you for your donation",
           txHash: response.transactionHash,
           rawLog: response.rawLog,
-          chain: args.wallet.chain,
+          chainId: args.wallet.chain.chain_id,
           //share is enabled for both individual and tca donations
           isShareEnabled: true,
         });
@@ -75,7 +75,7 @@ export const sendCosmosDonation = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chain: args.wallet.chain,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {

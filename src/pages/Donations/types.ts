@@ -1,4 +1,4 @@
-import { Transaction } from "types/aws";
+import { Donation } from "types/aws";
 
 export type SortDirection = "asc" | "desc";
-export type SortKey = keyof Omit<Transaction, "chain_id">;
+export type SortKey = keyof Pick<Donation, "amount" | "date">;

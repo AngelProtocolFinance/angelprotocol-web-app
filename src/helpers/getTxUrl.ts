@@ -1,5 +1,6 @@
-import { Chain } from "types/aws";
+import { chains } from "constants/chains";
 
-export function getTxUrl(chain: Chain, txHash: string): string {
-  return `${chain.block_explorer_url}${txHash}`; // chain.block_explorer_url always ends with '/'
+export function getTxUrl(chainId: string, txHash: string): string {
+  const txUrl = chains[chainId];
+  return `${txUrl}/${txHash}`;
 }
