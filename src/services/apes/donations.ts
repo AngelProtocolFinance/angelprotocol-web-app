@@ -2,6 +2,7 @@ import { AWSQueryRes, Donation, ReceiptPayload } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
+import { apesTags } from "./tags";
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,6 +24,7 @@ const donations_api = apes.injectEndpoints({
       Donation[],
       { id: string | number /** TODO: use key when bug is removed in AWS */ }
     >({
+      providesTags: [{ type: apesTags.donations }],
       query: ({ id }) => ({
         url: `v1/donation/${id}${IS_TEST ? "/testnet" : ""}`,
         // headers: { key },

@@ -13,7 +13,7 @@ export default function Table(props: { donations: Donation[] }) {
   );
 
   return (
-    <table className="w-full border-collapse">
+    <table className="w-full border-collapse self-start">
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
         <Cells
           type="th"
@@ -90,11 +90,15 @@ function HeaderButton(
   return (
     <button
       {...restProps}
-      className="w-full flex items-center justify-start gap-1 uppercase"
+      className="flex items-center justify-start gap-1 uppercase relative"
     >
       <span>{children}</span>
-      {_activeSortKey === _sortKey &&
-        (_sortDirection === "asc" ? <Icon type="Up" /> : <Icon type="Down" />)}
+      {_activeSortKey === _sortKey && (
+        <Icon
+          type={_sortDirection === "asc" ? "Up" : "Down"}
+          className="absolute -right-4"
+        />
+      )}
     </button>
   );
 }
