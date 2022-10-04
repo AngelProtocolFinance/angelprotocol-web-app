@@ -1,5 +1,5 @@
 import { cid, mockedUpload } from "setupTests";
-import { IPFS_GATEWAY, uploadToIpfs } from "./uploadToIpfs";
+import { IPFS_GATEWAY, uploadToIpfs } from "../uploadToIpfs";
 
 describe("uploadToIpfs tests", () => {
   it("returns correctly extracted data after successful upload", async () => {
