@@ -1,4 +1,4 @@
-import { Token } from "types/aws";
+import { KYCData, Token } from "types/aws";
 
 export interface DonateValues {
   amount: string;
@@ -7,26 +7,16 @@ export interface DonateValues {
   token: Token;
   min_liq: number;
   max_liq: number;
-  to: "tca" | "fund" | "charity";
-  receiver?: number | string;
+  charityId: number;
   isAgreedToTerms: boolean;
-  isKycDonorOnly?: boolean;
+  kycData?: KYCData;
 }
 
-interface FromTCA {
-  to: "tca";
-  receiver?: never;
-  max_liq?: never;
-  min_liq?: never;
-}
-
-interface ToFundOrCharity {
-  to: "fund" | "charity";
-  receiver: number;
-  //doesn't know yet limits on charity donations
+export type DonaterProps = Pick<DonateValues, "charityId"> & {
+  //NOTE: fill this if there's limit on donation splits to be enforce
   max_liq?: number;
   min_liq?: number;
-}
 
-type FundFlow = ToFundOrCharity | FromTCA;
-export type DonaterProps = FundFlow & { isKycDonorOnly?: boolean };
+  //if provider, user will receive receipt right after donation
+  kycData?: KYCData;
+};

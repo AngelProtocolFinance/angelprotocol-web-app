@@ -4,7 +4,6 @@ export const APIs = {
   flipside: "https://flipside.leslug.com/angel",
 };
 
-export const PRIVACY_POLICY =
-  "https://ipfs.w3s.link/ipfs/bafybeieor6a2tierwwjhhpogapwquoems7br2x73jsyxakwbjrvwfir2ha/Website%20and%20WebApp%20Privacy%20Policy%20%28v.110121%29.docx";
+export const PRIVACY_POLICY = "https://angelprotocol.io/privacy-policy/";
 export const LITEPAPER =
-  "https://ipfs.w3s.link/ipfs/bafybeihvkpjghhzr6uyjf6bvfl6v67yptxea36gfsix6lquqp5eb3mjcbu/ap-litepaper-v3.pdf";
+  "https://angelprotocol.io/docs/litepaper-introduction/";

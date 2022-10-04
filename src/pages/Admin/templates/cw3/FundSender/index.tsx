@@ -1,8 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import { Denoms } from "types/lists";
-import { denoms } from "constants/currency";
+import { axlUSDCDenom } from "constants/tokens";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -12,7 +11,7 @@ export default function FundSender() {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      currency: denoms.axlusdc as Denoms,
+      denom: axlUSDCDenom,
       haloBalance: 0,
       usdBalance: 0,
     },

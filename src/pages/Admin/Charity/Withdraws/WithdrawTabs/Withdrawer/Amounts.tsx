@@ -3,7 +3,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
-import { coinAsset } from "constants/currency";
+import { tokens } from "constants/tokens";
 
 export default function Amounts() {
   const {
@@ -45,7 +45,7 @@ export default function Amounts() {
               bal: {humanize(+field.balance, 4)}
             </button>
             <img
-              src={coinAsset[field.tokenId].icon}
+              src={tokens[field.tokenId].icon}
               alt=""
               className="h-5 w-5 object-contain mr-1"
             />
@@ -53,7 +53,7 @@ export default function Amounts() {
               htmlFor={field.id}
               className="uppercase font-heading text-sm"
             >
-              {coinAsset[field.tokenId].name}
+              {tokens[field.tokenId].symbol}
             </label>
             <input
               {...register(fieldName)}

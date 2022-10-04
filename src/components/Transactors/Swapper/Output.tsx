@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import haloLogo from "assets/icons/currencies/halo_outline.png";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { symbols } from "constants/currency";
+import { denoms, symbols } from "constants/tokens";
 
 export default function Output() {
   const { watch } = useFormContext<SwapValues>();
@@ -24,7 +24,7 @@ export default function Output() {
           alt=""
         />
         <span className="block font-bold text-2xl">
-          {is_buy ? symbols.halo : native_currency.symbol}
+          {is_buy ? symbols[denoms.halo] : native_currency.symbol}
         </span>
       </div>
 

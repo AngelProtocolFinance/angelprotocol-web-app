@@ -2,6 +2,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/cw3";
 import { QueryLoader } from "components/admin";
 import Balance from "./Balance";
+import Donations from "./Donations";
 import Table from "./Table";
 
 export default function Dashboard() {
@@ -32,6 +33,7 @@ export default function Dashboard() {
       >
         {(proposals) => <Table proposals={proposals} />}
       </QueryLoader>
+      <Donations />
     </div>
   );
 }

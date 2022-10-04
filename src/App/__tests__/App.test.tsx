@@ -74,16 +74,16 @@ describe("App.tsx tests", () => {
       name: /leaderboard/i,
     });
 
-    const registerLink = await screen.findByRole("link", {
-      name: /register/i,
-    });
+    // const registerLink = await screen.findByRole("link", {
+    //   name: /register/i,
+    // });
 
     //view is finally loaded
     expect(await screen.findByText(marketText1)).toBeInTheDocument();
     expect(await screen.findByText(marketText2)).toBeInTheDocument();
     expect(marketplaceLink).toBeInTheDocument();
     expect(leaderboardLink).toBeInTheDocument();
-    expect(registerLink).toBeInTheDocument();
+    // expect(registerLink).toBeInTheDocument();
 
     //user goes to Leaderboard
     userEvent.click(leaderboardLink);
@@ -94,10 +94,10 @@ describe("App.tsx tests", () => {
     ).toBeInTheDocument();
 
     //user goes to Registration
-    userEvent.click(registerLink);
-    expect(
-      await screen.findByRole("button", { name: /start/i })
-    ).toBeInTheDocument();
+    // userEvent.click(registerLink);
+    // expect(
+    //   await screen.findByRole("button", { name: /start/i })
+    // ).toBeInTheDocument();
 
     //user goes to back to Leaderboard
     userEvent.click(leaderboardLink);

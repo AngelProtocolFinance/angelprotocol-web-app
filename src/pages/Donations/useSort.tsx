@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
-import { Transaction } from "types/aws";
+import { Donation } from "types/aws";
 
-export default function useSortedTransactions(transactions: Transaction[]) {
-  const [sortKey, setSortKey] = useState<SortKey>("block_timestamp");
+//TODO: remove custom sorter and pass sort params to AWS instead
+export default function useSort(donations: Donation[]) {
+  const [sortKey, setSortKey] = useState<SortKey>("amount");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   //if key is already set, just toggle direction
@@ -15,8 +16,8 @@ export default function useSortedTransactions(transactions: Transaction[]) {
     }
   };
 
-  const sortedTransactions = useMemo(() => {
-    const txs = [...transactions];
+  const sorted = useMemo(() => {
+    const txs = [...donations];
     const gtSortVal = sortDirection === "asc" ? 1 : -1;
     const ltSortVal = sortDirection === "asc" ? -1 : 1;
     txs.sort((prev, next) => {
@@ -29,7 +30,7 @@ export default function useSortedTransactions(transactions: Transaction[]) {
       }
     });
     return txs;
-  }, [transactions, sortKey, sortDirection]);
+  }, [donations, sortKey, sortDirection]);
 
-  return { sortedTransactions, handleHeaderClick, sortDirection, sortKey };
+  return { sorted, handleHeaderClick, sortDirection, sortKey };
 }

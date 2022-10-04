@@ -51,9 +51,9 @@ function AppLinks() {
       <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
-      <NavLink to={appRoutes.register} className={styler}>
+      {/*<NavLink to={appRoutes.register} className={styler}>
         Register
-      </NavLink>
+      </NavLink>*/}
     </div>
   );
 }

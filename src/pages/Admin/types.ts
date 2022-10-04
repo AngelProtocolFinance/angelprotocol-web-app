@@ -1,6 +1,7 @@
 import { CharityApplication, Registration } from "types/aws";
 import {
   AllianceMember,
+  Asset,
   CW4Member,
   EndowmentSettingsPayload,
   EndowmentStatus,
@@ -12,7 +13,7 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
-import { Denoms, UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
@@ -107,7 +108,7 @@ export type CW3ConfigUpdateMeta = MetaConstructor<
 
 export type FundSendMeta = MetaConstructor<
   "cw3_transfer",
-  Pick<FundSendPayload, "amount" | "currency" | "recipient">
+  Pick<FundSendPayload, "amount" | "denom" | "recipient">
 >;
 
 /** _endowment */
@@ -115,6 +116,7 @@ export type WithdrawMeta = MetaConstructor<
   "acc_withdraw",
   {
     beneficiary: string;
+    assets: Asset[];
   }
 >;
 
@@ -216,7 +218,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: Denoms; //NOTE: Denoms might contain non-juno denoms
+  denom: string;
   haloBalance: number;
   usdBalance: number;
 };

@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { Denoms } from "types/lists";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -16,7 +15,7 @@ import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
-import { denoms, symbols } from "constants/currency";
+import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
 
 export default function useTransferFunds() {
   const {
@@ -31,10 +30,10 @@ export default function useTransferFunds() {
 
   function transferFunds(data: FundSendValues) {
     const balance =
-      data.currency === denoms.axlusdc ? data.usdBalance : data.haloBalance;
+      data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
       showModal(Popup, {
-        message: `not enough ${symbols[data.currency as Denoms]} balance`,
+        message: `not enough ${tokens[data.denom]} balance`,
       });
       return;
     }
@@ -42,7 +41,7 @@ export default function useTransferFunds() {
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
     const cw20Contract = new CW20(wallet, contracts.halo_token);
-    if (data.currency === denoms.halo) {
+    if (data.denom === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
         data.recipient
@@ -64,7 +63,7 @@ export default function useTransferFunds() {
       type: "cw3_transfer",
       data: {
         amount: data.amount,
-        currency: data.currency,
+        denom: data.denom,
         recipient: data.recipient,
       },
     };

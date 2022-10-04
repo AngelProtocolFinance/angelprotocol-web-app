@@ -1,15 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import { humanize } from "helpers";
-import { denoms, symbols } from "constants/currency";
+import { axlUSDCDenom, symbols } from "constants/tokens";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<FundSendValues>();
-  const currency = watch("currency");
+  const denom = watch("denom");
   const haloBalance = watch("haloBalance");
   const usdBalance = watch("usdBalance");
 
-  const displayBalance = currency === denoms.axlusdc ? usdBalance : haloBalance;
+  const displayBalance = denom === axlUSDCDenom ? usdBalance : haloBalance;
 
   function setMax() {
     setValue("amount", displayBalance, {
@@ -25,7 +25,7 @@ export default function Balance() {
     >
       <span className="uppercase text-xs">balance:</span>
       <span>{humanize(displayBalance, 3, true)}</span>
-      <span>{symbols[currency]}</span>
+      <span>{symbols[denom]}</span>
     </button>
   );
 }

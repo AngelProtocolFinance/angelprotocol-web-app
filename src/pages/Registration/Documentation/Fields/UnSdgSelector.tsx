@@ -1,8 +1,6 @@
-import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
 import { DocumentationValues as DV } from "pages/Registration/types";
 import { unsdgs } from "constants/unsdgs";
-import { InputRow } from "../../common";
+import { ErrorMessage, InputRow } from "../../common";
 import Selector from "../../common/Selector";
 
 const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
@@ -11,10 +9,6 @@ const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
 }));
 
 export default function UnSdgSelector() {
-  const {
-    formState: { errors },
-  } = useFormContext<DV>();
-
   return (
     <InputRow
       htmlFor="un_sdg"
@@ -25,12 +19,7 @@ export default function UnSdgSelector() {
         placeholder="Select an SDG"
         options={OPTIONS}
       />
-      <ErrorMessage
-        errors={errors}
-        as="p"
-        name="un_sdg"
-        className="w-full text-xs text-failed-red text-center"
-      />
+      <ErrorMessage<DV> name="un_sdg" />
     </InputRow>
   );
 }
