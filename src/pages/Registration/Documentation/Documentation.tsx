@@ -38,18 +38,18 @@ export default function Documentation() {
   return (
     <FormProvider {...methods}>
       <form
-        className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 gap-x-4 items-center text-left"
+        className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left"
         onSubmit={methods.handleSubmit(upload)}
       >
         <Title />
-        <Column>
+        <Column className="pr-4">
           <Header>Level 1</Header>
           <ProofOfIdentity />
           <WebsiteInput />
           <ProofOfRegistration />
           <UnSdgSelector classes="mt-3" />
         </Column>
-        <HighlightColumn level={1}>
+        <HighlightColumn level={1} className="p-2">
           <Header>Level 1</Header>
           <p>
             Your organization is eligible to create its endowment. Donors can
@@ -59,11 +59,11 @@ export default function Documentation() {
           </p>
         </HighlightColumn>
 
-        <Column>
+        <Column className="pr-4">
           <Header>Level 2</Header>
           <FinancialStatements />
         </Column>
-        <HighlightColumn level={2}>
+        <HighlightColumn level={2} className="p-2">
           <Header>Level 2</Header>
           <p>
             All benefits from Level 1 + your organization will be visible in the
@@ -71,11 +71,11 @@ export default function Documentation() {
           </p>
         </HighlightColumn>
 
-        <Column>
+        <Column className="pr-4">
           <Header>Level 3</Header>
           <AuditedFinancialReports />
         </Column>
-        <HighlightColumn level={3}>
+        <HighlightColumn level={3} className="p-2">
           <Header>Level 3</Header>
           <p>
             All benefits from Level 2 + your organization will be able to
@@ -98,12 +98,12 @@ const Title = () => {
 
   return (
     <>
-      <Header className="w-full">
+      <Header className="max-w-md self-start">
         {level < 3
           ? "Upload the relevant documentation to apply for the next level."
           : "Upload to proceed..."}
       </Header>
-      <Header className="w-2/3 ml-0">What are levels?</Header>
+      <Header className="self-start">What are levels?</Header>
     </>
   );
 };
@@ -130,7 +130,9 @@ const Column = ({ colored, children, className }: ColoredColumnProps) => {
     : "";
   return (
     <div
-      className={`grid h-full text-left p-3 gap-3 ${styles} ${className ?? ""}`}
+      className={`grid h-full text-left gap-3 pb-6 border-b border-zinc-50/20 ${styles} ${
+        className ?? ""
+      }`}
     >
       {children}
     </div>
