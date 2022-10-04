@@ -11,13 +11,13 @@ describe("uploadToIpfs tests", () => {
     expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/${fileName}`);
   });
 
-  it("returns file with whitespaces removed from file name", async () => {
+  it("returns file with file name encoded", async () => {
     const file = new File([], "test with space");
 
     const result = await uploadToIpfs(file);
     expect(mockedUpload).toHaveBeenCalledWith([file], {
-      name: "testwithspace",
+      name: "test%20with%20space",
     });
-    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/testwithspace`);
+    expect(result).toEqual(`${IPFS_GATEWAY}/${cid}/test%20with%20space`);
   });
 });
