@@ -1,7 +1,7 @@
 import { Web3Storage } from "web3.storage";
 
 //https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
-export const IPFS_GATEWAY = "https://ipfs.io/ipfs"; //public
+export const IPFS_GATEWAY = "https://cloudflare-ipfs.com/ipfs"; //public
 
 export async function uploadToIpfs(file: File): Promise<string> {
   const client = new Web3Storage({
