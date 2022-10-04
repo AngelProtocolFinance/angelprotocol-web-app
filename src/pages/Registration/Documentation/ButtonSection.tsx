@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
-export default function ButtonSection() {
+export default function ButtonSection({ classes = "" }: { classes?: string }) {
   const { charity } = useRegistrationQuery();
   const navigate = useNavigate();
   const {
@@ -23,7 +23,7 @@ export default function ButtonSection() {
   };
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className={`flex justify-center ${classes}`}>
       {isSubmitting ? (
         <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (
