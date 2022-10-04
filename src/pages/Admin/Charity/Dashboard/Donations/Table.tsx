@@ -1,11 +1,8 @@
-import React from "react";
-import { SortDirection, SortKey } from "pages/Donations/types";
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { HeaderButton, useSort } from "components/donations";
 import { getTxUrl, humanize, maskAddress } from "helpers";
-import useSort from "./useSort";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -13,7 +10,7 @@ export default function Table(props: { donations: Donation[] }) {
   );
 
   return (
-    <table className="w-full border-collapse">
+    <table className="w-full border-collapse self-start">
       <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
         <Cells
           type="th"
@@ -77,24 +74,3 @@ const csvHeaders: { key: keyof Donation; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
-
-function HeaderButton(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    _sortDirection: SortDirection;
-    _sortKey: SortKey;
-    _activeSortKey: SortKey;
-  }
-) {
-  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
-    props;
-  return (
-    <button
-      {...restProps}
-      className="w-full flex items-center justify-start gap-1 uppercase"
-    >
-      <span>{children}</span>
-      {_activeSortKey === _sortKey &&
-        (_sortDirection === "asc" ? <Icon type="Up" /> : <Icon type="Down" />)}
-    </button>
-  );
-}
