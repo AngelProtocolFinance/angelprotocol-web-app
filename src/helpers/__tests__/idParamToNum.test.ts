@@ -1,4 +1,4 @@
-import { idParamToNum } from "./idParamToNum";
+import { idParamToNum } from "../idParamToNum";
 
 describe("id param to number", () => {
   test("user set id path to invalid", () => {
