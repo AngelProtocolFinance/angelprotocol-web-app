@@ -1,12 +1,9 @@
-import React from "react";
-import { SortDirection, SortKey } from "pages/Donations/types";
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
-import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
+import { HeaderButton, useSort } from "components/donations";
 import { getTxUrl, humanize, maskAddress } from "helpers";
-import useSort from "./useSort";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -91,28 +88,3 @@ const csvHeaders: { key: keyof Donation; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
-
-function HeaderButton(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    _sortDirection: SortDirection;
-    _sortKey: SortKey;
-    _activeSortKey: SortKey;
-  }
-) {
-  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
-    props;
-  return (
-    <button
-      {...restProps}
-      className="flex items-center justify-start gap-1 uppercase relative"
-    >
-      <span>{children}</span>
-      {_activeSortKey === _sortKey && (
-        <Icon
-          type={_sortDirection === "asc" ? "Up" : "Down"}
-          className="absolute -right-4"
-        />
-      )}
-    </button>
-  );
-}

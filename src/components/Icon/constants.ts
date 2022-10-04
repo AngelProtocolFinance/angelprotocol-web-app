@@ -61,6 +61,7 @@ import {
   MdOutlineFileDownload,
 } from "react-icons/md";
 import { SiHiveBlockchain } from "react-icons/si";
+import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
 
@@ -79,6 +80,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
   Youtube: AiFillYoutube,
+  Unsorted: TiArrowUnsorted,
   Medium: AiOutlineMedium,
   Copy: AiOutlineCopy,
   Check: AiOutlineCheck,
