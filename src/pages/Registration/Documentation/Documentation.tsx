@@ -49,7 +49,7 @@ export default function Documentation() {
           <ProofOfRegistration />
           <UnSdgSelector classes="mt-3" />
         </Column>
-        <HighlightColumn level={1} className="p-2">
+        <HighlightColumn level={1}>
           <Header>Level 1</Header>
           <p>
             Your organization is eligible to create its endowment. Donors can
@@ -63,7 +63,7 @@ export default function Documentation() {
           <Header>Level 2</Header>
           <FinancialStatements />
         </Column>
-        <HighlightColumn level={2} className="p-2">
+        <HighlightColumn level={2}>
           <Header>Level 2</Header>
           <p>
             All benefits from Level 1 + your organization will be visible in the
@@ -75,7 +75,7 @@ export default function Documentation() {
           <Header>Level 3</Header>
           <AuditedFinancialReports />
         </Column>
-        <HighlightColumn level={3} className="p-2">
+        <HighlightColumn level={3}>
           <Header>Level 3</Header>
           <p>
             All benefits from Level 2 + your organization will be able to
@@ -121,7 +121,7 @@ type ColoredColumnProps = ColumnProps & { colored?: boolean };
 
 const HighlightColumn = ({ level, ...rest }: HighlightColumnProps) => {
   const currentLevel = useCurrentLevel();
-  return <Column {...rest} colored={currentLevel >= level} />;
+  return <Column {...rest} colored={currentLevel >= level} className="p-2" />;
 };
 
 const Column = ({ colored, children, className }: ColoredColumnProps) => {
