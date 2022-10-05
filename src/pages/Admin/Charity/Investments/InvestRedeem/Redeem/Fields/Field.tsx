@@ -18,7 +18,7 @@ export default function Field({ name, idx, balance }: Props) {
   } = useFormContext<FormValues>();
 
   function setMax() {
-    setValue(`redeems.${idx}.amount`, roundDown(balance), {
+    setValue(`redeems.${idx}.amount`, roundDown(balance, 6), {
       shouldValidate: true,
       shouldDirty: true,
     });
@@ -32,7 +32,7 @@ export default function Field({ name, idx, balance }: Props) {
         className="col-span-2 text-sm mb-2 justify-self-end hover:text-sky-500"
       >
         <span className="text-xs uppercase pr-1">balance</span>
-        <span className="font-heading">{humanize(balance, 4)}</span>
+        <span className="font-heading">{humanize(balance, 6)}</span>
       </button>
       <p className="p-3 rounded-md bg-zinc-50/5 shadow-inner">{name}</p>
       <div className="relative w-full">
