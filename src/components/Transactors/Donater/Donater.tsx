@@ -36,9 +36,8 @@ function DonateContext(props: DonaterProps & { tokens: Token[] | undefined }) {
       token: (props.tokens || placeholderChain.tokens)[0],
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
-      to: props.to,
-      receiver: props.receiver,
-      isKycDonorOnly: props.isKycDonorOnly,
+      charityId: props.charityId,
+      kycData: props.kycData,
     },
     resolver: yupResolver(schema),
   });

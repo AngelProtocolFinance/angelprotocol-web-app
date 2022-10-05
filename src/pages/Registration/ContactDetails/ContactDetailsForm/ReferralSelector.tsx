@@ -22,7 +22,7 @@ export default function ReferralSelector() {
           label="Please specify"
           placeholder="Please specify"
           required
-          classes={{ container: "mt-3" }}
+          classes="mt-3"
         />
       )}
     </div>

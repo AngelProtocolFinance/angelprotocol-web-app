@@ -1,3 +1,11 @@
+export type Donation = {
+  amount: number;
+  chainId: string;
+  date: string;
+  hash: string;
+  symbol: string;
+};
+
 export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"
@@ -21,6 +29,7 @@ type TxBase = {
   amount: number;
   splitLiq: string; //"50"
   denomination: string;
+  charityId: number;
 };
 
 type CryptoTx = TxBase & {
@@ -39,11 +48,4 @@ type FiatTx = TxBase & {
 
 type TxDetails = FiatTx | CryptoTx;
 
-export type Receiver =
-  | {
-      charityId: string;
-      fundId?: never;
-    }
-  | { fundId: number | undefined; charityId?: never };
-
-export type TxLogPayload = Receiver & TxDetails & { kycData?: KYCData };
+export type TxLogPayload = TxDetails & { kycData?: KYCData };

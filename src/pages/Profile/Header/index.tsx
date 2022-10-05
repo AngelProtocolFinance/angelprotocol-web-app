@@ -1,21 +1,40 @@
 import { ProfileResponse } from "types/contracts";
-import useDonater from "components/Transactors/Donater/useDonater";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import useKYC from "components/KYC/useKYC";
+import Popup from "components/Popup";
 import { unsdgs } from "constants/unsdgs";
 import { useProfile } from "..";
 import CharityLinks from "./Links";
 
 export default function CharityHeader(props: ProfileResponse) {
+  const { wallet } = useGetWallet();
   const profile = useProfile();
 
-  const showDonater = useDonater({
-    to: "charity",
-    receiver: profile.id,
-    isKycDonorOnly: profile.kyc_donors_only,
-  });
-
+  const showKYCForm = useKYC();
+  const { showModal } = useModalContext();
   //TODO: show multiple SDGs
   const sdgNum = props.categories.sdgs[0] || 1;
   const sdg = unsdgs[sdgNum];
+
+  function donate() {
+    if (!wallet) {
+      showModal(Popup, {
+        message: "You need to connect your wallet to make a donation",
+      });
+      return;
+    }
+    /** show kyc upfront, let KYC form show donater upon completion, 
+            or user skip if kyc is not required */
+    showKYCForm({
+      type: "on-donation",
+      donaterProps: {
+        charityId: profile.id,
+      },
+      isKYCRequired: profile.kyc_donors_only,
+      walletAddr: wallet.address,
+    });
+  }
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -28,7 +47,7 @@ export default function CharityHeader(props: ProfileResponse) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button onClick={showDonater}>DONATE NOW</Button>
+        <Button onClick={donate}>DONATE NOW</Button>
 
         <CharityLinks />
       </div>

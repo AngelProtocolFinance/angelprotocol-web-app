@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { StageUpdater } from "../../types";
-import { Chain, KYCData, Receiver } from "types/aws";
+import { Chain } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { DonateValues } from "components/Transactors/Donater";
 import { UnexpectedStateError, WalletDisconnectedError } from "errors/errors";
@@ -16,7 +16,6 @@ type TerraDonateArgs = {
   chain: Chain; // need to pass this chain object for displaying the Tx URL on successful Tx
   donateValues: DonateValues;
   tx: CreateTxOptions;
-  kycData?: KYCData;
 };
 
 export const sendTerraDonation = createAsyncThunk(
@@ -41,34 +40,31 @@ export const sendTerraDonation = createAsyncThunk(
       const response = await args.wallet.post(args.tx);
 
       if (response.success) {
-        updateStage({ step: "submit", message: "Saving donation details" });
+        const { charityId, token, amount, split_liq, kycData } =
+          args.donateValues;
 
-        const { receiver, token, amount, split_liq } = args.donateValues;
+        updateStage({
+          step: "submit",
+          message: kycData ? "Requesting receipt.." : "Saving donation details",
+        });
 
-        const receipient: Receiver =
-          typeof receiver === "string"
-            ? { charityId: receiver }
-            : { fundId: receiver };
-
-        if (typeof receiver !== "undefined") {
-          await logDonation({
-            ...receipient,
-            ...args.kycData,
-            transactionId: response.result.txhash,
-            transactionDate: new Date().toISOString(),
-            chainId: args.wallet.network.chainID,
-            amount: +amount,
-            denomination: token.symbol,
-            splitLiq: split_liq,
-            walletAddress: args.wallet.walletAddress,
-          });
-        }
+        await logDonation({
+          ...kycData,
+          transactionId: response.result.txhash,
+          transactionDate: new Date().toISOString(),
+          chainId: args.wallet.network.chainID,
+          amount: +amount,
+          denomination: token.symbol,
+          splitLiq: split_liq,
+          walletAddress: args.wallet.walletAddress,
+          charityId,
+        });
 
         updateStage({
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chain: args.chain,
+          chainId: args.chain.chain_id,
         });
 
         const getTxInfo = pollTerraTxInfo(
@@ -84,7 +80,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
-            chain: args.chain,
+            chainId: args.chain.chain_id,
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
@@ -96,7 +92,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chain: args.chain,
+            chainId: args.chain.chain_id,
           });
         }
       }

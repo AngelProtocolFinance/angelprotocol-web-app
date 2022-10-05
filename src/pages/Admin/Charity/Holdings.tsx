@@ -4,8 +4,8 @@ import { AccountType, CW20, GenericBalance } from "types/contracts";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { condense, humanize } from "helpers";
-import { coinAsset } from "constants/currency";
 import { adminRoutes } from "constants/routes";
+import { tokens } from "constants/tokens";
 
 type Props = GenericBalance & { type: AccountType };
 export default function Holdings({ cw20, native, type }: Props) {
@@ -50,12 +50,8 @@ function Balance(props: CW20 | Coin) {
   return (
     <Cells type="td" cellClass="py-2 font-mono uppercase text-zinc-50/80">
       <div className="flex items-center gap-2">
-        <img
-          className="w-6 h-6 object-contain"
-          src={coinAsset[id].icon}
-          alt=""
-        />
-        <span>{coinAsset[id].name}</span>
+        <img className="w-6 h-6 object-contain" src={tokens[id].icon} alt="" />
+        <span>{tokens[id].symbol}</span>
       </div>
 
       <>{humanize(condense(props.amount), 4)}</>

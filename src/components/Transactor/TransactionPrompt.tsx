@@ -3,7 +3,6 @@ import { PropsWithChildren, useMemo } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import Receipter from "components/Receipter";
 import { useGetter, useSetter } from "store/accessors";
 import { resetTxFormState } from "slices/transaction/transactionSlice";
 import Broadcast from "./Broadcast";
@@ -24,8 +23,6 @@ export default function TransactionPrompt({
     switch (stage.step) {
       case "initial":
         return children;
-      case "kyc":
-        return <Receipter prevKYC={stage.kycData} />; //no prev tx details
       case "submit":
         return <Submit {...stage} />;
       case "broadcast":
@@ -44,7 +41,6 @@ export default function TransactionPrompt({
     switch (stage.step) {
       case "success":
       case "error":
-      case "kyc":
         dispatch(resetTxFormState());
     }
     closeModal();

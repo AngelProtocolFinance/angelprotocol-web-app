@@ -1,10 +1,11 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
+import { tokens } from "constants/tokens";
 
-function Currency(props: { currency: string; text: string; icon: string }) {
+function Denom({ denom }: { denom: string }) {
   const { register, watch } = useFormContext<FundSendValues>();
-  const isActive = watch("currency") === props.currency;
+  const isActive = watch("denom") === denom;
 
   return (
     <div
@@ -13,21 +14,25 @@ function Currency(props: { currency: string; text: string; icon: string }) {
       } p-2 rounded-md`}
     >
       <input
-        id={props.currency}
-        {...register("currency")}
-        value={props.currency}
+        id={denom}
+        {...register("denom")}
+        value={denom}
         type="radio"
         className="w-0 h-0 appearance-none"
       />
       <label
-        htmlFor={props.currency}
+        htmlFor={denom}
         className="uppercase flex items-center text-sm cursor-pointer"
       >
-        <img src={props.icon} alt="" className="w-4 h-4 object-contain" />
-        <span className={`ml-0.5`}>{props.text}</span>
+        <img
+          src={tokens[denom].icon}
+          alt=""
+          className="w-4 h-4 object-contain"
+        />
+        <span className={`ml-0.5`}>{tokens[denom].symbol}</span>
       </label>
     </div>
   );
 }
 
-export default memo(Currency);
+export default memo(Denom);

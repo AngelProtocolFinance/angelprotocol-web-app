@@ -6,14 +6,12 @@ import { appRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
-const Donations = lazy(() => import("pages/Donations/Donations"));
+const Donations = lazy(() => import("pages/Donations"));
 // NOTE: Governance will be reenabled when we relaunch the $HALO token
 // const Governance = lazy(() => import("pages/Governance/Governance"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
-const Login = lazy(() => import("pages/Login/Login"));
 const Market = lazy(() => import("pages/Market/Market"));
 const Registration = lazy(() => import("pages/Registration"));
-const TCA = lazy(() => import("pages/TCA/TCA"));
 
 export default function Views() {
   const location = useLocation();
@@ -23,8 +21,6 @@ export default function Views() {
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
         <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
-        <Route path={appRoutes.login} element={<Login />} />
-        <Route path={appRoutes.tca} element={<TCA />} />
         {/* <Route path={`${appRoutes.govern}/*`} element={<Governance />} /> */}
         <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
         <Route
@@ -32,10 +28,8 @@ export default function Views() {
           element={<Donations />}
         />
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
-        <Route path={appRoutes.login} element={<Login />} />
         <Route index element={<Market />} />
         <Route path={`${appRoutes.register}/*`} element={<Registration />} />
-        <Route path={appRoutes.tca} element={<TCA />} />
         <Route
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}

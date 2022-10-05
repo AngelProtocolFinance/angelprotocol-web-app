@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { ReceipterValues } from "./types";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 
-const shape: SchemaShape<ReceipterValues> = {
+const shape: SchemaShape<FormValues> = {
   email: Yup.string().email("email is invalid").required("email is required"),
   fullName: Yup.string().required("full name is required."),
   streetAddress: Yup.string().required("street address is required"),

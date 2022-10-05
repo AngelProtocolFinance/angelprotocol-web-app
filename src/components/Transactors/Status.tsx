@@ -1,8 +1,8 @@
-import { ReactNode, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 
-export default function Status() {
+export default function Status({ classes = "" }: { classes?: string }) {
   const [detailsShown, showDetails] = useState(false);
   const { form_error } = useGetter((state) => state.transaction);
 
@@ -14,14 +14,14 @@ export default function Status() {
     return null;
   } else if (typeof form_error === "string") {
     return (
-      <StatusDiv>
+      <StatusDiv classes={classes}>
         <Icon type="Info" />
         <StatusTitle text={form_error} />
       </StatusDiv>
     );
   } else {
     return (
-      <StatusDiv>
+      <StatusDiv classes={classes}>
         <Icon type="Info" />
         <StatusTitle text={form_error.title} />
         {form_error.details && (
@@ -45,10 +45,15 @@ export default function Status() {
   }
 }
 
-function StatusDiv(props: { children: ReactNode }) {
+function StatusDiv({
+  children,
+  classes = "",
+}: PropsWithChildren<{ classes?: string }>) {
   return (
-    <div className="relative grid grid-cols-[auto_1fr] items-center bg-red-400/20 p-2 rounded-md text-angel-grey mb-2">
-      {props.children}
+    <div
+      className={`relative grid grid-cols-[auto_1fr] items-center bg-red-400/20 p-2 rounded-md text-angel-grey ${classes}`}
+    >
+      {children}
     </div>
   );
 }
