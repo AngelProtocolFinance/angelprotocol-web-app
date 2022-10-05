@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import { ContactPerson, Registration } from "types/aws";
 
 export type InputProps = PropsWithChildren<{
+  classes?: string;
   htmlFor?: string;
   label: string;
   required?: true | boolean;

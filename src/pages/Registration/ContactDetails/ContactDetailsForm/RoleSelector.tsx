@@ -14,7 +14,11 @@ export default function RoleSelector() {
         What's your role within the organization?
         <span className="text-failed-red ml-0.5">*</span>
       </label>
-      <Selector<CD> name="role" options={contactRoleOptions} />
+      <Selector<CD>
+        name="role"
+        options={contactRoleOptions}
+        classes={{ option: "px-3 py-2", button: "px-3 py-2" }}
+      />
       {role === "other" && (
         <FormInput<CD>
           fieldName="otherRole"
