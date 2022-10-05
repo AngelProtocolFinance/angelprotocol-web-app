@@ -3,7 +3,14 @@ import { ProposalBase } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 
-export const templates: { [key in Templates]: string } = {
+export const templateRoutes: {
+  [key in
+    | Exclude<
+        Templates,
+        "cw3_application" | "acc_invest" | "acc_redeem" | "acc_strategy"
+      >
+    | "index"]: string;
+} = {
   //index fund
   if_alliance: "if_alliance",
   if_create: "if_create",
@@ -15,7 +22,6 @@ export const templates: { [key in Templates]: string } = {
   //cw3
   cw3_config: "cw3_config",
   cw3_transfer: "cw3_transfer",
-  cw3_application: "",
 
   //cw4
   cw4_members: "cw4_members",
@@ -28,10 +34,6 @@ export const templates: { [key in Templates]: string } = {
   //registrar
   reg_config: "reg_config",
   reg_owner: "reg_owner",
-};
-
-export const templateRoutes: { [key in Templates | "index"]: string } = {
-  ...templates,
   index: "",
 };
 

@@ -40,6 +40,9 @@ export type Templates =
   | "acc_withdraw"
   | "acc_profile"
   | "acc_endow_status"
+  | "acc_invest"
+  | "acc_redeem"
+  | "acc_strategy"
 
   //registrar
   | "reg_config"

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { templates } from "pages/Admin/constants";
+import { templateRoutes } from "pages/Admin/constants";
 import { useLatestBlockQuery } from "services/juno";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -24,7 +24,7 @@ export default function Toolbar(props: { classes?: string }) {
       </p>
 
       <Link
-        to={`../${adminRoutes.templates}/${templates.cw4_members}`}
+        to={`../${adminRoutes.templates}/${templateRoutes.cw4_members}`}
         className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
       >
         + Create a proposal
