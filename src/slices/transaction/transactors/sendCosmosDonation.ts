@@ -61,8 +61,12 @@ export const sendCosmosDonation = createAsyncThunk(
           isShareEnabled: true,
         });
 
-        //invalidate user balance
-        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+        dispatch(
+          invalidateApesTags([
+            { type: apesTags.chain }, //invalidate user balance
+            { type: apesTags.donations }, //invalidate donation logs
+          ])
+        );
 
         //invalidate endowment balance
         dispatch(
