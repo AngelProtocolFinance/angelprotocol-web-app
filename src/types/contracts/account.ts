@@ -29,10 +29,8 @@ export type VaultWithBalance = [
 
 export interface EndowmentBalance {
   tokens_on_hand: BalanceInfo;
-  oneoff_locked: VaultWithBalance[];
-  oneoff_liquid: VaultWithBalance[];
-  strategies_locked: VaultWithBalance[];
-  strategies_liquid: VaultWithBalance[];
+  invested_locked: VaultWithBalance[];
+  invested_liquid: VaultWithBalance[];
 }
 
 interface RebalanceDetails {

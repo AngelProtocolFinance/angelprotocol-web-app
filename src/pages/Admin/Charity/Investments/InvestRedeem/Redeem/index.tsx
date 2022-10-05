@@ -30,22 +30,15 @@ export default function Redeem() {
   );
 }
 
-function FormContext({
-  oneoff_liquid,
-  oneoff_locked,
-  strategies_liquid,
-  strategies_locked,
-}: EndowmentBalance) {
+function FormContext({ invested_liquid, invested_locked }: EndowmentBalance) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       redeems: [
-        ...toRedeem(strategies_liquid, "liquid"),
-        ...toRedeem(oneoff_liquid, "liquid"),
-        ...toRedeem(strategies_locked, "locked"),
-        ...toRedeem(oneoff_locked, "locked"),
+        ...toRedeem(invested_liquid, "liquid"),
+        ...toRedeem(invested_locked, "locked"),
       ],
     },
   });
@@ -60,7 +53,7 @@ function FormContext({
 function toRedeem(vaults: VaultWithBalance[], type: AccountType): TRedeem[] {
   return vaults.map(([addr, balance]) => ({
     vault: addr,
-    balance: condenseToNum(balance),
+    balance: condenseToNum(balance, 6),
     amount: "",
     type,
   }));

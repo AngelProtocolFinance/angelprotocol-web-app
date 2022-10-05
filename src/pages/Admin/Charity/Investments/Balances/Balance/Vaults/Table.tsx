@@ -13,15 +13,12 @@ type Props = EndowmentBalance & { type: AccountType; classes?: string };
 export default function Table({
   classes = "",
   type,
-  oneoff_liquid,
-  oneoff_locked,
-  strategies_liquid,
-  strategies_locked,
+  invested_liquid,
+  invested_locked,
 }: Props) {
   const { endowment } = useAdminResources();
-  const stratsBal = type === "liquid" ? strategies_liquid : strategies_locked;
-  const oneOffsBal = type === "liquid" ? oneoff_liquid : oneoff_locked;
 
+  const balances = type === "liquid" ? invested_liquid : invested_locked;
   const strats = endowment.strategies[type];
   const oneOffs = endowment.oneoff_vaults[type];
 
@@ -40,10 +37,10 @@ export default function Table({
         type="tbody"
         rowClass="divide-x divide-zinc-50/30 border-b border-zinc-50/30 last:border-none"
       >
-        {withBalances(strats, stratsBal)
+        {withBalances(strats, balances)
           .map((vault) => <Row key={vault.address} {...vault} />)
           .concat(
-            withBalances(oneOffs, oneOffsBal).map((vault) => (
+            withBalances(oneOffs, balances).map((vault) => (
               <Row key={vault.address} {...vault} />
             ))
           )}
