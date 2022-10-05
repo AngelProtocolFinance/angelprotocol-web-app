@@ -8,7 +8,7 @@ import WalletInfoModal from "./WalletInfoModal";
 export default function Title() {
   return (
     <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
-      Please connect Keplr to register a new wallet for your charity
+      Please connect Keplr to register a new wallet for your endowment
       <InfoIcon />
     </h2>
   );

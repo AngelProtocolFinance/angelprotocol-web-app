@@ -1,5 +1,5 @@
-import CharityLeaderboard from "./Board";
 import DonationMetrics from "./DonationMetrics";
+import Table from "./Table";
 
 export default function Leaderboard() {
   return (
@@ -8,7 +8,7 @@ export default function Leaderboard() {
       <h3 className="mt-6 uppercase text-white-grey text-3xl font-bold">
         Leaderboard
       </h3>
-      <CharityLeaderboard />
+      <Table />
     </section>
   );
 }

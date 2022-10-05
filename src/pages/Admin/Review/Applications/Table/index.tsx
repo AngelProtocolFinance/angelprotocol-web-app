@@ -1,11 +1,11 @@
-import { CharityApplication } from "types/aws";
+import { EndowmentApplication } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import AppRow from "./AppRow";
 import Header from "./Header";
 import StatusSelector from "./StatusSelector";
 import useSortedApplications from "./useSortApplications";
 
-export default function Table(props: { applications: CharityApplication[] }) {
+export default function Table(props: { applications: EndowmentApplication[] }) {
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
     useSortedApplications(props.applications);
 
@@ -16,16 +16,16 @@ export default function Table(props: { applications: CharityApplication[] }) {
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName"}
-            onClick={handleHeaderClick("CharityName")}
+            sortKey={"Name"}
+            onClick={handleHeaderClick("Name")}
           >
             name
           </Header>
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName_ContactEmail"}
-            onClick={handleHeaderClick("CharityName_ContactEmail")}
+            sortKey={"Name_ContactEmail"}
+            onClick={handleHeaderClick("Name_ContactEmail")}
           >
             email
           </Header>

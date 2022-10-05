@@ -19,17 +19,17 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
 
   const methods = useForm<DocumentationValues>({
     resolver: yupResolver(documentationSchema),
     defaultValues: {
-      un_sdg: charity.Registration.UN_SDG,
-      website: charity.Registration.Website,
-      proofOfIdentity: charity.Registration.ProofOfIdentity,
-      proofOfRegistration: charity.Registration.ProofOfRegistration,
-      financialStatements: charity.Registration.FinancialStatements,
-      auditedFinancialReports: charity.Registration.AuditedFinancialReports,
+      un_sdg: application.Registration.UN_SDG,
+      website: application.Registration.Website,
+      proofOfIdentity: application.Registration.ProofOfIdentity,
+      proofOfRegistration: application.Registration.ProofOfRegistration,
+      financialStatements: application.Registration.FinancialStatements,
+      auditedFinancialReports: application.Registration.AuditedFinancialReports,
     },
   });
 

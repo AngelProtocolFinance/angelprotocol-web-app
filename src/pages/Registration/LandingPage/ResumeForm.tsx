@@ -38,7 +38,7 @@ export default function ResumeForm() {
     if (isError || !data) {
       handleError(
         error,
-        "No active charity application found with this registration reference"
+        "No active application found with this registration reference"
       );
       return;
     }

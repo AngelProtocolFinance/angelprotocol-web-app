@@ -1,6 +1,6 @@
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 
-export const placeholderCharity: Charity = {
+export const placeholderApplication: Application = {
   ContactPerson: {
     Email: "",
     EmailVerified: false,
@@ -15,8 +15,8 @@ export const placeholderCharity: Charity = {
     SK: "ContactPerson",
   },
   Registration: {
-    CharityName: "",
-    CharityName_ContactEmail: "",
+    OrganizationName: "",
+    OrganizationName_ContactEmail: "",
     RegistrationDate: "",
     RegistrationStatus: "Inactive",
     Website: "",
@@ -33,8 +33,8 @@ export const placeholderCharity: Charity = {
   },
   Metadata: {
     Banner: undefined,
-    CharityLogo: undefined,
-    CharityOverview: "",
+    Logo: undefined,
+    Overview: "",
     EndowmentContract: "",
     EndowmentId: 0,
     KycDonorsOnly: false,

@@ -1,4 +1,4 @@
-import { CharityApplication, Registration } from "types/aws";
+import { EndowmentApplication, Registration } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -96,10 +96,7 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
-export type CharityApplicationMeta = MetaConstructor<
-  "cw3_application",
-  Registration
->;
+export type ApplicationMeta = MetaConstructor<"cw3_application", Registration>;
 
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
@@ -154,7 +151,7 @@ export type ProposalMeta =
   //cw4
   | CW4MemberUpdateMeta
   //cw3
-  | CharityApplicationMeta
+  | ApplicationMeta
   | CW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
@@ -260,9 +257,9 @@ export type ProfileFormValues = ProposalBase &
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  CharityApplication,
-  | "CharityName"
+  EndowmentApplication,
+  | "OrganizationName"
   | "RegistrationDate"
   | "RegistrationStatus"
-  | "CharityName_ContactEmail"
+  | "OrganizationName_ContactEmail"
 >;

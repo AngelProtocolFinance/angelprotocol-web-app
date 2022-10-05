@@ -3,12 +3,12 @@ import { FileObject, Registration } from "types/aws";
 import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function CharityApplication(props: Registration) {
-  const email = props.CharityName_ContactEmail!.split("_")[1];
+export default function EndowmentApplication(props: Registration) {
+  const email = props.OrganizationName_ContactEmail!.split("_")[1];
 
   return (
     <PreviewContainer classes="grid">
-      <h3 className="text-xl font-semibold">{props.CharityName}</h3>
+      <h3 className="text-xl font-semibold">{props.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
         <Url href={props.Website}>
           <Icon type="Globe" size={16} />

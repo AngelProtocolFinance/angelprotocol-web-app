@@ -1,6 +1,6 @@
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 import routes from "pages/Registration/routes";
-import { placeholderCharity } from "services/aws/registration";
+import { placeholderApplication } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
 import {
   getAdditionalInformationStepData,
@@ -14,10 +14,12 @@ describe("stepChecks tests", () => {
     it.each([true, false])(
       "returns 'completed' result when Contact Details data is validly set even when EmailVerified === %j",
       (emailVerified) => {
-        const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
-        charity.ContactPerson.EmailVerified = emailVerified;
+        const application: Application = {
+          ...CONTACT_DETAILS_STEP_COMPLETE_APPLICATION,
+        };
+        application.ContactPerson.EmailVerified = emailVerified;
 
-        const stepData = getContactDetailsStepData(charity);
+        const stepData = getContactDetailsStepData(application);
 
         expect(stepData.isComplete).toBeTruthy();
         expect(stepData.urlToPreviousStep).toBeUndefined();
@@ -27,27 +29,31 @@ describe("stepChecks tests", () => {
 
   describe("getDocumentationStepData tests", () => {
     test("returns 'completed' result when Documentation and previous steps' data are validly set", () => {
-      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...DOCUMENTATION_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getDocumentationStepData(charity);
+      const stepData = getDocumentationStepData(application);
 
       expect(stepData.isComplete).toBeTruthy();
       expect(stepData.urlToPreviousStep).toBeUndefined();
     });
 
     test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
-      const charity: Charity = { ...placeholderCharity };
+      const application: Application = { ...placeholderApplication };
 
-      const stepData = getDocumentationStepData(charity);
+      const stepData = getDocumentationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
     });
 
     test("returns 'incomplete' result when Documentation data is incomplete", () => {
-      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...CONTACT_DETAILS_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getDocumentationStepData(charity);
+      const stepData = getDocumentationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -58,27 +64,31 @@ describe("stepChecks tests", () => {
 
   describe("getAdditionalInformationStepData tests", () => {
     test("returns 'completed' result when Additional Information and previous steps' data are validly set", () => {
-      const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...ADDITIONAL_INFO_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getAdditionalInformationStepData(charity);
+      const stepData = getAdditionalInformationStepData(application);
 
       expect(stepData.isComplete).toBeTruthy();
       expect(stepData.urlToPreviousStep).toBeUndefined();
     });
 
     test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
-      const charity: Charity = { ...placeholderCharity };
+      const application: Application = { ...placeholderApplication };
 
-      const stepData = getAdditionalInformationStepData(charity);
+      const stepData = getAdditionalInformationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
     });
 
     test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...CONTACT_DETAILS_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getAdditionalInformationStepData(charity);
+      const stepData = getAdditionalInformationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -87,9 +97,11 @@ describe("stepChecks tests", () => {
     });
 
     test("returns 'incomplete' result when Additional Information data is incomplete", () => {
-      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...DOCUMENTATION_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getAdditionalInformationStepData(charity);
+      const stepData = getAdditionalInformationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -100,27 +112,29 @@ describe("stepChecks tests", () => {
 
   describe("getWalletRegistrationStepData tests", () => {
     test("returns 'completed' result when all steps' data is validly set", () => {
-      const charity: Charity = { ...VALIDLY_FILLED_CHARITY };
+      const application: Application = { ...VALIDLY_FILLED_APPLICATION };
 
-      const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(application);
 
       expect(stepData.isComplete).toBeTruthy();
       expect(stepData.urlToPreviousStep).toBeUndefined();
     });
 
     test("returns 'incomplete' result when all steps are incomplete with URL to Contact Details step", () => {
-      const charity: Charity = { ...placeholderCharity };
+      const application: Application = { ...placeholderApplication };
 
-      const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(appRoutes.register);
     });
 
     test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Documentation step", () => {
-      const charity: Charity = { ...CONTACT_DETAILS_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...CONTACT_DETAILS_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -129,9 +143,11 @@ describe("stepChecks tests", () => {
     });
 
     test("returns 'incomplete' result when previous steps are incomplete with the previous step's URL to Additional Info step", () => {
-      const charity: Charity = { ...DOCUMENTATION_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...DOCUMENTATION_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -140,9 +156,11 @@ describe("stepChecks tests", () => {
     });
 
     test("returns 'incomplete' result when Wallet Registration data is incomplete", () => {
-      const charity: Charity = { ...ADDITIONAL_INFO_STEP_COMPLETE_CHARITY };
+      const application: Application = {
+        ...ADDITIONAL_INFO_STEP_COMPLETE_APPLICATION,
+      };
 
-      const stepData = getWalletRegistrationStepData(charity);
+      const stepData = getWalletRegistrationStepData(application);
 
       expect(stepData.isComplete).toBeFalsy();
       expect(stepData.urlToPreviousStep).toBe(
@@ -152,7 +170,7 @@ describe("stepChecks tests", () => {
   });
 });
 
-const VALIDLY_FILLED_CHARITY: Charity = {
+const VALIDLY_FILLED_APPLICATION: Application = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -167,8 +185,8 @@ const VALIDLY_FILLED_CHARITY: Charity = {
     SK: "ContactPerson",
   },
   Registration: {
-    CharityName: "charity",
-    CharityName_ContactEmail: "CHARITY_test@test.com",
+    OrganizationName: "application",
+    OrganizationName_ContactEmail: "APPLICATION_test@test.com",
     RegistrationDate: "2022-05-04T10:10:10Z",
     RegistrationStatus: "Inactive",
     SK: "Registration",
@@ -189,39 +207,41 @@ const VALIDLY_FILLED_CHARITY: Charity = {
   Metadata: {
     SK: "Metadata",
     Banner: { name: "banner.png", publicUrl: "https://path.to.banner" },
-    CharityLogo: { name: "logo.png", publicUrl: "https://path.to.logo" },
-    CharityOverview: "text",
+    Logo: { name: "logo.png", publicUrl: "https://path.to.logo" },
+    Overview: "text",
     EndowmentContract: "juno1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+    EndowmentId: 0,
     JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
     KycDonorsOnly: false,
   },
 };
 
-const CONTACT_DETAILS_STEP_COMPLETE_CHARITY: Charity = {
-  ...placeholderCharity,
-  ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
+const CONTACT_DETAILS_STEP_COMPLETE_APPLICATION: Application = {
+  ...placeholderApplication,
+  ContactPerson: { ...VALIDLY_FILLED_APPLICATION.ContactPerson },
   Registration: {
-    ...placeholderCharity.Registration,
-    CharityName: VALIDLY_FILLED_CHARITY.Registration.CharityName,
-    CharityName_ContactEmail:
-      VALIDLY_FILLED_CHARITY.Registration.CharityName_ContactEmail,
-    RegistrationDate: VALIDLY_FILLED_CHARITY.Registration.RegistrationDate,
-    RegistrationStatus: VALIDLY_FILLED_CHARITY.Registration.RegistrationStatus,
+    ...placeholderApplication.Registration,
+    OrganizationName: VALIDLY_FILLED_APPLICATION.Registration.OrganizationName,
+    OrganizationName_ContactEmail:
+      VALIDLY_FILLED_APPLICATION.Registration.OrganizationName_ContactEmail,
+    RegistrationDate: VALIDLY_FILLED_APPLICATION.Registration.RegistrationDate,
+    RegistrationStatus:
+      VALIDLY_FILLED_APPLICATION.Registration.RegistrationStatus,
   },
 };
 
-const DOCUMENTATION_STEP_COMPLETE_CHARITY: Charity = {
-  ...VALIDLY_FILLED_CHARITY,
-  Metadata: { ...placeholderCharity.Metadata },
+const DOCUMENTATION_STEP_COMPLETE_APPLICATION: Application = {
+  ...VALIDLY_FILLED_APPLICATION,
+  Metadata: { ...placeholderApplication.Metadata },
 };
 
-const ADDITIONAL_INFO_STEP_COMPLETE_CHARITY: Charity = {
-  ContactPerson: { ...VALIDLY_FILLED_CHARITY.ContactPerson },
-  Registration: { ...VALIDLY_FILLED_CHARITY.Registration },
+const ADDITIONAL_INFO_STEP_COMPLETE_APPLICATION: Application = {
+  ContactPerson: { ...VALIDLY_FILLED_APPLICATION.ContactPerson },
+  Registration: { ...VALIDLY_FILLED_APPLICATION.Registration },
   Metadata: {
-    ...placeholderCharity.Metadata,
-    Banner: { ...VALIDLY_FILLED_CHARITY.Metadata.Banner! },
-    CharityLogo: { ...VALIDLY_FILLED_CHARITY.Metadata.CharityLogo! },
-    CharityOverview: VALIDLY_FILLED_CHARITY.Metadata.CharityOverview,
+    ...placeholderApplication.Metadata,
+    Banner: { ...VALIDLY_FILLED_APPLICATION.Metadata.Banner! },
+    Logo: { ...VALIDLY_FILLED_APPLICATION.Metadata.Logo! },
+    Overview: VALIDLY_FILLED_APPLICATION.Metadata.Overview,
   },
 };
