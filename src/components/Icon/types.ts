@@ -31,6 +31,7 @@ export type IconTypes =
   | "Dislike"
   | "Upload"
   | "Wallet"
+  | "Unsorted"
   | "Loading"
   | "ChevronDown"
   | "Down"
