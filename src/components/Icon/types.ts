@@ -61,4 +61,6 @@ export type IconTypes =
   | "Admin"
   | "Crop"
   | "Save"
-  | "PieChart";
+  | "PieChart"
+  | "Moon"
+  | "Sun";

@@ -24,6 +24,7 @@ import {
   BiItalic,
   BiSave,
   BiSearchAlt2,
+  BiSun,
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
@@ -49,7 +50,7 @@ import {
   FaUsersCog,
 } from "react-icons/fa";
 import { FcSafe } from "react-icons/fc";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi";
@@ -127,4 +128,6 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Admin: FaUsersCog,
   Crop: IoCrop,
   Save: BiSave,
+  Moon: FiMoon,
+  Sun: BiSun,
 };
