@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
+import ThemeToggle from "./ThemeToggle";
 
 export default function DesktopNav() {
   return (
-    <nav className="hidden lg:flex w-full ml-2">
+    <nav className="hidden lg:flex w-full justify-between ml-2">
       <div className="justify-self-start items-center font-body text-base">
         <NavLink className={styler} to={appRoutes.index}>
           Marketplace
@@ -21,6 +22,8 @@ export default function DesktopNav() {
           Register
         </NavLink>*/}
       </div>
+
+      <ThemeToggle />
     </nav>
   );
 }
