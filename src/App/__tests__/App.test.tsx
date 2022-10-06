@@ -64,7 +64,7 @@ describe("App.tsx tests", () => {
 
     // view is finally loaded,
     // role here https://www.w3.org/TR/html-aria/#docconformance
-    expect(await screen.findByRole("banner")).toBeInTheDocument();
+    expect(await screen.findAllByRole("banner")).toHaveLength(2);
     expect(loader).not.toBeInTheDocument();
 
     const marketplaceLink = await screen.findByRole("link", {
