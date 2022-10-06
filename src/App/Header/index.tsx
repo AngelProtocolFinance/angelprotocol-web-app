@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
@@ -12,7 +14,7 @@ import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 
 export default function Header() {
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const { showModal, closeModal } = useModalContext();
 
   return (
     <>
@@ -45,17 +47,42 @@ export default function Header() {
           <Airdrop />
         </div>
         <button
-          onClick={() => setMobileNavOpen((prev) => !prev)}
+          onClick={() => showModal(Modal, { closeModal })}
           className="flex p-2 items-center text-white-grey justify-center"
         >
-          <Icon
-            type={isMobileNavOpen ? "Close" : "Menu"}
-            className="text-2xl"
-          />
+          <Icon type="Menu" className="text-2xl" />
         </button>
-        {isMobileNavOpen && <AppLinks />}
       </header>
     </>
+  );
+}
+
+function Modal({ closeModal }: { closeModal: () => void }) {
+  return (
+    <Dialog.Panel className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent">
+      <header className="grid grid-cols-[auto_1fr_auto] mb-4 pt-3 items-center w-full padded-container">
+        <a
+          rel="noreferrer"
+          href="https://angelprotocol.io/"
+          title="Go to Marketing page"
+        >
+          <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
+        </a>
+        <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
+          <TransactionHint />
+          <WalletSuite />
+          <Airdrop />
+        </div>
+        <button
+          onClick={closeModal}
+          className="flex p-2 items-center text-white-grey justify-center"
+        >
+          <Icon type="Close" className="text-2xl" />
+        </button>
+      </header>
+      <div className="h-px bg-white-grey w-full col-span-3" />
+      <AppLinks />
+    </Dialog.Panel>
   );
 }
 
@@ -71,7 +98,7 @@ function AppLinks() {
   }, [dispatch]);
 
   return (
-    <div className="grid col-span-3 justify-items-start content-start uppercase font-extrabold font-heading border-t-2 border-white-grey">
+    <div className="grid col-span-3 w-full justify-items-start content-start uppercase font-extrabold font-heading ">
       <NavLink to={appRoutes.index} className={styler} end>
         Marketplace
       </NavLink>
