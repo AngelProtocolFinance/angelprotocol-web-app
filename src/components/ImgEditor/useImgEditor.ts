@@ -19,11 +19,13 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
   const { handleError } = useErrorContext();
   const {
     watch,
+    setValue,
     control,
     formState: { isSubmitting, errors },
   } = useFormContext();
 
   const imageFile: FileWrapper | undefined = watch(props.name);
+  const [prevImageFile, setPrevImageFile] = useState<FileWrapper>();
 
   const initialImageRef = useRef<FileWrapper | undefined>(imageFile); //use to reset input internal state
   const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
@@ -31,6 +33,36 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
   const [isLoading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
+
+  const openCropModalImpl = useCallback(
+    (onChange: OnChangeFunc, src = uncroppedImgUrl) => {
+      showModal(ImgCropper, {
+        src,
+        aspectRatio: props.aspectRatioX / props.aspectRatioY,
+        onSave: (croppedBlob) => {
+          // banner!.name !== undefined, because banner has to be set for it to be croppable
+          const croppedValue: FileWrapper = {
+            file: new File([croppedBlob], imageFile!.name, {
+              type: croppedBlob.type,
+            }),
+            name: imageFile!.name,
+          };
+          onChange(croppedValue);
+        },
+        onClose: () => {
+          onChange(prevImageFile);
+        },
+      });
+    },
+    [
+      showModal,
+      prevImageFile,
+      uncroppedImgUrl,
+      props.aspectRatioX,
+      props.aspectRatioY,
+      imageFile,
+    ]
+  );
 
   const fileReader = useMemo(() => {
     const fr = new FileReader();
@@ -40,6 +72,14 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
       setImageUrl(newImgUrl);
       if (!uncroppedImgUrl) {
         setUncroppedImgUrl(newImgUrl);
+        // if it's loading the already submitted image (contains `publicUrl`)
+        if (imageFile?.file) {
+          // necessary to manually pass the `newImgUrl` value because `uncroppedImgUrl` state might not get updated on time
+          openCropModalImpl(
+            (croppedValue) => setValue(props.name, croppedValue as any),
+            newImgUrl
+          );
+        }
       }
       setLoading(false);
     };
@@ -50,7 +90,14 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     };
 
     return fr;
-  }, [uncroppedImgUrl, handleError]);
+  }, [
+    imageFile?.file,
+    props.name,
+    uncroppedImgUrl,
+    handleError,
+    openCropModalImpl,
+    setValue,
+  ]);
 
   useEffect(() => {
     (async function () {
@@ -74,9 +121,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageFile]);
 
-  const onUpload = useCallback(() => inputRef.current?.click(), []);
+  const upload = useCallback(() => inputRef.current?.click(), []);
 
-  const onUndo = useCallback(
+  const undo = useCallback(
     (onChange: OnChangeFunc) => () => {
       setUncroppedImgUrl(""); // will be read once the file is read in FileReader
       onChange(initialImageRef.current);
@@ -84,31 +131,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     []
   );
 
-  const onCrop = useCallback(
-    (onChange: OnChangeFunc) => () => {
-      //cropper is disabled when imageFile is null
-      showModal(ImgCropper, {
-        src: uncroppedImgUrl,
-        aspectRatio: props.aspectRatioX / props.aspectRatioY,
-        setCropedImage: (croppedBlob) => {
-          // banner!.name !== undefined, because banner has to be set for it to be croppable
-          const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], imageFile!.name, {
-              type: croppedBlob.type,
-            }),
-            name: imageFile!.name,
-          };
-          onChange(croppedValue);
-        },
-      });
-    },
-    [
-      props.aspectRatioX,
-      props.aspectRatioY,
-      imageFile,
-      uncroppedImgUrl,
-      showModal,
-    ]
+  const openCropModal = useCallback(
+    (onChange: OnChangeFunc) => () => openCropModalImpl(onChange),
+    [openCropModalImpl]
   );
 
   const onInputChange = useCallback(
@@ -121,10 +146,11 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         };
       }
 
+      setPrevImageFile(imageFile);
       onChange(fileWrapper);
       setUncroppedImgUrl(""); // will be read once the file is read in FileReader
     },
-    []
+    [imageFile]
   );
 
   return {
@@ -135,9 +161,9 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
     isInitial: initialImageRef.current === imageFile,
     isLoading,
     isSubmitting,
-    onUpload,
-    onUndo,
-    onCrop,
+    upload,
+    undo,
+    openCropModal,
     onInputChange,
   };
 }
