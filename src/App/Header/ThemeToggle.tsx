@@ -9,7 +9,7 @@ export default function ThemeToggle() {
     <Switch
       checked={isDarkMode}
       onChange={setDarkMode}
-      className="relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full shadow-sm shadow-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
+      className="relative inline-flex h-9 w-16 shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>
       <Icon
