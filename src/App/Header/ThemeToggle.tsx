@@ -9,7 +9,7 @@ export default function ThemeToggle() {
     <Switch
       checked={isDarkMode}
       onChange={setDarkMode}
-      className="relative flex items-center justify-around h-10 w-[86px] shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
+      className="relative flex items-center justify-center gap-1 h-10 w-[92px] shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>
       <span
@@ -18,8 +18,8 @@ export default function ThemeToggle() {
         }`}
       >
         <Icon
-          type="Clock"
-          className={`text-xl ${isDarkMode ? "text-white" : "text-black"}`}
+          type="Sun"
+          className={`text-lg ${isDarkMode ? "text-white" : "text-black"}`}
         />
       </span>
       <span
@@ -28,8 +28,8 @@ export default function ThemeToggle() {
         }`}
       >
         <Icon
-          type="MoneyBill"
-          className={`text-xl ${isDarkMode ? "text-black" : "text-white"}`}
+          type="Moon"
+          className={`text-lg ${isDarkMode ? "text-black" : "text-white"}`}
         />
       </span>
     </Switch>

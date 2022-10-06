@@ -63,6 +63,4 @@ export type IconTypes =
   | "Save"
   | "PieChart"
   | "Moon"
-  | "MoonFill"
-  | "Sun"
-  | "SunFill";
+  | "Sun";
