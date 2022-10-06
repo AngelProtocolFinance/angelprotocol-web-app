@@ -9,23 +9,29 @@ export default function ThemeToggle() {
     <Switch
       checked={isDarkMode}
       onChange={setDarkMode}
-      className="relative inline-flex h-9 w-16 shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
+      className="relative flex items-center justify-around h-10 w-[86px] shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>
-      <Icon
-        type="Clock"
-        size={20}
-        className={`h-3 w-3 rounded-full ${
-          isDarkMode ? "bg-transparent text-white" : "bg-white text-black"
+      <span
+        className={`flex items-center justify-center h-7 w-7 rounded-full pointer-events-none ${
+          isDarkMode ? "bg-transparent" : "bg-white"
         }`}
-      />
-      <Icon
-        type="ArrowBack"
-        size={20}
-        className={`h-3 w-3 rounded-full ${
-          isDarkMode ? "bg-white text-black" : "bg-transparent text-white"
+      >
+        <Icon
+          type="Clock"
+          className={`text-xl ${isDarkMode ? "text-white" : "text-black"}`}
+        />
+      </span>
+      <span
+        className={`flex items-center justify-center h-7 w-7 rounded-full pointer-events-none ${
+          isDarkMode ? "bg-white" : "bg-transparent"
         }`}
-      />
+      >
+        <Icon
+          type="MoneyBill"
+          className={`text-xl ${isDarkMode ? "text-black" : "text-white"}`}
+        />
+      </span>
     </Switch>
   );
 }
