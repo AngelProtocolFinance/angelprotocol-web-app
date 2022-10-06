@@ -1,4 +1,4 @@
-import Airdrop from "components/Transactors/Airdrop/Airdrop";
+import Airdrop from "./Airdrop";
 import ConnectButton from "./ConnectButton";
 import TransactionHint from "./TransactionHint";
 
