@@ -8,15 +8,15 @@ export function DashboardGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;
 }
 
-const guardLogic: GuardLogicFunc = (charity, children) => {
+const guardLogic: GuardLogicFunc = (application, children) => {
   const { isComplete, urlToPreviousStep } =
-    getWalletRegistrationStepData(charity);
+    getWalletRegistrationStepData(application);
 
   if (!isComplete) {
     return <Navigate to={urlToPreviousStep} />;
   }
 
-  if (charity.Registration.RegistrationStatus === "Active") {
+  if (application.Registration.RegistrationStatus === "Active") {
     return <Navigate to={appRoutes.index} />;
   }
 

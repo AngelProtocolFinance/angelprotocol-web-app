@@ -3,7 +3,7 @@ import { ContactDetails } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
 
 export const contactInfoShape: SchemaShape<ContactDetails> = {
-  charityName: Yup.string().required(
+  organizationName: Yup.string().required(
     "Please enter the name of your organization."
   ),
   firstName: Yup.string().required("Please enter your first name."),

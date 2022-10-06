@@ -5,7 +5,7 @@ import {
 import Loader from "components/Loader";
 import TableView from "./TableView";
 
-export default function Board() {
+export default function Table() {
   const { data: update = leaderboard_update, isLoading } =
     useLeaderboardsQuery("");
   return (

@@ -2,7 +2,7 @@ import { EndowmentEntry } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
-import CharityCard from "./CharityCard";
+import EndowmentCard from "./EndowmentCard";
 import IndexCard from "./IndexCard";
 
 export default function Index(props: {
@@ -22,7 +22,7 @@ export default function Index(props: {
           className="flex gap-4 overflow-x-scroll scroll-hidden py-2"
         >
           {props.profiles.map((profile) => (
-            <CharityCard key={profile.id} {...profile} />
+            <EndowmentCard key={profile.id} {...profile} />
           ))}
         </div>
         {showBack && (

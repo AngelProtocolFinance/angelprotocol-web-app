@@ -14,7 +14,7 @@ import routes from "../routes";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();
@@ -24,7 +24,7 @@ export default function useUpload() {
       try {
         const body = await getUploadUrls(values);
         const result = await uploadDocumentation({
-          PK: charity.ContactPerson.PK,
+          PK: application.ContactPerson.PK,
           body,
         });
 
@@ -32,7 +32,7 @@ export default function useUpload() {
           return handleError(result.error, GENERIC_ERROR_MESSAGE);
         }
 
-        const route = charity.Metadata.JunoWallet
+        const route = application.Metadata.JunoWallet
           ? routes.dashboard
           : routes.additionalInformation;
         navigate(`${appRoutes.register}/${route}`);
@@ -40,7 +40,7 @@ export default function useUpload() {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
     },
-    [charity, handleError, uploadDocumentation, navigate]
+    [application, handleError, uploadDocumentation, navigate]
   );
 
   return upload;

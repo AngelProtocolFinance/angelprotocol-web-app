@@ -72,8 +72,8 @@ type InitialRegistration = Optional<
 export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
-  CharityName: string;
-  CharityName_ContactEmail?: string;
+  OrganizationName: string;
+  OrganizationName_ContactEmail?: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
   ProofOfIdentity?: FileObject;
@@ -91,8 +91,8 @@ export type Registration = {
 type InitialMetaData = Optional<
   Metadata,
   | "Banner"
-  | "CharityLogo"
-  | "CharityOverview"
+  | "Logo"
+  | "Overview"
   | "EndowmentContract"
   | "EndowmentId"
   | "JunoWallet"
@@ -100,8 +100,8 @@ type InitialMetaData = Optional<
 >;
 export type Metadata = {
   Banner?: FileObject;
-  CharityLogo?: FileObject;
-  CharityOverview: string;
+  Logo?: FileObject;
+  Overview: string;
   EndowmentContract: string;
   EndowmentId: number;
   SK: "Metadata";
@@ -109,24 +109,24 @@ export type Metadata = {
   KycDonorsOnly: boolean;
 };
 
-export type Charity = {
+export type Application = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
 };
 
-export type UnprocessedCharity = {
+export type UnprocessedApplication = {
   ContactPerson: ContactPerson;
   Registration: InitialRegistration;
   Metadata: InitialMetaData;
 };
 
-export type ContactDetailsData = {
+export type ContactDetailsResult = {
   ContactPerson: ContactPerson;
   Registration: Pick<
     Registration,
-    | "CharityName"
-    | "CharityName_ContactEmail"
+    | "OrganizationName"
+    | "OrganizationName_ContactEmail"
     | "RegistrationDate"
     | "RegistrationStatus"
   >;
@@ -137,7 +137,7 @@ export type ContactDetailsRequest = {
   PK?: string;
   body: {
     ContactPerson: Omit<ContactPerson, "SK" | "EmailVerificationLastSentDate">;
-    Registration: Pick<Registration, "CharityName">;
+    Registration: Pick<Registration, "OrganizationName">;
   };
 };
 
@@ -153,20 +153,20 @@ export type SubmitResult = {
   EndowmentContract: string;
 };
 
-export type UpdateCharityMetadataData = {
+export type UpdateMetadataRequest = {
   PK?: string;
   body: {
     Banner?: FileObject;
-    CharityLogo?: FileObject;
-    CharityOverview?: string;
+    Logo?: FileObject;
+    Overview?: string;
     JunoWallet?: string;
   };
 };
 
-export type UpdateCharityMetadataResult = {
+export type UpdateMetadataResult = {
   Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
+  Logo: FileObject;
+  Overview: string;
   JunoWallet: string;
 };
 
@@ -192,7 +192,7 @@ export type UpdateDocumentationResult = {
   AuditedFinancialReports: FileObject[];
 };
 
-export type CharityApplication = Registration & {
+export type EndowmentApplication = Registration & {
   PK: string;
   poll_id: number;
 };

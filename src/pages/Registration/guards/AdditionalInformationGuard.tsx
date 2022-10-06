@@ -9,14 +9,15 @@ export function AdditionalInformationGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;
 }
 
-const guardLogic: GuardLogicFunc = (charity, children) => {
-  const { isComplete, urlToPreviousStep } = getDocumentationStepData(charity);
+const guardLogic: GuardLogicFunc = (application, children) => {
+  const { isComplete, urlToPreviousStep } =
+    getDocumentationStepData(application);
 
   if (!isComplete) {
     return <Navigate to={urlToPreviousStep} />;
   }
 
-  if (!isRegistrationEditable(charity)) {
+  if (!isRegistrationEditable(application)) {
     return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 

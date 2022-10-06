@@ -21,10 +21,10 @@ export default function useCurrentLevel() {
 
     // level checks are nested since subsequent levels can't be reached
     // unless previous ones are reached first (can'b get level 2 if level 1 is not reached)
-    if (getIsLevelOne(poi, website, por, methods)) {
+    if (getIsLevelOne(un_sdg, poi, website, por, methods)) {
       currentLevel = 1;
 
-      if (getIsLevelTwo(un_sdg, fs, methods)) {
+      if (getIsLevelTwo(fs, methods)) {
         currentLevel = 2;
 
         if (getIsLevelThree(afr, methods)) {
@@ -42,6 +42,7 @@ export default function useCurrentLevel() {
 }
 
 const getIsLevelOne = (
+  un_sdg: number,
   proofOfIdentity: FileWrapper,
   website: string,
   proofOfRegistration: FileWrapper,
@@ -51,21 +52,20 @@ const getIsLevelOne = (
   !getFieldState("proofOfIdentity").error &&
   !getFieldState("website").error &&
   !getFieldState("proofOfRegistration").error &&
+  !getFieldState("un_sdg").error &&
   // values inserted
+  un_sdg > 0 &&
   !!proofOfIdentity &&
   !!website &&
   !!proofOfRegistration;
 
 const getIsLevelTwo = (
-  un_sdg: number,
   financialStatements: FileWrapper[],
   { getFieldState }: UseFormReturn<DocumentationValues, any>
 ): boolean =>
   // no errors
-  !getFieldState("un_sdg").error &&
   !getFieldState("financialStatements").error &&
   // values inserted
-  un_sdg > 0 &&
   financialStatements.some((fs) => !!fs);
 
 const getIsLevelThree = (

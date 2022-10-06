@@ -5,9 +5,9 @@ import useKYC from "components/KYC/useKYC";
 import Popup from "components/Popup";
 import { unsdgs } from "constants/unsdgs";
 import { useProfile } from "..";
-import CharityLinks from "./Links";
+import Links from "./Links";
 
-export default function CharityHeader(props: ProfileResponse) {
+export default function Header(props: ProfileResponse) {
   const { wallet } = useGetWallet();
   const profile = useProfile();
 
@@ -49,7 +49,7 @@ export default function CharityHeader(props: ProfileResponse) {
       <div className="flex items-center gap-2 flex-wrap">
         <Button onClick={donate}>DONATE NOW</Button>
 
-        <CharityLinks />
+        <Links />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import Step from "./Step";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const { submit, isSubmitting } = useSubmit();
   const navigate = useNavigate();
   const { sendVerificationEmail, isLoading: isSendingEmail } =
@@ -19,22 +19,22 @@ export default function Dashboard() {
   const { handleError } = useErrorContext();
 
   const isLoading = isSubmitting || isSendingEmail;
-  const isSubmitted = !isRegistrationEditable(charity);
+  const isSubmitted = !isRegistrationEditable(application);
 
   const resendVerificationEmail = useCallback(async () => {
     try {
-      await sendVerificationEmail(charity.ContactPerson.PK, {
-        CharityName: charity.Registration.CharityName,
-        Email: charity.ContactPerson.Email,
-        FirstName: charity.ContactPerson.FirstName,
-        LastName: charity.ContactPerson.LastName,
-        Role: charity.ContactPerson.Role,
-        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      await sendVerificationEmail(application.ContactPerson.PK, {
+        OrganizationName: application.Registration.OrganizationName,
+        Email: application.ContactPerson.Email,
+        FirstName: application.ContactPerson.FirstName,
+        LastName: application.ContactPerson.LastName,
+        Role: application.ContactPerson.Role,
+        PhoneNumber: application.ContactPerson.PhoneNumber,
       });
     } catch (error) {
       handleError(error);
     }
-  }, [charity, handleError, sendVerificationEmail]);
+  }, [application, handleError, sendVerificationEmail]);
 
   return (
     <div className="flex flex-col gap-4 items-center h-full w-full">
@@ -67,7 +67,7 @@ export default function Dashboard() {
                 navigate(`${appRoutes.register}/${routes.documentation}`)
               }
               disabled={isLoading}
-              customStatus={`Level ${charity.Registration.Tier}`}
+              customStatus={`Level ${application.Registration.Tier}`}
             />
             <Step
               title="Additional Information"
@@ -86,14 +86,17 @@ export default function Dashboard() {
             <Step
               title="Email Verification"
               onClick={resendVerificationEmail}
-              disabled={charity.ContactPerson.EmailVerified || isLoading}
+              disabled={application.ContactPerson.EmailVerified || isLoading}
               buttonLabel="Resend"
-              isIncomplete={!charity.ContactPerson.EmailVerified}
+              isIncomplete={!application.ContactPerson.EmailVerified}
             />
           </div>
         </>
       )}
-      <EndowmentStatus isLoading={isLoading} onSubmit={() => submit(charity)} />
+      <EndowmentStatus
+        isLoading={isLoading}
+        onSubmit={() => submit(application)}
+      />
     </div>
   );
 }

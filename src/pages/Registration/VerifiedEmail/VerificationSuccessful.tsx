@@ -1,6 +1,6 @@
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { UnprocessedCharity } from "types/aws";
+import { UnprocessedApplication } from "types/aws";
 import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";
@@ -9,7 +9,7 @@ import routes from "../routes";
 export default function VerificationSuccessful({
   newCharity,
 }: {
-  newCharity: UnprocessedCharity;
+  newCharity: UnprocessedApplication;
 }) {
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function VerificationSuccessful({
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
-          {newCharity.Registration.CharityName},{" "}
+          {newCharity.Registration.OrganizationName},{" "}
           {newCharity.ContactPerson.FirstName}!
         </p>
       </div>

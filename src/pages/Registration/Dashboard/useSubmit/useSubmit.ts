@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -18,10 +18,10 @@ export default function useSubmit() {
   const { showModal } = useModalContext();
 
   const submit = useCallback(
-    async (charity: Charity) => {
+    async (application: Application) => {
       try {
         const contract = new CW3Review(wallet);
-        const msg = contract.createProposeApplicationMsg(charity);
+        const msg = contract.createProposeApplicationMsg(application);
         dispatch(
           sendCosmosTx({
             wallet,
@@ -30,7 +30,7 @@ export default function useSubmit() {
               return logProposalId({
                 res,
                 wallet: wallet!, //wallet is defined at this point
-                PK: charity.ContactPerson.PK!, //registration data is complete at this point
+                PK: application.ContactPerson.PK!, //registration data is complete at this point
               });
             },
           })

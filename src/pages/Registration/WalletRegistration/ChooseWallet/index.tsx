@@ -8,12 +8,12 @@ import Title from "./Title";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
 
   // if wallet registration step is already complete, then this was just data update,
   // so user can be navigated to the dashboard
   const onBackClick = () => {
-    const route = charity.Metadata.JunoWallet
+    const route = application.Metadata.JunoWallet
       ? routes.dashboard
       : routes.additionalInformation;
     navigate(`${appRoutes.register}/${route}`);

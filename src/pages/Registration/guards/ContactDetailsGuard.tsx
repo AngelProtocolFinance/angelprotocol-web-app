@@ -9,8 +9,8 @@ export function ContactDetailsGuard(props: PropsWithChildren<{}>) {
   return <CommonGuard guardLogic={guardLogic}>{props.children}</CommonGuard>;
 }
 
-const guardLogic: GuardLogicFunc = (charity, children) => {
-  if (!isRegistrationEditable(charity)) {
+const guardLogic: GuardLogicFunc = (application, children) => {
+  if (!isRegistrationEditable(application)) {
     return <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />;
   }
 

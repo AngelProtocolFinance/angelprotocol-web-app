@@ -20,7 +20,7 @@ export enum governRoutes {
   pollDetails = "pollDetails",
 }
 
-export enum charityRoutes {
+export enum profileRoutes {
   overview = "overview",
   endowment = "endowment",
   programs = "programs",

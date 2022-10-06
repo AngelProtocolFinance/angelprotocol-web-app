@@ -3,7 +3,7 @@ import { charityRoutes } from "constants/routes";
 import Endowment from "./Endowment";
 import Overview from "./Overview";
 
-export default function CharityTabs() {
+export default function Tabs() {
   //no need to lazy load this small sub pages
   return (
     <Routes>

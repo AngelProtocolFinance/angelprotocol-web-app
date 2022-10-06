@@ -17,14 +17,14 @@ export type DocumentationValues = {
 };
 
 export type AdditionalInfoValues = {
-  charityOverview: string;
-  charityLogo: FileWrapper;
+  overview: string;
+  logo: FileWrapper;
   banner: FileWrapper;
   kycDonorsOnly: boolean;
 };
 
 export type ContactDetails = {
-  charityName: string;
+  organizationName: string;
   firstName: string;
   lastName: string;
   email: string;
