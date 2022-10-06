@@ -1,13 +1,13 @@
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import ConnectedWallet from "./ConnectedWallet";
-import WalletSelector from "./WalletSelector";
+import TransactionHint from "components/Transactor/TransactionHint";
+import Airdrop from "components/Transactors/Airdrop/Airdrop";
+import ConnectButton from "./ConnectButton";
 
 export default function WalletSuite() {
-  const { wallet, isLoading } = useGetWallet();
-  //TODO: balance fetching and connecting must be separate
-  if (isLoading || !wallet) {
-    return <WalletSelector isLoading={isLoading} />;
-  }
-
-  return <ConnectedWallet {...wallet} />;
+  return (
+    <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
+      <TransactionHint />
+      <ConnectButton />
+      <Airdrop />
+    </div>
+  );
 }
