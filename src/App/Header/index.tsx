@@ -12,6 +12,7 @@ import { setIsMobileNavOpen } from "slices/components/mobileNav";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const { showModal, closeModal } = useModalContext();
@@ -108,6 +109,10 @@ function AppLinks() {
       {/*<NavLink to={appRoutes.register} className={styler}>
         Register
       </NavLink>*/}
+      <span className="flex justify-between items-center text-white-grey font-heading font-semibold mb-4 w-full">
+        <span>Theme</span>
+        <ThemeToggle />
+      </span>
     </div>
   );
 }
