@@ -88,7 +88,7 @@ function PageError() {
   return (
     <section className="padded-container grid content-center place-items-center gap-2">
       <Icon type="Warning" size={30} className="text-red-l1" />
-      <p className="text-red-l1 text-lg">Failed to load charity profile</p>
+      <p className="text-red-l1 text-lg">Failed to load endowment profile</p>
       <Link
         to={`${appRoutes.index}`}
         className="text-blue-l4 hover:text-blue text-sm"

@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useCachedGovStaker } from "services/juno/gov/queriers";
 import { condense, humanize, roundDown } from "helpers";
-import { symbols } from "constants/currency";
+import { denoms, symbols } from "constants/tokens";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {
@@ -34,8 +34,8 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={symbols.halo}
-          className="flex-auto p-1 pl-0 focus:outline-none bg-gray-l2 text-gray-d2 text-lg"
+          placeholder={symbols[denoms.halo]}
+          className="flex-auto p-1 pl-0 focus:outline-none bg-gray-l3 text-gray-d2 text-lg"
         />
         <div
           className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"

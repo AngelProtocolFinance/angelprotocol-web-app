@@ -4,8 +4,10 @@ import { FieldValues, Path, useController } from "react-hook-form";
 import Icon from "components/Icon";
 
 type OptionType = { label: string; value: any };
+export type Classes = { button?: string; option?: string };
 
 interface Props<T extends FieldValues> {
+  classes?: Classes;
   name: Path<T>;
   placeholder?: string;
   options: OptionType[];
@@ -32,7 +34,11 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
       as="div"
       className="relative"
     >
-      <Listbox.Button className="flex items-center bg-white disabled:bg-white/10 text-left rounded-md outline-none border-none w-full px-3 py-2 text-black">
+      <Listbox.Button
+        className={`${
+          props.classes?.button ?? ""
+        } flex items-center bg-white disabled:bg-zinc-50/10 text-left rounded-md outline-none border-none w-full text-black`}
+      >
         {({ open }) => (
           <>
             <span>{display}</span>
@@ -49,7 +55,9 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             key={option.value}
             value={option.value}
             className={({ selected }) =>
-              `cursor-pointer p-1 px-2 hover:bg-blue-l3/50 ${
+              `${
+                props.classes?.option ?? ""
+              } cursor-pointer hover:bg-blue-l3/50 ${
                 selected ? "bg-blue text-white" : "text-gray-d2"
               }`
             }

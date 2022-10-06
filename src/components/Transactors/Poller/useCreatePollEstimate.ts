@@ -11,7 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import { extractFeeAmount, processEstimateError } from "helpers";
-import { denoms } from "constants/currency";
+import { denoms } from "constants/tokens";
 
 export default function useCreatePollEstimate() {
   const {

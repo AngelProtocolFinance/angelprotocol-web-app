@@ -1,6 +1,7 @@
-import { CharityApplication, Registration } from "types/aws";
+import { EndowmentApplication, Registration } from "types/aws";
 import {
   AllianceMember,
+  Asset,
   CW4Member,
   EndowmentSettingsPayload,
   EndowmentStatus,
@@ -12,7 +13,7 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
-import { Denoms, UNSDG_NUMS } from "types/lists";
+import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
@@ -95,10 +96,7 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
-export type CharityApplicationMeta = MetaConstructor<
-  "cw3_application",
-  Registration
->;
+export type ApplicationMeta = MetaConstructor<"cw3_application", Registration>;
 
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
@@ -107,7 +105,7 @@ export type CW3ConfigUpdateMeta = MetaConstructor<
 
 export type FundSendMeta = MetaConstructor<
   "cw3_transfer",
-  Pick<FundSendPayload, "amount" | "currency" | "recipient">
+  Pick<FundSendPayload, "amount" | "denom" | "recipient">
 >;
 
 /** _endowment */
@@ -115,6 +113,7 @@ export type WithdrawMeta = MetaConstructor<
   "acc_withdraw",
   {
     beneficiary: string;
+    assets: Asset[];
   }
 >;
 
@@ -152,7 +151,7 @@ export type ProposalMeta =
   //cw4
   | CW4MemberUpdateMeta
   //cw3
-  | CharityApplicationMeta
+  | ApplicationMeta
   | CW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
@@ -216,7 +215,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: Denoms; //NOTE: Denoms might contain non-juno denoms
+  denom: string;
   haloBalance: number;
   usdBalance: number;
 };
@@ -258,9 +257,9 @@ export type ProfileFormValues = ProposalBase &
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  CharityApplication,
-  | "CharityName"
+  EndowmentApplication,
+  | "OrganizationName"
   | "RegistrationDate"
   | "RegistrationStatus"
-  | "CharityName_ContactEmail"
+  | "OrganizationName_ContactEmail"
 >;

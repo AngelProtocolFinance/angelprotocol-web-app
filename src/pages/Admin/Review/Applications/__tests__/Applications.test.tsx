@@ -1,23 +1,23 @@
 import { render, screen } from "@testing-library/react";
-import { CharityApplication } from "types/aws";
+import { EndowmentApplication } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import Applications from "..";
 
-const mockCharityApplicationsQuery = jest.fn();
+const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
-  useCharityApplicationsQuery: () => mockCharityApplicationsQuery(),
+  useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
 jest.mock("pages/Admin/Guard", () => ({
   __esModule: true,
   useAdminResources: () => mockAdminContext(),
 }));
 
-describe("Charity Applications", () => {
+describe("Applications", () => {
   test("Loading applications", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       isLoading: true,
     });
     render(
@@ -25,11 +25,11 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/loading applications/i)).toBeInTheDocument();
   });
   test("Error getting applications", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       isError: true,
     });
     render(
@@ -37,11 +37,11 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/failed to get applications/i)).toBeInTheDocument();
   });
   test("No applications found", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       data: [],
     });
     render(
@@ -49,13 +49,13 @@ describe("Charity Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("cell", { name: /no applications found/i })
     ).toBeInTheDocument();
   });
   test("AppRows with poll id shows link to proposal page", () => {
-    mockCharityApplicationsQuery.mockReturnValue({
+    mockEndowmentApplicationsQuery.mockReturnValue({
       data: mockApplications,
     });
     render(
@@ -73,12 +73,12 @@ describe("Charity Applications", () => {
   });
 });
 
-const mockApplications: CharityApplication[] = [
+const mockApplications: EndowmentApplication[] = [
   {
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    CharityName: "testCharity1",
+    OrganizationName: "testCharity1",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -95,7 +95,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    CharityName_ContactEmail: "testCharity1_testCharity1@mail.com",
+    OrganizationName_ContactEmail: "testCharity1_testCharity1@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -126,7 +126,7 @@ const mockApplications: CharityApplication[] = [
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    CharityName: "testCharity2",
+    OrganizationName: "testCharity2",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -143,7 +143,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    CharityName_ContactEmail: "testCharity2_testCharity2@mail.com",
+    OrganizationName_ContactEmail: "testCharity2_testCharity2@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -174,7 +174,7 @@ const mockApplications: CharityApplication[] = [
     ProofOfIdentityVerified: false,
     AuditedFinancialReportsVerified: false,
     RegistrationDate: "2022-06-30T10:05:45.350Z",
-    CharityName: "testCharity3",
+    OrganizationName: "testCharity3",
     Website: "http://google.com",
     FinancialStatements: [
       {
@@ -191,7 +191,7 @@ const mockApplications: CharityApplication[] = [
       publicUrl: "proofRegUrl",
     },
     ProofOfRegistrationVerified: false,
-    CharityName_ContactEmail: "testCharity3_testCharity3@mail.com",
+    OrganizationName_ContactEmail: "testCharity3_testCharity3@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",

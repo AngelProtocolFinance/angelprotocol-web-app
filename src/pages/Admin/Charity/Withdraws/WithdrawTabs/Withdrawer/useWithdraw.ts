@@ -37,7 +37,7 @@ export default function useWithdraw() {
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
-    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno;
+    const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno_withdraw;
     const isSendToApCW3 =
       endowment.endow_type === "Charity" && type === "locked";
 
@@ -45,6 +45,7 @@ export default function useWithdraw() {
       type: "acc_withdraw",
       data: {
         beneficiary: data.beneficiary,
+        assets,
       },
     };
 

@@ -3,20 +3,14 @@ import { DeliverTxResponse, StdFee } from "@cosmjs/stargate";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import { Chain, KYCData } from "types/aws";
+import { Chain } from "types/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 type Tag = TagDescription<string>;
 export type Tags = Tag[];
 export type TagPayload = PayloadAction<Tags, string>;
 export type TagPayloads = TagPayload[];
-export type Step =
-  | "form"
-  | "submit"
-  | "broadcast"
-  | "success"
-  | "error"
-  | "receipt";
+export type Step = "form" | "submit" | "broadcast" | "success" | "error";
 
 export type FormError =
   | {
@@ -30,30 +24,28 @@ export type FormError =
  * - step
  * - message
  * - txhash
- * - chain
+ * - chainId
  */
 
 export type InitialStage = {
   step: "initial";
   message?: never;
   txHash?: never;
-  chain?: never;
-  //re-start form with KYC data from receipter
-  kycData?: KYCData;
+  chainId?: never;
 };
 
 export type SubmitStage = {
   step: "submit";
   message: string;
   txHash?: never;
-  chain?: never;
+  chainId?: never;
 };
 
 export type BroadcastStage = {
   step: "broadcast";
   message: string;
   txHash: string;
-  chain: Chain;
+  chainId: string;
 };
 
 export type SuccessLink = { url: string; description: string };
@@ -61,7 +53,7 @@ export type SuccessStage = {
   step: "success";
   message: string;
   txHash: string; //leave "" to not render tx link
-  chain: Chain; //leave "" to not render tx link
+  chainId: string; //leave "" to not render tx link
   rawLog?: string;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
@@ -72,20 +64,11 @@ export type ErrorStage = {
   message: string;
   //supply these two if want to show tx link
   txHash?: string;
-  chain?: Chain;
-};
-
-export type KYCStage = {
-  step: "kyc";
-  message?: never;
-  txHash?: never;
-  chain?: never;
-  kycData?: KYCData;
+  chainId?: string;
 };
 
 export type Stage =
   | InitialStage
-  | KYCStage
   | SubmitStage
   | BroadcastStage
   | SuccessStage

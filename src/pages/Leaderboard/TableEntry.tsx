@@ -18,7 +18,7 @@ export default function TableEntry(props: Endowment) {
     <tr className="border-b border-black/10">
       <td>
         <LazyImage
-          src={props.charity_logo || defaultIcon}
+          src={props.logo || defaultIcon}
           alt=""
           classes={`self-center row-span-2 w-32 h-24 bg-white ${
             props.iconLight ? "bg-blue" : ""
@@ -30,7 +30,7 @@ export default function TableEntry(props: Endowment) {
           to={`../${appRoutes.profile}/${props.endowment_id}`}
           className="col-start-2 text-lg  text-gray-d2 hover:text-blue active:text-blue-d1 font-bold pt-2 mb-1"
         >
-          {props.charity_name}
+          {props.name}
         </Link>
       </td>
       <td>

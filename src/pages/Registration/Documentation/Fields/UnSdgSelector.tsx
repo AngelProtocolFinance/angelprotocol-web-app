@@ -1,8 +1,6 @@
-import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
 import { DocumentationValues as DV } from "pages/Registration/types";
 import { unsdgs } from "constants/unsdgs";
-import { InputRow } from "../../common";
+import { ErrorMessage, InputRow } from "../../common";
 import Selector from "../../common/Selector";
 
 const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
@@ -10,27 +8,20 @@ const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
   value: +_key,
 }));
 
-export default function UnSdgSelector() {
-  const {
-    formState: { errors },
-  } = useFormContext<DV>();
-
+export default function UnSdgSelector({ classes = "" }: { classes?: string }) {
   return (
     <InputRow
+      classes={classes}
       htmlFor="un_sdg"
       label="Which UN SDG is your org’s mission aligned with?"
     >
       <Selector<DV>
+        classes={{ button: "px-2 py-1 text-sm", option: "px-2 py-1 text-sm" }}
         name="un_sdg"
         placeholder="Select an SDG"
         options={OPTIONS}
       />
-      <ErrorMessage
-        errors={errors}
-        as="p"
-        name="un_sdg"
-        className="w-full text-xs text-red text-center"
-      />
+      <ErrorMessage<DV> name="un_sdg" />
     </InputRow>
   );
 }

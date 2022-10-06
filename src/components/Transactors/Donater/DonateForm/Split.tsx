@@ -18,15 +18,15 @@ export default function Split() {
         <Portion
           type="liquid"
           border_class="border-blue/80"
-          text_class="text-blue-d1 uppercase"
-          title="Liquid"
+          text_class="text-blue uppercase"
+          title="Current"
           action="Instantly available"
         >
           <Slider />
         </Portion>
       </div>
       <p className="text-xs text-gray-d2 text-center">
-        Note: Donations into the endowment provide sustainable financial runaway
+        Note: Donations into the Endowment provide sustainable financial runaway
         and allow your gift to give forever
       </p>
     </div>

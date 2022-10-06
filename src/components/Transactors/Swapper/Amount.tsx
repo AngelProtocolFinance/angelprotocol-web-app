@@ -5,7 +5,7 @@ import { SwapValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
-import { denoms } from "constants/currency";
+import { denoms } from "constants/tokens";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 

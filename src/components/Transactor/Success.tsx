@@ -11,7 +11,7 @@ export default function Success(props: SuccessStage) {
   const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chain, txHash, message, isShareEnabled, successLink } = props;
+  const { chainId, txHash, message, isShareEnabled, successLink } = props;
 
   //if no special action is needed, just shown normal acknowledge button
   const isAcknowledgeButtonShown = !isShareEnabled && !successLink;
@@ -36,9 +36,9 @@ export default function Success(props: SuccessStage) {
       <Icon type="CheckCircle" className="text-blue-d1 text-3xl mb-1" />
       <p className="text-center text-blue-d1 mb-2 font-bold">{message}</p>
 
-      {chain && txHash && (
+      {chainId && txHash && (
         <a
-          href={getTxUrl(chain, txHash)}
+          href={getTxUrl(chainId, txHash)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-blue cursor-pointer mb-6 text-sm"

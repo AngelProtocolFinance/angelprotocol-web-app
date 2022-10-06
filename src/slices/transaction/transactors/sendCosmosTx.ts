@@ -53,7 +53,7 @@ export const sendCosmosTx = createAsyncThunk(
             message: args.successMessage || "Transaction succesful!",
             txHash: response.transactionHash,
             rawLog: response.rawLog,
-            chain: args.wallet.chain,
+            chainId: args.wallet.chain.chain_id,
             successLink: args.successLink,
           });
         }
@@ -68,7 +68,7 @@ export const sendCosmosTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.transactionHash,
-          chain: args.wallet.chain,
+          chainId: args.wallet.chain.chain_id,
         });
       }
     } catch (err) {

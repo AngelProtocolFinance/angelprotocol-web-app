@@ -1,20 +1,18 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
-import { FileObject } from "types/aws";
 import {
   useRegistrationQuery,
-  useUpdateCharityMetadataMutation,
+  useUpdateMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FileWrapper } from "components/FileDropzone";
-import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes from "../routes";
+import getUploadBody from "./getUploadBody";
 
 export default function useSubmit() {
-  const [updateMetadata] = useUpdateCharityMetadataMutation();
-  const { charity } = useRegistrationQuery();
+  const [updateMetadata] = useUpdateMetadataMutation();
+  const { application } = useRegistrationQuery();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
@@ -24,7 +22,7 @@ export default function useSubmit() {
         const body = await getUploadBody(values);
 
         const result = await updateMetadata({
-          PK: charity.ContactPerson.PK,
+          PK: application.ContactPerson.PK,
           body,
         });
 
@@ -32,7 +30,7 @@ export default function useSubmit() {
           return handleError(result.error, "Error updating profile ❌");
         }
 
-        const route = charity.Metadata.JunoWallet
+        const route = application.Metadata.JunoWallet
           ? routes.dashboard
           : routes.wallet;
         navigate(`${appRoutes.register}/${route}`);
@@ -40,47 +38,8 @@ export default function useSubmit() {
         handleError(error, "Error updating profile ❌");
       }
     },
-    [charity, handleError, updateMetadata, navigate]
+    [application, handleError, updateMetadata, navigate]
   );
 
   return { submit };
-}
-
-async function getUploadBody(values: AdditionalInfoValues) {
-  const logoPromise = uploadIfNecessary(values.charityLogo);
-  const bannerPromise = uploadIfNecessary(values.banner);
-  const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
-
-  if (!CharityLogo.publicUrl || !Banner.publicUrl) {
-    throw new Error(
-      `Error uploading file ${
-        !CharityLogo.publicUrl ? values.charityLogo.name : values.banner.name
-      }`
-    );
-  }
-
-  return {
-    Banner,
-    CharityLogo,
-    CharityOverview: values.charityOverview,
-    KycDonorsOnly: values.kycDonorsOnly,
-  };
-}
-
-async function uploadIfNecessary(
-  fileWrapper: FileWrapper
-): Promise<FileObject> {
-  if (!fileWrapper.file) {
-    return {
-      name: fileWrapper.name,
-      publicUrl: fileWrapper.publicUrl,
-    };
-  }
-
-  const publicUrl = await uploadToIpfs(fileWrapper.file);
-
-  return {
-    name: fileWrapper.file.name,
-    publicUrl,
-  };
 }

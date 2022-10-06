@@ -5,10 +5,7 @@ import { FileWrapper } from "components/FileDropzone";
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };
 
-/**forms */
 export type DocumentationValues = {
-  // Expects an array because FileDropzone component always returns an array of Files,
-  // so this way it's easier to handle (Yup validation ensures single file uploaded)
   proofOfIdentity: FileWrapper;
   proofOfRegistration: FileWrapper;
   financialStatements: FileWrapper[];
@@ -20,14 +17,14 @@ export type DocumentationValues = {
 };
 
 export type AdditionalInfoValues = {
-  charityOverview: string;
-  charityLogo: FileWrapper;
+  overview: string;
+  logo: FileWrapper;
   banner: FileWrapper;
   kycDonorsOnly: boolean;
 };
 
 export type ContactDetails = {
-  charityName: string;
+  organizationName: string;
   firstName: string;
   lastName: string;
   email: string;

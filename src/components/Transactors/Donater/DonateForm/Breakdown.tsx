@@ -4,7 +4,7 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter } from "store/accessors";
 import { humanize } from "helpers";
 
-export default function Breakdown() {
+export default function Breakdown({ classes = "" }: { classes?: string }) {
   const { wallet } = useGetWallet();
   const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
@@ -15,7 +15,7 @@ export default function Breakdown() {
   const totalAmount = isNativeCoin ? fee + amount : amount;
 
   return (
-    <div className="m-1">
+    <div className={classes}>
       <Entry
         title="tx fee"
         amount={fee}

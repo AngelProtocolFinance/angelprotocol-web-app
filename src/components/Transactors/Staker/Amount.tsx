@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
 import { condense, humanize, roundDown } from "helpers";
-import { symbols } from "constants/currency";
+import { denoms, symbols } from "constants/tokens";
 import Balance from "./Balance";
 import useStakerBalance from "./useStakerBalance";
 
@@ -40,8 +40,9 @@ export default function Amount() {
         />
       )}
       <span className="my-3 text-gray-d2 italic text-xs">
-        There is a 7 day wait period to unstake {symbols.halo}. You will not be
-        able to claim your {symbols.halo} until this period has passed.
+        There is a 7 day wait period to unstake {symbols[denoms.halo]}. You will
+        not be able to claim your {symbols[denoms.halo]} until this period has
+        passed.
       </span>
       <div className="flex bg-gray-l3 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
         <input
@@ -49,8 +50,8 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={symbols.halo}
-          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l2 text-lg"
+          placeholder={symbols[denoms.halo]}
+          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l3 text-lg"
         />
         <div
           className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"

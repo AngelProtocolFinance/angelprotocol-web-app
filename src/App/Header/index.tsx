@@ -1,4 +1,4 @@
-import betaWhiteLogo from "assets/images/angelprotocol-horiz-wht.png";
+import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite";
@@ -10,9 +10,8 @@ export default function Header() {
     <header className="mb-4 grid grid-cols-[auto_1fr_auto] items-center w-full padded-container pt-3">
       <a
         rel="noreferrer"
-        target="_blank"
         href="https://angelprotocol.io/"
-        title="to home"
+        title="Go to Marketing page"
       >
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </a>

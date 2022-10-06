@@ -10,7 +10,7 @@ import { getTxUrl } from "helpers";
 export default function ErrPop(props: ErrorStage) {
   const dispatch = useSetter();
   const { closeModal } = useModalContext();
-  const { chain, message, txHash } = props;
+  const { chainId, message, txHash } = props;
   const { handleError } = useErrorContext();
 
   useEffect(() => {
@@ -30,11 +30,11 @@ export default function ErrPop(props: ErrorStage) {
 
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
-      <Icon type="Info" className="text-gray-d2 text-2xl mb-2" />
+      <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
       <p className="text-center text-gray-d2 mb-2 ">{message}</p>
-      {chain && txHash && (
+      {chainId && txHash && (
         <a
-          href={getTxUrl(chain, txHash)}
+          href={getTxUrl(chainId, txHash)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-red-l1 cursor-pointer mb-6 text-sm"

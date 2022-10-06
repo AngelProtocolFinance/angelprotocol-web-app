@@ -7,10 +7,10 @@ import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
 export default function WalletRegistration() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const { wallet, isLoading } = useGetWallet();
   const [submittedWallet, setSubmittedWallet] = useState(
-    charity.Metadata.JunoWallet
+    application.Metadata.JunoWallet
   );
 
   let content = <WalletSubmission />;

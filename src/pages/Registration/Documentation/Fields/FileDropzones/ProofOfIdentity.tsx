@@ -1,15 +1,14 @@
 import { Dialog } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import { DocumentationValues } from "pages/Registration/types";
 import { useModalContext } from "contexts/ModalContext";
 import FileDropzone from "components/FileDropzone";
-import { Button, InputRow } from "../../../common";
+import { Button, ErrorMessage, InputRow } from "../../../common";
 
 export default function ProofOfIdentity() {
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useFormContext<DocumentationValues>();
 
   return (
@@ -24,12 +23,7 @@ export default function ProofOfIdentity() {
         className="h-8"
         disabled={isSubmitting}
       />
-      <ErrorMessage
-        errors={errors}
-        name="proofOfIdentity"
-        as="p"
-        className="w-full text-xs text-red text-center"
-      />
+      <ErrorMessage<DocumentationValues> name="proofOfIdentity" />
     </InputRow>
   );
 }

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
 import Icon from "components/Icon";
 import { condense, humanize } from "helpers";
-import { symbols } from "constants/currency";
+import { denoms, symbols } from "constants/tokens";
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -46,7 +46,7 @@ export default function Claims() {
             Total claimable
           </span>
           <span className="font-heading">
-            {amount} {symbols.halo}
+            {amount} {symbols[denoms.halo]}
           </span>
         </p>
       )}
@@ -63,7 +63,7 @@ function Claim(props: { time: string; amount: string }) {
         <span className="mr-1">
           {humanize(condense(props.amount), 2, true)}
         </span>
-        <span className="text-xs font-semibold">{symbols.halo}</span>
+        <span className="text-xs font-semibold">{symbols[denoms.halo]}</span>
       </p>
       <p className="text-xs font-semibold">
         {claimable ? (

@@ -9,7 +9,11 @@ export default function AuthorityToCreateCheckbox() {
     formState: { errors, isSubmitting },
   } = useFormContext<DocumentationValues>();
 
-  const { charity } = useRegistrationQuery();
+  const {
+    application: {
+      Registration: { OrganizationName },
+    },
+  } = useRegistrationQuery();
 
   return (
     <Checkbox
@@ -18,8 +22,8 @@ export default function AuthorityToCreateCheckbox() {
       disabled={isSubmitting}
     >
       {`By checking this box, you declare that you have the authority to create an
-        endowment in the name of ${charity.Registration.CharityName} through Angel Protocol`}
-      <span className="text-red ml-0.5">*</span>
+        endowment in the name of ${OrganizationName} through Angel Protocol`}
+      <span className="text-red-l1 ml-0.5">*</span>
     </Checkbox>
   );
 }

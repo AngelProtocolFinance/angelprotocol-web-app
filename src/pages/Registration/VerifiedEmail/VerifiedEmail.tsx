@@ -1,7 +1,8 @@
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect, useState } from "react";
 import { Location, useLocation, useNavigate } from "react-router-dom";
-import { UnprocessedCharity } from "types/aws";
+import { VerifEmailBody } from "../common/types";
+import { UnprocessedApplication } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { UnexpectedStateError } from "errors/errors";
 import { appRoutes } from "constants/routes";
@@ -12,7 +13,7 @@ import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
-type JwtData = UnprocessedCharity & {
+type JwtData = UnprocessedApplication & {
   authorization: string;
   exp: number;
   iat: number;
@@ -27,14 +28,14 @@ export default function VerifiedEmail() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [isEmailExpired, setEmailExpired] = useState(false);
-  const [charity, setCharity] = useState<UnprocessedCharity>();
+  const [application, setApplication] = useState<UnprocessedApplication>();
 
   useEffect(() => {
     try {
       const jwtData = extractJwtData(location);
 
       setEmailExpired(jwtData.isEmailExpired);
-      setCharity(jwtData.charity);
+      setApplication(jwtData.application);
       setLoading(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
@@ -43,25 +44,25 @@ export default function VerifiedEmail() {
 
   const resendVerificationEmail = useCallback(async () => {
     try {
-      if (!charity) {
+      if (!application) {
         throw new UnexpectedStateError("Charity is undefined");
       }
 
-      const emailPayload = {
-        CharityName: charity.Registration.CharityName,
-        Email: charity.ContactPerson.Email,
-        FirstName: charity.ContactPerson.FirstName,
-        LastName: charity.ContactPerson.LastName,
-        Role: charity.ContactPerson.Role,
-        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      const emailPayload: VerifEmailBody = {
+        OrganizationName: application.Registration.OrganizationName,
+        Email: application.ContactPerson.Email,
+        FirstName: application.ContactPerson.FirstName,
+        LastName: application.ContactPerson.LastName,
+        Role: application.ContactPerson.Role,
+        PhoneNumber: application.ContactPerson.PhoneNumber,
       };
-      await sendVerificationEmail(charity.ContactPerson.PK, emailPayload);
+      await sendVerificationEmail(application.ContactPerson.PK, emailPayload);
 
       navigate(`${appRoutes.register}/${routes.confirmEmail}`);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     }
-  }, [charity, handleError, navigate, sendVerificationEmail]);
+  }, [application, handleError, navigate, sendVerificationEmail]);
 
   if (isLoading) {
     return <RegLoader />;
@@ -75,14 +76,17 @@ export default function VerifiedEmail() {
       />
     );
   }
-  return <VerificationSuccessful newCharity={charity!} />;
+  return <VerificationSuccessful newCharity={application!} />;
 }
 
-function extractJwtData(location: Location) {
+function extractJwtData(location: Location): {
+  application: UnprocessedApplication;
+  isEmailExpired: boolean;
+} {
   const pathNames = location.pathname.split("/");
   const jwtToken = pathNames[pathNames.length - 1];
   const jwtData = jwtDecode<JwtData>(jwtToken);
-  const { authorization, exp, iat, user, ...charity } = jwtData;
+  const { authorization, exp, iat, user, ...application } = jwtData;
   const isEmailExpired = Math.floor(Date.now() / 1000) >= exp;
-  return { charity, isEmailExpired };
+  return { application, isEmailExpired };
 }

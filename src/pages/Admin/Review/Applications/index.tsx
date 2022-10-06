@@ -1,4 +1,4 @@
-import { useCharityApplicationsQuery } from "services/aws/registration";
+import { useEndowmentApplicationsQuery } from "services/aws/registration";
 import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
@@ -9,8 +9,8 @@ export default function Applications() {
     data = [],
     isLoading,
     isError,
-  } = useCharityApplicationsQuery(activeStatus);
-  // const data: CharityApplication[] = [];
+  } = useEndowmentApplicationsQuery(activeStatus);
+  // const data: EndowmentApplication[] = [];
 
   if (isLoading) {
     return (

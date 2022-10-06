@@ -15,14 +15,18 @@ export default function ReferralSelector() {
         How did you find out about us?
         <span className="text-red ml-0.5">*</span>
       </label>
-      <Selector<CD> name="referralMethod" options={referralMethodOptions} />
+      <Selector<CD>
+        name="referralMethod"
+        options={referralMethodOptions}
+        classes={{ option: "px-3 py-2", button: "px-3 py-2" }}
+      />
       {method === "other" && (
         <FormInput<CD>
           fieldName="otherReferralMethod"
           label="Please specify"
           placeholder="Please specify"
           required
-          classes={{ container: "mt-3" }}
+          classes="mt-3"
         />
       )}
     </div>
