@@ -44,8 +44,8 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
 
     //endowment settings
     name: props.name,
-    logo: props.logo || "",
-    image: props.image || "",
+    logo: { name: "", publicUrl: props.logo },
+    image: { name: "", publicUrl: props.image },
     sdgNum: props.categories.sdgs[0] || 0,
   };
   const methods = useForm<ProfileFormValues>({
