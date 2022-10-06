@@ -34,22 +34,23 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
   const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
 
   const openCropModal = useCallback(
-    (onChange: OnChangeFunc) => () => {
-      showModal(ImgCropper, {
-        src: uncroppedImgUrl,
-        aspectRatio: props.aspectRatioX / props.aspectRatioY,
-        setCropedImage: (croppedBlob) => {
-          // banner!.name !== undefined, because banner has to be set for it to be croppable
-          const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], imageFile!.name, {
-              type: croppedBlob.type,
-            }),
-            name: imageFile!.name,
-          };
-          onChange(croppedValue);
-        },
-      });
-    },
+    (onChange: OnChangeFunc, src = uncroppedImgUrl) =>
+      () => {
+        showModal(ImgCropper, {
+          src,
+          aspectRatio: props.aspectRatioX / props.aspectRatioY,
+          setCropedImage: (croppedBlob) => {
+            // banner!.name !== undefined, because banner has to be set for it to be croppable
+            const croppedValue: FileWrapper = {
+              file: new File([croppedBlob], imageFile!.name, {
+                type: croppedBlob.type,
+              }),
+              name: imageFile!.name,
+            };
+            onChange(croppedValue);
+          },
+        });
+      },
     [
       showModal,
       uncroppedImgUrl,
@@ -69,8 +70,10 @@ export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
         setUncroppedImgUrl(newImgUrl);
         // if it's loading the already submitted image (contains `publicUrl`)
         if (imageFile?.file) {
-          openCropModal((croppedValue) =>
-            setValue(props.name, croppedValue as any)
+          // necessary to manually pass the `newImgUrl` value because `uncroppedImgUrl` state might not get updated on time
+          openCropModal(
+            (croppedValue) => setValue(props.name, croppedValue as any),
+            newImgUrl
           )();
         }
       }
