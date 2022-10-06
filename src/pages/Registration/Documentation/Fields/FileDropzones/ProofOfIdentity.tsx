@@ -4,7 +4,7 @@ import { BsX } from "react-icons/bs";
 import { DocumentationValues } from "pages/Registration/types";
 import { useModalContext } from "contexts/ModalContext";
 import FileDropzone from "components/FileDropzone";
-import { Button, ErrorMessage, InputRow } from "../../../common";
+import { Button, InputRow } from "../../../common";
 
 export default function ProofOfIdentity() {
   const {
@@ -23,7 +23,6 @@ export default function ProofOfIdentity() {
         className="h-8"
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues> name="proofOfIdentity" />
     </InputRow>
   );
 }
