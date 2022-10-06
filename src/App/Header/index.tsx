@@ -109,7 +109,9 @@ function AppLinks() {
       {/*<NavLink to={appRoutes.register} className={styler}>
         Register
       </NavLink>*/}
-      <span className="flex justify-between items-center text-white-grey font-heading font-semibold mb-4 w-full">
+      <span
+        className={`flex justify-between items-center ${commonNavItemStyle}`}
+      >
         <span>Theme</span>
         <ThemeToggle />
       </span>
@@ -117,7 +119,10 @@ function AppLinks() {
   );
 }
 
+const commonNavItemStyle =
+  "text-white-grey font-heading font-semibold mb-4 w-full text-2xl";
+
 const styler = createNavLinkStyler(
-  "text-white-grey hover:text-white-grey/75 font-heading font-semibold mb-4",
+  `${commonNavItemStyle} hover:text-white-grey/75`,
   "text-angel-orange"
 );
