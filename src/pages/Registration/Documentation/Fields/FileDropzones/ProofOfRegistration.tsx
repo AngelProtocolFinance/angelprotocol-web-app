@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
-import { ErrorMessage, InputRow } from "../../../common";
+import { InputRow } from "../../../common";
 
 export default function ProofOfRegistration() {
   const {
@@ -19,7 +19,6 @@ export default function ProofOfRegistration() {
         className="h-8"
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues> name="proofOfRegistration" />
     </InputRow>
   );
 }

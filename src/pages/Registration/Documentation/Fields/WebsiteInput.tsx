@@ -14,7 +14,7 @@ export default function WebsiteInput() {
         {...register("website", { setValueAs: transformUrl })}
         id="website"
         placeholder="Website URL"
-        className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
+        className="text-sm rounded-md outline-none border-none w-full px-2 py-1 text-black"
         disabled={isSubmitting}
       />
       <ErrorMessage<DocumentationValues> name="website" />

@@ -23,7 +23,7 @@ const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Registration() {
   const location = useLocation();
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
 
   const shouldShowProgressBar =
     location.pathname.search(
@@ -39,9 +39,9 @@ export default function Registration() {
       {shouldShowProgressBar && (
         <div className="flex flex-col w-full gap-2">
           <ProgressIndicator />
-          {!!charity.ContactPerson.PK && (
+          {!!application.ContactPerson.PK && (
             <div className="flex w-full justify-start">
-              Ref ID: {charity.ContactPerson.PK}
+              Ref ID: {application.ContactPerson.PK}
             </div>
           )}
         </div>

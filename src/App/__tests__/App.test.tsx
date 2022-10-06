@@ -4,7 +4,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { placeholderCharity as mockPlaceholderCharity } from "services/aws/registration";
+import { placeholderApplication as mockPlaceholderCharity } from "services/aws/registration";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
 

@@ -1,24 +1,24 @@
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
-  Charity,
-  CharityApplication,
+  Application,
   ContactDetailsRequest,
-  ContactDetailsData as ContactDetailsResult,
+  ContactDetailsResult,
+  EndowmentApplication,
   SubmitData,
   SubmitResult,
-  UnprocessedCharity,
-  UpdateCharityMetadataData,
-  UpdateCharityMetadataResult,
+  UnprocessedApplication,
   UpdateDocumentationData,
   UpdateDocumentationResult,
+  UpdateMetadataRequest,
+  UpdateMetadataResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { getSavedRegistrationReference } from "helpers";
 import { createAuthToken } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";
-import { placeholderCharity } from "./placeholders";
+import { placeholderApplication } from "./placeholders";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
@@ -26,7 +26,7 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string | undefined | null>({
+    registration: builder.query<Application, string | undefined | null>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
         return {
@@ -39,15 +39,16 @@ const registration_api = aws.injectEndpoints({
         ContactPerson: cp,
         Registration: r,
         Metadata: m,
-      }: UnprocessedCharity) => {
+      }: UnprocessedApplication) => {
         return {
           ContactPerson: cp,
           Registration: {
             AuditedFinancialReports: r.AuditedFinancialReports || [],
             AuditedFinancialReportsVerified:
               r.AuditedFinancialReportsVerified || false,
-            CharityName: r.CharityName,
-            CharityName_ContactEmail: r.CharityName_ContactEmail || "",
+            OrganizationName: r.OrganizationName,
+            OrganizationName_ContactEmail:
+              r.OrganizationName_ContactEmail || "",
             FinancialStatements: r.FinancialStatements || [],
             FinancialStatementsVerified: r.FinancialStatementsVerified || false,
             ProofOfIdentity: r.ProofOfIdentity,
@@ -63,8 +64,8 @@ const registration_api = aws.injectEndpoints({
           },
           Metadata: {
             Banner: m.Banner,
-            CharityLogo: m.CharityLogo,
-            CharityOverview: m.CharityOverview || "",
+            Logo: m.Logo,
+            Overview: m.Overview || "",
             EndowmentContract: m.EndowmentContract || "",
             EndowmentId: m.EndowmentId || 0,
             SK: "Metadata",
@@ -74,33 +75,33 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    createNewCharity: builder.mutation<
+    createNewApplication: builder.mutation<
       ContactDetailsResult,
       ContactDetailsRequest
     >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ body }) => ({
-        url: "v1/registration",
+        url: "v2/registration",
         method: "POST",
         headers,
         body,
       }),
     }),
-    charityApplications: builder.query<
-      CharityApplication[],
+    endowmentApplications: builder.query<
+      EndowmentApplication[],
       ApplicationStatusOptions
     >({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
       query: (status) => {
         return {
-          url: `v1/registration/list${
+          url: `v2/registration/list${
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
           method: "Get",
           headers,
         };
       },
-      transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
+      transformResponse: (response: AWSQueryRes<EndowmentApplication[]>) =>
         response.Items,
     }),
     //TODO:proper typings
@@ -111,7 +112,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, type, body }) => {
         return {
-          url: "v1/registration/build-email",
+          url: "v2/registration/build-email",
           method: "POST",
           params: { uuid, type },
           headers,
@@ -123,20 +124,20 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, SubmitData>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, EndowmentContract }) => ({
-        url: `v1/registration/${PK}/submit`,
+        url: `v2/registration/${PK}/submit`,
         method: "POST",
         headers,
         body: { EndowmentContract },
       }),
     }),
-    updateCharityMetadata: builder.mutation<
-      UpdateCharityMetadataResult,
-      UpdateCharityMetadataData
+    updateMetadata: builder.mutation<
+      UpdateMetadataResult,
+      UpdateMetadataRequest
     >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -151,7 +152,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -166,7 +167,7 @@ const registration_api = aws.injectEndpoints({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
-          url: "v1/registration",
+          url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
           headers,
@@ -177,11 +178,11 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useCreateNewCharityMutation,
-  useCharityApplicationsQuery,
+  useCreateNewApplicationMutation,
+  useEndowmentApplicationsQuery,
   useRequestEmailMutation,
   useSubmitMutation,
-  useUpdateCharityMetadataMutation,
+  useUpdateMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
   util: { updateQueryData: updateRegQueryData },
@@ -193,18 +194,18 @@ export const useRegistrationQuery = () => {
     skip: !regRef,
   });
 
-  // necessary to assign the placeholderCharity this way to avoid a bug when reading Charity
+  // necessary to assign the placeholderApplication this way to avoid a bug when reading Charity
   // data in Registration.tsx, because the following happens:
   // 1. continue a registration using a ref ID
-  // 2. charity data read in Registration using this ref ID
-  // 3. charity data read in any step of the flow using this ref ID
+  // 2. application data read in Registration using this ref ID
+  // 3. application data read in any step of the flow using this ref ID
   // 4. go back to Landing page (https://.../register)
-  // 5. click "Start" to start new registration -> ref ID is cleared and charity data cache should be cleared, but
+  // 5. click "Start" to start new registration -> ref ID is cleared and application data cache should be cleared, but
   //    due to some race condition, the Registration page reads the cached data before the clearing
-  // 6. different charity data is read in Registration.tsx than in other steps
-  const charity = !regRef || !data ? placeholderCharity : data;
+  // 6. different application data is read in Registration.tsx than in other steps
+  const application = !regRef || !data ? placeholderApplication : data;
 
-  return { charity, ...rest };
+  return { application, ...rest };
 };
 
 export const {

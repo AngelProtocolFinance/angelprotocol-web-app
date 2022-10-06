@@ -2,8 +2,8 @@ import { useRegistrationQuery } from "services/aws/registration";
 import { getRegistrationState } from "./helpers";
 
 export default function ProgressIndicator() {
-  const { charity } = useRegistrationQuery();
-  const state = getRegistrationState(charity);
+  const { application } = useRegistrationQuery();
+  const state = getRegistrationState(application);
   const progress = [
     state.contactDetails.isComplete,
     state.documentation.isComplete,

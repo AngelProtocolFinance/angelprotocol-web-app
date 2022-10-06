@@ -1,22 +1,22 @@
 import {
   useRegistrationQuery,
-  useUpdateCharityMetadataMutation,
+  useUpdateMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
 import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const [updateMetadata, { isSuccess, isLoading }] =
-    useUpdateCharityMetadataMutation();
+    useUpdateMetadataMutation();
   const { handleError } = useErrorContext();
 
   const registerWallet = async (data: Wallet) => {
     try {
       const result = await updateMetadata({
         body: { JunoWallet: data.address },
-        PK: charity.ContactPerson.PK,
+        PK: application.ContactPerson.PK,
       });
 
       if ("error" in result) {

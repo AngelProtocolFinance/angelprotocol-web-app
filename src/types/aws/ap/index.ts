@@ -3,13 +3,13 @@
  */
 export interface Endowment {
   endowment_id: string;
-  charity_owner: string;
-  charity_name: string;
+  owner: string;
+  name: string;
   total_liq: number;
   total_lock: number;
   overall: number;
-  charity_logo?: string;
-  charity_overview: string;
+  logo?: string;
+  overview: string;
   url: string;
   tier: number;
   iconLight?: boolean;

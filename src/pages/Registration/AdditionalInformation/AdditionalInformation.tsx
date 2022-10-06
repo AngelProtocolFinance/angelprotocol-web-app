@@ -11,16 +11,16 @@ import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const { submit } = useSubmit();
 
   const methods = useForm<AdditionalInfoValues>({
     resolver: yupResolver(additionalInfoSchema),
     defaultValues: {
-      banner: charity.Metadata.Banner,
-      charityOverview: charity.Metadata.CharityOverview,
-      charityLogo: charity.Metadata.CharityLogo,
-      kycDonorsOnly: charity.Metadata.KycDonorsOnly,
+      banner: application.Metadata.Banner,
+      overview: application.Metadata.Overview,
+      logo: application.Metadata.Logo,
+      kycDonorsOnly: application.Metadata.KycDonorsOnly,
     },
   });
 
@@ -35,7 +35,7 @@ export default function AdditionalInformation() {
         >
           <OrganizationName />
           <Banner />
-          <CharityLogo />
+          <Logo />
           <OverviewInput />
           <KycDonorsOnlyCheckbox />
           <ButtonSection />
@@ -68,12 +68,12 @@ function KycDonorsOnlyCheckbox() {
 }
 
 function OrganizationName() {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
 
   return (
-    <InputColumn htmlFor="charityName" label="Name of your organization">
+    <InputColumn htmlFor="name" label="Name of your organization">
       <span className="flex w-full font-bold">
-        {charity.Registration.CharityName}
+        {application.Registration.OrganizationName}
       </span>
     </InputColumn>
   );
@@ -98,11 +98,11 @@ const Banner = () => (
   </InputColumn>
 );
 
-const CharityLogo = () => (
-  <InputColumn htmlFor="charityLogo" label="Logo of your organization" required>
+const Logo = () => (
+  <InputColumn htmlFor="logo" label="Logo of your organization" required>
     <div className="flex flex-col gap-2">
       <ImgEditor<AdditionalInfoValues>
-        name="charityLogo"
+        name="logo"
         aspectRatioX={1}
         aspectRatioY={1}
         accept={VALID_MIME_TYPES}
@@ -122,12 +122,12 @@ const ImageSizeInfo = ({ limit }: { limit: string }) => (
 function OverviewInput() {
   return (
     <InputColumn
-      htmlFor="charityOverview"
+      htmlFor="overview"
       label="Description of your organization"
       required
     >
       <RichTextEditor<AdditionalInfoValues>
-        fieldName="charityOverview"
+        fieldName="overview"
         classes={{
           container:
             "text-white/80 p-3 rounded-md bg-white/10 shadow-inner w-full text-left",

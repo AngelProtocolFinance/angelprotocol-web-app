@@ -1,4 +1,4 @@
-import { Charity } from "types/aws";
+import { Application } from "types/aws";
 import {
   getAdditionalInformationStepData,
   getContactDetailsStepData,
@@ -18,13 +18,15 @@ type RegistrationState = {
   getIsReadyForSubmit: () => boolean;
 };
 
-export function getRegistrationState(charity: Charity): RegistrationState {
+export function getRegistrationState(
+  application: Application
+): RegistrationState {
   return {
-    contactDetails: getContactDetailsStepData(charity),
-    documentation: getDocumentationStepData(charity),
-    additionalInformation: getAdditionalInformationStepData(charity),
-    walletRegistration: getWalletRegistrationStepData(charity),
-    emailVerification: getEmailVerificationStepData(charity),
+    contactDetails: getContactDetailsStepData(application),
+    documentation: getDocumentationStepData(application),
+    additionalInformation: getAdditionalInformationStepData(application),
+    walletRegistration: getWalletRegistrationStepData(application),
+    emailVerification: getEmailVerificationStepData(application),
     getIsReadyForSubmit: function () {
       return (
         this.contactDetails.isComplete &&

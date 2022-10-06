@@ -7,7 +7,7 @@ import { Button } from "../common";
 import routes from "../routes";
 
 export default function RegisteredWallet(props: { onChange: () => void }) {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const navigate = useNavigate();
 
   return (
@@ -23,10 +23,9 @@ export default function RegisteredWallet(props: { onChange: () => void }) {
         </p>
         <p className="uppercase text-sm">your wallet address is</p>
         <p className="font-mono my-2 p-2 border-b border-white/20">
-          {charity.Metadata.JunoWallet}
+          {application.Metadata.JunoWallet}
         </p>
       </div>
-      {/**TODO: must be disabled at some registration point */}
       <Button
         onClick={props.onChange}
         className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"

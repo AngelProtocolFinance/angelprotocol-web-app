@@ -6,8 +6,8 @@ import { appRoutes } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 
-export default function ButtonSection() {
-  const { charity } = useRegistrationQuery();
+export default function ButtonSection({ classes = "" }: { classes?: string }) {
+  const { application } = useRegistrationQuery();
   const navigate = useNavigate();
   const {
     formState: { isSubmitting },
@@ -16,14 +16,14 @@ export default function ButtonSection() {
   // if wallet registration step is already complete, then this was just data update,
   // so user can be navigated to the dashboard
   const onBackClick = () => {
-    const route = charity.Metadata.JunoWallet
+    const route = application.Metadata.JunoWallet
       ? routes.dashboard
       : routes.contactDetails;
     navigate(`${appRoutes.register}/${route}`);
   };
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className={`flex justify-center ${classes}`}>
       {isSubmitting ? (
         <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (

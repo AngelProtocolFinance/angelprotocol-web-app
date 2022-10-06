@@ -5,7 +5,7 @@ import { ContactDetails } from "pages/Registration/types";
 import { ContactDetailsRequest } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import {
-  useCreateNewCharityMutation,
+  useCreateNewApplicationMutation,
   useRegistrationQuery,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
@@ -15,9 +15,9 @@ import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 
 export default function useSaveContactDetails() {
-  const [registerCharity] = useCreateNewCharityMutation();
+  const [registerCharity] = useCreateNewApplicationMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
-  const { charity: originalCharityData } = useRegistrationQuery();
+  const { application: originalApplication } = useRegistrationQuery();
   const navigate = useNavigate();
   const [isError, setError] = useState(false);
   const { handleError } = useErrorContext();
@@ -32,14 +32,14 @@ export default function useSaveContactDetails() {
         // 1. was already verified
         // 2. is the same as the the pre-contact-details-update email
         const isEmailVerified =
-          !!originalCharityData.ContactPerson.EmailVerified &&
-          originalCharityData.ContactPerson.Email === contactData.email;
+          !!originalApplication.ContactPerson.EmailVerified &&
+          originalApplication.ContactPerson.Email === contactData.email;
 
         const postData: ContactDetailsRequest = {
           PK: contactData.uniqueID,
           body: {
             Registration: {
-              CharityName: contactData.charityName,
+              OrganizationName: contactData.organizationName,
             },
             ContactPerson: {
               FirstName: contactData.firstName,
@@ -95,7 +95,7 @@ export default function useSaveContactDetails() {
       }
     },
     [
-      originalCharityData,
+      originalApplication,
       handleError,
       navigate,
       registerCharity,
