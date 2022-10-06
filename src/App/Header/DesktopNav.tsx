@@ -4,21 +4,23 @@ import { appRoutes } from "constants/routes";
 
 export default function DesktopNav() {
   return (
-    <nav className="hidden lg:flex flex justify-self-start items-center font-body text-sm lg:text-base ml-2">
-      <NavLink className={styler} to={appRoutes.index}>
-        Marketplace
-      </NavLink>
-      {/* 
-      NOTE: governance will be reenabled when we relaunch the $HALO token
-      <NavLink to={appRoutes.govern} className={styler}>
-        Governance
-      </NavLink> */}
-      <NavLink to={appRoutes.leaderboard} className={styler}>
-        Leaderboard
-      </NavLink>
-      {/*<NavLink to={appRoutes.register} className={styler}>
-        Register
-      </NavLink>*/}
+    <nav className="hidden lg:flex w-full ml-2">
+      <div className="justify-self-start items-center font-body text-base">
+        <NavLink className={styler} to={appRoutes.index}>
+          Marketplace
+        </NavLink>
+        {/*
+        NOTE: governance will be reenabled when we relaunch the $HALO token
+        <NavLink to={appRoutes.govern} className={styler}>
+          Governance
+        </NavLink> */}
+        <NavLink to={appRoutes.leaderboard} className={styler}>
+          Leaderboard
+        </NavLink>
+        {/*<NavLink to={appRoutes.register} className={styler}>
+          Register
+        </NavLink>*/}
+      </div>
     </nav>
   );
 }
