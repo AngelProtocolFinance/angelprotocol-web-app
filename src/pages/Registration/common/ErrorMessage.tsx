@@ -8,9 +8,6 @@ import {
 
 type Props<T extends FieldValues> = { name: keyof T & string };
 
-/** TODO: put this component in components/FileDropzone since it's the only one who needs to use this.
- *  due to files[] errors
- * Revert other components to using @hookform/<ErrorMessage/>  */
 export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
   const {
     formState: { errors },
