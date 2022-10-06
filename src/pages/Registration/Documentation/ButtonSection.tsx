@@ -7,7 +7,7 @@ import { Button } from "../common";
 import routes from "../routes";
 
 export default function ButtonSection({ classes = "" }: { classes?: string }) {
-  const { charity } = useRegistrationQuery();
+  const { application } = useRegistrationQuery();
   const navigate = useNavigate();
   const {
     formState: { isSubmitting },
