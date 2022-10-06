@@ -59,7 +59,7 @@ export default function Header() {
 
 function Modal({ closeModal }: { closeModal: () => void }) {
   return (
-    <Dialog.Panel className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent">
+    <Dialog.Panel className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent flex flex-col">
       <header className="grid grid-cols-[auto_1fr_auto] mb-4 pt-3 items-center w-full padded-container">
         <a
           rel="noreferrer"
@@ -80,7 +80,7 @@ function Modal({ closeModal }: { closeModal: () => void }) {
           <Icon type="Close" className="text-2xl" />
         </button>
       </header>
-      <div className="h-px bg-white-grey w-full col-span-3" />
+      <div className="h-px bg-white-grey w-full col-span-3 mb-5" />
       <AppLinks />
     </Dialog.Panel>
   );
@@ -98,7 +98,7 @@ function AppLinks() {
   }, [dispatch]);
 
   return (
-    <div className="grid col-span-3 w-full justify-items-start content-start uppercase font-extrabold font-heading ">
+    <div className="padded-container grid col-span-3 w-full justify-items-start content-start font-extrabold font-heading ">
       <NavLink to={appRoutes.index} className={styler} end>
         Marketplace
       </NavLink>
@@ -113,6 +113,6 @@ function AppLinks() {
 }
 
 const styler = createNavLinkStyler(
-  "text-white-grey hover:text-white-grey/75 uppercase font-heading font-semibold",
+  "text-white-grey hover:text-white-grey/75 font-heading font-semibold mb-4",
   "text-angel-orange"
 );
