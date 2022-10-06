@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../ThemeToggle";
 
-export default function DesktopNav() {
+export default function Content() {
   return (
     <nav className="flex w-full justify-between ml-2">
       <div className="justify-self-start items-center font-body text-base">
