@@ -24,6 +24,6 @@ export default function Nav() {
 }
 
 const styler = createNavLinkStyler(
-  "px-3 text-md text-white hover:text-orange-l3 uppercase font-heading font-semibold",
-  "pointer-events-none text-orange-l2"
+  "px-3 text-md text-white hover:text-orange-l2 uppercase font-heading font-semibold",
+  "pointer-events-none text-orange-l1"
 );
