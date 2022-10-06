@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
+import Icon, { IconTypes } from "components/Icon";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite";
@@ -34,25 +34,11 @@ export default function Header() {
           <Airdrop />
         </div>
       </header>
-      <header className="grid grid-cols-[auto_1fr_auto] gap-y-5 lg:hidden mb-4 items-center w-full padded-container pt-3">
-        <a
-          rel="noreferrer"
-          href="https://angelprotocol.io/"
-          title="Go to Marketing page"
-        >
-          <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
-        </a>
-        <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
-          <TransactionHint />
-          <WalletSuite />
-          <Airdrop />
-        </div>
-        <button
-          onClick={() => showModal(Modal, { closeModal })}
-          className="flex p-2 items-center text-white-grey justify-center"
-        >
-          <Icon type="Menu" className="text-2xl" />
-        </button>
+      <header className="lg:hidden">
+        <MobileHeader
+          onMenuClick={() => showModal(Modal, { closeModal })}
+          menuIconType="Menu"
+        />
       </header>
     </>
   );
@@ -60,30 +46,45 @@ export default function Header() {
 
 function Modal({ closeModal }: { closeModal: () => void }) {
   return (
-    <Dialog.Panel className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent flex flex-col">
-      <header className="grid grid-cols-[auto_1fr_auto] mb-4 pt-3 items-center w-full padded-container">
-        <a
-          rel="noreferrer"
-          href="https://angelprotocol.io/"
-          title="Go to Marketing page"
-        >
-          <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
-        </a>
-        <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
-          <TransactionHint />
-          <WalletSuite />
-          <Airdrop />
-        </div>
-        <button
-          onClick={closeModal}
-          className="flex p-2 items-center text-white-grey justify-center"
-        >
-          <Icon type="Close" className="text-2xl" />
-        </button>
-      </header>
+    <Dialog.Panel
+      as="header"
+      className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent flex flex-col"
+    >
+      <MobileHeader onMenuClick={closeModal} menuIconType="Close" />
       <div className="h-px bg-white-grey w-full col-span-3 mb-5" />
       <AppLinks />
     </Dialog.Panel>
+  );
+}
+
+function MobileHeader({
+  onMenuClick,
+  menuIconType,
+}: {
+  onMenuClick: () => void;
+  menuIconType: IconTypes;
+}) {
+  return (
+    <div className="grid grid-cols-[auto_1fr_auto]  mb-4 items-center w-full padded-container pt-3">
+      <a
+        rel="noreferrer"
+        href="https://angelprotocol.io/"
+        title="Go to Marketing page"
+      >
+        <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
+      </a>
+      <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
+        <TransactionHint />
+        <WalletSuite />
+        <Airdrop />
+      </div>
+      <button
+        onClick={onMenuClick}
+        className="flex p-2 items-center text-white-grey justify-center"
+      >
+        <Icon type={menuIconType} className="text-2xl" />
+      </button>
+    </div>
   );
 }
 
