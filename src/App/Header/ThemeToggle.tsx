@@ -20,6 +20,7 @@ export default function ThemeToggle() {
 
 const ToggleOption = (props: { checked: boolean; icon: IconTypes }) => (
   <span
+    aria-hidden="true"
     className={`flex items-center justify-center h-7 w-7 rounded-full pointer-events-none ${
       props.checked ? "bg-white" : "bg-transparent"
     }`}
