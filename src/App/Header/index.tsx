@@ -40,7 +40,7 @@ export default function Header() {
           href="https://angelprotocol.io/"
           title="Go to Marketing page"
         >
-          <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
+          <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
         </a>
         <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
           <TransactionHint />
@@ -67,7 +67,7 @@ function Modal({ closeModal }: { closeModal: () => void }) {
           href="https://angelprotocol.io/"
           title="Go to Marketing page"
         >
-          <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
+          <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
         </a>
         <div className="ml-5 grid grid-cols-[auto_1fr_auto]">
           <TransactionHint />
