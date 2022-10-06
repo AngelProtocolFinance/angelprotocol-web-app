@@ -1,6 +1,6 @@
-import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import ConnectButton from "./ConnectButton";
+import TransactionHint from "./TransactionHint";
 
 export default function WalletSuite() {
   return (
