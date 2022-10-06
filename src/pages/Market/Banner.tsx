@@ -13,7 +13,7 @@ export default function Banner() {
         <p className="font-heading text-orange-l1 font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
           GLOBAL IMPACT FINANCING.
         </p>
-        <p className="font-heading text-gray-d2 text-xl xl:text-2xl mb-0">
+        <p className="font-heading text-white text-xl xl:text-2xl mb-0">
           <span className="md:leading-normal xl:leading-relaxed">
             We provide impact stakeholders like non-profits and social
             entrepreneurs with the tools to raise, coordinate, and invest
