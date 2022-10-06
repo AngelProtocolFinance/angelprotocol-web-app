@@ -2,8 +2,8 @@ import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite";
+import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import DappMenu from "./Nav";
 
 export default function Header() {
   return (
@@ -15,7 +15,7 @@ export default function Header() {
       >
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </a>
-      <DappMenu />
+      <DesktopNav />
       <div className="ml-auto grid grid-cols-[auto_1fr_auto]">
         <TransactionHint />
         <WalletSuite />
