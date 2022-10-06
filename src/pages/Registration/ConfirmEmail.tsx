@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { VerifEmailBody } from "./common/types";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -25,8 +26,8 @@ export default function ConfirmEmail() {
         throw new UnexpectedStateError("Primary key is null");
       }
 
-      const emailPayload = {
-        Name: application.Registration.OrganizationName,
+      const emailPayload: VerifEmailBody = {
+        OrganizationName: application.Registration.OrganizationName,
         Email: application.ContactPerson.Email,
         FirstName: application.ContactPerson.FirstName,
         LastName: application.ContactPerson.LastName,
