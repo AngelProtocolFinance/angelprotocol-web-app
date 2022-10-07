@@ -1,4 +1,5 @@
 import { ProposalStatus } from "../../contracts";
+import { NetworkType } from "../../lists";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
@@ -21,8 +22,6 @@ export type Token = {
     | "ibc"
     | "placeholder";
 };
-
-export type NetworkType = "mainnet" | "testnet";
 
 export type Chain = {
   block_explorer_url: string; // https://testnet.snowtrace.io
