@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
-export default function Nav() {
+export default function DesktopNav() {
   return (
     <nav className="hidden lg:flex flex justify-self-start items-center font-body text-sm lg:text-base ml-2">
       <NavLink className={styler} to={appRoutes.index}>
