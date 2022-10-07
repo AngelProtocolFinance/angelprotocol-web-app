@@ -22,6 +22,8 @@ import {
 import {
   BiArrowBack,
   BiBold,
+  BiChevronDown,
+  BiChevronUp,
   BiGlobe,
   BiItalic,
   BiSave,
@@ -55,7 +57,6 @@ import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
-import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
 import {
@@ -75,7 +76,6 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
   FacebookCircle: FaFacebook,
   Discord: FaDiscord,
@@ -111,6 +111,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   ArrowBack: BiArrowBack,
+  ArrowDown: BiChevronDown,
+  ArrowUp: BiChevronUp,
   Back: MdOutlineArrowBackIosNew,
   Forward: MdOutlineArrowForwardIos,
   Blockchain: SiHiveBlockchain,
