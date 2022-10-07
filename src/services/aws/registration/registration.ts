@@ -77,7 +77,6 @@ const registration_api = aws.injectEndpoints({
       query: ({ body }) => ({
         url: "v2/registration",
         method: "POST",
-
         body,
       }),
     }),
