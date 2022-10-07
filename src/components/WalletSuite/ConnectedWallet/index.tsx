@@ -5,6 +5,7 @@ import {
 } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import { humanize, maskAddress } from "helpers";
+import { connectWalletBtnStyle } from "../constants";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
@@ -15,10 +16,7 @@ export default function ConnectedWallet(props: WalletState) {
   const { walletIcon } = props;
   return (
     <Popover as="div" className="relative">
-      <Popover.Button
-        disabled={isLoading}
-        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent focus:outline-none"
-      >
+      <Popover.Button disabled={isLoading} className={connectWalletBtnStyle}>
         {(!isLoading && (
           <img
             src={walletIcon}
