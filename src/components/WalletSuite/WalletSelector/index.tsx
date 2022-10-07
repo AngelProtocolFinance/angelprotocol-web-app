@@ -10,7 +10,7 @@ export default function WalletSelector(props: { isLoading: boolean }) {
     <Menu className="relative" as="div">
       <Menu.Button className={connectWalletBtnStyle} disabled={props.isLoading}>
         <Icon type="Wallet" className="text-xl grow-0" />
-        <span className="uppercase text-base font-bold">
+        <span className="uppercase">
           {props.isLoading ? "Loading" : "Connect"}
         </span>
       </Menu.Button>
