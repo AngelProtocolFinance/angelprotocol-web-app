@@ -16,8 +16,15 @@ export default function ConnectedWallet(props: WalletState) {
   return (
     <Popover as="div" className="relative">
       <Popover.Button disabled={isLoading} className={connectWalletBtnStyle}>
-        <span>{maskedAddr}</span>
-        <Icon type="ArrowDown" className="text-2xl opacity-50" />
+        {({ open }) => (
+          <>
+            <span>{maskedAddr}</span>
+            <Icon
+              type={open ? "ArrowUp" : "ArrowDown"}
+              className="text-2xl opacity-50"
+            />
+          </>
+        )}
       </Popover.Button>
       <Details {...props} />
     </Popover>

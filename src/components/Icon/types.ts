@@ -41,6 +41,7 @@ export type IconTypes =
   | "Warning"
   | "ArrowBack"
   | "ArrowDown"
+  | "ArrowUp"
   | "Back"
   | "Forward"
   | "Bold"
