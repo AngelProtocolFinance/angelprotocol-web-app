@@ -22,21 +22,21 @@ export const contracts: Contracts = IS_TEST
       //TESTNET CONTRACTS
       //core
       index_fund:
-        "juno107zpvrdyww48d0fylez3lxjf87qwwh8r5nphcdzlwnepnm2kga5q36quta",
+        "juno1jxgswmw6kndcqtp545pt0wn4m2rqunf7mzaxncyguuc9nx2tycgqalxeg6",
       registrar:
-        "juno13ufhg4xjdzylk9mhayc8khmgg25tl2vs42pzala9x53vxa8ppjkschfr0x",
+        "juno1dmry032p0khv2d5knrtf8q5hzcnv06f8ps24naw9hrpv699zw9xqad4jma",
       accounts:
-        "juno1prqanslytzwtrext3qpfy4p83ld7yw04ga06n6yufg53fukf4x0q0udwj2",
+        "juno1ltu4ng2gnm5zs3gnmww89udr0kknd5hlds44lq48guem5xxf4nzsawa9sc",
 
       // Admin
       cw3ApTeam:
-        "juno1pgedpd8m0g76ckxd6fduwpnm6x4g6fzsg0xj4u3xdchvjdxuzckqdhjv9a",
+        "juno189gdk2aczgkx7p0cyll2whah5afazazhmaw4rmfhh7lda2twyrxseq76zw",
       cw4GrpApTeam:
-        "juno13mk4dzwc5qdz7fxcrnkyj448lvap06rp7aw5h34xkcudrm98yv2sz4fysa",
+        "juno1ptpsp2shhyqqesd52gwtj0lele46sl3wp3myvxa46zq3r0g596wsztqvur",
       cw3ReviewTeam:
-        "juno13mlk69qjx2cm8upx3d04h9dxh78mzhfksxrrnuyjk2l5s5wknl8skvkjhp",
+        "juno1dkt5kujyd876wf0xgv3sedsjh6nzlhtdyykaz2e6tmnamzwphryqvaayaj",
       cw4GrpReviewTeam:
-        "juno1h94wjgxv32zsg64f34retxudwd4nppslwm4glvu2jld9vrqh7k6srzjhcj",
+        "juno129g6ldqjnfpgzyxn3lm5yr67r2zl7e35upsrswejdds49q5s60dqnttzx9",
 
       //terraswap
       halo_token: "",
