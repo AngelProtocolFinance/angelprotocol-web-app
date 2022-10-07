@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
+import Header from "../Header";
+import { adminMobileNavId } from "../constants";
 import AppLinks from "./AppLinks";
-import Header from "./Header";
-import { adminMobileNavId } from "./constants";
 
 export default function MenuModal({ onClose }: { onClose: () => void }) {
   return (

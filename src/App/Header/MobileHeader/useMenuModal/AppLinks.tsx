@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 import { useSetter } from "store/accessors";
 import { setIsMobileNavOpen } from "slices/components/mobileNav";
 import { appRoutes } from "constants/routes";
-import ThemeToggle from "../ThemeToggle";
-import { commonNavItemStyle, navLinkStyle } from "./constants";
+import ThemeToggle from "../../ThemeToggle";
+import { commonNavItemStyle, navLinkStyle } from "../constants";
 
 export default function AppLinks() {
   const dispatch = useSetter();
