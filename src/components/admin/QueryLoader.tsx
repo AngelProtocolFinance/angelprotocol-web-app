@@ -26,16 +26,16 @@ export function QueryLoader<T>({
 
   if (isLoading) {
     return (
-      <div className={`flex gap-2  ${classes?.container || ""}`}>
-        <Icon type="Loading" className="animate-spin relative top-1" />
+      <div className={`${classes?.container || ""}`}>
+        <Icon type="Loading" className="animate-spin inline relative mr-1" />
         <span>{messages.loading || "Loading.."}</span>
       </div>
     );
   }
   if (isError || !data) {
     return (
-      <div className={`flex gap-2 text-rose-300 ${classes?.container || ""}`}>
-        <Icon type="Info" className="relative top-1" />
+      <div className={`text-rose-300 ${classes?.container || ""}`}>
+        <Icon type="Info" className="inline relative mr-1" />
         <span>{messages.error || "Failed to get data"}</span>
       </div>
     );
@@ -44,8 +44,8 @@ export function QueryLoader<T>({
   if (Array.isArray(data)) {
     if (data.length <= 0) {
       return (
-        <div className={`flex gap-2  ${classes?.container || ""}`}>
-          <Icon type="Info" className="relative top-1" />
+        <div className={`${classes?.container || ""}`}>
+          <Icon type="Info" className="inline relative mr-1" />
           <span>{messages.empty || "No data"}</span>
         </div>
       );
@@ -55,8 +55,8 @@ export function QueryLoader<T>({
       const filtered = data.filter(filterFn);
       if (filtered.length <= 0) {
         return (
-          <div className={`flex gap-2  ${classes?.container || ""}`}>
-            <Icon type="Info" className="relative top-1" />
+          <div className={`${classes?.container || ""}`}>
+            <Icon type="Info" className="inline relative mr-1" />
             <span>{messages.empty || "No data"}</span>
           </div>
         );
