@@ -20,7 +20,7 @@ export default function MenuModal({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       <Separator />
-      <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-1 gap-3">
         <AppLinks />
         <div id={adminMobileNavId} />
       </div>

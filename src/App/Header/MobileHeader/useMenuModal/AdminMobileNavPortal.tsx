@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { NavLink } from "react-router-dom";
 import { useGetter } from "store/accessors";
@@ -11,11 +12,20 @@ import {
 export default function AdminMobileNavPortal({ id }: { id: number }) {
   const { isMobileNavOpen } = useGetter((state) => state.component.mobileNav);
 
+  const containerElement = document.querySelector(`#${adminMobileNavId}`);
+
+  useEffect(() => {
+    containerElement?.parentElement?.classList.add("sm:grid-cols-2");
+  }, [containerElement?.parentElement?.classList]);
+
   return (
     (isMobileNavOpen &&
+      !!containerElement &&
       createPortal(
-        <div className="border-t border-white-grey/20 padded-container">
-          <h4 className={`${commonNavItemStyle} mb-6 uppercase font-extrabold`}>
+        <div className="border-t sm:border-t-0 sm:border-l border-white-grey/20 padded-container">
+          <h4
+            className={`${commonNavItemStyle} mt-6 sm:mt-0 mb-6 uppercase font-extrabold`}
+          >
             Admin
           </h4>
           <div className="grid justify-items-start font-heading">
@@ -49,7 +59,7 @@ export default function AdminMobileNavPortal({ id }: { id: number }) {
             </NavLink>
           </div>
         </div>,
-        document.querySelector(`#${adminMobileNavId}`)!
+        containerElement
       )) ||
     null
   );
