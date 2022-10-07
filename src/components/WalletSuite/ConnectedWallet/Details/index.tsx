@@ -21,7 +21,7 @@ export default function Details(props: WalletState) {
   const { disconnect } = useSetWallet();
 
   return (
-    <Popover.Panel className="w-fit z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
+    <Popover.Panel className="w-60 z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
       <div className="bg-angel-grey text-zinc-50 text-xs p-2">
         <p className="uppercase">network : {chain.chain_name}</p>
       </div>
@@ -47,7 +47,7 @@ export default function Details(props: WalletState) {
         id={REVIEWER_ID}
       />
 
-      <Bookmarks />
+      <Bookmarks classes="my-4" />
 
       <Filter coins={coins} classes="mt-1">
         {(filtered) => <Holdings coins={filtered} />}
