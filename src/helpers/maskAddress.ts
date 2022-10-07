@@ -1,8 +1,10 @@
 export function maskAddress(addr?: string) {
+  const nChars = 6;
   if (!addr) {
     return "";
   } else {
-    const middle = addr.substring(3, addr.length - 4);
+    const len = addr.length;
+    const middle = addr.substring(nChars, len - nChars);
     return addr.replace(middle, "...");
   }
 }
