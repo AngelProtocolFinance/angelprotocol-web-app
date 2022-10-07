@@ -21,7 +21,11 @@ export default function Nav() {
 
   return (
     <div className="lg:col-span-2 flex gap-2">
-      <LinkIcon to={`${appRoutes.index}`} _iconType="ArrowBack">
+      <LinkIcon
+        to={`${appRoutes.index}`}
+        _iconType="ArrowBack"
+        className="mr-auto"
+      >
         back to marketplace
       </LinkIcon>
       {isMember && (

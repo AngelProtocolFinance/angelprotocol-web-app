@@ -18,7 +18,7 @@ export default function Bookmark() {
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
   const { id, name } = useProfile();
 
-  const bookMark = data.find((d) => d.id == id);
+  const bookMark = data.find((d) => d.id === id);
   const isBookMarked = bookMark !== undefined;
 
   async function toogleBookmark() {

@@ -1,16 +1,17 @@
 import { useBookmarksQuery } from "services/aws/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { QueryLoader } from "components/admin";
+import Bookmark from "./Bookmark";
 
-export default function Bookmarks() {
+export default function Bookmarks({ classes = "" }: { classes?: string }) {
   const { wallet } = useGetWallet();
   const queryState = useBookmarksQuery(wallet?.address!, { skip: !wallet });
 
   return (
-    <div className="px-3 my-1">
-      <h3 className="uppercase text-angel-grey font-bold mt-4">
-        My endowments
-      </h3>
+    <div
+      className={`p-3 ${classes} text-angel-grey border-y border-angel-grey/30`}
+    >
+      <h3 className="uppercase font-bold">My endowments</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -18,12 +19,12 @@ export default function Bookmarks() {
           error: "Failed to get bookmarked endowments..",
           loading: "Fetching endowments.",
         }}
-        classes={{ container: "text-angel-grey text-sm gap-1 mb-2" }}
+        classes={{ container: "text-sm gap-1 mb-2" }}
       >
         {(bookmarks) => (
-          <ul>
-            {bookmarks.map(({ name, id }) => (
-              <li key={id}>{name}</li>
+          <ul className="grid gap-y-3">
+            {bookmarks.map((b) => (
+              <Bookmark key={b.id} {...b} />
             ))}
           </ul>
         )}
