@@ -9,7 +9,7 @@ export default function ThemeToggle() {
     <Switch
       checked={isDarkMode}
       onChange={setDarkMode}
-      className="flex items-center justify-center gap-1 h-10 w-[92px] shrink-0 cursor-pointer rounded-full shadow-[inset_-.5px_.5px_2px] shadow-white-grey/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
+      className="flex items-center justify-center gap-1 h-10 w-20 shrink-0 cursor-pointer rounded-3xl border border-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>
       <ToggleOption checked={!isDarkMode} icon="Sun" />
@@ -21,7 +21,7 @@ export default function ThemeToggle() {
 const ToggleOption = (props: { checked: boolean; icon: IconTypes }) => (
   <span
     aria-hidden="true"
-    className={`flex items-center justify-center h-7 w-7 rounded-full pointer-events-none ${
+    className={`flex items-center justify-center h-8 w-8 rounded-full pointer-events-none ${
       props.checked ? "bg-white" : "bg-transparent"
     }`}
   >
