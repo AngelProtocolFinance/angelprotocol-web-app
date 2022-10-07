@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSetter } from "store/accessors";
 import { setIsMobileNavOpen } from "slices/components/mobileNav";
-import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 import ThemeToggle from "../ThemeToggle";
+import { commonNavItemStyle, navLinkStyle } from "./constants";
 
 export default function AppLinks() {
   const dispatch = useSetter();
@@ -18,14 +18,14 @@ export default function AppLinks() {
   }, [dispatch]);
 
   return (
-    <div className="padded-container grid col-span-3 w-full justify-items-start content-start font-extrabold font-heading ">
-      <NavLink to={appRoutes.index} className={styler} end>
+    <div className="padded-container grid w-full justify-items-start content-start font-extrabold font-heading ">
+      <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Marketplace
       </NavLink>
-      <NavLink to={appRoutes.leaderboard} className={styler}>
+      <NavLink to={appRoutes.leaderboard} className={navLinkStyle}>
         Leaderboard
       </NavLink>
-      {/*<NavLink to={appRoutes.register} className={styler}>
+      {/*<NavLink to={appRoutes.register} className={navLinkStyle}>
             Register
           </NavLink>*/}
       <span
@@ -37,11 +37,3 @@ export default function AppLinks() {
     </div>
   );
 }
-
-const commonNavItemStyle =
-  "text-white-grey font-heading font-semibold mb-4 w-full text-2xl";
-
-const styler = createNavLinkStyler(
-  `${commonNavItemStyle} hover:text-white-grey/75`,
-  "text-angel-orange"
-);

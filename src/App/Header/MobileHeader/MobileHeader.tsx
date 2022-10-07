@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import AppLinks from "./AppLinks";
 import Content from "./Content";
+import { adminMobileNavId } from "./constants";
 
 export default function MobileHeader() {
   const { showModal, closeModal } = useModalContext();
@@ -24,7 +25,10 @@ function Modal({ closeModal }: { closeModal: () => void }) {
     >
       <Content onMenuClick={closeModal} menuIconType="Close" />
       <div className="h-px bg-white-grey w-full col-span-3 mb-5" />
-      <AppLinks />
+      <div className="grid grid-cols-[1fr_1fr]">
+        <AppLinks />
+        <div id={adminMobileNavId} />
+      </div>
     </Dialog.Panel>
   );
 }
