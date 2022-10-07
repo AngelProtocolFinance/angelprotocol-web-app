@@ -8,8 +8,7 @@ import Index from "./Index";
 export default function Market() {
   const { data: endowments = {} as CategorizedEndowments, isLoading } =
     useCategorizedEndowmentsQuery({
-      endow_type: "charity",
-      status: "1",
+      limit: 80, // MAX_LIMIT we return per query (at this time)
     });
 
   return (
