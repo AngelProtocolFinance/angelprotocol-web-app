@@ -3,7 +3,7 @@ import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 import ThemeToggle from "../ThemeToggle";
 
-export default function Content() {
+export default function Header() {
   return (
     <nav className="flex w-full justify-between ml-2">
       <div className="justify-self-start items-center font-body text-base">
