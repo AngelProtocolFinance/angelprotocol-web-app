@@ -40,7 +40,7 @@ export default function Bookmark() {
       type="button"
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className="uppercase flex items-center gap-1 text-rose-300 hover:text-rose-200 disabled:text-grey-accent"
+      className="font-bold uppercase flex items-center gap-1 text-rose-300 hover:text-rose-200 disabled:text-grey-accent"
     >
       <Icon
         type={isBookMarked ? "HeartFill" : "HeartOutline"}
