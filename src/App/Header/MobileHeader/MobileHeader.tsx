@@ -24,14 +24,16 @@ export default function MobileHeader() {
       return;
     }
 
-    function closeModal() {
+    function handleCloseModal() {
+      // 1024 === tailwind's large screen size (in px)
+      // https://tailwindcss.com/docs/responsive-design
       if (window.innerWidth >= 1024) {
         closeModal();
       }
     }
-    window.addEventListener("resize", closeModal);
+    window.addEventListener("resize", handleCloseModal);
 
-    return () => window.removeEventListener("resize", closeModal);
+    return () => window.removeEventListener("resize", handleCloseModal);
   }, [isModalOpen, closeModal]);
 
   return (
