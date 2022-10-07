@@ -15,6 +15,7 @@ import {
 } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
+import { FileWrapper } from "components/FileDropzone";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -241,13 +242,11 @@ export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
 export type ProfileWithSettings = ProfileUpdate &
-  Omit<
-    //only include settings fields related to profile form
-    Pick<EndowmentSettingsPayload, "categories" | "image" | "logo" | "name">,
+  Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
-    "categories"
-  > & {
     sdgNum: UNSDG_NUMS;
+    image: FileWrapper;
+    logo: FileWrapper;
   };
 
 export type ProfileFormValues = ProposalBase &
