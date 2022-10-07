@@ -40,15 +40,14 @@ export default function Bookmark() {
       type="button"
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className={`text-angel-orange hover:text-amber-400 disabled:text-grey-accent ${
-        isToggling ? "animate-spin" : ""
-      }`}
+      className="uppercase flex items-center gap-1 text-rose-300 hover:text-rose-200 disabled:text-grey-accent"
     >
       <Icon
-        type={isBookMarked ? "StarFill" : "StarOutline"}
+        type={isBookMarked ? "HeartFill" : "HeartOutline"}
         size={20}
-        title="Bookmark this endowment for faster access from your wallet dropdown menu"
+        title="Favorite this endowment for faster access from your wallet dropdown menu"
       />
+      <span className="font-heading text-sm">Favorites</span>
     </button>
   );
 }

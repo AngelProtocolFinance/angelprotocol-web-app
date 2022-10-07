@@ -8,10 +8,8 @@ export default function Bookmarks({ classes = "" }: { classes?: string }) {
   const queryState = useBookmarksQuery(wallet?.address!, { skip: !wallet });
 
   return (
-    <div
-      className={`p-3 ${classes} text-angel-grey border-y border-angel-grey/30`}
-    >
-      <h3 className="uppercase font-bold">My endowments</h3>
+    <div className={`p-3 ${classes} text-angel-grey`}>
+      <h3 className="uppercase font-bold">Favorites</h3>
       <QueryLoader
         queryState={queryState}
         messages={{

@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 export default function Bookmark({ name, id }: EndowmentBookmark) {
   return (
     <li className="grid justify-items-start font-heading">
-      <p>{name}</p>
+      <p className="text-sm">{name}</p>
       <div className="flex items-center divide-x divide-angel-grey/20">
         <Link
           to={appRoutes.profile + "/" + id}

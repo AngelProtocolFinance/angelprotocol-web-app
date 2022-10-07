@@ -41,13 +41,9 @@ export default function Details(props: WalletState) {
       </Link>
 
       <AdminLink label="admin" className={linkStyle} id={AP_ID} />
-      <AdminLink
-        label="applications"
-        className={linkStyle + " mb-4"}
-        id={REVIEWER_ID}
-      />
+      <AdminLink label="applications" className={linkStyle} id={REVIEWER_ID} />
 
-      <Bookmarks classes="my-4" />
+      <Bookmarks classes="mb-4" />
 
       <Filter coins={coins} classes="mt-1">
         {(filtered) => <Holdings coins={filtered} />}
