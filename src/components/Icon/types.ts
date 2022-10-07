@@ -62,5 +62,7 @@ export type IconTypes =
   | "Crop"
   | "Save"
   | "PieChart"
+  | "HeartFill"
+  | "HeartOutline"
   | "Moon"
   | "Sun";

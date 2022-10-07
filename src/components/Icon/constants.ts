@@ -1,6 +1,7 @@
 import { IconType } from "react-icons";
 import {
   AiFillCaretLeft,
+  AiFillHeart,
   AiFillYoutube,
   AiOutlineCheck,
   AiOutlineCheckCircle,
@@ -10,6 +11,7 @@ import {
   AiOutlineExclamation,
   AiOutlineEye,
   AiOutlineEyeInvisible,
+  AiOutlineHeart,
   AiOutlineInfoCircle,
   AiOutlineLike,
   AiOutlineMedium,
@@ -130,4 +132,6 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Save: BiSave,
   Moon: FiMoon,
   Sun: BiSun,
+  HeartOutline: AiOutlineHeart,
+  HeartFill: AiFillHeart,
 };
