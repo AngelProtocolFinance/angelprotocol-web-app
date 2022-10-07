@@ -13,11 +13,11 @@ export default function Bookmarks() {
       <QueryLoader
         queryState={queryState}
         messages={{
-          empty: "You have not bookmarked any endowments yet",
-          error: "Failed to get bookmarked endowments..",
-          loading: "Fetching endowments.",
+          empty: "You have not yet added any Organisations to your Favorites",
+          error: "Failed to get favorite Organisations.",
+          loading: "Fetching Organisations...",
         }}
-        classes={{ container: "text-sm gap-1 mb-2" }}
+        classes={{ container: "text-xs gap-1 mb-2" }}
       >
         {(bookmarks) => (
           <ul className="grid gap-y-2">

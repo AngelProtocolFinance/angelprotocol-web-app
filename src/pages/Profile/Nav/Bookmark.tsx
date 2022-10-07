@@ -47,7 +47,7 @@ export default function Bookmark() {
         size={20}
         title="Favorite this endowment for faster access from your wallet dropdown menu"
       />
-      <span className="font-heading text-sm">Favorites</span>
+      <span className="font-heading text-sm">Favorite</span>
     </button>
   );
 }
