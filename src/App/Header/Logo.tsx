@@ -7,7 +7,7 @@ export default function Logo() {
       href="https://angelprotocol.io/"
       title="Go to Marketing page"
     >
-      <img src={betaWhiteLogo} alt="" className="w-24 sm:w-36" />
+      <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
     </a>
   );
 }

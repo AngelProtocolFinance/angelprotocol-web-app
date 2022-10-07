@@ -14,7 +14,7 @@ export default function AdminMobileNavPortal({ id }: { id: number }) {
   return (
     (isMobileNavOpen &&
       createPortal(
-        <div className="border-l border-white-grey/20 pl-4 ml-4">
+        <div className="border-t border-white-grey/20 padded-container">
           <h4 className={`${commonNavItemStyle} mb-6 uppercase font-extrabold`}>
             Admin
           </h4>
