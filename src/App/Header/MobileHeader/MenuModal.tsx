@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import AppLinks from "./AppLinks";
-import Content from "./Content";
+import Header from "./Header";
 import { adminMobileNavId } from "./constants";
 
 export default function MenuModal({ onClose }: { onClose: () => void }) {
@@ -9,7 +9,7 @@ export default function MenuModal({ onClose }: { onClose: () => void }) {
       as="header"
       className="fixed top-0 left-0 right-0 w-full z-10 bg-blue-accent flex flex-col"
     >
-      <Content onMenuClick={onClose} menuIconType="Close" />
+      <Header onMenuClick={onClose} menuIconType="Close" />
       <Separator />
       <div className="grid grid-cols-[1fr_1fr]">
         <AppLinks />

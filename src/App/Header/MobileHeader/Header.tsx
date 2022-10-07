@@ -9,7 +9,7 @@ type Props = {
   menuIconType: IconTypes;
 };
 
-export default function Content({ onMenuClick, menuIconType }: Props) {
+export default function Header({ onMenuClick, menuIconType }: Props) {
   return (
     <div className="grid grid-cols-[auto_1fr_auto]  mb-4 items-center w-full padded-container pt-3">
       <Logo />

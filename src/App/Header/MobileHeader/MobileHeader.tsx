@@ -1,4 +1,4 @@
-import Content from "./Content";
+import Header from "./Header";
 import useMenuModal from "./useMenuModal";
 
 export default function MobileHeader() {
@@ -6,7 +6,7 @@ export default function MobileHeader() {
 
   return (
     <header className="lg:hidden">
-      <Content onMenuClick={openMenu} menuIconType="Menu" />
+      <Header onMenuClick={openMenu} menuIconType="Menu" />
     </header>
   );
 }
