@@ -9,18 +9,19 @@ import Copier from "components/Copier";
 import { AdminLink } from "components/admin";
 import { maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
+import Bookmarks from "./Bookmarks";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 
 const linkStyle =
-  "text-angel-blue hover:text-angel-orange text-sm font-bold font-heading px-3 py-0.5 text-left uppercase";
+  "text-angel-blue hover:text-angel-orange text-sm font-bold font-heading px-3 text-left uppercase";
 
 export default function Details(props: WalletState) {
   const { coins, address, chain } = props;
   const { disconnect } = useSetWallet();
 
   return (
-    <Popover.Panel className="w-max z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
+    <Popover.Panel className="w-fit z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
       <div className="bg-angel-grey text-zinc-50 text-xs p-2">
         <p className="uppercase">network : {chain.chain_name}</p>
       </div>
@@ -38,13 +39,17 @@ export default function Details(props: WalletState) {
       >
         My Donations
       </Link>
+
       <AdminLink label="admin" className={linkStyle} id={AP_ID} />
       <AdminLink
         label="applications"
         className={linkStyle + " mb-4"}
         id={REVIEWER_ID}
       />
-      <Filter coins={coins}>
+
+      <Bookmarks />
+
+      <Filter coins={coins} classes="mt-1">
         {(filtered) => <Holdings coins={filtered} />}
       </Filter>
 
