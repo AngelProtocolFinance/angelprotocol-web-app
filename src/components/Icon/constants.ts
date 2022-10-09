@@ -1,6 +1,7 @@
 import { IconType } from "react-icons";
 import {
   AiFillCaretLeft,
+  AiFillHeart,
   AiFillYoutube,
   AiOutlineCheck,
   AiOutlineCheckCircle,
@@ -10,6 +11,7 @@ import {
   AiOutlineExclamation,
   AiOutlineEye,
   AiOutlineEyeInvisible,
+  AiOutlineHeart,
   AiOutlineInfoCircle,
   AiOutlineLike,
   AiOutlineMedium,
@@ -20,10 +22,13 @@ import {
 import {
   BiArrowBack,
   BiBold,
+  BiChevronDown,
+  BiChevronUp,
   BiGlobe,
   BiItalic,
   BiSave,
   BiSearchAlt2,
+  BiSun,
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
@@ -49,10 +54,9 @@ import {
   FaUsersCog,
 } from "react-icons/fa";
 import { FcSafe } from "react-icons/fc";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
-import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
 import {
@@ -72,7 +76,6 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
   FacebookCircle: FaFacebook,
   Discord: FaDiscord,
@@ -108,6 +111,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   ArrowBack: BiArrowBack,
+  ArrowDown: BiChevronDown,
+  ArrowUp: BiChevronUp,
   Back: MdOutlineArrowBackIosNew,
   Forward: MdOutlineArrowForwardIos,
   Blockchain: SiHiveBlockchain,
@@ -127,4 +132,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Admin: FaUsersCog,
   Crop: IoCrop,
   Save: BiSave,
+  Moon: FiMoon,
+  Sun: BiSun,
+  HeartOutline: AiOutlineHeart,
+  HeartFill: AiFillHeart,
 };

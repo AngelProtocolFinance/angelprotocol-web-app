@@ -15,9 +15,9 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
     isInitial,
     isLoading,
     isSubmitting,
-    onUpload,
-    onUndo,
-    onCrop,
+    upload,
+    undo,
+    openCropModal,
     onInputChange,
   } = useImgEditor(props);
 
@@ -45,20 +45,17 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
             render={({ field: { onChange, ref } }) =>
               !isSubmitting ? (
                 <div className="hidden group-hover:flex">
-                  <IconButton onClick={onUpload} disabled={isDisabled}>
+                  <IconButton onClick={upload} disabled={isDisabled}>
                     <Icon type="Upload" />
                   </IconButton>
                   {!isInitial && (
-                    <IconButton
-                      onClick={onUndo(onChange)}
-                      disabled={isDisabled}
-                    >
+                    <IconButton onClick={undo(onChange)} disabled={isDisabled}>
                       <Icon type="Undo" />
                     </IconButton>
                   )}
                   {!!imageUrl && (
                     <IconButton
-                      onClick={onCrop(onChange)}
+                      onClick={openCropModal(onChange)}
                       disabled={isDisabled}
                     >
                       <Icon type="Crop" />

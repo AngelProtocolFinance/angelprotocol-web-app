@@ -11,7 +11,7 @@ export default function Endowment() {
   const queryState = useBalanceQuery({ id: numId });
 
   return (
-    <div className="grid md:grid-cols-2 gap-3 content-start">
+    <div className="grid md:grid-cols-2 gap-3 content-start text-white/80">
       <QueryLoader
         queryState={queryState}
         messages={{

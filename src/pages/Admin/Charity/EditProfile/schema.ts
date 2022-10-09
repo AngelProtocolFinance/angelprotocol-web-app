@@ -22,7 +22,6 @@ const shape: SchemaShape<ProfileFormValues> = {
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
   image: Yup.mixed<FileWrapper>()
-    .required("Charity banner required")
     .test({
       name: "fileType",
       message: "Valid file types are JPG, PNG and WEBP",

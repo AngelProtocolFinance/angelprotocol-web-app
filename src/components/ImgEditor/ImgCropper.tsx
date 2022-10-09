@@ -8,7 +8,8 @@ import Icon, { IconTypes } from "components/Icon";
 export default function ImgCropper(props: {
   src: string;
   aspectRatio: number;
-  setCropedImage: (blob: Blob) => void;
+  onSave: (blob: Blob) => void;
+  onClose: () => void;
 }) {
   const { closeModal } = useModalContext();
   const [error, setError] = useState<string>();
@@ -35,11 +36,16 @@ export default function ImgCropper(props: {
         if (!blob) {
           setError("Cropping the file failed.");
         } else {
-          props.setCropedImage(blob);
+          props.onSave(blob);
           closeModal();
         }
       });
     }
+  }
+
+  function handleClose() {
+    props.onClose();
+    closeModal();
   }
 
   return (
@@ -48,8 +54,8 @@ export default function ImgCropper(props: {
         {error && (
           <p className="mr-auto text-red-l1 font-mono text-xs">{error}</p>
         )}
-        <Button iconType={"Save"} onClick={handleSave} />
-        <Button iconType={"Close"} onClick={closeModal} />
+        <Button iconType="Save" onClick={handleSave} />
+        <Button iconType="Close" onClick={handleClose} />
       </div>
       <img ref={imgRef} src={props.src} className="w-full" alt="banner" />
     </Dialog.Panel>

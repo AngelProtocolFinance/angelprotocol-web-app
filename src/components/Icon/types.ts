@@ -33,7 +33,6 @@ export type IconTypes =
   | "Wallet"
   | "Unsorted"
   | "Loading"
-  | "ChevronDown"
   | "Down"
   | "Up"
   | "HourglassSplit"
@@ -41,6 +40,8 @@ export type IconTypes =
   | "Settings"
   | "Warning"
   | "ArrowBack"
+  | "ArrowDown"
+  | "ArrowUp"
   | "Back"
   | "Forward"
   | "Bold"
@@ -61,4 +62,8 @@ export type IconTypes =
   | "Admin"
   | "Crop"
   | "Save"
-  | "PieChart";
+  | "PieChart"
+  | "HeartFill"
+  | "HeartOutline"
+  | "Moon"
+  | "Sun";

@@ -6,6 +6,7 @@ const criterionAmount = 0.001;
 
 export default function Filter(props: {
   coins: Token[];
+  classes?: string;
   children(filtered: Token[]): ReactElement;
 }) {
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
@@ -21,11 +22,11 @@ export default function Filter(props: {
   );
 
   if (props.coins.length <= 0) {
-    return <div>wallet is empty</div>;
+    return <div className={props.classes ?? ""}>wallet is empty</div>;
   }
 
   return (
-    <div className="px-3">
+    <div className={`px-3 ${props.classes ?? ""}`}>
       <div className="flex items-center gap-1">
         <Switch
           checked={isSmallAmountsShown}

@@ -23,7 +23,6 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 // import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
-const PLACEHOLDER_IMAGE = "[img]";
 
 export default function useEditProfile() {
   const { endowmentId, cw3, proposalLink } = useAdminResources();
@@ -40,6 +39,8 @@ export default function useEditProfile() {
     title,
     description,
     initial,
+    image,
+    logo,
     ...data
   }: ProfileFormValues) => {
     try {
@@ -47,55 +48,44 @@ export default function useEditProfile() {
       if (data.country_of_origin) {
         data.country_of_origin = data.country_of_origin.split(" ")[0];
       }
-      const diff = getPayloadDiff(initial, data);
+
+      //TODO: find a way to include image (nested obj) in diff (which is curr flat only)
+      const {
+        logo: initialLogo,
+        image: initialImage,
+        ...restInitial
+      } = initial;
+
+      const diff = getPayloadDiff(
+        //use flatten objects
+        { ...restInitial, image: initialImage.publicUrl },
+        { ...data, image: image.file ? image.file.name : undefined }
+      );
 
       //if overview has changed, and is set to something
       if ("overview" in diff && data.overview) {
         //truncate to reduce proposalMsg size
         diff.overview = PLACEHOLDER_OVERVIEW;
-        if (initial.image) {
-          initial.overview = PLACEHOLDER_OVERVIEW;
-        }
       }
 
-      //if image has changed, and is set to something
-      if ("image" in diff && data.image) {
-        //truncate to reduce proposalMsg size
-        diff.image = PLACEHOLDER_IMAGE;
-        if (initial.image) {
-          initial.image = PLACEHOLDER_IMAGE;
-        }
-      }
-
-      const diffEntries = Object.entries(
-        diff
-      ) as ObjectEntries<ProfileWithSettings>;
+      const diffEntries = Object.entries(diff) as ObjectEntries<
+        Omit<ProfileWithSettings, "image" | "logo" | "categories">
+      >;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }
 
-      //run form change check first
-      //upload if image is changed and is set to something
-      if ("image" in diff && data.image) {
-        //convert dataURL to file
+      let imgUrl: string = "";
+      //means new image file is selected
+      if (image.file) {
         showModal(Popup, { message: "Uploading image.." });
-        const imageRes = await fetch(data.image);
-        const imageBlob = await imageRes.blob();
-        const imageFile = new File([imageBlob], "banner"); //use endow address as unique imageName
-
-        //TODO: investigate optimizeImage file.name = undefined
-        // const file = await optimizeImage(imageFile);
-        const url = await uploadToIpfs(imageFile);
-
-        if (url) {
-          data.image = url;
-        } else {
-          throw new Error("Error uploading image");
-        }
+        imgUrl = await uploadToIpfs(image.file);
+      } else {
+        imgUrl = image.publicUrl;
       }
 
       const accountContract = new Account(wallet);
-      const { sdgNum, name, logo, image, ...profilePayload } = data;
+      const { sdgNum, name, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
@@ -108,15 +98,18 @@ export default function useEditProfile() {
           cleanObject({
             id: profilePayload.id,
             name,
-            image,
-            logo,
+            image: imgUrl,
+            logo: logo.publicUrl,
             categories: { sdgs: [sdgNum], general: [] },
           })
         );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
         type: "acc_profile",
-        data: genDiffMeta(diffEntries, initial),
+        data: genDiffMeta(diffEntries, {
+          ...restInitial,
+          image: initialImage.publicUrl,
+        }),
       };
 
       const adminContract = new CW3(wallet, cw3);

@@ -15,14 +15,9 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { getSavedRegistrationReference } from "helpers";
-import { createAuthToken } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";
 import { placeholderApplication } from "./placeholders";
-
-const headers = {
-  authorization: createAuthToken("charity-owner"),
-};
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,7 +27,6 @@ const registration_api = aws.injectEndpoints({
         return {
           url: "v1/registration",
           params: { uuid },
-          headers,
         };
       },
       transformResponse: ({
@@ -83,7 +77,6 @@ const registration_api = aws.injectEndpoints({
       query: ({ body }) => ({
         url: "v2/registration",
         method: "POST",
-        headers,
         body,
       }),
     }),
@@ -98,7 +91,6 @@ const registration_api = aws.injectEndpoints({
             status !== "all" ? `?regStatus=${status}` : ""
           }`,
           method: "Get",
-          headers,
         };
       },
       transformResponse: (response: AWSQueryRes<EndowmentApplication[]>) =>
@@ -115,7 +107,6 @@ const registration_api = aws.injectEndpoints({
           url: "v2/registration/build-email",
           method: "POST",
           params: { uuid, type },
-          headers,
           body,
         };
       },
@@ -126,7 +117,6 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, EndowmentContract }) => ({
         url: `v2/registration/${PK}/submit`,
         method: "POST",
-        headers,
         body: { EndowmentContract },
       }),
     }),
@@ -140,7 +130,6 @@ const registration_api = aws.injectEndpoints({
           url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
-          headers,
           body,
         };
       },
@@ -155,7 +144,6 @@ const registration_api = aws.injectEndpoints({
           url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
-          headers,
           body,
         };
       },
@@ -170,7 +158,6 @@ const registration_api = aws.injectEndpoints({
           url: "v2/registration",
           method: "PUT",
           params: { uuid: PK },
-          headers,
           body,
         };
       },
