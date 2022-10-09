@@ -22,7 +22,7 @@ export default function Details(props: WalletState) {
 
   return (
     <Popover.Panel className="w-60 z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
-      <div className="bg-angel-grey text-zinc-50 text-xs p-2">
+      <div className="bg-gray-d2 text-zinc-50 text-xs p-2">
         <p className="uppercase">network : {chain.chain_name}</p>
       </div>
 
@@ -49,7 +49,7 @@ export default function Details(props: WalletState) {
 
       <button
         onClick={disconnect}
-        className="mt-4 uppercase text-sm bg-orange hover:text-gray-d2 p-2 text-white"
+        className="mt-4 uppercase text-sm bg-orange hover:bg-orange-l1 p-2 text-white"
       >
         disconnect
       </button>
