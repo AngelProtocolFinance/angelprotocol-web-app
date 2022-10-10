@@ -56,7 +56,7 @@ export default function Form(props: Props) {
           <CountrySelector
             fieldName="country"
             classes={{
-              container: "p-3 rounded-md shadow-inner-white-grey bg-gray-l3",
+              container: "p-3 rounded-md shadow-inner-white bg-gray-l3",
               input: "bg-transparent",
             }}
           />
