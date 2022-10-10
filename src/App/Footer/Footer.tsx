@@ -3,7 +3,7 @@ import Socials from "./Socials";
 
 export default function Footer() {
   return (
-    <footer className="padded-container flex flex-col items-center justify-self-stretch text-white">
+    <footer className="padded-container py-4 flex flex-col items-center justify-self-stretch text-white">
       <Navigation />
       <div className="flex flex-col items-center gap-2 justify-self-stretch">
         <Socials />
