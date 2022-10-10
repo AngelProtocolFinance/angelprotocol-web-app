@@ -4,7 +4,7 @@ import Header from "./Header";
 
 export default function DesktopHeader() {
   return (
-    <header className="hidden lg:grid grid-cols-[auto_1fr_auto] mb-4 items-center w-full padded-container pt-3 gap-5">
+    <header className="hidden lg:grid grid-cols-[auto_1fr_auto] items-center w-full padded-container gap-5">
       <Logo />
       <Header />
       <WalletSuite />
