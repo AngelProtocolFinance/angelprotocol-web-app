@@ -1,3 +1,3 @@
 export default function Navigation() {
-  return <div>Navigation</div>;
+  return <section>Navigation</section>;
 }
