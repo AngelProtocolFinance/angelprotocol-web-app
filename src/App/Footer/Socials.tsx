@@ -1,8 +1,8 @@
 import Icon, { IconTypes } from "components/Icon";
 
-export default function Socials(props: { classes?: string }) {
+export default function Socials() {
   return (
-    <div className={`${props.classes || ""} flex justify-center items-center`}>
+    <div className="flex items-center gap-8">
       {SOCIAL_MEDIA_LINKS.map(({ id, iconType, link, title }) => {
         return (
           <a
@@ -10,9 +10,9 @@ export default function Socials(props: { classes?: string }) {
             href={link}
             target="_blank"
             rel="noreferrer"
-            className={`text-white hover:text-blue-l1 active:text-blue block mx-2 first:ml-0`}
+            className="text-white hover:text-blue-l1 active:text-blue"
           >
-            <Icon type={iconType} className="w-6 h-6" title={title} />
+            <Icon type={iconType} className="w-6" title={title} />
           </a>
         );
       })}
@@ -42,20 +42,38 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   },
   {
     id: 3,
+    iconType: "Discord",
+    link: "https://discord.gg/RhqA652ySA",
+    title: "Discord",
+  },
+  {
+    id: 4,
     iconType: "Youtube",
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
     title: "YouTube",
   },
   {
-    id: 4,
+    id: 5,
     iconType: "Medium",
     link: "https://angelprotocol.medium.com",
     title: "Medium",
   },
   {
-    id: 5,
-    iconType: "Discord",
-    link: "https://discord.gg/RhqA652ySA",
-    title: "Discord",
+    id: 6,
+    iconType: "Facebook",
+    link: "https://www.facebook.com/AngelProtocolFB/",
+    title: "Facebook",
+  },
+  {
+    id: 7,
+    iconType: "Linkedin",
+    link: "https://www.linkedin.com/company/angel-protocol/",
+    title: "Linkedin",
+  },
+  {
+    id: 8,
+    iconType: "Instagram",
+    link: "https://www.instagram.com/angelprotocol/",
+    title: "Instagram",
   },
 ];
