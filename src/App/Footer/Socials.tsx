@@ -60,7 +60,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   },
   {
     id: 6,
-    iconType: "Facebook",
+    iconType: "FacebookCircle",
     link: "https://www.facebook.com/AngelProtocolFB/",
     title: "Facebook",
   },
