@@ -1,13 +1,13 @@
 import Logo from "../Logo";
 import ThemeToggle from "../ThemeToggle";
 import WalletSuite from "../WalletSuite";
-import Header from "./Header";
+import NavLinks from "./NavLinks";
 
 export default function DesktopHeader() {
   return (
     <header className="hidden lg:grid grid-cols-[auto_1fr_auto] items-center w-full padded-container gap-5">
       <Logo />
-      <Header />
+      <NavLinks />
       <div className="flex gap-4">
         <ThemeToggle />
         <WalletSuite />
