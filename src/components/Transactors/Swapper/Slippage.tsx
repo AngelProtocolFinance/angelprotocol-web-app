@@ -4,7 +4,7 @@ import { SwapValues } from "./types";
 export default function Slippage() {
   return (
     <div className="flex items-baseline justify-end text-gray-d2 divide-x">
-      <p className="text-2xs uppercase font-bold font-heading mr-2">Slippage</p>
+      <p className="text-3xs uppercase font-bold font-heading mr-2">Slippage</p>
       <Option value="0.5" id={"slip_1"} />
       <Option value="1.0" id={"slip_2"} />
       <Option value="1.5" id={"slip_3"} />

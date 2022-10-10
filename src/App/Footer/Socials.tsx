@@ -12,7 +12,7 @@ export default function Socials() {
             rel="noreferrer"
             className="text-white hover:text-blue-l1 active:text-blue"
           >
-            <Icon type={iconType} className="w-6" title={title} />
+            <Icon type={iconType} className="w-6 h-6" title={title} />
           </a>
         );
       })}

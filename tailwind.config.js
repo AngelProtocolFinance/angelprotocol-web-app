@@ -88,7 +88,7 @@ module.exports = {
       },
 
       fontSize: {
-        "2xs": ["0.56rem", "0.7rem"],
+        "3xs": ["0.56rem", "0.7rem"],
         "4.5xl": "2.625rem",
       },
       fontFamily: {
