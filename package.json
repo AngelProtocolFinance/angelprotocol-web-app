@@ -78,7 +78,7 @@
     "@babel/plugin-transform-react-jsx": "^7.19.0",
     "@peculiar/webcrypto": "^1.4.0",
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@testing-library/dom": "^8.18.1",
+    "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
