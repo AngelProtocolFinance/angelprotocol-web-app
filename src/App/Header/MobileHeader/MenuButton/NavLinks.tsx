@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import ThemeToggle from "../../ThemeToggle";
 import { commonNavItemStyle, navLinkStyle } from "./constants";
 
-export default function AppLinks() {
+export default function NavLinks() {
   const dispatch = useSetter();
   useEffect(() => {
     //set open state after portal node has been mounted
