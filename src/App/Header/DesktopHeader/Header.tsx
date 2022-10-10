@@ -5,7 +5,7 @@ import ThemeToggle from "../ThemeToggle";
 
 export default function Header() {
   return (
-    <nav className="flex w-full justify-between ml-2">
+    <nav className="flex w-full justify-between">
       <div className="justify-self-start items-center font-body text-base">
         <NavLink className={styler} to={appRoutes.index}>
           Marketplace
