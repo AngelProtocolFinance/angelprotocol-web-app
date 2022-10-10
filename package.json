@@ -92,7 +92,7 @@
     "@types/react-csv": "^1.1.2",
     "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.1.8",
-    "@types/react-test-renderer": "17.0.2",
+    "@types/react-test-renderer": "18.0.0",
     "autoprefixer": "^10.0.2",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
