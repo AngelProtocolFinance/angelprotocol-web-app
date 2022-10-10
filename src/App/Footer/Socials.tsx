@@ -10,7 +10,7 @@ export default function Socials() {
             href={link}
             target="_blank"
             rel="noreferrer"
-            className="text-white hover:text-blue-l1 active:text-blue"
+            className="hover:text-blue-l1 active:text-blue"
           >
             <Icon type={iconType} className="w-6 h-6" title={title} />
           </a>
