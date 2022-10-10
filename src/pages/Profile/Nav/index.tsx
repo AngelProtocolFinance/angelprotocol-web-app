@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { ProfileParams } from "./types";
+import { ProfileParams } from "../types";
 import { useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
+import Bookmark from "./Bookmark";
 
 export default function Nav() {
   const { id } = useParams<ProfileParams>();
@@ -20,7 +21,11 @@ export default function Nav() {
 
   return (
     <div className="lg:col-span-2 flex gap-2">
-      <LinkIcon to={`${appRoutes.index}`} _iconType="ArrowBack">
+      <LinkIcon
+        to={`${appRoutes.index}`}
+        _iconType="ArrowBack"
+        className="mr-auto"
+      >
         back to marketplace
       </LinkIcon>
       {isMember && (
@@ -40,6 +45,7 @@ export default function Nav() {
           admin
         </LinkIcon>
       )}
+      <Bookmark />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { NetworkType } from "types/lists";
+
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
@@ -32,4 +34,15 @@ export type Airdrop = {
   // claimable: true;
   // address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
   // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
+};
+
+export type EndowmentBookmark = {
+  id: number;
+  name: string;
+};
+
+export type UserBookMarkInfo = {
+  wallet: string;
+  network: NetworkType;
+  endowments: EndowmentBookmark[];
 };

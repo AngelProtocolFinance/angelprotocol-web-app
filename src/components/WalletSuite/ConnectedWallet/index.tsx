@@ -4,35 +4,29 @@ import {
   useGetWallet,
 } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import { humanize, maskAddress } from "helpers";
+import { maskAddress } from "helpers";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
 export default function ConnectedWallet(props: WalletState) {
-  const { isLoading, wallet } = useGetWallet();
+  const { isLoading } = useGetWallet();
   const maskedAddr = maskAddress(props.address);
 
-  const { walletIcon } = props;
   return (
     <Popover as="div" className="relative">
       <Popover.Button
         disabled={isLoading}
-        className="border border-zinc-50/30 rounded-md flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent focus:outline-none"
+        className="flex grow-0 w-36 sm:w-44 h-10 py-2 px-3 justify-center items-center rounded-lg bg-orange hover:bg-angel-orange text-white gap-2 font-bold text-xs sm:text-base"
       >
-        {(!isLoading && (
-          <img
-            src={walletIcon}
-            alt=""
-            className="w-6 h-6 object-contain rounded-full mr-0 sm:mr-2 bg-white p-0.5"
-          />
-        )) || <Icon type="Loading" className="animate-spin mr-1" />}
-        <span className="px-2 text-sm">{maskedAddr}</span>
-        <span className="pl-2 hidden sm:block border-l border-zinc-50/20 text-sm ">
-          {humanize(wallet?.displayCoin.balance || 0, 3)}
-        </span>
-        <span className="text-xs pl-1 hidden sm:block">
-          {wallet?.displayCoin.symbol}
-        </span>
+        {({ open }) => (
+          <>
+            <span>{maskedAddr}</span>
+            <Icon
+              type={open ? "ArrowUp" : "ArrowDown"}
+              className="text-2xl opacity-50"
+            />
+          </>
+        )}
       </Popover.Button>
       <Details {...props} />
     </Popover>

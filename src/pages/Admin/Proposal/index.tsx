@@ -25,7 +25,7 @@ export default function Proposal() {
   );
 
   return (
-    <div className="grid content-start w-full min-h-screen">
+    <div className="grid content-start w-full min-h-screen text-white-grey/80">
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -34,7 +34,7 @@ export default function Proposal() {
         }}
       >
         {(proposal) => (
-          <div className="bg-white/10 text-white-grey/80 rounded-md shadow-inner p-4">
+          <div className="bg-white/10 rounded-md shadow-inner p-4">
             <div className="flex justify-between font-bold flex-wrap">
               <p className="font-mono">ID: {proposal.id}</p>
               <Status status={proposal.status} />
