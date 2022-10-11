@@ -7,10 +7,7 @@ import Index from "./Index";
 
 export default function Market() {
   const { data: endowments = {} as CategorizedEndowments, isLoading } =
-    useCategorizedEndowmentsQuery({
-      limit: 80, // MAX_LIMIT we return per query (at this time)
-    });
-
+    useCategorizedEndowmentsQuery({});
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />
