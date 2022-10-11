@@ -9,22 +9,26 @@ export default function Section({ title, links }: SectionProps) {
         {title}
       </h6>
       <div className="flex flex-col items-start h-full">
-        {links.map((link) => {
-          return link.href ? (
-            <a
-              key={link.text}
-              href={link.href}
-              className={`${linkStyles} cursor-pointer`}
-            >
-              {link.text}
-            </a>
-          ) : (
-            <span key={link.text} className={linkStyles}>
-              {link.text}
-            </span>
-          );
-        })}
+        {links.map((link) => (
+          <Link {...link} />
+        ))}
       </div>
     </div>
+  );
+}
+
+function Link(props: { text: string; href?: string }) {
+  return props.href ? (
+    <a
+      key={props.text}
+      href={props.href}
+      className={`${linkStyles} cursor-pointer`}
+    >
+      {props.text}
+    </a>
+  ) : (
+    <span key={props.text} className={linkStyles}>
+      {props.text}
+    </span>
   );
 }
