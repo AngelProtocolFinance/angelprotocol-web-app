@@ -92,5 +92,6 @@ export default function usePropose() {
     isTime: getValues("isTime"),
     configureCW3: handleSubmit(configureCW3),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    cw3MemberCount: cw3MemberCount,
   };
 }

@@ -5,7 +5,7 @@ import Member from "./Member";
 import useUpdateMembers from "./useUpdateMembers";
 
 export default function Form() {
-  const { updateMembers, apCW4Members } = useUpdateMembers();
+  const { updateMembers, apCW4Members, cw3MemberCount } = useUpdateMembers();
   return (
     <DivContainer>
       <TextInput<T> title="proposal title" name="title" required />
@@ -29,7 +29,7 @@ export default function Form() {
       <Adder />
 
       <Submitter type="button" onClick={updateMembers} _classes="mt-4">
-        Submit Proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </DivContainer>
   );

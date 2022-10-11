@@ -3,7 +3,8 @@ import { FormContainer, Submitter, TextInput } from "components/admin";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {
-  const { configureFund, isSubmitDisabled } = useConfigureFund();
+  const { configureFund, isSubmitDisabled, cw3MemberCount } =
+    useConfigureFund();
   return (
     <FormContainer onSubmit={configureFund}>
       <TextInput<FV> title="Proposal Title" name="title" required />
@@ -23,7 +24,7 @@ export default function Form() {
       <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </FormContainer>
   );

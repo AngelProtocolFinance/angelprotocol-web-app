@@ -4,7 +4,8 @@ import Amount from "./Amount";
 import useTransferFunds from "./useTransferFunds";
 
 export default function Form() {
-  const { transferFunds, isSubmitDisabled } = useTransferFunds();
+  const { transferFunds, isSubmitDisabled, cw3MemberCount } =
+    useTransferFunds();
   return (
     <form
       onSubmit={transferFunds}
@@ -20,7 +21,7 @@ export default function Form() {
       <Amount />
       <TextInput<FS> title="recipient" name="recipient" required mono />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </form>
   );

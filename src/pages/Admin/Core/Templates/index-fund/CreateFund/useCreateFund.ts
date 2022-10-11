@@ -106,5 +106,5 @@ export default function useCreateFund() {
     setSubmitting(false);
   }
 
-  return { createFund, isSubmitting };
+  return { createFund, isSubmitting, cw3MemberCount };
 }

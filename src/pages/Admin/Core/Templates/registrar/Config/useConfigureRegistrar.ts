@@ -89,5 +89,6 @@ export default function useConfigureRegistrar() {
   return {
     configureRegistrar: handleSubmit(configureRegistrar),
     isSubmitDisabled: !isDirty || isSubmitting,
+    cw3MemberCount,
   };
 }

@@ -103,5 +103,9 @@ export default function useUpdateFund() {
     }
   }
 
-  return { updateFund, isSubmitDisabled: isLoading };
+  return {
+    updateFund,
+    isSubmitDisabled: isLoading,
+    cw3MemberCount,
+  };
 }

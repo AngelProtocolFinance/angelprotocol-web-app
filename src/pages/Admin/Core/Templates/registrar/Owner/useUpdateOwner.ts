@@ -68,5 +68,6 @@ export default function useUpdateOwner() {
   return {
     updateOwner: handleSubmit(updateOwner),
     isSubmitDisabled: !isDirty || isSubmitting,
+    cw3MemberCount,
   };
 }

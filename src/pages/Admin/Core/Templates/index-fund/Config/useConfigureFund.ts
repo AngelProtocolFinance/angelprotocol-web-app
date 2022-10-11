@@ -85,5 +85,6 @@ export default function useConfigureFund() {
   return {
     configureFund: handleSubmit(configureFund),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    cw3MemberCount,
   };
 }
