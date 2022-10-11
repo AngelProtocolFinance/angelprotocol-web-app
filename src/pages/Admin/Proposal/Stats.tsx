@@ -38,9 +38,9 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
           title="yes"
           value={numYes}
           pct={pctYes}
-          textColor="text-emerald-400"
+          textColor="text-green-l1"
         />
-        <Stat title="no" value={numNo} pct={pctNo} textColor="text-rose-400" />
+        <Stat title="no" value={numNo} pct={pctNo} textColor="text-red-l1" />
       </div>
       <div
         className="relative mb-8 mt-10 h-4"
@@ -54,7 +54,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         }}
       >
         <p
-          className="absolute bottom-0 h-8 border-l border-emerald-400/80 align-bottom font-mono text-xs"
+          className="absolute bottom-0 h-8 border-l border-green-l1/80 align-bottom font-mono text-xs"
           style={{ left: `${pctTarget}%` }}
         >
           <span className="absolute -top-1/2 right-0 w-max translate-x-1/2 transform">
@@ -79,7 +79,7 @@ function Stat(props: {
 }) {
   return (
     <p
-      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-zinc-50/30 p-4`}
+      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-white/30 p-4`}
     >
       <span className="">{props.title}</span>
       <span className="my-2 text-2xl">{props.value}</span>

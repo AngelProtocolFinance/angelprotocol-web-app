@@ -29,10 +29,10 @@ export default function Connector(props: Connection) {
 
   if (isMulti) {
     return (
-      <div className={`${isOpen ? "border-b border-zinc-900/10" : ""}`}>
+      <div className={`${isOpen ? "border-b border-black/10" : ""}`}>
         <button
           className={`${
-            isOpen ? "" : "border-b border-zinc-900/10"
+            isOpen ? "" : "border-b border-black/10"
           } p-2 flex items-center gap-2 w-full items-center`}
           onClick={toggle}
         >
@@ -40,7 +40,7 @@ export default function Connector(props: Connection) {
           <Name>{isOpen ? "Select network" : props.name}</Name>
           <Icon
             type={isOpen ? "Up" : "Down"}
-            className="ml-auto text-angel-grey"
+            className="ml-auto text-gray-d2"
           />
         </button>
         {isOpen &&
@@ -55,7 +55,7 @@ export default function Connector(props: Connection) {
     <Menu.Item
       className={`group p-2 flex items-center gap-2 w-full items-center ${
         props.network ? "" : "border-b last:border-none "
-      } border-zinc-900/10`}
+      } border-black/10`}
       onClick={handleConnect}
       as="button"
     >
@@ -67,7 +67,7 @@ export default function Connector(props: Connection) {
 
 function Name(props: PropsWithChildren<{}>) {
   return (
-    <p className="uppercase text-sm text-angel-grey group-hover:text-sky-500 group-active:text-amber-500">
+    <p className="uppercase text-sm text-gray-d2 group-hover:text-blue group-active:text-orange">
       {props.children}
     </p>
   );
@@ -77,7 +77,7 @@ function Logo(props: { logo: string }) {
   return (
     <img
       src={props.logo}
-      className="w-8 h-8 object-contain p-1.5 bg-white-grey"
+      className="w-8 h-8 object-contain p-1.5 bg-white"
       alt=""
     />
   );

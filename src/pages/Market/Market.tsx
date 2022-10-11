@@ -16,11 +16,7 @@ export default function Market() {
     <div className="grid content-start padded-container pb-16">
       <Banner />
       {(isLoading && (
-        <Loader
-          bgColorClass="bg-white-grey/80"
-          gapClass="gap-2"
-          widthClass="w-4"
-        />
+        <Loader bgColorClass="bg-white/80" gapClass="gap-2" widthClass="w-4" />
       )) || (
         <>
           {Object.entries(endowments).map(([sdg_number, profiles]) => (

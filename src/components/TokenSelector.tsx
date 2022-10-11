@@ -49,9 +49,9 @@ export default function TokenSelector<T extends Base>(props: {
         </Combobox.Button>
       )}
 
-      <Combobox.Options className="absolute top-0 right-0 mt-10 max-h-60 w-max overflow-auto rounded-md bg-zinc-50 shadow-lg focus:outline-none">
+      <Combobox.Options className="absolute top-0 right-0 mt-10 max-h-60 w-max overflow-auto rounded-md bg-white shadow-lg focus:outline-none">
         {filteredCoins.length === 0 && symbol !== "" ? (
-          <div className="relative cursor-default select-none py-2 px-4 text-zinc-700 text-sm">
+          <div className="relative cursor-default select-none py-2 px-4 text-gray-d3 text-sm">
             {symbol} not found
           </div>
         ) : (
@@ -59,7 +59,7 @@ export default function TokenSelector<T extends Base>(props: {
             <Combobox.Option
               key={coin.token_id}
               className={
-                "flex items-center gap-2 p-3 hover:bg-sky-500/10 cursor-pointer"
+                "flex items-center gap-2 p-3 hover:bg-blue/10 cursor-pointer"
               }
               value={coin}
             >
@@ -71,7 +71,7 @@ export default function TokenSelector<T extends Base>(props: {
                       src={coin.logo}
                       className="w-5 h-5 object-contain"
                     />
-                    <span className={`text-sm text-zinc-600`}>
+                    <span className={`text-sm text-gray-d2`}>
                       {coin.symbol}
                     </span>
                   </>

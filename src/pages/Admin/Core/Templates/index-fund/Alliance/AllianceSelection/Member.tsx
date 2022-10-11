@@ -13,11 +13,11 @@ export default function Member(props: AllianceMemberWithFlags) {
       type="td"
       cellClass={`p-2 ${
         props.isAdded
-          ? "bg-green-400/20"
+          ? "bg-green-l1/20"
           : props.isDeleted
-          ? "bg-red-400/10"
+          ? "bg-red-l1/10"
           : props.edits
-          ? "bg-angel-orange/20"
+          ? "bg-orange/20"
           : ""
       }`}
     >
@@ -31,7 +31,7 @@ export default function Member(props: AllianceMemberWithFlags) {
       <div>
         {isEditable && (
           <Button
-            _accent="hover:text-angel-orange"
+            _accent="hover:text-orange"
             type="button"
             onClick={memberToggleEdit}
           >
@@ -42,7 +42,7 @@ export default function Member(props: AllianceMemberWithFlags) {
           <Button
             onClick={memberToggleAddDelete}
             type="button"
-            _accent="hover:text-red-400"
+            _accent="hover:text-red-l1"
           >
             {props.isAdded || props.isDeleted ? (
               <Icon type="Undo" />

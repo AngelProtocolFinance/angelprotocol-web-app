@@ -10,10 +10,10 @@ export default function Beneficiary() {
   } = useFormContext<WithdrawValues>();
 
   return (
-    <div className="relative grid mt-6 mb-6 border-b border-zinc-900/10">
+    <div className="relative grid mt-6 mb-6 border-b border-black/10">
       <label
         htmlFor={id}
-        className="text-angel-grey font-bold font-heading text-sm uppercase mb-2"
+        className="text-gray-d2 font-bold font-heading text-sm uppercase mb-2"
       >
         Destination wallet
       </label>
@@ -22,13 +22,13 @@ export default function Beneficiary() {
         id={id}
         type="text"
         autoComplete="off"
-        className="bg-transparent focus:outline-none font-mono text-sm text-angel-grey pb-2"
+        className="bg-transparent focus:outline-none font-mono text-sm text-gray-d2 pb-2"
       />
       <ErrorMessage
         errors={errors}
         name="beneficiary"
         as="span"
-        className="text-right text-rose-400 text-xs absolute -bottom-5 right-2"
+        className="text-right text-red-l1 text-xs absolute -bottom-5 right-2"
       />
     </div>
   );

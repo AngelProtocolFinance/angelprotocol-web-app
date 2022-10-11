@@ -22,10 +22,10 @@ export default function Amount(props: Props) {
       <button onClick={showSummary}>
         <Icon
           type="Info"
-          className="mt-0.5 block text-angel-blue hover:text-angel-orange"
+          className="mt-0.5 block text-blue hover:text-orange"
         />
       </button>
-      <p className="text-angel-grey">
+      <p className="text-gray-d2">
         ${humanize(props.locked + props.liquid, 0)}
       </p>
     </div>

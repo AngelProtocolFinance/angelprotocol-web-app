@@ -22,7 +22,7 @@ export default function AdminMobileNavPortal({ id }: { id: number }) {
     (isMobileNavOpen &&
       !!containerElement &&
       createPortal(
-        <div className="border-t sm:border-t-0 sm:border-l border-white-grey/20 padded-container">
+        <div className="border-t sm:border-t-0 sm:border-l border-white/20 padded-container">
           <h4
             className={`${commonNavItemStyle} mt-6 sm:mt-0 mb-6 uppercase font-extrabold`}
           >

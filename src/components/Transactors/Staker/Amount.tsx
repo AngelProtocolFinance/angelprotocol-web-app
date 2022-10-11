@@ -25,7 +25,7 @@ export default function Amount() {
     <div className="grid">
       <label
         htmlFor="amount"
-        className="flex justify-between text-angel-grey font-bold items-end"
+        className="flex justify-between text-gray-d2 font-bold items-end"
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance
@@ -39,22 +39,22 @@ export default function Amount() {
           title="Vote Locked"
         />
       )}
-      <span className="my-3 text-angel-grey italic text-xs">
+      <span className="my-3 text-gray-d2 italic text-xs">
         There is a 7 day wait period to unstake {symbols[denoms.halo]}. You will
         not be able to claim your {symbols[denoms.halo]} until this period has
         passed.
       </span>
-      <div className="flex bg-light-grey flex-wrap items-stretch shadow-inner-white-grey p-2 rounded-md">
+      <div className="flex bg-gray-l3 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={symbols[denoms.halo]}
-          className="flex-auto p-1 pl-0 focus:outline-none text-angel-grey bg-light-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l3 text-lg"
         />
         <div
-          className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"
+          className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"
           onClick={onMaxClick}
         >
           max
@@ -64,7 +64,7 @@ export default function Amount() {
         errors={errors}
         name="amount"
         as="p"
-        className="text-right text-red-400 text-xs mb-1 mt-1"
+        className="text-right text-red-l1 text-xs mb-1 mt-1"
       />
     </div>
   );

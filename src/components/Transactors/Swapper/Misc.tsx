@@ -8,7 +8,7 @@ import { denoms, symbols } from "constants/tokens";
 function Misc(props: { title: string; value: string; class?: string }) {
   const classes = `text-xs font-light ${props.class}`;
   return (
-    <div className="flex justify-between font-heading items-center text-xs text-angel-grey/80 m-1">
+    <div className="flex justify-between font-heading items-center text-xs text-gray-d2/80 m-1">
       <p className="text-xs font-semibold uppercase">{props.title}</p>
       <p className={classes}>{props.value}</p>
     </div>

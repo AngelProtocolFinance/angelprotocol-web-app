@@ -26,8 +26,8 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
   return (
     <div className="flex flex-col">
       <div
-        className={`grid place-items-center group p-1 rounded-md mb-4 bg-light-grey shadow-inner ${
-          errors[props.name] ? "shadow-red-500" : "shadow-white-grey"
+        className={`grid place-items-center group p-1 rounded-md mb-4 bg-gray-l2 shadow-inner ${
+          errors[props.name] ? "shadow-red" : "shadow-white"
         } ${props.className ?? ""}`}
         style={{
           background: `no-repeat center/cover url(${imageUrl}) ${
@@ -85,7 +85,7 @@ export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
         errors={errors}
         as="p"
         name={props.name}
-        className="w-full text-xs text-failed-red text-center"
+        className="w-full text-xs text-red text-center"
       />
     </div>
   );
@@ -96,7 +96,7 @@ function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
     <button
       {...props}
       type="button"
-      className="cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg"
+      className="cursor-pointer text-white text-lg bg-blue hover:bg-blue-d1 disabled:bg-gray/90 p-2 m-1 rounded-md shadow-lg"
     />
   );
 }
@@ -104,7 +104,7 @@ function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
 function LoadingOverlay() {
   return (
     <div className="absolute z-10">
-      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-angel-grey" />
+      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-gray-d2" />
     </div>
   );
 }

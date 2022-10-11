@@ -33,7 +33,7 @@ export default function Form() {
       <DateInput />
       <Slider />
       <CheckInput />
-      <Label className="text-green-400">Add members</Label>
+      <Label className="text-green-l1">Add members</Label>
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">
@@ -52,17 +52,17 @@ function Slider() {
   }
 
   return (
-    <div className="text-angel-grey grid mt-6">
-      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none">
+    <div className="text-gray-d2 grid mt-6">
+      <label className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2 select-none">
         <span>SPLIT TO LIQUID ACCOUNT</span>
-        <span className="font-mono font-bold text-green-500 ml-2 text-base">
+        <span className="font-mono font-bold text-green-d1 ml-2 text-base">
           {splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}
         </span>
         <button onClick={unspecifySplit} className="font-mono ml-1">
           reset
         </button>
       </label>
-      <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+      <div className="p-3 rounded-md bg-gray-l3 shadow-inner-white">
         <input
           {...register("splitToLiquid")}
           className="w-full"
@@ -80,8 +80,8 @@ function CheckInput() {
   const { register } = useFormContext<V>();
   return (
     <div
-      className="text-angel-grey flex items-center p-3 rounded-md 
-    shadow-inner-white-grey bg-light-grey my-6"
+      className="text-gray-d2 flex items-center p-3 rounded-md 
+    shadow-inner-white bg-gray-l3 my-6"
     >
       <input
         {...register("isFundRotating")}
@@ -91,7 +91,7 @@ function CheckInput() {
       />
       <label
         htmlFor="__checkInput"
-        className="text-xs font-heading uppercase font-bold text-angel-grey
+        className="text-xs font-heading uppercase font-bold text-gray-d2
         select-none cursor-pointer"
       >
         included on fund rotation
@@ -106,10 +106,10 @@ function DateInput() {
     formState: { errors },
   } = useFormContext<V>();
   return (
-    <div className="text-angel-grey grid">
+    <div className="text-gray-d2 grid">
       <label
         htmlFor="__dateInput"
-        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none"
+        className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2 select-none"
       >
         Expiry time
       </label>
@@ -117,14 +117,14 @@ function DateInput() {
         {...register("expiryTime")}
         id="__dateInput"
         type="datetime-local"
-        className="font-mono uppercase bg-light-grey shadow-inner-white-grey 
+        className="font-mono uppercase bg-gray-l3 shadow-inner-white 
         rounded-md p-3 focus:outline-none"
       />
       <ErrorMessage
         errors={errors}
         name={"expiryTime"}
         as="span"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
     </div>
   );

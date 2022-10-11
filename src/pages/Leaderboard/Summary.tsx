@@ -11,7 +11,7 @@ export default function Summary(props: SummaryProps) {
       <Amount title="impact" value={props.impact} />
       <button
         onClick={closeModal}
-        className="my-4 bg-angel-blue hover:bg-angel-blue/90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
+        className="my-4 bg-blue hover:bg-blue/90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
       >
         ok
       </button>
@@ -45,7 +45,7 @@ function Text(props: { type: string; title: string }) {
   }
 
   return (
-    <p className="font-semibold text-xs text-grey-accent leading-snug mb-2">
+    <p className="font-semibold text-xs text-gray-d2 leading-snug mb-2">
       <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );
@@ -53,7 +53,7 @@ function Text(props: { type: string; title: string }) {
 
 function Amount(props: { title: string; value: number }) {
   return (
-    <p className="font-heading grid grid-cols-2 items-center gap-10 uppercase font-bold text-2xl text-angel-blue">
+    <p className="font-heading grid grid-cols-2 items-center gap-10 uppercase font-bold text-2xl text-blue">
       <span className="text-base text-right justify-self-end ">
         {props.title}
       </span>

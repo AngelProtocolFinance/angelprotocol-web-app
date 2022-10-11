@@ -39,7 +39,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
         )}
         {status === "Rejected" && (
           <>
-            <p className="uppercase w-40 mr-2 text-red-500">Rejected</p>
+            <p className="uppercase w-40 mr-2 text-red">Rejected</p>
             <Button
               className="w-40 h-10 btn-primary"
               onClick={onSubmit}
@@ -50,12 +50,12 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           </>
         )}
         {status === "Under Review" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-yellow-500">
+          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-orange-l1">
             Under Review
           </p>
         )}
         {status === "Active" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-green-500">
+          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-green">
             Active
           </p>
         )}
@@ -63,7 +63,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
       {status === "Active" && (
         <Link
           to={`${appRoutes.profile}/${application.Metadata.EndowmentId}`}
-          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-thin-blue underline hover:text-bright-blue"
+          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-blue underline hover:text-blue-l1"
         >
           Check out your new Endowment's profile page here
         </Link>

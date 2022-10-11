@@ -90,7 +90,7 @@ function SubmitWithReason({
 
 function Warning({ message }: { message: string }) {
   return (
-    <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
+    <p className="p-2 text-sm bg-orange-l5 text-orange-d1 mb-4">
       <Icon type="Info" className="inline-block relative bottom-0.5 mr-1" />
       {message}
     </p>
@@ -101,7 +101,7 @@ function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
+      className="w-full py-2 uppercase hover:bg-blue-d1 bg-blue rounded-lg text-white text-sm font-bold disabled:bg-gray mt-4"
     />
   );
 }

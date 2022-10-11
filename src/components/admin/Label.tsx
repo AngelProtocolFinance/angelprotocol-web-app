@@ -8,7 +8,7 @@ export function Label(
   const {
     children,
     //default font color
-    className = "text-angel-grey",
+    className = "text-gray-d2",
     _required,
     ...restProps
   } = props;
@@ -17,7 +17,7 @@ export function Label(
       {...restProps}
       className={`flex items-baseline gap-1 text-xs font-heading uppercase font-bold ${className}`}
     >
-      {children} {_required && <span className="text-red-400">*</span>}
+      {children} {_required && <span className="text-red-l1">*</span>}
     </p>
   );
 }

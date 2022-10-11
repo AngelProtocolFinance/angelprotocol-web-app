@@ -11,14 +11,11 @@ export default function Terms({ classes = "" }: { classes?: string }) {
         id="confirmRole"
         {...register("isAgreedToTerms")}
       />
-      <label
-        htmlFor="confirmRole"
-        className="text-angel-grey font-light text-xs"
-      >
+      <label htmlFor="confirmRole" className="text-gray-d2 font-light text-xs">
         By clicking this button and donating with Angel Protocol, you
         acknowledge that you have read and accept the{" "}
         <a
-          className="text-angel-blue"
+          className="text-blue"
           href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Donor Terms of Use - Angel Protocol - v1.pdf"
           target="_blank"
           rel="noreferrer"

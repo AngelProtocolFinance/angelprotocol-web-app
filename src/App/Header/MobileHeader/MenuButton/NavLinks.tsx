@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import ThemeToggle from "../../ThemeToggle";
 import { commonNavItemStyle, navLinkStyle } from "./constants";
 
-export default function AppLinks() {
+export default function NavLinks() {
   const dispatch = useSetter();
   useEffect(() => {
     //set open state after portal node has been mounted
@@ -18,7 +18,7 @@ export default function AppLinks() {
   }, [dispatch]);
 
   return (
-    <div className="padded-container grid w-full justify-items-start content-start font-extrabold font-heading ">
+    <nav className="padded-container grid w-full justify-items-start content-start font-extrabold font-heading ">
       <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Marketplace
       </NavLink>
@@ -34,6 +34,6 @@ export default function AppLinks() {
         <span>Theme</span>
         <ThemeToggle />
       </span>
-    </div>
+    </nav>
   );
 }

@@ -12,14 +12,14 @@ type Props = {
 export default function Figure(props: Props) {
   return (
     <div
-      className={`bg-white/10 shadow-inner text-angel-grey w-full rounded-md p-6 ${
+      className={`bg-white/10 shadow-inner text-gray-d2 w-full rounded-md p-6 ${
         props.position || ""
       }`}
     >
-      <p className="font-heading font-bold mb-1 uppercase text-white-grey">
+      <p className="font-heading font-bold mb-1 uppercase text-white">
         {props.title}
       </p>
-      <p className="text-4xl font-heading text-white-grey/80">
+      <p className="text-4xl font-heading text-white/80">
         <span>{humanize(props.value, props.precision || 2, true)}</span>
         <span> {props.symbol}</span>
         {/* {(props.percent && (

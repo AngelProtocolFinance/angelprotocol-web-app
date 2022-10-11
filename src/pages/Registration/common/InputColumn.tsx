@@ -10,7 +10,7 @@ export default function InputColumn(props: InputProps) {
           className="cursor-pointer text-dark-grey"
         >
           {props.label}
-          {props.required && <span className="text-failed-red ml-0.5">*</span>}
+          {props.required && <span className="text-red ml-0.5">*</span>}
         </label>
         {!!props.infoModal && <InfoIcon modal={props.infoModal} />}
       </div>

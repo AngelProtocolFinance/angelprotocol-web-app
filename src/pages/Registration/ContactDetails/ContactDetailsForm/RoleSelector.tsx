@@ -12,7 +12,7 @@ export default function RoleSelector() {
     <div className="flex flex-col gap-1 w-full text-left">
       <label className="text-dark-grey">
         What's your role within the organization?
-        <span className="text-failed-red ml-0.5">*</span>
+        <span className="text-red ml-0.5">*</span>
       </label>
       <Selector<CD>
         name="role"

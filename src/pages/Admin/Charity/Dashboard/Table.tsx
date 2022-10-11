@@ -8,10 +8,10 @@ type Props = { proposals: Proposal[] };
 export default function Table({ proposals }: Props) {
   return (
     <table>
-      <TableSection rowClass="border-b border-zinc-50/30" type="thead">
+      <TableSection rowClass="border-b border-white/30" type="thead">
         <Cells
           type="th"
-          cellClass="p-1 uppercase text-zinc-50/80 text-left font-heading"
+          cellClass="p-1 uppercase text-white/80 text-left font-heading"
         >
           <>title</>
           <>status</>
@@ -19,17 +19,17 @@ export default function Table({ proposals }: Props) {
         </Cells>
       </TableSection>
       <TableSection
-        rowClass="last:border-none border-b border-zinc-50/10 hover:bg-zinc-50/5"
+        rowClass="last:border-none border-b border-white/10 hover:bg-white/10"
         type="tbody"
       >
         {proposals.map(({ title, status, expires, id }) => (
-          <Cells type="td" cellClass="p-1 text-zinc-50/80" key={id}>
+          <Cells type="td" cellClass="p-1 text-white/80" key={id}>
             <>{title}</>
             <span className="uppercase text-xs font-bold">{status}</span>
             <Expiry {...expires} />
             <Link
               to={`${adminRoutes.proposal}/${id}`}
-              className="flex items-center uppercase text-xs hover:text-angel-blue"
+              className="flex items-center uppercase text-xs hover:text-blue"
             >
               <span>Details</span>
               <Icon type="Forward" />

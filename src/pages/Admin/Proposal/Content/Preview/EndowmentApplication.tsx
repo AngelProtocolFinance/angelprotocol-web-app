@@ -50,7 +50,7 @@ function Documents({ docs, label }: { docs: FileObject[]; label: string }) {
         <Url
           href={doc.publicUrl}
           key={i}
-          className="font-heading uppercase text-sm flex items-center gap-1 text-sky-100 hover:text-sky-400 mb-1"
+          className="font-heading uppercase text-sm flex items-center gap-1 text-blue-l4 hover:text-blue-l1 mb-1"
         >
           <Icon type="ExternalLink" />
           <span>

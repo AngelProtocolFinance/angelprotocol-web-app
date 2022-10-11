@@ -15,7 +15,7 @@ export default function Stats(props: ProfileResponse & { classes?: string }) {
       <StatsItem title="no. of employees" value={props.number_of_employees} />
       <StatsItem
         title="navigator rating"
-        classes="text-leaf-green"
+        classes="text-green-l1"
         value={props.charity_navigator_rating}
       />
     </ul>

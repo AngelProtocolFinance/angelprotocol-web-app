@@ -31,7 +31,7 @@ type ErrorProps = { message?: string; center?: true | boolean };
 
 function Error({ message, center }: ErrorProps) {
   if (!message) return null;
-  const className = `w-full text-failed-red ${
+  const className = `w-full text-red ${
     center ? "text-center" : "text-left ml-5"
   }`;
   return <p className={className}>{message}</p>;

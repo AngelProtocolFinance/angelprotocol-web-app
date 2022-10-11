@@ -31,9 +31,9 @@ function ProofOfIdentityModal() {
   const { closeModal } = useModalContext();
 
   return (
-    <Dialog.Panel className="fixed-center z-20 bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
+    <Dialog.Panel className="fixed-center z-20 bg-white max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-blue">
       <BsX
-        className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
+        className="text-gray-l1 text-2xl ml-auto hover:cursor-pointer"
         onClick={closeModal}
       />
       <p className="p-4">

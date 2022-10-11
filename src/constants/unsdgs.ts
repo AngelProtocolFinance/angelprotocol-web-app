@@ -34,7 +34,7 @@ type UNSDG = {
 
 export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   1: {
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg1",
     text_hover: "hover:text-sdg1",
     bg: "bg-sdg1",
@@ -46,7 +46,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal1",
   },
   2: {
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg2",
     text_hover: "hover:text-sdg2",
     bg: "bg-sdg2",
@@ -58,7 +58,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal2",
   },
   3: {
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg3",
     text_hover: "hover:text-sdg3",
     bg: "bg-sdg3",
@@ -72,7 +72,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   4: {
     title: "quality education",
     desc: "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg4",
     text_hover: "hover:text-sdg4",
     bg: "bg-sdg4",
@@ -84,7 +84,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   5: {
     title: "gender equality",
     desc: "Achieve gender equality and empower all women and girls.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg5",
     text_hover: "hover:text-sdg5",
     bg: "bg-sdg5",
@@ -96,7 +96,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   6: {
     title: "clean water",
     desc: "Ensure availability and sustainable management of water and sanitation for all.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg6",
     text_hover: "hover:text-sdg6",
     bg: "bg-sdg6",
@@ -108,7 +108,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   7: {
     title: "affordable and clean energy",
     desc: "Ensure access to affordable, reliable, sustainable and modern energy for all.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg7",
     text_hover: "hover:text-sdg7",
     bg: "bg-sdg7",
@@ -120,7 +120,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   8: {
     title: "decent work and economic growth",
     desc: "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg8",
     text_hover: "hover:text-sdg8",
     bg: "bg-sdg8",
@@ -132,7 +132,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   9: {
     title: "industry, innovation and infrastructure",
     desc: "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg9",
     text_hover: "hover:text-sdg9",
     bg: "bg-sdg9",
@@ -144,7 +144,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   10: {
     title: "reduced inequalities",
     desc: "Reduce inequality within and among countries.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg10",
     text_hover: "hover:text-sdg10",
     bg: "bg-sdg10",
@@ -156,7 +156,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   11: {
     title: "sustainable cities and communities",
     desc: "Make cities and human settlements inclusive, safe, resilient and sustainable.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg11",
     text_hover: "hover:text-sdg11",
     bg: "bg-sdg11",
@@ -168,7 +168,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   12: {
     title: "responsible consumption and production",
     desc: "Ensure sustainable consumption and production patterns.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg12",
     text_hover: "hover:text-sdg12",
     bg: "bg-sdg12",
@@ -180,7 +180,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   13: {
     title: "climate action",
     desc: "Take urgent action to combat climate change and its impacts.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg13",
     text_hover: "hover:text-sdg13",
     bg: "bg-sdg13",
@@ -192,7 +192,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   14: {
     title: "life below water",
     desc: "Conserve and sustainably use the oceans, seas and marine resources for sustainable development.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg14",
     text_hover: "hover:text-sdg14",
     bg: "bg-sdg14",
@@ -204,7 +204,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   15: {
     title: "life on land",
     desc: "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg15",
     text_hover: "hover:text-sdg15",
     bg: "bg-sdg15",
@@ -216,7 +216,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   16: {
     title: "peace justice and strong institutions",
     desc: "Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg16",
     text_hover: "hover:text-sdg16",
     bg: "bg-sdg16",
@@ -228,7 +228,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
   17: {
     title: "partnerships for the goals",
     desc: "Strengthen the means of implementation and revitalize the global partnership for sustainable development.",
-    text_light: "text-white-grey",
+    text_light: "text-white",
     text_dark: "text-sdg",
     text_hover: "hover:text-sdg17",
     bg: "bg-sdg17",

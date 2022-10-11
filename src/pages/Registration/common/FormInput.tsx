@@ -30,14 +30,14 @@ export default function FormInput<T extends FieldValues>(
     <div className={`flex flex-col gap-1 w-full items-start ${classes || ""}`}>
       <label htmlFor={props.fieldName} className="text-dark-grey">
         {label}
-        {required && <span className="ml-0.5 text-failed-red">*</span>}
+        {required && <span className="ml-0.5 text-red">*</span>}
       </label>
       <input
         {...rest}
         id={props.fieldName}
         type={type}
         disabled={disabled || isSubmitting}
-        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black bg-zinc-50 disabled:bg-zinc-50/10 ${
+        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black bg-white disabled:bg-white/10 ${
           props.mono ? "font-mono" : ""
         }`}
         {...register(props.fieldName)}

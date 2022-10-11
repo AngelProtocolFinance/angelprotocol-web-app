@@ -38,20 +38,20 @@ export default function Amount() {
           type="button"
           style={{ animationDuration: "4s" }}
           className={`${
-            settings_shown ? "text-angel-blue animate-spin" : "text-angel-grey"
-          }  ml-0.5 text-xl hover:text-angel-orange justify-self-end`}
+            settings_shown ? "text-blue animate-spin" : "text-gray-d2"
+          }  ml-0.5 text-xl hover:text-orange justify-self-end`}
         >
           <Icon type="Settings" />
         </button>
       </div>
-      <div className="grid grid-cols-[auto_1fr] text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
-        <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
+      <div className="grid grid-cols-[auto_1fr] text-gray-d2 p-3 bg-gray-l3 shadow-inner-white rounded-md">
+        <p className="text-gray-d2 uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
         <Balance token={displayToken} />
         <label
           htmlFor="amount"
-          className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading rounded-md"
+          className="flex items-center justify-center text-gray-d2 text-lg uppercase font-heading rounded-md"
         >
           <img
             className={`${
@@ -71,14 +71,14 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-angel-grey bg-light-grey text-2xl w-full focus:outline-none"
+          className="text-right p-2 text-gray-d2 bg-gray-l2 text-2xl w-full focus:outline-none"
         />
       </div>
       <ErrorMessage
         errors={errors}
         name="amount"
         as="span"
-        className="text-right text-red-400 text-xs font-semibold font-mono m-1"
+        className="text-right text-red-l1 text-xs font-semibold font-mono m-1"
       />
     </div>
   );

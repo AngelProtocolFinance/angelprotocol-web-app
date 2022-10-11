@@ -5,7 +5,7 @@ export function DetailLabel(props: PropsWithChildren<{ classes?: string }>) {
     <p
       className={`${
         props.classes || ""
-      } text-xs font-bold text-white-grey uppercase font-heading`}
+      } text-xs font-bold text-white uppercase font-heading`}
     >
       {props.children}
     </p>

@@ -16,7 +16,7 @@ type TAcount = Locked | Liquid;
 export default function Account({ type, balance }: TAcount) {
   const { cw20, native } = balance;
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] rounded-md  p-4 border border-zinc-50/20">
+    <div className="grid grid-rows-[auto_1fr_auto] rounded-md  p-4 border border-white/20">
       <h3 className="mb-2 text-lg w-full font-bold uppercase flex items-center justify-self-start">
         <span>{type === "locked" ? "Endowment" : "Current"}</span>
       </h3>

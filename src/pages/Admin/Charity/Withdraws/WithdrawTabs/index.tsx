@@ -20,10 +20,8 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
             key={t}
             className={({ selected }) =>
               `${
-                selected
-                  ? "bg-angel-blue text-zinc-50"
-                  : "bg-zinc-50/80 text-angel-grey"
-              } px-4 py-2 uppercase text-sm disabled:text-zinc-400`
+                selected ? "bg-blue-l1 text-white" : "bg-white text-gray-d2"
+              } px-4 py-2 uppercase text-sm disabled:text-gray font-bold`
             }
           >
             {t}

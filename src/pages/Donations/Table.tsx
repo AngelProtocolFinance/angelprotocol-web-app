@@ -37,7 +37,7 @@ export default function Table(props: { donations: Donation[] }) {
           </HeaderButton>
           <>Hash</>
           <CsvExporter
-            classes="hover:text-angel-blue"
+            classes="hover:text-blue"
             headers={csvHeaders}
             data={props.donations}
             filename="donations.csv"
@@ -46,7 +46,7 @@ export default function Table(props: { donations: Donation[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
+        rowClass="border-b border-white/10 hover:bg-blue hover:bg-blue/10"
       >
         {sorted.map(({ hash, amount, symbol, chainId, date }) => (
           <Cells
@@ -61,12 +61,12 @@ export default function Table(props: { donations: Donation[] }) {
               href={getTxUrl(chainId, hash)}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+              className="text-center text-blue cursor-pointer uppercase text-sm"
             >
               {maskAddress(hash)}
             </a>
             <button
-              className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
+              className="font-heading text-sm text-white hover:text-blue disabled:text-gray-400 disabled:cursor-default uppercase"
               onClick={() =>
                 showKYCForm({
                   type: "post-donation",

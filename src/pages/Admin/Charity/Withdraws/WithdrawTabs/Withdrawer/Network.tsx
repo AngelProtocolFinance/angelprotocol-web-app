@@ -16,7 +16,7 @@ export default function Network() {
 
   return (
     <div>
-      <p className="uppercase font-bold text-angel-grey font-heading mb-2 text-sm">
+      <p className="uppercase font-bold text-gray-d2 font-heading mb-2 text-sm">
         Select network
       </p>
       <div className="flex items-center gap-4">
@@ -45,7 +45,7 @@ function Option(props: {
     <div className="flex items-center gap-1">
       <input {...props.reg} type="radio" value={props.value} id={props.value} />
       <label
-        className="font-heading uppercase text-sm text-angel-grey"
+        className="font-heading uppercase text-sm text-gray-d2"
         htmlFor={props.value}
       >
         {props.label}

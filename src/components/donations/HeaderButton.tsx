@@ -27,7 +27,7 @@ export function HeaderButton(
             : "Unsorted"
         }
         className={`absolute -right-4 ${
-          _activeSortKey === _sortKey ? "text-angel-orange/90" : "text-white/30"
+          _activeSortKey === _sortKey ? "text-orange/90" : "text-white/30"
         }`}
       />
     </button>

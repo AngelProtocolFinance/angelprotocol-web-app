@@ -14,7 +14,7 @@ import Filter from "./Filter";
 import Holdings from "./Holdings";
 
 const linkStyle =
-  "text-angel-blue hover:text-angel-orange text-sm font-bold font-heading px-3 text-left uppercase";
+  "text-blue hover:text-orange text-sm font-bold font-heading px-3 text-left uppercase";
 
 export default function Details(props: WalletState) {
   const { coins, address, chain } = props;
@@ -22,15 +22,13 @@ export default function Details(props: WalletState) {
 
   return (
     <Popover.Panel className="w-60 z-50 grid content-start absolute mt-2 bg-white right-0 rounded-md overflow-hidden shadow-lg">
-      <div className="bg-angel-grey text-zinc-50 text-xs p-2">
+      <div className="bg-gray-d2 text-zinc-50 text-xs p-2">
         <p className="uppercase">network : {chain.chain_name}</p>
       </div>
 
       <div className="flex gap-2 items-center p-3 pb-0">
-        <p className="text-sm text-angel-grey font-mono">
-          {maskAddress(address)}
-        </p>
-        <Copier text={address} colorClass="text-angel-grey text-lg" />
+        <p className="text-sm text-gray-d2 font-mono">{maskAddress(address)}</p>
+        <Copier text={address} colorClass="text-gray-d2 text-lg" />
       </div>
 
       <Link
@@ -51,7 +49,7 @@ export default function Details(props: WalletState) {
 
       <button
         onClick={disconnect}
-        className="mt-4 uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+        className="mt-4 uppercase text-sm bg-orange hover:bg-orange-l1 p-2 text-white"
       >
         disconnect
       </button>

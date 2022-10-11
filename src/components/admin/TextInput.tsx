@@ -22,11 +22,11 @@ export function TextInput<T extends FieldValues>(props: {
   return (
     <div className="flex flex-col mb-6">
       <label
-        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey"
+        className="mb-2 text-xs font-heading uppercase font-bold text-gray-d2"
         htmlFor={id}
       >
         {props.title}
-        {props.required && <span className="text-red-400 ml-1">*</span>}
+        {props.required && <span className="text-red-l1 ml-1">*</span>}
       </label>
 
       {React.createElement(props.wide ? "textarea" : "input", {
@@ -34,10 +34,10 @@ export function TextInput<T extends FieldValues>(props: {
         id: id,
         className: `${
           props.mono ? "font-mono text-sm" : ""
-        } text-black disabled:text-grey-accent focus:outline-none ${
+        } text-black disabled:text-gray focus:outline-none ${
           props.plain
-            ? "bg-light-grey border-b-2 border-angel-grey/25 rounded-none pb-1"
-            : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
+            ? "bg-gray-l3 border-b-2 border-gray-d2/25 rounded-none pb-1"
+            : "bg-gray-l3 shadow-inner-white rounded-md p-3"
         }`,
         disabled: props.disabled,
         placeholder: props.placeholder,
@@ -48,7 +48,7 @@ export function TextInput<T extends FieldValues>(props: {
         errors={errors}
         name={props.name as string}
         as="span"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="text-right text-red text-xs m-1"
       />
     </div>
   );

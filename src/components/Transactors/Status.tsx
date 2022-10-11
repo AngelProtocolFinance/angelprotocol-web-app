@@ -51,7 +51,7 @@ function StatusDiv({
 }: PropsWithChildren<{ classes?: string }>) {
   return (
     <div
-      className={`relative grid grid-cols-[auto_1fr] items-center bg-red-400/20 p-2 rounded-md text-angel-grey ${classes}`}
+      className={`relative grid grid-cols-[auto_1fr] items-center bg-red-400/20 p-2 rounded-md text-gray-d2 ${classes}`}
     >
       {children}
     </div>

@@ -18,7 +18,7 @@ export default function Form(props: Props) {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="w-full bg-white-grey grid gap-2 p-4 text-angel-grey"
+      className="w-full bg-white grid gap-2 p-4 text-gray-d2"
       autoComplete="off"
       autoSave="off"
     >
@@ -52,11 +52,11 @@ export default function Form(props: Props) {
         <label htmlFor="country" className="text-xs uppercase font-bold mb-1">
           Country <span className="text-rose-400"> *</span>
         </label>
-        <div className="form-control rounded-md grid bg-white-grey">
+        <div className="form-control rounded-md grid bg-white">
           <CountrySelector
             fieldName="country"
             classes={{
-              container: "p-3 rounded-md shadow-inner-white-grey bg-light-grey",
+              container: "p-3 rounded-md shadow-inner-white bg-gray-l3",
               input: "bg-transparent",
             }}
           />
@@ -64,7 +64,7 @@ export default function Form(props: Props) {
             errors={errors}
             name="country"
             as="span"
-            className="text-right text-red-400 my-1 text-xs mr-1"
+            className="text-right text-red-l1 my-1 text-xs mr-1"
           />
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function Form(props: Props) {
       </div>
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isSubmitting ? "Processing..." : "Submit"}

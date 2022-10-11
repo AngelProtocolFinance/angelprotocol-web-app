@@ -18,7 +18,7 @@ export default function Title(props: {
     <div className="grid mb-4">
       <label
         htmlFor={props.id}
-        className="text-angel-grey text-sm uppercase pl-0.5 mb-2"
+        className="text-gray-d2 text-sm uppercase pl-0.5 mb-2"
       >
         {props.label}
       </label>
@@ -26,14 +26,14 @@ export default function Title(props: {
         ...register(props.id),
         id: props.id,
         className:
-          "shadow-inner-white-grey bg-light-grey rounded-md p-3 text-angel-grey focus:outline-none",
+          "shadow-inner-white bg-gray-l3 rounded-md p-3 text-gray-d2 focus:outline-none",
         disabled: props.frozen,
       })}
       <ErrorMessage
         errors={errors}
         name={props.id}
         as="p"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
     </div>
   );

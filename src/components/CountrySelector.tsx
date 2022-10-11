@@ -43,7 +43,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
           <Icon type="Loading" className="animate-spin" />
         ) : countryName ? (
           <button
-            className="text-rose-500 hover:text-rose-400 active:text-rose-600"
+            className="text-red hover:text-red-l1 active:text-red-d1"
             onClick={() => {
               onCountryNameChange("");
             }}
@@ -67,7 +67,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
               <Combobox.Option
                 key={country.name}
                 value={country.name}
-                className="cursor-button flex gap-2 p-2 text-sm hover:bg-sky-100/50 cursor-button text-angel-grey"
+                className="cursor-button flex gap-2 p-2 text-sm hover:bg-blue-l4/50 cursor-button text-gray-d2"
               >
                 <img
                   src={country.flag}
@@ -77,7 +77,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
                 <span>{country.name}</span>
               </Combobox.Option>
             ))) || (
-            <div className="p-2 text-sm text-angel-grey">
+            <div className="p-2 text-sm text-gray-d2">
               {debouncedQuery} not found
             </div>
           )}

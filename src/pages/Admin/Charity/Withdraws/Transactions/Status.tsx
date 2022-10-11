@@ -10,16 +10,16 @@ export default function Status({
   routes = [],
 }: WithdrawLog) {
   if (proposal_status === "rejected") {
-    return <span className="text-rose-400 uppercase text-sm">rejected</span>;
+    return <span className="text-red-l1 uppercase text-sm">rejected</span>;
   }
 
   const currRoute = routes.length;
   if (num_routes && currRoute > 0) {
     let status =
       currRoute >= num_routes && routes[currRoute - 1].status === "OK" ? (
-        <span className="text-emerald-400">completed</span>
+        <span className="text-green-l1">completed</span>
       ) : (
-        <span className="text-amber-400">routing</span>
+        <span className="text-orange-l1">routing</span>
       );
 
     return (
@@ -30,7 +30,7 @@ export default function Status({
               {status}
               <span
                 className={`${
-                  open ? "bg-sky-500/30" : "bg-zinc-50/10 hover:bg-zinc-50/20"
+                  open ? "bg-blue/30" : "bg-white/10 hover:bg-white/20"
                 } rounded-sm p-1 `}
               >
                 {currRoute}/{num_routes}
@@ -40,7 +40,7 @@ export default function Status({
         </Popover.Button>
         <Popover.Panel
           as="ul"
-          className="absolute bg-zinc-50 shadow-md p-3 rounded-md text-zinc-600 z-10"
+          className="absolute bg-white shadow-md p-3 rounded-md text-gray-d2 z-10"
         >
           {Array(num_routes)
             .fill("")
@@ -56,7 +56,7 @@ export default function Status({
       </Popover>
     );
   } else {
-    return <span className="text-zinc-400 uppercase text-sm">submitted</span>;
+    return <span className="text-gray uppercase text-sm">submitted</span>;
   }
 }
 
@@ -88,7 +88,7 @@ function Route(props: {
         <span className="text-xs font-mono">{output_symbol}</span>
       </div>
       <a
-        className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600 mt-4"
+        className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1 mt-4"
         href={`${explorerUrls[id]}/${hash}`}
         target="_blank"
         rel="noopener noreferrer"

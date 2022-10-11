@@ -39,7 +39,7 @@ function IconLink({
       {...restProps}
       target="_blank"
       rel="noopener noreferrer"
-      className="h-10 w-10 p-2 rounded-full text-angel-blue inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+      className="h-10 w-10 p-2 rounded-full text-blue-l2 hover:text-blue-l4 inline-flex items-center border border-blue-l2 hover:border-blue-l4 focus:border-white"
     >
       <Icon type={_iconType} size={25} />
     </a>

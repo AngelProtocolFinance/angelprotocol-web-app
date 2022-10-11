@@ -16,7 +16,7 @@ export default function Reason() {
   return (
     <div>
       {existingReason && (
-        <p className="text-amber-700 bg-amber-100 text-sm p-2 rounded-md mb-2">
+        <p className="text-orange-d2 bg-orange-l4 text-sm p-2 rounded-md mb-2">
           <Icon type="Info" className="inline relative bottom-0.5 mr-0.5" />
           <span>Note: this will update prior reason for rejection</span>
         </p>

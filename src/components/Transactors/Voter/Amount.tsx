@@ -24,24 +24,21 @@ export default function Amount() {
 
   return (
     <div className="grid mb-1">
-      <label
-        htmlFor="amount"
-        className="text-angel-grey uppercase font-bold mb-2"
-      >
+      <label htmlFor="amount" className="text-gray-d2 uppercase font-bold mb-2">
         <span>Deposit amount</span>
         <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
-      <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
+      <div className="flex flex-wrap items-stretch p-3 bg-gray-l3 shadow-inner-white rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={symbols[denoms.halo]}
-          className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none bg-gray-l3 text-gray-d2 text-lg"
         />
         <div
-          className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"
+          className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"
           onClick={onMaxClick}
         >
           max
@@ -51,7 +48,7 @@ export default function Amount() {
         errors={errors}
         name="amount"
         as="p"
-        className="text-right text-red-400 text-xs mb-1 mt-1"
+        className="text-right text-red-l1 text-xs mb-1 mt-1"
       />
     </div>
   );
