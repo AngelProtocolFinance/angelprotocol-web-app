@@ -15,12 +15,6 @@ export default function Banner({ classes = "" }: { classes?: string }) {
         donating crypto assets today!
       </p>
       <img src={character} alt="" className="w-full max-w-md" />
-      {/* <div
-        className="w-full"
-        style={{
-          background: `url('${character}') center / contain no-repeat`,
-        }}
-      /> */}
     </div>
   );
 }
