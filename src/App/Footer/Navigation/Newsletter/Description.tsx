@@ -11,7 +11,7 @@ export default function Description() {
           href="https://angelprotocol.io/privacy-policy/"
           rel="noreferrer"
           target="_blank"
-          className="cursor-pointer underline"
+          className="font-bold cursor-pointer underline"
         >
           Privacy Policy
         </a>
