@@ -5,5 +5,3 @@ export const APIs = {
 };
 
 export const PRIVACY_POLICY = "https://angelprotocol.io/privacy-policy/";
-export const LITEPAPER =
-  "https://angelprotocol.io/docs/litepaper-introduction/";
