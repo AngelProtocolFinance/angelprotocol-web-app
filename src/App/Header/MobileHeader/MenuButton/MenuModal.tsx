@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import Icon from "components/Icon";
 import Logo from "../../Logo";
-import AppLinks from "./AppLinks";
+import NavLinks from "./NavLinks";
 import { adminMobileNavId } from "./constants";
 
 export default function MenuModal({ onClose }: { onClose: () => void }) {
@@ -21,7 +21,7 @@ export default function MenuModal({ onClose }: { onClose: () => void }) {
       </div>
       <Separator />
       <div className="grid grid-cols-1 gap-3">
-        <AppLinks />
+        <NavLinks />
         <div id={adminMobileNavId} />
       </div>
     </Dialog.Panel>

@@ -1,7 +1,7 @@
 import { useModalContext } from "contexts/ModalContext";
 import Icon, { IconTypes } from "components/Icon";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter } from "store/accessors";
-import TransactionPrompt from "./TransactionPrompt";
 
 export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
