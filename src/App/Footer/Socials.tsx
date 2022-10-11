@@ -10,7 +10,7 @@ export default function Socials(props: { classes?: string }) {
             href={link}
             target="_blank"
             rel="noreferrer"
-            className={`text-zinc-50 hover:text-sky-400 active:text-sky-500 block mx-2 first:ml-0`}
+            className={`text-white hover:text-blue-l1 active:text-blue block mx-2 first:ml-0`}
           >
             <Icon type={iconType} className="w-6 h-6" title={title} />
           </a>

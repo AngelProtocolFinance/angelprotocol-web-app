@@ -8,7 +8,7 @@ export default function Form() {
   return (
     <form
       onSubmit={transferFunds}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
+      className="w-full p-6 rounded-md grid content-start rounded-md bg-white"
     >
       <TextInput<FS> title="Proposal Title" name="title" required />
       <TextInput<FS>

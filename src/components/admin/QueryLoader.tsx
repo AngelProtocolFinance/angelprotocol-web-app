@@ -37,7 +37,7 @@ export function QueryLoader<T>({
   }
   if (isError || !data) {
     return (
-      <div className={`text-rose-300 ${classes?.container || ""}`}>
+      <div className={`text-red-l2 ${classes?.container || ""}`}>
         <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
         <span>{messages.error || "Failed to get data"}</span>
       </div>

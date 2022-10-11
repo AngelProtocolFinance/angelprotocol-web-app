@@ -23,7 +23,7 @@ export default function Adder() {
       <button
         onClick={addMember}
         type="button"
-        className="font-heading font-bold justify-self-end text-xs uppercase text-green-400 hover:text-green-300"
+        className="font-heading font-bold justify-self-end text-xs uppercase text-green-l1 hover:text-green-l2"
       >
         + add member
       </button>

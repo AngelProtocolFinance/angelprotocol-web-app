@@ -24,7 +24,7 @@ export default function Claims() {
   return (
     <div
       className={`grid ${
-        hasClaim ? "p-2 shadow-inner-white-grey bg-light-grey rounded-md" : ""
+        hasClaim ? "p-2 shadow-inner-white bg-gray-l3 rounded-md" : ""
       }`}
     >
       {(hasClaim && (
@@ -40,7 +40,7 @@ export default function Claims() {
       )) ||
         null}
       {total_claims.gt(0) && (
-        <p className="uppercase mb-1.5 text-angel-blue">
+        <p className="uppercase mb-1.5 text-blue">
           <span className="text-xs font-heading font-bold mr-1">
             {" "}
             Total claimable
@@ -59,11 +59,7 @@ function Claim(props: { time: string; amount: string }) {
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
   return (
     <li className="flex justify-between">
-      <p
-        className={`font-heading ${
-          claimable ? "text-angel-blue" : "text-grey-accent"
-        }`}
-      >
+      <p className={`font-heading ${claimable ? "text-blue" : "text-gray"}`}>
         <span className="mr-1">
           {humanize(condense(props.amount), 2, true)}
         </span>
@@ -71,11 +67,11 @@ function Claim(props: { time: string; amount: string }) {
       </p>
       <p className="text-xs font-semibold">
         {claimable ? (
-          <span className="flex items-center text-angel-blue">
+          <span className="flex items-center text-blue">
             <Icon type="Check" className="mr-0.5" /> claimable
           </span>
         ) : (
-          <span className="flex items-center text-grey-accent">
+          <span className="flex items-center text-gray">
             <Icon type="HourglassSplit" className="mr-0.5" />
             {claim_date}
           </span>

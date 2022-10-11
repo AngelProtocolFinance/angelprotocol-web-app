@@ -13,7 +13,7 @@ export default function Nav(props: { classes?: string }) {
     //bounding box to anchor buttons
     <div className={`relative ${props.classes || ""} my-3`}>
       <div ref={ref} className="overflow-hidden overflow-x-auto scroll-hidden">
-        <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(4,_minmax(8rem,_1fr))] divide-x">
+        <div className="bg-white text-gray-d2 text-sm grid grid-cols-[repeat(4,_minmax(8rem,_1fr))] divide-x">
           <NavLink end to={profileRoutes.overview} className={styler}>
             overview
           </NavLink>
@@ -45,12 +45,12 @@ export default function Nav(props: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "hover:text-white hover:bg-angel-blue font-semibold uppercase py-3 text-center",
-  "bg-angel-blue text-white"
+  "hover:text-white hover:bg-blue font-semibold uppercase py-3 text-center",
+  "bg-blue text-white"
 );
 
 const disabledClass =
-  "text-white-grey font-semibold bg-grey-accent uppercase py-3 text-center pointer-events-none";
+  "text-white font-semibold bg-gray uppercase py-3 text-center pointer-events-none";
 
 function Button({
   _iconType,
@@ -64,7 +64,7 @@ function Button({
       {...restProps}
       className={`absolute top-0 ${
         className || ""
-      } p-1 bg-blue-accent/50 group-hover:flex hover:bg-blue-accent/100 w-10 h-10 flex rounded-full items-center justify-center group`}
+      } p-1 bg-blue-d1/50 group-hover:flex hover:bg-blue-d1/100 w-10 h-10 flex rounded-full items-center justify-center group`}
     >
       <Icon type={_iconType} className="text-white text-2xl " />
     </button>

@@ -10,7 +10,7 @@ type Props = {
 export default function LinkExpired({ onClick, isLoading }: Props) {
   return (
     <div className="flex flex-col gap-10 items-center">
-      <FaExclamation className="text-4xl text-red-500" />
+      <FaExclamation className="text-4xl text-red" />
       <p className="text-2xl font-bold">
         Your verification link has expired. Please resend the verification
         email.

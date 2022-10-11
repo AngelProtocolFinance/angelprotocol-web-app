@@ -25,7 +25,9 @@ export default function Amount() {
   return (
     <div className="grid mb-4">
       <div className="flex items-baseline justify-between">
-        <Label _required>Transfer amount</Label>
+        <Label _required className="text-gray-d2 mb-2">
+          Transfer amount
+        </Label>
         <Balance />
       </div>
       <input
@@ -34,7 +36,7 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={denomText}
-        className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
+        className="shadow-inner-white focus:outline-none p-3 rounded-md text-xl bg-gray-l3 text-gray-d3"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
@@ -45,7 +47,7 @@ export default function Amount() {
           errors={errors}
           name="amount"
           as="span"
-          className="font-mono font-semibold text-red-400 text-xs mb-1 mt-0.5 text-right"
+          className="font-mono font-semibold text-red-l1 text-xs mb-1 mt-0.5 text-right"
         />
       </div>
     </div>

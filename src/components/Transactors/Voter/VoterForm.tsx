@@ -10,12 +10,12 @@ export default function VoterForm() {
   return (
     <form
       onSubmit={vote}
-      className="bg-white-grey grid p-4 rounded-md w-full max-w-lg"
+      className="bg-white grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >
       <Status />
-      <h4 className="text-xl text-angel-grey text-center uppercase">Vote</h4>
-      <p className="text-center text-angel-grey p-2 border-2 border-angel-blue/20 rounded-md my-4">
+      <h4 className="text-xl text-gray-d2 text-center uppercase">Vote</h4>
+      <p className="text-center text-gray-d2 p-2 border-2 border-blue/20 rounded-md my-4">
         Votes cannot be changed after submission. Staked HALO used to vote is
         locked and cannot be withdrawn until the poll has finished.
       </p>
@@ -27,7 +27,7 @@ export default function VoterForm() {
       <Fee />
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

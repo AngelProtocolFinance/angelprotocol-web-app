@@ -11,7 +11,7 @@ export default function DonationMetrics() {
   );
 
   return (
-    <div className="text-center text-white-grey">
+    <div className="text-center text-white">
       <h2 className="my-3 text-3xl font-extrabold">
         Total Donations: ${" "}
         {`${Number(

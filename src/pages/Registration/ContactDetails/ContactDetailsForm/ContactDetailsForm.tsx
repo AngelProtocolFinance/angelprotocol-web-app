@@ -130,11 +130,11 @@ const PrivacyPolicyCheckbox = forwardRef(
         href={PRIVACY_POLICY}
         target="_blank"
         rel="noreferrer noopener"
-        className="underline text-angel-blue"
+        className="underline text-blue"
       >
         Privacy Policy
       </a>
-      <span className="text-failed-red ml-0.5">*</span>
+      <span className="text-red ml-0.5">*</span>
     </Checkbox>
   )
 );

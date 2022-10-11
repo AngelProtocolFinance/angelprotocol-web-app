@@ -15,20 +15,20 @@ export default function TableEntry(props: Endowment) {
     5
   );
   return (
-    <tr className="border-b">
+    <tr className="border-b border-black/10">
       <td>
         <LazyImage
           src={props.logo || defaultIcon}
           alt=""
           classes={`self-center row-span-2 w-32 h-24 bg-white ${
-            props.iconLight ? "bg-angel-blue" : ""
+            props.iconLight ? "bg-blue" : ""
           } rounded-sm object-contain mr-4 m-1`}
         />
       </td>
       <td>
         <Link
           to={`../${appRoutes.profile}/${props.endowment_id}`}
-          className="col-start-2 text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 mb-1"
+          className="col-start-2 text-lg  text-gray-d2 hover:text-blue active:text-blue-d1 font-bold pt-2 mb-1"
         >
           {props.name}
         </Link>

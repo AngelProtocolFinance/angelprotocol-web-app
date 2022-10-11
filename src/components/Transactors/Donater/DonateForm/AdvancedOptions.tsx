@@ -15,15 +15,13 @@ export default function AdvancedOptions({
   return (
     <div
       className={`grid ${classes} ${
-        isOptionsShown
-          ? "p-3 rounded-md bg-light-grey shadow-inner-white-grey"
-          : ""
+        isOptionsShown ? "p-3 rounded-md bg-gray-l3 shadow-inner-white" : ""
       }`}
     >
       <button
         type="button"
         onClick={toggleAdvancedOptions}
-        className="justify-self-start flex items-center text-angel-grey hover:text-angel-blue font-semibold  cursor-pointer"
+        className="justify-self-start flex items-center text-gray-d2 hover:text-blue font-semibold  cursor-pointer"
       >
         <Icon
           type="Settings"

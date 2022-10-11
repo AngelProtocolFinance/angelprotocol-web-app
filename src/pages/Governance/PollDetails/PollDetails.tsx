@@ -15,7 +15,7 @@ export default function PollDetails() {
     <div className="padded-container grid content-start gap-4">
       <Link
         to={appRoutes.govern}
-        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
+        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-blue mt-4 mb-4"
       >
         <Icon type="ArrowBack" size={15} /> back to proposals
       </Link>
@@ -82,13 +82,13 @@ export default function PollDetails() {
             title="yes"
             percent={details.yes_pct}
             value={details.yes_val}
-            colorClass="text-green-500"
+            colorClass="text-green"
           />
           <Count
             title="no"
             percent={details.no_pct}
             value={details.no_val}
-            colorClass="text-red-400"
+            colorClass="text-red-l1"
           />
         </div>
       </div>
@@ -97,12 +97,12 @@ export default function PollDetails() {
 }
 
 const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
-  executed: { bg: "bg-green-400", text: "text-green-400" },
-  expired: { bg: "bg-white", text: "text-white-grey" },
-  failed: { bg: "bg-red-300", text: "text-red-300" },
-  in_progress: { bg: "bg-white", text: "text-white-grey" },
-  passed: { bg: "bg-green-400", text: "text-green-400" },
-  rejected: { bg: "bg-red-300", text: "text-red-300" },
+  executed: { bg: "bg-green-l1", text: "text-green-l1" },
+  expired: { bg: "bg-white", text: "text-white" },
+  failed: { bg: "bg-red-l2", text: "text-red-l2" },
+  in_progress: { bg: "bg-white", text: "text-white" },
+  passed: { bg: "bg-green-l1", text: "text-green-l1" },
+  rejected: { bg: "bg-red-l2", text: "text-red-l2" },
 };
 
 function Count(props: {

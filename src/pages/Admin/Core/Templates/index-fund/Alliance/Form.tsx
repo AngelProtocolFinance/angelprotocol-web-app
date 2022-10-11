@@ -15,14 +15,14 @@ export default function Form() {
         wide
         required
       />
-      <Label className="-mb-2 text-angel-grey">
-        <span className="text-red-400">Remove</span> |{" "}
-        <span className="text-angel-orange">Edit</span> existing member
+      <Label className="-mb-2 text-gray-d2">
+        <span className="text-red-l1">Remove</span> |{" "}
+        <span className="text-orange">Edit</span> existing member
       </Label>
       <AllianceSelection />
       {(isEditingMember && (
-        <Label className="mt-4 -mb-2 text-angel-orange">Edit Member</Label>
-      )) || <Label className="mt-4 -mb-2 text-green-400">Add member</Label>}
+        <Label className="mt-4 -mb-2 text-orange">Edit Member</Label>
+      )) || <Label className="mt-4 -mb-2 text-green-l1">Add member</Label>}
       <MemberEditor />
       <Submitter type="button" className="mt-4 " onClick={editAlliance}>
         Propose Changes

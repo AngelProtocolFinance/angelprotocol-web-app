@@ -11,7 +11,7 @@ import reportWebVitals from "./reportWebVitals";
 const App = lazy(() => import("./App/App"));
 
 const LoaderComponent = () => (
-  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
 const container = document.getElementById("root");

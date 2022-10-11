@@ -14,9 +14,9 @@ export default function Step(props: Props) {
     <div className="grid grid-cols-[2fr_1fr_auto] items-center w-full font-bold">
       <p className="mr-auto text-left">{props.title}</p>
       {props.isIncomplete ? (
-        <p className="uppercase text-yellow-500 w-40">Incomplete</p>
+        <p className="uppercase text-orange-l1 w-40">Incomplete</p>
       ) : (
-        <p className="uppercase text-green-500 w-40">
+        <p className="uppercase text-green w-40">
           {props.customStatus || "Completed"}
         </p>
       )}

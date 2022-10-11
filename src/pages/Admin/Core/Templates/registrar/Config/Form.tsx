@@ -20,18 +20,18 @@ export default function Form() {
         wide
         required
       />
-      <Label className="-mb-2 text-angel-grey">Latest accounts wasm code</Label>
+      <Label className="-mb-2 text-gray-d2">Latest accounts wasm code</Label>
       <GroupContainer>
         <TextInput<RV> title="accounts code id" name="accounts_code_id" plain />
       </GroupContainer>
 
-      <Label className="-mb-2 text-angel-grey">Default Donation splits</Label>
+      <Label className="-mb-2 text-gray-d2">Default Donation splits</Label>
       <GroupContainer>
         <TextInput<RV> title="tax rate ( % )" name="tax_rate" plain />
         <TextInput<RV> title="default vault" name="default_vault" plain mono />
       </GroupContainer>
 
-      <Label className="-mb-2 text-angel-grey">Vault Setting</Label>
+      <Label className="-mb-2 text-gray-d2">Vault Setting</Label>
       <GroupContainer>
         <TextInput<RV> title="min liquid split( % )" name="split_min" plain />
         <TextInput<RV> title="max liquid split( % )" name="split_max" plain />
@@ -42,7 +42,7 @@ export default function Form() {
         />
       </GroupContainer>
 
-      <Label className="-mb-2 text-angel-grey">Contract Directory</Label>
+      <Label className="-mb-2 text-gray-d2">Contract Directory</Label>
       <GroupContainer>
         <TextInput<RV>
           title="index fund"

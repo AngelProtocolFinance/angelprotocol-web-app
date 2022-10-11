@@ -10,7 +10,7 @@ export default function ProposalCard(props: Proposal) {
       to={`../${adminRoutes.proposal}/${props.id}`}
       className="bg-white/10 hover:bg-white/20 p-4 rounded-md shadow-inner grid"
     >
-      <div className="font-mono font-bold flex justify-between items-center text-white-grey/80">
+      <div className="font-mono font-bold flex justify-between items-center text-white/80">
         <p className="text-sm">ID: {props.id}</p>
         <Status status={props.status} />
       </div>

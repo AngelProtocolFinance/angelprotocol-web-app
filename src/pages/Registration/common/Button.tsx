@@ -21,7 +21,7 @@ export function Button(props: Props) {
   return (
     <button
       type={submit ? "submit" : "button"}
-      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${className}`}
+      className={`disabled:bg-gray-l1 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${className}`}
       {...rest}
       disabled={disabled || isLoading}
     >

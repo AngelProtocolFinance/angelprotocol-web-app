@@ -50,7 +50,7 @@ function DonateContext(props: DonaterProps & { tokens: Token[] | undefined }) {
 
 function DonateFormLoader() {
   return (
-    <div className="bg-white-grey grid p-4 rounded-md w-full">
+    <div className="bg-white grid p-4 rounded-md w-full">
       <ContentLoader className="opacity-30 h-12 w-full" />
       <ContentLoader className="opacity-30 h-30 mt-4 w-full" />
       <ContentLoader className="opacity-30 h-10 mt-4 w-full" />

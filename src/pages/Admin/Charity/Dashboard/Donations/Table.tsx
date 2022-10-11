@@ -11,7 +11,7 @@ export default function Table(props: { donations: Donation[] }) {
 
   return (
     <table className="w-full border-collapse self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
+      <TableSection type="thead" rowClass="border-b-2 border-white/30">
         <Cells
           type="th"
           cellClass="text-left uppercase font-heading font-semibold text-sm p-2 first:pl-0 last:pr-0"
@@ -34,7 +34,7 @@ export default function Table(props: { donations: Donation[] }) {
             Date
           </HeaderButton>
           <CsvExporter
-            classes="hover:text-angel-blue"
+            classes="hover:text-blue"
             headers={csvHeaders}
             data={props.donations}
             filename="received_donations.csv"
@@ -43,7 +43,7 @@ export default function Table(props: { donations: Donation[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
+        rowClass="border-b border-white/10 hover:bg-blue hover:bg-blue/10"
       >
         {sorted.map(({ hash, amount, symbol, chainId, date }) => (
           <Cells

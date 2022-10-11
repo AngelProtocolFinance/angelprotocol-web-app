@@ -24,7 +24,7 @@ export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
   return (
     <div className="flex flex-col gap-1 items-center">
       {fieldErrors.map((x) => (
-        <p className="w-full text-xs text-failed-red text-center" key={x.type}>
+        <p className="w-full text-xs text-red-l1 text-center" key={x.type}>
           {x.message}
         </p>
       ))}

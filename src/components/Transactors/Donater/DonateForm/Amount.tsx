@@ -15,32 +15,34 @@ export default function Amount() {
       <div className="flex items-baseline justify-between mb-1">
         <label
           htmlFor="amount"
-          className="text-angel-grey text-lg uppercase font-bold"
+          className="text-gray-d2 text-lg uppercase font-bold"
         >
           Donation Amount
         </label>
         <Balance />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 shadow-inner-white-grey rounded-md text-xl bg-light-grey/80 text-angel-grey">
+      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 rounded-md shadow-inner-white bg-gray-l3">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="0"
-          className="w-full p-3 bg-transparent focus:outline-none border-r border-zinc-600/20"
+          className="w-full p-3 bg-transparent focus:outline-none border-r border-gray-d2/20"
         />
         {/* <TokenSelector<DV> fieldName="token" classes="border-l-2 pl-2" /> */}
         <TokensSelector<DV> fieldName="token" />
       </div>
 
-      <ErrorMessage
-        errors={errors}
-        name="amount"
-        as="p"
-        className="font-mono font-semibold text-red-400 text-xs m-1 text-left"
-      />
+      <div className="empty:mb-2">
+        <ErrorMessage
+          errors={errors}
+          name="amount"
+          as="p"
+          className="text-red text-xs m-1 text-left"
+        />
+      </div>
     </div>
   );
 }

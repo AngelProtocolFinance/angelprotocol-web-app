@@ -38,12 +38,12 @@ export default function MemberEditor() {
         <Button
           type="button"
           onClick={editMember}
-          _accent={` ${isEditingMember ? "bg-angel-orange" : "bg-green-400"}`}
+          _accent={` ${isEditingMember ? "bg-orange" : "bg-green-l1"}`}
         >
           {isEditingMember ? "save changes" : "+ add member"}
         </Button>
         {isEditingMember && (
-          <Button type="button" onClick={resetEdit} _accent="bg-red-400">
+          <Button type="button" onClick={resetEdit} _accent="bg-red-l1">
             cancel
           </Button>
         )}

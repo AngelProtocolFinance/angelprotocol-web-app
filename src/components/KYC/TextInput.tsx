@@ -16,24 +16,24 @@ export default function TextInput(props: {
     <div className="grid mb-3">
       <label
         htmlFor={props.id}
-        className="ml-0.5 text-angel-grey text-xs uppercase font-bold mb-1"
+        className="ml-0.5 text-gray-d2 text-xs uppercase font-bold mb-1"
       >
         {props.label}
-        {props.required && <span className="text-rose-400"> *</span>}
+        {props.required && <span className="text-red-l1"> *</span>}
       </label>
       <input
         {...register(props.name)}
         autoComplete="off"
         id={props.id}
         type="text"
-        className="p-3 text-angel-grey rounded-md shadow-inner-white-grey bg-light-grey
+        className="p-3 text-gray-d3 rounded-md shadow-inner-white bg-gray-l3
          focus:outline-none"
       />
       <ErrorMessage
         errors={errors}
         name={props.name}
         as="span"
-        className="text-right text-red-400 text-xs mt-1 mr-1"
+        className="text-right text-red-l1 text-xs mt-1 mr-1"
       />
     </div>
   );

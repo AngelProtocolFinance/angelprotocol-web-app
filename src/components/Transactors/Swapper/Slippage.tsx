@@ -3,7 +3,7 @@ import { SwapValues } from "./types";
 
 export default function Slippage() {
   return (
-    <div className="flex items-baseline justify-end text-angel-grey divide-x">
+    <div className="flex items-baseline justify-end text-gray-d2 divide-x">
       <p className="text-2xs uppercase font-bold font-heading mr-2">Slippage</p>
       <Option value="0.5" id={"slip_1"} />
       <Option value="1.0" id={"slip_2"} />
@@ -27,8 +27,8 @@ function Option(props: OptionProps) {
       <label
         htmlFor={props.id}
         className={`px-2 py-1 font-mono font-semibold cursor-pointer text-xs 
-        hover:bg-angel-blue/10 ${
-          is_active ? "bg-angel-blue/10 shadow-inner-white-grey rounded-sm" : ""
+        hover:bg-blue/10 ${
+          is_active ? "bg-blue/10 shadow-inner-white rounded-sm" : ""
         }`}
       >
         {props.value}%

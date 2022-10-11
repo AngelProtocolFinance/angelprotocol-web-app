@@ -32,7 +32,7 @@ export default function Filter(props: {
           checked={isSmallAmountsShown}
           onChange={setIsSmallAmountShown}
           className={`${
-            isSmallAmountsShown ? "bg-sky-500" : "bg-zinc-300"
+            isSmallAmountsShown ? "bg-blue" : "bg-gray-l1"
           } relative flex h-4 w-9 items-center rounded-full`}
         >
           <span
@@ -41,7 +41,7 @@ export default function Filter(props: {
             } inline-block h-3 w-3 transform rounded-full bg-white`}
           />
         </Switch>
-        <span className="font-mono text-sm text-zinc-600">
+        <span className="font-mono text-sm text-gray-d2">
           {"<" + criterionAmount}
         </span>
       </div>

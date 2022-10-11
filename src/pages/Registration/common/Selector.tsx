@@ -37,19 +37,19 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
       <Listbox.Button
         className={`${
           props.classes?.button ?? ""
-        } flex items-center bg-zinc-50 disabled:bg-zinc-50/10 text-left rounded-md outline-none border-none w-full text-black`}
+        } flex items-center bg-white disabled:bg-zinc-50/10 text-left rounded-md outline-none border-none w-full text-black`}
       >
         {({ open }) => (
           <>
             <span>{display}</span>
             <Icon
               type={open ? "Down" : "CaretLeft"}
-              className="text-angel-grey ml-auto"
+              className="text-gray-d2 ml-auto"
             />
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options className="z-10 mt-2 w-full h-[15rem] overflow-y-auto absolute top-full right-0 bg-white-grey rounded-md shadow-md">
+      <Listbox.Options className="z-10 mt-2 w-full h-[15rem] overflow-y-auto absolute top-full right-0 bg-white rounded-md shadow-md">
         {props.options.map((option) => (
           <Listbox.Option
             key={option.value}
@@ -57,8 +57,8 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             className={({ selected }) =>
               `${
                 props.classes?.option ?? ""
-              } cursor-pointer hover:bg-sky-200/50 ${
-                selected ? "bg-sky-500 text-zinc-50" : "text-angel-grey"
+              } cursor-pointer hover:bg-blue-l3/50 ${
+                selected ? "bg-blue text-white" : "text-gray-d2"
               }`
             }
           >

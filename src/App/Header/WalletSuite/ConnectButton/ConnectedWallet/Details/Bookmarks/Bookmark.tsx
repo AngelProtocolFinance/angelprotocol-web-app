@@ -7,15 +7,15 @@ export default function Bookmark({ name, id }: EndowmentBookmark) {
   return (
     <li className="grid justify-items-start font-heading">
       <p className="text-sm">{name}</p>
-      <div className="flex items-center divide-x divide-angel-grey/20">
+      <div className="flex items-center divide-x divide-gray-d2/20">
         <Link
           to={appRoutes.profile + "/" + id}
-          className="text-xs uppercase text-angel-blue active:text-angel-orange pr-2"
+          className="text-xs uppercase text-blue active:text-orange pr-2"
         >
           Profile
         </Link>
         <AdminLink
-          className="text-xs uppercase text-angel-blue active:text-angel-orange pl-2"
+          className="text-xs uppercase text-blue active:text-orange pl-2"
           id={id}
           label="admin"
         />

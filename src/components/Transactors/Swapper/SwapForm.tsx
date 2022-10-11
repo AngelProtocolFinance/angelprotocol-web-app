@@ -10,14 +10,14 @@ export default function SwapForm() {
   return (
     <form
       onSubmit={swap}
-      className="bg-white-grey grid p-4 rounded-md w-full"
+      className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
       <Amount />
       <button
         type="button"
-        className="text-blue-accent active:text-angel-blue hover:text-angel-blue justify-self-center my-3"
+        className="text-blue-d1 active:text-blue hover:text-blue justify-self-center my-3"
         onClick={switchCurrency}
       >
         <Icon type="ExchangeAlt" className="text-3xl" />
@@ -28,7 +28,7 @@ export default function SwapForm() {
       <Commission />
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "simulating.." : "swap"}

@@ -31,13 +31,13 @@ export default function Form() {
 
       {isFundSelected && (
         <>
-          <Label className="text-red-400 mt-6 -mb-2">Remove member</Label>
+          <Label className="text-red-l1 mt-6 -mb-2">Remove member</Label>
           <GroupContainer>
             {(isFundMembersLoading && (
               <Loader
                 gapClass="gap-1"
                 widthClass="w-2"
-                bgColorClass="bg-angel-grey"
+                bgColorClass="bg-gray-d2"
               />
             )) ||
               (fundMembersCopy.length > 0 && (
@@ -47,7 +47,7 @@ export default function Form() {
                   ))}
                 </div>
               )) || (
-                <p className="text-angel-grey font-mono text-sm">
+                <p className="text-gray-d2 font-mono text-sm">
                   this fund doesn't have any members yet
                 </p>
               )}
@@ -56,7 +56,7 @@ export default function Form() {
       )}
       {isFundSelected && (
         <>
-          <Label className="text-green-400 mt-6 -mb-2">add member</Label>
+          <Label className="text-green mt-6 -mb-2">add member</Label>
           <Adder />
         </>
       )}

@@ -22,14 +22,14 @@ export default function StatusSelector() {
         value={activeStatus}
         onChange={handleStatusChange}
         id="status_selector"
-        className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
+        className="bg-white/10 text-white p-2 text-sm rounded-md focus:outline-none uppercase "
       >
         {Object.entries(pollStatusOptions).map(
           ([optionValue, optionDescription]) => (
             <option
               key={optionValue}
               value={optionValue}
-              className="text-sm text-angel-grey uppercase p-1"
+              className="text-sm text-gray-d2 uppercase p-1"
             >
               {optionDescription}
             </option>

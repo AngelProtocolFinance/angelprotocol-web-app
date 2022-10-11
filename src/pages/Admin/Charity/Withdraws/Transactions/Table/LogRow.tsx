@@ -10,7 +10,7 @@ export default function LogRow(props: WithdrawLog) {
   const { amount, symbol, target_wallet } = props;
   const finalRoute = getFinalRoute(props);
   return (
-    <Cells type="td" cellClass="p-2 text-zinc-50/80">
+    <Cells type="td" cellClass="p-2 text-white/80">
       <Amount val={amount} symbol={symbol} />
 
       <span className="font-mono text-sm">{maskAddress(target_wallet)}</span>
@@ -26,7 +26,7 @@ export default function LogRow(props: WithdrawLog) {
       )}
       {finalRoute && finalRoute.status === "OK" ? (
         <a
-          className="text-sm font-mono text-sky-500 hover:text-sky-400 active:text-sky-600"
+          className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
           href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
           target="_blank"
           rel="noopener noreferrer"

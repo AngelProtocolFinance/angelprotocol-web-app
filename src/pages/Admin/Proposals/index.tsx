@@ -50,7 +50,7 @@ export default function Proposals() {
       {isLoadMoreShown && (
         <button
           disabled={isFilteredProposalsLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-blue/80 disabled:bg-gray uppecase font-heading uppercase rounded-sm"
           onClick={loadMoreProposals}
         >
           {isFilteredProposalsLoading ? (

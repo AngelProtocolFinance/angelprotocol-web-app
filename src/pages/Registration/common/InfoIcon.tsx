@@ -5,7 +5,7 @@ export default function InfoIcon({ modal }: { modal: React.FC<{}> }) {
   const { showModal } = useModalContext();
   return (
     <BsQuestionCircle
-      className="text-thin-blue cursor-pointer"
+      className="text-blue cursor-pointer"
       onClick={() => showModal(modal, {})}
     />
   );

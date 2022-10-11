@@ -32,7 +32,7 @@ function Entry(props: {
   symbol: string | undefined;
 }) {
   return (
-    <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
+    <div className="flex justify-between items-center text-xs font-heading text-blue mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
         {humanize(props.amount, 6)} {props.symbol}

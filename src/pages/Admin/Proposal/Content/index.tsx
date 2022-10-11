@@ -26,9 +26,7 @@ export default function Content(props: Proposal) {
         <button
           onClick={toggleRawMessage}
           className={`text-2xs font-normal font-mono ml-1 p-1 rounded-sm transition transform ${
-            isRawBlocksShown
-              ? "bg-angel-orange -rotate-90"
-              : "bg-angel-blue rotate-0"
+            isRawBlocksShown ? "bg-orange -rotate-90" : "bg-blue rotate-0"
           }`}
         >
           <Icon type="CaretLeft" />

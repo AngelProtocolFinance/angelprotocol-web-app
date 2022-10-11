@@ -25,10 +25,10 @@ export default function ProgressIndicator() {
         </p>
         <p>{percent}%</p>
       </div>
-      <div className="h-4 w-full bg-white-grey rounded-3xl">
+      <div className="h-4 w-full bg-white rounded-3xl">
         <div
           style={{ width: `${percent}%` }}
-          className={`h-full bg-angel-blue rounded-3xl`}
+          className={`h-full bg-blue rounded-3xl`}
         />
       </div>
     </div>

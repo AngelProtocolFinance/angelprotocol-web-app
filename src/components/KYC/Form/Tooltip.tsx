@@ -19,13 +19,13 @@ export default function Tooltip(
     <>
       <h3 className="text-2xl font-bold text-center mt-2">Need tax receipt?</h3>
       {props.isKYCRequired ? (
-        <p className="text-amber-600 bg-amber-100 p-3 rounded-md">
+        <p className="text-orange-d1 bg-orange-l4 p-3 rounded-md">
           <Icon type="Info" className="inline relative bottom-0.5 mr-2" />
           This charity requires KYC data
         </p>
       ) : (
         <button
-          className="text-angel-blue underline hover:text-bright-blue mb-2"
+          className="text-blue underline hover:text-blue-l1 mb-2"
           onClick={() => {
             showDonater(props.donaterProps);
           }}
@@ -37,7 +37,7 @@ export default function Tooltip(
         *Tax receipts can be requested and amended at any time from your
         <button
           onClick={goToMyDonations}
-          className="text-angel-blue inline mx-1 hover:text-bright-blue"
+          className="text-blue inline mx-1 hover:text-blue-l1"
         >
           My donations
         </button>

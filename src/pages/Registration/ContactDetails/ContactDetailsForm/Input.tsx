@@ -14,7 +14,7 @@ export default function Input(props: Props) {
     <div>
       <label htmlFor={registerReturn.name} className="text-dark-grey">
         {label}
-        {required && <span className="ml-0.5 text-failed-red">*</span>}
+        {required && <span className="ml-0.5 text-red">*</span>}
       </label>
       <input
         id={registerReturn.name}
@@ -23,9 +23,7 @@ export default function Input(props: Props) {
         {...registerReturn}
         {...rest}
       />
-      {errorMessage && (
-        <p className="text-sm text-failed-red">{errorMessage}</p>
-      )}
+      {errorMessage && <p className="text-sm text-red">{errorMessage}</p>}
     </div>
   );
 }

@@ -5,7 +5,7 @@ export default function Links(props: { classes?: string }) {
     <div
       className={`${
         props.classes || ""
-      } flex items-center divide-x divide-zinc-50/20`}
+      } flex items-center divide-x divide-white/20`}
     >
       <a
         className={linkStyle}
@@ -36,4 +36,4 @@ export default function Links(props: { classes?: string }) {
 }
 
 const linkStyle =
-  "text-white-grey hover:text-sky-300 text-sm px-3 lg:text-base font-heading uppercase font-semibold lg:px-2";
+  "text-white hover:text-blue-l2 text-sm px-3 lg:text-base font-heading uppercase font-semibold lg:px-2";

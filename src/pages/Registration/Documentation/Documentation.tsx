@@ -125,9 +125,7 @@ const HighlightColumn = ({ level, ...rest }: HighlightColumnProps) => {
 };
 
 const Column = ({ colored, children, className }: ColoredColumnProps) => {
-  const styles = colored
-    ? "ring ring-angel-blue rounded-md bg-angel-blue/50"
-    : "";
+  const styles = colored ? "ring ring-blue rounded-md bg-blue/50" : "";
   return (
     <div
       className={`grid h-full text-left gap-3 pb-6 border-b border-zinc-50/20 ${styles} ${

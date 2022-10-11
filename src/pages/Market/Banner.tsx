@@ -7,13 +7,13 @@ export default function Banner() {
         className="rounded-lg"
       />
       <div className="order-first lg:order-none self-center">
-        <p className="font-heading text-white-grey font-extrabold text-3xl md:text-4xl lg:text-5xl">
+        <p className="font-heading text-white font-extrabold text-3xl md:text-4xl lg:text-5xl">
           ANGEL PROTOCOL REDEFINES
         </p>
-        <p className="font-heading text-angel-orange font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
+        <p className="font-heading text-orange-l1 font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
           GLOBAL IMPACT FINANCING.
         </p>
-        <p className="font-heading text-white-grey text-xl xl:text-2xl mb-0">
+        <p className="font-heading text-white text-xl xl:text-2xl mb-0">
           <span className="md:leading-normal xl:leading-relaxed">
             We provide impact stakeholders like non-profits and social
             entrepreneurs with the tools to raise, coordinate, and invest

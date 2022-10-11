@@ -15,7 +15,7 @@ export default function Balance() {
     <button
       type="button"
       onClick={setMaxVal}
-      className="text-right text-angel-grey/80 hover:text-angel-blue text-xs font-semibold font-mono"
+      className="text-right text-gray-d2/80 hover:text-blue text-xs font-semibold font-mono"
     >
       BAL: {humanize(+token.balance, 3)} {token.symbol}
     </button>

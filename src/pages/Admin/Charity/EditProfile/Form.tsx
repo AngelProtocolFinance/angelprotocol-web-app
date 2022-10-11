@@ -25,7 +25,7 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.profile}/${id}`}
-        className="text-angel-blue hover:text-sky-300 text-sm font-semibold flex items-center gap-1"
+        className="text-blue hover:text-blue-l2 text-sm font-semibold flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>
@@ -37,7 +37,7 @@ export default function Form() {
         wide
         required
       />
-      <Label className="text-angel-grey -mb-2">Banner</Label>
+      <Label className="text-gray-d2 -mb-2">Banner</Label>
       <ImgEditor<UV>
         name="image"
         accept={VALID_MIME_TYPES}
@@ -45,7 +45,7 @@ export default function Form() {
         aspectRatioY={1}
         className="w-full aspect-[4/1]"
       />
-      <Label className="text-angel-grey -mb-2">SDG#</Label>
+      <Label className="text-gray-d2 -mb-2">SDG#</Label>
       <SDGSelector />
       <TextInput<UV>
         name="name"
@@ -62,28 +62,28 @@ export default function Form() {
         title="Street address"
         placeholder="Manila, Philippines"
       />
-      <Label className="text-angel-grey -mb-2">Country</Label>
+      <Label className="text-gray-d2 -mb-2">Country</Label>
       <CountrySelector<UV>
         fieldName="country_of_origin"
         classes={{
-          container: "bg-light-grey shadow-inner-white-grey rounded-md p-3",
+          container: "bg-gray-l3 shadow-inner-white rounded-md p-3",
           input: "bg-transparent",
         }}
       />
-      <Label className="text-angel-grey -mb-2">Overview</Label>
+      <Label className="text-gray-d2 -mb-2">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"
         placeHolder="a short overview of your charity"
         classes={{
           container:
-            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
+            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-gray-l3 shadow-inner-white p-3",
           error:
-            "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
-          charCounter: "text-angel-grey",
+            "font-mono font-semibold text-right text-red-l1 text-xs m-1 -mt-3",
+          charCounter: "text-gray-d2",
         }}
       />
 
-      <Label className="text-angel-grey -mb-2">Organization</Label>
+      <Label className="text-gray-d2 -mb-2">Organization</Label>
       <GroupContainer>
         <TextInput<UV>
           name="average_annual_budget"
@@ -105,7 +105,7 @@ export default function Form() {
         />
       </GroupContainer>
 
-      <Label className="text-angel-grey -mb-2">Social Media</Label>
+      <Label className="text-gray-d2 -mb-2">Social Media</Label>
       <GroupContainer>
         <TextInput<UV>
           name="url"

@@ -39,7 +39,7 @@ export default function Header(props: ProfileResponse) {
   return (
     <div className="flex flex-col items-start gap-2">
       {sdgNum && (
-        <p className="p-3 max-w-[250px] text-center bg-angel-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl">
+        <p className="p-3 max-w-[250px] text-center bg-blue text-white text-sm uppercase font-heading font-bold rounded-xl">
           SDG #{sdgNum}: {sdg?.title}
         </p>
       )}
@@ -58,7 +58,7 @@ export default function Header(props: ProfileResponse) {
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+      className="disabled:bg-gray uppercase bg-orange hover:bg-orange-l1 font-heading text-white font-semibold rounded-xl px-6 py-3"
       {...props}
     />
   );

@@ -19,18 +19,18 @@ export default function SDGSelector() {
       value={value}
       onChange={onChange}
       as="div"
-      className="w-full focus:outline-none rounded-md text-sm uppercase bg-light-grey shadow-inner-white-grey relative"
+      className="w-full focus:outline-none rounded-md text-sm uppercase bg-gray-l3 shadow-inner-white relative"
     >
       <Listbox.Button className="w-full p-3 text-left uppercase">
         {value} - {unsdgs[value].title}
       </Listbox.Button>
-      <Listbox.Options className="absolute bg-zinc-50 shadow-2xl z-10 rounded-md table p-3 rounded-md">
+      <Listbox.Options className="absolute bg-white shadow-2xl z-10 rounded-md table p-3 rounded-md">
         {sdgs.map((sdg) => (
           <Listbox.Option key={sdg.num} value={+sdg.num} as={Fragment}>
             {({ selected }) => (
               <div
-                className={`text-zinc-800 table-row hover:bg-sky-400/30 ${
-                  selected ? "bg-amber-500/30" : ""
+                className={`text-gray-d4 table-row hover:bg-blue-l1/30 ${
+                  selected ? "bg-amber-orange/30" : ""
                 } cursor-pointer p-1`}
               >
                 <span className="table-cell pr-2 p-1">{sdg.num}</span>
