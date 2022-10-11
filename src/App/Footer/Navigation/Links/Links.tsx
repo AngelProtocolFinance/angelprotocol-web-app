@@ -1,3 +1,5 @@
+import { SectionProps } from "./types";
+
 export default function Links() {
   return (
     <div className="grid grid-cols-4 gap-3 xl:gap-6 max-w-2xl">
@@ -33,15 +35,7 @@ export default function Links() {
   );
 }
 
-type Section = {
-  title: string;
-  links: {
-    text: string;
-    href?: string;
-  }[];
-};
-
-const sections: Section[] = [
+const sections: SectionProps[] = [
   {
     title: "Products",
     links: [
