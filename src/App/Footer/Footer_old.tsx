@@ -1,5 +1,5 @@
 import { LITEPAPER } from "constants/urls";
-import Links from "./Links";
+import Links from "./Links_old";
 import Socials from "./Socials";
 
 export default function Footer() {
