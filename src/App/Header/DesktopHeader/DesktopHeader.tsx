@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import hero from "assets/images/hero.png";
+import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 import Logo from "../Logo";
 import ThemeToggle from "../ThemeToggle";
@@ -10,9 +11,14 @@ import NavLinks from "./NavLinks";
 export default function DesktopHeader() {
   const { pathname } = useLocation();
   const isHome = pathname === appRoutes.index;
+
+  const theme = useGetter((state) => state.theme);
+  const color =
+    theme === "dark" ? "rgba(30, 91, 134, 0.9)" : "rgba(84, 163, 217, 0.9)";
   const background = isHome
-    ? `linear-gradient(rgba(84, 163, 217, 0.9), rgba(84, 163, 217, 0.9)), url('${hero}') center / cover no-repeat`
+    ? `linear-gradient(${color}, ${color}), url('${hero}') center / cover no-repeat`
     : "";
+
   return (
     <div
       className="hidden lg:block w-full pt-2"
