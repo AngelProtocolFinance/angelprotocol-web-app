@@ -8,7 +8,7 @@ export default function WalletSelector(props: { isLoading: boolean }) {
   return (
     <Menu className="relative" as="div">
       <Menu.Button
-        className="flex grow-0 w-32 h-10 py-2 px-3 justify-center items-center rounded-lg bg-orange hover:bg-angel-orange text-white gap-2 font-bold text-base"
+        className="flex grow-0 w-32 h-10 py-2 px-3 justify-center items-center rounded-lg bg-orange hover:bg-orange-l1 text-white gap-2 font-bold text-base"
         disabled={props.isLoading}
       >
         <Icon type="Wallet" className="text-xl grow-0" />

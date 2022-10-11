@@ -31,7 +31,7 @@ export default function App() {
   }
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-blue to-black bg-fixed">
+    <div className="grid grid-rows-[1fr_auto] bg-gradient-to-b from-blue to-black dark:from-blue-d5 dark:to-blue-d5 bg-fixed">
       <WalletProvider {...chainOptions}>
         <WalletContext>
           <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">

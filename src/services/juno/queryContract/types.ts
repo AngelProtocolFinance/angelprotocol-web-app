@@ -5,7 +5,6 @@ import {
   CW4Member,
   CW20Balance,
   CW20Info,
-  CategorizedEndowments,
   EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
@@ -94,11 +93,6 @@ export interface ContractQueries {
     args: EndowmentQueryOptions;
     res: Q<EndowmentListRes>;
     result: EndowmentEntry[];
-  };
-  accCategorizedEndows: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: CategorizedEndowments;
   };
   accEndowment: {
     args: { id: number };

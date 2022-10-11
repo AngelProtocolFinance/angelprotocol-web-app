@@ -4,7 +4,6 @@ import {
   Asset,
   Categories,
   EndowmentStatus,
-  EndowmentStatusStrNum,
   EndowmentTier,
   EndowmentType,
   SocialMedialUrls,
@@ -91,12 +90,9 @@ export interface Source {
 }
 
 export type EndowmentQueryOptions = {
-  name?: string;
-  owner?: string;
-  status?: EndowmentStatusStrNum;
-  tier?: EndowmentTier;
-  endow_type?: EndowmentType;
   proposal_link?: number;
+  start_after?: number;
+  limit?: number;
 };
 
 export type EndowmentEntry = {
