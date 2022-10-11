@@ -16,10 +16,14 @@ export const account_api = junoApi.injectEndpoints({
         const endowments = await getEndowments(50, 0, []);
         return {
           data: endowments.reduce((result, entry) => {
-            const { categories, tier } = entry;
+            const { categories, tier, endow_type, status } = entry;
             //TODO: this structure allows endowment to be listed in only 1 sdg row
             const sdgNum = categories.sdgs[0] ?? 1;
-            if (tier === "Level1") {
+            if (
+              tier === "Level1" ||
+              endow_type !== "Charity" ||
+              status !== "Approved"
+            ) {
               return result;
             } else {
               result[sdgNum] ||= [];
