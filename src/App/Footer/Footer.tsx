@@ -1,7 +1,8 @@
+import { memo } from "react";
 import Navigation from "./Navigation";
 import Socials from "./Socials";
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="flex flex-col items-center px-2.5 text-white">
       <Navigation />
@@ -15,3 +16,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default memo(Footer);
