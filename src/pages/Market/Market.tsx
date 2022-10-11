@@ -2,7 +2,6 @@ import { CategorizedEndowments } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { useCategorizedEndowmentsQuery } from "services/juno/account";
 import Loader from "components/Loader";
-import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
@@ -14,7 +13,6 @@ export default function Market() {
 
   return (
     <div className="grid content-start padded-container pb-16">
-      <Banner />
       {(isLoading && (
         <Loader bgColorClass="bg-white/80" gapClass="gap-2" widthClass="w-4" />
       )) || (
