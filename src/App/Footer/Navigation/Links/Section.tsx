@@ -19,7 +19,12 @@ export default function Section({ title, links }: SectionProps) {
 
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
-    <a href={props.href} className={`${linkStyles} cursor-pointer`}>
+    <a
+      href={props.href}
+      rel="noreferrer"
+      target="_blank"
+      className={`${linkStyles} cursor-pointer`}
+    >
       {props.text}
     </a>
   ) : (
