@@ -22,7 +22,8 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, proposalLink, endowment } = useAdminResources();
+  const { cw3, cw3MemberCount, endowmentId, proposalLink, endowment } =
+    useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
@@ -85,8 +86,11 @@ export default function useWithdraw() {
           ]),
         ],
         //Juno withdrawal
-        successLink: proposalLink,
-        successMessage: "Withdraw proposal successfully created!",
+        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
+        successMessage:
+          cw3MemberCount === 1
+            ? undefined
+            : "Withdraw proposal successfully created!",
 
         onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno

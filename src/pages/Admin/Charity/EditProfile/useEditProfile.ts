@@ -25,7 +25,8 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 const PLACEHOLDER_OVERVIEW = "[text]";
 
 export default function useEditProfile() {
-  const { endowmentId, cw3, proposalLink } = useAdminResources();
+  const { endowmentId, cw3, cw3MemberCount, proposalLink } =
+    useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -129,8 +130,11 @@ export default function useEditProfile() {
               { type: junoTags.admin, id: adminTags.proposals },
             ]),
           ],
-          successLink: proposalLink,
-          successMessage: "Profile update proposal submitted",
+          successLink: cw3MemberCount === 1 ? undefined : proposalLink,
+          successMessage:
+            cw3MemberCount === 1
+              ? undefined
+              : "Profile update proposal submitted",
         })
       );
       showModal(TransactionPrompt, {});

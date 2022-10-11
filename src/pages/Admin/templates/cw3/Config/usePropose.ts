@@ -20,7 +20,7 @@ type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
 export default function usePropose() {
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, cw3MemberCount, proposalLink } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     getValues,
@@ -80,8 +80,9 @@ export default function usePropose() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: proposalLink,
-        successMessage: "Config update proposal submitted",
+        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
+        successMessage:
+          cw3MemberCount === 1 ? undefined : "Config update proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});
