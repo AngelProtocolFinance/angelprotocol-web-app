@@ -25,12 +25,12 @@ export default function Newsletter() {
         onSubmit={(e) => console.log("submitted", e)}
       >
         <input
-          className="flex items-center py-2 px-3 border border-gray-l2 rounded-lg"
+          className="flex items-center w-44 xl:w-72 py-2 px-3 border border-gray-l2 rounded-lg text-sm xl:text-base"
           placeholder="Enter your email address here"
         />
         <button
           type="submit"
-          className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg"
+          className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm xl:text-base font-bold"
         >
           Subscribe
         </button>
