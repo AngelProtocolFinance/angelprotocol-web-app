@@ -1,4 +1,4 @@
-import angel from "assets/images/character4.png";
+import character from "assets/images/character4.png";
 
 export default function Banner({ classes = "" }: { classes?: string }) {
   return (
@@ -15,7 +15,7 @@ export default function Banner({ classes = "" }: { classes?: string }) {
         className="row-span-2 self-end w-full h-full relative -bottom-[12%] -left-[18%]"
         style={{
           transform: "scaleX(-1.3) scaleY(1.3)",
-          background: `url('${angel}') 50% 50% / contain no-repeat`,
+          background: `url('${character}') 50% 50% / contain no-repeat`,
         }}
       />
       <p className="text-xl max-w-xl leading-relaxed font-heading">
