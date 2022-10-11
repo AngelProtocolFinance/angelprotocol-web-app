@@ -76,9 +76,6 @@ export const queryObject: {
   accEndowList(options) {
     return { endowment_list: options };
   },
-  accCategorizedEndows(options) {
-    return { endowment_list: options };
-  },
 
   accEndowment({ id }) {
     return { endowment: { id } };
