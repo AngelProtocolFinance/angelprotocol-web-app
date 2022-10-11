@@ -27,7 +27,6 @@ export default function useXdefi() {
       if (connection) {
         connect(connection.type, connection.identifier);
       } else {
-        // Errors within handled in src/components/WalletSuite/WalletSelector/Connector.tsx
         checkXdefiPriority();
       }
     },

@@ -91,7 +91,6 @@ export default function useInjectedProvider(
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
         //if connection is made via "connect-button"
-        // Error handled in src/components/WalletSuite/WalletSelector/Connector.tsx
         throw new WalletError(
           err.message || "Unknown error occured",
           err.code || 0
@@ -110,7 +109,6 @@ export default function useInjectedProvider(
     removeAllListeners(providerId);
   }
 
-  // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
   const connect = async () => {
     const dwindow = window as Dwindow;
 
