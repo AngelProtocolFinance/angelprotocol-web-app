@@ -25,6 +25,7 @@ export type AdminRoles = "ap" | "reviewer" | "charity";
 export type AdminResources = {
   cw3: string;
   cw4: string;
+  cw3MemberCount: number;
   endowmentId: number;
   endowment: EndowmentDetails;
   cw3config: CW3Config;
