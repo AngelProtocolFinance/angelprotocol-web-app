@@ -3835,9 +3835,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.18.1":
-  version: 8.18.1
-  resolution: "@testing-library/dom@npm:8.18.1"
+"@testing-library/dom@npm:^8.19.0":
+  version: 8.19.0
+  resolution: "@testing-library/dom@npm:8.19.0"
   dependencies:
     "@babel/code-frame": ^7.10.4
     "@babel/runtime": ^7.12.5
@@ -3847,7 +3847,7 @@ __metadata:
     dom-accessibility-api: ^0.5.9
     lz-string: ^1.4.4
     pretty-format: ^27.0.2
-  checksum: 432a7da2bb626b11375b22e22d12c02317b35d69c0f69972c03bd0104895b496f21dc5b9d4447adef6e0c9acb3c0a64337f7d38c9667dbbacf09d5cd523394dd
+  checksum: 6bb93fef96703b6c47cf1b7cc8f71d402a9576084a94ba4e9926f51bd7bb1287fbb4f6942d82bd03fc6f3d998ae97e60f6aea4618f3a1ce6139597d2a4ecb7b9
   languageName: node
   linkType: hard
 
@@ -3884,9 +3884,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^13.0.0":
-  version: 13.3.0
-  resolution: "@testing-library/react@npm:13.3.0"
+"@testing-library/react@npm:^13.4.0":
+  version: 13.4.0
+  resolution: "@testing-library/react@npm:13.4.0"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^8.5.0
@@ -3894,7 +3894,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 98fd8616a7cae0ecfcbe97b5b3c5b91fbafccf449c04875395ccc0e3f0b139e53b3261b9536ec2169a5e2883a1be2098907209064061fe0c2ff21dfbc785dd40
+  checksum: 51ec548c1fdb1271089a5c63e0908f0166f2c7fcd9cacd3108ebbe0ce64cb4351812d885892020dc37608418cfb15698514856502b3cab0e5cc58d6cc1bd4a3e
   languageName: node
   linkType: hard
 
@@ -4209,13 +4209,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.0.3":
-  version: 29.0.3
-  resolution: "@types/jest@npm:29.0.3"
+"@types/jest@npm:^29.1.2":
+  version: 29.1.2
+  resolution: "@types/jest@npm:29.1.2"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 14a8ec1954540ec59f4072c3c4dbc6b5d5ff616556c98671aca26606bdf9d49616a3f269f3e488c80cd481ee19880351575c1f6895827628818e193600c121e0
+  checksum: a6761b5ac132c641740886f9c0714607255ebffb6add5989f51ea9e392fc3c5cd474e7590f12b003d5b67ce177dfbc8d3d60d0baa335c48c50deeee6b755a473
   languageName: node
   linkType: hard
 
@@ -4305,10 +4305,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.7.18":
-  version: 18.7.18
-  resolution: "@types/node@npm:18.7.18"
-  checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
+"@types/node@npm:^18.8.3":
+  version: 18.8.4
+  resolution: "@types/node@npm:18.8.4"
+  checksum: c2b87f6b0b1f02b2ce61ca7cb93ea287119bda086a3f33e48da8f5e70c24ad7141cc3465946e0e36abb7eba70c7b320c7659842096e4aa573b3a8d557322c818
   languageName: node
   linkType: hard
 
@@ -4410,12 +4410,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-test-renderer@npm:17.0.2":
-  version: 17.0.2
-  resolution: "@types/react-test-renderer@npm:17.0.2"
+"@types/react-test-renderer@npm:18.0.0":
+  version: 18.0.0
+  resolution: "@types/react-test-renderer@npm:18.0.0"
   dependencies:
-    "@types/react": ^17
-  checksum: 0be325798b6b38cc31fbb11f2f1e1a5578cc3b23eddf1ddd1ab58ccf50966e8f779383084d8bc3a7db3108ad815af8fbae5c0f54329a88d52200e01547d85c33
+    "@types/react": "*"
+  checksum: 6afc938a1d7618d88ab8793e251f0bd5981bf3f08c1b600f74df3f8800b92589ea534dc6dcb7c8d683893fcc740bf8d7843a42bf2dae59785cfe88f004bd7b0b
   languageName: node
   linkType: hard
 
@@ -4427,17 +4427,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 18cae64f5bfd6bb58fbd8ee2ba52ec82de844f114254e26de7b513e4b86621f643f9b71d7066958cd571b0d78cb86cbceda449c5289f9349ca573df29ab69252
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^17":
-  version: 17.0.48
-  resolution: "@types/react@npm:17.0.48"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: b683fa33f751ced0b8c8715df9f40de15513c1d7ce66064a75cdfb8805cc913b0b214a2e7022ef0b724bd62a1e8651d040cd265dd0452bde03cca9b8e495742d
   languageName: node
   linkType: hard
 
@@ -5336,21 +5325,21 @@ __metadata:
     "@tailwindcss/line-clamp": ^0.4.2
     "@terra-money/terra.js": ^3.1.7
     "@terra-money/wallet-provider": ^3.11.1
-    "@testing-library/dom": ^8.18.1
+    "@testing-library/dom": ^8.19.0
     "@testing-library/jest-dom": ^5.14.1
-    "@testing-library/react": ^13.0.0
+    "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^13.2.1
     "@trivago/prettier-plugin-sort-imports": ^3.2.0
     "@types/compress.js": ^1.1.1
-    "@types/jest": ^29.0.3
+    "@types/jest": ^29.1.2
     "@types/jsonwebtoken": ^8.5.5
-    "@types/node": ^18.7.18
+    "@types/node": ^18.8.3
     "@types/quill": ^2.0.9
     "@types/react": ^18.0.0
     "@types/react-csv": ^1.1.2
     "@types/react-dom": ^18.0.0
     "@types/react-router-dom": ^5.1.8
-    "@types/react-test-renderer": 17.0.2
+    "@types/react-test-renderer": 18.0.0
     autoprefixer: ^10.0.2
     buffer: ^6.0.3
     compress.js: ^1.2.2
@@ -5373,8 +5362,8 @@ __metadata:
     react-app-rewired: ^2.2.1
     react-csv: ^2.2.2
     react-dom: ^18.2.0
-    react-dropzone: ^12.0.4
-    react-hook-form: ^7.36.1
+    react-dropzone: ^14.2.2
+    react-hook-form: ^7.37.0
     react-icons: ^4.4.0
     react-redux: ^8.0.2
     react-router-dom: ^6.2.0
@@ -8885,12 +8874,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "file-selector@npm:0.5.0"
+"file-selector@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "file-selector@npm:0.6.0"
   dependencies:
-    tslib: ^2.0.3
-  checksum: f95a06938123a2b765d136a4430cc8b19165f06a53e7ae1dcca4947716d61e9181453fcfeb2358c2660cbcecf96d7334f0528ba60071fed81f8bd358ea08454a
+    tslib: ^2.4.0
+  checksum: 7d051b6e5d793f3c6e2ab287ba5e7c2c6a0971bccc9d56e044c8047ba483e18f60fc0b5771c951dc707c0d15f4f36ccb4f1f1aaf385d21ec8f7700dadf8325ba
   languageName: node
   linkType: hard
 
@@ -14672,16 +14661,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^12.0.4":
-  version: 12.1.0
-  resolution: "react-dropzone@npm:12.1.0"
+"react-dropzone@npm:^14.2.2":
+  version: 14.2.2
+  resolution: "react-dropzone@npm:14.2.2"
   dependencies:
     attr-accept: ^2.2.2
-    file-selector: ^0.5.0
+    file-selector: ^0.6.0
     prop-types: ^15.8.1
   peerDependencies:
-    react: ">= 16.8"
-  checksum: 1be37433cf42b8a9f98c8f59678e30fffc1e9b8e3fdb20f3a376557948f727156123ca0a7e45cd3882606184d945ea1139f17da0e1e5ba0b646a23be0ed65fb3
+    react: ">= 16.8 || 18.0.0"
+  checksum: ef9ea7b3b5734e8eade2d29efc26da410dd7d6d046216331f6a51e2df4459c35f3a8f950fa7f723f3db6b0ead8aa68f58f6adbd39b98575c9fc8d8dfe02b671f
   languageName: node
   linkType: hard
 
@@ -14692,12 +14681,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.36.1":
-  version: 7.36.1
-  resolution: "react-hook-form@npm:7.36.1"
+"react-hook-form@npm:^7.37.0":
+  version: 7.37.0
+  resolution: "react-hook-form@npm:7.37.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: d41951685fe7d345997c1ac489ccc1a44d11cfa6021b0a39a449029ba3cd8e5824afe5f6464e8ff6fb7c01d1915627b53ec1e1bfee63a6b722b6855794dc0df9
+  checksum: 9dedc9a419c1f4cff35bc4e5d1cc39fa019e2c72401af04ac456dc1d5b87070156ee97070834d7d308293470bac45f652e12ab3cc86f36abd0e0a3ed32e89628
   languageName: node
   linkType: hard
 
