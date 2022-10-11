@@ -17,7 +17,7 @@ import { VALID_MIME_TYPES } from "./schema";
 import useEditForm from "./useEditProfile";
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditForm();
+  const { editProfile, isSubmitDisabled, id, cw3MemberCount } = useEditForm();
   return (
     <FormContainer
       onSubmit={editProfile}
@@ -139,7 +139,7 @@ export default function Form() {
         placeholder="hello@angelprotocol.io"
       />
       <Submitter disabled={isSubmitDisabled} type="submit">
-        Submit proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </FormContainer>
   );

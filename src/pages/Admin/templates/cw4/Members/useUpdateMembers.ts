@@ -96,5 +96,5 @@ export default function useUpdateMembers() {
     reset();
   }
 
-  return { updateMembers, apCW4Members };
+  return { updateMembers, apCW4Members, cw3MemberCount };
 }

@@ -115,7 +115,7 @@ export default function useUpdateStatus() {
     showModal(TransactionPrompt, {});
   }
 
-  return { updateStatus: handleSubmit(updateStatus) };
+  return { updateStatus: handleSubmit(updateStatus), cw3MemberCount };
 }
 
 const endowmentStatus: EndowmentStatus = {

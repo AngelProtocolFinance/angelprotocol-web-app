@@ -9,7 +9,8 @@ import {
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
 export default function Form() {
-  const { configureRegistrar, isSubmitDisabled } = useConfigureRegistrar();
+  const { configureRegistrar, isSubmitDisabled, cw3MemberCount } =
+    useConfigureRegistrar();
 
   return (
     <FormContainer onSubmit={configureRegistrar}>
@@ -74,7 +75,7 @@ export default function Form() {
       </GroupContainer>
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </FormContainer>
   );

@@ -94,5 +94,6 @@ export default function useTransferFunds() {
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
+    cw3MemberCount,
   };
 }

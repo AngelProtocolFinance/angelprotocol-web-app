@@ -67,5 +67,6 @@ export default function useDestroyFund() {
   return {
     destroyFund: handleSubmit(destroyFund),
     isSubmitDisabled: isSubmitting,
+    cw3MemberCount,
   };
 }

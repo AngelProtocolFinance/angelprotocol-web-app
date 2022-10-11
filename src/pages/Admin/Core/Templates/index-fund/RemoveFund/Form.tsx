@@ -4,7 +4,7 @@ import FundSelection from "../FundSelection";
 import useDestroyFund from "./useDestroyFund";
 
 export default function Form() {
-  const { destroyFund, isSubmitDisabled } = useDestroyFund();
+  const { destroyFund, isSubmitDisabled, cw3MemberCount } = useDestroyFund();
   return (
     <FormContainer onSubmit={destroyFund}>
       <TextInput<FD> title="Proposal Title" name="title" required />
@@ -17,7 +17,7 @@ export default function Form() {
       <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit{cw3MemberCount > 1 ? "proposal" : ""}
       </Submitter>
     </FormContainer>
   );

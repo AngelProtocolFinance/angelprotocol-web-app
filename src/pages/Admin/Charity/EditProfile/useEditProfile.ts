@@ -147,5 +147,6 @@ export default function useEditProfile() {
     editProfile: handleSubmit(editProfile),
     isSubmitDisabled: isSubmitting || !isDirty,
     id: endowmentId,
+    cw3MemberCount: cw3MemberCount,
   };
 }
