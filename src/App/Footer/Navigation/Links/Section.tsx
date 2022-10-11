@@ -6,7 +6,7 @@ export default function Section({ title, links }: SectionProps) {
       <h6 className="font-heading font-bold text-sm xl:text-base uppercase">
         {title}
       </h6>
-      <div className="flex flex-col items-start h-full">
+      <div className="flex flex-col items-start h-full gap-1">
         {links.map((link) => (
           <Link key={link.text} {...link} />
         ))}

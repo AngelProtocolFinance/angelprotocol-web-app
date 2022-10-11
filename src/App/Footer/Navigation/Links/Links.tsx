@@ -3,7 +3,7 @@ import Section from "./Section";
 
 export default function Links() {
   return (
-    <div className="grid grid-cols-4 gap-3 xl:gap-6 max-w-2xl">
+    <div className="grid grid-cols-4 gap-3 xl:gap-6 max-w-[38rem]">
       {sections.map((section) => (
         <Section key={section.title} {...section} />
       ))}

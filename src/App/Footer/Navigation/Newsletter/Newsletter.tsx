@@ -1,6 +1,6 @@
 export default function Newsletter() {
   return (
-    <div className="flex flex-col items-start gap-2.5 ">
+    <div className="flex flex-col items-start gap-2.5 max-w-sm">
       <div className="flex flex-col items-start">
         <h6 className="font-header font-bold text-sm xl:text-base uppercase">
           Subscribe to our newsletter
