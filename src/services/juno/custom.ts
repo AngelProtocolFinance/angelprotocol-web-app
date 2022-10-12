@@ -78,6 +78,12 @@ export const customApi = junoApi.injectEndpoints({
           });
 
           if (!!voter.weight) {
+            const listVoters = await queryContract(
+              "cw3ListVoters",
+              cw3Addr,
+              null
+            );
+            const isSingleMember = listVoters.voters.length === 1;
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
 
             return {
@@ -87,8 +93,15 @@ export const customApi = junoApi.injectEndpoints({
                 endowmentId: numId,
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
-                proposalLink,
                 role,
+                proposal(name) {
+                  return {
+                    successLink: isSingleMember ? undefined : proposalLink,
+                    successMessage: isSingleMember
+                      ? undefined
+                      : `${name} proposal created`,
+                  };
+                },
               },
             };
           } else {
@@ -108,6 +121,12 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         if (!!voter.weight) {
+          const listVoters = await queryContract(
+            "cw3ListVoters",
+            endowment.owner,
+            null
+          );
+          const isSingleMember = listVoters.voters.length === 1;
           const cw3config = await queryContract(
             "cw3Config",
             endowment.owner,
@@ -120,8 +139,15 @@ export const customApi = junoApi.injectEndpoints({
               endowmentId: numId,
               endowment,
               cw3config,
-              proposalLink,
               role: "charity",
+              proposal(name) {
+                return {
+                  successLink: isSingleMember ? undefined : proposalLink,
+                  successMessage: isSingleMember
+                    ? undefined
+                    : `${name} proposal created`,
+                };
+              },
             },
           };
         }

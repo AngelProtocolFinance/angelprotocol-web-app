@@ -18,6 +18,10 @@ export type VotesPageOptions = {
   start_after?: number;
 };
 
+export type CW3ListVoters = {
+  voters: string[];
+};
+
 export type ProposalsRes = {
   proposals: Proposal[];
 };

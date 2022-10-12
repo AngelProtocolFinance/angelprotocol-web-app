@@ -37,7 +37,7 @@ export default function Form() {
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">
-        Submit Proposal
+        Submit
       </Submitter>
     </DivContainer>
   );

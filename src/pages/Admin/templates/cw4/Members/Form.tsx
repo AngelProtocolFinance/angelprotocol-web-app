@@ -29,7 +29,7 @@ export default function Form() {
       <Adder />
 
       <Submitter type="button" onClick={updateMembers} _classes="mt-4">
-        Submit Proposal
+        Submit
       </Submitter>
     </DivContainer>
   );

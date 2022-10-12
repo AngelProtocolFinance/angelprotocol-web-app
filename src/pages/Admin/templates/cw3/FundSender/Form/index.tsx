@@ -20,7 +20,7 @@ export default function Form() {
       <Amount />
       <TextInput<FS> title="recipient" name="recipient" required mono />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </form>
   );

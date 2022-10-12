@@ -22,7 +22,8 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, proposalLink, endowment } = useAdminResources();
+  const { cw3, endowmentId, endowment, proposal } = useAdminResources();
+  const adminProposal = proposal;
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
@@ -74,6 +75,7 @@ export default function useWithdraw() {
           JSON.stringify(meta)
         );
 
+    const prop = adminProposal("Withdraw proposal");
     dispatch(
       sendCosmosTx({
         wallet,
@@ -85,17 +87,14 @@ export default function useWithdraw() {
           ]),
         ],
         //Juno withdrawal
-        successLink: proposalLink,
-        successMessage: "Withdraw proposal successfully created!",
-
+        ...prop,
         onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno
           : (response) =>
               logWithdrawProposal({
                 res: response,
-                proposalLink,
+                proposalLink: prop.successLink,
                 wallet: wallet!, //wallet is defined at this point
-
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,

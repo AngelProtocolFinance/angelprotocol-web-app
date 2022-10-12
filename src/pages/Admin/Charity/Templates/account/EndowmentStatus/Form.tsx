@@ -27,7 +27,7 @@ export default function Form() {
       <Label _required>New endowment status</Label>
       <StatusOptions />
       <Submitter type="submit" _classes="mt-4">
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

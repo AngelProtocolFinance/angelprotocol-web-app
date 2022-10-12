@@ -139,7 +139,7 @@ export default function Form() {
         placeholder="hello@angelprotocol.io"
       />
       <Submitter disabled={isSubmitDisabled} type="submit">
-        Submit proposal
+        Submit
       </Submitter>
     </FormContainer>
   );
