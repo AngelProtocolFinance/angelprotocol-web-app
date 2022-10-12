@@ -5,7 +5,7 @@ import { ErrorMessage } from "./ErrorMessage";
 export default function FormInput<T extends FieldValues>(
   props: Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
     fieldName: Path<T>;
-    label: string;
+    label?: string;
     classes?: string;
     mono?: true;
   }
@@ -28,10 +28,12 @@ export default function FormInput<T extends FieldValues>(
 
   return (
     <div className={`flex flex-col gap-1 w-full items-start ${classes || ""}`}>
-      <label htmlFor={props.fieldName} className="text-dark-grey">
-        {label}
-        {required && <span className="ml-0.5 text-red">*</span>}
-      </label>
+      {!!label && (
+        <label htmlFor={props.fieldName} className="text-dark-grey">
+          {label}
+          {required && <span className="ml-0.5 text-red">*</span>}
+        </label>
+      )}
       <input
         {...rest}
         id={props.fieldName}
