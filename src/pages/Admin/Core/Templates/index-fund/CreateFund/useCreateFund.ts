@@ -17,7 +17,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
-  const { cw3, cw3MemberCount, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -96,9 +96,7 @@ export default function useCreateFund() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
-        successMessage:
-          cw3MemberCount === 1 ? undefined : "Create fund proposal submitted",
+        ...proposal("Create fund"),
       })
     );
     showModal(TransactionPrompt, {});
@@ -106,5 +104,5 @@ export default function useCreateFund() {
     setSubmitting(false);
   }
 
-  return { createFund, isSubmitting, cw3MemberCount };
+  return { createFund, isSubmitting };
 }

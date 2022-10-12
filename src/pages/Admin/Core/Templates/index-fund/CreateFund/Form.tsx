@@ -7,7 +7,7 @@ import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
 
 export default function Form() {
-  const { createFund, cw3MemberCount } = useCreateFund();
+  const { createFund } = useCreateFund();
   return (
     <DivContainer>
       <TextInput title="Proposal Title" name="title" required />
@@ -37,7 +37,7 @@ export default function Form() {
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">
-        Submit{cw3MemberCount > 1 ? "proposal" : ""}
+        Submit
       </Submitter>
     </DivContainer>
   );

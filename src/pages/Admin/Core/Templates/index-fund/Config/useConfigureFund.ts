@@ -19,7 +19,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { proposalLink, cw3, cw3MemberCount } = useAdminResources();
+  const { proposal, cw3 } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -74,9 +74,7 @@ export default function useConfigureFund() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
-        successMessage:
-          cw3MemberCount === 1 ? undefined : "Config update proposal submitted",
+        ...proposal("Config update"),
       })
     );
     showModal(TransactionPrompt, {});
@@ -85,6 +83,5 @@ export default function useConfigureFund() {
   return {
     configureFund: handleSubmit(configureFund),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
-    cw3MemberCount,
   };
 }

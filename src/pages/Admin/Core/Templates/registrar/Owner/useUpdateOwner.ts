@@ -13,7 +13,7 @@ import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 
 export default function useUpdateOwner() {
-  const { cw3, cw3MemberCount, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -57,9 +57,7 @@ export default function useUpdateOwner() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
-        successMessage:
-          cw3MemberCount === 1 ? undefined : "Owner update proposal submitted",
+        ...proposal("Owner update"),
       })
     );
     showModal(TransactionPrompt, {});
@@ -68,6 +66,5 @@ export default function useUpdateOwner() {
   return {
     updateOwner: handleSubmit(updateOwner),
     isSubmitDisabled: !isDirty || isSubmitting,
-    cw3MemberCount,
   };
 }

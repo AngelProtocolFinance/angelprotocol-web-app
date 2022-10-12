@@ -5,7 +5,7 @@ import StatusPreview from "./StatusPreview";
 import useUpdateStatus from "./useUpdateStatus";
 
 export default function Form() {
-  const { updateStatus, cw3MemberCount } = useUpdateStatus();
+  const { updateStatus } = useUpdateStatus();
   return (
     <FormContainer onSubmit={updateStatus}>
       <TextInput title="proposal title" name="title" required />
@@ -26,9 +26,7 @@ export default function Form() {
       <StatusPreview />
       <Label _required>New endowment status</Label>
       <StatusOptions />
-      <Submitter type="submit" _classes="mt-4">
-        Submit{cw3MemberCount > 1 ? "proposal" : ""}
-      </Submitter>
+      <Submitter type="submit" _classes="mt-4"></Submitter>
     </FormContainer>
   );
 }
