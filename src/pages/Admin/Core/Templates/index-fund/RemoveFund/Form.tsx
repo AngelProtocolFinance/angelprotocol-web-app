@@ -17,7 +17,7 @@ export default function Form() {
       <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

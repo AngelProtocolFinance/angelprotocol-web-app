@@ -13,7 +13,7 @@ import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 
 export default function useUpdateOwner() {
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -57,8 +57,7 @@ export default function useUpdateOwner() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: proposalLink,
-        successMessage: "Owner update proposal submitted",
+        ...proposal("Owner update"),
       })
     );
     showModal(TransactionPrompt, {});
