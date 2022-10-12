@@ -6,7 +6,6 @@
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
   }
-
   .btn-primary {
     @apply bg-orange hover:bg-blue active:bg-blue disabled:bg-gray transition;
   }
@@ -14,7 +13,7 @@
     @apply border-2 border-orange hover:border-orange/33 active:border-orange/70 disabled:border-none;
   }
   .btn-secondary {
-    @apply bg-blue;
+    @apply bg-blue hover:bg-orange active:bg-orange disabled:bg-gray transition;
   }
   .btn-outline-secondary {
     @apply border-2 border-blue hover:border-blue/33 active:border-blue/70 disabled:border-none;
