@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import hero from "assets/images/hero.png";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
@@ -34,9 +34,7 @@ export default function DesktopHeader() {
           <WalletSuite />
         </div>
       </header>
-      <Routes>
-        <Route path={appRoutes.index} element={<Banner classes="my-10" />} />
-      </Routes>
+      {isHome && <Banner classes="my-10" />}
     </div>
   );
 }
