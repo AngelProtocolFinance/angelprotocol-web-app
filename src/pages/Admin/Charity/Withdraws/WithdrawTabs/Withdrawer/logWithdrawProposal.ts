@@ -25,7 +25,7 @@ type ProposalInfo = {
 
 type Params = ProposalInfo & {
   res: DeliverTxResponse;
-  proposalLink: SuccessLink;
+  proposalLink: SuccessLink | undefined;
   wallet: WalletState;
 };
 

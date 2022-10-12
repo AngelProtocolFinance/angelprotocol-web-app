@@ -20,7 +20,7 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -78,8 +78,7 @@ export default function useConfigureRegistrar() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: proposalLink,
-        successMessage: "Config update proposal submitted",
+        ...proposal("Config update"),
       })
     );
     showModal(TransactionPrompt, {});

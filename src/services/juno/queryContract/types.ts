@@ -2,10 +2,10 @@ import {
   AdminVoteInfo,
   AllianceMember,
   CW3Config,
+  CW3ListVoters,
   CW4Member,
   CW20Balance,
   CW20Info,
-  CategorizedEndowments,
   EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
@@ -71,6 +71,7 @@ export interface ContractQueries {
   cw4Member: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
 
   cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
+  cw3ListVoters: { args: null; res: Q<CW3ListVoters>; result: CW3ListVoters };
   cw3Config: { args: null; res: Q<CW3Config>; result: CW3Config };
   cw3Propsosals: {
     args: PageOptions;
@@ -94,11 +95,6 @@ export interface ContractQueries {
     args: EndowmentQueryOptions;
     res: Q<EndowmentListRes>;
     result: EndowmentEntry[];
-  };
-  accCategorizedEndows: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: CategorizedEndowments;
   };
   accEndowment: {
     args: { id: number };

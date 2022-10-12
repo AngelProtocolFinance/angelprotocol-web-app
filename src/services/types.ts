@@ -1,4 +1,4 @@
-import { SuccessLink } from "slices/transaction/types";
+import { SendCosmosTxArgs } from "slices/transaction/types";
 import { Token } from "types/aws";
 import {
   AdminVoteInfo,
@@ -28,8 +28,12 @@ export type AdminResources = {
   endowmentId: number;
   endowment: EndowmentDetails;
   cw3config: CW3Config;
-  proposalLink: SuccessLink;
   role: AdminRoles;
+  //proposal method to collate proposal resources
+  //use SendCosmosTxArgs types so to just spread it later on fn call
+  proposal(
+    proposalName: string
+  ): Pick<SendCosmosTxArgs, "successMessage" | "successLink">;
 };
 
 export type ProposalDetails = Proposal & {

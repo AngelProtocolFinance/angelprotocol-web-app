@@ -41,6 +41,7 @@ export const queryObject: {
   cw3Voter({ addr }) {
     return { voter: { address: addr } };
   },
+  cw3ListVoters: { list_voters: {} },
   cw3Config: { config: {} },
   cw3Propsosals(options) {
     return { reverse_proposals: options };
@@ -74,9 +75,6 @@ export const queryObject: {
 
   /** account */
   accEndowList(options) {
-    return { endowment_list: options };
-  },
-  accCategorizedEndows(options) {
     return { endowment_list: options };
   },
 
