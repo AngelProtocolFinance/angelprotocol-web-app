@@ -1,42 +1,38 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Hubspot from "hubspot";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+import { FormProvider, useForm } from "react-hook-form";
+import { FormInput } from "pages/Registration/common";
 import { useErrorContext } from "contexts/ErrorContext";
-import { logger } from "helpers";
+import Icon from "components/Icon";
+import { FormValues, schema } from "./schema";
 
-const hubspot = new Hubspot({
-  apiKey: process.env.REACT_APP_HUBSPOT_API_KEY || "",
-});
 const PORTAL_ID = "24900163";
 const FORM_ID = "6593339e-cc5d-4375-bd06-560a8c88879c";
-
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Please enter your email."),
-});
-
-const SUCCESS_MESSAGE =
-  "The form was sent successfully. By doing so, you have agreed to our privacy policy";
+const HUBSPOT_API = `https://api.hsforms.com/submissions/v3/integration/secure/submit/${PORTAL_ID}/${FORM_ID}?hapikey=${
+  process.env.REACT_APP_HUBSPOT_API_KEY || ""
+}`;
 
 export default function Newsletter() {
   const { handleError } = useErrorContext();
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<{ email: string }>({
+  const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
+  const {
+    handleSubmit,
+    formState: { isSubmitSuccessful, isSubmitting },
+  } = methods;
 
-  function submit(data: { email: string }) {
-    hubspot.forms
-      .submit(PORTAL_ID, FORM_ID, {
-        fields: [{ name: "email", value: data.email }],
-      })
-      .then((res: any) => logger.log(res))
-      .catch((err: any) => handleError(err));
+  async function submit(data: FormValues) {
+    const response = await fetch(HUBSPOT_API, {
+      method: "POST",
+      body: JSON.stringify({ fields: [{ name: "email", value: data.email }] }),
+    });
+
+    const json = await response.json();
+    console.log(json);
+    if ("errors" in json) {
+      handleError(json.errors);
+    }
   }
 
   return (
@@ -60,23 +56,37 @@ export default function Newsletter() {
         </p>
       </div>
 
-      <form
-        className="flex items-start gap-3 xl:gap-6"
-        onSubmit={handleSubmit(submit)}
-      >
-        <input
-          className="flex items-center w-44 xl:w-72 py-2 px-3 border border-gray-l2 rounded-lg text-sm"
-          placeholder="Enter your email address here"
-          disabled={isSubmitting}
-        />
-        <button
-          type="submit"
-          className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm font-bold"
-          disabled={isSubmitting}
+      <FormProvider {...methods}>
+        <form
+          className="flex items-start gap-3 xl:gap-6"
+          onSubmit={handleSubmit(submit)}
         >
-          Subscribe
-        </button>
-      </form>
+          <div>
+            <FormInput<FormValues>
+              fieldName="email"
+              className="flex items-center w-44 xl:w-72 py-2 px-3 border border-gray-l2 rounded-lg text-sm"
+              placeholder="Enter your email address here"
+              disabled={isSubmitting}
+            />
+            {isSubmitSuccessful && (
+              <span className="flex gap-1">
+                <Icon type="Check" />
+                <p>
+                  The form was sent successfully. By doing so, you have agreed
+                  to our privacy policy
+                </p>
+              </span>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm font-bold"
+            disabled={isSubmitting}
+          >
+            Subscribe
+          </button>
+        </form>
+      </FormProvider>
     </div>
   );
 }
