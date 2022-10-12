@@ -83,7 +83,7 @@ describe("App.tsx tests", () => {
     expect(screen.getByTestId("loader")).toBeInTheDocument();
 
     //marketplace is finally loaded
-    expect(await screen.findByText(/mock endowment/i));
+    expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
     expect(screen.queryByTestId("loader")).toBeNull();
 
     //user goes to leaderboards
@@ -102,6 +102,9 @@ describe("App.tsx tests", () => {
         name: /marketplace/i,
       })
     );
-    expect(await screen.findByText(/mock endowment/i));
+    //not sure if caching works in test, so just wait again for mock endowment
+    expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
+    expect(screen.getByText(bannerText1)).toBeInTheDocument();
+    expect(screen.getByText(bannerText2)).toBeInTheDocument();
   });
 });
