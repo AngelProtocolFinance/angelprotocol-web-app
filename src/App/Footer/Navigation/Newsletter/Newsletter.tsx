@@ -64,7 +64,7 @@ export default function Newsletter() {
           <div>
             <FormInput<FormValues>
               fieldName="email"
-              className="flex items-center w-44 xl:w-72 py-2 px-3 border border-gray-l2 rounded-lg text-sm"
+              className="flex items-center w-44 xl:w-72 border border-gray-l2 rounded-lg text-sm"
               placeholder="Enter your email address here"
               disabled={isSubmitting}
             />
