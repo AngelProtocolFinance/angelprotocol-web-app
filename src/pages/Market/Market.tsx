@@ -7,6 +7,7 @@ import Index from "./Index";
 export default function Market() {
   const { data: endowments = {} as CategorizedEndowments, isLoading } =
     useCategorizedEndowmentsQuery({});
+
   return (
     <div className="grid content-start padded-container pb-16 mt-4">
       {(isLoading && (
