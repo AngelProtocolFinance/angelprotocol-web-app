@@ -77,25 +77,31 @@ export const customApi = junoApi.injectEndpoints({
             addr: args.user,
           });
 
-          const listVoters = await queryContract(
-            "cw3ListVoters",
-            cw3Addr,
-            null
-          );
-
-          if (!!voter.weight && !!listVoters.voters) {
+          if (!!voter.weight) {
+            const listVoters = await queryContract(
+              "cw3ListVoters",
+              cw3Addr,
+              null
+            );
+            const isSingleMember = listVoters.voters.length === 1;
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
 
             return {
               data: {
                 cw3: cw3Addr,
                 cw4: cw4Addr,
-                cw3MemberCount: listVoters.voters.length,
                 endowmentId: numId,
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
-                proposalLink,
                 role,
+                proposal(name) {
+                  return {
+                    successLink: isSingleMember ? undefined : proposalLink,
+                    successMessage: isSingleMember
+                      ? undefined
+                      : `${name} proposal created`,
+                  };
+                },
               },
             };
           } else {
@@ -114,13 +120,13 @@ export const customApi = junoApi.injectEndpoints({
           addr: args.user,
         });
 
-        const listVoters = await queryContract(
-          "cw3ListVoters",
-          endowment.owner,
-          null
-        );
-
-        if (!!voter.weight && !!listVoters.voters) {
+        if (!!voter.weight) {
+          const listVoters = await queryContract(
+            "cw3ListVoters",
+            endowment.owner,
+            null
+          );
+          const isSingleMember = listVoters.voters.length === 1;
           const cw3config = await queryContract(
             "cw3Config",
             endowment.owner,
@@ -130,12 +136,18 @@ export const customApi = junoApi.injectEndpoints({
             data: {
               cw3: endowment.owner,
               cw4: cw3config.group_addr,
-              cw3MemberCount: listVoters.voters.length,
               endowmentId: numId,
               endowment,
               cw3config,
-              proposalLink,
               role: "charity",
+              proposal(name) {
+                return {
+                  successLink: isSingleMember ? undefined : proposalLink,
+                  successMessage: isSingleMember
+                    ? undefined
+                    : `${name} proposal created`,
+                };
+              },
             },
           };
         }

@@ -3,8 +3,7 @@ import { FormContainer, Submitter, TextInput } from "components/admin";
 import usePropose from "./usePropose";
 
 export default function Form() {
-  const { configureCW3, isSubmitDisabled, isTime, cw3MemberCount } =
-    usePropose();
+  const { configureCW3, isSubmitDisabled, isTime } = usePropose();
   return (
     <FormContainer onSubmit={configureCW3}>
       <TextInput<CV> title="Proposal Title" name="title" required />
@@ -27,7 +26,7 @@ export default function Form() {
         mono
       />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit{cw3MemberCount > 1 ? "proposal" : ""}
+        Submit
       </Submitter>
     </FormContainer>
   );

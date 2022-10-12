@@ -16,7 +16,7 @@ import useUpdateFund from "./useUpdateFund";
 export default function Form() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =
     useInitFundMembers();
-  const { updateFund, cw3MemberCount } = useUpdateFund();
+  const { updateFund } = useUpdateFund();
   return (
     <FormContainer onSubmit={updateFund}>
       <TextInput<FV> title="Proposal Title" name="title" required />
@@ -61,7 +61,7 @@ export default function Form() {
         </>
       )}
       <Submitter type="button" onClick={updateFund} _classes="mt-4">
-        Submit{cw3MemberCount > 1 ? "proposal" : ""}
+        Submit
       </Submitter>
     </FormContainer>
   );

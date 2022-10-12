@@ -23,7 +23,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { cw3, cw3MemberCount, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -83,9 +83,7 @@ export default function useTransferFunds() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: cw3MemberCount === 1 ? undefined : proposalLink,
-        successMessage:
-          cw3MemberCount === 1 ? undefined : "Fund transfer proposal submitted",
+        ...proposal("Fund transfer"),
       })
     );
     showModal(TransactionPrompt, {});
@@ -94,6 +92,5 @@ export default function useTransferFunds() {
   return {
     transferFunds: handleSubmit(transferFunds),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
-    cw3MemberCount,
   };
 }

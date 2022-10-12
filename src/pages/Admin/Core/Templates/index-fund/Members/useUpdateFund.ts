@@ -16,7 +16,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, cw3MemberCount, proposalLink } = useAdminResources();
+  const { cw3, proposal } = useAdminResources();
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
@@ -89,9 +89,7 @@ export default function useUpdateFund() {
               { type: junoTags.admin, id: adminTags.proposals },
             ]),
           ],
-          successLink: cw3MemberCount === 1 ? undefined : proposalLink,
-          successMessage:
-            cw3MemberCount === 1 ? undefined : "Fund member proposal submitted",
+          ...proposal("Fund member"),
         })
       );
       setIsLoading(false);
@@ -106,6 +104,5 @@ export default function useUpdateFund() {
   return {
     updateFund,
     isSubmitDisabled: isLoading,
-    cw3MemberCount,
   };
 }
