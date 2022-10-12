@@ -3,10 +3,9 @@ import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 
 export default function FormInput<T extends FieldValues>(
-  props: Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
+  props: InputHTMLAttributes<HTMLInputElement> & {
     fieldName: Path<T>;
     label?: string;
-    classes?: string;
   }
 ) {
   const {
@@ -14,7 +13,7 @@ export default function FormInput<T extends FieldValues>(
     fieldName,
     disabled,
     required,
-    classes,
+    className = "",
     type = "text",
     ...rest
   } = props;
@@ -25,7 +24,7 @@ export default function FormInput<T extends FieldValues>(
   } = useFormContext<T>();
 
   return (
-    <div className={`flex flex-col gap-1 w-full items-start ${classes || ""}`}>
+    <div className={`flex flex-col gap-1 w-full items-start ${className}`}>
       {!!label && (
         <label htmlFor={props.fieldName} className="text-dark-grey">
           {label}

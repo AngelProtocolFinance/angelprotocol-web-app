@@ -26,7 +26,7 @@ export default function ReferralSelector() {
           label="Please specify"
           placeholder="Please specify"
           required
-          classes="mt-3"
+          className="mt-3"
         />
       )}
     </div>
