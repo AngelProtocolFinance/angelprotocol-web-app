@@ -10,13 +10,13 @@
     @apply bg-orange hover:bg-blue active:bg-blue disabled:bg-gray transition;
   }
   .btn-outline-primary {
-    @apply border-2 border-orange hover:bg-orange/30 active:bg-orange/70 disabled:border-none;
+    @apply border-2 border-orange hover:bg-orange/30 active:bg-orange/70 disabled:border-none transition;
   }
   .btn-secondary {
     @apply bg-blue hover:bg-orange active:bg-orange disabled:bg-gray transition;
   }
   .btn-outline-secondary {
-    @apply border-2 border-blue hover:bg-blue/30 active:bg-blue/70 disabled:border-none;
+    @apply border-2 border-blue hover:bg-blue/30 active:bg-blue/70 disabled:border-none transition;
   }
 }
 
