@@ -107,10 +107,6 @@ export type EndowmentEntry = {
   categories: Categories;
 };
 
-export type CategorizedEndowments = {
-  [index in UNSDG_NUMS]: EndowmentEntry[];
-};
-
 export interface ProfileResponse {
   name: string; // name of the Charity Endowment
   overview: string;
