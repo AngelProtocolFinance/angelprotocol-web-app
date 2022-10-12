@@ -61,15 +61,15 @@ export default function Newsletter() {
           className="flex items-start gap-3 xl:gap-6"
           onSubmit={handleSubmit(submit)}
         >
-          <div>
+          <div className="flex flex-col gap-1 w-44 xl:w-72">
             <FormInput<FormValues>
               fieldName="email"
-              className="flex items-center w-44 xl:w-72 border border-gray-l2 rounded-lg text-sm"
+              className="flex items-center border border-gray-l2 rounded-lg text-sm"
               placeholder="Enter your email address here"
               disabled={isSubmitting}
             />
             {isSubmitSuccessful && (
-              <span className="flex gap-1">
+              <span className="flex gap-1 w-full text-xs">
                 <Icon type="Check" />
                 <p>
                   The form was sent successfully. By doing so, you have agreed
