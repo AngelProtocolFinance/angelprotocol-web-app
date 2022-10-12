@@ -6,6 +6,19 @@
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
   }
+
+  .btn-primary {
+    @apply bg-orange;
+  }
+  .btn-outline-primary {
+    @apply border-2 border-orange hover:border-orange/33 active:border-orange/70 disabled:border-none;
+  }
+  .btn-secondary {
+    @apply bg-blue;
+  }
+  .btn-outline-secondary {
+    @apply border-2 border-blue hover:border-blue/33 active:border-blue/70 disabled:border-none;
+  }
 }
 
 @layer utilities {
