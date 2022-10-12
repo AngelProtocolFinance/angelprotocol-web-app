@@ -1,37 +1,32 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormInput } from "pages/Registration/common";
+import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { FormValues, schema } from "./schema";
 
-const PORTAL_ID = "24900163";
-const FORM_ID = "6593339e-cc5d-4375-bd06-560a8c88879c";
-const HUBSPOT_API = `https://api.hsforms.com/submissions/v3/integration/secure/submit/${PORTAL_ID}/${FORM_ID}?hapikey=${
-  process.env.REACT_APP_HUBSPOT_API_KEY || ""
-}`;
-
 export default function Newsletter() {
   const { handleError } = useErrorContext();
+  const [subscribe, { isSuccess }] = useNewsletterSubscribeMutation();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
   const {
     handleSubmit,
-    formState: { isSubmitSuccessful, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   async function submit(data: FormValues) {
-    const response = await fetch(HUBSPOT_API, {
-      method: "POST",
-      body: JSON.stringify({ fields: [{ name: "email", value: data.email }] }),
-    });
+    try {
+      const response = await subscribe(data.email);
 
-    const json = await response.json();
-    console.log(json);
-    if ("errors" in json) {
-      handleError(json.errors);
+      if ("error" in response) {
+        throw response.error;
+      }
+    } catch (error) {
+      handleError(error);
     }
   }
 
@@ -68,7 +63,7 @@ export default function Newsletter() {
               placeholder="Enter your email address here"
               disabled={isSubmitting}
             />
-            {isSubmitSuccessful && (
+            {isSuccess && (
               <span className="flex gap-1 w-full text-xs">
                 <Icon type="Check" />
                 <p>
