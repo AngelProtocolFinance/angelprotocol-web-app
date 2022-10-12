@@ -23,7 +23,9 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
 
   const className = `flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
     isDragActive ? "bg-blue/50 ring ring-blue" : "bg-white outline-none"
-  } ${props.className} ${props.disabled ? "cursor-default bg-gray/40" : ""}`;
+  } ${props.className} ${
+    props.disabled ? "cursor-default bg-gray/40" : "cursor-pointer"
+  }`;
 
   return (
     <div {...getRootProps({ className })}>
