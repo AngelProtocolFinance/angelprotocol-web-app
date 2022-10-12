@@ -1,5 +1,5 @@
 import { Args, Res, Result } from "./queryContract/types";
-import { CategorizedEndowments, EndowmentEntry } from "types/contracts";
+import { EndowmentEntry } from "types/contracts";
 import { accountTags, junoTags } from "services/juno/tags";
 import { contracts } from "constants/contracts";
 import { junoApi } from ".";
@@ -10,34 +10,21 @@ const accounts = contracts.accounts;
 export const account_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     //fetch endowments by batch to avoid hitting gas limits
-    categorizedEndowments: builder.query<CategorizedEndowments, unknown>({
+    endowments: builder.query<EndowmentEntry[], unknown>({
       providesTags: [{ type: junoTags.registrar, id: accountTags.endowments }],
       async queryFn() {
         const endowments = await getEndowments(50, 0, []);
         return {
-          data: endowments.reduce((result, entry) => {
-            const { categories, tier } = entry;
-            //TODO: this structure allows endowment to be listed in only 1 sdg row
-            const sdgNum = categories.sdgs[0] ?? 1;
-            if (tier === "Level1") {
-              return result;
-            } else {
-              result[sdgNum] ||= [];
-              result[sdgNum].push(entry);
-              return result;
-            }
-          }, {} as CategorizedEndowments),
+          data: endowments.filter(
+            ({ endow_type, tier, status }) =>
+              endow_type === "Charity" ||
+              tier !== "Level1" ||
+              status === "Approved"
+          ),
         };
       },
     }),
 
-    endowments: builder.query<Result<"accEndowList">, Args<"accEndowList">>({
-      providesTags: [{ type: junoTags.account, id: accountTags.endowments }],
-      query: (args) => genQueryPath("accEndowList", args, accounts),
-      transformResponse: (res: Res<"accEndowList">) => {
-        return res.data.endowments;
-      },
-    }),
     endowmentDetails: builder.query<
       Result<"accEndowment">,
       Args<"accEndowment">
@@ -68,7 +55,6 @@ export const account_api = junoApi.injectEndpoints({
 export const {
   useEndowmentDetailsQuery,
   useEndowmentProfileQuery,
-  useCategorizedEndowmentsQuery,
   useBalanceQuery,
   useEndowmentsQuery,
 } = account_api;
