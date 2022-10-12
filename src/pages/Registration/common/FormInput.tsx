@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 
-export default function FormInput<T extends FieldValues>(
+export function FormInput<T extends FieldValues>(
   props: InputHTMLAttributes<HTMLInputElement> & {
     fieldName: Path<T>;
     label?: string;

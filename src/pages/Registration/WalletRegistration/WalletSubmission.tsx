@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import FormInput from "pages/Registration/common/FormInput";
+import { FormInput } from "pages/Registration/common";
 import { useRegistrationQuery } from "services/aws/registration";
 import {
   useGetWallet,

@@ -3,7 +3,7 @@ import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails as CD } from "pages/Registration/types";
-import FormInput from "pages/Registration/common/FormInput";
+import { FormInput } from "pages/Registration/common";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { appRoutes } from "constants/routes";
