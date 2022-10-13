@@ -41,9 +41,8 @@ export default function Form() {
       <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
-        aspectRatioX={4}
-        aspectRatioY={1}
-        className="w-full aspect-[4/1]"
+        aspect={[4, 1]}
+        classes="w-full aspect-[4/1] mb-4"
       />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />

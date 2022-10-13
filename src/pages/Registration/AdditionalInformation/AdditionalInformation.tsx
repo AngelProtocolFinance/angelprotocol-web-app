@@ -86,12 +86,11 @@ const Banner = () => (
     required
   >
     <div className="flex flex-col gap-2">
-      <ImgEditor<AdditionalInfoValues>
+      <ImgEditor<AdditionalInfoValues, "banner">
         name="banner"
-        aspectRatioX={4}
-        aspectRatioY={1}
+        aspect={[4, 1]}
         accept={VALID_MIME_TYPES}
-        className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
+        classes="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
       />
       <ImageSizeInfo limit="1MB" />
     </div>
@@ -101,12 +100,11 @@ const Banner = () => (
 const CharityLogo = () => (
   <InputColumn htmlFor="charityLogo" label="Logo of your organization" required>
     <div className="flex flex-col gap-2">
-      <ImgEditor<AdditionalInfoValues>
+      <ImgEditor<AdditionalInfoValues, "charityLogo">
         name="charityLogo"
-        aspectRatioX={1}
-        aspectRatioY={1}
+        aspect={[4, 1]}
         accept={VALID_MIME_TYPES}
-        className="h-20 sm:h-40 w-20 sm:w-40"
+        classes="h-20 sm:h-40 w-20 sm:w-40"
       />
       <ImageSizeInfo limit="1MB" />
     </div>

@@ -7,7 +7,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FileWrapper } from "components/FileDropzone";
+import { ImgLink } from "components/ImgEditor";
 import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes from "../routes";
@@ -67,20 +67,16 @@ async function getUploadBody(values: AdditionalInfoValues) {
   };
 }
 
-async function uploadIfNecessary(
-  fileWrapper: FileWrapper
-): Promise<FileObject> {
-  if (!fileWrapper.file) {
-    return {
-      name: fileWrapper.name,
-      publicUrl: fileWrapper.publicUrl,
-    };
+async function uploadIfNecessary({
+  file,
+  ...link
+}: ImgLink): Promise<FileObject> {
+  if (!file) {
+    return link;
   }
 
-  const publicUrl = await uploadToIpfs(fileWrapper.file);
-
   return {
-    name: fileWrapper.file.name,
-    publicUrl,
+    name: file.name,
+    publicUrl: await uploadToIpfs(file),
   };
 }
