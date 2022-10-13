@@ -47,11 +47,20 @@ export default function useEditProfile() {
         data.country_of_origin = data.country_of_origin.split(" ")[0];
       }
 
+      let imgUrl: string = "";
+      //means new image file is selected
+      if (data.image.file) {
+        showModal(Popup, { message: "Uploading image.." });
+        imgUrl = await uploadToIpfs(data.image.file);
+      } else {
+        imgUrl = data.image.publicUrl;
+      }
+
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
       const flatData: FlatProfileWithSettings = {
         ...data,
-        image: data.image.preview,
+        image: imgUrl,
         logo: data.logo.preview,
       };
 
@@ -70,19 +79,10 @@ export default function useEditProfile() {
         throw new Error("no changes detected");
       }
 
-      let imgUrl: string = "";
-      //means new image file is selected
-      if (data.image.file) {
-        showModal(Popup, { message: "Uploading image.." });
-        //TODO: make ipfs upload acces file[]
-        imgUrl = await uploadToIpfs(data.image.file);
-      } else {
-        imgUrl = data.image.publicUrl;
-      }
       //TODO: add logo upload
 
       const accountContract = new Account(wallet);
-      const { sdg, name, ...profilePayload } = data;
+      const { sdg, name, image, logo, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({

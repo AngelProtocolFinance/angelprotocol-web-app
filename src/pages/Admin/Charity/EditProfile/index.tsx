@@ -56,7 +56,7 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
   const initial: ProfileWithSettings = {
     ...flatInitial,
     image: { name: "", publicUrl: props.image, preview: props.image },
-    logo: { name: "", publicUrl: props.image, preview: props.image },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
   };
 
   const methods = useForm<ProfileFormValues>({

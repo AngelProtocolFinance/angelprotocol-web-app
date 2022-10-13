@@ -42,7 +42,7 @@ export default function Form() {
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4"
+        classes="w-full aspect-[4/1] mb-4 shadow-inner-white-grey bg-gray-l2 rounded-md"
       />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
