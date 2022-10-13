@@ -19,7 +19,7 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { cw3, proposal } = useAdminResources();
+  const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
@@ -56,7 +56,8 @@ export default function useDestroyFund() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Fund deletion"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPrompt, {});

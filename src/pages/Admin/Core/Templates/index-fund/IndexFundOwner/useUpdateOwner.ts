@@ -14,7 +14,7 @@ import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 
 export default function useUpdateOwner() {
-  const { cw3, proposal } = useAdminResources();
+  const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -58,7 +58,8 @@ export default function useUpdateOwner() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Owner update"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPrompt, {});
