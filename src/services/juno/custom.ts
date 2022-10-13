@@ -20,8 +20,33 @@ function getCWs(id: number) {
   const role: AdminRoles = id === AP_ID ? "ap" : "reviewer";
   return { cw3Addr, cw4Addr, role };
 }
+
 function isAp(id: number) {
   return id === AP_ID || id === REVIEWER_ID;
+}
+
+class ProposalDisplay {
+  successLink: SuccessLink;
+  successMessage: string;
+
+  constructor(
+    isSingleMember: boolean,
+    adminHomeUrl: string,
+    adminProposalsUrl: string
+  ) {
+    this.successLink = isSingleMember
+      ? {
+          url: adminHomeUrl,
+          description: "Go to admin home",
+        }
+      : {
+          url: adminProposalsUrl,
+          description: "Go to proposals",
+        };
+    this.successMessage = isSingleMember
+      ? `Successful transaction`
+      : `Proposal successfully created`;
+  }
 }
 
 export const customApi = junoApi.injectEndpoints({
@@ -65,10 +90,8 @@ export const customApi = junoApi.injectEndpoints({
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
-        const proposalLink: SuccessLink = {
-          url: `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`,
-          description: "Go to proposals",
-        };
+        const adminProposalsUrl = `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`;
+        const adminHomeUrl = `${appRoutes.admin}/${args.endowmentId}`;
 
         if (isAp(numId)) {
           const { cw3Addr, cw4Addr, role } = getCWs(numId);
@@ -84,6 +107,11 @@ export const customApi = junoApi.injectEndpoints({
               null
             );
             const isSingleMember = listVoters.voters.length === 1;
+            const propDisplay = new ProposalDisplay(
+              isSingleMember,
+              adminHomeUrl,
+              adminProposalsUrl
+            );
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
 
             return {
@@ -94,14 +122,8 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 role,
-                proposal(name) {
-                  return {
-                    successLink: isSingleMember ? undefined : proposalLink,
-                    successMessage: isSingleMember
-                      ? undefined
-                      : `${name} proposal created`,
-                  };
-                },
+                successLink: propDisplay.successLink,
+                successMessage: propDisplay.successMessage,
               },
             };
           } else {
@@ -127,6 +149,11 @@ export const customApi = junoApi.injectEndpoints({
             null
           );
           const isSingleMember = listVoters.voters.length === 1;
+          const propDisplay = new ProposalDisplay(
+            isSingleMember,
+            adminHomeUrl,
+            adminProposalsUrl
+          );
           const cw3config = await queryContract(
             "cw3Config",
             endowment.owner,
@@ -140,14 +167,8 @@ export const customApi = junoApi.injectEndpoints({
               endowment,
               cw3config,
               role: "charity",
-              proposal(name) {
-                return {
-                  successLink: isSingleMember ? undefined : proposalLink,
-                  successMessage: isSingleMember
-                    ? undefined
-                    : `${name} proposal created`,
-                };
-              },
+              successLink: propDisplay.successLink,
+              successMessage: propDisplay.successMessage,
             },
           };
         }
