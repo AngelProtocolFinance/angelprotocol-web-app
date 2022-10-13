@@ -32,8 +32,6 @@ export default function LandingPage() {
         <Button onClick={handleStart} className="btn-orange w-40 h-10">
           Start
         </Button>
-        <button className="btn-orange w-40 h-10">test</button>
-        <button className="btn-blue w-40 h-10">test</button>
       </Section>
 
       <Section>
