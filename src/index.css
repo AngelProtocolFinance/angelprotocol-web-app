@@ -7,16 +7,16 @@
     @apply xl:container xl:mx-auto px-5;
   }
   .btn-primary {
-    @apply bg-orange hover:bg-blue active:bg-blue disabled:bg-gray transition;
+    @apply bg-orange text-white hover:bg-blue active:bg-blue disabled:bg-gray transition;
   }
   .btn-outline-primary {
-    @apply border-2 border-orange hover:bg-orange/30 active:bg-orange/70 disabled:border-gray disabled:text-gray transition;
+    @apply border-2 border-orange text-orange hover:bg-orange/30 active:bg-orange/70 hover:text-white active:text-white disabled:border-gray disabled:text-gray transition;
   }
   .btn-secondary {
-    @apply bg-blue hover:bg-orange active:bg-orange disabled:bg-gray transition;
+    @apply bg-blue text-white hover:bg-orange active:bg-orange disabled:bg-gray transition;
   }
   .btn-outline-secondary {
-    @apply border-2 border-blue hover:bg-blue/30 active:bg-blue/70 disabled:border-gray disabled:text-gray transition;
+    @apply border-2 border-blue text-blue hover:bg-blue/30 active:bg-blue/70 hover:text-white active:text-white disabled:border-gray disabled:text-gray transition;
   }
 }
 
