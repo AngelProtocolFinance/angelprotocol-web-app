@@ -1,7 +1,5 @@
 import { SectionProps } from "./types";
 
-const linkStyles = "font-sans font-semibold text-xs";
-
 export default function Section({ title, links }: SectionProps) {
   return (
     <div className="flex flex-col items-start pb-5 gap-2 xl:gap-4">
@@ -14,6 +12,9 @@ export default function Section({ title, links }: SectionProps) {
     </div>
   );
 }
+
+const linkStyles = "font-sans font-semibold text-xs";
+
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
     <a
