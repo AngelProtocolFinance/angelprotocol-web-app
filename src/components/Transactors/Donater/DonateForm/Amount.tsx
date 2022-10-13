@@ -22,7 +22,7 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 rounded-md shadow-inner-white bg-gray-l3">
+      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 rounded-md shadow-inner-white bg-gray-l4">
         <input
           {...register("amount")}
           autoComplete="off"

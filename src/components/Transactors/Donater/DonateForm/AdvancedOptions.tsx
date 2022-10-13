@@ -15,7 +15,7 @@ export default function AdvancedOptions({
   return (
     <div
       className={`grid ${classes} ${
-        isOptionsShown ? "p-3 rounded-md bg-gray-l3 shadow-inner-white" : ""
+        isOptionsShown ? "p-3 rounded-md bg-gray-l4 shadow-inner-white" : ""
       }`}
     >
       <button

@@ -64,7 +64,8 @@ module.exports = {
         gray: "#ACA7A0",
         "gray-l1": "#C4C0BB",
         "gray-l2": "#D7D1D1",
-        "gray-l3": "#F3F3F2",
+        "gray-l3": "#ECEDED",
+        "gray-l4": "#F3F3F2",
         white: "#FFFFFF",
 
         //standard sdg colors
