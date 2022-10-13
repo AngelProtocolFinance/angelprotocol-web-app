@@ -22,7 +22,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { cw3, proposalLink, role } = useAdminResources();
+  const { cw3, proposal, role } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
@@ -105,8 +105,7 @@ export default function useUpdateStatus() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        successLink: proposalLink,
-        successMessage: "Endowment status update proposal submitted",
+        ...proposal("Endowment status update"),
       })
     );
     showModal(TransactionPrompt, {});

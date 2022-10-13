@@ -26,7 +26,7 @@ export default function Form() {
         mono
       />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

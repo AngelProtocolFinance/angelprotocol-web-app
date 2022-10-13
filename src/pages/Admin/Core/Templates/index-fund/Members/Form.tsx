@@ -61,7 +61,7 @@ export default function Form() {
         </>
       )}
       <Submitter type="button" onClick={updateFund} _classes="mt-4">
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

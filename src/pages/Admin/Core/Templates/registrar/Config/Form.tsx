@@ -74,7 +74,7 @@ export default function Form() {
       </GroupContainer>
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

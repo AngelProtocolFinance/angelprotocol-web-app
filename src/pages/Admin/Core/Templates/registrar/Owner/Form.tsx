@@ -16,7 +16,7 @@ export default function Form() {
       <TextInput<RV> title="current owner" name="initialOwner" mono disabled />
       <TextInput<RV> title="new owner" name="new_owner" mono required />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );

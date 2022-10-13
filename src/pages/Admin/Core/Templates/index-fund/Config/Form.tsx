@@ -23,7 +23,7 @@ export default function Form() {
       <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Submit Proposal
+        Submit
       </Submitter>
     </FormContainer>
   );
