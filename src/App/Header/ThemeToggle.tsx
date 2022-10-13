@@ -1,23 +1,19 @@
 import { Switch } from "@headlessui/react";
-import { useEffect, useState } from "react";
 import Icon, { IconTypes } from "components/Icon";
-import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+import { useGetter, useSetter } from "store/accessors";
+import { toggle } from "slices/theme";
 
 export default function ThemeToggle() {
-  const [isDarkMode, setDarkMode] = useState(isPrevDark);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      setToDarkMode();
-    } else {
-      setToLightMode();
-    }
-  }, [isDarkMode]);
+  const dispatch = useSetter();
+  const theme = useGetter((state) => state.theme);
+  const isDarkMode = theme === "dark";
 
   return (
     <Switch
       checked={isDarkMode}
-      onChange={setDarkMode}
+      onChange={() => {
+        dispatch(toggle());
+      }}
       className="flex items-center justify-center gap-1 h-10 w-20 shrink-0 cursor-pointer rounded-3xl border border-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>

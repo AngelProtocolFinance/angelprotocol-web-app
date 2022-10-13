@@ -7,7 +7,7 @@ export default function MenuButton() {
   return (
     <button
       onClick={openMenu}
-      className="flex items-center text-white-grey justify-center w-10 h-10"
+      className="flex items-center text-white justify-center w-10 h-10"
     >
       <Icon type="Menu" className="text-2xl" />
     </button>
