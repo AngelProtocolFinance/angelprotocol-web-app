@@ -10,13 +10,13 @@ export default function Newsletter() {
   const { handleError } = useErrorContext();
   const [subscribe, { isSuccess }] = useNewsletterSubscribeMutation();
 
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(schema),
-  });
   const {
     handleSubmit,
+    register,
     formState: { isSubmitting },
-  } = methods;
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+  });
 
   async function submit(data: FormValues) {
     try {
@@ -51,37 +51,36 @@ export default function Newsletter() {
         </p>
       </div>
 
-      <FormProvider {...methods}>
-        <form
-          className="flex items-start gap-3 xl:gap-6"
-          onSubmit={handleSubmit(submit)}
-        >
-          <div className="flex flex-col gap-1 w-44 xl:w-72">
-            <FormInput<FormValues>
-              fieldName="email"
-              className="flex items-center border border-gray-l2 rounded-lg text-sm"
-              placeholder="Enter your email address here"
-              disabled={isSubmitting}
-            />
-            {isSuccess && (
-              <span className="flex gap-1 w-full text-xs">
-                <Icon type="Check" />
-                <p>
-                  The form was sent successfully. By doing so, you have agreed
-                  to our privacy policy
-                </p>
-              </span>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm font-bold"
+      <form
+        className="flex items-start gap-3 xl:gap-6"
+        onSubmit={handleSubmit(submit)}
+      >
+        <div className="flex flex-col gap-1 w-44 xl:w-72">
+          <input
+            {...register("email")}
+            id="email"
+            className="flex items-center border border-gray-l2 rounded-lg text-sm outline-none w-full px-3 py-2 text-black bg-white disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            placeholder="Enter your email address here"
             disabled={isSubmitting}
-          >
-            Subscribe
-          </button>
-        </form>
-      </FormProvider>
+          />
+          {isSuccess && (
+            <span className="flex gap-1 w-full text-xs">
+              <Icon type="Check" />
+              <p>
+                The form was sent successfully. By doing so, you have agreed to
+                our privacy policy
+              </p>
+            </span>
+          )}
+        </div>
+        <button
+          type="submit"
+          className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm font-bold"
+          disabled={isSubmitting}
+        >
+          Subscribe
+        </button>
+      </form>
     </div>
   );
 }
