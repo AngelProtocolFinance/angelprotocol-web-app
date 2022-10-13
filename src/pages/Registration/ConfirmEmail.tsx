@@ -89,7 +89,7 @@ export default function ConfirmEmail() {
         {!application.ContactPerson.EmailVerified && (
           <Button
             onClick={sendEmail}
-            className="btn-outline-secondary w-64 h-12 text-sm"
+            className="btn-outline-blue w-64 h-12 text-sm"
             isLoading={isLoading}
           >
             Resend verification email
@@ -97,7 +97,7 @@ export default function ConfirmEmail() {
         )}
         <Button
           onClick={onContinueClick}
-          className="btn-primary w-48 h-12 text-sm"
+          className="btn-orange w-48 h-12 text-sm"
           disabled={isLoading}
         >
           continue

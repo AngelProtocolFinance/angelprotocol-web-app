@@ -23,7 +23,7 @@ export default function ChooseWallet() {
     <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
       <Title />
       <KeplrConnector />
-      <Button className="btn-outline-secondary w-80 h-10" onClick={onBackClick}>
+      <Button className="btn-outline-blue w-80 h-10" onClick={onBackClick}>
         Back
       </Button>
     </div>

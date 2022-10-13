@@ -17,7 +17,7 @@ export default function WalletInfoModal() {
         account’, has unique public and private addresses, will hold your
         endowment balances and is used to authorise transactions.
       </p>
-      <Button className="btn-secondary w-40 h-10" onClick={closeModal}>
+      <Button className="btn-blue w-40 h-10" onClick={closeModal}>
         Got it
       </Button>
     </div>
