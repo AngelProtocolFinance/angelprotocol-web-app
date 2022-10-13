@@ -1,12 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
-import { Controller, FieldValues } from "react-hook-form";
+import { Controller, FieldValues, Path } from "react-hook-form";
 import { Props } from "./types";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import useImgEditor from "./useImgEditor";
 
-export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
+export default function ImgEditor<T extends FieldValues, K extends keyof T>(
+  props: Props<T, K>
+) {
   const {
     control,
     errors,

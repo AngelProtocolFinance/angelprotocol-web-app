@@ -1,3 +1,4 @@
+import { ImgLink } from "components/ImgEditor/types";
 import { CharityApplication, Registration } from "types/aws";
 import {
   AllianceMember,
@@ -248,8 +249,7 @@ export type ProfileWithSettings = ProfileUpdate &
   Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
     sdgNum: UNSDG_NUMS;
-    image: FileWrapper;
-    logo: FileWrapper;
+    image: ImgLink;
   };
 
 export type ProfileFormValues = ProposalBase &

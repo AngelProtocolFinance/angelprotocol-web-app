@@ -38,7 +38,7 @@ export default function Form() {
         required
       />
       <Label className="text-angel-grey -mb-2">Banner</Label>
-      <ImgEditor<UV>
+      <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspectRatioX={4}
