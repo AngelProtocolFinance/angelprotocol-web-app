@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import hero from "assets/images/hero.png";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
+import Floater from "../Floater";
 import Logo from "../Logo";
 import WalletSuite from "../WalletSuite";
 import Banner from "./Banner";
@@ -20,19 +21,21 @@ export default function MobileHeader() {
 
   return (
     <div
-      className="lg:hidden w-full pt-2"
+      className="lg:hidden w-full"
       style={{
         background,
       }}
     >
-      <header className="flex justify-between items-center w-full padded-container py-3">
-        <Logo />
-        <div className="flex justify-end gap-3">
-          <WalletSuite />
-          <MenuButton />
-        </div>
-      </header>
-      {isHome && <Banner classes="mt-10" />}
+      <Floater>
+        <header className="flex justify-between items-center w-full padded-container">
+          <Logo />
+          <div className="flex justify-end gap-3">
+            <WalletSuite />
+            <MenuButton />
+          </div>
+        </header>
+      </Floater>
+      {isHome && <Banner classes="mt-32" />}
     </div>
   );
 }
