@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
@@ -15,7 +16,7 @@ export default function Newsletter() {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors, isValid },
   } = methods;
 
   async function submit(data: FormValues) {
@@ -64,7 +65,13 @@ export default function Newsletter() {
               placeholder="Enter your email address here"
               disabled={isSubmitting}
             />
-            {isSuccess && (
+            <ErrorMessage
+              errors={errors}
+              as="p"
+              name="email"
+              className="w-full text-xs text-white dark:text-orange-l2 text-center"
+            />
+            {isSuccess && isValid && (
               <span className="flex gap-1 w-full text-xs">
                 <Icon type="Check" />
                 <p>
