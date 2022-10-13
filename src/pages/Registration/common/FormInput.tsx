@@ -7,6 +7,7 @@ export function FormInput<T extends FieldValues>(
     fieldName: Path<T>;
     label: string;
     classes?: string;
+    mono?: true;
   }
 ) {
   const {
@@ -16,6 +17,7 @@ export function FormInput<T extends FieldValues>(
     required,
     classes,
     type = "text",
+    mono,
     ...rest
   } = props;
 
@@ -35,7 +37,9 @@ export function FormInput<T extends FieldValues>(
         id={props.fieldName}
         type={type}
         disabled={disabled || isSubmitting}
-        className="rounded-md outline-none border-none w-full px-3 py-2 text-black bg-white disabled:bg-white/10"
+        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black bg-white disabled:bg-white/10 ${
+          props.mono ? "font-mono" : ""
+        }`}
         {...register(props.fieldName)}
       />
       <ErrorMessage<T> name={props.fieldName} />
