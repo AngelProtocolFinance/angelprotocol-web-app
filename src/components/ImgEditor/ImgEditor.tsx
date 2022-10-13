@@ -16,22 +16,25 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   const filePath: any = `${String(name)}.${fileKey}`;
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
 
   const { onDrop, handleOpenCropper, isInitial, handleReset, preview } =
     useImgEditor(props);
 
   const { getRootProps, getInputProps } = useDropzone({
+    disabled: isSubmitting,
     multiple: false,
     onDrop,
   });
+
+  const overlay = `rgba(254,254,254,${isSubmitting ? 0.8 : 0})`;
 
   return (
     <div
       className={`relative grid place-items-center group ${classes}`}
       style={{
-        background: `no-repeat center/cover url(${preview})`,
+        background: `linear-gradient(${overlay},${overlay}), url(${preview}) center/cover no-repeat `,
       }}
     >
       <div className="absolute hidden group-hover:flex">
