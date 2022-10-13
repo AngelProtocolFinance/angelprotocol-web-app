@@ -9,3 +9,8 @@ export interface AWSQueryRes<T> {
    */
   LastEvaluatedKey?: string;
 }
+
+export type FileObject = {
+  name: string;
+  publicUrl: string;
+};

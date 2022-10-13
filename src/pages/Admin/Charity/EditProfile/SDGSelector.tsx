@@ -12,7 +12,7 @@ const sdgs = Object.entries(unsdgs).map(([key, val]) => ({
 export default function SDGSelector() {
   const {
     field: { onChange, value },
-  } = useController<Pick<ProfileFormValues, "sdgNum">>({ name: "sdgNum" });
+  } = useController<Pick<ProfileFormValues, "sdg">>({ name: "sdg" });
 
   return (
     <Listbox

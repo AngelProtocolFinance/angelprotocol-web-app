@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
+import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
-import ImgEditor from "components/ImgEditor";
+import ImgEditor, { ImgLink } from "components/ImgEditor";
 import RichTextEditor from "components/RichTextEditor";
 import InputColumn from "../common/InputColumn";
 import ButtonSection from "./ButtonSection";
@@ -17,9 +18,10 @@ export default function AdditionalInformation() {
   const methods = useForm<AdditionalInfoValues>({
     resolver: yupResolver(additionalInfoSchema),
     defaultValues: {
-      banner: charity.Metadata.Banner,
+      //convert to editor format
+      banner: toImgLink(charity.Metadata.Banner),
+      charityLogo: toImgLink(charity.Metadata.CharityLogo),
       charityOverview: charity.Metadata.CharityOverview,
-      charityLogo: charity.Metadata.CharityLogo,
       kycDonorsOnly: charity.Metadata.KycDonorsOnly,
     },
   });
@@ -86,12 +88,11 @@ const Banner = () => (
     required
   >
     <div className="flex flex-col gap-2">
-      <ImgEditor<AdditionalInfoValues>
+      <ImgEditor<AdditionalInfoValues, "banner">
         name="banner"
-        aspectRatioX={4}
-        aspectRatioY={1}
+        aspect={[4, 1]}
         accept={VALID_MIME_TYPES}
-        className="h-20 sm:h-40 w-[20rem] sm:w-[40rem]"
+        classes="w-[20rem] sm:w-[40rem] aspect-[4/1] border-2 border-white/20 rounded-md"
       />
       <ImageSizeInfo limit="1MB" />
     </div>
@@ -101,12 +102,11 @@ const Banner = () => (
 const CharityLogo = () => (
   <InputColumn htmlFor="charityLogo" label="Logo of your organization" required>
     <div className="flex flex-col gap-2">
-      <ImgEditor<AdditionalInfoValues>
+      <ImgEditor<AdditionalInfoValues, "charityLogo">
         name="charityLogo"
-        aspectRatioX={1}
-        aspectRatioY={1}
+        aspect={[1, 1]}
         accept={VALID_MIME_TYPES}
-        className="h-20 sm:h-40 w-20 sm:w-40"
+        classes="sm:h-40 w-20 sm:w-40 aspect-[1/1] border-2 border-white/20 rounded-md"
       />
       <ImageSizeInfo limit="1MB" />
     </div>
@@ -114,7 +114,7 @@ const CharityLogo = () => (
 );
 
 const ImageSizeInfo = ({ limit }: { limit: string }) => (
-  <p className="text-xs -mt-5 text-left font-thin text-white/70">
+  <p className="text-xs text-left font-thin text-white/70">
     should be less than {limit}
   </p>
 );
@@ -137,4 +137,12 @@ function OverviewInput() {
       />
     </InputColumn>
   );
+}
+
+function toImgLink(file?: FileObject): ImgLink {
+  if (file) {
+    return { ...file, preview: file.publicUrl };
+  } else {
+    return { name: "", preview: "", publicUrl: "" };
+  }
 }

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import {
   EndowmentProfileUpdateMeta,
-  ProfileWithSettings,
+  FlatProfileWithSettings,
 } from "pages/Admin/types";
 import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
@@ -39,8 +39,6 @@ export default function useEditProfile() {
     title,
     description,
     initial,
-    image,
-    logo,
     ...data
   }: ProfileFormValues) => {
     try {
@@ -49,18 +47,24 @@ export default function useEditProfile() {
         data.country_of_origin = data.country_of_origin.split(" ")[0];
       }
 
-      //TODO: find a way to include image (nested obj) in diff (which is curr flat only)
-      const {
-        logo: initialLogo,
-        image: initialImage,
-        ...restInitial
-      } = initial;
+      let imgUrl: string = "";
+      //means new image file is selected
+      if (data.image.file) {
+        showModal(Popup, { message: "Uploading image.." });
+        imgUrl = await uploadToIpfs(data.image.file);
+      } else {
+        imgUrl = data.image.publicUrl;
+      }
 
-      const diff = getPayloadDiff(
-        //use flatten objects
-        { ...restInitial, image: initialImage.publicUrl },
-        { ...data, image: image.file ? image.file.name : undefined }
-      );
+      //flatten profile values for diffing
+      //TODO: refactor to diff nested objects
+      const flatData: FlatProfileWithSettings = {
+        ...data,
+        image: imgUrl,
+        logo: data.logo.preview,
+      };
+
+      const diff = getPayloadDiff(initial, flatData);
 
       //if overview has changed, and is set to something
       if ("overview" in diff && data.overview) {
@@ -68,24 +72,17 @@ export default function useEditProfile() {
         diff.overview = PLACEHOLDER_OVERVIEW;
       }
 
-      const diffEntries = Object.entries(diff) as ObjectEntries<
-        Omit<ProfileWithSettings, "image" | "logo" | "categories">
-      >;
+      const diffEntries = Object.entries(
+        diff
+      ) as ObjectEntries<FlatProfileWithSettings>;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }
 
-      let imgUrl: string = "";
-      //means new image file is selected
-      if (image.file) {
-        showModal(Popup, { message: "Uploading image.." });
-        imgUrl = await uploadToIpfs(image.file);
-      } else {
-        imgUrl = image.publicUrl;
-      }
+      //TODO: add logo upload
 
       const accountContract = new Account(wallet);
-      const { sdgNum, name, ...profilePayload } = data;
+      const { sdg, name, image, logo, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
@@ -99,17 +96,14 @@ export default function useEditProfile() {
             id: profilePayload.id,
             name,
             image: imgUrl,
-            logo: logo.publicUrl,
-            categories: { sdgs: [sdgNum], general: [] },
+            logo: data.logo.publicUrl,
+            categories: { sdgs: [sdg], general: [] },
           })
         );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
         type: "acc_profile",
-        data: genDiffMeta(diffEntries, {
-          ...restInitial,
-          image: initialImage.publicUrl,
-        }),
+        data: genDiffMeta(diffEntries, initial),
       };
 
       const adminContract = new CW3(wallet, cw3);
