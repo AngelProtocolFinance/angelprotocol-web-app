@@ -25,7 +25,7 @@ export default function RoleSelector() {
           label="Specify your role"
           placeholder="Specify your role"
           required
-          className="mt-3"
+          classes="mt-3"
         />
       )}
     </div>

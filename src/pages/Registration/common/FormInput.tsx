@@ -6,6 +6,7 @@ export function FormInput<T extends FieldValues>(
   props: InputHTMLAttributes<HTMLInputElement> & {
     fieldName: Path<T>;
     label?: string;
+    classes?: string;
   }
 ) {
   const {
@@ -13,7 +14,7 @@ export function FormInput<T extends FieldValues>(
     fieldName,
     disabled,
     required,
-    className = "",
+    classes,
     type = "text",
     ...rest
   } = props;
@@ -24,7 +25,7 @@ export function FormInput<T extends FieldValues>(
   } = useFormContext<T>();
 
   return (
-    <div className={`flex flex-col gap-1 w-full items-start ${className}`}>
+    <div className={`flex flex-col gap-1 w-full items-start ${classes || ""}`}>
       {!!label && (
         <label htmlFor={props.fieldName} className="text-dark-grey">
           {label}
