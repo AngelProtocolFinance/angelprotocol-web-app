@@ -6,25 +6,34 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-type Props<T extends FieldValues> = { name: keyof T & string };
+type Props<T extends FieldValues> = {
+  name: keyof T & string;
+  colors?: { light: string; dark: string };
+};
 
-export function ErrorMessage<T extends FieldValues>(props: Props<T>) {
+export function ErrorMessage<T extends FieldValues>({
+  name,
+  colors = { light: "red-l1", dark: "red-l1" },
+}: Props<T>) {
   const {
     formState: { errors },
   } = useFormContext<T>();
 
-  if (!errors || !errors[props.name]) {
+  if (!errors || !errors[name]) {
     return null;
   }
 
-  const fieldErrors = Array.isArray(errors[props.name])
-    ? getUniqueFieldErrors(errors[props.name])
-    : [errors[props.name] as FieldError];
+  const fieldErrors = Array.isArray(errors[name])
+    ? getUniqueFieldErrors(errors[name])
+    : [errors[name] as FieldError];
 
   return (
     <div className="flex flex-col gap-1 items-center">
       {fieldErrors.map((x) => (
-        <p className="w-full text-xs text-red-l1 text-center" key={x.type}>
+        <p
+          key={x.type}
+          className={`w-full text-xs text-${colors.light.trim()} dark:text-${colors.dark.trim()} text-center`}
+        >
           {x.message}
         </p>
       ))}
