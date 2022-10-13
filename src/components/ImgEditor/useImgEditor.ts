@@ -2,6 +2,7 @@ import { DropzoneOptions } from "react-dropzone";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import ImgCropper from "./ImgCropper";
 
 type Key = keyof ImgLink;
@@ -37,13 +38,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
           preview,
           aspect,
           onSave(blob) {
-            if (!blob) return;
-            const cropped = URL.createObjectURL(blob);
-            setValue(previewPath, cropped as any);
-            closeModal();
-            onFileChange(
-              new File([blob], newFile.name, { type: newFile.type })
-            );
+            handleCropResult(blob, newFile);
           },
         });
       }
@@ -56,17 +51,24 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
       preview,
       aspect,
       onSave(blob) {
-        if (!blob) return;
-        const cropped = URL.createObjectURL(blob);
-        setValue(previewPath, cropped as any);
-        closeModal();
-        onFileChange(
-          new File([blob], currFile.name, {
-            type: currFile.type,
-          })
-        );
+        handleCropResult(blob, currFile);
       },
     });
+  }
+
+  function handleCropResult(blob: Blob | null, originalFile: File) {
+    if (!blob) {
+      showModal(Popup, { message: "Failed to crop image" });
+      return;
+    }
+    const cropped = URL.createObjectURL(blob);
+    setValue(previewPath, cropped as any);
+    closeModal();
+    onFileChange(
+      new File([blob], originalFile.name, {
+        type: originalFile.type,
+      })
+    );
   }
 
   function handleReset() {
