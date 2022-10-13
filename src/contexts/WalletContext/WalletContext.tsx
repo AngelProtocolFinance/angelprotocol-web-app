@@ -56,12 +56,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: metamaskInfo,
   } = useInjectedProvider("metamask");
 
-  const {
-    isLoading: isBinanceWalletLoading,
-    connection: binanceWalletConnection,
-    disconnect: disconnectBinanceWallet,
-    providerInfo: binanceWalletInfo,
-  } = useInjectedProvider("binance-wallet");
+  // const {
+  //   isLoading: isBinanceWalletLoading,
+  //   connection: binanceWalletConnection,
+  //   disconnect: disconnectBinanceWallet,
+  //   providerInfo: binanceWalletInfo,
+  // } = useInjectedProvider("binance-wallet");
 
   const {
     isLoading: isKeplrLoading,
@@ -81,10 +81,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   } = useXdefi();
 
   const providerStatuses: ProviderStatuses = [
-    {
-      providerInfo: binanceWalletInfo,
-      isLoading: isBinanceWalletLoading,
-    },
+    // {
+    //   providerInfo: binanceWalletInfo,
+    //   isLoading: isBinanceWalletLoading,
+    // },
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
@@ -111,9 +111,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
-      case "binance-wallet":
-        disconnectBinanceWallet();
-        break;
+      // case "binance-wallet":
+      //   disconnectBinanceWallet();
+      //   break;
       case "xdefi-evm":
         disconnectEVMxdefi();
         break;
@@ -133,7 +133,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProviderInfo?.providerId,
     disconnectMetamask,
-    disconnectBinanceWallet,
+    // disconnectBinanceWallet,
     disconnectEVMxdefi,
     disconnectKeplr,
     disconnectTerra,
@@ -182,7 +182,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             xdefiConnection,
             metamaskConnection,
             ...terraConnections,
-            binanceWalletConnection,
+            // binanceWalletConnection,
           ],
           disconnect,
         }}
