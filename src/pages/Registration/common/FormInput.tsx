@@ -2,8 +2,8 @@ import { InputHTMLAttributes } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { ErrorMessage } from "./ErrorMessage";
 
-export function FormInput<T extends FieldValues>(
-  props: InputHTMLAttributes<HTMLInputElement> & {
+export default function FormInput<T extends FieldValues>(
+  props: Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
     fieldName: Path<T>;
     label: string;
     classes?: string;

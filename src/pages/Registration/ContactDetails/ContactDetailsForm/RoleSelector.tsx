@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { ContactDetails as CD, OptionType } from "pages/Registration/types";
-import { FormInput } from "../../common";
+import FormInput from "../../common/FormInput";
 import Selector from "../../common/Selector";
 
 export default function RoleSelector() {

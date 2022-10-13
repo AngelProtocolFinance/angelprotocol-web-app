@@ -3,7 +3,7 @@ import {
   ContactDetails as CD,
   ReferralOptionType,
 } from "pages/Registration/types";
-import { FormInput } from "../../common";
+import FormInput from "../../common/FormInput";
 import Selector from "../../common/Selector";
 
 export default function ReferralSelector() {
