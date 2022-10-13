@@ -71,7 +71,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
 
   function handleReset() {
     setValue(previewPath, publicUrl as any, { shouldValidate: false });
-    setValue(filePath, [] as any, { shouldValidate: false });
+    setValue(filePath, undefined as any, { shouldValidate: false });
   }
 
   return { onDrop, handleOpenCropper, isInitial, handleReset, preview };

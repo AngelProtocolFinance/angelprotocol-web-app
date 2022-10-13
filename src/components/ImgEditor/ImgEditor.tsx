@@ -28,7 +28,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
     onDrop,
   });
 
-  const overlay = `rgba(254,254,254,${isSubmitting ? 0.8 : 0})`;
+  const overlay = `rgba(254,254,254,${isSubmitting ? 0.6 : 0})`;
 
   return (
     <div
@@ -38,17 +38,17 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
       }}
     >
       <div className="absolute hidden group-hover:flex">
-        <div {...getRootProps()} className={buttonStyle}>
+        <div {...getRootProps({ className: buttonStyle })}>
           <input {...getInputProps()} />
           <Icon type="Upload" />
         </div>
-        <IconButton disabled={isInitial} onClick={handleReset}>
+        <IconButton disabled={isInitial || isSubmitting} onClick={handleReset}>
           <Icon type="Undo" />
         </IconButton>
         {
           //allow crop only on new uploaded image
           !isInitial && (
-            <IconButton onClick={handleOpenCropper}>
+            <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
               <Icon type="Crop" />
             </IconButton>
           )

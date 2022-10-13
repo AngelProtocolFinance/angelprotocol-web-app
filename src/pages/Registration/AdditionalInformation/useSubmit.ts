@@ -69,6 +69,7 @@ async function getUploadBody(values: AdditionalInfoValues) {
 
 async function uploadIfNecessary({
   file,
+  preview,
   ...link
 }: ImgLink): Promise<FileObject> {
   if (!file) {
