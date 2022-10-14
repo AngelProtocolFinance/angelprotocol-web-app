@@ -1,5 +1,3 @@
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -100,45 +98,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/line-clamp"),
-    plugin(function ({ addComponents, theme }) {
-      addComponents({
-        ".btn-primary": {
-          backgroundColor: theme("colors.orange"),
-        },
-        ".btn-outline-primary": {
-          borderStyle: "solid",
-          borderColor: theme("colors.orange"),
-          borderWidth: "2px",
-          "&:hover": {
-            backgroundColor: `${theme("colors.orange")}33`,
-          },
-          "&:active": {
-            backgroundColor: `${theme("colors.orange")}b2`,
-          },
-          "&:disabled": {
-            borderStyle: "none",
-          },
-        },
-        ".btn-secondary": {
-          backgroundColor: theme("colors.blue"),
-        },
-        ".btn-outline-secondary": {
-          borderStyle: "solid",
-          borderColor: theme("colors.blue"),
-          borderWidth: "2px",
-          "&:hover": {
-            backgroundColor: `${theme("colors.blue")}33`,
-          },
-          "&:active": {
-            backgroundColor: `${theme("colors.blue")}b2`,
-          },
-          "&:disabled": {
-            borderStyle: "none",
-          },
-        },
-      });
-    }),
-  ],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

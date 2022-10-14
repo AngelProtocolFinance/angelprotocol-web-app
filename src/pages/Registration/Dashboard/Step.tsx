@@ -21,7 +21,7 @@ export default function Step(props: Props) {
         </p>
       )}
       <Button
-        className="btn-secondary w-40 h-10"
+        className="btn-blue w-40 h-10"
         onClick={props.onClick}
         disabled={props.disabled}
       >
