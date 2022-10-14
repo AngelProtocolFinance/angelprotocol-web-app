@@ -12,11 +12,12 @@ export default function Newsletter() {
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
+    reValidateMode: "onSubmit",
   });
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting, errors, isValid },
+    formState: { isSubmitting, errors },
   } = methods;
 
   async function submit(data: FormValues) {
@@ -71,7 +72,7 @@ export default function Newsletter() {
               name="email"
               className="w-full text-xs text-white dark:text-orange-l2 text-center"
             />
-            {isSuccess && isValid && (
+            {isSuccess && !errors.email && (
               <span className="flex gap-1 w-full text-xs">
                 <Icon type="Check" />
                 <p>
