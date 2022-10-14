@@ -4,8 +4,7 @@ import { FEEDBACK, LITEPAPER, PRIVACY_POLICY, SUPPORT } from "constants/urls";
 import Logo from "./Logo";
 import Socials from "./Socials";
 
-const LINK_STYLE =
-  "font-['Work_Sans'] text-sm hover:text-gray-l4 active:gray-l3";
+const LINK_STYLE = "font-work text-sm hover:text-gray-l4 active:gray-l3";
 
 export default function MobileFooter() {
   return (
@@ -33,7 +32,7 @@ export default function MobileFooter() {
           <BoldLink href={FEEDBACK}>Feedback</BoldLink>
           <BoldLink href={PRIVACY_POLICY}>Privacy Policy</BoldLink>
         </span>
-        <span className="font-['work_sans'] font-normal text-sm">
+        <span className="font-work font-normal text-sm">
           &#169; {new Date().getFullYear()} Angel Protocol
         </span>
       </section>

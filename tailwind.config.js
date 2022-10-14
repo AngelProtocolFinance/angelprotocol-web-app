@@ -94,6 +94,7 @@ module.exports = {
       fontFamily: {
         heading: ["Montserrat", "serif"],
         body: ["Open Sans", "sans-serif"],
+        work: "Work Sans",
       },
       width: {
         "3/4": "75%",
