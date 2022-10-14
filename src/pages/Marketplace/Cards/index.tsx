@@ -2,7 +2,7 @@ import { useEndowmentsQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
 import Card from "./Card";
 
-export default function Cards() {
+export default function Cards({ classes = "" }: { classes?: string }) {
   const queryState = useEndowmentsQuery({});
 
   return (
@@ -13,10 +13,12 @@ export default function Cards() {
         loading: "Getting endowments..",
         empty: "No endowments found",
       }}
-      classes={{ container: "place-self-center" }}
+      classes={{ container: `place-self-center ${classes}` }}
     >
       {(endowments) => (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 content-start">
+        <div
+          className={`${classes} grid grid-cols-[repeat(auto-fit,minmax(245px,1fr))] gap-4 content-start`}
+        >
           {endowments.map((endow) => (
             <Card {...endow} key={endow.id} />
           ))}
