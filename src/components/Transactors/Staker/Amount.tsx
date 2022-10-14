@@ -44,14 +44,14 @@ export default function Amount() {
         not be able to claim your {symbols[denoms.halo]} until this period has
         passed.
       </span>
-      <div className="flex bg-gray-l3 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
+      <div className="flex bg-gray-l4 flex-wrap items-stretch shadow-inner-white p-2 rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={symbols[denoms.halo]}
-          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l3 text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l4 text-lg"
         />
         <div
           className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"

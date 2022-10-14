@@ -1,7 +1,7 @@
 import { ProviderId } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
-import binanceWalletIcon from "assets/icons/wallets/binance.png";
+// import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
@@ -12,11 +12,11 @@ import { EXPECTED_NETWORK_TYPE } from "constants/env";
 export const WALLET_METADATA: {
   [key in ProviderId]: { logo: string; installUrl: string; name: string };
 } = {
-  "binance-wallet": {
-    logo: binanceWalletIcon,
-    installUrl: "https://www.bnbchain.org/en/binance-wallet",
-    name: "Binance Wallet",
-  },
+  // "binance-wallet": {
+  //   logo: binanceWalletIcon,
+  //   installUrl: "https://www.bnbchain.org/en/binance-wallet",
+  //   name: "Binance Wallet",
+  // },
   metamask: {
     logo: metamaskIcon,
     installUrl: "https://metamask.io/",

@@ -52,7 +52,7 @@ export default function Profile() {
   if (isError || isEndowError || !endowment || !profile) return <PageError />;
 
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 pt-28 content-start">
       <context.Provider
         value={{
           ...profile,
@@ -71,7 +71,7 @@ export default function Profile() {
 
 function Skeleton() {
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start opacity-20">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 pt-28 content-start opacity-20">
       <ContentLoader className="w-48 h-10 lg:col-span-2" />
       <ContentLoader className="w-full rounded-md" />
       <div className="w-full row-span-2 grid grid grid-rows-[auto_auto_1fr]">

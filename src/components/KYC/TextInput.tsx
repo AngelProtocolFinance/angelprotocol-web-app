@@ -26,7 +26,7 @@ export default function TextInput(props: {
         autoComplete="off"
         id={props.id}
         type="text"
-        className="p-3 text-gray-d3 rounded-md shadow-inner-white bg-gray-l3
+        className="p-3 text-gray-d4 rounded-md shadow-inner-white bg-gray-l4
          focus:outline-none"
       />
       <ErrorMessage

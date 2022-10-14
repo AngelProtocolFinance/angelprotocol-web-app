@@ -59,11 +59,7 @@ export default function ResumeForm() {
         type="text"
       />
       <p className="text-red">{errors.refer?.message}</p>
-      <Button
-        submit
-        className="btn-secondary w-40 h-10"
-        isLoading={isSubmitting}
-      >
+      <Button submit className="btn-blue w-40 h-10" isLoading={isSubmitting}>
         Resume
       </Button>
     </form>

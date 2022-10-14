@@ -3,7 +3,7 @@ import Table from "./Table";
 
 export default function Leaderboard() {
   return (
-    <section className="grid content-start padded-container">
+    <section className="grid content-start padded-container pt-24">
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-white text-3xl font-bold">
         Leaderboard

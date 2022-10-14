@@ -19,7 +19,7 @@ export default function PollCard(props: { poll_id: number }) {
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
-        <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
+        <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-3xs">
           {details.vote_ended && details.status === "in_progress"
             ? "vote period ended"
             : details.status.replace("_", " ")}
@@ -51,7 +51,7 @@ export default function PollCard(props: { poll_id: number }) {
             voting period ended
           </p>
           <p className="flex items-center justify-end">
-            <span className="font-heading uppercase text-2xs mr-0.5">
+            <span className="font-heading uppercase text-3xs mr-0.5">
               at block
             </span>
             <Icon type="Blockchain" className="mr-2" />
@@ -70,7 +70,7 @@ export default function PollCard(props: { poll_id: number }) {
             <span className="font-heading text-sm">
               {humanize(+details.blocks_remaining, 0)}
             </span>
-            <span className="font-heading uppercase text-2xs ml-1">blocks</span>
+            <span className="font-heading uppercase text-3xs ml-1">blocks</span>
           </p>
         </div>
       )}

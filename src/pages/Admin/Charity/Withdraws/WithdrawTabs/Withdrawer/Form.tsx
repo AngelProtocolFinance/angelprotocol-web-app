@@ -12,18 +12,18 @@ export default function Form() {
     <form
       onSubmit={withdraw}
       autoComplete="off"
-      className="text-gray-d3 bg-white grid p-4 pt-0 mt-4 rounded-md"
+      className="text-gray-d4 bg-white grid p-4 pt-0 mt-4 rounded-md"
       noValidate
     >
       <Amounts />
       <Network />
       <Beneficiary />
-      <div className="bg-orange-l5 p-2 rounded-md text-orange-d1 mb-2 text-sm">
+      <div className="bg-orange-l5 p-2 rounded-md text-orange-d2 mb-2 text-sm">
         <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
         All withdraws to Ethereum & Binance are processed on a hourly basis by
         our cross-chain pipelines.
       </div>
-      <div className="bg-orange-l5 p-2 rounded-md text-orange-d1 mb-2 text-sm">
+      <div className="bg-orange-l5 p-2 rounded-md text-orange-d2 mb-2 text-sm">
         <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
         We recommend not using crypto exchange addresses for withdrawals. We are
         not responsible for the loss of funds.
