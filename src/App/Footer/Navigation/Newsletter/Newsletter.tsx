@@ -17,6 +17,7 @@ export default function Newsletter() {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { isSubmitting, errors },
   } = methods;
 
@@ -27,6 +28,8 @@ export default function Newsletter() {
       if ("error" in response) {
         throw response.error;
       }
+
+      reset();
     } catch (error) {
       handleError(error);
     }
