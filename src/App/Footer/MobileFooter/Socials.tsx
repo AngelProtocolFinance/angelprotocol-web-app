@@ -28,7 +28,7 @@ export default function Socials() {
               rel="noreferrer"
               className="hover:text-blue-l1 active:text-blue"
             >
-              <Icon type={iconType} className="w-5 h-5" title={type} />
+              <Icon type={iconType} className="w-6 h-6" title={type} />
             </a>
           );
         })}
