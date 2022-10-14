@@ -8,7 +8,7 @@ export default function MobileFooter() {
       <div className="flex flex-col items-center pt-6 pb-10 gap-6 border-b border-gray-l2 dark:border-gray-l3">
         <Logo />
         <Socials />
-        <WalletSuite />
+        <WalletSuite menuPlacement="top" />
       </div>
     </div>
   );

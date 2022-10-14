@@ -3,7 +3,9 @@ import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Connector from "./Connector";
 
-export default function WalletSelector(props: { isLoading: boolean }) {
+type Props = { isLoading: boolean; menuPlacement?: "top" | "bottom" };
+
+export default function WalletSelector(props: Props) {
   const { connections } = useSetWallet();
   return (
     <Menu className="relative" as="div">
@@ -17,7 +19,11 @@ export default function WalletSelector(props: { isLoading: boolean }) {
         </span>
       </Menu.Button>
 
-      <Menu.Items className="absolute z-10 bg-white w-max p-3 rounded-md mt-2 right-0">
+      <Menu.Items
+        className={`absolute z-10 bg-white w-max p-3 rounded-md right-0 ${
+          props.menuPlacement === "top" ? "-translate-y-full -top-2" : "mt-2"
+        }`}
+      >
         {connections.map((connection) => (
           <Connector {...connection} key={connection.name} />
         ))}
