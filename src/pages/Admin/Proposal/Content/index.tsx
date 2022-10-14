@@ -25,7 +25,7 @@ export default function Content(props: Proposal) {
         raw messages
         <button
           onClick={toggleRawMessage}
-          className={`text-2xs font-normal font-mono ml-1 p-1 rounded-sm transition transform ${
+          className={`text-3xs font-normal font-mono ml-1 p-1 rounded-sm transition transform ${
             isRawBlocksShown ? "bg-orange -rotate-90" : "bg-blue rotate-0"
           }`}
         >

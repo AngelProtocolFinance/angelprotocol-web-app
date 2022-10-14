@@ -16,7 +16,7 @@ export default function Toolbar(props: { classes?: string }) {
       <StatusSelector />
       <GroupSelector />
       <p className="ml-auto text-white/80 font-heading text-sm flex items-center mr-2">
-        <span className="font-heading uppercase text-2xs mr-2">
+        <span className="font-heading uppercase text-3xs mr-2">
           current block{" "}
         </span>
         <Icon type="Blockchain" className="mr-1" />

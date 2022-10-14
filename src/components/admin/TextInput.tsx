@@ -36,8 +36,8 @@ export function TextInput<T extends FieldValues>(props: {
           props.mono ? "font-mono text-sm" : ""
         } text-black disabled:text-gray focus:outline-none ${
           props.plain
-            ? "bg-gray-l3 border-b-2 border-gray-d2/25 rounded-none pb-1"
-            : "bg-gray-l3 shadow-inner-white rounded-md p-3"
+            ? "bg-gray-l4 border-b-2 border-gray-d2/25 rounded-none pb-1"
+            : "bg-gray-l4 shadow-inner-white rounded-md p-3"
         }`,
         disabled: props.disabled,
         placeholder: props.placeholder,

@@ -19,7 +19,7 @@ export default function SDGSelector() {
       value={value}
       onChange={onChange}
       as="div"
-      className="w-full focus:outline-none rounded-md text-sm uppercase bg-gray-l3 shadow-inner-white relative"
+      className="w-full focus:outline-none rounded-md text-sm uppercase bg-gray-l4 shadow-inner-white relative"
     >
       <Listbox.Button className="w-full p-3 text-left uppercase">
         {value} - {unsdgs[value].title}

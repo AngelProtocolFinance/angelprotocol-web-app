@@ -23,7 +23,7 @@ export default function Toolbar(props: {
       />
 
       <p className="ml-auto text-white/80 font-heading text-sm flex items-center px-3">
-        <span className="font-heading uppercase text-2xs">current block </span>
+        <span className="font-heading uppercase text-3xs">current block </span>
         <Icon type="Blockchain" className="mr-1" />
         <span>{humanize(+block_height, 0)}</span>
       </p>
