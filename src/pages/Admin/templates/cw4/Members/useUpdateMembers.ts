@@ -15,7 +15,7 @@ import CW4 from "contracts/CW4";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, proposal } = useAdminResources();
+  const { cw3, cw4, successLink, successMessage } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -85,7 +85,8 @@ export default function useUpdateMembers() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Group member update"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPromp, {});

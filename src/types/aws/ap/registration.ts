@@ -1,6 +1,7 @@
 import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
 import { Optional } from "../../utils";
+import { FileObject } from "../common";
 
 export type RegistrationStatus =
   | "Inactive"
@@ -49,11 +50,6 @@ export type ContactPerson = {
   ReferralMethod: ReferralMethods;
   Role: ContactRoles;
   SK: "ContactPerson";
-};
-
-export type FileObject = {
-  name: string;
-  publicUrl: string;
 };
 
 type InitialRegistration = Optional<

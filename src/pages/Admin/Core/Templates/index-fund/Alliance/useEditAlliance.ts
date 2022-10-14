@@ -15,7 +15,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { proposal, cw3 } = useAdminResources();
+  const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
@@ -95,7 +95,8 @@ export default function useEditAlliance() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Alliance member update"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPromp, {});

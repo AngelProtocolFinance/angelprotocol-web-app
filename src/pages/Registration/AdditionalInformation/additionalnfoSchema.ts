@@ -1,7 +1,8 @@
 import * as Yup from "yup";
 import { AdditionalInfoValues } from "../types";
-import { FileWrapper } from "components/FileDropzone/types";
+import { ImgLink } from "components/ImgEditor/types";
 import { SchemaShape } from "schemas/types";
+import { genFileSchema } from "schemas/file";
 import { stringByteSchema } from "schemas/string";
 
 export const VALID_MIME_TYPES = [
@@ -11,25 +12,17 @@ export const VALID_MIME_TYPES = [
   "image/svg",
 ];
 
-const FILE_SCHEMA = Yup.mixed<FileWrapper>()
-  .test({
-    name: "fileType",
-    message: "Valid file types are JPG, PNG, WEBP and SVG",
-    test: (fileWrapper) =>
-      fileWrapper?.file
-        ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
-        : true,
-  })
-  .test({
-    name: "fileSize",
-    message: "Image size must be smaller than 1MB",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
-  });
+const urlKey: keyof ImgLink = "publicUrl";
+const imgShape: SchemaShape<ImgLink> = {
+  file: genFileSchema(1e6, VALID_MIME_TYPES).when(urlKey, (url, schema) =>
+    url ? schema.optional() : schema.required("required")
+  ),
+};
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
-  overview: stringByteSchema("overview", 4, 1024),
-  logo: FILE_SCHEMA.required("Logo is required"),
-  banner: FILE_SCHEMA.required("Banner is required"),
+  charityOverview: stringByteSchema("overview", 4, 1024),
+  charityLogo: Yup.object().shape(imgShape),
+  banner: Yup.object().shape(imgShape),
 };
 
 export const additionalInfoSchema = Yup.object().shape(additionalnfoShape);

@@ -23,7 +23,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { cw3, proposal } = useAdminResources();
+  const { cw3, successLink, successMessage } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -83,7 +83,8 @@ export default function useTransferFunds() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Fund transfer"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPrompt, {});
