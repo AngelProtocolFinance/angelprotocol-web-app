@@ -1,6 +1,6 @@
 import { AdditionalInfoValues } from "../types";
 import { FileObject, Metadata } from "types/aws";
-import { FileWrapper } from "components/FileDropzone";
+import { ImgLink } from "components/ImgEditor";
 import { uploadToIpfs } from "helpers";
 
 type UploadBody = Pick<
@@ -11,14 +11,14 @@ type UploadBody = Pick<
 export default async function getUploadBody(
   values: AdditionalInfoValues
 ): Promise<UploadBody> {
-  const logoPromise = uploadIfNecessary(values.logo);
+  const logoPromise = uploadIfNecessary(values.charityLogo);
   const bannerPromise = uploadIfNecessary(values.banner);
   const [Logo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
   if (!Logo.publicUrl || !Banner.publicUrl) {
     throw new Error(
       `Error uploading file ${
-        !Logo.publicUrl ? values.logo.name : values.banner.name
+        !Logo.publicUrl ? values.charityLogo.name : values.banner.name
       }`
     );
   }
@@ -26,25 +26,22 @@ export default async function getUploadBody(
   return {
     Banner,
     Logo,
-    Overview: values.overview,
+    Overview: values.charityOverview,
     KycDonorsOnly: values.kycDonorsOnly,
   };
 }
 
-async function uploadIfNecessary(
-  fileWrapper: FileWrapper
-): Promise<FileObject> {
-  if (!fileWrapper.file) {
-    return {
-      name: fileWrapper.name,
-      publicUrl: fileWrapper.publicUrl,
-    };
+async function uploadIfNecessary({
+  file,
+  preview,
+  ...link
+}: ImgLink): Promise<FileObject> {
+  if (!file) {
+    return link;
   }
 
-  const publicUrl = await uploadToIpfs(fileWrapper.file);
-
   return {
-    name: fileWrapper.file.name,
-    publicUrl,
+    name: file.name,
+    publicUrl: await uploadToIpfs(file),
   };
 }

@@ -1,6 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { ProfileFormValues, ProfileWithSettings } from "pages/Admin/types";
+import {
+  FlatProfileWithSettings,
+  ProfileFormValues,
+  ProfileWithSettings,
+} from "pages/Admin/types";
 import { ProfileResponse } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
@@ -26,7 +30,7 @@ export default function EditProfile() {
 
 function FormWithContext(props: ProfileResponse & { id: number }) {
   //initialize falsy values
-  const initial: Required<ProfileWithSettings> = {
+  const flatInitial: Required<FlatProfileWithSettings> = {
     id: props.id,
     overview: props.overview,
     url: props.url || "",
@@ -44,16 +48,23 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
 
     //endowment settings
     name: props.name,
-    logo: { name: "", publicUrl: props.logo },
-    image: { name: "", publicUrl: props.image },
-    sdgNum: props.categories.sdgs[0] || 0,
+    image: props.image || "",
+    logo: props.logo || "",
+    sdg: props.categories.sdgs[0] || 0,
   };
+
+  const initial: ProfileWithSettings = {
+    ...flatInitial,
+    image: { name: "", publicUrl: props.image, preview: props.image },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+  };
+
   const methods = useForm<ProfileFormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       ...initial,
-      initial,
+      initial: flatInitial,
     },
     resolver: yupResolver(schema),
   });

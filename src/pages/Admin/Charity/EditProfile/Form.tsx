@@ -38,12 +38,11 @@ export default function Form() {
         required
       />
       <Label className="text-gray-d2 -mb-2">Banner</Label>
-      <ImgEditor<UV>
+      <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
-        aspectRatioX={4}
-        aspectRatioY={1}
-        className="w-full aspect-[4/1]"
+        aspect={[4, 1]}
+        classes="w-full aspect-[4/1] mb-4 shadow-inner-white bg-gray-l2 rounded-md"
       />
       <Label className="text-gray-d2 -mb-2">SDG#</Label>
       <SDGSelector />

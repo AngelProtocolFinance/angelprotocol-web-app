@@ -1,3 +1,4 @@
+import { ImgLink } from "components/ImgEditor/types";
 import { EndowmentApplication, Registration } from "types/aws";
 import {
   AllianceMember,
@@ -15,7 +16,6 @@ import {
 } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
-import { FileWrapper } from "components/FileDropzone";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -244,14 +244,22 @@ export type RegistrarOwnerValues = ProposalBase &
 export type ProfileWithSettings = ProfileUpdate &
   Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
-    sdgNum: UNSDG_NUMS;
-    image: FileWrapper;
-    logo: FileWrapper;
+    sdg: UNSDG_NUMS;
+    image: ImgLink;
+    logo: ImgLink;
   };
+
+export type FlatProfileWithSettings = Omit<
+  ProfileWithSettings,
+  "image" | "logo"
+> & {
+  image: string;
+  logo: string;
+};
 
 export type ProfileFormValues = ProposalBase &
   ProfileWithSettings & {
-    initial: ProfileWithSettings;
+    initial: FlatProfileWithSettings;
   };
 
 export type SortDirection = "asc" | "desc";
