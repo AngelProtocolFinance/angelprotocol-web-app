@@ -17,9 +17,8 @@ export default function Socials() {
         Join our community
       </span>
       <div className="flex items-center justify-center gap-8">
-        {SOCIAL_MEDIA_LINKS.filter((link) =>
-          FOOTER_SOCIAL_MEDIA.includes(link.type)
-        ).map(({ iconType, link, type }) => {
+        {FOOTER_SOCIAL_MEDIA.map((type) => {
+          const { iconType, link } = SOCIAL_MEDIA_LINKS[type];
           return (
             <a
               key={type}

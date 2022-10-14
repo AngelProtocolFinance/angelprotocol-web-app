@@ -4,7 +4,7 @@ import { SOCIAL_MEDIA_LINKS } from "../constants";
 export default function Socials() {
   return (
     <div className="flex items-center gap-8">
-      {SOCIAL_MEDIA_LINKS.map(({ iconType, link, type }) => {
+      {Object.entries(SOCIAL_MEDIA_LINKS).map(([type, { iconType, link }]) => {
         return (
           <a
             key={type}
