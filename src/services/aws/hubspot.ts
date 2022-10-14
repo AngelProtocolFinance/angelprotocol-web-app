@@ -2,7 +2,7 @@ import { aws } from "./aws";
 
 const ROOT_PATH = "v1/hubspot";
 
-const newsletter_api = aws.injectEndpoints({
+const hubspot_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     newsletterSubscribe: builder.mutation<unknown, string>({
       query: (email) => {
@@ -16,4 +16,4 @@ const newsletter_api = aws.injectEndpoints({
   }),
 });
 
-export const { useNewsletterSubscribeMutation } = newsletter_api;
+export const { useNewsletterSubscribeMutation } = hubspot_api;
