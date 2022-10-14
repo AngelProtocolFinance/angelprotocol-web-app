@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import SDGGroups from "./SDGGroups";
 
 export default function Sidebar() {
   return (
@@ -7,12 +7,7 @@ export default function Sidebar() {
         <h3 className="uppercase font-bold">filter by</h3>
         <button className="text-gray-d1 text-xs">Reset Filters</button>
       </div>
-      <div className="p-3">
-        <button className="uppercase text-xs font-heading font-bold flex items-center justify-between w-full">
-          <span>SDG </span>
-          <Icon type="ArrowDown" size={18} />
-        </button>
-      </div>
+      <SDGGroups />
     </div>
   );
 }

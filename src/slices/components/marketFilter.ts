@@ -5,9 +5,13 @@ type State = {
   searchText: string;
   //type: "profit" | "non-profit"
   //geography
-  sdgs: number[];
+  sdgs: { [idx: number]: number[] };
 };
-const initialState: State = { sdgs: [], isOpen: false, searchText: "" };
+const initialState: State = {
+  sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [] },
+  isOpen: false,
+  searchText: "",
+};
 
 const marketFilter = createSlice({
   name: "marketFilter",
@@ -16,8 +20,13 @@ const marketFilter = createSlice({
     reset: () => {
       return initialState;
     },
-    setSdgs: (state, { payload }: PayloadAction<number[]>) => {
-      state.sdgs = payload;
+    setSdgs: (
+      state,
+      {
+        payload: { group, sdgs },
+      }: PayloadAction<{ group: number; sdgs: number[] }>
+    ) => {
+      state.sdgs[group] = sdgs;
     },
     toggle(state) {
       state.isOpen = !state.isOpen;

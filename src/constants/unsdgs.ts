@@ -40,7 +40,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     bg: "bg-sdg1",
     border: "border-sdg1",
     icon: no_poverty,
-    title: "no poverty",
+    title: "No Poverty",
     desc: "End poverty in all its forms everywhere.",
     youtube: "https://www.youtube.com/watch?v=kNsLF9-9l5U",
     website: "https://sdgs.un.org/goals/goal1",
@@ -52,7 +52,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     bg: "bg-sdg2",
     border: "border-sdg2",
     icon: zero_hunger,
-    title: "zero hunger",
+    title: "Zero Hunger",
     desc: "End hunger, achieve food security and improved nutrition and promote sustainable agriculture.",
     youtube: "https://www.youtube.com/watch?v=j06rYbyD9lI",
     website: "https://sdgs.un.org/goals/goal2",
@@ -64,13 +64,13 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     bg: "bg-sdg3",
     border: "border-sdg3",
     icon: good_health,
-    title: "good health",
+    title: "Good Health",
     desc: "Ensure healthy lives and promote well-being for all at all ages.",
     youtube: "https://www.youtube.com/watch?v=Fzz3Rr8fd2Q",
     website: "https://sdgs.un.org/goals/goal3",
   },
   4: {
-    title: "quality education",
+    title: "Quality Education",
     desc: "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.",
     text_light: "text-white",
     text_dark: "text-sdg4",
@@ -82,7 +82,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal4",
   },
   5: {
-    title: "gender equality",
+    title: "Gender Equality",
     desc: "Achieve gender equality and empower all women and girls.",
     text_light: "text-white",
     text_dark: "text-sdg5",
@@ -94,7 +94,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal5",
   },
   6: {
-    title: "clean water",
+    title: "Clean Water",
     desc: "Ensure availability and sustainable management of water and sanitation for all.",
     text_light: "text-white",
     text_dark: "text-sdg6",
@@ -106,7 +106,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal6",
   },
   7: {
-    title: "affordable and clean energy",
+    title: "Affordable and Clean Energy",
     desc: "Ensure access to affordable, reliable, sustainable and modern energy for all.",
     text_light: "text-white",
     text_dark: "text-sdg7",
@@ -118,7 +118,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal7",
   },
   8: {
-    title: "decent work and economic growth",
+    title: "Decent Work and Economic Growth",
     desc: "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all.",
     text_light: "text-white",
     text_dark: "text-sdg8",
@@ -130,7 +130,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal8",
   },
   9: {
-    title: "industry, innovation and infrastructure",
+    title: "Industry, Innovation and Infrastructure",
     desc: "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation.",
     text_light: "text-white",
     text_dark: "text-sdg9",
@@ -142,7 +142,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal9",
   },
   10: {
-    title: "reduced inequalities",
+    title: "Reduced Inequalities",
     desc: "Reduce inequality within and among countries.",
     text_light: "text-white",
     text_dark: "text-sdg10",
@@ -154,7 +154,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal10",
   },
   11: {
-    title: "sustainable cities and communities",
+    title: "Sustainable Cities and Communities",
     desc: "Make cities and human settlements inclusive, safe, resilient and sustainable.",
     text_light: "text-white",
     text_dark: "text-sdg11",
@@ -166,7 +166,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal11",
   },
   12: {
-    title: "responsible consumption and production",
+    title: "Responsible Consumption and Production",
     desc: "Ensure sustainable consumption and production patterns.",
     text_light: "text-white",
     text_dark: "text-sdg12",
@@ -178,7 +178,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal12",
   },
   13: {
-    title: "climate action",
+    title: "Climate Action",
     desc: "Take urgent action to combat climate change and its impacts.",
     text_light: "text-white",
     text_dark: "text-sdg13",
@@ -190,7 +190,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal13",
   },
   14: {
-    title: "life below water",
+    title: "Life below Water",
     desc: "Conserve and sustainably use the oceans, seas and marine resources for sustainable development.",
     text_light: "text-white",
     text_dark: "text-sdg14",
@@ -202,7 +202,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal14",
   },
   15: {
-    title: "life on land",
+    title: "Life on Land",
     desc: "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss.",
     text_light: "text-white",
     text_dark: "text-sdg15",
@@ -214,7 +214,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal15",
   },
   16: {
-    title: "peace justice and strong institutions",
+    title: "Peace Justice and Strong Institutions",
     desc: "Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels.",
     text_light: "text-white",
     text_dark: "text-sdg16",
@@ -226,7 +226,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal16",
   },
   17: {
-    title: "partnerships for the goals",
+    title: "Partnerships for the Goals",
     desc: "Strengthen the means of implementation and revitalize the global partnership for sustainable development.",
     text_light: "text-white",
     text_dark: "text-sdg",
