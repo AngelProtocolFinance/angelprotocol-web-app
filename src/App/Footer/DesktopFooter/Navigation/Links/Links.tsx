@@ -1,4 +1,5 @@
 import { SectionProps } from "./types";
+import { LITEPAPER } from "constants/urls";
 import Section from "./Section";
 
 export default function Links() {
@@ -47,10 +48,7 @@ const sections: SectionProps[] = [
   {
     title: "Docs",
     links: [
-      {
-        text: "Litepaper",
-        href: "https://angelprotocol.io/docs/litepaper-introduction/",
-      },
+      { text: "Litepaper", href: LITEPAPER },
       { text: "FAQs (coming soon)" },
       { text: "Technical doc (coming soon)" },
     ],
