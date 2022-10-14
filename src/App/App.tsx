@@ -8,7 +8,7 @@ import { chainOptions } from "./chainOptions";
 
 export default function App() {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-blue to-black dark:from-blue-d5 dark:to-blue-d5 bg-fixed">
+    <div className="grid grid-rows-[auto_1fr_auto] bg-orange-l6 dark:bg-blue-d5">
       <WalletProvider {...chainOptions}>
         <WalletContext>
           <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">

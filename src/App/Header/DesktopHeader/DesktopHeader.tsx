@@ -40,7 +40,7 @@ export default function DesktopHeader() {
         </header>
       </Floater>
 
-      {isHome && <Banner classes="mt-32" />}
+      {isHome && <Banner classes="mt-32 mb-10" />}
     </div>
   );
 }
