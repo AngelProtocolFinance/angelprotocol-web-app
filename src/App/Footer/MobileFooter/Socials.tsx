@@ -16,7 +16,7 @@ export default function Socials() {
       <span className="font-heading font-bold text-xs text-center tracking-widest uppercase">
         Join our community
       </span>
-      <div className="flex items-center gap-8">
+      <div className="flex items-center justify-center gap-8">
         {SOCIAL_MEDIA_LINKS.filter((link) =>
           FOOTER_SOCIAL_MEDIA.includes(link.type)
         ).map(({ iconType, link, type }) => {
@@ -28,7 +28,7 @@ export default function Socials() {
               rel="noreferrer"
               className="hover:text-blue-l1 active:text-blue"
             >
-              <Icon type={iconType} className="w-6 h-6" title={type} />
+              <Icon type={iconType} className="w-5 h-5" title={type} />
             </a>
           );
         })}
