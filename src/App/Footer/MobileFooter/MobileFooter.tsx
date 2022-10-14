@@ -1,4 +1,5 @@
 import WalletSuite from "App/Header/WalletSuite";
+import Links from "./Links";
 import Logo from "./Logo";
 import Socials from "./Socials";
 
@@ -12,6 +13,8 @@ export default function MobileFooter() {
           <WalletSuite menuPlacement="top" />
         </div>
       </section>
+
+      <Links />
     </div>
   );
 }
