@@ -28,12 +28,12 @@ export default function RegisteredWallet(props: { onChange: () => void }) {
       </div>
       <Button
         onClick={props.onChange}
-        className="btn-outline-secondary uppercase font-heading text-xs px-2 py-1"
+        className="btn-outline-blue uppercase font-heading text-xs px-2 py-1"
       >
         change wallet
       </Button>
       <Button
-        className="btn-primary w-80 h-10 mt-8 rounded-xl uppercase font-bold"
+        className="btn-orange w-80 h-10 mt-8 rounded-xl uppercase font-bold"
         onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
       >
         Continue

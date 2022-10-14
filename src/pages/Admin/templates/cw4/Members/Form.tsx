@@ -17,7 +17,7 @@ export default function Form() {
       />
 
       <Label className="text-red-l1 -mb-2">remove member</Label>
-      <div className="mb-7 p-3 rounded-md bg-gray-l3 shadow-inner-white">
+      <div className="mb-7 p-3 rounded-md bg-gray-l4 shadow-inner-white">
         <div className="flex flex-col gap-2 mb-2">
           {apCW4Members.map((member) => (
             <Member key={member.addr} {...member} />

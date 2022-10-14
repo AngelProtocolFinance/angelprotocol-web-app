@@ -30,7 +30,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
         <p className="ml-3 mr-auto">Status of Your Endowment</p>
         {status === "Inactive" && (
           <Button
-            className="w-40 h-10 btn-primary"
+            className="w-40 h-10 btn-orange"
             onClick={onSubmit}
             disabled={!registrationState.getIsReadyForSubmit() || isLoading}
           >
@@ -41,7 +41,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           <>
             <p className="uppercase w-40 mr-2 text-red">Rejected</p>
             <Button
-              className="w-40 h-10 btn-primary"
+              className="w-40 h-10 btn-orange"
               onClick={onSubmit}
               disabled={!registrationState.getIsReadyForSubmit() || isLoading}
             >

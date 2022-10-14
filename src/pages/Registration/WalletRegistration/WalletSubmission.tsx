@@ -79,7 +79,7 @@ export default function WalletSubmission() {
 
             <div className="flex justify-center gap-2">
               <Button
-                className="btn-outline-secondary w-48 h-10"
+                className="btn-outline-blue w-48 h-10"
                 disabled={isSubmitting}
                 onClick={onBackClick}
               >
@@ -87,7 +87,7 @@ export default function WalletSubmission() {
               </Button>
               <Button
                 submit
-                className="btn-primary w-48 h-10"
+                className="btn-orange w-48 h-10"
                 isLoading={isSubmitting}
                 disabled={isSubmitting}
               >

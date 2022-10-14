@@ -40,7 +40,7 @@ function ProofOfIdentityModal() {
         ### EXPLANATION FOR REASONS FOR ASKING PROOF OF IDENTITY AND ACCEPTABLE
         TYPES ###
       </p>
-      <Button className="btn-secondary w-40 h-10" onClick={closeModal}>
+      <Button className="btn-blue w-40 h-10" onClick={closeModal}>
         Got it
       </Button>
     </Dialog.Panel>

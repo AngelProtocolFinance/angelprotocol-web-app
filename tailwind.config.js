@@ -1,5 +1,3 @@
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -22,7 +20,7 @@ module.exports = {
 
         //blue
         "blue-d5": "#0F2E43",
-        "blue-d4": "#184A6D",
+        "blue-d4": "#1E5B86",
         "blue-d3": "#226A9A",
         "blue-d2": "#2D89C8",
         "blue-d1": "#3185C0",
@@ -64,7 +62,8 @@ module.exports = {
         gray: "#ACA7A0",
         "gray-l1": "#C4C0BB",
         "gray-l2": "#D7D1D1",
-        "gray-l3": "#F3F3F2",
+        "gray-l3": "#ECEDED",
+        "gray-l4": "#F3F3F2",
         white: "#FFFFFF",
 
         //standard sdg colors
@@ -88,7 +87,8 @@ module.exports = {
       },
 
       fontSize: {
-        "2xs": ["0.56rem", "0.7rem"],
+        "2xs": "0.625rem",
+        "3xs": ["0.56rem", "0.7rem"],
         "4.5xl": "2.625rem",
       },
       fontFamily: {
@@ -100,45 +100,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/line-clamp"),
-    plugin(function ({ addComponents, theme }) {
-      addComponents({
-        ".btn-primary": {
-          backgroundColor: theme("colors.orange"),
-        },
-        ".btn-outline-primary": {
-          borderStyle: "solid",
-          borderColor: theme("colors.orange"),
-          borderWidth: "2px",
-          "&:hover": {
-            backgroundColor: `${theme("colors.orange")}33`,
-          },
-          "&:active": {
-            backgroundColor: `${theme("colors.orange")}b2`,
-          },
-          "&:disabled": {
-            borderStyle: "none",
-          },
-        },
-        ".btn-secondary": {
-          backgroundColor: theme("colors.blue"),
-        },
-        ".btn-outline-secondary": {
-          borderStyle: "solid",
-          borderColor: theme("colors.blue"),
-          borderWidth: "2px",
-          "&:hover": {
-            backgroundColor: `${theme("colors.blue")}33`,
-          },
-          "&:active": {
-            backgroundColor: `${theme("colors.blue")}b2`,
-          },
-          "&:disabled": {
-            borderStyle: "none",
-          },
-        },
-      });
-    }),
-  ],
+  plugins: [require("@tailwindcss/line-clamp")],
 };

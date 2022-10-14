@@ -28,14 +28,14 @@ export default function Amount() {
         <span>Deposit amount</span>
         <Balance amount={humanize(govStakedHalo, 3)} title="Balance" />
       </label>
-      <div className="flex flex-wrap items-stretch p-3 bg-gray-l3 shadow-inner-white rounded-md">
+      <div className="flex flex-wrap items-stretch p-3 bg-gray-l4 shadow-inner-white rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={symbols[denoms.halo]}
-          className="flex-auto p-1 pl-0 focus:outline-none bg-gray-l3 text-gray-d2 text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none bg-gray-l4 text-gray-d2 text-lg"
         />
         <div
           className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"

@@ -32,7 +32,7 @@ export default function Registration() {
 
   const containerClasses = `grid grid-rows-[${
     !shouldShowProgressBar ? "1fr" : "auto_1fr"
-  }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5`;
+  }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5 pt-28`;
 
   return (
     <section className={containerClasses}>

@@ -6,6 +6,46 @@
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
   }
+
+  .btn-orange {
+    @apply bg-orange text-white uppercase cursor-pointer font-bold hover:bg-orange-l1 active:bg-orange-d1 transition;
+  }
+  .btn-orange:disabled {
+    @apply bg-gray cursor-auto;
+  }
+
+  .btn-outline-orange {
+    @apply border-2 border-orange text-orange uppercase cursor-pointer font-bold transition;
+  }
+  .btn-outline-orange:hover {
+    @apply bg-orange-d2 text-white;
+  }
+  .btn-outline-orange:active {
+    @apply bg-orange-d1 text-white;
+  }
+  .btn-outline-orange:disabled {
+    @apply border-gray text-gray cursor-auto;
+  }
+
+  .btn-blue {
+    @apply bg-blue text-white uppercase cursor-pointer font-bold hover:bg-blue-l1 active:bg-blue-d1 transition;
+  }
+  .btn-blue:disabled {
+    @apply bg-gray cursor-auto;
+  }
+
+  .btn-outline-blue {
+    @apply border-2 border-blue text-blue uppercase cursor-pointer font-bold transition;
+  }
+  .btn-outline-blue:hover {
+    @apply bg-blue-d3 text-white;
+  }
+  .btn-outline-blue:active {
+    @apply bg-blue-d1 text-white;
+  }
+  .btn-outline-blue:disabled {
+    @apply border-gray text-gray cursor-auto;
+  }
 }
 
 @layer utilities {
