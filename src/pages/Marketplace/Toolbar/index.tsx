@@ -7,10 +7,10 @@ export default function Toolbar() {
         <Icon type="Filter" size={20} />
         <span>Filter</span>
       </button>
-      <div className="flex gap-2 items-center py-2 px-3 border border-gray-l2 rounded-md ">
-        <Icon type="Search" size={20} />
+      <div className="flex gap-2 items-center border border-gray-l2 rounded-md overflow-clip">
+        <Icon type="Search" size={20} className="ml-2" />
         <input
-          className="focus:outline-none"
+          className="focus:outline-none w-full py-2 pr-3"
           placeholder="Search organizations..."
         />
       </div>
