@@ -7,11 +7,18 @@ import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
-import { requiredTokenAmount } from "schemas/number";
+import { tokenConstraint } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
 
 const shape: SchemaShape<DonateValues> = {
-  amount: requiredTokenAmount,
+  amount: tokenConstraint
+    .required("required")
+    .when("token", (token: Token, schema) =>
+      schema.min(
+        token.min_donation_amount,
+        `amount must be greater than ${token.min_donation_amount}`
+      )
+    ),
   isAgreedToTerms: Yup.boolean().isTrue(),
 };
 const schema = Yup.object().shape(shape);
