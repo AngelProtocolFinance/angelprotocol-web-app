@@ -15,8 +15,8 @@ const shape: SchemaShape<DonateValues> = {
     .required("required")
     .when("token", (token: Token, schema) =>
       schema.min(
-        token.min_donation_amount,
-        `amount must be greater than ${token.min_donation_amount}`
+        token.min_donation_amnt,
+        `amount must be greater than ${token.min_donation_amnt}`
       )
     ),
   isAgreedToTerms: Yup.boolean().isTrue(),

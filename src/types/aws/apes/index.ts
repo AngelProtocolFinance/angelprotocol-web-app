@@ -10,7 +10,7 @@ export type Token = {
   balance: number; // 0 --> not returned by APES but dynamically calculated and set
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
-  min_donation_amount: number;
+  min_donation_amnt: number;
   name: string; // "Stader LunaX Token"
   symbol: string; // DB Partition key ex., "LunaX"
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
