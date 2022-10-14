@@ -7,14 +7,14 @@ export default function Toolbar() {
         <Icon type="Filter" size={20} />
         <span>Filter</span>
       </button>
-      <div className="flex gap-2 items-center py-2 px-3 border-2 border-gray-l3 rounded-md ">
+      <div className="flex gap-2 items-center py-2 px-3 border border-gray-l2 rounded-md ">
         <Icon type="Search" size={20} />
         <input
           className="focus:outline-none"
           placeholder="Search organizations..."
         />
       </div>
-      <button className="flex items-center justify-between gap-3 w-36 text-sm py-2 px-3 border-2 border-gray-l3 rounded-md uppercase">
+      <button className="flex items-center justify-between gap-3 w-36 text-sm py-2 px-3 border border-gray-l2 rounded-md uppercase">
         <span>sort by</span>
         <Icon type="ArrowDown" />
       </button>
