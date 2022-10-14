@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
@@ -10,16 +10,15 @@ export default function Newsletter() {
   const { handleError } = useErrorContext();
   const [subscribe, { isSuccess }] = useNewsletterSubscribeMutation();
 
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(schema),
-    reValidateMode: "onSubmit",
-  });
   const {
     handleSubmit,
     register,
     reset,
     formState: { isSubmitting, errors },
-  } = methods;
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    reValidateMode: "onSubmit",
+  });
 
   async function submit(data: FormValues) {
     try {
@@ -56,44 +55,42 @@ export default function Newsletter() {
         </p>
       </div>
 
-      <FormProvider {...methods}>
-        <form
-          className="flex items-start gap-3 xl:gap-6"
-          onSubmit={handleSubmit(submit)}
-        >
-          <div className="flex flex-col gap-1 w-44 xl:w-72">
-            <input
-              {...register("email")}
-              id="email"
-              className="flex items-center border border-gray-l2 rounded-lg text-sm outline-none w-full px-3 py-2 text-black bg-white disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              placeholder="Enter your email address here"
-              disabled={isSubmitting}
-            />
-            <ErrorMessage
-              errors={errors}
-              as="p"
-              name="email"
-              className="w-full text-xs text-white dark:text-orange-l2 text-center"
-            />
-            {isSuccess && !errors.email && (
-              <span className="flex gap-1 w-full text-xs">
-                <Icon type="Check" />
-                <p>
-                  The form was sent successfully. By doing so, you have agreed
-                  to our privacy policy
-                </p>
-              </span>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="btn-orange flex items-center justify-center py-2 px-3 rounded-lg text-sm"
+      <form
+        className="flex items-start gap-3 xl:gap-6"
+        onSubmit={handleSubmit(submit)}
+      >
+        <div className="flex flex-col gap-1 w-44 xl:w-72">
+          <input
+            {...register("email")}
+            id="email"
+            className="flex items-center border border-gray-l2 rounded-lg text-sm outline-none w-full px-3 py-2 text-black bg-white disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            placeholder="Enter your email address here"
             disabled={isSubmitting}
-          >
-            Subscribe
-          </button>
-        </form>
-      </FormProvider>
+          />
+          <ErrorMessage
+            errors={errors}
+            as="p"
+            name="email"
+            className="w-full text-xs text-white dark:text-orange-l2 text-center"
+          />
+          {isSuccess && !errors.email && (
+            <span className="flex gap-1 w-full text-xs">
+              <Icon type="Check" />
+              <p>
+                The form was sent successfully. By doing so, you have agreed to
+                our privacy policy
+              </p>
+            </span>
+          )}
+        </div>
+        <button
+          type="submit"
+          className="btn-orange flex items-center justify-center py-2 px-3 rounded-lg text-sm"
+          disabled={isSubmitting}
+        >
+          Subscribe
+        </button>
+      </form>
     </div>
   );
 }
