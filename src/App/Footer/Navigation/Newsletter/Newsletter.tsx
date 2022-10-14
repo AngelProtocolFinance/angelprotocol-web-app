@@ -84,7 +84,7 @@ export default function Newsletter() {
           </div>
           <button
             type="submit"
-            className="btn-primary flex items-center justify-center uppercase py-2 px-3 rounded-lg text-sm font-bold"
+            className="btn-orange flex items-center justify-center py-2 px-3 rounded-lg text-sm"
             disabled={isSubmitting}
           >
             Subscribe
