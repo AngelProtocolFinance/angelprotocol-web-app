@@ -18,17 +18,17 @@ export default function Socials() {
       </span>
       <div className="flex items-center gap-8">
         {SOCIAL_MEDIA_LINKS.filter((link) =>
-          FOOTER_SOCIAL_MEDIA.includes(link.title)
-        ).map(({ iconType, link, title }) => {
+          FOOTER_SOCIAL_MEDIA.includes(link.type)
+        ).map(({ iconType, link, type }) => {
           return (
             <a
-              key={title}
+              key={type}
               href={link}
               target="_blank"
               rel="noreferrer"
               className="hover:text-blue-l1 active:text-blue"
             >
-              <Icon type={iconType} className="w-6 h-6" title={title} />
+              <Icon type={iconType} className="w-6 h-6" title={type} />
             </a>
           );
         })}
