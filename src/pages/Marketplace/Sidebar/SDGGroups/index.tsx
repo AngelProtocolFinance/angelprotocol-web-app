@@ -14,10 +14,10 @@ export default function SDGGroups() {
         className="mb-3 focus:outline-none w-full font-heading uppercase text-sm flex items-center justify-between"
       >
         <span className="text-xs font-semibold">SDG Group</span>
-        <Icon type="Down" />
+        <Icon type="ArrowDown" size={18} />
       </button>
       {isOpen && (
-        <div className="grid gap-y-2">
+        <div className="grid gap-y-1">
           <Group num={1} members={[0, 1, 2, 3]} />
           <Group num={2} members={[4, 5, 6, 7]} />
           <Group num={3} members={[8, 9, 10, 11]} />
