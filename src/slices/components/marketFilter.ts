@@ -17,8 +17,9 @@ const marketFilter = createSlice({
   name: "marketFilter",
   initialState,
   reducers: {
-    reset: () => {
-      return initialState;
+    reset: (state) => {
+      //reset everything except isOpen
+      return { ...initialState, isOpen: state.isOpen };
     },
     setSdgs: (
       state,
