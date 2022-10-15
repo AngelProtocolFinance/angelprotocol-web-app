@@ -14,12 +14,12 @@ export default function Marketplace() {
       <Sidebar
         classes={`${
           isFilterOpen
-            ? "fixed z-20 inset-0 lg:grid lg:relative lg:z-0"
+            ? "fixed z-20 inset-0 md:grid md:relative md:z-0"
             : "hidden"
         }`}
       />
       <Cards
-        classes={`${isFilterOpen ? "col-span-2 lg:col-span-1" : "col-span-2"}`}
+        classes={`${isFilterOpen ? "col-span-2 md:col-span-1" : "col-span-2"}`}
       />
     </div>
   );

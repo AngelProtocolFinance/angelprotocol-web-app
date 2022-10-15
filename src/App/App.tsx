@@ -17,7 +17,8 @@ export default function App() {
           </ModalContext>
         </WalletContext>
       </WalletProvider>
-      <Footer />
+      <div />
+      {/* <Footer /> */}
     </div>
   );
 }

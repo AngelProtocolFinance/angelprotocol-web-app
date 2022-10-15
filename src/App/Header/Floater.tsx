@@ -22,7 +22,7 @@ export default function Floater({ children }: PropsWithChildren<{}>) {
     <div
       className={`${
         isScrolled ? "bg-blue dark:bg-blue-d5 shadow-lg" : ""
-      } p-2 fixed transition ease-in-out duration-300 w-full z-20`}
+      } py-2 fixed transition ease-in-out duration-300 w-full z-20`}
     >
       {children}
     </div>
