@@ -38,7 +38,7 @@
     @apply border-2 border-blue text-blue uppercase cursor-pointer font-bold transition;
   }
   .btn-outline-blue:hover {
-    @apply bg-blue-d3 text-white;
+    @apply bg-blue-d2 text-white;
   }
   .btn-outline-blue:active {
     @apply bg-blue-d1 text-white;

@@ -4,7 +4,7 @@ import Socials from "./Socials";
 
 function Footer() {
   return (
-    <footer className="flex flex-col items-center px-2.5 text-white bg-blue dark:bg-blue-d4">
+    <footer className="flex flex-col items-center px-2.5 text-white bg-blue dark:bg-blue-d3">
       <Navigation />
       <section className="flex flex-col items-center gap-2 w-full py-4 px-40">
         <Socials />

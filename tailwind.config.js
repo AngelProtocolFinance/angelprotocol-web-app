@@ -19,11 +19,12 @@ module.exports = {
         "orange-l6": "#FDFDFC",
 
         //blue
-        "blue-d5": "#0F2E43",
-        "blue-d4": "#1E5B86",
-        "blue-d3": "#226A9A",
-        "blue-d2": "#2D89C8",
-        "blue-d1": "#3185C0",
+        "blue-d6": "#0F2E43",
+        "blue-d5": "#143F5C",
+        "blue-d4": "#12364F",
+        "blue-d3": "#1E5B86",
+        "blue-d2": "#226A9A",
+        "blue-d1": "#2D89C8",
         blue: "#54A3D9",
         "blue-l1": "#76B2DC",
         "blue-l2": "#97C7E8",
