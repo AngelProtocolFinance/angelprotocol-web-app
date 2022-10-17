@@ -8,10 +8,11 @@ import { Checkbox, Drawer } from "../common";
 
 type Props = {
   num: number;
-  members: (UNSDG_NUMS | 0)[];
+  members: UNSDG_NUMS[];
+  title: string;
 };
 
-export default function Group({ num, members }: Props) {
+export default function Group({ num, members, title }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const { sdgs } = useGetter((state) => state.component.marketFilter);
   const selected = sdgs[num];
@@ -41,7 +42,7 @@ export default function Group({ num, members }: Props) {
         <button onClick={toggleGroup}>
           <Checkbox checked={isAllSelected} classes="top-[2px]" />
         </button>
-        <Drawer isOpen={isOpen} toggle={toggle} title={`Goal group ${num}`} />
+        <Drawer isOpen={isOpen} toggle={toggle} title={title} />
       </div>
 
       {isOpen && (
@@ -55,7 +56,7 @@ export default function Group({ num, members }: Props) {
               {({ selected }) => (
                 <>
                   <Checkbox checked={selected} classes="mr-4 top-[3px]" />
-                  SDG {m} : {m === 0 ? "Uncategorized" : unsdgs[m].title}
+                  SDG #{m} : {unsdgs[m].title}
                 </>
               )}
             </Listbox.Option>

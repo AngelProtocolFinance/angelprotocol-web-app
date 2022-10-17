@@ -11,7 +11,7 @@ type State = {
   sdgs: { [idx: number]: number[] };
 };
 const initialState: State = {
-  sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [] },
+  sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
   isOpen: false,
   searchText: "",
   types: [],
