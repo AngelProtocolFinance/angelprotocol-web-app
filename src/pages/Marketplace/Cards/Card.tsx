@@ -1,8 +1,13 @@
+import { Link } from "react-router-dom";
 import { EndowmentEntry } from "types/contracts";
+import { appRoutes } from "constants/routes";
 
-export default function Card({ name, image }: EndowmentEntry) {
+export default function Card({ name, image, id }: EndowmentEntry) {
   return (
-    <div className="dark:bg-blue-d6 rounded-md grid grid-rows-[1fr_auto] overflow-clip border border-gray-l2 dark:border-bluegray-d1">
+    <Link
+      to={`${appRoutes.profile}/${id}`}
+      className="dark:bg-blue-d6 rounded-md grid grid-rows-[1fr_auto] overflow-clip border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue "
+    >
       <img
         src={image}
         className="h-44 object-cover bg-blue-l4 dark:bg-blue-d2"
@@ -22,7 +27,7 @@ export default function Card({ name, image }: EndowmentEntry) {
         <SDG num={2} />
         <SDG num={3} />
       </div>
-    </div>
+    </Link>
   );
 }
 

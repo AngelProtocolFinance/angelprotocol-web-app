@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Icon, { DrawerIcon } from "components/Icon";
 import { Drawer } from "../common";
 import Group from "./Group";
 

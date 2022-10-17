@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "../lists";
 import {
   Asset,
   Categories,

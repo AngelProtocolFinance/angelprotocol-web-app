@@ -3,7 +3,7 @@ import {
   WalletState,
   useGetWallet,
 } from "contexts/WalletContext/WalletContext";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
 import Details from "./Details";
 
