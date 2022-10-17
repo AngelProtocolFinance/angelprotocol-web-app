@@ -2,7 +2,7 @@ import { EndowmentEntry } from "types/contracts";
 
 export default function Card({ name, image }: EndowmentEntry) {
   return (
-    <div className="dark:bg-blue-d6 rounded-md grid grid-rows-[1fr_auto] overflow-clip border border-gray-l2 dark:border-blue-l1/40">
+    <div className="dark:bg-blue-d6 rounded-md grid grid-rows-[1fr_auto] overflow-clip border border-gray-l2 dark:border-bluegray-d1">
       <img
         src={image}
         className="h-44 object-cover bg-blue-l4 dark:bg-blue-d2"

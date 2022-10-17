@@ -32,6 +32,9 @@ module.exports = {
         "blue-l4": "#E2EFF9",
         "blue-l5": "#EAF4FA",
 
+        //blue-gray
+        "bluegray-d1": "#3D5F76",
+
         /**green, based on tailwind emerald shades */
         "green-d4": "#064e3b",
         "green-d3": "#065f46",
