@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DonationsMetricList, Update } from "types/aws";
-import { CategorizedEndowments, EndowmentEntry } from "types/contracts";
+import { EndowmentEntry } from "types/contracts";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
 
@@ -16,14 +16,11 @@ const mockEndowment: EndowmentEntry = {
   status: "Approved",
   tier: "Level2",
 };
-const mockEndowments: Pick<CategorizedEndowments, 1> = {
-  1: [mockEndowment],
-};
 
 jest.mock("services/juno/account", () => ({
   __esModule: true,
-  useCategorizedEndowmentsQuery: () => ({
-    data: mockEndowments,
+  useEndowmentsQuery: () => ({
+    data: [mockEndowment],
   }),
 }));
 
