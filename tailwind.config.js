@@ -3,6 +3,10 @@ module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
+    backgroundImage: {
+      "market-banner-light": `linear-gradient(rgba(84, 163, 217, 0.9), rgba(84, 163, 217, 0.9)), url('./assets/images/hero.png')`,
+      "market-banner-dark": `linear-gradient(rgba(30, 91, 134, 0.9), rgba(30, 91, 134, 0.9)), url('./assets/images/hero.png')`,
+    },
     extend: {
       colors: {
         //orange

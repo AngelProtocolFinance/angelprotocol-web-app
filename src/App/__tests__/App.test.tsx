@@ -73,13 +73,13 @@ describe("App.tsx tests", () => {
         name: /leaderboard/i,
       })
     ).toBeInTheDocument();
-    expect(screen.getByText(bannerText1)).toBeInTheDocument();
-    expect(screen.getByText(bannerText2)).toBeInTheDocument();
 
     // marketplace is being lazy loaded
     expect(screen.getByTestId("loader")).toBeInTheDocument();
 
     //marketplace is finally loaded
+    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
     expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
     expect(screen.queryByTestId("loader")).toBeNull();
 

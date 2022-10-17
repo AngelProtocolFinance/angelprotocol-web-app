@@ -1,6 +1,9 @@
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 
-export default function Floater({ children }: PropsWithChildren<{}>) {
+export default function Floater({
+  classes = "",
+  children,
+}: PropsWithChildren<{ classes?: string }>) {
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,8 +23,8 @@ export default function Floater({ children }: PropsWithChildren<{}>) {
 
   return (
     <div
-      className={`${
-        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
+      className={`${isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""} ${
+        classes ?? ""
       } py-2 fixed transition ease-in-out duration-300 w-full z-20`}
     >
       {children}

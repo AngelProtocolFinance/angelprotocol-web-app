@@ -1,24 +1,29 @@
 import { Switch } from "@headlessui/react";
+import { useState } from "react";
 import Icon, { IconTypes } from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { toggle } from "slices/theme";
+import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 
 export default function ThemeToggle() {
-  const dispatch = useSetter();
-  const theme = useGetter((state) => state.theme);
-  const isDarkMode = theme === "dark";
+  const [isDark, setIsDark] = useState(isPrevDark);
+
+  function toggle(isDark: boolean) {
+    if (isDark) {
+      setToDarkMode();
+    } else {
+      setToLightMode();
+    }
+    setIsDark(isDark);
+  }
 
   return (
     <Switch
-      checked={isDarkMode}
-      onChange={() => {
-        dispatch(toggle());
-      }}
+      checked={isDark}
+      onChange={toggle}
       className="flex items-center justify-center gap-1 h-10 w-20 shrink-0 cursor-pointer rounded-3xl border border-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
     >
       <span className="sr-only">Enable dark mode</span>
-      <ToggleOption checked={!isDarkMode} icon="Sun" />
-      <ToggleOption checked={isDarkMode} icon="Moon" />
+      <ToggleOption checked={!isDark} icon="Sun" />
+      <ToggleOption checked={isDark} icon="Moon" />
     </Switch>
   );
 }

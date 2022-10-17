@@ -3,7 +3,7 @@ import character from "assets/images/character4.png";
 export default function Banner({ classes = "" }: { classes?: string }) {
   return (
     <div
-      className={`grid grid-cols-[3fr_2fr] gap-4 padded-container content-start text-white ${classes}`}
+      className={`${classes} grid-cols-[3fr_2fr] gap-4 pt-28 pb-4 padded-container content-start text-white `}
     >
       <h1 className="font-extrabold max-w-md text-2xl md:text-3xl lg:text-4xl self-end">
         <div className="leading-tight">ANGEL PROTOCOL REDEFINES</div>
