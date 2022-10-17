@@ -15,7 +15,7 @@ export default function Toolbar() {
     <div className="col-span-2 grid grid-cols-2 md:grid-cols-[auto_1fr_auto] gap-3">
       <button
         onClick={toggleFilter}
-        className="btn-orange flex items-center gap-2 justify-between rounded-md px-3 py-2 text-sm"
+        className="min-w-[10rem] btn-orange flex items-center gap-2 justify-between rounded-md px-3 py-2 text-sm"
       >
         <Icon type="Filter" size={20} />
         <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
@@ -27,7 +27,7 @@ export default function Toolbar() {
           placeholder="Search organizations..."
         />
       </div>
-      <button className="flex items-center justify-between gap-3 text-sm py-2 px-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md uppercase">
+      <button className="min-w-[10rem] flex items-center justify-between gap-3 text-sm py-2 px-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md uppercase">
         <span>sort by</span>
         <Icon type="ArrowDown" />
       </button>
