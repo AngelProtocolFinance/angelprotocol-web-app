@@ -1,29 +1,33 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import { useProfileContext } from "../ProfileProvider";
+import { ProfileContext } from "../ProfileProvider";
 import Banner from "./Banner";
 import Body from "./Body";
+import LocalContext from "./LocalContext";
 import Logo from "./Logo";
 
 export default function DesktopProfile() {
-  const { isLoading, isError, profile, kyc_donors_only } = useProfileContext();
+  const { isLoading, isError, profile } = useContext(ProfileContext);
 
   if (isLoading) {
     return <Skeleton />;
   }
 
-  if (isError || !profile || kyc_donors_only === undefined) {
+  if (isError || !profile) {
     return <PageError />;
   }
 
   return (
-    <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
-      <Banner />
-      <Logo />
-      <Body />
-    </section>
+    <LocalContext.Provider value={{ profile }}>
+      <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
+        <Banner />
+        <Logo />
+        <Body />
+      </section>
+    </LocalContext.Provider>
   );
 }
 
