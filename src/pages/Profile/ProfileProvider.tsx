@@ -1,30 +1,15 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import { PropsWithChildren, createContext } from "react";
 import { useParams } from "react-router-dom";
-import { ProfileResponse } from "types/contracts";
+import { ProfileContextType } from "./types";
 import {
   useEndowmentDetailsQuery,
   useEndowmentProfileQuery,
 } from "services/juno/account";
 import { idParamToNum } from "helpers";
 
-type ProfileExtended = {
-  profile?: ProfileResponse;
-  kyc_donors_only?: boolean;
-  isLoading: boolean;
-  isError: boolean;
-};
-
-const ProfileContext = createContext<ProfileExtended>({} as ProfileExtended);
-
-export const useProfileContext = () => {
-  const val = useContext(ProfileContext);
-  if (Object.entries(val).length <= 0) {
-    throw new Error(
-      "useProfile hook should only be used inside Profile context"
-    );
-  }
-  return val; //val is defined here
-};
+export const ProfileContext = createContext<ProfileContextType>(
+  {} as ProfileContextType
+);
 
 export default function ProfileProvider(props: PropsWithChildren<{}>) {
   const { id } = useParams<{ id: string }>();
@@ -44,13 +29,14 @@ export default function ProfileProvider(props: PropsWithChildren<{}>) {
   return (
     <ProfileContext.Provider
       value={{
-        profile: !!profile
-          ? {
-              ...profile,
-              id: numId, //!isError && numId is valid id
-            }
-          : undefined,
-        kyc_donors_only: endowment?.kyc_donors_only,
+        profile:
+          !!profile && !!endowment
+            ? {
+                ...profile,
+                id: numId, //!isError && numId is valid id
+                kyc_donors_only: endowment.kyc_donors_only,
+              }
+            : undefined,
         isLoading: isEndowLoading || isProfileLoading,
         isError: isEndowError || isProfileError,
       }}
