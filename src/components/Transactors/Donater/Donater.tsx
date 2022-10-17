@@ -10,8 +10,10 @@ import ContentLoader from "components/ContentLoader";
 import { tokenConstraint } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
 
+const tokenKey: keyof DonateValues = "token";
+
 const shape: SchemaShape<DonateValues> = {
-  amount: tokenConstraint.when("token", (token: Token, field) =>
+  amount: tokenConstraint.when(tokenKey, (token: Token, field) =>
     !!token.min_donation_amnt
       ? field
           .required("required")
