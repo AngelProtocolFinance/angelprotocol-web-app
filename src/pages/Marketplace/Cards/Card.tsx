@@ -6,6 +6,9 @@ import { appRoutes } from "constants/routes";
 export default function Card({ name, image, id }: EndowmentEntry) {
   return (
     <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
+      <p className="absolute top-3 left-3 bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
+        non profit
+      </p>
       <BookmarkBtn
         name={name!}
         id={id}
