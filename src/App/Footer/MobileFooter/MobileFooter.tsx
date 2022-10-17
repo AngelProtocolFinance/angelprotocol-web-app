@@ -18,25 +18,29 @@ export default function MobileFooter() {
       </section>
 
       <section className="flex flex-col items-center py-6 gap-3 w-full">
-        <a
-          className={`font-normal ${LINK_STYLE}`}
-          href={LITEPAPER}
-          rel="noreferrer"
-          target="_blank"
-          title="Litepaper"
-        >
-          Download Litepaper
-        </a>
+        <DownloadLitepaper />
         <span className="flex justify-around w-full">
           <BoldLink href={SUPPORT}>Support</BoldLink>
           <BoldLink href={FEEDBACK}>Feedback</BoldLink>
           <BoldLink href={PRIVACY_POLICY}>Privacy Policy</BoldLink>
         </span>
-        <span className="font-work font-normal text-sm">
-          &#169; {new Date().getFullYear()} Angel Protocol
-        </span>
+        <Copyright />
       </section>
     </div>
+  );
+}
+
+function DownloadLitepaper() {
+  return (
+    <a
+      className={`font-normal ${LINK_STYLE}`}
+      href={LITEPAPER}
+      rel="noreferrer"
+      target="_blank"
+      title="Litepaper"
+    >
+      Download Litepaper
+    </a>
   );
 }
 
@@ -50,5 +54,13 @@ function BoldLink({ children, href }: PropsWithChildren<{ href: string }>) {
     >
       {children}
     </a>
+  );
+}
+
+function Copyright() {
+  return (
+    <span className="font-work font-normal text-sm">
+      &#169; {new Date().getFullYear()} Angel Protocol
+    </span>
   );
 }
