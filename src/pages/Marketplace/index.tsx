@@ -8,7 +8,7 @@ export default function Marketplace() {
     (state) => state.component.marketFilter.isOpen
   );
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-4 grid-rows-[auto_1fr] padded-container pb-16 pt-4 min-h-screen text-gray-d2">
+    <div className="grid grid-cols-[auto_1fr] gap-4 grid-rows-[auto_1fr] padded-container pb-16 pt-4 min-h-screen text-gray-d2 bg-orange-l6 dark:bg-blue-d4">
       <Toolbar />
       <Sidebar
         classes={`${
