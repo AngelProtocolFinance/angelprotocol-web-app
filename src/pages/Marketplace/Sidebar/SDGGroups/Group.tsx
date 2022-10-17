@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { UNSDG_NUMS } from "types/lists";
-import Icon from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { setSdgs } from "slices/components/marketFilter";
 import { unsdgs } from "constants/unsdgs";
@@ -44,7 +44,7 @@ export default function Group({ num, members }: Props) {
           className="text-sm font-heading font-semibold flex items-center justify-between w-full"
         >
           <span>Goal group {num}</span>
-          <Icon type="ArrowDown" size={18} />
+          <DrawerIcon isOpen={isOpen} size={20} />
         </button>
       </div>
 
@@ -82,7 +82,7 @@ function Checkbox({
       type="checkbox"
       readOnly
       checked={checked}
-      className={`inline-block relative appearance-none border border-gray-d1 rounded-sm w-4 h-4 shrink-0 checked:bg-blue checked:border-blue ${classes}`}
+      className={`inline-block relative appearance-none border border-gray-d1 dark:border-gray-l2 rounded-sm w-4 h-4 shrink-0 checked:bg-blue checked:border-blue dark:checked:bg-blue dark:checked:border-blue ${classes}`}
     />
   );
 }

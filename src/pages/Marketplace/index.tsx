@@ -1,4 +1,3 @@
-import { useEndowmentsQuery } from "services/juno/account";
 import { useGetter } from "store/accessors";
 import Cards from "./Cards";
 import Sidebar from "./Sidebar";

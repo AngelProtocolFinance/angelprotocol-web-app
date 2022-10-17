@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 import Group from "./Group";
 
 export default function SDGGroups() {
@@ -14,7 +14,7 @@ export default function SDGGroups() {
         className="mb-3 focus:outline-none w-full font-heading uppercase text-sm flex items-center justify-between"
       >
         <span className="text-xs font-semibold">SDG Group</span>
-        <Icon type="ArrowDown" size={18} />
+        <DrawerIcon isOpen={isOpen} size={20} />
       </button>
       {isOpen && (
         <div className="grid gap-y-1">
