@@ -28,7 +28,7 @@ export default function EditProfile() {
   return <FormWithContext {...{ ...profile, id: endowmentId }} />;
 }
 
-function FormWithContext(props: ProfileResponse & { id: number }) {
+function FormWithContext(props: ProfileResponse) {
   //initialize falsy values
   const flatInitial: Required<FlatProfileWithSettings> = {
     id: props.id,

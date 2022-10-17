@@ -8,7 +8,7 @@ import {
 import { idParamToNum } from "helpers";
 
 type ProfileExtended = {
-  profile?: ProfileResponse & { id: number };
+  profile?: ProfileResponse;
   kyc_donors_only?: boolean;
   isLoading: boolean;
   isError: boolean;
