@@ -54,7 +54,7 @@ export default function Amount() {
           className="flex-auto p-1 pl-0 focus:outline-none text-gray-d2 bg-gray-l4 text-lg"
         />
         <div
-          className="p-2 outline-none text-gray text-sm hover:text-gray-d4 cursor-pointer"
+          className="p-2 outline-none text-gray text-sm hover:text-gray-d3 cursor-pointer"
           onClick={onMaxClick}
         >
           max

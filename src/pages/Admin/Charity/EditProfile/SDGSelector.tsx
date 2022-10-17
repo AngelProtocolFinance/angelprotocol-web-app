@@ -29,7 +29,7 @@ export default function SDGSelector() {
           <Listbox.Option key={sdg.num} value={+sdg.num} as={Fragment}>
             {({ selected }) => (
               <div
-                className={`text-gray-d4 table-row hover:bg-blue-l1/30 ${
+                className={`text-gray-d3 table-row hover:bg-blue-l1/30 ${
                   selected ? "bg-amber-orange/30" : ""
                 } cursor-pointer p-1`}
               >
