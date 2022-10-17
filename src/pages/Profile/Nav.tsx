@@ -1,20 +1,19 @@
-import { useParams } from "react-router-dom";
 import { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { ProfileParams } from "../types";
 import { useIsMemberQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import BookmarkBtn from "components/BookmarkBtn";
 import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
-import Bookmark from "./Bookmark";
+import { useProfile } from ".";
 
 export default function Nav() {
-  const { id } = useParams<ProfileParams>();
+  const { id, name } = useProfile();
   const { wallet } = useGetWallet();
   const { data: isMember } = useIsMemberQuery(
     {
       user: wallet?.address!,
-      endowmentId: id,
+      endowmentId: `${id}`,
     },
     { skip: !wallet || !id }
   );
@@ -45,7 +44,13 @@ export default function Nav() {
           admin
         </LinkIcon>
       )}
-      <Bookmark />
+      <BookmarkBtn
+        name={name}
+        id={id}
+        classes="uppercase font-bold font-heading text-red-l2 hover:text-red-l3 disabled:text-gray text-sm"
+      >
+        Favorite
+      </BookmarkBtn>
     </div>
   );
 }

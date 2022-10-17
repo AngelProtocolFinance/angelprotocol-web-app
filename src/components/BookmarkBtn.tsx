@@ -1,11 +1,22 @@
+import { PropsWithChildren } from "react";
 import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
-import { useProfile } from "..";
 
-export default function Bookmark() {
+type Props = PropsWithChildren<{
+  id: number;
+  name: string;
+  classes?: string;
+}>;
+
+export default function BookmarkBtn({
+  id,
+  name,
+  children,
+  classes = "",
+}: Props) {
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const {
     data = [],
@@ -16,7 +27,6 @@ export default function Bookmark() {
   });
   const { showModal } = useModalContext();
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
-  const { id, name } = useProfile();
 
   const bookMark = data.find((d) => d.id === id);
   const isBookMarked = bookMark !== undefined;
@@ -40,14 +50,17 @@ export default function Bookmark() {
       type="button"
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className="font-bold uppercase flex items-center gap-1 text-red-l2 hover:text-red-l3 disabled:text-gray"
+      className={`flex items-center gap-1 ${classes ?? ""}`}
     >
       <Icon
-        type={isBookMarked ? "HeartFill" : "HeartOutline"}
+        type={
+          isToggling ? "Loading" : isBookMarked ? "HeartFill" : "HeartOutline"
+        }
+        className={isToggling ? "animate-spin" : ""}
         size={20}
         title="Favorite this endowment for faster access from your wallet dropdown menu"
       />
-      <span className="font-heading text-sm">Favorite</span>
+      {children}
     </button>
   );
 }
