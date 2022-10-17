@@ -107,6 +107,7 @@ export type EndowmentEntry = {
 };
 
 export interface ProfileResponse {
+  id: number; // this field is not returned in the response, but is set dynamically afterwards
   name: string; // name of the Charity Endowment
   overview: string;
   categories: Categories;
