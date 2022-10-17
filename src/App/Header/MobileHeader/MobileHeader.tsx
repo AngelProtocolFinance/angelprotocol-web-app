@@ -2,9 +2,9 @@ import { useLocation } from "react-router-dom";
 import hero from "assets/images/hero.png";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
+import WalletSuite from "../../WalletSuite";
 import Floater from "../Floater";
 import Logo from "../Logo";
-import WalletSuite from "../WalletSuite";
 import Banner from "./Banner";
 import MenuButton from "./MenuButton";
 

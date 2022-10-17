@@ -1,4 +1,4 @@
-import WalletSuite from "App/Header/WalletSuite";
+import WalletSuite from "App/WalletSuite";
 import { PropsWithChildren } from "react";
 import { FEEDBACK, LITEPAPER, PRIVACY_POLICY, SUPPORT } from "constants/urls";
 import Logo from "./Logo";
