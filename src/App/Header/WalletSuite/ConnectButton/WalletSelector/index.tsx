@@ -13,7 +13,7 @@ export default function WalletSelector(props: Props) {
         className="flex grow-0 w-32 h-10 py-2 px-3 justify-center items-center rounded-lg bg-orange hover:bg-orange-l1 text-white gap-2 font-bold text-sm sm:text-base"
         disabled={props.isLoading}
       >
-        <Icon type="Wallet" className="text-lg sm:text-xl grow-0" />
+        <Icon type="Wallet" className="text-base sm:text-xl grow-0" />
         <span className="uppercase">
           {props.isLoading ? "Loading" : "Connect"}
         </span>
