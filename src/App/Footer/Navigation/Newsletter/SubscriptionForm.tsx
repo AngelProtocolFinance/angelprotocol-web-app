@@ -51,7 +51,7 @@ export default function SubscriptionForm() {
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-white dark:text-orange-l2 text-center"
+          className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
