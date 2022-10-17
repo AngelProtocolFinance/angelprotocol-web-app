@@ -3,7 +3,7 @@ import {
   WalletState,
   useGetWallet,
 } from "contexts/WalletContext/WalletContext";
-import Icon from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
 import Details from "./Details";
 
@@ -21,10 +21,7 @@ export default function ConnectedWallet(props: WalletState) {
         {({ open }) => (
           <>
             <span>{maskedAddr}</span>
-            <Icon
-              type={open ? "ArrowUp" : "ArrowDown"}
-              className="text-2xl opacity-50"
-            />
+            <DrawerIcon isOpen={open} className="text-2xl opacity-50" />
           </>
         )}
       </Popover.Button>
