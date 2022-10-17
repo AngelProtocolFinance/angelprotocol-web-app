@@ -13,7 +13,7 @@ export function Drawer({ toggle, isOpen, classes = "", title }: Props) {
       className={`${classes} focus:outline-none w-full font-heading uppercase text-sm flex items-center justify-between`}
     >
       <span className="text-xs font-semibold">{title}</span>
-      <DrawerIcon isOpen={isOpen} size={20} />
+      <DrawerIcon isOpen={isOpen} size={20} className="ml-2" />
     </button>
   );
 }
