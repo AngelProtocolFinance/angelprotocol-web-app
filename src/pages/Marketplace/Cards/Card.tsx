@@ -5,7 +5,7 @@ import { appRoutes } from "constants/routes";
 
 export default function Card({ name, image, id }: EndowmentEntry) {
   return (
-    <div className="relative dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
+    <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
       <BookmarkBtn
         name={name!}
         id={id}
@@ -13,14 +13,14 @@ export default function Card({ name, image, id }: EndowmentEntry) {
       />
       <Link
         to={`${appRoutes.profile}/${id}`}
-        className="grid grid-rows-[1fr_auto] overflow-clip "
+        className="grid grid-rows-[1fr_auto]"
       >
         <img
           src={image}
-          className="h-44 object-cover bg-blue-l4 dark:bg-blue-d2"
+          className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""
           onError={(e) => {
-            e.currentTarget.classList.add("bg-blue-l3");
+            e.currentTarget.classList.add("bg-blue-l3 border-none");
           }}
         />
         <div className="p-3">
