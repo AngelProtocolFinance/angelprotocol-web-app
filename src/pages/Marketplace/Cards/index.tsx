@@ -9,11 +9,13 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     <QueryLoader
       queryState={queryState}
       messages={{
-        error: "Failed to get endowments..",
+        error: "Failed to get endowments",
         loading: "Getting endowments..",
         empty: "No endowments found",
       }}
-      classes={{ container: `place-self-center ${classes}` }}
+      classes={{
+        container: `mt-10 ml-10 ${classes} dark:text-white`,
+      }}
     >
       {(endowments) => (
         <div
