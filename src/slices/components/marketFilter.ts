@@ -1,8 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+export type EndowType = "np" | "fp" | "ic";
+
 type State = {
   isOpen: boolean;
   searchText: string;
+  types: EndowType[];
   //type: "profit" | "non-profit"
   //geography
   sdgs: { [idx: number]: number[] };
@@ -11,6 +14,7 @@ const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [] },
   isOpen: false,
   searchText: "",
+  types: [],
 };
 
 const marketFilter = createSlice({
@@ -29,11 +33,14 @@ const marketFilter = createSlice({
     ) => {
       state.sdgs[group] = sdgs;
     },
+    setTypes: (state, { payload }: PayloadAction<EndowType[]>) => {
+      state.types = payload;
+    },
     toggle(state) {
       state.isOpen = !state.isOpen;
     },
   },
 });
 
-export const { setSdgs, reset, toggle } = marketFilter.actions;
+export const { setSdgs, reset, toggle, setTypes } = marketFilter.actions;
 export default marketFilter.reducer;

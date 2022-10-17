@@ -2,6 +2,7 @@ import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { reset, toggle } from "slices/components/marketFilter";
 import SDGGroups from "./SDGGroups";
+import Types from "./Types";
 
 export default function Sidebar({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
@@ -32,6 +33,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           Reset Filters
         </button>
       </div>
+      <Types />
       <SDGGroups />
     </div>
   );

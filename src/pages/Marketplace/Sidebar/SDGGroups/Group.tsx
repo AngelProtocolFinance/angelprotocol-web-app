@@ -1,10 +1,10 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { UNSDG_NUMS } from "types/lists";
-import { DrawerIcon } from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { setSdgs } from "slices/components/marketFilter";
 import { unsdgs } from "constants/unsdgs";
+import { Checkbox, Drawer } from "../common";
 
 type Props = {
   num: number;
@@ -19,6 +19,10 @@ export default function Group({ num, members }: Props) {
 
   const isAllSelected = selected.length === members.length;
 
+  function toggle() {
+    setIsOpen((prev) => !prev);
+  }
+
   function toggleGroup() {
     dispatch(setSdgs({ group: num, sdgs: isAllSelected ? [] : members }));
   }
@@ -26,7 +30,7 @@ export default function Group({ num, members }: Props) {
   return (
     <Listbox
       as="div"
-      className="p-1"
+      className="py-1 pr-3"
       multiple
       value={selected}
       onChange={(val: number[]) => {
@@ -37,15 +41,7 @@ export default function Group({ num, members }: Props) {
         <button onClick={toggleGroup}>
           <Checkbox checked={isAllSelected} classes="top-[2px]" />
         </button>
-        <button
-          onClick={() => {
-            setIsOpen((p) => !p);
-          }}
-          className="text-sm font-heading font-semibold flex items-center justify-between w-full"
-        >
-          <span>Goal group {num}</span>
-          <DrawerIcon isOpen={isOpen} size={20} />
-        </button>
+        <Drawer isOpen={isOpen} toggle={toggle} title={`Goal group ${num}`} />
       </div>
 
       {isOpen && (
@@ -67,22 +63,5 @@ export default function Group({ num, members }: Props) {
         </Listbox.Options>
       )}
     </Listbox>
-  );
-}
-
-function Checkbox({
-  checked,
-  classes = "",
-}: {
-  checked: boolean;
-  classes?: string;
-}) {
-  return (
-    <input
-      type="checkbox"
-      readOnly
-      checked={checked}
-      className={`inline-block relative appearance-none border border-gray-d1 dark:border-gray-l2 rounded-sm w-4 h-4 shrink-0 checked:bg-blue checked:border-blue dark:checked:bg-blue dark:checked:border-blue ${classes}`}
-    />
   );
 }

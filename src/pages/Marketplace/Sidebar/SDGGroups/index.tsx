@@ -1,21 +1,23 @@
 import { useState } from "react";
 import Icon, { DrawerIcon } from "components/Icon";
+import { Drawer } from "../common";
 import Group from "./Group";
 
 export default function SDGGroups() {
   const [isOpen, setIsOpen] = useState(false);
 
+  function toggle() {
+    setIsOpen((prev) => !prev);
+  }
+
   return (
     <div className="px-3 pt-3">
-      <button
-        onClick={() => {
-          setIsOpen((p) => !p);
-        }}
-        className="mb-3 focus:outline-none w-full font-heading uppercase text-sm flex items-center justify-between"
-      >
-        <span className="text-xs font-semibold">SDG Group</span>
-        <DrawerIcon isOpen={isOpen} size={20} />
-      </button>
+      <Drawer
+        title="Sdg group"
+        isOpen={isOpen}
+        toggle={toggle}
+        classes="mb-3"
+      />
       {isOpen && (
         <div className="grid gap-y-1">
           <Group num={1} members={[0, 1, 2, 3]} />

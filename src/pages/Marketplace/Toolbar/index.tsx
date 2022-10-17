@@ -18,7 +18,7 @@ export default function Toolbar() {
         className="btn-orange flex items-center gap-2 justify-between rounded-md px-3 py-2 text-sm"
       >
         <Icon type="Filter" size={20} />
-        <span>{isFilterOpen ? "Hide filter" : "Filter"}</span>
+        <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
       </button>
       <div className="flex gap-2 order-first col-span-2 md:order-none md:col-span-1 items-center  dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md overflow-clip">
         <Icon type="Search" size={20} className="ml-2" />
