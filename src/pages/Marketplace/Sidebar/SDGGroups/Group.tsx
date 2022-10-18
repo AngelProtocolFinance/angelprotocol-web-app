@@ -40,7 +40,7 @@ export default function Group({ num, members, title }: Props) {
     >
       <div className="flex items-center gap-2">
         <button onClick={toggleGroup}>
-          <Checkbox checked={isAllSelected} classes="top-[2px]" />
+          <Checkbox checked={isAllSelected} classes="top-0.5" />
         </button>
         <Drawer isOpen={isOpen} toggle={toggle} title={title} />
       </div>

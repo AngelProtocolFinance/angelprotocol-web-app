@@ -23,7 +23,7 @@ export default function Card({ name, image, id }: EndowmentEntry) {
           className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""
           onError={(e) => {
-            e.currentTarget.classList.add("bg-blue-l3 border-none");
+            e.currentTarget.classList.add("bg-blue-l3");
           }}
         />
         <div className="p-3">
