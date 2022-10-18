@@ -3,7 +3,7 @@ import { NetworkType } from "types/lists";
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
-export interface Endowment {
+export interface LeaderboardEntry {
   endowment_id: string;
   owner: string;
   name: string;
@@ -18,7 +18,7 @@ export interface Endowment {
 }
 
 export interface Update {
-  endowments: Endowment[];
+  endowments: LeaderboardEntry[];
   last_update: string;
 }
 

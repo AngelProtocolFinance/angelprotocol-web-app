@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { Endowment } from "types/aws";
+import { LeaderboardEntry } from "types/aws";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import LazyImage from "components/LazyImage";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 
-export default function TableEntry(props: Endowment) {
+export default function TableEntry(props: LeaderboardEntry) {
   const { locked, liquid } = projectFunds(
     10,
     props.total_lock,
