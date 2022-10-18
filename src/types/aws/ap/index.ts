@@ -1,6 +1,5 @@
 import {
   CapitalizedEndowmentType,
-  Categories,
   EndowmentStatus,
   EndowmentTier,
   SocialMedialUrls,
