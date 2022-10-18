@@ -1,79 +1,52 @@
 import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
-import React, { useCallback, useRef, useState } from "react";
-import { useModalContext } from "contexts/ModalContext";
-import Icon, { IconTypes } from "components/Icon";
+import { useCallback, useRef } from "react";
+import Icon from "components/Icon";
 
-export default function ImgCropper(props: {
-  src: string;
-  aspectRatio: number;
-  onSave: (blob: Blob) => void;
-  onClose: () => void;
-}) {
-  const { closeModal } = useModalContext();
-  const [error, setError] = useState<string>();
+type Props = {
+  preview: string;
+  aspect: [number, number];
+  onSave(blob: Blob | null): void;
+};
+
+export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
   const cropperRef = useRef<Cropper>();
 
   const imgRef = useCallback(
     (node: HTMLImageElement | null) => {
       if (node && !cropperRef.current) {
         cropperRef.current = new Cropper(node, {
-          aspectRatio: props.aspectRatio,
+          aspectRatio: x / y,
           viewMode: 1,
           zoomable: false,
           scalable: false,
         });
       }
     },
-    [props.aspectRatio]
+    [x, y]
   );
 
   function handleSave() {
-    setError(undefined);
     if (cropperRef.current) {
       cropperRef.current.getCroppedCanvas().toBlob((blob) => {
-        if (!blob) {
-          setError("Cropping the file failed.");
-        } else {
-          props.onSave(blob);
-          closeModal();
-        }
+        onSave(blob);
       });
     }
-  }
-
-  function handleClose() {
-    props.onClose();
-    closeModal();
   }
 
   return (
     <Dialog.Panel className="grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
       <div className="bg-white flex items-center justify-end gap-2 p-1">
-        {error && (
-          <p className="mr-auto text-red-l1 font-mono text-xs">{error}</p>
-        )}
-        <Button iconType="Save" onClick={handleSave} />
-        <Button iconType="Close" onClick={handleClose} />
+        <button
+          type="button"
+          className="text-gray-d2 hover:text-blue"
+          onClick={handleSave}
+        >
+          <Icon type="Save" size={24} />
+        </button>
       </div>
-      <img ref={imgRef} src={props.src} className="w-full" alt="banner" />
+      <img ref={imgRef} src={preview} className="w-full" alt="banner" />
     </Dialog.Panel>
-  );
-}
-
-type RB = React.ButtonHTMLAttributes<HTMLButtonElement>;
-function Button({
-  iconType,
-  ...restProps
-}: Omit<RB, "className" | "type"> & { iconType: IconTypes }) {
-  return (
-    <button
-      {...restProps}
-      type="button"
-      className="text-gray-d2 hover:text-blue"
-    >
-      <Icon type={iconType} size={24} />
-    </button>
   );
 }

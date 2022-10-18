@@ -12,7 +12,7 @@ const sdgs = Object.entries(unsdgs).map(([key, val]) => ({
 export default function SDGSelector() {
   const {
     field: { onChange, value },
-  } = useController<Pick<ProfileFormValues, "sdgNum">>({ name: "sdgNum" });
+  } = useController<Pick<ProfileFormValues, "sdg">>({ name: "sdg" });
 
   return (
     <Listbox
@@ -29,7 +29,7 @@ export default function SDGSelector() {
           <Listbox.Option key={sdg.num} value={+sdg.num} as={Fragment}>
             {({ selected }) => (
               <div
-                className={`text-gray-d4 table-row hover:bg-blue-l1/30 ${
+                className={`text-gray-d3 table-row hover:bg-blue-l1/30 ${
                   selected ? "bg-amber-orange/30" : ""
                 } cursor-pointer p-1`}
               >

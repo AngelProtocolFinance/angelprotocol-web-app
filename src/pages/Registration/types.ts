@@ -1,6 +1,7 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { FileWrapper } from "components/FileDropzone";
+import { ImgLink } from "components/ImgEditor";
 
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };
@@ -17,9 +18,9 @@ export type DocumentationValues = {
 };
 
 export type AdditionalInfoValues = {
-  overview: string;
-  logo: FileWrapper;
-  banner: FileWrapper;
+  charityOverview: string;
+  charityLogo: ImgLink;
+  banner: ImgLink;
   kycDonorsOnly: boolean;
 };
 

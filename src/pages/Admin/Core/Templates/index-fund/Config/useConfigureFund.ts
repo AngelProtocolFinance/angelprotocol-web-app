@@ -19,7 +19,7 @@ import { cleanObject } from "helpers/admin/cleanObject";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { proposal, cw3 } = useAdminResources();
+  const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -74,7 +74,8 @@ export default function useConfigureFund() {
             { type: junoTags.admin, id: adminTags.proposals },
           ]),
         ],
-        ...proposal("Config update"),
+        successLink,
+        successMessage,
       })
     );
     showModal(TransactionPrompt, {});

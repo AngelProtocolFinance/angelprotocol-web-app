@@ -51,7 +51,7 @@ export default function TokenSelector<T extends Base>(props: {
 
       <Combobox.Options className="absolute top-0 right-0 mt-10 max-h-60 w-max overflow-auto rounded-md bg-white shadow-lg focus:outline-none">
         {filteredCoins.length === 0 && symbol !== "" ? (
-          <div className="relative cursor-default select-none py-2 px-4 text-gray-d4 text-sm">
+          <div className="relative cursor-default select-none py-2 px-4 text-gray-d3 text-sm">
             {symbol} not found
           </div>
         ) : (
