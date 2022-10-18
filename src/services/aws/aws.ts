@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { EndowmentBookmark, UserBookMarkInfo } from "types/aws";
+import {
+  AWSQueryRes,
+  Endowment,
+  EndowmentBookmark,
+  EndowmentsQueryParams,
+  UserBookMarkInfo,
+} from "types/aws";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
@@ -20,10 +26,18 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.admin, awsTags.cha, awsTags.bookmarks],
+  tagTypes: [awsTags.admin, awsTags.cha, awsTags.bookmarks, awsTags.endowments],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
+    endowments: builder.query<AWSQueryRes<Endowment[]>, EndowmentsQueryParams>({
+      providesTags: [{ type: awsTags.endowments }],
+      query: (params) => {
+        const network: NetworkType = IS_TEST ? "mainnet" : "mainnet";
+        return { url: `/v1/endowments/${network}`, params };
+      },
+    }),
+
     bookmarks: builder.query<EndowmentBookmark[], string>({
       providesTags: [{ type: awsTags.bookmarks }],
       query: (walletAddr) => {
@@ -55,5 +69,6 @@ export const aws = createApi({
 export const {
   useBookmarksQuery,
   useToggleBookmarkMutation,
+  useEndowmentsQuery,
   util: { invalidateTags: invalidateAwsTags },
 } = aws;

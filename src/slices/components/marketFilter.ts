@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-export type EndowType = "np" | "fp" | "ic";
+import { CapitalizedEndowmentType } from "types/contracts";
 
 type State = {
   isOpen: boolean;
   searchText: string;
-  types: EndowType[];
+  types: CapitalizedEndowmentType[];
   //type: "profit" | "non-profit"
   //geography
   sdgs: { [idx: number]: number[] };
+  key?: string; //update with LastEvaluatedKey from AWSQueryRes to get next page
 };
 const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
@@ -31,10 +31,24 @@ const marketFilter = createSlice({
         payload: { group, sdgs },
       }: PayloadAction<{ group: number; sdgs: number[] }>
     ) => {
-      state.sdgs[group] = sdgs;
+      // state.key = undefined;
+      // state.sdgs[group] = sdgs; //TODO: enable multiple sdgs
+
+      //set only single sdg
+      const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
+      return { ...state, sdgs: _sdgs, key: undefined };
     },
-    setTypes: (state, { payload }: PayloadAction<EndowType[]>) => {
-      state.types = payload;
+    setKey: (state, { payload }: PayloadAction<string>) => {
+      state.key = payload;
+    },
+    setTypes: (
+      state,
+      { payload }: PayloadAction<CapitalizedEndowmentType[]>
+    ) => {
+      // state.types = payload; //TODO: enable multiple types
+      //set only single type
+      state.key = undefined;
+      state.types = [payload[payload.length - 1]];
     },
     toggle(state) {
       state.isOpen = !state.isOpen;
@@ -42,5 +56,6 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes } = marketFilter.actions;
+export const { setSdgs, reset, toggle, setTypes, setKey } =
+  marketFilter.actions;
 export default marketFilter.reducer;

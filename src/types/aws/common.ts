@@ -5,7 +5,6 @@ export interface AWSQueryRes<T> {
   /**
    * base64string
    * only present when Items > 25
-   * pass this back as { headers:{ key: LastEvaluatedKey }} to get next page
    */
   LastEvaluatedKey?: string;
 }
