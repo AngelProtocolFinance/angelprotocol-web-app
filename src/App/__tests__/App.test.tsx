@@ -1,28 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { DonationsMetricList, Update } from "types/aws";
-import { EndowmentEntry } from "types/contracts";
+import { DonationsMetricList, Endowment, Update } from "types/aws";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
-
-const mockEndowment: EndowmentEntry = {
-  categories: { sdgs: [], general: [] },
-  endow_type: "Charity",
-  id: 1,
-  image: "",
-  logo: "",
-  name: "mock endowment",
-  owner: "",
-  status: "Approved",
-  tier: "Level2",
-};
-
-jest.mock("services/juno/account", () => ({
-  __esModule: true,
-  useEndowmentsQuery: () => ({
-    data: [mockEndowment],
-  }),
-}));
 
 const mockMetrics: DonationsMetricList = {
   donations_daily_count: 0,
@@ -80,7 +60,6 @@ describe("App.tsx tests", () => {
     //marketplace is finally loaded
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
     expect(await screen.findByText(bannerText2)).toBeInTheDocument();
-    expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
     expect(screen.queryByTestId("loader")).toBeNull();
 
     //user goes to leaderboards
@@ -99,9 +78,7 @@ describe("App.tsx tests", () => {
         name: /marketplace/i,
       })
     );
-    //not sure if caching works in test, so just wait again for mock endowment
-    expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
-    expect(screen.getByText(bannerText1)).toBeInTheDocument();
-    expect(screen.getByText(bannerText2)).toBeInTheDocument();
+    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
   });
 });

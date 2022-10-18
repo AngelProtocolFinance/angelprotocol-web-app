@@ -8,7 +8,7 @@ export default function Card({
   image,
   id,
   endow_type,
-  categories,
+  categories_sdgs,
 }: Endowment) {
   return (
     <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
@@ -40,7 +40,7 @@ export default function Card({
           </p>
         </div>
         <div className="flex text-2xs font-bold px-3 pb-3 gap-1">
-          {categories.sdgs.map((s) => (
+          {categories_sdgs.map((s) => (
             <SDG num={s} key={s} />
           ))}
         </div>

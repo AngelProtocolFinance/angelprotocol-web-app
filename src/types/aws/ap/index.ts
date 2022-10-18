@@ -5,7 +5,7 @@ import {
   EndowmentTier,
   SocialMedialUrls,
 } from "../../contracts";
-import { NetworkType } from "../../lists";
+import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
@@ -21,7 +21,7 @@ export type Endowment = {
   logo: string;
   image: string;
   tier: EndowmentTier;
-  categories: Categories;
+  categories_sdgs: UNSDG_NUMS[];
 
   //profile
   overview: string;
