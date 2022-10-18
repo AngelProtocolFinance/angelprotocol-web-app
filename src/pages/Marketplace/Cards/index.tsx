@@ -86,8 +86,3 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     </QueryLoader>
   );
 }
-
-/**
- * 1. next_key | none
- * 2.
- */

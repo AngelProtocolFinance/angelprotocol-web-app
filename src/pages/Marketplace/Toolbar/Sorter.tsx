@@ -24,8 +24,6 @@ export default function Sorter() {
     dispatch(setSort({ ...sort, isAscending: !sort.isAscending }));
   }
 
-  console.log(sort);
-
   return (
     <Listbox
       value={sort?.key}
