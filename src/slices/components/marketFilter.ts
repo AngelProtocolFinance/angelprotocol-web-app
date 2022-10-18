@@ -5,7 +5,7 @@ type State = {
   isOpen: boolean;
   searchText: string;
   types: CapitalizedEndowmentType[];
-  //type: "profit" | "non-profit"
+
   //geography
   sdgs: { [idx: number]: number[] };
   key?: string;
@@ -35,7 +35,6 @@ const marketFilter = createSlice({
       // state.sdgs[group] = sdgs; //TODO: enable multiple sdgs
 
       //set only single sdg
-      state.key = undefined;
       const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
       return { ...state, sdgs: _sdgs, key: undefined };
     },

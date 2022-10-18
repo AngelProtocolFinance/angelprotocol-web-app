@@ -23,7 +23,6 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   });
 
   const prevKeyRef = useRef<string | undefined>(undefined);
-
   const hasMore = !!data?.LastEvaluatedKey;
   const hasPrevious = !!key;
 
@@ -46,12 +45,13 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     <QueryLoader
       queryState={{
         data: data?.Items,
-        isLoading: isLoading || isFetching,
+        isLoading: isLoading,
         isError,
       }}
       messages={{
         error: "Failed to get endowments",
         loading: "Getting endowments..",
+        empty: "No endowments found",
       }}
       classes={{
         container: `mt-10 ml-10 ${classes} dark:text-white`,
