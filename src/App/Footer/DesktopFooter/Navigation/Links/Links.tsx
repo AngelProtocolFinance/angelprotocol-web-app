@@ -4,7 +4,7 @@ import Section from "./Section";
 
 export default function Links() {
   return (
-    <div className="grid grid-rows-2 grid-cols-2 w-full max-w-[38rem] lg:grid-rows-1 lg:grid-cols-4 lg:gap-3 xl:gap-6">
+    <div className="grid grid-rows-2 grid-cols-2 gap-6 w-4/5 max-w-[38rem] md:grid-rows-1 md:grid-cols-4 lg:w-full">
       {sections.map((section) => (
         <Section key={section.title} {...section} />
       ))}
