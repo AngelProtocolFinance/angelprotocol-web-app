@@ -1,6 +1,7 @@
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
+import Sorter from "./Sorter";
 
 export default function Toolbar() {
   const isFilterOpen = useGetter(
@@ -27,10 +28,7 @@ export default function Toolbar() {
           placeholder="Search organizations..."
         />
       </div>
-      <button className="min-w-[10rem] flex items-center justify-between gap-3 text-sm py-2 px-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md uppercase">
-        <span>sort by</span>
-        <Icon type="ArrowDown" />
-      </button>
+      <Sorter />
     </div>
   );
 }

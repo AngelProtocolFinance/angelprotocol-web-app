@@ -7,7 +7,7 @@ import Page from "./Page";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, key } = useGetter(
+  const { sdgs, types, key, sort } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -16,6 +16,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   ) || ["", []];
 
   const { isLoading, isFetching, data, isError } = useEndowmentsQuery({
+    "alphabet-order": sort && sort.key === "name" ? sort.isAscending : false,
     type: types[0], //TODO: set to types[]
     tier: "Level3", //TODO: set to tier[]
     sdg: members[0], //TODO: set to sdgs[]

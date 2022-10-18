@@ -1,10 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { EndowmentsSortKey } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
+
+export type Sort = { key: EndowmentsSortKey; isAscending: boolean };
 
 type State = {
   isOpen: boolean;
   searchText: string;
   types: CapitalizedEndowmentType[];
+  sort?: Sort;
 
   //geography
   sdgs: { [idx: number]: number[] };
@@ -22,8 +26,8 @@ const marketFilter = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      //reset everything except isOpen
-      return { ...initialState, isOpen: state.isOpen };
+      //reset everything except isOpen && sortKey
+      return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
     },
     setSdgs: (
       state,
@@ -41,6 +45,9 @@ const marketFilter = createSlice({
     setKey: (state, { payload }: PayloadAction<string | undefined>) => {
       state.key = payload;
     },
+    setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
+      state.sort = payload;
+    },
     setTypes: (
       state,
       { payload }: PayloadAction<CapitalizedEndowmentType[]>
@@ -56,6 +63,6 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes, setKey } =
+export const { setSdgs, reset, toggle, setTypes, setKey, setSort } =
   marketFilter.actions;
 export default marketFilter.reducer;

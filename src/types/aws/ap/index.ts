@@ -35,6 +35,8 @@ export type Endowment = {
   annual_revenue?: string;
   charity_navigator_rating?: string;
 };
+
+export type EndowmentsSortKey = "name"; // | add more in the future
 export type EndowmentsQueryParams = {
   key?: string;
   sdg?: number;
