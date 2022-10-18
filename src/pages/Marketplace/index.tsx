@@ -10,13 +10,13 @@ export default function Marketplace() {
     (state) => state.component.marketFilter.isOpen
   );
   return (
-    <>
+    <div className="w-full grid content-start bg-orange-l6 dark:bg-blue-d4">
       <div className="bg-market-banner-light dark:bg-market-banner-dark bg-cover bg-center">
         <Banner classes="hidden lg:grid" />
         <MobileBanner classes="grid lg:hidden" />
       </div>
 
-      <div className="pt-4 pb-16 grid grid-cols-[auto_1fr] gap-4 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2 bg-orange-l6 dark:bg-blue-d4">
+      <div className="pt-4 pb-16 grid grid-cols-[auto_1fr] gap-4 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2">
         <Toolbar />
         <Sidebar
           classes={`${
@@ -31,6 +31,6 @@ export default function Marketplace() {
           }`}
         />
       </div>
-    </>
+    </div>
   );
 }
