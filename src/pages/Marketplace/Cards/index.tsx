@@ -55,7 +55,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
         empty: "No endowments found",
       }}
       classes={{
-        container: `mt-10 ml-10 ${classes} dark:text-white`,
+        container: `mt-4 ml-4 ${classes} dark:text-white`,
       }}
     >
       {(endowments) => (
