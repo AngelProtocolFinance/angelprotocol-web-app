@@ -1,6 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import {
   Asset,
+  CapitalizedEndowmentType,
   Categories,
   EndowmentStatus,
   EndowmentTier,
@@ -53,7 +54,7 @@ type OneOffVaults = Vaults<string[]>;
 export interface EndowmentDetails {
   owner: string;
   status: EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
+  endow_type: CapitalizedEndowmentType;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
@@ -98,11 +99,11 @@ export type EndowmentEntry = {
   id: number; //int
   owner: String;
   status: keyof EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
-  name?: string;
-  logo?: string;
-  image?: string;
-  tier?: EndowmentTier;
+  endow_type: CapitalizedEndowmentType;
+  name: string;
+  logo: string;
+  image: string;
+  tier: EndowmentTier;
   categories: Categories;
 };
 
