@@ -25,6 +25,7 @@ export default function Card({
         className="grid grid-rows-[1fr_auto]"
       >
         <img
+          loading={"lazy"}
           src={image}
           className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""

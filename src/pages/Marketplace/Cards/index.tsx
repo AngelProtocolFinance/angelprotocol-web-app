@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useEndowmentsQuery } from "services/aws/aws";
 import { QueryLoader } from "components/admin";
 import { useGetter, useSetter } from "store/accessors";
@@ -16,17 +17,28 @@ export default function Cards({ classes = "" }: { classes?: string }) {
 
   const { isLoading, isFetching, data, isError } = useEndowmentsQuery({
     type: types[0], //TODO: set to types[]
-    // tier: "Level3", //TODO: set to tier[]
+    tier: "Level3", //TODO: set to tier[]
     sdg: members[0], //TODO: set to sdgs[]
     key,
   });
 
+  const prevKeyRef = useRef<string | undefined>(undefined);
+
   const hasMore = !!data?.LastEvaluatedKey;
+  const hasPrevious = !!key;
 
   //button is hidden when there's no more
   function loadNextPage() {
     if (data?.LastEvaluatedKey) {
+      //save curr key before setting next key
+      prevKeyRef.current = key;
       dispatch(setKey(data.LastEvaluatedKey));
+    }
+  }
+
+  function loadPrevious() {
+    if (key) {
+      dispatch(setKey(prevKeyRef.current));
     }
   }
 
@@ -48,17 +60,33 @@ export default function Cards({ classes = "" }: { classes?: string }) {
       {(endowments) => (
         <div className={`${classes} w-full grid content-start`}>
           <Page endowments={endowments} />
-          {hasMore && (
-            <button
-              className="btn-orange rounded-md p-2 mt-4"
-              onClick={loadNextPage}
-              disabled={isLoading || isFetching}
-            >
-              Load more organizations
-            </button>
-          )}
+          <div className="flex gap-2 items-center mt-8 justify-center">
+            {hasPrevious && (
+              <button
+                className="btn-outline-blue rounded-md py-0.5 text-sm w-24"
+                onClick={loadPrevious}
+                disabled={isLoading || isFetching}
+              >
+                previous
+              </button>
+            )}
+            {hasMore && (
+              <button
+                className="btn-orange rounded-md py-1 text-sm w-24"
+                onClick={loadNextPage}
+                disabled={isLoading || isFetching}
+              >
+                next
+              </button>
+            )}
+          </div>
         </div>
       )}
     </QueryLoader>
   );
 }
+
+/**
+ * 1. next_key | none
+ * 2.
+ */

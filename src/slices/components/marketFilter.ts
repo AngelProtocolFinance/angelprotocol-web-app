@@ -8,7 +8,7 @@ type State = {
   //type: "profit" | "non-profit"
   //geography
   sdgs: { [idx: number]: number[] };
-  key?: string; //update with LastEvaluatedKey from AWSQueryRes to get next page
+  key?: string;
 };
 const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
@@ -35,10 +35,11 @@ const marketFilter = createSlice({
       // state.sdgs[group] = sdgs; //TODO: enable multiple sdgs
 
       //set only single sdg
+      state.key = undefined;
       const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
       return { ...state, sdgs: _sdgs, key: undefined };
     },
-    setKey: (state, { payload }: PayloadAction<string>) => {
+    setKey: (state, { payload }: PayloadAction<string | undefined>) => {
       state.key = payload;
     },
     setTypes: (
