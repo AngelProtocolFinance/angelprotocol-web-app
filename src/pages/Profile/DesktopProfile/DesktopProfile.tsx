@@ -21,7 +21,7 @@ export default function DesktopProfile() {
   return (
     <LocalContext.Provider value={{ profile }}>
       <section className="hidden sm:block isolate relative w-full h-full">
-        <div className="absolute left-20 top-52">
+        <div className="absolute left-20 top-52 z-10">
           <Logo />
         </div>
 
