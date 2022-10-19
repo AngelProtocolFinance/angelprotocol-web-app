@@ -13,7 +13,7 @@ const options: Option[] = [
 ];
 
 export default function Types() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const { types } = useGetter((state) => state.component.marketFilter);
   const dispatch = useSetter();
 

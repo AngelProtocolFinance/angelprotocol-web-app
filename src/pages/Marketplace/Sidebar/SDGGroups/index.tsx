@@ -3,7 +3,7 @@ import { Drawer } from "../common";
 import Group from "./Group";
 
 export default function SDGGroups() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
     setIsOpen((prev) => !prev);
@@ -18,7 +18,7 @@ export default function SDGGroups() {
         classes="mb-3"
       />
       {isOpen && (
-        <div className="grid gap-y-1">
+        <div className="grid gap-y-1 max-h-[30rem] overflow-y-auto scroller">
           <Group
             title="SDG Group 1 : Reducing overall inequality"
             num={1}

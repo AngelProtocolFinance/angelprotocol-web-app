@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer components {
+  .scroller::-webkit-scrollbar {
+    @apply w-1
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    @apply bg-orange
+  }
+
+  .scroller::-webkit-scrollbar-track{
+    @apply bg-gray-l2 dark:bg-bluegray-d1
+  }
+
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
   }
