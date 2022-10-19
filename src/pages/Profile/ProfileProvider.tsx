@@ -31,11 +31,7 @@ export default function ProfileProvider(props: PropsWithChildren<{}>) {
       value={{
         profile:
           !!profile && !!endowment
-            ? {
-                ...profile,
-                id: numId, //!isError && numId is valid id
-                kyc_donors_only: endowment.kyc_donors_only,
-              }
+            ? { ...profile, kyc_donors_only: endowment.kyc_donors_only }
             : undefined,
         isLoading: isEndowLoading || isProfileLoading,
         isError: isEndowError || isProfileError,
