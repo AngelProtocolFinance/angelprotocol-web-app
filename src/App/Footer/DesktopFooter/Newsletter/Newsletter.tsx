@@ -2,8 +2,8 @@ import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter() {
   return (
-    <div className="flex flex-col items-start gap-2.5 max-w-xs xl:max-w-md">
-      <div className="flex flex-col items-start w-4/5">
+    <div className="flex flex-col items-center gap-2.5 w-full md:w-4/5 lg:w-full lg:max-w-xs xl:max-w-md">
+      <div className="flex flex-col items-start w-4/5 lg:w-full">
         <h6 className="font-header font-bold text-sm uppercase">
           Subscribe to our newsletter
         </h6>

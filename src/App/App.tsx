@@ -8,16 +8,16 @@ import { chainOptions } from "./chainOptions";
 
 export default function App() {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-blue to-black dark:from-blue-d5 dark:to-blue-d5 bg-fixed">
-      <WalletProvider {...chainOptions}>
-        <WalletContext>
-          <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+    <WalletProvider {...chainOptions}>
+      <WalletContext>
+        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+          <div className="grid grid-rows-[auto_1fr_auto] bg-gradient-to-b from-blue to-black dark:from-blue-d5 dark:to-blue-d5 bg-fixed">
             <Header />
             <Views />
-          </ModalContext>
-        </WalletContext>
-      </WalletProvider>
-      <Footer />
-    </div>
+            <Footer />
+          </div>
+        </ModalContext>
+      </WalletContext>
+    </WalletProvider>
   );
 }
