@@ -58,6 +58,7 @@ import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
+import { ImFilePicture } from "react-icons/im";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
 import {
@@ -140,4 +141,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Sun: BiSun,
   HeartOutline: AiOutlineHeart,
   HeartFill: AiFillHeart,
+  Picture: ImFilePicture,
 };
