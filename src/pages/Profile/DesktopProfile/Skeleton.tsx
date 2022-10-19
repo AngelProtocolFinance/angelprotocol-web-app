@@ -4,7 +4,7 @@ import Loader from "components/Loader";
 export default function Skeleton() {
   return (
     <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
-      <div className="flex items-center justify-center h-72 w-full">
+      <div className="flex items-center justify-center h-72 w-full bg-blue dark:bg-blue-d4">
         <Loader bgColorClass="bg-white/80" gapClass="gap-2" widthClass="w-4" />
       </div>
       <div className="w-full h-full bg-white dark:bg-blue-d5 flex pt-6 pb-20 px-20">
