@@ -22,10 +22,13 @@ export default function DesktopProfile() {
 
   return (
     <LocalContext.Provider value={{ profile }}>
-      <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
-        <Banner className="h-72" />
-        <Logo className="absolute left-auto lg:left-20 top-52" />
+      <section className="hidden sm:grid grid-rows-[294px_1fr] items-center isolate relative w-full h-full">
+        <Banner />
         <Body />
+
+        <div className="absolute left-auto lg:left-20 top-52">
+          <Logo />
+        </div>
       </section>
     </LocalContext.Provider>
   );
