@@ -37,7 +37,7 @@ function WithdrawLink(props: { classes?: string; type: AccountType }) {
     <Link
       to={adminRoutes.withdraws}
       state={props.type}
-      className={`flex justify-end items-center gap-2 uppercase text-sm text-blue-l3 ${props.classes}`}
+      className={`flex justify-end items-center gap-2 uppercase text-sm text-blue-l4 ${props.classes}`}
     >
       <span>withdraw</span>
       <Icon type="Forward" />

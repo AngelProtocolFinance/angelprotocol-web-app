@@ -67,7 +67,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
               <Combobox.Option
                 key={country.name}
                 value={country.name}
-                className="cursor-button flex gap-2 p-2 text-sm hover:bg-blue-l4/50 cursor-button text-gray-d2"
+                className="cursor-button flex gap-2 p-2 text-sm hover:bg-blue-l5/50 cursor-button text-gray-d2"
               >
                 <img
                   src={country.flag}

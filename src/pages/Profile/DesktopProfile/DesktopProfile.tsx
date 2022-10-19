@@ -53,7 +53,7 @@ function PageError() {
       <p className="text-red-l1 text-lg">Failed to load endowment profile</p>
       <Link
         to={`${appRoutes.index}`}
-        className="text-blue-l4 hover:text-blue text-sm"
+        className="text-blue-l5 hover:text-blue text-sm"
       >
         back to Marketplace
       </Link>
