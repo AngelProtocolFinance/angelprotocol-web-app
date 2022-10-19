@@ -1,9 +1,10 @@
 import { SectionProps } from "./types";
+import { LITEPAPER } from "constants/urls";
 import Section from "./Section";
 
 export default function Links() {
   return (
-    <div className="grid grid-cols-4 gap-3 xl:gap-6 max-w-[38rem]">
+    <div className="grid grid-rows-2 grid-cols-2 gap-6 w-4/5 max-w-[38rem] md:grid-rows-1 md:grid-cols-4 lg:w-full">
       {sections.map((section) => (
         <Section key={section.title} {...section} />
       ))}
@@ -47,10 +48,7 @@ const sections: SectionProps[] = [
   {
     title: "Docs",
     links: [
-      {
-        text: "Litepaper",
-        href: "https://angelprotocol.io/docs/litepaper-introduction/",
-      },
+      { text: "Litepaper", href: LITEPAPER },
       { text: "FAQs (coming soon)" },
       { text: "Technical doc (coming soon)" },
     ],
