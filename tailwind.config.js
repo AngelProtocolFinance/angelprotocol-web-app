@@ -36,6 +36,7 @@ module.exports = {
         l3: "#B8D9EF",
         l4: "#E2EFF9",
         l5: "#EAF4FA",
+        capital: "#3D5F76",
       },
 
       green: {
