@@ -41,7 +41,7 @@ export default function ProfileProvider(props: PropsWithChildren<{}>) {
         isError: isEndowError || isProfileError,
       }}
     >
-      <div>{props.children}</div>
+      {props.children}
     </ProfileContext.Provider>
   );
 }
