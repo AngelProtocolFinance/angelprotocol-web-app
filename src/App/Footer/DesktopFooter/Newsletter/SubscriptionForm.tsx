@@ -36,10 +36,10 @@ export default function SubscriptionForm() {
 
   return (
     <form
-      className="flex flex-col items-center gap-3 w-4/5 xl:flex-row xl:items-start xl:gap-6"
+      className="flex flex-col items-center gap-3 w-4/5 lg:w-full xl:flex-row xl:items-start xl:gap-6"
       onSubmit={handleSubmit(submit)}
     >
-      <div className="flex flex-col gap-1 w-full xl:w-72">
+      <div className="flex flex-col gap-1 w-full">
         <input
           {...register("email")}
           id="email"
