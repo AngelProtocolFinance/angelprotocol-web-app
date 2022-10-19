@@ -20,7 +20,7 @@ export default function Skeleton() {
         </div>
       </div>
 
-      <div className="absolute left-auto lg:left-20 top-36">
+      <div className="absolute left-20 top-36">
         <div className="box-border h-44 w-44 rounded-full bg-blue-l3 object-contain dark:bg-blue">
           <Loader
             bgColorClass="bg-white/80"

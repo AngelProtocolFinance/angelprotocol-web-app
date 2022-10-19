@@ -24,7 +24,7 @@ export default function DesktopProfile() {
         <Banner />
         <Body />
 
-        <div className="absolute left-auto lg:left-20 top-52">
+        <div className="absolute left-20 top-52">
           <Logo />
         </div>
       </section>
