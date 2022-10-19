@@ -1,11 +1,9 @@
 import { useLocalContext } from "./LocalContext";
 
-type Props = { className?: string };
-
-export default function Banner({ className = "" }: Props) {
+export default function Banner() {
   const { profile } = useLocalContext();
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className="relative w-full h-full">
       <img
         src={profile.image}
         alt=""
