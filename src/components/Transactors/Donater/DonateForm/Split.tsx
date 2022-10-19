@@ -12,22 +12,22 @@ export default function Split() {
           type="locked"
           border_class="border-green-500/80"
           text_class="text-green-500 uppercase"
-          title="Endowment"
+          title="Locked"
           action="Compounded forever"
         />
         <Portion
           type="liquid"
           border_class="border-angel-blue/80"
           text_class="text-blue-accent uppercase"
-          title="Current"
+          title="Liquid"
           action="Instantly available"
         >
           <Slider />
         </Portion>
       </div>
       <p className="text-xs text-angel-grey text-center">
-        Note: Donations into the Endowment provide sustainable financial runaway
-        and allow your gift to give forever
+        Note: Donations into the Locked portion provide sustainable financial
+        runaway and allow your gift to give forever
       </p>
     </div>
   );
