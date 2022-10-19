@@ -48,9 +48,9 @@ function Skeleton() {
 
 function PageError() {
   return (
-    <section className="padded-container grid content-center place-items-center gap-2">
-      <Icon type="Warning" size={30} className="text-red-l1" />
-      <p className="text-red-l1 text-lg">Failed to load endowment profile</p>
+    <section className="padded-container flex flex-col items-center justify-center w-full h-screen gap-2 text-red-l1 dark:text-red-l2">
+      <Icon type="Warning" size={30} />
+      <p className="text-lg">Failed to load endowment profile</p>
       <Link
         to={`${appRoutes.index}`}
         className="text-blue-l5 hover:text-blue text-sm"
