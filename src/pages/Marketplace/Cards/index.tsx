@@ -19,7 +19,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     >
       {(endowments) => (
         <div
-          className={`${classes} grid grid-cols-[repeat(auto-fit,minmax(245px,1fr))] gap-4 content-start`}
+          className={`${classes} grid grid-cols-[repeat(auto-fit,minmax(245px,1fr))] gap-6 content-start`}
         >
           {endowments.map((endow) => (
             <Card {...endow} key={endow.id} />

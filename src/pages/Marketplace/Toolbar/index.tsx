@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
 
-export default function Toolbar() {
+export default function Toolbar({ classes = "" }: { classes?: string }) {
   const isFilterOpen = useGetter(
     (state) => state.component.marketFilter.isOpen
   );
@@ -12,7 +12,9 @@ export default function Toolbar() {
   }
 
   return (
-    <div className="col-span-2 grid grid-cols-2 md:grid-cols-[auto_1fr_auto] gap-3">
+    <div
+      className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr_auto] gap-3`}
+    >
       <button
         onClick={toggleFilter}
         className="min-w-[10rem] btn-orange flex items-center gap-2 justify-between rounded-md px-3 py-2 text-sm"
