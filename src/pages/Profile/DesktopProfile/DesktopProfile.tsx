@@ -24,7 +24,7 @@ export default function DesktopProfile() {
     <LocalContext.Provider value={{ profile }}>
       <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
         <Banner className="h-72" />
-        <Logo />
+        <Logo className="absolute left-20 top-52" />
         <Body />
       </section>
     </LocalContext.Provider>
