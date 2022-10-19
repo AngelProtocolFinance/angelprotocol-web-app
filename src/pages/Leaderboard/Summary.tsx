@@ -31,16 +31,16 @@ function Text(props: { type: string; title: string }) {
     }
     if (props.title === "Impact") {
       textBlob =
-        "The Impact is the cumulative total of direct donations to the Current Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity will have been able to use day to day over 10 years without touching the Principal.";
+        "The Impact is the cumulative total of direct donations to the Liquid Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity will have been able to use day to day over 10 years without touching the Principal.";
     }
   } else {
     if (props.title === "Principal") {
       textBlob =
-        "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Current Account for immediate use. Of the yield, 75% goes to the Current Account, 25% reinvested.";
+        "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Liquid Account for immediate use. Of the yield, 75% goes to the Liquid Account, 25% reinvested.";
     }
     if (props.title === "Impact") {
       textBlob =
-        "The Impact is the cumulative total of direct donations to the Current Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity has been able to use day to day without touching the Principal.";
+        "The Impact is the cumulative total of direct donations to the Liquid Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity has been able to use day to day without touching the Principal.";
     }
   }
 
