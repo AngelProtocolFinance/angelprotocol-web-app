@@ -26,8 +26,8 @@ export default function Split() {
         </Portion>
       </div>
       <p className="text-xs text-angel-grey text-center">
-        Note: Donations into the Endowment provide sustainable financial runaway
-        and allow your gift to give forever
+        Note: Donations into the Locked portion provide sustainable financial
+        runaway and allow your gift to give forever
       </p>
     </div>
   );
