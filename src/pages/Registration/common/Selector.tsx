@@ -57,7 +57,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
             className={({ selected }) =>
               `${
                 props.classes?.option ?? ""
-              } cursor-pointer hover:bg-blue-l3/50 ${
+              } cursor-pointer hover:bg-blue-l4/50 ${
                 selected ? "bg-blue text-white" : "text-gray-d2"
               }`
             }
