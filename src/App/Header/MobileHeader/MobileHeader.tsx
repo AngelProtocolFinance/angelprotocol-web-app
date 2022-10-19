@@ -1,5 +1,5 @@
+import WalletSuite from "../../WalletSuite";
 import Logo from "../Logo";
-import WalletSuite from "../WalletSuite";
 import MenuButton from "./MenuButton";
 
 export default function MobileHeader() {

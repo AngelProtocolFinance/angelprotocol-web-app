@@ -1,6 +1,6 @@
+import WalletSuite from "../../WalletSuite";
 import Logo from "../Logo";
 import ThemeToggle from "../ThemeToggle";
-import WalletSuite from "../WalletSuite";
 import NavLinks from "./NavLinks";
 
 export default function DesktopHeader() {

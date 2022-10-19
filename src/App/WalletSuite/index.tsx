@@ -2,11 +2,13 @@ import Airdrop from "./Airdrop";
 import ConnectButton from "./ConnectButton";
 import TransactionHint from "./TransactionHint";
 
-export default function WalletSuite() {
+type Props = { menuPlacement?: "top" | "bottom" };
+
+export default function WalletSuite(props: Props) {
   return (
     <div className="grid grid-cols-[auto_1fr_auto]">
       <TransactionHint />
-      <ConnectButton />
+      <ConnectButton {...props} />
       <Airdrop />
     </div>
   );

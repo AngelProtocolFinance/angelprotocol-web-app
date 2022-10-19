@@ -4,4 +4,10 @@ export const APIs = {
   flipside: "https://flipside.leslug.com/angel",
 };
 
+export const FEEDBACK =
+  "https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37";
+export const LITEPAPER =
+  "https://angelprotocol.io/docs/litepaper-introduction/";
 export const PRIVACY_POLICY = "https://angelprotocol.io/privacy-policy/";
+export const SUPPORT =
+  "https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37";

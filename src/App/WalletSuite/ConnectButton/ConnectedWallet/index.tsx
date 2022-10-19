@@ -5,6 +5,7 @@ import {
 } from "contexts/WalletContext/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
+import { COMMON_BUTTON_STYLE } from "../constants";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
@@ -16,7 +17,7 @@ export default function ConnectedWallet(props: WalletState) {
     <Popover as="div" className="relative">
       <Popover.Button
         disabled={isLoading}
-        className="flex grow-0 w-36 sm:w-44 h-10 py-2 px-3 justify-center items-center rounded-lg bg-orange hover:bg-orange-l1 text-white gap-2 font-bold text-xs sm:text-base"
+        className={`${COMMON_BUTTON_STYLE} w-36 text-xs`}
       >
         {({ open }) => (
           <>
