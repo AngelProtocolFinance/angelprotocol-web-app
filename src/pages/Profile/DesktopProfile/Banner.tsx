@@ -3,7 +3,7 @@ import { useLocalContext } from "./LocalContext";
 export default function Banner() {
   const { profile } = useLocalContext();
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-72">
       <img
         src={profile.image}
         alt=""

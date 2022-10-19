@@ -22,7 +22,7 @@ export default function DesktopProfile() {
 
   return (
     <LocalContext.Provider value={{ profile }}>
-      <section className="hidden sm:grid grid-rows-[294px_1fr] items-center isolate relative w-full h-full">
+      <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
         <Banner />
         <Body />
 
