@@ -22,13 +22,11 @@ export default function DesktopProfile() {
 
   return (
     <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
-      <section className="hidden sm:block isolate relative w-full h-full">
-        <Logo className="absolute left-20 top-52 z-10" />
+      <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
+        <Banner />
+        <Body />
 
-        <div className="flex flex-col items-center w-full h-full">
-          <Banner />
-          <Body />
-        </div>
+        <Logo className="absolute left-20 top-52 z-10" />
       </section>
     </LocalContext.Provider>
   );
