@@ -33,7 +33,7 @@ export default function DesktopProfile() {
 function Banner() {
   const { image } = useLocalContext();
   return (
-    <div className="relative w-full h-72">
+    <div className="relative w-full h-68">
       <img
         src={image}
         alt=""

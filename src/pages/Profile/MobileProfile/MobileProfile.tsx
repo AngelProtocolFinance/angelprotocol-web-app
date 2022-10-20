@@ -1,7 +1,4 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
-import Icon from "components/Icon";
-import { appRoutes } from "constants/routes";
 import LocalContext, { useLocalContext } from "../LocalContext";
 import Logo from "../Logo";
 import PageError from "../PageError";
@@ -13,30 +10,31 @@ export default function MobileProfile() {
   const { isLoading, isError, profile, kyc_donors_only, id } =
     useContext(ProfileContext);
 
-  if (isLoading) {
-    return <Skeleton />;
-  }
+  return <PageError />;
+  //   if (isLoading) {
+  //   return <Skeleton />;
+  // }
 
-  if (isError || !profile || kyc_donors_only === undefined) {
-    return <PageError />;
-  }
+  // if (isError || !profile || kyc_donors_only === undefined) {
+  //   return <PageError />;
+  // }
 
-  return (
-    <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
-      <section className="sm:hidden flex flex-col items-center isolate relative w-full h-full">
-        <Banner />
-        <Body />
+  // return (
+  //   <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
+  //     <section className="sm:hidden flex flex-col items-center isolate relative w-full h-full">
+  //       <Banner />
+  //       <Body />
 
-        <Logo className="absolute left-auto top-36 z-10" />
-      </section>
-    </LocalContext.Provider>
-  );
+  //       <Logo className="absolute left-auto top-32 z-10" />
+  //     </section>
+  //   </LocalContext.Provider>
+  // );
 }
 
 function Banner() {
   const { image } = useLocalContext();
   return (
-    <div className="relative w-full h-60">
+    <div className="relative w-full h-52">
       <img
         src={image}
         alt=""
