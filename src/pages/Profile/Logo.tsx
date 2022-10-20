@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { useLocalContext } from "./LocalContext";
+import { useProfileContext } from "./ProfileContext";
 
 const logoStyle =
   "box-border h-40 w-40 sm:h-44 sm:w-44 border border-gray-l2 rounded-full dark:border-bluegray-d1";
@@ -7,7 +7,7 @@ const logoStyle =
 type Props = { className?: string };
 
 export default function Logo({ className = "" }: Props) {
-  const { logo } = useLocalContext();
+  const { logo } = useProfileContext();
 
   if (!logo) {
     return (

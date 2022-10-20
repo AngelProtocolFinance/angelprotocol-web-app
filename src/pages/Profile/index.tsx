@@ -5,9 +5,9 @@ import {
 } from "services/juno/account";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
-import LocalContext, { useLocalContext } from "./LocalContext";
 import Logo from "./Logo";
 import PageError from "./PageError";
+import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 export default function Profile() {
@@ -34,7 +34,7 @@ export default function Profile() {
   }
 
   return (
-    <LocalContext.Provider
+    <ProfileContext.Provider
       value={{
         ...profile,
         kyc_donors_only: endowment.kyc_donors_only,
@@ -47,12 +47,12 @@ export default function Profile() {
 
         <Logo className="absolute left-auto top-32 z-10 sm:left-20 sm:top-48" />
       </section>
-    </LocalContext.Provider>
+    </ProfileContext.Provider>
   );
 }
 
 function Banner() {
-  const { image } = useLocalContext();
+  const { image } = useProfileContext();
   return (
     <div className="relative w-full h-52 sm:h-72">
       <img
