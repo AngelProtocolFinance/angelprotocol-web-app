@@ -25,7 +25,7 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return <FormWithContext {...{ ...profile, id: endowmentId }} />;
+  return <FormWithContext {...profile} id={endowmentId} />;
 }
 
 function FormWithContext(props: ProfileResponse & { id: number }) {

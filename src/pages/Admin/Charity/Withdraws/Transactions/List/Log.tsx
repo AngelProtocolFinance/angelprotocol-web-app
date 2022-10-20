@@ -55,7 +55,7 @@ function KeyVal({ title, children }: PropsWithChildren<{ title: string }>) {
   return (
     <div className="grid">
       <span className="text-xs">{title}</span>
-      <div className="text-blue-l3">{children}</div>
+      <div className="text-blue-l4">{children}</div>
     </div>
   );
 }
