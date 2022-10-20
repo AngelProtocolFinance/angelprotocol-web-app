@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { useLocalContext } from "./LocalContext";
 
 const logoStyle =
-  "box-border h-44 w-44 border border-gray-l2 rounded-full dark:border-blue-capital";
+  "box-border h-44 w-44 border border-gray-l2 rounded-full dark:border-bluegray-d1";
 
 export default function Logo() {
   const { profile } = useLocalContext();
