@@ -23,13 +23,11 @@ export default function MobileProfile() {
 
   return (
     <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
-      <section className="sm:hidden isolate relative w-full h-full">
-        <Logo className="absolute left-auto top-24 z-10" />
+      <section className="sm:hidden flex flex-col items-center isolate relative w-full h-full">
+        <Banner />
+        <Body />
 
-        <div className="flex flex-col items-center w-full h-full">
-          <Banner />
-          <Body />
-        </div>
+        <Logo className="absolute left-auto top-36 z-10" />
       </section>
     </LocalContext.Provider>
   );
@@ -44,7 +42,7 @@ function Banner() {
         alt=""
         className="absolute h-full w-full object-cover object-right opacity-10"
       />
-      <div className="absolute -z-10 bg-blue dark:bg-blue-d4 h-full w-full" />
+      <div className="absolute -z-10 bg-blue dark:bg-blue-d3 h-full w-full" />
     </div>
   );
 }
