@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ProfileContextType } from "../types";
+import { ProfileContextType } from "./types";
 
 type ReqCtxType = Required<ProfileContextType>;
 
