@@ -37,8 +37,9 @@ function ProofOfIdentityModal() {
         onClick={closeModal}
       />
       <p className="p-4">
-        ### EXPLANATION FOR REASONS FOR ASKING PROOF OF IDENTITY AND ACCEPTABLE
-        TYPES ###
+        We need to confirm you are an authorized representative of your charity.
+        Please upload a picture (JPEG or PDF) of either a driver's license or a
+        passport page that shows your details.
       </p>
       <Button className="btn-blue w-40 h-10" onClick={closeModal}>
         Got it
