@@ -1,9 +1,9 @@
 import character from "assets/images/character2.png";
 
-export default function Banner({ classes = "" }: { classes?: string }) {
+export default function MobileBanner({ classes = "" }: { classes?: string }) {
   return (
     <div
-      className={`grid content-start justify-items-center padded-container text-white ${classes}`}
+      className={`${classes} content-start pt-28 justify-items-center padded-container text-white `}
     >
       <h1 className="text-center font-extrabold max-w-md text-2xl md:text-3xl lg:text-4xl">
         <div className="leading-tight">ANGEL PROTOCOL SUPPORTS</div>

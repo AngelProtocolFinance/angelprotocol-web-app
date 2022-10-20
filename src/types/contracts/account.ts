@@ -1,5 +1,4 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "../lists";
 import {
   Asset,
   Categories,
@@ -105,10 +104,6 @@ export type EndowmentEntry = {
   image?: string;
   tier?: EndowmentTier;
   categories: Categories;
-};
-
-export type CategorizedEndowments = {
-  [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
 export interface ProfileResponse {

@@ -64,6 +64,7 @@ import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
   MdOutlineFileDownload,
+  MdOutlineFilterAlt,
 } from "react-icons/md";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
@@ -72,6 +73,7 @@ import { IconTypes } from "./types";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   FilterLeft: BsFilterLeft,
+  Filter: MdOutlineFilterAlt,
   FileDownload: MdOutlineFileDownload,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,

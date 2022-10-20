@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DonationsMetricList, Update } from "types/aws";
-import { CategorizedEndowments, EndowmentEntry } from "types/contracts";
+import { EndowmentEntry } from "types/contracts";
 import AppWrapper from "test/AppWrapper";
 import App from "../App";
 
@@ -16,14 +16,11 @@ const mockEndowment: EndowmentEntry = {
   status: "Approved",
   tier: "Level2",
 };
-const mockEndowments: Pick<CategorizedEndowments, 1> = {
-  1: [mockEndowment],
-};
 
 jest.mock("services/juno/account", () => ({
   __esModule: true,
-  useCategorizedEndowmentsQuery: () => ({
-    data: mockEndowments,
+  useEndowmentsQuery: () => ({
+    data: [mockEndowment],
   }),
 }));
 
@@ -76,13 +73,13 @@ describe("App.tsx tests", () => {
         name: /leaderboard/i,
       })
     ).toBeInTheDocument();
-    expect(screen.getByText(bannerText1)).toBeInTheDocument();
-    expect(screen.getByText(bannerText2)).toBeInTheDocument();
 
     // marketplace is being lazy loaded
     expect(screen.getByTestId("loader")).toBeInTheDocument();
 
     //marketplace is finally loaded
+    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
     expect(await screen.findByText(/mock endowment/i)).toBeInTheDocument();
     expect(screen.queryByTestId("loader")).toBeNull();
 

@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer components {
+  .scroller::-webkit-scrollbar {
+    @apply w-1
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    @apply bg-orange
+  }
+
+  .scroller::-webkit-scrollbar-track{
+    @apply bg-gray-l2 dark:bg-bluegray-d1
+  }
+
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
   }
@@ -38,7 +50,7 @@
     @apply border-2 border-blue text-blue uppercase cursor-pointer font-bold transition;
   }
   .btn-outline-blue:hover {
-    @apply bg-blue-d3 text-white;
+    @apply bg-blue-d2 text-white;
   }
   .btn-outline-blue:active {
     @apply bg-blue-d1 text-white;
@@ -68,7 +80,6 @@
     -khtml-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
-    user-drag: none;
   }
 
   .scroll-hidden {

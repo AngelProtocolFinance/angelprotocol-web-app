@@ -8,7 +8,7 @@ export default function MenuModal({ onClose }: { onClose: () => void }) {
   return (
     <Dialog.Panel
       as="header"
-      className="fixed top-0 left-0 right-0 w-full z-10 bg-blue dark:bg-blue-d5 flex flex-col shadow-lg"
+      className="fixed top-0 left-0 right-0 w-full z-10 bg-blue dark:bg-blue-d4 flex flex-col shadow-lg"
     >
       <div className="flex justify-between mb-4 items-center w-full padded-container pt-3">
         <Logo />
