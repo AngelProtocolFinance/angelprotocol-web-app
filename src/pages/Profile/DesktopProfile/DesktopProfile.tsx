@@ -9,18 +9,19 @@ import Logo from "./Logo";
 import Skeleton from "./Skeleton";
 
 export default function DesktopProfile() {
-  const { isLoading, isError, profile } = useContext(ProfileContext);
+  const { isLoading, isError, profile, kyc_donors_only, id } =
+    useContext(ProfileContext);
 
   if (isLoading) {
     return <Skeleton />;
   }
 
-  if (isError || !profile) {
+  if (isError || !profile || kyc_donors_only === undefined) {
     return <PageError />;
   }
 
   return (
-    <LocalContext.Provider value={{ profile }}>
+    <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
       <section className="hidden sm:block isolate relative w-full h-full">
         <div className="absolute left-20 top-52 z-10">
           <Logo />
@@ -36,11 +37,11 @@ export default function DesktopProfile() {
 }
 
 function Banner() {
-  const { profile } = useLocalContext();
+  const { image } = useLocalContext();
   return (
     <div className="relative w-full h-72">
       <img
-        src={profile.image}
+        src={image}
         alt=""
         className="absolute h-full w-full object-cover object-right opacity-10"
       />
@@ -48,6 +49,7 @@ function Banner() {
     </div>
   );
 }
+
 function PageError() {
   return (
     <section className="padded-container flex flex-col items-center justify-center w-full h-screen gap-2 text-red-l1 dark:text-red-l2">

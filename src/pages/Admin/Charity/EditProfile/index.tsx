@@ -25,10 +25,10 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return <FormWithContext {...profile} />;
+  return <FormWithContext {...profile} id={endowmentId} />;
 }
 
-function FormWithContext(props: ProfileResponse) {
+function FormWithContext(props: ProfileResponse & { id: number }) {
   //initialize falsy values
   const flatInitial: Required<FlatProfileWithSettings> = {
     id: props.id,
