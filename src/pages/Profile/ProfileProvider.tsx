@@ -29,10 +29,9 @@ export default function ProfileProvider(props: PropsWithChildren<{}>) {
   return (
     <ProfileContext.Provider
       value={{
-        profile:
-          !!profile && !!endowment
-            ? { ...profile, kyc_donors_only: endowment.kyc_donors_only }
-            : undefined,
+        profile: profile,
+        kyc_donors_only: endowment?.kyc_donors_only,
+        id: numId,
         isLoading: isEndowLoading || isProfileLoading,
         isError: isEndowError || isProfileError,
       }}

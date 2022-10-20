@@ -5,9 +5,9 @@ const logoStyle =
   "box-border h-44 w-44 border border-gray-l2 rounded-full dark:border-bluegray-d1";
 
 export default function Logo() {
-  const { profile } = useLocalContext();
+  const { logo } = useLocalContext();
 
-  if (!profile.logo) {
+  if (!logo) {
     return (
       <div className={`${logoStyle} flex items-center justify-center`}>
         <Icon
@@ -22,7 +22,7 @@ export default function Logo() {
     <img
       className={`${logoStyle} bg-white object-contain`}
       alt="logo"
-      src={profile.logo}
+      src={logo}
     />
   );
 }
