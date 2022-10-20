@@ -7,7 +7,7 @@ export default function Skeleton() {
       <Banner />
       <Body />
 
-      <Logo className="absolute left-auto top-32 sm:left-20 sm:top-36" />
+      <Logo className="absolute left-auto top-32 sm:left-20 sm:top-44" />
     </section>
   );
 }
@@ -20,9 +20,9 @@ function Banner() {
 
 function Body() {
   return (
-    <div className="w-full h-full bg-white dark:bg-blue-d5 grid grid-rows-3 gap-10 px-6 pt-24 pb-8 sm:pt-6 sm:pb-20 sm:px-20">
-      <ContentLoader className="w-full h-56 sm:w-2/5 sm:h-full sm:justify-self-end" />
-      <ContentLoader className="w-full h-72 sm:h-full" />
+    <div className="w-full bg-white dark:bg-blue-d5 flex flex-col sm:items-end gap-5 px-6 pt-24 pb-8 sm:pt-6 sm:pb-20 sm:px-20">
+      <ContentLoader className="h-56 sm:w-2/5 sm:h-28" />
+      <ContentLoader className="w-full h-72 sm:h-28" />
       <div className="flex flex-col gap-10 w-full h-full sm:flex-row sm:gap-8">
         <ContentLoader className="w-full h-96 sm:h-[905px]" />
         <ContentLoader className="w-full h-96 sm:w-[405px] sm:h-[905px]" />
