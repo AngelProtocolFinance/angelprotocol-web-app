@@ -20,11 +20,11 @@ export default function DesktopProfile() {
 
   return (
     <LocalContext.Provider value={{ ...profile, kyc_donors_only, id }}>
-      <section className="hidden sm:flex flex-col items-center isolate relative w-full h-full">
+      <section className="flex flex-col items-center isolate relative w-full h-full">
         <Banner />
         <Body />
 
-        <Logo className="absolute left-20 top-52 z-10" />
+        <Logo className="absolute left-auto top-32 z-10 sm:left-20 sm:top-52" />
       </section>
     </LocalContext.Provider>
   );
@@ -33,7 +33,7 @@ export default function DesktopProfile() {
 function Banner() {
   const { image } = useLocalContext();
   return (
-    <div className="relative w-full h-68">
+    <div className="relative w-full h-52 sm:h-68">
       <img
         src={image}
         alt=""
