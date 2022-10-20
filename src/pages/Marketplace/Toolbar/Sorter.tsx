@@ -31,12 +31,14 @@ export default function Sorter() {
       as="div"
       className="relative min-w-[10rem]"
     >
-      <div className="w-full flex items-center justify-between gap-3 text-sm py-2 px-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md">
-        <Listbox.Button className="upppercase flex items-center gap-2 justify-between w-full">
+      <div className="w-full h-full flex items-center justify-between text-sm py-2 pl-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md">
+        <Listbox.Button className="upppercase flex items-center justify-between w-full">
           {({ open }) => (
             <>
               <span className="uppercase">{sort?.key || "sort by"}</span>
-              {!isSortKeySelected && <DrawerIcon isOpen={open} size={20} />}
+              {!isSortKeySelected && (
+                <DrawerIcon isOpen={open} size={20} className="mr-3" />
+              )}
             </>
           )}
         </Listbox.Button>
@@ -47,11 +49,15 @@ export default function Sorter() {
             <button
               type="button"
               onClick={resetSort}
-              className="text-red dark:text-red-l3"
+              className="text-red dark:text-red-l3 mr-2"
             >
               <Icon type="Close" />
             </button>
-            <button type="button" onClick={() => toggleDirection(sort)}>
+            <button
+              type="button"
+              onClick={() => toggleDirection(sort)}
+              className="mr-3"
+            >
               <Icon type={sort.isAscending ? "Up" : "Down"} />
             </button>
           </>
