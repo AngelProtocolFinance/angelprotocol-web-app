@@ -24,7 +24,7 @@ export default function DesktopProfile() {
         <Banner />
         <Body />
 
-        <Logo className="absolute left-auto top-32 z-10 sm:left-20 sm:top-52" />
+        <Logo className="absolute left-auto top-32 z-10 sm:left-20 sm:top-48" />
       </section>
     </LocalContext.Provider>
   );
@@ -33,7 +33,7 @@ export default function DesktopProfile() {
 function Banner() {
   const { image } = useLocalContext();
   return (
-    <div className="relative w-full h-52 sm:h-68">
+    <div className="relative w-full h-52 sm:h-72">
       <img
         src={image}
         alt=""
