@@ -41,7 +41,7 @@ function Banner() {
         alt=""
         className="absolute h-full w-full object-cover object-right opacity-10"
       />
-      <div className="absolute -z-10 bg-blue dark:bg-blue-d4 h-full w-full" />
+      <div className="absolute -z-10 bg-blue dark:bg-blue-d3 h-full w-full" />
     </div>
   );
 }
