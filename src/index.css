@@ -20,7 +20,7 @@
   }
 
   .btn {
-    @apply flex items-center justify-center gap-2 font-heading;
+    @apply flex items-center justify-center gap-2 font-body;
   }
 
   .btn-orange {
