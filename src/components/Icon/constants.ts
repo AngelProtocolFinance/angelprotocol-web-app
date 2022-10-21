@@ -67,6 +67,7 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
 } from "react-icons/md";
+import { RiMapPin2Line } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
@@ -142,4 +143,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   HeartOutline: AiOutlineHeart,
   HeartFill: AiFillHeart,
   Picture: ImFilePicture,
+  MapPin: RiMapPin2Line,
 };

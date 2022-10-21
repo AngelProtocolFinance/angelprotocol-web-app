@@ -11,7 +11,7 @@ export default function Body() {
         <span className="flex items-center gap-2 text-black font-sans font-medium text-base dark:text-white">
           <Icon type="Globe" className="h-6 w-6" />
           <a href={profile.url} title="organization url">
-            {profile.url} https://www.example.com{" "}
+            {profile.url} https://www.example.com
             {/* --> DELETE PRIOR TO MERGING AND UNCOMMENT THE `profile.url` CHECK */}
           </a>
         </span>
@@ -23,7 +23,13 @@ export default function Body() {
           Donate now
         </button>
       </div>
-      <div className="flex items-center justify-end gap-6">name + address</div>
+      <div className="flex flex-col gap-6 max-w-sm text-black dark:text-white">
+        <h3 className="font-header font-bold text-3xl">{profile.name}</h3>
+        <span className="flex items-center justify-center gap-2 text-base font-work uppercase">
+          <Icon type="MapPin" className="h-6 w-6" />
+          {profile.street_address}
+        </span>
+      </div>
       <div className="flex items-center justify-end gap-6 w-[810px]">
         balances
       </div>
