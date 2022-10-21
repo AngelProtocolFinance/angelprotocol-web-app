@@ -26,7 +26,7 @@ export default function Body() {
         {/* )} */}
         <button
           onClick={() => console.log("donate")}
-          className="btn btn-orange w-80 h-12 py-2 px-6 rounded text-sm"
+          className="btn btn-orange w-80 h-12 py-2 px-6 rounded text-sm normal-case"
         >
           Donate now
         </button>
