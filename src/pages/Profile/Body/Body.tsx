@@ -1,3 +1,4 @@
+import Icon from "components/Icon";
 import { useProfileContext } from "../ProfileContext";
 
 export default function Body() {
@@ -6,7 +7,15 @@ export default function Body() {
   return (
     <div className="grid grid-rows-[auto_auto_1fr] grid-cols-[auto_auto] gap-10 items-end w-full h-full pt-6 px-20 pb-20 bg-white dark:bg-blue-d4">
       <div className="col-span-2 flex items-center justify-end gap-6">
-        website + button
+        {/* {profile.url && ( */}
+        <span className="flex items-center gap-2 text-black font-sans font-medium text-base dark:text-white">
+          <Icon type="Globe" className="h-6 w-6" />
+          <a href={profile.url} title="organization url">
+            {profile.url} https://www.example.com{" "}
+            {/* --> DELETE PRIOR TO MERGING AND UNCOMMENT THE `profile.url` CHECK */}
+          </a>
+        </span>
+        {/* )} */}
       </div>
       <div className="flex items-center justify-end gap-6">name + address</div>
       <div className="flex items-center justify-end gap-6 w-[810px]">
