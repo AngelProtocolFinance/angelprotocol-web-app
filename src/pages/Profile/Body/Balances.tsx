@@ -9,7 +9,7 @@ function Balances({ liquid, locked }: BalanceInfo) {
     liquid.native.find((bal) => bal.denom === axlUSDCDenom)?.amount ?? 0;
 
   return (
-    <div className="flex items-center justify-cener gap-4 w-full">
+    <div className="grid grid-cols-3 items-center justify-cener gap-4 w-full">
       <Balance
         title="Total Value"
         amount={Number(lockedAmount) + Number(liquidAmount)}
@@ -22,7 +22,7 @@ function Balances({ liquid, locked }: BalanceInfo) {
 
 function Balance(props: { title: string; amount: number | string }) {
   return (
-    <div className="flex flex-col justify-center items-start px-6 gap-2 border border-gray-l2 rounded">
+    <div className="flex flex-col justify-center items-start px-6 gap-2 border border-gray-l2 rounded h-28">
       <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>
