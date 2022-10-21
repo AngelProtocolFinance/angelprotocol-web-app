@@ -9,6 +9,7 @@ export default function Card({
   id,
   endow_type,
   categories_sdgs,
+  country_of_origin,
 }: Endowment) {
   return (
     <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
@@ -36,7 +37,7 @@ export default function Card({
         <div className="p-3">
           <h3 className="font-bold dark:text-white">{name}</h3>
           <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-0.5">
-            Country, city
+            {country_of_origin}
           </p>
         </div>
         <div className="flex text-2xs font-bold px-3 pb-3 gap-1">

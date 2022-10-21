@@ -1,4 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+  PayloadAction,
+  createListenerMiddleware,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { EndowmentsSortKey } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
 
@@ -46,6 +50,7 @@ const marketFilter = createSlice({
       state.key = payload;
     },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
+      state.key = undefined;
       state.sort = payload;
     },
     setTypes: (
@@ -54,6 +59,7 @@ const marketFilter = createSlice({
     ) => {
       // state.types = payload; //TODO: enable multiple types
       //set only single type
+
       state.key = undefined;
       state.types = [payload[payload.length - 1]];
     },
@@ -65,4 +71,5 @@ const marketFilter = createSlice({
 
 export const { setSdgs, reset, toggle, setTypes, setKey, setSort } =
   marketFilter.actions;
+
 export default marketFilter.reducer;

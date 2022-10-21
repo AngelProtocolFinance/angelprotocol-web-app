@@ -15,15 +15,16 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     ([, members]) => members.length > 0
   ) || ["", []];
 
+  const prevKeyRef = useRef<string | undefined>(undefined);
   const { isLoading, isFetching, data, isError } = useEndowmentsQuery({
     "alphabet-order": sort && sort.key === "name" ? sort.isAscending : false,
     type: types[0], //TODO: set to types[]
     tier: "Level3", //TODO: set to tier[]
     sdg: members[0], //TODO: set to sdgs[]
     key,
+    prevKey: prevKeyRef.current,
   });
 
-  const prevKeyRef = useRef<string | undefined>(undefined);
   const hasMore = !!data?.LastEvaluatedKey;
   const hasPrevious = !!key;
 

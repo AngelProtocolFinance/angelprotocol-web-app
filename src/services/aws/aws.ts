@@ -7,7 +7,7 @@ import {
   UserBookMarkInfo,
 } from "types/aws";
 import { NetworkType } from "types/lists";
-import { createAuthToken } from "helpers";
+import { createAuthToken, toBase64 } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { awsTags } from "./tags";
@@ -35,6 +35,32 @@ export const aws = createApi({
       query: (params) => {
         const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return { url: `/v1/endowments/${network}`, params };
+      },
+      async onQueryStarted(
+        arg,
+        { queryFulfilled, getCacheEntry, updateCachedData }
+      ) {
+        const { originalArgs } = getCacheEntry();
+        if (originalArgs) {
+          const {
+            key: origKey,
+            prevKey: origPrevKey,
+            ...prevParams
+          } = originalArgs;
+          const { key, prevKey, ...params } = arg;
+
+          //append results into prev result obtained with the same params
+          if (toBase64(prevParams) === toBase64(params)) {
+            //since loading is only forwards, append prev cache entry whenever key changes
+            if (prevKey !== key) {
+              const { data } = await queryFulfilled;
+              updateCachedData((cacheData) => {
+                cacheData.Items.push(...data.Items);
+                cacheData.LastEvaluatedKey = data.LastEvaluatedKey;
+              });
+            }
+          }
+        }
       },
     }),
 

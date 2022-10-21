@@ -44,6 +44,9 @@ export type EndowmentsQueryParams = {
   "overall-ascend"?: boolean; //true high -> low
   type?: Endowment["endow_type"];
   tier?: Endowment["tier"];
+
+  //meta
+  prevKey?: string;
 };
 
 export interface LeaderboardEntry {
