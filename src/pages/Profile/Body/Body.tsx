@@ -31,7 +31,7 @@ export default function Body() {
           Donate now
         </button>
       </div>
-      <div className="flex flex-col gap-6 items-start max-w-sm text-black dark:text-white">
+      <div className="flex flex-col gap-6 items-start max-w-sm h-full text-black dark:text-white">
         <h3 className="font-header font-bold text-3xl">{profile.name}</h3>
         <span className="flex items-center justify-center gap-2 text-base font-work uppercase">
           <Icon type="MapPin" className="h-6 w-6" />
