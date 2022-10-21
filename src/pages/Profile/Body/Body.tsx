@@ -16,6 +16,12 @@ export default function Body() {
           </a>
         </span>
         {/* )} */}
+        <button
+          onClick={() => console.log("donate")}
+          className="btn btn-orange w-80 h-12 py-2 px-6 rounded text-sm"
+        >
+          Donate now
+        </button>
       </div>
       <div className="flex items-center justify-end gap-6">name + address</div>
       <div className="flex items-center justify-end gap-6 w-[810px]">
