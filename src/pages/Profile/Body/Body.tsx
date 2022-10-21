@@ -9,7 +9,7 @@ export default function Body() {
   const queryState = useBalanceQuery({ id: profile.id });
 
   return (
-    <div className="flex flex-col gap-8 items-end w-full h-full pt-32 px-6 pb-8 bg-white dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
+    <div className="flex flex-col gap-8 items-end w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
       <div className="order-2 flex items-center justify-end gap-6 lg:order-1 lg:col-span-2">
         {/* {profile.url && ( */}
         <span className="flex items-center gap-2 text-black font-sans font-medium text-base dark:text-white">
