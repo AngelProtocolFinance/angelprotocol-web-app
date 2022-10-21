@@ -10,9 +10,9 @@ export default function Body() {
 
   return (
     <div className="flex flex-col gap-8 items-end w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
-      <div className="order-2 flex items-center justify-end gap-6 lg:order-1 lg:col-span-2">
+      <div className="order-2 flex flex-col items-center justify-end gap-8 lg:order-1 lg:col-span-2 lg:flex-row lg:gap-6">
         {/* {profile.url && ( */}
-        <span className="flex items-center gap-2 text-black font-sans font-medium text-base dark:text-white">
+        <span className="flex text-center items-center gap-2 w-full text-black font-sans font-medium text-base dark:text-white lg:w-min">
           <Icon type="Globe" className="h-6 w-6" />
           <a
             href={profile.url}
