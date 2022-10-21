@@ -2,14 +2,18 @@ import { memo } from "react";
 import { BalanceInfo } from "types/contracts";
 import { axlUSDCDenom } from "constants/tokens";
 
-function Balances({ liquid, locked }: BalanceInfo) {
+type Props = BalanceInfo & { className?: string };
+
+function Balances({ liquid, locked, className = "" }: Props) {
   const lockedAmount =
     locked.native.find((bal) => bal.denom === axlUSDCDenom)?.amount ?? 0;
   const liquidAmount =
     liquid.native.find((bal) => bal.denom === axlUSDCDenom)?.amount ?? 0;
 
   return (
-    <div className="grid grid-rows-3 items-center justify-center gap-4 w-full lg:grid-rows-1 lg:grid-cols-3">
+    <div
+      className={`grid grid-rows-3 items-center justify-center gap-4 w-full lg:grid-rows-1 lg:grid-cols-3 ${className}`}
+    >
       <Balance
         title="Total Value"
         amount={Number(lockedAmount) + Number(liquidAmount)}

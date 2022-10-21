@@ -50,10 +50,12 @@ export default function Body() {
           container: "flex items-center justify-center w-full h-full",
         }}
       >
-        {({ tokens_on_hand }) => <Balances {...tokens_on_hand} />}
+        {({ tokens_on_hand }) => (
+          <Balances {...tokens_on_hand} className="order-3" />
+        )}
       </QueryLoader>
 
-      <div className="col-span-2 w-full h-40">Overview</div>
+      <div className="order-4 lg:col-span-2 w-full h-40">Overview</div>
     </div>
   );
 }
