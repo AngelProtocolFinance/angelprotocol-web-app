@@ -22,11 +22,11 @@ function Balances({ liquid, locked }: BalanceInfo) {
 
 function Balance(props: { title: string; amount: number | string }) {
   return (
-    <div className="flex flex-col justify-center items-start px-6 gap-2 border border-gray-l2 rounded h-28">
-      <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
+    <div className="flex flex-col justify-center items-start px-6 gap-2 rounded h-28 border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray-d1">
+      <h6 className="font-heading font-bold text-black text-xs tracking-wider uppercase dark:text-white">
         {props.title}
       </h6>
-      <p className="font-work font-normal text-lg text-gray-d1">
+      <p className="font-work font-normal text-lg text-gray-d1 dark:text-gray">
         ${props.amount}
       </p>
     </div>
