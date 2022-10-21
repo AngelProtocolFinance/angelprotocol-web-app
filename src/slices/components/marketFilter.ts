@@ -1,8 +1,4 @@
-import {
-  PayloadAction,
-  createListenerMiddleware,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { EndowmentsSortKey } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
 
