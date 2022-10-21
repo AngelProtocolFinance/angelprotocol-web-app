@@ -10,7 +10,11 @@ export default function Body() {
         {/* {profile.url && ( */}
         <span className="flex items-center gap-2 text-black font-sans font-medium text-base dark:text-white">
           <Icon type="Globe" className="h-6 w-6" />
-          <a href={profile.url} title="organization url">
+          <a
+            href={profile.url}
+            title="organization url"
+            className="cursor-pointer hover:underline"
+          >
             {profile.url} https://www.example.com
             {/* --> DELETE PRIOR TO MERGING AND UNCOMMENT THE `profile.url` CHECK */}
           </a>
