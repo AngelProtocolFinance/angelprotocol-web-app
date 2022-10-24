@@ -49,7 +49,8 @@ export default function Body() {
         }}
         classes={{
           container:
-            "flex items-center justify-center w-full h-full order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end text-black dark:text-white",
+            "flex items-center justify-center w-full h-full order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end",
+          loading: "text-black dark:text-white",
         }}
       >
         {({ tokens_on_hand }) => (
