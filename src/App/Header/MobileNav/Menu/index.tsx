@@ -19,7 +19,7 @@ export default function Menu({ onClose }: { onClose: () => void }) {
           <Icon type="Close" size={24} />
         </button>
       </div>
-      <div className="grid grid-cols-1 gap-3 padded-container">
+      <div className="grid sm:grid-cols-2 gap-3 padded-container pb-3">
         <Links />
         <div
           className="empty:hidden border-t pt-4 sm:pt-0 sm:border-l sm:border-t-0 sm:pl-4 border-white/20"
