@@ -1,13 +1,15 @@
-import { useRef } from "react";
-import { useEndowmentsQuery } from "services/aws/aws";
+import {
+  updateAWSQueryData,
+  useEndowmentsQuery,
+  useLazyEndowmentsQuery,
+} from "services/aws/aws";
 import { QueryLoader } from "components/admin";
 import { useGetter, useSetter } from "store/accessors";
-import { setCutoff } from "slices/components/marketFilter";
-import Page from "./Page";
+import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, cutoff, sort } = useGetter(
+  const { sdgs, types, sort } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -15,33 +17,37 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     ([, members]) => members.length > 0
   ) || ["", []];
 
-  const prevCutoffRef = useRef<number | undefined>(undefined);
-  const { isLoading, isFetching, data, isError } = useEndowmentsQuery({
+  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
     "alphabet-order": sort && sort.key === "name" ? sort.isAscending : false,
     type: types[0], //TODO: set to types[]
     tier: "Level3", //TODO: set to tier[]
     sdg: members[0], //TODO: set to sdgs[]
-    cutoff,
-    prevCutoff: prevCutoffRef.current,
+    cutoff: 1, //always starts at 1
   });
 
-  const hasMore = !!data?.ItemCutoff;
-  const hasPrevious = !!cutoff;
+  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
 
-  //button is hidden when there's no more
-  function loadNextPage() {
+  async function loadNextPage() {
+    //button is hidden when there's no more
     if (data?.ItemCutoff) {
-      //save curr key before setting next key
-      prevCutoffRef.current = cutoff;
-      dispatch(setCutoff(data.ItemCutoff + 1));
+      const { data: newEndowRes } = await loadMore({
+        ...originalArgs,
+        cutoff: data.ItemCutoff + 1,
+      });
+
+      if (newEndowRes && originalArgs) {
+        //pessimistic update to original cache data
+        dispatch(
+          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
+            prevResult.Items.push(...newEndowRes.Items);
+            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+          })
+        );
+      }
     }
   }
 
-  function loadPrevious() {
-    if (cutoff) {
-      dispatch(setCutoff(prevCutoffRef.current));
-    }
-  }
+  const hasMore = !!data?.ItemCutoff;
 
   return (
     <QueryLoader
@@ -56,18 +62,26 @@ export default function Cards({ classes = "" }: { classes?: string }) {
         empty: "No endowments found",
       }}
       classes={{
-        container: `mt-4 ml-4 ${classes} dark:text-white`,
+        container: `${classes} dark:text-white`,
       }}
     >
       {(endowments) => (
-        <div className={`${classes} w-full grid content-start`}>
-          <Page endowments={endowments} />
+        <div
+          className={`${classes} w-full grid ${
+            endowments.length < 3
+              ? "grid-cols-[repeat(auto-fill,minmax(255px,1fr))]"
+              : "grid-cols-[repeat(auto-fit,minmax(245px,1fr))]"
+          } gap-4 content-start`}
+        >
+          {endowments.map((endow) => (
+            <Card {...endow} key={endow.id} />
+          ))}
 
           {hasMore && (
             <button
-              className="btn-orange rounded-md p-2 text-sm w-full mt-6"
+              className="col-span-full btn-orange rounded-md p-2 text-sm w-full mt-6"
               onClick={loadNextPage}
-              disabled={isLoading || isFetching}
+              disabled={isLoading || isLoadingNextPage}
             >
               Load more organizations
             </button>

@@ -5,7 +5,7 @@ import {
   EndowmentTier,
   SocialMedialUrls,
 } from "../../contracts";
-import { NetworkType, UNSDG_NUMS } from "../../lists";
+import { NetworkType } from "../../lists";
 
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
@@ -45,9 +45,6 @@ export type EndowmentsQueryParams = {
   "overall-ascend"?: boolean; //true high -> low
   type?: Endowment["endow_type"];
   tier?: Endowment["tier"];
-
-  //meta
-  prevCutoff?: number;
 };
 
 export interface LeaderboardEntry {

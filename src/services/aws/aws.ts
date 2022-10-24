@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  AWSQueryRes,
   Endowment,
   EndowmentBookmark,
   EndowmentsQueryParams,
@@ -8,7 +7,7 @@ import {
   UserBookMarkInfo,
 } from "types/aws";
 import { NetworkType } from "types/lists";
-import { createAuthToken, toBase64 } from "helpers";
+import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { awsTags } from "./tags";
@@ -39,33 +38,6 @@ export const aws = createApi({
       query: (params) => {
         const network: NetworkType = IS_TEST ? "mainnet" : "mainnet";
         return { url: `/v1/endowments/${network}`, params };
-      },
-      async onQueryStarted(
-        arg,
-        { queryFulfilled, getCacheEntry, updateCachedData }
-      ) {
-        const { originalArgs, data } = getCacheEntry();
-        console.log(getCacheEntry());
-        if (originalArgs) {
-          const {
-            cutoff: origCutoff,
-            prevCutoff: origPrevCutoff,
-            ...prevParams
-          } = originalArgs;
-          const { cutoff, prevCutoff, ...params } = arg;
-
-          //append results into prev result obtained with the same params
-          if (toBase64(prevParams) === toBase64(params)) {
-            //since loading is only forwards, append prev cache entry whenever key changes
-            if (prevCutoff !== cutoff) {
-              const { data } = await queryFulfilled;
-              updateCachedData((cacheData) => {
-                cacheData.Items.push(...data.Items);
-                cacheData.ItemCutoff = data.ItemCutoff;
-              });
-            }
-          }
-        }
       },
     }),
 
@@ -101,5 +73,12 @@ export const {
   useBookmarksQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
-  util: { invalidateTags: invalidateAwsTags },
+
+  endpoints: {
+    endowments: { useLazyQuery: useLazyEndowmentsQuery },
+  },
+  util: {
+    invalidateTags: invalidateAwsTags,
+    updateQueryData: updateAWSQueryData,
+  },
 } = aws;
