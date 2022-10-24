@@ -1,13 +1,10 @@
-import { useBalanceQuery } from "services/juno/account";
 import Icon from "components/Icon";
-import { QueryLoader } from "components/admin";
 import { useProfileContext } from "../ProfileContext";
 import Balances from "./Balances";
 import useDonate from "./useDonate";
 
 export default function Body() {
   const profile = useProfileContext();
-  const queryState = useBalanceQuery({ id: profile.id });
   const donate = useDonate();
 
   return (
@@ -43,25 +40,7 @@ export default function Body() {
         </span>
       </div>
 
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: "Fetching endowment balances",
-          error: "Failed to get endowment balances ",
-        }}
-        classes={{
-          container:
-            "flex items-center justify-center w-full h-full order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end",
-          loading: "text-black dark:text-white",
-        }}
-      >
-        {({ tokens_on_hand }) => (
-          <Balances
-            {...tokens_on_hand}
-            className="order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end"
-          />
-        )}
-      </QueryLoader>
+      <Balances className="order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end" />
 
       <div className="order-4 xl:col-span-2 w-full h-40">Overview</div>
     </div>

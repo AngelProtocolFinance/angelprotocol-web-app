@@ -1,10 +1,36 @@
 import { memo } from "react";
 import { BalanceInfo } from "types/contracts";
+import { useBalanceQuery } from "services/juno/account";
+import { QueryLoader } from "components/admin";
 import { axlUSDCDenom } from "constants/tokens";
+import { useProfileContext } from "../ProfileContext";
 
-type Props = BalanceInfo & { className?: string };
+type Props = { className: string };
 
-function Balances({ liquid, locked, className = "" }: Props) {
+function Balances({ className }: Props) {
+  const profile = useProfileContext();
+  const queryState = useBalanceQuery({ id: profile.id });
+
+  return (
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Fetching endowment balances",
+        error: "Failed to get endowment balances ",
+      }}
+      classes={{
+        container: `flex items-center justify-center w-full h-full ${className}`,
+        loading: "text-black dark:text-white",
+      }}
+    >
+      {({ tokens_on_hand }) => (
+        <Content {...tokens_on_hand} className={className} />
+      )}
+    </QueryLoader>
+  );
+}
+
+function Content({ liquid, locked, className }: BalanceInfo & Props) {
   const lockedAmount =
     locked.native.find((bal) => bal.denom === axlUSDCDenom)?.amount ?? 0;
   const liquidAmount =
