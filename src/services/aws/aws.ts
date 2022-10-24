@@ -4,6 +4,7 @@ import {
   Endowment,
   EndowmentBookmark,
   EndowmentsQueryParams,
+  PaginatedAWSQueryRes,
   UserBookMarkInfo,
 } from "types/aws";
 import { NetworkType } from "types/lists";
@@ -30,33 +31,37 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowments: builder.query<AWSQueryRes<Endowment[]>, EndowmentsQueryParams>({
+    endowments: builder.query<
+      PaginatedAWSQueryRes<Endowment[]>,
+      EndowmentsQueryParams
+    >({
       providesTags: [{ type: awsTags.endowments }],
       query: (params) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+        const network: NetworkType = IS_TEST ? "mainnet" : "mainnet";
         return { url: `/v1/endowments/${network}`, params };
       },
       async onQueryStarted(
         arg,
         { queryFulfilled, getCacheEntry, updateCachedData }
       ) {
-        const { originalArgs } = getCacheEntry();
+        const { originalArgs, data } = getCacheEntry();
+        console.log(getCacheEntry());
         if (originalArgs) {
           const {
-            key: origKey,
-            prevKey: origPrevKey,
+            cutoff: origCutoff,
+            prevCutoff: origPrevCutoff,
             ...prevParams
           } = originalArgs;
-          const { key, prevKey, ...params } = arg;
+          const { cutoff, prevCutoff, ...params } = arg;
 
           //append results into prev result obtained with the same params
           if (toBase64(prevParams) === toBase64(params)) {
             //since loading is only forwards, append prev cache entry whenever key changes
-            if (prevKey !== key) {
+            if (prevCutoff !== cutoff) {
               const { data } = await queryFulfilled;
               updateCachedData((cacheData) => {
                 cacheData.Items.push(...data.Items);
-                cacheData.LastEvaluatedKey = data.LastEvaluatedKey;
+                cacheData.ItemCutoff = data.ItemCutoff;
               });
             }
           }

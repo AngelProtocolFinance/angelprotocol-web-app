@@ -8,7 +8,7 @@ export default function Card({
   image,
   id,
   endow_type,
-  categories_sdgs,
+  categories,
   country_of_origin,
 }: Endowment) {
   return (
@@ -41,7 +41,7 @@ export default function Card({
           </p>
         </div>
         <div className="flex text-2xs font-bold px-3 pb-3 gap-1">
-          {categories_sdgs.map((s) => (
+          {categories.sdgs.map((s) => (
             <SDG num={s} key={s} />
           ))}
         </div>

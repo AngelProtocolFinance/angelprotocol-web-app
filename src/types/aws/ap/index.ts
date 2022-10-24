@@ -1,5 +1,6 @@
 import {
   CapitalizedEndowmentType,
+  Categories,
   EndowmentStatus,
   EndowmentTier,
   SocialMedialUrls,
@@ -20,7 +21,7 @@ export type Endowment = {
   logo: string;
   image: string;
   tier: EndowmentTier;
-  categories_sdgs: UNSDG_NUMS[];
+  categories: Categories;
 
   //profile
   overview: string;
@@ -38,7 +39,7 @@ export type Endowment = {
 
 export type EndowmentsSortKey = "name"; // | add more in the future
 export type EndowmentsQueryParams = {
-  key?: string;
+  cutoff?: number;
   sdg?: number;
   "alphabet-order"?: boolean; //true A-Z
   "overall-ascend"?: boolean; //true high -> low
@@ -46,7 +47,7 @@ export type EndowmentsQueryParams = {
   tier?: Endowment["tier"];
 
   //meta
-  prevKey?: string;
+  prevCutoff?: number;
 };
 
 export interface LeaderboardEntry {

@@ -12,7 +12,7 @@ type State = {
 
   //geography
   sdgs: { [idx: number]: number[] };
-  key?: string;
+  cutoff?: number;
 };
 const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
@@ -35,18 +35,18 @@ const marketFilter = createSlice({
         payload: { group, sdgs },
       }: PayloadAction<{ group: number; sdgs: number[] }>
     ) => {
-      // state.key = undefined;
+      // state.cutoff = undefined;
       // state.sdgs[group] = sdgs; //TODO: enable multiple sdgs
 
       //set only single sdg
       const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
       return { ...state, sdgs: _sdgs, key: undefined };
     },
-    setKey: (state, { payload }: PayloadAction<string | undefined>) => {
-      state.key = payload;
+    setCutoff: (state, { payload }: PayloadAction<number | undefined>) => {
+      state.cutoff = payload;
     },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
-      state.key = undefined;
+      state.cutoff = undefined;
       state.sort = payload;
     },
     setTypes: (
@@ -56,7 +56,7 @@ const marketFilter = createSlice({
       // state.types = payload; //TODO: enable multiple types
       //set only single type
 
-      state.key = undefined;
+      state.cutoff = undefined;
       state.types = [payload[payload.length - 1]];
     },
     toggle(state) {
@@ -65,7 +65,7 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes, setKey, setSort } =
+export const { setSdgs, reset, toggle, setTypes, setCutoff, setSort } =
   marketFilter.actions;
 
 export default marketFilter.reducer;
