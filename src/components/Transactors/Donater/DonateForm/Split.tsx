@@ -12,14 +12,14 @@ export default function Split() {
           type="locked"
           border_class="border-green-500/80"
           text_class="text-green-500 uppercase"
-          title="Locked"
+          title="Endowment"
           action="Compounded forever"
         />
         <Portion
           type="liquid"
           border_class="border-angel-blue/80"
           text_class="text-blue-accent uppercase"
-          title="Liquid"
+          title="Current"
           action="Instantly available"
         >
           <Slider />
