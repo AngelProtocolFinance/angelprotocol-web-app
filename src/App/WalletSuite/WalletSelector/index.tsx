@@ -11,7 +11,7 @@ export default function WalletSelector(props: Props) {
   return (
     <Menu className="relative" as="div">
       <Menu.Button
-        className={`${COMMON_BUTTON_STYLE} w-32 text-sm sm:text-base`}
+        className={`${COMMON_BUTTON_STYLE} text-sm sm:text-base`}
         disabled={props.isLoading}
       >
         <Icon type="Wallet" className="text-base sm:text-xl grow-0" />
