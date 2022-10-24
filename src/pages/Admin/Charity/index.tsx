@@ -1,4 +1,4 @@
-import AdminMobileNavPortal from "App/Header/MobileNav/portals/AdminMobileNavPortal";
+import { AdminMobileNavPortal } from "App/Header/MobileNav";
 import { useAdminResources } from "../Guard";
 import Nav from "./Nav";
 import Views from "./Views";

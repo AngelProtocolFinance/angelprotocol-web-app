@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import WalletSuite from "../WalletSuite";
 import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
-import MobileNav from "./MobileNav";
+import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
@@ -26,25 +26,22 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="items-center w-full padded-container gap-5">
-      <Logo />
-      <DesktopNav />
-      <div>
-        <ThemeToggle />
-        <TransactionHint />
-        <WalletSuite />
-        <Airdrop />
+    <header
+      className={`${
+        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : "bg-transparent"
+      } py-2 fixed top-0 transition ease-in-out duration-300 w-full z-20`}
+    >
+      <div className="grid grid-cols-[auto_1fr_auto_auto] padded-container items-center">
+        <Logo />
+        <DesktopNav />
+        <div className="flex gap-x-2">
+          <ThemeToggle />
+          <TransactionHint />
+          <WalletSuite />
+          <Airdrop />
+        </div>
+        <MobileNavOpener />
       </div>
-      <MobileNav />
     </header>
-
-    // <div
-    //   className={`${
-    //     isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
-    //   } py-2 fixed transition ease-in-out duration-300 w-full z-20`}
-    // >
-    //   <DesktopHeader />
-    //   {/* <MobileHeader /> */}
-    // </div>
   );
 }

@@ -9,8 +9,10 @@ import {
   navLinkStyle,
 } from "../constants";
 
-export default function AdminMobileNavPortal({ id }: { id: number }) {
-  const { isMobileNavOpen } = useGetter((state) => state.component.mobileNav);
+export function AdminMobileNavPortal({ id }: { id: number }) {
+  const isMobileNavRendered = useGetter(
+    (state) => state.component.mobileNav.isRendered
+  );
 
   const containerElement = document.querySelector(`#${adminMobileNavId}`);
 
@@ -19,7 +21,7 @@ export default function AdminMobileNavPortal({ id }: { id: number }) {
   }, [containerElement?.parentElement?.classList]);
 
   return (
-    (isMobileNavOpen &&
+    (isMobileNavRendered &&
       !!containerElement &&
       createPortal(
         <div className="border-t sm:border-t-0 sm:border-l border-white/20 padded-container">

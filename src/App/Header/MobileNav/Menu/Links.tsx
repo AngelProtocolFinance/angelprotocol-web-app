@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSetter } from "store/accessors";
-import { setIsMobileNavOpen } from "slices/components/mobileNav";
+import { setIsRendered } from "slices/components/mobileNav";
 import { appRoutes } from "constants/routes";
-import ThemeToggle from "../ThemeToggle";
-import { commonNavItemStyle, navLinkStyle } from "./constants";
+import ThemeToggle from "../../ThemeToggle";
+import { commonNavItemStyle, navLinkStyle } from "../constants";
 
 export default function Links() {
   const dispatch = useSetter();
   useEffect(() => {
     //set open state after portal node has been mounted
-    dispatch(setIsMobileNavOpen(true));
+    dispatch(setIsRendered(true));
 
     return () => {
-      dispatch(setIsMobileNavOpen(false));
+      dispatch(setIsRendered(false));
     };
   }, [dispatch]);
 
