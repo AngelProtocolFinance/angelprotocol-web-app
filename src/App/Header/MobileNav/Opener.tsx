@@ -3,7 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Menu from "./Menu";
 
-export function Opener() {
+export function Opener({ classes = "" }: { classes?: string }) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
   const handleCloseModal = () => {
@@ -34,9 +34,9 @@ export function Opener() {
   return (
     <button
       onClick={openMenu}
-      className="flex items-center text-white justify-center w-10 h-10"
+      className={`${classes} items-center text-white justify-center`}
     >
-      <Icon type="Menu" className="text-2xl" />
+      <Icon type="Menu" size={24} />
     </button>
   );
 }

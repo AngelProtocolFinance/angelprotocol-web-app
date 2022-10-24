@@ -3,7 +3,7 @@ import { useState } from "react";
 import Icon, { IconTypes } from "components/Icon";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ classes = "" }: { classes?: string }) {
   const [isDark, setIsDark] = useState(isPrevDark);
 
   function toggle(isDark: boolean) {
@@ -19,7 +19,7 @@ export default function ThemeToggle() {
     <Switch
       checked={isDark}
       onChange={toggle}
-      className="flex items-center justify-center gap-1 h-10 w-20 shrink-0 cursor-pointer rounded-3xl border border-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent"
+      className={`${classes} items-center justify-center gap-1 h-10 w-20 shrink-0 cursor-pointer rounded-3xl border border-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 bg-transparent`}
     >
       <span className="sr-only">Enable dark mode</span>
       <ToggleOption checked={!isDark} icon="Sun" />

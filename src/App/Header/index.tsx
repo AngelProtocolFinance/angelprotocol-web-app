@@ -29,18 +29,18 @@ export default function Header() {
     <header
       className={`${
         isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : "bg-transparent"
-      } py-2 fixed top-0 transition ease-in-out duration-300 w-full z-20`}
+      } py-3 fixed top-0 transition ease-in-out duration-300 w-full z-20`}
     >
-      <div className="grid grid-cols-[auto_1fr_auto_auto] padded-container items-center">
+      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container ">
         <Logo />
-        <DesktopNav />
-        <div className="flex gap-x-2">
-          <ThemeToggle />
+        <DesktopNav classes="hidden lg:flex" />
+        <div className="flex gap-x-2 ml-auto lg:ml-0">
+          <ThemeToggle classes="hidden lg:flex" />
           <TransactionHint />
           <WalletSuite />
           <Airdrop />
         </div>
-        <MobileNavOpener />
+        <MobileNavOpener classes="flex ml-2 lg:hidden" />
       </div>
     </header>
   );

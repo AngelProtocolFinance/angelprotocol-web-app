@@ -24,10 +24,8 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
     (isMobileNavRendered &&
       !!containerElement &&
       createPortal(
-        <div className="border-t sm:border-t-0 sm:border-l border-white/20 padded-container">
-          <h4
-            className={`${commonNavItemStyle} mt-6 sm:mt-0 mb-6 uppercase font-extrabold`}
-          >
+        <>
+          <h4 className={`${commonNavItemStyle} mb-4 uppercase font-extrabold`}>
             Admin
           </h4>
           <div className="grid justify-items-start font-heading">
@@ -60,7 +58,7 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
               Proposals
             </NavLink>
           </div>
-        </div>,
+        </>,
         containerElement
       )) ||
     null
