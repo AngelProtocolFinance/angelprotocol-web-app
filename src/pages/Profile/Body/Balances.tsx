@@ -12,7 +12,7 @@ function Balances({ liquid, locked, className = "" }: Props) {
 
   return (
     <div
-      className={`grid grid-rows-3 items-center justify-center gap-4 w-full lg:grid-rows-1 lg:grid-cols-3 ${className}`}
+      className={`grid grid-rows-3 items-center justify-stretch gap-4 w-full lg:grid-rows-1 lg:grid-cols-3 lg:justify-center ${className}`}
     >
       <Balance
         title="Total Value"
@@ -26,7 +26,7 @@ function Balances({ liquid, locked, className = "" }: Props) {
 
 function Balance(props: { title: string; amount: number | string }) {
   return (
-    <div className="flex flex-col justify-center items-center justify-self-stretch gap-2 h-20 py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray-d1 lg:items-start lg:h-28 lg:px-6 lg:py-0">
+    <div className="flex flex-col justify-center items-center gap-2 h-20 py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray-d1 lg:items-start lg:h-28 lg:px-6 lg:py-0">
       <h6 className="font-heading font-bold text-black text-xs tracking-wider uppercase dark:text-white">
         {props.title}
       </h6>
