@@ -9,7 +9,7 @@ export default function Body() {
   const queryState = useBalanceQuery({ id: profile.id });
 
   return (
-    <div className="flex flex-col gap-8 items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 xl:grid xl:grid-rows-[auto_auto_1fr] xl:grid-cols-[auto_auto] xl:items-end xl:gap-10 xl:pt-6 xl:px-20 xl:pb-20">
+    <div className="flex flex-col gap-8 items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:items-end lg:gap-10 xl:pt-6 xl:px-20 xl:pb-20">
       <div className="order-2 flex flex-col items-center justify-end gap-8 w-full xl:order-1 xl:col-span-2 xl:flex-row xl:gap-6">
         {/* {profile.url && ( */}
         <span className="flex items-center justify-center gap-2 w-full text-black font-sans font-medium text-sm dark:text-white sm:w-auto sm:text-base">
@@ -53,7 +53,10 @@ export default function Body() {
         }}
       >
         {({ tokens_on_hand }) => (
-          <Balances {...tokens_on_hand} className="order-3" />
+          <Balances
+            {...tokens_on_hand}
+            className="order-3 lg:col-span-2 xl:col-span-1"
+          />
         )}
       </QueryLoader>
 
