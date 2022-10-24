@@ -4258,10 +4258,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16":
-  version: 16.11.68
-  resolution: "@types/node@npm:16.11.68"
-  checksum: a35293b6b8867e10ab9e10b6cd5f0e4224a86256d5ef102581dcb9f79f35f255ad87443e8584ddf8dce1229ee28885c58187e41822cf8d1e82495e7897c47c3f
+"@types/node@npm:^18":
+  version: 18.11.4
+  resolution: "@types/node@npm:18.11.4"
+  checksum: 1de782b4eef4a5115396ae62137f248390ee5d1d9e9eeb49599714554cce1328af43da31bc28e7bab5a0ef859538a584a907b26163a59b42bc87b8317dc00bb8
   languageName: node
   linkType: hard
 
@@ -5279,7 +5279,7 @@ __metadata:
     "@types/compress.js": ^1.1.1
     "@types/jest": ^29.1.2
     "@types/jsonwebtoken": ^8.5.5
-    "@types/node": ^16
+    "@types/node": ^18
     "@types/quill": ^2.0.9
     "@types/react": ^18.0.0
     "@types/react-csv": ^1.1.2
