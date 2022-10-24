@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
-import Logo from "App/Header/Logo";
 import Icon from "components/Icon";
+import Logo from "../../Logo";
 import { adminMobileNavId } from "../constants";
 import Links from "./Links";
 
