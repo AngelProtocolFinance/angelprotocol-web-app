@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom";
 import { useSetter } from "store/accessors";
 import { setIsMobileNavOpen } from "slices/components/mobileNav";
 import { appRoutes } from "constants/routes";
-import ThemeToggle from "../../ThemeToggle";
+import ThemeToggle from "../ThemeToggle";
 import { commonNavItemStyle, navLinkStyle } from "./constants";
 
-export default function NavLinks() {
+export default function Links() {
   const dispatch = useSetter();
   useEffect(() => {
     //set open state after portal node has been mounted

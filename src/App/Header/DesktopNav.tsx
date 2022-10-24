@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
 
-export default function NavLinks() {
+export default function DesktopNav() {
   return (
     <nav className="flex justify-self-start items-center font-body text-base">
       <NavLink className={styler} to={appRoutes.index}>

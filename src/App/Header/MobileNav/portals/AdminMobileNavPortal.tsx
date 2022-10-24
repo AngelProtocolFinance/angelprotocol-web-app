@@ -7,7 +7,7 @@ import {
   adminMobileNavId,
   commonNavItemStyle,
   navLinkStyle,
-} from "./constants";
+} from "../constants";
 
 export default function AdminMobileNavPortal({ id }: { id: number }) {
   const { isMobileNavOpen } = useGetter((state) => state.component.mobileNav);
