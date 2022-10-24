@@ -9,11 +9,11 @@ export default function Body() {
   const queryState = useBalanceQuery({ id: profile.id });
 
   return (
-    <div className="flex flex-col gap-8 items-end w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
+    <div className="flex flex-col gap-8 items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:items-end lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
       <div className="order-2 flex flex-col items-center justify-end gap-8 lg:order-1 lg:col-span-2 lg:flex-row lg:gap-6">
         {/* {profile.url && ( */}
-        <span className="flex items-center justify-center gap-2 w-full text-black font-sans font-medium text-base dark:text-white lg:w-min">
-          <Icon type="Globe" className="h-6 w-6" />
+        <span className="flex items-center justify-center gap-2 w-full text-black font-sans font-medium text-sm dark:text-white lg:w-min lg:text-base">
+          <Icon type="Globe" className="h-5 w-5 lg:h-6 lg:w-6" />
           <a
             href={profile.url}
             title="organization url"
@@ -26,7 +26,7 @@ export default function Body() {
         {/* )} */}
         <button
           onClick={() => console.log("donate")}
-          className="btn btn-orange w-80 h-12 py-2 px-6 rounded text-sm normal-case"
+          className="btn btn-orange w-full h-12 py-2 px-6 rounded text-sm normal-case lg:w-80"
         >
           Donate now
         </button>
@@ -36,8 +36,8 @@ export default function Body() {
         <h3 className="font-header font-bold text-2xl lg:text-3xl">
           {profile.name}
         </h3>
-        <span className="flex items-center justify-center gap-2 text-base font-work uppercase">
-          <Icon type="MapPin" className="h-6 w-6" />
+        <span className="flex items-center justify-center gap-2 text-sm lg:text-base font-work uppercase">
+          <Icon type="MapPin" className="h-5 w-5 lg:h-6 lg:w-6" />
           {profile.street_address}
         </span>
       </div>
