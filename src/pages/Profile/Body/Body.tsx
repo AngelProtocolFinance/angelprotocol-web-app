@@ -55,7 +55,7 @@ export default function Body() {
         {({ tokens_on_hand }) => (
           <Balances
             {...tokens_on_hand}
-            className="order-3 lg:col-span-2 xl:col-span-1"
+            className="order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end"
           />
         )}
       </QueryLoader>
