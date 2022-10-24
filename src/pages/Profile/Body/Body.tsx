@@ -33,9 +33,9 @@ export default function Body() {
       </div>
 
       <div className="order-1 flex flex-col gap-8 items-center w-full max-w-sm text-black dark:text-white lg:order-2 lg:gap-6 lg:items-start lg:h-full">
-        <h3 className="font-header font-bold text-2xl lg:text-3xl">
+        <p className="font-header font-bold text-2xl max-w-[320px] truncate lg:text-3xl lg:max-w-full">
           {profile.name}
-        </h3>
+        </p>
         <span className="flex items-center justify-center gap-2 text-sm lg:text-base font-work uppercase">
           <Icon type="MapPin" className="h-5 w-5 lg:h-6 lg:w-6" />
           {profile.street_address}
