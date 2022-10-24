@@ -4,7 +4,7 @@ import Icon, { IconTypes } from "components/Icon";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 
 export default function ThemeToggle({ classes = "" }: { classes?: string }) {
-  const [isDark, setIsDark] = useState(isPrevDark);
+  const [isDark, setIsDark] = useState(isPrevDark());
 
   function toggle(isDark: boolean) {
     if (isDark) {
