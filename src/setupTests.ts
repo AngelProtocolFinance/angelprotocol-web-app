@@ -33,14 +33,14 @@ Object.defineProperty(window, "IntersectionObserver", {
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation((query) => ({
+  value: (query: any) => ({
     matches: false,
     media: query,
     onchange: null,
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
-  })),
+  }),
 });
 
 // required after adding @cosmjs/cosmwasm-stargate
