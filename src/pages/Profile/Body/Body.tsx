@@ -19,7 +19,7 @@ export default function Body() {
               title="organization url"
               className="cursor-pointer hover:underline"
             >
-              {profile.url}
+              {profile.url.replace(/^https?:\/\//i, "")}
             </a>
           </span>
         )}
