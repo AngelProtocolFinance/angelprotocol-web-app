@@ -13,7 +13,7 @@ export default function Sorter() {
   const isSortKeySelected = sort !== undefined;
 
   function handleSortChange(value: EndowmentsSortKey) {
-    dispatch(setSort({ key: value, isAscending: false }));
+    dispatch(setSort({ key: value, isAscending: true }));
   }
 
   function resetSort() {
