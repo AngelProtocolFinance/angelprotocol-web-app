@@ -41,11 +41,10 @@ export default function Profile() {
         id: numId,
       }}
     >
-      <section className="flex flex-col items-center isolate relative w-full h-full">
+      <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />
+        <Logo />
         <Body />
-
-        <Logo className="absolute left-auto top-32 z-10 sm:left-20 sm:top-48" />
       </section>
     </ProfileContext.Provider>
   );
