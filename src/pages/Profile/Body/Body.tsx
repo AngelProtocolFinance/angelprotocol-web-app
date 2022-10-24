@@ -1,5 +1,9 @@
 import { useBalanceQuery } from "services/juno/account";
+import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
+import useKYC from "components/KYC/useKYC";
+import Popup from "components/Popup";
 import { QueryLoader } from "components/admin";
 import { useProfileContext } from "../ProfileContext";
 import Balances from "./Balances";
@@ -7,6 +11,28 @@ import Balances from "./Balances";
 export default function Body() {
   const profile = useProfileContext();
   const queryState = useBalanceQuery({ id: profile.id });
+  const { wallet } = useGetWallet();
+  const showKYCForm = useKYC();
+  const { showModal } = useModalContext();
+
+  function donate() {
+    if (!wallet) {
+      showModal(Popup, {
+        message: "You need to connect your wallet to make a donation",
+      });
+      return;
+    }
+    /** show kyc upfront, let KYC form show donater upon completion, 
+            or user skip if kyc is not required */
+    showKYCForm({
+      type: "on-donation",
+      donaterProps: {
+        charityId: profile.id,
+      },
+      isKYCRequired: profile.kyc_donors_only,
+      walletAddr: wallet.address,
+    });
+  }
 
   return (
     <div className="flex flex-col gap-8 items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:items-end lg:gap-16 xl:pt-6 xl:px-20 xl:pb-20">
@@ -24,7 +50,7 @@ export default function Body() {
           </span>
         )}
         <button
-          onClick={() => console.log("donate")}
+          onClick={donate}
           className="btn btn-orange w-full h-12 max-w-xs py-2 px-6 rounded text-sm normal-case"
         >
           Donate now
