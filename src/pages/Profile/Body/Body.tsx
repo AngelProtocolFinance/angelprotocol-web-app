@@ -10,7 +10,7 @@ export default function Body() {
 
   return (
     <div className="flex flex-col gap-8 items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 dark:bg-blue-d4 lg:grid lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:items-end lg:gap-10 lg:pt-6 lg:px-20 lg:pb-20">
-      <div className="order-2 flex flex-col items-center justify-end gap-8 lg:order-1 lg:col-span-2 lg:flex-row lg:gap-6">
+      <div className="order-2 flex flex-col items-center justify-end gap-8 w-full lg:order-1 lg:col-span-2 lg:flex-row lg:gap-6">
         {/* {profile.url && ( */}
         <span className="flex items-center justify-center gap-2 w-full text-black font-sans font-medium text-sm dark:text-white lg:w-min lg:text-base">
           <Icon type="Globe" className="h-5 w-5 lg:h-6 lg:w-6" />
