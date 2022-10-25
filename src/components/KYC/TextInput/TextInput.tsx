@@ -18,7 +18,7 @@ export function TextInput<T extends FieldValues>({
   ...props
 }: Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "autoComplete" | "className" | "name"
+  "type" | "autoComplete" | "className" | "name" | "id"
 > & {
   name: Path<T>;
   classes?: Classes;

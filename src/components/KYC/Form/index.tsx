@@ -1,18 +1,19 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FormValues, Props } from "../types";
+import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import useSubmitKYC from "components/KYC/useSubmitKYC";
 import { maskAddress } from "helpers";
+import Label from "../Label";
 import { TextInput, textFieldStyle } from "../TextInput";
 import Tooltip from "./Tooltip";
 
 export default function Form(props: Props) {
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     formState: { errors },
-  } = useFormContext<FormValues>();
+  } = useFormContext<FV>();
   const { submit, isSubmitDisabled, isSubmitting } = useSubmitKYC(props);
 
   return (
@@ -36,22 +37,16 @@ export default function Form(props: Props) {
         //use ternary to narrow type of props
         <Tooltip {...props} isKYCRequired={props.isKYCRequired} />
       )}
-
-      <TextInput name="email" id="email" label="Email Address" required />
-      <TextInput name="fullName" id="fullName" label="Full Name" required />
-      <TextInput
-        name="streetAddress"
-        id="streetAddress"
-        label="Street Address"
-        required
-      />
-      <TextInput name="city" id="city" label="City" required />
-      <TextInput name="state" id="state" label="State" />
-      <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
+      <TextInput<FV> name="email" label="Email address" required />
+      <TextInput<FV> name="fullName" label="Full name" required />
+      <TextInput<FV> name="streetAddress" label="Street address" required />
+      <TextInput<FV> name="city" label="City" required />
+      <TextInput<FV> name="state" label="State" />
+      <TextInput<FV> name="zipCode" label="Zip code" required />
       <div className="grid">
-        <label htmlFor="country" className="text-xs uppercase mb-1">
-          Country <span className="text-rose-400"> *</span>
-        </label>
+        <Label htmlFor="country" required className="mb-2">
+          Country
+        </Label>
         <div className="form-control rounded-md grid">
           <CountrySelector
             fieldName="country"
@@ -68,7 +63,7 @@ export default function Form(props: Props) {
           />
         </div>
       </div>
-      <div className="my-3 flex items-start">
+      <div className="flex items-start">
         <input
           type="checkbox"
           className="mr-2 mt-0.5"
@@ -80,7 +75,7 @@ export default function Form(props: Props) {
           Charity to keep me informed of their progress and news.
         </label>
       </div>
-      <div className="my-3 flex items-start">
+      <div className="flex items-start">
         <input
           type="checkbox"
           className="mr-2 mt-0.5"
