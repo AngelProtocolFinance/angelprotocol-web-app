@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { BalanceInfo } from "types/contracts";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
@@ -7,7 +6,7 @@ import { useProfileContext } from "../ProfileContext";
 
 type Props = { className: string };
 
-function Balances({ className }: Props) {
+export default function Balances({ className }: Props) {
   const profile = useProfileContext();
   const queryState = useBalanceQuery({ id: profile.id });
 
@@ -62,5 +61,3 @@ function Balance(props: { title: string; amount: number | string }) {
     </div>
   );
 }
-
-export default memo(Balances);
