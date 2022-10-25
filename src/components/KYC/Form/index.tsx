@@ -51,7 +51,6 @@ export default function Form(props: Props) {
           <CountrySelector
             fieldName="country"
             classes={{
-              container: "",
               input: textFieldStyle,
             }}
           />
