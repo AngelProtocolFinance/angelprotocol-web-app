@@ -4,7 +4,7 @@ import { FormValues, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import useSubmitKYC from "components/KYC/useSubmitKYC";
 import { maskAddress } from "helpers";
-import TextInput from "../TextInput";
+import { TextInput, textFieldStyle } from "../TextInput";
 import Tooltip from "./Tooltip";
 
 export default function Form(props: Props) {
@@ -18,7 +18,7 @@ export default function Form(props: Props) {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="w-full bg-white grid gap-2 p-4 text-gray-d2"
+      className="w-full bg-orange-l6 dark:bg-blue-d4 grid gap-6 p-4 text-gray-d2 dark:text-white font-work"
       autoComplete="off"
       autoSave="off"
     >
@@ -49,15 +49,15 @@ export default function Form(props: Props) {
       <TextInput name="state" id="state" label="State" />
       <TextInput name="zipCode" id="zipCode" label="Zip Code" required />
       <div className="grid">
-        <label htmlFor="country" className="text-xs uppercase font-bold mb-1">
+        <label htmlFor="country" className="text-xs uppercase mb-1">
           Country <span className="text-rose-400"> *</span>
         </label>
-        <div className="form-control rounded-md grid bg-white">
+        <div className="form-control rounded-md grid">
           <CountrySelector
             fieldName="country"
             classes={{
-              container: "p-3 rounded-md shadow-inner-white bg-gray-l4",
-              input: "bg-transparent",
+              container: "",
+              input: textFieldStyle,
             }}
           />
           <ErrorMessage
