@@ -28,7 +28,7 @@ export default function Header() {
   return (
     <header
       className={`${
-        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : "bg-transparent"
+        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
       } py-3 fixed top-0 transition ease-in-out duration-300 w-full z-20`}
     >
       <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container ">
