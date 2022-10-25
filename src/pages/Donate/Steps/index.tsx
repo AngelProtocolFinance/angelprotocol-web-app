@@ -38,7 +38,7 @@ function CurrStep(props: DonationState) {
       return <KYC {...state} />;
     }
     case 1: {
-      return <Donater {...state} />;
+      return <Donater />;
     }
     default: {
       return <></>; // <Steps /> sets to step 1 onMount
