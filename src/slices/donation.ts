@@ -1,21 +1,39 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type State = Step0 | Step1 | Step2 | Step3;
+export type DonationState = Step0 | Step1 | Step2 | Step3;
 
-const initialState: State = { step: 0 };
+const initialState: DonationState = { step: 0 };
 
 const donation = createSlice({
   name: "donate",
-  initialState: initialState as State,
+  initialState: initialState as DonationState,
   reducers: {
     setRecipient: (_, { payload }: PayloadAction<DonationRecipient>) => {
       return { step: 1, recipient: payload };
+    },
+    setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
+      return {
+        step: 2, //set to next
+        details: payload,
+        recipient: state.recipient!, //user can't go to step 2 without completing step 1
+      };
+    },
+    setKYC: (state, { payload }: PayloadAction<KYC>) => {
+      return {
+        step: 3, //set to next
+        kyc: payload,
+        details: state.details!, //user can't go to step 3 without completing step 1
+        recipient: state.recipient!,
+      };
+    },
+    setStep(state, { payload }: PayloadAction<number>) {
+      state.step = payload as DonationState["step"];
     },
   },
 });
 
 export default donation.reducer;
-export const { setRecipient } = donation.actions;
+export const { setRecipient, setStep, setDetails, setKYC } = donation.actions;
 
 export type DonationRecipient = {
   id: number;
@@ -35,24 +53,24 @@ type Step0 = {
   step: 0;
   details?: never;
   kyc?: never;
-  recipient?: never;
+  recipient?: DonationRecipient;
 };
 
-type Step1 = {
+export type Step1 = {
   step: 1;
-  details?: never;
+  details?: DonationDetails;
   kyc?: never;
   recipient: DonationRecipient;
 };
 
-type Step2 = {
+export type Step2 = {
   step: 2;
-  details: DonationDetails;
-  kyc?: never;
+  details?: DonationDetails;
+  kyc?: KYC;
   recipient: DonationRecipient;
 };
 
-type Step3 = {
+export type Step3 = {
   step: 3;
   details: DonationDetails;
   kyc: KYC;
