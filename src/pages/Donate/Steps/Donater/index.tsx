@@ -1,3 +1,3 @@
 export default function Donater() {
-  return <></>;
+  return <>Donate form</>;
 }
