@@ -75,7 +75,7 @@ module.exports = {
         d1: "#6C6760",
         DEFAULT: "#ACA7A0",
         l1: "#C4C0BB",
-        l2: "#D7D1D1",
+        l2: "#D6D6D6",
         l3: "#ECEDED",
         l4: "#F3F3F2",
       },
