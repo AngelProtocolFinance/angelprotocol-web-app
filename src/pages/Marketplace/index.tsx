@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import Banner from "./Banner";
 import Cards from "./Cards";
@@ -16,6 +17,9 @@ export default function Marketplace() {
         <MobileBanner classes="grid lg:hidden" />
       </div>
 
+      <Link to="/donate/1" className="bg-red fixed-center">
+        donate
+      </Link>
       <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2">
         <Toolbar classes="my-10 col-span-2" />
         <Sidebar

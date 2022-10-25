@@ -13,6 +13,7 @@ export enum appRoutes {
   govern = "/govern",
   endowment_admin = "/endowment-admin",
   donations = "/donations",
+  donate = "/donate",
 }
 
 export enum governRoutes {
