@@ -19,7 +19,6 @@ export default function Balances({ className }: Props) {
       }}
       classes={{
         container: `flex items-center justify-center w-full h-full ${className}`,
-        loading: "text-black dark:text-white",
       }}
     >
       {({ tokens_on_hand }) => (
@@ -52,7 +51,7 @@ function Content({ liquid, locked, className }: BalanceInfo & Props) {
 function Balance(props: { title: string; amount: number | string }) {
   return (
     <div className="flex flex-col justify-center items-center gap-2 h-20 w-full max-w-xs py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray-d1 md:items-start md:h-28 md:px-6 md:py-04">
-      <h6 className="font-heading font-bold text-black text-xs tracking-wider uppercase dark:text-white">
+      <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>
       <p className="font-work font-normal text-lg text-gray-d1 dark:text-gray">

@@ -11,7 +11,7 @@ export default function UrlDonateSection({ className }: { className: string }) {
       className={`flex flex-col items-center justify-end gap-8 w-full xl:flex-row xl:gap-6 ${className}`}
     >
       {profile.url && (
-        <span className="flex items-center justify-center gap-2 w-full text-black font-sans font-medium text-sm dark:text-white sm:w-auto sm:text-base">
+        <span className="flex items-center justify-center gap-2 w-full font-sans font-medium text-sm sm:w-auto sm:text-base">
           <Icon type="Globe" className="h-5 w-5 sm:h-6 sm:w-6" />
           <a
             href={profile.url}
