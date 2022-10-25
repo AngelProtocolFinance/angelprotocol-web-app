@@ -10,7 +10,12 @@ export default function Progress() {
       <p>Donation method</p>
       <p>Donation details</p>
       <p>Finalize payment</p>
-      <div className="mt-3 h-2 w-full col-span-full bg-gray-l2 dark:bg-bluegray-d1 rounded-full" />
+      <div className="mt-3 relative h-2 w-full col-span-full bg-gray-l2 dark:bg-bluegray-d1 rounded-full overflow-hidden">
+        <div
+          style={{ width: `${(numCompletedSteps / 3) * 100}%` }}
+          className="h-full bg-orange rounded-full"
+        />
+      </div>
     </div>
   );
 }
