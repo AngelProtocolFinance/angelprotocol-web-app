@@ -33,13 +33,8 @@ export default function TokenSelector<T extends FieldValues>(props: {
       as="div"
       className={`${
         props.classes?.container ?? ""
-      } flex items-center gap-1 w-full`}
+      } flex items-center gap-1 w-full dark:text-gray`}
     >
-      <img
-        alt=""
-        src={(token as Token).logo}
-        className="w-6 h-6 object-contain mr-1"
-      />
       <span className="text-sm">{token.symbol}</span>
 
       {coins.length > 1 && (
@@ -51,9 +46,9 @@ export default function TokenSelector<T extends FieldValues>(props: {
       <Combobox.Options
         className={`${
           props.classes?.options ?? ""
-        } border border-gray-l2 p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 shadow-lg focus:outline-nones`}
+        } border border-gray-l2 dark:border-bluegray-d1 p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 dark:bg-blue-d7 shadow-lg focus:outline-nones`}
       >
-        <div className="flex p-2 gap-2 border border-gray-l2 rounded">
+        <div className="flex p-2 gap-2 border border-gray-l2 dark:border-bluegray-d1 rounded">
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."

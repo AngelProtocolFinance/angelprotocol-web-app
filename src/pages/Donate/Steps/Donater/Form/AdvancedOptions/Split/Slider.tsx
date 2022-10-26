@@ -4,13 +4,13 @@ import { DonateValues } from "../../../types";
 export default function Slider() {
   const {
     register,
-    formState: { errors },
+    formState: { isValid },
   } = useFormContext<DonateValues>();
 
   return (
     <div className="my-2 select-none">
       <input
-        disabled={!!errors["token"]?.amount}
+        disabled={!isValid}
         type="range"
         {...register("pctLiquidSplit")}
         min={0}

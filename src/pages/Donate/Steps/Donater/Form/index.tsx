@@ -37,7 +37,7 @@ export default function Form() {
       <div className="grid grid-cols-2 gap-5 font-body mt-12">
         <Link
           to={`${appRoutes.profile}/1`}
-          className="py-3 rounded border border-gray-l2 bg-orange-l5 text-center hover:bg-orange-l4"
+          className="py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4"
           type="submit"
         >
           Cancel

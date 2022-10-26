@@ -16,20 +16,20 @@ export default function Amount() {
   return (
     <div className="grid">
       <div className="flex items-baseline justify-between mb-1">
-        <label htmlFor="amount" className="text-gray-d2 text-lg font-bold">
+        <label htmlFor="amount" className="text-lg font-bold">
           Enter the donation amount:
         </label>
         <Balance />
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 border border-gray-l2 rounded">
+      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray-d1 rounded">
         <input
           {...register("token.amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={`${min_donation_amnt}`}
-          className="w-full text-sm bg-transparent focus:outline-none"
+          className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
         />
         <TokensSelector<DV>
           fieldName="token"
@@ -41,10 +41,10 @@ export default function Amount() {
           errors={errors}
           name="token.amount"
           as="p"
-          className="text-red text-xs text-left my-1"
+          className="text-red dark:text-red-l2 text-xs text-left my-1"
         />
       </div>
-      <p className="text-xs text-gray-d1">
+      <p className="text-xs">
         Minimal amount: {symbol} {min_donation_amnt}
       </p>
     </div>
