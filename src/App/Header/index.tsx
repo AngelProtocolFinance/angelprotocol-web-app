@@ -1,8 +1,13 @@
+import Airdrop from "App/Header/Airdrop";
+import TransactionHint from "App/Header/TransactionHint";
 import { useEffect, useRef, useState } from "react";
-import DesktopHeader from "./DesktopHeader";
-import MobileHeader from "./MobileHeader";
+import WalletSuite from "../WalletSuite";
+import DesktopNav from "./DesktopNav";
+import Logo from "./Logo";
+import { Opener as MobileNavOpener } from "./MobileNav";
+import ThemeToggle from "./ThemeToggle";
 
-export default function Header() {
+export default function Header({ classes = "" }: { classes?: string }) {
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -21,13 +26,22 @@ export default function Header() {
   }, []);
 
   return (
-    <div
-      className={`${
+    <header
+      className={`${classes} ${
         isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
-      } py-2 fixed transition ease-in-out duration-300 w-full z-20`}
+      } py-3 transition ease-in-out duration-300 w-full`}
     >
-      <DesktopHeader />
-      <MobileHeader />
-    </div>
+      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container ">
+        <Logo />
+        <DesktopNav classes="hidden lg:flex" />
+        <div className="flex gap-x-2 ml-auto lg:ml-0">
+          <ThemeToggle classes="hidden lg:flex" />
+          <TransactionHint />
+          <WalletSuite />
+          <Airdrop />
+        </div>
+        <MobileNavOpener classes="flex ml-2 lg:hidden" />
+      </div>
+    </header>
   );
 }

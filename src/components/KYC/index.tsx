@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
-import ReceiptForm from "./Form";
+import Form from "./Form";
 import { schema } from "./schema";
 
 export default function KYC(props: Props) {
@@ -19,9 +19,9 @@ export default function KYC(props: Props) {
     <FormProvider {...methods}>
       {/** atm, receipt form is used in modal, add option to wrap in div if not used as modal */}
       <Dialog.Panel
-        className={`fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto`}
+        className={`fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1`}
       >
-        <ReceiptForm {...props} />
+        <Form {...props} />
       </Dialog.Panel>
     </FormProvider>
   );

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { NavLink } from "react-router-dom";
 import { useGetter } from "store/accessors";
@@ -7,25 +6,18 @@ import {
   adminMobileNavId,
   commonNavItemStyle,
   navLinkStyle,
-} from "./constants";
+} from "../constants";
 
-export default function AdminMobileNavPortal({ id }: { id: number }) {
-  const { isMobileNavOpen } = useGetter((state) => state.component.mobileNav);
-
-  const containerElement = document.querySelector(`#${adminMobileNavId}`);
-
-  useEffect(() => {
-    containerElement?.parentElement?.classList.add("sm:grid-cols-2");
-  }, [containerElement?.parentElement?.classList]);
+export function AdminMobileNavPortal({ id }: { id: number }) {
+  const isMobileNavRendered = useGetter(
+    (state) => state.component.mobileNav.isRendered
+  );
 
   return (
-    (isMobileNavOpen &&
-      !!containerElement &&
+    (isMobileNavRendered &&
       createPortal(
-        <div className="border-t sm:border-t-0 sm:border-l border-white/20 padded-container">
-          <h4
-            className={`${commonNavItemStyle} mt-6 sm:mt-0 mb-6 uppercase font-extrabold`}
-          >
+        <>
+          <h4 className={`${commonNavItemStyle} mb-4 uppercase font-extrabold`}>
             Admin
           </h4>
           <div className="grid justify-items-start font-heading">
@@ -58,8 +50,8 @@ export default function AdminMobileNavPortal({ id }: { id: number }) {
               Proposals
             </NavLink>
           </div>
-        </div>,
-        containerElement
+        </>,
+        document.querySelector(`#${adminMobileNavId}`)!
       )) ||
     null
   );

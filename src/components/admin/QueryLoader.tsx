@@ -26,7 +26,7 @@ export function QueryLoader<T>({
 
   if (isLoading) {
     return (
-      <div className={`${classes?.container || ""}`}>
+      <div className={classes?.container || ""}>
         <Icon
           type="Loading"
           className="animate-spin inline relative mr-1 bottom-[1px]"
