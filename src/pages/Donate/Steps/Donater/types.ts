@@ -5,8 +5,4 @@ export type TokenWithAmount = Token & { amount: string };
 export interface DonateValues {
   token: TokenWithAmount;
   liquidSplit: string;
-  //metadata;
-
-  charityId: number;
-  isAgreedToTerms: boolean;
 }

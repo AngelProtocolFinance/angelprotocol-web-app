@@ -24,7 +24,7 @@ const tokenShape: SchemaShape<TWA> = {
 
 const shape: SchemaShape<DonateValues> = {
   token: Yup.object().shape(tokenShape),
-  isAgreedToTerms: Yup.boolean().isTrue(),
+  //no need to validate split, restricted by slider
 };
 
 export const schema = Yup.object().shape(shape);

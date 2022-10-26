@@ -1,12 +1,10 @@
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import AmountOptions from "./AmountOptions";
-import Terms from "./Terms";
 
-export default function DonateForm() {
+export default function Form() {
   const {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
@@ -23,8 +21,6 @@ export default function DonateForm() {
       <Amount />
       <AmountOptions classes="mt-3" />
       <AdvancedOptions classes="mt-10" />
-
-      <Terms classes="my-3" />
 
       <button
         disabled={!isValid || !isDirty || isSubmitting}

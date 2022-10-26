@@ -1,6 +1,5 @@
-import { Popover } from "@headlessui/react";
 import { useState } from "react";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import Split from "./Split";
 
 type Props = {
