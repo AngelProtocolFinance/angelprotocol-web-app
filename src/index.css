@@ -4,19 +4,23 @@
 
 @layer components {
   .scroller::-webkit-scrollbar {
-    @apply w-1
+    @apply w-1;
   }
 
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-orange
+    @apply bg-orange;
   }
 
-  .scroller::-webkit-scrollbar-track{
-    @apply bg-gray-l2 dark:bg-bluegray-d1
+  .scroller::-webkit-scrollbar-track {
+    @apply bg-gray-l2 dark:bg-bluegray-d1;
   }
 
   .padded-container {
     @apply xl:container xl:mx-auto px-5;
+  }
+
+  .btn {
+    @apply flex items-center justify-center gap-2 font-body;
   }
 
   .btn-orange {

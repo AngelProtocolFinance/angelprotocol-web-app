@@ -78,6 +78,7 @@ module.exports = {
         l2: "#D6D6D6",
         l3: "#ECEDED",
         l4: "#F3F3F2",
+        l5: "#FDFDFC",
       },
       white: "#FFFFFF",
 

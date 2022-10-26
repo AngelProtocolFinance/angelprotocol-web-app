@@ -69,4 +69,5 @@ export type IconTypes =
   | "HeartOutline"
   | "Moon"
   | "Sun"
-  | "Picture";
+  | "Picture"
+  | "MapPin";

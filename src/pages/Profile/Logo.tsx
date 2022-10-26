@@ -2,10 +2,10 @@ import Icon from "components/Icon";
 import { useProfileContext } from "./ProfileContext";
 
 const anchorStyle =
-  "flex items-center justify-center w-full h-0 overflow-visible isolate lg:justify-start lg:pl-20";
+  "flex items-center justify-center w-full h-0 overflow-visible isolate xl:justify-start xl:pl-20";
 
 const logoStyle =
-  "box-border h-40 w-40 sm:h-44 sm:w-44 border border-gray-l2 rounded-full object-contain dark:border-bluegray-d1";
+  "box-border h-44 w-44 border border-gray-l2 rounded-full object-contain dark:border-bluegray-d1";
 
 export default function Logo() {
   const { logo } = useProfileContext();
