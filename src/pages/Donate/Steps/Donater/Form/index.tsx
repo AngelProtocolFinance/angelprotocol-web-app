@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import AdvancedOptions from "./AdvanceOptions";
 import Amount from "./Amount";
+import AmountOptions from "./AmountOptions";
 import Terms from "./Terms";
 
 export default function DonateForm() {
@@ -23,7 +24,7 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Amount />
-
+      <AmountOptions classes="mt-3" />
       <AdvancedOptions
         classes="-ml-0.5 mt-6"
         toggleAdvancedOptions={toggleAdvancedOptions}
