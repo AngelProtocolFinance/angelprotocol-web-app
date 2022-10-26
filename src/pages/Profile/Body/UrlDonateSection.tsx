@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
 import Icon from "components/Icon";
+import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
-import useDonate from "./useDonate";
+
+// import useDonate from "./useDonate";
 
 export default function UrlDonateSection({ className }: { className: string }) {
   const profile = useProfileContext();
-  const donate = useDonate();
+  // const donate = useDonate();
 
   return (
     <div
@@ -22,12 +25,12 @@ export default function UrlDonateSection({ className }: { className: string }) {
         </a>
       </span>
       {/* )} */}
-      <button
-        onClick={donate}
+      <Link
+        to={appRoutes.donate + `/${profile.id}`}
         className="btn btn-orange w-full h-12 max-w-xs py-2 px-6 rounded text-sm normal-case"
       >
         Donate now
-      </button>
+      </Link>
     </div>
   );
 }
