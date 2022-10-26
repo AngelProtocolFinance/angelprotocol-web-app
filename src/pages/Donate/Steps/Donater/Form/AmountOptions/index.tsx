@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { humanize } from "helpers";
 
-const SCALE = [1, 5, 10, 50, 100];
+const SCALE = [1, 2, 5, 10, 20];
 
 export default function AmountOptions({ classes = "" }: { classes?: string }) {
   const { watch, setValue } = useFormContext<DonateValues>();
