@@ -7,7 +7,7 @@ import Logo from "./Logo";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-export default function Header() {
+export default function Header({ classes = "" }: { classes?: string }) {
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -27,9 +27,9 @@ export default function Header() {
 
   return (
     <header
-      className={`${
+      className={`${classes} ${
         isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
-      } py-3 fixed top-0 transition ease-in-out duration-300 w-full z-20`}
+      } py-3 transition ease-in-out duration-300 w-full`}
     >
       <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container ">
         <Logo />
