@@ -13,7 +13,6 @@ export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
     baseUrl: APIs.apes,
-    mode: "cors",
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
@@ -37,7 +36,8 @@ export const apes = createApi({
           // fetch balances for juno or terra
           if (chain.type === "juno-native" || chain.type === "terra-native") {
             const balancesRes = await fetch(
-              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+              process.env.REACT_APP_JUNO_LCD_NODE +
+                `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             // returns only positive balances
@@ -60,6 +60,8 @@ export const apes = createApi({
                 token.decimals
               );
             });
+
+            console.log(chain);
 
             return { data: chain };
           }

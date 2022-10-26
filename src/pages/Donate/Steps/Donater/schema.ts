@@ -16,7 +16,7 @@ const tokenShape: SchemaShape<TWA> = {
       : tokenConstraint.when([minKey, balKey], (...args: any[]) => {
           const [minAmount, balance, schema] = args as [Min, Bal, any];
           return schema
-            .min(minAmount || 0, `amount must be greater than ${minAmount}`)
+            .min(minAmount || 0, `amount must be at least ${minAmount}`)
             .max(balance, "not enough balance");
         })
   ),

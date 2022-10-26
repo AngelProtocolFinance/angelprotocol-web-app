@@ -22,7 +22,7 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="grid grid-cols-[1fr_auto] items-center pr-1 gap-2 py-3 px-4 border border-gray-l2 rounded">
+      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 border border-gray-l2 rounded">
         <input
           {...register("token.amount")}
           autoComplete="off"
@@ -31,7 +31,10 @@ export default function Amount() {
           placeholder={`${min_donation_amnt}`}
           className="w-full text-sm bg-transparent focus:outline-none"
         />
-        <TokensSelector<DV> fieldName="token" />
+        <TokensSelector<DV>
+          fieldName="token"
+          classes={{ options: "absolute right-0 top-4" }}
+        />
       </div>
       <div className="empty:mb-2">
         <ErrorMessage

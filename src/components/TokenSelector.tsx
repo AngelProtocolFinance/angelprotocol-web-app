@@ -1,13 +1,13 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { Path, useController } from "react-hook-form";
+import { FieldValues, Path, useController } from "react-hook-form";
 import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Icon from "./Icon";
+import Icon, { DrawerIcon } from "./Icon";
 
-type Base = { token: Token };
-export default function TokenSelector<T extends Base>(props: {
+export default function TokenSelector<T extends FieldValues>(props: {
   fieldName: Path<T>;
+  classes?: { container?: string; options?: string };
 }) {
   const { wallet } = useGetWallet();
   const {
@@ -27,29 +27,41 @@ export default function TokenSelector<T extends Base>(props: {
   return (
     <Combobox
       value={token}
-      onChange={onTokenChange}
+      onChange={(token: Token) => {
+        onTokenChange({ ...token, amount: "" });
+      }}
       as="div"
-      className="relative flex items-center gap-1 w-full"
+      className={`${
+        props.classes?.container ?? ""
+      } flex items-center gap-1 w-full`}
     >
       <img
         alt=""
         src={(token as Token).logo}
-        className="w-6 h-6 object-contain "
+        className="w-6 h-6 object-contain mr-1"
       />
-      <Combobox.Input
-        disabled={coins.length <= 1}
-        className="w-16 text-center text-sm focus:outline-none bg-transparent"
-        displayValue={(coin: Token) => coin.symbol}
-        onChange={(event) => setSymbol(event.target.value)}
-      />
+      <span className="text-sm">{token.symbol}</span>
 
       {coins.length > 1 && (
         <Combobox.Button className="">
-          {({ open }) => <Icon type={open ? "Down" : "CaretLeft"} />}
+          {({ open }) => <DrawerIcon isOpen={open} size={20} />}
         </Combobox.Button>
       )}
 
-      <Combobox.Options className="absolute top-0 right-0 mt-10 max-h-60 w-max overflow-auto rounded-md bg-white shadow-lg focus:outline-none">
+      <Combobox.Options
+        className={`${
+          props.classes?.options ?? ""
+        } border border-gray-l2 p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 shadow-lg focus:outline-nones`}
+      >
+        <div className="flex p-2 gap-2 border border-gray-l2 rounded">
+          <Icon type="Search" size={20} />
+          <Combobox.Input
+            placeholder="Search..."
+            disabled={coins.length <= 1}
+            className="text-left text-sm focus:outline-none bg-transparent w-20"
+            onChange={(event) => setSymbol(event.target.value)}
+          />
+        </div>
         {filteredCoins.length === 0 && symbol !== "" ? (
           <div className="relative cursor-default select-none py-2 px-4 text-gray-d3 text-sm">
             {symbol} not found
@@ -69,11 +81,9 @@ export default function TokenSelector<T extends Base>(props: {
                     <img
                       alt=""
                       src={coin.logo}
-                      className="w-5 h-5 object-contain"
+                      className="w-6 h-6 object-contain"
                     />
-                    <span className={`text-sm text-gray-d2`}>
-                      {coin.symbol}
-                    </span>
+                    <span className="text-sm">{coin.symbol}</span>
                   </>
                 ) : (
                   <></>
