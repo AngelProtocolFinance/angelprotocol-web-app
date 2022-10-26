@@ -4,14 +4,12 @@ import UrlDonateSection from "./UrlDonateSection";
 
 export default function Body() {
   return (
-    <div className="grid gap-8 justify-items-center w-full h-full pt-32 px-6 pb-8 bg-gray-l5 text-gray-d2 dark:bg-blue-d4 dark:text-white lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:items-end lg:gap-16 xl:pt-6 xl:px-20 xl:pb-20">
-      <UrlDonateSection className="order-2 xl:order-1 xl:col-span-2" />
+    <div className="padded-container grid justify-items-center xl:justify-items-start xl:grid-cols-[1fr_auto] gap-y-8">
+      <NameAddressSection className="xl:row-start-2 xl:self-center" />
+      <UrlDonateSection className="xl:col-start-2" />
+      <Balances className="xl:row-start-2" />
 
-      <NameAddressSection className="order-1 xl:order-2" />
-
-      <Balances className="order-3 lg:col-span-2 xl:col-span-1 xl:justify-self-end" />
-
-      <div className="order-4 xl:col-span-2 w-full h-40">Overview</div>
+      <div className="">Overview</div>
     </div>
   );
 }

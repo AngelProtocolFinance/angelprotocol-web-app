@@ -41,9 +41,9 @@ export default function Profile() {
         id: numId,
       }}
     >
-      <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
+      <section className="grid content-start items-center isolate w-full h-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white">
         <Banner />
-        <Logo />
+        <Logo classes="mb-28 xl:mb-6" />
         <Body />
       </section>
     </ProfileContext.Provider>

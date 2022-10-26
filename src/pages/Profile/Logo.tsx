@@ -2,17 +2,17 @@ import Icon from "components/Icon";
 import { useProfileContext } from "./ProfileContext";
 
 const anchorStyle =
-  "flex items-center justify-center w-full h-0 overflow-visible isolate xl:justify-start xl:pl-20";
+  "flex items-center justify-center w-full h-0 overflow-visible isolate xl:justify-start padded-container";
 
 const logoStyle =
   "box-border h-44 w-44 border border-gray-l2 rounded-full object-contain dark:border-bluegray-d1";
 
-export default function Logo() {
+export default function Logo({ classes = "" }: { classes?: string }) {
   const { logo } = useProfileContext();
 
   if (!logo) {
     return (
-      <div className={anchorStyle}>
+      <div className={anchorStyle + " " + classes}>
         <div
           className={`${logoStyle} flex items-center justify-center bg-blue-l3 dark:bg-blue`}
         >
@@ -26,7 +26,7 @@ export default function Logo() {
   }
 
   return (
-    <div className={anchorStyle}>
+    <div className={anchorStyle + " " + classes}>
       <img className={`${logoStyle} bg-white`} alt="logo" src={logo} />
     </div>
   );
