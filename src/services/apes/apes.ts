@@ -13,6 +13,7 @@ export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
     baseUrl: APIs.apes,
+    mode: "cors",
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
