@@ -36,7 +36,7 @@ export const aws = createApi({
     >({
       providesTags: [{ type: awsTags.endowments }],
       query: (params) => {
-        const network: NetworkType = IS_TEST ? "mainnet" : "mainnet";
+        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return { url: `/v1/endowments/${network}`, params };
       },
     }),

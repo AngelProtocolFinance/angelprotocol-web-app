@@ -63,11 +63,7 @@ export default function Sorter() {
           </>
         )}
       </div>
-      <Listbox.Options
-        className={
-          "absolute grid bg-orange-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l1 dark:border-bluegray-d1"
-        }
-      >
+      <Listbox.Options className="absolute grid bg-orange-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l1 dark:border-bluegray-d1">
         {options.map(({ key, name }) => (
           <Listbox.Option
             key={key}

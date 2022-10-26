@@ -17,7 +17,7 @@ export default function Card({
         {endow_type === "Charity" ? "Non-profit" : "For-profit"}
       </p>
       <BookmarkBtn
-        name={name!}
+        name={name}
         id={id}
         classes="absolute top-3 right-3 text-red-l1"
       />
@@ -26,7 +26,7 @@ export default function Card({
         className="grid grid-rows-[1fr_auto]"
       >
         <img
-          loading={"lazy"}
+          loading="lazy"
           src={image}
           className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""

@@ -37,7 +37,7 @@ const marketFilter = createSlice({
 
       //set only single sdg
       const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
-      return { ...state, sdgs: _sdgs, key: undefined };
+      return { ...state, sdgs: _sdgs };
     },
 
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {

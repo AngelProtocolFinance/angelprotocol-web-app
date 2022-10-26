@@ -1,4 +1,4 @@
-import { EndowmentType } from "./common";
+import { CapitalizedEndowmentType, EndowmentType } from "./common";
 
 export type RegistrarConfig = {
   owner: string;
@@ -25,7 +25,7 @@ type AccountType = "locked" | "liquid";
 
 export type VaultListOptions = {
   network?: string;
-  endowment_type?: Capitalize<EndowmentType>;
+  endowment_type?: CapitalizedEndowmentType;
   acct_type?: AccountType;
   approved?: boolean;
   start_after?: string;
