@@ -4,23 +4,24 @@ import { DonateValues } from "./types";
 import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
+import { Step1 } from "slices/donation";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Donater() {
+export default function Donater(props: Step1) {
   const { wallet, isLoading } = useGetWallet();
 
   if (isLoading) return <Loader />;
-  return <Context tokens={wallet?.coins} />;
+  return <Context tokens={wallet?.coins} state={props} />;
 }
 
-function Context(props: { tokens: Token[] | undefined }) {
+function Context(props: { tokens: Token[] | undefined; state: Step1 }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
+    defaultValues: props.state.details || {
       token: { ...(props.tokens || placeholderChain.tokens)[0], amount: "" },
-      liquidSplit: "0",
+      pctLiquidSplit: "0",
     },
     resolver: yupResolver(schema),
   });

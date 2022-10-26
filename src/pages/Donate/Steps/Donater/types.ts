@@ -1,8 +1,3 @@
-import { Token } from "types/aws";
+import { DonationDetails } from "slices/donation";
 
-export type TokenWithAmount = Token & { amount: string };
-
-export interface DonateValues {
-  token: TokenWithAmount;
-  liquidSplit: string;
-}
+export type DonateValues = DonationDetails;

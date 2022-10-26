@@ -12,7 +12,7 @@ export default function Slider() {
       <input
         disabled={!!errors["token"]?.amount}
         type="range"
-        {...register("liquidSplit")}
+        {...register("pctLiquidSplit")}
         min={0}
         max={100}
         className="slider"

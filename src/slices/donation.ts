@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Token } from "types/aws";
 
 export type DonationState = Step0 | Step1 | Step2 | Step3;
 
@@ -35,14 +36,15 @@ const donation = createSlice({
 export default donation.reducer;
 export const { setRecipient, setStep, setDetails, setKYC } = donation.actions;
 
+export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
   id: number;
   name: string;
 };
 
-type DonationDetails = {
-  amount: number;
-  liquidSplit?: number;
+export type DonationDetails = {
+  token: TokenWithAmount;
+  pctLiquidSplit: string;
 };
 
 type KYC = {

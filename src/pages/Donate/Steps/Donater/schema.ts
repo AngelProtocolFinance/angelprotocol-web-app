@@ -1,6 +1,7 @@
 import * as Yup from "yup";
-import { DonateValues, TokenWithAmount as TWA } from "./types";
+import { DonateValues } from "./types";
 import { SchemaShape } from "schemas/types";
+import { TokenWithAmount as TWA } from "slices/donation";
 import { tokenConstraint } from "schemas/number";
 
 type Key = keyof TWA;
