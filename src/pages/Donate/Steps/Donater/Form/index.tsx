@@ -46,7 +46,7 @@ export default function Form() {
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
-          className="py-3 rounded btn-orange"
+          className="py-3 rounded btn-orange normal-case"
           type="submit"
         >
           Continue

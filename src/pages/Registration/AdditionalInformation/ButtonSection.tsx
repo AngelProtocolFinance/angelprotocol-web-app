@@ -34,7 +34,7 @@ export default function ButtonSection() {
           >
             Back
           </Button>
-          <Button submit className="btn-orange uppercase w-48 h-12">
+          <Button submit className="btn-orange w-48 h-12">
             Submit
           </Button>
         </>
