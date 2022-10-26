@@ -22,13 +22,22 @@ export default function Form() {
       <AmountOptions classes="mt-3" />
       <AdvancedOptions classes="mt-10" />
 
-      <button
-        disabled={!isValid || !isDirty || isSubmitting}
-        className="w-full bg-orange hover:bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        type="submit"
-      >
-        {"submit"}
-      </button>
+      <div className="grid grid-cols-2 gap-5 font-body mt-12">
+        <button
+          disabled={!isValid || !isDirty || isSubmitting}
+          className="py-3 rounded border border-gray-l2 bg-orange-l5"
+          type="submit"
+        >
+          Cancel
+        </button>
+        <button
+          disabled={!isValid || !isDirty || isSubmitting}
+          className="py-3 rounded btn-orange"
+          type="submit"
+        >
+          Continue
+        </button>
+      </div>
     </form>
   );
 }

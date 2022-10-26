@@ -12,6 +12,12 @@
   .slider::-moz-range-thumb {
     @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
   }
+  .slider:disabled::-webkit-slider-thumb {
+    @apply bg-gray-l1;
+  }
+  .slider:disabled::-moz-range-thumb {
+    @apply bg-gray-l1;
+  }
   .slider:focus {
     @apply outline-none;
   }

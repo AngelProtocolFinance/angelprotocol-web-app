@@ -15,9 +15,11 @@ const tokenShape: SchemaShape<TWA> = {
       ? Yup.string().required("required")
       : tokenConstraint.when([minKey, balKey], (...args: any[]) => {
           const [minAmount, balance, schema] = args as [Min, Bal, any];
-          return schema
-            .min(minAmount || 0, `amount must be at least ${minAmount}`)
-            .max(balance, "not enough balance");
+          return !!minAmount
+            ? schema
+                .min(minAmount || 0, `amount must be at least ${minAmount}`)
+                .max(balance, "not enough balance")
+            : schema.max(balance, "not enough balance");
         })
   ),
 };

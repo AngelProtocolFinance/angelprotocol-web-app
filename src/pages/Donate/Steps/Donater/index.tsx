@@ -20,7 +20,7 @@ function Context(props: { tokens: Token[] | undefined }) {
     reValidateMode: "onChange",
     defaultValues: {
       token: { ...(props.tokens || placeholderChain.tokens)[0], amount: "" },
-      liquidSplit: "",
+      liquidSplit: "0",
     },
     resolver: yupResolver(schema),
   });

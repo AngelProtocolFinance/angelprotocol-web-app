@@ -8,12 +8,11 @@ export default function usePortion(type: string) {
   const liquidSplit = Number(watch("liquidSplit"));
   const lockedSplit: number = 100 - liquidSplit;
   const token = watch("token");
+  const amount = Number(token.amount);
 
-  console.log(token);
-
-  //values
   const disp_amount = `${token.symbol} ${humanize(
-    ((isLocked ? lockedSplit : liquidSplit) / 100) * Number(token.amount),
+    ((isLocked ? lockedSplit : liquidSplit) / 100) *
+      (isNaN(amount) ? 0 : amount),
     6
   )}`;
 
