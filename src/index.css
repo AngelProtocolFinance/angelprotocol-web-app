@@ -3,16 +3,35 @@
 @tailwind utilities;
 
 @layer components {
+  .slider {
+    @apply appearance-none bg-transparent w-full;
+  }
+  .slider::-webkit-slider-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
+  }
+  .slider::-moz-range-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
+  }
+  .slider:focus {
+    @apply outline-none;
+  }
+  .slider::-ms-track {
+    @apply w-full cursor-pointer bg-transparent border-transparent;
+  }
+  .slider::-webkit-slider-runnable-track {
+    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray-d1 rounded-full;
+  }
+
   .scroller::-webkit-scrollbar {
-    @apply w-1
+    @apply w-1;
   }
 
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-orange
+    @apply bg-orange;
   }
 
-  .scroller::-webkit-scrollbar-track{
-    @apply bg-gray-l2 dark:bg-bluegray-d1
+  .scroller::-webkit-scrollbar-track {
+    @apply bg-gray-l2 dark:bg-bluegray-d1;
   }
 
   .padded-container {

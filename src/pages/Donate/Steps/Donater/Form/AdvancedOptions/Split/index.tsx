@@ -3,10 +3,8 @@ import Slider from "./Slider";
 
 export default function Split() {
   return (
-    <div className="grid ml-1">
-      <p className="text-gray-d2 uppercase text-sm font-bold mt-2 mb-1">
-        Split
-      </p>
+    <div className="grid p-6 pt-4 font-heading border-t border-gray-l2">
+      <p className="text-xs uppercase font-bold mb-2">Split</p>
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion type="locked" title="Endowment" action="Compounded forever" />
         <Portion type="liquid" title="Current" action="Instantly available">

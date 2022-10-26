@@ -9,12 +9,14 @@ type Props = PropsWithChildren<{
 export default function Portion({ type, title, action, children }: Props) {
   const { disp_amount, disp_split } = usePortion(type);
   return (
-    <div className="flex flex-col items-center border-2 p-2 rounded-md">
-      <p className=" font-bold text-lg">{title}</p>
+    <div className="flex flex-col items-center border border-gray-l2 p-6 rounded">
+      <p className="uppercase font-bold text-lg">{title}</p>
       <p className=" text-lg mb-2 font-bold">{disp_split}%</p>
-      <p className="uppercase text-xs ">{action}</p>
+      <p className="uppercase text-xs text-center w-24">{action}</p>
       {children}
-      <p className="mt-auto font-bold text-lg">{disp_amount}</p>
+      <p className="mt-auto font-bold text-lg text-center w-36">
+        {disp_amount}
+      </p>
     </div>
   );
 }

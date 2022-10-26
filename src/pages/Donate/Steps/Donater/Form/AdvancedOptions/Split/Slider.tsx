@@ -15,7 +15,7 @@ export default function Slider() {
         {...register("liquidSplit")}
         min={0}
         max={100}
-        className="w-full"
+        className="slider"
       />
     </div>
   );

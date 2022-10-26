@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import AdvancedOptions from "./AdvanceOptions";
+import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import AmountOptions from "./AmountOptions";
 import Terms from "./Terms";
@@ -11,9 +11,6 @@ export default function DonateForm() {
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
-
-  const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
-  const toggleAdvancedOptions = () => setIsAdvancedOptionShown((prev) => !prev);
 
   return (
     <form
@@ -25,11 +22,7 @@ export default function DonateForm() {
     >
       <Amount />
       <AmountOptions classes="mt-3" />
-      <AdvancedOptions
-        classes="-ml-0.5 mt-6"
-        toggleAdvancedOptions={toggleAdvancedOptions}
-        isOptionsShown={isAdvancedOptionShown}
-      />
+      <AdvancedOptions classes="mt-10" />
 
       <Terms classes="my-3" />
 
