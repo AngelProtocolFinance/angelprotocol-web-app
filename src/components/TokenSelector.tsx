@@ -48,7 +48,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
           props.classes?.options ?? ""
         } border border-gray-l2 dark:border-bluegray-d1 p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 dark:bg-blue-d7 shadow-lg focus:outline-nones`}
       >
-        <div className="flex p-2 gap-2 border border-gray-l2 dark:border-bluegray-d1 rounded">
+        <div className="flex p-2 gap-2 border border-gray-l2 dark:border-bluegray-d1 rounded mb-1">
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."
@@ -58,7 +58,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
           />
         </div>
         {filteredCoins.length === 0 && symbol !== "" ? (
-          <div className="relative cursor-default select-none py-2 px-4 text-gray-d3 text-sm">
+          <div className="relative cursor-default select-none py-2 px-4text-sm">
             {symbol} not found
           </div>
         ) : (
@@ -66,7 +66,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
             <Combobox.Option
               key={coin.token_id}
               className={
-                "flex items-center gap-2 p-3 hover:bg-blue/10 cursor-pointer"
+                "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d4 cursor-pointer"
               }
               value={coin}
             >

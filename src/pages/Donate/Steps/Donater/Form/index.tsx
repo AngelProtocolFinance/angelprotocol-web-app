@@ -34,10 +34,10 @@ export default function Form() {
       <AmountOptions classes="mt-3" />
       <AdvancedOptions classes="mt-10" />
 
-      <div className="grid grid-cols-2 gap-5 font-body mt-12">
+      <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
         <Link
           to={`${appRoutes.profile}/1`}
-          className="py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4"
+          className="text-sm md:text-base py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4"
           type="submit"
         >
           Cancel
@@ -46,7 +46,7 @@ export default function Form() {
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
-          className="py-3 rounded btn-orange normal-case"
+          className="text-sm md:text-base py-3 rounded btn-orange normal-case"
           type="submit"
         >
           Continue
