@@ -4,14 +4,13 @@ import { DonateValues } from "./types";
 import { Token } from "types/aws";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
-import ContentLoader from "components/ContentLoader";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Donater() {
   const { wallet, isLoading } = useGetWallet();
 
-  if (isLoading) return <DonateFormLoader />;
+  if (isLoading) return <Loader />;
   return <Context tokens={wallet?.coins} />;
 }
 
@@ -31,12 +30,13 @@ function Context(props: { tokens: Token[] | undefined }) {
   );
 }
 
-function DonateFormLoader() {
+function Loader() {
   return (
-    <div className="bg-white grid p-4 rounded-md w-full">
-      <ContentLoader className="opacity-30 h-12 w-full" />
-      <ContentLoader className="opacity-30 h-30 mt-4 w-full" />
-      <ContentLoader className="opacity-30 h-10 mt-4 w-full" />
+    <div className="grid grid-cols-2 w-full gap-4 justify-self-center">
+      <div className="dark:bg-white/30 bg-gray-l2/30 w-full h-16 rounded col-span-2" />
+      <div className="dark:bg-white/30 bg-gray-l2/30 w-full h-16 rounded col-span-2" />
+      <div className="dark:bg-white/30 bg-gray-l2/30 w-full h-16 rounded" />
+      <div className="dark:bg-white/30 bg-gray-l2/30 w-full h-16 rounded" />
     </div>
   );
 }

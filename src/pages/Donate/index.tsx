@@ -14,7 +14,7 @@ export default function Donate() {
   );
 
   return (
-    <section className="min-h-screen w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white">
+    <section className="grid content-start min-h-screen w-full font-work bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white">
       <div className="w-full bg-market-banner-light dark:bg-market-banner-dark h-72 bg-center bg-cover pt-24" />
       <QueryLoader
         queryState={queryState}

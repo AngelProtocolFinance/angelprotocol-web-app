@@ -19,7 +19,7 @@ export default function DonateForm() {
       onSubmit={handleSubmit((data) => {
         console.log(data);
       })}
-      className="bg-white grid p-4 rounded-md w-full"
+      className="grid rounded-md w-full"
       autoComplete="off"
     >
       <Amount />
