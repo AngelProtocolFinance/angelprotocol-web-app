@@ -4,8 +4,8 @@ import {
   useEndowmentProfileQuery,
 } from "services/juno/account";
 import { idParamToNum } from "helpers";
-import Body from "./Body";
 import Logo from "./Logo";
+import MainContent from "./MainContent";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
@@ -44,7 +44,7 @@ export default function Profile() {
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />
         <Logo />
-        <Body />
+        <MainContent />
       </section>
     </ProfileContext.Provider>
   );
