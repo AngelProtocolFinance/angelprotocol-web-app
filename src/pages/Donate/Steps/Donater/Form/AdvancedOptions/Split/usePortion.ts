@@ -5,18 +5,20 @@ import { humanize } from "helpers";
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
   const { watch } = useFormContext<DonateValues>();
-  const split_liq = Number(watch("liquidSplit"));
-  const split_locked: number = 100 - split_liq;
+  const liquidSplit = Number(watch("liquidSplit"));
+  const lockedSplit: number = 100 - liquidSplit;
   const token = watch("token");
+
+  console.log(token);
 
   //values
   const disp_amount = `${token.symbol} ${humanize(
-    ((isLocked ? split_locked : split_liq) / 100) * Number(token.amount),
+    ((isLocked ? lockedSplit : liquidSplit) / 100) * Number(token.amount),
     6
   )}`;
 
   return {
     disp_amount,
-    disp_split: isLocked ? split_locked : split_liq,
+    disp_split: isLocked ? lockedSplit : liquidSplit,
   };
 }
