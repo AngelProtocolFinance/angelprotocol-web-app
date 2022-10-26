@@ -57,7 +57,7 @@ import {
 import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
-import { GoLinkExternal } from "react-icons/go";
+import { GoDash, GoLinkExternal } from "react-icons/go";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
@@ -144,4 +144,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   HeartFill: AiFillHeart,
   Picture: ImFilePicture,
   MapPin: RiMapPin2Line,
+  Dash: GoDash,
 };
