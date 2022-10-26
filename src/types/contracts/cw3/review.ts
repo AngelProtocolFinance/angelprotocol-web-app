@@ -1,8 +1,8 @@
 import {
   CW4Member,
+  CapitalizedEndowmentType,
   Categories,
   EndowmentTierNum,
-  EndowmentType,
   SocialMedialUrls,
   Threshold,
   Vote,
@@ -31,7 +31,7 @@ export type NewEndowment = {
   name: string; // name of the Endowment
   categories: Categories; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
   tier?: EndowmentTierNum; // SHOULD NOT be editable for now (only the Config.owner, ie via the Gov contract or AP CW3 Multisig can set/update)
-  endow_type: Capitalize<EndowmentType>;
+  endow_type: CapitalizedEndowmentType;
   logo: string;
   image: string;
   profile: NewProfile; // struct holding the Endowment info

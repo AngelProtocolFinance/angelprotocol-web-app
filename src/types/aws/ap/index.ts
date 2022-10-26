@@ -1,9 +1,53 @@
-import { NetworkType } from "types/lists";
+import {
+  CapitalizedEndowmentType,
+  Categories,
+  EndowmentStatus,
+  EndowmentTier,
+  SocialMedialUrls,
+} from "../../contracts";
+import { NetworkType } from "../../lists";
 
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
-export interface Endowment {
+
+export type Endowment = {
+  //EndowmentEntry
+  id: number; //int
+  owner: String;
+  status: keyof EndowmentStatus;
+  endow_type: CapitalizedEndowmentType;
+  name: string;
+  logo: string;
+  image: string;
+  tier: EndowmentTier;
+  categories: Categories;
+
+  //profile
+  overview: string;
+  url?: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: SocialMedialUrls;
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+};
+
+export type EndowmentsSortKey = "name"; // | add more in the future
+export type EndowmentsQueryParams = {
+  cutoff?: number;
+  sdg?: number;
+  "alphabet-order"?: boolean; //true A-Z
+  "overall-ascend"?: boolean; //true high -> low
+  type?: Endowment["endow_type"];
+  tier?: Endowment["tier"];
+};
+
+export interface LeaderboardEntry {
   endowment_id: string;
   owner: string;
   name: string;
@@ -18,7 +62,7 @@ export interface Endowment {
 }
 
 export interface Update {
-  endowments: Endowment[];
+  endowments: LeaderboardEntry[];
   last_update: string;
 }
 

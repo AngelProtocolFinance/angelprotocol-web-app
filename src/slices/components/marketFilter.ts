@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { EndowmentsSortKey } from "types/aws";
+import { CapitalizedEndowmentType } from "types/contracts";
 
-export type EndowType = "np" | "fp" | "ic";
+export type Sort = { key: EndowmentsSortKey; isAscending: boolean };
 
 type State = {
   isOpen: boolean;
   searchText: string;
-  types: EndowType[];
-  //type: "profit" | "non-profit"
+  types: CapitalizedEndowmentType[];
+  sort?: Sort;
   //geography
   sdgs: { [idx: number]: number[] };
 };
@@ -22,8 +24,8 @@ const marketFilter = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      //reset everything except isOpen
-      return { ...initialState, isOpen: state.isOpen };
+      //reset everything except isOpen && sortKey
+      return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
     },
     setSdgs: (
       state,
@@ -31,10 +33,23 @@ const marketFilter = createSlice({
         payload: { group, sdgs },
       }: PayloadAction<{ group: number; sdgs: number[] }>
     ) => {
-      state.sdgs[group] = sdgs;
+      // state.sdgs[group] = sdgs; //TODO: enable multiple sdgs
+
+      //set only single sdg
+      const _sdgs = { ...initialState.sdgs, [group]: [sdgs[sdgs.length - 1]] };
+      return { ...state, sdgs: _sdgs };
     },
-    setTypes: (state, { payload }: PayloadAction<EndowType[]>) => {
-      state.types = payload;
+
+    setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
+      state.sort = payload;
+    },
+    setTypes: (
+      state,
+      { payload }: PayloadAction<CapitalizedEndowmentType[]>
+    ) => {
+      // state.types = payload; //TODO: enable multiple types
+      //set only single type
+      state.types = [payload[payload.length - 1]];
     },
     toggle(state) {
       state.isOpen = !state.isOpen;
@@ -42,5 +57,7 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes } = marketFilter.actions;
+export const { setSdgs, reset, toggle, setTypes, setSort } =
+  marketFilter.actions;
+
 export default marketFilter.reducer;
