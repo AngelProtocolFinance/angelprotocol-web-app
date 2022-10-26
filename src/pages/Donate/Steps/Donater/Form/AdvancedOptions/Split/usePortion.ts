@@ -13,7 +13,7 @@ export default function usePortion(type: string) {
   const disp_amount = `${token.symbol} ${humanize(
     ((isLocked ? pctLockedSplit : pctLiqSplit) / 100) *
       (isNaN(amount) ? 0 : amount),
-    6
+    5
   )}`;
 
   return {

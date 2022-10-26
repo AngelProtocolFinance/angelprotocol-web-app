@@ -29,12 +29,12 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={`${min_donation_amnt}`}
+          placeholder="0.0000"
           className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
         />
         <TokensSelector<DV>
           fieldName="token"
-          classes={{ options: "absolute right-0 top-2 z-20" }}
+          classes={{ options: "absolute right-0 top-2 z-10" }}
         />
       </div>
       <div className="empty:mb-2">

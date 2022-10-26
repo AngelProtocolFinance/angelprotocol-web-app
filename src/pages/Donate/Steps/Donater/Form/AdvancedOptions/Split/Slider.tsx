@@ -1,14 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../../types";
 
-export default function Slider() {
+export default function Slider({ classes = "" }: { classes?: string }) {
   const {
     register,
     formState: { isValid },
   } = useFormContext<DonateValues>();
 
   return (
-    <div className="my-2 select-none">
+    <div className={`${classes} select-none`}>
       <input
         disabled={!isValid}
         type="range"

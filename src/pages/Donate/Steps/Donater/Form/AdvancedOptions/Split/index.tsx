@@ -9,7 +9,7 @@ export default function Split() {
       <div className="grid grid-cols-2 gap-2 mb-6">
         <Portion type="locked" title="Endowment" action="Compounded forever" />
         <Portion type="liquid" title="Current" action="Instantly available">
-          <Slider />
+          <Slider classes="my-2.5" />
         </Portion>
       </div>
       <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray-d1 rounded">
