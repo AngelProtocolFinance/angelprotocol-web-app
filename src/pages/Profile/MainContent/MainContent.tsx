@@ -13,7 +13,7 @@ export default function MainContent() {
 
         <Balances className="order-3 lg:col-span-1 lg:justify-self-end" />
 
-        <Body className="order-4 xl:col-span-2 w-full h-40" />
+        <Body className="order-4 xl:col-span-2 w-full h-full" />
       </div>
     </div>
   );
