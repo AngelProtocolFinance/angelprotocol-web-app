@@ -73,7 +73,7 @@ module.exports = {
         d3: "#272420",
         d2: "#44413C",
         d1: "#6C6760",
-        DEFAULT: "#ACA7A0",
+        DEFAULT: "#A2A3A3",
         l1: "#C4C0BB",
         l2: "#D6D6D6",
         l3: "#ECEDED",
