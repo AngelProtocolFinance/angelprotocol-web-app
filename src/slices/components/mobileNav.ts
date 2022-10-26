@@ -1,17 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type State = { isMobileNavOpen: boolean };
-const initialState: State = { isMobileNavOpen: false };
+type State = { isRendered: boolean };
+const initialState: State = { isRendered: false };
 
 const mobileNav = createSlice({
   name: "mobileNav",
   initialState,
   reducers: {
-    setIsMobileNavOpen: (state, { payload }: PayloadAction<boolean>) => {
-      state.isMobileNavOpen = payload;
+    setIsRendered: (state, { payload }: PayloadAction<boolean>) => {
+      state.isRendered = payload;
     },
   },
 });
 
-export const { setIsMobileNavOpen } = mobileNav.actions;
+export const { setIsRendered } = mobileNav.actions;
 export default mobileNav.reducer;

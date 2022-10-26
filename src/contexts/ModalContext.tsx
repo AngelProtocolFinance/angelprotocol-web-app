@@ -10,11 +10,17 @@ import {
 import { FC } from "react";
 
 type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
+type Opener = <T extends object = {}>(
+  Content: FC<T>,
+  props: T,
+  parentId?: string
+) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
 };
+
+type ContextVal = Handlers & { isModalOpen: boolean };
 
 export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
@@ -35,6 +41,7 @@ export default function ModalContext(
       value={{
         showModal,
         closeModal,
+        isModalOpen: !!Modal,
       }}
     >
       <Dialog
@@ -50,7 +57,7 @@ export default function ModalContext(
     </setContext.Provider>
   );
 }
-const setContext = createContext<Handlers>({} as Handlers);
+const setContext = createContext<ContextVal>({} as ContextVal);
 export const useModalContext = () => {
   const val = useContext(setContext);
   if (Object.entries(val).length <= 0) {

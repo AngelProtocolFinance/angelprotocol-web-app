@@ -1,24 +1,24 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSetter } from "store/accessors";
-import { setIsMobileNavOpen } from "slices/components/mobileNav";
+import { setIsRendered } from "slices/components/mobileNav";
 import { appRoutes } from "constants/routes";
 import ThemeToggle from "../../ThemeToggle";
-import { commonNavItemStyle, navLinkStyle } from "./constants";
+import { commonNavItemStyle, navLinkStyle } from "../constants";
 
-export default function NavLinks() {
+export default function Links() {
   const dispatch = useSetter();
   useEffect(() => {
     //set open state after portal node has been mounted
-    dispatch(setIsMobileNavOpen(true));
+    dispatch(setIsRendered(true));
 
     return () => {
-      dispatch(setIsMobileNavOpen(false));
+      dispatch(setIsRendered(false));
     };
   }, [dispatch]);
 
   return (
-    <nav className="padded-container grid w-full justify-items-start content-start font-extrabold font-heading ">
+    <nav className="grid w-full justify-items-start content-start font-extrabold font-heading">
       <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Marketplace
       </NavLink>
@@ -32,7 +32,7 @@ export default function NavLinks() {
         className={`flex justify-between items-center ${commonNavItemStyle}`}
       >
         <span>Theme</span>
-        <ThemeToggle />
+        <ThemeToggle classes="flex" />
       </span>
     </nav>
   );
