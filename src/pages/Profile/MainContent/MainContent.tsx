@@ -1,4 +1,5 @@
 import Balances from "./Balances";
+import Body from "./Body";
 import NameAddressSection from "./NameAddressSection";
 import UrlDonateSection from "./UrlDonateSection";
 
@@ -12,7 +13,7 @@ export default function MainContent() {
 
         <Balances className="order-3 lg:col-span-1 lg:justify-self-end" />
 
-        <div className="order-4 lg:col-span-2 w-full h-40">Overview</div>
+        <Body className="order-4 xl:col-span-2 w-full h-40" />
       </div>
     </div>
   );
