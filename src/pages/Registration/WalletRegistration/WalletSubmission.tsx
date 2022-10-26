@@ -87,7 +87,7 @@ export default function WalletSubmission() {
               </Button>
               <Button
                 submit
-                className="btn-orange w-48 h-10"
+                className="btn-orange uppercase w-48 h-10"
                 isLoading={isSubmitting}
                 disabled={isSubmitting}
               >

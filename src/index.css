@@ -39,7 +39,7 @@
   }
 
   .btn-orange {
-    @apply bg-orange text-white uppercase cursor-pointer font-bold hover:bg-orange-l1 active:bg-orange-d1 transition;
+    @apply bg-orange text-white cursor-pointer font-bold hover:bg-orange-l1 active:bg-orange-d1 transition;
   }
   .btn-orange:disabled {
     @apply bg-gray cursor-auto;

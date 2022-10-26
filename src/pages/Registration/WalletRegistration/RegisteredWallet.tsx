@@ -33,7 +33,7 @@ export default function RegisteredWallet(props: { onChange: () => void }) {
         change wallet
       </Button>
       <Button
-        className="btn-orange w-80 h-10 mt-8 rounded-xl uppercase font-bold"
+        className="btn-orange uppercase w-80 h-10 mt-8 rounded-xl uppercase font-bold"
         onClick={() => navigate(`${appRoutes.register}/${routes.dashboard}`)}
       >
         Continue
