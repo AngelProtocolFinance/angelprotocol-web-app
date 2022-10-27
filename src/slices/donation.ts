@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { KYCData, Token } from "types/aws";
+import { Token } from "types/aws";
 
 export type DonationState = Step0 | Step1 | Step2 | Step3;
 
@@ -14,17 +14,16 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
-        step: 2, //set to next
+        ...(state as Step2),
+        step: 2,
         details: payload,
-        recipient: state.recipient!, //user can't go to step 2 without completing step 1
       };
     },
-    setKYC: (state, { payload }: PayloadAction<KYC>) => {
+    setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
-        step: 3, //set to next
+        ...(state as Step3),
+        step: 3,
         kyc: payload,
-        details: state.details!, //user can't go to step 3 without completing step 1
-        recipient: state.recipient!,
       };
     },
     setStep(state, { payload }: PayloadAction<number>) {
@@ -57,6 +56,8 @@ export type KYC = {
   email: string;
 };
 
+export type SkippableKYC = KYC | "skipped";
+
 type Step0 = {
   step: 0;
   details?: never;
@@ -74,13 +75,13 @@ export type Step1 = {
 export type Step2 = {
   step: 2;
   details?: DonationDetails;
-  kyc?: KYCData;
+  kyc?: SkippableKYC;
   recipient: DonationRecipient;
 };
 
 export type Step3 = {
   step: 3;
   details: DonationDetails;
-  kyc: KYC;
+  kyc: KYC | "skipped";
   recipient: DonationRecipient;
 };

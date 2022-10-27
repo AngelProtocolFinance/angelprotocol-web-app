@@ -1,5 +1,5 @@
 import { useSetter } from "store/accessors";
-import { Step2, setKYC, setStep } from "slices/donation";
+import { Step2, setStep } from "slices/donation";
 
 export default function KYC(props: Step2) {
   const dispatch = useSetter();

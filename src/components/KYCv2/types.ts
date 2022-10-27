@@ -1,4 +1,3 @@
-import { KYCData } from "types/aws";
 import { KYC, Step2 } from "slices/donation";
 
 export type PrevTxDetails = { txHash: string; chainId: string };
@@ -19,5 +18,6 @@ type PostDonation = {
 };
 
 export type Props = (OnDonation | PostDonation) & {
+  classes?: string;
   isKYCRequired?: boolean;
 };

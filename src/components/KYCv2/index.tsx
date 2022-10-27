@@ -10,7 +10,11 @@ export default function KYCv2(props: Props) {
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: isOnDonation ? props.state.kyc : {},
+    defaultValues: isOnDonation
+      ? props.state.kyc === "skipped"
+        ? {}
+        : props.state.kyc
+      : {},
     resolver: yupResolver(schema),
   });
 
@@ -26,7 +30,7 @@ export default function KYCv2(props: Props) {
     <FormProvider {...methods}>
       {/** atm, receipt form is used in modal, add option to wrap in div if not used as modal */}
       <Dialog.Panel
-        className={`fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1`}
+        className={`fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1 p-4`}
       >
         <Form {...props} />
       </Dialog.Panel>

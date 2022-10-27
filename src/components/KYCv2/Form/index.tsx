@@ -2,43 +2,37 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
-import Label from "../Label";
-import { TextInput, textFieldStyle } from "../TextInput";
-import useSubmit from "../useSubmit";
+import { Label, TextInput, textFieldStyle } from "components/TextInput";
+import Controls from "./Controls";
 import Tooltip from "./Tooltip";
+import useSubmit from "./useSubmit";
 
-export default function Form({
-  classes = "",
-  ...props
-}: Props & { classes?: string }) {
+export default function Form({ classes = "", ...props }: Props) {
   const {
     handleSubmit,
     formState: { errors },
   } = useFormContext<FV>();
-  const { submit, isSubmitDisabled, isSubmitting } = useSubmit(props);
-
+  const submit = useSubmit(props);
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className={`${classes} w-full bg-orange-l6 dark:bg-blue-d4 grid gap-6 p-4 text-gray-d2 dark:text-white font-work`}
+      className={`${classes} w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work`}
       autoComplete="off"
       autoSave="off"
     >
-      <Tooltip {...props} />
-      <TextInput<FV> name="name.first" label="First name" required />
-      <TextInput<FV> name="name.last" label="Last name" required />
-      <TextInput<FV> name="address.street" label="Address" required />
+      <Tooltip {...props} classes="col-span-2 mb-12" />
+      <TextInput<FV> name="name.first" label="First name" />
+      <TextInput<FV> name="name.last" label="Last name" />
+      <TextInput<FV> name="address.street" label="Address" />
       <TextInput<FV>
-        name="address.street"
+        name="address.complement"
         label="Address complement"
-        required
+        required={false}
       />
-      <TextInput<FV> name="postalCode" label="Zip code" required />
-
-      <TextInput<FV> name="city" label="City" required />
-      <TextInput<FV> name="email" label="Email address" required />
+      <TextInput<FV> name="city" label="City" />
+      <TextInput<FV> name="postalCode" label="Zip code" />
       <div className="grid">
-        <Label htmlFor="country" required className="mb-2">
+        <Label htmlFor="country" className="mb-2">
           Country
         </Label>
         <div className="form-control rounded-md grid">
@@ -56,15 +50,9 @@ export default function Form({
           />
         </div>
       </div>
-      <TextInput<FV> name="state" label="State" />
-
-      <button
-        disabled={isSubmitDisabled}
-        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        type="submit"
-      >
-        {isSubmitting ? "Processing..." : "Submit"}
-      </button>
+      <TextInput<FV> name="state" label="State" required={false} />
+      <TextInput<FV> name="email" label="Email address" />
+      <Controls {...props} classes="mt-4" />
     </form>
   );
 }

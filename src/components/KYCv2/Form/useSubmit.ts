@@ -1,31 +1,16 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV, Props } from "./types";
+import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
+import { setKYC } from "slices/donation";
 
 export default function useSubmit(props: Props) {
-  const {
-    formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<FV>();
+  const { reset } = useFormContext<FV>();
   const dispatch = useSetter();
   const [submitRequest] = useRequestReceiptMutation();
   const { showModal } = useModalContext();
-
-  /**
-   * 
-   * @param data   fullName: string; // "John Doe"
-  email: string; // "john@doe.email.com"
-  streetAddress: string;
-  city: string;
-  state: string;
-  zipCode: string; //2000
-  country: string;
-  consent_tax: boolean;
-  consent_marketing: boolean;
-   * @returns 
-   */
 
   const submit = async (data: FV) => {
     const { name, address, email, city, state, postalCode, country } = data;
@@ -55,11 +40,11 @@ export default function useSubmit(props: Props) {
       });
       return;
     }
+
+    //on-donation receipt
+    dispatch(setKYC(data));
+    reset();
   };
 
-  return {
-    submit,
-    isSubmitting,
-    isSubmitDisabled: isSubmitting || !isValid || !isDirty,
-  };
+  return submit;
 }

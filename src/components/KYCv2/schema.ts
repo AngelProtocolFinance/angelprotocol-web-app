@@ -10,7 +10,7 @@ const shape: SchemaShape<FormValues> = {
   }),
   address: Yup.object().shape({
     street: requiredString,
-    complement: requiredString,
+    //complement: optional
   }),
 
   city: requiredString,
