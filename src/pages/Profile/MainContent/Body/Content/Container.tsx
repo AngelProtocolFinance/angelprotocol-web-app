@@ -33,7 +33,7 @@ function Header(props: {
         onClick={props.onClick}
         className="flex items-center justify-center p-px w-10 h-10 border border-gray-l2 rounded"
       >
-        <Icon type={props.isOpen ? "Dash" : "ArrowDown"} />
+        <Icon type={props.isOpen ? "Dash" : "Plus"} />
       </button>
     </div>
   );
