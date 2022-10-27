@@ -8,7 +8,7 @@ export default function NameAddressSection(props: { className: string }) {
     <div
       className={`flex flex-col gap-8 items-center w-full max-w-sm lg:items-start lg:h-full lg:gap-6 ${props.className}`}
     >
-      <p className="font-header font-bold text-2xl max-w-[320px] truncate sm:text-3xl sm:max-w-full">
+      <p className="font-header font-bold text-2xl max-w-[320px] truncate sm:text-3xl">
         {profile.name}
       </p>
       <span className="flex items-center justify-center gap-2 text-sm sm:text-base font-work uppercase">
