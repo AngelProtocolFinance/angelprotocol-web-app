@@ -20,7 +20,7 @@ const imgShape: SchemaShape<ImgLink> = {
 };
 
 const additionalnfoShape: SchemaShape<AdditionalInfoValues> = {
-  charityOverview: stringByteSchema("overview", 4, 1024),
+  charityOverview: stringByteSchema(4, 1024),
   charityLogo: Yup.object().shape(imgShape),
   banner: Yup.object().shape(imgShape),
 };
