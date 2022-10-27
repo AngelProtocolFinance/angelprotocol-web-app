@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Token } from "types/aws";
+import { KYCData, Token } from "types/aws";
 
 export type DonationState = Step0 | Step1 | Step2 | Step3;
 
@@ -47,8 +47,14 @@ export type DonationDetails = {
   pctLiquidSplit: string;
 };
 
-type KYC = {
-  name: string;
+export type KYC = {
+  name: { first: string; last: string };
+  address: { street: string; complement: string };
+  city: string;
+  postalCode: string;
+  country: string;
+  state: string;
+  email: string;
 };
 
 type Step0 = {
@@ -68,7 +74,7 @@ export type Step1 = {
 export type Step2 = {
   step: 2;
   details?: DonationDetails;
-  kyc?: KYC;
+  kyc?: KYCData;
   recipient: DonationRecipient;
 };
 
