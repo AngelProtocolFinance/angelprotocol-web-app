@@ -12,7 +12,7 @@ export default function useSubmit(props: Props) {
   const [submitRequest] = useRequestReceiptMutation();
   const { showModal } = useModalContext();
 
-  const submit = async ({ hasAgreedToTerms, ...data }: FV) => {
+  const submit = async (data: FV) => {
     const { name, address, email, city, state, postalCode, country } = data;
     if (props.type === "post-donation") {
       const response = await submitRequest({

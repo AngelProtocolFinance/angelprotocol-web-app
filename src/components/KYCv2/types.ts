@@ -2,7 +2,7 @@ import { KYC, Step2 } from "slices/donation";
 
 export type PrevTxDetails = { txHash: string; chainId: string };
 
-export type FormValues = KYC & { hasAgreedToTerms: boolean };
+export type FormValues = KYC;
 
 export type OnDonation = {
   type: "on-donation";

@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import { Label, TextInput, textFieldStyle } from "components/TextInput";
+import { ButtonContinue } from "components/donation";
 import Controls from "./Controls";
 import Terms from "./Terms";
 import Tooltip from "./Tooltip";
@@ -11,7 +12,7 @@ import useSubmit from "./useSubmit";
 export default function Form({ classes = "", ...props }: Props) {
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isSubmitting, isValid },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
   return (
@@ -77,8 +78,18 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <Terms classes="col-span-full" />
-      <Controls {...props} classes="mt-8 md:mt-12 col-span-full" />
+      <Terms classes="col-span-full my-12" />
+      {props.type === "post-donation" ? (
+        <ButtonContinue
+          className="col-span-full"
+          disabled={!isDirty || !isValid || !isSubmitting}
+          type="submit"
+        >
+          {isSubmitting ? "Processing..." : "Submit"}
+        </ButtonContinue>
+      ) : (
+        <Controls {...props} classes="col-span-full" />
+      )}
     </form>
   );
 }

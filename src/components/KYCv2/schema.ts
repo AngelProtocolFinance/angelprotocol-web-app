@@ -3,8 +3,6 @@ import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredString } from "schemas/string";
 
-export const KYC_KEY = "isKYCRequired";
-
 const shape: SchemaShape<FormValues> = {
   name: Yup.object().shape({
     first: requiredString,
@@ -14,7 +12,6 @@ const shape: SchemaShape<FormValues> = {
     street: requiredString,
     //complement: optional
   }),
-
   city: requiredString,
   postalCode: requiredString,
   country: requiredString,

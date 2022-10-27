@@ -55,6 +55,7 @@ export type KYC = {
   country: string;
   state: string;
   email: string;
+  hasAgreedToTerms: boolean;
 };
 
 export type SkippableKYC = KYC | "skipped";

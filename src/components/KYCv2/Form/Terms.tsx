@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues, Props } from "../types";
+import { FormValues } from "../types";
 
 export default function Terms({ classes = "" }: { classes?: string }) {
   const { register } = useFormContext<FormValues>();
