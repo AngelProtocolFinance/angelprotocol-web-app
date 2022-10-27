@@ -8,7 +8,7 @@ export default function Body() {
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:justify-items-start lg:items-end lg:gap-16 lg:pt-6 lg:pb-20">
         <UrlDonateSection className="order-2 lg:order-1 lg:col-span-2" />
 
-        <NameAddressSection className="order-1 lg:order-2" />
+        <NameAddressSection className="order-1 lg:order-2 lg:pl-2" />
 
         <Balances className="order-3 lg:col-span-1 lg:justify-self-end" />
 
