@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import Label from "../Label";
+import { Label } from "./Label";
 import { TextField } from "./TextField";
 
 type Classes = {
@@ -23,7 +23,6 @@ export function TextInput<T extends FieldValues>({
   name: Path<T>;
   classes?: Classes;
   label: string;
-  required?: true;
 }) {
   const {
     register,
