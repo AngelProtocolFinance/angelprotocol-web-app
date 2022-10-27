@@ -7,6 +7,7 @@ import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import transactionReducer from "slices/transaction/transactionSlice";
+import { listener } from "./listener";
 
 export const store = configureStore({
   reducer: {
@@ -22,12 +23,14 @@ export const store = configureStore({
     //future: futureReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
-      aws.middleware,
-      apes.middleware,
-      junoApi.middleware,
-      countriesApi.middleware,
-    ]),
+    getDefaultMiddleware()
+      .prepend(listener.middleware)
+      .concat([
+        aws.middleware,
+        apes.middleware,
+        junoApi.middleware,
+        countriesApi.middleware,
+      ]),
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

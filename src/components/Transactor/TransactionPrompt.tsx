@@ -3,8 +3,7 @@ import { PropsWithChildren, useMemo } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { resetTxFormState } from "slices/transaction/transactionSlice";
+import { useGetter } from "store/accessors";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
@@ -15,7 +14,6 @@ export default function TransactionPrompt({
   inModal = true,
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const stage = useGetter((state) => state.transaction.stage);
-  const dispatch = useSetter();
   const { closeModal } = useModalContext();
   const { handleError } = useErrorContext();
 
@@ -37,20 +35,11 @@ export default function TransactionPrompt({
     }
   }, [stage, children, handleError]);
 
-  function closePrompt() {
-    switch (stage.step) {
-      case "success":
-      case "error":
-        dispatch(resetTxFormState());
-    }
-    closeModal();
-  }
-
   if (inModal) {
     return (
       <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
         <button
-          onClick={closePrompt}
+          onClick={closeModal}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
           <Icon type="Close" size={25} />

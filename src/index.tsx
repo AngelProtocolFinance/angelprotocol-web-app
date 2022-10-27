@@ -19,15 +19,15 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ErrorBoundary>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
             <App />
           </Suspense>
         </BrowserRouter>
-      </Provider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Provider>
   </StrictMode>
 );
 

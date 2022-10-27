@@ -1,4 +1,5 @@
 import { Dialog } from "@headlessui/react";
+import { createAction } from "@reduxjs/toolkit";
 import {
   PropsWithChildren,
   ReactNode,
@@ -8,9 +9,14 @@ import {
   useState,
 } from "react";
 import { FC } from "react";
+import { useSetter } from "store/accessors";
 
 type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
+type Opener = <T extends object = {}>(
+  Content: FC<T>,
+  props: T,
+  parentId?: string
+) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
@@ -19,6 +25,7 @@ type Handlers = {
 export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
+  const dispatch = useSetter();
   const [Modal, setModal] = useState<ReactNode>();
 
   const showModal: Opener = useCallback((Modal, props) => {
@@ -28,7 +35,8 @@ export default function ModalContext(
 
   const closeModal = useCallback(() => {
     setModal(undefined);
-  }, []);
+    dispatch(modalClosed);
+  }, [dispatch]);
 
   return (
     <setContext.Provider
@@ -39,7 +47,7 @@ export default function ModalContext(
     >
       <Dialog
         open={Modal !== undefined}
-        onClose={() => setModal(undefined)}
+        onClose={closeModal}
         className="relative z-50"
       >
         <div className={props.backdropClasses} aria-hidden="true" />
@@ -58,3 +66,5 @@ export const useModalContext = () => {
   }
   return val;
 };
+
+export const modalClosed = createAction("modalClosed");
