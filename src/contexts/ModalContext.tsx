@@ -10,7 +10,7 @@ import {
 import { FC } from "react";
 
 type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
+type Opener = <T = {}>(Content: FC<T>, props: T) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
