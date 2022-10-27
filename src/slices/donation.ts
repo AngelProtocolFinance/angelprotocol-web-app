@@ -39,6 +39,7 @@ export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
   id: number;
   name: string;
+  isKYCRequired: boolean;
 };
 
 export type DonationDetails = {

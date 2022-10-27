@@ -19,5 +19,4 @@ type PostDonation = {
 
 export type Props = (OnDonation | PostDonation) & {
   classes?: string;
-  isKYCRequired?: boolean;
 };

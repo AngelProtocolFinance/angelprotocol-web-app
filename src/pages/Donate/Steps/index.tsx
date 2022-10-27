@@ -40,7 +40,6 @@ function CurrStep(props: DonationState) {
           type="on-donation"
           state={props}
           classes="grid grid-cols-2 gap-5"
-          isKYCRequired={true}
         />
       );
     }

@@ -3,7 +3,7 @@ import { FormValues, Props } from "../types";
 import { useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 
-export default function Controls({ isKYCRequired, ...props }: Props) {
+export default function Controls(props: Props) {
   const {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FormValues>();
@@ -21,7 +21,11 @@ export default function Controls({ isKYCRequired, ...props }: Props) {
     );
   }
 
-  const { step, kyc } = props.state;
+  const {
+    step,
+    kyc,
+    recipient: { isKYCRequired },
+  } = props.state;
 
   function goBack() {
     dispatch(setStep(step - 1));

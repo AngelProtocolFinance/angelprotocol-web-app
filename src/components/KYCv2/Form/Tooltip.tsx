@@ -15,12 +15,11 @@ export default function Tooltip(props: Props) {
     );
   }
   const {
-    isKYCRequired,
     state: { recipient },
   } = props;
 
   return (
-    (isKYCRequired && (
+    (recipient.isKYCRequired && (
       <p className={`font-bold text-center ${props.classes ?? ""}`}>
         {recipient.name} enforces donor verification. Please provide your
         personal information below to complete your donation. You will be sent a
