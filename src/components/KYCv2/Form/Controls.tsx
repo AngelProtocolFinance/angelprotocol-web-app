@@ -6,8 +6,10 @@ import { setKYC, setStep } from "slices/donation";
 
 export default function Controls({ classes = "", ...props }: Props) {
   const {
+    watch,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FormValues>();
+  const hasAgreedToTerms = watch("hasAgreedToTerms");
   const dispatch = useSetter();
 
   if (props.type === "post-donation") {
@@ -48,7 +50,11 @@ export default function Controls({ classes = "", ...props }: Props) {
           Continue
         </ButtonContinue>
       ) : (
-        <ButtonContinue type="button" onClick={skip}>
+        <ButtonContinue
+          disabled={!hasAgreedToTerms}
+          type="button"
+          onClick={skip}
+        >
           Continue
         </ButtonContinue>
       )}

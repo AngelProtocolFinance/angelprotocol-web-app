@@ -2,7 +2,7 @@ import { KYC, Step2 } from "slices/donation";
 
 export type PrevTxDetails = { txHash: string; chainId: string };
 
-export type FormValues = KYC;
+export type FormValues = KYC & { hasAgreedToTerms: boolean };
 
 export type OnDonation = {
   type: "on-donation";
@@ -17,6 +17,4 @@ type PostDonation = {
   txHash: string;
 };
 
-export type Props = (OnDonation | PostDonation) & {
-  classes?: string;
-};
+export type Props = (OnDonation | PostDonation) & { classes?: string };

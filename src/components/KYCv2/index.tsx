@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
 import Form from "./Form";
-import { schema } from "./schema";
+import { KYC_KEY, schema } from "./schema";
 
 export default function KYCv2(props: Props) {
   const isOnDonation = props.type === "on-donation";
@@ -15,7 +15,11 @@ export default function KYCv2(props: Props) {
         ? {}
         : props.state.kyc
       : {},
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema, {
+      context: {
+        [KYC_KEY]: isOnDonation && props.state.recipient.isKYCRequired,
+      },
+    }),
   });
 
   if (isOnDonation) {
