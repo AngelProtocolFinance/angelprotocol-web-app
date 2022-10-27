@@ -32,7 +32,7 @@ export default function Amount() {
           placeholder="0.0000"
           className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
         />
-        <TokensSelector<DV>
+        <TokensSelector<DV, "token">
           fieldName="token"
           classes={{ options: "absolute right-0 top-2 z-10" }}
         />

@@ -1,10 +1,11 @@
-import { KYCData, Token } from "types/aws";
+import { KYCData } from "types/aws";
+import { TokenWithAmount } from "slices/donation";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: Token;
+  token: TokenWithAmount;
   min_liq: number;
   max_liq: number;
   charityId: number;

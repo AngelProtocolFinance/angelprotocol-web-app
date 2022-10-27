@@ -32,7 +32,7 @@ export default function Amount() {
           className="w-full p-3 bg-transparent focus:outline-none border-r border-gray-d2/20"
         />
         {/* <TokenSelector<DV> fieldName="token" classes="border-l-2 pl-2" /> */}
-        <TokensSelector<DV> fieldName="token" />
+        <TokensSelector<DV, "token"> fieldName="token" />
       </div>
 
       <div className="empty:mb-2">
