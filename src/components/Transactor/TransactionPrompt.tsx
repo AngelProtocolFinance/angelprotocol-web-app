@@ -1,9 +1,10 @@
 import { Dialog } from "@headlessui/react";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { resetTxFormState } from "slices/transaction/transactionSlice";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
@@ -13,9 +14,20 @@ export default function TransactionPrompt({
   children,
   inModal = true,
 }: PropsWithChildren<{ inModal?: boolean }>) {
+  const dispatch = useSetter();
   const stage = useGetter((state) => state.transaction.stage);
-  const { closeModal } = useModalContext();
+  const { closeModal, onCloseModal } = useModalContext();
   const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    onCloseModal(() => {
+      switch (stage.step) {
+        case "success":
+        case "error":
+          dispatch(resetTxFormState());
+      }
+    });
+  }, [stage.step, dispatch, onCloseModal]);
 
   const prompt = useMemo(() => {
     switch (stage.step) {
