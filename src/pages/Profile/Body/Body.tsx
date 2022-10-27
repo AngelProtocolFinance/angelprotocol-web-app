@@ -10,7 +10,7 @@ export default function Body() {
 
         <NameAddressSection className="order-1 xl:order-2 xl:pl-2" />
 
-        <Balances className="order-3 xl:col-span-2 xl:col-span-1 xl:justify-self-end" />
+        <Balances className="order-3 xl:col-span-1 xl:justify-self-end" />
 
         <div className="order-4 xl:col-span-2 w-full h-40">Overview</div>
       </div>
