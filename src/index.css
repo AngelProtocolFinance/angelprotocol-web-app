@@ -16,7 +16,7 @@
   }
 
   .padded-container {
-    @apply xl:container xl:mx-auto;
+    @apply px-5 xl:container xl:mx-auto xl:px-0;
   }
 
   .btn {
