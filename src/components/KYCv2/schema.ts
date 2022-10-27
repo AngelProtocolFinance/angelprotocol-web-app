@@ -16,7 +16,7 @@ const shape: SchemaShape<FormValues> = {
   city: requiredString,
   postalCode: requiredString,
   country: requiredString,
-  email: Yup.string().email("email is invalid").required("email is required"),
+  email: Yup.string().email("invalid").required("required"),
 };
 
 export const schema = Yup.object().shape(shape);

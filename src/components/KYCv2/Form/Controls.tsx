@@ -4,7 +4,7 @@ import { BtnBack, ButtonContinue } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 
-export default function Controls(props: Props) {
+export default function Controls({ classes = "", ...props }: Props) {
   const {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FormValues>();
@@ -13,6 +13,7 @@ export default function Controls(props: Props) {
   if (props.type === "post-donation") {
     return (
       <ButtonContinue
+        className={classes}
         disabled={!isDirty || !isValid || !isSubmitting}
         type="submit"
       >
@@ -38,7 +39,7 @@ export default function Controls(props: Props) {
     isSubmitting || !isValid || (wasCompleted ? false : !isDirty);
 
   return (
-    <div className="grid cols-span-2 col-span-2">
+    <div className={`${classes} grid grid-cols-2 gap-5`}>
       <BtnBack as="btn" onClick={goBack} type="button">
         Back
       </BtnBack>
@@ -48,7 +49,7 @@ export default function Controls(props: Props) {
         </ButtonContinue>
       ) : (
         <ButtonContinue type="button" onClick={skip}>
-          Skip
+          Continue
         </ButtonContinue>
       )}
     </div>

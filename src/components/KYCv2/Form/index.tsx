@@ -20,7 +20,7 @@ export default function Form({ classes = "", ...props }: Props) {
       autoComplete="off"
       autoSave="off"
     >
-      <Tooltip {...props} classes="col-span-2 mb-12" />
+      <Tooltip {...props} classes="mb-12 col-span-full" />
       <TextInput<FV> name="name.first" label="First name" />
       <TextInput<FV> name="name.last" label="Last name" />
       <TextInput<FV> name="address.street" label="Address" />
@@ -51,8 +51,12 @@ export default function Form({ classes = "", ...props }: Props) {
         </div>
       </div>
       <TextInput<FV> name="state" label="State" required={false} />
-      <TextInput<FV> name="email" label="Email address" />
-      <Controls {...props} classes="mt-4" />
+      <TextInput<FV>
+        name="email"
+        label="Email address"
+        classes={{ container: "col-span-full" }}
+      />
+      <Controls {...props} classes="mt-8 md:mt-12 col-span-full" />
     </form>
   );
 }

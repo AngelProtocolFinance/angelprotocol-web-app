@@ -9,7 +9,7 @@ type Lnk = { as: "link" } & LinkProps;
 type Props = Btn | Lnk;
 
 const common =
-  "text-sm md:text-base py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4 dark:hover:bg-blue-d3";
+  "max-md:text-sm py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4 dark:hover:bg-blue-d3";
 
 export function BtnBack(props: Props) {
   if (props.as === "link") {

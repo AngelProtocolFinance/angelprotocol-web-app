@@ -39,7 +39,7 @@ function CurrStep(props: DonationState) {
         <KYCv2
           type="on-donation"
           state={props}
-          classes="grid grid-cols-2 gap-5"
+          classes="grid gap-5 min-[510px]:grid-cols-2"
         />
       );
     }

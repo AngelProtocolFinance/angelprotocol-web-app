@@ -25,7 +25,11 @@ export default function Tooltip(props: Props) {
         personal information below to complete your donation. You will be sent a
         tax receipt to your email address automatically
       </p>
-    )) ||
-    null
+    )) || (
+      <p className={`font-bold text-center ${props.classes ?? ""}`}>
+        Please fill in your personal information below if you want to be sent a
+        tax receipt. You can leave the form blank if you don't want one
+      </p>
+    )
   );
 }
