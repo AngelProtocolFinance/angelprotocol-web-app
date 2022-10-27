@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues, Props } from "../types";
+import { BtnBack, ButtonContinue } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 
@@ -11,13 +12,12 @@ export default function Controls(props: Props) {
 
   if (props.type === "post-donation") {
     return (
-      <button
+      <ButtonContinue
         disabled={!isDirty || !isValid || !isSubmitting}
-        className="btn-orange"
         type="submit"
       >
         {isSubmitting ? "Processing..." : "Submit"}
-      </button>
+      </ButtonContinue>
     );
   }
 
@@ -39,21 +39,17 @@ export default function Controls(props: Props) {
 
   return (
     <div className="grid cols-span-2 col-span-2">
-      <button
-        onClick={goBack}
-        className="text-sm md:text-base py-3 rounded border border-gray-l2 dark:border-bluegray-d1 bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4 dark:hover:bg-blue-d3"
-        type="button"
-      >
+      <BtnBack as="btn" onClick={goBack} type="button">
         Back
-      </button>
+      </BtnBack>
       {isKYCRequired ? (
-        <button disabled={cantSubmit} className="btn-orange" type="submit">
+        <ButtonContinue disabled={cantSubmit} type="submit">
           Continue
-        </button>
+        </ButtonContinue>
       ) : (
-        <button className="btn-orange" type="button" onClick={skip}>
+        <ButtonContinue type="button" onClick={skip}>
           Skip
-        </button>
+        </ButtonContinue>
       )}
     </div>
   );
