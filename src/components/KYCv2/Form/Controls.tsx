@@ -15,23 +15,26 @@ export default function Controls({
     watch,
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
-  const { hasAgreedToTerms, ...formVal } = watch();
-
-  const wantsKYC = hasStartedKYC(formVal || {});
-
-  useEffect(() => {
-    if (!wantsKYC) {
-      reset({}, { keepValues: true });
-    }
-  }, [wantsKYC, reset]);
 
   const dispatch = useSetter();
-
   const { state } = props;
   const {
     step,
     recipient: { isKYCRequired },
   } = state;
+
+  const { hasAgreedToTerms, ...formVal } = watch();
+  const wantsKYC = hasStartedKYC(formVal || {});
+
+  useEffect(() => {
+    (async () => {
+      if (!wantsKYC && !isKYCRequired) {
+        //wait for a bit to cover last synchronous error
+        await new Promise((r) => setTimeout(r, 100));
+        reset(undefined, { keepValues: true });
+      }
+    })();
+  }, [wantsKYC, reset, isKYCRequired]);
 
   function goBack() {
     dispatch(setStep(step - 1));

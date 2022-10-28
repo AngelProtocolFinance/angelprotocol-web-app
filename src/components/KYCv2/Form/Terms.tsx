@@ -33,7 +33,7 @@ export default function Terms({ classes = "" }: { classes?: string }) {
         errors={errors}
         name={name}
         as="p"
-        className="absolute -bottom-6 left-0 text-left text-xs text-red dark:text-red-l4"
+        className="absolute -bottom-6 left-0 text-left text-xs text-red dark:text-red-l2"
       />
     </div>
   );
