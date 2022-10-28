@@ -2,7 +2,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
-import { Label, TextInput, textFieldStyle } from "components/TextInput";
+import {
+  Label,
+  TextInput,
+  errorStyle,
+  textFieldStyle,
+} from "components/TextInput";
 import { ButtonContinue } from "components/donation";
 import Controls from "./Controls";
 import Terms from "./Terms";
@@ -62,7 +67,7 @@ export default function Form({ classes = "", ...props }: Props) {
             errors={errors}
             name="country"
             as="span"
-            className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l4"
+            className={errorStyle}
           />
         </div>
       </div>

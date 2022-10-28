@@ -16,7 +16,10 @@ const shape: SchemaShape<FormValues> = {
   postalCode: requiredString,
   country: requiredString,
   email: Yup.string().email("invalid").required("required"),
-  hasAgreedToTerms: Yup.boolean().oneOf([true]),
+  hasAgreedToTerms: Yup.boolean().oneOf(
+    [true],
+    "donors must agree to donation terms"
+  ),
 };
 
 export const schema = Yup.object().shape(shape);

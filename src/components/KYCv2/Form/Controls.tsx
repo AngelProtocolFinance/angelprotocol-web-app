@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues, OnDonation } from "../types";
 import { BtnBack, ButtonContinue } from "components/donation";
@@ -9,30 +10,36 @@ export default function Controls({
   ...props
 }: OnDonation & { classes?: string }) {
   const {
+    reset,
+    trigger,
     watch,
-    formState: { isSubmitting, isDirty, isValid },
+    formState: { isSubmitting },
   } = useFormContext<FormValues>();
   const { hasAgreedToTerms, ...formVal } = watch();
+
+  const wantsKYC = hasStartedKYC(formVal || {});
+
+  useEffect(() => {
+    if (!wantsKYC) {
+      reset({}, { keepValues: true });
+    }
+  }, [wantsKYC, reset]);
 
   const dispatch = useSetter();
 
   const { state } = props;
   const {
     step,
-    kyc,
     recipient: { isKYCRequired },
   } = state;
 
   function goBack() {
     dispatch(setStep(step - 1));
   }
-  function skip() {
-    dispatch(setKYC("skipped"));
+  async function skip() {
+    const isValid = await trigger("hasAgreedToTerms", { shouldFocus: true });
+    isValid && dispatch(setKYC("skipped"));
   }
-
-  const wasCompleted = !!kyc;
-  const cantSubmit =
-    isSubmitting || !isValid || (wasCompleted ? false : !isDirty);
 
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
@@ -41,16 +48,12 @@ export default function Controls({
       </BtnBack>
       {/** KYC may not be required, and user may skip KYC,
        * but if user want to submit KYC - it should be validated */}
-      {isKYCRequired || hasStartedKYC(formVal || {}) ? (
-        <ButtonContinue disabled={cantSubmit} type="submit">
+      {isKYCRequired || wantsKYC ? (
+        <ButtonContinue disabled={isSubmitting} type="submit">
           Continue
         </ButtonContinue>
       ) : (
-        <ButtonContinue
-          disabled={!hasAgreedToTerms}
-          type="button"
-          onClick={skip}
-        >
+        <ButtonContinue type="button" onClick={skip}>
           Continue
         </ButtonContinue>
       )}

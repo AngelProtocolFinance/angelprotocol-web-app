@@ -19,7 +19,7 @@ export default function KYCv2(props: Props) {
   }
 
   const methods = useForm<FormValues>({
-    mode: "onChange",
+    mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues,
     resolver: yupResolver(schema),
