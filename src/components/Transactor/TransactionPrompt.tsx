@@ -16,18 +16,18 @@ export default function TransactionPrompt({
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const dispatch = useSetter();
   const stage = useGetter((state) => state.transaction.stage);
-  const { closeModal, onCloseModal } = useModalContext();
+  const { closeModal, onModalClose } = useModalContext();
   const { handleError } = useErrorContext();
 
   useEffect(() => {
-    onCloseModal(() => {
+    onModalClose(() => {
       switch (stage.step) {
         case "success":
         case "error":
           dispatch(resetTxFormState());
       }
     });
-  }, [stage.step, dispatch, onCloseModal]);
+  }, [stage.step, dispatch, onModalClose]);
 
   const prompt = useMemo(() => {
     switch (stage.step) {

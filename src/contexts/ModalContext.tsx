@@ -14,7 +14,7 @@ type Opener = <T = {}>(Content: FC<T>, props: T) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
-  onCloseModal: (func: Handler) => void;
+  onModalClose: (func: Handler) => void;
 };
 
 export default function ModalContext(
@@ -36,7 +36,7 @@ export default function ModalContext(
     }
   }, [onClose]);
 
-  const onCloseModal = useCallback(
+  const onModalClose = useCallback(
     (func: Handler) => setOnClose(() => func),
     []
   );
@@ -46,7 +46,7 @@ export default function ModalContext(
       value={{
         showModal,
         closeModal,
-        onCloseModal,
+        onModalClose,
       }}
     >
       <Dialog
