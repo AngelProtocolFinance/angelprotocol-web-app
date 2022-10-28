@@ -3,7 +3,7 @@ import { ProfileFormValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
-import RichTextEditor from "components/RichTextEditor";
+import { RichTextEditor } from "components/RichText";
 import {
   FormContainer,
   GroupContainer,
