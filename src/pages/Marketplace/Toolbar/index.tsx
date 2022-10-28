@@ -1,6 +1,7 @@
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
+import Search from "./Search";
 import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
@@ -23,13 +24,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
         <Icon type="Filter" size={20} />
         <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
       </button>
-      <div className="flex gap-2 order-first col-span-2 md:order-none md:col-span-1 items-center  dark:text-gray-l2 border border-gray-l2 dark:border-bluegray-d1 rounded-md overflow-clip">
-        <Icon type="Search" size={20} className="ml-2" />
-        <input
-          className="focus:outline-none w-full py-2 pr-3 bg-transparent dark:placeholder:text-gray-l2"
-          placeholder="Search organizations..."
-        />
-      </div>
+      <Search classes="order-first col-span-2 md:order-none md:col-span-1" />
       <Sorter />
     </div>
   );

@@ -35,6 +35,9 @@ const marketFilter = createSlice({
     ) => {
       state.sdgs[group] = sdgs;
     },
+    setSearchText: (state, { payload }: PayloadAction<string>) => {
+      state.searchText = payload;
+    },
 
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;
@@ -53,7 +56,7 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes, setSort } =
+export const { setSdgs, reset, toggle, setTypes, setSort, setSearchText } =
   marketFilter.actions;
 
 export default marketFilter.reducer;
