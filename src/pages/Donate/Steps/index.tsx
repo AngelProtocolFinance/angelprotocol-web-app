@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import KYCv2 from "components/KYCv2";
+import KYCv2 from "components/KYC";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,

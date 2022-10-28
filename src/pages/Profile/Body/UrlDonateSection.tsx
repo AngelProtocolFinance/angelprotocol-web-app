@@ -3,11 +3,8 @@ import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 
-// import useDonate from "./useDonate";
-
 export default function UrlDonateSection({ className }: { className: string }) {
   const profile = useProfileContext();
-  // const donate = useDonate();
 
   return (
     <div

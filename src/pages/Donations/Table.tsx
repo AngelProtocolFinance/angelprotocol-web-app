@@ -1,6 +1,6 @@
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
-import useKYC from "components/KYCv2/useKYC";
+import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import { HeaderButton, useSort } from "components/donations";
 import { getTxUrl, humanize, maskAddress } from "helpers";
