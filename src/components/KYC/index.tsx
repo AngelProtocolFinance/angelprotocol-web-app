@@ -5,7 +5,7 @@ import { FormValues, Props } from "./types";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
-export default function KYCv2(props: Props) {
+export default function KYC(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
   let defaultValues: Partial<FormValues> = {};
