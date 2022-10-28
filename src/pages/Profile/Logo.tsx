@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { useProfileContext } from "./ProfileContext";
 
 const logoStyle =
-  "box-border h-44 w-44 border border-gray-l2 rounded-full object-contain dark:border-bluegray-d1";
+  "box-border h-44 w-44 border border-gray-l2 rounded-full object-contain dark:border-bluegray";
 
 export default function Logo() {
   return (

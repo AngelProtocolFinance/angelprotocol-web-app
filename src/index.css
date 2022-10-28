@@ -12,7 +12,7 @@
   }
 
   .scroller::-webkit-scrollbar-track {
-    @apply bg-gray-l2 dark:bg-bluegray-d1;
+    @apply bg-gray-l2 dark:bg-bluegray;
   }
 
   .padded-container {
