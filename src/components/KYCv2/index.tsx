@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
-import Form from "./Form";
+import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
 export default function KYCv2(props: Props) {
@@ -36,7 +36,7 @@ export default function KYCv2(props: Props) {
   return (
     <FormProvider {...methods}>
       <Dialog.Panel
-        className={`fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1 p-4`}
+        className={`${formStyle} fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1 p-4`}
       >
         <Form {...props} />
       </Dialog.Panel>

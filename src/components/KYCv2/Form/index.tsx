@@ -14,20 +14,28 @@ import Terms from "./Terms";
 import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
+export const formStyle =
+  "w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
+
 export default function Form({ classes = "", ...props }: Props) {
   const {
     handleSubmit,
-    formState: { errors, isDirty, isSubmitting, isValid },
+    formState: { errors, isSubmitting },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
+  const isPostKyc = props.type === "post-donation";
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className={`${classes} w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work`}
+      className={`${classes} ${formStyle}`}
       autoComplete="off"
       autoSave="off"
     >
-      <Tooltip {...props} classes="mb-12 col-span-full" />
+      <Tooltip
+        {...props}
+        classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
+      />
       <TextInput<FV>
         name="name.first"
         label="First name"
@@ -83,11 +91,11 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <Terms classes="col-span-full my-12" />
+      <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
       {props.type === "post-donation" ? (
         <ButtonContinue
           className="col-span-full"
-          disabled={!isDirty || !isValid || !isSubmitting}
+          disabled={isSubmitting}
           type="submit"
         >
           {isSubmitting ? "Processing..." : "Submit"}
