@@ -1,9 +1,16 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { FieldValues, Path, useController } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { TokenWithAmount } from "slices/donation";
 import Icon, { DrawerIcon } from "./Icon";
+
+type BaseFormValue = { [index: string]: TokenWithAmount };
 
 export default function TokenSelector<
   T extends FieldValues,
@@ -13,9 +20,10 @@ export default function TokenSelector<
   classes?: { container?: string; options?: string };
 }) {
   const { wallet } = useGetWallet();
+  const { setValue } = useFormContext<BaseFormValue>();
   const {
     field: { onChange: onTokenChange, value: token },
-  } = useController<{ [index: string]: TokenWithAmount }>({
+  } = useController<BaseFormValue>({
     name: props.fieldName,
   });
 
@@ -32,7 +40,10 @@ export default function TokenSelector<
   return (
     <Combobox
       value={token}
-      onChange={onTokenChange}
+      onChange={(token: TokenWithAmount) => {
+        onTokenChange(token);
+        setValue("token.amount", token.amount);
+      }}
       as="div"
       className={`${
         props.classes?.container ?? ""

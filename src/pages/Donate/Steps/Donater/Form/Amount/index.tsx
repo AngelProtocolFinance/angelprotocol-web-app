@@ -11,7 +11,7 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<DV>();
 
-  const { min_donation_amnt, symbol, amount } = watch("token");
+  const { min_donation_amnt, symbol } = watch("token");
 
   return (
     <div className="grid">
@@ -25,7 +25,6 @@ export default function Amount() {
       <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray-d1 rounded">
         <input
           {...register("token.amount")}
-          value={amount}
           autoComplete="off"
           id="amount"
           type="text"
