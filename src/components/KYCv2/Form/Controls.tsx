@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues, OnDonation } from "../types";
 import { BtnBack, ButtonContinue } from "components/donation";
 import { useSetter } from "store/accessors";
 import { KYC, setKYC, setStep } from "slices/donation";
+import { appRoutes } from "constants/routes";
 
 export default function Controls({
   classes = "",
@@ -20,7 +22,7 @@ export default function Controls({
   const { state } = props;
   const {
     step,
-    recipient: { isKYCRequired },
+    recipient: { isKYCRequired, id: endowId },
   } = state;
 
   const { hasAgreedToTerms, ...formVal } = watch();
@@ -60,6 +62,12 @@ export default function Controls({
           Continue
         </ButtonContinue>
       )}
+      <Link
+        to={appRoutes.profile + `/${endowId}`}
+        className="max-md:text-sm mt-6 col-span-full text-center text-gray-d1 dark:text-gray"
+      >
+        Cancel
+      </Link>
     </div>
   );
 }
