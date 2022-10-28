@@ -9,14 +9,14 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, sort } = useGetter(
+  const { sdgs, types, sort, searchText } = useGetter(
     (state) => state.component.marketFilter
   );
 
   const selectedSDGs = Object.entries(sdgs).flatMap(([, members]) => members);
 
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    query: "matchall",
+    query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_type: types[0],
     tier: "Level3",
