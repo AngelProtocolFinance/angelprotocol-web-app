@@ -1,6 +1,7 @@
 import { BalanceInfo } from "types/contracts";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
+import { condense, humanize } from "helpers";
 import { axlUSDCDenom } from "constants/tokens";
 import { useProfileContext } from "../ProfileContext";
 
@@ -55,7 +56,7 @@ function Balance(props: { title: string; amount: number | string }) {
         {props.title}
       </h6>
       <p className="font-work font-normal text-lg text-gray-d1 dark:text-gray">
-        ${props.amount}
+        ${humanize(condense(props.amount))}
       </p>
     </div>
   );
