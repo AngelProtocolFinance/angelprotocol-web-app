@@ -13,29 +13,30 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     (state) => state.component.marketFilter
   );
 
-  const [, members] = Object.entries(sdgs).find(
-    ([, members]) => members.length > 0
-  ) || ["", []];
+  const selectedSDGs = Object.entries(sdgs).flatMap(([, members]) => members);
 
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    "alphabet-order": sort && sort.key === "name" ? sort.isAscending : false,
-    type: types[0], //TODO: set to types[]
-    tier: "Level3", //TODO: set to tier[]
-    sdg: members[0], //TODO: set to sdgs[]
-    cutoff: 1, //always starts at 1
+    query: "matchall",
+    sort: sort ? `${sort.key}+${sort.direction}` : "default",
+    endow_type: types[0],
+    tier: "Level3",
+    sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
-    if (data?.ItemCutoff) {
+    if (
+      data?.ItemCutoff &&
+      originalArgs /** cards won't even show if no initial query is made */
+    ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        cutoff: data.ItemCutoff + 1,
+        start: data.ItemCutoff + 1,
       });
 
-      if (newEndowRes && originalArgs) {
+      if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
           updateAWSQueryData("endowments", originalArgs, (prevResult) => {

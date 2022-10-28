@@ -37,14 +37,17 @@ export type Endowment = {
   charity_navigator_rating?: string;
 };
 
-export type EndowmentsSortKey = "name"; // | add more in the future
+export type SortDirection = "asc" | "desc";
+export type EndowmentsSortKey = "name_internal" | "overall";
+export type SortValue = "default" | `${EndowmentsSortKey}+${SortDirection}`;
+
 export type EndowmentsQueryParams = {
-  cutoff?: number;
-  sdg?: number;
-  "alphabet-order"?: boolean; //true A-Z
-  "overall-ascend"?: boolean; //true high -> low
-  type?: Endowment["endow_type"];
-  tier?: Endowment["tier"];
+  query: string; //set to "matchAll" if no search query
+  sort: SortValue;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_type?: CapitalizedEndowmentType; //for now,
+  sdgs?: string; // comma separated sdg values
+  tier?: Exclude<EndowmentTier, "Level1">; //for now
 };
 
 export interface LeaderboardEntry {
