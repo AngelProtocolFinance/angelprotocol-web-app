@@ -21,7 +21,7 @@ export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
   const [Modal, setModal] = useState<ReactNode>();
-  const [onClick, setOnClick] = useState<Handler>();
+  const [onClose, setOnClose] = useState<Handler>();
 
   const showModal: Opener = useCallback((Modal, props) => {
     setModal(<Modal {...props} />);
@@ -30,14 +30,14 @@ export default function ModalContext(
 
   const closeModal = useCallback(() => {
     setModal(undefined);
-    if (onClick) {
-      onClick();
-      setOnClick(undefined);
+    if (onClose) {
+      onClose();
+      setOnClose(undefined);
     }
-  }, [onClick]);
+  }, [onClose]);
 
   const onCloseModal = useCallback(
-    (func: Handler) => setOnClick(() => func),
+    (func: Handler) => setOnClose(() => func),
     []
   );
 
