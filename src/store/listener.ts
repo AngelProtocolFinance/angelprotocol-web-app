@@ -1,5 +1,5 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
-import { modalClosed } from "contexts/ModalContext";
+import { modalTriggered } from "contexts/ModalContext";
 import { TransactorName } from "components/Transactor";
 import { TransactionPromptName } from "components/Transactor/TransactionPrompt";
 import { resetTxFormState } from "slices/transaction/transactionSlice";
@@ -7,15 +7,24 @@ import { RootState } from "./store";
 
 export const listener = createListenerMiddleware();
 listener.startListening({
-  actionCreator: modalClosed,
-  effect({ payload: key }, { dispatch, cancelActiveListeners, getState }) {
+  actionCreator: modalTriggered,
+  effect(
+    { payload: { key, action } },
+    { dispatch, cancelActiveListeners, getState }
+  ) {
     const state = getState() as RootState;
-    if (key === TransactionPromptName || key === TransactorName) {
-      switch (state.transaction.stage.step) {
-        case "success":
-        case "error":
+    const isTransactor = key === TransactorName;
+    const isHint = key === TransactionPromptName;
+
+    switch (state.transaction.stage.step) {
+      case "success":
+      case "error":
+        if (
+          (action === "close" && (isTransactor || isHint)) ||
+          (action === "open" && isTransactor)
+        ) {
           dispatch(resetTxFormState());
-      }
+        }
     }
 
     cancelActiveListeners();

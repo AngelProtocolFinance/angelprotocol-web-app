@@ -28,14 +28,18 @@ export default function ModalContext(
   const dispatch = useSetter();
   const [Modal, setModal] = useState<ReactElement>();
 
-  const showModal: Opener = useCallback((Modal, props) => {
-    setModal(<Modal {...props} key={Modal.name} />);
-  }, []);
+  const showModal: Opener = useCallback(
+    (Modal, props) => {
+      setModal(<Modal {...props} key={Modal.name} />);
+      dispatch(modalTriggered({ key: Modal.name, action: "open" }));
+    },
+    [dispatch]
+  );
 
   const closeModal = useCallback(() => {
     const key = Modal?.key || null;
     setModal(undefined);
-    dispatch(modalClosed(key));
+    dispatch(modalTriggered({ key, action: "close" }));
   }, [dispatch, Modal?.key]);
 
   return (
@@ -67,4 +71,5 @@ export const useModalContext = () => {
   return val;
 };
 
-export const modalClosed = createAction<ReactElement["key"]>("modalClosed");
+type Payload = { key: ReactElement["key"]; action: "open" | "close" };
+export const modalTriggered = createAction<Payload>("modalTriggered");
