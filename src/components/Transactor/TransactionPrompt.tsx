@@ -53,5 +53,6 @@ export default function TransactionPrompt({
   return <div className={containerClasses}>{prompt}</div>;
 }
 
+export const TransactionPromptName = TransactionPrompt.name;
 const containerClasses =
   "w-full max-w-md bg-white-grey rounded-md overflow-visible pt-4";

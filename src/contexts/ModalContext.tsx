@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { createAction } from "@reduxjs/toolkit";
 import {
   PropsWithChildren,
-  ReactNode,
+  ReactElement,
   createContext,
   useCallback,
   useContext,
@@ -12,7 +12,7 @@ import { FC } from "react";
 import { useSetter } from "store/accessors";
 
 type Handler = () => void;
-type Opener = <T extends object = {}>(
+type Opener = <T extends object>(
   Content: FC<T>,
   props: T,
   parentId?: string
@@ -26,17 +26,17 @@ export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
   const dispatch = useSetter();
-  const [Modal, setModal] = useState<ReactNode>();
+  const [Modal, setModal] = useState<ReactElement>();
 
   const showModal: Opener = useCallback((Modal, props) => {
-    setModal(<Modal {...props} />);
-    // track last active element
+    setModal(<Modal {...props} key={Modal.name} />);
   }, []);
 
   const closeModal = useCallback(() => {
+    const key = Modal?.key || null;
     setModal(undefined);
-    dispatch(modalClosed);
-  }, [dispatch]);
+    dispatch(modalClosed(key));
+  }, [dispatch, Modal?.key]);
 
   return (
     <setContext.Provider
@@ -67,4 +67,4 @@ export const useModalContext = () => {
   return val;
 };
 
-export const modalClosed = createAction("modalClosed");
+export const modalClosed = createAction<ReactElement["key"]>("modalClosed");

@@ -18,3 +18,5 @@ export default function Transactor<C extends object>({
     </TransactionPrompt>
   );
 }
+
+export const TransactorName = Transactor.name;
