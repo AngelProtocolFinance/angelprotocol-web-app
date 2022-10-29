@@ -12,7 +12,7 @@ import { FC } from "react";
 import { useSetter } from "store/accessors";
 
 type Handler = () => void;
-type Opener = <T extends object>(
+type Opener = <T extends object = {}>(
   Content: FC<T>,
   props: T,
   parentId?: string
