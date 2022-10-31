@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import Icon from "components/Icon";
 import KYC from "components/KYC";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -30,9 +32,37 @@ export default function Steps(props: DonationRecipient) {
 }
 
 function CurrStep(props: DonationState) {
+  const { wallet, isLoading } = useGetWallet();
+
+  if (isLoading) {
+    return (
+      <p className="text-center">
+        <Icon
+          size={20}
+          type="Loading"
+          className="relative inline bottom-[1px] mr-2 animate-spin"
+        />
+        Loading wallet
+      </p>
+    );
+  }
+
+  if (!wallet) {
+    return (
+      <p className="text-center">
+        <Icon
+          size={20}
+          type="Info"
+          className="relative inline bottom-[1px] mr-2"
+        />
+        You need to connect your wallet do make a donation
+      </p>
+    );
+  }
+
   switch (props.step) {
     case 3: {
-      return <Submit {...props} />;
+      return <Submit {...props} wallet={wallet} />;
     }
     case 2: {
       return (
@@ -44,7 +74,7 @@ function CurrStep(props: DonationState) {
       );
     }
     case 1: {
-      return <Donater {...props} />;
+      return <Donater {...props} wallet={wallet} />;
     }
     default: {
       return <></>; // <Steps /> sets to step 1 onMount

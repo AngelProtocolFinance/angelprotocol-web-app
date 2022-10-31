@@ -45,6 +45,9 @@ export type DonationRecipient = {
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: string;
+
+  //meta
+  tokens: TokenWithAmount[];
 };
 
 export type KYC = {

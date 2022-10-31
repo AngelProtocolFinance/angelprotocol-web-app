@@ -6,7 +6,6 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { TokenWithAmount } from "slices/donation";
 import Icon, { DrawerIcon } from "./Icon";
 
@@ -16,10 +15,10 @@ export default function TokenSelector<
   T extends FieldValues,
   K extends Path<T>
 >(props: {
+  tokens: TokenWithAmount[];
   fieldName: T[K] extends TokenWithAmount ? K : never;
   classes?: { container?: string; options?: string };
 }) {
-  const { wallet } = useGetWallet();
   const { setValue } = useFormContext<BaseFormValue>();
   const {
     field: { onChange: onTokenChange, value: token },
@@ -27,14 +26,13 @@ export default function TokenSelector<
     name: props.fieldName,
   });
 
-  const coins = wallet?.coins || [];
   const [symbol, setSymbol] = useState("");
 
-  const filteredCoins =
+  const filtered =
     symbol === ""
-      ? coins
-      : coins.filter((coin) => {
-          return coin.symbol.includes(symbol.toLowerCase());
+      ? props.tokens
+      : props.tokens.filter((t) => {
+          return t.symbol.includes(symbol.toLowerCase());
         });
 
   return (
@@ -51,7 +49,7 @@ export default function TokenSelector<
     >
       <span className="text-sm">{token.symbol}</span>
 
-      {coins.length > 1 && (
+      {props.tokens.length > 1 && (
         <Combobox.Button className="">
           {({ open }) => <DrawerIcon isOpen={open} size={20} />}
         </Combobox.Button>
@@ -66,33 +64,33 @@ export default function TokenSelector<
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."
-            disabled={coins.length <= 1}
+            disabled={props.tokens.length <= 1}
             className="text-left text-sm focus:outline-none bg-transparent w-20"
             onChange={(event) => setSymbol(event.target.value)}
           />
         </div>
-        {filteredCoins.length === 0 && symbol !== "" ? (
+        {filtered.length === 0 && symbol !== "" ? (
           <div className="relative cursor-default select-none py-2 px-4text-sm">
             {symbol} not found
           </div>
         ) : (
-          filteredCoins.map((coin) => (
+          filtered.map((token) => (
             <Combobox.Option
-              key={coin.token_id}
+              key={token.token_id}
               className={
                 "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d4 cursor-pointer"
               }
-              value={{ ...coin, amount: "" }}
+              value={token}
             >
               {({ selected }) =>
                 !selected ? (
                   <>
                     <img
                       alt=""
-                      src={coin.logo}
+                      src={token.logo}
                       className="w-6 h-6 object-contain"
                     />
-                    <span className="text-sm">{coin.symbol}</span>
+                    <span className="text-sm">{token.symbol}</span>
                   </>
                 ) : (
                   <></>

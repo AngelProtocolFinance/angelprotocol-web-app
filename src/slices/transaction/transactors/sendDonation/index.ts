@@ -4,7 +4,7 @@ import { WalletController } from "@terra-money/wallet-provider";
 import { chainOptions } from "App/chainOptions";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { DonateArgs, EstimatedTx, StageUpdater, TxOptions } from "../../types";
+import { DonateArgs, EstimatedTx, StageUpdater } from "../../types";
 import { KYCData } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
@@ -16,7 +16,7 @@ import handleTxError from "../../handleTxError";
 import transactionSlice, { setStage } from "../../transactionSlice";
 import handleEthError from "./handleEthError";
 
-export const sendCosmosDonation = createAsyncThunk<void, DonateArgs>(
+export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${transactionSlice.name}/junoDonate`,
   async (
     { wallet, tx, donation: { details, kyc, recipient } },
