@@ -1,6 +1,9 @@
 export type Donation = {
   amount: number;
   chainId: string;
+  chainName: string;
+  charityName: string;
+  charityUrl: string | undefined;
   date: string;
   hash: string;
   symbol: string;
