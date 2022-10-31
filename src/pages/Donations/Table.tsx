@@ -89,8 +89,8 @@ export default function Table(props: { donations: Donation[] }) {
                 to={`${appRoutes.profile}/${charityId}`}
                 className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
               >
-                {charityName}
-                <Icon type="ExternalLink" />
+                <span className="truncate">{charityName}</span>
+                <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{humanize(amount, 3)}</>
               <>{new Date(date).toLocaleDateString()}</>
