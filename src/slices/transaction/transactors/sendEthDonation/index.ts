@@ -70,6 +70,9 @@ export const sendEthDonation = createAsyncThunk(
         splitLiq: split_liq,
         walletAddress: args.wallet.address,
         charityId,
+        chainName: args.wallet.chain.chain_name,
+        charityName: args.donateValues.charityName,
+        charityUrl: args.donateValues.charityUrl,
       });
 
       updateStage({

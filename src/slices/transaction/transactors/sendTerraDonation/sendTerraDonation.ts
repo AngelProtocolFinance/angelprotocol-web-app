@@ -58,6 +58,9 @@ export const sendTerraDonation = createAsyncThunk(
           splitLiq: split_liq,
           walletAddress: args.wallet.walletAddress,
           charityId,
+          chainName: args.chain.chain_name,
+          charityName: args.donateValues.charityName,
+          charityUrl: args.donateValues.charityUrl,
         });
 
         updateStage({

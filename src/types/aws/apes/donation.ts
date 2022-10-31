@@ -25,7 +25,10 @@ export type ReceiptPayload = KYCData & {
 type TxBase = {
   amount: number;
   chainId: string;
+  chainName: string;
   charityId: number;
+  charityName: string;
+  charityUrl: string | undefined;
   denomination: string;
   splitLiq: string; //"50"
   transactionId: string;
