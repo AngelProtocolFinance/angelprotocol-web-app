@@ -1,5 +1,6 @@
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
+import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import { HeaderButton, useSort } from "components/donations";
@@ -27,6 +28,14 @@ export default function Table(props: { donations: Donation[] }) {
             Network
           </HeaderButton>
           <>Currency</>
+          <HeaderButton
+            onClick={handleHeaderClick("charityName")}
+            _activeSortKey={sortKey}
+            _sortKey="charityName"
+            _sortDirection={sortDirection}
+          >
+            Recipient
+          </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
@@ -56,37 +65,49 @@ export default function Table(props: { donations: Donation[] }) {
         type="tbody"
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
-        {sorted.map(({ hash, amount, symbol, chainId, date, chainName }) => (
-          <Cells
-            key={hash}
-            type="td"
-            cellClass="p-2 first:pl-0 last:pr-0 text-left"
-          >
-            <>{chainName}</>
-            <span className="font-mono text-sm">{symbol}</span>
-            <>{humanize(amount, 3)}</>
-            <>{new Date(date).toLocaleDateString()}</>
-            <a
-              href={getTxUrl(chainId, hash)}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+        {sorted.map(
+          ({
+            hash,
+            amount,
+            symbol,
+            chainId,
+            date,
+            chainName,
+            charityName,
+            charityUrl,
+          }) => (
+            <Cells
+              key={hash}
+              type="td"
+              cellClass="p-2 first:pl-0 last:pr-0 text-left"
             >
-              {maskAddress(hash)}
-            </a>
-            <button
-              className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
-              onClick={() =>
-                showKYCForm({
-                  type: "post-donation",
-                  txHash: hash,
-                })
-              }
-            >
-              get receipt
-            </button>
-          </Cells>
-        ))}
+              <>{chainName}Juno Mainnet</>
+              <span className="font-mono text-sm">{symbol}</span>
+              <CharityName name={charityName} url={charityUrl} />
+              <>{humanize(amount, 3)}</>
+              <>{new Date(date).toLocaleDateString()}</>
+              <a
+                href={getTxUrl(chainId, hash)}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+              >
+                {maskAddress(hash)}
+              </a>
+              <button
+                className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
+                onClick={() =>
+                  showKYCForm({
+                    type: "post-donation",
+                    txHash: hash,
+                  })
+                }
+              >
+                get receipt
+              </button>
+            </Cells>
+          )
+        )}
       </TableSection>
     </table>
   );
@@ -97,3 +118,21 @@ const csvHeaders: { key: keyof Donation; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
+
+function CharityName({ name, url }: { name: string; url?: string }) {
+  if (!url) {
+    return <span className="text-sm w-40">{name}</span>;
+  }
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
+    >
+      <span className="truncate">{name}</span>
+      <Icon type="ExternalLink" />
+    </a>
+  );
+}
