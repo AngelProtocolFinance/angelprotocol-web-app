@@ -29,7 +29,7 @@ function Balance(props: CW20 | Coin) {
         <span>{tokens[id].symbol}</span>
       </div>
 
-      <div className="text-right">{humanize(condense(props.amount), 4)}</div>
+      <div className="text-right">{humanize(condense(props.amount))}</div>
     </Cells>
   );
 }
