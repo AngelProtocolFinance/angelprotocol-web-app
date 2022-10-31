@@ -23,13 +23,13 @@ export type ReceiptPayload = KYCData & {
 };
 
 type TxBase = {
+  amount: number;
+  chainId: string;
+  charityId: number;
+  denomination: string;
+  splitLiq: string; //"50"
   transactionId: string;
   transactionDate: string;
-  chainId: string;
-  amount: number;
-  splitLiq: string; //"50"
-  denomination: string;
-  charityId: number;
 };
 
 type CryptoTx = TxBase & {
