@@ -31,7 +31,7 @@ export default function CharityHeader(props: ProfileResponse) {
       donaterProps: {
         charityId: profile.id,
         charityName: profile.name,
-        charityUrl: profile.url,
+        profileUrl: profile.url,
       },
       isKYCRequired: profile.kyc_donors_only,
       walletAddr: wallet.address,

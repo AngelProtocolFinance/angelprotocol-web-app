@@ -60,7 +60,7 @@ export const sendTerraDonation = createAsyncThunk(
           charityId,
           chainName: args.chain.chain_name,
           charityName: args.donateValues.charityName,
-          charityUrl: args.donateValues.charityUrl,
+          profileUrl: args.donateValues.profileUrl,
         });
 
         updateStage({

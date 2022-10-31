@@ -51,7 +51,7 @@ export const sendCosmosDonation = createAsyncThunk(
           charityId,
           chainName: args.wallet.chain.chain_name,
           charityName: args.donateValues.charityName,
-          charityUrl: args.donateValues.charityUrl,
+          profileUrl: args.donateValues.profileUrl,
         });
 
         updateStage({

@@ -74,7 +74,7 @@ export default function Table(props: { donations: Donation[] }) {
             date,
             chainName,
             charityName,
-            charityUrl,
+            profileUrl,
           }) => (
             <Cells
               key={hash}
@@ -83,7 +83,7 @@ export default function Table(props: { donations: Donation[] }) {
             >
               <>{chainName}Juno Mainnet</>
               <span className="font-mono text-sm">{symbol}</span>
-              <CharityName name={charityName} url={charityUrl} />
+              <CharityName name={charityName} url={profileUrl} />
               <>{humanize(amount, 3)}</>
               <>{new Date(date).toLocaleDateString()}</>
               <a

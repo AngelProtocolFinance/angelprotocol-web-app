@@ -5,7 +5,7 @@ export interface DonateValues {
   //metadata;
   charityId: number;
   charityName: string;
-  charityUrl: string | undefined;
+  profileUrl: string | undefined;
   isAgreedToTerms: boolean;
   kycData?: KYCData;
   max_liq: number;
@@ -16,7 +16,7 @@ export interface DonateValues {
 
 export type DonaterProps = Pick<
   DonateValues,
-  "charityId" | "charityName" | "charityUrl"
+  "charityId" | "charityName" | "profileUrl"
 > & {
   //NOTE: fill this if there's limit on donation splits to be enforce
   max_liq?: number;

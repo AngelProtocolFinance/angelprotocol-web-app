@@ -3,7 +3,7 @@ export type Donation = {
   chainId: string;
   chainName: string;
   charityName: string;
-  charityUrl: string | undefined;
+  profileUrl: string | undefined;
   date: string;
   hash: string;
   symbol: string;
@@ -31,7 +31,7 @@ type TxBase = {
   chainName: string;
   charityId: number;
   charityName: string;
-  charityUrl: string | undefined;
+  profileUrl: string | undefined;
   denomination: string;
   splitLiq: string; //"50"
   transactionId: string;
