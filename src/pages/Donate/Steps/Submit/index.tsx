@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Estimate } from "./types";
-import { EstimatedTx } from "slices/transaction/types";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
-import { Step3, setStep } from "slices/donation";
+import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/transaction/transactors";
 import { estimateDonation } from "./estimateDonation";
 
-export default function Submit(props: Step3 & { wallet: WalletState }) {
+export default function Submit(props: SubmitStep & { wallet: WalletState }) {
   const dispatch = useSetter();
 
   const [estimate, setEstimate] = useState<Estimate | "loading" | "error">(

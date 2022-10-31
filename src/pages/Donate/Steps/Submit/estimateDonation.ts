@@ -4,7 +4,7 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { Estimate } from "./types";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { Step3 } from "slices/donation";
+import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
@@ -14,7 +14,7 @@ import estimateTerraFee from "./estimateTerraFee";
 export async function estimateDonation({
   details: { token },
   wallet,
-}: Step3 & { wallet: WalletState }): Promise<Estimate | null> {
+}: SubmitStep & { wallet: WalletState }): Promise<Estimate | null> {
   const { chain } = wallet;
   const { native_currency } = chain;
 

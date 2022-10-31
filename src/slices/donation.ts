@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Token } from "types/aws";
 
-export type DonationState = Step0 | Step1 | Step2 | Step3;
+export type DonationState = InitStep | FormStep | KYCStep | SubmitStep;
 
 const initialState: DonationState = { step: 0 };
 
@@ -14,14 +14,14 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
-        ...(state as Step2),
+        ...(state as Omit<KYCStep, "details">),
         step: 2,
         details: payload,
       };
     },
     setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
-        ...(state as Step3),
+        ...(state as Omit<SubmitStep, "kyc">),
         step: 3,
         kyc: payload,
       };
@@ -63,28 +63,25 @@ export type KYC = {
 
 export type SkippableKYC = KYC | "skipped";
 
-type Step0 = {
+type InitStep = {
   step: 0;
-  details?: never;
-  kyc?: never;
   recipient?: DonationRecipient;
 };
 
-export type Step1 = {
+export type FormStep = {
   step: 1;
   details?: DonationDetails;
-  kyc?: never;
   recipient: DonationRecipient;
 };
 
-export type Step2 = {
+export type KYCStep = {
   step: 2;
   details?: DonationDetails;
   kyc?: SkippableKYC;
   recipient: DonationRecipient;
 };
 
-export type Step3 = {
+export type SubmitStep = {
   step: 3;
   details: DonationDetails;
   kyc: KYC | "skipped";

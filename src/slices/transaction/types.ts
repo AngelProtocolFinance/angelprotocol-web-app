@@ -6,7 +6,7 @@ import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions"
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain } from "types/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
-import { Step3 } from "slices/donation";
+import { SubmitStep } from "slices/donation";
 
 type Tag = TagDescription<string>;
 export type Tags = Tag[];
@@ -124,5 +124,5 @@ export type EstimatedTx =
 export type DonateArgs = {
   wallet: WalletState;
   tx: EstimatedTx;
-  donation: Step3;
+  donation: SubmitStep;
 };

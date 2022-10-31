@@ -34,7 +34,7 @@ export default function Steps(props: DonationRecipient) {
 function CurrStep(props: DonationState) {
   const { wallet, isLoading } = useGetWallet();
 
-  if (isLoading) {
+  if (isLoading && props.step <= 3) {
     return (
       <p className="text-center">
         <Icon
@@ -47,7 +47,7 @@ function CurrStep(props: DonationState) {
     );
   }
 
-  if (!wallet) {
+  if (!wallet && props.step <= 3) {
     return (
       <p className="text-center">
         <Icon
@@ -62,7 +62,7 @@ function CurrStep(props: DonationState) {
 
   switch (props.step) {
     case 3: {
-      return <Submit {...props} wallet={wallet} />;
+      return <Submit {...props} wallet={wallet!} />; //defined for steps 1 -> 3
     }
     case 2: {
       return (
@@ -74,7 +74,7 @@ function CurrStep(props: DonationState) {
       );
     }
     case 1: {
-      return <Donater {...props} wallet={wallet} />;
+      return <Donater {...props} wallet={wallet!} />; //defined for steps 1 -> 3
     }
     default: {
       return <></>; // <Steps /> sets to step 1 onMount
