@@ -101,7 +101,7 @@ export default class Contract {
   }
 
   createTransferNativeMsg(
-    amount: number,
+    amount: number | string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {

@@ -20,7 +20,7 @@ export default class CW20 extends Contract {
     });
   }
 
-  createTransferMsg(amount: number, recipient: string) {
+  createTransferMsg(amount: number | string, recipient: string) {
     return this.createExecuteContractMsg(this.address, {
       transfer: {
         //convert to uamount
