@@ -2,6 +2,7 @@ export type Donation = {
   amount: number;
   chainId: string;
   chainName: string;
+  charityId: string;
   charityName: string;
   profileUrl: string | undefined;
   date: string;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
@@ -5,6 +6,7 @@ import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import { HeaderButton, useSort } from "components/donations";
 import { getTxUrl, humanize, maskAddress } from "helpers";
+import { appRoutes } from "constants/routes";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -74,7 +76,7 @@ export default function Table(props: { donations: Donation[] }) {
             date,
             chainName,
             charityName,
-            profileUrl,
+            charityId,
           }) => (
             <Cells
               key={hash}
@@ -83,7 +85,13 @@ export default function Table(props: { donations: Donation[] }) {
             >
               <>{chainName}Juno Mainnet</>
               <span className="font-mono text-sm">{symbol}</span>
-              <CharityName name={charityName} url={profileUrl} />
+              <Link
+                to={`${appRoutes.profile}/${charityId}`}
+                className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
+              >
+                {charityName}
+                <Icon type="ExternalLink" />
+              </Link>
               <>{humanize(amount, 3)}</>
               <>{new Date(date).toLocaleDateString()}</>
               <a
@@ -118,21 +126,3 @@ const csvHeaders: { key: keyof Donation; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
-
-function CharityName({ name, url }: { name: string; url?: string }) {
-  if (!url) {
-    return <span className="text-sm w-40">{name}</span>;
-  }
-
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noreferrer noopener"
-      className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
-    >
-      <span className="truncate">{name}</span>
-      <Icon type="ExternalLink" />
-    </a>
-  );
-}
