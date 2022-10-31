@@ -67,7 +67,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tailwindcss/line-clamp"),
     plugin(function ({ addComponents, theme }) {
       addComponents({
         ".btn-primary": {
