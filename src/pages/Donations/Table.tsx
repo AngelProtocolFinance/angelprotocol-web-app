@@ -18,6 +18,14 @@ export default function Table(props: { donations: Donation[] }) {
           type="th"
           cellClass="text-left uppercase font-heading font-semibold text-sm text-white p-2 first:pl-0 last:pr-0"
         >
+          <HeaderButton
+            onClick={handleHeaderClick("chainName")}
+            _activeSortKey={sortKey}
+            _sortKey="chainName"
+            _sortDirection={sortDirection}
+          >
+            Network
+          </HeaderButton>
           <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("amount")}
@@ -48,12 +56,13 @@ export default function Table(props: { donations: Donation[] }) {
         type="tbody"
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
-        {sorted.map(({ hash, amount, symbol, chainId, date }) => (
+        {sorted.map(({ hash, amount, symbol, chainId, date, chainName }) => (
           <Cells
             key={hash}
             type="td"
             cellClass="p-2 first:pl-0 last:pr-0 text-left"
           >
+            <>{chainName}</>
             <span className="font-mono text-sm">{symbol}</span>
             <>{humanize(amount, 3)}</>
             <>{new Date(date).toLocaleDateString()}</>
