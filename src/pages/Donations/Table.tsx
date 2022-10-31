@@ -18,6 +18,7 @@ export default function Table(props: { donations: Donation[] }) {
           type="th"
           cellClass="text-left uppercase font-heading font-semibold text-sm text-white p-2 first:pl-0 last:pr-0"
         >
+          <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
@@ -26,7 +27,6 @@ export default function Table(props: { donations: Donation[] }) {
           >
             Amount
           </HeaderButton>
-          <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
@@ -54,8 +54,8 @@ export default function Table(props: { donations: Donation[] }) {
             type="td"
             cellClass="p-2 first:pl-0 last:pr-0 text-left"
           >
-            <>{humanize(amount, 3)}</>
             <span className="font-mono text-sm">{symbol}</span>
+            <>{humanize(amount, 3)}</>
             <>{new Date(date).toLocaleDateString()}</>
             <a
               href={getTxUrl(chainId, hash)}
