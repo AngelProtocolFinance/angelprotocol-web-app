@@ -4,7 +4,6 @@ export type Donation = {
   chainName: string;
   charityId: string;
   charityName: string;
-  profileUrl: string | undefined;
   date: string;
   hash: string;
   symbol: string;
@@ -32,7 +31,6 @@ type TxBase = {
   chainName: string;
   charityId: number;
   charityName: string;
-  profileUrl: string | undefined;
   denomination: string;
   splitLiq: string; //"50"
   transactionId: string;

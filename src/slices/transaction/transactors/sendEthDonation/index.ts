@@ -72,7 +72,6 @@ export const sendEthDonation = createAsyncThunk(
         charityId,
         chainName: args.wallet.chain.chain_name,
         charityName: args.donateValues.charityName,
-        profileUrl: args.donateValues.profileUrl,
       });
 
       updateStage({

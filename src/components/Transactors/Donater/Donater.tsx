@@ -39,7 +39,6 @@ function DonateContext(props: DonaterProps & { tokens: Token[] | undefined }) {
       charityId: props.charityId,
       kycData: props.kycData,
       charityName: props.charityName,
-      profileUrl: props.profileUrl,
     },
     resolver: yupResolver(schema),
   });
