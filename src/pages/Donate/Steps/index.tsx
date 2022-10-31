@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import KYC from "components/KYC";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
@@ -6,7 +7,6 @@ import {
   setRecipient,
 } from "slices/donation";
 import Donater from "./Donater";
-import KYC from "./KYC";
 import Progress from "./Progress";
 import Submit from "./Submit";
 
@@ -35,7 +35,13 @@ function CurrStep(props: DonationState) {
       return <Submit {...props} />;
     }
     case 2: {
-      return <KYC {...props} />;
+      return (
+        <KYC
+          type="on-donation"
+          state={props}
+          classes="grid gap-5 min-[510px]:grid-cols-2"
+        />
+      );
     }
     case 1: {
       return <Donater {...props} />;

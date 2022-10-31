@@ -14,17 +14,16 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
-        step: 2, //set to next
+        ...(state as Step2),
+        step: 2,
         details: payload,
-        recipient: state.recipient!, //user can't go to step 2 without completing step 1
       };
     },
-    setKYC: (state, { payload }: PayloadAction<KYC>) => {
+    setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
-        step: 3, //set to next
+        ...(state as Step3),
+        step: 3,
         kyc: payload,
-        details: state.details!, //user can't go to step 3 without completing step 1
-        recipient: state.recipient!,
       };
     },
     setStep(state, { payload }: PayloadAction<number>) {
@@ -40,6 +39,7 @@ export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
   id: number;
   name: string;
+  isKYCRequired: boolean;
 };
 
 export type DonationDetails = {
@@ -47,9 +47,18 @@ export type DonationDetails = {
   pctLiquidSplit: string;
 };
 
-type KYC = {
-  name: string;
+export type KYC = {
+  name: { first: string; last: string };
+  address: { street: string; complement: string };
+  city: string;
+  postalCode: string;
+  country: string;
+  state: string;
+  email: string;
+  hasAgreedToTerms: boolean;
 };
+
+export type SkippableKYC = KYC | "skipped";
 
 type Step0 = {
   step: 0;
@@ -68,13 +77,13 @@ export type Step1 = {
 export type Step2 = {
   step: 2;
   details?: DonationDetails;
-  kyc?: KYC;
+  kyc?: SkippableKYC;
   recipient: DonationRecipient;
 };
 
 export type Step3 = {
   step: 3;
   details: DonationDetails;
-  kyc: KYC;
+  kyc: KYC | "skipped";
   recipient: DonationRecipient;
 };

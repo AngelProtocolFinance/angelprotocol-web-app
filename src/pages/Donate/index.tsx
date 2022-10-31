@@ -24,7 +24,13 @@ export default function Donate() {
         }}
         classes={{ container: "text-center mt-8" }}
       >
-        {(endowment) => <Steps name={endowment.name} id={numId} />}
+        {(endowment) => (
+          <Steps
+            name={endowment.name}
+            id={numId}
+            isKYCRequired={endowment.kyc_donors_only}
+          />
+        )}
       </QueryLoader>
     </section>
   );
