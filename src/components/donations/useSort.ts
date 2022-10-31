@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SortDirection, SortKey } from "pages/Donations/types";
+import { SortDirection, SortKey } from "./types";
 import { Donation } from "types/aws";
 
 //TODO: remove custom sorter and pass sort params to AWS instead
