@@ -1,10 +1,12 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse, StdFee } from "@cosmjs/stargate";
+import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain } from "types/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
+import { Step3 } from "slices/donation";
 
 type Tag = TagDescription<string>;
 export type Tags = Tag[];
@@ -113,3 +115,14 @@ type CosmosWithTx = BaseArgs & {
 };
 
 export type SendCosmosTxArgs = CosmosWithMsg | CosmosWithTx;
+
+export type EstimatedTx =
+  | { type: "cosmos"; val: TxOptions }
+  | { type: "terra"; val: CreateTxOptions }
+  | { type: "evm"; val: TransactionRequest };
+
+export type DonateArgs = {
+  wallet: WalletState;
+  tx: EstimatedTx;
+  donation: Step3;
+};

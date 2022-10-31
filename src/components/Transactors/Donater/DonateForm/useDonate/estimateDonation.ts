@@ -8,6 +8,7 @@ import {
 } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
+import { EstimatedTx } from "slices/transaction/types";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { Step3 } from "slices/donation";
 import Account from "contracts/Account";
@@ -17,15 +18,11 @@ import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 
 type Fee = { amount: number; symbol: string };
-type Tx =
-  | { type: "cosmos"; val: EncodeObject }
-  | { type: "terra"; val: CreateTxOptions }
-  | { type: "evm"; val: TransactionRequest };
 
 export async function estimateDonation({
   details: { token },
   wallet,
-}: Step3 & { wallet: WalletState }): Promise<{ fee: Fee; tx: Tx }> {
+}: Step3 & { wallet: WalletState }): Promise<{ fee: Fee; tx: EstimatedTx }> {
   const { chain } = wallet;
   const { native_currency } = chain;
 
@@ -38,14 +35,12 @@ export async function estimateDonation({
         token.token_id
       );
 
-      const feeAmount = extractFeeAmount(
-        await contract.estimateFee([msg]),
-        native_currency.token_id
-      );
+      const fee = await contract.estimateFee([msg]);
+      const feeAmount = extractFeeAmount(fee, native_currency.token_id);
 
       return {
         fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "cosmos", val: msg },
+        tx: { type: "cosmos", val: { fee, msgs: [msg] } },
       };
     } else {
       const contract = new CW20(wallet, token.token_id);
@@ -53,14 +48,12 @@ export async function estimateDonation({
         token.amount,
         ap_wallets.juno_deposit
       );
-      const feeAmount = extractFeeAmount(
-        await contract.estimateFee([msg]),
-        native_currency.token_id
-      );
+      const fee = await contract.estimateFee([msg]);
+      const feeAmount = extractFeeAmount(fee, native_currency.token_id);
 
       return {
         fee: { amount: feeAmount, symbol: native_currency.symbol },
-        tx: { type: "cosmos", val: msg },
+        tx: { type: "cosmos", val: { fee, msgs: [msg] } },
       };
     }
   }
