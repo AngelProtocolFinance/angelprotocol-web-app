@@ -5,7 +5,10 @@ import { useGetter, useSetter } from "store/accessors";
 import { Sort, setSort } from "slices/components/marketFilter";
 
 type Option = { name: string; key: EndowmentsSortKey };
-const options: Option[] = [{ name: "Name", key: "name" }];
+const options: Option[] = [
+  { name: "Name", key: "name_internal" },
+  { name: "Donations", key: "overall" },
+];
 
 export default function Sorter() {
   const dispatch = useSetter();
@@ -13,7 +16,12 @@ export default function Sorter() {
   const isSortKeySelected = sort !== undefined;
 
   function handleSortChange(value: EndowmentsSortKey) {
-    dispatch(setSort({ key: value, isAscending: true }));
+    dispatch(
+      setSort({
+        key: value,
+        direction: "desc" /** default dir when sort is not specified is 'asc'*/,
+      })
+    );
   }
 
   function resetSort() {
@@ -21,8 +29,13 @@ export default function Sorter() {
   }
 
   function toggleDirection(sort: Sort) {
-    dispatch(setSort({ ...sort, isAscending: !sort.isAscending }));
+    dispatch(
+      setSort({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })
+    );
   }
+
+  const activeSortName =
+    (sort && options.find(({ key }) => key === sort.key))?.name || "sort by";
 
   return (
     <Listbox
@@ -35,7 +48,7 @@ export default function Sorter() {
         <Listbox.Button className="upppercase flex items-center justify-between w-full">
           {({ open }) => (
             <>
-              <span className="uppercase">{sort?.key || "sort by"}</span>
+              <span className="uppercase">{activeSortName}</span>
               {!isSortKeySelected && (
                 <DrawerIcon isOpen={open} size={20} className="mr-3" />
               )}
@@ -58,7 +71,7 @@ export default function Sorter() {
               onClick={() => toggleDirection(sort)}
               className="mr-3"
             >
-              <Icon type={sort.isAscending ? "Up" : "Down"} />
+              <Icon type={sort.direction === "asc" ? "Up" : "Down"} />
             </button>
           </>
         )}
