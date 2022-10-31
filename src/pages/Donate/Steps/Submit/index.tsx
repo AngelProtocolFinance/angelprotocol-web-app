@@ -4,6 +4,7 @@ import { EstimatedTx } from "slices/transaction/types";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { Step3, setStep } from "slices/donation";
+import { sendDonation } from "slices/transaction/transactors";
 import { estimateDonation } from "./estimateDonation";
 
 export default function Submit(props: Step3 & { wallet: WalletState }) {
@@ -25,8 +26,9 @@ export default function Submit(props: Step3 & { wallet: WalletState }) {
     dispatch(setStep(props.step - 1));
   }
 
-  function submit(tx: EstimatedTx) {
-    // dispatch(sendDonation({ donation: props , tx:}));
+  function submit() {
+    const { wallet, ...donation } = props;
+    dispatch(sendDonation({ donation, wallet, tx: (estimate as any).tx }));
   }
 
   return (
@@ -34,7 +36,9 @@ export default function Submit(props: Step3 & { wallet: WalletState }) {
       <div>{JSON.stringify(estimate)}</div>
       <div>SUBMIT UI</div>
       <div>
-        <button>submit data</button>
+        <button type="button" onClick={submit}>
+          submit data
+        </button>
         <button onClick={goBack}>back to kyc form</button>
       </div>
     </div>
