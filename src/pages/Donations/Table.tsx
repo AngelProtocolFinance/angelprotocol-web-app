@@ -21,7 +21,7 @@ export default function Table(props: { donations: Donation[] }) {
           <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
-            _sortKey={"amount"}
+            _sortKey="amount"
             _sortDirection={sortDirection}
           >
             Amount
@@ -30,7 +30,7 @@ export default function Table(props: { donations: Donation[] }) {
           <HeaderButton
             onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
-            _sortKey={"date"}
+            _sortKey="date"
             _sortDirection={sortDirection}
           >
             Date
