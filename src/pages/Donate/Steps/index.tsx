@@ -6,7 +6,6 @@ import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
-  TxStep,
   resetDetails,
   setRecipient,
 } from "slices/donation";
@@ -24,12 +23,12 @@ export default function Steps(props: DonationRecipient) {
   }, [dispatch, props]);
 
   const isHeadingShown =
-    state.step <= 4 ||
-    (state.step === 4 && state.status !== "error" && !("hash" in state.status));
+    state.step < 4 ||
+    (state.step === 4 && "loadingMsg" in (state.status as any));
 
   return (
     <div className="justify-self-center grid padded-container max-w-[32rem]">
-      {false && (
+      {isHeadingShown && (
         <>
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
             You'are about to make a donation to {props.name}
@@ -37,14 +36,7 @@ export default function Steps(props: DonationRecipient) {
           <Progress classes="my-12" />
         </>
       )}
-      <Result
-        {...({
-          status: { hash: "abc123" },
-          recipient: { name: "", id: 1 },
-        } as TxStep)}
-        classes="justify-self-center mt-16"
-      />
-      {/* <CurrStep {...state} /> */}
+      <CurrStep {...state} />
     </div>
   );
 }
@@ -56,7 +48,7 @@ function CurrStep(props: DonationState) {
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
     !wallet && dispatch(resetDetails());
-  }, [wallet]);
+  }, [wallet, dispatch]);
 
   if (props.step <= 3) {
     if (isLoading) {

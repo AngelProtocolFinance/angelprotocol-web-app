@@ -129,7 +129,7 @@ function TxTotal({
           <Tooltip
             type="Loading"
             message="Estimating transaction cost.."
-            classes="my-3"
+            classes="my-6"
           />
         </>
       );

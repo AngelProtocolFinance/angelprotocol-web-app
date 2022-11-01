@@ -8,7 +8,7 @@ export default function Loading({
   classes?: string;
 }) {
   return (
-    <div className={`flex flex-col justify-center gap-6 ${classes}`}>
+    <div className={`grid justify-items-center gap-6 ${classes}`}>
       <Icon type="Loading" size={113} className="animate-spin text-orange" />
       <p className="text-center">{message}</p>
     </div>
