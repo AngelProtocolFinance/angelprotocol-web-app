@@ -25,7 +25,7 @@
     @apply w-full cursor-pointer bg-transparent border-transparent;
   }
   .slider::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray-d1 rounded-full;
+    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
   }
 
   .scroller::-webkit-scrollbar {
@@ -37,7 +37,7 @@
   }
 
   .scroller::-webkit-scrollbar-track {
-    @apply bg-gray-l2 dark:bg-bluegray-d1;
+    @apply bg-gray-l2 dark:bg-bluegray;
   }
 
   .padded-container {

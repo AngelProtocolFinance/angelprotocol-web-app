@@ -1,4 +1,5 @@
 export type IconTypes =
+  | "Dash"
   | "Discord"
   | "FilterLeft"
   | "Filter"

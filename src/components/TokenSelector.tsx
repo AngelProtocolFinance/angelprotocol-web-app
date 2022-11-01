@@ -46,9 +46,9 @@ export default function TokenSelector<T extends FieldValues>(props: {
       <Combobox.Options
         className={`${
           props.classes?.options ?? ""
-        } border border-gray-l2 dark:border-bluegray-d1 p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 dark:bg-blue-d7 shadow-lg focus:outline-nones`}
+        } border border-gray-l2 dark:border-bluegray p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-orange-l6 dark:bg-blue-d7 shadow-lg focus:outline-nones`}
       >
-        <div className="flex p-2 gap-2 border border-gray-l2 dark:border-bluegray-d1 rounded mb-1">
+        <div className="flex p-2 gap-2 border border-gray-l2 dark:border-bluegray rounded mb-1">
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."

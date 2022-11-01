@@ -3,6 +3,7 @@ export enum awsTags {
   admin = "admin",
   cha = "charity",
   bookmarks = "bookmarks",
+  endowments = "endowments",
 }
 
 export enum chaTags {

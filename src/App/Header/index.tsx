@@ -31,7 +31,7 @@ export default function Header({ classes = "" }: { classes?: string }) {
         isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
       } py-3 transition ease-in-out duration-300 w-full`}
     >
-      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container ">
+      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container">
         <Logo />
         <DesktopNav classes="hidden lg:flex" />
         <div className="flex gap-x-2 ml-auto lg:ml-0">

@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
-import { EndowmentEntry } from "types/contracts";
+import { Endowment } from "types/aws";
 import BookmarkBtn from "components/BookmarkBtn";
 import { appRoutes } from "constants/routes";
 
-export default function Card({ name, image, id }: EndowmentEntry) {
+export default function Card({
+  name,
+  image,
+  id,
+  endow_type,
+  categories,
+  country_of_origin,
+}: Endowment) {
   return (
-    <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray-d1 hover:border-blue dark:hover:border-blue">
+    <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <p className="absolute top-3 left-3 bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
-        non profit
+        {endow_type === "Charity" ? "Non-profit" : "For-profit"}
       </p>
       <BookmarkBtn
-        name={name!}
+        name={name}
         id={id}
         classes="absolute top-3 right-3 text-red-l1"
       />
@@ -19,6 +26,7 @@ export default function Card({ name, image, id }: EndowmentEntry) {
         className="grid grid-rows-[1fr_auto]"
       >
         <img
+          loading="lazy"
           src={image}
           className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""
@@ -29,13 +37,13 @@ export default function Card({ name, image, id }: EndowmentEntry) {
         <div className="p-3">
           <h3 className="font-bold dark:text-white">{name}</h3>
           <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-0.5">
-            Country, city
+            {country_of_origin}
           </p>
         </div>
         <div className="flex text-2xs font-bold px-3 pb-3 gap-1">
-          <SDG num={1} />
-          <SDG num={2} />
-          <SDG num={3} />
+          {categories.sdgs.map((s) => (
+            <SDG num={s} key={s} />
+          ))}
         </div>
       </Link>
     </div>
