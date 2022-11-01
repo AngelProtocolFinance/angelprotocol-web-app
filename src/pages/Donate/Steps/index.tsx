@@ -35,28 +35,15 @@ function CurrStep(props: DonationState) {
   const { wallet, isLoading } = useGetWallet();
 
   if (isLoading && props.step <= 3) {
-    return (
-      <p className="text-center">
-        <Icon
-          size={20}
-          type="Loading"
-          className="relative inline bottom-[1px] mr-2 animate-spin"
-        />
-        Loading wallet
-      </p>
-    );
+    return <Tooltip type="Loading" message="Loading wallet" />;
   }
 
   if (!wallet && props.step <= 3) {
     return (
-      <p className="text-center">
-        <Icon
-          size={20}
-          type="Info"
-          className="relative inline bottom-[1px] mr-2"
-        />
-        You need to connect your wallet do make a donation
-      </p>
+      <Tooltip
+        type="Info"
+        message="You need to connect your wallet do make a donation"
+      />
     );
   }
 
@@ -80,4 +67,25 @@ function CurrStep(props: DonationState) {
       return <></>; // <Steps /> sets to step 1 onMount
     }
   }
+}
+
+function Tooltip({
+  type,
+  message,
+}: {
+  type: "Loading" | "Info";
+  message: string;
+}) {
+  return (
+    <p className="text-center">
+      <Icon
+        size={20}
+        type={type}
+        className={`relative inline bottom-[1px] mr-2 ${
+          type === "Loading" ? "animate-spin" : ""
+        }`}
+      />
+      {message}
+    </p>
+  );
 }

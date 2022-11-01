@@ -37,7 +37,8 @@ export const apes = createApi({
           // fetch balances for juno or terra
           if (chain.type === "juno-native" || chain.type === "terra-native") {
             const balancesRes = await fetch(
-              chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
+              process.env.REACT_APP_JUNO_LCD_NODE +
+                `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             // returns only positive balances
