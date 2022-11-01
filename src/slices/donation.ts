@@ -14,7 +14,7 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
-        ...(state as Omit<KYCStep, "details">),
+        ...(state as KYCStep),
         step: 2,
         details: payload,
       };
@@ -28,13 +28,19 @@ const donation = createSlice({
     },
     setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
-        ...(state as Omit<SubmitStep, "kyc">),
+        ...(state as SubmitStep),
         step: 3,
         kyc: payload,
       };
     },
 
-    setTxStatus: (state) => {},
+    setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
+      return {
+        ...(state as SubmitStep),
+        step: 4,
+        status: payload,
+      };
+    },
 
     setStep(state, { payload }: PayloadAction<number>) {
       state.step = payload as DonationState["step"];
@@ -43,8 +49,14 @@ const donation = createSlice({
 });
 
 export default donation.reducer;
-export const { setRecipient, setStep, setDetails, resetDetails, setKYC } =
-  donation.actions;
+export const {
+  setRecipient,
+  setStep,
+  setDetails,
+  resetDetails,
+  setKYC,
+  setTxStatus,
+} = donation.actions;
 
 export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
@@ -95,7 +107,7 @@ export type SubmitStep = {
   step: 3;
 } & Omit<Required<KYCStep>, "step">;
 
-type TxStatus = "loading" | "error" | { hash: string };
+export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type TxStep = {
   step: 4;
   status: TxStatus;

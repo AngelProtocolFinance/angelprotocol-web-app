@@ -4,17 +4,15 @@ import { WalletController } from "@terra-money/wallet-provider";
 import { chainOptions } from "App/chainOptions";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { DonateArgs, EstimatedTx, StageUpdater } from "../../types";
+import { DonateArgs, EstimatedTx } from "../../types";
 import { KYCData } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import { TokenWithAmount } from "slices/donation";
+import { TokenWithAmount, TxStatus, setTxStatus } from "slices/donation";
 import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
-import { getProvider } from "helpers";
-import handleTxError from "../../handleTxError";
-import transactionSlice, { setStage } from "../../transactionSlice";
-import handleEthError from "./handleEthError";
+import { getProvider, logger } from "helpers";
+import transactionSlice from "../../transactionSlice";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${transactionSlice.name}/junoDonate`,
@@ -22,11 +20,14 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }
   ) => {
-    const updateStage: StageUpdater = (update) => {
-      dispatch(setStage(update));
+    const updateTx = (status: TxStatus) => {
+      dispatch(setTxStatus(status));
     };
+
     try {
       const { token, pctLiquidSplit } = details;
+      updateTx({ loadingMsg: "Payment is being processed..." });
+
       const { isSuccess, hash } = await sendTransaction(tx, wallet, token);
 
       if (isSuccess) {
@@ -44,9 +45,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
                 consent_tax: true,
                 consent_marketing: true,
               };
-        updateStage({
-          step: "submit",
-          message:
+
+        updateTx({
+          loadingMsg:
             kyc !== "skipped"
               ? "Requesting receipt.."
               : "Saving donation details",
@@ -61,8 +62,10 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           denomination: token.symbol,
           splitLiq: `${+pctLiquidSplit / 100}`,
           walletAddress: wallet.address,
-          charityId: recipient.id,
+          endowmentId: recipient.id,
         });
+
+        updateTx({ hash });
 
         //invalidate cache entries
         dispatch(
@@ -72,22 +75,11 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           ])
         );
       } else {
-        updateStage({
-          step: "error",
-          message: "Transaction failed",
-          txHash: hash,
-          chainId: wallet.chain.chain_id,
-        });
+        updateTx("error");
       }
     } catch (err) {
-      switch (tx.type) {
-        case "cosmos":
-        case "terra":
-          handleTxError(err, updateStage);
-          break;
-        default:
-          handleEthError(err, updateStage);
-      }
+      logger.error(err);
+      updateTx("error");
     }
   }
 );

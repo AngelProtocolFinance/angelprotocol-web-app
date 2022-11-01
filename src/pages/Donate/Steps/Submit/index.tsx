@@ -110,7 +110,7 @@ function TxTotal({
           <Tooltip
             type="Info"
             message="This transaction is likely to fail"
-            classes="my-3"
+            classes="my-3 text-red dark:text-red-l2"
           />
         </>
       );
@@ -125,6 +125,11 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
+          <Tooltip
+            type="Loading"
+            message="Estimating transaction cost.."
+            classes="my-3"
+          />
         </>
       );
     default:

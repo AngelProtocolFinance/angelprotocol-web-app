@@ -11,6 +11,7 @@ import {
 } from "slices/donation";
 import Donater from "./Donater";
 import Progress from "./Progress";
+import Result from "./Result";
 import Submit from "./Submit";
 
 export default function Steps(props: DonationRecipient) {
@@ -74,6 +75,8 @@ function CurrStep(props: DonationState) {
         return <></>; // <Steps /> sets to step 1 onMount
       }
     }
+  } else if (props.step === 4) {
+    return <Result {...props} />;
   } else {
     return <></>;
   }
