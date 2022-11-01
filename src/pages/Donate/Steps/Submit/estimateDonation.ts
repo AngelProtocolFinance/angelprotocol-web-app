@@ -53,10 +53,9 @@ export async function estimateDonation({
     // terra native transaction, send or contract interaction
     else if (chain.type === "terra-native") {
       const amount = scaleToStr(token.amount);
-
       if (token.type === "terra-native" || token.type === "ibc") {
         const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-          new Coin(token.amount, amount),
+          new Coin(token.token_id, amount),
         ]);
 
         const fee = await estimateTerraFee(wallet, [msg]);

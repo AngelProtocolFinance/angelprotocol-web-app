@@ -96,7 +96,7 @@ async function sendTransaction(
       return { hash: response.transactionHash, isSuccess: !response.code };
     }
     case "terra": {
-      const response = await controller.post(tx.val, wallet.address);
+      const response = await controller.post(tx.val);
       return { hash: response.result.txhash, isSuccess: response.success };
     }
     //evm donations
