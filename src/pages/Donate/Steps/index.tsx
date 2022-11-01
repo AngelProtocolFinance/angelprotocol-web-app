@@ -6,6 +6,7 @@ import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
+  resetDetails,
   setRecipient,
 } from "slices/donation";
 import Donater from "./Donater";
@@ -32,7 +33,13 @@ export default function Steps(props: DonationRecipient) {
 }
 
 function CurrStep(props: DonationState) {
+  const dispatch = useSetter();
   const { wallet, isLoading } = useGetWallet();
+
+  /** reset form state when user disconnects, user might change wallet */
+  useEffect(() => {
+    !wallet && dispatch(resetDetails());
+  }, [wallet]);
 
   if (isLoading && props.step <= 3) {
     return <Tooltip type="Loading" message="Loading wallet" />;

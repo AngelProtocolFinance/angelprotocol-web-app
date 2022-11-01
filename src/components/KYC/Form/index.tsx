@@ -15,7 +15,7 @@ import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
 export const formStyle =
-  "w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
+  "w-full bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
