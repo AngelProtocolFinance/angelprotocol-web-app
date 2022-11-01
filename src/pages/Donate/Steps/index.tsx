@@ -38,7 +38,10 @@ export default function Steps(props: DonationRecipient) {
         </>
       )}
       <Result
-        {...({ status: "error", recipient: { name: "", id: 1 } } as TxStep)}
+        {...({
+          status: { hash: "abc123" },
+          recipient: { name: "", id: 1 },
+        } as TxStep)}
         classes="justify-self-center mt-16"
       />
       {/* <CurrStep {...state} /> */}

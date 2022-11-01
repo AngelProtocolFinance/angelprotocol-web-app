@@ -1,6 +1,7 @@
 import { TxStep } from "slices/donation";
 import Err from "./Err";
 import Loading from "./Loading";
+import Success from "./Success";
 
 export default function Result({
   classes = "",
@@ -12,6 +13,6 @@ export default function Result({
   } else if ("loadingMsg" in status) {
     return <Loading message={status.loadingMsg} classes={classes} />;
   } else {
-    return <div>{status.hash}</div>;
+    return <Success classes={classes} endowId={recipient.id} />;
   }
 }
