@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/juno/gov/queriers";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { scale } from "helpers";
 import { denoms } from "constants/tokens";
 

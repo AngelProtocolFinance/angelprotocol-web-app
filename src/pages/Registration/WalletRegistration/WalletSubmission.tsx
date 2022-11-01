@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
 import { useRegistrationQuery } from "services/aws/registration";
-import {
-  useGetWallet,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { useGetWallet, useSetWallet } from "contexts/WalletContext";
 import { requiredWalletAddr } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { Button } from "../common";

@@ -47,6 +47,8 @@ export type DonationDetails = {
   pctLiquidSplit: string;
 
   //meta
+  chainId: string;
+  chainName: string;
   tokens: TokenWithAmount[];
 };
 
@@ -86,4 +88,15 @@ export type SubmitStep = {
   details: DonationDetails;
   kyc: KYC | "skipped";
   recipient: DonationRecipient;
+};
+
+type ResultStep = {
+  step: 4;
+  status:
+    | "loading"
+    | "error"
+    | (Pick<SubmitStep, "details" | "kyc" | "recipient"> & {
+        hash: string;
+        chainId: string;
+      });
 };

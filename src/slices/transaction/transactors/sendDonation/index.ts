@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import { DonateArgs, EstimatedTx, StageUpdater } from "../../types";
 import { KYCData } from "types/aws";
 import { apesTags, invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { TokenWithAmount } from "slices/donation";
 import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";

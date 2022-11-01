@@ -17,7 +17,7 @@ import { TxOptions } from "slices/transaction/types";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { logger, scaleToStr, toBase64 } from "helpers";
 import {
   CosmosTxSimulationFail,

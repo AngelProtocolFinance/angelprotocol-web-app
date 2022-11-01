@@ -1,7 +1,7 @@
 import { ApplicationMeta } from "pages/Admin/types";
 import { Application } from "types/aws";
 import { ApplicationProposal, ApplicationVote } from "types/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { contracts } from "constants/contracts";
 import CW3 from ".";
 

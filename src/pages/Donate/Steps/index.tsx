@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import KYC from "components/KYC";
 import { useGetter, useSetter } from "store/accessors";

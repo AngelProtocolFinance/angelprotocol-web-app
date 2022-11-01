@@ -3,7 +3,7 @@ import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { Estimate } from "./types";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
