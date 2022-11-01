@@ -1,10 +1,16 @@
 import { TxStep } from "slices/donation";
+import Err from "./Err";
+import Loading from "./Loading";
 
-export default function Result({ status }: TxStep) {
+export default function Result({
+  classes = "",
+  recipient,
+  status,
+}: TxStep & { classes?: string }) {
   if (status === "error") {
-    return <div>error</div>;
+    return <Err classes={classes} endowId={recipient.id} />;
   } else if ("loadingMsg" in status) {
-    return <div>{status.loadingMsg}</div>;
+    return <Loading message={status.loadingMsg} classes={classes} />;
   } else {
     return <div>{status.hash}</div>;
   }

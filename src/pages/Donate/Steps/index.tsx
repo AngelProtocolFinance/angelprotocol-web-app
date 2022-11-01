@@ -6,6 +6,7 @@ import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
+  TxStep,
   resetDetails,
   setRecipient,
 } from "slices/donation";
@@ -22,13 +23,25 @@ export default function Steps(props: DonationRecipient) {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
 
+  const isHeadingShown =
+    state.step <= 4 ||
+    (state.step === 4 && state.status !== "error" && !("hash" in state.status));
+
   return (
     <div className="justify-self-center grid padded-container max-w-[32rem]">
-      <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
-        You'are about to make a donation to {props.name}
-      </h3>
-      {state.step <= 3 && <Progress />}
-      <CurrStep {...state} />
+      {false && (
+        <>
+          <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
+            You'are about to make a donation to {props.name}
+          </h3>
+          <Progress classes="my-12" />
+        </>
+      )}
+      <Result
+        {...({ status: "error", recipient: { name: "", id: 1 } } as TxStep)}
+        classes="justify-self-center mt-16"
+      />
+      {/* <CurrStep {...state} /> */}
     </div>
   );
 }
@@ -76,7 +89,7 @@ function CurrStep(props: DonationState) {
       }
     }
   } else if (props.step === 4) {
-    return <Result {...props} />;
+    return <Result {...props} classes="justify-self-center mt-16" />;
   } else {
     return <></>;
   }

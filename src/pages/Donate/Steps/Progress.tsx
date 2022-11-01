@@ -1,10 +1,12 @@
 import { useGetter } from "store/accessors";
 
-export default function Progress() {
+export default function Progress({ classes = "" }: { classes?: string }) {
   const step = useGetter((state) => state.donation.step);
 
   return (
-    <div className="my-12 text-sm mb-10 grid grid-cols-3 justify-items-center gap-2">
+    <div
+      className={`${classes} text-sm mb-10 grid grid-cols-3 justify-items-center gap-2`}
+    >
       <p className="text-center">Donation method</p>
       <p className="text-center">Donation details</p>
       <p className="text-center">Finalize payment</p>

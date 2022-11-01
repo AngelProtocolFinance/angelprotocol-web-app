@@ -6,7 +6,7 @@ export function ButtonContinue({
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className={`${className} max-md:text-sm py-3 rounded btn-orange normal-case`}
+      className={`${className} max-md:text-sm p-3 rounded btn-orange normal-case`}
       {...props}
     />
   );

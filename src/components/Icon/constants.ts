@@ -32,6 +32,7 @@ import {
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
+  BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
 } from "react-icons/bs";
@@ -103,6 +104,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   StopWatch: FaStopwatch,
   Exclamation: AiOutlineExclamation,
   ExclamationCircle: BsExclamationCircle,
+  ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
   Eye: AiOutlineEye,
   EyeInvisible: AiOutlineEyeInvisible,

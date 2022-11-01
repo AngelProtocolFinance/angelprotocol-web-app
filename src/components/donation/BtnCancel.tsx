@@ -9,7 +9,7 @@ type Lnk = { as: "link" } & LinkProps;
 export type BtnCancelProps = Btn | Lnk;
 
 const common =
-  "max-md:text-sm py-3 rounded border border-gray-l2 dark:border-bluegray-d1 text-center hover:border-gray-l1 hover:dark:border-blue-d2";
+  "max-md:text-sm p-3 rounded border border-gray-l2 dark:border-bluegray-d1 text-center hover:border-gray-l1 hover:dark:border-blue-d2";
 
 export function BtnCancel(props: BtnCancelProps) {
   if (props.as === "link") {
