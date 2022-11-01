@@ -34,7 +34,7 @@ export default function Success({
           View transaction
         </BtnSec>
       </div>
-      <div className="h-20 grid place-items-center my-12 dark:bg-blue-d7 rounded border dark:border-bluegray-d1 w-full">
+      <div className="h-20 grid place-items-center my-12 dark:bg-blue-d7 rounded border dark:border-bluegray w-full">
         socials
       </div>
 

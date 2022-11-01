@@ -36,7 +36,7 @@ export default function KYC(props: Props) {
   return (
     <FormProvider {...methods}>
       <Dialog.Panel
-        className={`${formStyle} fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray-d1 p-4`}
+        className={`${formStyle} fixed-center z-20 rounded-md w-full max-w-xl max-h-[75vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray p-4`}
       >
         <Form {...props} />
       </Dialog.Panel>

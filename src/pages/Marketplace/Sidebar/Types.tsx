@@ -1,15 +1,16 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
+import { CapitalizedEndowmentType } from "types/contracts";
 import { useGetter, useSetter } from "store/accessors";
-import { EndowType, setTypes } from "slices/components/marketFilter";
+import { setTypes } from "slices/components/marketFilter";
 import { Checkbox, Drawer } from "./common";
 
-type Option = { type: EndowType; name: string };
+type Option = { type: CapitalizedEndowmentType; name: string };
 
 const options: Option[] = [
-  { name: "Registered Non-Profit", type: "np" },
-  { name: "Impact For-Profit", type: "fp" },
-  { name: "Impact Crowdfunding", type: "ic" },
+  { name: "Registered Non-Profit", type: "Charity" },
+  { name: "Impact For-Profit", type: "Normal" },
+  // { name: "Impact Crowdfunding", type: "ic" },
 ];
 
 export default function Types() {
@@ -27,7 +28,7 @@ export default function Types() {
       className="px-3 pt-3"
       multiple
       value={types}
-      onChange={(types: EndowType[]) => {
+      onChange={(types: CapitalizedEndowmentType[]) => {
         dispatch(setTypes(types));
       }}
     >

@@ -1,8 +1,8 @@
-import { Endowment } from "types/aws";
+import { LeaderboardEntry } from "types/aws";
 import Heading from "./Heading";
 import TableEntry from "./TableEntry";
 
-export default function TableView(props: { endowments: Endowment[] }) {
+export default function TableView(props: { endowments: LeaderboardEntry[] }) {
   return (
     <div className="self-start w-full h-[50rem] pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">

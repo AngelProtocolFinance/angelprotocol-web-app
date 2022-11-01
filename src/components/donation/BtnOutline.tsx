@@ -5,7 +5,7 @@ export function BtnOutline(props: BtnProps) {
   return (
     <BaseBtn
       {...props}
-      commonStyles="max-md:text-sm p-3 rounded border border-gray-l2 dark:border-bluegray-d1 text-center hover:border-gray-l1 hover:dark:border-blue-d2"
+      commonStyles="max-md:text-sm p-3 rounded border border-gray-l2 dark:border-bluegray text-center hover:border-gray-l1 hover:dark:border-blue-d2"
     />
   );
 }
