@@ -1,3 +1,3 @@
-export * from "./BtnContinue";
-export * from "./BtnBack";
+export * from "./BtnPrimary";
+export * from "./BtnSec";
 export * from "./Tooltip";

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues, OnDonation } from "../types";
-import { BtnBack, ButtonContinue } from "components/donation";
-import { BtnCancel } from "components/donation/BtnCancel";
+import { BtnPrimary, BtnSec } from "components/donation";
+import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { KYC, setKYC, setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -48,27 +48,27 @@ export default function Controls({
 
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
-      <BtnBack as="btn" onClick={goBack} type="button">
+      <BtnSec as="btn" onClick={goBack} type="button">
         Back
-      </BtnBack>
+      </BtnSec>
       {/** KYC may not be required, and user may skip KYC,
        * but if user want to submit KYC - it should be validated */}
       {isKYCRequired || wantsKYC ? (
-        <ButtonContinue disabled={isSubmitting} type="submit">
+        <BtnPrimary disabled={isSubmitting} type="submit">
           Continue
-        </ButtonContinue>
+        </BtnPrimary>
       ) : (
-        <ButtonContinue type="button" onClick={skip}>
+        <BtnPrimary type="button" onClick={skip}>
           Continue
-        </ButtonContinue>
+        </BtnPrimary>
       )}
-      <BtnCancel
+      <BtnOutline
         as="link"
         to={appRoutes.profile + `/${endowId}`}
         className="col-span-full"
       >
         Cancel
-      </BtnCancel>
+      </BtnOutline>
     </div>
   );
 }

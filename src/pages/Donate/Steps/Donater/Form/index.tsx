@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { DonateValues } from "../types";
-import { BtnBack, ButtonContinue } from "components/donation";
+import { BtnPrimary, BtnSec } from "components/donation";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
@@ -35,17 +35,17 @@ export default function Form() {
       <AdvancedOptions classes="mt-10" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <BtnBack as="link" to={`${appRoutes.profile}/1`}>
+        <BtnSec as="link" to={`${appRoutes.profile}/1`}>
           Cancel
-        </BtnBack>
-        <ButtonContinue
+        </BtnSec>
+        <BtnPrimary
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
           type="submit"
         >
           Continue
-        </ButtonContinue>
+        </BtnPrimary>
       </div>
     </form>
   );

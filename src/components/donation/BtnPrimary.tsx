@@ -1,6 +1,6 @@
 import React from "react";
 
-export function ButtonContinue({
+export function BtnPrimary({
   className,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {

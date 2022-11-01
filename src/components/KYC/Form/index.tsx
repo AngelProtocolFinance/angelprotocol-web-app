@@ -8,7 +8,7 @@ import {
   errorStyle,
   textFieldStyle,
 } from "components/TextInput";
-import { ButtonContinue } from "components/donation";
+import { BtnPrimary } from "components/donation";
 import Controls from "./Controls";
 import Terms from "./Terms";
 import Tooltip from "./Tooltip";
@@ -93,13 +93,13 @@ export default function Form({ classes = "", ...props }: Props) {
       />
       <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
       {props.type === "post-donation" ? (
-        <ButtonContinue
+        <BtnPrimary
           className="col-span-full"
           disabled={isSubmitting}
           type="submit"
         >
           {isSubmitting ? "Processing..." : "Submit"}
-        </ButtonContinue>
+        </BtnPrimary>
       ) : (
         <Controls {...props} classes="col-span-full" />
       )}

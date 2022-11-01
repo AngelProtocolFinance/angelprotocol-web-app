@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { BtnBack, ButtonContinue } from "components/donation";
+import { BtnPrimary, BtnSec } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -30,12 +30,10 @@ export default function Success({
         or change your payment method and try again.
       </p>
       <div className="grid grid-cols-2 mt-12 gap-5">
-        <BtnBack as="link" to={appRoutes.profile + `/${endowId}`}>
+        <BtnSec as="link" to={appRoutes.profile + `/${endowId}`}>
           Back to the platform
-        </BtnBack>
-        <ButtonContinue onClick={goToForm}>
-          Change payment details
-        </ButtonContinue>
+        </BtnSec>
+        <BtnPrimary onClick={goToForm}>Change payment details</BtnPrimary>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
-import { BtnBack, ButtonContinue, Tooltip } from "components/donation";
-import { BtnCancel } from "components/donation/BtnCancel";
+import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
+import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { SubmitStep, TokenWithAmount, setStep } from "slices/donation";
 import { sendDonation } from "slices/transaction/transactors";
@@ -60,10 +60,10 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
-        <BtnBack as="btn" onClick={goBack} type="button">
+        <BtnSec as="btn" onClick={goBack} type="button">
           Back
-        </BtnBack>
-        <ButtonContinue
+        </BtnSec>
+        <BtnPrimary
           onClick={
             isNotEstimated
               ? undefined
@@ -75,14 +75,14 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           type="submit"
         >
           Make donation
-        </ButtonContinue>
-        <BtnCancel
+        </BtnPrimary>
+        <BtnOutline
           as="link"
           to={appRoutes.profile + `/${endowId}`}
           className="col-span-full"
         >
           Cancel
-        </BtnCancel>
+        </BtnOutline>
       </div>
     </div>
   );
