@@ -83,7 +83,7 @@ export default function Table(props: { donations: Donation[] }) {
               type="td"
               cellClass="p-2 first:pl-0 last:pr-0 text-left"
             >
-              <>{chainName}Juno Mainnet</>
+              <>{chainName}</>
               <span className="font-mono text-sm">{symbol}</span>
               <Link
                 to={`${appRoutes.profile}/${charityId}`}
