@@ -1,48 +1,35 @@
-import { useNavigate } from "react-router-dom";
-import { OnDonation, Props } from "../types";
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import useDonater from "components/Transactors/Donater/useDonater";
-import { appRoutes } from "constants/routes";
+import { Props } from "../types";
+import { maskAddress } from "helpers";
 
-export default function Tooltip(
-  props: OnDonation & Pick<Props, "isKYCRequired">
-) {
-  const { closeModal } = useModalContext();
-  const navigate = useNavigate();
-  const showDonater = useDonater();
-  function goToMyDonations() {
-    closeModal();
-    navigate(appRoutes.donations + `/${props.walletAddr}`);
+export default function Tooltip(props: Props) {
+  if (props.type === "post-donation") {
+    return (
+      <p className={props.classes ?? ""}>
+        <span className="text-xs uppercase font-bold mb-1">
+          Transaction ID:
+        </span>
+        <span className="font-normal text-sm ml-2">
+          {maskAddress(props.txHash)}
+        </span>
+      </p>
+    );
   }
+  const {
+    state: { recipient },
+  } = props;
+
   return (
-    <>
-      <h3 className="text-2xl font-bold text-center mt-2">Need tax receipt?</h3>
-      {props.isKYCRequired ? (
-        <p className="text-orange-d1 bg-orange-l4 p-3 rounded-md">
-          <Icon type="Info" className="inline relative bottom-0.5 mr-2" />
-          This charity requires KYC data
-        </p>
-      ) : (
-        <button
-          className="text-blue underline hover:text-blue-l1 mb-2"
-          onClick={() => {
-            showDonater(props.donaterProps);
-          }}
-        >
-          No tax receipt needed, thanks*
-        </button>
-      )}
-      <div className="text-center font-light text-sm mb-2">
-        *Tax receipts can be requested and amended at any time from your
-        <button
-          onClick={goToMyDonations}
-          className="text-blue inline mx-1 hover:text-blue-l1"
-        >
-          My donations
-        </button>
-        table.
-      </div>
-    </>
+    (recipient.isKYCRequired && (
+      <p className={`font-bold text-center ${props.classes ?? ""}`}>
+        {recipient.name} enforces donor verification. Please provide your
+        personal information below to complete your donation. You will be sent a
+        tax receipt to your email address automatically
+      </p>
+    )) || (
+      <p className={`font-bold text-center ${props.classes ?? ""}`}>
+        Please fill in your personal information below if you want to be sent a
+        tax receipt. You can leave the form blank if you don't want one
+      </p>
+    )
   );
 }

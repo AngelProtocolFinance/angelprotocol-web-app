@@ -4,9 +4,9 @@ import { SchemaShape } from "schemas/types";
 import { stringByteSchema } from "schemas/string";
 
 const shape: SchemaShape<CreatePollValues> = {
-  title: stringByteSchema("title", 4, 64),
-  description: stringByteSchema("description", 4, 1024),
-  link: stringByteSchema("link", 4, 128),
+  title: stringByteSchema(4, 64),
+  description: stringByteSchema(4, 1024),
+  link: stringByteSchema(4, 128),
 };
 
 export const schema = Yup.object().shape(shape);

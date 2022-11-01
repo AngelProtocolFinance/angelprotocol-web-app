@@ -7,6 +7,7 @@ import Icon from "./Icon";
 
 export default function CountrySelector<T extends FieldValues>(props: {
   fieldName: Path<T>;
+  placeholder?: string;
   classes?: {
     container?: string;
     input?: string;
@@ -55,6 +56,7 @@ export default function CountrySelector<T extends FieldValues>(props: {
         )}
       </div>
       <Combobox.Input
+        placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
         className={`focus:outline-none w-full ${props.classes?.input || ""}`}
       />

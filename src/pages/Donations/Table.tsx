@@ -71,6 +71,7 @@ export default function Table(props: { donations: Donation[] }) {
                 showKYCForm({
                   type: "post-donation",
                   txHash: hash,
+                  classes: "grid gap-5",
                 })
               }
             >

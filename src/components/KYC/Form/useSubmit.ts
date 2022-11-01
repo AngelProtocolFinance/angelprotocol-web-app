@@ -1,22 +1,30 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV, Props } from "./types";
+import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import useDonater from "components/Transactors/Donater/useDonater";
+import { useSetter } from "store/accessors";
+import { setKYC } from "slices/donation";
 
-export default function useSubmitKYC(props: Props) {
-  const {
-    formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<FV>();
+export default function useSubmit(props: Props) {
+  const { reset } = useFormContext<FV>();
+  const dispatch = useSetter();
   const [submitRequest] = useRequestReceiptMutation();
   const { showModal } = useModalContext();
-  const showDonater = useDonater();
 
   const submit = async (data: FV) => {
+    const { name, address, email, city, state, postalCode, country } = data;
     if (props.type === "post-donation") {
       const response = await submitRequest({
-        ...data,
+        fullName: `${name.first} ${name.last}`,
+        email,
+        streetAddress: `${address.street} ${address.complement}`,
+        city,
+        state,
+        zipCode: postalCode,
+        country,
+        consent_tax: true,
+        consent_marketing: true,
         transactionId: props.txHash,
       });
 
@@ -33,13 +41,10 @@ export default function useSubmitKYC(props: Props) {
       return;
     }
 
-    //show donater and pass KYC data, atm donation is only tx that may require KYC data
-    showDonater({ ...props.donaterProps, kycData: data });
+    //on-donation receipt
+    dispatch(setKYC(data));
+    reset();
   };
 
-  return {
-    submit,
-    isSubmitting,
-    isSubmitDisabled: isSubmitting || !isValid || !isDirty,
-  };
+  return submit;
 }

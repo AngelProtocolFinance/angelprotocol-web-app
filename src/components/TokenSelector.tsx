@@ -1,18 +1,31 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { FieldValues, Path, useController } from "react-hook-form";
-import { Token } from "types/aws";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { TokenWithAmount } from "slices/donation";
 import Icon, { DrawerIcon } from "./Icon";
 
-export default function TokenSelector<T extends FieldValues>(props: {
-  fieldName: Path<T>;
+type BaseFormValue = { [index: string]: TokenWithAmount };
+
+export default function TokenSelector<
+  T extends FieldValues,
+  K extends Path<T>
+>(props: {
+  fieldName: T[K] extends TokenWithAmount ? K : never;
   classes?: { container?: string; options?: string };
 }) {
   const { wallet } = useGetWallet();
+  const { setValue } = useFormContext<BaseFormValue>();
   const {
     field: { onChange: onTokenChange, value: token },
-  } = useController<T>({ name: props.fieldName });
+  } = useController<BaseFormValue>({
+    name: props.fieldName,
+  });
 
   const coins = wallet?.coins || [];
   const [symbol, setSymbol] = useState("");
@@ -27,8 +40,9 @@ export default function TokenSelector<T extends FieldValues>(props: {
   return (
     <Combobox
       value={token}
-      onChange={(token: Token) => {
-        onTokenChange({ ...token, amount: "" });
+      onChange={(token: TokenWithAmount) => {
+        onTokenChange(token);
+        setValue("token.amount", token.amount);
       }}
       as="div"
       className={`${
@@ -68,7 +82,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
               className={
                 "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d4 cursor-pointer"
               }
-              value={coin}
+              value={{ ...coin, amount: "" }}
             >
               {({ selected }) =>
                 !selected ? (
