@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import "quill/dist/quill.bubble.css";
 import { FieldValues, Path, useController } from "react-hook-form";
-import RichText, { EditorClasses } from "./RichText";
+import { EditorClasses, RichText } from "./RichText";
 
 export function RichTextEditor<T extends FieldValues>(props: {
   fieldName: Path<T>;

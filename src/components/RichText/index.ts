@@ -1,2 +1,2 @@
 export * from "./RichTextEditor";
-export * from "./RichTextView";
+export * from "./RichText";

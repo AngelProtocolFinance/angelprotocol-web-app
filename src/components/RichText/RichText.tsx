@@ -22,7 +22,7 @@ type Props = (ReadOnly | Editable) & {
   classes?: EditorClasses;
 };
 
-export default function RichText(props: Props) {
+export function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
 
   const containerRef = useCallback((container: HTMLDivElement | null) => {
