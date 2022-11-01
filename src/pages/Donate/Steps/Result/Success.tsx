@@ -25,16 +25,23 @@ export default function Success({
         <span className="font-extrabold">ETH 0.05</span> to{" "}
         <span className="font-extrabold">mothers2mothers</span>!
       </h3>
-      <p className="text-center">
-        11The payment wasn’t processed. Please double check your payment details
-        or change your payment method and try again.
+      <p className="text-center mb-8">
+        If you requested it, a tax receipt has been sent to the email address
+        provided.
       </p>
-      <div className="grid grid-cols-2 mt-12 gap-5">
+      <div className="grid grid-cols-2 gap-5 w-full">
+        <BtnSec as="btn">Download receipt</BtnSec>
         <BtnSec as="link" to={appRoutes.profile + `/${endowId}`}>
-          Back to the platform
+          View transaction
         </BtnSec>
-        <BtnPrimary onClick={goToForm}>Change payment details</BtnPrimary>
       </div>
+      <div className="h-20 grid place-items-center my-12 dark:bg-blue-d7 rounded border dark:border-bluegray-d1 w-full">
+        socials
+      </div>
+
+      <BtnPrimary as="btn" onClick={goToForm}>
+        Change payment details
+      </BtnPrimary>
     </div>
   );
 }

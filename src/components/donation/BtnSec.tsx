@@ -1,6 +1,7 @@
-import { BtnOutline, BtnOutlineProps } from "./BtnOutline";
+import { BtnProps } from "./types";
+import { BtnOutline } from "./BtnOutline";
 
-export function BtnSec(props: BtnOutlineProps) {
+export function BtnSec(props: BtnProps) {
   return (
     <BtnOutline
       {...props}

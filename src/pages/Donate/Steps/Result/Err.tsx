@@ -33,7 +33,9 @@ export default function Err({
         <BtnSec as="link" to={appRoutes.profile + `/${endowId}`}>
           Back to the platform
         </BtnSec>
-        <BtnPrimary onClick={goToForm}>Change payment details</BtnPrimary>
+        <BtnPrimary as="btn" onClick={goToForm}>
+          Change payment details
+        </BtnPrimary>
       </div>
     </div>
   );

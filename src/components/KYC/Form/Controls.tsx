@@ -54,11 +54,11 @@ export default function Controls({
       {/** KYC may not be required, and user may skip KYC,
        * but if user want to submit KYC - it should be validated */}
       {isKYCRequired || wantsKYC ? (
-        <BtnPrimary disabled={isSubmitting} type="submit">
+        <BtnPrimary as="btn" disabled={isSubmitting} type="submit">
           Continue
         </BtnPrimary>
       ) : (
-        <BtnPrimary type="button" onClick={skip}>
+        <BtnPrimary as="btn" type="button" onClick={skip}>
           Continue
         </BtnPrimary>
       )}

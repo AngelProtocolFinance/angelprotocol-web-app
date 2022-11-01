@@ -1,13 +1,11 @@
-import React from "react";
+import { BtnProps } from "./types";
+import BaseBtn from "./Base";
 
-export function BtnPrimary({
-  className,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+export function BtnPrimary(props: BtnProps) {
   return (
-    <button
-      className={`${className} max-md:text-sm p-3 rounded btn-orange normal-case`}
+    <BaseBtn
       {...props}
+      commonStyles="max-md:text-sm p-3 rounded btn-orange normal-case"
     />
   );
 }
