@@ -1,5 +1,6 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { Estimate } from "./types";
@@ -14,7 +15,11 @@ import estimateTerraFee from "./estimateTerraFee";
 export async function estimateDonation({
   details: { token },
   wallet,
-}: SubmitStep & { wallet: WalletState }): Promise<Estimate | null> {
+  terraWallet,
+}: SubmitStep & {
+  wallet: WalletState;
+  terraWallet?: ConnectedWallet;
+}): Promise<Estimate | null> {
   const { chain } = wallet;
   const { native_currency } = chain;
 
@@ -63,7 +68,12 @@ export async function estimateDonation({
 
         return {
           fee: { amount: feeAmount, symbol: native_currency.symbol },
-          tx: { type: "terra", val: { fee, msgs: [msg] } },
+          tx: {
+            type: "terra",
+            val: { fee, msgs: [msg] },
+            //terra-native won't appear if terra wallet is not connected
+            wallet: terraWallet!,
+          },
         };
       } else {
         const msg = new MsgExecuteContract(wallet.address, token.token_id, {
@@ -77,7 +87,11 @@ export async function estimateDonation({
 
         return {
           fee: { amount: feeAmount, symbol: native_currency.symbol },
-          tx: { type: "terra", val: { fee, msgs: [msg] } },
+          tx: {
+            type: "terra",
+            val: { fee, msgs: [msg] },
+            wallet: terraWallet!,
+          },
         };
       }
     }

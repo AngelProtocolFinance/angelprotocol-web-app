@@ -1,7 +1,5 @@
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { WalletController } from "@terra-money/wallet-provider";
-import { chainOptions } from "App/chainOptions";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { DonateArgs, EstimatedTx } from "../../types";
@@ -96,7 +94,7 @@ async function sendTransaction(
       return { hash: response.transactionHash, isSuccess: !response.code };
     }
     case "terra": {
-      const response = await controller.post(tx.val);
+      const response = await tx.wallet.post(tx.val);
       return { hash: response.result.txhash, isSuccess: response.success };
     }
     //evm donations
@@ -123,5 +121,3 @@ async function sendTransaction(
     }
   }
 }
-
-const controller = new WalletController(chainOptions);

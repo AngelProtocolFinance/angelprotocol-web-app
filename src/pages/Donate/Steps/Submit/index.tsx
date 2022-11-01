@@ -1,3 +1,4 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
@@ -14,16 +15,16 @@ type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-
+  const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateDonation(props);
+      const _estimate = await estimateDonation({ ...props, terraWallet });
       setEstimate(_estimate || "error");
     })();
-  }, [props]);
+  }, [props, terraWallet]);
 
   function goBack() {
     dispatch(setStep(props.step - 1));

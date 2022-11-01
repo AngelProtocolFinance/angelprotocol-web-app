@@ -4,6 +4,7 @@ import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Chain } from "types/aws";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
@@ -118,7 +119,7 @@ export type SendCosmosTxArgs = CosmosWithMsg | CosmosWithTx;
 
 export type EstimatedTx =
   | { type: "cosmos"; val: TxOptions }
-  | { type: "terra"; val: CreateTxOptions }
+  | { type: "terra"; val: CreateTxOptions; wallet: ConnectedWallet }
   | { type: "evm"; val: TransactionRequest };
 
 export type DonateArgs = {
