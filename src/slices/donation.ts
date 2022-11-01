@@ -19,6 +19,13 @@ const donation = createSlice({
         details: payload,
       };
     },
+    resetDetails: (state) => {
+      return {
+        ...(state as FormStep),
+        step: 1,
+        details: undefined,
+      };
+    },
     setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
         ...(state as Omit<SubmitStep, "kyc">),
@@ -33,7 +40,8 @@ const donation = createSlice({
 });
 
 export default donation.reducer;
-export const { setRecipient, setStep, setDetails, setKYC } = donation.actions;
+export const { setRecipient, setStep, setDetails, resetDetails, setKYC } =
+  donation.actions;
 
 export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
@@ -72,22 +80,22 @@ type InitStep = {
 
 export type FormStep = {
   step: 1;
-  details?: DonationDetails;
   recipient: DonationRecipient;
+  details?: DonationDetails;
 };
 
 export type KYCStep = {
   step: 2;
-  details?: DonationDetails;
-  kyc?: SkippableKYC;
   recipient: DonationRecipient;
+  details: DonationDetails;
+  kyc?: SkippableKYC;
 };
 
 export type SubmitStep = {
   step: 3;
-  details: DonationDetails;
-  kyc: KYC | "skipped";
   recipient: DonationRecipient;
+  details: DonationDetails;
+  kyc: SkippableKYC;
 };
 
 type ResultStep = {

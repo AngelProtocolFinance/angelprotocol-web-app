@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
 import KYC from "components/KYC";
+import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
@@ -67,25 +67,4 @@ function CurrStep(props: DonationState) {
       return <></>; // <Steps /> sets to step 1 onMount
     }
   }
-}
-
-function Tooltip({
-  type,
-  message,
-}: {
-  type: "Loading" | "Info";
-  message: string;
-}) {
-  return (
-    <p className="text-center">
-      <Icon
-        size={20}
-        type={type}
-        className={`relative inline bottom-[1px] mr-2 ${
-          type === "Loading" ? "animate-spin" : ""
-        }`}
-      />
-      {message}
-    </p>
-  );
 }

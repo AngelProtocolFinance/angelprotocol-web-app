@@ -12,9 +12,10 @@ export default function Donater({
   ...state
 }: WithWallet<FormStep>) {
   const { tokens } = chain;
+  const _all = [chain.native_currency].concat(tokens);
   const _tokens: TokenWithAmount[] =
-    tokens.length > 0
-      ? tokens.map((t) => ({ ...t, amount: "0" }))
+    _all.length > 0
+      ? _all.map((t) => ({ ...t, amount: "0" }))
       : placeholderChain.tokens.map((t) => ({ ...t, amount: "0" }));
 
   const methods = useForm<DonateValues>({

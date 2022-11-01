@@ -1,17 +1,19 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
+import { Tooltip } from "components/donation";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
+import { SubmitStep, TokenWithAmount, setStep } from "slices/donation";
 import { sendDonation } from "slices/transaction/transactors";
+import { humanize } from "helpers";
 import { estimateDonation } from "./estimateDonation";
+
+type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
 
-  const [estimate, setEstimate] = useState<Estimate | "loading" | "error">(
-    "loading"
-  );
+  const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
     (async () => {
@@ -34,16 +36,23 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   const { chain } = props.wallet;
   return (
     <div>
-      <Row title="Currency:" classes="py-3">
+      <Row title="Currency:">
         <img
+          alt=""
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
           src={token.logo}
         />
-        <span className="text-gray-d1 dark:text-gray">{token.symbol}</span>
+        <span>{token.symbol}</span>
       </Row>
-      <Row title="Blockchain:" classes="py-3">
-        <span className="text-gray-d1 dark:text-gray">{chain.chain_name}</span>
+      <Row title="Blockchain:">
+        <span>{chain.chain_name}</span>
       </Row>
+      <Row title="Amount:">
+        <span>
+          {token.symbol} {humanize(token.amount, 4)}
+        </span>
+      </Row>
+      <TxTotal estimate={estimate} token={token} />
       <div>SUBMIT UI</div>
       <div>
         <button type="button" onClick={submit}>
@@ -55,6 +64,63 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   );
 }
 
+function TxTotal({
+  estimate,
+  token,
+}: {
+  estimate: EstimateStatus;
+  token: TokenWithAmount;
+}) {
+  switch (estimate) {
+    case "error":
+      return (
+        <>
+          <Row title="Transaction costs:">
+            <span className="text-red dark:text-red-l2">0.0000</span>
+          </Row>
+          <Row title="TOTAL">
+            <span className="text-red dark:text-red-l2">
+              {token.symbol} {humanize(token.amount, 4)}
+            </span>
+          </Row>
+          <Tooltip type="Info" message="This transaction is likely to fail" />
+        </>
+      );
+    case "loading":
+      return (
+        <>
+          <Row title="Transaction costs:">
+            <span>----</span>
+          </Row>
+          <Row title="TOTAL">
+            <span>
+              {token.symbol} {humanize(token.amount, 4)}
+            </span>
+          </Row>
+        </>
+      );
+    default:
+      const { fee } = estimate;
+      const total =
+        fee.symbol === token.symbol
+          ? +token.amount + +fee.amount
+          : +token.amount;
+
+      return (
+        <>
+          <Row title="Transaction costs:">
+            {fee.symbol} {humanize(fee.amount, 4)}
+          </Row>
+          <Row title="TOTAL">
+            <span>
+              {token.symbol} {humanize(total, 4)}
+            </span>
+          </Row>
+        </>
+      );
+  }
+}
+
 function Row({
   title,
   children,
@@ -62,9 +128,9 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} flex items-center justify-between w-full border-b border-bluegray-d1 last:border-none`}
+      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-gray-l2 dark:border-bluegray-d1 last:border-none`}
     >
-      <p>{title}</p>
+      <p className="text-gray-d2 dark:text-white">{title}</p>
       {children}
     </div>
   );
