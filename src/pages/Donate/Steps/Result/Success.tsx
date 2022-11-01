@@ -39,8 +39,8 @@ export default function Success({
         socials
       </div>
 
-      <BtnPrimary as="btn" onClick={goToForm}>
-        Change payment details
+      <BtnPrimary as="link" to={appRoutes.profile + `/${endowId}`}>
+        Back to the platform
       </BtnPrimary>
     </div>
   );

@@ -1,5 +1,5 @@
 import { BtnProps } from "./types";
-import BaseBtn from "./Base";
+import BaseBtn from "./BaseBtn";
 
 export function BtnOutline(props: BtnProps) {
   return (
