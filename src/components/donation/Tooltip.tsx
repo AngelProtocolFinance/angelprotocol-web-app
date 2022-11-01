@@ -1,14 +1,16 @@
 import Icon from "components/Icon";
 
 export function Tooltip({
+  classes = "",
   type,
   message,
 }: {
   type: "Loading" | "Info";
   message: string;
+  classes?: string;
 }) {
   return (
-    <p className="text-center">
+    <p className={`${classes} text-center`}>
       <Icon
         size={20}
         type={type}

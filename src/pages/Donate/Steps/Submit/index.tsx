@@ -1,11 +1,13 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
-import { Tooltip } from "components/donation";
+import { BtnBack, ButtonContinue, Tooltip } from "components/donation";
+import { BtnCancel } from "components/donation/BtnCancel";
 import { useSetter } from "store/accessors";
 import { SubmitStep, TokenWithAmount, setStep } from "slices/donation";
 import { sendDonation } from "slices/transaction/transactors";
 import { humanize } from "helpers";
+import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
 
 type EstimateStatus = Estimate | "loading" | "error";
@@ -27,13 +29,17 @@ export default function Submit(props: WithWallet<SubmitStep>) {
     dispatch(setStep(props.step - 1));
   }
 
-  function submit() {
+  function submit({ tx }: Estimate) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx: (estimate as any).tx }));
+    dispatch(sendDonation({ donation, wallet, tx }));
   }
 
   const { token } = props.details;
   const { chain } = props.wallet;
+  const { id: endowId } = props.recipient;
+
+  const isNotEstimated = estimate === "error" || estimate === "loading";
+
   return (
     <div>
       <Row title="Currency:">
@@ -53,12 +59,30 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         </span>
       </Row>
       <TxTotal estimate={estimate} token={token} />
-      <div>SUBMIT UI</div>
-      <div>
-        <button type="button" onClick={submit}>
-          submit data
-        </button>
-        <button onClick={goBack}>back to kyc form</button>
+      <div className="mt-14 grid grid-cols-2 gap-5">
+        <BtnBack as="btn" onClick={goBack} type="button">
+          Back
+        </BtnBack>
+        <ButtonContinue
+          onClick={
+            isNotEstimated
+              ? undefined
+              : () => {
+                  submit(estimate);
+                }
+          }
+          disabled={isNotEstimated}
+          type="submit"
+        >
+          Make donation
+        </ButtonContinue>
+        <BtnCancel
+          as="link"
+          to={appRoutes.profile + `/${endowId}`}
+          className="col-span-full"
+        >
+          Cancel
+        </BtnCancel>
       </div>
     </div>
   );
@@ -83,7 +107,11 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
-          <Tooltip type="Info" message="This transaction is likely to fail" />
+          <Tooltip
+            type="Info"
+            message="This transaction is likely to fail"
+            classes="my-3"
+          />
         </>
       );
     case "loading":

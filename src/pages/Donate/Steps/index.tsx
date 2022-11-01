@@ -26,7 +26,7 @@ export default function Steps(props: DonationRecipient) {
       <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
         You'are about to make a donation to {props.name}
       </h3>
-      <Progress />
+      {state.step <= 3 && <Progress />}
       <CurrStep {...state} />
     </div>
   );
@@ -41,37 +41,40 @@ function CurrStep(props: DonationState) {
     !wallet && dispatch(resetDetails());
   }, [wallet]);
 
-  if (isLoading && props.step <= 3) {
-    return <Tooltip type="Loading" message="Loading wallet" />;
-  }
-
-  if (!wallet && props.step <= 3) {
-    return (
-      <Tooltip
-        type="Info"
-        message="You need to connect your wallet do make a donation"
-      />
-    );
-  }
-
-  switch (props.step) {
-    case 3: {
-      return <Submit {...props} wallet={wallet!} />; //defined for steps 1 -> 3
+  if (props.step <= 3) {
+    if (isLoading) {
+      return <Tooltip type="Loading" message="Loading wallet" />;
     }
-    case 2: {
+
+    if (!wallet) {
       return (
-        <KYC
-          type="on-donation"
-          state={props}
-          classes="grid gap-5 min-[510px]:grid-cols-2"
+        <Tooltip
+          type="Info"
+          message="You need to connect your wallet do make a donation"
         />
       );
     }
-    case 1: {
-      return <Donater {...props} wallet={wallet!} />; //defined for steps 1 -> 3
+    switch (props.step) {
+      case 3: {
+        return <Submit {...props} wallet={wallet} />;
+      }
+      case 2: {
+        return (
+          <KYC
+            type="on-donation"
+            state={props}
+            classes="grid gap-5 min-[510px]:grid-cols-2"
+          />
+        );
+      }
+      case 1: {
+        return <Donater {...props} wallet={wallet} />;
+      }
+      default: {
+        return <></>; // <Steps /> sets to step 1 onMount
+      }
     }
-    default: {
-      return <></>; // <Steps /> sets to step 1 onMount
-    }
+  } else {
+    return <></>;
   }
 }

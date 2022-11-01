@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Token } from "types/aws";
 
-export type DonationState = InitStep | FormStep | KYCStep | SubmitStep;
+export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
 const initialState: DonationState = { step: 0 };
 
@@ -33,6 +33,9 @@ const donation = createSlice({
         kyc: payload,
       };
     },
+
+    setTxStatus: (state) => {},
+
     setStep(state, { payload }: PayloadAction<number>) {
       state.step = payload as DonationState["step"];
     },
@@ -80,31 +83,20 @@ type InitStep = {
 
 export type FormStep = {
   step: 1;
-  recipient: DonationRecipient;
   details?: DonationDetails;
-};
+} & Omit<Required<InitStep>, "step">;
 
 export type KYCStep = {
   step: 2;
-  recipient: DonationRecipient;
-  details: DonationDetails;
   kyc?: SkippableKYC;
-};
+} & Omit<Required<FormStep>, "step">;
 
 export type SubmitStep = {
   step: 3;
-  recipient: DonationRecipient;
-  details: DonationDetails;
-  kyc: SkippableKYC;
-};
+} & Omit<Required<KYCStep>, "step">;
 
-type ResultStep = {
+type TxStatus = "loading" | "error" | { hash: string };
+export type TxStep = {
   step: 4;
-  status:
-    | "loading"
-    | "error"
-    | (Pick<SubmitStep, "details" | "kyc" | "recipient"> & {
-        hash: string;
-        chainId: string;
-      });
-};
+  status: TxStatus;
+} & Omit<SubmitStep, "step">;
