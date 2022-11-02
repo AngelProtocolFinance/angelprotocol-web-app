@@ -114,12 +114,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
+  const providersLoading = providerStatuses.some(({ isLoading }) => isLoading);
+
   useEffect(() => {
     (async function () {
       try {
         const connectedProviderId = getConnectedProvider();
 
-        if (activeProviderInfo || !connectedProviderId) {
+        if (providersLoading || activeProviderInfo || !connectedProviderId) {
           return;
         }
 
@@ -150,7 +152,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeProviderInfo]);
+  }, [providersLoading, activeProviderInfo]);
 
   const disconnect = useCallback(() => {
     switch (activeProviderInfo?.providerId) {
