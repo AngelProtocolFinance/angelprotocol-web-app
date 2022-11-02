@@ -3,7 +3,7 @@ import { Connection, ProviderId, WalletData } from "./types";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { UnexpectedStateError } from "errors/errors";
 import { useErrorContext } from "../ErrorContext";
-import { getConnectedProvider } from "./helpers/connectedProvider";
+import { getConnectedProviderId } from "./helpers/connectedProvider";
 
 export default function useAutoConnect(wallets: WalletData[]) {
   const { handleError } = useErrorContext();
@@ -17,7 +17,7 @@ export default function useAutoConnect(wallets: WalletData[]) {
   useEffect(() => {
     (async function () {
       try {
-        const connectedProviderId = getConnectedProvider();
+        const connectedProviderId = getConnectedProviderId();
 
         if (providersLoading || activeProviderInfo || !connectedProviderId) {
           return;

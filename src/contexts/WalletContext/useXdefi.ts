@@ -4,7 +4,7 @@ import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
-import { storeConnectedProvider } from "./helpers/connectedProvider";
+import { storeConnectedProviderId } from "./helpers/connectedProvider";
 import useInjectedProvider from "./useInjectedProvider";
 
 export default function useXdefi(): WalletData {
@@ -28,7 +28,7 @@ export default function useXdefi(): WalletData {
     connect: async () => {
       if (connection) {
         connect(connection.type, connection.identifier);
-        storeConnectedProvider("xdefi-wallet");
+        storeConnectedProviderId("xdefi-wallet");
       } else {
         // Errors within handled in src/components/WalletSuite/WalletSelector/Connector.tsx
         checkXdefiPriority();

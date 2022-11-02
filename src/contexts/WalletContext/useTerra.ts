@@ -6,8 +6,8 @@ import {
 import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
 import { WALLET_METADATA } from "./constants";
 import {
-  removeConnectedProvider,
-  storeConnectedProvider,
+  removeConnectedProviderId,
+  storeConnectedProviderId,
 } from "./helpers/connectedProvider";
 
 export default function useTerra(): WalletData {
@@ -50,13 +50,13 @@ export default function useTerra(): WalletData {
       providerId: connection.identifier as ProviderId,
       connect: async () => {
         connect(connection.type, connection.identifier);
-        storeConnectedProvider(connection.identifier as ProviderId);
+        storeConnectedProviderId(connection.identifier as ProviderId);
       },
     }));
 
   const disconnectTerra = () => {
     disconnect();
-    removeConnectedProvider();
+    removeConnectedProviderId();
   };
 
   return {

@@ -5,8 +5,8 @@ import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import {
-  removeConnectedProvider,
-  storeConnectedProvider,
+  removeConnectedProviderId,
+  storeConnectedProviderId,
 } from "../helpers/connectedProvider";
 import { juno_test_chain_info } from "./chains";
 
@@ -35,7 +35,7 @@ export default function useKeplr(): WalletData {
       setAddress(key.bech32Address);
       setChainId(CHAIN_ID);
       setIsLoading(false);
-      storeConnectedProvider(PROVIDER_ID);
+      storeConnectedProviderId(PROVIDER_ID);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
       setIsLoading(false);
@@ -72,7 +72,7 @@ export default function useKeplr(): WalletData {
     if (!address) return;
     setAddress("");
     setChainId(undefined);
-    removeConnectedProvider();
+    removeConnectedProviderId();
   }
 
   const providerInfo: ProviderInfo | undefined =
