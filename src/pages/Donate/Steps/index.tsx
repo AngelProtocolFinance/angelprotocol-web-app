@@ -22,13 +22,9 @@ export default function Steps(props: DonationRecipient) {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
 
-  const isHeadingShown =
-    state.step < 4 ||
-    (state.step === 4 && "loadingMsg" in (state.status as any));
-
   return (
     <div className="justify-self-center grid padded-container max-w-[32rem]">
-      {isHeadingShown && (
+      {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
             You'are about to make a donation to {props.name}
@@ -87,5 +83,17 @@ function CurrStep(props: DonationState) {
     return <Result {...props} classes="justify-self-center mt-16" />;
   } else {
     return <></>;
+  }
+}
+
+function isHeadingShown(state: DonationState) {
+  switch (state.step) {
+    case 4:
+      if (state.status === "error") return false;
+      if ("hash" in state.status) return false;
+      //only show progress on loading
+      return true;
+    default:
+      return true;
   }
 }
