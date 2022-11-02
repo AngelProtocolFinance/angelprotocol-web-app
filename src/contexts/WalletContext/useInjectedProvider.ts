@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import {
   AccountChangeHandler,
@@ -15,28 +15,16 @@ import {
   removeConnectedProvider,
   storeConnectedProvider,
 } from "./helpers/connectedProvider";
-import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
   connectorName = prettifyId(providerId),
   connectorLogo?: string
 ) {
-  const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
-  const lastAction = retrieveUserAction(actionKey);
-  const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-
-  useEffect(() => {
-    requestAccess();
-    return () => {
-      removeAllListeners(providerId);
-    };
-    //eslint-disable-next-line
-  }, []);
 
   /** attachers/detachers */
   const attachChainChangedHandler = (provider: InjectedProvider) => {
@@ -61,19 +49,14 @@ export default function useInjectedProvider(
     } else {
       setAddress("");
       setChainId(undefined);
-      saveUserAction(actionKey, "disconnect");
       removeAllListeners(providerId);
     }
   };
 
-  const requestAccess = async (isNewConnection = false) => {
+  const requestAccess = async () => {
     try {
       const injectedProvider = getProvider(providerId);
-      if (
-        injectedProvider &&
-        (isNewConnection || shouldReconnect) &&
-        !address
-      ) {
+      if (injectedProvider && !address) {
         attachAccountChangeHandler(injectedProvider);
         attachChainChangedHandler(injectedProvider);
 
@@ -93,15 +76,12 @@ export default function useInjectedProvider(
       //if user cancels, set pref to disconnect
       logger.error(err);
       setIsLoading(false);
-      saveUserAction(actionKey, "disconnect");
-      if (isNewConnection) {
-        //if connection is made via "connect-button"
-        // Error handled in src/components/WalletSuite/WalletSelector/Connector.tsx
-        throw new WalletError(
-          err.message || "Unknown error occured",
-          err.code || 0
-        );
-      }
+      //if connection is made via "connect-button"
+      // Error handled in src/components/WalletSuite/WalletSelector/Connector.tsx
+      throw new WalletError(
+        err.message || "Unknown error occured",
+        err.code || 0
+      );
     }
   };
 
@@ -111,7 +91,6 @@ export default function useInjectedProvider(
     if (!injectedProvider) return;
     setAddress("");
     setChainId(undefined);
-    saveUserAction(actionKey, "disconnect");
     removeAllListeners(providerId);
     removeConnectedProvider();
   }
@@ -139,8 +118,7 @@ export default function useInjectedProvider(
       }
 
       setIsLoading(true);
-      await requestAccess(true);
-      saveUserAction(actionKey, "connect");
+      await requestAccess();
     } catch (err: any) {
       setIsLoading(false);
       throw new WalletError(

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
@@ -8,26 +8,17 @@ import {
   removeConnectedProvider,
   storeConnectedProvider,
 } from "../helpers/connectedProvider";
-import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
 const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
-const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 const PROVIDER_ID: ProviderId = "keplr";
 
 export default function useKeplr() {
   //connect only if there's no active wallet
-  const lastAction = retrieveUserAction(actionKey);
-  const shouldReconnect = lastAction === "connect";
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-
-  useEffect(() => {
-    (shouldReconnect && requestAccess()) || setIsLoading(false);
-    //eslint-disable-next-line
-  }, []);
 
   // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx
   const requestAccess = async (isNewConnection = false) => {
@@ -48,7 +39,6 @@ export default function useKeplr() {
     } catch (err: any) {
       //if user cancels, set pref to disconnect
       setIsLoading(false);
-      saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
         if (/key/.test(err?.message)) {
           throw new WalletError("Your Keplr account is not logged in", 0);
@@ -68,7 +58,6 @@ export default function useKeplr() {
       //connecting xdefi
       setIsLoading(true);
       await requestAccess(true);
-      saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
       // Error handled in src/components/WalletSuite/WalletSelector/Connector.tsx
@@ -83,7 +72,6 @@ export default function useKeplr() {
     if (!address) return;
     setAddress("");
     setChainId(undefined);
-    saveUserAction(actionKey, "disconnect");
     removeConnectedProvider();
   }
 
