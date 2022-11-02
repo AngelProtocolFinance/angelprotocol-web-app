@@ -19,11 +19,10 @@ export default function Err({
 
   return (
     <div className={`grid justify-items-center ${classes}`}>
-      <Icon
-        type="ExclamationCircleFill"
-        size={80}
-        className="text-[#F15A21] mb-8 text-center"
-      />
+      <div className="bg-[#F15A21] rounded-full aspect-square grid place-items-center mb-8">
+        <Icon type="Exclamation" size={50} className="text-white m-5" />
+      </div>
+
       <h3 className="text-3xl mb-12 font-bold">Something went wrong!</h3>
       <p className="text-center">
         The payment wasn’t processed. Please double check your payment details
