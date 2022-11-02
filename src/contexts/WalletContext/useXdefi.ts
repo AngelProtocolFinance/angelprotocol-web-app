@@ -41,7 +41,6 @@ export default function useXdefi(): WalletData {
     logo: WALLET_METADATA["xdefi-wallet"].logo,
     installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     networks: [...xdefiEVMConnections, xdefiTerraConnection],
-    providerId: "xdefi-wallet",
   };
 
   return {

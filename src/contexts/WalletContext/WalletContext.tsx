@@ -250,11 +250,20 @@ function findActiveConnection(
   connectedProviderId: ProviderId
 ): Connection | undefined {
   for (const { connections } of wallets) {
-    const connectedProvider = connections.find(
-      (c) => c.providerId === connectedProviderId
-    );
-    if (connectedProvider) {
-      return connectedProvider;
+    for (const conn of connections) {
+      if (conn.providerId) {
+        if (conn.providerId === connectedProviderId) {
+          return conn;
+        }
+      } else {
+        const result = conn.networks.find(
+          (conn) => conn.providerId === connectedProviderId
+        );
+
+        if (result) {
+          return result;
+        }
+      }
     }
   }
 }

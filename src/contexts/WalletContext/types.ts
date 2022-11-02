@@ -13,12 +13,15 @@ export type ProviderId =
 type Base = {
   logo: string;
   installUrl?: string;
-  providerId: ProviderId;
   name: string;
   network?: true;
 };
-type Single = { connect: () => Promise<void>; networks?: never };
-type Multi = { connect?: never; networks: Connection[] };
+type Single = {
+  connect: () => Promise<void>;
+  networks?: never;
+  providerId: ProviderId;
+};
+type Multi = { connect?: never; networks: Connection[]; providerId?: never };
 export type Connection = Base & (Single | Multi);
 
 export type ProviderInfo = {
