@@ -1,5 +1,5 @@
 import { useWallet } from "@terra-money/wallet-provider";
-import { Connection } from "./types";
+import { Connection, WalletData } from "./types";
 import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
 import { WALLET_METADATA } from "./constants";
@@ -7,11 +7,11 @@ import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { storeConnectedProvider } from "./helpers/connectedProvider";
 import useInjectedProvider from "./useInjectedProvider";
 
-export default function useXdefi() {
+export default function useXdefi(): WalletData {
   const { availableConnections, connect } = useWallet();
   const {
     isLoading: isxdefiEVMLoading,
-    connection: xdefiEVMConnection,
+    connections: xdefiEVMConnections,
     disconnect: disconnectEVMxdefi,
     providerInfo: xdefiEVMinfo,
   } = useInjectedProvider("xdefi-evm", "Ethereum", evmIcon);
@@ -40,15 +40,15 @@ export default function useXdefi() {
     name: "xdefi",
     logo: WALLET_METADATA["xdefi-wallet"].logo,
     installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
-    networks: [xdefiTerraConnection, xdefiEVMConnection],
+    networks: [...xdefiEVMConnections, xdefiTerraConnection],
     providerId: "xdefi-wallet",
   };
 
   return {
     //xdefi terra state is already reflected in useTerra
-    isxdefiEVMLoading,
-    disconnectEVMxdefi,
-    xdefiEVMinfo,
-    xdefiConnection,
+    isLoading: isxdefiEVMLoading,
+    disconnect: disconnectEVMxdefi,
+    providerInfo: xdefiEVMinfo,
+    connections: [xdefiConnection],
   };
 }

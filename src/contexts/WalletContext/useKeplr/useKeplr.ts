@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "../types";
+import { Connection, ProviderId, ProviderInfo, WalletData } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
@@ -14,7 +14,7 @@ const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 const dwindow: Dwindow = window;
 const PROVIDER_ID: ProviderId = "keplr";
 
-export default function useKeplr() {
+export default function useKeplr(): WalletData {
   //connect only if there's no active wallet
   const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState<string>("");
@@ -86,14 +86,16 @@ export default function useKeplr() {
       : undefined;
 
   //connection object to render <Connector/>
-  const connection: Connection = {
-    ...WALLET_METADATA.keplr,
-    providerId: PROVIDER_ID,
-    connect,
-  };
+  const connections: Connection[] = [
+    {
+      ...WALLET_METADATA.keplr,
+      providerId: PROVIDER_ID,
+      connect,
+    },
+  ];
 
   return {
-    connection,
+    connections,
     disconnect,
     isLoading,
     providerInfo,

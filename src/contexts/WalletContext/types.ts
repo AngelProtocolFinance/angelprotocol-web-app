@@ -30,3 +30,10 @@ export type ProviderInfo = {
 
 type ProviderStatus = { providerInfo?: ProviderInfo; isLoading: boolean };
 export type ProviderStatuses = ProviderStatus[];
+
+export type WalletData = {
+  connections: Connection[];
+  disconnect: () => void;
+  providerInfo?: ProviderInfo;
+  isLoading: boolean;
+};

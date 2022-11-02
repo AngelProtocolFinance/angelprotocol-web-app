@@ -59,7 +59,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
-    connection: metamaskConnection,
+    connections: metamaskConnections,
     disconnect: disconnectMetamask,
     providerInfo: metamaskInfo,
   } = useInjectedProvider("metamask");
@@ -73,19 +73,23 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const {
     isLoading: isKeplrLoading,
-    connection: keplrConnection,
+    connections: keplrConnections,
     disconnect: disconnectKeplr,
     providerInfo: keplrWalletInfo,
   } = useKeplr();
 
-  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
-    useTerra();
+  const {
+    isLoading: isTerraLoading,
+    connections: terraConnections,
+    disconnect: disconnectTerra,
+    providerInfo: terraInfo,
+  } = useTerra();
 
   const {
-    isxdefiEVMLoading,
-    xdefiConnection,
-    disconnectEVMxdefi,
-    xdefiEVMinfo,
+    isLoading: isxdefiEVMLoading,
+    connections: xdefiConnections,
+    disconnect: disconnectEVMxdefi,
+    providerInfo: xdefiEVMinfo,
   } = useXdefi();
 
   const providerStatuses: ProviderStatuses = [
@@ -127,9 +131,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
         const connectedProvider = [
           ...terraConnections,
-          ...xdefiConnection.networks,
-          metamaskConnection,
-          keplrConnection,
+          ...(xdefiConnections[0].networks ?? []),
+          ...metamaskConnections,
+          ...keplrConnections,
         ].find((connection) => connection.providerId === connectedProviderId);
 
         if (!connectedProvider) {
@@ -226,9 +230,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: [
-            keplrConnection,
-            xdefiConnection,
-            metamaskConnection,
+            ...keplrConnections,
+            ...xdefiConnections,
+            ...metamaskConnections,
             ...terraConnections,
             // binanceWalletConnection,
           ],

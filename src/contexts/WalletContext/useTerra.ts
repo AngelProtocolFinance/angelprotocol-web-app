@@ -3,14 +3,14 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
 import { WALLET_METADATA } from "./constants";
 import {
   removeConnectedProvider,
   storeConnectedProvider,
 } from "./helpers/connectedProvider";
 
-export default function useTerra() {
+export default function useTerra(): WalletData {
   const {
     availableConnections,
     connection,
@@ -21,7 +21,7 @@ export default function useTerra() {
     disconnect,
   } = useWallet();
 
-  const terraInfo: ProviderInfo | undefined = connection
+  const providerInfo: ProviderInfo | undefined = connection
     ? {
         providerId:
           //use connect type as Id if no further connections stems out of the type
@@ -33,7 +33,7 @@ export default function useTerra() {
       }
     : undefined;
 
-  const terraConnections: Connection[] = availableConnections
+  const connections: Connection[] = availableConnections
     .filter(
       (connection) =>
         !(
@@ -60,9 +60,9 @@ export default function useTerra() {
   };
 
   return {
-    isTerraLoading: status === WalletStatus.INITIALIZING,
-    terraConnections,
-    disconnectTerra,
-    terraInfo,
+    isLoading: status === WalletStatus.INITIALIZING,
+    connections,
+    disconnect: disconnectTerra,
+    providerInfo,
   };
 }

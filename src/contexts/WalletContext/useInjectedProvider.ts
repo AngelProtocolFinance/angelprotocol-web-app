@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -20,7 +20,7 @@ export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
   connectorName = prettifyId(providerId),
   connectorLogo?: string
-) {
+): WalletData {
   //connect only if there's no active wallet
   const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState<string>("");
@@ -140,16 +140,18 @@ export default function useInjectedProvider(
       : undefined;
 
   //connection object to render <Connector/>
-  const connection: Connection = {
-    name: connectorName,
-    logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
-    installUrl: WALLET_METADATA[providerId].installUrl,
-    providerId,
-    connect,
-  };
+  const connections: Connection[] = [
+    {
+      name: connectorName,
+      logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
+      installUrl: WALLET_METADATA[providerId].installUrl,
+      providerId,
+      connect,
+    },
+  ];
 
   return {
-    connection,
+    connections,
     disconnect,
     isLoading,
     providerInfo,
