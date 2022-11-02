@@ -8,17 +8,12 @@ import {
 } from "react";
 import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
 import { Chain, Token } from "types/aws";
-import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
-import {
-  UnexpectedStateError,
-  WalletDisconnectedError,
-  WrongNetworkError,
-} from "errors/errors";
+import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
-import { getConnectedProvider } from "./helpers/connectedProvider";
+import useAutoConnect from "./useAutoConnect";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -50,9 +45,10 @@ const initialState: State = {
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
-  const { handleError } = useErrorContext();
-
   const metamask = useInjectedProvider("metamask");
+  const keplr = useKeplr();
+  const terra = useTerra();
+  const xdefi = useXdefi();
 
   // const {
   //   isLoading: isBinanceWalletLoading,
@@ -61,55 +57,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   //   providerInfo: binanceWalletInfo,
   // } = useInjectedProvider("binance-wallet");
 
-  const keplr = useKeplr();
-
-  const terra = useTerra();
-
-  const xdefi = useXdefi();
-
   const wallets: WalletData[] = [metamask, keplr, terra, xdefi];
+
+  useAutoConnect(wallets);
 
   const activeProviderInfo = wallets.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
-
-  const providersLoading = wallets.some(({ isLoading }) => isLoading);
-
-  useEffect(() => {
-    (async function () {
-      try {
-        const connectedProviderId = getConnectedProvider();
-
-        if (providersLoading || activeProviderInfo || !connectedProviderId) {
-          return;
-        }
-
-        const connectedProvider = findActiveConnection(
-          wallets,
-          connectedProviderId
-        );
-
-        if (!connectedProvider) {
-          throw new UnexpectedStateError(
-            `Stored an unexpected provider ID ${connectedProviderId}`
-          );
-        }
-
-        if (!connectedProvider.connect) {
-          throw new UnexpectedStateError(
-            `Provider connection doesn't have a connect() function. ${JSON.stringify(
-              connectedProvider
-            )}`
-          );
-        }
-
-        await connectedProvider.connect();
-      } catch (error) {
-        handleError(error, GENERIC_ERROR_MESSAGE);
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [providersLoading, activeProviderInfo]);
 
   const disconnect = useCallback(() => {
     switch (activeProviderInfo?.providerId) {
@@ -244,26 +198,3 @@ const setContext = createContext<Setters>({
 
 export const useSetWallet = () => useContext(setContext);
 export const useGetWallet = () => useContext(getContext);
-
-function findActiveConnection(
-  wallets: WalletData[],
-  connectedProviderId: ProviderId
-): Connection | undefined {
-  for (const { connections } of wallets) {
-    for (const conn of connections) {
-      if (conn.providerId) {
-        if (conn.providerId === connectedProviderId) {
-          return conn;
-        }
-      } else if (conn.networks) {
-        const result = conn.networks.find(
-          (conn) => conn.providerId === connectedProviderId
-        );
-
-        if (result) {
-          return result;
-        }
-      }
-    }
-  }
-}
