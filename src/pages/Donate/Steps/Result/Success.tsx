@@ -29,14 +29,19 @@ export default function Success({
         provided.
       </p>
       <div className="grid grid-cols-2 gap-5 w-full">
-        <BtnSec>Download receipt</BtnSec>
+        <BtnSec className="flex items-center justify-center gap-3.5">
+          <Icon type="FileDownload" size={22} />
+          <span>Download tax receipt</span>
+        </BtnSec>
         <BtnSec
           as="a"
           href={getTxUrl(chainId, hash)}
           target="_blank"
           rel="noopener noreferrer"
+          className="flex items-center justify-center gap-3.5"
         >
-          View transaction
+          <Icon type="ExternalLink" size={22} />
+          <span>View transaction</span>
         </BtnSec>
       </div>
       <div className="h-20 grid place-items-center my-12 dark:bg-blue-d7 rounded border dark:border-bluegray w-full">
