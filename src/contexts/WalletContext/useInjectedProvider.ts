@@ -166,6 +166,7 @@ export default function useInjectedProvider(
     name: connectorName,
     logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
     installUrl: WALLET_METADATA[providerId].installUrl,
+    providerId,
     connect,
   };
 

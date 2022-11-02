@@ -47,6 +47,7 @@ export default function useTerra() {
       installUrl: connection.identifier
         ? WALLET_METADATA[connection.identifier as ProviderId]?.installUrl // --> if the connection.identifier is unsupported, we do not fill out the install URL field
         : undefined,
+      providerId: connection.identifier as ProviderId,
       connect: async () => {
         connect(connection.type, connection.identifier);
         storeConnectedProvider(connection.identifier as ProviderId);

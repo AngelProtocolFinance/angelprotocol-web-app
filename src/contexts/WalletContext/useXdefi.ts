@@ -24,6 +24,7 @@ export default function useXdefi() {
     logo: terraIcon, //this connector will appear on network selection
     name: "Terra",
     installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
+    providerId: "xdefi-wallet",
     connect: async () => {
       if (connection) {
         connect(connection.type, connection.identifier);
@@ -40,6 +41,7 @@ export default function useXdefi() {
     logo: WALLET_METADATA["xdefi-wallet"].logo,
     installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     networks: [xdefiTerraConnection, xdefiEVMConnection],
+    providerId: "xdefi-wallet",
   };
 
   return {
