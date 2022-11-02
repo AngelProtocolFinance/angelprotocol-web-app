@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DrawerIcon } from "components/Icon";
+import Icon from "components/Icon";
 import Split from "./Split";
 
 type Props = {
@@ -19,14 +19,14 @@ export default function AdvancedOptions({ classes = "" }: Props) {
     >
       <div className="flex items-center justify-between px-4 py-2 bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold py-2">
-          {isOpen && "Hide"} Advance Options
+          {isOpen && "Hide"} Advanced Options
         </span>
         <button
           type="button"
           onClick={toggle}
           className="border border-gray-l2 dark:border-bluegray h-full aspect-square rounded grid place-items-center"
         >
-          <DrawerIcon isOpen={isOpen} size={20} />
+          <Icon type={isOpen ? "Dash" : "Plus"} size={15} />
         </button>
       </div>
       {isOpen && <Split />}

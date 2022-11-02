@@ -39,9 +39,13 @@ export default function Form({ classes = "", ...props }: Props) {
       <TextInput<FV>
         name="name.first"
         label="First name"
-        placeholder="e.g John"
+        placeholder="e.g. John"
       />
-      <TextInput<FV> name="name.last" label="Last name" placeholder="e.g Doe" />
+      <TextInput<FV>
+        name="name.last"
+        label="Last name"
+        placeholder="e.g. Doe"
+      />
       <TextInput<FV>
         name="address.street"
         label="Address"
@@ -88,7 +92,7 @@ export default function Form({ classes = "", ...props }: Props) {
       <TextInput<FV>
         name="email"
         label="Email address"
-        placeholder="e.g johndoe@mail.com"
+        placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
       <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />

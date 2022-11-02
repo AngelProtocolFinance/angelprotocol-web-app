@@ -1,3 +1,4 @@
+import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
 import { humanize } from "helpers";
@@ -9,12 +10,12 @@ export default function AmountOptions({ classes = "" }: { classes?: string }) {
   const { min_donation_amnt, amount } = watch("token");
 
   const min = min_donation_amnt || 100;
-  const steps = SCALE.map((s) => (min || 100) * s);
+  const steps = SCALE.map((s) => min * s);
 
   return (
     <div className={`grid grid-cols-5 gap-2 text-xs ${classes}`}>
       {steps.map((m) => {
-        const precision = min < 1 ? 3 : 0;
+        const precision = new Decimal(min).decimalPlaces();
         return (
           <button
             type="button"

@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
-import { DonateParams } from "./types";
 import { useEndowmentDetailsQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
 import Steps from "./Steps";
 
 export default function Donate() {
-  const { id } = useParams<DonateParams>();
+  const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
   const queryState = useEndowmentDetailsQuery(
     { id: numId },

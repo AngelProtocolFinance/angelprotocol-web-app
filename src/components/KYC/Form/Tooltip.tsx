@@ -20,13 +20,17 @@ export default function Tooltip(props: Props) {
 
   return (
     (recipient.isKYCRequired && (
-      <p className={`font-bold text-center ${props.classes ?? ""}`}>
+      <p
+        className={`font-heading font-bold text-center ${props.classes ?? ""}`}
+      >
         {recipient.name} enforces donor verification. Please provide your
         personal information below to complete your donation. You will be sent a
         tax receipt to your email address automatically
       </p>
     )) || (
-      <p className={`font-bold text-center ${props.classes ?? ""}`}>
+      <p
+        className={`font-heading font-bold text-center ${props.classes ?? ""}`}
+      >
         Please fill in your personal information below if you want to be sent a
         tax receipt. You can leave the form blank if you don't want one
       </p>
