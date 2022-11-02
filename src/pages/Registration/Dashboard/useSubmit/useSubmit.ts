@@ -1,16 +1,17 @@
 import { useCallback } from "react";
-import { Charity } from "types/aws";
+import { Charity, SubmitData } from "types/aws";
 import { invalidateAwsTags } from "services/aws/aws";
+import { useSubmitMutation } from "services/aws/registration";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
-import { createAuthToken, logger } from "helpers";
-import { APIs } from "constants/urls";
+import { logger } from "helpers";
 
 export default function useSubmit() {
+  const [submitApplication] = useSubmitMutation();
   const { wallet } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
@@ -23,15 +24,16 @@ export default function useSubmit() {
           setStage({ step: "submit", message: "Saving endowment proposal" })
         );
 
-        const generatedToken = createAuthToken("charity-owner");
-        const response = await fetch(
-          `${APIs.aws}/v2/registration/${charity.ContactPerson.PK!}/submit`,
-          {
-            method: "POST",
-            body: JSON.stringify({ chain_id: wallet!.chain.chain_id }),
-            headers: { authorization: generatedToken },
-          }
-        );
+        const postData: SubmitData = {
+          PK: charity.ContactPerson.PK!,
+          chain_id: wallet!.chain.chain_id,
+        };
+
+        const response = await submitApplication(postData);
+
+        if ("error" in response) {
+          throw new Error("Request failed");
+        }
 
         dispatch(
           setStage({
@@ -47,10 +49,6 @@ export default function useSubmit() {
             { type: awsTags.admin, id: adminTags.registration },
           ])
         );
-
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
       } catch (err) {
         logger.error(err);
         dispatch(
@@ -64,7 +62,7 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [dispatch, showModal, wallet]
+    [dispatch, showModal, submitApplication, wallet]
   );
 
   return { submit, isSubmitting: form_loading };

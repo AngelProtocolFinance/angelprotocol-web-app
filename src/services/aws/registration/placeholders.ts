@@ -35,7 +35,6 @@ export const placeholderCharity: Charity = {
     Banner: undefined,
     CharityLogo: undefined,
     CharityOverview: "",
-    EndowmentContract: "",
     EndowmentId: 0,
     KycDonorsOnly: false,
     SK: "Metadata",

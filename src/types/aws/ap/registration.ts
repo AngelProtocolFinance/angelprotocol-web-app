@@ -89,7 +89,6 @@ type InitialMetaData = Optional<
   | "Banner"
   | "CharityLogo"
   | "CharityOverview"
-  | "EndowmentContract"
   | "EndowmentId"
   | "JunoWallet"
   | "KycDonorsOnly"
@@ -98,7 +97,6 @@ export type Metadata = {
   Banner?: FileObject;
   CharityLogo?: FileObject;
   CharityOverview: string;
-  EndowmentContract: string;
   EndowmentId: number;
   SK: "Metadata";
   JunoWallet: string;
@@ -140,13 +138,14 @@ export type ContactDetailsRequest = {
 //*
 export type SubmitData = {
   PK: string;
-  EndowmentContract: string;
+  chain_id: string;
 };
 
 //*
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;
-  EndowmentContract: string;
+  chain_id: string;
+  poll_id: number;
 };
 
 export type UpdateCharityMetadataData = {
