@@ -29,8 +29,13 @@ export default function Success({
         provided.
       </p>
       <div className="grid grid-cols-2 gap-5 w-full">
-        <BtnSec as="btn">Download receipt</BtnSec>
-        <BtnSec as="link" to={getTxUrl(chainId, hash)}>
+        <BtnSec>Download receipt</BtnSec>
+        <BtnSec
+          as="a"
+          href={getTxUrl(chainId, hash)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           View transaction
         </BtnSec>
       </div>

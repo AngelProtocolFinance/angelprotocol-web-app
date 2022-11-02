@@ -98,7 +98,6 @@ export default function Form({ classes = "", ...props }: Props) {
       <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
       {props.type === "post-donation" ? (
         <BtnPrimary
-          as="btn"
           className="col-span-full"
           disabled={isSubmitting}
           type="submit"

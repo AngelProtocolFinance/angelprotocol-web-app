@@ -48,17 +48,17 @@ export default function Controls({
 
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
-      <BtnSec as="btn" onClick={goBack} type="button">
+      <BtnSec onClick={goBack} type="button">
         Back
       </BtnSec>
       {/** KYC may not be required, and user may skip KYC,
        * but if user want to submit KYC - it should be validated */}
       {isKYCRequired || wantsKYC ? (
-        <BtnPrimary as="btn" disabled={isSubmitting} type="submit">
+        <BtnPrimary disabled={isSubmitting} type="submit">
           Continue
         </BtnPrimary>
       ) : (
-        <BtnPrimary as="btn" type="button" onClick={skip}>
+        <BtnPrimary type="button" onClick={skip}>
           Continue
         </BtnPrimary>
       )}

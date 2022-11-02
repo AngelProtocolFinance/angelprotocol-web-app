@@ -39,7 +39,6 @@ export default function Form() {
           Cancel
         </BtnSec>
         <BtnPrimary
-          as="btn"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }

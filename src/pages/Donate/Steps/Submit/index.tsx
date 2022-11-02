@@ -61,11 +61,10 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
-        <BtnSec as="btn" onClick={goBack} type="button">
+        <BtnSec onClick={goBack} type="button">
           Back
         </BtnSec>
         <BtnPrimary
-          as="btn"
           onClick={
             isNotEstimated
               ? undefined
