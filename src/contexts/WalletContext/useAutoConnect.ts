@@ -23,26 +23,26 @@ export default function useAutoConnect(wallets: WalletData[]) {
           return;
         }
 
-        const connectedProvider = findActiveConnection(
+        const activeConnection = findActiveConnection(
           wallets,
           connectedProviderId
         );
 
-        if (!connectedProvider) {
+        if (!activeConnection) {
           throw new UnexpectedStateError(
             `Stored an unexpected provider ID ${connectedProviderId}`
           );
         }
 
-        if (!connectedProvider.connect) {
+        if (!activeConnection.connect) {
           throw new UnexpectedStateError(
             `Provider connection doesn't have a connect() function. ${JSON.stringify(
-              connectedProvider
+              activeConnection
             )}`
           );
         }
 
-        await connectedProvider.connect();
+        await activeConnection.connect();
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
