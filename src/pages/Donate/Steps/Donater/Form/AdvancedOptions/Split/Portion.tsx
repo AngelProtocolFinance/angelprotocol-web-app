@@ -14,9 +14,7 @@ export default function Portion({ type, title, action, children }: Props) {
       <p className="text-sm md:text-lg mb-2 font-bold">{disp_split}%</p>
       <p className="uppercase text-xs text-center w-24 font-body">{action}</p>
       {children}
-      <p className="mt-auto font-bold md:text-lg text-center w-24">
-        {disp_amount}
-      </p>
+      <p className="mt-auto font-bold md:text-lg text-center">{disp_amount}</p>
     </div>
   );
 }

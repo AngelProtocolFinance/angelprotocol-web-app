@@ -14,7 +14,7 @@ export default function Split() {
       </div>
       <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray rounded">
         <Icon type="Info" size={44} />
-        <p className="text-xs leading-normal text-left">
+        <p className="text-sm leading-normal text-left">
           Donations into the Endowment provide sustainable financial runaway and
           allow your gift to give forever
         </p>

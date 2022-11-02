@@ -19,7 +19,7 @@ export default function Steps(props: DonationRecipient) {
   }, [dispatch, props]);
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[32rem]">
+    <div className="justify-self-center grid padded-container max-w-[35rem]">
       <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
         You'are about to make a donation to {props.name}
       </h3>
