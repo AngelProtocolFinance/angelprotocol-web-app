@@ -3,6 +3,7 @@ import { BtnPrimary, BtnSec } from "components/donation";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import Share from "./Share";
 
 export default function Success({
   classes,
@@ -44,8 +45,15 @@ export default function Success({
           <span>View transaction</span>
         </BtnSec>
       </div>
-      <div className="h-20 grid place-items-center my-12 dark:bg-blue-d7 rounded border dark:border-bluegray w-full">
-        socials
+      <div className="p-5 flex items-center my-12 dark:bg-blue-d7 rounded border border-gray-l2 dark:border-bluegray w-full gap-2">
+        <span className="uppercase font-bold mr-auto">
+          Share on social media
+        </span>
+        <Share size={16} type="Facebook" />
+        <Share size={24} type="Twitter" />
+        <Share size={24} type="Instagram" />
+        <Share size={21} type="Telegram" />
+        <Share size={22} type="Discord" />
       </div>
 
       <BtnPrimary as="link" to={appRoutes.profile + `/${id}`}>

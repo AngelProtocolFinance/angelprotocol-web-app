@@ -3,15 +3,15 @@ import { BtnProps } from "./types";
 
 export default function BaseBtn({
   commonStyles,
+  className,
   ...props
 }: BtnProps & { commonStyles: string }) {
   switch (props.as) {
     case "link": {
-      const { className, ...rest } = props;
-      return <Link className={commonStyles + ` ${className}`} {...rest} />;
+      return <Link className={commonStyles + ` ${className}`} {...props} />;
     }
     case "a": {
-      const { className, children, ...rest } = props;
+      const { children, ...rest } = props;
       return (
         <a className={commonStyles + ` ${className}`} {...rest}>
           {children}
@@ -19,8 +19,7 @@ export default function BaseBtn({
       );
     }
     default: {
-      const { className, ...rest } = props;
-      return <button className={commonStyles + ` ${className}`} {...rest} />;
+      return <button className={commonStyles + ` ${className}`} {...props} />;
     }
   }
 }
