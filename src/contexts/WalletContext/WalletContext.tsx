@@ -13,11 +13,17 @@ import {
   ProviderStatuses,
 } from "./types";
 import { Chain, Token } from "types/aws";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
+import {
+  UnexpectedStateError,
+  WalletDisconnectedError,
+  WrongNetworkError,
+} from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
+import { getConnectedProvider } from "./helpers/connectedProvider";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -49,6 +55,8 @@ const initialState: State = {
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
+  const { handleError } = useErrorContext();
+
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
@@ -105,6 +113,43 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const connectedProviderId = getConnectedProvider();
+
+        if (activeProviderInfo || !connectedProviderId) {
+          return;
+        }
+
+        const connectedProvider = [
+          ...terraConnections,
+          ...xdefiConnection.networks,
+          metamaskConnection,
+          keplrConnection,
+        ].find((connection) => connection.providerId === connectedProviderId);
+
+        if (!connectedProvider) {
+          throw new UnexpectedStateError(
+            `Stored an unexpected provider ID ${connectedProviderId}`
+          );
+        }
+
+        if (!connectedProvider.connect) {
+          throw new UnexpectedStateError(
+            `Provider connection doesn't have a connect() function. ${JSON.stringify(
+              connectedProvider
+            )}`
+          );
+        }
+
+        await connectedProvider.connect();
+      } catch (error) {
+        handleError(error, GENERIC_ERROR_MESSAGE);
+      }
+    })();
+  }, [activeProviderInfo]);
 
   const disconnect = useCallback(() => {
     switch (activeProviderInfo?.providerId) {

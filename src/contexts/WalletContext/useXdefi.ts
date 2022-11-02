@@ -1,5 +1,5 @@
 import { useWallet } from "@terra-money/wallet-provider";
-import { Connection, ProviderId } from "./types";
+import { Connection } from "./types";
 import evmIcon from "assets/icons/evm.webp";
 import terraIcon from "assets/icons/terra.png";
 import { WALLET_METADATA } from "./constants";
