@@ -6,12 +6,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import {
-  Connection,
-  ProviderId,
-  ProviderInfo,
-  ProviderStatuses,
-} from "./types";
+import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
 import { Chain, Token } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
@@ -57,12 +52,7 @@ const initialState: State = {
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const { handleError } = useErrorContext();
 
-  const {
-    isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
-    connections: metamaskConnections,
-    disconnect: disconnectMetamask,
-    providerInfo: metamaskInfo,
-  } = useInjectedProvider("metamask");
+  const metamask = useInjectedProvider("metamask");
 
   // const {
   //   isLoading: isBinanceWalletLoading,
@@ -71,54 +61,19 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   //   providerInfo: binanceWalletInfo,
   // } = useInjectedProvider("binance-wallet");
 
-  const {
-    isLoading: isKeplrLoading,
-    connections: keplrConnections,
-    disconnect: disconnectKeplr,
-    providerInfo: keplrWalletInfo,
-  } = useKeplr();
+  const keplr = useKeplr();
 
-  const {
-    isLoading: isTerraLoading,
-    connections: terraConnections,
-    disconnect: disconnectTerra,
-    providerInfo: terraInfo,
-  } = useTerra();
+  const terra = useTerra();
 
-  const {
-    isLoading: isxdefiEVMLoading,
-    connections: xdefiConnections,
-    disconnect: disconnectEVMxdefi,
-    providerInfo: xdefiEVMinfo,
-  } = useXdefi();
+  const xdefi = useXdefi();
 
-  const providerStatuses: ProviderStatuses = [
-    // {
-    //   providerInfo: binanceWalletInfo,
-    //   isLoading: isBinanceWalletLoading,
-    // },
-    {
-      providerInfo: metamaskInfo,
-      isLoading: isMetamaskLoading,
-    },
-    {
-      providerInfo: xdefiEVMinfo,
-      isLoading: isxdefiEVMLoading,
-    },
-    {
-      providerInfo: terraInfo,
-      isLoading: isTerraLoading,
-    },
-    {
-      providerInfo: keplrWalletInfo,
-      isLoading: isKeplrLoading,
-    },
-  ];
-  const activeProviderInfo = providerStatuses.find(
+  const wallets: WalletData[] = [metamask, keplr, terra, xdefi];
+
+  const activeProviderInfo = wallets.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
 
-  const providersLoading = providerStatuses.some(({ isLoading }) => isLoading);
+  const providersLoading = wallets.some(({ isLoading }) => isLoading);
 
   useEffect(() => {
     (async function () {
@@ -129,12 +84,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           return;
         }
 
-        const connectedProvider = [
-          ...terraConnections,
-          ...(xdefiConnections[0].networks ?? []),
-          ...metamaskConnections,
-          ...keplrConnections,
-        ].find((connection) => connection.providerId === connectedProviderId);
+        const connectedProvider = findActiveConnection(
+          wallets,
+          connectedProviderId
+        );
 
         if (!connectedProvider) {
           throw new UnexpectedStateError(
@@ -161,34 +114,34 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const disconnect = useCallback(() => {
     switch (activeProviderInfo?.providerId) {
       case "metamask":
-        disconnectMetamask();
+        metamask.disconnect();
         break;
       // case "binance-wallet":
       //   disconnectBinanceWallet();
       //   break;
       case "xdefi-evm":
-        disconnectEVMxdefi();
+        xdefi.disconnect();
         break;
       case "keplr":
-        disconnectKeplr();
+        keplr.disconnect();
         break;
       case "xdefi-wallet":
       case "station":
       case "falcon-wallet":
       case "leap-wallet":
       case "walletconnect":
-        disconnectTerra();
+        terra.disconnect();
         break;
       default:
         throw new WalletDisconnectedError();
     }
   }, [
     activeProviderInfo?.providerId,
-    disconnectMetamask,
-    // disconnectBinanceWallet,
-    disconnectEVMxdefi,
-    disconnectKeplr,
-    disconnectTerra,
+    metamask,
+    // BinanceWallet,
+    xdefi,
+    keplr,
+    terra,
   ]);
 
   const {
@@ -224,16 +177,16 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isLoading: providerStatuses.some((x) => x.isLoading) || isChainLoading,
+        isLoading: wallets.some((x) => x.isLoading) || isChainLoading,
       }}
     >
       <setContext.Provider
         value={{
           connections: [
-            ...keplrConnections,
-            ...xdefiConnections,
-            ...metamaskConnections,
-            ...terraConnections,
+            ...keplr.connections,
+            ...xdefi.connections,
+            ...metamask.connections,
+            ...terra.connections,
             // binanceWalletConnection,
           ],
           disconnect,
@@ -291,3 +244,17 @@ const setContext = createContext<Setters>({
 
 export const useSetWallet = () => useContext(setContext);
 export const useGetWallet = () => useContext(getContext);
+
+function findActiveConnection(
+  wallets: WalletData[],
+  connectedProviderId: ProviderId
+): Connection | undefined {
+  for (const { connections } of wallets) {
+    const connectedProvider = connections.find(
+      (c) => c.providerId === connectedProviderId
+    );
+    if (connectedProvider) {
+      return connectedProvider;
+    }
+  }
+}

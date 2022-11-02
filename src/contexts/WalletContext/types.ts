@@ -28,9 +28,6 @@ export type ProviderInfo = {
   address: string;
 };
 
-type ProviderStatus = { providerInfo?: ProviderInfo; isLoading: boolean };
-export type ProviderStatuses = ProviderStatus[];
-
 export type WalletData = {
   connections: Connection[];
   disconnect: () => void;
