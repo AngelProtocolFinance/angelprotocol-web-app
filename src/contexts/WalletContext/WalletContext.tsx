@@ -9,7 +9,7 @@ import { Connection, ProviderId, WalletData } from "./types";
 import { Chain, Token } from "types/aws";
 import { WalletDisconnectedError } from "errors/errors";
 import useAutoConnect from "./useAutoConnect";
-import useGetChainData from "./useGetChainData";
+import useChainData from "./useChainData";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -94,7 +94,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     terra,
   ]);
 
-  const { chain, isLoading: isChainLoading } = useGetChainData(
+  const { chain, isLoading: isChainLoading } = useChainData(
     activeProviderInfo,
     disconnect
   );

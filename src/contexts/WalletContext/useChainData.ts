@@ -6,7 +6,7 @@ import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 
-export default function useVerifyChain(
+export default function useChainData(
   activeProviderInfo: ProviderInfo | undefined,
   disconnect: () => void
 ) {
