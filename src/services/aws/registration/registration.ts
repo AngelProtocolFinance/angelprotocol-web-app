@@ -65,7 +65,6 @@ const registration_api = aws.injectEndpoints({
             Banner: m.Banner,
             CharityLogo: m.CharityLogo,
             CharityOverview: m.CharityOverview || "",
-            EndowmentContract: m.EndowmentContract || "",
             EndowmentId: m.EndowmentId || 0,
             SK: "Metadata",
             JunoWallet: m.JunoWallet || "",
@@ -122,11 +121,11 @@ const registration_api = aws.injectEndpoints({
     }),
     submit: builder.mutation<SubmitResult, SubmitData>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ PK, EndowmentContract }) => ({
-        url: `v1/registration/${PK}/submit`,
+      query: ({ PK, chain_id }) => ({
+        url: `v2/registration/${PK}/submit`,
         method: "POST",
         headers,
-        body: { EndowmentContract },
+        body: { chain_id },
       }),
     }),
     updateCharityMetadata: builder.mutation<

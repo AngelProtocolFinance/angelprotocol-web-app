@@ -57,7 +57,6 @@ const CHARITY: Charity = {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
-    EndowmentContract: "",
     SK: "Metadata",
     JunoWallet: PLACEHOLDER_WALLET.address,
     KycDonorsOnly: false,
