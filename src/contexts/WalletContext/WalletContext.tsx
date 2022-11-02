@@ -3,17 +3,13 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderInfo, WalletData } from "./types";
+import { Connection, ProviderId, WalletData } from "./types";
 import { Chain, Token } from "types/aws";
-import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
-import { useErrorContext } from "../ErrorContext";
-import { placeholderChain } from "./constants";
+import { WalletDisconnectedError } from "errors/errors";
 import useAutoConnect from "./useAutoConnect";
+import useGetChainData from "./useGetChainData";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -98,16 +94,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     terra,
   ]);
 
-  const {
-    data: chain = placeholderChain,
-    isLoading: isChainLoading,
-    error,
-  } = useChainQuery(
-    { providerInfo: activeProviderInfo! },
-    { skip: !activeProviderInfo }
+  const { chain, isLoading: isChainLoading } = useGetChainData(
+    activeProviderInfo,
+    disconnect
   );
-
-  useVerifyChain(activeProviderInfo, chain, error, disconnect);
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProviderInfo) {
@@ -150,44 +140,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       </setContext.Provider>
     </getContext.Provider>
   );
-}
-
-function useVerifyChain(
-  activeProviderInfo: ProviderInfo | undefined,
-  chain: Chain,
-  chainError: any,
-  disconnect: () => void
-) {
-  const { handleError } = useErrorContext();
-
-  const handle = useCallback(
-    (error: any) => {
-      handleError(error);
-      try {
-        disconnect();
-      } catch (err) {
-        // when wallet is disconnected, the `disconnect` func is recreated,
-        // causing this hook to rerun and throwing the error below.
-        // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectedError)) {
-          handleError(err);
-        }
-      }
-    },
-    [handleError, disconnect]
-  );
-
-  useEffect(() => {
-    // no active provider === no connected wallet so no need to run hook
-    if (!activeProviderInfo) {
-      return;
-    }
-    if (chainError) {
-      handle(chainError);
-    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
-      handle(new WrongNetworkError());
-    }
-  }, [activeProviderInfo, chain, chainError, handle]);
 }
 
 const getContext = createContext<State>(initialState);
