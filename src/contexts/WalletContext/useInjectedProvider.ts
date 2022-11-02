@@ -11,6 +11,10 @@ import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
+import {
+  removeConnectedProvider,
+  storeConnectedProvider,
+} from "./helpers/connectedProvider";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
@@ -82,6 +86,7 @@ export default function useInjectedProvider(
 
         setAddress(accounts[0]);
         setChainId(`${parseInt(hexChainId, 16)}`);
+        storeConnectedProvider(providerId);
       }
       setIsLoading(false);
     } catch (err: any) {
@@ -108,6 +113,7 @@ export default function useInjectedProvider(
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
     removeAllListeners(providerId);
+    removeConnectedProvider();
   }
 
   // Errors handled in src/components/WalletSuite/WalletSelector/Connector.tsx

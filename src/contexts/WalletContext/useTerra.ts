@@ -5,6 +5,10 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { WALLET_METADATA } from "./constants";
+import {
+  removeConnectedProvider,
+  storeConnectedProvider,
+} from "./helpers/connectedProvider";
 
 export default function useTerra() {
   const {
@@ -20,8 +24,8 @@ export default function useTerra() {
   const terraInfo: ProviderInfo | undefined = connection
     ? {
         providerId:
-          //use connect type as Id if no futher connections stems out of the type
-          (connection?.identifier as ProviderId) ||
+          //use connect type as Id if no further connections stems out of the type
+          (connection.identifier as ProviderId) ||
           connection.type.toLowerCase(),
         logo: connection?.icon!,
         chainId: network.chainID,
@@ -45,13 +49,19 @@ export default function useTerra() {
         : undefined,
       connect: async () => {
         connect(connection.type, connection.identifier);
+        storeConnectedProvider(connection.identifier as ProviderId);
       },
     }));
+
+  const disconnectTerra = () => {
+    disconnect();
+    removeConnectedProvider();
+  };
 
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
-    disconnectTerra: disconnect,
+    disconnectTerra,
     terraInfo,
   };
 }

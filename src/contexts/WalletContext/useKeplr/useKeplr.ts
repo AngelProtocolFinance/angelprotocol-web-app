@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
+import { Connection, ProviderId, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
+import {
+  removeConnectedProvider,
+  storeConnectedProvider,
+} from "../helpers/connectedProvider";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
 const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
+const PROVIDER_ID: ProviderId = "keplr";
 
 export default function useKeplr() {
   //connect only if there's no active wallet
@@ -39,6 +44,7 @@ export default function useKeplr() {
       setAddress(key.bech32Address);
       setChainId(CHAIN_ID);
       setIsLoading(false);
+      storeConnectedProvider(PROVIDER_ID);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
       setIsLoading(false);
@@ -55,7 +61,7 @@ export default function useKeplr() {
 
   const connect = async () => {
     if (!dwindow.keplr) {
-      throw new WalletNotInstalledError("keplr");
+      throw new WalletNotInstalledError(PROVIDER_ID);
     }
 
     try {
@@ -78,13 +84,14 @@ export default function useKeplr() {
     setAddress("");
     setChainId(undefined);
     saveUserAction(actionKey, "disconnect");
+    removeConnectedProvider();
   }
 
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
           logo: WALLET_METADATA.keplr.logo,
-          providerId: "keplr",
+          providerId: PROVIDER_ID,
           chainId,
           address,
         }
