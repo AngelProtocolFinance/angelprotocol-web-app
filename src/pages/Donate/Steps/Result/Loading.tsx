@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import Loader from "./Loader";
 
 export default function Loading({
   message,
@@ -9,7 +9,7 @@ export default function Loading({
 }) {
   return (
     <div className={`grid justify-items-center gap-6 ${classes}`}>
-      <Icon type="Loading" size={113} className="animate-spin text-orange" />
+      <Loader thickness={10} classes="w-32" />
       <p className="text-center">{message}</p>
     </div>
   );
