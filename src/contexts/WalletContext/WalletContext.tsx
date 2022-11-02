@@ -255,7 +255,7 @@ function findActiveConnection(
         if (conn.providerId === connectedProviderId) {
           return conn;
         }
-      } else {
+      } else if (conn.networks) {
         const result = conn.networks.find(
           (conn) => conn.providerId === connectedProviderId
         );
