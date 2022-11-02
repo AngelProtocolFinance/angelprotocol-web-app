@@ -23,7 +23,7 @@ export default function Steps(props: DonationRecipient) {
   }, [dispatch, props]);
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[32rem]">
+    <div className="justify-self-center grid padded-container max-w-[35rem]">
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
