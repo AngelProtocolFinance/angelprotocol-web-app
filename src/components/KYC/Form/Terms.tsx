@@ -12,12 +12,12 @@ export default function Terms({ classes = "" }: { classes?: string }) {
   return (
     <div className={`${classes} flex items-center gap-3 relative`}>
       <input
-        className="appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange"
+        className="cursor-pointer appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange"
         type="checkbox"
         {...register(name)}
         id={name}
       />
-      <label className="" htmlFor={name}>
+      <label className="cursor-pointer" htmlFor={name}>
         I have read and I agree with{" "}
         <a
           className="underline text-orange"
