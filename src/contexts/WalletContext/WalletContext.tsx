@@ -149,6 +149,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProviderInfo]);
 
   const disconnect = useCallback(() => {

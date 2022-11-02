@@ -22,7 +22,7 @@ export default function useInjectedProvider(
   connectorLogo?: string
 ) {
   //connect only if there's no active wallet
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
 
