@@ -25,9 +25,9 @@ export default function Links() {
       <NavLink to={appRoutes.leaderboard} className={navLinkStyle}>
         Leaderboard
       </NavLink>
-      {/*<NavLink to={appRoutes.register} className={navLinkStyle}>
-            Register
-          </NavLink>*/}
+      <NavLink to={appRoutes.register} className={navLinkStyle}>
+        Register
+      </NavLink>
       <span
         className={`flex justify-between items-center ${commonNavItemStyle}`}
       >
