@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -16,8 +16,18 @@ export default function TransactionPrompt({
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
-  const { closeModal } = useModalContext();
+  const { closeModal, onModalClose } = useModalContext();
   const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    onModalClose(() => {
+      switch (stage.step) {
+        case "success":
+        case "error":
+          dispatch(resetTxFormState());
+      }
+    });
+  }, [stage.step, dispatch, onModalClose]);
 
   const prompt = useMemo(() => {
     switch (stage.step) {
@@ -37,20 +47,11 @@ export default function TransactionPrompt({
     }
   }, [stage, children, handleError]);
 
-  function closePrompt() {
-    switch (stage.step) {
-      case "success":
-      case "error":
-        dispatch(resetTxFormState());
-    }
-    closeModal();
-  }
-
   if (inModal) {
     return (
       <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
         <button
-          onClick={closePrompt}
+          onClick={closeModal}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
           <Icon type="Close" size={25} />

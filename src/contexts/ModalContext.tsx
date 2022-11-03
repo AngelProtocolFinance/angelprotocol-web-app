@@ -10,16 +10,18 @@ import {
 import { FC } from "react";
 
 type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
+type Opener = <T = {}>(Content: FC<T>, props: T) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
+  onModalClose: (func: Handler) => void;
 };
 
 export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
   const [Modal, setModal] = useState<ReactNode>();
+  const [onClose, setOnClose] = useState<Handler>();
 
   const showModal: Opener = useCallback((Modal, props) => {
     setModal(<Modal {...props} />);
@@ -28,18 +30,28 @@ export default function ModalContext(
 
   const closeModal = useCallback(() => {
     setModal(undefined);
-  }, []);
+    if (onClose) {
+      onClose();
+      setOnClose(undefined);
+    }
+  }, [onClose]);
+
+  const onModalClose = useCallback(
+    (func: Handler) => setOnClose(() => func),
+    []
+  );
 
   return (
     <setContext.Provider
       value={{
         showModal,
         closeModal,
+        onModalClose,
       }}
     >
       <Dialog
         open={Modal !== undefined}
-        onClose={() => setModal(undefined)}
+        onClose={closeModal}
         className="relative z-50"
       >
         <div className={props.backdropClasses} aria-hidden="true" />
