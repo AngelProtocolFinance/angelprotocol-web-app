@@ -44,7 +44,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Dialog.Panel className="grid content-start fixed-center z-20 border border-gray-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-full max-w-[39rem] rounded overflow-clip">
+    <Dialog.Panel className="grid content-start fixed-center z-20 border border-gray-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray">
         Share on {type}
         <button
@@ -56,7 +56,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
       </div>
       <p
         ref={msgRef}
-        className="my-10 mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l2 dark:border-bluegray rounded"
+        className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l2 dark:border-bluegray rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">@AngelProtocol</span>! Every gift is
@@ -69,7 +69,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         href={generateShareLink(shareText, type)}
         target="_blank"
         rel="noopener noreferrer"
-        className="justify-self-center flex items-center justify-center gap-2 min-w-[16rem] mb-10"
+        className="flex items-center justify-center gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center border border-white rounded">
           <Icon type={type} className="absolute-center" size={iconSize} />
