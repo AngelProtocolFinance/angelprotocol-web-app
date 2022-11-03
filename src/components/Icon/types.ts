@@ -23,7 +23,6 @@ export type IconTypes =
   | "StopWatch"
   | "Info"
   | "CheckCircle"
-  | "Exclamation"
   | "Eye"
   | "EyeInvisible"
   | "CaretLeft"
