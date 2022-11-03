@@ -75,7 +75,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           disabled={isNotEstimated}
           type="submit"
         >
-          Make donation
+          Complete
         </BtnPrimary>
         <BtnOutline
           as="link"
