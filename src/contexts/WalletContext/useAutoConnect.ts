@@ -9,7 +9,7 @@ export default function useAutoConnect(wallets: WalletData[]) {
   const { handleError } = useErrorContext();
 
   const activeProviderInfo = wallets.find(
-    ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
+    ({ providerInfo }) => !!providerInfo
   )?.providerInfo;
 
   const providersLoading = wallets.some(({ isLoading }) => isLoading);
