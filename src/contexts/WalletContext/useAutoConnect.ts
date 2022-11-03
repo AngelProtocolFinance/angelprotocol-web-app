@@ -12,14 +12,14 @@ export default function useAutoConnect(wallets: WalletData[]) {
     ({ providerInfo }) => !!providerInfo
   )?.providerInfo;
 
-  const providersLoading = wallets.some(({ isLoading }) => isLoading);
+  const areWalletsLoading = wallets.some(({ isLoading }) => isLoading);
 
   useEffect(() => {
     (async function () {
       try {
         const connectedProviderId = getConnectedProviderId();
 
-        if (providersLoading || activeProviderInfo || !connectedProviderId) {
+        if (areWalletsLoading || activeProviderInfo || !connectedProviderId) {
           return;
         }
 
@@ -45,7 +45,7 @@ export default function useAutoConnect(wallets: WalletData[]) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [providersLoading, activeProviderInfo]);
+  }, [areWalletsLoading, activeProviderInfo]);
 }
 
 function findLastConnection(
