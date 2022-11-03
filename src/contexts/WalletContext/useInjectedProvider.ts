@@ -50,6 +50,7 @@ export default function useInjectedProvider(
       setAddress("");
       setChainId(undefined);
       removeAllListeners(providerId);
+      removeConnectedProviderId();
     }
   };
 
