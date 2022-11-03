@@ -44,19 +44,19 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Dialog.Panel className="grid content-start fixed-center z-20 bg-gray-l5 font-work text-gray-d2 w-full max-w-[39rem] rounded overflow-clip">
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5">
+    <Dialog.Panel className="grid content-start fixed-center z-20 border border-gray-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-full max-w-[39rem] rounded overflow-clip">
+      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray">
         Share on {type}
         <button
           onClick={closeModal}
-          className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l2 rounded"
+          className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l2 rounded dark:border-bluegray"
         >
           <Icon type="Close" className="absolute-center" size={28} />
         </button>
       </div>
       <p
         ref={msgRef}
-        className="my-10 mx-12 text-sm leading-normal p-3 border border-gray-l2 rounded"
+        className="my-10 mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l2 dark:border-bluegray rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">@AngelProtocol</span>! Every gift is
