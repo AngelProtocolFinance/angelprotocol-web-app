@@ -76,7 +76,7 @@ export default function Table(props: { donations: Donation[] }) {
             date,
             chainName,
             charityName,
-            charityId,
+            id: charityId,
           }) => (
             <Cells
               key={hash}

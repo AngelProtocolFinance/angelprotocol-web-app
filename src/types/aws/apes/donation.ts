@@ -2,10 +2,10 @@ export type Donation = {
   amount: number;
   chainId: string;
   chainName: string;
-  charityId: string;
   charityName: string;
   date: string;
   hash: string;
+  id: string; // charity ID
   symbol: string;
 };
 
