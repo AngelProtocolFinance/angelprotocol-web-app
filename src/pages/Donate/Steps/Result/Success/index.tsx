@@ -49,11 +49,11 @@ export default function Success({
         <span className="uppercase font-bold mr-auto">
           Share on social media
         </span>
-        <Share size={16} type="Facebook" />
-        <Share size={24} type="Twitter" />
-        <Share size={24} type="Instagram" />
-        <Share size={21} type="Telegram" />
-        <Share size={22} type="Discord" />
+        <Share iconSize={16} type="Facebook" />
+        <Share iconSize={24} type="Twitter" />
+        <Share iconSize={24} type="Instagram" />
+        <Share iconSize={21} type="Telegram" />
+        <Share iconSize={22} type="Discord" />
       </div>
 
       <BtnPrimary as="link" to={appRoutes.profile + `/${id}`}>
