@@ -16,6 +16,16 @@ export default function useAutoConnect(wallets: WalletData[]) {
       try {
         const connectedProviderId = getConnectedProviderId();
 
+        /**
+         * This hook should be triggered only on first load, but only after all wallets are done loading.
+         * So we need to check:
+         * - areWalletsLoading -> are the wallets still loading
+         * - connectedWallet -> is there a wallet that's currently connected
+         * - !connectedProviderId -> was the user connected to a wallet in their last session on the site
+         * If the wallets are still loading or there is no currently connected wallet or the user was not connected
+         * in their last session on the site, then there is no need to run "auto-connect" yet.
+         * Otherwise, we should auto-connect the user's wallet to the site
+         */
         if (areWalletsLoading || connectedWallet || !connectedProviderId) {
           return;
         }
