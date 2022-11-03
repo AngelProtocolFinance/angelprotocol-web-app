@@ -9,13 +9,13 @@ import {
 } from "react";
 import { FC } from "react";
 
-type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T) => void;
-type Handlers = {
+type Func = () => void;
+type Opener = <T extends {}>(Modal: FC<T>, props: T) => void;
+type ContextState = {
   isDismissible: boolean;
   showModal: Opener;
-  closeModal: Handler;
-  onModalClose: (func: Handler) => void;
+  closeModal: Func;
+  onModalClose: (func: Func) => void;
   setDismissible: (value: boolean) => void;
 };
 
@@ -24,14 +24,14 @@ export default function ModalContext(
 ) {
   const [Modal, setModal] = useState<ReactNode>();
   const [isDismissible, setDismissible] = useState(true);
-  const [onClose, setOnClose] = useState<Handler>();
+  const [onClose, setOnClose] = useState<Func>();
 
   const showModal: Opener = useCallback((Modal, props) => {
     setModal(<Modal {...props} />);
     // track last active element
   }, []);
 
-  const closeModal = useCallback(() => {
+  const closeModal: Func = useCallback(() => {
     if (!isDismissible) {
       return;
     }
@@ -42,10 +42,7 @@ export default function ModalContext(
     }
   }, [isDismissible, onClose]);
 
-  const onModalClose = useCallback(
-    (func: Handler) => setOnClose(() => func),
-    []
-  );
+  const onModalClose = useCallback((func: Func) => setOnClose(() => func), []);
 
   const handleSetDismissible = useCallback(
     (value: boolean) => {
@@ -57,7 +54,7 @@ export default function ModalContext(
   );
 
   return (
-    <setContext.Provider
+    <Context.Provider
       value={{
         isDismissible,
         showModal,
@@ -76,12 +73,14 @@ export default function ModalContext(
       </Dialog>
 
       {props.children}
-    </setContext.Provider>
+    </Context.Provider>
   );
 }
-const setContext = createContext<Handlers>({} as Handlers);
+
+const Context = createContext<ContextState>({} as ContextState);
+
 export const useModalContext = () => {
-  const val = useContext(setContext);
+  const val = useContext(Context);
   if (Object.entries(val).length <= 0) {
     throw new Error("This hook can only be used inside Modalcontext");
   }
