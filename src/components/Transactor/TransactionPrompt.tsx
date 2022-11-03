@@ -22,30 +22,35 @@ export default function TransactionPrompt({
   useEffect(() => {
     switch (stage.step) {
       case "initial":
+        setDismissible(true);
         dispatch(resetTxFormState());
         break;
       case "success":
       case "error":
+        setDismissible(true);
         onModalClose(() => dispatch(resetTxFormState()));
+        break;
+      case "broadcast":
+      case "submit":
+        setDismissible(false);
+        break;
+      default:
+        setDismissible(true);
     }
-  }, [stage.step, dispatch, onModalClose]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage.step, onModalClose]);
 
   const prompt = useMemo(() => {
     switch (stage.step) {
       case "initial":
-        setDismissible(true);
         return children;
       case "submit":
-        setDismissible(false);
         return <Submit {...stage} />;
       case "broadcast":
-        setDismissible(false);
         return <Broadcast {...stage} />;
       case "success":
-        setDismissible(true);
         return <Success {...stage} />;
       case "error":
-        setDismissible(true);
         return <ErrPop {...stage} />;
       default:
         handleError("wrong prompt");
