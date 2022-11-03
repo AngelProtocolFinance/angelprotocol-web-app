@@ -23,26 +23,23 @@ export default function useAutoConnect(wallets: WalletData[]) {
           return;
         }
 
-        const activeConnection = findActiveConnection(
-          wallets,
-          connectedProviderId
-        );
+        const lastConnection = findLastConnection(wallets, connectedProviderId);
 
-        if (!activeConnection) {
+        if (!lastConnection) {
           throw new UnexpectedStateError(
             `Stored an unexpected provider ID ${connectedProviderId}`
           );
         }
 
-        if (!activeConnection.connect) {
+        if (!lastConnection.connect) {
           throw new UnexpectedStateError(
             `Provider connection doesn't have a connect() function. ${JSON.stringify(
-              activeConnection
+              lastConnection
             )}`
           );
         }
 
-        await activeConnection.connect();
+        await lastConnection.connect();
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
@@ -51,7 +48,7 @@ export default function useAutoConnect(wallets: WalletData[]) {
   }, [providersLoading, activeProviderInfo]);
 }
 
-function findActiveConnection(
+function findLastConnection(
   wallets: WalletData[],
   connectedProviderId: ProviderId
 ): Connection | undefined {
