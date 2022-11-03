@@ -20,13 +20,14 @@ export default function TransactionPrompt({
   const { handleError } = useErrorContext();
 
   useEffect(() => {
-    onModalClose(() => {
-      switch (stage.step) {
-        case "success":
-        case "error":
-          dispatch(resetTxFormState());
-      }
-    });
+    switch (stage.step) {
+      case "initial":
+        dispatch(resetTxFormState());
+        break;
+      case "success":
+      case "error":
+        onModalClose(() => dispatch(resetTxFormState()));
+    }
   }, [stage.step, dispatch, onModalClose]);
 
   const prompt = useMemo(() => {
