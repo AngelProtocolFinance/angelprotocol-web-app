@@ -24,7 +24,6 @@ export default function TransactionPrompt({
     switch (stage.step) {
       case "initial":
         setDismissible(true);
-        dispatch(resetTxFormState());
         break;
       case "success":
       case "error":
