@@ -1,26 +1,29 @@
 import { Dialog } from "@headlessui/react";
+import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon, { IconTypes } from "components/Icon";
 import { BtnPrimary } from "components/donation";
+import { DonationRecipient } from "slices/donation";
 
-type SocialMedia = Extract<
+export type SocialMedia = Extract<
   IconTypes,
-  "Facebook" | "Twitter" | "Instagram" | "Telegram" | "Discord"
+  "Facebook" | "Twitter" | "Telegram" | "Linkedin"
 >;
 
-export default function Share({
-  type,
-  iconSize,
-}: {
+type Props = {
   type: SocialMedia;
   iconSize: number;
-}) {
+  recipient: DonationRecipient;
+};
+
+export default function Share(props: Props) {
+  const { type, iconSize } = props;
   const { showModal } = useModalContext();
 
   return (
     <button
       onClick={() => {
-        showModal(Prompt, { type, iconSize });
+        showModal(Prompt, props);
       }}
       className="relative w-10 h-10 grid place-items-center border dark:border-white rounded"
     >
@@ -29,8 +32,16 @@ export default function Share({
   );
 }
 
-function Prompt({ type, iconSize }: { type: SocialMedia; iconSize: number }) {
+function Prompt({ type, iconSize, recipient: { name } }: Props) {
   const { closeModal } = useModalContext();
+
+  //shareText will always hold some value
+  const [shareText, setShareText] = useState("");
+  const msgRef = useCallback((node: HTMLParagraphElement | null) => {
+    if (node) {
+      setShareText(node.innerText);
+    }
+  }, []);
 
   return (
     <Dialog.Panel className="grid content-start fixed-center z-20 bg-gray-l5 font-work text-gray-d2 w-full max-w-[39rem] rounded overflow-clip">
@@ -43,13 +54,23 @@ function Prompt({ type, iconSize }: { type: SocialMedia; iconSize: number }) {
           <Icon type="Close" className="absolute-center" size={28} />
         </button>
       </div>
-      <p className="my-10 mx-12 text-sm leading-normal p-3 border border-gray-l2 rounded">
-        I just donated to @mothers2mothers on @AngelProtocol! Every gift is
+      <p
+        ref={msgRef}
+        className="my-10 mx-12 text-sm leading-normal p-3 border border-gray-l2 rounded"
+      >
+        I just donated to <span className="font-bold">{name}</span> on{" "}
+        <span className="font-bold">@AngelProtocol</span>! Every gift is
         invested to provide sustainable funding for non-profits: Give once, give
         forever. Please join me in providing charities with financial freedom:
         https://app.angelprotocol.io
       </p>
-      <BtnPrimary className="justify-self-center flex items-center justify-center gap-2 min-w-[16rem] mb-10">
+      <BtnPrimary
+        as="a"
+        href={generateShareLink(shareText, type)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="justify-self-center flex items-center justify-center gap-2 min-w-[16rem] mb-10"
+      >
         <div className="relative w-8 h-8 grid place-items-center border border-white rounded">
           <Icon type={type} className="absolute-center" size={iconSize} />
         </div>
@@ -57,4 +78,32 @@ function Prompt({ type, iconSize }: { type: SocialMedia; iconSize: number }) {
       </BtnPrimary>
     </Dialog.Panel>
   );
+}
+
+const APP_URL = "https://app.angelprotocol.io";
+function generateShareLink(rawText: string, type: SocialMedia) {
+  const encodedText = encodeURIComponent(rawText);
+  const encodedURL = encodeURIComponent(APP_URL);
+  switch (type) {
+    case "Twitter":
+      //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
+      return `https://twitter.com/intent/tweet?text=${encodedText}`;
+    /**
+     * feed description is depracated
+     * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
+     * must rely on OpenGraph metadata
+     */
+    case "Facebook":
+      return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
+        APP_URL
+      )}&quote=${encodedText}`;
+
+    //https://core.telegram.org/widgets/share#custom-buttons
+    case "Telegram":
+      return `https://telegram.me/share/url?url=${encodedURL}&text=${encodedText}`;
+
+    //Linkedin
+    default:
+      return `https://www.linkedin.com/feed/?shareActive=true&text=${encodedText}`;
+  }
 }

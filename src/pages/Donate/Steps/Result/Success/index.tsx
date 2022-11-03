@@ -3,7 +3,7 @@ import { BtnPrimary, BtnSec } from "components/donation";
 import { TxStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import Share from "./Share";
+import Share, { SocialMedia } from "./Share";
 
 export default function Success({
   classes,
@@ -12,9 +12,9 @@ export default function Success({
   const {
     hash,
     details: { chainId, token },
-    recipient: { id, name },
+    recipient,
   } = state;
-
+  const { name, id } = recipient;
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <Icon type="CheckCircle" size={80} className="text-[#7EC682] mb-8" />
@@ -49,11 +49,9 @@ export default function Success({
         <span className="uppercase font-bold mr-auto">
           Share on social media
         </span>
-        <Share iconSize={16} type="Facebook" />
-        <Share iconSize={24} type="Twitter" />
-        <Share iconSize={24} type="Instagram" />
-        <Share iconSize={21} type="Telegram" />
-        <Share iconSize={22} type="Discord" />
+        {socials.map(([type, size]) => (
+          <Share key={type} iconSize={size} type={type} recipient={recipient} />
+        ))}
       </div>
 
       <BtnPrimary as="link" to={appRoutes.profile + `/${id}`}>
@@ -62,3 +60,10 @@ export default function Success({
     </div>
   );
 }
+
+const socials: [SocialMedia, number][] = [
+  ["Twitter", 24],
+  ["Telegram", 21],
+  ["Linkedin", 22],
+  ["Facebook", 16],
+];

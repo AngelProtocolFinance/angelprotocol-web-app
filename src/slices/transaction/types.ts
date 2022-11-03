@@ -58,7 +58,6 @@ export type SuccessStage = {
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
   rawLog?: string;
-  isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
 
