@@ -46,13 +46,22 @@ export default function ModalContext(
     []
   );
 
+  const handleSetDismissible = useCallback(
+    (value: boolean) => {
+      if (value !== isDismissible) {
+        setDismissible(value);
+      }
+    },
+    [isDismissible]
+  );
+
   return (
     <setContext.Provider
       value={{
         showModal,
         closeModal,
         onModalClose,
-        setDismissible,
+        setDismissible: handleSetDismissible,
       }}
     >
       <Dialog
