@@ -12,6 +12,7 @@ import { FC } from "react";
 type Handler = () => void;
 type Opener = <T = {}>(Content: FC<T>, props: T) => void;
 type Handlers = {
+  isDismissible: boolean;
   showModal: Opener;
   closeModal: Handler;
   onModalClose: (func: Handler) => void;
@@ -58,6 +59,7 @@ export default function ModalContext(
   return (
     <setContext.Provider
       value={{
+        isDismissible,
         showModal,
         closeModal,
         onModalClose,

@@ -16,7 +16,8 @@ export default function TransactionPrompt({
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
-  const { closeModal, onModalClose, setDismissible } = useModalContext();
+  const { closeModal, onModalClose, setDismissible, isDismissible } =
+    useModalContext();
   const { handleError } = useErrorContext();
 
   useEffect(() => {
@@ -61,12 +62,14 @@ export default function TransactionPrompt({
   if (inModal) {
     return (
       <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
-        <button
-          onClick={closeModal}
-          className="absolute right-2 top-2 text-angel-grey hover:text-black"
-        >
-          <Icon type="Close" size={25} />
-        </button>
+        {isDismissible && (
+          <button
+            onClick={closeModal}
+            className="absolute right-2 top-2 text-angel-grey hover:text-black"
+          >
+            <Icon type="Close" size={25} />
+          </button>
+        )}
 
         {prompt}
       </Dialog.Panel>
