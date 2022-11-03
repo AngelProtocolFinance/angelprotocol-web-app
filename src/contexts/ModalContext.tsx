@@ -15,12 +15,14 @@ type Handlers = {
   showModal: Opener;
   closeModal: Handler;
   onModalClose: (func: Handler) => void;
+  setDismissible: (value: boolean) => void;
 };
 
 export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
   const [Modal, setModal] = useState<ReactNode>();
+  const [isDismissible, setDismissible] = useState(true);
   const [onClose, setOnClose] = useState<Handler>();
 
   const showModal: Opener = useCallback((Modal, props) => {
@@ -29,12 +31,15 @@ export default function ModalContext(
   }, []);
 
   const closeModal = useCallback(() => {
+    if (!isDismissible) {
+      return;
+    }
     setModal(undefined);
     if (onClose) {
       onClose();
       setOnClose(undefined);
     }
-  }, [onClose]);
+  }, [isDismissible, onClose]);
 
   const onModalClose = useCallback(
     (func: Handler) => setOnClose(() => func),
@@ -47,6 +52,7 @@ export default function ModalContext(
         showModal,
         closeModal,
         onModalClose,
+        setDismissible,
       }}
     >
       <Dialog

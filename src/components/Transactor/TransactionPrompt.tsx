@@ -16,7 +16,7 @@ export default function TransactionPrompt({
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
-  const { closeModal, onModalClose } = useModalContext();
+  const { closeModal, onModalClose, setDismissible } = useModalContext();
   const { handleError } = useErrorContext();
 
   useEffect(() => {
@@ -33,14 +33,19 @@ export default function TransactionPrompt({
   const prompt = useMemo(() => {
     switch (stage.step) {
       case "initial":
+        setDismissible(true);
         return children;
       case "submit":
+        setDismissible(false);
         return <Submit {...stage} />;
       case "broadcast":
+        setDismissible(false);
         return <Broadcast {...stage} />;
       case "success":
+        setDismissible(true);
         return <Success {...stage} />;
       case "error":
+        setDismissible(true);
         return <ErrPop {...stage} />;
       default:
         handleError("wrong prompt");
