@@ -8,51 +8,45 @@ import { getConnectedProviderId } from "./helpers/connectedProvider";
 export default function useAutoConnect(wallets: WalletData[]) {
   const { handleError } = useErrorContext();
 
-  const connectedWallet = wallets.find(({ providerInfo }) => !!providerInfo);
-  const areWalletsLoading = wallets.some(({ isLoading }) => isLoading);
-
   useEffect(() => {
     (async function () {
       try {
         const connectedProviderId = getConnectedProviderId();
 
-        /**
-         * This hook should be triggered only on first load, but only after all wallets are done loading.
-         * So we need to check:
-         * - areWalletsLoading -> are the wallets still loading
-         * - connectedWallet -> is there a wallet that's currently connected
-         * - !connectedProviderId -> was the user connected to a wallet in their last session on the site
-         * If the wallets are still loading or there is no currently connected wallet or the user was not connected
-         * in their last session on the site, then there is no need to run "auto-connect" yet.
-         * Otherwise, we should auto-connect the user's wallet to the site
-         */
-        if (areWalletsLoading || connectedWallet || !connectedProviderId) {
+        if (!shouldAutoConnect(wallets, connectedProviderId)) {
           return;
         }
 
         const lastConnection = findLastConnection(wallets, connectedProviderId);
 
-        if (!lastConnection) {
-          throw new UnexpectedStateError(
-            `Stored an unexpected provider ID ${connectedProviderId}`
-          );
+        if (verifyValid(lastConnection, connectedProviderId)) {
+          await lastConnection.connect();
         }
-
-        if (!lastConnection.connect) {
-          throw new UnexpectedStateError(
-            `Provider connection doesn't have a connect() function. ${JSON.stringify(
-              lastConnection
-            )}`
-          );
-        }
-
-        await lastConnection.connect();
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [areWalletsLoading, connectedWallet]);
+  }, [wallets, handleError]);
+}
+
+/**
+ * This hook should be triggered only on first load, but only after all wallets are done loading.
+ * So we need to check:
+ * - activeWallet -> is there a loading wallet or an active (connected) wallet
+ * - !connectedProviderId -> was the user connected to a wallet in their last session on the site
+ * If the wallets are still loading or there is no currently connected wallet or the user was not connected
+ * in their last session on the site, then there is no need to run "auto-connect" yet.
+ * Otherwise, we should auto-connect the user's wallet to the site
+ */
+function shouldAutoConnect(
+  wallets: WalletData[],
+  connectedProviderId: ProviderId | undefined
+): connectedProviderId is NonNullable<ProviderId> {
+  const activeWallet = wallets.find(
+    ({ providerInfo, isLoading }) => isLoading || !!providerInfo
+  );
+
+  return !activeWallet || !!connectedProviderId;
 }
 
 function findLastConnection(
@@ -76,4 +70,25 @@ function findLastConnection(
       }
     }
   }
+}
+
+function verifyValid(
+  connection: Connection | undefined,
+  connectedProviderId: ProviderId
+): connection is NonNullable<Required<Connection>> {
+  if (!connection) {
+    throw new UnexpectedStateError(
+      `Stored an unexpected provider ID ${connectedProviderId}`
+    );
+  }
+
+  if (!connection.connect) {
+    throw new UnexpectedStateError(
+      `Provider connection doesn't have a connect() function. ${JSON.stringify(
+        connection
+      )}`
+    );
+  }
+
+  return true;
 }
