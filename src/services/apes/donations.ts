@@ -26,7 +26,7 @@ const donations_api = apes.injectEndpoints({
     >({
       providesTags: [{ type: apesTags.donations }],
       query: ({ id }) => ({
-        url: `v1/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+        url: `v2/donation/${id}${IS_TEST ? "/testnet" : ""}`,
         // headers: { key },
       }),
       transformResponse(res: AWSQueryRes<any>) {
