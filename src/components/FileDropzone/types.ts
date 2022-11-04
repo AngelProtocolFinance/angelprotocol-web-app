@@ -14,3 +14,8 @@ export type BaseProps<T extends FieldValues> = {
 export type FileWrapper =
   | (FileObject & { file?: never })
   | { name: string; file: File; publicUrl?: never };
+
+export type FileLink = {
+  link: FileObject | null;
+  file: File;
+};
