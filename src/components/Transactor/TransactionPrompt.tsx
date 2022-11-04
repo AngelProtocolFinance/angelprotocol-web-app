@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -16,8 +16,29 @@ export default function TransactionPrompt({
 }: PropsWithChildren<{ inModal?: boolean }>) {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
-  const { closeModal } = useModalContext();
+  const { closeModal, onModalClose, setDismissible, isDismissible } =
+    useModalContext();
   const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    switch (stage.step) {
+      case "initial":
+        setDismissible(true);
+        break;
+      case "success":
+      case "error":
+        setDismissible(true);
+        onModalClose(() => dispatch(resetTxFormState()));
+        break;
+      case "broadcast":
+      case "submit":
+        setDismissible(false);
+        break;
+      default:
+        setDismissible(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage.step, onModalClose]);
 
   const prompt = useMemo(() => {
     switch (stage.step) {
@@ -37,24 +58,17 @@ export default function TransactionPrompt({
     }
   }, [stage, children, handleError]);
 
-  function closePrompt() {
-    switch (stage.step) {
-      case "success":
-      case "error":
-        dispatch(resetTxFormState());
-    }
-    closeModal();
-  }
-
   if (inModal) {
     return (
       <Dialog.Panel className={`${containerClasses} fixed-center z-20`}>
-        <button
-          onClick={closePrompt}
-          className="absolute right-2 top-2 text-angel-grey hover:text-black"
-        >
-          <Icon type="Close" size={25} />
-        </button>
+        {isDismissible && (
+          <button
+            onClick={closeModal}
+            className="absolute right-2 top-2 text-angel-grey hover:text-black"
+          >
+            <Icon type="Close" size={25} />
+          </button>
+        )}
 
         {prompt}
       </Dialog.Panel>
