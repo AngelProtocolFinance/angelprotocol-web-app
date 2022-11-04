@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Application } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import haloLogo from "assets/icons/currencies/halo_outline.png";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { denoms, symbols } from "constants/tokens";
 
 export default function Output() {

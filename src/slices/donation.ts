@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Token } from "types/aws";
 
-export type DonationState = Step0 | Step1 | Step2 | Step3;
+export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
 const initialState: DonationState = { step: 0 };
 
@@ -14,18 +14,34 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       return {
-        ...(state as Step2),
+        ...(state as KYCStep),
         step: 2,
         details: payload,
       };
     },
+    resetDetails: (state) => {
+      return {
+        ...(state as FormStep),
+        step: 1,
+        details: undefined,
+      };
+    },
     setKYC: (state, { payload }: PayloadAction<SkippableKYC>) => {
       return {
-        ...(state as Step3),
+        ...(state as SubmitStep),
         step: 3,
         kyc: payload,
       };
     },
+
+    setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
+      return {
+        ...(state as SubmitStep),
+        step: 4,
+        status: payload,
+      };
+    },
+
     setStep(state, { payload }: PayloadAction<number>) {
       state.step = payload as DonationState["step"];
     },
@@ -33,7 +49,14 @@ const donation = createSlice({
 });
 
 export default donation.reducer;
-export const { setRecipient, setStep, setDetails, setKYC } = donation.actions;
+export const {
+  setRecipient,
+  setStep,
+  setDetails,
+  resetDetails,
+  setKYC,
+  setTxStatus,
+} = donation.actions;
 
 export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
@@ -45,6 +68,11 @@ export type DonationRecipient = {
 export type DonationDetails = {
   token: TokenWithAmount;
   pctLiquidSplit: string;
+
+  //meta
+  chainId: string;
+  chainName: string;
+  tokens: TokenWithAmount[];
 };
 
 export type KYC = {
@@ -60,30 +88,27 @@ export type KYC = {
 
 export type SkippableKYC = KYC | "skipped";
 
-type Step0 = {
+type InitStep = {
   step: 0;
-  details?: never;
-  kyc?: never;
   recipient?: DonationRecipient;
 };
 
-export type Step1 = {
+export type FormStep = {
   step: 1;
   details?: DonationDetails;
-  kyc?: never;
-  recipient: DonationRecipient;
-};
+} & Omit<Required<InitStep>, "step">;
 
-export type Step2 = {
+export type KYCStep = {
   step: 2;
-  details?: DonationDetails;
   kyc?: SkippableKYC;
-  recipient: DonationRecipient;
-};
+} & Omit<Required<FormStep>, "step">;
 
-export type Step3 = {
+export type SubmitStep = {
   step: 3;
-  details: DonationDetails;
-  kyc: KYC | "skipped";
-  recipient: DonationRecipient;
-};
+} & Omit<Required<KYCStep>, "step">;
+
+export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+export type TxStep = {
+  step: 4;
+  status: TxStatus;
+} & Omit<SubmitStep, "step">;

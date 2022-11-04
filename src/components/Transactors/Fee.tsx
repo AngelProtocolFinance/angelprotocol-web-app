@@ -1,4 +1,4 @@
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 
 export default function Fee() {

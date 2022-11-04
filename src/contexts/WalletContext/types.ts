@@ -1,3 +1,7 @@
+import { WalletState } from "./WalletContext";
+
+export type WithWallet<T> = T & { wallet: WalletState };
+
 export type ProviderId =
   // | "binance-wallet"
   | "metamask"

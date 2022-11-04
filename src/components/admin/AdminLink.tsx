@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useIsMemberQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 

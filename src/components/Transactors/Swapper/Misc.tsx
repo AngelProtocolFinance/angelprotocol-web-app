@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import { humanize } from "helpers";
 import { denoms, symbols } from "constants/tokens";

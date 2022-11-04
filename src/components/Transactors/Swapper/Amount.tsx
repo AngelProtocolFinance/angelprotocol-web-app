@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
 import { denoms } from "constants/tokens";

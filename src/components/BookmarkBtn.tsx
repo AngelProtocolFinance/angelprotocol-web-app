@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
 
