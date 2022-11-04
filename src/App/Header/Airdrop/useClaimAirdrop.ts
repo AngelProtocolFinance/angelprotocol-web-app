@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Airdrops } from "types/aws";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Airdrop from "contracts/Airdrop";

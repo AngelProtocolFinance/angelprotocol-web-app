@@ -19,7 +19,7 @@ jest.mock("helpers/processEstimateError", () => ({
 }));
 
 const mockUseGetWallet = jest.fn();
-jest.mock("contexts/WalletContext/WalletContext", () => ({
+jest.mock("contexts/WalletContext", () => ({
   __esModule: true,
   useGetWallet: () => mockUseGetWallet(),
 }));

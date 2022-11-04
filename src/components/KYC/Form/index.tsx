@@ -8,14 +8,14 @@ import {
   errorStyle,
   textFieldStyle,
 } from "components/TextInput";
-import { ButtonContinue } from "components/donation";
+import { BtnPrimary } from "components/donation";
 import Controls from "./Controls";
 import Terms from "./Terms";
 import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
 export const formStyle =
-  "w-full bg-orange-l6 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
+  "w-full bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
@@ -97,13 +97,13 @@ export default function Form({ classes = "", ...props }: Props) {
       />
       <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
       {props.type === "post-donation" ? (
-        <ButtonContinue
+        <BtnPrimary
           className="col-span-full"
           disabled={isSubmitting}
           type="submit"
         >
           {isSubmitting ? "Processing..." : "Submit"}
-        </ButtonContinue>
+        </BtnPrimary>
       ) : (
         <Controls {...props} classes="col-span-full" />
       )}

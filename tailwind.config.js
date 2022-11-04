@@ -19,8 +19,8 @@ module.exports = {
         l2: "#FFC86F",
         l3: "#FFD798",
         l4: "#FFEFD5",
-        l5: "#FCFAF7",
-        l6: "#FDFDFC",
+        l5: "#F9F4EC",
+        l6: "#FCFAF7",
       },
       blue: {
         d7: "#0D283A",
@@ -122,5 +122,4 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
 };

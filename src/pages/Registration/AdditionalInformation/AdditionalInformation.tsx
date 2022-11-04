@@ -5,7 +5,7 @@ import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
 import ImgEditor, { ImgLink } from "components/ImgEditor";
-import RichTextEditor from "components/RichTextEditor";
+import { RichTextEditor } from "components/RichText";
 import InputColumn from "../common/InputColumn";
 import ButtonSection from "./ButtonSection";
 import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";

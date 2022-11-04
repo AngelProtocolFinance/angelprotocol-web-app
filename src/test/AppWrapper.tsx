@@ -6,7 +6,7 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
-import WalletContext from "contexts/WalletContext/WalletContext";
+import WalletContext from "contexts/WalletContext";
 import { store } from "store/store";
 
 const testnet: NetworkInfo = {

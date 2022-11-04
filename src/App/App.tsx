@@ -1,6 +1,6 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
 import ModalContext from "contexts/ModalContext";
-import WalletContext from "contexts/WalletContext/WalletContext";
+import WalletContext from "contexts/WalletContext";
 import Footer from "./Footer";
 import Header from "./Header";
 import Views from "./Views";

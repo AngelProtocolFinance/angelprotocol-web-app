@@ -29,7 +29,7 @@ type TxBase = {
   amount: number;
   splitLiq: string; //"50"
   denomination: string;
-  charityId: number;
+  endowmentId: number;
 };
 
 type CryptoTx = TxBase & {

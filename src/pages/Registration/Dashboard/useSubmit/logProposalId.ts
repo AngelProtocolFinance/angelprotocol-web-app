@@ -2,7 +2,7 @@ import { DeliverTxResponse } from "@cosmjs/stargate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { invalidateAwsTags } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";

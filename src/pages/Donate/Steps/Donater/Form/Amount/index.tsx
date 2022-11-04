@@ -6,6 +6,7 @@ import Balance from "./Balance";
 
 export default function Amount() {
   const {
+    getValues,
     watch,
     register,
     formState: { errors },
@@ -32,6 +33,7 @@ export default function Amount() {
           className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
         />
         <TokensSelector<DV, "token">
+          tokens={getValues("tokens")}
           fieldName="token"
           classes={{ options: "absolute right-0 top-2 z-10" }}
         />

@@ -18,14 +18,14 @@ export default function DesktopNav({ classes = "" }: { classes?: string }) {
       <NavLink to={appRoutes.leaderboard} className={styler}>
         Leaderboard
       </NavLink>
-      {/*<NavLink to={appRoutes.register} className={styler}>
-          Register
-        </NavLink>*/}
+      <NavLink to={appRoutes.register} className={styler}>
+        Register
+      </NavLink>
     </nav>
   );
 }
 
 const styler = createNavLinkStyler(
-  "px-3 text-md text-white hover:text-orange-l5 uppercase font-heading font-semibold",
+  "px-3 text-md text-white hover:text-orange-l6 uppercase font-heading font-semibold",
   "pointer-events-none text-orange-l2"
 );
