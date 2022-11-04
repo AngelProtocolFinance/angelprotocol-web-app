@@ -13,7 +13,7 @@ export const sendDonationLog = createAsyncThunk(
       dispatch(
         setStage({
           step: "error",
-          message: `Failed to log donation (${payload.transactionId}) to charity:${payload.charityId}. Please contact support@angelprotocol.io`,
+          message: `Failed to log donation (${payload.transactionId}) to charity:${payload.endowmentId}. Please contact support@angelprotocol.io`,
         })
       );
     }

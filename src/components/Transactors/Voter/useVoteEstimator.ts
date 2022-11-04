@@ -5,7 +5,7 @@ import { VoteValues } from "./types";
 import { TxOptions } from "slices/transaction/types";
 import { Vote } from "types/contracts";
 import { useGovStaker } from "services/juno/gov/queriers";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import {
   setFee,

@@ -1,8 +1,5 @@
 import { Popover } from "@headlessui/react";
-import {
-  WalletState,
-  useGetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { WalletState, useGetWallet } from "contexts/WalletContext";
 import { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
 import { COMMON_BUTTON_STYLE } from "../constants";

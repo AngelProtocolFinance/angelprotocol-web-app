@@ -1,5 +1,5 @@
 import { useBookmarksQuery } from "services/aws/aws";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { QueryLoader } from "components/admin";
 import Bookmark from "./Bookmark";
 

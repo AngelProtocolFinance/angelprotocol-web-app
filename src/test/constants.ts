@@ -1,4 +1,4 @@
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { placeholderChain } from "contexts/WalletContext/constants";
 
 export const PLACEHOLDER_WALLET: WalletState = {
