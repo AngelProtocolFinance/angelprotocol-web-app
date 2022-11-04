@@ -28,7 +28,7 @@ function Header(props: {
 }) {
   return (
     <div
-      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l6 border-gray-l2 rounded dark:bg-blue-d7 dark:border-bluegray ${
+      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-gray-l2 rounded dark:bg-blue-d7 dark:border-bluegray ${
         props.isOpen ? "border-b" : ""
       }`}
     >
