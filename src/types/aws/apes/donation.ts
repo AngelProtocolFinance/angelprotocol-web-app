@@ -1,8 +1,11 @@
 export type Donation = {
   amount: number;
   chainId: string;
+  chainName: string;
+  charityName: string;
   date: string;
   hash: string;
+  id: string; // charity ID
   symbol: string;
 };
 
@@ -23,13 +26,15 @@ export type ReceiptPayload = KYCData & {
 };
 
 type TxBase = {
+  amount: number;
+  chainId: string;
+  chainName: string;
+  charityId: number;
+  charityName: string;
+  denomination: string;
+  splitLiq: string; //"50"
   transactionId: string;
   transactionDate: string;
-  chainId: string;
-  amount: number;
-  splitLiq: string; //"50"
-  denomination: string;
-  charityId: number;
 };
 
 type CryptoTx = TxBase & {

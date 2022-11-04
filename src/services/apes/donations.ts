@@ -1,8 +1,13 @@
-import { AWSQueryRes, Donation, ReceiptPayload } from "types/aws";
+import { Donation, ReceiptPayload } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
 import { apesTags } from "./tags";
+
+type DonationResult = {
+  Items: Donation[];
+  ItemCutoff: number | undefined;
+};
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,10 +31,10 @@ const donations_api = apes.injectEndpoints({
     >({
       providesTags: [{ type: apesTags.donations }],
       query: ({ id }) => ({
-        url: `v1/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+        url: `v2/donation/${id}${IS_TEST ? "/testnet" : ""}`,
         // headers: { key },
       }),
-      transformResponse(res: AWSQueryRes<any>) {
+      transformResponse(res: DonationResult) {
         return res.Items;
       },
     }),

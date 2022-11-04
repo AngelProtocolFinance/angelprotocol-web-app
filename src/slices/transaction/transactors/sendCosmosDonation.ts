@@ -49,6 +49,8 @@ export const sendCosmosDonation = createAsyncThunk(
           splitLiq: split_liq,
           walletAddress: args.wallet.address,
           charityId,
+          chainName: args.wallet.chain.chain_name,
+          charityName: args.donateValues.charityName,
         });
 
         updateStage({
