@@ -1,7 +1,9 @@
+import { FileObject } from "files-from-path";
 import * as Yup from "yup";
 import { DocumentationValues } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
-import { FileWrapper } from "components/FileDropzone";
+import { Asset } from "components/FileDrop";
+import { genFileSchema } from "schemas/file";
 
 const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -10,26 +12,21 @@ const VALID_MIME_TYPES = [
   "image/webp",
 ];
 
-const FILE_SCHEMA = Yup.mixed<FileWrapper>()
-  .test({
-    name: "fileType",
-    message: "Valid file types are PDF, JPG, PNG and WEBP",
-    test: (fileWrapper) =>
-      fileWrapper?.file
-        ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
-        : true,
-  })
-  .test({
-    name: "fileSize",
-    message: "File size must be smaller than 25Mb",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25e6,
-  });
+const previewsKey: keyof Asset = "previews";
+
+const assetShape: SchemaShape<Asset> = {
+  files: Yup.array(genFileSchema(25e6, VALID_MIME_TYPES)).when(
+    previewsKey,
+    (previews: FileObject[], schema: any) =>
+      previews.length <= 0 ? schema.min(1, "required") : schema
+  ),
+};
 
 const documentationShape: SchemaShape<DocumentationValues> = {
-  proofOfIdentity: FILE_SCHEMA.required("Proof of identity required"),
-  proofOfRegistration: FILE_SCHEMA.required("Proof of registration required"),
-  financialStatements: Yup.array<FileWrapper>().of(FILE_SCHEMA),
-  auditedFinancialReports: Yup.array<FileWrapper>().of(FILE_SCHEMA),
+  proofOfIdentity: Yup.object().shape(assetShape),
+  proofOfRegistration: Yup.object().shape(assetShape),
+  financialStatements: Yup.object().shape(assetShape),
+  auditedFinancialReports: Yup.object().shape(assetShape),
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),

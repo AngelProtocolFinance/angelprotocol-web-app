@@ -2,7 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
+import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
+import { Asset } from "components/FileDrop";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -26,10 +28,22 @@ export default function Documentation() {
     defaultValues: {
       un_sdg: application.Registration.UN_SDG,
       website: application.Registration.Website,
-      proofOfIdentity: application.Registration.ProofOfIdentity,
-      proofOfRegistration: application.Registration.ProofOfRegistration,
-      financialStatements: application.Registration.FinancialStatements,
-      auditedFinancialReports: application.Registration.AuditedFinancialReports,
+      proofOfIdentity: genFileAsset(
+        application.Registration.ProofOfIdentity
+          ? [application.Registration.ProofOfIdentity]
+          : []
+      ),
+      proofOfRegistration: genFileAsset(
+        application.Registration.ProofOfRegistration
+          ? [application.Registration.ProofOfRegistration]
+          : []
+      ),
+      financialStatements: genFileAsset(
+        application.Registration.FinancialStatements
+      ),
+      auditedFinancialReports: genFileAsset(
+        application.Registration.AuditedFinancialReports
+      ),
     },
   });
 
@@ -136,3 +150,6 @@ const Column = ({ colored, children, className }: ColoredColumnProps) => {
     </div>
   );
 };
+function genFileAsset(previews: FileObject[]): Asset {
+  return { files: [], previews };
+}

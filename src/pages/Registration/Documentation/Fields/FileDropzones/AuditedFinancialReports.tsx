@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import FileDropzone from "components/FileDropzone";
+import FileDrop from "components/FileDrop";
 import { InputRow } from "../../../common";
 
 export default function AuditedFinancialReport() {
@@ -13,7 +13,7 @@ export default function AuditedFinancialReport() {
       htmlFor="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone<DocumentationValues>
+      <FileDrop<DocumentationValues, "auditedFinancialReports">
         name="auditedFinancialReports"
         className="h-8"
         multiple

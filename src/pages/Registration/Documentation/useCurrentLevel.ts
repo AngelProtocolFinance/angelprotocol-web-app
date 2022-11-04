@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn, useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
+import { Asset } from "components/FileDrop";
 import { FileWrapper } from "components/FileDropzone";
 
 type Level = 0 | 1 | 2 | 3;
@@ -43,9 +44,9 @@ export default function useCurrentLevel() {
 
 const getIsLevelOne = (
   un_sdg: number,
-  proofOfIdentity: FileWrapper,
+  proofOfIdentity: Asset,
   website: string,
-  proofOfRegistration: FileWrapper,
+  proofOfRegistration: Asset,
   { getFieldState }: UseFormReturn<DocumentationValues, any>
 ): boolean =>
   // no errors
@@ -55,24 +56,24 @@ const getIsLevelOne = (
   !getFieldState("un_sdg").error &&
   // values inserted
   un_sdg > 0 &&
-  !!proofOfIdentity &&
+  proofOfIdentity.files.some((f) => f) &&
   !!website &&
-  !!proofOfRegistration;
+  proofOfRegistration.files.some((f) => f);
 
 const getIsLevelTwo = (
-  financialStatements: FileWrapper[],
+  financialStatements: Asset,
   { getFieldState }: UseFormReturn<DocumentationValues, any>
 ): boolean =>
   // no errors
   !getFieldState("financialStatements").error &&
   // values inserted
-  financialStatements.some((fs) => !!fs);
+  financialStatements.files.some((fs) => !!fs);
 
 const getIsLevelThree = (
-  auditedFinancialReports: FileWrapper[],
+  auditedFinancialReports: Asset,
   { getFieldState }: UseFormReturn<DocumentationValues, any>
 ): boolean =>
   // no errors
   !getFieldState("auditedFinancialReports").error &&
   // values inserted
-  auditedFinancialReports.some((fs) => !!fs);
+  auditedFinancialReports.files.some((fs) => !!fs);

@@ -171,8 +171,8 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: FileObject;
-    ProofOfRegistration: FileObject;
+    ProofOfIdentity: FileObject[];
+    ProofOfRegistration: FileObject[];
     FinancialStatements: FileObject[];
     AuditedFinancialReports: FileObject[];
   };

@@ -69,6 +69,12 @@ export default function Amounts() {
               as="span"
               className="text-right text-red-l1 text-xs absolute -bottom-5 right-2"
             />
+            <ErrorMessage
+              errors={errors}
+              name={"amounts"}
+              as="span"
+              className="text-right text-red-l1 text-xs absolute -bottom-5 right-2"
+            />
           </div>
         );
       })}

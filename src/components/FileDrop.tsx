@@ -1,31 +1,42 @@
 import { useDropzone } from "react-dropzone";
-import { FieldValues, Path, useController } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { FileObject } from "types/aws";
 import Icon from "components/Icon";
 
-export type FileLink = FileObject & { file: File };
-type BaseFormValue = { [index: string]: FileLink[] };
+export type Asset = {
+  previews: FileObject[]; //from previous submission
+  files: File[]; //new files
+};
 
-type Key = keyof FileLink;
-const fileKey: Key = "file";
+type Key = keyof Asset;
+const filesKey: Key = "files";
+const previewsKey: Key = "previews";
 
 export default function FileDrop<
   T extends FieldValues,
   K extends Path<T>
 >(props: {
-  fieldName: T[K] extends FileLink[] ? K : never;
+  name: T[K] extends Asset ? K : never;
   multiple?: true;
   disabled?: boolean;
   className?: string;
 }) {
-  const id = `${props.fieldName}.${fileKey}`;
+  const filesId = `${props.name}.${filesKey}` as Path<T>;
+  const previewsId = `${props.name}.${previewsKey}` as Path<T>;
+
+  const { getValues } = useFormContext<T>();
 
   const {
     field: { value: files, onChange: onFilesChange },
-  } = useController<BaseFormValue>({ name: id });
+  } = useController<T>({ name: filesId });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (files) => {
+    onDrop: (files: File[]) => {
       onFilesChange(files);
     },
     multiple: props.multiple,
@@ -40,14 +51,17 @@ export default function FileDrop<
 
   return (
     <div {...getRootProps({ className })}>
-      <input id={id} {...getInputProps()} />
-      <DropzoneText fileLinks={files} />
+      <input id={filesId} {...getInputProps()} />
+      <DropzoneText files={files as File[]} previews={getValues(previewsId)} />
     </div>
   );
 }
 
-function DropzoneText({ fileLinks }: { fileLinks: FileLink[] }) {
-  if (fileLinks.length <= 0) {
+function DropzoneText({ files, previews }: Asset) {
+  const isFilesEmpty = files.length <= 0;
+  const isPreviousEmpty = previews.length <= 0;
+
+  if (isFilesEmpty && isPreviousEmpty) {
     return (
       <span className="flex items-center gap-1 text-dark-grey text-sm">
         <Icon type="Upload" className="text-lg" />
@@ -56,18 +70,17 @@ function DropzoneText({ fileLinks }: { fileLinks: FileLink[] }) {
     );
   }
 
-  const fileNames = fileLinks
-    .map(({ file, name }) => file?.name || name)
-    .join(", ");
-
-  return fileLinks.length <= 0 ? (
-    <span className="flex items-center gap-1 text-dark-grey text-sm">
-      <Icon type="Upload" className="text-lg" />
-      Select file or Drag &amp; Drop
-    </span>
-  ) : (
-    <label className="flex text-black text-sm truncate" title={fileNames}>
-      {fileNames}
-    </label>
-  );
+  if (isFilesEmpty) {
+    //TODO: convert this to links
+    const names = previews.map(({ name }) => name).join(" ,");
+    return <div>{names}</div>;
+  } else {
+    //TODO: once UI is rectangular, add error messages below each name
+    const names = files.map(({ name }) => name).join(" ,");
+    return (
+      <label className="flex text-black text-sm truncate" title={names}>
+        {names}
+      </label>
+    );
+  }
 }
