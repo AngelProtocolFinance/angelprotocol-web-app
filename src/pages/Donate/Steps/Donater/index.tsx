@@ -2,21 +2,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { WithWallet } from "contexts/WalletContext";
-import { placeholderChain } from "contexts/WalletContext/constants";
 import { FormStep, TokenWithAmount } from "slices/donation";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Donater({
-  wallet: { chain },
-  ...state
-}: WithWallet<FormStep>) {
-  const { tokens } = chain;
-  const _all = [chain.native_currency].concat(tokens);
-  const _tokens: TokenWithAmount[] =
-    _all.length > 0
-      ? _all.map((t) => ({ ...t, amount: "0" }))
-      : placeholderChain.tokens.map((t) => ({ ...t, amount: "0" }));
+export default function Donater({ wallet, ...state }: WithWallet<FormStep>) {
+  const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
+    ...t,
+    amount: "0",
+  }));
 
   const methods = useForm<DonateValues>({
     mode: "onChange",
@@ -27,8 +21,8 @@ export default function Donater({
 
       //meta
       tokens: _tokens,
-      chainName: chain.chain_name,
-      chainId: chain.chain_id,
+      chainName: wallet.chain.chain_name,
+      chainId: wallet.chain.chain_id,
     },
     resolver: yupResolver(schema),
   });

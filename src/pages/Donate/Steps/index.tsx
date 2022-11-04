@@ -27,7 +27,7 @@ export default function Steps(props: DonationRecipient) {
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
-            You'are about to make a donation to {props.name}
+            You're about to make a donation to {props.name}
           </h3>
           <Progress classes="my-12" />
         </>
@@ -56,7 +56,7 @@ function CurrStep(props: DonationState) {
       return (
         <Tooltip
           type="Info"
-          message="You need to connect your wallet do make a donation"
+          message="You need to connect your wallet to make a donation"
         />
       );
     }
@@ -69,7 +69,7 @@ function CurrStep(props: DonationState) {
           <KYC
             type="on-donation"
             state={props}
-            classes="grid gap-5 min-[510px]:grid-cols-2"
+            classes="grid gap-5 sm:grid-cols-2"
           />
         );
       }

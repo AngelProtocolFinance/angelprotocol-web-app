@@ -14,7 +14,7 @@ export function Tooltip({
       <Icon
         size={20}
         type={type}
-        className={`relative inline bottom-[1px] mr-2 ${
+        className={`relative inline bottom-px mr-2 ${
           type === "Loading" ? "animate-spin" : ""
         }`}
       />
