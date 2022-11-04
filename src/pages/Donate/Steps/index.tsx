@@ -32,6 +32,7 @@ export default function Steps(props: DonationRecipient) {
           <Progress classes="my-12" />
         </>
       )}
+
       <CurrStep {...state} />
     </div>
   );
