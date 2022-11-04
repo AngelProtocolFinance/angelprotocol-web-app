@@ -51,7 +51,7 @@ export default function ContactDetailsForm() {
         onSubmit={handleSubmit(saveContactDetails)}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormInput<CD>
+          {/* <FormInput<CD>
             fieldName="firstName"
             label="First name"
             placeholder="First name"
@@ -62,7 +62,7 @@ export default function ContactDetailsForm() {
             label="Last name"
             placeholder="Last name"
             required
-          />
+          /> */}
           <FormInput<CD>
             fieldName="email"
             type="email"
@@ -70,7 +70,7 @@ export default function ContactDetailsForm() {
             placeholder="E-mail address"
             required
           />
-          <FormInput<CD>
+          {/* <FormInput<CD>
             fieldName="phone"
             label="Phone number"
             placeholder="Phone number"
@@ -89,26 +89,14 @@ export default function ContactDetailsForm() {
           label="Goals"
           placeholder="What is your goal in working with Angel Protocol?"
           required
-        />
-        <PrivacyPolicyCheckbox
-          disabled={isSubmitting}
-          {...register("checkedPolicy")}
-          error={errors.checkedPolicy?.message}
-          centerError
-        />
-        <div className="flex justify-center">
-          {/* If JunoWallet field is set, we can assume ContactDetails update form has been navigated to from the Dashboard*/}
-          {application.Metadata.JunoWallet && (
-            <Button
-              className="btn-outline-blue w-48 h-12 mr-2"
-              disabled={isSubmitting}
-              onClick={() =>
-                navigate(`${appRoutes.register}/${routes.dashboard}`)
-              }
-            >
-              Back
-            </Button>
-          )}
+        /> */}
+          <PrivacyPolicyCheckbox
+            disabled={isSubmitting}
+            {...register("checkedPolicy")}
+            error={errors.checkedPolicy?.message}
+            centerError
+          />
+
           <Button
             submit
             className="btn-orange w-48 h-12"
