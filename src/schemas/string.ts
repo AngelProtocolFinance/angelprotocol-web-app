@@ -29,6 +29,7 @@ export const stringByteSchema = (
 ) =>
   Yup.string()
     .required(`${title} is required`)
+    .matches(/^[\x00-\x7F]+$/, "Only ASCII characters are allowed")
     .test(
       "min_length",
       `${title} is too short`,
