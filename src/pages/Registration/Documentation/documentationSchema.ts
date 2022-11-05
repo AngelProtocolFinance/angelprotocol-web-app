@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { DocumentationValues } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
 import { FileWrapper } from "components/FileDropzone";
-import { stringSchema } from "schemas/string";
+import { asciiSchema } from "schemas/string";
 
 const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -31,7 +31,7 @@ const documentationShape: SchemaShape<DocumentationValues> = {
   proofOfRegistration: FILE_SCHEMA.required("Proof of registration required"),
   financialStatements: Yup.array<FileWrapper>().of(FILE_SCHEMA),
   auditedFinancialReports: Yup.array<FileWrapper>().of(FILE_SCHEMA),
-  website: stringSchema
+  website: asciiSchema
     .required("Organization website required")
     .url("Must be a valid URL"),
   un_sdg: Yup.number().min(1, "UNSDG must be selected").max(17),
