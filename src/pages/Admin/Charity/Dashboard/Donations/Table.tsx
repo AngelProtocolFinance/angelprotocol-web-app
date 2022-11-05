@@ -39,6 +39,7 @@ export default function Table(props: { donations: Donation[] }) {
             data={props.donations}
             filename="received_donations.csv"
           />
+          <>Data provided</>
         </Cells>
       </TableSection>
       <TableSection
@@ -62,6 +63,7 @@ export default function Table(props: { donations: Donation[] }) {
             >
               {maskAddress(hash)}
             </a>
+            <>No</>
           </Cells>
         ))}
       </TableSection>
