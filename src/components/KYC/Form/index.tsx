@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
+import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import {
   Label,
@@ -10,7 +11,6 @@ import {
 } from "components/TextInput";
 import { BtnPrimary } from "components/donation";
 import Controls from "./Controls";
-import Terms from "./Terms";
 import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
@@ -95,7 +95,25 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
+      <Checkbox<FV>
+        name="hasAgreedToTerms"
+        classes={{
+          container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
+          checkbox:
+            "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+        }}
+      >
+        I have read and I agree with{" "}
+        <a
+          className="underline text-orange"
+          target="_blank"
+          href="https://angelprotocol.io/terms-of-use"
+          rel="noopener noreferrer"
+        >
+          Terms & Conditions
+        </a>
+        .
+      </Checkbox>
       {props.type === "post-donation" ? (
         <BtnPrimary
           className="col-span-full"

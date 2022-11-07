@@ -12,6 +12,7 @@ const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
+const RegistrationV2 = lazy(() => import("pages/RegistrationV2"));
 const Donate = lazy(() => import("pages/Donate"));
 
 export default function Views() {
@@ -32,6 +33,7 @@ export default function Views() {
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
         <Route index element={<Marketplace />} />
         <Route path={`${appRoutes.register}/*`} element={<Registration />} />
+        <Route path={`${appRoutes.register2}/*`} element={<RegistrationV2 />} />
         <Route
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
