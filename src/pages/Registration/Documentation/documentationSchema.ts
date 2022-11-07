@@ -22,11 +22,13 @@ const assetShape: SchemaShape<Asset> = {
   ),
 };
 
+const docSchema = Yup.object().shape(assetShape);
+
 const documentationShape: SchemaShape<DocumentationValues> = {
-  proofOfIdentity: Yup.object().shape(assetShape),
-  proofOfRegistration: Yup.object().shape(assetShape),
-  financialStatements: Yup.object().shape(assetShape),
-  auditedFinancialReports: Yup.object().shape(assetShape),
+  proofOfIdentity: docSchema,
+  proofOfRegistration: docSchema,
+  financialStatements: docSchema,
+  auditedFinancialReports: docSchema,
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),

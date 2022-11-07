@@ -52,16 +52,16 @@ export default function FileDrop<
   return (
     <div {...getRootProps({ className })}>
       <input id={filesId} {...getInputProps()} />
-      <DropzoneText files={files as File[]} previews={getValues(previewsId)} />
+      <DropzoneText files={files} previews={getValues(previewsId)} />
     </div>
   );
 }
 
 function DropzoneText({ files, previews }: Asset) {
   const isFilesEmpty = files.length <= 0;
-  const isPreviousEmpty = previews.length <= 0;
+  const isPreviewsEmpty = previews.length <= 0;
 
-  if (isFilesEmpty && isPreviousEmpty) {
+  if (isFilesEmpty && isPreviewsEmpty) {
     return (
       <span className="flex items-center gap-1 text-dark-grey text-sm">
         <Icon type="Upload" className="text-lg" />

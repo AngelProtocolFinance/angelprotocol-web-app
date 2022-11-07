@@ -51,7 +51,7 @@ export default function useEditProfile() {
       //means new image file is selected
       if (data.image.file) {
         showModal(Popup, { message: "Uploading image.." });
-        imgUrl = await uploadToIpfs(data.image.file);
+        [imgUrl] = await uploadToIpfs([data.image.file]);
       } else {
         imgUrl = data.image.publicUrl;
       }

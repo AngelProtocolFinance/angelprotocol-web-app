@@ -14,7 +14,6 @@ import {
   UpdateMetadataResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
-import { Asset } from "components/FileDrop";
 import { getSavedRegistrationReference } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";

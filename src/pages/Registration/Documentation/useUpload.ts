@@ -38,8 +38,8 @@ export default function useUpload() {
           body: {
             Website: website,
             UN_SDG: un_sdg,
-            ProofOfIdentity: previews.proofOfIdentity,
-            ProofOfRegistration: previews.proofOfRegistration,
+            ProofOfIdentity: previews.proofOfIdentity[0],
+            ProofOfRegistration: previews.proofOfRegistration[0],
             FinancialStatements: previews.financialStatements,
             AuditedFinancialReports: previews.auditedFinancialReports,
           },
@@ -84,7 +84,6 @@ async function getFilePreviews<T extends { [index: string]: Asset }>(
 
   //rebuild object with preview urls
   const result: any = {};
-
   for (const [key, [start, end]] of Object.entries(positions)) {
     const _previews = previews.slice(start, end);
     //return previous previews if no new urls

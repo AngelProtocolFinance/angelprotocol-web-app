@@ -156,6 +156,7 @@ export type UpdateMetadataRequest = {
     Logo?: FileObject;
     Overview?: string;
     JunoWallet?: string;
+    KycDonorsOnly?: boolean;
   };
 };
 
@@ -171,8 +172,8 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: FileObject[];
-    ProofOfRegistration: FileObject[];
+    ProofOfIdentity: FileObject;
+    ProofOfRegistration: FileObject;
     FinancialStatements: FileObject[];
     AuditedFinancialReports: FileObject[];
   };

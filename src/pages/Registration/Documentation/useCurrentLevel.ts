@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { UseFormReturn, useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import { Asset } from "components/FileDrop";
-import { FileWrapper } from "components/FileDropzone";
 
 type Level = 0 | 1 | 2 | 3;
 
 export default function useCurrentLevel() {
   const [level, setLevel] = useState<Level>(0);
+  const {
+    formState: { errors },
+  } = useFormContext();
   const methods = useFormContext<DocumentationValues>();
+
+  console.log(errors);
 
   const poi = methods.watch("proofOfIdentity");
   const website = methods.watch("website");
