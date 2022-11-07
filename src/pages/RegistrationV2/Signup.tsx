@@ -1,17 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { SchemaShape } from "schemas/types";
+import Checkbox from "components/Checkbox";
 import { TextInput } from "components/TextInput";
+import { BtnPrim, BtnSec } from "components/registration";
+import { PRIVACY_POLICY } from "constants/urls";
 
-type FormValues = { email: string };
+type FormValues = { email: string; hasAgreedToPrivacyPolicy: boolean };
 
-export default function Signup() {
+export default function Signup({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
-    mode: "all",
-    reValidateMode: "onChange",
     resolver: yupResolver(
-      Yup.object().shape({
+      Yup.object().shape<SchemaShape<FormValues>>({
         email: Yup.string().required("required").email("invalid email"),
+        hasAgreedToPrivacyPolicy: Yup.boolean().oneOf(
+          [true],
+          "must agree to privacy policy"
+        ),
       })
     ),
   });
@@ -25,20 +31,47 @@ export default function Signup() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="padded-container w-full max-w-[37.5rem] mt-20 grid"
+      className={`${classes} padded-container w-full max-w-[37.5rem] my-20 grid`}
     >
       <h3 className="text-3xl font-bold text-center">
         Register to Angel Protocol
       </h3>
       <FormProvider {...methods}>
-        <TextInput
+        <TextInput<FormValues>
           name="email"
           label="E-mail"
           placeholder="e.g. johndoe@example.com"
-          classes={{ container: "mt-14" }}
+          classes={{ container: "mt-14 mx-0 sm:mx-24" }}
         />
+        <Checkbox<FormValues>
+          name="hasAgreedToPrivacyPolicy"
+          classes={{
+            container: "justify-self-center gap-3.5 mt-6 mb-8 text-xs",
+            checkbox:
+              "appearance-none border dark:border-bluegray w-4 h-4 rounded checked:bg-blue",
+          }}
+        >
+          I declare that I have read and agreed to{" "}
+          <a
+            className="underline text-orange"
+            target="_blank"
+            href={PRIVACY_POLICY}
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
+          <span className="text-red dark:text-red-l2">{"  "}*</span>
+        </Checkbox>
       </FormProvider>
-      <button className="btn-orange p-3 mt-8">submit</button>
+      <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
+        Register
+      </BtnPrim>
+      <p className="text-sm mx-0 sm:mx-24 relative h-[0.5px] grid place-items-center border-[0.5px] border-gray-d1 dark:border-gray my-11">
+        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute dark:text-gray">
+          OR
+        </span>
+      </p>
+      <BtnSec className="mx-0 sm:mx-24">Resume your registration</BtnSec>
     </form>
   );
 }

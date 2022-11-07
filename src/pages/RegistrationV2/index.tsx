@@ -3,9 +3,9 @@ import Signup from "./Signup";
 
 export default function RegistrationV2() {
   return (
-    <section className="bg-gray-l5 text-gray-d2 pt-24">
+    <section className="grid bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white pt-24">
       <Routes>
-        <Route index element={<Signup />} />
+        <Route index element={<Signup classes="justify-self-center" />} />
       </Routes>
     </section>
   );

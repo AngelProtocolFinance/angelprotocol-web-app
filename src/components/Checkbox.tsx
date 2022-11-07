@@ -43,7 +43,7 @@ export default function Checkbox<T extends FieldValues>({
 
       <ErrorMessage
         errors={errors}
-        name={id as any}
+        name={name as any}
         as="p"
         className="absolute -bottom-6 left-0 text-left text-xs text-red dark:text-red-l2"
       />
