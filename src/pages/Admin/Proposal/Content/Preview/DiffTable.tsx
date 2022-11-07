@@ -47,7 +47,7 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
       <ImageWrapper
         src={value}
         alt=""
-        className="w-40 sm:w-[40rem] sm:min-h-[5rem] max-w-2xl object-contain"
+        className="w-40 lg:w-[40rem] lg:min-h-[5rem] max-w-2xl object-contain"
       />
     );
   }
