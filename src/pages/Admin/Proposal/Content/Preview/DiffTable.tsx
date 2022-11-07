@@ -1,5 +1,7 @@
 import { DiffSet } from "types/utils";
+import ImageWrapper from "components/ImageWrapper";
 import TableSection, { Cells } from "components/TableSection";
+import { IPFS_GATEWAY } from "helpers";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function DiffTable<T extends object>(props: {
@@ -7,7 +9,7 @@ export default function DiffTable<T extends object>(props: {
 }) {
   return (
     <PreviewContainer>
-      <table className="w-full">
+      <table>
         <TableSection type="thead" rowClass="">
           <Cells
             type="th"
@@ -29,12 +31,26 @@ export default function DiffTable<T extends object>(props: {
               verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-white/20"
             >
               <>{(key as string).replace(/_/g, " ")}</>
-              <>{prev || "not set"}</>
-              <>{next || "not set"}</>
+              {createColumn(prev)}
+              {createColumn(next)}
             </Cells>
           ))}
         </TableSection>
       </table>
     </PreviewContainer>
   );
+}
+
+function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
+  if (typeof value === "string" && value.startsWith(IPFS_GATEWAY)) {
+    return (
+      <ImageWrapper
+        src={value}
+        alt=""
+        className="w-40 sm:w-[40rem] max-w-2xl object-contain"
+      />
+    );
+  }
+
+  return <>{value ?? "not set"}</>;
 }
