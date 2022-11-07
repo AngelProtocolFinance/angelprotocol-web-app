@@ -7,7 +7,7 @@ import {
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { Asset } from "components/FileDrop";
+import { Asset } from "components/FileDropzone";
 import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import { GENERIC_ERROR_MESSAGE } from "../constants";

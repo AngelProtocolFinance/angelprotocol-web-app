@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import FileDrop from "components/FileDrop";
+import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../../../common";
 
 export default function ProofOfRegistration() {
@@ -14,7 +14,7 @@ export default function ProofOfRegistration() {
       label="Proof of registration as a 501(c)(3) charity or equivalent"
       required
     >
-      <FileDrop<DocumentationValues, "proofOfRegistration">
+      <FileDropzone<DocumentationValues, "proofOfRegistration">
         name="proofOfRegistration"
         className="h-8"
         disabled={isSubmitting}

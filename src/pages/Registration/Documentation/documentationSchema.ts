@@ -2,7 +2,7 @@ import { FileObject } from "files-from-path";
 import * as Yup from "yup";
 import { DocumentationValues } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
-import { Asset } from "components/FileDrop";
+import { Asset } from "components/FileDropzone";
 import { genFileSchema } from "schemas/file";
 
 const VALID_MIME_TYPES = [

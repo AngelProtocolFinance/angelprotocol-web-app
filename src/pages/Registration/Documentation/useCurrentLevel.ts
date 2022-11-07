@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn, useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import { Asset } from "components/FileDrop";
+import { Asset } from "components/FileDropzone";
 
 type Level = 0 | 1 | 2 | 3;
 

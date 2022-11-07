@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import { DocumentationValues } from "pages/Registration/types";
 import { useModalContext } from "contexts/ModalContext";
-import FileDrop from "components/FileDrop";
+import FileDropzone from "components/FileDropzone";
 import { Button, InputRow } from "../../../common";
 
 export default function ProofOfIdentity() {
@@ -18,7 +18,7 @@ export default function ProofOfIdentity() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDrop<DocumentationValues, "proofOfIdentity">
+      <FileDropzone<DocumentationValues, "proofOfIdentity">
         name="proofOfIdentity"
         className="h-8"
         disabled={isSubmitting}

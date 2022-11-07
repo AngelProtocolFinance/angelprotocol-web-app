@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
-import { Asset } from "components/FileDrop";
+import { Asset } from "components/FileDropzone";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
