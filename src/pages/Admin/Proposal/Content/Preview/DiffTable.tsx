@@ -42,6 +42,10 @@ export default function DiffTable<T extends object>(props: {
 }
 
 function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
+  if (!value) {
+    return <>not set</>;
+  }
+
   if (typeof value === "string" && value.startsWith(IPFS_GATEWAY)) {
     return (
       <ImageWrapper
@@ -52,5 +56,5 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
     );
   }
 
-  return <>{value ?? "not set"}</>;
+  return <>{value}</>;
 }
