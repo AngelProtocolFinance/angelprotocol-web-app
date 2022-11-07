@@ -26,7 +26,7 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
       ? "bg-angel-blue/50 ring ring-angel-blue"
       : "bg-white outline-none"
   } ${props.className} ${
-    props.disabled ? "cursor-default bg-grey-accent/40" : ""
+    props.disabled ? "cursor-default bg-grey-accent/40" : "cursor-pointer"
   }`;
 
   return (
