@@ -29,13 +29,14 @@ export default function useTerra() {
       }
     : undefined;
 
+  console.log(availableConnections);
+
   const terraConnections: Connection[] = availableConnections
     .filter(
-      (connection) =>
-        !(
-          connection.identifier === "xdefi-wallet" ||
-          connection.type === ConnectType.READONLY
-        )
+      ({ type, identifier }) =>
+        identifier === "leap-wallet" ||
+        identifier === "station" ||
+        type === ConnectType.WALLETCONNECT
     )
     .map((connection) => ({
       logo: connection.icon,
