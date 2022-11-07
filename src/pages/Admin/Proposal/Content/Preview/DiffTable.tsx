@@ -46,6 +46,8 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
     return <>not set</>;
   }
 
+  // if the string value starts with the IPFS gateway URL value, this is surely a file
+  // the user has uploaded and a preview should be displayed
   if (typeof value === "string" && value.startsWith(IPFS_GATEWAY)) {
     return (
       <ImageWrapper
