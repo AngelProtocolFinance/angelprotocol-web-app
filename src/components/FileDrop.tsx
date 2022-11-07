@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { useDropzone } from "react-dropzone";
 import {
   FieldValues,
@@ -43,7 +44,7 @@ export default function FileDrop<
     disabled: props.disabled,
   });
 
-  const className = `flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
+  const className = `relative flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
     isDragActive ? "bg-blue/50 ring ring-blue" : "bg-white outline-none"
   } ${props.className} ${
     props.disabled ? "cursor-default bg-gray/40" : "cursor-pointer"
@@ -51,8 +52,20 @@ export default function FileDrop<
 
   return (
     <div {...getRootProps({ className })}>
-      <input id={filesId} {...getInputProps()} />
+      <input {...getInputProps({ id: filesId })} />
       <DropzoneText files={files} previews={getValues(previewsId)} />
+
+      {(files as File[])
+        //show 1 error for now
+        .map((_, i) => (
+          <ErrorMessage
+            key={i}
+            name={`${filesId}.${i}`}
+            as="p"
+            className="absolute left-1/2 transform w-full -translate-x-1/2 text-red dark:text-red-l2 text-xs -bottom-4"
+          />
+        ))
+        .find((err) => err) || <></>}
     </div>
   );
 }
@@ -73,7 +86,11 @@ function DropzoneText({ files, previews }: Asset) {
   if (isFilesEmpty) {
     //TODO: convert this to links
     const names = previews.map(({ name }) => name).join(" ,");
-    return <div>{names}</div>;
+    return (
+      <label className="flex text-black text-sm truncate" title={names}>
+        {names}
+      </label>
+    );
   } else {
     //TODO: once UI is rectangular, add error messages below each name
     const names = files.map(({ name }) => name).join(" ,");

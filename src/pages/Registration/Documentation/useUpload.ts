@@ -8,10 +8,10 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Asset } from "components/FileDrop";
+import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
 import routes from "../routes";
-import { ipfsUpload } from "./ipfsUpload";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
@@ -30,8 +30,6 @@ export default function useUpload() {
     }: DocumentationValues) => {
       try {
         const previews = await getFilePreviews({ ...documents });
-
-        console.log(previews);
 
         const result = await uploadDocumentation({
           PK: application.ContactPerson.PK,
@@ -75,7 +73,7 @@ async function getFilePreviews<T extends { [index: string]: Asset }>(
     files.push(...asset.files);
     pos += numFiles;
   }
-  const urls = await ipfsUpload(files);
+  const urls = await uploadToIpfs(files);
   //map file names to urls
   const previews: FileObject[] = files.map(({ name }, i) => ({
     name,

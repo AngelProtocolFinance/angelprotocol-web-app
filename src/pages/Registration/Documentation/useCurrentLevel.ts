@@ -7,12 +7,7 @@ type Level = 0 | 1 | 2 | 3;
 
 export default function useCurrentLevel() {
   const [level, setLevel] = useState<Level>(0);
-  const {
-    formState: { errors },
-  } = useFormContext();
   const methods = useFormContext<DocumentationValues>();
-
-  console.log(errors);
 
   const poi = methods.watch("proofOfIdentity");
   const website = methods.watch("website");
