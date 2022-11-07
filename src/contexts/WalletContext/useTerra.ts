@@ -1,14 +1,16 @@
 import {
   ConnectType,
+  Installation,
+  Connection as TerraConnection,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { WALLET_METADATA } from "./constants";
 
 export default function useTerra() {
   const {
     availableConnections,
+    availableInstallations,
     connection,
     network,
     wallets,
@@ -29,25 +31,24 @@ export default function useTerra() {
       }
     : undefined;
 
-  console.log(availableConnections);
-
   const terraConnections: Connection[] = availableConnections
-    .filter(
-      ({ type, identifier }) =>
-        identifier === "leap-wallet" ||
-        identifier === "station" ||
-        type === ConnectType.WALLETCONNECT
-    )
+    .filter(_filter)
     .map((connection) => ({
       logo: connection.icon,
       name: connection.name,
-      installUrl: connection.identifier
-        ? WALLET_METADATA[connection.identifier as ProviderId]?.installUrl // --> if the connection.identifier is unsupported, we do not fill out the install URL field
-        : undefined,
       connect: async () => {
         connect(connection.type, connection.identifier);
       },
-    }));
+    }))
+    .concat(
+      availableInstallations.filter(_filter).map(({ name, icon, url }) => ({
+        logo: icon,
+        name,
+        connect: async () => {
+          window.open(url, "_blank", "noopener noreferrer");
+        },
+      }))
+    );
 
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
@@ -55,4 +56,15 @@ export default function useTerra() {
     disconnectTerra: disconnect,
     terraInfo,
   };
+}
+
+function _filter<T extends TerraConnection | Installation>({
+  type,
+  identifier,
+}: T) {
+  return (
+    identifier === "leap-wallet" ||
+    identifier === "station" ||
+    type === ConnectType.WALLETCONNECT
+  );
 }

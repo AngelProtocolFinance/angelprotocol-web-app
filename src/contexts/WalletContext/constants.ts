@@ -1,16 +1,18 @@
-import { ProviderId } from "./types";
+import { WithoutInstallers } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 // import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
-import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
-import walletConnectIcon from "assets/icons/wallets/wallet-connect.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const WALLET_METADATA: {
-  [key in ProviderId]: { logo: string; installUrl: string; name: string };
+  [key in WithoutInstallers]: {
+    logo: string;
+    installUrl: string;
+    name: string;
+  };
 } = {
   // "binance-wallet": {
   //   logo: binanceWalletIcon,
@@ -31,32 +33,6 @@ export const WALLET_METADATA: {
     logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
     name: "XDEFI",
-  },
-  station: {
-    logo: terraStationIcon,
-    installUrl:
-      "https://chrome.google.com/webstore/detail/terra-station-wallet/aiifbnbfobpmeekipheeijimdpnlpgpp",
-    name: "Terra Station",
-  },
-  "leap-wallet": {
-    logo: "https://leapwallet.io/icon.png",
-    installUrl: "https://www.leapwallet.io/",
-    name: "Leap Wallet",
-  },
-  "falcon-wallet": {
-    logo: "https://api.falconwallet.app/assets/images/falcon-logo.png",
-    installUrl: "https://www.falconwallet.app/",
-    name: "Falcon Wallet",
-  },
-  "bitkeep-wallet": {
-    logo: "https://cdn.bitkeep.vip/u_b_6151d430-ae42-11ec-9c39-b7ca284b7fe4.png",
-    installUrl: "https://bitkeep.com/",
-    name: "Bitkeep Wallet",
-  },
-  walletconnect: {
-    logo: walletConnectIcon,
-    installUrl: "",
-    name: "Wallet Connect",
   },
   keplr: {
     logo: keplrIcon,
