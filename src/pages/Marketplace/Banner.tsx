@@ -5,7 +5,7 @@ export default function Banner({ classes = "" }: { classes?: string }) {
     <div
       className={`${classes} grid-cols-[3fr_2fr] gap-4 pt-28 pb-4 padded-container content-start text-white `}
     >
-      <h1 className="font-extrabold max-w-md text-2xl md:text-3xl lg:text-4xl self-end">
+      <h1 className="font-extrabold max-w-md text-2xl md:text-3xl lg:text-[2.75rem] self-end">
         <div className="leading-tight">ANGEL PROTOCOL REDEFINES</div>
         <div className="leading-tight text-orange">
           GLOBAL IMPACT FINANCING.
@@ -18,7 +18,7 @@ export default function Banner({ classes = "" }: { classes?: string }) {
           background: `url('${character}') 50% 50% / contain no-repeat`,
         }}
       />
-      <p className="text-xl max-w-xl leading-relaxed font-heading">
+      <p className="text-2xl max-w-xl leading-relaxed">
         We provide impact stakeholders like non-profits and social entrepreneurs
         with the tools to raise, coordinate, and invest capital. With Angel
         Protocol, impact is amplified. Funding goes further, connections run
