@@ -33,7 +33,7 @@ export function TextInput<T extends FieldValues>({
         {...props}
         registerReturn={register(name)}
         id={id}
-        className={classes?.input}
+        className={classes?.input + " bg-gray-l5 dark:bg-blue-d4"}
       />
       <ErrorMessage
         errors={errors}

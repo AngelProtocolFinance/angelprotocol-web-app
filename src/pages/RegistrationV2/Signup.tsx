@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import Checkbox from "components/Checkbox";
-import { TextInput } from "components/TextInput";
+import { TextInput } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 
@@ -48,7 +48,7 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           classes={{
             container: "justify-self-center gap-3.5 mt-6 mb-8 text-xs",
             checkbox:
-              "appearance-none border dark:border-bluegray w-4 h-4 rounded checked:bg-blue",
+              "appearance-none border border-gray-d2 dark:border-bluegray w-4 h-4 rounded checked:bg-blue",
           }}
         >
           I declare that I have read and agreed to{" "}
