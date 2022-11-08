@@ -56,7 +56,7 @@ export default function Table(props: { donations: Donation[] }) {
         type="tbody"
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
-        {sorted.map(({ hash, amount, symbol, chainId, date }) => (
+        {sorted.map(({ hash, amount, symbol, chainId, date }, i) => (
           <Cells
             key={hash}
             type="td"
@@ -73,10 +73,10 @@ export default function Table(props: { donations: Donation[] }) {
             >
               {maskAddress(hash)}
             </a>
-            {Math.random() < 0.5 ? (
-              <Icon type="Check" className="text-2xl" />
+            {i === 0 ? (
+              <Icon type="CheckCircle" className="text-2xl text-green-400" />
             ) : (
-              <Icon type="CloseCircle" className="text-2xl" />
+              <Icon type="CloseCircle" className="text-2xl text-red-400" />
             )}
           </Cells>
         ))}

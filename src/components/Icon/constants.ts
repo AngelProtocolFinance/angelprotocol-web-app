@@ -1,9 +1,9 @@
 import { IconType } from "react-icons";
 import {
   AiFillCaretLeft,
+  AiFillCheckCircle,
   AiFillYoutube,
   AiOutlineCheck,
-  AiOutlineCheckCircle,
   AiOutlineCopy,
   AiOutlineDislike,
   AiOutlineEdit,
@@ -95,7 +95,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
   Info: AiOutlineInfoCircle,
-  CheckCircle: AiOutlineCheckCircle,
+  CheckCircle: AiFillCheckCircle,
   Parachute: FaParachuteBox,
   StopWatch: FaStopwatch,
   ExclamationCircle: BsExclamationCircle,
