@@ -19,7 +19,7 @@ export default function Card({
       <BookmarkBtn
         name={name}
         id={id}
-        classes="absolute top-3 right-3 text-red-l1"
+        classes="absolute top-3 right-3 text-red"
       />
       <Link
         to={`${appRoutes.profile}/${id}`}
