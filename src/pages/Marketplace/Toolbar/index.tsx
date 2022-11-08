@@ -21,7 +21,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
         onClick={toggleFilter}
         className="min-w-[10rem] btn-orange flex items-center gap-2 justify-between rounded-lg px-3 py-2 text-[0.9375rem]"
       >
-        <Icon type="Filter" size={20} />
+        <Icon type="Filter" size={24} />
         <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
       </button>
       <Search classes="order-first col-span-2 md:order-none md:col-span-1" />
