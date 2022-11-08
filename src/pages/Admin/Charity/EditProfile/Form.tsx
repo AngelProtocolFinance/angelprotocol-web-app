@@ -102,6 +102,12 @@ export default function Form() {
           placeholder="50 - 100"
           plain
         />
+        <TextInput<UV>
+          name="charity_navigator_rating"
+          title="Navigator rating"
+          placeholder="Platinum"
+          plain
+        />
       </GroupContainer>
 
       <Label className="text-gray-d2 -mb-2">Social Media</Label>
@@ -137,6 +143,7 @@ export default function Form() {
         title="Contact email"
         placeholder="hello@angelprotocol.io"
       />
+
       <Submitter disabled={isSubmitDisabled} type="submit">
         Submit
       </Submitter>

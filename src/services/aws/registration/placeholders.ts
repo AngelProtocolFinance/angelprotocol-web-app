@@ -35,7 +35,6 @@ export const placeholderApplication: Application = {
     Banner: undefined,
     Logo: undefined,
     Overview: "",
-    EndowmentContract: "",
     EndowmentId: 0,
     KycDonorsOnly: false,
     SK: "Metadata",

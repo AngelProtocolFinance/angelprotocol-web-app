@@ -8,12 +8,13 @@ import {
   getSavedRegistrationReference,
   storeRegistrationReference,
 } from "helpers";
+import { asciiSchema } from "schemas/string";
 import { Button } from "../common";
 import routes from "../routes";
 
 type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
-  refer: Yup.string().required("Please enter your registration reference."),
+  refer: asciiSchema.required("Please enter your registration reference."),
 });
 
 export default function ResumeForm() {
