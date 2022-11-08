@@ -1,5 +1,6 @@
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { HeaderButton, useSort } from "components/donations";
 import { getTxUrl, humanize, maskAddress } from "helpers";
@@ -38,7 +39,9 @@ export default function Table(props: { donations: Donation[] }) {
             headers={csvHeaders}
             data={props.donations}
             filename="received_donations.csv"
-          />
+          >
+            Save to CSV <Icon type="FileDownload" className="text-2xl" />
+          </CsvExporter>
           <>Receipt provided</>
         </Cells>
       </TableSection>
