@@ -11,12 +11,9 @@ export default function SDGGroups() {
 
   return (
     <div className="px-3 pt-3">
-      <Drawer
-        title="Sdg group"
-        isOpen={isOpen}
-        toggle={toggle}
-        classes="mb-3"
-      />
+      <Drawer isOpen={isOpen} toggle={toggle} classes="mb-3">
+        <span className="font-bold text-xs font-heading">Sdg group</span>
+      </Drawer>
       {isOpen && (
         <div className="grid gap-y-1 max-h-[30rem] overflow-y-auto scroller">
           <Group

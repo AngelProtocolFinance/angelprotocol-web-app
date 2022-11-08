@@ -42,7 +42,9 @@ export default function Group({ num, members, title }: Props) {
         <button onClick={toggleGroup}>
           <Checkbox checked={isAllSelected} classes="top-0.5" />
         </button>
-        <Drawer isOpen={isOpen} toggle={toggle} title={title} />
+        <Drawer isOpen={isOpen} toggle={toggle}>
+          <span className="font-bold text-sm">{title}</span>
+        </Drawer>
       </div>
 
       {isOpen && (
