@@ -2,19 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { SuccessStage } from "slices/transaction/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import SharePrompt from "components/Share";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
 import { getTxUrl } from "helpers";
 
 export default function Success(props: SuccessStage) {
-  const { closeModal, showModal } = useModalContext();
+  const { closeModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chainId, txHash, message, isShareEnabled, successLink } = props;
-
-  //if no special action is needed, just shown normal acknowledge button
-  const isAcknowledgeButtonShown = !isShareEnabled && !successLink;
+  const { chainId, txHash, message, successLink } = props;
 
   function acknowledge() {
     dispatch(setStage({ step: "initial" }));
@@ -28,8 +24,6 @@ export default function Success(props: SuccessStage) {
       closeModal();
     };
   }
-
-  const shareDonation = () => showModal(SharePrompt, {});
 
   return (
     <div className="bg-white grid gap-y-4 p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center place-items-center">
@@ -48,12 +42,7 @@ export default function Success(props: SuccessStage) {
       )}
 
       <div className="flex justify-center gap-4">
-        {isAcknowledgeButtonShown && <Button onClick={acknowledge}>ok</Button>}
-        {isShareEnabled && (
-          <Button onClick={shareDonation} _bg="bg-orange">
-            share
-          </Button>
-        )}
+        {!successLink && <Button onClick={acknowledge}>ok</Button>}
 
         {successLink && (
           <Button

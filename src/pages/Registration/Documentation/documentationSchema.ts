@@ -4,6 +4,7 @@ import { DocumentationValues } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
 import { Asset } from "components/FileDropzone";
 import { genFileSchema } from "schemas/file";
+import { asciiSchema } from "schemas/string";
 
 const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -29,7 +30,7 @@ const documentationShape: SchemaShape<DocumentationValues> = {
   proofOfRegistration: docSchema,
   financialStatements: docSchema,
   auditedFinancialReports: docSchema,
-  website: Yup.string()
+  website: asciiSchema
     .required("Organization website required")
     .url("Must be a valid URL"),
   un_sdg: Yup.number().min(1, "UNSDG must be selected").max(17),

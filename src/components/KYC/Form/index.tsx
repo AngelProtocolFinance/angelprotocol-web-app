@@ -2,53 +2,74 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
-import useSubmitKYC from "components/KYC/useSubmitKYC";
-import { maskAddress } from "helpers";
-import Label from "../Label";
-import { TextInput, textFieldStyle } from "../TextInput";
+import {
+  Label,
+  TextInput,
+  errorStyle,
+  textFieldStyle,
+} from "components/TextInput";
+import { BtnPrimary } from "components/donation";
+import Controls from "./Controls";
+import Terms from "./Terms";
 import Tooltip from "./Tooltip";
+import useSubmit from "./useSubmit";
 
-export default function Form(props: Props) {
+export const formStyle =
+  "w-full bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white font-work";
+
+export default function Form({ classes = "", ...props }: Props) {
   const {
-    register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FV>();
-  const { submit, isSubmitDisabled, isSubmitting } = useSubmitKYC(props);
+  const submit = useSubmit(props);
+  const isPostKyc = props.type === "post-donation";
 
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="w-full bg-orange-l6 dark:bg-blue-d4 grid gap-6 p-4 text-gray-d2 dark:text-white font-work"
+      className={`${classes} ${formStyle}`}
       autoComplete="off"
       autoSave="off"
     >
-      {props.type === "post-donation" ? (
-        <p>
-          <span className="text-xs uppercase font-bold mb-1">
-            Transaction ID:
-          </span>
-          <span className="font-normal text-sm ml-2">
-            {maskAddress(props.txHash)}
-          </span>
-        </p>
-      ) : (
-        //on-donation KYC
-        //use ternary to narrow type of props
-        <Tooltip {...props} isKYCRequired={props.isKYCRequired} />
-      )}
-      <TextInput<FV> name="email" label="Email address" required />
-      <TextInput<FV> name="fullName" label="Full name" required />
-      <TextInput<FV> name="streetAddress" label="Street address" required />
-      <TextInput<FV> name="city" label="City" required />
-      <TextInput<FV> name="state" label="State" />
-      <TextInput<FV> name="zipCode" label="Zip code" required />
-      <div className="grid">
-        <Label htmlFor="country" required className="mb-2">
+      <Tooltip
+        {...props}
+        classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
+      />
+      <TextInput<FV>
+        name="name.first"
+        label="First name"
+        placeholder="e.g. John"
+      />
+      <TextInput<FV>
+        name="name.last"
+        label="Last name"
+        placeholder="e.g. Doe"
+      />
+      <TextInput<FV>
+        name="address.street"
+        label="Address"
+        placeholder="e.g. Street Rd 9920"
+      />
+      <TextInput<FV>
+        name="address.complement"
+        label="Address complement"
+        placeholder="e.g. Street Rd 9920"
+        required={false}
+      />
+      <TextInput<FV> name="city" label="City" placeholder="e.g. London" />
+      <TextInput<FV>
+        name="postalCode"
+        label="Zip code"
+        placeholder="e.g. 1080"
+      />
+      <div className="grid relative">
+        <Label htmlFor="country" className="mb-2">
           Country
         </Label>
         <div className="form-control rounded-md grid">
           <CountrySelector
+            placeholder="United Kingdom"
             fieldName="country"
             classes={{
               input: textFieldStyle,
@@ -58,41 +79,34 @@ export default function Form(props: Props) {
             errors={errors}
             name="country"
             as="span"
-            className="text-right text-red-l1 my-1 text-xs mr-1"
+            className={errorStyle}
           />
         </div>
       </div>
-      <div className="flex items-start">
-        <input
-          type="checkbox"
-          className="mr-2 mt-0.5"
-          id="consent_marketing"
-          {...register("consent_marketing")}
-        />
-        <label htmlFor="consent_marketing" className="font-light text-xs">
-          I consent to my details being used only by Angel Protocol and the
-          Charity to keep me informed of their progress and news.
-        </label>
-      </div>
-      <div className="flex items-start">
-        <input
-          type="checkbox"
-          className="mr-2 mt-0.5"
-          id="consent_tax"
-          {...register("consent_tax")}
-        />
-        <label htmlFor="consent_tax" className="font-light text-xs">
-          I consent to allow my information to be shared with the charity for
-          tax receipt processing purposes.
-        </label>
-      </div>
-      <button
-        disabled={isSubmitDisabled}
-        className="bg-orange disabled:bg-gray p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        type="submit"
-      >
-        {isSubmitting ? "Processing..." : "Submit"}
-      </button>
+      <TextInput<FV>
+        name="state"
+        label="State"
+        required={false}
+        placeholder="e.g. England"
+      />
+      <TextInput<FV>
+        name="email"
+        label="Email address"
+        placeholder="e.g. johndoe@mail.com"
+        classes={{ container: "col-span-full" }}
+      />
+      <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
+      {props.type === "post-donation" ? (
+        <BtnPrimary
+          className="col-span-full"
+          disabled={isSubmitting}
+          type="submit"
+        >
+          {isSubmitting ? "Processing..." : "Submit"}
+        </BtnPrimary>
+      ) : (
+        <Controls {...props} classes="col-span-full" />
+      )}
     </form>
   );
 }

@@ -6,12 +6,14 @@ import { junoApi } from "services/juno";
 import { adminReducer } from "slices/admin";
 import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
+import donation from "slices/donation";
 import transactionReducer from "slices/transaction/transactionSlice";
 
 export const store = configureStore({
   reducer: {
     transaction: transactionReducer,
     admin: adminReducer,
+    donation,
     auth: authReducer,
     component: componentReducer,
     [aws.reducerPath]: aws.reducer,

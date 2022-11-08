@@ -9,44 +9,65 @@ import {
 } from "react";
 import { FC } from "react";
 
-type Handler = () => void;
-type Opener = <T extends object = {}>(
-  Content: FC<T>,
-  props: T,
-  parentId?: string
-) => void;
-type Handlers = {
+type Func = () => void;
+type Opener = <T extends {}>(Modal: FC<T>, props: T) => void;
+type ContextState = {
+  isDismissible: boolean;
   showModal: Opener;
-  closeModal: Handler;
+  closeModal: Func;
+  onModalClose: (func: Func) => void;
+  setDismissible: (value: boolean) => void;
+  isModalOpen: boolean;
 };
-
-type ContextVal = Handlers & { isModalOpen: boolean };
 
 export default function ModalContext(
   props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
   const [Modal, setModal] = useState<ReactNode>();
+  const [isDismissible, setDismissible] = useState(true);
+  const [onClose, setOnClose] = useState<Func>();
 
   const showModal: Opener = useCallback((Modal, props) => {
     setModal(<Modal {...props} />);
     // track last active element
   }, []);
 
-  const closeModal = useCallback(() => {
+  const closeModal: Func = useCallback(() => {
+    if (!isDismissible) {
+      return;
+    }
     setModal(undefined);
-  }, []);
+    if (onClose) {
+      onClose();
+      setOnClose(undefined);
+    }
+  }, [isDismissible, onClose]);
+
+  const onModalClose = useCallback((func: Func) => setOnClose(() => func), []);
+
+  const handleSetDismissible = useCallback(
+    (value: boolean) => {
+      if (value !== isDismissible) {
+        setDismissible(value);
+      }
+    },
+    [isDismissible]
+  );
 
   return (
-    <setContext.Provider
+    <Context.Provider
       value={{
+        isDismissible,
+        isModalOpen: !!Modal,
         showModal,
         closeModal,
-        isModalOpen: !!Modal,
+        onModalClose,
+        setDismissible: handleSetDismissible,
       }}
     >
       <Dialog
         open={Modal !== undefined}
-        onClose={() => setModal(undefined)}
+        onClose={closeModal}
         className="relative z-50"
       >
         <div className={props.backdropClasses} aria-hidden="true" />
@@ -54,12 +75,14 @@ export default function ModalContext(
       </Dialog>
 
       {props.children}
-    </setContext.Provider>
+    </Context.Provider>
   );
 }
-const setContext = createContext<ContextVal>({} as ContextVal);
+
+const Context = createContext<ContextState>({} as ContextState);
+
 export const useModalContext = () => {
-  const val = useContext(setContext);
+  const val = useContext(Context);
   if (Object.entries(val).length <= 0) {
     throw new Error("This hook can only be used inside Modalcontext");
   }

@@ -8,7 +8,6 @@ import {
   AiOutlineCopy,
   AiOutlineDislike,
   AiOutlineEdit,
-  AiOutlineExclamation,
   AiOutlineEye,
   AiOutlineEyeInvisible,
   AiOutlineHeart,
@@ -32,6 +31,7 @@ import {
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
+  BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
 } from "react-icons/bs";
@@ -40,6 +40,7 @@ import {
   FaClock,
   FaCog,
   FaDiscord,
+  FaExclamation,
   FaFacebook,
   FaFacebookF,
   FaInstagram,
@@ -101,8 +102,9 @@ export const iconList: { [key in IconTypes]: IconType } = {
   CheckCircle: AiOutlineCheckCircle,
   Parachute: FaParachuteBox,
   StopWatch: FaStopwatch,
-  Exclamation: AiOutlineExclamation,
+  Exclamation: FaExclamation,
   ExclamationCircle: BsExclamationCircle,
+  ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
   Eye: AiOutlineEye,
   EyeInvisible: AiOutlineEyeInvisible,

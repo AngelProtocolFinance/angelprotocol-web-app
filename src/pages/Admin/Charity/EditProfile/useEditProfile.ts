@@ -10,7 +10,7 @@ import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -90,16 +90,15 @@ export default function useEditProfile() {
         })
       );
 
-      const settingsUpdateMsg =
-        accountContract.createEmbeddedUpdateSetttingsMsg(
-          cleanObject({
-            id: profilePayload.id,
-            name,
-            image: imgUrl,
-            logo: data.logo.publicUrl,
-            categories: { sdgs: [sdg], general: [] },
-          })
-        );
+      const settingsUpdateMsg = accountContract.createEmbeddedUpdateSettingsMsg(
+        cleanObject({
+          id: profilePayload.id,
+          name,
+          image: imgUrl,
+          logo: data.logo.publicUrl,
+          categories: { sdgs: [sdg], general: [] },
+        })
+      );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
         type: "acc_profile",

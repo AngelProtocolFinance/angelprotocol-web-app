@@ -1,10 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { AP_ID, REVIEWER_ID } from "services/juno/custom";
-import {
-  WalletState,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Copier from "components/Copier";
 import { AdminLink } from "components/admin";
 import { maskAddress } from "helpers";

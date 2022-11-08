@@ -1,5 +1,4 @@
 import Airdrop from "App/Header/Airdrop";
-import TransactionHint from "App/Header/TransactionHint";
 import { useEffect, useRef, useState } from "react";
 import WalletSuite from "../WalletSuite";
 import DesktopNav from "./DesktopNav";
@@ -36,7 +35,6 @@ export default function Header({ classes = "" }: { classes?: string }) {
         <DesktopNav classes="hidden lg:flex" />
         <div className="flex gap-x-2 ml-auto lg:ml-0">
           <ThemeToggle classes="hidden lg:flex" />
-          <TransactionHint />
           <WalletSuite />
           <Airdrop />
         </div>

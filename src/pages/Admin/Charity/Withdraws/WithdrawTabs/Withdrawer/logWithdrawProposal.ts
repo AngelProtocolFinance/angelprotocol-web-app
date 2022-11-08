@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SuccessLink } from "slices/transaction/types";
 import { AccountType } from "types/contracts";
 import { apesTags, invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import transactionSlice, {
   setStage,
 } from "slices/transaction/transactionSlice";
