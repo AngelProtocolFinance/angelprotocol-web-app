@@ -1,9 +1,11 @@
 import { Dialog } from "@headlessui/react";
-import { ProviderId } from "contexts/WalletContext/types";
+import { WithoutInstallers } from "contexts/WalletContext/types";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import Icon from "./Icon";
 
-export default function InstallWalletPopup(props: { providerId: ProviderId }) {
+export default function InstallWalletPopup(props: {
+  providerId: WithoutInstallers;
+}) {
   const { installUrl, logo, name } = WALLET_METADATA[props.providerId];
 
   return (

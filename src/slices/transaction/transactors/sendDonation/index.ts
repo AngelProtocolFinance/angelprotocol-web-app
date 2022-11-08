@@ -53,12 +53,14 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
         await logDonation({
           ...kycData /** receipt is sent to user if kyc is provider upfront */,
-          transactionId: hash,
-          transactionDate: new Date().toISOString(),
-          chainId: wallet.chain.chain_id,
           amount: +token.amount,
+          chainId: wallet.chain.chain_id,
+          chainName: wallet.chain.chain_name,
+          charityName: recipient.name,
           denomination: token.symbol,
           splitLiq: `${+pctLiquidSplit / 100}`,
+          transactionId: hash,
+          transactionDate: new Date().toISOString(),
           walletAddress: wallet.address,
           endowmentId: recipient.id,
         });

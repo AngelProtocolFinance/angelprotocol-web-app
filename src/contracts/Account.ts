@@ -39,7 +39,7 @@ export default class Account extends Contract {
     });
   }
 
-  createEmbeddedUpdateSetttingsMsg(payload: EndowmentSettingsPayload) {
+  createEmbeddedUpdateSettingsMsg(payload: EndowmentSettingsPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       update_endowment_settings: payload,
     });

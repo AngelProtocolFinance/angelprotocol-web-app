@@ -33,7 +33,7 @@ export default function Connector(props: Connection) {
         <button
           className={`${
             isOpen ? "" : "border-b border-black/10"
-          } p-2 flex items-center gap-2 w-full items-center`}
+          } p-2 flex items-center gap-2 w-full`}
           onClick={toggle}
         >
           <Logo logo={props.logo} />
@@ -53,7 +53,7 @@ export default function Connector(props: Connection) {
 
   return (
     <Menu.Item
-      className={`group p-2 flex items-center gap-2 w-full items-center ${
+      className={`group p-2 flex items-center gap-2 w-full ${
         props.network ? "" : "border-b last:border-none "
       } border-black/10`}
       onClick={handleConnect}
