@@ -155,6 +155,7 @@ export type UpdateMetadataRequest = {
     Logo?: FileObject;
     Overview?: string;
     JunoWallet?: string;
+    KycDonorsOnly?: boolean;
   };
 };
 

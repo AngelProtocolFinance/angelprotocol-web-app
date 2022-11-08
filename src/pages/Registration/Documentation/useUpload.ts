@@ -6,11 +6,10 @@ import {
   useUpdateDocumentationMutation,
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { FileWrapper } from "components/FileDropzone";
-import { logger, uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
 import { GENERIC_ERROR_MESSAGE } from "../constants";
 import routes from "../routes";
+import { getFilePreviews } from "./getFilePreviews";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
@@ -20,12 +19,26 @@ export default function useUpload() {
   const { handleError } = useErrorContext();
 
   const upload = useCallback(
-    async (values: DocumentationValues) => {
+    async ({
+      website,
+      checkedAuthority,
+      checkedPolicy,
+      un_sdg,
+      ...documents
+    }: DocumentationValues) => {
       try {
-        const body = await getUploadUrls(values);
+        const previews = await getFilePreviews({ ...documents });
+
         const result = await uploadDocumentation({
           PK: application.ContactPerson.PK,
-          body,
+          body: {
+            Website: website,
+            UN_SDG: un_sdg,
+            ProofOfIdentity: previews.proofOfIdentity[0],
+            ProofOfRegistration: previews.proofOfRegistration[0],
+            FinancialStatements: previews.financialStatements,
+            AuditedFinancialReports: previews.auditedFinancialReports,
+          },
         });
 
         if ("error" in result) {
@@ -44,65 +57,4 @@ export default function useUpload() {
   );
 
   return upload;
-}
-
-async function getUploadUrls(values: DocumentationValues) {
-  const poiPromise = uploadIfNecessary(values.proofOfIdentity);
-  const porPromise = uploadIfNecessary(values.proofOfRegistration);
-  const fsPromise = Promise.all(
-    values.financialStatements.map((fileWrapper) =>
-      uploadIfNecessary(fileWrapper)
-    )
-  );
-  const afrPromise = Promise.all(
-    values.auditedFinancialReports.map((fileWrapper) =>
-      uploadIfNecessary(fileWrapper)
-    )
-  );
-
-  const [
-    ProofOfIdentity,
-    ProofOfRegistration,
-    FinancialStatements,
-    AuditedFinancialReports,
-  ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
-
-  const hasError = FinancialStatements.concat(AuditedFinancialReports)
-    .concat([ProofOfIdentity, ProofOfRegistration])
-    .some((x) => {
-      if (!x.publicUrl) {
-        logger.error(`Error occured. File ${x.name} does not have a publicUrl`);
-        return true;
-      }
-      return false;
-    });
-
-  if (hasError) {
-    throw new Error("Error uploading files ❌");
-  }
-
-  return {
-    Website: values.website,
-    UN_SDG: values.un_sdg,
-    ProofOfIdentity,
-    ProofOfRegistration,
-    FinancialStatements,
-    AuditedFinancialReports,
-  };
-}
-
-async function uploadIfNecessary(fileWrapper: FileWrapper) {
-  if (!fileWrapper.file) {
-    return {
-      name: fileWrapper.name,
-      publicUrl: fileWrapper.publicUrl,
-    };
-  }
-
-  const publicUrl = await uploadToIpfs(fileWrapper.file);
-
-  return {
-    name: fileWrapper.file.name,
-    publicUrl,
-  };
 }

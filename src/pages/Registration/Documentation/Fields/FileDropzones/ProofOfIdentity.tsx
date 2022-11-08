@@ -18,7 +18,7 @@ export default function ProofOfIdentity() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone<DocumentationValues>
+      <FileDropzone<DocumentationValues, "proofOfIdentity">
         name="proofOfIdentity"
         className="h-8"
         disabled={isSubmitting}
