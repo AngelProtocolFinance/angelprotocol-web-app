@@ -73,7 +73,11 @@ export default function Table(props: { donations: Donation[] }) {
             >
               {maskAddress(hash)}
             </a>
-            <>No</>
+            {Math.random() < 0.5 ? (
+              <Icon type="Check" className="text-2xl" />
+            ) : (
+              <Icon type="CloseCircle" className="text-2xl" />
+            )}
           </Cells>
         ))}
       </TableSection>

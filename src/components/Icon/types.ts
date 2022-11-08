@@ -20,6 +20,7 @@ export type IconTypes =
   | "Check"
   | "Menu"
   | "Close"
+  | "CloseCircle"
   | "StopWatch"
   | "Info"
   | "CheckCircle"
