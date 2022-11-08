@@ -39,7 +39,7 @@ export default function Table(props: { donations: Donation[] }) {
             data={props.donations}
             filename="received_donations.csv"
           />
-          <>Data provided</>
+          <>Receipt provided</>
         </Cells>
       </TableSection>
       <TableSection
