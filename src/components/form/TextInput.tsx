@@ -1,9 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
-import React from "react";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { Label } from "./Label";
-import { TextField } from "./TextField";
-import { errorStyle } from "./constants";
+import { useFormContext } from "react-hook-form";
+import { FieldValues, Path } from "react-hook-form";
+import { Label, TextField } from "./";
 
 export type TextInputProps<T extends FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -18,15 +16,17 @@ type Classes = {
   input?: string;
   container?: string;
   label?: string;
+  error?: string;
 };
 
 export function TextInput<T extends FieldValues>({
   label,
   name,
   classes,
+  base,
   required,
   ...props
-}: TextInputProps<T>) {
+}: TextInputProps<T> & { base?: Classes }) {
   const {
     register,
     formState: { errors },
@@ -34,9 +34,9 @@ export function TextInput<T extends FieldValues>({
 
   const id = "__" + String(name);
   return (
-    <div className={`relative ${classes?.container || ""}`}>
+    <div className={`${base?.container ?? ""} ${classes?.container || ""}`}>
       <Label
-        className={classes?.label + " mb-2"}
+        className={`${base?.label ?? ""} ${classes?.label ?? ""}`}
         required={required}
         htmlFor={id}
       >
@@ -46,13 +46,13 @@ export function TextInput<T extends FieldValues>({
         {...props}
         registerReturn={register(name)}
         id={id}
-        className={classes?.input}
+        className={`${base?.input ?? ""} ${classes?.input ?? ""}`}
       />
       <ErrorMessage
         errors={errors}
         name={name}
         as="span"
-        className={errorStyle}
+        className={`${base?.error ?? ""} ${classes?.error ?? ""}`}
       />
     </div>
   );

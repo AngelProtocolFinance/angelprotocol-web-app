@@ -3,10 +3,10 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
-import { Label, errorStyle, textFieldStyle } from "components/TextInput";
 import { BtnPrimary } from "components/donation";
+import { Label } from "components/form";
 import Controls from "./Controls";
-import TextInput from "./TextInput";
+import TextInput, { errorStyle, textFieldStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
@@ -68,7 +68,7 @@ export default function Form({ classes = "", ...props }: Props) {
             placeholder="United Kingdom"
             fieldName="country"
             classes={{
-              input: textFieldStyle + " bg-gray-l5 dark:bg-blue-d6",
+              input: textFieldStyle,
             }}
           />
           <ErrorMessage

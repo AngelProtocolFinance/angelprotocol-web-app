@@ -1,46 +1,17 @@
-import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, useFormContext } from "react-hook-form";
-import {
-  Label,
-  TextField,
-  TextInputProps,
-  errorStyle,
-} from "components/TextInput";
+import { FieldValues } from "react-hook-form";
+import { TextInput as BaseInput, TextInputProps } from "components/form";
 
-export function TextInput<T extends FieldValues>({
-  label,
-  name,
-  classes,
-  required,
-  ...props
-}: TextInputProps<T>) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-
-  const id = "__" + String(name);
+export function TextInput<T extends FieldValues>(props: TextInputProps<T>) {
   return (
-    <div className={`relative ${classes?.container || ""}`}>
-      <Label
-        className={classes?.label + " mb-2"}
-        required={required}
-        htmlFor={id}
-      >
-        {label}
-      </Label>
-      <TextField
-        {...props}
-        registerReturn={register(name)}
-        id={id}
-        className={classes?.input + " bg-gray-l5 dark:bg-blue-d4"}
-      />
-      <ErrorMessage
-        errors={errors}
-        name={name}
-        as="span"
-        className={errorStyle}
-      />
-    </div>
+    <BaseInput
+      {...props}
+      base={{
+        label: "mb-2",
+        input:
+          "w-full rounded placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4",
+        error:
+          "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2",
+      }}
+    />
   );
 }

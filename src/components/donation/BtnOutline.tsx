@@ -1,11 +1,10 @@
-import { BtnProps } from "./types";
-import { BaseBtn } from "./BaseBtn";
+import { BtnLink, BtnLinkProps } from "components/BtnLink";
 
-export function BtnOutline(props: BtnProps) {
+export function BtnOutline({ className = "", ...props }: BtnLinkProps) {
   return (
-    <BaseBtn
+    <BtnLink
       {...props}
-      commonStyles="text-sm md:text-base p-3 rounded border border-gray-l2 dark:border-bluegray text-center hover:border-gray-l1 hover:dark:border-blue-d2 font-bold font-body"
+      className={`${className} text-sm md:text-base p-3 rounded border border-gray-l2 dark:border-bluegray text-center hover:border-gray-l1 hover:dark:border-blue-d2 font-bold font-body`}
     />
   );
 }

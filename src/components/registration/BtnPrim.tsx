@@ -1,10 +1,10 @@
-import { BaseBtn, BtnProps } from "../donation";
+import { BtnLink, BtnLinkProps } from "components/BtnLink";
 
-export function BtnPrim(props: BtnProps) {
+export function BtnPrim({ className = "", ...props }: BtnLinkProps) {
   return (
-    <BaseBtn
+    <BtnLink
       {...props}
-      commonStyles="text-sm p-3 rounded btn-orange font-body rounded"
+      className={`${className} "text-sm p-3 rounded btn-orange font-body"`}
     />
   );
 }
