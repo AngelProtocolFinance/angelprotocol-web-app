@@ -53,7 +53,7 @@ export default function Group({ num, members, title }: Props) {
             <Listbox.Option
               value={m}
               key={m}
-              className="gap-1 font-heading text-sm cursor-pointer"
+              className="gap-1 text-sm cursor-pointer"
             >
               {({ selected }) => (
                 <>

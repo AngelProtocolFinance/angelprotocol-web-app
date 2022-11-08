@@ -1,5 +1,6 @@
 import character from "assets/images/character4.png";
 
+/** */
 export default function Banner({ classes = "" }: { classes?: string }) {
   return (
     <div

@@ -41,7 +41,7 @@ export default function Types() {
             <Listbox.Option
               value={type}
               key={type}
-              className="gap-1 font-heading text-sm cursor-pointer"
+              className="gap-1 text-sm cursor-pointer"
             >
               {({ selected }) => (
                 <>
