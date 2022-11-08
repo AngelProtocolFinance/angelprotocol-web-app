@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BtnProps } from "./types";
 
-export default function BaseBtn({
+export function BaseBtn({
   commonStyles,
   className,
   ...props

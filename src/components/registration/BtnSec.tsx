@@ -1,5 +1,4 @@
-import { BtnProps } from "../donation/types";
-import BaseBtn from "../donation/BaseBtn";
+import { BaseBtn, BtnProps } from "../donation";
 
 export function BtnSec(props: BtnProps) {
   return (

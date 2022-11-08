@@ -1,5 +1,5 @@
 import { BtnProps } from "./types";
-import BaseBtn from "./BaseBtn";
+import { BaseBtn } from "./BaseBtn";
 
 export function BtnPrimary(props: BtnProps) {
   return (

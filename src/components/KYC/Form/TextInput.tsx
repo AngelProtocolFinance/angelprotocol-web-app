@@ -1,26 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
-import React from "react";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { Label } from "./Label";
-import { TextField } from "./TextField";
-import { errorStyle } from "./constants";
+import { FieldValues, useFormContext } from "react-hook-form";
+import {
+  Label,
+  TextField,
+  TextInputProps,
+  errorStyle,
+} from "components/TextInput";
 
-export type TextInputProps<T extends FieldValues> = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "autoComplete" | "className" | "name" | "id"
-> & {
-  name: Path<T>;
-  classes?: Classes;
-  label: string;
-};
-
-type Classes = {
-  input?: string;
-  container?: string;
-  label?: string;
-};
-
-export function TextInput<T extends FieldValues>({
+export default function TextInput<T extends FieldValues>({
   label,
   name,
   classes,
@@ -46,7 +33,7 @@ export function TextInput<T extends FieldValues>({
         {...props}
         registerReturn={register(name)}
         id={id}
-        className={classes?.input}
+        className={classes?.input + " bg-gray-l5 dark:bg-blue-d6"}
       />
       <ErrorMessage
         errors={errors}
