@@ -14,6 +14,7 @@ export default function TextInput<T extends FieldValues>(
     <BaseInput
       {...props}
       base={{
+        container: "relative",
         label: "mb-2",
         input: textFieldStyle,
         error: errorStyle,
