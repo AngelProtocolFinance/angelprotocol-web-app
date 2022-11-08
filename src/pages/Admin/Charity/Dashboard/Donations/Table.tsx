@@ -42,7 +42,14 @@ export default function Table(props: { donations: Donation[] }) {
           >
             Save to CSV <Icon type="FileDownload" className="text-2xl" />
           </CsvExporter>
-          <>Receipt provided</>
+          <CsvExporter
+            classes="hover:text-angel-blue"
+            headers={csvHeaders}
+            data={props.donations}
+            filename="receipts.csv"
+          >
+            Receipt provided <Icon type="FileDownload" className="text-2xl" />
+          </CsvExporter>
         </Cells>
       </TableSection>
       <TableSection
