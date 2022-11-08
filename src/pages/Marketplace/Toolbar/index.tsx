@@ -19,7 +19,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
     >
       <button
         onClick={toggleFilter}
-        className="min-w-[10rem] btn-orange flex items-center gap-2 justify-between rounded-lg px-3 py-2 text-sm"
+        className="min-w-[10rem] btn-orange flex items-center gap-2 justify-between rounded-lg px-3 py-2 text-[0.9375rem]"
       >
         <Icon type="Filter" size={20} />
         <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
