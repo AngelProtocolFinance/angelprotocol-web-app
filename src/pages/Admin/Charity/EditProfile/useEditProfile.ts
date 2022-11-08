@@ -90,16 +90,15 @@ export default function useEditProfile() {
         })
       );
 
-      const settingsUpdateMsg =
-        accountContract.createEmbeddedUpdateSetttingsMsg(
-          cleanObject({
-            id: profilePayload.id,
-            name,
-            image: imgUrl,
-            logo: data.logo.publicUrl,
-            categories: { sdgs: [sdg], general: [] },
-          })
-        );
+      const settingsUpdateMsg = accountContract.createEmbeddedUpdateSettingsMsg(
+        cleanObject({
+          id: profilePayload.id,
+          name,
+          image: imgUrl,
+          logo: data.logo.publicUrl,
+          categories: { sdgs: [sdg], general: [] },
+        })
+      );
 
       const profileUpdateMeta: EndowmentProfileUpdateMeta = {
         type: "acc_profile",

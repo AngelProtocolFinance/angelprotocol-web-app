@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { DonationsParams } from "./types";
 import { useDonationsQuery } from "services/apes";
 import { QueryLoader } from "components/admin";
 import Table from "./Table";
@@ -7,7 +6,7 @@ import Table from "./Table";
 // import DonationsTable from "./DonationsTable";
 
 export default function Donations() {
-  const { address } = useParams<DonationsParams>();
+  const { address } = useParams<{ address: string }>();
   const queryState = useDonationsQuery(
     { id: address! },
     {

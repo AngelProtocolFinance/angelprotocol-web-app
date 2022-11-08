@@ -1,4 +1,4 @@
-import { ProviderId } from "contexts/WalletContext/types";
+import { WithoutInstallers } from "contexts/WalletContext/types";
 import { Chain } from "types/aws";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
@@ -115,8 +115,8 @@ export class TxResultFail extends Error {
 }
 
 export class WalletNotInstalledError extends APError {
-  providerId: ProviderId;
-  constructor(providerId: ProviderId) {
+  providerId: WithoutInstallers;
+  constructor(providerId: WithoutInstallers) {
     super(
       "WalletNotInstalledError",
       `Wallet ${WALLET_METADATA[providerId].name} not installed`

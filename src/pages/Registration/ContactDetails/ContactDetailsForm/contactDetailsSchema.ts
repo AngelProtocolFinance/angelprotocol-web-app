@@ -1,32 +1,33 @@
 import * as Yup from "yup";
 import { ContactDetails } from "pages/Registration/types";
 import { SchemaShape } from "schemas/types";
+import { asciiSchema } from "schemas/string";
 
 export const contactInfoShape: SchemaShape<ContactDetails> = {
-  organizationName: Yup.string().required(
+  organizationName: asciiSchema.required(
     "Please enter the name of your organization."
   ),
-  firstName: Yup.string().required("Please enter your first name."),
-  lastName: Yup.string().required("Please enter your last name"),
-  email: Yup.string()
+  firstName: asciiSchema.required("Please enter your first name."),
+  lastName: asciiSchema.required("Please enter your last name"),
+  email: asciiSchema
     .email("Invalid email format")
     .required("Please enter your email."),
-  goals: Yup.string().required(
+  goals: asciiSchema.required(
     "Please state your goal in working with Angel Protocol."
   ),
   // since selector logic has a default value selected, this error message should never appear
-  role: Yup.string().required(
+  role: asciiSchema.required(
     "Please select your role within your organization."
   ),
-  otherRole: Yup.string().when("role", {
+  otherRole: asciiSchema.when("role", {
     is: "other",
-    then: Yup.string().required(
+    then: asciiSchema.required(
       "Please enter your role within your organization."
     ),
   }),
-  otherReferralMethod: Yup.string().when("referralMethod", {
+  otherReferralMethod: asciiSchema.when("referralMethod", {
     is: "other",
-    then: Yup.string().required("Please enter your referral method."),
+    then: asciiSchema.required("Please enter your referral method."),
   }),
   checkedPolicy: Yup.bool().isTrue("Checkbox must be checked"),
 };
