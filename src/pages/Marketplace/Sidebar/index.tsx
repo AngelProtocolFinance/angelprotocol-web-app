@@ -21,7 +21,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           <Icon type="Close" size={25} />
         </button>
       </div>
-      <div className="bg-orange-l6 dark:bg-blue-d7 font-heading flex items-center justify-between p-3 border-b border-gray-l2 dark:border-bluegray">
+      <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-3 border-b border-gray-l2 dark:border-bluegray">
         <h3 className="uppercase font-bold">Filter by</h3>
         <button
           type="button"
