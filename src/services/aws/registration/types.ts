@@ -1,8 +1,6 @@
-import { FileObject } from "files-from-path";
 import { Optional } from "types/utils";
+import { Asset } from "components/FileDropzone";
 import { ImgLink } from "components/ImgEditor";
-
-type FileLink = FileObject & { file: File | null };
 
 //REF_ID is global to registration
 type RegistrationID = {
@@ -36,15 +34,15 @@ type ContactPerson = {
 //STEP 2
 type Documentation = {
   //level 1 - should nest?
-  proofOfIdentity: FileLink[];
+  proofOfIdentity: Asset;
   website: string;
   sdgs: number[];
 
   //level 2
-  financialStatements: FileLink[];
+  financialStatements: Asset;
 
   //level3
-  annualReports: FileLink[];
+  annualReports: Asset;
   isKYCRequired: boolean;
 
   //so user won't click again on resume
@@ -78,16 +76,31 @@ export type CompleteRegistration = {
   wallet: WalletDetails;
 };
 
-type ApplicantStep = Optional<
+type Step1Data = Optional<
   CompleteRegistration,
   "contact" | "documentation" | "profile" | "wallet"
 >;
 
-type DocStep = Optional<
+type Step2Data = Optional<
   CompleteRegistration,
   "documentation" | "profile" | "wallet"
 >;
 
-type ProfileStep = Optional<CompleteRegistration, "profile" | "wallet">;
+type Step3Data = Optional<CompleteRegistration, "profile" | "wallet">;
+type Step4Data = Optional<CompleteRegistration, "wallet">;
 
-type WalletStep = Optional<CompleteRegistration, "wallet">;
+export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
+
+type RegistrationState = {
+  step1: { data: Step1Data; nav: [] };
+  step2: Step2Data;
+  step3: Step3Data;
+  step4: Step4Data;
+};
+
+function getData<T extends keyof RegistrationState>() {}
+
+/**
+ * register/steps receives RegistrationState
+ *
+ */
