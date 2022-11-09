@@ -33,7 +33,7 @@ export default function Header({ classes = "" }: { classes?: string }) {
       className={`${classes} ${
         isScrolled
           ? "bg-blue dark:bg-blue-d3 shadow-lg"
-          : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : "bg-transparent"}`
+          : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
       } py-3 transition ease-in-out duration-300 w-full`}
     >
       <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container">

@@ -44,11 +44,12 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           classes={{ container: "mt-14 mx-0 sm:mx-24" }}
         />
         <Checkbox<FormValues>
+          required
           name="hasAgreedToPrivacyPolicy"
           classes={{
             container: "justify-self-center gap-3.5 mt-6 mb-8 text-xs",
             checkbox:
-              "appearance-none border border-gray-d2 dark:border-bluegray w-4 h-4 rounded checked:bg-blue",
+              "appearance-none border border-gray-d2 dark:border-white w-4 h-4 rounded checked:bg-blue",
           }}
         >
           I declare that I have read and agreed to{" "}
@@ -60,14 +61,13 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           >
             Privacy Policy
           </a>
-          <span className="text-red dark:text-red-l2">{"  "}*</span>
         </Checkbox>
       </FormProvider>
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
         Register
       </BtnPrim>
       <p className="text-sm mx-0 sm:mx-24 relative h-[0.5px] grid place-items-center border-[0.5px] border-gray-d1 dark:border-gray my-11">
-        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute dark:text-gray">
+        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute text-gray-d1 dark:text-gray">
           OR
         </span>
       </p>

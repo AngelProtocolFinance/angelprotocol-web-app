@@ -6,13 +6,17 @@ export function Label({
   required?: boolean;
 }) {
   return (
-    <label {...props} className={`${className} block text-sm text-inherit`}>
-      <span>{props.children}</span>
-      {required === undefined ? null : required ? (
-        <span className="ml-1 text-red-l1 dark:text-red-l2">*</span>
-      ) : (
-        <span className="ml-1 text-gray-d1 dark:text-gray">(optional)</span>
-      )}
+    <label
+      {...props}
+      className={`${className} block text-sm text-inherit after:ml-1 ${
+        required !== undefined
+          ? required
+            ? "after:content-['*'] after:text-red"
+            : "after:content-['(optional)'] after:text-gray-d1 after:dark:text-gray"
+          : ""
+      }`}
+    >
+      {props.children}
     </label>
   );
 }

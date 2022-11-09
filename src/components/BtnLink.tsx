@@ -14,6 +14,10 @@ export function BtnLink(props: BtnLinkProps) {
       return <Link {...props} />;
     }
     case "a": {
+      /**
+       * have to destructure because of lint warning
+       * Anchors must have content and the content must be accessible by a screen reader
+       */
       const { children, ...rest } = props;
       return <a {...rest}>{children}</a>;
     }

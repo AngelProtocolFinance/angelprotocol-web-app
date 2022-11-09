@@ -7,10 +7,12 @@ export default function Checkbox<T extends FieldValues>({
   children,
   classes,
   disabled,
+  required,
 }: PropsWithChildren<{
   name: Path<T>;
   classes?: { container?: string; checkbox?: string; label?: string };
   disabled?: true;
+  required?: boolean;
 }>) {
   const {
     register,
@@ -33,8 +35,8 @@ export default function Checkbox<T extends FieldValues>({
         disabled={isSubmitting || disabled}
       />
       <label
-        className={`${
-          classes?.label ?? ""
+        className={`${classes?.label ?? ""} ${
+          required ? "after:ml-1 after:content-['*'] after:text-red" : ""
         } cursor-pointer peer-disabled:cursor-default`}
         htmlFor={id}
       >

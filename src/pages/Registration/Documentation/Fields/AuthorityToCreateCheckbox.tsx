@@ -10,10 +10,9 @@ export default function AuthorityToCreateCheckbox() {
   } = useRegistrationQuery();
 
   return (
-    <Checkbox<DocumentationValues> name="checkedAuthority">
+    <Checkbox<DocumentationValues> name="checkedAuthority" required>
       {`By checking this box, you declare that you have the authority to create an
         endowment in the name of ${OrganizationName} through Angel Protocol`}
-      <span className="text-red-l1 ml-0.5">*</span>
     </Checkbox>
   );
 }

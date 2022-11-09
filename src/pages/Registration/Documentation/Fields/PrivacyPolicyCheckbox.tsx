@@ -4,7 +4,7 @@ import { PRIVACY_POLICY } from "constants/urls";
 
 export default function PrivacyPolicyCheckbox() {
   return (
-    <Checkbox<DocumentationValues> name="checkedPolicy">
+    <Checkbox<DocumentationValues> name="checkedPolicy" required>
       By checking this box, you declare that you have read and agreed to our{" "}
       <a
         href={PRIVACY_POLICY}
@@ -14,7 +14,6 @@ export default function PrivacyPolicyCheckbox() {
       >
         Privacy Policy
       </a>
-      <span className="text-red ml-0.5">*</span>
     </Checkbox>
   );
 }
