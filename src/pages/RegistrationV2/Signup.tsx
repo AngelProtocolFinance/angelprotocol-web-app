@@ -6,6 +6,7 @@ import Checkbox from "components/Checkbox";
 import { TextInput } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
+import { routes } from "./routes";
 
 type FormValues = { email: string; hasAgreedToPrivacyPolicy: boolean };
 
@@ -41,7 +42,7 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           name="email"
           label="E-mail"
           placeholder="e.g. johndoe@example.com"
-          classes={{ container: "mt-14 mx-0 sm:mx-24" }}
+          classes={{ container: "mt-8 mx-0 sm:mx-24" }}
         />
         <Checkbox<FormValues>
           required
@@ -71,7 +72,9 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           OR
         </span>
       </p>
-      <BtnSec className="mx-0 sm:mx-24">Resume your registration</BtnSec>
+      <BtnSec as="link" className="mx-0 sm:mx-24" to={routes.resume}>
+        Resume your registration
+      </BtnSec>
     </form>
   );
 }
