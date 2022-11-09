@@ -1,11 +1,11 @@
-import { BtnProps } from "./types";
-import BaseBtn from "./BaseBtn";
+import { BtnLink, BtnLinkProps } from "components/BtnLink";
 
-export function BtnPrimary(props: BtnProps) {
+export function BtnPrimary({ className = "", ...props }: BtnLinkProps) {
   return (
-    <BaseBtn
+    <BtnLink
       {...props}
-      commonStyles="text-sm md:text-base p-3 rounded btn-orange normal-case font-body"
+      className={`${className} text-sm md:text-base p-3 rounded btn-orange font-body`}
+      style={{ textTransform: "none" } /** override btn-orange */}
     />
   );
 }

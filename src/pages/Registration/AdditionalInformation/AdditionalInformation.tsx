@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { AdditionalInfoValues } from "../types";
 import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
@@ -39,7 +39,12 @@ export default function AdditionalInformation() {
           <Banner />
           <Logo />
           <OverviewInput />
-          <KycDonorsOnlyCheckbox />
+          <Checkbox<AdditionalInfoValues> name="kycDonorsOnly">
+            <span className="text-base">
+              Only accept donations from donors who have provided their personal
+              information(Name & address).
+            </span>
+          </Checkbox>
           <ButtonSection />
         </form>
       </FormProvider>
@@ -52,22 +57,6 @@ const Title = () => (
     Your logo and description will be used to populate your public profile
   </h2>
 );
-
-function KycDonorsOnlyCheckbox() {
-  const {
-    formState: { isSubmitting },
-    register,
-  } = useFormContext<AdditionalInfoValues>();
-
-  return (
-    <Checkbox {...register("kycDonorsOnly")} disabled={isSubmitting}>
-      <span className="text-base">
-        Only accept donations from donors who have provided their personal
-        information(Name & address).
-      </span>
-    </Checkbox>
-  );
-}
 
 function OrganizationName() {
   const { application } = useRegistrationQuery();

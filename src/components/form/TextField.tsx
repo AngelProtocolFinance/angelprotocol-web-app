@@ -1,23 +1,24 @@
 import React from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
-import { textFieldStyle } from "./constants";
+
+type TextFieldProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "autoComplete"
+> & {
+  registerReturn: UseFormRegisterReturn;
+};
 
 export function TextField({
   className = "",
   registerReturn,
   ...props
-}: Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "autoComplete"
-> & {
-  registerReturn: UseFormRegisterReturn;
-}) {
+}: TextFieldProps) {
   return (
     <input
       {...props}
       {...registerReturn}
       type="text"
-      className={`${className} ${textFieldStyle}`}
+      className={className}
       autoComplete="off"
     />
   );
