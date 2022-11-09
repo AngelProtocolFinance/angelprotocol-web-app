@@ -32,14 +32,16 @@ export default function Types() {
         dispatch(setTypes(types));
       }}
     >
-      <Drawer isOpen={isOpen} toggle={toggle} title="Type" />
+      <Drawer isOpen={isOpen} toggle={toggle}>
+        <span className="font-bold text-xs font-heading">Type</span>
+      </Drawer>
       {isOpen && (
         <Listbox.Options static className="py-4 grid gap-4">
           {options.map(({ type, name }) => (
             <Listbox.Option
               value={type}
               key={type}
-              className="gap-1 font-heading text-sm cursor-pointer"
+              className="gap-1 text-sm cursor-pointer"
             >
               {({ selected }) => (
                 <>

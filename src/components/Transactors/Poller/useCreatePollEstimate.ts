@@ -2,7 +2,7 @@ import { StdFee } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import {
   setFee,

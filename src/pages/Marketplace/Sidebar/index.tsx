@@ -13,7 +13,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d4 dark:text-white overflow-hidden rounded-md content-start min-w-[18rem] bg-orange-l6 pb-3 ${classes}`}
+      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d4 dark:text-white overflow-hidden rounded-md content-start min-w-[18rem] bg-gray-l5 pb-3 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden dark:bg-blue-d7 border-b border-gray-l2">
         <h3 className="text-orange text-lg font-bold uppercase">Filters</h3>
@@ -21,7 +21,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           <Icon type="Close" size={25} />
         </button>
       </div>
-      <div className="bg-orange-l5 dark:bg-blue-d7 font-heading flex items-center justify-between p-3 border-b border-gray-l2 dark:border-bluegray">
+      <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-3 border-b border-gray-l2 dark:border-bluegray">
         <h3 className="uppercase font-bold">Filter by</h3>
         <button
           type="button"

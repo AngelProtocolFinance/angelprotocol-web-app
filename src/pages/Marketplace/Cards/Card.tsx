@@ -12,14 +12,14 @@ export default function Card({
   country_of_origin,
 }: Endowment) {
   return (
-    <div className="relative overflow-clip  dark:bg-blue-d6 rounded-md border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
+    <div className="relative overflow-clip  dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <p className="absolute top-3 left-3 bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
         {endow_type === "Charity" ? "Non-profit" : "For-profit"}
       </p>
       <BookmarkBtn
         name={name}
         id={id}
-        classes="absolute top-3 right-3 text-red-l1"
+        classes="absolute top-3 right-3 text-red"
       />
       <Link
         to={`${appRoutes.profile}/${id}`}

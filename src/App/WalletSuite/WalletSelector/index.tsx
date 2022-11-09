@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import { useSetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { COMMON_BUTTON_STYLE } from "../constants";
 import Connector from "./Connector";

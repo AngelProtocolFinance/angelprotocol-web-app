@@ -13,7 +13,7 @@ export default function FinancialStatements() {
       htmlFor="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
-      <FileDropzone<DocumentationValues>
+      <FileDropzone<DocumentationValues, "financialStatements">
         name="financialStatements"
         className="h-8"
         multiple

@@ -1,17 +1,17 @@
 import { useCallback } from "react";
-import { Application } from "types/aws";
-import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
+import { Application, SubmitData } from "types/aws";
+import { invalidateAwsTags } from "services/aws/aws";
+import { useSubmitMutation } from "services/aws/registration";
+import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
-import { sendCosmosTx } from "slices/transaction/transactors";
-import CW3Review from "contracts/CW3/CW3Review";
-import { logger, processEstimateError } from "helpers";
-import { logProposalId } from "./logProposalId";
+import { setStage } from "slices/transaction/transactionSlice";
+import { logger } from "helpers";
 
 export default function useSubmit() {
+  const [submitApplication] = useSubmitMutation();
   const { wallet } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
@@ -20,30 +20,49 @@ export default function useSubmit() {
   const submit = useCallback(
     async (application: Application) => {
       try {
-        const contract = new CW3Review(wallet);
-        const msg = contract.createProposeApplicationMsg(application);
         dispatch(
-          sendCosmosTx({
-            wallet,
-            msgs: [msg],
-            onSuccess(res) {
-              return logProposalId({
-                res,
-                wallet: wallet!, //wallet is defined at this point
-                PK: application.ContactPerson.PK!, //registration data is complete at this point
-              });
-            },
+          setStage({ step: "submit", message: "Saving endowment proposal" })
+        );
+
+        const postData: SubmitData = {
+          PK: application.ContactPerson.PK!,
+          chain_id: wallet!.chain.chain_id,
+        };
+
+        const response = await submitApplication(postData);
+
+        if ("error" in response) {
+          throw new Error("Request failed");
+        }
+
+        dispatch(
+          setStage({
+            step: "success",
+            message: "Endowment submitted for review",
+            txHash: "",
+            chainId: "",
           })
         );
+
+        dispatch(
+          invalidateAwsTags([
+            { type: awsTags.admin, id: adminTags.registration },
+          ])
+        );
       } catch (err) {
-        logger.error(processEstimateError(err));
-        dispatch(setStage({ step: "error", message: GENERIC_ERROR_MESSAGE }));
-        dispatch(setFormLoading(false));
+        logger.error(err);
+        dispatch(
+          setStage({
+            step: "error",
+            message:
+              "Failed to create endowment. Contact support@angelprotocol.io",
+          })
+        );
       } finally {
         showModal(TransactionPrompt, {});
       }
     },
-    [dispatch, showModal, wallet]
+    [dispatch, showModal, submitApplication, wallet]
   );
 
   return { submit, isSubmitting: form_loading };

@@ -21,8 +21,8 @@ const imgShape: SchemaShape<ImgLink> = {
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<ProfileFormValues> = {
   ...proposalShape,
-  name: stringByteSchema("name", 4, 64),
-  overview: stringByteSchema("overview", 4, 1024),
+  name: stringByteSchema(4, 64),
+  overview: stringByteSchema(4, 1024),
   //sdgNum: no need to validate, selected from dropdown with default value
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
