@@ -9,11 +9,6 @@ export default function CharityStats(
       <StatsItem title="Registration#" value={props.registration_number} />
       <StatsItem title="Address" value={props.street_address} />
       <StatsItem title="Country" value={props.country_of_origin} />
-      <StatsItem
-        title="avg annual budget"
-        value={props.average_annual_budget}
-      />
-      <StatsItem title="annual avg donations" value={props.annual_revenue} />
       <StatsItem title="no. of employees" value={props.number_of_employees} />
       <StatsItem
         title="navigator rating"
