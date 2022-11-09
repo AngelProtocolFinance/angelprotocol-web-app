@@ -1,4 +1,4 @@
-import { Donation } from "types/aws";
+import { Donation, KYCData } from "types/aws";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
@@ -36,7 +36,7 @@ export default function Table(props: { donations: Donation[] }) {
           </HeaderButton>
           <CsvExporter
             classes="hover:text-angel-blue"
-            headers={csvHeaders}
+            headers={csvHeadersDonations}
             data={props.donations}
             filename="received_donations.csv"
           >
@@ -44,8 +44,10 @@ export default function Table(props: { donations: Donation[] }) {
           </CsvExporter>
           <CsvExporter
             classes="hover:text-angel-blue"
-            headers={csvHeaders}
-            data={props.donations}
+            headers={csvHeadersReceipts}
+            data={props.donations
+              .filter((x) => !!x.kycData)
+              .map((x) => x.kycData!)}
             filename="receipts.csv"
           >
             Receipt provided <Icon type="FileDownload" className="text-2xl" />
@@ -56,7 +58,7 @@ export default function Table(props: { donations: Donation[] }) {
         type="tbody"
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
-        {sorted.map(({ hash, amount, symbol, chainId, date }, i) => (
+        {sorted.map(({ hash, amount, symbol, chainId, date, kycData }) => (
           <Cells
             key={hash}
             type="td"
@@ -73,10 +75,10 @@ export default function Table(props: { donations: Donation[] }) {
             >
               {maskAddress(hash)}
             </a>
-            {i === 0 ? (
-              <Icon type="CheckCircle" className="text-2xl text-green-400" />
-            ) : (
+            {!kycData ? (
               <Icon type="CloseCircle" className="text-2xl text-red-400" />
+            ) : (
+              <Icon type="CheckCircle" className="text-2xl text-green-400" />
             )}
           </Cells>
         ))}
@@ -84,9 +86,22 @@ export default function Table(props: { donations: Donation[] }) {
     </table>
   );
 }
-const csvHeaders: { key: keyof Donation; label: string }[] = [
+
+const csvHeadersDonations: { key: keyof Donation; label: string }[] = [
   { key: "amount", label: "Amount" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
+];
+
+const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
+  { key: "fullName", label: "Full Name" },
+  { key: "email", label: "Email" },
+  { key: "consent_marketing", label: "Consented to Marketing" },
+  { key: "consent_tax", label: "Consented to tax" },
+  { key: "streetAddress", label: "Street Address" },
+  { key: "city", label: "City" },
+  { key: "zipCode", label: "Zip Code" },
+  { key: "state", label: "State" },
+  { key: "country", label: "Country" },
 ];
