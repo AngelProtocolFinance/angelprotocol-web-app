@@ -7,6 +7,7 @@ export type Donation = {
   hash: string;
   id: string; // charity ID
   symbol: string;
+  kycData?: KYCData;
 };
 
 export type KYCData = {
