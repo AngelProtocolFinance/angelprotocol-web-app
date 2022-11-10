@@ -7,8 +7,8 @@ import {
 } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { appRoutes } from "constants/routes";
-import { GENERIC_ERROR_MESSAGE } from "../constants";
-import routes from "../routes";
+import { GENERIC_ERROR_MESSAGE } from "../../constants";
+import routes from "../../routes";
 import { getFilePreviews } from "./getFilePreviews";
 
 export default function useUpload() {

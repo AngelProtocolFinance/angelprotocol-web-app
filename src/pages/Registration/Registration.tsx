@@ -16,7 +16,7 @@ const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const ContactDetails = lazy(() => import("./Steps/ContactDetails"));
 const Dashboard = lazy(() => import("./Dashboard"));
-const Documentation = lazy(() => import("./Documentation"));
+const Documentation = lazy(() => import("./Steps/Documentation"));
 const LandingPage = lazy(() => import("./LandingPage"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));

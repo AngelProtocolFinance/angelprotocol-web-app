@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
 import routes from "../routes";
+import Contact from "./Contact";
 
 export default function Steps() {
   const { state } = useLocation();
@@ -36,7 +37,7 @@ export default function Steps() {
 
   return (
     <Routes>
-      <Route path="1" />
+      <Route path="1" element={<Contact state={data} thisStep={1} />} />
       <Route path="2" />
       <Route path="3" />
       <Route path="4" />

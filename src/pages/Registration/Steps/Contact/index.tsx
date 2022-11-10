@@ -1,11 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { useRegState } from "services/aws/registration/StepGuard";
+import {
+  useRegState,
+  withStepGuard,
+} from "services/aws/registration/StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function ContactDetails() {
+function ContactDetails() {
   const {
     data: { contact, init },
   } = useRegState<1>();
@@ -23,3 +26,5 @@ export default function ContactDetails() {
     </FormProvider>
   );
 }
+
+export default withStepGuard(ContactDetails);

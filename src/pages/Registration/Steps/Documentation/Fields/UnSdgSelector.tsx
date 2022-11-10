@@ -1,7 +1,7 @@
 import { DocumentationValues as DV } from "pages/Registration/types";
 import { unsdgs } from "constants/unsdgs";
-import { ErrorMessage, InputRow } from "../../common";
-import Selector from "../../common/Selector";
+import { ErrorMessage, InputRow } from "../../../common";
+import Selector from "../../../common/Selector";
 
 const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
   label: `${+_key < 10 ? "0" : ""}${_key} - ${val.title.toUpperCase()}`,

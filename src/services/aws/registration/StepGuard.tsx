@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, createContext, useContext } from "react";
 import { RegStep, RegistrationState } from "./types";
 
-function withStepGuard<T extends object>(Step: FC<T>) {
+export function withStepGuard<T extends object>(Step: FC<T>) {
   return function StepGuard({
     thisStep,
     state,

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
-import { ErrorMessage, InputRow } from "../../common";
+import { ErrorMessage, InputRow } from "../../../common";
 
 export default function WebsiteInput() {
   const {

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { DocumentationValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
-import { InputRow } from "../../../common";
+import { InputRow } from "../../../../common";
 
 export default function ProofOfRegistration() {
   const {
