@@ -8,7 +8,7 @@ export default function UrlDonateSection({ className }: { className: string }) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-end gap-8 w-full lg:flex-row lg:gap-6 ${className}`}
+      className={`flex flex-col items-center justify-end gap-8 w-full xl:flex-row xl:gap-6 ${className}`}
     >
       {profile.url && (
         <span className="flex items-center justify-center gap-2 w-full font-sans font-medium text-sm sm:w-auto sm:text-base">
