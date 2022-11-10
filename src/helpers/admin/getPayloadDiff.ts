@@ -1,3 +1,5 @@
+import deepEqual from "deep-equal";
+
 //NOTE: intended for shallow form objects only atm
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
@@ -5,7 +7,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   for (const key in prev) {
     const n = next[key];
     const p = prev[key];
-    if (p !== n) {
+    if (!deepEqual(p, n, { strict: true })) {
       diff[key] = n;
     }
   }
