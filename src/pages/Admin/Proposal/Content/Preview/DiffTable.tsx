@@ -58,5 +58,15 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
     );
   }
 
+  if (typeof value === "object") {
+    return (
+      <div className="grid bg-white/10 shadow-inner rounded-md p-2 text-sm">
+        <code className="font-mono whitespace-pre overflow-x-auto text-left">
+          {JSON.stringify(value, null, 2)}
+        </code>
+      </div>
+    );
+  }
+
   return <>{value}</>;
 }
