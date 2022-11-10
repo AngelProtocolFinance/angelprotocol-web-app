@@ -25,6 +25,9 @@ const assetShape: SchemaShape<Asset> = {
 
 const docSchema = Yup.object().shape(assetShape);
 
+/**
+ * TODO: only level 1 should be required
+ */
 const documentationShape: SchemaShape<DocumentationValues> = {
   proofOfIdentity: docSchema,
   proofOfRegistration: docSchema,

@@ -1,4 +1,8 @@
-import { FileObject, UnprocessedApplication } from "types/aws";
+import {
+  FileObject,
+  RegistrationStatus,
+  UnprocessedApplication,
+} from "types/aws";
 import { Optional } from "types/utils";
 
 //REF_ID is global to registration
@@ -149,7 +153,7 @@ type RegStep2 = {
 
 type RegStep3 = {
   step: 3;
-  data: Step3Data;
+  data: Step3Data & { level: number };
   nav: Nav;
 };
 
@@ -161,7 +165,7 @@ type RegStep4 = {
 
 type RegStep5 = {
   step: 5;
-  data: CompleteRegistration; //and some status
+  data: CompleteRegistration & { status: RegistrationStatus };
 };
 
 export type RegistrationState =
@@ -225,6 +229,7 @@ export function getRegistrationState({
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
         wallet: { address: m.JunoWallet! },
+        status: r.RegistrationStatus,
       },
     };
   } else if (
@@ -270,6 +275,7 @@ export function getRegistrationState({
             ? //asserted by isComplete, can be inlined, but need to reuse value
               { banner: m.Banner!, logo: m.Logo!, overview: m.Overview! }
             : undefined,
+        level: 1,
       },
       nav: { next: isComplete ? "" : undefined, back: "" },
     };

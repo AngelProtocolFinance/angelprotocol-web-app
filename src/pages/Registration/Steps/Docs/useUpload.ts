@@ -31,8 +31,8 @@ export default function useUpload() {
         body: {
           Website: website,
           UN_SDG: sdg,
-          ProofOfIdentity: previews.proofOfIdentity[0],
-          ProofOfRegistration: previews.proofOfRegistration[0],
+          ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
+          ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
           FinancialStatements: previews.financialStatements,
           AuditedFinancialReports: previews.annualReports,
         },
