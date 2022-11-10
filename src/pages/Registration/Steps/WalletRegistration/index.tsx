@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet } from "contexts/WalletContext";
-import RegLoader from "../common/RegLoader";
+import RegLoader from "../../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";

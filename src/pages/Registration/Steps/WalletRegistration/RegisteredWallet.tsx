@@ -3,8 +3,8 @@ import { BsCheck2 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
-import routes from "../routes";
+import { Button } from "../../common";
+import routes from "../../routes";
 
 export default function RegisteredWallet(props: { onChange: () => void }) {
   const { application } = useRegistrationQuery();

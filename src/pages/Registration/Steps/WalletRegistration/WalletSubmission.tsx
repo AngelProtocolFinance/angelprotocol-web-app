@@ -7,8 +7,8 @@ import { useRegistrationQuery } from "services/aws/registration";
 import { useGetWallet, useSetWallet } from "contexts/WalletContext";
 import { requiredWalletAddr } from "schemas/string";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
-import routes from "../routes";
+import { Button } from "../../common";
+import routes from "../../routes";
 import useRegisterWallet from "./useRegisterWallet";
 
 export type Wallet = { address: string };

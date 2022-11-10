@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
 import { useRegistrationQuery } from "services/aws/registration";
 import { appRoutes } from "constants/routes";
-import routes from "../../routes";
+import routes from "../../../routes";
 import KeplrConnector from "./KeplrConnector";
 import Title from "./Title";
 
