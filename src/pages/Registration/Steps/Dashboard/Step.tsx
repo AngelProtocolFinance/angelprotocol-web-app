@@ -1,4 +1,4 @@
-import { Button } from "../common";
+import { Button } from "../../common";
 
 type Props = {
   buttonLabel?: string;

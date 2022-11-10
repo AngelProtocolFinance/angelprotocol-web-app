@@ -4,7 +4,7 @@ import { getRegistrationState } from "pages/Registration/helpers";
 import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
+import { Button } from "../../common";
 
 type Props = {
   isLoading: boolean;

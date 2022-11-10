@@ -17,7 +17,7 @@ const AdditionalInformation = lazy(
 );
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const ContactDetails = lazy(() => import("./Steps/ContactDetails"));
-const Dashboard = lazy(() => import("./Dashboard"));
+const Dashboard = lazy(() => import("./Steps/Dashboard"));
 const Documentation = lazy(() => import("./Steps/Documentation"));
 const LandingPage = lazy(() => import("./LandingPage"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
