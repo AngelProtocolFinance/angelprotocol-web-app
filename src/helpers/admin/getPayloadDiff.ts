@@ -17,10 +17,12 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
     const p = prev[key];
     const n = next[key];
 
-    if (p == null && n != null) {
+    if (!p && !isZero(p) && (n || isZero(n))) {
       diff[key] = n;
     }
   }
 
   return diff;
 }
+
+const isZero = (val: any) => val === 0;
