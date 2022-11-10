@@ -4,8 +4,8 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   // include attr in next different from prev
   for (const key in prev) {
-    const p = prev[key];
     const n = next[key];
+    const p = prev[key];
 
     if (!deepEqual(p, n, { strict: true })) {
       diff[key] = n;
@@ -14,8 +14,8 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
 
   // include attr not in prev but in next
   for (const key in next) {
-    const p = prev[key];
     const n = next[key];
+    const p = prev[key];
 
     if (!p && !isZero(p) && (n || isZero(n))) {
       diff[key] = n;
