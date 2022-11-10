@@ -52,7 +52,7 @@ function RequireExecutionCheckbox() {
         className="text-xs font-heading uppercase font-bold text-angel-grey
         select-none cursor-pointer"
       >
-        require execution
+        execution required
       </label>
     </div>
   );
