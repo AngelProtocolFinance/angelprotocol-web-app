@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
 import routes from "../routes";
 import Contact from "./Contact";
+import Documentation from "./Docs";
 
 export default function Steps() {
   const { state } = useLocation();
@@ -13,10 +13,6 @@ export default function Steps() {
   const { data, isLoading, isFetching, isError } = useRegQuery(ref, {
     skip: !ref,
   });
-
-  useEffect(() => {
-    /** whenever cache is invalidated, navigate to latest step */
-  }, [isFetching]);
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
@@ -38,7 +34,7 @@ export default function Steps() {
   return (
     <Routes>
       <Route path="1" element={<Contact state={data} thisStep={1} />} />
-      <Route path="2" />
+      <Route path="2" element={<Documentation state={data} thisStep={2} />} />
       <Route path="3" />
       <Route path="4" />
       <Route path="5" />

@@ -10,7 +10,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { ImgLink } from "components/ImgEditor";
 import { uploadToIpfs } from "helpers";
 import { appRoutes } from "constants/routes";
-import routes from "../routes";
+import routes from "../../routes";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateMetadataMutation();

@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
-import routes from "../routes";
+import { Button } from "../../common";
+import routes from "../../routes";
 
 export default function ButtonSection() {
   const { application } = useRegistrationQuery();

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { AdditionalInfoValues } from "../types";
+import { AdditionalInfoValues } from "../../types";
 import { ImgLink } from "components/ImgEditor/types";
 import { SchemaShape } from "schemas/types";
 import { genFileSchema } from "schemas/file";

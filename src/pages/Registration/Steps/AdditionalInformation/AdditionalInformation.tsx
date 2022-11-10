@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { AdditionalInfoValues } from "../types";
+import { AdditionalInfoValues } from "../../types";
 import { FileObject } from "types/aws";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
 import ImgEditor, { ImgLink } from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import InputColumn from "../common/InputColumn";
+import InputColumn from "../../common/InputColumn";
 import ButtonSection from "./ButtonSection";
 import { VALID_MIME_TYPES, additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";

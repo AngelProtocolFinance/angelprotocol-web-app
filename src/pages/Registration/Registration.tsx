@@ -12,7 +12,9 @@ import {
 } from "./guards";
 import routes from "./routes";
 
-const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
+const AdditionalInformation = lazy(
+  () => import("./Steps/AdditionalInformation")
+);
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const ContactDetails = lazy(() => import("./Steps/ContactDetails"));
 const Dashboard = lazy(() => import("./Dashboard"));
