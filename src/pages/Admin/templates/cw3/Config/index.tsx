@@ -18,7 +18,11 @@ export default function Config() {
   return <CW3ConfigContext {...cw3Config} />;
 }
 
-function CW3ConfigContext({ max_voting_period, threshold }: CW3Config) {
+function CW3ConfigContext({
+  max_voting_period,
+  threshold,
+  require_execution,
+}: CW3Config) {
   const isTime = "time" in max_voting_period;
   const duration =
     "time" in max_voting_period
@@ -28,7 +32,7 @@ function CW3ConfigContext({ max_voting_period, threshold }: CW3Config) {
   const initial: FormCW3Config = {
     threshold: +threshold.absolute_percentage.percentage * 100,
     duration,
-    isExecutionRequired: false,
+    isExecutionRequired: require_execution,
   };
 
   const methods = useForm<CW3ConfigValues>({
