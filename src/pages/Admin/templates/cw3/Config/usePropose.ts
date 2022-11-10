@@ -57,6 +57,7 @@ export default function usePropose() {
         ? { time: data.duration }
         : { height: data.duration },
       require_execution: data.isExecutionRequired,
+      seed_split_to_liquid: 0,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
