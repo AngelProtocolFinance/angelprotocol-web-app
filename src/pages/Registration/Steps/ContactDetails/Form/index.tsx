@@ -6,12 +6,12 @@ import { ContactDetails as CD } from "pages/Registration/types";
 import FormInput from "pages/Registration/common/FormInput";
 import { useRegistrationQuery } from "services/aws/registration";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
-import { appRoutes } from "constants/routes";
+// import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../../common";
-import routes from "../../../routes";
-import ReferralSelector from "./ReferralSelector";
-import RoleSelector from "./RoleSelector";
+// import routes from "../../../routes";
+// import ReferralSelector from "./ReferralSelector";
+// import RoleSelector from "./RoleSelector";
 import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 

@@ -24,12 +24,12 @@ export type ContactPerson = {
 };
 
 //STEP 2
-type Documentation = {
+export type Documentation = {
   //level 1 - should nest?
   proofOfIdentity: FileObject[];
   proofOfRegistration: FileObject[];
   website: string;
-  sdgs: number[];
+  sdg: number;
 
   //level 2
   financialStatements: FileObject[];
@@ -342,7 +342,7 @@ function formatDocumentation(reg: UREG, isKYCRequired: boolean): Documentation {
     proofOfIdentity: poi ? [poi] : [],
     proofOfRegistration: por ? [por] : [],
     website: Website ?? "",
-    sdgs: [reg.UN_SDG],
+    sdg: reg.UN_SDG,
 
     //level 2
     financialStatements: fs || [],
