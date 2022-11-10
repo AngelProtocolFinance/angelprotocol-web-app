@@ -57,7 +57,6 @@ const APPLICATION: Application = {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     Logo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     Overview: "some overview",
-    EndowmentContract: "",
     SK: "Metadata",
     JunoWallet: PLACEHOLDER_WALLET.address,
     KycDonorsOnly: false,
