@@ -36,7 +36,7 @@ export default function Registration() {
 
   return (
     <section className={containerClasses}>
-      {shouldShowProgressBar && (
+      {/* {shouldShowProgressBar && (
         <div className="flex flex-col w-full gap-2">
           <ProgressIndicator />
           {!!application.ContactPerson.PK && (
@@ -45,7 +45,7 @@ export default function Registration() {
             </div>
           )}
         </div>
-      )}
+      )} */}
 
       <Routes>
         <Route

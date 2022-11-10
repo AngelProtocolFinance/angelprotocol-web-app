@@ -1,5 +1,29 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import { FC, PropsWithChildren, createContext, useContext } from "react";
 import { RegStep, RegistrationState } from "./types";
+
+function withStepGuard<T extends { step: number }>(Step: FC<T>) {
+  return function StepGuard(props: T) {
+    const registration = {} as RegistrationState;
+
+    //still initial
+    if (registration.step === 0) {
+    }
+
+    const { step } = props;
+    //going to next step without completing required step
+    if (step < registration.step) {
+      //redirect to registration.step
+    }
+
+    return (
+      <Context.Provider value={registration}>
+        <Step {...props} />
+      </Context.Provider>
+    );
+  };
+}
+
+const Guarded = withStepGuard(StepGuard);
 
 export default function StepGuard({
   step,
