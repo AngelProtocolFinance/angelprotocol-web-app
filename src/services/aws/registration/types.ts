@@ -9,6 +9,7 @@ import { Optional } from "types/utils";
 export type InitReg = {
   reference: string;
   email: string;
+  isEmailVerified?: boolean;
 };
 
 //STEP 1
@@ -224,7 +225,7 @@ export function getRegistrationState({
     return {
       step: 5,
       data: {
-        init: { email: c.Email, reference: c.PK },
+        init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
@@ -246,13 +247,13 @@ export function getRegistrationState({
     return {
       step: 4,
       data: {
-        init: { email: c.Email, reference: c.PK },
+        init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
         wallet: m.JunoWallet ? { address: m.JunoWallet! } : undefined,
       },
-      nav: { back: "" },
+      nav: { back: "3" },
     };
   } else if (
     c &&
@@ -266,7 +267,7 @@ export function getRegistrationState({
     return {
       step: 3,
       data: {
-        init: { email: c.Email, reference: c.PK },
+        init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile:
@@ -277,7 +278,7 @@ export function getRegistrationState({
             : undefined,
         level: 1,
       },
-      nav: { next: isComplete ? "" : undefined, back: "" },
+      nav: { next: isComplete ? "4" : undefined, back: "2" },
     };
   } else if (
     c &&
@@ -291,13 +292,13 @@ export function getRegistrationState({
     return {
       step: 2,
       data: {
-        init: { email: c.Email, reference: c.PK },
+        init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: isComplete
           ? formatDocumentation(r!, m.KycDonorsOnly!)
           : undefined,
       },
-      nav: { next: isComplete ? "" : undefined, back: "" },
+      nav: { next: isComplete ? "3" : undefined, back: "1" },
     };
   } else if (c && c.PK) {
     const isComplete =
@@ -305,12 +306,12 @@ export function getRegistrationState({
     return {
       step: 1,
       data: {
-        init: { email: c.Email, reference: c.PK },
+        init: getInit(c),
         contact: isComplete
           ? formatContactPerson(c, r.OrganizationName)
           : undefined,
       },
-      nav: { next: isComplete ? "" : undefined },
+      nav: { next: isComplete ? "2" : undefined },
     };
   } else {
     return { step: 0 };
@@ -319,7 +320,14 @@ export function getRegistrationState({
 
 type UCP = UnprocessedApplication["ContactPerson"];
 type UREG = UnprocessedApplication["Registration"];
-type UMETA = UnprocessedApplication["Metadata"];
+
+function getInit(cp: UCP): InitReg {
+  return {
+    email: cp.Email,
+    reference: cp.PK!,
+    isEmailVerified: cp.EmailVerified,
+  };
+}
 
 function formatContactPerson(cp: UCP, orgName: string): ContactPerson {
   return {

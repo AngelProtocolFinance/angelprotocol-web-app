@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
-import routes from "../routes";
+import routes, { steps } from "../routes";
 import Contact from "./Contact";
 import Documentation from "./Docs";
 import Profile from "./Profile";
@@ -31,16 +31,22 @@ export default function Steps() {
    * redirects to signup page
    */
   if (!data || !initReg) {
-    return <Navigate to={routes.index} />;
+    return <Navigate to=".." />;
   }
 
   return (
     <Routes>
-      <Route path="1" element={<Contact state={data} thisStep={1} />} />
-      <Route path="2" element={<Documentation state={data} thisStep={2} />} />
-      <Route path="3" element={<Profile state={data} thisStep={3} />} />
-      <Route path="4" element={<Wallet state={data} thisStep={4} />} />
-      <Route path="5" element={<Dashboard state={data} thisStep={5} />} />
+      <Route path={steps.contact} element={<Contact state={data} step={1} />} />
+      <Route
+        path={steps.doc}
+        element={<Documentation state={data} step={2} />}
+      />
+      <Route path={steps.profile} element={<Profile state={data} step={3} />} />
+      <Route path={steps.wallet} element={<Wallet state={data} step={4} />} />
+      <Route
+        path={steps.summary}
+        element={<Dashboard state={data} step={5} />}
+      />
     </Routes>
   );
 }

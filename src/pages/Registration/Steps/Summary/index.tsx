@@ -15,7 +15,7 @@ function Dashboard() {
   const { submit, isSubmitting } = useSubmit();
   const navigate = useNavigate();
 
-  const { documentation } = data;
+  const { documentation, status } = data;
   const cantBeEdited = !(status === "Inactive" || status === "Rejected");
 
   return (

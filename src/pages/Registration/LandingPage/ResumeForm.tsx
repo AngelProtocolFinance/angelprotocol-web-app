@@ -2,7 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useRegistrationLazyQuery } from "services/aws/registration";
+import { InitReg } from "services/aws/registration/types";
+import { useLazyRegQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import {
   getSavedRegistrationReference,
@@ -10,7 +11,7 @@ import {
 } from "helpers";
 import { asciiSchema } from "schemas/string";
 import { Button } from "../common";
-import routes from "../routes";
+import routes, { steps } from "../routes";
 
 type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
@@ -20,7 +21,7 @@ const FormInfoSchema = Yup.object().shape({
 export default function ResumeForm() {
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
-  const [checkPrevRegistration] = useRegistrationLazyQuery();
+  const [checkPrevRegistration] = useLazyRegQuery();
 
   const {
     register,
@@ -35,8 +36,12 @@ export default function ResumeForm() {
   });
 
   const onResume = async (val: ResumeValues) => {
-    const { isError, error, data } = await checkPrevRegistration(val.refer);
-    if (isError || !data) {
+    const {
+      isError,
+      error,
+      data: regState,
+    } = await checkPrevRegistration(val.refer);
+    if (isError || !regState) {
       handleError(
         error,
         "No active application found with this registration reference"
@@ -44,8 +49,19 @@ export default function ResumeForm() {
       return;
     }
     storeRegistrationReference(val.refer);
+
+    if ("data" in regState && !regState.data.init.isEmailVerified) {
+      navigate(routes.confirmEmail);
+    }
+
+    const state: InitReg = {
+      reference: val.refer,
+      email: "justin@angelprotocol.io",
+      isEmailVerified: true,
+    };
+
     //go to dashboard and let guard handle further routing
-    navigate(routes.dashboard);
+    navigate(routes.steps + `/${regState.step}`, { state });
   };
 
   return (

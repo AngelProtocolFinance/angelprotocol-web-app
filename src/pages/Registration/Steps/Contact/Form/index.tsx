@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
-import FormInput from "pages/Registration/common/FormInput";
 import { Button } from "../../../common";
+import FormInput from "../../../common/FormInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
 import useSaveContactDetails from "./useContactDetails";
@@ -9,8 +9,10 @@ import useSaveContactDetails from "./useContactDetails";
 export default function Form() {
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useFormContext<FV>();
+
+  console.log(errors);
 
   const { saveContactDetails } = useSaveContactDetails();
 

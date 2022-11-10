@@ -3,12 +3,12 @@ import { RegStep, RegistrationState } from "./types";
 
 export function withStepGuard<T extends object>(Step: FC<T>) {
   return function StepGuard({
-    thisStep,
+    step,
     state,
     ...props
-  }: T & { state: RegistrationState; thisStep: number }) {
+  }: T & { state: RegistrationState; step: number }) {
     //going to next step without completing required step
-    if (thisStep < state.step) {
+    if (step < state.step) {
       //redirect to registration.step
     }
 
