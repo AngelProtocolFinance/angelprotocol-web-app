@@ -28,6 +28,7 @@ function CW3ConfigContext({ max_voting_period, threshold }: CW3Config) {
   const initial: FormCW3Config = {
     threshold: +threshold.absolute_percentage.percentage * 100,
     duration,
+    require_execution: false,
   };
 
   const methods = useForm<CW3ConfigValues>({

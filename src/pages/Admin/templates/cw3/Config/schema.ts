@@ -8,6 +8,7 @@ const shape: SchemaShape<CW3ConfigValues> = {
   ...proposalShape,
   threshold: requiredPositiveNumber,
   duration: requiredPositiveNumber,
+  require_execution: Yup.bool().required(),
 };
 
 export const schema = Yup.object(shape);
