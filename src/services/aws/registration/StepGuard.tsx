@@ -20,8 +20,6 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
   };
 }
 
-const Guarded = withStepGuard(StepGuard);
-
 export default function StepGuard({
   step,
   children,

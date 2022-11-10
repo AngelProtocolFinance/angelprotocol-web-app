@@ -44,7 +44,7 @@ export type Documentation = {
 };
 
 //STEP 3
-type Profile = {
+export type Profile = {
   banner: FileObject;
   logo: FileObject;
   overview: string;
