@@ -1,7 +1,8 @@
 import { useRegistrationQuery } from "services/aws/registration";
-import ContactDetailsForm from "./ContactDetailsForm";
+import Form from "./Form";
 
-export default function ContactDetails() {
+//rename to contact details
+export default function Contact() {
   const { application } = useRegistrationQuery();
 
   return (
@@ -18,7 +19,7 @@ export default function ContactDetails() {
           registration if it gets interrupted in the future.
         </p>
       )}
-      <ContactDetailsForm />
+      <Form />
     </div>
   );
 }
