@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { useRegState } from "services/aws/registration/StepGuard";
+import {
+  useRegState,
+  withStepGuard,
+} from "services/aws/registration/StepGuard";
 import { useGetWallet } from "contexts/WalletContext";
 import RegLoader from "../../common/RegLoader";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
-export default function WalletRegistration() {
+function Wallet() {
   const {
     data: { wallet: prevWallet },
   } = useRegState<4>();
@@ -35,3 +38,5 @@ export default function WalletRegistration() {
 
   return <WalletSubmission {...wallet} />;
 }
+
+export default withStepGuard(Wallet);

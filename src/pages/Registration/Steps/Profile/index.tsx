@@ -2,12 +2,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { FileObject } from "types/aws";
-import { useRegState } from "services/aws/registration/StepGuard";
+import {
+  useRegState,
+  withStepGuard,
+} from "services/aws/registration/StepGuard";
 import { ImgLink } from "components/ImgEditor";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Profile() {
+function Profile() {
   const {
     data: { profile },
   } = useRegState<3>();
@@ -41,3 +44,5 @@ function toImgLink(file?: FileObject): ImgLink {
     return { name: "", preview: "", publicUrl: "" };
   }
 }
+
+export default withStepGuard(Profile);
