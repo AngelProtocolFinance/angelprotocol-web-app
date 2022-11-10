@@ -61,6 +61,10 @@ export type CW3Config = {
   max_voting_period: Duration;
   //...future needed attr
   require_execution: boolean;
+  registrar_contract: string;
+  seed_asset?: Asset;
+  seed_split_to_liquid: number;
+  new_endow_gas_money?: Coin;
 };
 
 export type CW3ConfigPayload = {
