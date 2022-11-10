@@ -47,15 +47,19 @@ export default function usePropose() {
 
     const contract = new CW3(wallet, cw3);
 
-    const { threshold, duration, ...rest } = newData;
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
         absolute_percentage: {
-          percentage: `${threshold / 100}`,
+          percentage: `${newData.threshold / 100}`,
         },
       },
-      max_voting_period: isTime ? { time: duration } : { height: duration },
-      ...rest,
+      max_voting_period: isTime
+        ? { time: newData.duration }
+        : { height: newData.duration },
+      require_execution: newData.require_execution,
+      seed_split_to_liquid: newData.seed_split_to_liquid,
+      new_endow_gas_money: newData.new_endow_gas_money,
+      seed_asset: newData.seed_asset,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
