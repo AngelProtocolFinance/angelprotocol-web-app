@@ -114,12 +114,6 @@ type Step3Data = Optional<
   Pick<CompleteRegistration, "id" | "contact" | "documentation" | "profile">,
   "profile"
 >;
-const x: Step3Data = {
-  id: {} as any,
-  contact: {} as any,
-  documentation: {} as any,
-  profile: undefined,
-};
 
 /**
  * Step 3
@@ -174,7 +168,7 @@ export type RegistrationState =
   | RegStep3
   | RegStep4;
 
-type RegStep = RegistrationState["step"];
+export type RegStep = RegistrationState["step"];
 
 /**
  * register/steps receives RegistrationState
