@@ -49,64 +49,75 @@ export default function Registration() {
 
       <Routes>
         <Route
-          path={routes.additionalInformation}
           element={
-            <AdditionalInformationGuard>
-              <AdditionalInformation />
-            </AdditionalInformationGuard>
+            <>
+              {(() => {
+                console.log("layout");
+                return "world";
+              })()}
+            </>
           }
-        />
-        <Route
-          path={routes.confirmEmail}
-          element={
-            // Documentation and ConfirmEmail pages have the same requirements to access the page
-            // which is - Contact Details step must have been submitted
-            <DocumentationGuard>
-              <ConfirmEmail />
-            </DocumentationGuard>
-          }
-        />
-        <Route
-          path={routes.contactDetails}
-          element={
-            <ContactDetailsGuard>
-              <ContactDetails />
-            </ContactDetailsGuard>
-          }
-        />
-        <Route
-          path={routes.dashboard}
-          element={
-            <DashboardGuard>
-              <Dashboard />
-            </DashboardGuard>
-          }
-        />
-        <Route
-          path={routes.documentation}
-          element={
-            <DocumentationGuard>
-              <Documentation />
-            </DocumentationGuard>
-          }
-        />
+        >
+          <Route
+            path={routes.additionalInformation}
+            element={
+              <AdditionalInformationGuard>
+                <AdditionalInformation />
+              </AdditionalInformationGuard>
+            }
+          />
+          <Route
+            path={routes.confirmEmail}
+            element={
+              // Documentation and ConfirmEmail pages have the same requirements to access the page
+              // which is - Contact Details step must have been submitted
+              <DocumentationGuard>
+                <ConfirmEmail />
+              </DocumentationGuard>
+            }
+          />
+          <Route
+            path={routes.contactDetails}
+            element={
+              <ContactDetailsGuard>
+                <ContactDetails />
+              </ContactDetailsGuard>
+            }
+          />
+          <Route
+            path={routes.dashboard}
+            element={
+              <DashboardGuard>
+                <Dashboard />
+              </DashboardGuard>
+            }
+          />
+          <Route
+            path={routes.documentation}
+            element={
+              <DocumentationGuard>
+                <Documentation />
+              </DocumentationGuard>
+            }
+          />
 
-        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
-        <Route
-          path={`${routes.wallet}/*`}
-          element={
-            <WalletRegistrationGuard>
-              <WalletRegistration />
-            </WalletRegistrationGuard>
-          }
-        />
-        <Route index element={<LandingPage />} />
-        <Route
-          path="*"
-          element={
-            <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />
-          }
-        />
+          <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
+          <Route
+            path={`${routes.wallet}/*`}
+            element={
+              <WalletRegistrationGuard>
+                <WalletRegistration />
+              </WalletRegistrationGuard>
+            }
+          />
+          <Route index element={<LandingPage />} />
+          <Route
+            path="*"
+            element={
+              <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />
+            }
+          />
+        </Route>
       </Routes>
     </section>
   );

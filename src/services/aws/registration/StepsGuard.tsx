@@ -1,4 +1,4 @@
-import { RegistrationData } from "./types";
+import { RegistrationData, RegistrationState } from "./types";
 
 /**
  * any page
@@ -13,10 +13,20 @@ import { RegistrationData } from "./types";
 
 type RegKeys = keyof RegistrationData;
 const ID_KEY: RegKeys = "id";
-export default function Guard(props: RegistrationData) {
+export default function Guard(props: RegistrationState) {
   if (ID_KEY in props) {
     props.id;
   }
 }
 
-function getContextValue() {}
+const state = {} as RegistrationState;
+function getContextValue<T extends RegistrationState["step"]>(
+  step: T
+): {
+  step: RegistrationState extends { step: infer S; data: any } ? S : never;
+  data: RegistrationState extends { step: T; data: infer D } ? D : never;
+} {
+  return { step: 1, data: {} as any };
+}
+
+const x = getContextValue(2);

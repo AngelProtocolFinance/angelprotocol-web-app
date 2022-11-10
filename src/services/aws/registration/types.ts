@@ -91,14 +91,35 @@ type Step4Data = Optional<CompleteRegistration, "wallet">;
 
 export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
 
-type RegistrationState = {
-  step1: { data: Step1Data; nav: [] };
-  step2: Step2Data;
-  step3: Step3Data;
-  step4: Step4Data;
+type Nav = {
+  back: string;
+  next?: string; //set when data is available
 };
 
-function getData<T extends keyof RegistrationState>() {}
+type RegStep1 = {
+  step: 1;
+  data: Step1Data;
+  nav: {};
+};
+
+type RegStep2 = {
+  step: 2;
+  data: Step2Data;
+};
+
+type RegStep3 = {
+  step: 3;
+  data: Step3Data;
+};
+
+type RegStep4 = {
+  step: 4;
+  data: Step4Data;
+};
+
+export type RegistrationState = RegStep1 | RegStep2 | RegStep3 | RegStep4;
+
+type RegStep = RegistrationState["step"];
 
 /**
  * register/steps receives RegistrationState
