@@ -176,7 +176,7 @@ export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 export type FormCW3Config = {
   threshold: number;
   duration: number;
-  require_execution: boolean;
+  isExecutionRequired: boolean;
 };
 export type CW3ConfigValues = ProposalBase &
   FormCW3Config & { initial: FormCW3Config; isTime: boolean };

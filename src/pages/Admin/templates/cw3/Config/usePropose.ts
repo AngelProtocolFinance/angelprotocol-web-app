@@ -56,7 +56,7 @@ export default function usePropose() {
       max_voting_period: isTime
         ? { time: data.duration }
         : { height: data.duration },
-      require_execution: true,
+      require_execution: data.isExecutionRequired,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
