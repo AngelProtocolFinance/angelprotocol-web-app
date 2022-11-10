@@ -67,7 +67,7 @@ export default function Signup({ classes = "" }: { classes?: string }) {
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
         Register
       </BtnPrim>
-      <p className="text-sm mx-0 sm:mx-24 relative h-[0.5px] grid place-items-center border-[0.5px] border-gray-d1 dark:border-gray my-11">
+      <p className="text-sm mx-0 sm:mx-24 relative h-px grid place-items-center bg-gray-d1 dark:bg-gray my-11">
         <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute text-gray-d1 dark:text-gray">
           OR
         </span>

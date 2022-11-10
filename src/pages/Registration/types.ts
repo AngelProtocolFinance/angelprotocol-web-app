@@ -1,16 +1,16 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import { FileWrapper } from "components/FileDropzone";
+import { Asset } from "components/FileDropzone";
 import { ImgLink } from "components/ImgEditor";
 
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };
 
 export type DocumentationValues = {
-  proofOfIdentity: FileWrapper;
-  proofOfRegistration: FileWrapper;
-  financialStatements: FileWrapper[];
-  auditedFinancialReports: FileWrapper[];
+  proofOfIdentity: Asset;
+  proofOfRegistration: Asset;
+  financialStatements: Asset;
+  auditedFinancialReports: Asset;
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;

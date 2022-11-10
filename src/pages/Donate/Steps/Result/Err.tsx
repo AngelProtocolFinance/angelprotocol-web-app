@@ -19,7 +19,7 @@ export default function Err({
 
   return (
     <div className={`grid justify-items-center ${classes}`}>
-      <div className="bg-[#F15A21] rounded-full aspect-square grid place-items-center mb-8">
+      <div className="bg-red rounded-full aspect-square grid place-items-center mb-8">
         <Icon type="Exclamation" size={45} className="text-white m-5" />
       </div>
 
