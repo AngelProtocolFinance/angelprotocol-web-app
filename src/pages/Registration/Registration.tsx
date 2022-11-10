@@ -14,7 +14,7 @@ import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
-const ContactDetails = lazy(() => import("./ContactDetails"));
+const ContactDetails = lazy(() => import("./Steps/ContactDetails"));
 const Dashboard = lazy(() => import("./Dashboard"));
 const Documentation = lazy(() => import("./Documentation"));
 const LandingPage = lazy(() => import("./LandingPage"));
@@ -22,20 +22,20 @@ const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Registration() {
-  const location = useLocation();
-  const { application } = useRegistrationQuery();
+  // const location = useLocation();
+  // const { application } = useRegistrationQuery();
 
-  const shouldShowProgressBar =
-    location.pathname.search(
-      `${appRoutes.register}(/${routes.confirmEmail})?/?$`
-    ) === -1;
+  // const shouldShowProgressBar =
+  //   location.pathname.search(
+  //     `${appRoutes.register}(/${routes.confirmEmail})?/?$`
+  //   ) === -1;
 
-  const containerClasses = `grid grid-rows-[${
-    !shouldShowProgressBar ? "1fr" : "auto_1fr"
-  }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5 pt-28`;
+  // const containerClasses = `grid grid-rows-[${
+  //   !shouldShowProgressBar ? "1fr" : "auto_1fr"
+  // }] gap-10 items-center sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5 pt-28`;
 
   return (
-    <section className={containerClasses}>
+    <section>
       {/* {shouldShowProgressBar && (
         <div className="flex flex-col w-full gap-2">
           <ProgressIndicator />
@@ -48,6 +48,11 @@ export default function Registration() {
       )} */}
 
       <Routes>
+        <Route path={routes.confirmEmail} element={<ConfirmEmail />} />
+        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
+        <Route index element={<LandingPage />} />
+        <Route path="*" element={<Navigate to={routes.index} />} />
+
         <Route
           path={routes.additionalInformation}
           element={
@@ -56,16 +61,7 @@ export default function Registration() {
             </AdditionalInformationGuard>
           }
         />
-        <Route
-          path={routes.confirmEmail}
-          element={
-            // Documentation and ConfirmEmail pages have the same requirements to access the page
-            // which is - Contact Details step must have been submitted
-            <DocumentationGuard>
-              <ConfirmEmail />
-            </DocumentationGuard>
-          }
-        />
+
         <Route
           path={routes.contactDetails}
           element={
@@ -91,20 +87,12 @@ export default function Registration() {
           }
         />
 
-        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
           element={
             <WalletRegistrationGuard>
               <WalletRegistration />
             </WalletRegistrationGuard>
-          }
-        />
-        <Route index element={<LandingPage />} />
-        <Route
-          path="*"
-          element={
-            <Navigate to={`${appRoutes.register}/${routes.dashboard}`} />
           }
         />
       </Routes>

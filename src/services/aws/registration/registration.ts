@@ -22,7 +22,7 @@ import { placeholderApplication } from "./placeholders";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    reg: builder.query<RegistrationState, string | undefined | null>({
+    reg: builder.query<RegistrationState, string>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
         return {

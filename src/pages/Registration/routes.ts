@@ -1,5 +1,5 @@
 enum routes {
-  index = "/",
+  index = "",
   contactDetails = "contact-details",
   dashboard = "dashboard",
   confirmEmail = "confirm-email",
@@ -8,6 +8,7 @@ enum routes {
   profile = "profile",
   documentation = "documentation",
   additionalInformation = "additional-information",
+  steps = "steps",
 }
 
 export default routes;

@@ -1,10 +1,8 @@
 import { FileObject, UnprocessedApplication } from "types/aws";
 import { Optional } from "types/utils";
-import { Asset } from "components/FileDropzone";
-import { ImgLink } from "components/ImgEditor";
 
 //REF_ID is global to registration
-type RegistrationID = {
+export type InitReg = {
   reference: string;
   email: string;
 };
@@ -64,7 +62,7 @@ type EndowmentDetails = {
 };
 
 export type CompleteRegistration = {
-  id: RegistrationID;
+  init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
   profile: Profile;
@@ -81,7 +79,7 @@ export type CompleteRegistration = {
  */
 
 type Step1Data = Optional<
-  Pick<CompleteRegistration, "id" | "contact">,
+  Pick<CompleteRegistration, "init" | "contact">,
   "contact"
 >;
 
@@ -95,7 +93,7 @@ type Step1Data = Optional<
  * }
  */
 type Step2Data = Optional<
-  Pick<CompleteRegistration, "id" | "contact" | "documentation">,
+  Pick<CompleteRegistration, "init" | "contact" | "documentation">,
   "documentation"
 >;
 
@@ -111,7 +109,7 @@ type Step2Data = Optional<
  */
 
 type Step3Data = Optional<
-  Pick<CompleteRegistration, "id" | "contact" | "documentation" | "profile">,
+  Pick<CompleteRegistration, "init" | "contact" | "documentation" | "profile">,
   "profile"
 >;
 
@@ -161,12 +159,18 @@ type RegStep4 = {
   nav: Omit<Nav, "next">;
 };
 
+type RegStep5 = {
+  step: 5;
+  data: CompleteRegistration; //and some status
+};
+
 export type RegistrationState =
   | RegStep0
   | RegStep1
   | RegStep2
   | RegStep3
-  | RegStep4;
+  | RegStep4
+  | RegStep5;
 
 export type RegStep = RegistrationState["step"];
 
@@ -210,12 +214,34 @@ export function getRegistrationState({
     m.KycDonorsOnly !== undefined &&
     !!m.Banner &&
     !!m.Logo &&
+    !!m.Overview &&
+    !!m.JunoWallet
+  ) {
+    return {
+      step: 5,
+      data: {
+        init: { email: c.Email, reference: c.PK },
+        contact: formatContactPerson(c, r.OrganizationName),
+        documentation: formatDocumentation(r, m.KycDonorsOnly),
+        profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
+        wallet: { address: m.JunoWallet! },
+      },
+    };
+  } else if (
+    c &&
+    c.PK &&
+    r &&
+    r.ProofOfIdentity && //no need to check for other fields
+    m &&
+    m.KycDonorsOnly !== undefined &&
+    !!m.Banner &&
+    !!m.Logo &&
     !!m.Overview
   ) {
     return {
       step: 4,
       data: {
-        id: { email: c.Email, reference: c.PK },
+        init: { email: c.Email, reference: c.PK },
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
@@ -235,7 +261,7 @@ export function getRegistrationState({
     return {
       step: 3,
       data: {
-        id: { email: c.Email, reference: c.PK },
+        init: { email: c.Email, reference: c.PK },
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: formatDocumentation(r, m.KycDonorsOnly),
         profile:
@@ -259,7 +285,7 @@ export function getRegistrationState({
     return {
       step: 2,
       data: {
-        id: { email: c.Email, reference: c.PK },
+        init: { email: c.Email, reference: c.PK },
         contact: formatContactPerson(c, r.OrganizationName),
         documentation: isComplete
           ? formatDocumentation(r!, m.KycDonorsOnly!)
@@ -273,7 +299,7 @@ export function getRegistrationState({
     return {
       step: 1,
       data: {
-        id: { email: c.Email, reference: c.PK },
+        init: { email: c.Email, reference: c.PK },
         contact: isComplete
           ? formatContactPerson(c, r.OrganizationName)
           : undefined,
@@ -302,24 +328,6 @@ function formatContactPerson(cp: UCP, orgName: string): ContactPerson {
   };
 }
 
-/**
- * 
- * proofOfIdentity: Asset;
-  website: string;
-  sdgs: number[];
-
-  //level 2
-  financialStatements: Asset;
-
-  //level3
-  annualReports: Asset;
-  isKYCRequired: boolean;
-
-  //so user won't click again on resume
-  hasAuthority: boolean;
-  hasAgreedToTerms: boolean;
- */
-
 function formatDocumentation(reg: UREG, isKYCRequired: boolean): Documentation {
   const {
     ProofOfIdentity: poi,
@@ -347,8 +355,4 @@ function formatDocumentation(reg: UREG, isKYCRequired: boolean): Documentation {
     hasAuthority: true,
     hasAgreedToTerms: true,
   };
-}
-
-function genFileAsset(previews: FileObject[]): Asset {
-  return { files: [], previews };
 }

@@ -12,7 +12,7 @@ import {
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
-import routes from "../../routes";
+import routes from "../../../routes";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewApplicationMutation();

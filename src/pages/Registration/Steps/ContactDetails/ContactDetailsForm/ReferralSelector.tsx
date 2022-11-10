@@ -3,8 +3,8 @@ import {
   ContactDetails as CD,
   ReferralOptionType,
 } from "pages/Registration/types";
-import FormInput from "../../common/FormInput";
-import Selector from "../../common/Selector";
+import FormInput from "../../../common/FormInput";
+import Selector from "../../../common/Selector";
 
 export default function ReferralSelector() {
   const { watch } = useFormContext<CD>();
