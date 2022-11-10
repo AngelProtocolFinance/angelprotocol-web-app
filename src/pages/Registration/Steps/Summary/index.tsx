@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Documentation } from "services/aws/registration/types";
-import { useRegState } from "services/aws/registration/StepGuard";
+import {
+  useRegState,
+  withStepGuard,
+} from "services/aws/registration/StepGuard";
 import { appRoutes } from "constants/routes";
 import routes from "../../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 import useSubmit from "./useSubmit";
 
-export default function Dashboard() {
+function Dashboard() {
   const { data } = useRegState<5>();
   const { submit, isSubmitting } = useSubmit();
   const navigate = useNavigate();
@@ -75,3 +78,5 @@ function getDocLevel({ financialStatements, annualReports }: Documentation) {
   if (annualReports.length > 0) level++;
   return level;
 }
+
+export default withStepGuard(Dashboard);

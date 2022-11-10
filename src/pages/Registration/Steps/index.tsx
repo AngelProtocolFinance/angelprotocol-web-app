@@ -5,6 +5,7 @@ import routes from "../routes";
 import Contact from "./Contact";
 import Documentation from "./Docs";
 import Profile from "./Profile";
+import Dashboard from "./Summary";
 import Wallet from "./Wallet";
 
 export default function Steps() {
@@ -39,7 +40,7 @@ export default function Steps() {
       <Route path="2" element={<Documentation state={data} thisStep={2} />} />
       <Route path="3" element={<Profile state={data} thisStep={3} />} />
       <Route path="4" element={<Wallet state={data} thisStep={4} />} />
-      <Route path="5" />
+      <Route path="5" element={<Dashboard state={data} thisStep={5} />} />
     </Routes>
   );
 }
