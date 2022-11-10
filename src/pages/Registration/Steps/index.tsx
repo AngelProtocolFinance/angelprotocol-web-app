@@ -13,7 +13,7 @@ export default function Steps() {
   const initReg = state as InitReg | undefined; //from non "/steps" navigations
 
   const ref = initReg?.reference || "";
-  const { data, isLoading, isError } = useRegQuery(ref, {
+  const { data, isLoading, isError, requestId } = useRegQuery(ref, {
     skip: !ref,
   });
 
@@ -34,18 +34,29 @@ export default function Steps() {
     return <Navigate to=".." />;
   }
 
+  const stateId = requestId || "";
+
   return (
     <Routes>
-      <Route path={steps.contact} element={<Contact state={data} step={1} />} />
+      <Route
+        path={steps.contact}
+        element={<Contact stateId={stateId} state={data} step={1} />}
+      />
       <Route
         path={steps.doc}
-        element={<Documentation state={data} step={2} />}
+        element={<Documentation stateId={stateId} state={data} step={2} />}
       />
-      <Route path={steps.profile} element={<Profile state={data} step={3} />} />
-      <Route path={steps.wallet} element={<Wallet state={data} step={4} />} />
+      <Route
+        path={steps.profile}
+        element={<Profile stateId={stateId} state={data} step={3} />}
+      />
+      <Route
+        path={steps.wallet}
+        element={<Wallet stateId={stateId} state={data} step={4} />}
+      />
       <Route
         path={steps.summary}
-        element={<Dashboard state={data} step={5} />}
+        element={<Dashboard stateId={stateId} state={data} step={5} />}
       />
     </Routes>
   );

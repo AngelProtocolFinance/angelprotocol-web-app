@@ -26,8 +26,6 @@ export default function useSaveContactDetails() {
             LastName: fv.lastName,
             Email: fv.email,
             Goals: fv.goal,
-            OtherReferralMethod: "",
-            OtherRole: fv.orgRole,
             PhoneNumber: fv.phone,
             ReferralMethod: fv.referralMethod as ReferralMethods,
             Role: fv.orgRole as ContactRoles,

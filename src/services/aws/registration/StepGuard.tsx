@@ -1,12 +1,34 @@
-import { FC, PropsWithChildren, createContext, useContext } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
+import { useNavigate } from "react-router-dom";
 import { RegStep, RegistrationState } from "./types";
 
 export function withStepGuard<T extends object>(Step: FC<T>) {
   return function StepGuard({
     step,
     state,
+    stateId,
     ...props
-  }: T & { state: RegistrationState; step: number }) {
+  }: T & { state: RegistrationState; step: number; stateId: string }) {
+    const idRef = useRef(stateId);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (idRef.current !== stateId) {
+        if ("data" in state) {
+          console.log("navigate");
+          navigate(`../${step + 1}`, { state: state.data.init });
+        }
+      }
+      idRef.current = stateId;
+    }, [stateId]);
+
     //going to next step without completing required step
     if (step < state.step) {
       //redirect to registration.step
