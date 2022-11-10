@@ -8,7 +8,7 @@ export type InitReg = {
 };
 
 //STEP 1
-type ContactPerson = {
+export type ContactPerson = {
   firstName: string;
   lastName: string;
   //https://www.npmjs.com/package/react-phone-input-2
