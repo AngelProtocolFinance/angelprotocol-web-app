@@ -191,7 +191,7 @@ export type RegStep = RegistrationState["step"];
  *
  */
 
-function getRegistrationState({
+export function getRegistrationState({
   ContactPerson: c,
   Registration: r,
   Metadata: m,

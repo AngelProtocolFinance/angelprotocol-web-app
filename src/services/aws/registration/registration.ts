@@ -1,3 +1,4 @@
+import { RegistrationState, getRegistrationState } from "./types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
@@ -21,6 +22,19 @@ import { placeholderApplication } from "./placeholders";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    reg: builder.query<RegistrationState, string | undefined | null>({
+      providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      query: (uuid) => {
+        return {
+          url: "v1/registration",
+          params: { uuid },
+        };
+      },
+      transformResponse(res: UnprocessedApplication) {
+        return getRegistrationState(res);
+      },
+    }),
+
     registration: builder.query<Application, string | undefined | null>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
@@ -164,6 +178,7 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
+  useRegQuery,
   useCreateNewApplicationMutation,
   useEndowmentApplicationsQuery,
   useRequestEmailMutation,
@@ -172,6 +187,9 @@ export const {
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
   util: { updateQueryData: updateRegQueryData },
+  endpoints: {
+    reg: { useLazyQuery: useLazyRegQuery },
+  },
 } = registration_api;
 
 export const useRegistrationQuery = () => {
