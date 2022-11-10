@@ -24,13 +24,13 @@ export const cw3Api = junoApi.injectEndpoints({
       }
     ),
     proposals: builder.query<
-      Result<"cw3Propsosals">,
-      WithAddrArgs<"cw3Propsosals">
+      Result<"cw3Proposals">,
+      WithAddrArgs<"cw3Proposals">
     >({
       providesTags: [{ type: junoTags.admin, id: adminTags.proposals }],
       query: ({ contract, ...args }) =>
-        genQueryPath("cw3Propsosals", args, contract),
-      transformResponse: (res: Res<"cw3Propsosals">) => {
+        genQueryPath("cw3Proposals", args, contract),
+      transformResponse: (res: Res<"cw3Proposals">) => {
         return res.data.proposals;
       },
     }),
