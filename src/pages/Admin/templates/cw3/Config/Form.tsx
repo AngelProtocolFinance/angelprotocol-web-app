@@ -26,7 +26,7 @@ export default function Form() {
         required
         mono
       />
-      <CheckInput />
+      <RequireExecutionCheckbox />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>
@@ -34,7 +34,7 @@ export default function Form() {
   );
 }
 
-function CheckInput() {
+function RequireExecutionCheckbox() {
   const { register } = useFormContext<CV>();
   return (
     <div
