@@ -18,21 +18,20 @@ export default function Config() {
   return <CW3ConfigContext {...cw3Config} />;
 }
 
-function CW3ConfigContext({
-  max_voting_period,
-  threshold,
-  require_execution,
-}: CW3Config) {
-  const isTime = "time" in max_voting_period;
+function CW3ConfigContext(cw3Config: CW3Config) {
+  const isTime = "time" in cw3Config.max_voting_period;
   const duration =
-    "time" in max_voting_period
-      ? max_voting_period.time
-      : max_voting_period.height;
+    "time" in cw3Config.max_voting_period
+      ? cw3Config.max_voting_period.time
+      : cw3Config.max_voting_period.height;
 
   const initial: FormCW3Config = {
-    threshold: +threshold.absolute_percentage.percentage * 100,
+    threshold: +cw3Config.threshold.absolute_percentage.percentage * 100,
     duration,
-    isExecutionRequired: require_execution,
+    require_execution: cw3Config.require_execution,
+    seed_split_to_liquid: cw3Config.seed_split_to_liquid,
+    new_endow_gas_money: cw3Config.new_endow_gas_money,
+    seed_asset: cw3Config.seed_asset,
   };
 
   const methods = useForm<CW3ConfigValues>({

@@ -42,7 +42,7 @@ function CheckInput() {
     shadow-inner-white-grey bg-light-grey my-6"
     >
       <input
-        {...register("isExecutionRequired")}
+        {...register("require_execution")}
         type="checkbox"
         className="mr-2"
         id="__checkInput"
