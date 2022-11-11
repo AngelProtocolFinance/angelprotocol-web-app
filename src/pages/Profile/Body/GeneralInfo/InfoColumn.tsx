@@ -8,7 +8,7 @@ export default function InfoColumn() {
   const profile = useProfileContext();
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:w-96 h-[928px] p-8 box-border border border-gray-l2 rounded">
+    <div className="flex flex-col gap-6 w-full lg:w-96 h-[928px] p-8 box-border border border-gray-l2 rounded text-gray-d2">
       <DonateButton />
 
       <div className="flex flex-col items-start gap-3">
@@ -24,12 +24,18 @@ export default function InfoColumn() {
           </Tag>
         ))}
       </div>
+
+      <p className="font-sans font-normal text-base">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra
+        tortor vitae, ornare ac, ultricies lacus. In sed arcu enim eu. Risus nam
+        egestas sit id eget.
+      </p>
     </div>
   );
 }
 
 const Tag = (props: PropsWithChildren<{}>) => (
-  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-[20px] font-body font-semibold text-sm text-gray-d2">
+  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-[20px] font-body font-semibold text-sm">
     {props.children}
   </div>
 );
