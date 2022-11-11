@@ -19,7 +19,7 @@ import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
-export default function usePropose() {
+export default function useCreateProposal() {
   const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
@@ -30,7 +30,7 @@ export default function usePropose() {
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
-  async function configureCW3({
+  async function createProposal({
     title,
     description,
     initial,
@@ -89,7 +89,7 @@ export default function usePropose() {
 
   return {
     isTime: getValues("isTime"),
-    configureCW3: handleSubmit(configureCW3),
+    createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }
