@@ -1,11 +1,11 @@
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import Icon, { IconTypes } from "components/Icon";
 
-export default function Socials() {
+export default function Socials({ className }: { className: string }) {
   const profile = useProfileContext();
 
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex items-center gap-3 ${className}`}>
       {profile.social_media_urls.facebook && (
         <SocialsIcon
           href={profile.social_media_urls.facebook}

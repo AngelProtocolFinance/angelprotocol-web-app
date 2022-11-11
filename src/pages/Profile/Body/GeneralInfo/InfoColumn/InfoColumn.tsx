@@ -26,13 +26,13 @@ export default function InfoColumn() {
         ))}
       </div>
 
-      <p className="font-sans font-normal text-base -mb-2">
+      <p className="font-sans font-normal text-base">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra
         tortor vitae, ornare ac, ultricies lacus. In sed arcu enim eu. Risus nam
         egestas sit id eget.
       </p>
 
-      <Socials />
+      <Socials className="-mt-2 mb-4" />
     </div>
   );
 }
