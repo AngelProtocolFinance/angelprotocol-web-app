@@ -113,7 +113,6 @@ export const customApi = junoApi.injectEndpoints({
               adminProposalsUrl
             );
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
-            console.log(cw3config);
 
             return {
               data: {
