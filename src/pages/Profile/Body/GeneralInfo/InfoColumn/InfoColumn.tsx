@@ -20,7 +20,7 @@ export default function InfoColumn() {
         )}
         <Tag>501 (c) Non-profit</Tag>
         {profile.categories.sdgs.map((unsdg_num) => (
-          <Tag>
+          <Tag key={unsdg_num}>
             SDG #{unsdg_num} : {unsdgs[unsdg_num].title}
           </Tag>
         ))}
