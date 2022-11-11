@@ -8,9 +8,11 @@ export default function Tags() {
 
   return (
     <div className="flex flex-col items-start gap-3">
-      <Tag>
-        Verification required <Icon type="Info" />
-      </Tag>
+      {profile.kyc_donors_only && (
+        <Tag>
+          Verification required <Icon type="Info" />
+        </Tag>
+      )}
       <Tag>501 (c) Non-profit</Tag>
       {profile.categories.sdgs.map((unsdg_num) => (
         <Tag key={unsdg_num}>
