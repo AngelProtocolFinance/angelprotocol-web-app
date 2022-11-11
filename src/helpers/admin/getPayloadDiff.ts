@@ -13,7 +13,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
 
   /**
    * if prev is falsy (excluding 0),
-   * include next value if it's truthy (including )
+   * include next value if it's truthy (including 0)
    */
   for (const key in next) {
     const n = next[key];
