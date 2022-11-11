@@ -9,7 +9,7 @@ export default function InfoColumn() {
   const profile = useProfileContext();
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2">
+    <div className="flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white">
       <DonateButton />
 
       <div className="flex flex-col items-start gap-3">
@@ -61,7 +61,7 @@ export default function InfoColumn() {
 }
 
 const Tag = (props: PropsWithChildren<{}>) => (
-  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-[20px] font-body font-semibold text-sm">
+  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-[20px] font-body font-semibold text-sm dark:bg-blue-d5">
     {props.children}
   </div>
 );
@@ -72,7 +72,7 @@ function Detail(props: { title: string; value?: string | number }) {
       <h6 className="font-header font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>
-      <span className="font-work font-normal text-base text-gray-d1">
+      <span className="font-work font-normal text-base text-gray-d1 dark:text-gray">
         {props.value || "no data"}
       </span>
     </div>
