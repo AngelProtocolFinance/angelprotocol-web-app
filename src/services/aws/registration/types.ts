@@ -269,13 +269,10 @@ export function getRegistrationState({
     c &&
     c.PK &&
     r &&
-    r.ProofOfIdentity && //no need to check for other fields
-    m &&
-    //TODO: remove KYC in documentation - or request to add
-    m.KycDonorsOnly !== undefined
+    r.ProofOfIdentity //no need to check for other fields
   ) {
     const isComplete =
-      !!m.Banner && !!m.Logo && !!m.Overview && !!m.KycDonorsOnly;
+      m && !!m.Banner && !!m.Logo && !!m.Overview && !!m.KycDonorsOnly;
     return {
       step: 3,
       data: {

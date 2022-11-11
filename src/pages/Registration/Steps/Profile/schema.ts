@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { AdditionalInfoValues } from "../../types";
+import { FormValues } from "./types";
 import { ImgLink } from "components/ImgEditor/types";
 import { SchemaShape } from "schemas/types";
 import { genFileSchema } from "schemas/file";
@@ -19,8 +19,8 @@ const imgShape: SchemaShape<ImgLink> = {
   ),
 };
 
-export const schema = Yup.object().shape<SchemaShape<AdditionalInfoValues>>({
-  charityOverview: stringByteSchema(4, 1024),
-  charityLogo: Yup.object().shape(imgShape),
+export const schema = Yup.object().shape<SchemaShape<FormValues>>({
+  overview: stringByteSchema(4, 1024),
+  logo: Yup.object().shape(imgShape),
   banner: Yup.object().shape(imgShape),
 });
