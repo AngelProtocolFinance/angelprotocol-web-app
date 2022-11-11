@@ -73,7 +73,7 @@ function Detail(props: { title: string; value?: string | number }) {
         {props.title}
       </h6>
       <span className="font-work font-normal text-base text-gray-d1">
-        {props.value}
+        {props.value || "no data"}
       </span>
     </div>
   );
