@@ -42,7 +42,9 @@ export default function DiffTable<T extends object>(props: {
 }
 
 function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
-  if (!value) {
+  // value == null -> value is either null or undefined
+  // https://contribute.jquery.org/style-guide/js/#equality
+  if (value == null) {
     return <>not set</>;
   }
 
@@ -58,5 +60,15 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
     );
   }
 
-  return <>{value}</>;
+  if (typeof value === "object") {
+    return (
+      <div className="grid bg-white/10 shadow-inner rounded-md p-2 text-sm">
+        <code className="font-mono whitespace-pre overflow-x-auto text-left">
+          {JSON.stringify(value, null, 2)}
+        </code>
+      </div>
+    );
+  }
+
+  return <>{JSON.stringify(value)}</>;
 }
