@@ -35,6 +35,8 @@ export default function usePropose() {
     description,
     initial,
     isTime,
+    seed_asset,
+    new_endow_gas_money,
     ...newData
   }: CW3ConfigValues) {
     const diff = getPayloadDiff(initial, newData);
@@ -58,8 +60,8 @@ export default function usePropose() {
         : { height: newData.duration },
       require_execution: newData.require_execution,
       seed_split_to_liquid: newData.seed_split_to_liquid,
-      new_endow_gas_money: newData.new_endow_gas_money,
-      seed_asset: newData.seed_asset,
+      new_endow_gas_money: new_endow_gas_money,
+      seed_asset: seed_asset,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {

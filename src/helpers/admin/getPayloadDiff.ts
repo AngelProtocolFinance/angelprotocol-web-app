@@ -1,5 +1,3 @@
-import deepEqual from "deep-equal";
-
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   // include attr in next different from prev
@@ -7,7 +5,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
     const n = next[key];
     const p = prev[key];
 
-    if (!deepEqual(p, n, { strict: true })) {
+    if (p !== n) {
       diff[key] = n;
     }
   }
