@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
+import { StepGuardProps } from "services/aws/registration/StepGuard";
 import routes, { steps } from "../routes";
 import Contact from "./Contact";
 import Documentation from "./Docs";
@@ -35,28 +36,33 @@ export default function Steps() {
   }
 
   const stateId = requestId || "";
+  const guardProps: Omit<StepGuardProps, "step"> = {
+    init: initReg,
+    state: data,
+    stateId,
+  };
 
   return (
     <Routes>
       <Route
         path={steps.contact}
-        element={<Contact stateId={stateId} state={data} step={1} />}
+        element={<Contact {...guardProps} step={1} />}
       />
       <Route
         path={steps.doc}
-        element={<Documentation stateId={stateId} state={data} step={2} />}
+        element={<Documentation {...guardProps} step={2} />}
       />
       <Route
         path={steps.profile}
-        element={<Profile stateId={stateId} state={data} step={3} />}
+        element={<Profile {...guardProps} step={3} />}
       />
       <Route
         path={steps.wallet}
-        element={<Wallet stateId={stateId} state={data} step={4} />}
+        element={<Wallet {...guardProps} step={4} />}
       />
       <Route
         path={steps.summary}
-        element={<Dashboard stateId={stateId} state={data} step={5} />}
+        element={<Dashboard {...guardProps} step={5} />}
       />
     </Routes>
   );

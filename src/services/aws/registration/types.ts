@@ -261,6 +261,7 @@ export function getRegistrationState({
     r &&
     r.ProofOfIdentity && //no need to check for other fields
     m &&
+    //TODO: remove KYC in documentation - or request to add
     m.KycDonorsOnly !== undefined
   ) {
     const isComplete = !!m.Banner && !!m.Logo && !!m.Overview;
@@ -303,6 +304,7 @@ export function getRegistrationState({
   } else if (c && c.PK) {
     const isComplete =
       c.FirstName && c.LastName; /**... no need to check for other fields */
+    console.log(c.FirstName, c.LastName);
     return {
       step: 1,
       data: {

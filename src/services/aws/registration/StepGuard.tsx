@@ -7,23 +7,36 @@ import {
   useRef,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { RegStep, RegistrationState } from "./types";
+import { InitReg, RegStep, RegistrationState } from "./types";
+
+export type StepGuardProps = {
+  init: InitReg;
+  state: RegistrationState;
+  stateId: string;
+  step: number;
+};
 
 export function withStepGuard<T extends object>(Step: FC<T>) {
   return function StepGuard({
     step,
+    init,
     state,
     stateId,
     ...props
-  }: T & { state: RegistrationState; step: number; stateId: string }) {
+  }: T & StepGuardProps) {
     const idRef = useRef(stateId);
     const navigate = useNavigate();
 
+    console.log(state);
+
     useEffect(() => {
       if (idRef.current !== stateId) {
-        if ("data" in state) {
-          console.log("navigate");
-          navigate(`../${step + 1}`, { state: state.data.init });
+        if ("nav" in state && "next" in state.nav) {
+          if (state.nav.next) {
+            navigate(`../${state.nav.next}`, { state: init });
+          } else if (step < state.step) {
+            navigate(`../${step + 1}`, { state: init });
+          }
         }
       }
       idRef.current = stateId;
