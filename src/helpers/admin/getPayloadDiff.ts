@@ -1,3 +1,4 @@
+//NOTE: intended for shallow form objects only atm
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   // include attr in next different from prev
