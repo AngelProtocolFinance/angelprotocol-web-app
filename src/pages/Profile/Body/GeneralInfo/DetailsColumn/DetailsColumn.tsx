@@ -5,7 +5,7 @@ import { unsdgs } from "constants/unsdgs";
 import DonateButton from "../../DonateButton";
 import Socials from "./Socials";
 
-export default function InfoColumn({ className }: { className: string }) {
+export default function DetailsColumn({ className }: { className: string }) {
   const profile = useProfileContext();
 
   return (
