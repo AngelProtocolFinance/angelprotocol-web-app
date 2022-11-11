@@ -5,19 +5,19 @@ import { unsdgs } from "constants/unsdgs";
 import DonateButton from "../../DonateButton";
 import Socials from "./Socials";
 
-export default function InfoColumn() {
+export default function InfoColumn({ className }: { className: string }) {
   const profile = useProfileContext();
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white">
+    <div
+      className={`${className} flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white`}
+    >
       <DonateButton />
 
       <div className="flex flex-col items-start gap-3">
-        {profile.kyc_donors_only && (
-          <Tag>
-            Verification required <Icon type="Warning" />
-          </Tag>
-        )}
+        <Tag>
+          Verification required <Icon type="Info" />
+        </Tag>
         <Tag>501 (c) Non-profit</Tag>
         {profile.categories.sdgs.map((unsdg_num) => (
           <Tag key={unsdg_num}>
