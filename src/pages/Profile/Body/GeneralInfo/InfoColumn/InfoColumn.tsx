@@ -9,7 +9,7 @@ export default function InfoColumn() {
   const profile = useProfileContext();
 
   return (
-    <div className="flex flex-col gap-6 w-full lg:w-96 h-[928px] p-8 box-border border border-gray-l2 rounded text-gray-d2">
+    <div className="flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2">
       <DonateButton />
 
       <div className="flex flex-col items-start gap-3">
