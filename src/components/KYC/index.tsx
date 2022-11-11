@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
+import { placeHolderCountryOption } from "components/CountrySelector";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
@@ -12,10 +13,15 @@ export default function KYC(props: Props) {
   if (isOnDonation && props.state.kyc) {
     const { kyc } = props.state;
     if (kyc === "skipped") {
-      defaultValues = { hasAgreedToTerms: true };
+      defaultValues = {
+        hasAgreedToTerms: true,
+        country: placeHolderCountryOption,
+      };
     } else {
       defaultValues = { ...kyc };
     }
+  } else {
+    defaultValues = { country: placeHolderCountryOption };
   }
 
   const methods = useForm<FormValues>({

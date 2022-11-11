@@ -62,8 +62,8 @@ export default function Form() {
         placeholder="Manila, Philippines"
       />
       <Label className="text-gray-d2 -mb-2">Country</Label>
-      <CountrySelector<UV>
-        fieldName="country_of_origin"
+      <CountrySelector<UV, "country">
+        fieldName="country"
         classes={{
           container: "bg-gray-l4 shadow-inner-white rounded-md p-3",
           input: "bg-transparent",

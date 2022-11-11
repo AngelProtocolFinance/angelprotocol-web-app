@@ -64,7 +64,7 @@ export default function Form({ classes = "", ...props }: Props) {
           Country
         </Label>
         <div className="form-control rounded-md grid">
-          <CountrySelector
+          <CountrySelector<FV, "country">
             placeholder="United Kingdom"
             fieldName="country"
             classes={{

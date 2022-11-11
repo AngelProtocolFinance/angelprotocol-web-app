@@ -8,16 +8,14 @@ export const countriesApi = createApi({
   }),
   tagTypes: ["countries"],
   endpoints: (builder) => ({
-    countries: builder.query<CountryOption[], string>({
-      providesTags: (result, error, arg) =>
-        result ? [{ type: "countries", id: arg }] : ["countries"],
-      query: (arg) => ({
-        url: `name/${arg}`,
+    countries: builder.query<CountryOption[], unknown>({
+      query: () => ({
+        url: "all",
         params: { fields: "name,flags" },
       }),
 
       transformResponse(res: Country[]) {
-        return res.slice(0, 10 /**return first 5 only */).map((country) => ({
+        return res.map((country) => ({
           name: country.name.common,
           flag: country.flags.svg || country.flags.png || "",
         }));
