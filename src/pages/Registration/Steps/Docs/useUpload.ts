@@ -19,7 +19,6 @@ export default function useUpload() {
     website,
     hasAuthority,
     hasAgreedToTerms,
-    isKYCRequired,
     sdg,
     ...documents
   }: FormValues) => {

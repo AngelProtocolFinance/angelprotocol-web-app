@@ -41,7 +41,6 @@ export type Documentation = {
 
   //level3
   annualReports: FileObject[];
-  isKYCRequired: boolean;
 
   //so user won't click again on resume
   hasAuthority: boolean;
@@ -53,6 +52,7 @@ export type Profile = {
   banner: FileObject;
   logo: FileObject;
   overview: string;
+  isKYCRequired: boolean;
 };
 
 //STEP 4
@@ -227,8 +227,13 @@ export function getRegistrationState({
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
-        documentation: formatDocumentation(r, m.KycDonorsOnly),
-        profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
+        documentation: formatDocumentation(r),
+        profile: {
+          banner: m.Banner,
+          logo: m.Logo,
+          overview: m.Overview,
+          isKYCRequired: m.KycDonorsOnly,
+        },
         wallet: { address: m.JunoWallet! },
         status: r.RegistrationStatus,
       },
@@ -249,8 +254,13 @@ export function getRegistrationState({
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
-        documentation: formatDocumentation(r, m.KycDonorsOnly),
-        profile: { banner: m.Banner, logo: m.Logo, overview: m.Overview },
+        documentation: formatDocumentation(r),
+        profile: {
+          banner: m.Banner,
+          logo: m.Logo,
+          overview: m.Overview,
+          isKYCRequired: m.KycDonorsOnly,
+        },
         wallet: m.JunoWallet ? { address: m.JunoWallet! } : undefined,
       },
       nav: { back: "3" },
@@ -264,18 +274,24 @@ export function getRegistrationState({
     //TODO: remove KYC in documentation - or request to add
     m.KycDonorsOnly !== undefined
   ) {
-    const isComplete = !!m.Banner && !!m.Logo && !!m.Overview;
+    const isComplete =
+      !!m.Banner && !!m.Logo && !!m.Overview && !!m.KycDonorsOnly;
     return {
       step: 3,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
-        documentation: formatDocumentation(r, m.KycDonorsOnly),
+        documentation: formatDocumentation(r),
         profile:
           //must be defined altogether, can't initially set just one
           isComplete
             ? //asserted by isComplete, can be inlined, but need to reuse value
-              { banner: m.Banner!, logo: m.Logo!, overview: m.Overview! }
+              {
+                banner: m.Banner!,
+                logo: m.Logo!,
+                overview: m.Overview!,
+                isKYCRequired: m.KycDonorsOnly!,
+              }
             : undefined,
         level: 1,
       },
@@ -287,17 +303,14 @@ export function getRegistrationState({
     c.FirstName &&
     c.LastName /**... no need to check for other fields */
   ) {
-    const isComplete =
-      r && r.ProofOfIdentity && m && m.KycDonorsOnly !== undefined;
+    const isComplete = r && r.ProofOfIdentity;
 
     return {
       step: 2,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r.OrganizationName),
-        documentation: isComplete
-          ? formatDocumentation(r!, m.KycDonorsOnly!)
-          : undefined,
+        documentation: isComplete ? formatDocumentation(r) : undefined,
       },
       nav: { next: isComplete ? "3" : undefined, back: "1" },
     };
@@ -344,7 +357,7 @@ function formatContactPerson(cp: UCP, orgName: string): ContactPerson {
   };
 }
 
-function formatDocumentation(reg: UREG, isKYCRequired: boolean): Documentation {
+function formatDocumentation(reg: UREG): Documentation {
   const {
     ProofOfIdentity: poi,
     ProofOfRegistration: por,
@@ -365,7 +378,6 @@ function formatDocumentation(reg: UREG, isKYCRequired: boolean): Documentation {
 
     //level 3
     annualReports: ar || [],
-    isKYCRequired,
 
     //meta
     hasAuthority: true,
