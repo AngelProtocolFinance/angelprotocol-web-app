@@ -93,6 +93,7 @@ type InitialMetaData = Optional<
   | "JunoWallet"
   | "KycDonorsOnly"
 >;
+
 export type Metadata = {
   Banner?: FileObject;
   Logo?: FileObject;

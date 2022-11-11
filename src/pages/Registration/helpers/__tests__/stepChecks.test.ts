@@ -209,7 +209,6 @@ const VALIDLY_FILLED_APPLICATION: Application = {
     Banner: { name: "banner.png", publicUrl: "https://path.to.banner" },
     Logo: { name: "logo.png", publicUrl: "https://path.to.logo" },
     Overview: "text",
-    EndowmentContract: "juno1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     EndowmentId: 0,
     JunoWallet: "juno1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
     KycDonorsOnly: false,
