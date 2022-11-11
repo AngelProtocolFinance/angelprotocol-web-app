@@ -6,7 +6,7 @@ const logoStyle =
 
 export default function Logo() {
   return (
-    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate xl:justify-start">
       <Image />
     </div>
   );
