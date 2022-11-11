@@ -40,6 +40,21 @@ describe("getPayloadDiff", () => {
   });
 
   test("both zero in prev and next", () => {
-    expect(getPayloadDiff({ a: 0 }, { a: 0 })).toStrictEqual({});
+    expect(
+      getPayloadDiff(
+        //prettier ignore
+        { a: 0 },
+        { a: 0 }
+      )
+    ).toStrictEqual({});
+  });
+  test("prev is false", () => {
+    expect(
+      getPayloadDiff(
+        //prettier ignore
+        { a: false },
+        { a: false }
+      )
+    ).toStrictEqual({});
   });
 });
