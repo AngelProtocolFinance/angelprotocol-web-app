@@ -37,7 +37,7 @@ export default function InfoColumn() {
       <Detail title="registration no." value={profile.registration_number} />
       <Detail
         title="address"
-        value={`${profile.street_address}, ${profile.country_of_origin}`}
+        value={createAddress(profile.street_address, profile.country_of_origin)}
       />
       <Detail
         title="average annual budget"
@@ -77,4 +77,17 @@ function Detail(props: { title: string; value?: string | number }) {
       </span>
     </div>
   );
+}
+
+function createAddress(
+  street_address: string | undefined,
+  country_of_origin: string | undefined
+): string | undefined {
+  if (!street_address) {
+    return country_of_origin;
+  } else if (!country_of_origin) {
+    return street_address;
+  } else {
+    return street_address + ", " + country_of_origin;
+  }
 }
