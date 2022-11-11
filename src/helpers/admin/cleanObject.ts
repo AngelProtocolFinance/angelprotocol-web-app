@@ -3,10 +3,12 @@ export function cleanObject<T extends object>(obj: T) {
   for (const key in obj) {
     const val = obj[key];
     //include all truthy values and 0
-    if (val != null) {
+    if (val || isZero(val)) {
       cleanedObj[key] = val;
     }
   }
 
   return cleanedObj as T;
 }
+
+const isZero = (val: any) => val === 0;

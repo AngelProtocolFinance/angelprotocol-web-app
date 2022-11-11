@@ -1,11 +1,5 @@
 import { getPayloadDiff } from "./getPayloadDiff";
 
-type Case = {
-  prev: any;
-  next: any;
-  expected: any;
-};
-
 describe("getPayloadDiff", () => {
   test("include changes from prev to next", () => {
     expect(
@@ -42,24 +36,5 @@ describe("getPayloadDiff", () => {
 
   test("both zero in prev and next", () => {
     expect(getPayloadDiff({ a: 0 }, { a: 0 })).toMatchObject({});
-  });
-
-  const cases: Case[] = [
-    {
-      prev: {},
-      next: { a: "" },
-      expected: { a: "" },
-    },
-    {
-      prev: { a: "" },
-      next: {},
-      expected: {},
-    },
-  ];
-
-  test.each(cases)("Test case: %j", (testCase) => {
-    expect(getPayloadDiff(testCase.prev, testCase.next)).toMatchObject(
-      testCase.expected
-    );
   });
 });
