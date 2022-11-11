@@ -1,8 +1,9 @@
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
-import Icon, { IconTypes } from "components/Icon";
+import Icon from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
-import DonateButton from "../DonateButton";
+import DonateButton from "../../DonateButton";
+import Socials from "./Socials";
 
 export default function InfoColumn() {
   const profile = useProfileContext();
@@ -40,41 +41,4 @@ const Tag = (props: PropsWithChildren<{}>) => (
   <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-[20px] font-body font-semibold text-sm">
     {props.children}
   </div>
-);
-
-function Socials() {
-  const profile = useProfileContext();
-
-  return (
-    <div className="flex items-center gap-3">
-      {profile.social_media_urls.facebook && (
-        <SocialsIcon
-          href={profile.social_media_urls.facebook}
-          iconType="Facebook"
-        />
-      )}
-      {profile.social_media_urls.linkedin && (
-        <SocialsIcon
-          href={profile.social_media_urls.linkedin}
-          iconType="LinkedinIn"
-        />
-      )}
-      {profile.social_media_urls.twitter && (
-        <SocialsIcon
-          href={profile.social_media_urls.twitter}
-          iconType="Telegram"
-        />
-      )}
-    </div>
-  );
-}
-
-const SocialsIcon = (props: { href: string; iconType: IconTypes }) => (
-  <a
-    href={props.href}
-    rel="noopener noreferrer"
-    className="flex items-center justify-center p-1 w-10 h-10 border border-gray-d2 rounded"
-  >
-    <Icon type={props.iconType} />
-  </a>
 );
