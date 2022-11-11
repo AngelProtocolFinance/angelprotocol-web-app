@@ -31,7 +31,7 @@ export default function Details() {
   );
 }
 
-function Detail(props: { title: string; value?: string | number }) {
+function Detail(props: { title: string; value?: string }) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
       <h6 className="font-header font-bold text-xs tracking-wider uppercase">
