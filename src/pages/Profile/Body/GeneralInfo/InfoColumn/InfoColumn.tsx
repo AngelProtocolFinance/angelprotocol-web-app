@@ -33,6 +33,29 @@ export default function InfoColumn() {
       </p>
 
       <Socials className="-mt-2 mb-4" />
+
+      <Detail title="registration no." value={profile.registration_number} />
+      <Detail
+        title="address"
+        value={`${profile.street_address}, ${profile.country_of_origin}`}
+      />
+      <Detail
+        title="average annual budget"
+        value={profile.average_annual_budget}
+      />
+      <Detail title="average annual donations" value={profile.annual_revenue} />
+      <Detail
+        title="no. of employees"
+        value={
+          profile.number_of_employees
+            ? `1-${profile.number_of_employees} people`
+            : "1 person"
+        }
+      />
+      <Detail
+        title="navigation rating"
+        value={profile.charity_navigator_rating}
+      />
     </div>
   );
 }
@@ -42,3 +65,16 @@ const Tag = (props: PropsWithChildren<{}>) => (
     {props.children}
   </div>
 );
+
+function Detail(props: { title: string; value?: string | number }) {
+  return (
+    <div className="flex flex-col justify-center items-start gap-2 w-full">
+      <h6 className="font-header font-bold text-xs tracking-wider uppercase">
+        {props.title}
+      </h6>
+      <span className="font-work font-normal text-base text-gray-d1">
+        {props.value}
+      </span>
+    </div>
+  );
+}
