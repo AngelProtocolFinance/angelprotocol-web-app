@@ -35,9 +35,9 @@ export default function useCreateProposal() {
     description,
     initial,
     isTime,
-    ...data
+    ...newData
   }: CW3ConfigValues) {
-    const diff = getPayloadDiff(initial, data);
+    const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
@@ -50,12 +50,12 @@ export default function useCreateProposal() {
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
         absolute_percentage: {
-          percentage: `${data.threshold / 100}`,
+          percentage: `${newData.threshold / 100}`,
         },
       },
       max_voting_period: isTime
-        ? { time: data.duration }
-        : { height: data.duration },
+        ? { time: newData.duration }
+        : { height: newData.duration },
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
