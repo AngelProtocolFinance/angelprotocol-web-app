@@ -2,18 +2,18 @@
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   /** include attr in next different from prev,
-   *  given that next is truthy (including 0) */
+   *  given that next is truthy (including 0, and false) */
   for (const key in prev) {
     const n = next[key];
     const p = prev[key];
-    if (p !== n && (n || isZero(n))) {
+    if (p !== n && (n || isZero(n) || n === false)) {
       diff[key] = n;
     }
   }
 
   /**
    * if prev is falsy (excluding 0 and false),
-   * include next value if it's truthy (including 0)
+   * include next value if it's truthy (including 0, and false)
    */
   for (const key in next) {
     const n = next[key];
@@ -25,7 +25,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
      * && p !== false -> null | undefined | ""
      */
 
-    if (!p && !isZero(p) && p !== false && (n || isZero(n))) {
+    if (!p && !isZero(p) && p !== false && (n || isZero(n) || n === false)) {
       diff[key] = n;
     }
   }
