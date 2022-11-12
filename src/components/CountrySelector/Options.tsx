@@ -7,13 +7,14 @@ const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d2 shadow-lg rounded overflow-y-scroll scroller";
 
 export default function Options({ query }: { query: string }) {
+  const queryState = useCountriesQuery({});
   return (
     <QueryLoader
-      queryState={useCountriesQuery({})}
+      queryState={queryState}
       messages={{
         loading: "loading options..",
         error: "failed to get country options",
-        empty: `${query} not found`,
+        empty: query ? `${query} not found` : "no options found",
       }}
       filterFn={(c) =>
         c.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())

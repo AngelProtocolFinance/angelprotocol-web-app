@@ -97,9 +97,10 @@ export default function CountrySelector<
           className="absolute right-2 top-1/2 -translate-y-1/2 transform text-red hover:text-red-l1 active:text-red-d1 "
           onClick={() => {
             onCountryChange(placeHolderCountryOption);
+            setQuery("");
           }}
         >
-          <Icon type="Close" size={14} />
+          <Icon type="Close" size={16} />
         </button>
       )}
 
