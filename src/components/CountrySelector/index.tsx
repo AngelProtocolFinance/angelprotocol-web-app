@@ -62,6 +62,7 @@ export default function CountrySelector<
         onCountryChange({ name: country.name, flag: data });
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (
