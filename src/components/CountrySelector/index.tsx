@@ -1,6 +1,6 @@
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FieldValues,
   Path,
@@ -10,8 +10,9 @@ import {
 import { CountryOption } from "services/types";
 import ukflag from "assets/icons/uk-flag.png";
 import unknownFlag from "assets/icons/unknown-flag.jpeg";
-import { useCountriesQuery, useLazyCountryFlagQuery } from "services/countries";
-import Icon, { DrawerIcon } from "./Icon";
+import { useLazyCountryFlagQuery } from "services/countries";
+import Icon, { DrawerIcon } from "../Icon";
+import Options from "./Options";
 
 type BaseFormShape = { [index: string]: CountryOption };
 
@@ -48,18 +49,7 @@ export default function CountrySelector<
   });
 
   const [query, setQuery] = useState(country.name);
-  const { data: countries = [], isError, isLoading } = useCountriesQuery({});
   const [queryFlag] = useLazyCountryFlagQuery();
-
-  const filtered = useMemo(
-    () =>
-      query
-        ? countries.filter((c) =>
-            c.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
-          )
-        : countries,
-    [query, countries]
-  );
 
   /**
    * some consumers can only store countryName:string
@@ -73,16 +63,6 @@ export default function CountrySelector<
       }
     })();
   }, []);
-
-  if (isLoading) {
-    return <Skeleton classes={props.classes?.container} />;
-  }
-
-  if (isError) {
-    return <Skeleton classes={props.classes?.container} error />;
-  }
-
-  const numOptions = filtered.length;
 
   return (
     <Combobox
@@ -122,35 +102,8 @@ export default function CountrySelector<
         </button>
       )}
 
-      <Combobox.Options
-        className="absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d2 shadow-lg rounded overflow-y-scroll scroller"
-        style={{ height: numOptions <= 10 ? "auto" : "10rem" }}
-      >
-        {(numOptions > 0 &&
-          filtered.map((country) => (
-            <Combobox.Option
-              as={React.Fragment}
-              key={country.name}
-              value={country}
-            >
-              {({ active }) => (
-                <li
-                  className={`${
-                    active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                  } flex gap-2 p-2`}
-                >
-                  <img
-                    loading="lazy"
-                    src={country.flag}
-                    alt="flag"
-                    className="aspect-video w-8 object-contain"
-                  />
-                  <span>{country.name}</span>
-                </li>
-              )}
-            </Combobox.Option>
-          ))) || <div className="p-2 text-sm">{query} not found</div>}
-      </Combobox.Options>
+      <Options query={query} />
+
       <ErrorMessage
         errors={errors}
         name={`${props.fieldName}.${nameKey}`}
@@ -158,22 +111,5 @@ export default function CountrySelector<
         className={props.classes?.error}
       />
     </Combobox>
-  );
-}
-
-function Skeleton({ classes = "", error }: { classes?: string; error?: true }) {
-  return (
-    <div className={containerStyle + ` ${classes} h-[3.25rem] px-4 py-3.5`}>
-      {error ? (
-        <>
-          <Icon type="Warning" className="text-red mr-2" size={20} />
-          <p className="text-red text-sm">Failed to load country options</p>
-        </>
-      ) : (
-        <>
-          <Icon type="Loading" className="animate-spin" />
-        </>
-      )}
-    </div>
   );
 }
