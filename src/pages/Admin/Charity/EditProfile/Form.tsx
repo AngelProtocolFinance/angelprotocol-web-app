@@ -67,6 +67,8 @@ export default function Form() {
         classes={{
           container: "bg-gray-l4 shadow-inner-white rounded-md p-3",
           input: "bg-transparent",
+          error:
+            "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2",
         }}
       />
       <Label className="text-gray-d2 -mb-2">Overview</Label>

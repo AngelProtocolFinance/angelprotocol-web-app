@@ -1,11 +1,19 @@
 import { Combobox } from "@headlessui/react";
+import { ErrorMessage } from "@hookform/error-message";
 import React, { useEffect, useMemo, useState } from "react";
-import { FieldValues, Path, useController } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { CountryOption } from "services/types";
 import ukflag from "assets/icons/uk-flag.png";
 import unknownFlag from "assets/icons/unknown-flag.jpeg";
 import { useCountriesQuery, useLazyCountryFlagQuery } from "services/countries";
 import Icon, { DrawerIcon } from "./Icon";
+
+type BaseFormShape = { [index: string]: CountryOption };
 
 export const placeHolderCountryOption: CountryOption = {
   name: "",
@@ -14,6 +22,8 @@ export const placeHolderCountryOption: CountryOption = {
 
 const containerStyle =
   "relative items-center grid grid-cols-[auto_auto_1fr] w-full";
+
+const nameKey: keyof CountryOption = "name";
 
 export default function CountrySelector<
   T extends FieldValues,
@@ -24,11 +34,16 @@ export default function CountrySelector<
   classes?: {
     container?: string;
     input?: string;
+    error?: string;
   };
 }) {
   const {
+    formState: { errors },
+  } = useFormContext<BaseFormShape>();
+
+  const {
     field: { value: country, onChange: onCountryChange },
-  } = useController<{ [index: string]: CountryOption }>({
+  } = useController<BaseFormShape>({
     name: props.fieldName,
   });
 
@@ -136,6 +151,12 @@ export default function CountrySelector<
             </Combobox.Option>
           ))) || <div className="p-2 text-sm">{query} not found</div>}
       </Combobox.Options>
+      <ErrorMessage
+        errors={errors}
+        name={`${props.fieldName}.${nameKey}`}
+        as="span"
+        className={props.classes?.error}
+      />
     </Combobox>
   );
 }

@@ -30,8 +30,9 @@ export const countriesApi = createApi({
         url: `name/${countryName}`,
         params: { fields: "flags" },
       }),
-      transformResponse(res: Pick<Country, "flags">) {
-        return res.flags.svg || res.flags.png || "";
+      transformResponse(res: Country[]) {
+        const flags = res[0].flags;
+        return flags.svg || flags.png || "";
       },
     }),
   }),
