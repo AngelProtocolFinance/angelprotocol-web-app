@@ -89,7 +89,7 @@ function hasStartedKYC({
     address?.complement,
     city,
     postalCode,
-    country,
+    country.name,
     state,
     email,
   ].some((val) => val);
