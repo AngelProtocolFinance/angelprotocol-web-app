@@ -15,10 +15,12 @@ export const countriesApi = createApi({
       }),
 
       transformResponse(res: Country[]) {
-        return res.map((country) => ({
-          name: country.name.common,
-          flag: country.flags.svg || country.flags.png || "",
-        }));
+        return res
+          .map((country) => ({
+            name: country.name.common,
+            flag: country.flags.svg || country.flags.png || "",
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
       },
     }),
   }),
