@@ -2,8 +2,9 @@ import { Combobox } from "@headlessui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { CountryOption } from "services/types";
-import ukflag from "assets/icons/ukflag.png";
-import { useCountriesQuery } from "services/countries";
+import ukflag from "assets/icons/uk-flag.png";
+import unknownFlag from "assets/icons/unknown-flag.jpeg";
+import { useCountriesQuery, useLazyCountryFlagQuery } from "services/countries";
 import Icon, { DrawerIcon } from "./Icon";
 
 export const placeHolderCountryOption: CountryOption = {
@@ -33,6 +34,7 @@ export default function CountrySelector<
 
   const [query, setQuery] = useState(country.name);
   const { data: countries = [], isError, isLoading } = useCountriesQuery({});
+  const [queryFlag] = useLazyCountryFlagQuery();
 
   const filtered = useMemo(
     () =>
@@ -44,7 +46,18 @@ export default function CountrySelector<
     [query, countries]
   );
 
-  useEffect(() => {}, []);
+  /**
+   * some consumers can only store countryName:string
+   * in this case, get flag for them when this component loads
+   */
+  useEffect(() => {
+    (async () => {
+      if (country.name && !country.flag) {
+        const { data = "" } = await queryFlag(country.name);
+        onCountryChange({ name: country.name, flag: data });
+      }
+    })();
+  }, []);
 
   if (isLoading) {
     return <Skeleton classes={props.classes?.container} />;
@@ -63,7 +76,14 @@ export default function CountrySelector<
       as="div"
       className={`${containerStyle} ${props.classes?.container || ""}`}
     >
-      <img src={country.flag} alt="flag" className="w-8" />
+      <img
+        src={country.flag}
+        alt="flag"
+        className="w-8"
+        onError={(e) => {
+          e.currentTarget.src = unknownFlag;
+        }}
+      />
 
       <Combobox.Button>
         {({ open }) => <DrawerIcon isOpen={open} size={25} className="mx-1" />}

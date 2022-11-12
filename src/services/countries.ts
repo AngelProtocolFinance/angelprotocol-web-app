@@ -23,7 +23,18 @@ export const countriesApi = createApi({
           .sort((a, b) => a.name.localeCompare(b.name));
       },
     }),
+    countryFlag: builder.query<string, string>({
+      query: (
+        countryName /**should come from previously selected country*/
+      ) => ({
+        url: `name/${countryName}`,
+        params: { fields: "flags" },
+      }),
+      transformResponse(res: Pick<Country, "flags">) {
+        return res.flags.svg || res.flags.png || "";
+      },
+    }),
   }),
 });
 
-export const { useCountriesQuery } = countriesApi;
+export const { useCountriesQuery, useLazyCountryFlagQuery } = countriesApi;
