@@ -1,5 +1,6 @@
 import { Combobox } from "@headlessui/react";
-import React, { PropsWithChildren, useState } from "react";
+import { ErrorMessage } from "@hookform/error-message";
+import { PropsWithChildren, useState } from "react";
 import {
   FieldValues,
   Path,
@@ -7,6 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
+import { errorStyle } from "components/registration";
 
 type Props<T extends FieldValues> = {
   options: string[];
@@ -19,7 +21,9 @@ export default function Selector<T extends FieldValues>({
   options,
   name,
 }: Props<T>) {
-  const {} = useFormContext<T>();
+  const {
+    formState: { errors },
+  } = useFormContext<T>();
   const {
     field: { value: role, onChange: onRoleChange },
   } = useController<T>({ name });
@@ -49,24 +53,34 @@ export default function Selector<T extends FieldValues>({
         {({ open }) => <DrawerIcon isOpen={open} size={25} />}
       </Combobox.Button>
       <Combobox.Options className="rounded-sm text-sm border border-gray-l2 dark:border-bluegray absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
-        {!!query && (
-          <Combobox.Option value={query} as={React.Fragment}>
-            {({ active }) => <Item active={active}>Other: {query}</Item>}
-          </Combobox.Option>
-        )}
         {filtered.map((option) => (
-          <Combobox.Option key={option} value={option} as={React.Fragment}>
+          <Combobox.Option key={option} value={option}>
             {({ active }) => <Item active={active}>{option}</Item>}
           </Combobox.Option>
         ))}
+        {!!query && (
+          <Combobox.Option key="__other" value={query}>
+            {({ active }) => <Item active={active}>Other: {query}</Item>}
+          </Combobox.Option>
+        )}
       </Combobox.Options>
+      <ErrorMessage
+        errors={errors}
+        name={name as any}
+        as="p"
+        className={errorStyle}
+      />
     </Combobox>
   );
 }
 
 function Item({ active, children }: PropsWithChildren<{ active: boolean }>) {
   return (
-    <li className={`px-4 py-2 ${active ? "bg-blue-l2 dark:bg-blue-d2" : ""}`}>
+    <li
+      className={`px-4 py-2 cursor-pointer ${
+        active ? "bg-blue-l2 dark:bg-blue-d2" : ""
+      }`}
+    >
       {children}
     </li>
   );

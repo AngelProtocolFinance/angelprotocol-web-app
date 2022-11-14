@@ -8,10 +8,10 @@ export default function ContactForm() {
   return (
     <FormProvider {...methods}>
       <form className="padded-container max-w-[45.5rem] justify-self-center mt-28">
-        <h2 className="font-bold text-[2rem] mb-2">
+        <h2 className="font-bold text-center sm:text-left text-xl mb-2">
           Let's start with your contact details
         </h2>
-        <p className="text-lg mb-8">
+        <p className="text-center sm:text-left text-lg mb-8">
           This information will let us know more about your organization and who
           you are. Once this form is submitted, you will be able to resume your
           registration if it gets interrupted in the future.
@@ -102,7 +102,7 @@ export default function ContactForm() {
           placeholder="What is your goal working with Angel Protocol?"
           required
         />
-        <BtnPrim className="my-8 py-3 px-8">Continue</BtnPrim>
+        <BtnPrim className="my-8 py-3 px-8 w-full sm:w-auto">Continue</BtnPrim>
       </form>
     </FormProvider>
   );
