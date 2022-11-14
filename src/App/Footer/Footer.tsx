@@ -11,7 +11,7 @@ function Footer() {
         <Newsletter />
       </section>
 
-      <div className="w-full h-px bg-gray-l2 dark:bg-gray-l3" />
+      <div className="w-full h-px bg-gray-l2" />
 
       <section className="padded-container flex flex-col items-center gap-2 w-full py-4">
         <Socials />
