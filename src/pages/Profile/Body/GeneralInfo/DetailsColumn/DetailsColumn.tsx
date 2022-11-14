@@ -6,7 +6,7 @@ import Tags from "./Tags";
 export default function DetailsColumn({ className }: { className: string }) {
   return (
     <div
-      className={`${className} flex flex-col gap-6 w-full lg:w-96 p-8 box-border border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white`}
+      className={`${className} flex flex-col gap-6 w-full lg:w-96 p-8 border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white`}
     >
       <DonateButton />
 
