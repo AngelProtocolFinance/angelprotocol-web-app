@@ -20,7 +20,6 @@ function Link(props: { text: string; href?: string }) {
     <a
       href={props.href}
       rel="noreferrer"
-      target="_blank"
       className={`${linkStyles} cursor-pointer`}
     >
       {props.text}

@@ -13,7 +13,6 @@ export default function Newsletter() {
           <a
             href="https://angelprotocol.io/privacy-policy/"
             rel="noreferrer"
-            target="_blank"
             className="font-bold cursor-pointer underline"
           >
             Privacy Policy
