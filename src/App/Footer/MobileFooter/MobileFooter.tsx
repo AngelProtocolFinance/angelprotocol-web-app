@@ -36,7 +36,6 @@ function DownloadLitepaper() {
       className={`font-normal ${LINK_STYLE}`}
       href={LITEPAPER}
       rel="noreferrer"
-      target="_blank"
       title="Litepaper"
     >
       Download Litepaper
@@ -46,12 +45,7 @@ function DownloadLitepaper() {
 
 function BoldLink({ children, href }: PropsWithChildren<{ href: string }>) {
   return (
-    <a
-      className={`font-bold ${LINK_STYLE}`}
-      href={href}
-      rel="noreferrer"
-      target="_blank"
-    >
+    <a className={`font-bold ${LINK_STYLE}`} href={href} rel="noreferrer">
       {children}
     </a>
   );
