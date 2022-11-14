@@ -1,10 +1,15 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { ContactRoles, ReferralMethods } from "types/aws";
 import { Label } from "components/form";
-import { BtnPrim, TextInput } from "components/registration";
-import Selector from "./Selector";
+import { BtnPrim, Selector, TextInput } from "components/registration";
 
 export default function ContactForm() {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      role: { value: "ceo", label: "CEO" },
+      referralMethod: { value: "twitter", label: "Twitter" },
+    },
+  });
   return (
     <FormProvider {...methods}>
       <form className="padded-container max-w-[45.5rem] justify-self-center mt-28">
@@ -53,53 +58,59 @@ export default function ContactForm() {
           classes={{ container: "mb-4" }}
           required
         />
-        <div>
-          <Label required className="mb-2">
-            What's your role within the organization?
-          </Label>
-          <Selector
-            name="role"
-            placeholder="CEO"
-            options={[
-              "Chairperson / President",
-              "Vice-chairperson / Vice president",
-              "Secretary",
-              "Treasurer",
-              "CEO",
-              "CFO",
-              "Board Member",
-              "Leadership Team",
-              "Fundraising / Finance",
-              "Legal",
-              "Communications",
-            ]}
-          />
-        </div>
+        <Label required className="mb-2">
+          What's your role within the organization?
+        </Label>
+        <Selector
+          name="role"
+          options={(Object.entries(roles) as [ContactRoles, string][]).map(
+            ([value, label]) => ({
+              value,
+              label,
+            })
+          )}
+        >
+          {({ value }) =>
+            value === "other" && (
+              <TextInput
+                name="otherRole"
+                label="Specify your role"
+                required
+                classes={{ container: "mt-4" }}
+              />
+            )
+          }
+        </Selector>
 
         <h3 className="font-bold mt-8 mb-4">Other information</h3>
-        <div className="mb-4">
-          <Label required className="mb-2">
-            How did you find out about us?
-          </Label>
-          <Selector
-            name="referralMethod"
-            placeholder="Angel alliance"
-            options={[
-              "Angel Alliance",
-              "Discord",
-              "Facebook",
-              "Linked",
-              "Medium",
-              "Press",
-              "Search Engines",
-              "Twitter",
-            ]}
-          />
-        </div>
+        <Label required className="mb-2">
+          How did you find about us?
+        </Label>
+        <Selector
+          name="referralMethod"
+          options={(
+            Object.entries(referralMethods) as [ReferralMethods, string][]
+          ).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        >
+          {({ value }) =>
+            value === "other" && (
+              <TextInput
+                name="otherReferral"
+                label="Other referral method"
+                required
+                classes={{ container: "mt-4" }}
+              />
+            )
+          }
+        </Selector>
         <TextInput
           name="goals"
           label="Goals"
           placeholder="What is your goal working with Angel Protocol?"
+          classes={{ container: "mt-4" }}
           required
         />
         <BtnPrim className="my-8 py-3 px-8 w-full sm:w-auto">Continue</BtnPrim>
@@ -107,3 +118,30 @@ export default function ContactForm() {
     </FormProvider>
   );
 }
+
+const roles: { [key in ContactRoles]: string } = {
+  president: "Chairperson / President",
+  "vice-president": "Vice-chairperson / Vice president",
+  secretary: "Secretary",
+  treasurer: "Treasurer",
+  ceo: "CEO",
+  cfo: "CFO",
+  "board-member": "Board Member",
+  "leadership-team": "Leadership Team",
+  "fundraising-finance": "Fundraising / Finance",
+  legal: "Legal",
+  communications: "Communications",
+  other: "Other",
+};
+
+const referralMethods: { [key in ReferralMethods]: string } = {
+  "angel-alliance": "Angel Alliance",
+  discord: "Discord",
+  facebook: "Facebook",
+  linkedin: "Linkedin",
+  medium: "Medium",
+  press: "Press",
+  "search-engines": "Search engines",
+  twitter: "Twitter",
+  other: "Other",
+};
