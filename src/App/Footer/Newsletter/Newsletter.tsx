@@ -7,7 +7,7 @@ export default function Newsletter() {
         <h6 className="font-header font-black text-base uppercase text-center md:text-left">
           Subscribe to our newsletter
         </h6>
-        <p className="font-work font-normal text-sm text-center md:text-left">
+        <p className="font-body font-normal text-sm text-center md:text-left">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <a
