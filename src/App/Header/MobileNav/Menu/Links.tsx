@@ -18,7 +18,7 @@ export default function Links() {
   }, [dispatch]);
 
   return (
-    <nav className="grid gap-4 w-full py-4 font-extrabold font-heading">
+    <nav className="grid gap-4 w-full pt-4 font-extrabold font-heading">
       <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Marketplace
       </NavLink>
