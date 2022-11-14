@@ -10,9 +10,18 @@ export default function ContactForm() {
       referralMethod: { value: "twitter", label: "Twitter" },
     },
   });
+
+  async function fakeSubmit() {
+    await new Promise((r) => setTimeout(r, 1500));
+    alert("submitted");
+  }
+
   return (
     <FormProvider {...methods}>
-      <form className="padded-container max-w-[45.5rem] justify-self-center mt-28">
+      <form
+        className="padded-container max-w-[45.5rem] justify-self-center mt-28"
+        onSubmit={methods.handleSubmit(fakeSubmit)}
+      >
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
           Let's start with your contact details
         </h2>
@@ -113,7 +122,9 @@ export default function ContactForm() {
           classes={{ container: "mt-4" }}
           required
         />
-        <BtnPrim className="my-8 py-3 px-8 w-full sm:w-auto">Continue</BtnPrim>
+        <BtnPrim type="submit" className="my-8 py-3 px-8 w-full sm:w-auto">
+          Continue
+        </BtnPrim>
       </form>
     </FormProvider>
   );

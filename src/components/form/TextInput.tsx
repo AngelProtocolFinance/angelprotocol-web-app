@@ -24,11 +24,12 @@ export function TextInput<T extends FieldValues>({
   name,
   classes,
   required,
+  disabled,
   ...props
 }: TextInputProps<T>) {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext();
 
   const id = "__" + String(name);
@@ -40,6 +41,7 @@ export function TextInput<T extends FieldValues>({
       <input
         {...props}
         {...register(name)}
+        disabled={isSubmitting || disabled}
         type="text"
         className={classes?.input}
         autoComplete="off"

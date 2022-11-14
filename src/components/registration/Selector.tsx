@@ -39,15 +39,11 @@ export function Selector<
         as="div"
         className={`relative ${container}`}
       >
-        <Listbox.Button className="w-full px-4 py-3.5 text-sm focus:outline-none bg-transparent flex justify-between items-center rounded  border border-gray-l2 focus-within:outline-none focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4">
+        <Listbox.Button className="w-full flex justify-between items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
           {({ open }) => (
             <>
               <span>{selected.label}</span>
-              <DrawerIcon
-                className="text-gray-d2 ml-auto"
-                isOpen={open}
-                size={25}
-              />
+              <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
             </>
           )}
         </Listbox.Button>
