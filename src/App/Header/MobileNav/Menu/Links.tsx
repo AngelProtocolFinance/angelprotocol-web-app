@@ -22,7 +22,7 @@ export default function Links() {
       <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Home
       </NavLink>
-      <NavLink to={appRoutes.marketplace} className={navLinkStyle} end>
+      <NavLink to={appRoutes.marketplace} className={navLinkStyle}>
         Marketplace
       </NavLink>
       <NavLink to={appRoutes.leaderboard} className={navLinkStyle}>
