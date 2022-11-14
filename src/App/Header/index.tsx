@@ -36,10 +36,10 @@ export default function Header({ classes = "" }: { classes?: string }) {
           : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
       } py-3 transition ease-in-out duration-300 w-full`}
     >
-      <div className="grid items-center gap-2 padded-container grid-cols-[auto_1fr_auto]">
+      <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
         <Logo />
         <DesktopNav classes="hidden lg:flex" />
-        <div className="flex gap-x-2 justify-self-end">
+        <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />
           <Airdrop />
