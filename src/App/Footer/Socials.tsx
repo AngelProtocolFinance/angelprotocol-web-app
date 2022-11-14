@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { SOCIAL_MEDIA_LINKS } from "../constants";
+import { SOCIAL_MEDIA_LINKS } from "./constants";
 
 export default function Socials() {
   return (
