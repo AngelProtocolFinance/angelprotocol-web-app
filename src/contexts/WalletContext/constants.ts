@@ -1,7 +1,7 @@
 import { WithoutInstallers } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
-// import binanceWalletIcon from "assets/icons/wallets/binance.png";
+import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";

@@ -14,7 +14,7 @@ import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 export default function useInjectedProvider(
-  providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
+  providerId: Extract<ProviderId, "metamask" | "xdefi-evm" | "binance-wallet">,
   connectorName = prettifyId(providerId),
   connectorLogo?: string
 ) {
