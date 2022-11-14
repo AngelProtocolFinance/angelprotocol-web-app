@@ -1,4 +1,4 @@
-import { SectionProps, SocialMedia } from "./types";
+import { SocialMedia } from "./types";
 import { IconTypes } from "components/Icon";
 import { LITEPAPER } from "constants/urls";
 
@@ -39,6 +39,14 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
     iconType: "Instagram",
     link: "https://www.instagram.com/angelprotocol/",
   },
+};
+
+type SectionProps = {
+  title: string;
+  links: {
+    text: string;
+    href?: string;
+  }[];
 };
 
 export const SECTIONS_DATA: SectionProps[] = [
