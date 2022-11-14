@@ -4,9 +4,7 @@ import { appRoutes } from "constants/routes";
 
 export default function DesktopNav({ classes = "" }: { classes?: string }) {
   return (
-    <nav
-      className={`${classes} justify-self-start items-center font-body text-base`}
-    >
+    <nav className={`${classes} items-center font-body text-base`}>
       <NavLink className={styler} to={appRoutes.index}>
         Marketplace
       </NavLink>
