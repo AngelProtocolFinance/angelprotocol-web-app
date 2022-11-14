@@ -16,7 +16,7 @@ export default function Menu({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           className="flex items-center text-white justify-center"
         >
-          <Icon type="Close" size={24} />
+          <Icon type="Close" size={32} />
         </button>
       </div>
       <div className="flex flex-col sm:flex-row gap-3 padded-container">
