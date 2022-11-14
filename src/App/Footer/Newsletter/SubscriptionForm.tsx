@@ -57,7 +57,7 @@ export default function SubscriptionForm() {
       </div>
       <button
         type="submit"
-        className="btn-orange flex items-center justify-center py-2 px-3 rounded-lg text-xs w-full xl:w-min xl:text-sm"
+        className="btn btn-orange py-2 px-3 rounded-lg text-xs w-full xl:w-min xl:text-sm"
         disabled={isSubmitting}
       >
         Subscribe
