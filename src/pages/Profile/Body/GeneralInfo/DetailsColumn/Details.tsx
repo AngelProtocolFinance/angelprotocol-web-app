@@ -10,11 +10,8 @@ export default function Details() {
         title="address"
         value={createAddress(profile.street_address, profile.country_of_origin)}
       />
-      <Detail
-        title="average annual budget"
-        value={profile.average_annual_budget}
-      />
-      <Detail title="average annual donations" value={profile.annual_revenue} />
+      <Detail title="average annual budget" />
+      <Detail title="average annual donations" />
       <Detail
         title="no. of employees"
         value={
