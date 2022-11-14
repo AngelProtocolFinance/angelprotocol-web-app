@@ -34,7 +34,7 @@ export default function Header({ classes = "" }: { classes?: string }) {
         isScrolled
           ? "bg-blue dark:bg-blue-d3 shadow-lg"
           : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
-      } py-3 transition ease-in-out duration-300 w-full`}
+      } py-4 transition ease-in-out duration-300 w-full`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
         <Logo />
