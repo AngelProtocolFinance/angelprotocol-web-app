@@ -10,7 +10,10 @@ export default function WalletSelector(props: Props) {
   const { connections } = useSetWallet();
   return (
     <Menu className="relative" as="div">
-      <Menu.Button className={COMMON_BUTTON_STYLE} disabled={props.isLoading}>
+      <Menu.Button
+        className={`${COMMON_BUTTON_STYLE} text-base`}
+        disabled={props.isLoading}
+      >
         <Icon type="Wallet" size={20} />
         <span className="uppercase">
           {props.isLoading ? "Loading" : "Connect"}
