@@ -14,11 +14,11 @@ export const WALLET_METADATA: {
     name: string;
   };
 } = {
-  // "binance-wallet": {
-  //   logo: binanceWalletIcon,
-  //   installUrl: "https://www.bnbchain.org/en/binance-wallet",
-  //   name: "Binance Wallet",
-  // },
+  "binance-wallet": {
+    logo: binanceWalletIcon,
+    installUrl: "https://www.bnbchain.org/en/binance-wallet",
+    name: "Binance Wallet",
+  },
   metamask: {
     logo: metamaskIcon,
     installUrl: "https://metamask.io/",
