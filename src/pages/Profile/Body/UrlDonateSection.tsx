@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
+import DonateButton from "./DonateButton";
 
 export default function UrlDonateSection({ className }: { className: string }) {
   const profile = useProfileContext();
@@ -22,12 +21,8 @@ export default function UrlDonateSection({ className }: { className: string }) {
           </a>
         </span>
       )}
-      <Link
-        to={appRoutes.donate + `/${profile.id}`}
-        className="btn btn-orange w-full h-12 max-w-xs py-2 px-6 rounded text-sm normal-case"
-      >
-        Donate now
-      </Link>
+
+      <DonateButton />
     </div>
   );
 }
