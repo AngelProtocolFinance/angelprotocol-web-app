@@ -19,7 +19,7 @@ import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
-export default function usePropose() {
+export default function useCreateProposal() {
   const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
@@ -30,14 +30,14 @@ export default function usePropose() {
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
-  async function configureCW3({
+  async function createProposal({
     title,
     description,
     initial,
     isTime,
-    ...data
+    ...newData
   }: CW3ConfigValues) {
-    const diff = getPayloadDiff(initial, data);
+    const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
@@ -50,12 +50,12 @@ export default function usePropose() {
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
         absolute_percentage: {
-          percentage: `${data.threshold / 100}`,
+          percentage: `${newData.threshold / 100}`,
         },
       },
       max_voting_period: isTime
-        ? { time: data.duration }
-        : { height: data.duration },
+        ? { time: newData.duration }
+        : { height: newData.duration },
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
@@ -89,7 +89,7 @@ export default function usePropose() {
 
   return {
     isTime: getValues("isTime"),
-    configureCW3: handleSubmit(configureCW3),
+    createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }

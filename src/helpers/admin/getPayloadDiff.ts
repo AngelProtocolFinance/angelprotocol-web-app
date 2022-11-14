@@ -5,6 +5,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   for (const key in prev) {
     const n = next[key];
     const p = prev[key];
+
     if (p !== n) {
       diff[key] = n;
     }

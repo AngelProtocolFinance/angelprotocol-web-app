@@ -1,11 +1,11 @@
 import { CW3ConfigValues as CV } from "pages/Admin/types";
 import { FormContainer, Submitter, TextInput } from "components/admin";
-import usePropose from "./usePropose";
+import useCreateProposal from "./useCreateProposal";
 
 export default function Form() {
-  const { configureCW3, isSubmitDisabled, isTime } = usePropose();
+  const { createProposal, isSubmitDisabled, isTime } = useCreateProposal();
   return (
-    <FormContainer onSubmit={configureCW3}>
+    <FormContainer onSubmit={createProposal}>
       <TextInput<CV> title="Proposal Title" name="title" required />
       <TextInput<CV>
         title="proposal description"
