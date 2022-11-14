@@ -10,7 +10,7 @@ export default function Tags() {
     <div className="flex flex-col items-start gap-3">
       {profile.kyc_donors_only && (
         <Tag>
-          Verification required <Icon type="Info" />
+          Verification required <Icon type="Info" size={24} />
         </Tag>
       )}
       <Tag>501 (c) Non-profit</Tag>
