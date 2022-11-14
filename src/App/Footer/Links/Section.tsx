@@ -13,7 +13,7 @@ export default function Section({ title, links }: SectionProps) {
   );
 }
 
-const linkStyles = "font-sans font-semibold text-xs";
+const linkStyles = "font-work font-semibold text-xs";
 
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
