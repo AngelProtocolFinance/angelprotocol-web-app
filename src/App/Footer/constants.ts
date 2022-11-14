@@ -1,6 +1,15 @@
-import { SocialMedia } from "./types";
 import { IconTypes } from "components/Icon";
 import { LITEPAPER } from "constants/urls";
+
+type SocialMedia =
+  | "Twitter"
+  | "Telegram"
+  | "Discord"
+  | "YouTube"
+  | "Medium"
+  | "Facebook"
+  | "Linkedin"
+  | "Instagram";
 
 type SocialMediaLinks = {
   [index in SocialMedia]: { iconType: IconTypes; link: string };
