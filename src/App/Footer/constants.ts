@@ -41,7 +41,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   },
 };
 
-type SectionProps = {
+type Section = {
   title: string;
   links: {
     text: string;
@@ -49,7 +49,7 @@ type SectionProps = {
   }[];
 };
 
-export const SECTIONS_DATA: SectionProps[] = [
+export const SECTIONS_DATA: Section[] = [
   {
     title: "Products",
     links: [
