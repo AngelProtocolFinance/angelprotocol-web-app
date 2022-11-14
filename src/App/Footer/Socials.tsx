@@ -3,7 +3,7 @@ import { SOCIAL_MEDIA_LINKS } from "./constants";
 
 export default function Socials() {
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex items-center gap-4 md:gap-8">
       {Object.entries(SOCIAL_MEDIA_LINKS).map(([type, { iconType, link }]) => {
         return (
           <a
