@@ -62,11 +62,13 @@ export default function Form() {
         placeholder="Manila, Philippines"
       />
       <Label className="text-gray-d2 -mb-2">Country</Label>
-      <CountrySelector<UV>
-        fieldName="country_of_origin"
+      <CountrySelector<UV, "country">
+        fieldName="country"
         classes={{
           container: "bg-gray-l4 shadow-inner-white rounded-md p-3",
           input: "bg-transparent",
+          error:
+            "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2",
         }}
       />
       <Label className="text-gray-d2 -mb-2">Overview</Label>
@@ -84,18 +86,6 @@ export default function Form() {
 
       <Label className="text-gray-d2 -mb-2">Organization</Label>
       <GroupContainer>
-        <TextInput<UV>
-          name="average_annual_budget"
-          title="Annual budget"
-          placeholder="$100,000"
-          plain
-        />
-        <TextInput<UV>
-          name="annual_revenue"
-          title="Annual revenue"
-          placeholder="$120,000"
-          plain
-        />
         <TextInput<UV>
           name="number_of_employees"
           title="Number of employeees"

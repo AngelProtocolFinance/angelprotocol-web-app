@@ -1,4 +1,5 @@
 import { ImgLink } from "components/ImgEditor/types";
+import { CountryOption } from "services/types";
 import { EndowmentApplication, Registration } from "types/aws";
 import {
   AllianceMember,
@@ -241,9 +242,10 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type ProfileWithSettings = ProfileUpdate &
+export type ProfileWithSettings = Omit<ProfileUpdate, "country_of_origin"> &
   Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
+    country: CountryOption;
     sdg: UNSDG_NUMS;
     image: ImgLink;
     logo: ImgLink;
@@ -251,10 +253,11 @@ export type ProfileWithSettings = ProfileUpdate &
 
 export type FlatProfileWithSettings = Omit<
   ProfileWithSettings,
-  "image" | "logo"
+  "image" | "logo" | "country"
 > & {
   image: string;
   logo: string;
+  country: string;
 };
 
 export type ProfileFormValues = ProposalBase &

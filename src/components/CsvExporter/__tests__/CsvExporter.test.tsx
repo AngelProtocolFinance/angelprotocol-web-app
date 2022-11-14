@@ -21,7 +21,11 @@ describe("CsvExporter tests", () => {
       { key1: "value21", key2: "value22" },
     ];
     const filename = "testfile.csv";
-    render(<CsvExporter data={data} headers={headers} filename={filename} />);
+    render(
+      <CsvExporter data={data} headers={headers} filename={filename}>
+        Save
+      </CsvExporter>
+    );
     expect(mockChildComponent).toHaveBeenCalledWith(
       expect.objectContaining({ data, filename, headers })
     );
