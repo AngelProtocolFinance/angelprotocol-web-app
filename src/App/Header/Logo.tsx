@@ -1,4 +1,4 @@
-import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
+import betaWhiteLogo from "assets/images/angelprotocol-logo-white.svg";
 
 export default function Logo() {
   return (
