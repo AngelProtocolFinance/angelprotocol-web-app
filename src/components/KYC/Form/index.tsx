@@ -4,6 +4,7 @@ import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
+import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
@@ -99,7 +100,7 @@ export default function Form({ classes = "", ...props }: Props) {
         <a
           className="underline text-orange"
           target="_blank"
-          href="https://angelprotocol.io/terms-of-use"
+          href={TERMS_OF_USE}
           rel="noopener noreferrer"
         >
           Terms & Conditions

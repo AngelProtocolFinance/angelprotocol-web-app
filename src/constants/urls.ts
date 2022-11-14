@@ -11,3 +11,5 @@ export const LITEPAPER =
 export const PRIVACY_POLICY = "https://angelprotocol.io/privacy-policy/";
 export const SUPPORT =
   "https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37";
+
+export const TERMS_OF_USE = "https://angelprotocol.io/terms-of-use";
