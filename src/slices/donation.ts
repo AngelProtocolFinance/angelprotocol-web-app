@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { CountryOption } from "services/types";
 import { Token } from "types/aws";
 
 export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
@@ -80,7 +81,7 @@ export type KYC = {
   address: { street: string; complement: string };
   city: string;
   postalCode: string;
-  country: string;
+  country: CountryOption;
   state: string;
   email: string;
   hasAgreedToTerms: boolean;
