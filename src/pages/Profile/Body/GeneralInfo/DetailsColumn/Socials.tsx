@@ -32,8 +32,8 @@ const SocialsIcon = (props: { href: string; iconType: IconTypes }) => (
   <a
     href={props.href}
     rel="noopener noreferrer"
-    className="flex items-center justify-center p-2 w-10 h-10 border border-gray-d2 rounded hover:text-blue-l1 hover:border-blue-l1 active:text-blue dark:border-white"
+    className="flex items-center justify-center w-10 h-10 border border-gray-d2 rounded hover:text-blue-l1 hover:border-blue-l1 active:text-blue dark:border-white"
   >
-    <Icon type={props.iconType} className="w-full h-full" />
+    <Icon type={props.iconType} className="w-6 h-6" />
   </a>
 );
