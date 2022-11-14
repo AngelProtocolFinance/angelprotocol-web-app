@@ -121,8 +121,8 @@ export interface ProfileResponse {
   contact_email?: string;
   social_media_urls: SocialMedialUrls;
   number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
+  // average_annual_budget?: string;
+  // annual_revenue?: string;
   charity_navigator_rating?: string;
 }
 
@@ -139,8 +139,8 @@ export interface ProfileUpdate {
   twitter?: string;
   linkedin?: string;
   number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
+  // average_annual_budget?: string;
+  // annual_revenue?: string;
   charity_navigator_rating?: string;
 }
 

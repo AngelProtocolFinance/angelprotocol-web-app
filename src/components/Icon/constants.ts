@@ -1,10 +1,10 @@
 import { IconType } from "react-icons";
 import {
   AiFillCaretLeft,
+  AiFillCheckCircle,
   AiFillHeart,
   AiFillYoutube,
   AiOutlineCheck,
-  AiOutlineCheckCircle,
   AiOutlineCopy,
   AiOutlineDislike,
   AiOutlineEdit,
@@ -61,7 +61,13 @@ import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoDash, GoLinkExternal } from "react-icons/go";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdSettings } from "react-icons/io";
-import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
+import {
+  IoClose,
+  IoCloseCircle,
+  IoCrop,
+  IoWalletSharp,
+  IoWarning,
+} from "react-icons/io5";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -96,10 +102,11 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Check: AiOutlineCheck,
   Menu: FiMenu,
   Close: IoClose,
+  CloseCircle: IoCloseCircle,
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
   Info: AiOutlineInfoCircle,
-  CheckCircle: AiOutlineCheckCircle,
+  CheckCircle: AiFillCheckCircle,
   Parachute: FaParachuteBox,
   StopWatch: FaStopwatch,
   Exclamation: FaExclamation,
