@@ -19,7 +19,7 @@ import { genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
-export default function usePropose() {
+export default function useCreateProposal() {
   const { cw3, successLink, successMessage } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
