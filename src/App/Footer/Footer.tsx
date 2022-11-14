@@ -11,7 +11,7 @@ function Footer() {
         <Newsletter />
       </section>
 
-      <div className="w-full h-px bg-gray-l2" />
+      <Separator />
 
       <section className="padded-container flex flex-col items-center gap-2 w-full py-4">
         <Socials />
@@ -25,3 +25,5 @@ function Footer() {
 }
 
 export default memo(Footer);
+
+const Separator = () => <div className="w-full h-px bg-gray-l2" />;
