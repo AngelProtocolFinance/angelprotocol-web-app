@@ -1,6 +1,6 @@
-import { SectionProps } from "./types";
 import { LITEPAPER } from "constants/urls";
-import Section from "./Section";
+
+const linkStyles = "font-body font-semibold text-sm";
 
 export default function Links() {
   return (
@@ -9,6 +9,41 @@ export default function Links() {
         <Section key={section.title} {...section} />
       ))}
     </div>
+  );
+}
+
+type SectionProps = {
+  title: string;
+  links: {
+    text: string;
+    href?: string;
+  }[];
+};
+
+function Section({ title, links }: SectionProps) {
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <h6 className="font-heading font-black text-base uppercase">{title}</h6>
+      <div className="flex flex-col items-start h-full gap-1">
+        {links.map((link) => (
+          <Link key={link.text} {...link} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Link(props: { text: string; href?: string }) {
+  return props.href ? (
+    <a
+      href={props.href}
+      rel="noreferrer"
+      className={`${linkStyles} cursor-pointer`}
+    >
+      {props.text}
+    </a>
+  ) : (
+    <span className={linkStyles}>{props.text}</span>
   );
 }
 
