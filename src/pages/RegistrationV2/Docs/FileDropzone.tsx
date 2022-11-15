@@ -55,7 +55,7 @@ export default function FileDropzone<
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
               ? "border-gray-d1 dark:border-gray"
-              : "border-gray-l2 dark:border-bluegray focus:border-blue-l1 focus:dark:border-blue-d1"
+              : "border-gray-l2 dark:border-bluegray focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting || props.disabled
               ? "cursor-default bg-gray-l4 dark:bg-bluegray-d1"
