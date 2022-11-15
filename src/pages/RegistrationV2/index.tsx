@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import ContactForm from "./ Contact";
+import ContactForm from "./Contact";
 import Resume from "./Resume";
 import Signup from "./Signup";
 import { routes } from "./routes";
