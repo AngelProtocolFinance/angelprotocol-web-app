@@ -34,12 +34,12 @@ export default function Header({ classes = "" }: { classes?: string }) {
         isScrolled
           ? "bg-blue dark:bg-blue-d3 shadow-lg"
           : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
-      } py-3 transition ease-in-out duration-300 w-full`}
+      } py-4 transition ease-in-out duration-300 w-full`}
     >
-      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container">
+      <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
         <Logo />
         <DesktopNav classes="hidden lg:flex" />
-        <div className="flex gap-x-2 ml-auto lg:ml-0">
+        <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />
           <Airdrop />
