@@ -30,7 +30,10 @@ export default function FileDropzone<
   const filesId = `${props.name}.${filesKey}` as Path<T>;
   const previewsId = `${props.name}.${previewsKey}` as Path<T>;
 
-  const { getValues } = useFormContext<T>();
+  const {
+    getValues,
+    formState: { errors },
+  } = useFormContext<T>();
 
   const {
     field: { value: files, onChange: onFilesChange },
@@ -44,16 +47,27 @@ export default function FileDropzone<
     disabled: props.disabled,
   });
 
-  const className = `relative flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
-    isDragActive ? "bg-blue/50 ring ring-blue" : "bg-white outline-none"
-  } ${props.className} ${
-    props.disabled ? "cursor-default bg-gray/40" : "cursor-pointer"
-  }`;
-
   return (
-    <div {...getRootProps({ className })}>
+    <div
+      {...getRootProps({
+        className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none  ${
+          isDragActive
+            ? "border-gray-d1"
+            : "border-gray-l2 focus:border-blue-l1"
+        } ${
+          props.disabled
+            ? "cursor-default bg-gray-l4"
+            : "bg-orange-l6 cursor-pointer"
+        } ${props.className ?? ""}`,
+      })}
+    >
       <input {...getInputProps({ id: filesId })} />
-      <DropzoneText files={files} previews={getValues(previewsId)} />
+      <DropzoneText
+        files={files}
+        previews={getValues(previewsId)}
+        filesId={filesId}
+        formErrors={errors}
+      />
 
       {(files as File[])
         //show 1 error for now
@@ -70,15 +84,21 @@ export default function FileDropzone<
   );
 }
 
-function DropzoneText({ files, previews }: Asset) {
+function DropzoneText({
+  formErrors,
+  filesId,
+  files,
+  previews,
+}: Asset & { filesId: string; formErrors: any }) {
   const isFilesEmpty = files.length <= 0;
   const isPreviewsEmpty = previews.length <= 0;
 
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
-      <span className="flex items-center gap-1 text-dark-grey text-sm">
-        <Icon type="Upload" className="text-lg" />
-        Select file or Drag &amp; Drop
+      <span className="grid justify-items-center text-sm text-gray-d1">
+        <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
+        <p className="font-semibold mb-1">Upload file</p>
+        <span>Click to Browse or Drag &amp; Drop</span>
       </span>
     );
   }
@@ -92,12 +112,20 @@ function DropzoneText({ files, previews }: Asset) {
       </label>
     );
   } else {
-    //TODO: once UI is rectangular, add error messages below each name
-    const names = files.map(({ name }) => name).join(" ,");
     return (
-      <label className="flex text-black text-sm truncate" title={names}>
-        {names}
-      </label>
+      <div className="grid">
+        {files.map(({ name }, i) => (
+          <p>
+            <label className="text-sm">{name}</label>
+            <ErrorMessage
+              errors={formErrors}
+              name={`${filesId}.${i}`}
+              as="span"
+              className="text-red text-xs before:content-['-'] before:mx-1"
+            />
+          </p>
+        ))}
+      </div>
     );
   }
 }

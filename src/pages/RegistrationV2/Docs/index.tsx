@@ -1,6 +1,7 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { ContactRoles, ReferralMethods } from "types/aws";
+import { FormValues as FV, FormValues } from "./types";
+import { ContactRoles, FileObject, ReferralMethods } from "types/aws";
 import Checkbox from "components/Checkbox";
 import { Label } from "components/form";
 import {
@@ -11,14 +12,21 @@ import {
   checkBoxStyle,
 } from "components/registration";
 import { TERMS_OF_USE } from "constants/urls";
-import { Asset } from "./FileDropzone";
+import FileDropzone, { Asset } from "./FileDropzone";
 import { Radio } from "./Radio";
+import { schema } from "./schema";
 
 export default function Docs() {
-  const methods = useForm({
+  const methods = useForm<FV>({
+    mode: "all",
+    reValidateMode: "onChange",
+    resolver: yupResolver(schema),
     defaultValues: {
-      role: { value: "ceo", label: "CEO" },
-      referralMethod: { value: "twitter", label: "Twitter" },
+      proofOfIdentity: genFileAsset([]),
+      proofOfRegistration: genFileAsset([]),
+      financialStatements: genFileAsset([]),
+      auditedFinancialReports: genFileAsset([]),
+      website: "",
     },
   });
 
@@ -33,7 +41,20 @@ export default function Docs() {
         className="padded-container max-w-[45.5rem] justify-self-center mt-28"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
+        <Level num={1} />
+        <p className="mt-2 text-sm">
+          Your organization is eligible to create its endowment. Donors can
+          donate funds through your organization’s landing page on Angel
+          Protocol’s interface. Your organization is not displayed on the
+          marketplace and cannot be found through the search bar.
+        </p>
+        <Label className="mt-8 mb-2" required>
+          Your proof of identity
+        </Label>
+        <FileDropzone<FV, "proofOfIdentity"> name="proofOfIdentity" multiple />
+
         <Separator classes="my-8" />
+
         <Label>
           Only accept donations from donors who have provided their personal
           information (name and address):
@@ -49,8 +70,9 @@ export default function Docs() {
           classes={{ container: "text-sm mb-3", checkbox: checkBoxStyle }}
         >
           By checking this box, you declare that you have the authority to
-          create an endowment in the name of My Organization through Angel
-          Protocol
+          create an endowment in the name of{" "}
+          <span className="text-red">My Organization (placeholder)</span>{" "}
+          through Angel Protocol
         </Checkbox>
         <Checkbox
           name="hasAgreedToTerms"
@@ -81,6 +103,19 @@ export default function Docs() {
   );
 }
 
+function Level({ num }: { num: number }) {
+  return (
+    <h4 className="flex items-center gap-2.5">
+      <div className="h-5 relative aspect-square border rounded-full before:content-[''] before:h-3 before:aspect-square before:absolute-center before:rounded-full before:bg-green" />
+      <span className="text-lg font-bold">Level {num}</span>
+    </h4>
+  );
+}
+
 const Separator = ({ classes = "" }: { classes?: string }) => (
   <div className={`${classes} h-px w-full bg-gray-l2`} />
 );
+
+function genFileAsset(previews: FileObject[]): Asset {
+  return { files: [], previews };
+}
