@@ -52,14 +52,14 @@ export default function FileDropzone<
     <div className="relative">
       <div
         {...getRootProps({
-          className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none  ${
+          className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
               ? "border-gray-d1"
               : "border-gray-l2 focus:border-blue-l1"
           } ${
             props.disabled
               ? "cursor-default bg-gray-l4"
-              : "bg-orange-l6 cursor-pointer"
+              : "bg-orange-l6 dark:bg-blue-d4 cursor-pointer"
           } ${props.className ?? ""}`,
         })}
       >

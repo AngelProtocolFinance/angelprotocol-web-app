@@ -68,7 +68,7 @@ export function Selector<
         className={`relative ${container}`}
         multiple={multiple}
       >
-        <Listbox.Button className="w-full flex items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
+        <Listbox.Button className="w-full flex items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-transparent disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
           {({ open }) => (
             <>
               <span>{getDisplay(selected)}</span>

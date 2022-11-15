@@ -5,6 +5,7 @@ import { SchemaShape } from "schemas/types";
 import Checkbox from "components/Checkbox";
 import { TextInput, checkBoxStyle } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
+import OrSeparator from "components/registration/OrSeparator";
 import { PRIVACY_POLICY } from "constants/urls";
 import { routes } from "./routes";
 
@@ -67,11 +68,7 @@ export default function Signup({ classes = "" }: { classes?: string }) {
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
         Register
       </BtnPrim>
-      <p className="text-sm mx-0 sm:mx-24 relative h-px grid place-items-center bg-gray-d1 dark:bg-gray my-11">
-        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute text-gray-d1 dark:text-gray">
-          OR
-        </span>
-      </p>
+      <OrSeparator classes="my-11" />
       <BtnSec as="link" className="mx-0 sm:mx-24" to={routes.resume}>
         Resume your registration
       </BtnSec>
