@@ -59,7 +59,7 @@ export default function FileDropzone<
           } ${
             isSubmitting || props.disabled
               ? "cursor-default bg-gray-l4 dark:bg-bluegray-d1"
-              : "bg-orange-l6 dark:bg-blue-d4 cursor-pointer"
+              : "bg-gray-l5 dark:bg-blue-d4 cursor-pointer"
           } ${props.className ?? ""}`,
         })}
       >

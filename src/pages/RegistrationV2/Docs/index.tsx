@@ -43,7 +43,7 @@ export default function Docs() {
   return (
     <FormProvider {...methods}>
       <form
-        className="padded-container max-w-[45.5rem] justify-self-center mt-28 dark:bg-blue-d6"
+        className="padded-container max-w-[45.5rem] justify-self-center mt-28 bg-white dark:bg-blue-d6"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
         <Level num={1} />
