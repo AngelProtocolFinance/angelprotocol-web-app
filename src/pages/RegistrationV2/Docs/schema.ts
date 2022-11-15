@@ -34,6 +34,6 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
     .required("Organization website required")
     .url("Must be a valid URL"),
   sdg: Yup.number().min(1, "UNSDG must be selected").max(17),
-  hasAuthority: Yup.bool().isTrue("Authority checkbox must be checked"),
-  hasAgreedToTerms: Yup.bool().isTrue("Policy checkbox must be checked"),
+  hasAuthority: Yup.bool().isTrue("must have authority"),
+  hasAgreedToTerms: Yup.bool().isTrue("must agree to terms"),
 });

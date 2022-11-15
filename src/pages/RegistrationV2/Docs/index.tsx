@@ -27,6 +27,9 @@ export default function Docs() {
       financialStatements: genFileAsset([]),
       auditedFinancialReports: genFileAsset([]),
       website: "",
+      hasAuthority: false,
+      hasAgreedToTerms: false,
+      isKYCRequired: "No",
     },
   });
 
@@ -64,20 +67,28 @@ export default function Docs() {
           <Radio value="No" />
         </div>
         <Separator classes="my-8" />
-        <Checkbox
+        <Checkbox<FV>
           name="hasAuthority"
           required
-          classes={{ container: "text-sm mb-3", checkbox: checkBoxStyle }}
+          classes={{
+            container: "text-sm mb-3",
+            checkbox: checkBoxStyle,
+            error: "mt-1",
+          }}
         >
           By checking this box, you declare that you have the authority to
           create an endowment in the name of{" "}
           <span className="text-red">My Organization (placeholder)</span>{" "}
           through Angel Protocol
         </Checkbox>
-        <Checkbox
+        <Checkbox<FV>
           name="hasAgreedToTerms"
           required
-          classes={{ container: "text-sm", checkbox: checkBoxStyle }}
+          classes={{
+            container: "text-sm",
+            checkbox: checkBoxStyle,
+            error: "mt-1",
+          }}
         >
           By checking this box, you declare that you have read and agreed to our{" "}
           {""}

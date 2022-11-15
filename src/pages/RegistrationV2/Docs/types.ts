@@ -7,7 +7,7 @@ export type FormValues = {
   auditedFinancialReports: Asset;
   website: string;
   sdg: number;
-  isKYCRequired: boolean;
+  isKYCRequired: "Yes" | "No";
   hasAuthority: boolean;
-  hasAgreedToTerms: "Yes" | "No";
+  hasAgreedToTerms: boolean;
 };

@@ -111,21 +111,21 @@ function DropzoneText({
         {names}
       </label>
     );
-  } else {
-    return (
-      <div className="grid">
-        {files.map(({ name }, i) => (
-          <p>
-            <label className="text-sm">{name}</label>
-            <ErrorMessage
-              errors={formErrors}
-              name={`${filesId}.${i}`}
-              as="span"
-              className="text-red text-xs before:content-['-'] before:mx-1"
-            />
-          </p>
-        ))}
-      </div>
-    );
   }
+
+  return (
+    <div>
+      {files.map(({ name }, i) => (
+        <p>
+          <label className="text-sm">{name}</label>
+          <ErrorMessage
+            errors={formErrors}
+            name={`${filesId}.${i}`}
+            as="span"
+            className="text-red text-xs before:content-['-'] before:mx-1"
+          />
+        </p>
+      ))}
+    </div>
+  );
 }

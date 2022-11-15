@@ -48,8 +48,9 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           required
           name="hasAgreedToPrivacyPolicy"
           classes={{
-            container: "justify-self-center gap-3.5 mt-6 mb-8 text-xs",
+            container: "justify-self-center mt-6 mb-8 text-xs",
             checkbox: checkBoxStyle,
+            error: "mt-2",
           }}
         >
           I declare that I have read and agreed to{" "}
