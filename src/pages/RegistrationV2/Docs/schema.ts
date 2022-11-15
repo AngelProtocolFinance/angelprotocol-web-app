@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Asset } from "components/FileDropzone";
+import { OptionType } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { asciiSchema } from "schemas/string";
 
@@ -30,10 +31,10 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   financialStatements: Yup.object().shape(genAssetShape()),
   auditedFinancialReports: Yup.object().shape(genAssetShape()),
-  website: asciiSchema
-    .required("Organization website required")
-    .url("Must be a valid URL"),
-  sdg: Yup.number().min(1, "UNSDG must be selected").max(17),
+  website: asciiSchema.required("required").url("invalid url"),
+  sdg: Yup.object().shape<SchemaShape<OptionType<string>>>({
+    label: Yup.string().required("required"),
+  }),
   hasAuthority: Yup.bool().isTrue("must have authority"),
   hasAgreedToTerms: Yup.bool().isTrue("must agree to terms"),
 });

@@ -5,7 +5,7 @@ import { FieldValues, Path, useController } from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
 import { errorStyle } from "./constants";
 
-type OptionType<V> = { label: string; value: V };
+export type OptionType<V> = { label: string; value: V };
 type Classes = {
   container?: string;
 };
@@ -19,6 +19,8 @@ interface Props<T extends FieldValues, K extends Path<T>, V extends string> {
   children?: (selected: OptionType<V>) => ReactNode;
 }
 
+const labelKey: keyof OptionType<string> = "label";
+
 export function Selector<
   T extends FieldValues,
   K extends Path<T>,
@@ -29,6 +31,8 @@ export function Selector<
     formState: { isSubmitting, errors },
     field: { value: selected, onChange: onSelectedChange },
   } = useController<{ [index: string]: OptionType<V> }>({ name: name });
+
+  const labelId = `${name}.${labelKey}`;
 
   return (
     <>
@@ -53,7 +57,7 @@ export function Selector<
           ))}
         </Listbox.Options>
         <ErrorMessage
-          name={name}
+          name={labelId}
           errors={errors}
           as="p"
           className={errorStyle}

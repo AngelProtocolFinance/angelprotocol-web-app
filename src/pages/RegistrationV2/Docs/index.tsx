@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV, FormValues } from "./types";
 import { ContactRoles, FileObject, ReferralMethods } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
 import Checkbox from "components/Checkbox";
 import { Label } from "components/form";
 import {
@@ -11,6 +12,7 @@ import {
   TextInput,
   checkBoxStyle,
 } from "components/registration";
+import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import FileDropzone, { Asset } from "./FileDropzone";
 import { Radio } from "./Radio";
@@ -30,6 +32,7 @@ export default function Docs() {
       hasAuthority: false,
       hasAgreedToTerms: false,
       isKYCRequired: "No",
+      sdg: { value: "", label: "" },
     },
   });
 
@@ -67,6 +70,45 @@ export default function Docs() {
         />
         <Label className="mb-2" required>
           Proof of registration as a 501(C)(3) charity or equivalent
+        </Label>
+        <FileDropzone<FV, "proofOfIdentity">
+          name="proofOfIdentity"
+          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+        />
+        <Label className="mb-2 mt-6" required>
+          Select one SDG your organization is aligned with
+        </Label>
+        <Selector<FV, "sdg", string>
+          name="sdg"
+          options={Object.entries(unsdgs).map(([key, { title }]) => ({
+            value: key,
+            label: `${key} - ${title}`,
+          }))}
+        />
+
+        <Separator classes="my-8" />
+
+        <Level num={2} />
+        <p className="mt-2 text-sm mb-8">
+          All benefits from Level 1 + your organization will be visible in the
+          marketplace.
+        </p>
+        <Label className="mb-2">
+          At least one of the last 2 year’s financial statements
+        </Label>
+        <FileDropzone<FV, "proofOfIdentity">
+          name="proofOfIdentity"
+          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+        />
+
+        <Separator classes="my-8" />
+
+        <Level num={3} />
+        <p className="mt-2 text-sm mb-8">
+          3rd party audited financial report or published Annual Report
+        </p>
+        <Label className="mb-2">
+          At least one of the last 2 year’s financial statements
         </Label>
         <FileDropzone<FV, "proofOfIdentity">
           name="proofOfIdentity"
