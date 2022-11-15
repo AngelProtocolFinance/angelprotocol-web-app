@@ -24,7 +24,7 @@ export default function ContactForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="padded-container max-w-[45.5rem] justify-self-center mt-28"
+        className="padded-container max-w-[45.5rem] justify-self-center mt-28 dark:bg-blue-d6"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">

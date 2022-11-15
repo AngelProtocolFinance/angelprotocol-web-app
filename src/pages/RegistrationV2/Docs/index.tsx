@@ -43,7 +43,7 @@ export default function Docs() {
   return (
     <FormProvider {...methods}>
       <form
-        className="padded-container max-w-[45.5rem] justify-self-center mt-28"
+        className="padded-container max-w-[45.5rem] justify-self-center mt-28 dark:bg-blue-d6"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
         <Level num={1} />
@@ -70,8 +70,8 @@ export default function Docs() {
         <Label className="mb-2" required>
           Proof of registration as a 501(C)(3) charity or equivalent
         </Label>
-        <FileDropzone<FV, "proofOfIdentity">
-          name="proofOfIdentity"
+        <FileDropzone<FV, "proofOfRegistration">
+          name="proofOfRegistration"
           tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
         />
         <Label className="mb-2 mt-6" required>
@@ -80,10 +80,7 @@ export default function Docs() {
         <Selector<FV, "sdgs", number, true>
           multiple
           name="sdgs"
-          options={Object.entries(unsdgs).map(([key, { title }]) => ({
-            value: +key,
-            label: `${key} - ${title}`,
-          }))}
+          options={sdgOptions}
         />
 
         <Separator classes="my-8" />
@@ -96,8 +93,9 @@ export default function Docs() {
         <Label className="mb-2">
           At least one of the last 2 year’s financial statements
         </Label>
-        <FileDropzone<FV, "proofOfIdentity">
-          name="proofOfIdentity"
+        <FileDropzone<FV, "financialStatements">
+          multiple
+          name="financialStatements"
           tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
         />
 
@@ -110,8 +108,9 @@ export default function Docs() {
         <Label className="mb-2">
           At least one of the last 2 year’s financial statements
         </Label>
-        <FileDropzone<FV, "proofOfIdentity">
-          name="proofOfIdentity"
+        <FileDropzone<FV, "auditedFinancialReports">
+          multiple
+          name="auditedFinancialReports"
           tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
         />
 
@@ -131,7 +130,7 @@ export default function Docs() {
           required
           classes={{
             container: "text-sm mb-3",
-            checkbox: checkBoxStyle,
+            checkbox: checkBoxStyle + " self-start sm:self-center",
             error: "mt-1",
           }}
         >
@@ -145,7 +144,7 @@ export default function Docs() {
           required
           classes={{
             container: "text-sm",
-            checkbox: checkBoxStyle,
+            checkbox: checkBoxStyle + " self-start sm:self-center",
             error: "mt-1",
           }}
         >
@@ -160,7 +159,7 @@ export default function Docs() {
             Terms & Conditions
           </a>
         </Checkbox>
-        <div className="grid sm:flex gap-2 my-8">
+        <div className="grid grid-cols-2 sm:flex gap-2 my-8">
           <BtnSec as="link" to="" className="py-3 min-w-[8rem] text-center">
             Back
           </BtnSec>
@@ -183,9 +182,14 @@ function Level({ num }: { num: number }) {
 }
 
 const Separator = ({ classes = "" }: { classes?: string }) => (
-  <div className={`${classes} h-px w-full bg-gray-l2`} />
+  <div className={`${classes} h-px w-full bg-gray-l2 dark:bg-bluegray`} />
 );
 
 function genFileAsset(previews: FileObject[]): Asset {
   return { files: [], previews };
 }
+
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({
+  value: +key,
+  label: `${key} - ${title}`,
+}));

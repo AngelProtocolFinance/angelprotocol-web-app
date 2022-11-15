@@ -54,8 +54,8 @@ export default function FileDropzone<
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
-              ? "border-gray-d1"
-              : "border-gray-l2 focus:border-blue-l1"
+              ? "border-gray-d1 dark:border-gray"
+              : "border-gray-l2 dark:border-bluegray focus:border-blue-l1 focus:dark:border-blue-d1"
           } ${
             props.disabled
               ? "cursor-default bg-gray-l4"
@@ -71,13 +71,15 @@ export default function FileDropzone<
           formErrors={errors}
         />
       </div>
-      <p className="text-xs text-gray-d1 mt-2">{props.tooltip}</p>
-      <ErrorMessage
-        name={filesId as any}
-        errors={errors}
-        as="p"
-        className="absolute bottom-1 right-0 text-red text-xs"
-      />
+      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+        {props.tooltip}{" "}
+        <ErrorMessage
+          name={filesId as any}
+          errors={errors}
+          as="span"
+          className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
+        />
+      </p>
     </div>
   );
 }
@@ -93,7 +95,7 @@ function DropzoneText({
 
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
-      <span className="grid justify-items-center text-sm text-gray-d1">
+      <span className="grid justify-items-center text-sm text-gray-d1 dark:text-gray">
         <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
@@ -114,13 +116,13 @@ function DropzoneText({
   return (
     <div>
       {files.map(({ name }, i) => (
-        <p>
+        <p key={i}>
           <label className="text-sm">{name}</label>
           <ErrorMessage
             errors={formErrors}
             name={`${filesId}.${i}`}
             as="span"
-            className="text-red text-xs before:content-['-'] before:mx-1"
+            className="text-red dark:text-red-l2 text-xs before:content-['-'] before:mx-1"
           />
         </p>
       ))}
