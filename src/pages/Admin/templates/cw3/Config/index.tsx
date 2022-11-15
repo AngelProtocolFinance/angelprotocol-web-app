@@ -29,9 +29,6 @@ function CW3ConfigContext(cw3Config: CW3Config) {
     threshold: +cw3Config.threshold.absolute_percentage.percentage * 100,
     duration,
     require_execution: cw3Config.require_execution,
-    seed_split_to_liquid: cw3Config.seed_split_to_liquid,
-    new_endow_gas_money: cw3Config.new_endow_gas_money,
-    seed_asset: cw3Config.seed_asset,
   };
 
   const methods = useForm<CW3ConfigValues>({

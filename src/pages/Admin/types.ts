@@ -3,7 +3,6 @@ import { CharityApplication, Registration } from "types/aws";
 import {
   AllianceMember,
   Asset,
-  CW3ConfigPayload,
   CW4Member,
   EndowmentSettingsPayload,
   EndowmentStatus,
@@ -174,12 +173,10 @@ export type ProposalBase = {
 export type FundIdContext = { fundId: string };
 export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
-export type FormCW3Config = Omit<
-  CW3ConfigPayload,
-  "threshold" | "max_voting_period"
-> & {
+export type FormCW3Config = {
   threshold: number;
   duration: number;
+  require_execution: boolean;
 };
 export type CW3ConfigValues = ProposalBase &
   FormCW3Config & { initial: FormCW3Config; isTime: boolean };
