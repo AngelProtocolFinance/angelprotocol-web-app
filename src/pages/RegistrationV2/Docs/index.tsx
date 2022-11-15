@@ -1,22 +1,18 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { FormValues as FV } from "./types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import Checkbox from "components/Checkbox";
 import { Label } from "components/form";
-import { BtnPrim, BtnSec, Selector, TextInput } from "components/registration";
+import {
+  BtnPrim,
+  BtnSec,
+  Selector,
+  TextInput,
+  checkBoxStyle,
+} from "components/registration";
 import { TERMS_OF_USE } from "constants/urls";
 import { Asset } from "./FileDropzone";
-
-type FormValues = {
-  proofOfIdentity: Asset;
-  proofOfRegistration: Asset;
-  financialStatements: Asset;
-  annualReports: Asset;
-  website: string;
-  sdgs: number[];
-  isKYCRequired: boolean;
-  hasAuthority: boolean;
-  hasAgreedToTerms: boolean;
-};
+import { Radio } from "./Radio";
 
 export default function Docs() {
   const methods = useForm({
@@ -37,12 +33,30 @@ export default function Docs() {
         className="padded-container max-w-[45.5rem] justify-self-center mt-28"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
-        <Checkbox name="hasAuthority" required>
+        <Separator classes="my-8" />
+        <Label>
+          Only accept donations from donors who have provided their personal
+          information (name and address):
+        </Label>
+        <div className="flex gap-4 mt-4">
+          <Radio value="Yes" />
+          <Radio value="No" />
+        </div>
+        <Separator classes="my-8" />
+        <Checkbox
+          name="hasAuthority"
+          required
+          classes={{ container: "text-sm mb-3", checkbox: checkBoxStyle }}
+        >
           By checking this box, you declare that you have the authority to
           create an endowment in the name of My Organization through Angel
           Protocol
         </Checkbox>
-        <Checkbox name="hasAgreedToTerms" required>
+        <Checkbox
+          name="hasAgreedToTerms"
+          required
+          classes={{ container: "text-sm", checkbox: checkBoxStyle }}
+        >
           By checking this box, you declare that you have read and agreed to our{" "}
           {""}
           <a
@@ -67,29 +81,6 @@ export default function Docs() {
   );
 }
 
-const roles: { [key in ContactRoles]: string } = {
-  president: "Chairperson / President",
-  "vice-president": "Vice-chairperson / Vice president",
-  secretary: "Secretary",
-  treasurer: "Treasurer",
-  ceo: "CEO",
-  cfo: "CFO",
-  "board-member": "Board Member",
-  "leadership-team": "Leadership Team",
-  "fundraising-finance": "Fundraising / Finance",
-  legal: "Legal",
-  communications: "Communications",
-  other: "Other",
-};
-
-const referralMethods: { [key in ReferralMethods]: string } = {
-  "angel-alliance": "Angel Alliance",
-  discord: "Discord",
-  facebook: "Facebook",
-  linkedin: "Linkedin",
-  medium: "Medium",
-  press: "Press",
-  "search-engines": "Search engines",
-  twitter: "Twitter",
-  other: "Other",
-};
+const Separator = ({ classes = "" }: { classes?: string }) => (
+  <div className={`${classes} h-px w-full bg-gray-l2`} />
+);
