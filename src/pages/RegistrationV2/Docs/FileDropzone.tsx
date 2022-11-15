@@ -116,7 +116,7 @@ function DropzoneText({
   return (
     <div>
       {files.map(({ name }, i) => (
-        <p key={i}>
+        <p key={name}>
           <label className="text-sm">{name}</label>
           <ErrorMessage
             errors={formErrors}
