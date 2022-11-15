@@ -135,8 +135,8 @@ export default function Docs() {
           }}
         >
           By checking this box, you declare that you have the authority to
-          create an endowment in the name of{" "}
-          <span className="text-red">My Organization (placeholder)</span>{" "}
+          create an endowment in the name of
+          {" { My Organization } "}
           through Angel Protocol
         </Checkbox>
         <Checkbox<FV>
