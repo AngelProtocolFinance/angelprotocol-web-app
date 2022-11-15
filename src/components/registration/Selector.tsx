@@ -5,7 +5,7 @@ import { FieldValues, Path, useController } from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
 import { errorStyle } from "./constants";
 
-type OptionType<V> = { label: string; value: V };
+export type OptionType<V> = { label: string; value: V };
 type Classes = {
   container?: string;
 };

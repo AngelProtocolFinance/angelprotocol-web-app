@@ -1,7 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { Label } from "components/form";
-import { BtnPrim, Selector, TextInput } from "components/registration";
+import {
+  BtnPrim,
+  OptionType,
+  Selector,
+  TextInput,
+} from "components/registration";
 
 export default function ContactForm() {
   const methods = useForm({
@@ -70,15 +75,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           What's your role within the organization?
         </Label>
-        <Selector
-          name="role"
-          options={(Object.entries(roles) as [ContactRoles, string][]).map(
-            ([value, label]) => ({
-              value,
-              label,
-            })
-          )}
-        >
+        <Selector name="role" options={genOptions(roles)}>
           {({ value }) =>
             value === "other" && (
               <TextInput
@@ -95,15 +92,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           How did you find about us?
         </Label>
-        <Selector
-          name="referralMethod"
-          options={(
-            Object.entries(referralMethods) as [ReferralMethods, string][]
-          ).map(([value, label]) => ({
-            value,
-            label,
-          }))}
-        >
+        <Selector name="referralMethod" options={genOptions(referralMethods)}>
           {({ value }) =>
             value === "other" && (
               <TextInput
@@ -156,3 +145,12 @@ const referralMethods: { [key in ReferralMethods]: string } = {
   twitter: "Twitter",
   other: "Other",
 };
+
+function genOptions<T extends object>(
+  objOptions: T
+): T extends { [key in infer R]: any } ? OptionType<R>[] : OptionType<never>[] {
+  return Object.entries(objOptions).map(([value, label]) => ({
+    value,
+    label,
+  })) as any;
+}
