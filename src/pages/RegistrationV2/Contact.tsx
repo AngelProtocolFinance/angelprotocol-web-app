@@ -70,7 +70,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           What's your role within the organization?
         </Label>
-        <Selector
+        <Selector<any, any, ContactRoles, false>
           name="role"
           options={(Object.entries(roles) as [ContactRoles, string][]).map(
             ([value, label]) => ({
@@ -95,7 +95,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           How did you find about us?
         </Label>
-        <Selector
+        <Selector<any, any, ReferralMethods, false>
           name="referralMethod"
           options={(
             Object.entries(referralMethods) as [ReferralMethods, string][]

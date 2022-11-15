@@ -24,7 +24,7 @@ export default function SDGSelector() {
       <Listbox.Button className="w-full p-3 text-left uppercase">
         {value} - {unsdgs[value].title}
       </Listbox.Button>
-      <Listbox.Options className="absolute bg-white shadow-2xl z-10 rounded-md table p-3 rounded-md">
+      <Listbox.Options className="absolute bg-white shadow-2xl z-10 table p-3 rounded">
         {sdgs.map((sdg) => (
           <Listbox.Option key={sdg.num} value={+sdg.num} as={Fragment}>
             {({ selected }) => (

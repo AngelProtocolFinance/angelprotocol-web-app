@@ -1,4 +1,3 @@
-import { UNSDG_NUMS } from "types/lists";
 import { OptionType } from "components/registration";
 import { Asset } from "./FileDropzone";
 
@@ -8,7 +7,7 @@ export type FormValues = {
   financialStatements: Asset;
   auditedFinancialReports: Asset;
   website: string;
-  sdg: OptionType<string>;
+  sdgs: OptionType<number>[];
   isKYCRequired: "Yes" | "No";
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;

@@ -1,8 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV, FormValues } from "./types";
-import { ContactRoles, FileObject, ReferralMethods } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
+import { FormValues as FV } from "./types";
+import { FileObject } from "types/aws";
 import Checkbox from "components/Checkbox";
 import { Label } from "components/form";
 import {
@@ -32,7 +31,7 @@ export default function Docs() {
       hasAuthority: false,
       hasAgreedToTerms: false,
       isKYCRequired: "No",
-      sdg: { value: "", label: "" },
+      sdgs: [],
     },
   });
 
@@ -78,10 +77,11 @@ export default function Docs() {
         <Label className="mb-2 mt-6" required>
           Select one SDG your organization is aligned with
         </Label>
-        <Selector<FV, "sdg", string>
-          name="sdg"
+        <Selector<FV, "sdgs", number, true>
+          multiple
+          name="sdgs"
           options={Object.entries(unsdgs).map(([key, { title }]) => ({
-            value: key,
+            value: +key,
             label: `${key} - ${title}`,
           }))}
         />
