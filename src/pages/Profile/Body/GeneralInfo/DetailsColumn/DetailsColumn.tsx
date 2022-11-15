@@ -12,7 +12,7 @@ export default function DetailsColumn({ className }: { className: string }) {
 
       <Tags />
 
-      <Socials className="-mt-2 mb-4" />
+      <Socials className="mb-4" />
 
       <Details />
     </div>
