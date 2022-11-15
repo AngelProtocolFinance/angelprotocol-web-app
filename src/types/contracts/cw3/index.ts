@@ -1,11 +1,4 @@
-import { Coin } from "@cosmjs/proto-signing";
-import {
-  Asset,
-  EmbeddedBankMsg,
-  EmbeddedWasmMsg,
-  Threshold,
-  Vote,
-} from "../common";
+import { EmbeddedBankMsg, EmbeddedWasmMsg, Threshold, Vote } from "../common";
 
 type Duration = { time: number } | { height: number };
 type PercentageRes = {
