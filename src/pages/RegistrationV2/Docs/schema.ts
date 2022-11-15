@@ -15,21 +15,21 @@ const VALID_MIME_TYPES = [
 
 const previewsKey: keyof Asset = "previews";
 
-const assetShape: SchemaShape<Asset> = {
-  files: Yup.array(genFileSchema(25e6, VALID_MIME_TYPES)).when(
-    previewsKey,
-    (previews: FileObject[], schema: any) =>
-      previews.length <= 0 ? schema.min(1, "required") : schema
-  ),
-};
-
-const docSchema = Yup.object().shape(assetShape);
+function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
+  return {
+    files: Yup.array(genFileSchema(25e6, VALID_MIME_TYPES)).when(
+      previewsKey,
+      (previews: FileObject[], schema: any) =>
+        previews.length <= 0 && isRequired ? schema.min(1, "required") : schema
+    ),
+  };
+}
 
 export const schema = Yup.object().shape<SchemaShape<FormValues>>({
-  proofOfIdentity: docSchema,
-  proofOfRegistration: docSchema,
-  financialStatements: docSchema,
-  auditedFinancialReports: docSchema,
+  proofOfIdentity: Yup.object().shape(genAssetShape(true)),
+  proofOfRegistration: Yup.object().shape(genAssetShape(true)),
+  financialStatements: Yup.object().shape(genAssetShape()),
+  auditedFinancialReports: Yup.object().shape(genAssetShape()),
   website: asciiSchema
     .required("Organization website required")
     .url("Must be a valid URL"),

@@ -54,7 +54,24 @@ export default function Docs() {
         <Label className="mt-8 mb-2" required>
           Your proof of identity
         </Label>
-        <FileDropzone<FV, "proofOfIdentity"> name="proofOfIdentity" multiple />
+        <FileDropzone<FV, "proofOfIdentity">
+          name="proofOfIdentity"
+          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+        />
+        <TextInput<FV>
+          name="website"
+          label="Website of your organization"
+          required
+          classes={{ container: "my-6" }}
+          placeholder="e.g. https://www.example.com"
+        />
+        <Label className="mb-2" required>
+          Proof of registration as a 501(C)(3) charity or equivalent
+        </Label>
+        <FileDropzone<FV, "proofOfIdentity">
+          name="proofOfIdentity"
+          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+        />
 
         <Separator classes="my-8" />
 

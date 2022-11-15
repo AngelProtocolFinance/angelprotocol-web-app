@@ -26,6 +26,7 @@ export default function FileDropzone<
   multiple?: true;
   disabled?: boolean;
   className?: string;
+  tooltip: string;
 }) {
   const filesId = `${props.name}.${filesKey}` as Path<T>;
   const previewsId = `${props.name}.${previewsKey}` as Path<T>;
@@ -48,38 +49,35 @@ export default function FileDropzone<
   });
 
   return (
-    <div
-      {...getRootProps({
-        className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none  ${
-          isDragActive
-            ? "border-gray-d1"
-            : "border-gray-l2 focus:border-blue-l1"
-        } ${
-          props.disabled
-            ? "cursor-default bg-gray-l4"
-            : "bg-orange-l6 cursor-pointer"
-        } ${props.className ?? ""}`,
-      })}
-    >
-      <input {...getInputProps({ id: filesId })} />
-      <DropzoneText
-        files={files}
-        previews={getValues(previewsId)}
-        filesId={filesId}
-        formErrors={errors}
+    <div className="relative">
+      <div
+        {...getRootProps({
+          className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none  ${
+            isDragActive
+              ? "border-gray-d1"
+              : "border-gray-l2 focus:border-blue-l1"
+          } ${
+            props.disabled
+              ? "cursor-default bg-gray-l4"
+              : "bg-orange-l6 cursor-pointer"
+          } ${props.className ?? ""}`,
+        })}
+      >
+        <input {...getInputProps({ id: filesId })} />
+        <DropzoneText
+          files={files}
+          previews={getValues(previewsId)}
+          filesId={filesId}
+          formErrors={errors}
+        />
+      </div>
+      <p className="text-xs text-gray-d1 mt-2">{props.tooltip}</p>
+      <ErrorMessage
+        name={filesId as any}
+        errors={errors}
+        as="p"
+        className="absolute bottom-1 right-0 text-red text-xs"
       />
-
-      {(files as File[])
-        //show 1 error for now
-        .map((_, i) => (
-          <ErrorMessage
-            key={i}
-            name={`${filesId}.${i}`}
-            as="p"
-            className="absolute left-1/2 transform w-full -translate-x-1/2 text-red dark:text-red-l2 text-xs -bottom-4"
-          />
-        ))
-        .find((err) => err) || <></>}
     </div>
   );
 }
