@@ -1,7 +1,12 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { Label } from "components/form";
-import { BtnPrim, Selector, TextInput } from "components/registration";
+import {
+  BtnPrim,
+  OptionType,
+  Selector,
+  TextInput,
+} from "components/registration";
 
 export default function ContactForm() {
   const methods = useForm({
@@ -72,12 +77,7 @@ export default function ContactForm() {
         </Label>
         <Selector<any, any, ContactRoles, false>
           name="role"
-          options={(Object.entries(roles) as [ContactRoles, string][]).map(
-            ([value, label]) => ({
-              value,
-              label,
-            })
-          )}
+          options={roleOptions}
         >
           {({ value }) =>
             value === "other" && (
@@ -97,12 +97,7 @@ export default function ContactForm() {
         </Label>
         <Selector<any, any, ReferralMethods, false>
           name="referralMethod"
-          options={(
-            Object.entries(referralMethods) as [ReferralMethods, string][]
-          ).map(([value, label]) => ({
-            value,
-            label,
-          }))}
+          options={referralOptions}
         >
           {({ value }) =>
             value === "other" && (
@@ -156,3 +151,15 @@ const referralMethods: { [key in ReferralMethods]: string } = {
   twitter: "Twitter",
   other: "Other",
 };
+
+function genOptions<T extends object>(
+  objOptions: T
+): T extends { [key in infer R]: any } ? OptionType<R>[] : OptionType<never>[] {
+  return Object.entries(objOptions).map(([value, label]) => ({
+    value,
+    label,
+  })) as any;
+}
+
+const roleOptions = genOptions(roles);
+const referralOptions = genOptions(referralMethods);
