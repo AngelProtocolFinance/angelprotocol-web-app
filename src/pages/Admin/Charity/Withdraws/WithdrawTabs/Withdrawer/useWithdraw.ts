@@ -32,10 +32,12 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
-    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
-      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
-      amount: scaleToStr(value /** empty "" */ || "0"),
-    }));
+    const assets: Asset[] = data.amounts.map(
+      ({ value, tokenId, type: tokenType }) => ({
+        info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
+        amount: scaleToStr(value /** empty "" */ || "0"),
+      })
+    );
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
