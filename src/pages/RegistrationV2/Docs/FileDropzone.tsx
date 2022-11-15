@@ -33,7 +33,7 @@ export default function FileDropzone<
 
   const {
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
 
   const {
@@ -57,8 +57,8 @@ export default function FileDropzone<
               ? "border-gray-d1 dark:border-gray"
               : "border-gray-l2 dark:border-bluegray focus:border-blue-l1 focus:dark:border-blue-d1"
           } ${
-            props.disabled
-              ? "cursor-default bg-gray-l4"
+            isSubmitting || props.disabled
+              ? "cursor-default bg-gray-l4 dark:bg-bluegray-d1"
               : "bg-orange-l6 dark:bg-blue-d4 cursor-pointer"
           } ${props.className ?? ""}`,
         })}
