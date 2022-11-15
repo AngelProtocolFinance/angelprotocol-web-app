@@ -12,13 +12,7 @@ export default function DetailsColumn({ className }: { className: string }) {
 
       <Tags />
 
-      <p className="font-work font-normal text-base">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra
-        tortor vitae, ornare ac, ultricies lacus. In sed arcu enim eu. Risus nam
-        egestas sit id eget.
-      </p>
-
-      <Socials className="-mt-2 mb-4" />
+      <Socials className="mb-4" />
 
       <Details />
     </div>
