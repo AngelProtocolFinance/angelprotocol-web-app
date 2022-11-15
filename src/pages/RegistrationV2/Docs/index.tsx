@@ -15,7 +15,7 @@ import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import FileDropzone, { Asset } from "./FileDropzone";
 import { Radio } from "./Radio";
-import { schema } from "./schema";
+import { MB_LIMIT, schema } from "./schema";
 
 export default function Docs() {
   const methods = useForm<FV>({
@@ -58,7 +58,7 @@ export default function Docs() {
         </Label>
         <FileDropzone<FV, "proofOfIdentity">
           name="proofOfIdentity"
-          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+          tooltip={fileTooltip}
         />
         <TextInput<FV>
           name="website"
@@ -72,7 +72,7 @@ export default function Docs() {
         </Label>
         <FileDropzone<FV, "proofOfRegistration">
           name="proofOfRegistration"
-          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+          tooltip={fileTooltip}
         />
         <Label className="mb-2 mt-6" required>
           Select one SDG your organization is aligned with
@@ -96,7 +96,7 @@ export default function Docs() {
         <FileDropzone<FV, "financialStatements">
           multiple
           name="financialStatements"
-          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+          tooltip={fileTooltip}
         />
 
         <Separator classes="my-8" />
@@ -111,7 +111,7 @@ export default function Docs() {
         <FileDropzone<FV, "auditedFinancialReports">
           multiple
           name="auditedFinancialReports"
-          tooltip="Valid types are: PDF, JPG, PNG and WEBP. File should be less than 1MB."
+          tooltip={fileTooltip}
         />
 
         <Separator classes="my-8" />
@@ -193,3 +193,5 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({
   value: +key,
   label: `${key} - ${title}`,
 }));
+
+const fileTooltip = `Valid types are: PDF, JPG, PNG and WEBP. File should be less than ${MB_LIMIT}MB.`;

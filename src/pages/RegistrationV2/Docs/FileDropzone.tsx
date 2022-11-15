@@ -49,7 +49,7 @@ export default function FileDropzone<
   });
 
   return (
-    <div className="relative">
+    <div>
       <div
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${

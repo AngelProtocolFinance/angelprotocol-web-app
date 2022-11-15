@@ -68,17 +68,13 @@ export function Selector<
         className={`relative ${container}`}
         multiple={multiple}
       >
-        <Listbox.Button className="w-full flex items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-transparent disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
+        <Listbox.Button className="w-full flex justify-between items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-transparent disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
           {({ open }) => (
             <>
               <span className={multiple ? "truncate" : ""}>
                 {getDisplay(selected)}
               </span>
-              <DrawerIcon
-                isOpen={open}
-                size={25}
-                className="ml-auto dark:text-gray"
-              />
+              <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
             </>
           )}
         </Listbox.Button>
