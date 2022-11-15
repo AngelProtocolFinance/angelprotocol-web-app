@@ -75,7 +75,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           What's your role within the organization?
         </Label>
-        <Selector name="role" options={genOptions(roles)}>
+        <Selector name="role" options={roleOptions}>
           {({ value }) =>
             value === "other" && (
               <TextInput
@@ -92,7 +92,7 @@ export default function ContactForm() {
         <Label required className="mb-2">
           How did you find about us?
         </Label>
-        <Selector name="referralMethod" options={genOptions(referralMethods)}>
+        <Selector name="referralMethod" options={referralOptions}>
           {({ value }) =>
             value === "other" && (
               <TextInput
@@ -154,3 +154,6 @@ function genOptions<T extends object>(
     label,
   })) as any;
 }
+
+const roleOptions = genOptions(roles);
+const referralOptions = genOptions(referralMethods);
