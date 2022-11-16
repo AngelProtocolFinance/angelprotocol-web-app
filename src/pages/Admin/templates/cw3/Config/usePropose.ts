@@ -35,9 +35,9 @@ export default function usePropose() {
     description,
     initial,
     isTime,
-    ...data
+    ...newData
   }: CW3ConfigValues) {
-    const diff = getPayloadDiff(initial, data);
+    const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
     if (diffEntries.length <= 0) {
@@ -50,12 +50,13 @@ export default function usePropose() {
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
         absolute_percentage: {
-          percentage: `${data.threshold / 100}`,
+          percentage: `${newData.threshold / 100}`,
         },
       },
       max_voting_period: isTime
-        ? { time: data.duration }
-        : { height: data.duration },
+        ? { time: newData.duration }
+        : { height: newData.duration },
+      require_execution: newData.require_execution,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {
