@@ -1,5 +1,7 @@
 import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { appRoutes } from "constants/routes";
 import WalletSuite from "../WalletSuite";
 import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
@@ -7,6 +9,8 @@ import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Header({ classes = "" }: { classes?: string }) {
+  const location = useLocation();
+  const isRegistration = location.pathname.includes(appRoutes.register2);
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -27,13 +31,15 @@ export default function Header({ classes = "" }: { classes?: string }) {
   return (
     <header
       className={`${classes} ${
-        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
-      } py-3 transition ease-in-out duration-300 w-full`}
+        isScrolled
+          ? "bg-blue dark:bg-blue-d3 shadow-lg"
+          : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
+      } py-4 transition ease-in-out duration-300 w-full`}
     >
-      <div className="flex items-center lg:grid lg:grid-cols-[auto_1fr_auto_auto] padded-container">
+      <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
         <Logo />
         <DesktopNav classes="hidden lg:flex" />
-        <div className="flex gap-x-2 ml-auto lg:ml-0">
+        <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />
           <Airdrop />

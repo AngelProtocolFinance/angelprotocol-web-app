@@ -1,17 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ForwardedRef, forwardRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ContactDetails as CD } from "pages/Registration/types";
 import FormInput from "pages/Registration/common/FormInput";
 import { useRegistrationQuery } from "services/aws/registration";
-import Checkbox, { CheckboxProps } from "components/Checkbox";
-// import { appRoutes } from "constants/routes";
-import { PRIVACY_POLICY } from "constants/urls";
+import { appRoutes } from "constants/routes";
 import { Button } from "../../../common";
-// import routes from "../../../routes";
-// import ReferralSelector from "./ReferralSelector";
-// import RoleSelector from "./RoleSelector";
+import routes from "../../../routes";
 import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 
@@ -36,9 +31,8 @@ export default function ContactDetailsForm() {
     },
   });
   const {
-    register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const { saveContactDetails } = useSaveContactDetails();
@@ -89,14 +83,21 @@ export default function ContactDetailsForm() {
           label="Goals"
           placeholder="What is your goal in working with Angel Protocol?"
           required
-        /> */}
-          <PrivacyPolicyCheckbox
-            disabled={isSubmitting}
-            {...register("checkedPolicy")}
-            error={errors.checkedPolicy?.message}
-            centerError
-          />
-
+        />
+        <PrivacyPolicyCheckbox />
+        <div className="flex justify-center">
+          {/* If JunoWallet field is set, we can assume ContactDetails update form has been navigated to from the Dashboard*/}
+          {application.Metadata.JunoWallet && (
+            <Button
+              className="btn-outline-blue w-48 h-12 mr-2"
+              disabled={isSubmitting}
+              onClick={() =>
+                navigate(`${appRoutes.register}/${routes.dashboard}`)
+              }
+            >
+              Back
+            </Button>
+          )}
           <Button
             submit
             className="btn-orange w-48 h-12"
@@ -109,20 +110,3 @@ export default function ContactDetailsForm() {
     </FormProvider>
   );
 }
-
-const PrivacyPolicyCheckbox = forwardRef(
-  (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
-    <Checkbox {...props} ref={ref}>
-      By checking this box, you declare that you have read and agreed to our{" "}
-      <a
-        href={PRIVACY_POLICY}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="underline text-blue"
-      >
-        Privacy Policy
-      </a>
-      <span className="text-red ml-0.5">*</span>
-    </Checkbox>
-  )
-);

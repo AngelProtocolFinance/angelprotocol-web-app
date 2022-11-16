@@ -18,7 +18,7 @@ export default function Links() {
   }, [dispatch]);
 
   return (
-    <nav className="grid w-full justify-items-start content-start font-extrabold font-heading">
+    <nav className="grid gap-4 w-full pt-4 font-extrabold font-heading">
       <NavLink to={appRoutes.index} className={navLinkStyle} end>
         Marketplace
       </NavLink>
@@ -29,7 +29,7 @@ export default function Links() {
         Register
       </NavLink>
       <span
-        className={`flex justify-between items-center ${commonNavItemStyle}`}
+        className={`flex justify-between items-center mt-4 ${commonNavItemStyle}`}
       >
         <span>Theme</span>
         <ThemeToggle classes="flex" />

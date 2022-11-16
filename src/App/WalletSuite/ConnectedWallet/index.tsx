@@ -14,7 +14,7 @@ export default function ConnectedWallet(props: WalletState) {
     <Popover as="div" className="relative">
       <Popover.Button
         disabled={isLoading}
-        className={`${COMMON_BUTTON_STYLE} text-xs`}
+        className={`${COMMON_BUTTON_STYLE} text-xs normal-case`}
       >
         {({ open }) => (
           <>

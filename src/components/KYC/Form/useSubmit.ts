@@ -22,7 +22,7 @@ export default function useSubmit(props: Props) {
         city,
         state,
         zipCode: postalCode,
-        country,
+        country: country.name,
         consent_tax: true,
         consent_marketing: true,
         transactionId: props.txHash,

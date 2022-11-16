@@ -1,16 +1,11 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
+import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
-import {
-  Label,
-  TextInput,
-  errorStyle,
-  textFieldStyle,
-} from "components/TextInput";
 import { BtnPrimary } from "components/donation";
+import { Label } from "components/form";
 import Controls from "./Controls";
-import Terms from "./Terms";
+import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
 import useSubmit from "./useSubmit";
 
@@ -20,7 +15,7 @@ export const formStyle =
 export default function Form({ classes = "", ...props }: Props) {
   const {
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
   const isPostKyc = props.type === "post-donation";
@@ -67,21 +62,18 @@ export default function Form({ classes = "", ...props }: Props) {
         <Label htmlFor="country" className="mb-2">
           Country
         </Label>
-        <div className="form-control rounded-md grid">
-          <CountrySelector
-            placeholder="United Kingdom"
-            fieldName="country"
-            classes={{
-              input: textFieldStyle,
-            }}
-          />
-          <ErrorMessage
-            errors={errors}
-            name="country"
-            as="span"
-            className={errorStyle}
-          />
-        </div>
+
+        <CountrySelector<FV, "country">
+          placeholder="United Kingdom"
+          fieldName="country"
+          classes={{
+            container:
+              "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
+            input:
+              "py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
+            error: errorStyle,
+          }}
+        />
       </div>
       <TextInput<FV>
         name="state"
@@ -95,7 +87,25 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <Terms classes={`${isPostKyc ? "my-2" : "my-12"} col-span-full`} />
+      <Checkbox<FV>
+        name="hasAgreedToTerms"
+        classes={{
+          container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
+          checkbox:
+            "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+        }}
+      >
+        I have read and I agree with{" "}
+        <a
+          className="underline text-orange"
+          target="_blank"
+          href="https://angelprotocol.io/terms-of-use"
+          rel="noopener noreferrer"
+        >
+          Terms & Conditions
+        </a>
+        .
+      </Checkbox>
       {props.type === "post-donation" ? (
         <BtnPrimary
           className="col-span-full"

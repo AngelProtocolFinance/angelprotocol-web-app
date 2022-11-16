@@ -42,11 +42,6 @@ export default function useEditProfile() {
     ...data
   }: ProfileFormValues) => {
     try {
-      //extract [code]
-      if (data.country_of_origin) {
-        data.country_of_origin = data.country_of_origin.split(" ")[0];
-      }
-
       let imgUrl: string = "";
       //means new image file is selected
       if (data.image.file) {
@@ -60,6 +55,7 @@ export default function useEditProfile() {
       //TODO: refactor to diff nested objects
       const flatData: FlatProfileWithSettings = {
         ...data,
+        country: data.country.name,
         image: imgUrl,
         logo: data.logo.preview,
       };
@@ -82,11 +78,12 @@ export default function useEditProfile() {
       //TODO: add logo upload
 
       const accountContract = new Account(wallet);
-      const { sdg, name, image, logo, ...profilePayload } = data;
+      const { sdg, name, image, logo, country, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
           ...profilePayload,
+          country_of_origin: country.name,
         })
       );
 

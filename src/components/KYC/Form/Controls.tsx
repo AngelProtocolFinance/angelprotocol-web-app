@@ -4,7 +4,7 @@ import { FormValues, OnDonation } from "../types";
 import { BtnPrimary, BtnSec } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
-import { KYC, setKYC, setStep } from "slices/donation";
+import { setKYC, setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
 
 export default function Controls({
@@ -81,7 +81,7 @@ function hasStartedKYC({
   country,
   state,
   email,
-}: Omit<KYC, "hasAgreedToTerms">) {
+}: Omit<FormValues, "hasAgreedToTerms">) {
   return [
     name?.first,
     name?.last,
@@ -89,7 +89,7 @@ function hasStartedKYC({
     address?.complement,
     city,
     postalCode,
-    country,
+    country.name,
     state,
     email,
   ].some((val) => val);

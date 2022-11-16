@@ -1,11 +1,10 @@
-import { BtnProps } from "./types";
-import { BtnOutline } from "./BtnOutline";
+import { BtnLink, BtnLinkProps } from "components/BtnLink";
 
-export function BtnSec({ className = "", ...props }: BtnProps) {
+export function BtnSec({ className = "", ...props }: BtnLinkProps) {
   return (
-    <BtnOutline
+    <BtnLink
       {...props}
-      className={`bg-orange-l5 dark:bg-blue-d5 text-center hover:bg-orange-l4 dark:hover:bg-blue-d3 ${className}`}
+      className={`${className}bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l4 dark:hover:bg-blue-d3 text-sm md:text-base p-3 rounded border border-gray-l2 dark:border-bluegray text-center hover:border-gray-l1 hover:dark:border-blue-d2 font-bold font-body`}
     />
   );
 }

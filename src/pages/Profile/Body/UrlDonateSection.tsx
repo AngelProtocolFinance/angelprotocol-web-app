@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
+import DonateButton from "./DonateButton";
 
 export default function UrlDonateSection({ className }: { className: string }) {
   const profile = useProfileContext();
 
   return (
     <div
-      className={`flex flex-col items-center justify-end gap-8 w-full lg:flex-row lg:gap-6 ${className}`}
+      className={`flex flex-col items-center justify-end gap-8 w-full xl:flex-row xl:gap-6 ${className}`}
     >
       {profile.url && (
         <span className="flex items-center justify-center gap-2 w-full font-sans font-medium text-sm sm:w-auto sm:text-base">
@@ -22,12 +21,8 @@ export default function UrlDonateSection({ className }: { className: string }) {
           </a>
         </span>
       )}
-      <Link
-        to={appRoutes.donate + `/${profile.id}`}
-        className="btn btn-orange w-full h-12 max-w-xs py-2 px-6 rounded text-sm normal-case"
-      >
-        Donate now
-      </Link>
+
+      <DonateButton />
     </div>
   );
 }
