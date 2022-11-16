@@ -37,7 +37,7 @@ function Logo({ logo }: { logo: string }) {
 
   return (
     <>
-      {isLoading && <ContentLoader className="w-12 h-12" />}
+      {isLoading && <ContentLoader className="w-12 h-12 rounded" />}
       <img
         src={logo}
         className={`w-12 h-12 object-contain ${isLoading ? "hidden" : ""}`}
