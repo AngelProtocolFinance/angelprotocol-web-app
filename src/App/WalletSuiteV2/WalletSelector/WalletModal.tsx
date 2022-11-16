@@ -26,7 +26,7 @@ export default function WalletModal() {
         <h4 className="font-work sm:font-heading font-semibold sm:font-bold text-center text-base sm:text-lg">
           Select one of the available wallets to continue
         </h4>
-        <div className="grid grid-cols-2 gap-4 w-full">
+        <div className="grid sm:grid-cols-2 gap-4 w-full">
           {connections.map((conn) => (
             <Connector {...conn} />
           ))}
