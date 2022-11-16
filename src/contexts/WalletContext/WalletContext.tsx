@@ -73,12 +73,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
     useTerra();
 
-  const {
-    isxdefiEVMLoading,
-    xdefiConnection,
-    disconnectEVMxdefi,
-    xdefiEVMinfo,
-  } = useXdefi();
+  const xdefiProviders = useXdefi();
 
   const providerStatuses: ProviderStatuses = [
     // {
@@ -89,10 +84,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
     },
-    {
-      providerInfo: xdefiEVMinfo,
-      isLoading: isxdefiEVMLoading,
-    },
+
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
@@ -101,7 +93,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
     },
-  ];
+  ].concat(
+    xdefiProviders.map((x) => ({
+      providerInfo: x.providerInfo,
+      isLoading: x.isLoading,
+    }))
+  );
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -115,7 +112,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       //   disconnectBinanceWallet();
       //   break;
       case "xdefi-evm":
-        disconnectEVMxdefi();
+        xdefiProviders
+          .find((x) => x.providerInfo?.providerId === "xdefi-evm")
+          ?.disconnect();
         break;
       case "keplr":
         disconnectKeplr();
@@ -133,7 +132,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     activeProviderInfo?.providerId,
     disconnectMetamask,
     // disconnectBinanceWallet,
-    disconnectEVMxdefi,
+    xdefiProviders,
     disconnectKeplr,
     disconnectTerra,
   ]);
@@ -182,11 +181,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
-            xdefiConnection,
             metamaskConnection,
             ...terraConnections,
             // binanceWalletConnection,
-          ],
+          ].concat(xdefiProviders.map((x) => x.connection)),
           disconnect,
         }}
       >
