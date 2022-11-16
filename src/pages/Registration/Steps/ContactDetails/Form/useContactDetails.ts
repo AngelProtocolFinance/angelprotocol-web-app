@@ -1,47 +1,36 @@
 import { FormValues } from "../types";
-import {
-  ContactDetailsRequest,
-  ContactRoles,
-  ReferralMethods,
-} from "types/aws";
-import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
-import { useUpdatePersonDataMutation } from "services/aws/registration";
+import { ContactRoles, ReferralMethods } from "types/aws";
+import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { handleMutationResult } from "helpers";
 
 export default function useSaveContactDetails() {
-  const [updateContactPerson] = useUpdatePersonDataMutation();
+  const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
 
   const saveContactDetails = async (fv: FormValues) => {
-    // call API to add or update contact details information(contactData)
-    try {
-      const postData: ContactDetailsRequest = {
-        PK: fv.ref,
-        body: {
-          Registration: {
-            OrganizationName: fv.orgName,
-          },
-          ContactPerson: {
-            FirstName: fv.firstName,
-            LastName: fv.lastName,
-            Email: fv.email,
-            Goals: fv.goals,
-            PhoneNumber: fv.phone,
-            ReferralMethod: fv.referralMethod as ReferralMethods,
-            Role: fv.role as ContactRoles,
-            EmailVerified: true,
-          },
+    handleMutationResult(
+      await updateReg({
+        type: "contact",
+        reference: fv.ref,
+        ContactPerson: {
+          FirstName: fv.firstName,
+          LastName: fv.lastName,
+          Email: fv.email,
+          Goals: fv.goals,
+          PhoneNumber: fv.phone,
+          ReferralMethod: fv.referralMethod as ReferralMethods,
+          Role: fv.role as ContactRoles,
         },
-      };
-
-      const result = await updateContactPerson(postData);
-
-      if ("error" in result) {
-        alert("error saving contact details");
-      }
-    } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
-    }
+        Registration: {
+          OrganizationName: fv.orgName,
+        },
+      }),
+      (result) => {
+        console.log(result);
+      },
+      handleError
+    );
   };
 
   return {

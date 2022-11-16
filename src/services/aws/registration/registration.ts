@@ -1,4 +1,8 @@
-import { InitApplication, SavedRegistration } from "./regtypes";
+import {
+  InitApplication,
+  RegistrationUpdate,
+  SavedRegistration,
+} from "./regtypes";
 import { RegistrationState, getRegistrationState } from "./types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
@@ -44,6 +48,21 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse(res: SavedRegistration) {
         return getRegistrationState(res);
+      },
+    }),
+    updateReg: builder.mutation<
+      any,
+      RegistrationUpdate & { reference: string }
+    >({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      query: ({ type, reference, ...payload }) => {
+        console.log(payload);
+        return {
+          url: "v2/registration",
+          method: "PUT",
+          params: { uuid: reference },
+          body: payload,
+        };
       },
     }),
 
@@ -170,20 +189,6 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updatePersonData: builder.mutation<
-      ContactDetailsResult,
-      ContactDetailsRequest
-    >({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ PK, body }) => {
-        return {
-          url: "v2/registration",
-          method: "PUT",
-          params: { uuid: PK },
-          body,
-        };
-      },
-    }),
   }),
 });
 export const {
@@ -193,13 +198,14 @@ export const {
   useEndowmentApplicationsQuery,
 
   //mutations
+  useUpdateRegMutation,
+
   useNewApplicationMutation,
   useCreateNewApplicationMutation,
   useRequestEmailMutation,
   useSubmitMutation,
   useUpdateMetadataMutation,
   useUpdateDocumentationMutation,
-  useUpdatePersonDataMutation,
 
   util: { updateQueryData: updateRegQueryData },
 } = registration_api;
