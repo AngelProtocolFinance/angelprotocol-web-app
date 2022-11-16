@@ -27,6 +27,8 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     const idRef = useRef(stateId);
     const navigate = useNavigate();
 
+    console.log(state);
+
     const { step: savedStep } = state;
 
     useEffect(() => {
@@ -42,7 +44,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
       idRef.current = stateId;
     }, [stateId]);
 
-    if (state.step === 1 && state.data.init.isEmailVerified) {
+    if (state.step === 1 && !state.data.init.isEmailVerified) {
       return <Navigate to={"."} />;
     }
 

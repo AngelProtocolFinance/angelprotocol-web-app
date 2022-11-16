@@ -13,8 +13,21 @@ export function handleMutationResult<T extends any>(
   onError: (error: unknown) => void
 ) {
   if ("error" in result) {
-    if ("data" in result.error) {
-      onError(result.error);
+    /** narrow to server error */
+    if (
+      "data" in result.error /** narrow first to FetchBaseQueryError */ &&
+      isServerError(result.error)
+    ) {
+      const d: any = result.error.data;
+      if (typeof d === "string") {
+        onError(d);
+      } else if ("message" in d) {
+        onError(d.message);
+
+        /** update with other aws error formats */
+      } else {
+        onError(d);
+      }
     } else {
       onError(
         "An error occured. Please try again later. If the error persists, please contact support@angelprotocol.io"
@@ -23,4 +36,10 @@ export function handleMutationResult<T extends any>(
   } else {
     onSuccess(result.data);
   }
+}
+
+function isServerError(
+  error: FetchBaseQueryError
+): error is { data: any; status: number } {
+  return "status" in error && typeof error.status === "number" && !!error.data;
 }

@@ -18,7 +18,7 @@ export default function Form() {
 
   return (
     <form
-      className="mx-auto md:w-full flex flex-col gap-6"
+      className="mx-auto md:w-full flex flex-col gap-6 padded-container"
       onSubmit={handleSubmit(saveContactDetails)}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

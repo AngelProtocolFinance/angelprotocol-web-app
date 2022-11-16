@@ -1,19 +1,16 @@
 import jwtDecode from "jwt-decode";
-import { useCallback, useEffect, useState } from "react";
-import { Location, useLocation, useNavigate } from "react-router-dom";
-import { VerifEmailBody } from "../common/types";
-import { UnprocessedApplication } from "types/aws";
+import { Location, Navigate, useLocation } from "react-router-dom";
+import { InitApplication } from "services/aws/registration/regtypes";
+import { InitReg } from "services/aws/registration/types";
+import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
-import { UnexpectedStateError } from "errors/errors";
+import Icon from "components/Icon";
+import { BtnPrim } from "components/registration";
+import { handleMutationResult, logger } from "helpers";
 import { appRoutes } from "constants/routes";
-import RegLoader from "../common/RegLoader";
-import useSendVerificationEmail from "../common/useSendVerificationEmail";
-import { GENERIC_ERROR_MESSAGE } from "../constants";
-import routes from "../routes";
-import LinkExpired from "./LinkExpired";
-import VerificationSuccessful from "./VerificationSuccessful";
+import routes, { steps } from "../routes";
 
-type JwtData = UnprocessedApplication & {
+type JwtData = InitApplication & {
   authorization: string;
   exp: number;
   iat: number;
@@ -22,71 +19,87 @@ type JwtData = UnprocessedApplication & {
 
 export default function VerifiedEmail() {
   const location = useLocation();
-  const { sendVerificationEmail, isLoading: isSendingEmail } =
-    useSendVerificationEmail();
   const { handleError } = useErrorContext();
-  const navigate = useNavigate();
-  const [isLoading, setLoading] = useState(true);
-  const [isEmailExpired, setEmailExpired] = useState(false);
-  const [application, setApplication] = useState<UnprocessedApplication>();
+  const [requestEmail, { isLoading }] = useRequestEmailMutation();
 
-  useEffect(() => {
-    try {
-      const jwtData = extractJwtData(location);
-
-      setEmailExpired(jwtData.isEmailExpired);
-      setApplication(jwtData.application);
-      setLoading(false);
-    } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
-    }
-  }, [location, handleError]);
-
-  const resendVerificationEmail = useCallback(async () => {
-    try {
-      if (!application) {
-        throw new UnexpectedStateError("Charity is undefined");
-      }
-
-      const emailPayload: VerifEmailBody = {
-        OrganizationName: application.Registration.OrganizationName,
-        Email: application.ContactPerson.Email,
-        FirstName: application.ContactPerson.FirstName,
-        LastName: application.ContactPerson.LastName,
-        Role: application.ContactPerson.Role,
-        PhoneNumber: application.ContactPerson.PhoneNumber,
-      };
-      await sendVerificationEmail(application.ContactPerson.PK, emailPayload);
-
-      navigate(`${appRoutes.register}/${routes.confirmEmail}`);
-    } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
-    }
-  }, [application, handleError, navigate, sendVerificationEmail]);
-
-  if (isLoading) {
-    return <RegLoader />;
+  const data = extractJwtData(location);
+  if (!data) {
+    /** if JWT data is tampered in URL */
+    return <Navigate to={".."} />;
   }
 
-  if (isEmailExpired) {
+  const {
+    application: { ContactPerson: c },
+    isExpired,
+  } = data;
+
+  if (isExpired) {
     return (
-      <LinkExpired
-        onClick={resendVerificationEmail}
-        isLoading={isSendingEmail}
-      />
+      <div className="flex flex-col gap-10 items-center">
+        <Icon type="Info" className="text-4xl text-red" />
+        <p className="text-2xl font-bold">
+          Your verification link has expired. Please resend the verification
+          email.
+        </p>
+        <BtnPrim
+          className="btn-orange w-64 h-12 text-sm"
+          onClick={async () => {
+            handleMutationResult(
+              await requestEmail({ uuid: c.PK, email: c.Email }),
+              (data) => {
+                console.log(data);
+              },
+              (error) => {
+                handleError(error);
+              }
+            );
+          }}
+          disabled={isLoading}
+        >
+          Resend verification email
+        </BtnPrim>
+      </div>
     );
   }
-  return <VerificationSuccessful newCharity={application!} />;
+
+  const state: InitReg = {
+    reference: c.PK,
+    email: c.Email,
+    isEmailVerified: true,
+    lastVerified: c.EmailVerificationLastSentDate,
+  };
+
+  return (
+    <div className="flex flex-col gap-10 items-center">
+      <Icon type="Check" className="text-4xl text-green-l1" />
+      <h1>Your email address is confirmed!</h1>
+      <p>
+        Thank you for your interest in Angel Protocol! Your endowment is just a
+        few steps away.
+      </p>
+      <BtnPrim
+        as="link"
+        to={`${appRoutes.register}/${routes.steps}/${steps.contact}`}
+        state={state}
+      >
+        Continue Registration
+      </BtnPrim>
+    </div>
+  );
 }
 
-function extractJwtData(location: Location): {
-  application: UnprocessedApplication;
-  isEmailExpired: boolean;
-} {
-  const pathNames = location.pathname.split("/");
-  const jwtToken = pathNames[pathNames.length - 1];
-  const jwtData = jwtDecode<JwtData>(jwtToken);
-  const { authorization, exp, iat, user, ...application } = jwtData;
-  const isEmailExpired = Math.floor(Date.now() / 1000) >= exp;
-  return { application, isEmailExpired };
+function extractJwtData(
+  location: Location
+): { application: InitApplication; isExpired: boolean } | undefined {
+  try {
+    const pathNames = location.pathname.split("/");
+    const jwtToken = pathNames[pathNames.length - 1];
+    const jwtData = jwtDecode<JwtData>(jwtToken);
+    const { authorization, exp, iat, user, ...application } = jwtData;
+    const isExpired = Math.floor(Date.now() / 1000) >= exp;
+    return { application, isExpired };
+  } catch (err) {
+    logger.error(err);
+    return undefined;
+  }
 }

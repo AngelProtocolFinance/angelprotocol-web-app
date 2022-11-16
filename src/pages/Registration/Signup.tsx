@@ -20,7 +20,7 @@ type FormValues = { email: string; hasAgreedToPrivacyPolicy: boolean };
 
 export default function Signup({ classes = "" }: { classes?: string }) {
   const navigate = useNavigate();
-  const [register] = useNewApplicationMutation();
+  const [register, { isLoading }] = useNewApplicationMutation();
   const { handleError } = useErrorContext();
   const methods = useForm<FormValues>({
     resolver: yupResolver(
@@ -87,7 +87,11 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           </a>
         </Checkbox>
       </FormProvider>
-      <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
+      <BtnPrim
+        type="submit"
+        className="mt-8 mx-0 sm:mx-24"
+        disabled={isLoading}
+      >
         Register
       </BtnPrim>
       <p className="text-sm mx-0 sm:mx-24 relative h-px grid place-items-center bg-gray-d1 dark:bg-gray my-11">
