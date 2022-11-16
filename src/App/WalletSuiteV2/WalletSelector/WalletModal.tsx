@@ -12,13 +12,11 @@ export default function WalletModal() {
     <Dialog.Panel className="fixed-center z-20 flex flex-col items-center max-w-lg max-h-[572px] border border-gray-l2 rounded bg-gray-l5 text-gray-d2">
       <Dialog.Title
         as="h3"
-        className="grid grid-rows-1 grid-cols-3 items-center justify-items-end w-full px-4 py-6 bg-orange-l6 border-b border-gray-l2"
+        className="relative w-full py-6 bg-orange-l6 border-b border-gray-l2 font-heading font-bold text-center text-xl"
       >
-        <span className="col-start-2 w-full font-heading font-bold text-xl justify-self-center">
-          Connect Wallet
-        </span>
+        Connect Wallet
         <button
-          className="flex items-center justify-center w-10 h-10 mr-4 border border-gray-l2 rounded"
+          className="absolute right-4 top-4 flex items-center justify-center w-10 h-10 mr-4 border border-gray-l2 rounded"
           onClick={closeModal}
         >
           <Icon type="Close" size={24} />
