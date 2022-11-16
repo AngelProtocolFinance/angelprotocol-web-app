@@ -58,6 +58,7 @@ export default function ResumeForm() {
       reference: val.refer,
       email: "justin@angelprotocol.io",
       isEmailVerified: true,
+      lastVerified: regState.data.init.lastVerified,
     };
 
     //go to dashboard and let guard handle further routing

@@ -23,7 +23,8 @@ import { Optional } from "types/utils";
 export type InitReg = {
   reference: string;
   email: string;
-  isEmailVerified?: boolean;
+  isEmailVerified: boolean;
+  lastVerified: string; // ISO string
 };
 
 //STEP 1
@@ -150,11 +151,7 @@ type Step4Data = Optional<CompleteRegistration, "wallet">;
 
 export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
 
-type Nav = { back: string; next?: string };
-
-type RegStep0 = {
-  step: 0;
-};
+type Nav = { back: number; next?: number };
 
 type RegStep1 = {
   step: 1;
@@ -186,7 +183,6 @@ type RegStep5 = {
 };
 
 export type RegistrationState =
-  | RegStep0
   | RegStep1
   | RegStep2
   | RegStep3
@@ -221,7 +217,7 @@ export function getRegistrationState(
         documentation: formatDocumentation(r),
         profile: formatProfile(m),
       },
-      nav: { back: "3" },
+      nav: { back: 3 },
     };
   } else if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
@@ -233,7 +229,7 @@ export function getRegistrationState(
         documentation: formatDocumentation(r),
         level: 1,
       },
-      nav: { back: "2", next: "4" },
+      nav: { back: 2, next: 4 },
     };
   } else if (isDoneContact(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
@@ -243,7 +239,7 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
       },
-      nav: { next: "3", back: "1" },
+      nav: { next: 3, back: 1 },
     };
   } else {
     return {
@@ -251,16 +247,17 @@ export function getRegistrationState(
       data: {
         init: getInit(reg.ContactPerson),
       },
-      nav: { next: "2" },
+      nav: { next: 2 },
     };
   }
 }
 
-function getInit({ Email, EmailVerified, PK }: InitContact): InitReg {
+function getInit(i: InitContact): InitReg {
   return {
-    email: Email,
-    reference: PK,
-    isEmailVerified: EmailVerified,
+    email: i.Email,
+    reference: i.PK,
+    isEmailVerified: i.EmailVerified,
+    lastVerified: i.EmailVerificationLastSentDate,
   };
 }
 

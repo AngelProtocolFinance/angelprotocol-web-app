@@ -66,7 +66,7 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
                 className={`btn-outline-blue w-48 h-10 ${
                   isSubmitting ? "pointer-events-none" : ""
                 } `}
-                to={nav.back}
+                to={`${nav.back}`}
               >
                 Back
               </Link>

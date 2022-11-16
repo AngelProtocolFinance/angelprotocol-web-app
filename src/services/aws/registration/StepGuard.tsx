@@ -32,6 +32,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     useEffect(() => {
       if (idRef.current !== stateId) {
         if ("nav" in state && "next" in state.nav) {
+          /**  */
           if (state.nav.next) {
             navigate(`../${state.nav.next}`, { state: init });
           } else if (step < state.step) {
@@ -41,6 +42,9 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
       }
       idRef.current = stateId;
     }, [stateId]);
+
+    if (state.step === 1 && state.data.init.isEmailVerified) {
+    }
 
     //going to next step without completing required step
     if (step < state.step) {
@@ -62,8 +66,6 @@ export default function StepGuard({
   const registration = {} as RegistrationState;
 
   //still initial
-  if (registration.step === 0) {
-  }
 
   //going to next step without completing required step
   if (step < registration.step) {
