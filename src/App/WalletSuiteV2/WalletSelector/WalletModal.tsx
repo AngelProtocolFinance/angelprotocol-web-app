@@ -27,9 +27,8 @@ export default function WalletModal() {
           Select one of the available wallets to continue
         </h4>
         <div className="grid sm:grid-cols-2 gap-4 w-full">
-          {connections.map((conn) => (
-            <Connector key={conn.name} {...conn} />
-          ))}
+          {!!connections.length &&
+            connections.map((conn) => <Connector key={conn.name} {...conn} />)}
         </div>
       </div>
     </Dialog.Panel>
