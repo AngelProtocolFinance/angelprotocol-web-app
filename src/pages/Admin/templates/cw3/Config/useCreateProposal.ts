@@ -56,6 +56,7 @@ export default function useCreateProposal() {
       max_voting_period: isTime
         ? { time: newData.duration }
         : { height: newData.duration },
+      require_execution: newData.require_execution,
     });
 
     const configUpdateMeta: CW3ConfigUpdateMeta = {

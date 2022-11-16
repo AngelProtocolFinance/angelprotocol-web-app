@@ -53,6 +53,7 @@ export type CW3Config = {
   threshold: Threshold;
   max_voting_period: Duration;
   //...future needed attr
+  require_execution: boolean;
 };
 
 export type CW3ConfigPayload = {
@@ -60,6 +61,7 @@ export type CW3ConfigPayload = {
   threshold: Threshold;
   //poll duration in block height
   max_voting_period: Duration;
+  require_execution: boolean;
 };
 
 export type AdminVoteInfo = {
