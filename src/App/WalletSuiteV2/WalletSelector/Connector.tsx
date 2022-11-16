@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Connection } from "contexts/WalletContext/types";
 import { useErrorContext } from "contexts/ErrorContext";
+import ContentLoader from "components/ContentLoader";
 
 export default function Connector(props: Connection) {
   const { handleError } = useErrorContext();
@@ -31,5 +33,17 @@ export default function Connector(props: Connection) {
 }
 
 function Logo({ logo }: { logo: string }) {
-  return <img src={logo} className="w-12 h-12 object-contain" alt="" />;
+  const [isLoading, setLoading] = useState(true);
+
+  return (
+    <>
+      {isLoading && <ContentLoader className="w-12 h-12" />}
+      <img
+        src={logo}
+        className={`w-12 h-12 object-contain ${isLoading ? "hidden" : ""}`}
+        alt=""
+        onLoad={() => setLoading(false)}
+      />
+    </>
+  );
 }
