@@ -175,20 +175,6 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updateDocumentation: builder.mutation<
-      UpdateDocumentationResult,
-      UpdateDocumentationData
-    >({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ PK, body }) => {
-        return {
-          url: "v2/registration",
-          method: "PUT",
-          params: { uuid: PK },
-          body,
-        };
-      },
-    }),
   }),
 });
 export const {
@@ -205,7 +191,6 @@ export const {
   useRequestEmailMutation,
   useSubmitMutation,
   useUpdateMetadataMutation,
-  useUpdateDocumentationMutation,
 
   util: { updateQueryData: updateRegQueryData },
 } = registration_api;

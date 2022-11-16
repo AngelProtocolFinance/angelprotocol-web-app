@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
-import { DocumentationValues } from "pages/Registration/types";
+import { FormValues } from "../types";
 import { ErrorMessage, InputRow } from "../../../common";
 
 export default function WebsiteInput() {
   const {
     register,
     formState: { isSubmitting },
-  } = useFormContext<DocumentationValues>();
+  } = useFormContext<FormValues>();
 
   return (
     <InputRow htmlFor="website" label="Website of your organization" required>
@@ -17,7 +17,7 @@ export default function WebsiteInput() {
         className="text-sm rounded-md outline-none border-none w-full px-2 py-1 text-black"
         disabled={isSubmitting}
       />
-      <ErrorMessage<DocumentationValues> name="website" />
+      <ErrorMessage<FormValues> name="website" />
     </InputRow>
   );
 }

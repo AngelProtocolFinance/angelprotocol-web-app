@@ -1,4 +1,4 @@
-import { DocumentationValues as DV } from "pages/Registration/types";
+import { FormValues as FV } from "../types";
 import { unsdgs } from "constants/unsdgs";
 import { ErrorMessage, InputRow } from "../../../common";
 import Selector from "../../../common/Selector";
@@ -15,13 +15,13 @@ export default function UnSdgSelector({ classes = "" }: { classes?: string }) {
       htmlFor="un_sdg"
       label="Which UN SDG is your org’s mission aligned with?"
     >
-      <Selector<DV>
+      <Selector<FV>
         classes={{ button: "px-2 py-1 text-sm", option: "px-2 py-1 text-sm" }}
-        name="un_sdg"
+        name="sdg"
         placeholder="Select an SDG"
         options={OPTIONS}
       />
-      <ErrorMessage<DV> name="un_sdg" />
+      <ErrorMessage<FV> name="sdg" />
     </InputRow>
   );
 }

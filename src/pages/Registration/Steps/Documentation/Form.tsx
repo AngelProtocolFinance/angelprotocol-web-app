@@ -18,7 +18,7 @@ export default function Form() {
 
   return (
     <form
-      className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left"
+      className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left padded-container"
       onSubmit={upload}
     >
       <Title />

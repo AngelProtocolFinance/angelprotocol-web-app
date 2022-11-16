@@ -6,7 +6,7 @@ export type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: "Inactive";
-  UN_SDG: 0;
+  UN_SDG: number;
 };
 
 export type InitContact = {

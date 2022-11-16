@@ -51,5 +51,17 @@ describe("get documentation file previews", () => {
       c: [preview1],
     });
   });
-  // no need to test for empty files and empty preview - should be prevented by schema
+  test("return empty arrays when no new files and previews are empty", async () => {
+    const documentationVals: Parameters<typeof getFilePreviews>[0] = {
+      a: { files: [], previews: [preview1] },
+      b: { files: [], previews: [] },
+      c: { files: [], previews: [] },
+    };
+    const previews = await getFilePreviews(documentationVals);
+    expect(previews).toStrictEqual({
+      a: [preview1],
+      b: [],
+      c: [],
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
-import { DocumentationValues } from "pages/Registration/types";
+import { FormValues } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import FileDropzone from "components/FileDropzone";
 import { Button, InputRow } from "../../../../common";
@@ -9,7 +9,7 @@ import { Button, InputRow } from "../../../../common";
 export default function ProofOfIdentity() {
   const {
     formState: { isSubmitting },
-  } = useFormContext<DocumentationValues>();
+  } = useFormContext<FormValues>();
 
   return (
     <InputRow
@@ -18,7 +18,7 @@ export default function ProofOfIdentity() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone<DocumentationValues, "proofOfIdentity">
+      <FileDropzone<FormValues, "proofOfIdentity">
         name="proofOfIdentity"
         className="h-8"
         disabled={isSubmitting}

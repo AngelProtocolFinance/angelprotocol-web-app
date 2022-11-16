@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn, useFormContext } from "react-hook-form";
-import { DocumentationValues } from "pages/Registration/types";
+import { FormValues } from "./types";
 import { Asset } from "components/FileDropzone";
 
 type Level = 0 | 1 | 2 | 3;
 
 export default function useCurrentLevel() {
   const [level, setLevel] = useState<Level>(0);
-  const methods = useFormContext<DocumentationValues>();
+  const methods = useFormContext<FormValues>();
 
   const poi = methods.watch("proofOfIdentity");
   const website = methods.watch("website");
   const por = methods.watch("proofOfRegistration");
-  const un_sdg = methods.watch("un_sdg");
+  const un_sdg = methods.watch("sdg");
   const fs = methods.watch("financialStatements");
-  const afr = methods.watch("auditedFinancialReports");
+  const afr = methods.watch("annualReports");
 
   useEffect(() => {
     let currentLevel: Level = 0;
@@ -46,13 +46,13 @@ const getIsLevelOne = (
   proofOfIdentity: Asset,
   website: string,
   proofOfRegistration: Asset,
-  { getFieldState }: UseFormReturn<DocumentationValues, any>
+  { getFieldState }: UseFormReturn<FormValues, any>
 ): boolean =>
   // no errors
   !getFieldState("proofOfIdentity").error &&
   !getFieldState("website").error &&
   !getFieldState("proofOfRegistration").error &&
-  !getFieldState("un_sdg").error &&
+  !getFieldState("sdg").error &&
   // values inserted
   un_sdg > 0 &&
   proofOfIdentity.files.some((f) => f) &&
@@ -61,7 +61,7 @@ const getIsLevelOne = (
 
 const getIsLevelTwo = (
   financialStatements: Asset,
-  { getFieldState }: UseFormReturn<DocumentationValues, any>
+  { getFieldState }: UseFormReturn<FormValues, any>
 ): boolean =>
   // no errors
   !getFieldState("financialStatements").error &&
@@ -70,9 +70,9 @@ const getIsLevelTwo = (
 
 const getIsLevelThree = (
   auditedFinancialReports: Asset,
-  { getFieldState }: UseFormReturn<DocumentationValues, any>
+  { getFieldState }: UseFormReturn<FormValues, any>
 ): boolean =>
   // no errors
-  !getFieldState("auditedFinancialReports").error &&
+  !getFieldState("annualReports").error &&
   // values inserted
   auditedFinancialReports.files.some((fs) => !!fs);

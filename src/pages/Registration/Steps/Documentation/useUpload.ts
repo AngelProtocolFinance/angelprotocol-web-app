@@ -1,60 +1,45 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { DocumentationValues } from "pages/Registration/types";
-import {
-  useRegistrationQuery,
-  useUpdateDocumentationMutation,
-} from "services/aws/registration";
+import { useFormContext } from "react-hook-form";
+import { FormValues } from "./types";
+import { useUpdateRegMutation } from "services/aws/registration";
+import { useRegState } from "services/aws/registration/StepGuard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { appRoutes } from "constants/routes";
-import { GENERIC_ERROR_MESSAGE } from "../../constants";
-import routes from "../../routes";
+import { handleMutationResult } from "helpers";
 import { getFilePreviews } from "./getFilePreviews";
 
 export default function useUpload() {
-  const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { application } = useRegistrationQuery();
-  const navigate = useNavigate();
+  const { handleSubmit } = useFormContext<FormValues>();
+  const [updateReg] = useUpdateRegMutation();
+  const {
+    data: { init },
+  } = useRegState<2>();
 
   const { handleError } = useErrorContext();
 
-  const upload = useCallback(
-    async ({
-      website,
-      checkedAuthority,
-      checkedPolicy,
-      un_sdg,
-      ...documents
-    }: DocumentationValues) => {
-      try {
-        const previews = await getFilePreviews({ ...documents });
-
-        const result = await uploadDocumentation({
-          PK: application.ContactPerson.PK,
-          body: {
-            Website: website,
-            UN_SDG: un_sdg,
-            ProofOfIdentity: previews.proofOfIdentity[0],
-            ProofOfRegistration: previews.proofOfRegistration[0],
-            FinancialStatements: previews.financialStatements,
-            AuditedFinancialReports: previews.auditedFinancialReports,
-          },
-        });
-
-        if ("error" in result) {
-          return handleError(result.error, GENERIC_ERROR_MESSAGE);
-        }
-
-        const route = application.Metadata.JunoWallet
-          ? routes.dashboard
-          : routes.additionalInformation;
-        navigate(`${appRoutes.register}/${route}`);
-      } catch (error) {
-        handleError(error, GENERIC_ERROR_MESSAGE);
-      }
-    },
-    [application, handleError, uploadDocumentation, navigate]
-  );
-
-  return upload;
+  const upload = async ({
+    website,
+    hasAuthority,
+    hasAgreedToTerms,
+    sdg,
+    ...documents
+  }: FormValues) => {
+    const previews = await getFilePreviews({ ...documents });
+    handleMutationResult(
+      await updateReg({
+        type: "docs",
+        reference: init.reference,
+        //payload
+        Website: website,
+        UN_SDG: sdg,
+        ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
+        ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
+        FinancialStatements: previews.financialStatements,
+        AuditedFinancialReports: previews.annualReports,
+      }),
+      (result) => {
+        console.log(result);
+      },
+      handleError
+    );
+  };
+  return handleSubmit(upload);
 }

@@ -1,26 +1,14 @@
 import { useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useRegistrationQuery } from "services/aws/registration";
+import { Link } from "react-router-dom";
+import { useRegState } from "services/aws/registration/StepGuard";
 import Loader from "components/Loader";
-import { appRoutes } from "constants/routes";
 import { Button } from "../../common";
-import routes from "../../routes";
 
 export default function ButtonSection({ classes = "" }: { classes?: string }) {
-  const { application } = useRegistrationQuery();
-  const navigate = useNavigate();
+  const { nav, data } = useRegState<2>();
   const {
     formState: { isSubmitting },
   } = useFormContext();
-
-  // if wallet registration step is already complete, then this was just data update,
-  // so user can be navigated to the dashboard
-  const onBackClick = () => {
-    const route = application.Metadata.JunoWallet
-      ? routes.dashboard
-      : routes.contactDetails;
-    navigate(`${appRoutes.register}/${route}`);
-  };
 
   return (
     <div className={`flex justify-center ${classes}`}>
@@ -28,12 +16,13 @@ export default function ButtonSection({ classes = "" }: { classes?: string }) {
         <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (
         <>
-          <Button
+          <Link
             className="btn-outline-blue w-48 h-12 mr-2"
-            onClick={onBackClick}
+            to={`../${nav.back}`}
+            state={data.init}
           >
             Back
-          </Button>
+          </Link>
           <Button submit className="btn-orange w-48 h-12">
             Upload
           </Button>
