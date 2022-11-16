@@ -23,7 +23,7 @@ export default function Connector(props: Connection) {
 
   return (
     <button
-      className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l2 rounded bg-white dark:bg-blue dark:border-none"
+      className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l2 rounded bg-white hover:bg-orange-l5 dark:bg-blue-d2 hover:dark:bg-blue-d3 dark:border-none"
       onClick={handleConnect}
     >
       <Logo logo={props.logo} />
