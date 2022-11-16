@@ -2,7 +2,7 @@ import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { appRoutes } from "constants/routes";
-import WalletSuite from "../WalletSuite";
+import WalletSuite from "../WalletSuiteV2";
 import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
 import { Opener as MobileNavOpener } from "./MobileNav";
