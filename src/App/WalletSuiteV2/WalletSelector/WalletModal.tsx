@@ -19,7 +19,7 @@ export default function WalletModal() {
           className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 mr-4 sm:border border-gray-l2 sm:rounded dark:border-bluegray text-gray-d2 dark:text-white"
           onClick={closeModal}
         >
-          <Icon type="Close" size={24} />
+          <Icon type="Close" className="w-8 h-8" />
         </button>
       </Dialog.Title>
       <div className="flex flex-col justify-center items-center gap-4 sm:gap-6 p-6 sm:p-8 w-full overflow-y-auto">
