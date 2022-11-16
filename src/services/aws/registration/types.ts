@@ -1,3 +1,17 @@
+import { emit } from "process";
+import {
+  ContactDetails,
+  DoneContact,
+  DoneDocs,
+  DoneProfile,
+  DoneWallet,
+  InitContact,
+  OrgData,
+  SavedRegistration,
+  TDocumentation,
+  Profile as TProfile,
+  WalletData,
+} from "./regtypes";
 import {
   FileObject,
   RegistrationStatus,
@@ -22,10 +36,12 @@ export type ContactPerson = {
   email: string;
 
   orgName: string;
-  orgRole: string;
+  role: string;
+  otherRole: string;
 
   referralMethod: string;
-  goal: string;
+  otherReferralMethod: string;
+  goals: string;
 };
 
 //STEP 2
@@ -179,196 +195,116 @@ export type RegistrationState =
 
 export type RegStep = RegistrationState["step"];
 
-/**
- * register/steps receives RegistrationState
- * name: {
-    first: string;
-    last: string;
-  };
-  //https://www.npmjs.com/package/react-phone-input-2
-  phone: string; // {format: string, value:string}
-  // disabled, can't be changed once confirmed
-  email: string;
-
-  organization: {
-    name: string;
-    role: string;
-    otherRole: string;
-    goal: string;
-    referror: string;
-  };
- *
- */
-
-export function getRegistrationState({
-  ContactPerson: c,
-  Registration: r,
-  Metadata: m,
-}: UnprocessedApplication): RegistrationState {
-  if (
-    /** TODO: this exhaustive checks can be avoided if each registration step doesn't get
-     *  data from different keys in UnproccessApplications
-     *  e.g Step4 should be considered finished if Application.Registration is defined, but we also need to check
-     *  if it has ProofOfIdentity since Registration attr can be created by Step1 when saving OrgName
-     */
-    c &&
-    c.PK &&
-    r &&
-    r.ProofOfIdentity && //no need to check for other fields
-    m &&
-    m.KycDonorsOnly !== undefined &&
-    !!m.Banner &&
-    !!m.Logo &&
-    !!m.Overview &&
-    !!m.JunoWallet
-  ) {
+export function getRegistrationState(
+  reg: SavedRegistration
+): RegistrationState {
+  if (isDoneWallet(reg)) {
+    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
       step: 5,
       data: {
         init: getInit(c),
-        contact: formatContactPerson(c, r.OrganizationName),
+        contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        profile: {
-          banner: m.Banner,
-          logo: m.Logo,
-          overview: m.Overview,
-          isKYCRequired: m.KycDonorsOnly,
-        },
-        wallet: { address: m.JunoWallet! },
+        profile: formatProfile(m),
+        wallet: { address: m.JunoWallet },
         status: r.RegistrationStatus,
       },
     };
-  } else if (
-    c &&
-    c.PK &&
-    r &&
-    r.ProofOfIdentity && //no need to check for other fields
-    m &&
-    m.KycDonorsOnly !== undefined &&
-    !!m.Banner &&
-    !!m.Logo &&
-    !!m.Overview
-  ) {
+  } else if (isDoneProfile(reg)) {
+    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
       step: 4,
       data: {
         init: getInit(c),
-        contact: formatContactPerson(c, r.OrganizationName),
+        contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        profile: {
-          banner: m.Banner,
-          logo: m.Logo,
-          overview: m.Overview,
-          isKYCRequired: m.KycDonorsOnly,
-        },
-        wallet: m.JunoWallet ? { address: m.JunoWallet! } : undefined,
+        profile: formatProfile(m),
       },
       nav: { back: "3" },
     };
-  } else if (
-    c &&
-    c.PK &&
-    r &&
-    r.ProofOfIdentity //no need to check for other fields
-  ) {
-    const isComplete =
-      m && !!m.Banner && !!m.Logo && !!m.Overview && !!m.KycDonorsOnly;
+  } else if (isDoneDocs(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 3,
       data: {
         init: getInit(c),
-        contact: formatContactPerson(c, r.OrganizationName),
+        contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        profile:
-          //must be defined altogether, can't initially set just one
-          isComplete
-            ? //asserted by isComplete, can be inlined, but need to reuse value
-              {
-                banner: m.Banner!,
-                logo: m.Logo!,
-                overview: m.Overview!,
-                isKYCRequired: m.KycDonorsOnly!,
-              }
-            : undefined,
         level: 1,
       },
-      nav: { next: isComplete ? "4" : undefined, back: "2" },
+      nav: { back: "2", next: "4" },
     };
-  } else if (
-    c &&
-    c.PK &&
-    c.FirstName &&
-    c.LastName /**... no need to check for other fields */
-  ) {
-    const isComplete = r && r.ProofOfIdentity;
-
+  } else if (isDoneContact(reg)) {
+    const { ContactPerson: c, Registration: r } = reg;
     return {
       step: 2,
       data: {
         init: getInit(c),
-        contact: formatContactPerson(c, r.OrganizationName),
-        documentation: isComplete ? formatDocumentation(r) : undefined,
+        contact: formatContactPerson(c, r),
       },
-      nav: { next: isComplete ? "3" : undefined, back: "1" },
+      nav: { next: "3", back: "1" },
     };
-  } else if (c && c.PK) {
-    const isComplete =
-      c.FirstName && c.LastName; /**... no need to check for other fields */
-    console.log(c.FirstName, c.LastName);
+  } else {
     return {
       step: 1,
       data: {
-        init: getInit(c),
-        contact: isComplete
-          ? formatContactPerson(c, r.OrganizationName)
-          : undefined,
+        init: getInit(reg.ContactPerson),
       },
-      nav: { next: isComplete ? "2" : undefined },
+      nav: { next: "2" },
     };
-  } else {
-    return { step: 0 };
   }
 }
 
-type UCP = UnprocessedApplication["ContactPerson"];
-type UREG = UnprocessedApplication["Registration"];
-
-function getInit(cp: UCP): InitReg {
+function getInit({ Email, EmailVerified, PK }: InitContact): InitReg {
   return {
-    email: cp.Email,
-    reference: cp.PK!,
-    isEmailVerified: cp.EmailVerified,
+    email: Email,
+    reference: PK,
+    isEmailVerified: EmailVerified,
   };
 }
 
-function formatContactPerson(cp: UCP, orgName: string): ContactPerson {
+function formatProfile(m: DoneProfile["Metadata"]): Profile {
   return {
-    firstName: cp.FirstName,
-    lastName: cp.LastName,
-    phone: cp.PhoneNumber,
-    email: cp.Email,
-    orgName,
-    orgRole: cp.Role,
-    goal: cp.Goals,
-    referralMethod: cp.ReferralMethod,
+    banner: m.Banner,
+    logo: m.Logo,
+    overview: m.Overview,
+    isKYCRequired: m.KycDonorsOnly,
   };
 }
 
-function formatDocumentation(reg: UREG): Documentation {
-  const {
-    ProofOfIdentity: poi,
-    ProofOfRegistration: por,
-    FinancialStatements: fs,
-    AuditedFinancialReports: ar,
-    Website,
-  } = reg;
+function formatContactPerson(
+  c: ContactDetails & InitContact,
+  r: DoneContact["Registration"]
+): ContactPerson {
+  return {
+    firstName: c.FirstName,
+    lastName: c.LastName,
+    phone: c.PhoneNumber,
+    email: c.Email,
+    orgName: r.OrganizationName,
+    role: c.Role,
+    otherRole: c.OtherRole,
+    referralMethod: c.ReferralMethod,
+    otherReferralMethod: c.OtherReferralMethod,
+    goals: c.Goals,
+  };
+}
 
+function formatDocumentation({
+  ProofOfIdentity: poi,
+  ProofOfRegistration: por,
+  FinancialStatements: fs,
+  AuditedFinancialReports: ar,
+  Website,
+  UN_SDG,
+}: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
-    proofOfIdentity: poi ? [poi] : [],
-    proofOfRegistration: por ? [por] : [],
-    website: Website ?? "",
-    sdg: reg.UN_SDG,
+    proofOfIdentity: [poi],
+    proofOfRegistration: [por],
+    website: Website,
+    sdg: UN_SDG,
 
     //level 2
     financialStatements: fs || [],
@@ -380,4 +316,24 @@ function formatDocumentation(reg: UREG): Documentation {
     hasAuthority: true,
     hasAgreedToTerms: true,
   };
+}
+
+function isDoneWallet(data: SavedRegistration): data is DoneWallet {
+  const key: keyof WalletData = "JunoWallet";
+  return key in data.Metadata;
+}
+
+function isDoneProfile(data: SavedRegistration): data is DoneProfile {
+  const key: keyof TProfile = "Logo";
+  return key in data;
+}
+
+function isDoneDocs(data: SavedRegistration): data is DoneDocs {
+  const key: keyof TDocumentation = "ProofOfIdentity";
+  return key in data;
+}
+
+function isDoneContact(data: SavedRegistration): data is DoneContact {
+  const key: keyof ContactDetails = "FirstName";
+  return key in data;
 }

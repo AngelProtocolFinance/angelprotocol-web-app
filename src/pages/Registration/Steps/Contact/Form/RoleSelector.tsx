@@ -11,7 +11,7 @@ export default function RoleSelector() {
         <span className="text-red ml-0.5">*</span>
       </label>
       <Selector<FV>
-        name="orgRole"
+        name="role"
         options={contactRoleOptions}
         classes={{ option: "px-3 py-2", button: "px-3 py-2" }}
       />

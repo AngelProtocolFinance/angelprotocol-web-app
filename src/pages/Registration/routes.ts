@@ -1,5 +1,6 @@
 enum routes {
   index = "",
+  resume = "",
   contactDetails = "contact-details",
   dashboard = "dashboard",
   confirmEmail = "confirm-email",

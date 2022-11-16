@@ -10,11 +10,11 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   email: asciiSchema
     .email("Invalid email format")
     .required("Please enter your email."),
-  goal: asciiSchema.required(
+  goals: asciiSchema.required(
     "Please state your goal in working with Angel Protocol."
   ),
   // since selector logic has a default value selected, this error message should never appear
-  orgRole: asciiSchema.required(
+  role: asciiSchema.required(
     "Please select your role within your organization."
   ),
   referralMethod: asciiSchema.required(

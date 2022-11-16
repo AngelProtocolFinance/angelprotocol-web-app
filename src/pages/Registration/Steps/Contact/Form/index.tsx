@@ -56,7 +56,7 @@ export default function Form() {
         <ReferralSelector />
       </div>
       <FormInput<FV>
-        fieldName="goal"
+        fieldName="goals"
         label="Goals"
         placeholder="What is your goal in working with Angel Protocol?"
         required

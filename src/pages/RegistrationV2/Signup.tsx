@@ -1,7 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
+import { useNewApplicationMutation } from "services/aws/registration";
 import Checkbox from "components/Checkbox";
 import { TextInput } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
@@ -11,6 +15,7 @@ import { routes } from "./routes";
 type FormValues = { email: string; hasAgreedToPrivacyPolicy: boolean };
 
 export default function Signup({ classes = "" }: { classes?: string }) {
+  const [register] = useNewApplicationMutation();
   const methods = useForm<FormValues>({
     resolver: yupResolver(
       Yup.object().shape<SchemaShape<FormValues>>({
@@ -25,8 +30,16 @@ export default function Signup({ classes = "" }: { classes?: string }) {
 
   const { handleSubmit } = methods;
 
-  function onSubmit({ email }: FormValues) {
-    alert(email);
+  async function onSubmit({ email }: FormValues) {
+    handleMutationResult(
+      await register({ email }),
+      (data) => {
+        console.log(data);
+      },
+      (message) => {
+        alert(message);
+      }
+    );
   }
 
   return (
@@ -77,4 +90,26 @@ export default function Signup({ classes = "" }: { classes?: string }) {
       </BtnSec>
     </form>
   );
+}
+
+function handleMutationResult<T extends any>(
+  result:
+    | {
+        data: T;
+      }
+    | {
+        error: FetchBaseQueryError | SerializedError;
+      },
+  onSuccess: (data: T) => void,
+  onError: (messsage: string) => void
+) {
+  if ("error" in result) {
+    if ("data" in result.error && typeof result.error.data === "string") {
+      onError(result.error.data);
+    } else {
+      onError(GENERIC_ERROR_MESSAGE);
+    }
+  } else {
+    onSuccess(result.data);
+  }
 }

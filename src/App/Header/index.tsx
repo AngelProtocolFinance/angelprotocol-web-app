@@ -10,7 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Header({ classes = "" }: { classes?: string }) {
   const location = useLocation();
-  const isRegistration = location.pathname.includes(appRoutes.register2);
+  const isRegistration = location.pathname.includes(appRoutes.register);
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
