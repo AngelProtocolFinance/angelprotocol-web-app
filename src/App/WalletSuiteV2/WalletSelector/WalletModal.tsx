@@ -9,10 +9,10 @@ export default function WalletModal() {
   const { connections } = useSetWallet();
 
   return (
-    <Dialog.Panel className="fixed-center z-20 flex flex-col items-center max-w-lg max-h-[572px] border border-gray-l2 rounded bg-gray-l5 text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white">
+    <Dialog.Panel className="absolute sm:fixed-center z-20 flex flex-col sm:items-center w-full sm:max-w-lg h-full sm:max-h-[572px] border border-gray-l2 rounded bg-gray-l5 text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white">
       <Dialog.Title
         as="h3"
-        className="relative w-full py-6 bg-orange-l6 border-b border-gray-l2 font-heading font-bold text-center text-xl dark:bg-blue-d7 dark:border-bluegray"
+        className="relative w-full py-6 bg-orange-l6 border-b border-gray-l2 font-heading font-bold sm:text-center text-xl max-sm:text-orange dark:bg-blue-d7 dark:border-bluegray"
       >
         Connect Wallet
         <button
