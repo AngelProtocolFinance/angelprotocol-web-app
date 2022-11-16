@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import { useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
+import Connector from "./Connector";
 
 export default function WalletModal() {
   const { closeModal } = useModalContext();
@@ -27,6 +28,11 @@ export default function WalletModal() {
         <h4 className="font-heading font-bold font-lg">
           Select one of the available wallets to continue
         </h4>
+        <div className="grid grid-cols-2 gap-4 w-full">
+          {connections.map((conn) => (
+            <Connector {...conn} />
+          ))}
+        </div>
       </div>
     </Dialog.Panel>
   );
