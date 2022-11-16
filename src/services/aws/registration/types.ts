@@ -194,6 +194,7 @@ export type RegStep = RegistrationState["step"];
 export function getRegistrationState(
   reg: SavedRegistration
 ): RegistrationState {
+  console.log("reg", reg);
   if (isDoneWallet(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
@@ -322,15 +323,16 @@ function isDoneWallet(data: SavedRegistration): data is DoneWallet {
 
 function isDoneProfile(data: SavedRegistration): data is DoneProfile {
   const key: keyof TProfile = "Logo";
-  return key in data;
+  return key in data.Metadata;
 }
 
 function isDoneDocs(data: SavedRegistration): data is DoneDocs {
   const key: keyof TDocumentation = "ProofOfIdentity";
-  return key in data;
+  return key in data.Registration;
 }
 
 function isDoneContact(data: SavedRegistration): data is DoneContact {
+  console.log(data);
   const key: keyof ContactDetails = "FirstName";
-  return key in data;
+  return key in data.ContactPerson;
 }

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { InitReg } from "services/aws/registration/types";
 import { useLazyRegQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { BtnPrim, BtnSec } from "components/registration";
 import {
   getSavedRegistrationReference,
   storeRegistrationReference,
@@ -50,19 +51,14 @@ export default function ResumeForm() {
     }
     storeRegistrationReference(val.refer);
 
+    const state = regState.data.init;
+
     if ("data" in regState && !regState.data.init.isEmailVerified) {
-      navigate(routes.confirmEmail);
+      return navigate(`../${routes.confirmEmail}`, { state });
     }
 
-    const state: InitReg = {
-      reference: val.refer,
-      email: "justin@angelprotocol.io",
-      isEmailVerified: true,
-      lastVerified: regState.data.init.lastVerified,
-    };
-
     //go to dashboard and let guard handle further routing
-    navigate(routes.steps + `/${regState.step}`, { state });
+    navigate(`../${routes.steps}/${regState.step}`, { state });
   };
 
   return (
@@ -77,9 +73,12 @@ export default function ResumeForm() {
         type="text"
       />
       <p className="text-red">{errors.refer?.message}</p>
-      <Button submit className="btn-blue w-40 h-10" isLoading={isSubmitting}>
+      <BtnPrim type="submit" disabled={isSubmitting}>
         Resume
-      </Button>
+      </BtnPrim>
+      <BtnSec as="link" to="..">
+        Register new account
+      </BtnSec>
     </form>
   );
 }

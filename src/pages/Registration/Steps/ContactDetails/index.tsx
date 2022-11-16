@@ -1,25 +1,33 @@
-import { useRegistrationQuery } from "services/aws/registration";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
+import { FormValues } from "./types";
+import {
+  useRegState,
+  withStepGuard,
+} from "services/aws/registration/StepGuard";
 import Form from "./Form";
+import { schema } from "./schema";
 
-//rename to contact details
-export default function Contact() {
-  const { application } = useRegistrationQuery();
+function ContactDetails() {
+  const {
+    data: { contact, init },
+  } = useRegState<1>();
+
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: contact
+      ? { ...contact, ref: init.reference }
+      : {
+          ref: init.reference,
+          email: init.email,
+        },
+  });
 
   return (
-    <div className="flex flex-col gap-5 w-full h-full">
-      <h3 className="text-3xl font-bold mb-5">
-        {application.ContactPerson.PK
-          ? "Update your contact details."
-          : "Let's start with your contact details."}
-      </h3>
-      {!application.ContactPerson.PK && (
-        <p className="text-xl">
-          This information will let us know more about your organization and who
-          you are. Once this form is submitted, you will be able to resume your
-          registration if it gets interrupted in the future.
-        </p>
-      )}
+    <FormProvider {...methods}>
       <Form />
-    </div>
+    </FormProvider>
   );
 }
+
+export default withStepGuard(ContactDetails);

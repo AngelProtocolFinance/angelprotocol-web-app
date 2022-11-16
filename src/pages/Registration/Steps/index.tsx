@@ -3,7 +3,7 @@ import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
 import { StepGuardProps } from "services/aws/registration/StepGuard";
 import routes, { steps } from "../routes";
-import Contact from "./Contact";
+import Contact from "./ContactDetails";
 import Documentation from "./Docs";
 import Profile from "./Profile";
 import Dashboard from "./Summary";

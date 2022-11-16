@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import Signup from "../Registration/Signup";
 import ContactForm from "./Contact";
 import Resume from "./Resume";
+import Signup from "./Signup";
 import { routes } from "./routes";
 
 export default function RegistrationV2() {
