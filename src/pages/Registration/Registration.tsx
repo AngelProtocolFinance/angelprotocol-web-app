@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Signup from "pages/Registration/Signup";
 import Resume from "pages/RegistrationV2/Resume";
-import Signup from "pages/RegistrationV2/Signup";
 import Steps from "./Steps";
 import routes from "./routes";
 

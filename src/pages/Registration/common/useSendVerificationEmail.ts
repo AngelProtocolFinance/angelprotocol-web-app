@@ -16,7 +16,7 @@ export default function useSendVerificationEmail() {
         throw new UnexpectedStateError("Email body is undefined");
       }
 
-      const response = await sendEmail({ type: "verify-email", body, uuid });
+      const response = await sendEmail({ email: "", uuid });
 
       if ("error" in response) {
         throw response.error;

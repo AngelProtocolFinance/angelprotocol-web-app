@@ -1,4 +1,4 @@
-import { SavedRegistration } from "./regtypes";
+import { InitApplication, SavedRegistration } from "./regtypes";
 import { RegistrationState, getRegistrationState } from "./types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
@@ -23,7 +23,10 @@ import { placeholderApplication } from "./placeholders";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.mutation<any, { email: string }>({
+    newApplication: builder.mutation<
+      Pick<InitApplication, "Registration" | "ContactPerson">,
+      { email: string }
+    >({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ email }) => ({
         url: "v2/registration",
@@ -119,17 +122,14 @@ const registration_api = aws.injectEndpoints({
         response.Items,
     }),
     //TODO:proper typings
-    requestEmail: builder.mutation<
-      any,
-      { uuid: string; type: string; body: any }
-    >({
+    requestEmail: builder.mutation<any, { uuid: string; email: string }>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ uuid, type, body }) => {
+      query: ({ uuid, email }) => {
         return {
           url: "v2/registration/build-email",
           method: "POST",
-          params: { uuid, type },
-          body,
+          params: { uuid, type: "verify-email" },
+          body: { Email: email },
         };
       },
       transformResponse: (response: { data: any }) => response,

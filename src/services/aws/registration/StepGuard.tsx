@@ -6,7 +6,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "./types";
 
 export type StepGuardProps = {
@@ -18,7 +18,7 @@ export type StepGuardProps = {
 
 export function withStepGuard<T extends object>(Step: FC<T>) {
   return function StepGuard({
-    step,
+    step: thisStep,
     init,
     state,
     stateId,
@@ -27,28 +27,28 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     const idRef = useRef(stateId);
     const navigate = useNavigate();
 
-    console.log(state);
+    const { step: savedStep } = state;
 
     useEffect(() => {
       if (idRef.current !== stateId) {
-        if ("nav" in state && "next" in state.nav) {
-          /**  */
-          if (state.nav.next) {
-            navigate(`../${state.nav.next}`, { state: init });
-          } else if (step < state.step) {
-            navigate(`../${step + 1}`, { state: init });
-          }
+        /** if reg is complete, mutations should redirect to summary */
+        if (thisStep < savedStep && savedStep === 5) {
+          navigate(`../${savedStep}`, { state: init });
+          /** if not complete, just go to next step */
+        } else if (thisStep < savedStep) {
+          navigate(`../${thisStep + 1}`, { state: init });
         }
       }
       idRef.current = stateId;
     }, [stateId]);
 
     if (state.step === 1 && state.data.init.isEmailVerified) {
+      return <Navigate to={"."} />;
     }
 
     //going to next step without completing required step
-    if (step < state.step) {
-      //redirect to registration.step
+    if (thisStep > savedStep) {
+      return <Navigate to={`../${savedStep}`} />;
     }
 
     return (

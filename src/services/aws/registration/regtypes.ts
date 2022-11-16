@@ -51,7 +51,7 @@ export type Profile = {
 };
 
 //INIT STEP
-type InitApplication = {
+export type InitApplication = {
   Registration: InitReg;
   ContactPerson: InitContact;
   Metadata: InitMeta;
