@@ -3,6 +3,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
 import Holdings from "../Holdings";
+import { accountTypeDisplayValue } from "../constants";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
@@ -11,7 +12,9 @@ export default function Balance({ type }: Props) {
 
   return (
     <div className="shadow-inner bg-zinc-50/5 rounded-md p-3">
-      <h4 className="uppercase text-zinc-50/80 font-extrabold">{type}</h4>
+      <h4 className="uppercase text-zinc-50/80 font-extrabold">
+        {accountTypeDisplayValue[type]}
+      </h4>
       <QueryLoader
         queryState={queryState}
         messages={{

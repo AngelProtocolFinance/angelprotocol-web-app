@@ -65,7 +65,7 @@ function SubmitWithReason({
   if (endowment.endow_type === "Charity") {
     return (
       <>
-        <Warning message="Withdrawing from locked funds requires Angel Protocol team approval." />
+        <Warning message="Withdrawing from endowment funds requires Angel Protocol team approval." />
         <TextInput<WV> name="reason" title="Reason" />
         <Button type="submit" disabled={isSubmitDisabled}>
           Create withdraw proposal
@@ -79,7 +79,7 @@ function SubmitWithReason({
   return (
     <>
       {!isMatured && (
-        <Warning message="Withdrawing locked funds before maturity is not allowed." />
+        <Warning message="Withdrawing endowment funds before maturity is not allowed." />
       )}
       <Button type="submit" disabled={!isMatured}>
         Create withdraw proposal
