@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
+import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, junoTags } from "services/juno/tags";
@@ -31,10 +32,12 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
-    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
-      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
-      amount: scaleToStr(value /** empty "" */ || "0"),
-    }));
+    const assets: Asset[] = data.amounts.map(
+      ({ value, tokenId, type: tokenType }) => ({
+        info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
+        amount: scaleToStr(value /** empty "" */ || "0"),
+      })
+    );
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
@@ -63,7 +66,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${type} assets from endowment id: ${endowmentId}`,
+          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${endowmentId}`,
           [
             account.createEmbeddedWithdrawMsg({
               id: endowmentId,
