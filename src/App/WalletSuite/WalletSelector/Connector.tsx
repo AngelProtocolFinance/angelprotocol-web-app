@@ -1,22 +1,12 @@
-import { Menu } from "@headlessui/react";
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { Connection } from "contexts/WalletContext/types";
 import { useErrorContext } from "contexts/ErrorContext";
-import Icon from "components/Icon";
+import ContentLoader from "components/ContentLoader";
 
 export default function Connector(props: Connection) {
-  const [isOpen, setIsOpen] = useState(false);
   const { handleError } = useErrorContext();
 
   const isMulti = "networks" in props;
-
-  const toggle = () => {
-    if (isMulti) {
-      setIsOpen((prev) => !prev);
-    } else {
-      handleError("No network selection");
-    }
-  };
 
   async function handleConnect() {
     try {
@@ -28,57 +18,32 @@ export default function Connector(props: Connection) {
   }
 
   if (isMulti) {
-    return (
-      <div className={`${isOpen ? "border-b border-black/10" : ""}`}>
-        <button
-          className={`${
-            isOpen ? "" : "border-b border-black/10"
-          } p-2 flex items-center gap-2 w-full`}
-          onClick={toggle}
-        >
-          <Logo logo={props.logo} />
-          <Name>{isOpen ? "Select network" : props.name}</Name>
-          <Icon
-            type={isOpen ? "Up" : "Down"}
-            className="ml-auto text-gray-d2"
-          />
-        </button>
-        {isOpen &&
-          (props?.networks || []).map((c) => (
-            <Connector {...c} network key={c.name} />
-          ))}
-      </div>
-    );
+    return null;
   }
 
   return (
-    <Menu.Item
-      className={`group p-2 flex items-center gap-2 w-full ${
-        props.network ? "" : "border-b last:border-none "
-      } border-black/10`}
+    <button
+      className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l2 rounded bg-white hover:bg-orange-l5 dark:bg-blue-d2 hover:dark:bg-blue-d3 dark:border-none"
       onClick={handleConnect}
-      as="button"
     >
       <Logo logo={props.logo} />
-      <Name>{props.name}</Name>
-    </Menu.Item>
+      <span className="font-heading font-bold text-sm">{props.name}</span>
+    </button>
   );
 }
 
-function Name(props: PropsWithChildren<{}>) {
-  return (
-    <p className="uppercase text-sm text-gray-d2 group-hover:text-blue group-active:text-orange">
-      {props.children}
-    </p>
-  );
-}
+function Logo({ logo }: { logo: string }) {
+  const [isLoading, setLoading] = useState(true);
 
-function Logo(props: { logo: string }) {
   return (
-    <img
-      src={props.logo}
-      className="w-8 h-8 object-contain p-1.5 bg-white"
-      alt=""
-    />
+    <>
+      {isLoading && <ContentLoader className="w-12 h-12 rounded" />}
+      <img
+        src={logo}
+        className={`w-12 h-12 object-contain ${isLoading ? "hidden" : ""}`}
+        alt=""
+        onLoad={() => setLoading(false)}
+      />
+    </>
   );
 }

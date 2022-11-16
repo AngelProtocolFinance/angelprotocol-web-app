@@ -1,34 +1,25 @@
-import { Menu } from "@headlessui/react";
-import { useSetWallet } from "contexts/WalletContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { COMMON_BUTTON_STYLE } from "../constants";
-import Connector from "./Connector";
+import WalletModal from "./WalletModal";
 
-type Props = { isLoading: boolean; menuPlacement?: "top" | "bottom" };
+type Props = { isLoading: boolean };
 
 export default function WalletSelector(props: Props) {
-  const { connections } = useSetWallet();
-  return (
-    <Menu className="relative" as="div">
-      <Menu.Button
-        className={`${COMMON_BUTTON_STYLE} text-base`}
-        disabled={props.isLoading}
-      >
-        <Icon type="Wallet" size={20} />
-        <span className="uppercase">
-          {props.isLoading ? "Loading" : "Connect"}
-        </span>
-      </Menu.Button>
+  const { showModal } = useModalContext();
 
-      <Menu.Items
-        className={`absolute z-10 bg-white w-max p-3 rounded-md right-0 ${
-          props.menuPlacement === "top" ? "-translate-y-full -top-2" : "mt-2"
-        }`}
-      >
-        {connections.map((connection) => (
-          <Connector {...connection} key={connection.name} />
-        ))}
-      </Menu.Items>
-    </Menu>
+  const handleClick = () => showModal(WalletModal, {});
+
+  return (
+    <button
+      className={`${COMMON_BUTTON_STYLE} text-base`}
+      disabled={props.isLoading}
+      onClick={handleClick}
+    >
+      <Icon type="Wallet" size={20} />
+      <span className="uppercase">
+        {props.isLoading ? "Loading" : "Connect"}
+      </span>
+    </button>
   );
 }
