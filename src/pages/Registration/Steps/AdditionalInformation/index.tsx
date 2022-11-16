@@ -12,7 +12,7 @@ import { schema } from "./schema";
 
 function Profile() {
   const {
-    data: { profile },
+    data: { profile, init },
   } = useRegState<3>();
 
   const methods = useForm<FormValues>({
@@ -23,10 +23,12 @@ function Profile() {
           banner: toImgLink(profile.banner),
           logo: toImgLink(profile.logo),
           overview: profile.overview,
+          ref: init.reference,
         }
       : {
           banner: { name: "", preview: "", publicUrl: "" },
           logo: { name: "", preview: "", publicUrl: "" },
+          ref: init.reference,
         },
   });
 
