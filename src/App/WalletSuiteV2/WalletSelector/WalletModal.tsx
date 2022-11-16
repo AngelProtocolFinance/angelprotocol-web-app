@@ -16,7 +16,7 @@ export default function WalletModal() {
       >
         Connect Wallet
         <button
-          className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 mr-4 sm:border border-gray-l2 sm:rounded dark:border-bluegray text-gray-d2 dark:text-white"
+          className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 mr-4 sm:border border-gray-l2 hover:border-gray sm:rounded dark:border-bluegray dark:hover:border-bluegray-d1 text-gray-d2 hover:text-black dark:text-white dark:hover:text-gray"
           onClick={closeModal}
         >
           <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
