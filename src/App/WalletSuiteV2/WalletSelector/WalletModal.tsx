@@ -22,8 +22,8 @@ export default function WalletModal() {
           <Icon type="Close" size={24} />
         </button>
       </Dialog.Title>
-      <div className="flex flex-col justify-center items-center gap-6 p-8 w-full overflow-y-auto">
-        <h4 className="font-heading font-bold font-lg">
+      <div className="flex flex-col justify-center items-center gap-4 sm:gap-6 p-6 sm:p-8 w-full overflow-y-auto">
+        <h4 className="font-work sm:font-heading font-semibold sm:font-bold text-center text-base sm:text-lg">
           Select one of the available wallets to continue
         </h4>
         <div className="grid grid-cols-2 gap-4 w-full">
