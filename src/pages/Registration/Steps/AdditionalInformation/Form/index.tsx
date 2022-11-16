@@ -15,7 +15,7 @@ export default function Form() {
 
   return (
     <form
-      className="flex flex-col justify-center w-5/6 h-full gap-10"
+      className="flex flex-col justify-center w-5/6 h-full gap-10 padded-container pt-10"
       onSubmit={submit}
     >
       <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">

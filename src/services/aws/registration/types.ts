@@ -1,4 +1,3 @@
-import { emit } from "process";
 import {
   ContactDetails,
   DoneContact,
@@ -6,17 +5,12 @@ import {
   DoneProfile,
   DoneWallet,
   InitContact,
-  OrgData,
   SavedRegistration,
   TDocumentation,
   Profile as TProfile,
   WalletData,
 } from "./regtypes";
-import {
-  FileObject,
-  RegistrationStatus,
-  UnprocessedApplication,
-} from "types/aws";
+import { FileObject, RegistrationStatus } from "types/aws";
 import { Optional } from "types/utils";
 
 //REF_ID is global to registration

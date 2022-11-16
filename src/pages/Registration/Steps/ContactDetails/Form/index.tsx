@@ -9,7 +9,7 @@ import useSaveContactDetails from "./useContactDetails";
 export default function Form() {
   const {
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useFormContext<FV>();
 
   const { saveContactDetails } = useSaveContactDetails();

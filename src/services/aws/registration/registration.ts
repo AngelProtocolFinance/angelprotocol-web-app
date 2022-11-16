@@ -8,14 +8,10 @@ import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
   Application,
-  ContactDetailsRequest,
-  ContactDetailsResult,
   EndowmentApplication,
   SubmitData,
   SubmitResult,
   UnprocessedApplication,
-  UpdateDocumentationData,
-  UpdateDocumentationResult,
   UpdateMetadataRequest,
   UpdateMetadataResult,
 } from "types/aws";
@@ -113,17 +109,6 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    createNewApplication: builder.mutation<
-      ContactDetailsResult,
-      ContactDetailsRequest
-    >({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ body }) => ({
-        url: "v2/registration",
-        method: "POST",
-        body,
-      }),
-    }),
     endowmentApplications: builder.query<
       EndowmentApplication[],
       ApplicationStatusOptions
@@ -187,11 +172,9 @@ export const {
   useUpdateRegMutation,
 
   useNewApplicationMutation,
-  useCreateNewApplicationMutation,
   useRequestEmailMutation,
   useSubmitMutation,
   useUpdateMetadataMutation,
-
   util: { updateQueryData: updateRegQueryData },
 } = registration_api;
 

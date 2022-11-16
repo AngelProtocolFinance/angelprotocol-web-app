@@ -3,9 +3,9 @@ import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
 import { StepGuardProps } from "services/aws/registration/StepGuard";
 import { steps } from "../routes";
+import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
 import Documentation from "./Documentation";
-import Profile from "./Profile";
 import Dashboard from "./Summary";
 import Wallet from "./Wallet";
 

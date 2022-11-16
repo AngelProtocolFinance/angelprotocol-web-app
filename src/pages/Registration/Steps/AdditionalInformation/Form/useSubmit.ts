@@ -1,38 +1,33 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { FileObject } from "types/aws";
-import { useUpdateMetadataMutation } from "services/aws/registration";
+import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { ImgLink } from "components/ImgEditor";
-import { uploadToIpfs } from "helpers";
+import { handleMutationResult, uploadToIpfs } from "helpers";
 
 export default function useSubmit() {
   const { handleSubmit } = useFormContext<FV>();
-  const [updateMetadata] = useUpdateMetadataMutation();
+  const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
 
   const submit = async ({ overview, ref, ...imgs }: FV) => {
-    try {
-      const previews = await getFilePreviews({ ...imgs });
-
-      const result = await updateMetadata({
-        PK: ref,
-        body: {
-          Banner: previews.banner,
-          Logo: previews.logo,
-          Overview: overview,
-          KycDonorsOnly: false /**TODO: isKYC part of metaData */,
-        },
-      });
-
-      if ("error" in result) {
-        return handleError(result.error, "Error updating profile ❌");
-      }
-    } catch (error) {
-      handleError(error, "Error updating profile ❌");
-    }
+    const previews = await getFilePreviews({ ...imgs });
+    handleMutationResult(
+      await updateReg({
+        type: "profile",
+        reference: ref,
+        Banner: previews.banner,
+        Logo: previews.logo,
+        Overview: overview,
+        KycDonorsOnly: false /**TODO: isKYC part of metaData */,
+      }),
+      (result) => {
+        console.log(result);
+      },
+      handleError
+    );
   };
-
   return handleSubmit(submit);
 }
 

@@ -42,6 +42,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
         }
       }
       idRef.current = stateId;
+      //eslint-disable-next-line
     }, [stateId]);
 
     if (state.step === 1 && !state.data.init.isEmailVerified) {
