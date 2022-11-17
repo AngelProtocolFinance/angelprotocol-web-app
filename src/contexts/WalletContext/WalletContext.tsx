@@ -77,7 +77,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     connection: xdefiConnection,
     disconnect: disconnectXdefi,
     providerInfo: xdefiInfo,
-  } = useInjectedProvider("xdefi-ethereum");
+  } = useInjectedProvider("xdefi-evm");
 
   const providerStatuses: ProviderStatuses = [
     // {
@@ -115,7 +115,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       // case "binance-wallet":
       //   disconnectBinanceWallet();
       //   break;
-      case "xdefi-ethereum":
+      case "xdefi-evm":
         disconnectXdefi();
         break;
       case "keplr":

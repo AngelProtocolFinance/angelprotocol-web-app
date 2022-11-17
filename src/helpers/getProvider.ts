@@ -10,7 +10,7 @@ export function getProvider(
       return dwindow.BinanceChain;*/
     case "metamask":
       return dwindow.ethereum;
-    case "xdefi-ethereum":
+    case "xdefi-evm":
       return dwindow.xfi?.ethereum;
     default:
       return undefined;
