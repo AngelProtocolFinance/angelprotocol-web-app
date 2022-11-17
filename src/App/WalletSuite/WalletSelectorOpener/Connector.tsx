@@ -20,7 +20,9 @@ export default function Connector(props: Connection) {
       onClick={handleConnect}
     >
       <Logo logo={props.logo} />
-      <span className="font-heading font-bold text-sm">{props.name}</span>
+      <span className="font-heading font-bold text-sm capitalize">
+        {props.name}
+      </span>
     </button>
   );
 }
