@@ -1,12 +1,5 @@
-import {
-  FC,
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FC, createContext, useContext, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "./types";
 
 export type StepGuardProps = {
@@ -43,37 +36,12 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
       //eslint-disable-next-line
     }, [stateId]);
 
-    if (state.step === 1 && !state.data.init.isEmailVerified) {
-      return <Navigate to={"."} state={init} />;
-    }
-
-    //going to next step without completing required step
-    if (thisStep > savedStep) {
-      return <Navigate to={`../${savedStep}`} state={init} />;
-    }
-
     return (
       <Context.Provider value={state}>
         <Step {...(props as T)} />
       </Context.Provider>
     );
   };
-}
-
-export default function StepGuard({
-  step,
-  children,
-}: PropsWithChildren<{ step: RegStep }>) {
-  const registration = {} as RegistrationState;
-
-  //still initial
-
-  //going to next step without completing required step
-  if (step < registration.step) {
-    //redirect to registration.step
-  }
-
-  return <Context.Provider value={registration}>{children}</Context.Provider>;
 }
 
 const Context = createContext<RegistrationState>({} as RegistrationState);
@@ -85,7 +53,7 @@ export function useRegState<T extends RegStep>(): Extract<
   const val = useContext(Context);
   if (Object.entries(val).length <= 0) {
     throw new Error(
-      `${useRegState.name} should only be used inside ${StepGuard.name} context`
+      `${useRegState.name} should only be used inside ${withStepGuard.name} context`
     );
   }
   return val as any;

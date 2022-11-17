@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/aws/registration/types";
 import { useRegQuery } from "services/aws/registration";
@@ -11,35 +12,39 @@ import Wallet from "./WalletRegistration";
 
 export default function Steps() {
   const { state } = useLocation();
-  const initReg = state as InitReg | undefined; //from non "/steps" navigations
+  const initReg = state as InitReg | undefined;
 
   const ref = initReg?.reference || "";
-  const { data, isLoading, isError, requestId } = useRegQuery(ref, {
+  const { data, isLoading, isFetching, isError, requestId } = useRegQuery(ref, {
     skip: !ref,
   });
+  const idRef = useRef(requestId);
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
-    return <p>fetching registration data</p>;
+    return <p className="place-self-center">fetching registration data</p>;
   }
 
   if (isError) {
-    return <p>failed to get registration data - please try again later</p>;
+    return (
+      <p className="place-self-center">
+        failed to get registration data - please try again later
+      </p>
+    );
   }
 
   /**
    * visiting /steps without setting state (e.g via url bar) would just
-   * redirects to signup page
+   * redirect to signup page
    */
   if (!data || !initReg) {
     return <Navigate to=".." />;
   }
 
-  const stateId = requestId || "";
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
     state: data,
-    stateId,
+    stateId: debouceId(requestId, isFetching, idRef),
   };
 
   return (
@@ -68,4 +73,21 @@ export default function Steps() {
       </Routes>
     </div>
   );
+}
+
+/** hold prev id, while still isFetching
+ * could just bundle isFetching & isLoading to sync fresh id with
+ * loaded data - but this would disrupt UI with "loading" on every save
+ */
+function debouceId(
+  id: string | undefined,
+  isFetching: boolean,
+  ref: React.MutableRefObject<string | undefined>
+): string {
+  if (isFetching) {
+    return ref.current || "";
+  } else {
+    ref.current = id;
+    return id || "";
+  }
 }

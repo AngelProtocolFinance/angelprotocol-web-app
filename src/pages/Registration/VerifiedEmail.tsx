@@ -8,7 +8,7 @@ import Icon from "components/Icon";
 import { BtnPrim } from "components/registration";
 import { handleMutationResult, logger } from "helpers";
 import { appRoutes } from "constants/routes";
-import routes, { steps } from "../routes";
+import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {
   authorization: string;
