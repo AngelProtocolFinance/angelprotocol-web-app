@@ -5,7 +5,7 @@ import WalletModal from "./WalletModal";
 
 type Props = { isLoading: boolean };
 
-export default function WalletSelector(props: Props) {
+export default function WalletSelectorOpener(props: Props) {
   const { showModal } = useModalContext();
 
   const handleClick = () => showModal(WalletModal, {});
