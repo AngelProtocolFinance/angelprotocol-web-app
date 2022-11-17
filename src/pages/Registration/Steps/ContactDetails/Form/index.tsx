@@ -1,5 +1,5 @@
 import { FormValues as FV } from "../types";
-import { Button } from "../../../common";
+import { BtnPrim } from "components/registration";
 import FormInput from "../../../common/FormInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
@@ -54,9 +54,9 @@ export default function Form() {
         required
       />
 
-      <Button submit className="btn-orange w-48 h-12" isLoading={isSubmitting}>
+      <BtnPrim type="submit" disabled={isSubmitting}>
         Continue
-      </Button>
+      </BtnPrim>
     </form>
   );
 }

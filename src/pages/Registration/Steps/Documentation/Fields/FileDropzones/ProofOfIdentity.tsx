@@ -4,7 +4,8 @@ import { BsX } from "react-icons/bs";
 import { FormValues } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import FileDropzone from "components/FileDropzone";
-import { Button, InputRow } from "../../../../common";
+import { BtnSec } from "components/registration";
+import { InputRow } from "../../../../common";
 
 export default function ProofOfIdentity() {
   const {
@@ -41,9 +42,7 @@ function ProofOfIdentityModal() {
         Please upload a picture (JPEG or PDF) of either a driver's license or a
         passport page that shows your details.
       </p>
-      <Button className="btn-blue w-40 h-10" onClick={closeModal}>
-        Got it
-      </Button>
+      <BtnSec onClick={closeModal}>Got it</BtnSec>
     </Dialog.Panel>
   );
 }

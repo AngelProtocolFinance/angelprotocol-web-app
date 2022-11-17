@@ -1,8 +1,7 @@
 import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
 import Icon from "components/Icon";
-import { BtnPrim } from "components/registration";
-import { Button } from "../../common";
+import { BtnPrim, BtnSec } from "components/registration";
 
 export default function RegisteredWallet(props: {
   onChange: () => void;
@@ -23,12 +22,7 @@ export default function RegisteredWallet(props: {
           {props.address}
         </p>
       </div>
-      <Button
-        onClick={props.onChange}
-        className="btn-outline-blue uppercase font-heading text-xs px-2 py-1"
-      >
-        change wallet
-      </Button>
+      <BtnSec onClick={props.onChange}>change wallet</BtnSec>
       <BtnPrim as="link" to={`../${steps.summary}`} state={data.init}>
         Continue
       </BtnPrim>

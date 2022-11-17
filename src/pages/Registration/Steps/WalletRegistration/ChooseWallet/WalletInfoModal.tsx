@@ -1,6 +1,6 @@
 import { BsX } from "react-icons/bs";
 import { useModalContext } from "contexts/ModalContext";
-import { Button } from "../../../common";
+import { BtnSec } from "components/registration";
 
 export default function WalletInfoModal() {
   const { closeModal } = useModalContext();
@@ -17,9 +17,7 @@ export default function WalletInfoModal() {
         account’, has unique public and private addresses, will hold your
         endowment balances and is used to authorise transactions.
       </p>
-      <Button className="btn-blue w-40 h-10" onClick={closeModal}>
-        Got it
-      </Button>
+      <BtnSec onClick={closeModal}>Got it</BtnSec>
     </div>
   );
 }

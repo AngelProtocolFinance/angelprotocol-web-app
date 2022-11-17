@@ -1,14 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
+import routes from "pages/Registration/routes";
+import { useLazyRegQuery } from "services/aws/registration";
+import { useErrorContext } from "contexts/ErrorContext";
 import { TextInput } from "components/registration";
 import { BtnPrim, BtnSec, OrSeparator } from "components/registration";
+import {
+  getSavedRegistrationReference,
+  storeRegistrationReference,
+} from "helpers";
 
 type FormValues = { reference: string };
 
 export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
+    defaultValues: {
+      reference: getSavedRegistrationReference() || "",
+    },
     resolver: yupResolver(
       Yup.object().shape<SchemaShape<FormValues>>({
         reference: Yup.string().required("required"),
@@ -17,10 +28,34 @@ export default function Resume({ classes = "" }: { classes?: string }) {
   });
 
   const { handleSubmit } = methods;
+  const navigate = useNavigate();
+  const { handleError } = useErrorContext();
+  const [checkPrevRegistration] = useLazyRegQuery();
 
-  function onSubmit({ reference }: FormValues) {
-    alert(reference);
-  }
+  const onSubmit = async ({ reference }: FormValues) => {
+    const {
+      isError,
+      error,
+      data: regState,
+    } = await checkPrevRegistration(reference);
+    if (isError || !regState) {
+      handleError(
+        error,
+        "No active application found with this registration reference"
+      );
+      return;
+    }
+    storeRegistrationReference(reference);
+
+    const state = regState.data.init;
+
+    if ("data" in regState && !regState.data.init.isEmailVerified) {
+      return navigate(`../${routes.confirmEmail}`, { state });
+    }
+
+    //go to dashboard and let guard handle further routing
+    navigate(`../${routes.steps}/${regState.step}`, { state });
+  };
 
   return (
     <form

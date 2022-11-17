@@ -5,9 +5,8 @@ import FormInput from "pages/Registration/common/FormInput";
 import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
-import { BtnSec } from "components/registration";
+import { BtnPrim, BtnSec } from "components/registration";
 import { requiredWalletAddr } from "schemas/string";
-import { Button } from "../../common";
 import useRegisterWallet from "./useRegisterWallet";
 
 export type Wallet = { address: string };
@@ -42,13 +41,13 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
             </span>
           </p>
           <p>Only Keplr wallet is allowed!</p>
-          <Button
+          <BtnPrim
             className="text-sm uppercase text-orange hover:text-orange px-2 py-1 mt-2"
             disabled={isSubmitting}
             onClick={disconnect}
           >
             Connect Keplr wallet
-          </Button>
+          </BtnPrim>
         </div>
       ) : (
         <FormProvider {...methods}>
@@ -63,17 +62,17 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
             />
 
             <div className="flex justify-center gap-2">
-              <BtnSec as="link" to={`../${steps.profile}`} state={data.init}>
-                Back
-              </BtnSec>
-              <Button
-                submit
-                className="btn-orange w-48 h-10"
-                isLoading={isSubmitting}
+              <BtnSec
+                as="link"
+                to={`../${steps.profile}`}
+                state={data.init}
                 disabled={isSubmitting}
               >
+                Back
+              </BtnSec>
+              <BtnPrim type="submit" disabled={isSubmitting}>
                 Submit
-              </Button>
+              </BtnPrim>
             </div>
           </form>
         </FormProvider>

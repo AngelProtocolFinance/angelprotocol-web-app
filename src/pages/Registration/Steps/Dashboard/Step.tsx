@@ -1,4 +1,4 @@
-import { Button } from "../../common";
+import { BtnSec } from "components/registration";
 
 type Props = {
   buttonLabel?: string;
@@ -20,13 +20,13 @@ export default function Step(props: Props) {
           {props.customStatus || "Completed"}
         </p>
       )}
-      <Button
-        className="btn-blue w-40 h-10"
+      <BtnSec
+        className="w-40 h-10"
         onClick={props.onClick}
         disabled={props.disabled}
       >
         {props.buttonLabel || "Update"}
-      </Button>
+      </BtnSec>
     </div>
   );
 }

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { getRegistrationState } from "pages/Registration/helpers";
 import { useRegistrationQuery } from "services/aws/registration";
 import Loader from "components/Loader";
+import { BtnPrim } from "components/registration";
 import { appRoutes } from "constants/routes";
-import { Button } from "../../common";
 
 type Props = {
   isLoading: boolean;
@@ -29,24 +29,22 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
       <div className="flex w-9/12 items-center justify-end rounded-md border-2 border-white border-solid p-2 px-9 font-bold">
         <p className="ml-3 mr-auto">Status of Your Endowment</p>
         {status === "Inactive" && (
-          <Button
-            className="w-40 h-10 btn-orange"
+          <BtnPrim
             onClick={onSubmit}
             disabled={!registrationState.getIsReadyForSubmit() || isLoading}
           >
             Submit
-          </Button>
+          </BtnPrim>
         )}
         {status === "Rejected" && (
           <>
             <p className="uppercase w-40 mr-2 text-red">Rejected</p>
-            <Button
-              className="w-40 h-10 btn-orange"
+            <BtnPrim
               onClick={onSubmit}
               disabled={!registrationState.getIsReadyForSubmit() || isLoading}
             >
               Resubmit
-            </Button>
+            </BtnPrim>
           </>
         )}
         {status === "Under Review" && (

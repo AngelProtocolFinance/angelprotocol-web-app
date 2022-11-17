@@ -12,7 +12,12 @@ export default function ButtonSection() {
 
   return (
     <div className="flex justify-center mt-4">
-      <BtnSec as="link" to={`../${steps.doc}`} state={data.init}>
+      <BtnSec
+        as="link"
+        to={`../${steps.doc}`}
+        state={data.init}
+        disabled={isSubmitting}
+      >
         Back
       </BtnSec>
       <BtnPrim type="submit" disabled={isSubmitting}>

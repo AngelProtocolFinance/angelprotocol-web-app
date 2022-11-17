@@ -1,9 +1,9 @@
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { UnprocessedApplication } from "types/aws";
+import { BtnPrim } from "components/registration";
 import { storeRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
-import { Button } from "../common";
 import routes from "../routes";
 
 export default function VerificationSuccessful({
@@ -32,9 +32,7 @@ export default function VerificationSuccessful({
         <p>Your registration reference is</p>
         <p className="text-orange">{newCharity.ContactPerson.PK}</p>
       </div>
-      <Button className="btn-orange w-48 h-12" onClick={handleContinue}>
-        Continue
-      </Button>
+      <BtnPrim onClick={handleContinue}>Continue</BtnPrim>
     </div>
   );
 }

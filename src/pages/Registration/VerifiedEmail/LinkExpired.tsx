@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 import { FaExclamation } from "react-icons/fa";
-import { Button } from "../common";
+import { BtnPrim } from "components/registration";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -15,13 +15,9 @@ export default function LinkExpired({ onClick, isLoading }: Props) {
         Your verification link has expired. Please resend the verification
         email.
       </p>
-      <Button
-        className="btn-orange w-64 h-12 text-sm"
-        onClick={onClick}
-        isLoading={isLoading}
-      >
+      <BtnPrim onClick={onClick} disabled={isLoading}>
         Resend verification email
-      </Button>
+      </BtnPrim>
     </div>
   );
 }
