@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AP_ID } from "services/juno/custom";
+import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import ContentLoader from "components/ContentLoader";
 import { AdminLink } from "components/admin";
 
@@ -20,7 +20,12 @@ export default function MyEndowment() {
             <Link to={""} className="pr-1 border-r border-gray-l2">
               profile
             </Link>
-            <AdminLink label="admin" className="pl-1" id={AP_ID} />
+            <AdminLink
+              label="admin"
+              className="px-1 border-r border-gray-l2"
+              id={AP_ID}
+            />
+            <AdminLink label="applications" className="pl-1" id={REVIEWER_ID} />
           </div>
         </div>
       </div>
