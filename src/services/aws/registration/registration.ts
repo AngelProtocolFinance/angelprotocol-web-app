@@ -132,7 +132,10 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: AWSQueryRes<EndowmentApplication[]>) =>
         response.Items,
     }),
-    //TODO:proper typings
+    /**TODO this should return a value
+     * { isEmailVerified } so to redirect already verified user if trying to
+     * verify again
+     */
     requestEmail: builder.mutation<any, { uuid: string; email: string }>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, email }) => {
