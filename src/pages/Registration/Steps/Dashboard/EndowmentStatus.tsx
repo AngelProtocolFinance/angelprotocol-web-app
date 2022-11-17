@@ -32,6 +32,7 @@ export default function EndowmentStatus({ isLoading, onSubmit }: Props) {
           <BtnPrim
             onClick={onSubmit}
             disabled={!registrationState.getIsReadyForSubmit() || isLoading}
+            className="min-w-[8rem]"
           >
             Submit
           </BtnPrim>

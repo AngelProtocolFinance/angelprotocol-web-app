@@ -21,7 +21,7 @@ export default function Step(props: Props) {
         </p>
       )}
       <BtnSec
-        className="w-40 h-10"
+        className="min-w-[8rem]"
         onClick={props.onClick}
         disabled={props.disabled}
       >

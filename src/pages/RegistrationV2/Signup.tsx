@@ -1,7 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
+import { InitReg } from "services/aws/registration/types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import Checkbox from "components/Checkbox";
@@ -27,10 +29,22 @@ export default function Signup({ classes = "" }: { classes?: string }) {
     ),
   });
   const { handleError } = useErrorContext();
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+  const navigate = useNavigate();
 
   async function onSubmit({ email }: FormValues) {
-    handleMutationResult(await register({ email }), handleError);
+    handleMutationResult(await register({ email }), handleError, (res) => {
+      const state: InitReg = {
+        email: res.ContactPerson.Email,
+        reference: res.ContactPerson.PK,
+        isEmailVerified: false,
+        lastVerified: res.ContactPerson.EmailVerificationLastSentDate,
+      };
+      navigate(routes.confirmEmail, { state });
+    });
   }
 
   return (
@@ -68,11 +82,20 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           </a>
         </Checkbox>
       </FormProvider>
-      <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
+      <BtnPrim
+        type="submit"
+        className="mt-8 mx-0 sm:mx-24"
+        disabled={isSubmitting}
+      >
         Register
       </BtnPrim>
       <OrSeparator classes="my-11" />
-      <BtnSec as="link" className="mx-0 sm:mx-24" to={routes.resume}>
+      <BtnSec
+        as="link"
+        className="mx-0 sm:mx-24"
+        to={routes.resume}
+        disabled={isSubmitting}
+      >
         Resume your registration
       </BtnSec>
     </form>

@@ -27,7 +27,10 @@ export default function Resume({ classes = "" }: { classes?: string }) {
     ),
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
   const [checkPrevRegistration] = useLazyRegQuery();
@@ -74,11 +77,20 @@ export default function Resume({ classes = "" }: { classes?: string }) {
           classes={{ container: "mt-8 mx-0 sm:mx-24" }}
         />
       </FormProvider>
-      <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
+      <BtnPrim
+        type="submit"
+        className="mt-8 mx-0 sm:mx-24"
+        disabled={isSubmitting}
+      >
         Resume
       </BtnPrim>
       <OrSeparator classes="my-11" />
-      <BtnSec as="link" className="mx-0 sm:mx-24" to="..">
+      <BtnSec
+        as="link"
+        className="mx-0 sm:mx-24"
+        to=".."
+        disabled={isSubmitting}
+      >
         Register new account
       </BtnSec>
     </form>
