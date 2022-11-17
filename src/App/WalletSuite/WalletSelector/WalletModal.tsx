@@ -23,9 +23,9 @@ export default function WalletModal() {
         </button>
       </Dialog.Title>
       <div className="flex flex-col items-center gap-4 sm:gap-6 p-6 sm:p-8 dark:p-8 w-full sm:max-h-[492px] overflow-y-auto">
-        <h4 className="font-work sm:font-heading font-semibold sm:font-bold text-center text-base sm:text-lg">
+        <p className="font-work sm:font-heading font-semibold sm:font-bold text-center text-base sm:text-lg">
           Select one of the available wallets to continue
-        </h4>
+        </p>
         <div className="grid sm:grid-cols-2 gap-4 w-full">
           {!!connections.length &&
             connections.map((conn) => <Connector key={conn.name} {...conn} />)}
