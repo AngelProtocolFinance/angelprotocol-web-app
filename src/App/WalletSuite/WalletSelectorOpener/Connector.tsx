@@ -6,19 +6,12 @@ import ContentLoader from "components/ContentLoader";
 export default function Connector(props: Connection) {
   const { handleError } = useErrorContext();
 
-  const isMulti = "networks" in props;
-
   async function handleConnect() {
     try {
-      if (isMulti) throw new Error("Need to choose network first");
       await props.connect();
     } catch (error: any) {
       handleError(error);
     }
-  }
-
-  if (isMulti) {
-    return null;
   }
 
   return (
