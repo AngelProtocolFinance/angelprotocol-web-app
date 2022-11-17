@@ -1,7 +1,6 @@
 import { WithoutInstallers } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
-import evmIcon from "assets/icons/evm.webp";
 // import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -31,7 +30,7 @@ export const WALLET_METADATA: {
     name: "XDEFI",
   },
   "xdefi-evm": {
-    logo: evmIcon,
+    logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
     name: "XDEFI",
   },
