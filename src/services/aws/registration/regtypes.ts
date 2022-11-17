@@ -81,7 +81,15 @@ export type DoneProfile = {
 export type DoneWallet = {
   Registration: InitReg & OrgData & TDocumentation;
   ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta & Profile & WalletData;
+  Metadata: InitMeta &
+    Profile &
+    WalletData & {
+      EndowmentId?: number;
+      /** when created 
+      TODO: should be part of Registration status
+      Inactive | Rejected | {id: number}
+      */
+    };
 };
 
 export type SavedRegistration =

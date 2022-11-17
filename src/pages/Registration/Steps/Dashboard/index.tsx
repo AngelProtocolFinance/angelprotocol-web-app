@@ -64,7 +64,11 @@ function Dashboard() {
           </div>
         </>
       )}
-      <EndowmentStatus isLoading={isSubmitting} onSubmit={() => submit(data)} />
+      <EndowmentStatus
+        onSubmit={() => submit(data)}
+        status={status}
+        endowId={data.endowId}
+      />
     </div>
   );
 }

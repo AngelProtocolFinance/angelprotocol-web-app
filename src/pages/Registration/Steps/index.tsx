@@ -8,6 +8,7 @@ import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
+import ProgressIndicator from "./ProgressIndicator";
 import Wallet from "./WalletRegistration";
 
 export default function Steps() {
@@ -49,6 +50,7 @@ export default function Steps() {
 
   return (
     <div className="padded-container grid justify-items-center py-8">
+      <ProgressIndicator step={data.step} />
       <Routes>
         <Route
           path={steps.contact}

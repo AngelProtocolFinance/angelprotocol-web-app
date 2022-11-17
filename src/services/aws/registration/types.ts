@@ -72,17 +72,13 @@ type WalletDetails = {
   address: string;
 };
 
-//STEP 5
-type EndowmentDetails = {
-  id: string;
-};
-
 export type CompleteRegistration = {
   init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
   profile: Profile;
   wallet: WalletDetails;
+  endowId?: number; //created
 };
 
 /**
@@ -193,6 +189,7 @@ export function getRegistrationState(
         profile: formatProfile(m),
         wallet: { address: m.JunoWallet },
         status: r.RegistrationStatus,
+        endowId: m.EndowmentId,
       },
     };
   } else if (isDoneProfile(reg)) {
