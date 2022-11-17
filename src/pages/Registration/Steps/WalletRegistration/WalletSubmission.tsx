@@ -3,10 +3,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
 import { steps } from "pages/Registration/routes";
-import { useRegState } from "services/aws/registration/StepGuard";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { BtnPrim, BtnSec } from "components/registration";
 import { requiredWalletAddr } from "schemas/string";
+import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
 
 export type Wallet = { address: string };

@@ -1,10 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import {
-  useRegState,
-  withStepGuard,
-} from "services/aws/registration/StepGuard";
+import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
 

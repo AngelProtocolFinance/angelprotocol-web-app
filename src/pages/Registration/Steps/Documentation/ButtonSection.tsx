@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { steps } from "pages/Registration/routes";
-import { useRegState } from "services/aws/registration/StepGuard";
 import { BtnPrim, BtnSec } from "components/registration";
+import { useRegState } from "../StepGuard";
 
 export default function ButtonSection({ classes = "" }: { classes?: string }) {
   const { data } = useRegState<2>();

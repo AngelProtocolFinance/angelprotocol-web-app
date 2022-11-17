@@ -1,8 +1,8 @@
 import { FormValues } from "../types";
-import { useRegState } from "services/aws/registration/StepGuard";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import InputColumn from "../../../common/InputColumn";
+import { useRegState } from "../../StepGuard";
 import ButtonSection from "../ButtonSection";
 import { VALID_MIME_TYPES } from "../schema";
 import useSubmit from "./useSubmit";

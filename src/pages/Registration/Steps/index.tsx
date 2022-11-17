@@ -2,13 +2,13 @@ import { useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/types";
 import { useRegQuery } from "services/aws/registration";
-import { StepGuardProps } from "services/aws/registration/StepGuard";
 import { steps } from "../routes";
 import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
 import ProgressIndicator from "./ProgressIndicator";
+import { StepGuardProps } from "./StepGuard";
 import Wallet from "./WalletRegistration";
 
 export default function Steps() {

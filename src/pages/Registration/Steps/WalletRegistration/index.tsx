@@ -1,10 +1,7 @@
 import { useState } from "react";
-import {
-  useRegState,
-  withStepGuard,
-} from "services/aws/registration/StepGuard";
 import { useGetWallet } from "contexts/WalletContext";
 import RegLoader from "../../common/RegLoader";
+import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";

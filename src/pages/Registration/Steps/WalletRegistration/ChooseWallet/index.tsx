@@ -1,6 +1,6 @@
-import { steps } from "pages/Registration/routes";
-import { useRegState } from "services/aws/registration/StepGuard";
 import { BtnSec } from "components/registration";
+import { steps } from "../../../routes";
+import { useRegState } from "../../StepGuard";
 import KeplrConnector from "./KeplrConnector";
 import Title from "./Title";
 

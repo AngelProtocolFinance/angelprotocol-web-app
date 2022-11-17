@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useRegState } from "services/aws/registration/StepGuard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
+import { useRegState } from "../../StepGuard";
 
 export default function useSubmit() {
   const {

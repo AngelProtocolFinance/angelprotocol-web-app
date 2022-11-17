@@ -1,5 +1,5 @@
-import { useRegState } from "services/aws/registration/StepGuard";
 import Checkbox from "components/Checkbox";
+import { useRegState } from "../../StepGuard";
 
 export default function AuthorityToCreateCheckbox() {
   const {

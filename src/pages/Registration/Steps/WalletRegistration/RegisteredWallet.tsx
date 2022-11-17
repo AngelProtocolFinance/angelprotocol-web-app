@@ -1,7 +1,7 @@
 import { steps } from "pages/Registration/routes";
-import { useRegState } from "services/aws/registration/StepGuard";
 import Icon from "components/Icon";
 import { BtnPrim, BtnSec } from "components/registration";
+import { useRegState } from "../StepGuard";
 
 export default function RegisteredWallet(props: {
   onChange: () => void;
