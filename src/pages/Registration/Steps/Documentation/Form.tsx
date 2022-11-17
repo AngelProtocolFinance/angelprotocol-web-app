@@ -17,7 +17,7 @@ export default function Form() {
   const submit = useSubmit();
   return (
     <form
-      className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left padded-container"
+      className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left max-w-4xl"
       onSubmit={submit}
     >
       <Title />

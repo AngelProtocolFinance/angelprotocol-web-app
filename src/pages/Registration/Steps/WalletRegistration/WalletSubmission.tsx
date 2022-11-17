@@ -67,10 +67,15 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
                 to={`../${steps.profile}`}
                 state={data.init}
                 disabled={isSubmitting}
+                className="min-w-[8rem]"
               >
                 Back
               </BtnSec>
-              <BtnPrim type="submit" disabled={isSubmitting}>
+              <BtnPrim
+                type="submit"
+                disabled={isSubmitting}
+                className="min-w-[8rem]"
+              >
                 Submit
               </BtnPrim>
             </div>

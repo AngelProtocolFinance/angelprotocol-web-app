@@ -10,16 +10,17 @@ export default function ButtonSection({ classes = "" }: { classes?: string }) {
   } = useFormContext();
 
   return (
-    <div className={`flex justify-center ${classes}`}>
+    <div className={`flex justify-center ${classes} gap-4`}>
       <BtnSec
         as="link"
         to={`../${steps.contact}`}
         state={data.init}
         disabled={isSubmitting}
+        className="min-w-[8rem]"
       >
         Back
       </BtnSec>
-      <BtnPrim type="submit" disabled={isSubmitting}>
+      <BtnPrim type="submit" disabled={isSubmitting} className="min-w-[8rem]">
         Continue
       </BtnPrim>
     </div>

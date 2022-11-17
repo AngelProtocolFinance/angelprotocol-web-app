@@ -43,27 +43,29 @@ export default function Steps() {
   };
 
   return (
-    <Routes>
-      <Route
-        path={steps.contact}
-        element={<Contact {...guardProps} step={1} />}
-      />
-      <Route
-        path={steps.doc}
-        element={<Documentation {...guardProps} step={2} />}
-      />
-      <Route
-        path={steps.profile}
-        element={<Profile {...guardProps} step={3} />}
-      />
-      <Route
-        path={steps.wallet}
-        element={<Wallet {...guardProps} step={4} />}
-      />
-      <Route
-        path={steps.summary}
-        element={<Dashboard {...guardProps} step={5} />}
-      />
-    </Routes>
+    <div className="padded-container grid justify-items-center py-8">
+      <Routes>
+        <Route
+          path={steps.contact}
+          element={<Contact {...guardProps} step={1} />}
+        />
+        <Route
+          path={steps.doc}
+          element={<Documentation {...guardProps} step={2} />}
+        />
+        <Route
+          path={steps.profile}
+          element={<Profile {...guardProps} step={3} />}
+        />
+        <Route
+          path={steps.wallet}
+          element={<Wallet {...guardProps} step={4} />}
+        />
+        <Route
+          path={steps.summary}
+          element={<Dashboard {...guardProps} step={5} />}
+        />
+      </Routes>
+    </div>
   );
 }

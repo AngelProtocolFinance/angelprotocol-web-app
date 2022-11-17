@@ -14,10 +14,7 @@ export default function Form() {
   const submit = useSubmit();
 
   return (
-    <form
-      className="flex flex-col justify-center w-5/6 h-full gap-10 padded-container pt-10"
-      onSubmit={submit}
-    >
+    <form className="grid w-full max-w-4xl gap-10" onSubmit={submit}>
       <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
         Your logo and description will be used to populate your public profile
       </h2>
