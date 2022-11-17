@@ -1,9 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
-import Loader from "components/Loader";
-import { Button } from "../../common";
+import { BtnPrim, BtnSec } from "components/registration";
 
 export default function ButtonSection({ classes = "" }: { classes?: string }) {
   const { data } = useRegState<2>();
@@ -13,22 +11,12 @@ export default function ButtonSection({ classes = "" }: { classes?: string }) {
 
   return (
     <div className={`flex justify-center ${classes}`}>
-      {isSubmitting ? (
-        <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
-      ) : (
-        <>
-          <Link
-            className="btn-outline-blue w-48 h-12 mr-2"
-            to={`../${steps.contact}`}
-            state={data.init}
-          >
-            Back
-          </Link>
-          <Button submit className="btn-orange w-48 h-12">
-            Upload
-          </Button>
-        </>
-      )}
+      <BtnSec as="link" to={`../${steps.contact}`} state={data.init}>
+        Back
+      </BtnSec>
+      <BtnPrim type="submit" disabled={isSubmitting}>
+        Continue
+      </BtnPrim>
     </div>
   );
 }

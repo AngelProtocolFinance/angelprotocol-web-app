@@ -11,15 +11,14 @@ import {
   WebsiteInput,
 } from "./Fields";
 import useCurrentLevel from "./useCurrentLevel";
-import useUpload from "./useUpload";
+import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const upload = useUpload();
-
+  const submit = useSubmit();
   return (
     <form
       className="grid grid-cols-[3fr_2fr] w-full h-full gap-y-8 items-center text-left padded-container"
-      onSubmit={upload}
+      onSubmit={submit}
     >
       <Title />
       <Column className="pr-4">

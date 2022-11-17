@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { FormValues } from "./types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useRegState } from "services/aws/registration/StepGuard";
@@ -6,22 +7,31 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
 import { getFilePreviews } from "./getFilePreviews";
 
-export default function useUpload() {
-  const { handleSubmit } = useFormContext<FormValues>();
-  const [updateReg] = useUpdateRegMutation();
+export default function useSubmit() {
   const {
-    data: { init },
+    handleSubmit,
+    formState: { isDirty },
+  } = useFormContext<FormValues>();
+  const {
+    step,
+    data: { init, documentation },
   } = useRegState<2>();
 
+  const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
+  const navigate = useNavigate();
 
-  const upload = async ({
+  const submit = async ({
     website,
     hasAuthority,
     hasAgreedToTerms,
     sdg,
     ...documents
   }: FormValues) => {
+    if (documentation && !isDirty) {
+      return navigate(`../${step}`, { state: init });
+    }
+
     const previews = await getFilePreviews({ ...documents });
     handleMutationResult(
       await updateReg({
@@ -38,5 +48,5 @@ export default function useUpload() {
       handleError
     );
   };
-  return handleSubmit(upload);
+  return handleSubmit(submit);
 }

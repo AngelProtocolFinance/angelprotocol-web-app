@@ -24,7 +24,7 @@ export default function useSubmit() {
 
   const submit = async ({ overview, ref, ...imgs }: FV) => {
     if (profile && !isDirty) {
-      navigate(`../${step}`, { state: init });
+      return navigate(`../${step}`, { state: init });
     }
 
     const previews = await getFilePreviews({ ...imgs });

@@ -23,7 +23,7 @@ export default function useSubmit() {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && contact) {
-      navigate(`../${step}`, { state: init }); // go to latest step
+      return navigate(`../${step}`, { state: init }); // go to latest step
     }
 
     handleMutationResult(
