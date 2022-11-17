@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
 import Loader from "components/Loader";
 import { Button } from "../../common";
 
 export default function ButtonSection() {
   const {
-    nav,
     data: { init },
   } = useRegState<3>();
   const {
@@ -21,7 +21,7 @@ export default function ButtonSection() {
         <>
           <Link
             className="btn-outline-blue w-48 h-12 mr-2"
-            to={`../${nav.back}`}
+            to={`../${steps.doc}`}
             state={init}
           >
             Back

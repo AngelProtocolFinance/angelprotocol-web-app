@@ -9,7 +9,7 @@ import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
-function Wallet() {
+function WalletRegistration() {
   const {
     data: { wallet: prevWallet },
   } = useRegState<4>();
@@ -39,4 +39,4 @@ function Wallet() {
   return <WalletSubmission {...wallet} />;
 }
 
-export default withStepGuard(Wallet);
+export default withStepGuard(WalletRegistration);

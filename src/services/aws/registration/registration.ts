@@ -50,7 +50,6 @@ const registration_api = aws.injectEndpoints({
       any,
       RegistrationUpdate & { reference: string }
     >({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ type, reference, ...payload }) => {
         console.log(payload);
         return {
@@ -58,6 +57,15 @@ const registration_api = aws.injectEndpoints({
           method: "PUT",
           params: { uuid: reference },
           body: payload,
+        };
+      },
+      //invalidate tags only if there's no error
+      invalidatesTags: (res, error) =>
+        error ? [] : [{ type: awsTags.admin, id: adminTags.registration }],
+      transformErrorResponse(res, meta, { type }) {
+        return {
+          status: res.status,
+          data: `Failed to update ${type}. Please try again later.`,
         };
       },
     }),

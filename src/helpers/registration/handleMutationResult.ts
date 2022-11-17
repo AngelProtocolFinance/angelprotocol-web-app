@@ -9,8 +9,8 @@ export function handleMutationResult<T extends any>(
     | {
         error: FetchBaseQueryError | SerializedError;
       },
-  onSuccess: (data: T) => void,
-  onError: (error: unknown) => void
+  onError: (error: unknown) => void,
+  onSuccess?: (data: T) => void
 ) {
   if ("error" in result) {
     /** narrow to server error */
@@ -34,7 +34,7 @@ export function handleMutationResult<T extends any>(
       );
     }
   } else {
-    onSuccess(result.data);
+    onSuccess && onSuccess(result.data);
   }
 }
 

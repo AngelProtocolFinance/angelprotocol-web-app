@@ -25,7 +25,7 @@ export default function useUpload() {
     const previews = await getFilePreviews({ ...documents });
     handleMutationResult(
       await updateReg({
-        type: "docs",
+        type: "documentation",
         reference: init.reference,
         //payload
         Website: website,
@@ -35,9 +35,6 @@ export default function useUpload() {
         FinancialStatements: previews.financialStatements,
         AuditedFinancialReports: previews.annualReports,
       }),
-      (result) => {
-        console.log(result);
-      },
       handleError
     );
   };

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
-import { useRegState } from "services/aws/registration/StepGuard";
+import { steps } from "pages/Registration/routes";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { requiredWalletAddr } from "schemas/string";
 import { Button } from "../../common";
@@ -13,7 +13,6 @@ export type Wallet = { address: string };
 
 export default function WalletSubmission({ address, providerId }: WalletState) {
   const { disconnect } = useSetWallet();
-  const { nav } = useRegState<4>();
   const { isSubmitting, registerWallet } = useRegisterWallet();
 
   const methods = useForm<Wallet>({
@@ -66,7 +65,7 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
                 className={`btn-outline-blue w-48 h-10 ${
                   isSubmitting ? "pointer-events-none" : ""
                 } `}
-                to={`${nav.back}`}
+                to={`../${steps.profile}`}
               >
                 Back
               </Link>

@@ -46,12 +46,7 @@ export default function VerifiedEmail() {
           onClick={async () => {
             handleMutationResult(
               await requestEmail({ uuid: c.PK, email: c.Email }),
-              (data) => {
-                console.log(data);
-              },
-              (error) => {
-                handleError(error);
-              }
+              handleError
             );
           }}
           disabled={isLoading}

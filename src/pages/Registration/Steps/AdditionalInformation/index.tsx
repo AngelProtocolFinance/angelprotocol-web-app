@@ -10,7 +10,7 @@ import { ImgLink } from "components/ImgEditor";
 import Form from "./Form";
 import { schema } from "./schema";
 
-function Profile() {
+function AdditionalInformation() {
   const {
     data: { profile, init },
   } = useRegState<3>();
@@ -47,4 +47,4 @@ function toImgLink(file?: FileObject): ImgLink {
   }
 }
 
-export default withStepGuard(Profile);
+export default withStepGuard(AdditionalInformation);

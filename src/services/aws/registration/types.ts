@@ -145,30 +145,24 @@ type Step4Data = Optional<CompleteRegistration, "wallet">;
 
 export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
 
-type Nav = { back: number; next?: number };
-
 type RegStep1 = {
   step: 1;
   data: Step1Data;
-  nav: Omit<Nav, "back">;
 };
 
 type RegStep2 = {
   step: 2;
   data: Step2Data;
-  nav: Nav;
 };
 
 type RegStep3 = {
   step: 3;
   data: Step3Data & { level: number };
-  nav: Nav;
 };
 
 type RegStep4 = {
   step: 4;
   data: Step4Data;
-  nav: Omit<Nav, "next">;
 };
 
 type RegStep5 = {
@@ -212,7 +206,6 @@ export function getRegistrationState(
         documentation: formatDocumentation(r),
         profile: formatProfile(m),
       },
-      nav: { back: 3 },
     };
   } else if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
@@ -224,7 +217,6 @@ export function getRegistrationState(
         documentation: formatDocumentation(r),
         level: 1,
       },
-      nav: { back: 2, next: 4 },
     };
   } else if (isDoneContact(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
@@ -234,7 +226,6 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
       },
-      nav: { next: 3, back: 1 },
     };
   } else {
     return {
@@ -242,7 +233,6 @@ export function getRegistrationState(
       data: {
         init: getInit(reg.ContactPerson),
       },
-      nav: { next: 2 },
     };
   }
 }

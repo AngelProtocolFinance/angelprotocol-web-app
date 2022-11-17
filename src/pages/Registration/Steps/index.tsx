@@ -5,8 +5,8 @@ import { StepGuardProps } from "services/aws/registration/StepGuard";
 import { steps } from "../routes";
 import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
+import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
-import Dashboard from "./Summary";
 import Wallet from "./Wallet";
 
 export default function Steps() {

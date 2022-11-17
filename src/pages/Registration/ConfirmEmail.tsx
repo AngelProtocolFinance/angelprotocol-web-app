@@ -5,7 +5,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
 import { ButtonMailTo } from "./common";
-import routes from "./routes";
 
 export default function ConfirmEmail() {
   /** going to this page should only be thru Signup or Resume
@@ -36,12 +35,7 @@ export default function ConfirmEmail() {
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),
-            (data) => {
-              console.log(data);
-            },
-            (error) => {
-              handleError(error);
-            }
+            handleError
           );
         }}
         disabled={isLoading}

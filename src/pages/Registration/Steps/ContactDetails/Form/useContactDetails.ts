@@ -11,7 +11,7 @@ export default function useSaveContactDetails() {
   const saveContactDetails = async (fv: FormValues) => {
     handleMutationResult(
       await updateReg({
-        type: "contact",
+        type: "contact details",
         reference: fv.ref,
         ContactPerson: {
           FirstName: fv.firstName,
@@ -26,9 +26,6 @@ export default function useSaveContactDetails() {
           OrganizationName: fv.orgName,
         },
       }),
-      (result) => {
-        console.log(result);
-      },
       handleError
     );
   };

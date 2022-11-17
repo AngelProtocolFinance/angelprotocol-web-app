@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Documentation } from "services/aws/registration/types";
+import { steps } from "pages/RegistrationV2/routes";
 import {
   useRegState,
   withStepGuard,
 } from "services/aws/registration/StepGuard";
-import { appRoutes } from "constants/routes";
-import routes from "../../routes";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 import useSubmit from "./useSubmit";
@@ -38,30 +37,28 @@ function Dashboard() {
             <Step
               title="Contact Details"
               onClick={() =>
-                navigate(`${appRoutes.register}/${routes.contactDetails}`)
+                navigate(`../${steps.contact}`, { state: data.init })
               }
               disabled={isSubmitting}
             />
             <Step
               title="Documentation"
-              onClick={() =>
-                navigate(`${appRoutes.register}/${routes.documentation}`)
-              }
+              onClick={() => navigate(`../${steps.doc}`, { state: data.init })}
               disabled={isSubmitting}
               customStatus={`Level ${getDocLevel(documentation)}`}
             />
             <Step
               title="Additional Information"
               onClick={() =>
-                navigate(
-                  `${appRoutes.register}/${routes.additionalInformation}`
-                )
+                navigate(`../${steps.profile}`, { state: data.init })
               }
               disabled={isSubmitting}
             />
             <Step
               title="Wallet Address"
-              onClick={() => navigate(`${appRoutes.register}/${routes.wallet}`)}
+              onClick={() =>
+                navigate(`../${steps.wallet}`, { state: data.init })
+              }
               disabled={isSubmitting}
             />
           </div>

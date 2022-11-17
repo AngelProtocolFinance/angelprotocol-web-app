@@ -92,18 +92,18 @@ export type SavedRegistration =
   | DoneWallet;
 
 type ContactUpdate = {
-  type: "contact";
+  type: "contact details";
   ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
   Registration: OrgData;
 };
 
 type DocsUpdate = {
-  type: "docs";
+  type: "documentation";
 } & Omit<TDocumentation, "Tier"> &
   Partial<Pick<InitReg, "UN_SDG">>;
 
 type ProfileUpdate = {
-  type: "profile";
+  type: "profile assets";
 } & Pick<Profile, "Logo"> &
   Partial<Omit<Profile, "Logo">>;
 

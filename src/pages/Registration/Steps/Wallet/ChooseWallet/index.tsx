@@ -1,31 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "pages/Registration/common";
-import { useRegistrationQuery } from "services/aws/registration";
-import { appRoutes } from "constants/routes";
-import routes from "../../../routes";
+import { steps } from "pages/Registration/routes";
+import { BtnSec } from "components/registration";
 import KeplrConnector from "./KeplrConnector";
 import Title from "./Title";
 
 export default function ChooseWallet() {
-  const navigate = useNavigate();
-  const { application } = useRegistrationQuery();
-
-  // if wallet registration step is already complete, then this was just data update,
-  // so user can be navigated to the dashboard
-  const onBackClick = () => {
-    const route = application.Metadata.JunoWallet
-      ? routes.dashboard
-      : routes.additionalInformation;
-    navigate(`${appRoutes.register}/${route}`);
-  };
-
   return (
     <div className="flex flex-col gap-5 items-center justify-center h-full w-full">
       <Title />
       <KeplrConnector />
-      <Button className="btn-outline-blue w-80 h-10" onClick={onBackClick}>
+      <BtnSec as="link" to={`../${steps.profile}`}>
         Back
-      </Button>
+      </BtnSec>
     </div>
   );
 }

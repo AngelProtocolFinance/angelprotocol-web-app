@@ -15,16 +15,13 @@ export default function useSubmit() {
     const previews = await getFilePreviews({ ...imgs });
     handleMutationResult(
       await updateReg({
-        type: "profile",
+        type: "profile assets",
         reference: ref,
         Banner: previews.banner,
         Logo: previews.logo,
         Overview: overview,
         KycDonorsOnly: false /**TODO: isKYC part of metaData */,
       }),
-      (result) => {
-        console.log(result);
-      },
       handleError
     );
   };

@@ -6,21 +6,17 @@ import WalletInfoModal from "./WalletInfoModal";
 // (the user would expect the info icon to remain at the end of the string even on smaller screens, but
 // React renders it all the way to the right, making it appear unrelated to the title, reducing UX)
 export default function Title() {
+  const { showModal } = useModalContext();
   return (
     <h2 className="flex text-lg xl:text-xl font-semibold gap-2 items-center">
       Please connect Keplr to register a new wallet for your endowment
-      <InfoIcon />
+      <button>
+        <Icon
+          type="ExclamationCircle"
+          className="text-blue cursor-pointer text-5xl md:text-2xl"
+          onClick={() => showModal(WalletInfoModal, {})}
+        />
+      </button>
     </h2>
-  );
-}
-
-function InfoIcon() {
-  const { showModal } = useModalContext();
-  return (
-    <Icon
-      type="ExclamationCircle"
-      className="text-blue cursor-pointer text-5xl md:text-2xl"
-      onClick={() => showModal(WalletInfoModal, {})}
-    />
   );
 }

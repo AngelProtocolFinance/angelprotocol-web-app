@@ -1,22 +1,18 @@
-import {
-  useRegistrationQuery,
-  useUpdateMetadataMutation,
-} from "services/aws/registration";
+import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { GENERIC_ERROR_MESSAGE } from "../../constants";
 import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
-  const { application } = useRegistrationQuery();
-  const [updateMetadata, { isSuccess, isLoading }] =
-    useUpdateMetadataMutation();
   const { handleError } = useErrorContext();
+  const [updateReg, { isSuccess, isLoading }] = useUpdateRegMutation();
 
   const registerWallet = async (data: Wallet) => {
     try {
-      const result = await updateMetadata({
-        body: { JunoWallet: data.address },
-        PK: application.ContactPerson.PK,
+      const result = await updateReg({
+        type: "wallet",
+        reference: "",
+        JunoWallet: data.address,
       });
 
       if ("error" in result) {

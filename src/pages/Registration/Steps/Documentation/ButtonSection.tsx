@@ -1,11 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
 import Loader from "components/Loader";
 import { Button } from "../../common";
 
 export default function ButtonSection({ classes = "" }: { classes?: string }) {
-  const { nav, data } = useRegState<2>();
+  const { data } = useRegState<2>();
   const {
     formState: { isSubmitting },
   } = useFormContext();
@@ -18,7 +19,7 @@ export default function ButtonSection({ classes = "" }: { classes?: string }) {
         <>
           <Link
             className="btn-outline-blue w-48 h-12 mr-2"
-            to={`../${nav.back}`}
+            to={`../${steps.contact}`}
             state={data.init}
           >
             Back

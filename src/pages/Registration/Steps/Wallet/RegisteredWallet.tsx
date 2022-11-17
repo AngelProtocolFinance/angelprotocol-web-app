@@ -1,6 +1,5 @@
-import { IconContext } from "react-icons";
-import { BsCheck2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Icon from "components/Icon";
 import { Button } from "../../common";
 
 export default function RegisteredWallet(props: {
@@ -10,9 +9,7 @@ export default function RegisteredWallet(props: {
   return (
     <div className="flex flex-col h-full w-full items-center">
       <div className="flex flex-col items-center gap-4 mb-4">
-        <IconContext.Provider value={{ className: "text-7xl" }}>
-          <BsCheck2 />
-        </IconContext.Provider>
+        <Icon type="Check" size={60} />
       </div>
       <div>
         <p className="text-xl font-extrabold font-heading uppercase mb-2">
