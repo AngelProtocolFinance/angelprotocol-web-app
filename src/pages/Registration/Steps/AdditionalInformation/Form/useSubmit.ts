@@ -1,17 +1,32 @@
 import { useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { FileObject } from "types/aws";
 import { useUpdateRegMutation } from "services/aws/registration";
+import { useRegState } from "services/aws/registration/StepGuard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { ImgLink } from "components/ImgEditor";
 import { handleMutationResult, uploadToIpfs } from "helpers";
 
 export default function useSubmit() {
-  const { handleSubmit } = useFormContext<FV>();
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = useFormContext<FV>();
+
+  const {
+    step,
+    data: { profile, init },
+  } = useRegState<3>();
   const [updateReg] = useUpdateRegMutation();
+  const navigate = useNavigate();
   const { handleError } = useErrorContext();
 
   const submit = async ({ overview, ref, ...imgs }: FV) => {
+    if (profile && !isDirty) {
+      navigate(`../${step}`, { state: init });
+    }
+
     const previews = await getFilePreviews({ ...imgs });
 
     handleMutationResult(

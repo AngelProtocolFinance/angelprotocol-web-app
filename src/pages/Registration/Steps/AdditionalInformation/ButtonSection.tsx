@@ -1,36 +1,23 @@
 import { useFormContext } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import { useRegState } from "services/aws/registration/StepGuard";
-import Loader from "components/Loader";
-import { Button } from "../../common";
+import { BtnSec } from "components/donation";
+import { BtnPrim } from "components/registration";
 
 export default function ButtonSection() {
-  const {
-    data: { init },
-  } = useRegState<3>();
+  const { data } = useRegState<3>();
   const {
     formState: { isSubmitting },
   } = useFormContext();
 
   return (
     <div className="flex justify-center mt-4">
-      {isSubmitting ? (
-        <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
-      ) : (
-        <>
-          <Link
-            className="btn-outline-blue w-48 h-12 mr-2"
-            to={`../${steps.doc}`}
-            state={init}
-          >
-            Back
-          </Link>
-          <Button submit className="btn-orange w-48 h-12">
-            Submit
-          </Button>
-        </>
-      )}
+      <BtnSec as="link" to={`../${steps.doc}`} state={data.init}>
+        Back
+      </BtnSec>
+      <BtnPrim type="submit" disabled={isSubmitting}>
+        Continue
+      </BtnPrim>
     </div>
   );
 }
