@@ -51,7 +51,6 @@ const registration_api = aws.injectEndpoints({
       RegistrationUpdate & { reference: string }
     >({
       query: ({ type, reference, ...payload }) => {
-        console.log(payload);
         return {
           url: "v2/registration",
           method: "PUT",

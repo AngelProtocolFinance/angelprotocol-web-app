@@ -12,7 +12,6 @@ export default function ConfirmEmail() {
    */
   const { state } = useLocation();
   const initReg = state as InitReg | undefined; //from non "/steps" navigations
-  console.log(initReg);
 
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();

@@ -49,7 +49,6 @@ async function getFilePreviews<T extends { [index: string]: ImgLink }>(
 ): Promise<{ [key in keyof T]: FileObject }> {
   const idxes: { [index: string]: number } = {};
   let files: File[] = [];
-  console.log("fields", fields);
 
   let pos = 0;
   for (const [key, imgLink] of Object.entries(fields)) {
@@ -68,8 +67,6 @@ async function getFilePreviews<T extends { [index: string]: ImgLink }>(
     name,
     publicUrl: urls[i],
   }));
-
-  console.log(previews, "previews", idxes);
 
   //rebuild object with preview urls
   const result: any = {};

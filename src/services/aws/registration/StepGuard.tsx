@@ -27,8 +27,6 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     const idRef = useRef(stateId);
     const navigate = useNavigate();
 
-    console.log("render", { state });
-
     const { step: savedStep } = state;
 
     useEffect(() => {
