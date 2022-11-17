@@ -100,7 +100,7 @@ export type Documentation = {
   financialStatements: FileObject[];
 
   //level3
-  annualReports: FileObject[];
+  auditedFinancialReports: FileObject[];
 
   //so user won't click again on resume
   hasAuthority: boolean;

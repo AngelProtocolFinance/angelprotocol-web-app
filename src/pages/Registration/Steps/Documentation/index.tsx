@@ -23,7 +23,7 @@ function Documentation() {
           proofOfIdentity: genFileAsset(doc.proofOfIdentity),
           proofOfRegistration: genFileAsset(doc.proofOfRegistration),
           financialStatements: genFileAsset(doc.financialStatements),
-          annualReports: genFileAsset(doc.annualReports),
+          annualReports: genFileAsset(doc.auditedFinancialReports),
         }
       : {
           proofOfIdentity: genFileAsset([]),

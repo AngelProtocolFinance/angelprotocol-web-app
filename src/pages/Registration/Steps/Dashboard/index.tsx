@@ -73,10 +73,13 @@ function Dashboard() {
   );
 }
 
-function getDocLevel({ financialStatements, annualReports }: Documentation) {
+function getDocLevel({
+  financialStatements,
+  auditedFinancialReports,
+}: Documentation) {
   let level = 1;
   if (financialStatements.length > 0) level++;
-  if (annualReports.length > 0) level++;
+  if (auditedFinancialReports.length > 0) level++;
   return level;
 }
 

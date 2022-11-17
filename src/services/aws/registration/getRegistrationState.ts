@@ -130,7 +130,7 @@ function formatDocumentation({
     financialStatements: fs || [],
 
     //level 3
-    annualReports: ar || [],
+    auditedFinancialReports: ar || [],
 
     //meta
     hasAuthority: true,
