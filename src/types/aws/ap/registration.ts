@@ -1,6 +1,4 @@
-import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
-import { Optional } from "../../utils";
 import { FileObject } from "../common";
 
 export type RegistrationStatus =

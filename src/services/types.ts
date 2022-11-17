@@ -1,19 +1,5 @@
 import { SuccessLink } from "slices/transaction/types";
-import {
-  ContactDetails,
-  DoneContact,
-  DoneDocs,
-  DoneProfile,
-  DoneWallet,
-  FileObject,
-  InitContact,
-  RegProfile,
-  RegistrationStatus,
-  SavedRegistration,
-  TDocumentation,
-  Token,
-  WalletData,
-} from "types/aws";
+import { FileObject, RegistrationStatus, Token } from "types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -174,7 +160,7 @@ type RegStep2 = {
 
 type RegStep3 = {
   step: 3;
-  data: Step3Data & { level: number };
+  data: Step3Data;
 };
 
 type RegStep4 = {

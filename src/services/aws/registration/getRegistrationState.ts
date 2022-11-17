@@ -54,7 +54,6 @@ export function getRegistrationState(
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        level: 1,
       },
     };
   } else if (isDoneContact(reg)) {
