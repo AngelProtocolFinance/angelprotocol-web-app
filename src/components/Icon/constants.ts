@@ -73,6 +73,7 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
+  MdOutlineUploadFile,
 } from "react-icons/md";
 import { RiMapPin2Line } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -84,6 +85,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   FilterLeft: BsFilterLeft,
   Filter: MdOutlineFilterAlt,
   FileDownload: MdOutlineFileDownload,
+  FileUpload: MdOutlineUploadFile,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,

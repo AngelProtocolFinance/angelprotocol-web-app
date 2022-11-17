@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ContactForm from "./Contact";
+import Docs from "./Docs";
 import Resume from "./Resume";
 import Signup from "./Signup";
 import { routes } from "./routes";
@@ -13,6 +14,7 @@ export default function RegistrationV2() {
           element={<Resume classes="justify-self-center" />}
         />
         <Route path={routes.contact} element={<ContactForm />} />
+        <Route path={routes.docs} element={<Docs />} />
         <Route index element={<Signup classes="justify-self-center" />} />
       </Routes>
     </section>

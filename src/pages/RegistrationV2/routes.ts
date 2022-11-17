@@ -4,4 +4,5 @@ export const routes = {
 
   /** temp route only - will be moved in overall wiring */
   contact: "contact",
+  docs: "docs",
 } as const;

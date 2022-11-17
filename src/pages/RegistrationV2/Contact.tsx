@@ -24,7 +24,7 @@ export default function ContactForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="padded-container max-w-[45.5rem] justify-self-center mt-28"
+        className="padded-container max-w-[45.5rem] justify-self-center mt-28 bg-white dark:bg-blue-d6"
         onSubmit={methods.handleSubmit(fakeSubmit)}
       >
         <h2 className="font-bold text-center sm:text-left text-xl mb-2">
@@ -75,7 +75,10 @@ export default function ContactForm() {
         <Label required className="mb-2">
           What's your role within the organization?
         </Label>
-        <Selector name="role" options={roleOptions}>
+        <Selector<any, any, ContactRoles, false>
+          name="role"
+          options={roleOptions}
+        >
           {({ value }) =>
             value === "other" && (
               <TextInput
@@ -92,7 +95,10 @@ export default function ContactForm() {
         <Label required className="mb-2">
           How did you find about us?
         </Label>
-        <Selector name="referralMethod" options={referralOptions}>
+        <Selector<any, any, ReferralMethods, false>
+          name="referralMethod"
+          options={referralOptions}
+        >
           {({ value }) =>
             value === "other" && (
               <TextInput

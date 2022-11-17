@@ -3,8 +3,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import Checkbox from "components/Checkbox";
-import { TextInput } from "components/registration";
+import { TextInput, checkBoxStyle } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
+import OrSeparator from "components/registration/OrSeparator";
 import { PRIVACY_POLICY } from "constants/urls";
 import { routes } from "./routes";
 
@@ -48,9 +49,9 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           required
           name="hasAgreedToPrivacyPolicy"
           classes={{
-            container: "justify-self-center gap-3.5 mt-6 mb-8 text-xs",
-            checkbox:
-              "appearance-none border border-gray-d2 dark:border-white w-4 h-4 rounded checked:bg-blue",
+            container: "justify-self-center mt-6 mb-8 text-xs",
+            checkbox: checkBoxStyle,
+            error: "mt-2",
           }}
         >
           I declare that I have read and agreed to{" "}
@@ -67,11 +68,7 @@ export default function Signup({ classes = "" }: { classes?: string }) {
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
         Register
       </BtnPrim>
-      <p className="text-sm mx-0 sm:mx-24 relative h-px grid place-items-center bg-gray-d1 dark:bg-gray my-11">
-        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute text-gray-d1 dark:text-gray">
-          OR
-        </span>
-      </p>
+      <OrSeparator classes="my-11" />
       <BtnSec as="link" className="mx-0 sm:mx-24" to={routes.resume}>
         Resume your registration
       </BtnSec>
