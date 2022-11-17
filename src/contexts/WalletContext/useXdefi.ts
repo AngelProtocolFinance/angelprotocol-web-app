@@ -16,7 +16,7 @@ type Result = {
 export default function useXdefi() {
   const evmProvider = useInjectedProvider(
     "xdefi-evm",
-    "xdefi Ethereum",
+    "xdefi (Ethereum)",
     evmIcon
   );
 
@@ -35,7 +35,7 @@ export default function useXdefi() {
 
   const xdefiTerraConnection: Connection = {
     logo: terraIcon, //this connector will appear on network selection
-    name: "xdefi Terra",
+    name: "xdefi (Terra)",
     installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     connect: async () => {
       if (connection) {
