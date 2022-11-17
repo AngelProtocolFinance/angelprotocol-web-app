@@ -1,23 +1,16 @@
-import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { Button } from "../../../common";
 import FormInput from "../../../common/FormInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
-import useSaveContactDetails from "./useContactDetails";
+import useSaveContactDetails from "./useSubmit";
 
 export default function Form() {
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useFormContext<FV>();
-
-  const { saveContactDetails } = useSaveContactDetails();
-
+  const { submit, isSubmitting } = useSaveContactDetails();
   return (
     <form
       className="mx-auto md:w-full flex flex-col gap-6 padded-container"
-      onSubmit={handleSubmit(saveContactDetails)}
+      onSubmit={submit}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormInput<FV>

@@ -13,7 +13,6 @@ export default function useSubmit() {
 
   const submit = async ({ overview, ref, ...imgs }: FV) => {
     const previews = await getFilePreviews({ ...imgs });
-    console.log(imgs);
 
     handleMutationResult(
       await updateReg({
@@ -35,23 +34,27 @@ async function getFilePreviews<T extends { [index: string]: ImgLink }>(
 ): Promise<{ [key in keyof T]: FileObject }> {
   const idxes: { [index: string]: number } = {};
   let files: File[] = [];
+  console.log("fields", fields);
 
   let pos = 0;
   for (const [key, imgLink] of Object.entries(fields)) {
+    idxes[key] = pos;
     if (imgLink.file) {
-      idxes[key] = pos;
       files.push(imgLink.file);
       pos++;
     } else {
       continue;
     }
   }
+
   const urls = await uploadToIpfs(files);
   //map file names to urls
   const previews: FileObject[] = files.map(({ name }, i) => ({
     name,
     publicUrl: urls[i],
   }));
+
+  console.log(previews, "previews", idxes);
 
   //rebuild object with preview urls
   const result: any = {};
