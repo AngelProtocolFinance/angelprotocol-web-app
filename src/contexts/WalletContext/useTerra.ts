@@ -62,6 +62,7 @@ function _filter<T extends TerraConnection | Installation>(conn: T) {
   const identifier = conn.identifier as ProviderId;
 
   return (
+    identifier === "xdefi-wallet" ||
     identifier === "leap-wallet" ||
     identifier === "station" ||
     conn.type === ConnectType.WALLETCONNECT
