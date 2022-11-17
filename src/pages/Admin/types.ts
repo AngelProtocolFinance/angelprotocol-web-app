@@ -1,6 +1,6 @@
 import { ImgLink } from "components/ImgEditor/types";
 import { CountryOption } from "services/types";
-import { EndowmentApplication, Registration } from "types/aws";
+import { EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -98,8 +98,10 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
-export type ApplicationMeta = MetaConstructor<"cw3_application", Registration>;
-
+export type ApplicationMeta = MetaConstructor<
+  "cw3_application",
+  EndowmentProposal
+>;
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
   DiffSet<FormCW3Config>
@@ -267,7 +269,7 @@ export type ProfileFormValues = ProposalBase &
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  EndowmentApplication,
+  EndowmentProposal,
   | "OrganizationName"
   | "RegistrationDate"
   | "RegistrationStatus"

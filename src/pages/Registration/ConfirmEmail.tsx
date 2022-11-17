@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { InitReg } from "services/aws/registration/types";
+import { InitReg } from "services/types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { BtnPrim } from "components/registration";

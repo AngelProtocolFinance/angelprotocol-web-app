@@ -1,3 +1,3 @@
-import { ContactPerson } from "services/aws/registration/types";
+import { ContactPerson } from "services/types";
 
 export type FormValues = ContactPerson & { ref: string };

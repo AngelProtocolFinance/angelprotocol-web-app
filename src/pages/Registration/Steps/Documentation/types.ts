@@ -1,4 +1,4 @@
-import { Documentation } from "services/aws/registration/types";
+import { Documentation } from "services/types";
 import { Asset } from "components/FileDropzone";
 
 export type FormValues = Pick<

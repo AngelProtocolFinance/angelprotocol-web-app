@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { SortDirection, SortKey } from "pages/Admin/types";
-import { EndowmentApplication } from "types/aws";
+import { EndowmentProposal } from "types/aws";
 
 export default function useSortedApplications(
-  applications: EndowmentApplication[]
+  applications: EndowmentProposal[]
 ) {
   const [sortKey, setSortKey] = useState<SortKey>("RegistrationDate");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");

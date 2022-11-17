@@ -36,160 +36,146 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
-export type ContactPerson = {
+export type InitReg = {
+  PK: string;
+  SK: "Registration";
+  RegistrationDate: string /** ISO string*/;
+  RegistrationStatus: "Inactive";
+  UN_SDG: number;
+};
+
+export type InitContact = {
+  PK: string;
+  SK: "ContactPerson";
   Email: string;
-  EmailVerified?: boolean;
-  EmailVerificationLastSentDate: string;
-  Goals: string;
+  EmailVerified: boolean;
+  EmailVerificationLastSentDate: string /** ISO string */;
+};
+
+type InitMeta = {
+  PK: string;
+  SK: "Metadata";
+};
+
+export type ContactDetails = {
   FirstName: string;
   LastName: string;
-  OtherRole?: string;
-  OtherReferralMethod?: string;
   PhoneNumber: string;
-  PK?: string;
-  ReferralMethod: ReferralMethods;
+  Goals: string;
   Role: ContactRoles;
-  SK: "ContactPerson";
+  OtherRole: string;
+  ReferralMethod: ReferralMethods;
+  OtherReferralMethod: string;
 };
 
-type InitialRegistration = Optional<
-  Registration,
-  | "AuditedFinancialReports"
-  | "AuditedFinancialReportsVerified"
-  | "FinancialStatements"
-  | "FinancialStatementsVerified"
-  | "ProofOfIdentity"
-  | "ProofOfIdentityVerified"
-  | "ProofOfRegistration"
-  | "ProofOfRegistrationVerified"
-  | "Website"
->;
-
-export type Registration = {
-  AuditedFinancialReports: FileObject[];
-  AuditedFinancialReportsVerified: boolean;
-  OrganizationName: string;
-  OrganizationName_ContactEmail?: string;
-  FinancialStatements: FileObject[];
-  FinancialStatementsVerified: boolean;
-  ProofOfIdentity?: FileObject;
-  ProofOfIdentityVerified: boolean;
-  ProofOfRegistration?: FileObject;
-  ProofOfRegistrationVerified: boolean;
-  RegistrationDate: string;
-  RegistrationStatus: RegistrationStatus;
-  SK: "Registration";
-  Tier?: EndowmentTierNum;
-  UN_SDG: UNSDG_NUMS;
+export type TDocumentation = {
+  ProofOfIdentity: FileObject;
+  ProofOfRegistration: FileObject;
   Website: string;
+  Tier: EndowmentTierNum;
+  //based on tier
+  FinancialStatements?: FileObject[];
+  AuditedFinancialReports?: FileObject[];
 };
 
-type InitialMetaData = Optional<
-  Metadata,
-  | "Banner"
-  | "Logo"
-  | "Overview"
-  | "EndowmentId"
-  | "JunoWallet"
-  | "KycDonorsOnly"
->;
-
-export type Metadata = {
-  Banner?: FileObject;
-  Logo?: FileObject;
-  Overview: string;
-  EndowmentId: number;
-  SK: "Metadata";
-  JunoWallet: string;
-  KycDonorsOnly: boolean;
-};
-
-export type Application = {
-  ContactPerson: ContactPerson;
-  Metadata: Metadata;
-  Registration: Registration;
-};
-
-export type UnprocessedApplication = {
-  ContactPerson: ContactPerson;
-  Registration: InitialRegistration;
-  Metadata: InitialMetaData;
-};
-
-export type ContactDetailsResult = {
-  ContactPerson: ContactPerson;
-  Registration: Pick<
-    Registration,
-    | "OrganizationName"
-    | "OrganizationName_ContactEmail"
-    | "RegistrationDate"
-    | "RegistrationStatus"
-  >;
-};
-
-//*
-export type ContactDetailsRequest = {
-  PK?: string;
-  body: {
-    ContactPerson: Omit<ContactPerson, "SK" | "EmailVerificationLastSentDate">;
-    Registration: Pick<Registration, "OrganizationName">;
-  };
-};
-
-//*
-export type SubmitData = {
-  PK: string;
-  chain_id: string;
-};
-
-//*
-export type SubmitResult = {
-  RegistrationStatus: RegistrationStatus;
-  chain_id: string;
-  poll_id: number;
-};
-
-export type UpdateMetadataRequest = {
-  PK?: string;
-  body: {
-    Banner?: FileObject;
-    Logo?: FileObject;
-    Overview?: string;
-    JunoWallet?: string;
-    KycDonorsOnly?: boolean;
-  };
-};
-
-export type UpdateMetadataResult = {
+export type RegProfile = {
   Banner: FileObject;
   Logo: FileObject;
   Overview: string;
-  JunoWallet: string;
+  KycDonorsOnly: boolean;
 };
 
-export type UpdateDocumentationData = {
-  PK?: string;
-  body: {
-    Website: string;
-    UN_SDG: number;
-    ProofOfIdentity: FileObject;
-    ProofOfRegistration: FileObject;
-    FinancialStatements: FileObject[];
-    AuditedFinancialReports: FileObject[];
+//INIT STEP
+export type InitApplication = {
+  Registration: InitReg;
+  ContactPerson: InitContact;
+  Metadata: InitMeta;
+};
+
+export type OrgData = { OrganizationName: string };
+export type WalletData = { JunoWallet: string };
+
+export type DoneContact = {
+  Registration: InitReg & OrgData;
+  ContactPerson: InitContact & ContactDetails;
+  Metadata: InitMeta;
+};
+
+export type DoneDocs = {
+  Registration: InitReg & OrgData & TDocumentation;
+  ContactPerson: InitContact & ContactDetails;
+  Metadata: InitMeta;
+};
+
+export type DoneProfile = {
+  Registration: InitReg & OrgData & TDocumentation;
+  ContactPerson: InitContact & ContactDetails;
+  Metadata: InitMeta & RegProfile;
+};
+
+export type DoneWallet = {
+  Registration: InitReg & OrgData & TDocumentation;
+  ContactPerson: InitContact & ContactDetails;
+  Metadata: InitMeta &
+    RegProfile &
+    WalletData & {
+      EndowmentId?: number;
+      /** when created 
+      TODO: should be part of Registration status
+      Inactive | Rejected | {id: number}
+      */
+    };
+};
+
+export type SavedRegistration =
+  | InitApplication
+  | DoneContact
+  | DoneDocs
+  | DoneProfile
+  | DoneWallet;
+
+type ContactUpdate = {
+  type: "contact details";
+  ContactPerson: Pick<InitContact, "Email"> & Partial<ContactDetails>;
+  Registration: OrgData;
+};
+
+type DocsUpdate = {
+  type: "documentation";
+} & Omit<TDocumentation, "Tier"> &
+  Partial<Pick<InitReg, "UN_SDG">>;
+
+type ProfileUpdate = {
+  type: "profile assets";
+} & Pick<RegProfile, "Logo"> &
+  Partial<Omit<RegProfile, "Logo">>;
+
+type WalletUpdate = {
+  type: "wallet";
+} & WalletData;
+
+export type RegistrationUpdate =
+  | ContactUpdate
+  | DocsUpdate
+  | ProfileUpdate
+  | WalletUpdate;
+
+/** alias to provide context outside registration */
+export type Application = DoneWallet;
+
+/** shape used in Review proposals table */
+export type EndowmentProposal = Pick<
+  InitReg,
+  "PK" | "RegistrationDate" | "RegistrationStatus"
+> &
+  OrgData &
+  TDocumentation & {
+    OrganizationName_ContactEmail: string;
+    poll_id: number;
   };
-};
 
-export type UpdateDocumentationResult = {
-  Tier: EndowmentTierNum;
-  Website: string;
-  UN_SDG: number;
-  ProofOfIdentity: FileObject;
-  ProofOfRegistration: FileObject;
-  FinancialStatements: FileObject[];
-  AuditedFinancialReports: FileObject[];
-};
-
-export type EndowmentApplication = Registration & {
-  PK: string;
+export type SubmitResult = {
+  RegistrationStatus: RegistrationStatus;
+  chain_id: string;
   poll_id: number;
 };

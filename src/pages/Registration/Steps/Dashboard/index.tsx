@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Documentation } from "services/aws/registration/types";
+import { Documentation } from "services/types";
 import { steps } from "pages/RegistrationV2/routes";
 import {
   useRegState,

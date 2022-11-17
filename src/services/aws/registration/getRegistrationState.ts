@@ -1,179 +1,22 @@
 import {
+  ContactPerson,
+  Documentation,
+  InitReg,
+  Profile,
+  RegistrationState,
+} from "../../types";
+import {
   ContactDetails,
   DoneContact,
   DoneDocs,
   DoneProfile,
   DoneWallet,
   InitContact,
+  RegProfile,
   SavedRegistration,
   TDocumentation,
-  Profile as TProfile,
   WalletData,
-} from "./regtypes";
-import { FileObject, RegistrationStatus } from "types/aws";
-import { Optional } from "types/utils";
-
-//REF_ID is global to registration
-export type InitReg = {
-  reference: string;
-  email: string;
-  isEmailVerified: boolean;
-  lastVerified: string; // ISO string
-};
-
-//STEP 1
-export type ContactPerson = {
-  firstName: string;
-  lastName: string;
-  //https://www.npmjs.com/package/react-phone-input-2
-  phone: string; // {format: string, value:string}
-  // disabled, can't be changed once confirmed
-  email: string;
-
-  orgName: string;
-  role: string;
-  otherRole: string;
-
-  referralMethod: string;
-  otherReferralMethod: string;
-  goals: string;
-};
-
-//STEP 2
-export type Documentation = {
-  //level 1 - should nest?
-  proofOfIdentity: FileObject[];
-  proofOfRegistration: FileObject[];
-  website: string;
-  sdg: number;
-
-  //level 2
-  financialStatements: FileObject[];
-
-  //level3
-  annualReports: FileObject[];
-
-  //so user won't click again on resume
-  hasAuthority: boolean;
-  hasAgreedToTerms: boolean;
-};
-
-//STEP 3
-export type Profile = {
-  banner: FileObject;
-  logo: FileObject;
-  overview: string;
-  isKYCRequired: boolean;
-};
-
-//STEP 4
-type WalletDetails = {
-  //keplr only
-  address: string;
-};
-
-export type CompleteRegistration = {
-  init: InitReg;
-  contact: ContactPerson;
-  documentation: Documentation;
-  profile: Profile;
-  wallet: WalletDetails;
-  endowId?: number; //created
-};
-
-/**
- * Step 1
- * user initiated, and confirmed email registration
- * RegistrationData {
- *   id: {ref, email, isEmailVerified:true}
- *   contact: something | undefined - if something, user can skip to next step
- * }
- */
-
-type Step1Data = Optional<
-  Pick<CompleteRegistration, "init" | "contact">,
-  "contact"
->;
-
-/**
- * Step 2
- * user completed up to contact details form
- * RegistrationData {
- *   id: {ref, email, isEmailVerified:true}
- *   contact: something,
- *   documentation: something | undefined - if something, user can skip to next step
- * }
- */
-type Step2Data = Optional<
-  Pick<CompleteRegistration, "init" | "contact" | "documentation">,
-  "documentation"
->;
-
-/**
- * Step 3
- * user completed up to documentation
- * RegistrationData {
- *   id: {ref, email, isEmailVerified:true}
- *   contact: something,
- *   documentation: something
- *   profile: something | undefined - if something, user can skip to next step
- * }
- */
-
-type Step3Data = Optional<
-  Pick<CompleteRegistration, "init" | "contact" | "documentation" | "profile">,
-  "profile"
->;
-
-/**
- * Step 3
- * user completed up to profile
- * RegistrationData {
- *   id: {ref, email, isEmailVerified:true}
- *   contact: something,
- *   documentation: something
- *   profile: something
- *   wallet: something | undefined - if something, user can submit application
- * }
- */
-
-type Step4Data = Optional<CompleteRegistration, "wallet">;
-
-export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
-
-type RegStep1 = {
-  step: 1;
-  data: Step1Data;
-};
-
-type RegStep2 = {
-  step: 2;
-  data: Step2Data;
-};
-
-type RegStep3 = {
-  step: 3;
-  data: Step3Data & { level: number };
-};
-
-type RegStep4 = {
-  step: 4;
-  data: Step4Data;
-};
-
-type RegStep5 = {
-  step: 5;
-  data: CompleteRegistration & { status: RegistrationStatus };
-};
-
-export type RegistrationState =
-  | RegStep1
-  | RegStep2
-  | RegStep3
-  | RegStep4
-  | RegStep5;
-
-export type RegStep = RegistrationState["step"];
+} from "types/aws";
 
 export function getRegistrationState(
   reg: SavedRegistration
@@ -302,7 +145,7 @@ function isDoneWallet(data: SavedRegistration): data is DoneWallet {
 }
 
 function isDoneProfile(data: SavedRegistration): data is DoneProfile {
-  const key: keyof TProfile = "Logo";
+  const key: keyof RegProfile = "Logo";
   return key in data.Metadata;
 }
 

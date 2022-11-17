@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
-import { InitReg } from "services/aws/registration/types";
+import { InitReg } from "services/types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import Checkbox from "components/Checkbox";

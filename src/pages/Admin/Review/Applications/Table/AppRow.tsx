@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { EndowmentApplication } from "types/aws";
+import { EndowmentProposal } from "types/aws";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { adminRoutes } from "constants/routes";
 import { statusColors } from "../constants";
 
-export default function AppRow(props: EndowmentApplication) {
+export default function AppRow(props: EndowmentProposal) {
   return (
     <Cells type="td" cellClass="px-2 py-3" key={props.PK}>
       <>{props.OrganizationName}</>
-      <>{props.OrganizationName_ContactEmail?.split("_")[1]}</>
+      <>{props.OrganizationName_ContactEmail.split("_")[1]}</>
       <>{new Date(props.RegistrationDate).toDateString()}</>
       <span
         className={`${

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { InitReg } from "services/aws/registration/types";
+import { InitReg } from "services/types";
 import { useRegQuery } from "services/aws/registration";
 import { StepGuardProps } from "services/aws/registration/StepGuard";
 import { steps } from "../routes";
@@ -50,7 +50,7 @@ export default function Steps() {
 
   return (
     <div className="padded-container grid justify-items-center py-8">
-      <ProgressIndicator step={data.step} />
+      <ProgressIndicator step={data.step} classes="mb-8" />
       <Routes>
         <Route
           path={steps.contact}

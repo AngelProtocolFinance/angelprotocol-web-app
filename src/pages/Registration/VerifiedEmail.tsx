@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { Location, Navigate, useLocation } from "react-router-dom";
-import { InitApplication } from "services/aws/registration/regtypes";
-import { InitReg } from "services/aws/registration/types";
+import { InitReg } from "services/types";
+import { InitApplication } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";

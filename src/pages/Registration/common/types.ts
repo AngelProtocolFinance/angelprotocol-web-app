@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react";
-import { ContactPerson, Registration } from "types/aws";
 
 export type InputProps = PropsWithChildren<{
   classes?: string;
@@ -8,9 +7,3 @@ export type InputProps = PropsWithChildren<{
   required?: true | boolean;
   infoModal?: React.FC<{}>;
 }>;
-
-export type VerifEmailBody = Pick<
-  ContactPerson,
-  "Email" | "FirstName" | "LastName" | "Role" | "PhoneNumber"
-> &
-  Pick<Registration, "OrganizationName">;

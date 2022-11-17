@@ -1,25 +1,17 @@
-import {
-  InitApplication,
-  RegistrationUpdate,
-  SavedRegistration,
-} from "./regtypes";
-import { RegistrationState, getRegistrationState } from "./types";
+import { RegistrationState } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
-  Application,
-  EndowmentApplication,
-  SubmitData,
+  EndowmentProposal,
+  InitApplication,
+  RegistrationUpdate,
+  SavedRegistration,
   SubmitResult,
-  UnprocessedApplication,
-  UpdateMetadataRequest,
-  UpdateMetadataResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
-import { getSavedRegistrationReference } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";
-import { placeholderApplication } from "./placeholders";
+import { getRegistrationState } from "./getRegistrationState";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -70,7 +62,7 @@ const registration_api = aws.injectEndpoints({
     }),
 
     endowmentApplications: builder.query<
-      EndowmentApplication[],
+      EndowmentProposal[],
       ApplicationStatusOptions
     >({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
@@ -82,7 +74,7 @@ const registration_api = aws.injectEndpoints({
           method: "Get",
         };
       },
-      transformResponse: (response: AWSQueryRes<EndowmentApplication[]>) =>
+      transformResponse: (response: AWSQueryRes<EndowmentProposal[]>) =>
         response.Items,
     }),
     /**TODO this should return a value
@@ -101,13 +93,19 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    submit: builder.mutation<SubmitResult, SubmitData>({
+    submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: ({ PK, chain_id }) => ({
-        url: `v2/registration/${PK}/submit`,
+      query: ({ ref, chain_id }) => ({
+        url: `v2/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),
+      transformErrorResponse(err, meta, arg) {
+        return {
+          status: err.status,
+          data: "Registration submission failed. Contact support@angelprotocol.io",
+        };
+      },
     }),
   }),
 });
