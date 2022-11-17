@@ -21,7 +21,6 @@ import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useXdefi from "./useXdefi";
 
 export type WalletState = {
   walletIcon: string;
@@ -73,7 +72,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
     useTerra();
 
-  const xdefiProviders = useXdefi();
+  const {
+    isLoading: isXdefiLoading, //requesting permission, attaching event listeners
+    connection: xdefiConnection,
+    disconnect: disconnectXdefi,
+    providerInfo: xdefiInfo,
+  } = useInjectedProvider("xdefi-evm");
 
   const providerStatuses: ProviderStatuses = [
     // {
@@ -93,12 +97,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
     },
-  ].concat(
-    xdefiProviders.map((x) => ({
-      providerInfo: x.providerInfo,
-      isLoading: x.isLoading,
-    }))
-  );
+    {
+      providerInfo: xdefiInfo,
+      isLoading: isXdefiLoading,
+    },
+  ];
+
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -112,9 +116,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       //   disconnectBinanceWallet();
       //   break;
       case "xdefi-evm":
-        xdefiProviders
-          .find((x) => x.providerInfo?.providerId === "xdefi-evm")
-          ?.disconnect();
+        disconnectXdefi();
         break;
       case "keplr":
         disconnectKeplr();
@@ -132,7 +134,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     activeProviderInfo?.providerId,
     disconnectMetamask,
     // disconnectBinanceWallet,
-    xdefiProviders,
+    disconnectXdefi,
     disconnectKeplr,
     disconnectTerra,
   ]);
@@ -182,9 +184,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           connections: [
             keplrConnection,
             metamaskConnection,
+            xdefiConnection,
             ...terraConnections,
             // binanceWalletConnection,
-          ].concat(xdefiProviders.map((x) => x.connection)),
+          ],
           disconnect,
         }}
       >
