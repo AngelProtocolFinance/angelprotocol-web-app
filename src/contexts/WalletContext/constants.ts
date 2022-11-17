@@ -29,7 +29,7 @@ export const WALLET_METADATA: {
     installUrl: "https://www.xdefi.io/",
     name: "XDEFI",
   },
-  "xdefi-evm": {
+  "xdefi-ethereum": {
     logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
     name: "XDEFI",

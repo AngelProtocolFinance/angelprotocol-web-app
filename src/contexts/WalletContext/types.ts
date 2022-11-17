@@ -6,7 +6,7 @@ export type ProviderId =
   // | "binance-wallet"
   | "metamask"
   | "xdefi-wallet" //xdefi terra provider
-  | "xdefi-evm" //xdefi evm provider
+  | "xdefi-ethereum" //xdefi evm provider
   | "leap-wallet"
   | "station"
   | "walletconnect"
