@@ -7,7 +7,7 @@ import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
-import Wallet from "./Wallet";
+import Wallet from "./WalletRegistration";
 
 export default function Steps() {
   const { state } = useLocation();

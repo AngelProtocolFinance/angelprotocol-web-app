@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { steps } from "pages/Registration/routes";
+import { useRegState } from "services/aws/registration/StepGuard";
 import Icon from "components/Icon";
+import { BtnPrim } from "components/registration";
 import { Button } from "../../common";
 
 export default function RegisteredWallet(props: {
   onChange: () => void;
   address: string;
 }) {
+  const { data } = useRegState<4>();
   return (
     <div className="flex flex-col h-full w-full items-center">
       <div className="flex flex-col items-center gap-4 mb-4">
@@ -26,12 +29,9 @@ export default function RegisteredWallet(props: {
       >
         change wallet
       </Button>
-      <Link
-        className="btn-orange w-80 h-10 mt-8 rounded-xl uppercase font-bold"
-        to="5"
-      >
+      <BtnPrim as="link" to={`../${steps.summary}`} state={data.init}>
         Continue
-      </Link>
+      </BtnPrim>
     </div>
   );
 }

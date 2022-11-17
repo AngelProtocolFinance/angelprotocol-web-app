@@ -13,6 +13,8 @@ export default function useSubmit() {
 
   const submit = async ({ overview, ref, ...imgs }: FV) => {
     const previews = await getFilePreviews({ ...imgs });
+    console.log(imgs);
+
     handleMutationResult(
       await updateReg({
         type: "profile assets",

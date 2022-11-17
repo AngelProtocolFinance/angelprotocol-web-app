@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import FormInput from "pages/Registration/common/FormInput";
 import { steps } from "pages/Registration/routes";
+import { useRegState } from "services/aws/registration/StepGuard";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
+import { BtnSec } from "components/registration";
 import { requiredWalletAddr } from "schemas/string";
 import { Button } from "../../common";
 import useRegisterWallet from "./useRegisterWallet";
@@ -14,6 +15,7 @@ export type Wallet = { address: string };
 export default function WalletSubmission({ address, providerId }: WalletState) {
   const { disconnect } = useSetWallet();
   const { isSubmitting, registerWallet } = useRegisterWallet();
+  const { data } = useRegState<4>();
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -61,14 +63,9 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
             />
 
             <div className="flex justify-center gap-2">
-              <Link
-                className={`btn-outline-blue w-48 h-10 ${
-                  isSubmitting ? "pointer-events-none" : ""
-                } `}
-                to={`../${steps.profile}`}
-              >
+              <BtnSec as="link" to={`../${steps.profile}`} state={data.init}>
                 Back
-              </Link>
+              </BtnSec>
               <Button
                 submit
                 className="btn-orange w-48 h-10"
