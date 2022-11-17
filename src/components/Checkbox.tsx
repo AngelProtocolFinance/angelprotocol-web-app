@@ -2,6 +2,13 @@ import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 
+type Classes = {
+  container?: string;
+  checkbox?: string;
+  label?: string;
+  error?: string;
+};
+
 export default function Checkbox<T extends FieldValues>({
   name,
   children,
@@ -10,7 +17,7 @@ export default function Checkbox<T extends FieldValues>({
   required,
 }: PropsWithChildren<{
   name: Path<T>;
-  classes?: { container?: string; checkbox?: string; label?: string };
+  classes?: Classes;
   disabled?: true;
   required?: boolean;
 }>) {
@@ -23,7 +30,9 @@ export default function Checkbox<T extends FieldValues>({
 
   return (
     <div
-      className={`${classes?.container ?? ""} flex items-center gap-3 relative`}
+      className={`${
+        classes?.container ?? ""
+      } grid grid-cols-[auto_1fr] gap-x-3 relative items-center`}
     >
       <input
         className={
@@ -47,7 +56,9 @@ export default function Checkbox<T extends FieldValues>({
         errors={errors}
         name={name as any}
         as="p"
-        className="absolute -bottom-6 left-0 text-left text-xs text-red dark:text-red-l2"
+        className={`col-span-full text-xs text-red dark:text-red-l2 ${
+          classes?.error ?? ""
+        }`}
       />
     </div>
   );

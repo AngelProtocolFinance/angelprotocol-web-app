@@ -5,6 +5,7 @@ export const routes = {
   confirmEmail: "confirm-email",
   /** temp route only - will be moved in overall wiring */
   contact: "contact",
+  docs: "docs",
 } as const;
 
 export const steps = {

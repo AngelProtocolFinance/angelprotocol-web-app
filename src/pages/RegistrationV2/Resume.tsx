@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import { TextInput } from "components/registration";
-import { BtnPrim, BtnSec } from "components/registration";
+import { BtnPrim, BtnSec, OrSeparator } from "components/registration";
 
 type FormValues = { reference: string };
 
@@ -42,11 +42,7 @@ export default function Resume({ classes = "" }: { classes?: string }) {
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">
         Resume
       </BtnPrim>
-      <p className="text-sm mx-0 sm:mx-24 relative h-[0.5px] grid place-items-center border-[0.5px] border-gray-d1 dark:border-gray my-11">
-        <span className="bg-gray-l5 dark:bg-blue-d4 p-3 absolute text-gray-d1 dark:text-gray">
-          OR
-        </span>
-      </p>
+      <OrSeparator classes="my-11" />
       <BtnSec as="link" className="mx-0 sm:mx-24" to="..">
         Register new account
       </BtnSec>

@@ -4,6 +4,7 @@ export type IconTypes =
   | "FilterLeft"
   | "Filter"
   | "FileDownload"
+  | "FileUpload"
   | "Telegram"
   | "Twitter"
   | "Youtube"

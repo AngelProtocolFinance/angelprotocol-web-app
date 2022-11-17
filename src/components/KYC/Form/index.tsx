@@ -4,6 +4,7 @@ import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
+import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
@@ -93,13 +94,14 @@ export default function Form({ classes = "", ...props }: Props) {
           container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
           checkbox:
             "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+          error: "mt-2",
         }}
       >
         I have read and I agree with{" "}
         <a
           className="underline text-orange"
           target="_blank"
-          href="https://angelprotocol.io/terms-of-use"
+          href={TERMS_OF_USE}
           rel="noopener noreferrer"
         >
           Terms & Conditions
