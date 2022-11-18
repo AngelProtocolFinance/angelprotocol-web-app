@@ -53,28 +53,30 @@ export default function Steps({ classes = "" }: { classes?: string }) {
       className={`max-w-5xl w-full px-5 sm:px-8 pt-0 grid md:grid-cols-[auto_1fr] shadow-[0px_0px_10px_4px] shadow-blue-d6 lg:shadow-none lg:border border-gray-l2 dark:border-bluegray rounded-none lg:rounded-lg justify-items-center ${classes}`}
     >
       <ProgressIndicator step={data.step} classes="mb-8" />
-      <Routes>
-        <Route
-          path={steps.contact}
-          element={<Contact {...guardProps} step={1} />}
-        />
-        <Route
-          path={steps.doc}
-          element={<Documentation {...guardProps} step={2} />}
-        />
-        <Route
-          path={steps.profile}
-          element={<Profile {...guardProps} step={3} />}
-        />
-        <Route
-          path={steps.wallet}
-          element={<Wallet {...guardProps} step={4} />}
-        />
-        <Route
-          path={steps.summary}
-          element={<Dashboard {...guardProps} step={5} />}
-        />
-      </Routes>
+      <div>
+        <Routes>
+          <Route
+            path={steps.contact}
+            element={<Contact {...guardProps} step={1} />}
+          />
+          <Route
+            path={steps.doc}
+            element={<Documentation {...guardProps} step={2} />}
+          />
+          <Route
+            path={steps.profile}
+            element={<Profile {...guardProps} step={3} />}
+          />
+          <Route
+            path={steps.wallet}
+            element={<Wallet {...guardProps} step={4} />}
+          />
+          <Route
+            path={steps.summary}
+            element={<Dashboard {...guardProps} step={5} />}
+          />
+        </Routes>
+      </div>
       <div className="bg-blue col-span-full w-full">reference number here</div>
     </div>
   );

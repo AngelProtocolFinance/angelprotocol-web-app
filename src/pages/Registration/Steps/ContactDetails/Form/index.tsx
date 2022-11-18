@@ -8,7 +8,7 @@ import useSaveContactDetails from "./useSubmit";
 export default function Form() {
   const { submit, isSubmitting } = useSaveContactDetails();
   return (
-    <form className="grid grid-cols-2 gap-6 max-w-5xl" onSubmit={submit}>
+    <form className="grid grid-cols-2 gap-6" onSubmit={submit}>
       <FormInput<FV>
         fieldName="firstName"
         label="First name"
