@@ -11,7 +11,7 @@ import ProgressIndicator from "./ProgressIndicator";
 import { StepGuardProps } from "./StepGuard";
 import Wallet from "./WalletRegistration";
 
-export default function Steps() {
+export default function Steps({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
   const initReg = state as InitReg | undefined;
 
@@ -49,7 +49,9 @@ export default function Steps() {
   };
 
   return (
-    <div className="padded-container grid justify-items-center py-8">
+    <div
+      className={`padded-container sm:px-8 py-8 grid grid-cols-[auto_1fr] border border-gray-l2 dark:border-bluegray rounded-lg justify-items-center max-w-5xl w-full ${classes}`}
+    >
       <ProgressIndicator step={data.step} classes="mb-8" />
       <Routes>
         <Route

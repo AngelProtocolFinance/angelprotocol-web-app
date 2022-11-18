@@ -12,7 +12,8 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   return (
     <div className={`w-full ${classes}`}>
-      <div className="flex justify-between items-center mb-2">
+      progress indicator here
+      {/* <div className="flex justify-between items-center mb-2">
         <p>
           {step} of {NUM_STEPS} Steps
         </p>
@@ -23,7 +24,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
           style={{ width: `${percent}%` }}
           className={`h-full bg-blue rounded-3xl`}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

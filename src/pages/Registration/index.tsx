@@ -14,7 +14,10 @@ export default function Registration() {
       <Routes>
         <Route path={routes.confirmEmail} element={<ConfirmEmail />} />
         <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
-        <Route path={routes.steps + "/*"} element={<Steps />} />
+        <Route
+          path={routes.steps + "/*"}
+          element={<Steps classes="my-20 justify-self-center" />}
+        />
         <Route
           path={routes.resume}
           element={<Resume classes="justify-self-center my-20" />}
