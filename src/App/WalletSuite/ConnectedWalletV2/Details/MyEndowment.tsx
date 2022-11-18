@@ -4,32 +4,41 @@ import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import ContentLoader from "components/ContentLoader";
 import { AdminLink } from "components/admin";
 
+// Placeholder until profile-fetching by wallet address endpoint is created
+const profile = undefined;
+
 export default function MyEndowment() {
   return (
-    <div className="grid p-4 gap-3 border-b border-gray-l2">
-      <h3 className="font-heading font-bold text-sm text-gray-d1">
-        My Endowment
-      </h3>
-      <div className="flex gap-3">
-        <Logo logo={""} />
-        <div className="grid">
-          <span className="font-heading font-semibold text-sm">
-            {"endowment name"}
-          </span>
-          <div className="flex items-center uppercase font-heading font-semibold text-xs underline text-orange">
-            <Link to={""} className="pr-1 border-r border-gray-l2">
-              profile
-            </Link>
-            <AdminLink
-              label="admin"
-              className="px-1 border-r border-gray-l2"
-              id={AP_ID}
-            />
-            <AdminLink label="applications" className="pl-1" id={REVIEWER_ID} />
+    !profile && (
+      <div className="grid p-4 gap-3 border-b border-gray-l2">
+        <h3 className="font-heading font-bold text-sm text-gray-d1">
+          My Endowment
+        </h3>
+        <div className="flex gap-3">
+          <Logo logo={""} />
+          <div className="grid">
+            <span className="font-heading font-semibold text-sm">
+              {"endowment name"}
+            </span>
+            <div className="flex items-center uppercase font-heading font-semibold text-xs underline text-orange">
+              <Link to={""} className="pr-1 border-r border-gray-l2">
+                profile
+              </Link>
+              <AdminLink
+                label="admin"
+                className="px-1 border-r border-gray-l2"
+                id={AP_ID}
+              />
+              <AdminLink
+                label="applications"
+                className="pl-1"
+                id={REVIEWER_ID}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    )
   );
 }
 
