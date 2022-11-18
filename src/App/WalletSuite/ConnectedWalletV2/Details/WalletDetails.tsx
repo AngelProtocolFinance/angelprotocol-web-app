@@ -24,7 +24,10 @@ export default function WalletDetails(props: WalletState) {
   return (
     <div className="grid gap-3 p-4 border-b border-gray-l2">
       {filteredCoins.map((coin) => (
-        <div className="flex justify-between items-center gap-2 font-heading font-bold text-sm">
+        <div
+          key={coin.token_id}
+          className="flex justify-between items-center gap-2 font-heading font-bold text-sm"
+        >
           <span className="flex items-center gap-2">
             <img src={coin.logo} className="w-6 h-6 object-contain" />
             {coin.symbol}
