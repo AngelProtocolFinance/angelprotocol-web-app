@@ -3,17 +3,17 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
+import { getSavedRegistrationReference } from "helpers";
 import Form from "./Form";
 
-export default function Signup({ classes = "" }: { classes?: string }) {
+export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
+    defaultValues: {
+      reference: getSavedRegistrationReference() || "",
+    },
     resolver: yupResolver(
       Yup.object().shape<SchemaShape<FormValues>>({
-        email: Yup.string().required("required").email("invalid email"),
-        hasAgreedToPrivacyPolicy: Yup.boolean().oneOf(
-          [true],
-          "must agree to privacy policy"
-        ),
+        reference: Yup.string().required("required"),
       })
     ),
   });
