@@ -44,11 +44,11 @@ export default function WalletDetails(props: WalletState) {
           onChange={setHideSmallAmounts}
           className={`${
             hideSmallAmounts ? "bg-orange" : "bg-gray-l1"
-          } relative flex h-4 w-8 items-center rounded-full cursor-pointer transition-colors duration-200 p-2 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+          } relative flex h-4 w-8 items-center rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-l2`}
         >
           <span
             className={`${
-              hideSmallAmounts ? "translate-x-4" : "translate-x-0"
+              hideSmallAmounts ? "translate-x-[1.125rem]" : "translate-x-0.5"
             } pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white transition duration-200 ease-in-out`}
           />
         </Switch>
