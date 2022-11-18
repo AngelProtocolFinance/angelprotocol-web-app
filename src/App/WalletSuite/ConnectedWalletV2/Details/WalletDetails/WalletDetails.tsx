@@ -12,6 +12,11 @@ export default function WalletDetails(props: WalletState) {
         </span>
         <Copier text={props.address} className="w-6 h-6" />
       </div>
+      {/* For now just a label until it is decided what exactly needs to be displayed here, see this comment:
+      https://app.clickup.com/t/3rcffb9?comment=1134342876&threadedComment=1134387996*/}
+      <div className="flex items-center p-4 pl-3 border border-gray-l2 rounded">
+        {props.chain.chain_name}
+      </div>
     </div>
   );
 }
