@@ -2,6 +2,7 @@ import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { appRoutes } from "constants/routes";
+import Favourites from "./Favourites";
 import MyEndowment from "./MyEndowment";
 import WalletDetails from "./WalletDetails";
 
@@ -20,6 +21,7 @@ export default function Details(props: WalletState) {
           My Donations
         </Link>
       </div>
+      <Favourites {...props} />
       <button
         onClick={disconnect}
         className="btn h-12 bg-orange-l5 hover:bg-orange-l3 uppercase text-sm font-body font-bold text-base rounded-b"
