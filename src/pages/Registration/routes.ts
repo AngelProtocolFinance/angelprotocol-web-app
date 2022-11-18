@@ -1,14 +1,8 @@
 enum routes {
   index = "",
   resume = "resume",
-  contactDetails = "contact-details",
-  dashboard = "dashboard",
   confirmEmail = "confirm-email",
   verifyEmail = "verify/:token",
-  wallet = "wallet",
-  profile = "profile",
-  documentation = "documentation",
-  additionalInformation = "additional-information",
   steps = "steps",
 }
 
