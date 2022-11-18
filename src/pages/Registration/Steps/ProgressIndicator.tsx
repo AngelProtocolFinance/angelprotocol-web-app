@@ -17,12 +17,15 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(false);
 
   useEffect(() => {
+    /** on first visit */
+    setIsOtherStepsShown(window.innerWidth >= 768);
+
     function autoToggle() {
       // 768 === tailwind's md screen size (in px)
       // https://tailwindcss.com/docs/screens
       setIsOtherStepsShown(window.innerWidth >= 768);
     }
-    const debounced = debounceCallback(autoToggle, 200);
+    const debounced = debounceCallback(autoToggle, 100);
     window.addEventListener("resize", debounced);
     return () => window.removeEventListener("resize", debounced);
   }, []);

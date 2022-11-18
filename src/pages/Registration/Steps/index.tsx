@@ -54,7 +54,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     >
       <ProgressIndicator
         step={data.step}
-        classes="md:justify-self-stretch ml-8 mr-10"
+        classes="sm:mt-2 md:justify-self-stretch ml-8 mr-10"
       />
 
       <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7/80">
