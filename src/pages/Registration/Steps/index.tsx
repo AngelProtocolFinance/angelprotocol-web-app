@@ -54,7 +54,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     >
       <ProgressIndicator step={data.step} classes="mb-8" />
 
-      <div className="w-full px-6 py-8 md:py-0 md:px-8  md:shadow-none shadow-[0px_0px_10px_4px] shadow-blue-d7">
+      <div className="z-10 w-full px-6 py-8 md:py-0 md:px-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7/80">
         <Routes>
           <Route
             path={steps.contact}
@@ -79,7 +79,12 @@ export default function Steps({ classes = "" }: { classes?: string }) {
         </Routes>
       </div>
 
-      <div className="bg-blue col-span-full w-full">reference number here</div>
+      <div className="col-span-full w-full py-3 px-6 md:mt-8 text-sm text-left md:text-center bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white md:text-gray-d1 md:dark:text-gray md:border-t border-gray-l2 dark:border-bluegray rounded-b-lg">
+        <span className="font-semibold">Your registration number:</span>
+        <span className="block mt-1 md:inline md:mt-0">
+          {initReg.reference}
+        </span>
+      </div>
     </div>
   );
 }
