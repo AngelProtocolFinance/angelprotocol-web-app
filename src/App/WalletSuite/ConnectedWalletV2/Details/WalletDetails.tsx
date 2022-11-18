@@ -1,3 +1,4 @@
+import { Switch } from "@headlessui/react";
 import { useMemo, useState } from "react";
 import { WalletState } from "contexts/WalletContext";
 import { humanize } from "helpers";
@@ -5,16 +6,17 @@ import { humanize } from "helpers";
 const criterionAmount = 0.001;
 
 export default function WalletDetails(props: WalletState) {
-  const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
+  const [hideSmallAmounts, setHideSmallAmounts] = useState(true);
+
   const filteredCoins = useMemo(
     () =>
       props.coins.filter((coin) =>
         //show atleast eth
-        coin.balance > 0 && isSmallAmountsShown
+        coin.balance > 0 && !hideSmallAmounts
           ? true
           : +coin.balance > criterionAmount
       ),
-    [props.coins, isSmallAmountsShown]
+    [props.coins, hideSmallAmounts]
   );
 
   if (!filteredCoins.length) {
@@ -29,12 +31,28 @@ export default function WalletDetails(props: WalletState) {
           className="flex justify-between items-center gap-2 font-heading font-bold text-sm"
         >
           <span className="flex items-center gap-2">
-            <img src={coin.logo} className="w-6 h-6 object-contain" />
+            <img src={coin.logo} className="w-6 h-6 object-contain" alt="" />
             {coin.symbol}
           </span>
           {humanize(coin.balance, 3, true)}
         </div>
       ))}
+      <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1">
+        Round balance:
+        <Switch
+          checked={hideSmallAmounts}
+          onChange={setHideSmallAmounts}
+          className={`${
+            hideSmallAmounts ? "bg-orange" : "bg-gray-l1"
+          } relative flex h-4 w-8 items-center rounded-full cursor-pointer transition-colors duration-200 p-2 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        >
+          <span
+            className={`${
+              hideSmallAmounts ? "translate-x-4" : "translate-x-0"
+            } pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white transition duration-200 ease-in-out`}
+          />
+        </Switch>
+      </div>
     </div>
   );
 }
