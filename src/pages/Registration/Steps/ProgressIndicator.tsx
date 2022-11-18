@@ -9,23 +9,36 @@ type Props = {
   classes?: string;
 };
 
+const SCREEN_MD = 768; /** tailwind md screen size */
+function isMD(): boolean {
+  return window.innerWidth >= SCREEN_MD;
+}
+
 export default function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
   const currPath = idParamToNum(paths[paths.length - 1]);
 
-  const [isOtherStepsShown, setIsOtherStepsShown] = useState(false);
+  const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
   useEffect(() => {
+    /** track state via closure */
+    let isOpen = isMD();
     /** on first visit */
-    setIsOtherStepsShown(window.innerWidth >= 768);
+    setIsOtherStepsShown(isOpen);
 
     function autoToggle() {
-      // 768 === tailwind's md screen size (in px)
-      // https://tailwindcss.com/docs/screens
-      setIsOtherStepsShown(window.innerWidth >= 768);
+      /** update state only when necessary */
+      const shouldOpen = isMD();
+      if (shouldOpen && !isOpen) {
+        setIsOtherStepsShown(shouldOpen);
+        isOpen = shouldOpen;
+      } else if (!shouldOpen && isOpen) {
+        setIsOtherStepsShown(shouldOpen);
+        isOpen = shouldOpen;
+      }
     }
-    const debounced = debounceCallback(autoToggle, 100);
+    const debounced = debounceCallback(autoToggle, 150);
     window.addEventListener("resize", debounced);
     return () => window.removeEventListener("resize", debounced);
   }, []);
