@@ -1,5 +1,5 @@
 import { WalletState } from "contexts/WalletContext";
-import Icon from "components/Icon";
+import Copier from "components/Copier";
 import Balances from "./Balances";
 
 export default function WalletDetails(props: WalletState) {
@@ -10,7 +10,7 @@ export default function WalletDetails(props: WalletState) {
         <span className="font-body font-normal text-sm truncate">
           {props.address}
         </span>
-        <Icon type="Copy" className="w-6 h-6" />
+        <Copier text={props.address} className="w-6 h-6" />
       </div>
     </div>
   );
