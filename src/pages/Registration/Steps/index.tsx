@@ -52,9 +52,9 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     <div
       className={`w-full md:w-[90%] max-w-5xl md:pt-8 grid md:grid-cols-[auto_1fr] justify-items-center md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
-      <ProgressIndicator step={data.step} classes="mb-8" />
+      <ProgressIndicator step={data.step} classes="justify-self-start ml-8" />
 
-      <div className="z-10 w-full px-6 py-8 md:py-0 md:px-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7/80">
+      <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7/80">
         <Routes>
           <Route
             path={steps.contact}
