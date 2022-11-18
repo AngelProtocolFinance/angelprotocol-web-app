@@ -36,18 +36,18 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   );
 
   return (
-    <div className={`py-4 pl-6 pr-5 ${classes} dark:text-gray`}>
+    <div className={`py-4 px-6 ${classes} dark:text-gray`}>
       <div className="relative">
         <Step classes="relative" isDone={step >= 1} isCurr={currPath === 1}>
           Contact Details
         </Step>
         <button
-          className="absolute top-1/2 right-0 transform -translate-y-1/2 md:hidden"
+          className="absolute top-1/2 -right-6 transform -translate-y-1/2 md:hidden"
           onClick={() => {
             setIsOtherStepsShown((prev) => !prev);
           }}
         >
-          <DrawerIcon className="" isOpen={isOtherStepsShown} />
+          <DrawerIcon className="" isOpen={isOtherStepsShown} size={25} />
         </button>
       </div>
 
