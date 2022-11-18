@@ -58,13 +58,13 @@ export default function useTerra() {
   };
 }
 
-function _filter<T extends TerraConnection | Installation>({
-  type,
-  identifier,
-}: T) {
+function _filter<T extends TerraConnection | Installation>(conn: T) {
+  const identifier = conn.identifier as ProviderId;
+
   return (
+    identifier === "xdefi-wallet" ||
     identifier === "leap-wallet" ||
     identifier === "station" ||
-    type === ConnectType.WALLETCONNECT
+    conn.type === ConnectType.WALLETCONNECT
   );
 }

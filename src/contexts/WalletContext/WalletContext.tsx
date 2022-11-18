@@ -21,7 +21,6 @@ import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useXdefi from "./useXdefi";
 
 export type WalletState = {
   walletIcon: string;
@@ -74,11 +73,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     useTerra();
 
   const {
-    isxdefiEVMLoading,
-    xdefiConnection,
-    disconnectEVMxdefi,
-    xdefiEVMinfo,
-  } = useXdefi();
+    isLoading: isXdefiLoading, //requesting permission, attaching event listeners
+    connection: xdefiConnection,
+    disconnect: disconnectXdefi,
+    providerInfo: xdefiInfo,
+  } = useInjectedProvider("xdefi-evm");
 
   const providerStatuses: ProviderStatuses = [
     // {
@@ -89,10 +88,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
     },
-    {
-      providerInfo: xdefiEVMinfo,
-      isLoading: isxdefiEVMLoading,
-    },
+
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
@@ -101,7 +97,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
     },
+    {
+      providerInfo: xdefiInfo,
+      isLoading: isXdefiLoading,
+    },
   ];
+
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -115,7 +116,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       //   disconnectBinanceWallet();
       //   break;
       case "xdefi-evm":
-        disconnectEVMxdefi();
+        disconnectXdefi();
         break;
       case "keplr":
         disconnectKeplr();
@@ -133,7 +134,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     activeProviderInfo?.providerId,
     disconnectMetamask,
     // disconnectBinanceWallet,
-    disconnectEVMxdefi,
+    disconnectXdefi,
     disconnectKeplr,
     disconnectTerra,
   ]);
@@ -182,8 +183,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
-            xdefiConnection,
             metamaskConnection,
+            xdefiConnection,
             ...terraConnections,
             // binanceWalletConnection,
           ],
