@@ -5,7 +5,7 @@ import { appRoutes } from "constants/routes";
 
 export default function Bookmark({ name, id }: EndowmentBookmark) {
   return (
-    <li className="grid justify-items-start font-heading">
+    <li className="flex items-center gap-2 py-1">
       <p className="text-sm">{name}</p>
       <div className="flex items-center divide-x divide-gray-d2/20">
         <Link
