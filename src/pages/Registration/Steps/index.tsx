@@ -50,10 +50,11 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`max-w-5xl w-full px-5 sm:px-8 pt-0 grid md:grid-cols-[auto_1fr] shadow-[0px_0px_10px_4px] shadow-blue-d6 lg:shadow-none lg:border border-gray-l2 dark:border-bluegray rounded-none lg:rounded-lg justify-items-center ${classes}`}
+      className={`w-full md:w-[90%] max-w-5xl md:pt-8 grid md:grid-cols-[auto_1fr] justify-items-center md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
       <ProgressIndicator step={data.step} classes="mb-8" />
-      <div>
+
+      <div className="w-full px-6 py-8 md:py-0 md:px-8  md:shadow-none shadow-[0px_0px_10px_4px] shadow-blue-d7">
         <Routes>
           <Route
             path={steps.contact}
@@ -77,6 +78,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
           />
         </Routes>
       </div>
+
       <div className="bg-blue col-span-full w-full">reference number here</div>
     </div>
   );
