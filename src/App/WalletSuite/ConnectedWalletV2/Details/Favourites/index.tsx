@@ -30,10 +30,10 @@ export default function Favourites(props: WalletState) {
           error: "Failed to get favorite organisations.",
           loading: "Fetching favourites...",
         }}
-        classes={{ container: "text-xs gap-1 mb-2" }}
+        classes={{ container: "text-xs gap-1" }}
       >
         {(bookmarks) => (
-          <ul className="grid gap-y-2">
+          <ul className="grid gap-1">
             {bookmarks.map((b) => (
               <Bookmark key={b.id} {...b} />
             ))}
