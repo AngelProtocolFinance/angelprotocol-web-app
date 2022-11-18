@@ -8,6 +8,7 @@ import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
 import ProgressIndicator from "./ProgressIndicator";
+import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
 import Wallet from "./WalletRegistration";
 
@@ -52,9 +53,12 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     <div
       className={`w-full md:w-[90%] max-w-5xl md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
-      <ProgressIndicator step={data.step} classes="sm:mt-2 ml-8 mr-10" />
+      <ProgressIndicator
+        step={data.step}
+        classes="sm:mt-2 md:mt-0 mx-6 md:ml-8"
+      />
 
-      <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7/80">
+      <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7">
         <Routes>
           <Route
             path={steps.contact}
@@ -78,13 +82,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
           />
         </Routes>
       </div>
-
-      <div className="col-span-full w-full py-3 px-6 md:mt-8 text-sm text-left md:text-center bg-gray-l5 dark:bg-blue-d4 text-gray-d2 dark:text-white md:text-gray-d1 md:dark:text-gray md:border-t border-gray-l2 dark:border-bluegray rounded-b-lg">
-        <span className="font-semibold">Your registration number:</span>
-        <span className="block mt-1 md:inline md:mt-0">
-          {initReg.reference}
-        </span>
-      </div>
+      <Reference id={initReg.reference} classes="col-span-full md:mt-8" />
     </div>
   );
 }

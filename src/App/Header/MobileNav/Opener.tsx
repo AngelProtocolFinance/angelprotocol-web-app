@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import useHandleScreenResize from "pages/Registration/Steps/useHandleScreenResize";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Menu from "./Menu";

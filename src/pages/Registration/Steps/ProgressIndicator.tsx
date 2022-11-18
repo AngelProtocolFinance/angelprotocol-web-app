@@ -1,8 +1,10 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "services/types";
+import useHandleScreenResize, {
+  SCREEN_MD,
+} from "pages/Registration/Steps/useHandleScreenResize";
 import { DrawerIcon } from "components/Icon";
-import useHandleScreenResize from "hooks/useHandleScreenResize";
 import { idParamToNum } from "helpers";
 
 type Props = {
@@ -19,7 +21,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   useHandleScreenResize(
     (screen, ref) => {
-      const shouldOpen = screen >= 768; /** tailwind md screen size */
+      const shouldOpen = screen >= SCREEN_MD; /** tailwind md screen size */
       if (shouldOpen && !ref.isOpen) {
         setIsOtherStepsShown(shouldOpen);
         ref.isOpen = shouldOpen;

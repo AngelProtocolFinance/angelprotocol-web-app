@@ -7,6 +7,8 @@ import { useEffect } from "react";
  * @param ref modifiable internal state
  * @param shouldRunOnLoad set to `true` to run `onResize` on first load
  */
+export const SCREEN_MD = 768; /**tailwind md screen size*/
+
 export default function useHandleScreenResize<T extends object>(
   onResize: (screenSize: number, ref: T) => void,
   debounceTime: number = 150,
