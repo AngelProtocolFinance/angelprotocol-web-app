@@ -18,7 +18,7 @@ export default function Favourites(props: WalletState) {
         */}
         <Link
           to={`${appRoutes.donations}/${props.address}`}
-          className="font-heading font-semibold text-xs uppercase underline text-orange hover:text-orange-l1 transition ease-in-out duration-300"
+          className="font-heading font-semibold text-xs uppercase underline text-orange hover:text-orange-l2 transition ease-in-out duration-300"
         >
           View All
         </Link>
