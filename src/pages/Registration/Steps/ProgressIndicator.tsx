@@ -2,17 +2,13 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "services/types";
 import { DrawerIcon } from "components/Icon";
+import useHandleScreenResize from "hooks/useHandleScreenResize";
 import { idParamToNum } from "helpers";
 
 type Props = {
   step: RegStep;
   classes?: string;
 };
-
-const SCREEN_MD = 768; /** tailwind md screen size */
-function isMD(): boolean {
-  return window.innerWidth >= SCREEN_MD;
-}
 
 export default function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
@@ -21,27 +17,21 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
-  useEffect(() => {
-    /** track state via closure */
-    let isOpen = isMD();
-    /** on first visit */
-    setIsOtherStepsShown(isOpen);
-
-    function autoToggle() {
-      /** update state only when necessary */
-      const shouldOpen = isMD();
-      if (shouldOpen && !isOpen) {
+  useHandleScreenResize(
+    (screen, ref) => {
+      const shouldOpen = screen >= 768; /** tailwind md screen size */
+      if (shouldOpen && !ref.isOpen) {
         setIsOtherStepsShown(shouldOpen);
-        isOpen = shouldOpen;
-      } else if (!shouldOpen && isOpen) {
+        ref.isOpen = shouldOpen;
+      } else if (!shouldOpen && ref.isOpen) {
         setIsOtherStepsShown(shouldOpen);
-        isOpen = shouldOpen;
+        ref.isOpen = shouldOpen;
       }
-    }
-    const debounced = debounceCallback(autoToggle, 150);
-    window.addEventListener("resize", debounced);
-    return () => window.removeEventListener("resize", debounced);
-  }, []);
+    },
+    150,
+    { isOpen: true },
+    true
+  );
 
   return (
     <div className={`py-4 pl-6 pr-5 ${classes} dark:text-gray`}>
@@ -115,20 +105,4 @@ function Step({
       </div>
     </div>
   );
-}
-
-type Fn = (...args: any[]) => void;
-function debounceCallback(callback: Fn, msDelay: number): Fn {
-  let timeout: number | undefined;
-
-  const debounced: Fn = (args) => {
-    if (timeout) {
-      window.clearTimeout(timeout);
-    }
-    timeout = window.setTimeout(() => {
-      callback.apply(null, args);
-    }, msDelay);
-  };
-
-  return debounced;
 }
