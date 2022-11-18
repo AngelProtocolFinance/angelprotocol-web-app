@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
-import { asciiSchema, requiredWalletAddr } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 import { chainIds } from "constants/chainIds";
 
 type TVal = Amount["value"];
@@ -17,7 +17,7 @@ const heightKey: keyof WV = "height";
 const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
-      ? asciiSchema //required collected on _amount
+      ? Yup.string() //required collected on _amount
       : tokenConstraint.when(balKey, (balance: TBal, schema) =>
           schema
             .test("enough balance", "not enough balance", () => {
@@ -41,15 +41,15 @@ const shape: SchemaShape<WV> = {
     schema.of(Yup.object().shape(amount(network)))
   ),
   //test if at least one amount is filled
-  _amounts: asciiSchema.when(amountsKey, (amounts: Amount[], schema) =>
+  _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
     schema.test("at least one is filled", "", () =>
       amounts.some((amount) => amount.value !== "")
     )
   ),
-  beneficiary: asciiSchema.when(netKey, (network: TNetwork) =>
+  beneficiary: Yup.string().when(netKey, (network: TNetwork) =>
     requiredWalletAddr(network)
   ),
-  reason: asciiSchema.when(heightKey, (height, schema) =>
+  reason: Yup.string().when(heightKey, (height, schema) =>
     height > 0 ? schema.required("reason required") : schema.optional()
   ),
 };

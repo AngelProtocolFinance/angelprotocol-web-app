@@ -1,18 +1,18 @@
 import * as Yup from "yup";
 import { AllianceEditValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
-import { asciiSchema, requiredWalletAddr } from "schemas/string";
+import { requiredWalletAddr } from "schemas/string";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<AllianceEditValues> = {
   ...proposalShape,
   wallet: requiredWalletAddr(),
-  name: asciiSchema.required("name is required"),
-  logo: asciiSchema
+  name: Yup.string().required("name is required"),
+  logo: Yup.string()
     .nullable()
     .required("logo is required")
     .url("url is invalid"),
-  website: asciiSchema
+  website: Yup.string()
     .nullable()
     .required("website is required")
     .url("url is invalid"),
