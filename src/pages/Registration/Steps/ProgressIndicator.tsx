@@ -11,7 +11,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const percent = (step / NUM_STEPS) * 100;
 
   return (
-    <div className={`w-full ${classes}`}>
+    <div className={`w-36 ${classes} bg-green`}>
       progress indicator here
       {/* <div className="flex justify-between items-center mb-2">
         <p>

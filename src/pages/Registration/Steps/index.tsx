@@ -50,7 +50,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`padded-container sm:px-8 py-8 grid grid-cols-[auto_1fr] border border-gray-l2 dark:border-bluegray rounded-lg justify-items-center max-w-5xl w-full ${classes}`}
+      className={`max-w-5xl w-full px-5 sm:px-8 pt-0 grid md:grid-cols-[auto_1fr] shadow-[0px_0px_10px_4px] shadow-blue-d6 lg:shadow-none lg:border border-gray-l2 dark:border-bluegray rounded-none lg:rounded-lg justify-items-center ${classes}`}
     >
       <ProgressIndicator step={data.step} classes="mb-8" />
       <Routes>
@@ -75,6 +75,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
           element={<Dashboard {...guardProps} step={5} />}
         />
       </Routes>
+      <div className="bg-blue col-span-full w-full">reference number here</div>
     </div>
   );
 }
