@@ -25,7 +25,10 @@ export default function Details(props: WalletState) {
 
       <div className="flex gap-2 items-center p-3 pb-0">
         <p className="text-sm text-gray-d2 font-mono">{maskAddress(address)}</p>
-        <Copier text={address} classes="text-gray-d2 text-lg" />
+        <Copier
+          text={address}
+          classes="text-gray-d2 text-lg hover:text-orange"
+        />
       </div>
 
       <Link
