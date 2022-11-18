@@ -17,9 +17,9 @@ export default function Registration() {
         <Route path={routes.steps + "/*"} element={<Steps />} />
         <Route
           path={routes.resume}
-          element={<Resume classes="justify-self-center" />}
+          element={<Resume classes="justify-self-center my-20" />}
         />
-        <Route index element={<Signup classes="justify-self-center" />} />
+        <Route index element={<Signup classes="justify-self-center my-20" />} />
         <Route path="*" element={<Navigate to={routes.index} />} />
       </Routes>
     </section>

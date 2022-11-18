@@ -12,7 +12,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
   return (
     <form
       onSubmit={submit}
-      className={`${classes} padded-container w-full max-w-[37.5rem] my-20 grid`}
+      className={`${classes} grid padded-container w-full max-w-[37.5rem]`}
     >
       <h3 className="text-3xl font-bold text-center">Resume registration</h3>
       <p className="text-center mt-2 text-gray-d1 dark:text-gray-l2 text-lg">

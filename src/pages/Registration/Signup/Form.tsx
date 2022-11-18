@@ -1,8 +1,8 @@
 import { FormValues as FV } from "./types";
 import Checkbox from "components/Checkbox";
-import { BtnSec } from "components/donation";
 import {
   BtnPrim,
+  BtnSec,
   OrSeparator,
   TextInput,
   checkBoxStyle,
@@ -16,7 +16,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
   return (
     <form
       onSubmit={submit}
-      className={`${classes} padded-container w-full max-w-[37.5rem] my-20 grid`}
+      className={`${classes} padded-container w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl font-bold text-center">
         Register to Angel Protocol
