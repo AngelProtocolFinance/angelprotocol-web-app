@@ -12,7 +12,7 @@ export default function Details(props: WalletState) {
       <WalletDetails {...props} />
       <button
         onClick={disconnect}
-        className="btn bg-orange-l5 uppercase text-sm hover:bg-orange-l3 px-8 py-2 font-body font-bold text-base rounded-b"
+        className="btn h-12 bg-orange-l5 hover:bg-orange-l3 uppercase text-sm font-body font-bold text-base rounded-b"
       >
         disconnect
       </button>
