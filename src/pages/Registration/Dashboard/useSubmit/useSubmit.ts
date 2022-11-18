@@ -7,7 +7,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { setStage } from "slices/transaction/transactionSlice";
+import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { logger } from "helpers";
 
 export default function useSubmit() {
@@ -23,6 +23,7 @@ export default function useSubmit() {
         dispatch(
           setStage({ step: "submit", message: "Saving endowment proposal" })
         );
+        dispatch(setFormLoading(true));
 
         const postData: SubmitData = {
           PK: charity.ContactPerson.PK!,
@@ -30,6 +31,8 @@ export default function useSubmit() {
         };
 
         const response = await submitApplication(postData);
+
+        dispatch(setFormLoading(false));
 
         if ("error" in response) {
           throw new Error("Request failed");
