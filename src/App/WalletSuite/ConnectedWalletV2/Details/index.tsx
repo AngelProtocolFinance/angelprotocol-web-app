@@ -16,7 +16,7 @@ export default function Details(props: WalletState) {
       <div className="items-center p-4 border-b border-gray-l2">
         <Link
           to={`${appRoutes.donations}/${props.address}`}
-          className="font-heading font-bold text-sm uppercase"
+          className="font-heading font-bold text-sm uppercase hover:text-orange"
         >
           My Donations
         </Link>
