@@ -38,7 +38,7 @@ export default function WalletDetails(props: WalletState) {
         </div>
       ))}
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1">
-        Round balance:
+        Hide small amounts:
         <Switch
           checked={hideSmallAmounts}
           onChange={setHideSmallAmounts}
