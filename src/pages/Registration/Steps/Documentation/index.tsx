@@ -20,13 +20,19 @@ function Documentation() {
           proofOfIdentity: genFileAsset(doc.proofOfIdentity),
           proofOfRegistration: genFileAsset(doc.proofOfRegistration),
           financialStatements: genFileAsset(doc.financialStatements),
-          annualReports: genFileAsset(doc.auditedFinancialReports),
+          auditedFinancialReports: genFileAsset(doc.auditedFinancialReports),
+          sdgs: [],
         }
       : {
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
           financialStatements: genFileAsset([]),
-          annualReports: genFileAsset([]),
+          auditedFinancialReports: genFileAsset([]),
+          website: "",
+          hasAuthority: false,
+          hasAgreedToTerms: false,
+          isKYCRequired: "No",
+          sdgs: [],
         },
   });
 

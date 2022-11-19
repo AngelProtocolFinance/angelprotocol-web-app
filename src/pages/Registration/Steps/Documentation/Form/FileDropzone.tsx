@@ -107,7 +107,7 @@ function DropzoneText({
     //TODO: convert this to links
     const names = previews.map(({ name }) => name).join(" ,");
     return (
-      <label className="flex text-black text-sm truncate" title={names}>
+      <label className="text-sm truncate" title={names}>
         {names}
       </label>
     );

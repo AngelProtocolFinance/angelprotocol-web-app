@@ -1,16 +1,16 @@
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FormValues } from "./types";
+import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
-import { useRegState } from "../StepGuard";
+import { useRegState } from "../../StepGuard";
 import { getFilePreviews } from "./getFilePreviews";
 
 export default function useSubmit() {
   const {
     handleSubmit,
-    formState: { isDirty },
+    formState: { isDirty, isSubmitting },
   } = useFormContext<FormValues>();
   const {
     step,
@@ -25,7 +25,8 @@ export default function useSubmit() {
     website,
     hasAuthority,
     hasAgreedToTerms,
-    sdg,
+    sdgs,
+    isKYCRequired,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -39,14 +40,14 @@ export default function useSubmit() {
         reference: init.reference,
         //payload
         Website: website,
-        UN_SDG: sdg,
+        UN_SDG: sdgs[0].value,
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
         FinancialStatements: previews.financialStatements,
-        AuditedFinancialReports: previews.annualReports,
+        AuditedFinancialReports: previews.auditedFinancialReports,
       }),
       handleError
     );
   };
-  return handleSubmit(submit);
+  return { submit: handleSubmit(submit), isSubmitting };
 }

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import { FormValues as FV } from "../types";
 
 const fieldName: keyof FV = "isKYCRequired";
 export function Radio({ value }: { value: FV["isKYCRequired"] }) {

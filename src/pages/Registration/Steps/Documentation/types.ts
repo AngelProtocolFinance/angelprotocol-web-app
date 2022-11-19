@@ -1,12 +1,14 @@
-import { Documentation } from "services/types";
-import { Asset } from "components/FileDropzone";
+import { OptionType } from "components/registration";
+import { Asset } from "./Form/FileDropzone";
 
-export type FormValues = Pick<
-  Documentation,
-  "website" | "sdg" | "hasAuthority" | "hasAgreedToTerms"
-> & {
+export type FormValues = {
   proofOfIdentity: Asset;
   proofOfRegistration: Asset;
   financialStatements: Asset;
-  annualReports: Asset;
+  auditedFinancialReports: Asset;
+  website: string;
+  sdgs: OptionType<number>[];
+  isKYCRequired: "Yes" | "No";
+  hasAuthority: boolean;
+  hasAgreedToTerms: boolean;
 };
