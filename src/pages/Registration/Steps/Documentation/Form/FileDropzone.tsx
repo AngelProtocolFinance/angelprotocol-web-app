@@ -104,12 +104,21 @@ function DropzoneText({
   }
 
   if (isFilesEmpty) {
-    //TODO: convert this to links
-    const names = previews.map(({ name }) => name).join(" ,");
     return (
-      <label className="text-sm truncate" title={names}>
-        {names}
-      </label>
+      <div>
+        {previews.map(({ name, publicUrl }) => (
+          <a
+            onClickCapture={(ev) => ev.stopPropagation()}
+            key={name}
+            href={publicUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm block text-blue hover:text-blue-l1"
+          >
+            {name}
+          </a>
+        ))}
+      </div>
     );
   }
 
