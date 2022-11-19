@@ -55,7 +55,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     >
       <ProgressIndicator
         step={data.step}
-        classes="sm:mt-2 md:mt-0 mx-6 md:ml-8"
+        classes="sm:mt-2 md:mt-0 mx-6 md:ml-8 min-w-[13.5rem]"
       />
 
       <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7">

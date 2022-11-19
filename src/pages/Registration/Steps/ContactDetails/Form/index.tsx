@@ -98,7 +98,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       />
       <BtnPrim
         type="submit"
-        className="my-8 py-3 px-8 w-full sm:w-auto"
+        className="mt-8 py-3 px-8 w-full sm:w-auto"
         disabled={isSubmitting}
       >
         Continue
