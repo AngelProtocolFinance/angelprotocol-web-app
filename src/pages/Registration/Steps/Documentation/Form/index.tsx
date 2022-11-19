@@ -136,7 +136,7 @@ export default function Form() {
           Terms & Conditions
         </a>
       </Checkbox>
-      <div className="grid grid-cols-2 sm:flex gap-2 my-8">
+      <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <BtnSec
           disabled={isSubmitting}
           as="link"

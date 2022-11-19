@@ -21,6 +21,8 @@ function Documentation() {
           proofOfRegistration: genFileAsset(doc.proofOfRegistration),
           financialStatements: genFileAsset(doc.financialStatements),
           auditedFinancialReports: genFileAsset(doc.auditedFinancialReports),
+          /**currently part of Metadata */
+          isKYCRequired: "No",
           sdgs: [],
         }
       : {

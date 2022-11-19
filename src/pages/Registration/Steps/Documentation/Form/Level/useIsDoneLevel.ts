@@ -38,19 +38,24 @@ export default function useIsDoneLevel(level: TLevel): boolean {
     auditedFinancialReports: afrErr,
   } = errors;
 
-  const is1Filled =
-    hasFiles(poi) && hasFiles(por) && !!website && sdgs.length > 0;
-  const is1ErrorFree = [poiErr, porErr, websiteErr, sdgsErr].every(
-    (err) => !err
-  );
-  const is1Done = is1Filled && is1ErrorFree;
-  const is2Done = is1Done && hasFiles(fs) && !fsErr;
-  const is3Done =
-    is2Done && hasFiles(afr) && !afrErr && isKYCRequired !== undefined;
+  const status: { [key in TLevel]: boolean } = {
+    1: false,
+    2: false,
+    3: false,
+  };
 
-  const _level = 3 - [is3Done, is2Done, is1Done].findIndex((v) => v);
-  console.log({ _level });
-  return _level === level;
+  status[1] =
+    hasFiles(poi) &&
+    hasFiles(por) &&
+    !!website &&
+    sdgs.length > 0 &&
+    [poiErr, porErr, websiteErr, sdgsErr].every((err) => !err);
+
+  status[2] = status[1] && hasFiles(fs) && !fsErr;
+  status[3] =
+    status[2] && hasFiles(afr) && !afrErr && isKYCRequired !== undefined;
+
+  return status[level];
 }
 
 function hasFiles(field: Asset): boolean {

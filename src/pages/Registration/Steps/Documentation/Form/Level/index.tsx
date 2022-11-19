@@ -3,7 +3,6 @@ import useIsDoneLevel from "./useIsDoneLevel";
 export type TLevel = 1 | 2 | 3;
 export default function Level({ num }: { num: TLevel }) {
   const isDone = useIsDoneLevel(num);
-  console.log({ num, isDone });
   return (
     <h4 className="flex items-center gap-2.5">
       <div
