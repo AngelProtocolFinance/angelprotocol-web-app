@@ -1,5 +1,11 @@
 import { SuccessLink } from "slices/transaction/types";
-import { FileObject, RegistrationStatus, Token } from "types/aws";
+import {
+  ContactRoles,
+  FileObject,
+  ReferralMethods,
+  RegistrationStatus,
+  Token,
+} from "types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -80,10 +86,10 @@ export type ContactPerson = {
   email: string;
 
   orgName: string;
-  role: string;
+  role: ContactRoles;
   otherRole: string;
 
-  referralMethod: string;
+  referralMethod: ReferralMethods;
   otherReferralMethod: string;
   goals: string;
 };

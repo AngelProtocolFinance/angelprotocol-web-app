@@ -1,7 +1,6 @@
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import { ContactRoles, ReferralMethods } from "types/aws";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
@@ -36,8 +35,10 @@ export default function useSubmit() {
           Email: fv.email,
           Goals: fv.goals,
           PhoneNumber: fv.phone,
-          ReferralMethod: fv.referralMethod as ReferralMethods,
-          Role: fv.role as ContactRoles,
+          ReferralMethod: fv.referralMethod.value,
+          OtherReferralMethod: fv.referralMethod.value,
+          Role: fv.role.value,
+          OtherRole: fv.otherRole,
         },
         Registration: {
           OrganizationName: fv.orgName,
