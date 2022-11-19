@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import useHandleScreenResize from "pages/Registration/Steps/useHandleScreenResize";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import Menu from "./Menu";
 
 export function Opener({ classes = "" }: { classes?: string }) {
@@ -15,22 +14,16 @@ export function Opener({ classes = "" }: { classes?: string }) {
     showModal(Menu, { onClose: handleCloseModal });
   };
 
-  useEffect(() => {
-    if (!isModalOpen) {
-      return;
-    }
-
-    function handleCloseModal() {
-      // 1024 === tailwind's large screen size (in px)
-      // https://tailwindcss.com/docs/responsive-design
-      if (window.innerWidth >= 1024) {
+  useHandleScreenResize(
+    (screenSize) => {
+      if (screenSize >= SCREEN_LG) {
         closeModal();
       }
-    }
-    window.addEventListener("resize", handleCloseModal);
-
-    return () => window.removeEventListener("resize", handleCloseModal);
-  }, [isModalOpen, closeModal]);
+    },
+    50,
+    {},
+    { shouldAttachListener: isModalOpen }
+  );
 
   return (
     <button

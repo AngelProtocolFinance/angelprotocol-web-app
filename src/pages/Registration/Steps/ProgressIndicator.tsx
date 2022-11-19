@@ -1,10 +1,8 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "services/types";
-import useHandleScreenResize, {
-  SCREEN_MD,
-} from "pages/Registration/Steps/useHandleScreenResize";
 import { DrawerIcon } from "components/Icon";
+import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 import { idParamToNum } from "helpers";
 
 type Props = {
@@ -32,7 +30,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     },
     150,
     { isOpen: true },
-    true
+    { shouldAttachListener: true, shouldCallOnResizeOnLoad: true }
   );
 
   return (
