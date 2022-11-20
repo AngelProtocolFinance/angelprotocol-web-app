@@ -1,6 +1,6 @@
 import { FileObject } from "types/aws";
+import { Asset } from "components/registration";
 import { uploadToIpfs } from "helpers";
-import { Asset } from "../../../../../components/registration/FileDropzone";
 
 export async function getFilePreviews<T extends { [index: string]: Asset }>(
   fields: T
