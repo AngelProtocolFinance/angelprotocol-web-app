@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { steps } from "pages/RegistrationV2/routes";
+import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
