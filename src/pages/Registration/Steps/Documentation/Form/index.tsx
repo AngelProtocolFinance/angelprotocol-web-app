@@ -112,9 +112,8 @@ export default function Form() {
         }}
       >
         By checking this box, you declare that you have the authority to create
-        an endowment in the name of
-        {" { My Organization } "}
-        through Angel Protocol
+        an endowment in the name of {data.contact.orgName} through Angel
+        Protocol
       </Checkbox>
       <Checkbox<FV>
         name="hasAgreedToTerms"
