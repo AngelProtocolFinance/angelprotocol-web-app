@@ -1,6 +1,6 @@
 import { FC, createContext, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { InitReg, RegStep, RegistrationState } from "services/types";
+import { InitReg, RegStep, RegistrationState } from "../types";
 
 export type StepGuardProps = {
   init: InitReg;

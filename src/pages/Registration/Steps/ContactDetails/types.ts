@@ -1,3 +1,3 @@
-import { ContactPerson } from "services/types";
+import { ContactPerson } from "../../types";
 
 export type FormValues = ContactPerson & { ref: string };

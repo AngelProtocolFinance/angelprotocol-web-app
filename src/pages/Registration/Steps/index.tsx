@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { InitReg } from "services/types";
+import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
 import Profile from "./AdditionalInformation";

@@ -1,4 +1,4 @@
-import { RegStep } from "services/types";
+import { RegStep } from "../types";
 
 const NUM_STEPS = 5;
 

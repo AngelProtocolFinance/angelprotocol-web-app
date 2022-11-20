@@ -1,4 +1,4 @@
-import { Documentation } from "services/types";
+import { Documentation } from "../../types";
 import { Asset } from "components/FileDropzone";
 
 export type FormValues = Pick<
