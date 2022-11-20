@@ -1,6 +1,5 @@
 import { ReactElement, cloneElement, useState } from "react";
 import Icon, { DrawerIcon } from "components/Icon";
-import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 
 type Props = {
   id: string;
@@ -9,16 +8,6 @@ type Props = {
 
 export default function Reference({ id, classes = "" }: Props) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  useHandleScreenResize(
-    (screen) => {
-      if (screen >= SCREEN_MD) {
-        setIsTooltipOpen(false);
-      }
-    },
-    150,
-    {},
-    { shouldAttachListener: isTooltipOpen }
-  );
 
   return (
     <div
@@ -43,7 +32,7 @@ export default function Reference({ id, classes = "" }: Props) {
         </button>
       </div>
       {isTooltipOpen && (
-        <p className="mt-4 dark:text-gray text-gray-d1">{tooltip}</p>
+        <p className="md:hidden mt-4 dark:text-gray text-gray-d1">{tooltip}</p>
       )}
     </div>
   );
