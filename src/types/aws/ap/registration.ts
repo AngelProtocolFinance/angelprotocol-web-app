@@ -158,6 +158,14 @@ export type RegistrationUpdate =
   | ProfileUpdate
   | WalletUpdate;
 
+export type ContactUpdateResult = {
+  ContactPerson: ContactDetails;
+  Registration: OrgData;
+};
+export type DocsUpdateResult = InitReg & TDocumentation;
+export type ProfileUpdateResult = RegProfile;
+export type WalletUpdateResult = WalletData;
+
 /** alias to provide context outside registration */
 export type Application = DoneWallet;
 

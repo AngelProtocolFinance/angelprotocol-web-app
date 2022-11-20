@@ -8,5 +8,5 @@ export type FormValues = Pick<
   proofOfIdentity: Asset;
   proofOfRegistration: Asset;
   financialStatements: Asset;
-  annualReports: Asset;
+  auditedFinancialReports: Asset;
 };

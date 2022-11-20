@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "services/types";
 import { useRegQuery } from "services/aws/registration";
@@ -10,16 +9,16 @@ import Documentation from "./Documentation";
 import ProgressIndicator from "./ProgressIndicator";
 import { StepGuardProps } from "./StepGuard";
 import Wallet from "./WalletRegistration";
+import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps() {
   const { state } = useLocation();
   const initReg = state as InitReg | undefined;
 
   const ref = initReg?.reference || "";
-  const { data, isLoading, isFetching, isError, requestId } = useRegQuery(ref, {
+  const { data, isLoading, isError } = useRegQuery(ref, {
     skip: !ref,
   });
-  const idRef = useRef(requestId);
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
@@ -42,15 +41,16 @@ export default function Steps() {
     return <Navigate to=".." />;
   }
 
+  const regState = getRegistrationState(data);
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
-    state: data,
-    stateId: debouceId(requestId, isFetching, idRef),
+    state: regState,
+    stateId: data.reqId,
   };
 
   return (
     <div className="padded-container grid justify-items-center py-8">
-      <ProgressIndicator step={data.step} classes="mb-8" />
+      <ProgressIndicator step={regState.step} classes="mb-8" />
       <Routes>
         <Route
           path={steps.contact}
@@ -81,15 +81,3 @@ export default function Steps() {
  * could just bundle isFetching & isLoading to sync fresh id with
  * loaded data - but this would disrupt UI with "loading" on every save
  */
-function debouceId(
-  id: string | undefined,
-  isFetching: boolean,
-  ref: React.MutableRefObject<string | undefined>
-): string {
-  if (isFetching) {
-    return ref.current || "";
-  } else {
-    ref.current = id;
-    return id || "";
-  }
-}

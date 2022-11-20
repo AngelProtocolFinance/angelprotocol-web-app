@@ -29,7 +29,7 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfIdentity: docSchema,
   proofOfRegistration: docSchema,
   financialStatements: docSchema,
-  annualReports: docSchema,
+  auditedFinancialReports: docSchema,
   website: asciiSchema
     .required("Organization website required")
     .url("Must be a valid URL"),

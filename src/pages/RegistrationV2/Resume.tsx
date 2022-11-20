@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
+import { getRegistrationState } from "pages/Registration/Steps/getRegistrationState";
 import routes from "pages/Registration/routes";
 import { useLazyRegQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -39,9 +40,10 @@ export default function Resume({ classes = "" }: { classes?: string }) {
     const {
       isError,
       error,
-      data: regState,
+      data: registration,
     } = await checkPrevRegistration(reference);
-    if (isError || !regState) {
+
+    if (isError || !registration) {
       handleError(
         error,
         "No active application found with this registration reference"
@@ -50,14 +52,17 @@ export default function Resume({ classes = "" }: { classes?: string }) {
     }
     storeRegistrationReference(reference);
 
-    const state = regState.data.init;
+    const regState = getRegistrationState(registration);
 
     if ("data" in regState && !regState.data.init.isEmailVerified) {
-      return navigate(`../${routes.confirmEmail}`, { state });
+      return navigate(`../${routes.confirmEmail}`, {
+        state: regState.data.init,
+      });
     }
 
-    //go to dashboard and let guard handle further routing
-    navigate(`../${routes.steps}/${regState.step}`, { state });
+    navigate(`../${routes.steps}/${regState.step}`, {
+      state: regState.data.init,
+    });
   };
 
   return (

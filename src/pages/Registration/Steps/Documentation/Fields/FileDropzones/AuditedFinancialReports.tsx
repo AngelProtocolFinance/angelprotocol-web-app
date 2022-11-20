@@ -13,8 +13,8 @@ export default function AuditedFinancialReport() {
       htmlFor="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone<FormValues, "annualReports">
-        name="annualReports"
+      <FileDropzone<FormValues, "auditedFinancialReports">
+        name="auditedFinancialReports"
         className="h-8"
         multiple
         disabled={isSubmitting}

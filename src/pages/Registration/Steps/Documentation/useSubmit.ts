@@ -43,7 +43,7 @@ export default function useSubmit() {
         ProofOfIdentity: previews.proofOfIdentity[0], //poi is level1 and required
         ProofOfRegistration: previews.proofOfRegistration[0], //por is level1 and required,
         FinancialStatements: previews.financialStatements,
-        AuditedFinancialReports: previews.annualReports,
+        AuditedFinancialReports: previews.auditedFinancialReports,
       }),
       handleError
     );

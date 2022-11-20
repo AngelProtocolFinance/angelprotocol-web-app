@@ -14,7 +14,7 @@ export default function useCurrentLevel() {
   const por = methods.watch("proofOfRegistration");
   const un_sdg = methods.watch("sdg");
   const fs = methods.watch("financialStatements");
-  const afr = methods.watch("annualReports");
+  const afr = methods.watch("auditedFinancialReports");
 
   useEffect(() => {
     let currentLevel: Level = 0;
@@ -73,6 +73,6 @@ const getIsLevelThree = (
   { getFieldState }: UseFormReturn<FormValues, any>
 ): boolean =>
   // no errors
-  !getFieldState("annualReports").error &&
+  !getFieldState("auditedFinancialReports").error &&
   // values inserted
   auditedFinancialReports.files.some((fs) => !!fs);

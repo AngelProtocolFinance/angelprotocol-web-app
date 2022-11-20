@@ -5,7 +5,7 @@ import { InitReg, RegStep, RegistrationState } from "services/types";
 export type StepGuardProps = {
   init: InitReg;
   state: RegistrationState;
-  stateId: string;
+  stateId: number;
   step: number;
 };
 

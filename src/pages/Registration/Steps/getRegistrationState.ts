@@ -4,7 +4,7 @@ import {
   InitReg,
   Profile,
   RegistrationState,
-} from "../../types";
+} from "../../../services/types";
 import {
   ContactDetails,
   DoneContact,
