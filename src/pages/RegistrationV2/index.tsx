@@ -1,6 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Docs from "../Registration/Steps/Documentation/Form";
-import { routes } from "./routes";
 
 export default function RegistrationV2() {
   return (

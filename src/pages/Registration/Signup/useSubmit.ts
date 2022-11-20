@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { InitReg } from "../types";
 import { FormValues } from "./types";
-import { InitReg } from "services/types";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";

@@ -1,6 +1,5 @@
-import { useRef } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { InitReg } from "services/types";
+import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
 import Profile from "./AdditionalInformation";
@@ -11,16 +10,16 @@ import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
 import Wallet from "./WalletRegistration";
+import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
   const initReg = state as InitReg | undefined;
 
   const ref = initReg?.reference || "";
-  const { data, isLoading, isFetching, isError, requestId } = useRegQuery(ref, {
+  const { data, isLoading, isError } = useRegQuery(ref, {
     skip: !ref,
   });
-  const idRef = useRef(requestId);
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
@@ -43,10 +42,11 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     return <Navigate to=".." />;
   }
 
+  const regState = getRegistrationState(data);
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
-    state: data,
-    stateId: debouceId(requestId, isFetching, idRef),
+    state: regState,
+    stateId: data.reqId,
   };
 
   return (
@@ -54,7 +54,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
       className={`w-full md:w-[90%] max-w-[62.5rem] md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
       <ProgressIndicator
-        step={data.step}
+        step={regState.step}
         classes="sm:mt-2 md:mt-0 mx-6 md:ml-8 md:min-w-[12rem] lg:min-w-[15.5rem]"
       />
 
@@ -91,15 +91,3 @@ export default function Steps({ classes = "" }: { classes?: string }) {
  * could just bundle isFetching & isLoading to sync fresh id with
  * loaded data - but this would disrupt UI with "loading" on every save
  */
-function debouceId(
-  id: string | undefined,
-  isFetching: boolean,
-  ref: React.MutableRefObject<string | undefined>
-): string {
-  if (isFetching) {
-    return ref.current || "";
-  } else {
-    ref.current = id;
-    return id || "";
-  }
-}

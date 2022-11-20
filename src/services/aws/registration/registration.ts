@@ -1,17 +1,20 @@
-import { RegistrationState } from "services/types";
 import { ApplicationStatusOptions } from "slices/admin/types";
 import {
   AWSQueryRes,
+  ContactUpdateResult,
+  DocsUpdateResult,
   EndowmentProposal,
   InitApplication,
+  ProfileUpdateResult,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
+  WalletUpdateResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
+import { logger } from "helpers";
 import { aws } from "../aws";
 import { awsTags } from "../tags";
-import { getRegistrationState } from "./getRegistrationState";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,7 +29,7 @@ const registration_api = aws.injectEndpoints({
         body: { Email: email },
       }),
     }),
-    reg: builder.query<RegistrationState, string>({
+    reg: builder.query<SavedRegistration & { reqId: number }, string>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (uuid) => {
         return {
@@ -35,7 +38,7 @@ const registration_api = aws.injectEndpoints({
         };
       },
       transformResponse(res: SavedRegistration) {
-        return getRegistrationState(res);
+        return { ...res, reqId: 0 };
       },
     }),
     updateReg: builder.mutation<
@@ -50,14 +53,60 @@ const registration_api = aws.injectEndpoints({
           body: payload,
         };
       },
-      //invalidate tags only if there's no error
-      invalidatesTags: (res, error) =>
-        error ? [] : [{ type: awsTags.admin, id: adminTags.registration }],
       transformErrorResponse(res, meta, { type }) {
         return {
           status: res.status,
           data: `Failed to update ${type}. Please try again later.`,
         };
+      },
+      /** pessimistic manual cache update so not to GET fresh data */
+      async onQueryStarted({ type, reference }, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            registration_api.util.updateQueryData("reg", reference, (draft) => {
+              switch (type) {
+                case "contact details":
+                  {
+                    const { ContactPerson, Registration } =
+                      data as ContactUpdateResult;
+                    draft.ContactPerson = Object.assign(
+                      draft.ContactPerson,
+                      ContactPerson
+                    );
+                    draft.Registration = {
+                      ...draft.Registration,
+                      OrganizationName: Registration.OrganizationName,
+                    };
+                  }
+                  break;
+                case "documentation": {
+                  draft.Registration = Object.assign(
+                    draft.Registration,
+                    data as DocsUpdateResult
+                  );
+                  break;
+                }
+                case "profile assets": {
+                  draft.Metadata = Object.assign(
+                    draft.Metadata,
+                    data as ProfileUpdateResult
+                  );
+                  break;
+                }
+                case "wallet": {
+                  draft.Metadata = Object.assign(
+                    draft.Metadata,
+                    data as WalletUpdateResult
+                  );
+                }
+              }
+              draft.reqId = draft.reqId + 1;
+            })
+          );
+        } catch (err) {
+          logger.error(err);
+        }
       },
     }),
 

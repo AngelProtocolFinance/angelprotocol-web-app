@@ -1,4 +1,4 @@
-import { ContactPerson } from "services/types";
+import { ContactPerson } from "../../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { OptionType } from "components/registration";
 

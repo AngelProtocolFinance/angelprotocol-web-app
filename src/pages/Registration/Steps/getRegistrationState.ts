@@ -4,19 +4,22 @@ import {
   InitReg,
   Profile,
   RegistrationState,
-} from "../../types";
+} from "../types";
 import {
   ContactDetails,
   DoneContact,
   DoneDocs,
   DoneProfile,
   DoneWallet,
+  FileObject,
   InitContact,
   RegProfile,
   SavedRegistration,
   TDocumentation,
   WalletData,
 } from "types/aws";
+import { Asset } from "components/registration";
+import { unsdgs } from "constants/unsdgs";
 
 export function getRegistrationState(
   reg: SavedRegistration
@@ -112,30 +115,38 @@ function formatContactPerson(
 }
 
 function formatDocumentation({
+  Tier,
   ProofOfIdentity: poi,
   ProofOfRegistration: por,
   FinancialStatements: fs,
-  AuditedFinancialReports: ar,
+  AuditedFinancialReports: afr,
   Website,
   UN_SDG,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
-    proofOfIdentity: [poi],
-    proofOfRegistration: [por],
+    proofOfIdentity: genFileAsset([poi]),
+    proofOfRegistration: genFileAsset([por]),
     website: Website,
-    sdgs: [UN_SDG],
+    sdgs: [{ value: UN_SDG, label: `${UN_SDG} - ${unsdgs[UN_SDG].title}` }],
 
     //level 2
-    financialStatements: fs || [],
+    financialStatements: genFileAsset(fs || []),
 
     //level 3
-    auditedFinancialReports: ar || [],
+    auditedFinancialReports: genFileAsset(afr || []),
+    /**TODO: must be part of Registration not Metadata */
+    isKYCRequired: "No",
 
     //meta
+    level: Tier,
     hasAuthority: true,
     hasAgreedToTerms: true,
   };
+}
+
+export function genFileAsset(previews: FileObject[]): Asset {
+  return { files: [], previews };
 }
 
 function isDoneWallet(data: SavedRegistration): data is DoneWallet {

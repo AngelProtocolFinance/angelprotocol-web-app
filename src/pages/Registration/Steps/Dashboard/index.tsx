@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Documentation } from "services/types";
 import { steps } from "pages/RegistrationV2/routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
@@ -32,7 +31,7 @@ function Dashboard() {
           title="Documentation"
           onClick={() => navigate(`../${steps.doc}`, { state: data.init })}
           disabled={isStepDisabled}
-          customStatus={`Level ${getDocLevel(documentation)}`}
+          customStatus={`Level ${documentation.level}`}
         />
         <Step
           title="Additional Information"
@@ -54,16 +53,6 @@ function Dashboard() {
       />
     </div>
   );
-}
-
-function getDocLevel({
-  financialStatements,
-  auditedFinancialReports,
-}: Documentation) {
-  let level = 1;
-  if (financialStatements.length > 0) level++;
-  if (auditedFinancialReports.length > 0) level++;
-  return level;
 }
 
 export default withStepGuard(Dashboard);

@@ -4,6 +4,7 @@ import { FormValues } from "./types";
 import { useLazyRegQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
+import { getRegistrationState } from "../Steps/getRegistrationState";
 import routes from "../routes";
 
 export default function useSubmit() {
@@ -17,12 +18,8 @@ export default function useSubmit() {
   const [checkPrevRegistration] = useLazyRegQuery();
 
   const onSubmit = async ({ reference }: FormValues) => {
-    const {
-      isError,
-      error,
-      data: regState,
-    } = await checkPrevRegistration(reference);
-    if (isError || !regState) {
+    const { isError, error, data } = await checkPrevRegistration(reference);
+    if (isError || !data) {
       handleError(
         error,
         "No active application found with this registration reference"
@@ -31,13 +28,14 @@ export default function useSubmit() {
     }
     storeRegistrationReference(reference);
 
-    const state = regState.data.init;
+    const state = getRegistrationState(data);
+    const init = state.data.init;
 
-    if ("data" in regState && !regState.data.init.isEmailVerified) {
-      return navigate(`../${routes.confirmEmail}`, { state });
+    if ("data" in state && !state.data.init.isEmailVerified) {
+      return navigate(`../${routes.confirmEmail}`, { state: init });
     }
 
-    navigate(`../${routes.steps}/${regState.step}`, { state });
+    navigate(`../${routes.steps}/${state.step}`, { state: init });
   };
 
   return { submit: handleSubmit(onSubmit), isSubmitting };

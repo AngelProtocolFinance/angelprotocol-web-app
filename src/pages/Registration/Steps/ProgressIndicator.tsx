@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { RegStep } from "services/types";
+import { RegStep } from "../types";
 import { DrawerIcon } from "components/Icon";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 import { idParamToNum } from "helpers";

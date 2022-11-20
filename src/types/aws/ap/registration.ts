@@ -1,3 +1,4 @@
+import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
 
@@ -39,7 +40,7 @@ export type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: "Inactive";
-  UN_SDG: number;
+  UN_SDG: UNSDG_NUMS;
 };
 
 export type InitContact = {
@@ -157,6 +158,14 @@ export type RegistrationUpdate =
   | DocsUpdate
   | ProfileUpdate
   | WalletUpdate;
+
+export type ContactUpdateResult = {
+  ContactPerson: ContactDetails;
+  Registration: OrgData;
+};
+export type DocsUpdateResult = InitReg & TDocumentation;
+export type ProfileUpdateResult = RegProfile;
+export type WalletUpdateResult = WalletData;
 
 /** alias to provide context outside registration */
 export type Application = DoneWallet;

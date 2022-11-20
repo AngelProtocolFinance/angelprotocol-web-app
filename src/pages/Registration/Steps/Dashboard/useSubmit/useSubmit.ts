@@ -1,4 +1,4 @@
-import { CompleteRegistration } from "services/types";
+import { CompleteRegistration } from "../../../types";
 import { useSubmitMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
