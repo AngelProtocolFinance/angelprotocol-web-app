@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../../types";
-import { Asset } from "components/FileDropzone";
+import { Asset } from "components/registration";
 import { TLevel } from ".";
 
 export default function useIsDoneLevel(level: TLevel): boolean {

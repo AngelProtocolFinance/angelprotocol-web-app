@@ -2,7 +2,7 @@ import { FileObject } from "files-from-path";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Asset } from "components/FileDropzone";
+import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
 import { asciiSchema } from "schemas/string";
 

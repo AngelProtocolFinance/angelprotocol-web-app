@@ -18,10 +18,7 @@ type Key = keyof Asset;
 const filesKey: Key = "files";
 const previewsKey: Key = "previews";
 
-export default function FileDropzone<
-  T extends FieldValues,
-  K extends Path<T>
->(props: {
+export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
   name: T[K] extends Asset ? K : never;
   multiple?: true;
   disabled?: boolean;

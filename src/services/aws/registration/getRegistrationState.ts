@@ -124,7 +124,7 @@ function formatDocumentation({
     proofOfIdentity: [poi],
     proofOfRegistration: [por],
     website: Website,
-    sdg: UN_SDG,
+    sdgs: [UN_SDG],
 
     //level 2
     financialStatements: fs || [],

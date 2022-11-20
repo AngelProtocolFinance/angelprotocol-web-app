@@ -4,6 +4,7 @@ import { Label } from "components/form";
 import {
   BtnPrim,
   BtnSec,
+  FileDropzone,
   Selector,
   TextInput,
   checkBoxStyle,
@@ -13,7 +14,6 @@ import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { MB_LIMIT } from "../schema";
-import FileDropzone from "./FileDropzone";
 import Level from "./Level";
 import { Radio } from "./Radio";
 import useSubmit from "./useSubmit";

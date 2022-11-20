@@ -1,7 +1,7 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import { Asset } from "components/FileDropzone";
 import { ImgLink } from "components/ImgEditor";
+import { Asset } from "components/registration";
 
 export type OptionType = { label: string; value: ContactRoles };
 export type ReferralOptionType = { label: string; value: ReferralMethods };

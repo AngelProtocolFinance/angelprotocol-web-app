@@ -2,7 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { FileObject } from "types/aws";
-import { Asset } from "components/FileDropzone";
+import { Asset } from "components/registration";
+import { unsdgs } from "constants/unsdgs";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -21,9 +22,9 @@ function Documentation() {
           proofOfRegistration: genFileAsset(doc.proofOfRegistration),
           financialStatements: genFileAsset(doc.financialStatements),
           auditedFinancialReports: genFileAsset(doc.auditedFinancialReports),
-          /**currently part of Metadata */
+          /**TODO: AWS should be part of Documentation: curr in Metadata */
           isKYCRequired: "No",
-          sdgs: [],
+          sdgs: [{ value: 1, label: unsdgs[1].title }],
         }
       : {
           proofOfIdentity: genFileAsset([]),

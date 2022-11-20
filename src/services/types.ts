@@ -100,7 +100,7 @@ export type Documentation = {
   proofOfIdentity: FileObject[];
   proofOfRegistration: FileObject[];
   website: string;
-  sdg: number;
+  sdgs: number[];
 
   //level 2
   financialStatements: FileObject[];

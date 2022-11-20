@@ -1,5 +1,5 @@
 import { OptionType } from "components/registration";
-import { Asset } from "./Form/FileDropzone";
+import { Asset } from "../../../../components/registration/FileDropzone";
 
 export type FormValues = {
   proofOfIdentity: Asset;
