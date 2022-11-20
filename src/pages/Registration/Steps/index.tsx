@@ -51,11 +51,11 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`w-full md:w-[90%] max-w-5xl md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
+      className={`w-full md:w-[90%] max-w-[62.5rem] md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
       <ProgressIndicator
         step={data.step}
-        classes="sm:mt-2 md:mt-0 mx-6 md:ml-8 min-w-[13.5rem]"
+        classes="sm:mt-2 md:mt-0 mx-6 md:ml-8 md:min-w-[12rem] lg:min-w-[15.5rem]"
       />
 
       <div className="z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l2/80 dark:shadow-blue-d7">
