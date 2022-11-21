@@ -61,7 +61,7 @@ export default function useTerra() {
       }))
     );
 
-  const switchChain = (chainId: chainIDs) => {
+  const switchChain = async (chainId: chainIDs) => {
     if (!connection) {
       throw new WalletDisconnectedError();
     }
