@@ -6,6 +6,15 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
+import {
+  UnsupportedNetworkError,
+  WalletDisconnectedError,
+} from "errors/errors";
+import { chainIDs } from "constants/chains";
+
+const SUPPORTED_CHAINS = [chainIDs.terraMain, chainIDs.terraTest];
 
 export default function useTerra() {
   const {
@@ -18,6 +27,8 @@ export default function useTerra() {
     connect,
     disconnect,
   } = useWallet();
+
+  const { showModal } = useModalContext();
 
   const terraInfo: ProviderInfo | undefined = connection
     ? {
@@ -50,11 +61,27 @@ export default function useTerra() {
       }))
     );
 
+  const switchChain = (chainId: chainIDs) => {
+    if (!connection) {
+      throw new WalletDisconnectedError();
+    }
+
+    if (!SUPPORTED_CHAINS.includes(chainId)) {
+      throw new UnsupportedNetworkError(chainId);
+    }
+
+    showModal(Popup, {
+      message: `Please use your wallet to switch to ${chainId} chain and reload the page`,
+    });
+  };
+
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
     disconnectTerra: disconnect,
     terraInfo,
+    switchChain,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
 
