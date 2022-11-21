@@ -33,8 +33,7 @@ export default function useKeplr() {
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-  const [supportedChains, setSupportedChains] =
-    useState<BaseChain[]>(SUPPORTED_CHAINS);
+  const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
 
   useEffect(() => {
     (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
