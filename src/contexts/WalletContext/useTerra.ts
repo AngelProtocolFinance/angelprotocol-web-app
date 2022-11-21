@@ -15,6 +15,7 @@ import {
   WalletDisconnectedError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
+import useSetSupportedChains from "./useSetSupportedChains";
 
 const SUPPORTED_CHAINS: BaseChain[] = [
   { chain_id: chainIDs.terraMain, chain_name: chainIDs.terraMain },
@@ -37,6 +38,8 @@ export default function useTerra() {
   } = useWallet();
 
   const { showModal } = useModalContext();
+
+  useSetSupportedChains(SUPPORTED_CHAINS, setSupportedChains);
 
   const terraInfo: ProviderInfo | undefined = connection
     ? {
