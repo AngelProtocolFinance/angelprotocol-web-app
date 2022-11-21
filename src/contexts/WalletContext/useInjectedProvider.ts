@@ -8,7 +8,12 @@ import {
   InjectedProvider,
 } from "types/ethereum";
 import { getProvider, logger } from "helpers";
-import { WalletError, WalletNotInstalledError } from "errors/errors";
+import {
+  UnexpectedStateError,
+  WalletDisconnectedError,
+  WalletError,
+  WalletNotInstalledError,
+} from "errors/errors";
 import { chainIDs } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
@@ -148,6 +153,60 @@ export default function useInjectedProvider(
     }
   };
 
+  const switchChain = async (chainId: chainIDs) => {
+    const injectedProvider = getProvider(providerId);
+
+    if (!injectedProvider) {
+      throw new UnexpectedStateError(
+        `Provider ID was never passed, current value: ${providerId}`
+      );
+    }
+    if (!address) {
+      throw new WalletDisconnectedError();
+    }
+
+    try {
+      setIsLoading(true);
+      await injectedProvider.request({
+        method: EIPMethods.wallet_switchEthereumChain,
+        params: [{ chainId }],
+      });
+    } catch (switchError: any) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError?.code === 4902) {
+        try {
+          await injectedProvider.request({
+            method: EIPMethods.wallet_addEthereumChain,
+            params: [
+              {
+                chainId, // A 0x-prefixed hexadecimal string
+                // chainName,
+                // nativeCurrency: {
+                //   name,
+                //   symbol, // 2-6 characters long
+                //   decimals: 18,
+                // };
+                // rpcUrls: [],
+                // blockExplorerUrls?: [],
+              },
+            ],
+          });
+        } catch (addError: any) {
+          throw new WalletError(
+            addError?.message || "Unknown error occured",
+            addError?.code || 0
+          );
+        }
+      }
+      throw new WalletError(
+        switchError?.message || "Unknown error occured",
+        switchError?.code || 0
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   //consolidate to one object for diff
   const providerInfo: ProviderInfo | undefined =
     chainId && address
@@ -170,8 +229,10 @@ export default function useInjectedProvider(
   return {
     connection,
     disconnect,
+    switchChain,
     isLoading,
     providerInfo,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
 
