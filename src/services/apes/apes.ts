@@ -17,6 +17,9 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
+    chains: builder.query<Pick<Chain, "chain_id" | "chain_name">[], unknown>({
+      query: () => "v1/chains",
+    }),
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
@@ -108,6 +111,7 @@ export const apes = createApi({
 });
 
 export const {
+  useChainsQuery,
   useChainQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
