@@ -21,7 +21,6 @@ export type Connection = {
   logo: string;
   installUrl?: string;
   name: string;
-  network?: true;
   connect(args?: string): Promise<void>;
 };
 
