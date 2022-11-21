@@ -127,5 +127,6 @@ export default function useKeplr() {
     switchChain,
     isLoading,
     providerInfo,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
