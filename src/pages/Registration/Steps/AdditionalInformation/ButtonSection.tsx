@@ -15,7 +15,7 @@ export default function ButtonSection() {
         as="link"
         to={`../${steps.doc}`}
         state={data.init}
-        disabled={isSubmitting}
+        aria-disabled={isSubmitting}
         className="min-w-[10rem]"
       >
         Back

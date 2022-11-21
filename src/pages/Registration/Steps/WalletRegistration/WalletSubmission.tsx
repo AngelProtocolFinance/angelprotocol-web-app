@@ -66,7 +66,7 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
                 as="link"
                 to={`../${steps.profile}`}
                 state={data.init}
-                disabled={isSubmitting}
+                aria-disabled={isSubmitting}
                 className="min-w-[8rem]"
               >
                 Back

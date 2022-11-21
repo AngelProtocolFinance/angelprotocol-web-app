@@ -137,7 +137,7 @@ export default function Form() {
       </Checkbox>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <BtnSec
-          disabled={isSubmitting}
+          aria-disabled={isSubmitting}
           as="link"
           to={`../${steps.contact}`}
           state={data.init}
