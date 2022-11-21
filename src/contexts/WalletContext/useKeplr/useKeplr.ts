@@ -37,7 +37,7 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      if (!SUPPORTED_CHAINS.includes(chainId)) {
+      if (!isChainSupported(chainId)) {
         throw new UnsupportedNetworkError(chainId);
       }
 
@@ -108,7 +108,8 @@ export default function useKeplr() {
     }
   };
 
-  const isChainSupported = (chainId: string) => {};
+  const isChainSupported = (chainId: string) =>
+    SUPPORTED_CHAINS.includes(chainId);
 
   const providerInfo: ProviderInfo | undefined =
     address && chainId
