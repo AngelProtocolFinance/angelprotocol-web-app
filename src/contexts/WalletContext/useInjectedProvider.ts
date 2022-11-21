@@ -9,10 +9,13 @@ import {
 } from "types/ethereum";
 import { getProvider, logger } from "helpers";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
+import { chainIDs } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+
+const SUPPORTED_CHAINS = [chainIDs.ethMain, chainIDs.ethTest];
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
