@@ -13,11 +13,12 @@ import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
+import useSetSupportedChains from "../useSetSupportedChains";
 import { juno_test_chain_info } from "./chains";
 
-const SUPPORTED_CHAINS = [
-  chainIDs.junoMain,
-  chainIDs.junoTest,
+const SUPPORTED_CHAINS: BaseChain[] = [
+  { chain_id: chainIDs.junoMain, chain_name: chainIDs.junoMain },
+  { chain_id: chainIDs.junoTest, chain_name: chainIDs.junoTest },
   /*, "pisco-1", "phoenix-1" --> to be added */
 ];
 
@@ -32,53 +33,23 @@ export default function useKeplr() {
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-  const [supportedChains, setSupportedChains] = useState<BaseChain[]>(
-    SUPPORTED_CHAINS.map((chain_id) => ({ chain_id, chain_name: chain_id }))
-  );
-
-  const [getChains] = useLazyChainsQuery();
+  const [supportedChains, setSupportedChains] =
+    useState<BaseChain[]>(SUPPORTED_CHAINS);
 
   useEffect(() => {
     (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    (async function () {
-      const {
-        data: chains,
-        isLoading: areChainsLoading,
-        isSuccess,
-      } = await getChains(null);
-
-      if (!areChainsLoading && isSuccess) {
-        setSupportedChains(
-          SUPPORTED_CHAINS.map((suppChainId) => {
-            const chain = chains.find(
-              (chain) => chain.chain_id === suppChainId
-            );
-            if (!chain) {
-              logger.error(
-                `Chain ${suppChainId} not returned in the chains collection`
-              );
-            }
-
-            return {
-              chain_id: suppChainId,
-              chain_name: chain?.chain_name || suppChainId,
-            };
-          })
-        );
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useSetSupportedChains(SUPPORTED_CHAINS, setSupportedChains);
 
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
-      if (!SUPPORTED_CHAINS.includes(chainId)) {
+      if (
+        !SUPPORTED_CHAINS.some((suppChain) => suppChain.chain_id === chainId)
+      ) {
         throw new UnsupportedNetworkError(chainId);
       }
 
