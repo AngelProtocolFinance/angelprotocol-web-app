@@ -2,6 +2,8 @@ import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
 import { ButtonMailTo } from "./common";
@@ -15,6 +17,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
 
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
 
   if (!initReg) {
     return <Navigate to={".."} />;
@@ -30,7 +33,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Confirm your email address
       </h1>
 
-      <p className="font-normal text-center text-white/75 mb-8 w-full text-lg">
+      <p className="text-center text-white/75 mb-8 w-full text-lg">
         We sent an email to <span className="font-semibold">{email}</span>.
         Please confirm your email by clicking on the link in the message.
       </p>
@@ -39,7 +42,10 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),
-            handleError
+            handleError,
+            () => {
+              showModal(Popup, { message: "Email verification sent!" });
+            }
           );
         }}
         disabled={isLoading}

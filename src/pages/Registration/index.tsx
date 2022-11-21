@@ -18,7 +18,12 @@ export default function Registration() {
             <ConfirmEmail classes="my-8 md:my-[10.5rem] mx-6 justify-self-center" />
           }
         />
-        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
+        <Route
+          path={routes.verifyEmail}
+          element={
+            <VerifiedEmail classes="my-10 md:my-32 mx-6 justify-self-center" />
+          }
+        />
         <Route
           path={routes.steps + "/*"}
           element={<Steps classes="my-0 md:my-20 justify-self-center" />}
