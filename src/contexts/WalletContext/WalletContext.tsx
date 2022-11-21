@@ -8,7 +8,7 @@ import {
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { Chain, Token } from "types/aws";
 import { WalletDisconnectedError } from "errors/errors";
-import useChainWithBalancesQuery from "./useChainWithBalancesQuery";
+import { useChainWithBalancesQuery } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";

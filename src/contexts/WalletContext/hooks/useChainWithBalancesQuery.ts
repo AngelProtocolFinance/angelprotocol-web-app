@@ -1,19 +1,19 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ethers, utils } from "ethers";
 import { useCallback, useEffect, useState } from "react";
-import { ProviderInfo } from "./types";
+import { ProviderInfo } from "../types";
 import { Chain } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { queryContract } from "services/juno/queryContract";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
-import { useErrorContext } from "../ErrorContext";
-import { placeholderChain } from "./constants";
-import { getERC20Holdings } from "./helpers/getERC20Holdings";
+import { useErrorContext } from "../../ErrorContext";
+import { placeholderChain } from "../constants";
+import { getERC20Holdings } from "../helpers/getERC20Holdings";
 
 type Result = { chain: Chain; isLoading: boolean };
 
-export default function useChainWithBalancesQuery(
+export function useChainWithBalancesQuery(
   activeProviderInfo: ProviderInfo | undefined,
   disconnect: () => void
 ): Result {
