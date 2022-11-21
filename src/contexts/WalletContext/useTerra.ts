@@ -17,11 +17,12 @@ import {
 import { chainIDs } from "constants/chains";
 import useSetSupportedChains from "./useSetSupportedChains";
 
-const SUPPORTED_CHAINS: BaseChain[] = [
-  { chain_id: chainIDs.terraMain, chain_name: chainIDs.terraMain },
-  { chain_id: chainIDs.terraTest, chain_name: chainIDs.terraTest },
-  /*, "pisco-1", "phoenix-1" --> to be added */
-];
+const SUPPORTED_CHAIN_IDS = [chainIDs.terraMain, chainIDs.terraTest];
+
+const SUPPORTED_CHAINS: BaseChain[] = SUPPORTED_CHAIN_IDS.map((chain_id) => ({
+  chain_id,
+  chain_name: chain_id,
+}));
 
 export default function useTerra() {
   const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
@@ -39,7 +40,7 @@ export default function useTerra() {
 
   const { showModal } = useModalContext();
 
-  useSetSupportedChains(SUPPORTED_CHAINS, setSupportedChains);
+  useSetSupportedChains(SUPPORTED_CHAIN_IDS, setSupportedChains);
 
   const terraInfo: ProviderInfo | undefined = connection
     ? {
@@ -77,7 +78,7 @@ export default function useTerra() {
       throw new WalletDisconnectedError();
     }
 
-    if (!SUPPORTED_CHAINS.some((suppChain) => suppChain.chain_id === chainId)) {
+    if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
       throw new UnsupportedNetworkError(chainId);
     }
 

@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { BaseChain } from "types/aws";
 import { useLazyChainsQuery } from "services/apes";
 import { logger } from "helpers";
+import { chainIDs } from "constants/chains";
 
 export default function useSetSupportedChains(
-  supportedChains: BaseChain[],
+  supportedChainIds: chainIDs[],
   setSupportedChains: (chains: BaseChain[]) => void
 ) {
   const [getChains] = useLazyChainsQuery();
@@ -19,15 +20,15 @@ export default function useSetSupportedChains(
 
       if (!areChainsLoading && isSuccess) {
         setSupportedChains(
-          supportedChains.map((suppChain) => {
+          supportedChainIds.map((suppChainId) => {
             const chain = chains.find(
-              (chain) => chain.chain_id === suppChain.chain_id
+              (chain) => chain.chain_id === suppChainId
             );
             if (!chain) {
               logger.error(
-                `Chain ${suppChain.chain_id} not returned in the chains collection`
+                `Chain ${suppChainId} not returned in the chains collection`
               );
-              return { ...suppChain };
+              return { chain_id: suppChainId, chain_name: suppChainId };
             }
 
             return { ...chain };
@@ -35,5 +36,5 @@ export default function useSetSupportedChains(
         );
       }
     })();
-  }, [supportedChains, setSupportedChains, getChains]);
+  }, [supportedChainIds, setSupportedChains, getChains]);
 }

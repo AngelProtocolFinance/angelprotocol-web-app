@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
-import { useLazyChainsQuery } from "services/apes";
-import { logger } from "helpers";
 import {
   UnsupportedNetworkError,
   WalletError,
@@ -16,11 +14,15 @@ import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import useSetSupportedChains from "../useSetSupportedChains";
 import { juno_test_chain_info } from "./chains";
 
-const SUPPORTED_CHAINS: BaseChain[] = [
-  { chain_id: chainIDs.junoMain, chain_name: chainIDs.junoMain },
-  { chain_id: chainIDs.junoTest, chain_name: chainIDs.junoTest },
-  /*, "pisco-1", "phoenix-1" --> to be added */
+const SUPPORTED_CHAIN_IDS = [
+  chainIDs.junoMain,
+  chainIDs.junoTest /*, "pisco-1", "phoenix-1" --> to be added */,
 ];
+
+const SUPPORTED_CHAINS: BaseChain[] = SUPPORTED_CHAIN_IDS.map((chain_id) => ({
+  chain_id,
+  chain_name: chain_id,
+}));
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
@@ -40,15 +42,13 @@ export default function useKeplr() {
     // eslint-disable-next-line
   }, []);
 
-  useSetSupportedChains(SUPPORTED_CHAINS, setSupportedChains);
+  useSetSupportedChains(SUPPORTED_CHAIN_IDS, setSupportedChains);
 
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
-      if (
-        !SUPPORTED_CHAINS.some((suppChain) => suppChain.chain_id === chainId)
-      ) {
+      if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
         throw new UnsupportedNetworkError(chainId);
       }
 
