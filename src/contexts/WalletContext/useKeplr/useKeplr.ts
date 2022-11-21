@@ -78,6 +78,24 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
+  const switchNetwork = async (chainId: string) => {
+    if (!dwindow.keplr) {
+      throw new WalletNotInstalledError("keplr");
+    }
+
+    try {
+      //connecting xdefi
+      setIsLoading(true);
+      await requestAccess(chainId, true);
+    } catch (err: any) {
+      setIsLoading(false);
+      throw new WalletError(
+        err?.message || "Unknown error occured",
+        err?.code || 0
+      );
+    }
+  };
+
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
@@ -94,6 +112,7 @@ export default function useKeplr() {
   return {
     connection,
     disconnect,
+    switchNetwork,
     isLoading,
     providerInfo,
   };
