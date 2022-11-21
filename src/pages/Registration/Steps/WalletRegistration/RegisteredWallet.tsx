@@ -21,9 +21,9 @@ export default function RegisteredWallet(props: {
         {/** TODO: only address:string is saved in DB, can't determine what wallet corresponds to that address
          *  should also save: { name, logo }
          */}
-        <p className="text-sm mb-2">Your wallet address:</p>
-        <p className="relative px-4 py-3 border border-gray-l2 dark:border-bluegray rounded flex items-center text-sm">
-          {props.address}
+        <p className="text-sm mb-2">Your Wallet address:</p>
+        <p className="relative px-4 py-3 border border-gray-l2 dark:border-bluegray rounded flex items-center text-sm truncate">
+          <span className="truncate pr-6">{props.address}</span>
           <Copier
             text={props.address}
             classes="text-inherit absolute right-3 top-1/2 transform -translate-y-1/2"
@@ -35,12 +35,12 @@ export default function RegisteredWallet(props: {
         </BtnSec>
       </div>
 
-      <div className="flex gap-3 items-center mt-8">
+      <div className="grid grid-cols-2 md:flex gap-3 items-center mt-8">
         <BtnSec
           as="link"
           to={`../${steps.doc}`}
           state={data.init}
-          className="w-32 text-center"
+          className="min-w-[8rem] text-center"
         >
           Back
         </BtnSec>
@@ -48,7 +48,7 @@ export default function RegisteredWallet(props: {
           as="link"
           to={`../${steps.summary}`}
           state={data.init}
-          className="w-32 text-center"
+          className="min-w-[8rem] text-center"
         >
           Continue
         </BtnPrim>

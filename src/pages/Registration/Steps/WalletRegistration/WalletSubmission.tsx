@@ -1,5 +1,6 @@
 import { steps } from "pages/Registration/routes";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
+import Icon from "components/Icon";
 import { BtnPrim, BtnSec, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
@@ -17,28 +18,27 @@ export default function WalletSubmission({
 
   if (providerId !== "keplr") {
     return (
-      <div className="text-center bg-orange/20 border-2 border-orange/80 rounded-md p-4 ">
-        <p>
-          <span className="text-sm font-bold">connected wallet: </span>
-          <span className="font-extrabold uppercase">
-            {providerId.toLocaleUpperCase()}
-          </span>
+      <div className="text-center md:text-left">
+        <h3 className="text-lg font-bold mb-4 flex items-center justify-center md:justify-start gap-3">
+          <Icon type="Info" className="text-red" size={28} />
+          <span>Unsupported wallet</span>
+        </h3>
+        <p className="text-gray-d1 dark:text-gray text-sm">
+          connected wallet{" "}
+          <span className="font-semibold capitalize">{providerId}</span> is not
+          supported for registration.
         </p>
-        <p>Only Keplr wallet is allowed!</p>
-        <BtnPrim
-          className="text-sm uppercase text-orange hover:text-orange px-2 py-1 mt-2"
-          disabled={isSubmitting}
-          onClick={disconnect}
-        >
-          Connect Keplr wallet
-        </BtnPrim>
+
+        <BtnSec className="mt-8" disabled={isSubmitting} onClick={disconnect}>
+          Change wallet
+        </BtnSec>
       </div>
     );
   }
 
   return (
-    <div className="grid max-w-[27.31rem]">
-      <h3 className="text-lg font-bold">
+    <div className="grid justify-self-center md:justify-self-start max-w-[27.31rem]">
+      <h3 className="text-center md:text-left text-lg font-bold">
         You are already connected to a Wallet:
       </h3>
       <div className="grid grid-cols-[auto_1fr] items-center border border-gray-l2 dark:border-bluegray p-4 rounded mt-8">
@@ -48,7 +48,7 @@ export default function WalletSubmission({
           className="w-10 h-10 object-contain row-span-2 mr-4"
         />
         <h6 className="capitalize font-bold text-lg mb-1">{providerId}</h6>
-        <span className="text-sm">{address}</span>
+        <span className="text-sm truncate">{address}</span>
       </div>
 
       <Separator classes="my-8 before:mr-2 after:ml-2">OR</Separator>
@@ -62,7 +62,7 @@ export default function WalletSubmission({
       </BtnSec>
       <p className="text-center text-sm">We recommend using a new wallet.</p>
 
-      <div className="flex mt-8 gap-2">
+      <div className="grid grid-cols-2 md:flex mt-8 gap-2">
         <BtnSec
           as="link"
           to={`../${steps.doc}`}
