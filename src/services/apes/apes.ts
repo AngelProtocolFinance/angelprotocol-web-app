@@ -2,7 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
-import { Chain, WithdrawLog } from "types/aws";
+import { BaseChain, Chain, WithdrawLog } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
 import { APIs } from "constants/urls";
@@ -17,7 +17,7 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
-    chains: builder.query<Pick<Chain, "chain_id" | "chain_name">[], unknown>({
+    chains: builder.query<BaseChain[], unknown>({
       query: () => "v1/chains",
     }),
     withdrawLogs: builder.query<WithdrawLog[], string>({

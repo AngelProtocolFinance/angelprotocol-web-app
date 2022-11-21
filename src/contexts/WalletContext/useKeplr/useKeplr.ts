@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
+import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
+import { useLazyChainsQuery } from "services/apes";
+import { logger } from "helpers";
 import {
   UnsupportedNetworkError,
   WalletError,
@@ -29,13 +32,46 @@ export default function useKeplr() {
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-  const [supportedChains, setSupportedChains] = useState(
+  const [supportedChains, setSupportedChains] = useState<BaseChain[]>(
     SUPPORTED_CHAINS.map((chain_id) => ({ chain_id, chain_name: chain_id }))
   );
 
+  const [getChains] = useLazyChainsQuery();
+
   useEffect(() => {
     (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
-    //eslint-disable-next-line
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      const {
+        data: chains,
+        isLoading: areChainsLoading,
+        isSuccess,
+      } = await getChains(null);
+
+      if (!areChainsLoading && isSuccess) {
+        setSupportedChains(
+          SUPPORTED_CHAINS.map((suppChainId) => {
+            const chain = chains.find(
+              (chain) => chain.chain_id === suppChainId
+            );
+            if (!chain) {
+              logger.error(
+                `Chain ${suppChainId} not returned in the chains collection`
+              );
+            }
+
+            return {
+              chain_id: suppChainId,
+              chain_name: chain?.chain_name || suppChainId,
+            };
+          })
+        );
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
@@ -52,6 +88,7 @@ export default function useKeplr() {
 
       await dwindow.keplr.enable(chainId);
       const key = await dwindow.keplr.getKey(chainId);
+
       setAddress(key.bech32Address);
       setChainId(chainId);
       setIsLoading(false);
