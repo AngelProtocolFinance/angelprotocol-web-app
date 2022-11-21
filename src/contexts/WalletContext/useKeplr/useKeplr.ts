@@ -6,17 +6,19 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
+import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
 const SUPPORTED_CHAINS = [
-  "juno-1",
-  "uni-5" /*, "pisco-1", "phoenix-1" --> to be added */,
+  chainIDs.junoMain,
+  chainIDs.junoTest,
+  /*, "pisco-1", "phoenix-1" --> to be added */
 ];
 
-const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
+const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 
@@ -33,7 +35,7 @@ export default function useKeplr() {
     //eslint-disable-next-line
   }, []);
 
-  const requestAccess = async (chainId: string, isNewConnection = false) => {
+  const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
@@ -91,7 +93,7 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
-  const switchChain = async (chainId: string) => {
+  const switchChain = async (chainId: chainIDs) => {
     if (!dwindow.keplr) {
       throw new WalletNotInstalledError("keplr");
     }
