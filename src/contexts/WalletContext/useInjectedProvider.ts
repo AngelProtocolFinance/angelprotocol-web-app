@@ -1,6 +1,7 @@
 // import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -10,6 +11,7 @@ import {
 import { getProvider, logger } from "helpers";
 import {
   UnexpectedStateError,
+  UnsupportedNetworkError,
   WalletDisconnectedError,
   WalletError,
   WalletNotInstalledError,
@@ -19,8 +21,14 @@ import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+import useSetSupportedChains from "./useSetSupportedChains";
 
-const SUPPORTED_CHAINS = [chainIDs.ethMain, chainIDs.ethTest];
+const SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
+
+const SUPPORTED_CHAINS: BaseChain[] = SUPPORTED_CHAIN_IDS.map((chain_id) => ({
+  chain_id,
+  chain_name: chain_id,
+}));
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
@@ -34,6 +42,7 @@ export default function useInjectedProvider(
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
+  const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
 
   useEffect(() => {
     // console.log(JSON.stringify(ethers.providers.getNetwork(43114)));
@@ -44,6 +53,8 @@ export default function useInjectedProvider(
     };
     //eslint-disable-next-line
   }, []);
+
+  useSetSupportedChains(SUPPORTED_CHAIN_IDS, setSupportedChains);
 
   /** attachers/detachers */
   const attachChainChangedHandler = (provider: InjectedProvider) => {
@@ -164,6 +175,9 @@ export default function useInjectedProvider(
     if (!address) {
       throw new WalletDisconnectedError();
     }
+    if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
+      throw new UnsupportedNetworkError(chainId);
+    }
 
     try {
       setIsLoading(true);
@@ -232,7 +246,7 @@ export default function useInjectedProvider(
     switchChain,
     isLoading,
     providerInfo,
-    supportedChains: SUPPORTED_CHAINS,
+    supportedChains,
   };
 }
 
