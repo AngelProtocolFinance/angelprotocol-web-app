@@ -61,7 +61,6 @@ export type Profile = {
   banner: FileObject;
   logo: FileObject;
   overview: string;
-  isKYCRequired: boolean;
 };
 
 //STEP 4

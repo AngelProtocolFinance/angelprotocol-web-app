@@ -40,7 +40,7 @@ export type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: "Inactive";
-  UN_SDG: UNSDG_NUMS;
+  UN_SDG: UNSDG_NUMS[];
 };
 
 export type InitContact = {
@@ -75,6 +75,7 @@ export type TDocumentation = {
   //based on tier
   FinancialStatements?: FileObject[];
   AuditedFinancialReports?: FileObject[];
+  KycDonorsOnly: boolean;
 };
 
 //INIT STEP

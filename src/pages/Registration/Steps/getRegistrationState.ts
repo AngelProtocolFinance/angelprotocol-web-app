@@ -98,13 +98,17 @@ function formatDocumentation({
   AuditedFinancialReports: afr,
   Website,
   UN_SDG,
+  KycDonorsOnly,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
     proofOfIdentity: genFileAsset([poi]),
     proofOfRegistration: genFileAsset([por]),
     website: Website,
-    sdgs: [{ value: UN_SDG, label: `${UN_SDG} - ${unsdgs[UN_SDG].title}` }],
+    sdgs: UN_SDG.map((sdg) => ({
+      value: sdg,
+      label: `${sdg} - ${unsdgs[sdg].title}`,
+    })),
 
     //level 2
     financialStatements: genFileAsset(fs || []),
@@ -112,7 +116,7 @@ function formatDocumentation({
     //level 3
     auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
-    isKYCRequired: "No",
+    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //meta
     level: Tier,
