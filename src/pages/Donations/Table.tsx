@@ -15,12 +15,28 @@ export default function Table(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <table className="w-full text-white/80 border-collapse self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
+    <table className="w-full text-sm text-gray-d2">
+      <TableSection type="thead" rowClass="">
         <Cells
           type="th"
-          cellClass="text-left uppercase font-heading font-semibold text-sm text-white p-2 first:pl-0 last:pr-0"
+          cellClass="bg-orange-l6 uppercase font-heading font-semibold text-left text-gray-d2 text-sm border border-gray-l2 p-3"
         >
+          <HeaderButton
+            onClick={handleHeaderClick("charityName")}
+            _activeSortKey={sortKey}
+            _sortKey="charityName"
+            _sortDirection={sortDirection}
+          >
+            Recipient
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("date")}
+            _activeSortKey={sortKey}
+            _sortKey="date"
+            _sortDirection={sortDirection}
+          >
+            Date
+          </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("chainName")}
             _activeSortKey={sortKey}
@@ -31,14 +47,6 @@ export default function Table(props: { donations: Donation[] }) {
           </HeaderButton>
           <>Currency</>
           <HeaderButton
-            onClick={handleHeaderClick("charityName")}
-            _activeSortKey={sortKey}
-            _sortKey="charityName"
-            _sortDirection={sortDirection}
-          >
-            Recipient
-          </HeaderButton>
-          <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
             _sortKey="amount"
@@ -46,17 +54,10 @@ export default function Table(props: { donations: Donation[] }) {
           >
             Amount
           </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("date")}
-            _activeSortKey={sortKey}
-            _sortKey="date"
-            _sortDirection={sortDirection}
-          >
-            Date
-          </HeaderButton>
-          <>Hash</>
+          <>TX Hash</>
+          <span className="flex justify-center">Status</span>
           <CsvExporter
-            classes="hover:text-blue"
+            classes="hover:text-blue flex justify-center"
             headers={csvHeaders}
             data={props.donations}
             filename="donations.csv"
@@ -67,7 +68,7 @@ export default function Table(props: { donations: Donation[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-blue hover:bg-blue/10"
+        rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 even:bg-orange-l6"
       >
         {sorted.map(
           ({
@@ -80,13 +81,7 @@ export default function Table(props: { donations: Donation[] }) {
             charityName,
             id: charityId,
           }) => (
-            <Cells
-              key={hash}
-              type="td"
-              cellClass="p-2 first:pl-0 last:pr-0 text-left"
-            >
-              <>{chainName}</>
-              <span className="font-mono text-sm">{symbol}</span>
+            <Cells key={hash} type="td" cellClass="p-3 border border-gray-l2">
               <Link
                 to={`${appRoutes.profile}/${charityId}`}
                 className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
@@ -94,8 +89,10 @@ export default function Table(props: { donations: Donation[] }) {
                 <span className="truncate">{charityName}</span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
-              <>{humanize(amount, 3)}</>
               <>{new Date(date).toLocaleDateString()}</>
+              <>{chainName}</>
+              <span className="font-mono text-sm">{symbol}</span>
+              <>{humanize(amount, 3)}</>
               <a
                 href={getTxUrl(chainId, hash)}
                 target="_blank"
@@ -104,8 +101,11 @@ export default function Table(props: { donations: Donation[] }) {
               >
                 {maskAddress(hash)}
               </a>
+              <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
+                Received
+              </button>
               <button
-                className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
+                className="w-full flex justify-center"
                 onClick={() =>
                   showKYCForm({
                     type: "post-donation",
@@ -114,7 +114,7 @@ export default function Table(props: { donations: Donation[] }) {
                   })
                 }
               >
-                get receipt
+                <Icon type="FatArrowDownload" className="text-2xl" />
               </button>
             </Cells>
           )

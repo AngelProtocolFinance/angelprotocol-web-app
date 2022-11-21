@@ -11,8 +11,8 @@ export default function App() {
     <WalletProvider {...chainOptions}>
       <WalletContext>
         <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-          <div className="grid grid-rows-[1fr_auto] bg-gradient-to-b from-blue to-black dark:from-blue-d3 dark:to-blue-d3 bg-fixed">
-            <Header classes="fixed top-0 z-20" />
+          <div className="grid grid-rows-[1fr_auto] dark:from-blue-d3 dark:to-blue-d3 bg-fixed">
+            <Header classes="fixed top-0 z-20 bg-blue dark:bg-blue-d3" />
             <Views />
             <Footer />
           </div>

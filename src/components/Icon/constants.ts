@@ -60,7 +60,7 @@ import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoDash, GoLinkExternal } from "react-icons/go";
 import { ImFilePicture } from "react-icons/im";
-import { IoMdSettings } from "react-icons/io";
+import { IoMdDownload, IoMdSettings } from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -156,4 +156,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Picture: ImFilePicture,
   MapPin: RiMapPin2Line,
   Dash: GoDash,
+  FatArrowDownload: IoMdDownload,
 };

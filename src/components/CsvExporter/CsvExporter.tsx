@@ -11,6 +11,7 @@ export default function CsvExporter(props: Props) {
       className={`flex gap-1 items-center ${props.classes ?? ""}`}
     >
       {props.children}
+      Receipt
     </CSVLink>
   );
 }
