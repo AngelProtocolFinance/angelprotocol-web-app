@@ -1,3 +1,4 @@
+// import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import {
@@ -27,6 +28,8 @@ export default function useInjectedProvider(
   const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
+    // console.log(JSON.stringify(ethers.providers.getNetwork(43114)));
+
     requestAccess();
     return () => {
       removeAllListeners(providerId);
