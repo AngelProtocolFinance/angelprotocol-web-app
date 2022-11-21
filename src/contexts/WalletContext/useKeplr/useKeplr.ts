@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
-import { WalletError, WalletNotInstalledError } from "errors/errors";
+import {
+  UnsupportedNetworkError,
+  WalletError,
+  WalletNotInstalledError,
+} from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
+
+const SUPPORTED_CHAINS = [
+  "juno-1",
+  "uni-5" /*, "pisco-1", "phoenix-1" --> to be added */,
+];
 
 const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 const actionKey = `keplr__pref`;
@@ -27,6 +36,10 @@ export default function useKeplr() {
   const requestAccess = async (chainId: string, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
+
+      if (!SUPPORTED_CHAINS.includes(chainId)) {
+        throw new UnsupportedNetworkError(chainId);
+      }
 
       if (chainId === juno_test_chain_info.chainId) {
         await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
@@ -96,6 +109,8 @@ export default function useKeplr() {
     }
   };
 
+  const isChainSupported = (chainId: string) => {};
+
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
@@ -112,6 +127,7 @@ export default function useKeplr() {
   return {
     connection,
     disconnect,
+    isChainSupported,
     switchChain,
     isLoading,
     providerInfo,
