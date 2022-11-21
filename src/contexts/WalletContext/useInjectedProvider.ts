@@ -102,8 +102,16 @@ export default function useInjectedProvider(
           method: EIPMethods.eth_chainId,
         });
 
+        const parsedChainId = `${parseInt(hexChainId, 16)}`;
+        if (
+          !supportedChains.find(
+            (suppChain) => suppChain.chain_id === parsedChainId
+          )
+        ) {
+          throw new UnsupportedNetworkError(parsedChainId);
+        }
         setAddress(accounts[0]);
-        setChainId(`${parseInt(hexChainId, 16)}`);
+        setChainId(parsedChainId);
       }
       setIsLoading(false);
     } catch (err: any) {
@@ -111,6 +119,11 @@ export default function useInjectedProvider(
       logger.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
+      removeAllListeners(providerId);
+
+      if (err instanceof UnsupportedNetworkError) {
+        throw err;
+      }
       if (isNewConnection) {
         //if connection is made via "connect-button"
         throw new WalletError(
