@@ -3,7 +3,7 @@ import Checkbox from "components/Checkbox";
 import {
   BtnPrim,
   BtnSec,
-  OrSeparator,
+  Separator,
   TextInput,
   checkBoxStyle,
 } from "components/registration";
@@ -55,7 +55,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       >
         Register
       </BtnPrim>
-      <OrSeparator classes="my-11" />
+      <Separator classes="my-11 mx-0 sm:mx-24" />
       <BtnSec
         as="link"
         className="mx-0 sm:mx-24"

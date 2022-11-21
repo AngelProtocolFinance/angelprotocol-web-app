@@ -1,10 +1,5 @@
 import { FormValues } from "./types";
-import {
-  BtnPrim,
-  BtnSec,
-  OrSeparator,
-  TextInput,
-} from "components/registration";
+import { BtnPrim, BtnSec, Separator, TextInput } from "components/registration";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
@@ -33,7 +28,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       >
         Resume
       </BtnPrim>
-      <OrSeparator classes="my-11" />
+      <Separator classes="my-11 mx-0 sm:mx-24" />
       <BtnSec
         as="link"
         className="mx-0 sm:mx-24"
