@@ -28,7 +28,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
       >
         Resume
       </BtnPrim>
-      <Separator classes="my-11 mx-0 sm:mx-24" />
+      <Separator classes="my-11 mx-0 sm:mx-24 before:mr-2 after:ml-2">
+        OR
+      </Separator>
       <BtnSec
         as="link"
         className="mx-0 sm:mx-24"

@@ -20,10 +20,14 @@ export default function KeplrConnector() {
   return (
     <button
       onClick={handleConnect}
-      className="flex justify-content items-center gap-2 p-6 rounded-md btn-outline-orange"
+      className="flex items-center border border-gray-l2 dark:border-bluegray w-full p-4 rounded"
     >
-      <img src={keplrWalletLogo} alt="" className="w-8 h-8 object-contain" />
-      <span className="font-heading uppercase">connect keplr wallet</span>
+      <img
+        src={keplrWalletLogo}
+        alt=""
+        className="w-8 h-8 object-contain mr-4"
+      />
+      <span className="font-heading font-bold text-lg">Keplr</span>
     </button>
   );
 }

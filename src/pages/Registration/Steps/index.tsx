@@ -48,8 +48,6 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     stateId: data.reqId,
   };
 
-  console.log(regState);
-
   return (
     <div
       className={`w-full md:w-[90%] max-w-[62.5rem] md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
