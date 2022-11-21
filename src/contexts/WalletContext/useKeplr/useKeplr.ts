@@ -28,7 +28,7 @@ export default function useKeplr() {
     try {
       if (!dwindow.keplr) return;
 
-      if (IS_TEST) {
+      if (chainId === juno_test_chain_info.chainId) {
         await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
