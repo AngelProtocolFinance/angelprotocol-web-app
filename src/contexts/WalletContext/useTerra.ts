@@ -5,6 +5,7 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
+import { useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
@@ -22,6 +23,8 @@ const SUPPORTED_CHAINS: BaseChain[] = [
 ];
 
 export default function useTerra() {
+  const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
+
   const {
     availableConnections,
     availableInstallations,
@@ -86,7 +89,7 @@ export default function useTerra() {
     disconnectTerra: disconnect,
     terraInfo,
     switchChain,
-    supportedChains: SUPPORTED_CHAINS,
+    supportedChains,
   };
 }
 
