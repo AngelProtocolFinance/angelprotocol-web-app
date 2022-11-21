@@ -111,7 +111,7 @@ export const apes = createApi({
 });
 
 export const {
-  useChainsQuery,
+  useLazyChainsQuery,
   useChainQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },

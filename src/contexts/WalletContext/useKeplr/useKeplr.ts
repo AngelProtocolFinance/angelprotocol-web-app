@@ -29,6 +29,9 @@ export default function useKeplr() {
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
+  const [supportedChains, setSupportedChains] = useState(
+    SUPPORTED_CHAINS.map((chain_id) => ({ chain_id, chain_name: chain_id }))
+  );
 
   useEffect(() => {
     (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
@@ -49,7 +52,6 @@ export default function useKeplr() {
 
       await dwindow.keplr.enable(chainId);
       const key = await dwindow.keplr.getKey(chainId);
-
       setAddress(key.bech32Address);
       setChainId(chainId);
       setIsLoading(false);
@@ -129,6 +131,6 @@ export default function useKeplr() {
     switchChain,
     isLoading,
     providerInfo,
-    supportedChains: SUPPORTED_CHAINS,
+    supportedChains,
   };
 }
