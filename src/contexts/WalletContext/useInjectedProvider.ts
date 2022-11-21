@@ -1,4 +1,4 @@
-// import { ethers } from "ethers";
+import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
@@ -48,8 +48,16 @@ export default function useInjectedProvider(
   const addEthereumChain = useAddEthereumChain();
 
   useEffect(() => {
-    // console.log(JSON.stringify(ethers.providers.getNetwork(43114)));
+    SUPPORTED_CHAIN_IDS.forEach((suppChainId) => {
+      if (!ethers.providers.getNetwork(Number(suppChainId))) {
+        throw new UnexpectedStateError(
+          `${suppChainId} not supported by ethers providers`
+        );
+      }
+    });
+  }, []);
 
+  useEffect(() => {
     requestAccess();
     return () => {
       removeAllListeners(providerId);
