@@ -21,6 +21,7 @@ import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+import { useAddEthereumChain } from "./hooks/useAddEthereumChain";
 import useSetSupportedChains from "./useSetSupportedChains";
 
 const SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
@@ -43,6 +44,8 @@ export default function useInjectedProvider(
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
   const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
+
+  const addEthereumChain = useAddEthereumChain();
 
   useEffect(() => {
     // console.log(JSON.stringify(ethers.providers.getNetwork(43114)));
@@ -200,35 +203,14 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError?.code === 4902) {
-        try {
-          await injectedProvider.request({
-            method: EIPMethods.wallet_addEthereumChain,
-            params: [
-              {
-                chainId, // A 0x-prefixed hexadecimal string
-                // chainName,
-                // nativeCurrency: {
-                //   name,
-                //   symbol, // 2-6 characters long
-                //   decimals: 18,
-                // };
-                // rpcUrls: [],
-                // blockExplorerUrls?: [],
-              },
-            ],
-          });
-        } catch (addError: any) {
-          throw new WalletError(
-            addError?.message || "Unknown error occured",
-            addError?.code || 0
-          );
-        }
+      if (switchError?.code !== 4902) {
+        throw new WalletError(
+          switchError?.message || "Unknown error occured",
+          switchError?.code || 0
+        );
       }
-      throw new WalletError(
-        switchError?.message || "Unknown error occured",
-        switchError?.code || 0
-      );
+
+      await addEthereumChain(injectedProvider, chainId);
     } finally {
       setIsLoading(false);
     }
