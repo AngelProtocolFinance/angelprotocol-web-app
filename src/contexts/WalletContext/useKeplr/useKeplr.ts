@@ -20,11 +20,11 @@ export default function useKeplr() {
   const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
-    (shouldReconnect && requestAccess()) || setIsLoading(false);
+    (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
     //eslint-disable-next-line
   }, []);
 
-  const requestAccess = async (isNewConnection = false) => {
+  const requestAccess = async (chainId: string, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
@@ -32,11 +32,11 @@ export default function useKeplr() {
         await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
-      await dwindow.keplr.enable(CHAIN_ID);
-      const key = await dwindow.keplr.getKey(CHAIN_ID);
+      await dwindow.keplr.enable(chainId);
+      const key = await dwindow.keplr.getKey(chainId);
 
       setAddress(key.bech32Address);
-      setChainId(CHAIN_ID);
+      setChainId(chainId);
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
@@ -60,7 +60,7 @@ export default function useKeplr() {
     try {
       //connecting xdefi
       setIsLoading(true);
-      await requestAccess(true);
+      await requestAccess(CHAIN_ID, true);
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
