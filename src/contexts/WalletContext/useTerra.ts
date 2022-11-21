@@ -6,6 +6,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import {
@@ -14,7 +15,11 @@ import {
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
 
-const SUPPORTED_CHAINS = [chainIDs.terraMain, chainIDs.terraTest];
+const SUPPORTED_CHAINS: BaseChain[] = [
+  { chain_id: chainIDs.terraMain, chain_name: chainIDs.terraMain },
+  { chain_id: chainIDs.terraTest, chain_name: chainIDs.terraTest },
+  /*, "pisco-1", "phoenix-1" --> to be added */
+];
 
 export default function useTerra() {
   const {
@@ -66,7 +71,7 @@ export default function useTerra() {
       throw new WalletDisconnectedError();
     }
 
-    if (!SUPPORTED_CHAINS.includes(chainId)) {
+    if (!SUPPORTED_CHAINS.some((suppChain) => suppChain.chain_id === chainId)) {
       throw new UnsupportedNetworkError(chainId);
     }
 
