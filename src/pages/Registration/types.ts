@@ -74,7 +74,6 @@ export type CompleteRegistration = {
   init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
-  profile: Profile;
   wallet: WalletDetails;
   endowId?: number; //created
 };
@@ -89,13 +88,9 @@ type Step2Data = Optional<
   "documentation"
 >;
 
-type Step3Data = Optional<
-  Pick<CompleteRegistration, "init" | "contact" | "documentation" | "profile">,
-  "profile"
->;
-type Step4Data = Optional<CompleteRegistration, "wallet">;
+type Step3Data = Optional<CompleteRegistration, "wallet">;
 
-export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
+export type RegistrationData = Step1Data | Step2Data | Step3Data;
 
 type RegStep1 = {
   step: 1;
@@ -114,19 +109,9 @@ type RegStep3 = {
 
 type RegStep4 = {
   step: 4;
-  data: Step4Data;
-};
-
-type RegStep5 = {
-  step: 5;
   data: CompleteRegistration & { status: RegistrationStatus };
 };
 
-export type RegistrationState =
-  | RegStep1
-  | RegStep2
-  | RegStep3
-  | RegStep4
-  | RegStep5;
+export type RegistrationState = RegStep1 | RegStep2 | RegStep3 | RegStep4;
 
 export type RegStep = RegistrationState["step"];

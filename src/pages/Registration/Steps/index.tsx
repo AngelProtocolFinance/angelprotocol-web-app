@@ -2,7 +2,6 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
-import Profile from "./AdditionalInformation";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
@@ -49,6 +48,8 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     stateId: data.reqId,
   };
 
+  console.log(regState);
+
   return (
     <div
       className={`w-full md:w-[90%] max-w-[62.5rem] md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l2 dark:border-bluegray rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
@@ -69,16 +70,12 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Documentation {...guardProps} step={2} />}
           />
           <Route
-            path={steps.profile}
-            element={<Profile {...guardProps} step={3} />}
-          />
-          <Route
             path={steps.wallet}
-            element={<Wallet {...guardProps} step={4} />}
+            element={<Wallet {...guardProps} step={3} />}
           />
           <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={5} />}
+            element={<Dashboard {...guardProps} step={4} />}
           />
         </Routes>
       </div>

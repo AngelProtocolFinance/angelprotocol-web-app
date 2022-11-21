@@ -6,7 +6,7 @@ import { Wallet } from "./WalletSubmission";
 
 export default function useRegisterWallet() {
   const { handleError } = useErrorContext();
-  const { data: state } = useRegState<4>();
+  const { data: state } = useRegState<3>();
   const [updateReg, { isSuccess, isLoading }] = useUpdateRegMutation();
 
   const registerWallet = async (data: Wallet) => {

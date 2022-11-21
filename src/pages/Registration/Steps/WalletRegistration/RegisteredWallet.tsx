@@ -7,7 +7,7 @@ export default function RegisteredWallet(props: {
   onChange: () => void;
   address: string;
 }) {
-  const { data } = useRegState<4>();
+  const { data } = useRegState<3>();
   return (
     <div className="grid h-full w-full justify-items-center">
       <div className="flex flex-col items-center gap-4 mb-4">

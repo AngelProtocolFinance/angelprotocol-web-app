@@ -2,18 +2,15 @@ import {
   ContactPerson,
   Documentation,
   InitReg,
-  Profile,
   RegistrationState,
 } from "../types";
 import {
   ContactDetails,
   DoneContact,
   DoneDocs,
-  DoneProfile,
   DoneWallet,
   FileObject,
   InitContact,
-  RegProfile,
   SavedRegistration,
   TDocumentation,
   WalletData,
@@ -27,26 +24,14 @@ export function getRegistrationState(
   if (isDoneWallet(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
-      step: 5,
-      data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-        documentation: formatDocumentation(r),
-        profile: formatProfile(m),
-        wallet: { address: m.JunoWallet },
-        status: r.RegistrationStatus,
-        endowId: m.EndowmentId,
-      },
-    };
-  } else if (isDoneProfile(reg)) {
-    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
-    return {
       step: 4,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        profile: formatProfile(m),
+        wallet: { address: m.JunoWallet },
+        status: r.RegistrationStatus,
+        endowId: m.EndowmentId,
       },
     };
   } else if (isDoneDocs(reg)) {
@@ -84,15 +69,6 @@ function getInit(i: InitContact): InitReg {
     reference: i.PK,
     isEmailVerified: i.EmailVerified,
     lastVerified: i.EmailVerificationLastSentDate,
-  };
-}
-
-function formatProfile(m: DoneProfile["Metadata"]): Profile {
-  return {
-    banner: m.Banner,
-    logo: m.Logo,
-    overview: m.Overview,
-    isKYCRequired: m.KycDonorsOnly,
   };
 }
 
@@ -151,11 +127,6 @@ export function genFileAsset(previews: FileObject[]): Asset {
 
 function isDoneWallet(data: SavedRegistration): data is DoneWallet {
   const key: keyof WalletData = "JunoWallet";
-  return key in data.Metadata;
-}
-
-function isDoneProfile(data: SavedRegistration): data is DoneProfile {
-  const key: keyof RegProfile = "Logo";
   return key in data.Metadata;
 }
 

@@ -9,7 +9,7 @@ import WalletSubmission from "./WalletSubmission";
 function WalletRegistration() {
   const {
     data: { wallet: prevWallet },
-  } = useRegState<4>();
+  } = useRegState<3>();
   const { wallet, isLoading } = useGetWallet();
 
   //save prevWallet to intermediate state

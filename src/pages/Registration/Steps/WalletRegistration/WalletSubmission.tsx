@@ -14,7 +14,7 @@ export type Wallet = { address: string };
 export default function WalletSubmission({ address, providerId }: WalletState) {
   const { disconnect } = useSetWallet();
   const { isSubmitting, registerWallet } = useRegisterWallet();
-  const { data } = useRegState<4>();
+  const { data } = useRegState<3>();
 
   const methods = useForm<Wallet>({
     mode: "onChange",
@@ -64,7 +64,7 @@ export default function WalletSubmission({ address, providerId }: WalletState) {
             <div className="flex justify-center gap-2">
               <BtnSec
                 as="link"
-                to={`../${steps.profile}`}
+                to={`../${steps.doc}`}
                 state={data.init}
                 aria-disabled={isSubmitting}
                 className="min-w-[8rem]"

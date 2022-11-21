@@ -6,7 +6,7 @@ import Step from "./Step";
 import useSubmit from "./useSubmit";
 
 function Dashboard() {
-  const { data } = useRegState<5>();
+  const { data } = useRegState<4>();
   const { submit, isSubmitting } = useSubmit();
   const navigate = useNavigate();
 
@@ -32,11 +32,6 @@ function Dashboard() {
           onClick={() => navigate(`../${steps.doc}`, { state: data.init })}
           disabled={isStepDisabled}
           customStatus={`Level ${documentation.level}`}
-        />
-        <Step
-          title="Additional Information"
-          onClick={() => navigate(`../${steps.profile}`, { state: data.init })}
-          disabled={isStepDisabled}
         />
         <Step
           title="Wallet Address"

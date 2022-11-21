@@ -55,12 +55,9 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
             Documentation
           </Step>
           <Step isDone={step >= 3} isCurr={currPath === 3}>
-            Profile
-          </Step>
-          <Step isDone={step >= 4} isCurr={currPath === 4}>
             Wallet address
           </Step>
-          <Step isDone={step >= 5} isCurr={currPath === 5}>
+          <Step isDone={step >= 4} isCurr={currPath === 4}>
             Summary
           </Step>
         </>
