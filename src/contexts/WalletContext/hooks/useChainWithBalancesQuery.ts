@@ -24,10 +24,9 @@ export function useChainWithBalancesQuery(
     isLoading: isChainLoading,
     isFetching: isChainFetching,
     error,
-  } = useChainQuery(
-    { chainId: activeProviderInfo?.chainId ?? "" },
-    { skip: !activeProviderInfo }
-  );
+  } = useChainQuery(activeProviderInfo?.chainId ?? "", {
+    skip: !activeProviderInfo,
+  });
 
   const isLoading = isChainLoading || isChainFetching;
 

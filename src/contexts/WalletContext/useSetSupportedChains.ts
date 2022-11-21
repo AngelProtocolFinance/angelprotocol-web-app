@@ -16,7 +16,7 @@ export default function useSetSupportedChains(
         data: chains,
         isLoading: areChainsLoading,
         isSuccess,
-      } = await getChains(null);
+      } = await getChains(null, true);
 
       if (!areChainsLoading && isSuccess) {
         setSupportedChains(

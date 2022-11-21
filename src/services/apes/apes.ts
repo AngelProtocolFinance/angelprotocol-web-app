@@ -19,9 +19,9 @@ export const apes = createApi({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
-    chain: builder.query<Chain, { chainId: string }>({
+    chain: builder.query<Chain, string>({
       providesTags: [{ type: apesTags.chain }],
-      async queryFn({ chainId }) {
+      async queryFn(chainId) {
         try {
           const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
 
@@ -52,6 +52,7 @@ export const apes = createApi({
 export const {
   useLazyChainsQuery,
   useChainQuery,
+  useLazyChainQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
 } = apes;
