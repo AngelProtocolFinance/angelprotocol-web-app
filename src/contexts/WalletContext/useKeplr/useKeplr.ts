@@ -78,7 +78,7 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
-  const switchNetwork = async (chainId: string) => {
+  const switchChain = async (chainId: string) => {
     if (!dwindow.keplr) {
       throw new WalletNotInstalledError("keplr");
     }
@@ -112,7 +112,7 @@ export default function useKeplr() {
   return {
     connection,
     disconnect,
-    switchNetwork,
+    switchChain,
     isLoading,
     providerInfo,
   };
