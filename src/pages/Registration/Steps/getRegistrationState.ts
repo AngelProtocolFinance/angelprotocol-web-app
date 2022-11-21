@@ -89,7 +89,6 @@ function formatProfile(m: DoneProfile["Metadata"]): Profile {
     banner: m.Banner,
     logo: m.Logo,
     overview: m.Overview,
-    isKYCRequired: m.KycDonorsOnly,
   };
 }
 
@@ -124,7 +123,7 @@ function formatDocumentation({
     proofOfIdentity: [poi],
     proofOfRegistration: [por],
     website: Website,
-    sdg: UN_SDG,
+    sdg: UN_SDG[0] || 1,
 
     //level 2
     financialStatements: fs || [],

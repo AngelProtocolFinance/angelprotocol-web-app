@@ -36,7 +36,6 @@ export default function useSubmit() {
         Banner: previews.banner,
         Logo: previews.logo,
         Overview: overview,
-        KycDonorsOnly: false /**TODO: isKYC part of metaData */,
       }),
       handleError
     );

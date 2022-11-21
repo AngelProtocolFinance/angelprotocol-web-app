@@ -4,6 +4,7 @@ import {
   ReferralMethods,
   RegistrationStatus,
 } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
 
 export type OptionType = { label: string; value: ContactRoles };
@@ -40,7 +41,7 @@ export type Documentation = {
   proofOfIdentity: FileObject[];
   proofOfRegistration: FileObject[];
   website: string;
-  sdg: number;
+  sdg: UNSDG_NUMS;
 
   //level 2
   financialStatements: FileObject[];
@@ -58,7 +59,6 @@ export type Profile = {
   banner: FileObject;
   logo: FileObject;
   overview: string;
-  isKYCRequired: boolean;
 };
 
 //STEP 4

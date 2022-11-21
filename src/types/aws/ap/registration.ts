@@ -1,3 +1,4 @@
+import { UNSDG_NUMS } from "types/lists";
 import { EndowmentTierNum } from "../../contracts";
 import { FileObject } from "../common";
 
@@ -39,7 +40,7 @@ export type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: "Inactive";
-  UN_SDG: number;
+  UN_SDG: UNSDG_NUMS[];
 };
 
 export type InitContact = {
@@ -74,13 +75,13 @@ export type TDocumentation = {
   //based on tier
   FinancialStatements?: FileObject[];
   AuditedFinancialReports?: FileObject[];
+  KycDonorsOnly: boolean;
 };
 
 export type RegProfile = {
   Banner: FileObject;
   Logo: FileObject;
   Overview: string;
-  KycDonorsOnly: boolean;
 };
 
 //INIT STEP
