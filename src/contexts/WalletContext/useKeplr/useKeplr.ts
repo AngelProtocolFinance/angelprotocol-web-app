@@ -97,7 +97,6 @@ export default function useKeplr() {
     }
 
     try {
-      //connecting xdefi
       setIsLoading(true);
       await requestAccess(chainId, true);
     } catch (err: any) {
