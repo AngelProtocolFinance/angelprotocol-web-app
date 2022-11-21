@@ -6,7 +6,7 @@ export function ButtonMailTo({ mailTo, label, subject }: Props) {
       href={`mailto:${mailTo}${
         subject ? `?subject=${encodeURIComponent(subject)}` : ""
       }`}
-      className="italic underline"
+      className="underline text-xs text-orange"
     >
       {label}
     </a>

@@ -12,8 +12,18 @@ export default function Registration() {
   return (
     <section className="grid dark:bg-blue-d4 bg-gray-l5 text-gray-d2 dark:text-white pt-24">
       <Routes>
-        <Route path={routes.confirmEmail} element={<ConfirmEmail />} />
-        <Route path={routes.verifyEmail} element={<VerifiedEmail />} />
+        <Route
+          path={routes.confirmEmail}
+          element={
+            <ConfirmEmail classes="my-8 md:my-[10.5rem] mx-6 justify-self-center" />
+          }
+        />
+        <Route
+          path={routes.verifyEmail}
+          element={
+            <VerifiedEmail classes="my-10 md:my-32 mx-6 justify-self-center" />
+          }
+        />
         <Route
           path={routes.steps + "/*"}
           element={<Steps classes="my-0 md:my-20 justify-self-center" />}
