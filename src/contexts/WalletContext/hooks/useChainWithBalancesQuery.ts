@@ -68,36 +68,39 @@ export function useChainWithBalancesQuery(
 
           return prev;
         });
-      }
+      } else {
+        /**fetch balances for ethereum */
+        const jsonProvider = new ethers.providers.JsonRpcProvider(
+          chain.rpc_url,
+          {
+            chainId: +chainId,
+            name: chain.chain_name,
+          }
+        );
+        const queryResults = await jsonProvider.getBalance(address);
 
-      /**fetch balances for ethereum */
-      const jsonProvider = new ethers.providers.JsonRpcProvider(chain.rpc_url, {
-        chainId: +chainId,
-        name: chain.chain_name,
-      });
-      const queryResults = await jsonProvider.getBalance(address);
+        chain.native_currency.balance = +utils.formatUnits(
+          queryResults,
+          chain.native_currency.decimals
+        );
 
-      chain.native_currency.balance = +utils.formatUnits(
-        queryResults,
-        chain.native_currency.decimals
-      );
+        const erc20Holdings = await getERC20Holdings(
+          chain.rpc_url,
+          address,
+          chain.tokens.map((token) => token.token_id)
+        );
 
-      const erc20Holdings = await getERC20Holdings(
-        chain.rpc_url,
-        address,
-        chain.tokens.map((token) => token.token_id)
-      );
+        setChainWithBalance((prev) => {
+          prev.tokens.forEach((token) => {
+            const erc20 = erc20Holdings.find(
+              (x) => x.contractAddress === token.token_id
+            );
+            token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
+          });
 
-      setChainWithBalance((prev) => {
-        prev.tokens.forEach((token) => {
-          const erc20 = erc20Holdings.find(
-            (x) => x.contractAddress === token.token_id
-          );
-          token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
+          return prev;
         });
-
-        return prev;
-      });
+      }
     })();
   }, [activeProviderInfo, chain, isLoading]);
 
