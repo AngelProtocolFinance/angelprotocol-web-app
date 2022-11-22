@@ -51,14 +51,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     switchChain: switchMetamaskChain,
   } = useInjectedProvider("metamask");
 
-  // const {
-  //   isLoading: isBinanceWalletLoading,
-  //   connection: binanceWalletConnection,
-  //   disconnect: disconnectBinanceWallet,
-  //   providerInfo: binanceWalletInfo,
-  //   supportedChains: binanceSupportedChains,
-  //   switchChain: switchBinanceChain,
-  // } = useInjectedProvider("binance-wallet");
+  const {
+    isLoading: isBinanceWalletLoading,
+    connection: binanceWalletConnection,
+    disconnect: disconnectBinanceWallet,
+    providerInfo: binanceWalletInfo,
+    supportedChains: binanceSupportedChains,
+    switchChain: switchBinanceChain,
+  } = useInjectedProvider("binance-wallet");
 
   const {
     isLoading: isKeplrLoading,
@@ -88,10 +88,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   } = useInjectedProvider("xdefi-evm");
 
   const providerStatuses: ProviderStatus[] = [
-    // {
-    //   providerInfo: binanceWalletInfo,
-    //   isLoading: isBinanceWalletLoading,
-    // },
+    {
+      providerInfo: binanceWalletInfo,
+      isLoading: isBinanceWalletLoading,
+      supportedChains: binanceSupportedChains,
+      switchChain: switchBinanceChain,
+    },
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
@@ -128,9 +130,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
-      // case "binance-wallet":
-      //   disconnectBinanceWallet();
-      //   break;
+      case "binance-wallet":
+        disconnectBinanceWallet();
+        break;
       case "xdefi-evm":
         disconnectXdefi();
         break;
@@ -149,7 +151,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProvider?.providerInfo,
     disconnectMetamask,
-    // disconnectBinanceWallet,
+    disconnectBinanceWallet,
     disconnectXdefi,
     disconnectKeplr,
     disconnectTerra,
@@ -206,7 +208,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             metamaskConnection,
             xdefiConnection,
             ...terraConnections,
-            // binanceWalletConnection,
+            binanceWalletConnection,
           ],
           disconnect,
           switchChain,

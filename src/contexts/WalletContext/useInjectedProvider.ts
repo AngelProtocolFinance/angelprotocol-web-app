@@ -7,7 +7,7 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
-import { getProvider, logger } from "helpers";
+import { getProvider } from "helpers";
 import {
   UnexpectedStateError,
   UnsupportedNetworkError,
@@ -22,10 +22,15 @@ import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
 
-const SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
+const SUPPORTED_CHAIN_IDS = [
+  chainIDs.ethMain,
+  chainIDs.ethTest,
+  chainIDs.binanceMain,
+  chainIDs.binanceTest,
+];
 
 export default function useInjectedProvider(
-  providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
+  providerId: Extract<ProviderId, "metamask" | "xdefi-evm" | "binance-wallet">,
   connectorName = prettifyId(providerId),
   connectorLogo?: string
 ) {
@@ -118,7 +123,6 @@ export default function useInjectedProvider(
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
-      logger.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
       removeAllListeners(providerId);

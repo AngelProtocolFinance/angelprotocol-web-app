@@ -1,7 +1,7 @@
 import { WithoutInstallers } from "./types";
 import { Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
-// import binanceWalletIcon from "assets/icons/wallets/binance.png";
+import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
@@ -14,11 +14,11 @@ export const WALLET_METADATA: {
     name: string;
   };
 } = {
-  // "binance-wallet": {
-  //   logo: binanceWalletIcon,
-  //   installUrl: "https://www.bnbchain.org/en/binance-wallet",
-  //   name: "Binance Wallet",
-  // },
+  "binance-wallet": {
+    logo: binanceWalletIcon,
+    installUrl: "https://www.bnbchain.org/en/binance-wallet",
+    name: "Binance Wallet",
+  },
   metamask: {
     logo: metamaskIcon,
     installUrl: "https://metamask.io/",
@@ -44,7 +44,7 @@ export const WALLET_METADATA: {
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
   chain_id: "placeholder",
-  chain_name: "Token",
+  chain_name: "placeholder",
   native_currency: {
     type: "placeholder",
     symbol: "NATIVE",

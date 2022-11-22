@@ -7,7 +7,7 @@ export interface Dwindow extends Window {
     terra?: any;
   };
   ethereum?: any;
-  // BinanceChain?: any;
+  BinanceChain?: any;
   keplr?: Keplr;
 }
 

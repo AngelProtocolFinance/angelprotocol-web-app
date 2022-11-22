@@ -49,7 +49,7 @@ function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
 
 function getWalletAddrPattern(network: string) {
   switch (network) {
-    // case chainIds.binance:
+    case chainIds.binance:
     case chainIds.ethereum:
       return /^0x[a-fA-F0-9]{40}$/;
     default:

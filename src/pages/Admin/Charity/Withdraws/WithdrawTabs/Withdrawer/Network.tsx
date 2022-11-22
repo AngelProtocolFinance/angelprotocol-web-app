@@ -26,11 +26,11 @@ export default function Network() {
           label="ethereum"
           value={chainIds.ethereum}
         />
-        {/* <Option
+        <Option
           reg={register("network")}
           label="binance"
           value={chainIds.binance}
-        /> */}
+        />
       </div>
     </div>
   );

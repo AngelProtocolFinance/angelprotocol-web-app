@@ -28,6 +28,9 @@ export function useChainWithBalancesQuery(
     skip: !activeProviderInfo,
   });
 
+  console.log("chain", JSON.stringify(chain));
+  console.log("chainWithBalance", JSON.stringify(chainWithBalance));
+
   const isLoading = isChainLoading || isChainFetching;
 
   useVerifyChain(activeProviderInfo, chain, isLoading, error, disconnect);
@@ -79,11 +82,6 @@ export function useChainWithBalancesQuery(
         );
         const queryResults = await jsonProvider.getBalance(address);
 
-        chain.native_currency.balance = +utils.formatUnits(
-          queryResults,
-          chain.native_currency.decimals
-        );
-
         const erc20Holdings = await getERC20Holdings(
           chain.rpc_url,
           address,
@@ -91,6 +89,11 @@ export function useChainWithBalancesQuery(
         );
 
         setChainWithBalance((prev) => {
+          prev.native_currency.balance = +utils.formatUnits(
+            queryResults,
+            chain.native_currency.decimals
+          );
+
           prev.tokens.forEach((token) => {
             const erc20 = erc20Holdings.find(
               (x) => x.contractAddress === token.token_id

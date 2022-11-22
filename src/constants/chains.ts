@@ -1,8 +1,8 @@
 export enum chainIDs {
   junoMain = "juno-1",
   junoTest = "uni-5",
-  // binanceMain = "56",
-  // binanceTest = "97",
+  binanceMain = "56",
+  binanceTest = "97",
   ethMain = "1",
   ethTest = "5",
   terraMain = "phoenix-1",
@@ -15,8 +15,8 @@ type Info = { txExplorer: string };
 const _chains: { [key in chainIDs]: Info } = {
   1: { txExplorer: "https://etherscan.io/tx" },
   5: { txExplorer: "https://goerli.etherscan.io/tx" },
-  // 97: { txExplorer: "https://testnet.bscscan.com/tx" },
-  // 56: { txExplorer: "https://bscscan.com/tx" },
+  97: { txExplorer: "https://testnet.bscscan.com/tx" },
+  56: { txExplorer: "https://bscscan.com/tx" },
   "juno-1": { txExplorer: "https://www.mintscan.io/juno/txs" },
   "uni-5": { txExplorer: "https://testnet.mintscan.io/juno-testnet/txs" },
   "phoenix-1": { txExplorer: "https://finder.terra.money/mainnet/tx" },
