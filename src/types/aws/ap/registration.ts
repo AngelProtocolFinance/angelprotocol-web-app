@@ -152,8 +152,8 @@ export type EndowmentProposal = Pick<
   "PK" | "RegistrationDate" | "RegistrationStatus"
 > &
   OrgData &
-  TDocumentation & {
-    OrganizationName_ContactEmail: string;
+  TDocumentation &
+  Pick<InitContact, "Email"> & {
     poll_id: number;
   };
 
