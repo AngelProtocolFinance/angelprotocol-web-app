@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Resume from "pages/Registration/Resume";
 import Signup from "pages/Registration/Signup";
 import Steps from "./Steps";
+import Success from "./Success";
 import routes from "./routes";
 
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
@@ -31,6 +32,12 @@ export default function Registration() {
         <Route
           path={routes.resume}
           element={<Resume classes="justify-self-center my-20" />}
+        />
+        <Route
+          path={routes.success}
+          element={
+            <Success classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
+          }
         />
         <Route index element={<Signup classes="justify-self-center my-20" />} />
         <Route path="*" element={<Navigate to={routes.index} />} />

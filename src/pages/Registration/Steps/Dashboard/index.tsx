@@ -1,4 +1,6 @@
+import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "pages/Registration/types";
+import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { handleMutationResult } from "helpers";
@@ -25,6 +27,10 @@ function Dashboard() {
 
   const { documentation, status } = data;
   const isStepDisabled = isSubmitting || status === "Under Review";
+
+  if (status === "Active") {
+    return <Navigate to={`../../${routes.success}`} state={data} />;
+  }
 
   return (
     <div className="grid">

@@ -1,15 +1,13 @@
 import { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
 import { RegistrationStatus } from "types/aws";
 import { steps } from "pages/Registration/routes";
 import Icon from "components/Icon";
 import { BtnPrim, BtnSec } from "components/registration";
-import { adminRoutes, appRoutes } from "constants/routes";
 import { useRegState } from "../StepGuard";
 
 type Props = {
   isSubmitting: boolean;
-  status: RegistrationStatus;
+  status: Exclude<RegistrationStatus, "Active">;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
   endowId?: number;
   classes?: string;
@@ -18,7 +16,6 @@ type Props = {
 export default function EndowmentStatus({
   onSubmit,
   status,
-  endowId,
   isSubmitting,
   classes = "",
 }: Props) {
@@ -45,26 +42,6 @@ export default function EndowmentStatus({
           >
             Resubmit
           </BtnPrim>
-        </div>
-      );
-
-    case "Active":
-      return (
-        <div className={`max-sm:grid justify-items-center gap-2 ${classes}`}>
-          <Icon
-            type="Check"
-            className="inline relative bottom-px text-green dark:text-green-l2 mr-2"
-            size={18}
-          />
-          <span className="text-green dark:text-green-l2">
-            Your endowment has been created.
-          </span>
-          <Link
-            className="text-xs inline-block uppercase underline text-blue-l1 dark:text-blue-l2 ml-2"
-            to={`${appRoutes.admin}/${endowId!}/${adminRoutes.edit_profile}`}
-          >
-            edit profile
-          </Link>
         </div>
       );
 
