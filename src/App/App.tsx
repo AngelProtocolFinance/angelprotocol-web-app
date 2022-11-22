@@ -1,18 +1,26 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
+import { useLocation } from "react-router-dom";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext";
+import hasBg from "helpers/hasBG";
 import Footer from "./Footer";
 import Header from "./Header";
 import Views from "./Views";
 import { chainOptions } from "./chainOptions";
 
 export default function App() {
+  const location = useLocation();
+
   return (
     <WalletProvider {...chainOptions}>
       <WalletContext>
         <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
           <div className="grid grid-rows-[1fr_auto] dark:from-blue-d3 dark:to-blue-d3 bg-fixed">
-            <Header classes="fixed top-0 z-20 bg-blue dark:bg-blue-d3" />
+            <Header
+              classes={`fixed top-0 z-20 ${
+                hasBg(location) ? "bg-blue dark:bg-blue-d3" : ""
+              }`}
+            />
             <Views />
             <Footer />
           </div>
