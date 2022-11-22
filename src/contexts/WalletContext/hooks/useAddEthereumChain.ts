@@ -3,6 +3,7 @@ import { InjectedProvider } from "types/ethereum";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
+import toPrefixedHex from "../helpers/toPrefixedHex";
 
 export function useAddEthereumChain() {
   const [getChain] = useLazyChainQuery();
@@ -19,7 +20,7 @@ export function useAddEthereumChain() {
           method: EIPMethods.wallet_addEthereumChain,
           params: [
             {
-              chainId: Number(chainId).toString(16),
+              chainId: toPrefixedHex(chainId),
               chainName: chainToAdd.chain_name,
               nativeCurrency: {
                 name: chainToAdd.native_currency.name,

@@ -20,6 +20,7 @@ import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+import toPrefixedHex from "./helpers/toPrefixedHex";
 import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
 
 const SUPPORTED_CHAIN_IDS = [
@@ -206,7 +207,7 @@ export default function useInjectedProvider(
       setIsLoading(true);
       await injectedProvider.request({
         method: EIPMethods.wallet_switchEthereumChain,
-        params: [{ chainId }],
+        params: [{ chainId: toPrefixedHex(chainId) }],
       });
     } catch (switchError: any) {
       // This error code indicates that the chain has not been added to MetaMask.
