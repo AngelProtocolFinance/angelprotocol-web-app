@@ -5,6 +5,7 @@ import { appRoutes } from "constants/routes";
 
 export default function Card({
   name,
+  logo,
   image,
   id,
   endow_type,
@@ -19,6 +20,7 @@ export default function Card({
       <BookmarkBtn
         name={name}
         id={id}
+        logo={logo}
         classes="absolute top-3 right-3 text-red"
       />
       <Link

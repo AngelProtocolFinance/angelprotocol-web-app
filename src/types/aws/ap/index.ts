@@ -86,6 +86,7 @@ export type Airdrop = {
 export type EndowmentBookmark = {
   id: number;
   name: string;
+  logo: string;
 };
 
 export type UserBookMarkInfo = {
