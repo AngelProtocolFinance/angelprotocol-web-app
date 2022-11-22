@@ -62,7 +62,7 @@ export default function Table(props: { donations: Donation[] }) {
             data={props.donations}
             filename="donations.csv"
           >
-            Save to CSV <Icon type="FileDownload" className="text-2xl" />
+            Receipt
           </CsvExporter>
         </Cells>
       </TableSection>
