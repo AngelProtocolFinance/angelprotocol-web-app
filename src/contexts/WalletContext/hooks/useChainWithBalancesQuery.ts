@@ -38,7 +38,15 @@ export function useChainWithBalancesQuery(
     }
 
     (async function () {
-      const result = { ...chain };
+      // tokens & native_currency need to be copied separately, otherwise
+      // the balance will not be settable (due to the returned `chain` not being modifiable)
+      const result: Chain = {
+        ...chain,
+        native_currency: {
+          ...chain.native_currency,
+        },
+        tokens: chain.tokens.map((t) => ({ ...t })),
+      };
 
       const { address, chainId } = activeProviderInfo;
 
