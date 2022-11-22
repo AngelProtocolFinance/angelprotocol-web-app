@@ -6,8 +6,9 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { Chain, Token } from "types/aws";
+import { BaseChain, Chain, Token } from "types/aws";
 import { WalletDisconnectedError } from "errors/errors";
+import { chainIDs } from "constants/chains";
 import { useChainWithBalancesQuery } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -20,6 +21,7 @@ export type WalletState = {
   address: string;
   chain: Chain;
   providerId: ProviderId;
+  supportedChains: BaseChain[];
   getBalance: (token_id: string) => number;
 };
 
@@ -29,6 +31,7 @@ type State = {
 };
 
 type Setters = {
+  switchChain: (chainId: chainIDs) => Promise<void>;
   disconnect(): void;
   connections: Connection[];
 };
@@ -116,12 +119,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
   ];
 
-  const activeProviderInfo = providerStatuses.find(
+  const activeProvider = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
-  )?.providerInfo;
+  );
 
   const disconnect = useCallback(() => {
-    switch (activeProviderInfo?.providerId) {
+    switch (activeProvider?.providerInfo!.providerId) {
       case "metamask":
         disconnectMetamask();
         break;
@@ -144,7 +147,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         throw new WalletDisconnectedError();
     }
   }, [
-    activeProviderInfo?.providerId,
+    activeProvider?.providerInfo,
     disconnectMetamask,
     // disconnectBinanceWallet,
     disconnectXdefi,
@@ -152,28 +155,42 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectTerra,
   ]);
 
+  const switchChain = useCallback(
+    async (chainId: chainIDs) => {
+      if (!activeProvider) {
+        throw new WalletDisconnectedError();
+      }
+
+      await activeProvider.switchChain(chainId);
+    },
+    [activeProvider]
+  );
+
   const { chain, isLoading: isChainLoading } = useChainWithBalancesQuery(
-    activeProviderInfo,
+    activeProvider?.providerInfo,
     disconnect
   );
 
   const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address } = activeProviderInfo;
-      return {
+    if (activeProvider) {
+      const { logo, providerId, address } = activeProvider.providerInfo!;
+      const walletState: WalletState = {
         walletIcon: logo,
         displayCoin: chain.native_currency,
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
         providerId,
+        supportedChains: activeProvider.supportedChains,
         getBalance: (token_id: string) =>
           [chain.native_currency, ...chain.tokens].find(
             (x) => x.token_id === token_id
           )?.balance || 0,
       };
+
+      return walletState;
     }
-  }, [activeProviderInfo, chain]);
+  }, [activeProvider, chain]);
 
   return (
     <getContext.Provider
@@ -192,6 +209,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             // binanceWalletConnection,
           ],
           disconnect,
+          switchChain,
         }}
       >
         {props.children}
@@ -204,6 +222,7 @@ const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
+  switchChain: async (_) => {},
 });
 
 export const useSetWallet = () => useContext(setContext);
