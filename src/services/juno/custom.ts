@@ -1,11 +1,11 @@
 import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
-import { EndowmentDetails } from "types/contracts";
+import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
-import { customTags, junoTags } from "./tags";
+import { customTags, defaultProposalTags, junoTags } from "./tags";
 
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
@@ -26,26 +26,39 @@ function isAp(id: number) {
 
 async function getPropMeta(
   endowId: number,
-  cw3: string
+  cw3: string,
+  config: CW3Config
 ): Promise<AdminResources["propMeta"]> {
   const votersRes = await queryContract("cw3ListVoters", cw3, null);
+  const numVoters = votersRes.voters.length;
 
-  return votersRes.voters.length === 1
+  const willExecute =
+    /** single member */
+    numVoters === 1 ||
+    /** multiple members but threshold is lte 1/members given that execution is not required */
+    (!config.require_execution &&
+      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
+
+  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
+
+  return willExecute
     ? {
-        isSingle: true,
+        willExecute,
         successLink: {
           url: `${appRoutes.admin}/${endowId}`,
           description: "Go to admin home",
         },
         successMessage: "Successful transaction",
+        tagPayloads,
       }
     : {
-        isSingle: false,
+        willExecute: undefined,
         successLink: {
           url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
         },
         successMessage: "Proposal successfully created",
+        tagPayloads,
       };
 }
 
@@ -108,7 +121,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 role,
-                propMeta: await getPropMeta(numId, cw3Addr),
+                propMeta: await getPropMeta(numId, cw3Addr, cw3config),
               },
             };
           } else {
@@ -141,7 +154,7 @@ export const customApi = junoApi.injectEndpoints({
               endowment,
               cw3config,
               role: "charity",
-              propMeta: await getPropMeta(numId, endowment.owner),
+              propMeta: await getPropMeta(numId, endowment.owner, cw3config),
             },
           };
         }

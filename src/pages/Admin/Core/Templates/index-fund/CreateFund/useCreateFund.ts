@@ -4,7 +4,6 @@ import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
 import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
@@ -12,7 +11,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { cleanObject } from "helpers/admin";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
@@ -90,7 +89,6 @@ export default function useCreateFund() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("if_create"),
         ...propMeta,
       })
     );

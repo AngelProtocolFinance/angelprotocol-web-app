@@ -3,15 +3,16 @@ import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { TagPayload } from "slices/transaction/types";
 import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
-import { useLatestBlockQuery } from "services/juno";
+import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
+import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
+import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
-import { defaultTagPayloads, getTagPayloads } from "../helpers";
 
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
@@ -97,7 +98,7 @@ function extractTagFromMeta(
   proposalMeta: ProposalDetails["meta"]
 ): TagPayload[] {
   if (!proposalMeta) {
-    return defaultTagPayloads;
+    return [invalidateJunoTags(defaultProposalTags)];
   }
   const parsedProposalMeta: ProposalMeta = JSON.parse(proposalMeta);
   return getTagPayloads(parsedProposalMeta.type);

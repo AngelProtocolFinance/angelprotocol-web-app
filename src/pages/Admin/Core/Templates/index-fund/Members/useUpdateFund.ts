@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -83,7 +82,6 @@ export default function useUpdateFund() {
         sendCosmosTx({
           wallet,
           msgs: [proposalMsg],
-          tagPayloads: getTagPayloads("if_members"),
           ...propMeta,
         })
       );

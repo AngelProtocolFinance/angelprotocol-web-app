@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -89,7 +88,6 @@ export default function useEditAlliance() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("if_alliance"),
         ...propMeta,
       })
     );

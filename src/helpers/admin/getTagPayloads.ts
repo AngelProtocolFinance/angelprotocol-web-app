@@ -1,30 +1,17 @@
-import { ProposalMeta } from "../types";
-import { Tag, TagPayload } from "slices/transaction/types";
+import { ProposalMeta } from "pages/Admin/types";
+import { TagPayload } from "slices/transaction/types";
 import { invalidateJunoTags } from "services/juno";
 import {
   accountTags,
   adminTags,
-  customTags,
+  defaultProposalTags,
   indexfundTags,
   junoTags,
   registrarTags,
 } from "services/juno/tags";
 
-const defaultTags: Tag[] = [
-  //basic tags to invalidate
-  { type: junoTags.admin, id: adminTags.proposals },
-  { type: junoTags.custom, id: customTags.proposalDetails },
-];
-
-export const defaultTagPayloads: TagPayload[] = [
-  invalidateJunoTags(defaultTags),
-];
-
-export function getTagPayloads(
-  type?: ProposalMeta["type"],
-  isSingle?: boolean
-): TagPayload[] {
-  const _tags = [...defaultTags];
+export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
+  const _tags = [...defaultProposalTags];
 
   switch (type) {
     case "if_alliance":
@@ -94,5 +81,5 @@ export function getTagPayloads(
       break;
   }
 
-  return [invalidateJunoTags(isSingle ? _tags : defaultTags)];
+  return [invalidateJunoTags(_tags)];
 }

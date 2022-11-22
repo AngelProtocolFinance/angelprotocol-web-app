@@ -5,7 +5,6 @@ import {
   FormCW3Config,
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -13,7 +12,7 @@ import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
@@ -75,8 +74,8 @@ export default function useCreateProposal() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("cw3_config", propMeta.isSingle),
         ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
       })
     );
     showModal(TransactionPrompt, {});

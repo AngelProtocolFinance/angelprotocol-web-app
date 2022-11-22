@@ -30,8 +30,8 @@ export type AdminResources = {
   cw3config: CW3Config;
   role: AdminRoles;
   propMeta: Required<
-    Pick<SendCosmosTxArgs, "successLink" | "successMessage">
-  > & { isSingle: boolean };
+    Pick<SendCosmosTxArgs, "successLink" | "successMessage" | "tagPayloads">
+  > & { willExecute?: true };
 };
 
 export type ProposalDetails = Proposal & {

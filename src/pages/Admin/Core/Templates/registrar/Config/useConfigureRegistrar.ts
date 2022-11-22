@@ -5,7 +5,6 @@ import {
 } from "pages/Admin/types";
 import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -72,7 +71,6 @@ export default function useConfigureRegistrar() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("reg_config", propMeta.isSingle),
         ...propMeta,
       })
     );

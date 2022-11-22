@@ -3,7 +3,6 @@ import { FundSendMeta } from "pages/Admin/types";
 import { FundSendValues } from "pages/Admin/types";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -13,6 +12,7 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import { scaleToStr } from "helpers";
+import { getTagPayloads } from "helpers/admin";
 import { contracts } from "constants/contracts";
 import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
 
@@ -77,8 +77,8 @@ export default function useTransferFunds() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("cw3_transfer"),
         ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
       })
     );
     showModal(TransactionPrompt, {});

@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
 import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -11,6 +10,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
+import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
@@ -79,8 +79,8 @@ export default function useUpdateMembers() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("cw4_members"),
         ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
       })
     );
     showModal(TransactionPromp, {});

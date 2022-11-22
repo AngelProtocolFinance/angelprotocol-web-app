@@ -7,7 +7,6 @@ import {
   StatusChangePayload,
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -16,7 +15,7 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { cleanObject, getTagPayloads } from "helpers/admin";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
@@ -99,8 +98,8 @@ export default function useUpdateStatus() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("acc_endow_status", propMeta.isSingle),
         ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
       })
     );
     showModal(TransactionPrompt, {});

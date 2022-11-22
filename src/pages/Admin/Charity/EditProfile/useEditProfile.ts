@@ -6,7 +6,6 @@ import {
 import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -17,7 +16,12 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import { uploadToIpfs } from "helpers";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
+import {
+  cleanObject,
+  genDiffMeta,
+  getPayloadDiff,
+  getTagPayloads,
+} from "helpers/admin";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -116,8 +120,8 @@ export default function useEditProfile() {
         sendCosmosTx({
           wallet,
           msgs: [proposalMsg],
-          tagPayloads: getTagPayloads("acc_profile", propMeta.isSingle),
           ...propMeta,
+          tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
         })
       );
       showModal(TransactionPrompt, {});

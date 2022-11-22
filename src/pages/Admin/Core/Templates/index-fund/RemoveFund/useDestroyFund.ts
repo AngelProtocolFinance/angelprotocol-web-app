@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -50,7 +49,6 @@ export default function useDestroyFund() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("if_remove"),
         ...propMeta,
       })
     );

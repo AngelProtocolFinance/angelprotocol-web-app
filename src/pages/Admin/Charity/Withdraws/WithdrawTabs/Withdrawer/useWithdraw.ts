@@ -4,7 +4,6 @@ import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
@@ -80,7 +79,6 @@ export default function useWithdraw() {
       sendCosmosTx({
         wallet,
         msgs: [proposal],
-        tagPayloads: getTagPayloads("acc_withdraw"),
         //Juno withdrawal
         ...propMeta,
         onSuccess: isJuno

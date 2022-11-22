@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta } from "pages/Admin/types";
 import { IndexFundOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -52,7 +51,6 @@ export default function useUpdateOwner() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: getTagPayloads("if_owner"),
         ...propMeta,
       })
     );
