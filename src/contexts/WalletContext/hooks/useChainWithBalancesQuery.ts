@@ -28,9 +28,6 @@ export function useChainWithBalancesQuery(
     skip: !activeProviderInfo,
   });
 
-  console.log("chain", JSON.stringify(chain));
-  console.log("chainWithBalance", JSON.stringify(chainWithBalance));
-
   const isLoading = isChainLoading || isChainFetching;
 
   useVerifyChain(activeProviderInfo, chain, isLoading, error, disconnect);
