@@ -19,7 +19,7 @@ export function useAddEthereumChain() {
           method: EIPMethods.wallet_addEthereumChain,
           params: [
             {
-              chainId,
+              chainId: Number(chainId).toString(16),
               chainName: chainToAdd.chain_name,
               nativeCurrency: {
                 name: chainToAdd.native_currency.name,
