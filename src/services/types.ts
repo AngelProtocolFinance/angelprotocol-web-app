@@ -1,4 +1,4 @@
-import { SendCosmosTxArgs, SuccessLink } from "slices/transaction/types";
+import { SendCosmosTxArgs } from "slices/transaction/types";
 import { Token } from "types/aws";
 import {
   AdminVoteInfo,
