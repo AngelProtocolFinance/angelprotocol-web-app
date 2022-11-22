@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
 import {
+  UnexpectedStateError,
   UnsupportedNetworkError,
   WalletError,
   WalletNotInstalledError,
@@ -11,18 +11,13 @@ import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
-import { useSetSupportedChains } from "../hooks";
+import { useGetSupportedChains } from "../hooks";
 import { juno_test_chain_info } from "./chains";
 
 const SUPPORTED_CHAIN_IDS = [
   chainIDs.junoMain,
   chainIDs.junoTest /*, "pisco-1", "phoenix-1" --> to be added */,
 ];
-
-const SUPPORTED_CHAINS: BaseChain[] = SUPPORTED_CHAIN_IDS.map((chain_id) => ({
-  chain_id,
-  chain_name: chain_id,
-}));
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
@@ -35,14 +30,14 @@ export default function useKeplr() {
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-  const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
 
   useEffect(() => {
     (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
     // eslint-disable-next-line
   }, []);
 
-  useSetSupportedChains(SUPPORTED_CHAIN_IDS, setSupportedChains);
+  const { supportedChains, isLoading: areChainsLoading } =
+    useGetSupportedChains(SUPPORTED_CHAIN_IDS);
 
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
@@ -107,6 +102,10 @@ export default function useKeplr() {
       throw new WalletNotInstalledError("keplr");
     }
 
+    if (areChainsLoading) {
+      throw new UnexpectedStateError("Chains are still being loaded");
+    }
+
     try {
       setIsLoading(true);
       await requestAccess(chainId, true);
@@ -136,7 +135,7 @@ export default function useKeplr() {
     connection,
     disconnect,
     switchChain,
-    isLoading,
+    isLoading: isLoading || areChainsLoading,
     providerInfo,
     supportedChains,
   };

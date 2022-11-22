@@ -21,14 +21,9 @@ import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
-import { useAddEthereumChain, useSetSupportedChains } from "./hooks";
+import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
 
 const SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
-
-const SUPPORTED_CHAINS: BaseChain[] = SUPPORTED_CHAIN_IDS.map((chain_id) => ({
-  chain_id,
-  chain_name: chain_id,
-}));
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
@@ -42,7 +37,6 @@ export default function useInjectedProvider(
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
-  const [supportedChains, setSupportedChains] = useState(SUPPORTED_CHAINS);
 
   const addEthereumChain = useAddEthereumChain();
 
@@ -64,7 +58,8 @@ export default function useInjectedProvider(
     //eslint-disable-next-line
   }, []);
 
-  useSetSupportedChains(SUPPORTED_CHAIN_IDS, setSupportedChains);
+  const { supportedChains, isLoading: areChainsLoading } =
+    useGetSupportedChains(SUPPORTED_CHAIN_IDS);
 
   /** attachers/detachers */
   const attachChainChangedHandler = (provider: InjectedProvider) => {
@@ -186,6 +181,10 @@ export default function useInjectedProvider(
   };
 
   const switchChain = async (chainId: chainIDs) => {
+    if (areChainsLoading) {
+      throw new UnexpectedStateError("Chains are still being loaded");
+    }
+
     const injectedProvider = getProvider(providerId);
 
     if (!injectedProvider) {
@@ -244,7 +243,7 @@ export default function useInjectedProvider(
     connection,
     disconnect,
     switchChain,
-    isLoading,
+    isLoading: isLoading || areChainsLoading,
     providerInfo,
     supportedChains,
   };

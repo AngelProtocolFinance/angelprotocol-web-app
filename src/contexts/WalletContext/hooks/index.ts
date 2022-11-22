@@ -1,3 +1,3 @@
 export * from "./useChainWithBalancesQuery";
-export * from "./useSetSupportedChains";
+export * from "./useGetSupportedChains";
 export * from "./useAddEthereumChain";

@@ -50,7 +50,7 @@ export const apes = createApi({
 });
 
 export const {
-  useLazyChainsQuery,
+  useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
   useWithdrawLogsQuery,

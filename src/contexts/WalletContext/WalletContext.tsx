@@ -5,7 +5,7 @@ import {
   useContext,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatuses } from "./types";
+import { Connection, ProviderId, ProviderStatus } from "./types";
 import { Chain, Token } from "types/aws";
 import { WalletDisconnectedError } from "errors/errors";
 import { useChainWithBalancesQuery } from "./hooks";
@@ -44,6 +44,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     connection: metamaskConnection,
     disconnect: disconnectMetamask,
     providerInfo: metamaskInfo,
+    supportedChains: metamaskSupportedChains,
+    switchChain: switchMetamaskChain,
   } = useInjectedProvider("metamask");
 
   // const {
@@ -51,6 +53,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   //   connection: binanceWalletConnection,
   //   disconnect: disconnectBinanceWallet,
   //   providerInfo: binanceWalletInfo,
+  //   supportedChains: binanceSupportedChains,
+  //   switchChain: switchBinanceChain,
   // } = useInjectedProvider("binance-wallet");
 
   const {
@@ -58,19 +62,29 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     connection: keplrConnection,
     disconnect: disconnectKeplr,
     providerInfo: keplrWalletInfo,
+    supportedChains: keplrSupportedChains,
+    switchChain: switchKeplrChain,
   } = useKeplr();
 
-  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
-    useTerra();
+  const {
+    isTerraLoading,
+    terraConnections,
+    disconnectTerra,
+    terraInfo,
+    supportedChains: terraSupportedChains,
+    switchChain: switchTerraChain,
+  } = useTerra();
 
   const {
     isLoading: isXdefiLoading, //requesting permission, attaching event listeners
     connection: xdefiConnection,
     disconnect: disconnectXdefi,
     providerInfo: xdefiInfo,
+    supportedChains: xdefiSupportedChains,
+    switchChain: switchXdefiChain,
   } = useInjectedProvider("xdefi-evm");
 
-  const providerStatuses: ProviderStatuses = [
+  const providerStatuses: ProviderStatus[] = [
     // {
     //   providerInfo: binanceWalletInfo,
     //   isLoading: isBinanceWalletLoading,
@@ -78,19 +92,27 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
+      supportedChains: metamaskSupportedChains,
+      switchChain: switchMetamaskChain,
     },
 
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
+      supportedChains: terraSupportedChains,
+      switchChain: switchTerraChain,
     },
     {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
+      supportedChains: keplrSupportedChains,
+      switchChain: switchKeplrChain,
     },
     {
       providerInfo: xdefiInfo,
       isLoading: isXdefiLoading,
+      supportedChains: xdefiSupportedChains,
+      switchChain: switchXdefiChain,
     },
   ];
 
