@@ -6,10 +6,8 @@ import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain } from "types/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
-type Tag = TagDescription<string>;
-export type Tags = Tag[];
-export type TagPayload = PayloadAction<Tags, string>;
-export type TagPayloads = TagPayload[];
+export type Tag = TagDescription<string>;
+export type TagPayload = PayloadAction<Tag[], string>;
 export type Step = "form" | "submit" | "broadcast" | "success" | "error";
 
 export type FormError =
@@ -76,7 +74,7 @@ export type Stage =
 export type StageUpdater = (update: Stage) => void;
 
 type BaseArgs = {
-  tagPayloads?: TagPayloads;
+  tagPayloads?: TagPayload[];
   successMessage?: string;
   successLink?: SuccessLink;
   wallet: WalletState | undefined;

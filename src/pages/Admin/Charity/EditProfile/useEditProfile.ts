@@ -6,8 +6,7 @@ import {
 import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { accountTags, adminTags, junoTags } from "services/juno/tags";
+import { getTagPayloads } from "pages/Admin/helpers";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -25,7 +24,7 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 const PLACEHOLDER_OVERVIEW = "[text]";
 
 export default function useEditProfile() {
-  const { endowmentId, cw3, successLink, successMessage } = useAdminResources();
+  const { endowmentId, cw3, propMeta } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -117,14 +116,8 @@ export default function useEditProfile() {
         sendCosmosTx({
           wallet,
           msgs: [proposalMsg],
-          tagPayloads: [
-            invalidateJunoTags([
-              { type: junoTags.admin, id: adminTags.proposals },
-              { type: junoTags.account, id: accountTags.profile },
-            ]),
-          ],
-          successLink,
-          successMessage,
+          tagPayloads: getTagPayloads("acc_profile", propMeta.isSingle),
+          ...propMeta,
         })
       );
       showModal(TransactionPrompt, {});

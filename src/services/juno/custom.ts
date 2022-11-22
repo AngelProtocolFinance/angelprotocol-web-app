@@ -24,17 +24,15 @@ function isAp(id: number) {
   return id === AP_ID || id === REVIEWER_ID;
 }
 
-async function getPropDisplay(
+async function getPropMeta(
   endowId: number,
   cw3: string
-): Promise<
-  Pick<AdminResources, "successLink" | "successMessage" | "isSingleMember">
-> {
+): Promise<AdminResources["propMeta"]> {
   const votersRes = await queryContract("cw3ListVoters", cw3, null);
 
   return votersRes.voters.length === 1
     ? {
-        isSingleMember: true,
+        isSingle: true,
         successLink: {
           url: `${appRoutes.admin}/${endowId}`,
           description: "Go to admin home",
@@ -42,7 +40,7 @@ async function getPropDisplay(
         successMessage: "Successful transaction",
       }
     : {
-        isSingleMember: false,
+        isSingle: false,
         successLink: {
           url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
@@ -110,7 +108,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 role,
-                ...(await getPropDisplay(numId, cw3Addr)),
+                propMeta: await getPropMeta(numId, cw3Addr),
               },
             };
           } else {
@@ -143,7 +141,7 @@ export const customApi = junoApi.injectEndpoints({
               endowment,
               cw3config,
               role: "charity",
-              ...(await getPropDisplay(numId, endowment.owner)),
+              propMeta: await getPropMeta(numId, endowment.owner),
             },
           };
         }

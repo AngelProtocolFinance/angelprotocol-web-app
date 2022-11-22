@@ -5,8 +5,7 @@ import {
 } from "pages/Admin/types";
 import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
+import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -20,7 +19,7 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -73,13 +72,8 @@ export default function useConfigureRegistrar() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        tagPayloads: getTagPayloads("reg_config", propMeta.isSingle),
+        ...propMeta,
       })
     );
     showModal(TransactionPrompt, {});

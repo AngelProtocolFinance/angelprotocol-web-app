@@ -2,8 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
 import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
+import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -15,7 +14,7 @@ import CW4 from "contracts/CW4";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, successLink, successMessage } = useAdminResources();
+  const { cw3, cw4, propMeta } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
@@ -80,13 +79,8 @@ export default function useUpdateMembers() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        tagPayloads: getTagPayloads("cw4_members"),
+        ...propMeta,
       })
     );
     showModal(TransactionPromp, {});

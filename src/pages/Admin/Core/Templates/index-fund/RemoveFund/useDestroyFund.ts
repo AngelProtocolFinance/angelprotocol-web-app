@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
+import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -19,7 +18,7 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
@@ -51,13 +50,8 @@ export default function useDestroyFund() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        tagPayloads: getTagPayloads("if_remove"),
+        ...propMeta,
       })
     );
     showModal(TransactionPrompt, {});

@@ -5,8 +5,7 @@ import {
   FormCW3Config,
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
+import { getTagPayloads } from "pages/Admin/helpers";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -20,7 +19,7 @@ type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
 export default function useCreateProposal() {
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     getValues,
@@ -76,13 +75,8 @@ export default function useCreateProposal() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        tagPayloads: getTagPayloads("cw3_config", propMeta.isSingle),
+        ...propMeta,
       })
     );
     showModal(TransactionPrompt, {});
