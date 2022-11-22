@@ -41,6 +41,8 @@ export function useChainWithBalancesQuery(
     }
 
     (async function () {
+      const result = { ...chain };
+
       const { address, chainId } = activeProviderInfo;
 
       // fetch balances for juno or terra
@@ -60,16 +62,12 @@ export function useChainWithBalancesQuery(
 
         const allBalances = nativeBalances.concat(cw20Balances);
 
-        setChainWithBalance((prev) => {
-          [prev.native_currency, ...prev.tokens].forEach((token) => {
-            const balance = allBalances.find((x) => x.denom === token.token_id);
-            token.balance = +utils.formatUnits(
-              balance?.amount ?? 0,
-              token.decimals
-            );
-          });
-
-          return prev;
+        [result.native_currency, ...result.tokens].forEach((token) => {
+          const balance = allBalances.find((x) => x.denom === token.token_id);
+          token.balance = +utils.formatUnits(
+            balance?.amount ?? 0,
+            token.decimals
+          );
         });
       } else {
         /**fetch balances for ethereum */
@@ -88,22 +86,20 @@ export function useChainWithBalancesQuery(
           chain.tokens.map((token) => token.token_id)
         );
 
-        setChainWithBalance((prev) => {
-          prev.native_currency.balance = +utils.formatUnits(
-            queryResults,
-            chain.native_currency.decimals
+        result.native_currency.balance = +utils.formatUnits(
+          queryResults,
+          chain.native_currency.decimals
+        );
+
+        result.tokens.forEach((token) => {
+          const erc20 = erc20Holdings.find(
+            (x) => x.contractAddress === token.token_id
           );
-
-          prev.tokens.forEach((token) => {
-            const erc20 = erc20Holdings.find(
-              (x) => x.contractAddress === token.token_id
-            );
-            token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
-          });
-
-          return prev;
+          token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
         });
       }
+
+      setChainWithBalance(result);
     })();
   }, [activeProviderInfo, chain, isLoading]);
 
