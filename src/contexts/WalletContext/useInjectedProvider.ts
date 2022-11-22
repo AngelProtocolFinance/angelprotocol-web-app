@@ -23,6 +23,8 @@ import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import toPrefixedHex from "./helpers/toPrefixedHex";
 import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
 
+const CHAIN_NOT_ADDED_CODE = 4902;
+
 const SUPPORTED_CHAIN_IDS = [
   chainIDs.ethMain,
   chainIDs.ethTest,
@@ -210,8 +212,7 @@ export default function useInjectedProvider(
         params: [{ chainId: toPrefixedHex(chainId) }],
       });
     } catch (switchError: any) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError?.code !== 4902) {
+      if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
         throw new WalletError(
           switchError?.message || "Unknown error occured",
           switchError?.code || 0
