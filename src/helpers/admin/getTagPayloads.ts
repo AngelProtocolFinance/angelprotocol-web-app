@@ -68,7 +68,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "acc_endow_status":
       _tags.push({
         type: junoTags.account,
-        id: accountTags.endowments, //via selectFromResult (endowments), TODO: convert to {endowment:{}} query
+        id: accountTags.endowments,
       });
       break;
 
