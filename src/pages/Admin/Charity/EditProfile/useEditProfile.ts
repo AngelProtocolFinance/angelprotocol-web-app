@@ -7,7 +7,7 @@ import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
+import { accountTags, adminTags, junoTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -120,6 +120,7 @@ export default function useEditProfile() {
           tagPayloads: [
             invalidateJunoTags([
               { type: junoTags.admin, id: adminTags.proposals },
+              { type: junoTags.account, id: accountTags.profile },
             ]),
           ],
           successLink,

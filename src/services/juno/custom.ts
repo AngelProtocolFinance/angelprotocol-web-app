@@ -1,5 +1,4 @@
 import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
-import { SuccessLink } from "slices/transaction/types";
 import { EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
@@ -25,28 +24,31 @@ function isAp(id: number) {
   return id === AP_ID || id === REVIEWER_ID;
 }
 
-class ProposalDisplay {
-  successLink: SuccessLink;
-  successMessage: string;
+async function getPropDisplay(
+  endowId: number,
+  cw3: string
+): Promise<
+  Pick<AdminResources, "successLink" | "successMessage" | "isSingleMember">
+> {
+  const votersRes = await queryContract("cw3ListVoters", cw3, null);
 
-  constructor(
-    isSingleMember: boolean,
-    adminHomeUrl: string,
-    adminProposalsUrl: string
-  ) {
-    this.successLink = isSingleMember
-      ? {
-          url: adminHomeUrl,
+  return votersRes.voters.length === 1
+    ? {
+        isSingleMember: true,
+        successLink: {
+          url: `${appRoutes.admin}/${endowId}`,
           description: "Go to admin home",
-        }
-      : {
-          url: adminProposalsUrl,
+        },
+        successMessage: "Successful transaction",
+      }
+    : {
+        isSingleMember: false,
+        successLink: {
+          url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
-        };
-    this.successMessage = isSingleMember
-      ? `Successful transaction`
-      : `Proposal successfully created`;
-  }
+        },
+        successMessage: "Proposal successfully created",
+      };
 }
 
 export const customApi = junoApi.injectEndpoints({
@@ -89,9 +91,6 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [{ type: junoTags.custom, id: customTags.adminResources }],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
-        /** special case for ap admin usage */
-        const adminProposalsUrl = `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`;
-        const adminHomeUrl = `${appRoutes.admin}/${args.endowmentId}`;
 
         if (isAp(numId)) {
           const { cw3Addr, cw4Addr, role } = getCWs(numId);
@@ -101,17 +100,6 @@ export const customApi = junoApi.injectEndpoints({
           });
 
           if (!!voter.weight) {
-            const listVoters = await queryContract(
-              "cw3ListVoters",
-              cw3Addr,
-              null
-            );
-            const isSingleMember = listVoters.voters.length === 1;
-            const propDisplay = new ProposalDisplay(
-              isSingleMember,
-              adminHomeUrl,
-              adminProposalsUrl
-            );
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
 
             return {
@@ -122,8 +110,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 role,
-                successLink: propDisplay.successLink,
-                successMessage: propDisplay.successMessage,
+                ...(await getPropDisplay(numId, cw3Addr)),
               },
             };
           } else {
@@ -143,17 +130,6 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         if (!!voter.weight) {
-          const listVoters = await queryContract(
-            "cw3ListVoters",
-            endowment.owner,
-            null
-          );
-          const isSingleMember = listVoters.voters.length === 1;
-          const propDisplay = new ProposalDisplay(
-            isSingleMember,
-            adminHomeUrl,
-            adminProposalsUrl
-          );
           const cw3config = await queryContract(
             "cw3Config",
             endowment.owner,
@@ -167,8 +143,7 @@ export const customApi = junoApi.injectEndpoints({
               endowment,
               cw3config,
               role: "charity",
-              successLink: propDisplay.successLink,
-              successMessage: propDisplay.successMessage,
+              ...(await getPropDisplay(numId, endowment.owner)),
             },
           };
         }

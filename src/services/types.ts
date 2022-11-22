@@ -31,6 +31,7 @@ export type AdminResources = {
   role: AdminRoles;
   successLink: SuccessLink;
   successMessage: string;
+  isSingleMember: boolean;
 };
 
 export type ProposalDetails = Proposal & {
