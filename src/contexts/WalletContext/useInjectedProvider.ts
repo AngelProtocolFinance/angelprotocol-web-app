@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
