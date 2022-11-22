@@ -45,7 +45,7 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
           return supportedChains.push({ ...chain });
         }
 
-        logger.error(
+        logger.info(
           `Chain ${suppChainId} not returned in the chains collection`
         );
       });
