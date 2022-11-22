@@ -4,7 +4,7 @@ import { useLazyChainsQuery } from "services/apes";
 import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
 
-export default function useSetSupportedChains(
+export function useSetSupportedChains(
   supportedChainIds: chainIDs[],
   setSupportedChains: (chains: BaseChain[]) => void
 ) {

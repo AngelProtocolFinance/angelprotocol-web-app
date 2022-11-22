@@ -11,7 +11,7 @@ import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
-import useSetSupportedChains from "../useSetSupportedChains";
+import { useSetSupportedChains } from "../hooks";
 import { juno_test_chain_info } from "./chains";
 
 const SUPPORTED_CHAIN_IDS = [

@@ -21,8 +21,7 @@ import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
-import { useAddEthereumChain } from "./hooks/useAddEthereumChain";
-import useSetSupportedChains from "./useSetSupportedChains";
+import { useAddEthereumChain, useSetSupportedChains } from "./hooks";
 
 const SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
 

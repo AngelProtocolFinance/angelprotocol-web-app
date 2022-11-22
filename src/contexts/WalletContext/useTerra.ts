@@ -15,7 +15,7 @@ import {
   WalletDisconnectedError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import useSetSupportedChains from "./useSetSupportedChains";
+import { useSetSupportedChains } from "./hooks";
 
 const SUPPORTED_CHAIN_IDS = [chainIDs.terraMain, chainIDs.terraTest];
 
