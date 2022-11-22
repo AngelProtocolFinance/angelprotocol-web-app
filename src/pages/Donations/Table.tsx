@@ -57,7 +57,7 @@ export default function Table(props: { donations: Donation[] }) {
           <>TX Hash</>
           <span className="flex justify-center">Status</span>
           <CsvExporter
-            classes="hover:text-blue flex justify-center"
+            classes="hover:text-blue justify-center"
             headers={csvHeaders}
             data={props.donations}
             filename="donations.csv"
