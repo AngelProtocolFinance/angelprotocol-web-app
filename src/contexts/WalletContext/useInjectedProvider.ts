@@ -115,9 +115,7 @@ export default function useInjectedProvider(
 
         const parsedChainId = `${parseInt(hexChainId, 16)}`;
         if (
-          !supportedChains.find(
-            (suppChain) => suppChain.chain_id === parsedChainId
-          )
+          !SUPPORTED_CHAIN_IDS.includes(parsedChainId as unknown as chainIDs)
         ) {
           throw new UnsupportedNetworkError(parsedChainId);
         }
