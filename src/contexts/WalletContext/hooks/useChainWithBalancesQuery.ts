@@ -98,8 +98,8 @@ export function useChainWithBalancesQuery(
 
         return prev;
       });
-    });
-  }, [activeProviderInfo, chain]);
+    })();
+  }, [activeProviderInfo, chain, isLoading]);
 
   return {
     chain: chainWithBalance,
@@ -143,7 +143,7 @@ function useVerifyChain(
     } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
       handle(new WrongNetworkError());
     }
-  }, [activeProviderInfo, chain, chainError, handle]);
+  }, [activeProviderInfo, chain, chainError, isLoading, handle]);
 }
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {

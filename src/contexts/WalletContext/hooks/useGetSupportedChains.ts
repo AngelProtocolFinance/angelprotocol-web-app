@@ -37,12 +37,12 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     if (isError) {
       handleError(error);
     } else if (isSuccess) {
-      const supportedChains: BaseChain[] = [];
+      const result: BaseChain[] = [];
 
       supportedChainIds.forEach((suppChainId) => {
         const chain = newChains.find((chain) => chain.chain_id === suppChainId);
         if (chain) {
-          return supportedChains.push({ ...chain });
+          return result.push({ ...chain });
         }
 
         logger.info(
@@ -50,9 +50,17 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
         );
       });
 
-      setSupportedChains(supportedChains);
+      setSupportedChains(result);
     }
-  }, [supportedChainIds, isLoading, isSuccess, isError, error, handleError]);
+  }, [
+    supportedChainIds,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    newChains,
+    handleError,
+  ]);
 
   return { isLoading, supportedChains };
 }
