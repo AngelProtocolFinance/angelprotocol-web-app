@@ -28,12 +28,12 @@ const CHAIN_NOT_ADDED_CODE = 4902;
 const SUPPORTED_CHAIN_IDS = [
   chainIDs.ethMain,
   chainIDs.ethTest,
-  chainIDs.binanceMain,
+  // chainIDs.binanceMain,
   chainIDs.binanceTest,
 ];
 
 export default function useInjectedProvider(
-  providerId: Extract<ProviderId, "metamask" | "xdefi-evm" | "binance-wallet">,
+  providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
   connectorName = prettifyId(providerId),
   connectorLogo?: string
 ) {

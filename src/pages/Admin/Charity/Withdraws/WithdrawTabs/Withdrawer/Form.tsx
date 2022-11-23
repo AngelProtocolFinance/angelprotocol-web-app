@@ -20,8 +20,8 @@ export default function Form() {
       <Beneficiary />
       <div className="bg-orange-l6 p-2 rounded-md text-orange-d2 mb-2 text-sm">
         <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
-        All withdraws to Ethereum{/* & Binance*/} are processed on a hourly
-        basis by our cross-chain pipelines.
+        All withdraws to Ethereum & Binance are processed on a hourly basis by
+        our cross-chain pipelines.
       </div>
       <div className="bg-orange-l6 p-2 rounded-md text-orange-d2 mb-2 text-sm">
         <Icon type="Info" className="inline relative bottom-0.5 mr-1" />
