@@ -40,18 +40,10 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     if (isError) {
       handleError(error);
     } else if (isSuccess) {
-      const result: BaseChain[] = [];
-
-      supportedChainIds.forEach((suppChainId) => {
-        const chain = newChains.find((chain) => chain.chain_id === suppChainId);
-        if (chain) {
-          return result.push({ ...chain });
-        }
-
-        logger.info(
-          `Chain ${suppChainId} not returned in the chains collection`
-        );
-      });
+      const result: BaseChain[] = getSupportedChains(
+        supportedChainIds,
+        newChains
+      );
 
       if (!result.length) {
         const suppChainsStr = supportedChainIds.join(", ");
@@ -77,4 +69,22 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
   ]);
 
   return { isLoading: isChainsQueryLoading || isLoading, supportedChains };
+}
+
+function getSupportedChains(
+  supportedChainIds: chainIDs[],
+  newChains: BaseChain[]
+): BaseChain[] {
+  const result: BaseChain[] = [];
+
+  supportedChainIds.forEach((suppChainId) => {
+    const chain = newChains.find((chain) => chain.chain_id === suppChainId);
+    if (chain) {
+      return result.push({ ...chain });
+    }
+
+    logger.info(`Chain ${suppChainId} not returned in the chains collection`);
+  });
+
+  return result;
 }
