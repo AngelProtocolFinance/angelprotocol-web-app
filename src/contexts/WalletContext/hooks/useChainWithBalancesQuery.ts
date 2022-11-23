@@ -18,7 +18,7 @@ export function useChainWithBalancesQuery(
   disconnect: () => void
 ): Result {
   const [chainWithBalance, setChainWithBalance] = useState(placeholderChain);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   const { handleError } = useErrorContext();
 
