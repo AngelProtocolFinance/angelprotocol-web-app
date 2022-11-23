@@ -1,10 +1,11 @@
 import { Link, LinkProps } from "react-router-dom";
+import ExtLink, { ExtLinkProps } from "./ExtLink";
 
 type Btn = {
   as?: "btn";
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 type Lnk = { as: "link" } & LinkProps;
-type Ext = { as: "a" } & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+type Ext = { as: "a" } & ExtLinkProps;
 
 export type BtnLinkProps = Btn | Lnk | Ext;
 
@@ -19,7 +20,7 @@ export function BtnLink(props: BtnLinkProps) {
        * Anchors must have content and the content must be accessible by a screen reader
        */
       const { children, ...rest } = props;
-      return <a {...rest}>{children}</a>;
+      return <ExtLink {...rest}>{children}</ExtLink>;
     }
     default: {
       return <button {...props} />;

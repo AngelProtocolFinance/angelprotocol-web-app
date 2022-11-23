@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { SuccessStage } from "slices/transaction/types";
 import { useModalContext } from "contexts/ModalContext";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
@@ -31,14 +32,12 @@ export default function Success(props: SuccessStage) {
       <p className="text-center text-blue-d1 mb-2 font-bold">{message}</p>
 
       {chainId && txHash && (
-        <a
+        <ExtLink
           href={getTxUrl(chainId, txHash)}
-          target="_blank"
-          rel="noreferrer noopener"
           className="text-center text-blue cursor-pointer mb-6 text-sm"
         >
           view transaction details
-        </a>
+        </ExtLink>
       )}
 
       <div className="flex justify-center gap-4">

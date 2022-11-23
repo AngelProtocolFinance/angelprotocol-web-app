@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { SchemaShape } from "schemas/types";
 import Checkbox from "components/Checkbox";
+import ExtLink from "components/ExtLink";
 import { TextInput, checkBoxStyle } from "components/registration";
 import { BtnPrim, BtnSec } from "components/registration";
 import OrSeparator from "components/registration/OrSeparator";
@@ -55,14 +56,9 @@ export default function Signup({ classes = "" }: { classes?: string }) {
           }}
         >
           I declare that I have read and agreed to{" "}
-          <a
-            className="underline text-orange"
-            target="_blank"
-            href={PRIVACY_POLICY}
-            rel="noopener noreferrer"
-          >
+          <ExtLink className="underline text-orange" href={PRIVACY_POLICY}>
             Privacy Policy
-          </a>
+          </ExtLink>
         </Checkbox>
       </FormProvider>
       <BtnPrim type="submit" className="mt-8 mx-0 sm:mx-24">

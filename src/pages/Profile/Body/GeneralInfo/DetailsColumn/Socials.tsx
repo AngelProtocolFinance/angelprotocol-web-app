@@ -1,4 +1,5 @@
 import { useProfileContext } from "pages/Profile/ProfileContext";
+import ExtLink from "components/ExtLink";
 import Icon, { IconTypes } from "components/Icon";
 
 export default function Socials({ className }: { className: string }) {
@@ -29,11 +30,10 @@ export default function Socials({ className }: { className: string }) {
 }
 
 const SocialsIcon = (props: { href: string; iconType: IconTypes }) => (
-  <a
+  <ExtLink
     href={props.href}
-    rel="noopener noreferrer"
     className="flex items-center justify-center w-10 h-10 border border-gray-d2 rounded hover:text-blue-l1 hover:border-blue-l1 active:text-blue dark:border-white"
   >
     <Icon type={props.iconType} className="w-6 h-6" />
-  </a>
+  </ExtLink>
 );

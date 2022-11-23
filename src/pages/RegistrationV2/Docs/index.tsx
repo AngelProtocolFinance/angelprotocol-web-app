@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { FileObject } from "types/aws";
 import Checkbox from "components/Checkbox";
+import ExtLink from "components/ExtLink";
 import { Label } from "components/form";
 import {
   BtnPrim,
@@ -150,14 +151,9 @@ export default function Docs() {
         >
           By checking this box, you declare that you have read and agreed to our{" "}
           {""}
-          <a
-            className="underline text-orange"
-            target="_blank"
-            href={TERMS_OF_USE}
-            rel="noopener noreferrer"
-          >
+          <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
             Terms & Conditions
-          </a>
+          </ExtLink>
         </Checkbox>
         <div className="grid grid-cols-2 sm:flex gap-2 my-8">
           <BtnSec as="link" to="" className="py-3 min-w-[8rem] text-center">

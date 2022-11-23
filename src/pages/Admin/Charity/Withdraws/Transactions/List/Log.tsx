@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { WithdrawLog } from "types/aws";
+import ExtLink from "components/ExtLink";
 import { maskAddress } from "helpers";
 import Amount from "../Amount";
 import Status from "../Status";
@@ -35,14 +36,12 @@ export default function Log(props: WithdrawLog) {
 
       <KeyVal title="tx hash">
         {finalRoute && finalRoute.status === "OK" ? (
-          <a
+          <ExtLink
             className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
             href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
-            target="_blank"
-            rel="noopener noreferrer"
           >
             {maskAddress(finalRoute.hash)}
-          </a>
+          </ExtLink>
         ) : (
           <>---</>
         )}
