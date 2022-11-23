@@ -17,15 +17,12 @@ export type WithoutInstallers = Exclude<
   "station" | "walletconnect" | "leap-wallet"
 >;
 
-type Base = {
+export type Connection = {
   logo: string;
   installUrl?: string;
   name: string;
-  network?: true;
+  connect(args?: string): Promise<void>;
 };
-type Single = { connect(args?: string): Promise<void>; networks?: never };
-type Multi = { connect?: never; networks: Connection[] };
-export type Connection = Base & (Single | Multi);
 
 export type ProviderInfo = {
   providerId: ProviderId;
