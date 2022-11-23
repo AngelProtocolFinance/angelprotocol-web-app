@@ -45,7 +45,11 @@ export default function Types() {
             >
               {({ selected }) => (
                 <>
-                  <Checkbox checked={selected} classes="mr-4 top-[3px]" />
+                  <Checkbox
+                    checked={selected}
+                    className="mr-4 top-[3px]"
+                    readOnly
+                  />
                   {name}
                 </>
               )}

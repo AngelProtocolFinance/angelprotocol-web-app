@@ -11,12 +11,14 @@ type State = {
   sort?: Sort;
   //geography
   sdgs: { [idx: number]: number[] };
+  kycOnly: boolean;
 };
 const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
   isOpen: false,
   searchText: "",
   types: [],
+  kycOnly: false,
 };
 
 const marketFilter = createSlice({
@@ -38,7 +40,9 @@ const marketFilter = createSlice({
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
     },
-
+    setKYCOnly: (state, { payload }: PayloadAction<boolean>) => {
+      state.kycOnly = payload;
+    },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;
     },
@@ -56,7 +60,14 @@ const marketFilter = createSlice({
   },
 });
 
-export const { setSdgs, reset, toggle, setTypes, setSort, setSearchText } =
-  marketFilter.actions;
+export const {
+  setSdgs,
+  reset,
+  toggle,
+  setTypes,
+  setSort,
+  setKYCOnly,
+  setSearchText,
+} = marketFilter.actions;
 
 export default marketFilter.reducer;

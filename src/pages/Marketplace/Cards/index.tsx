@@ -9,7 +9,7 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, sort, searchText } = useGetter(
+  const { sdgs, types, sort, searchText, kycOnly } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -21,6 +21,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     endow_type: types[0],
     tier: "Level3",
     sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
+    kyc_only: kycOnly || undefined,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
