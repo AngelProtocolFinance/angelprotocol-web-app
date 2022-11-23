@@ -16,6 +16,7 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
         } as BaseChain)
     )
   );
+  const [isLoading, setLoading] = useState(true);
 
   const { handleError } = useErrorContext();
 
@@ -28,13 +29,14 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     isSuccess,
   } = useChainsQuery(null);
 
-  const isLoading = areChainsLoading || isFetching;
+  const isChainsLoading = areChainsLoading || isFetching;
 
   useEffect(() => {
-    if (isLoading) {
+    if (isChainsLoading) {
       return;
     }
 
+    setLoading(true);
     if (isError) {
       handleError(error);
     } else if (isSuccess) {
@@ -62,10 +64,11 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
       }
 
       setSupportedChains(result);
+      setLoading(false);
     }
   }, [
     supportedChainIds,
-    isLoading,
+    isChainsLoading,
     isSuccess,
     isError,
     error,
@@ -73,5 +76,5 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     handleError,
   ]);
 
-  return { isLoading, supportedChains };
+  return { isLoading: isChainsLoading || isLoading, supportedChains };
 }
