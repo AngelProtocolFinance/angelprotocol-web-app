@@ -1,6 +1,6 @@
 import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { appRoutes } from "constants/routes";
 import WalletSuite from "../WalletSuite";
 import DesktopNav from "./DesktopNav";
@@ -10,7 +10,6 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Header({ classes = "" }: { classes?: string }) {
   const location = useLocation();
-  const isRegistration = location.pathname.includes(appRoutes.register);
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -31,12 +30,12 @@ export default function Header({ classes = "" }: { classes?: string }) {
   return (
     <header
       className={`${classes} ${
-        isScrolled
-          ? "bg-blue dark:bg-blue-d3 shadow-lg"
-          : ` ${isRegistration ? "bg-blue dark:bg-blue-d3" : ""}`
-      } py-4 transition ease-in-out duration-300 w-full`}
+        isScrolled ? "bg-blue dark:bg-blue-d3 shadow-lg" : ""
+      } ${
+        hasBanner(location) ? "-mb-[6.5rem]" : "bg-blue dark:bg-blue-d3 mb-0"
+      } transition ease-in-out duration-300 w-full`}
     >
-      <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
+      <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto] py-4">
         <Logo />
         <DesktopNav classes="hidden lg:flex" />
         <div className="flex gap-4 justify-self-end">
@@ -47,5 +46,17 @@ export default function Header({ classes = "" }: { classes?: string }) {
         <MobileNavOpener classes="flex ml-2 lg:hidden" />
       </div>
     </header>
+  );
+}
+
+function hasBanner(location: Location): boolean {
+  return !!matchRoutes(
+    [
+      /**routes with banner */
+      appRoutes.index,
+      appRoutes.donate,
+      appRoutes.profile + "/*",
+    ].map((r) => ({ path: r })),
+    location
   );
 }

@@ -15,7 +15,7 @@ export default function Donations() {
   );
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-28 text-white/80">
+    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 mt-4 text-white/80">
       <h1 className="text-2xl font-extrabold uppercase text-white mb-4">
         My Donations
       </h1>

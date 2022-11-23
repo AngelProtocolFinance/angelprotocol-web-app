@@ -10,7 +10,7 @@ export default function Marketplace() {
     (state) => state.component.marketFilter.isOpen
   );
   return (
-    <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d4 pb-16">
+    <>
       <div className="bg-market-banner-light dark:bg-market-banner-dark bg-cover bg-center">
         <Banner classes="hidden lg:grid" />
         <MobileBanner classes="grid lg:hidden" />
@@ -26,11 +26,11 @@ export default function Marketplace() {
           }`}
         />
         <Cards
-          classes={`${
+          classes={`mb-16 ${
             isFilterOpen ? "col-span-2 md:col-span-1" : "col-span-2"
           }`}
         />
       </div>
-    </div>
+    </>
   );
 }
