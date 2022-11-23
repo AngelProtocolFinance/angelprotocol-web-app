@@ -56,7 +56,7 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
       if (!supportedChainIds.length) {
         return handleError(
           new UnexpectedStateError(
-            `None of the supported chains was returned (${supportedChainIds.join(
+            `None of the supported chains were returned (${supportedChainIds.join(
               ", "
             )})`
           )
