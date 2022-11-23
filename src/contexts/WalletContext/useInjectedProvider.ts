@@ -78,8 +78,10 @@ export default function useInjectedProvider(
   };
 
   /** event handlers */
-  const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setChainId(`${parseInt(hexChainId, 16)}`);
+  const handleChainChange: ChainChangeHandler = (_) => {
+    // it is best to reload the page on chain/network changes, as otherwise there might be unexpected behavior
+    // https://docs.ethers.io/v5/concepts/best-practices/
+    window.location.reload();
   };
 
   //useful when user changes account internally via metamask
