@@ -64,8 +64,9 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
       }
 
       setSupportedChains(result);
-      setLoading(false);
     }
+
+    setLoading(false);
   }, [
     supportedChainIds,
     isChainsLoading,
