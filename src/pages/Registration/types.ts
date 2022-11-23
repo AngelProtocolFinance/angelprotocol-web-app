@@ -4,11 +4,11 @@ import {
   ReferralMethods,
   RegistrationStatus,
 } from "types/aws";
+import { EndowmentTierNum } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
+import { Asset, OptionType } from "components/registration";
 
-export type OptionType = { label: string; value: ContactRoles };
-export type ReferralOptionType = { label: string; value: ReferralMethods };
 //REF_ID is global to registration
 export type InitReg = {
   reference: string;
@@ -27,31 +27,33 @@ export type ContactPerson = {
   email: string;
 
   orgName: string;
-  role: string;
+  role: ContactRoles;
   otherRole: string;
 
-  referralMethod: string;
+  referralMethod: ReferralMethods;
   otherReferralMethod: string;
   goals: string;
 };
 
 //STEP 2
 export type Documentation = {
-  //level 1 - should nest?
-  proofOfIdentity: FileObject[];
-  proofOfRegistration: FileObject[];
+  //level1
+  proofOfIdentity: Asset;
+  proofOfRegistration: Asset;
   website: string;
-  sdg: UNSDG_NUMS;
+  sdgs: OptionType<UNSDG_NUMS>[];
 
   //level 2
-  financialStatements: FileObject[];
+  financialStatements: Asset;
 
   //level3
-  auditedFinancialReports: FileObject[];
+  auditedFinancialReports: Asset;
+  isKYCRequired: "Yes" | "No";
 
   //so user won't click again on resume
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
+  level: EndowmentTierNum;
 };
 
 //STEP 3
@@ -71,7 +73,6 @@ export type CompleteRegistration = {
   init: InitReg;
   contact: ContactPerson;
   documentation: Documentation;
-  profile: Profile;
   wallet: WalletDetails;
   endowId?: number; //created
 };
@@ -86,13 +87,9 @@ type Step2Data = Optional<
   "documentation"
 >;
 
-type Step3Data = Optional<
-  Pick<CompleteRegistration, "init" | "contact" | "documentation" | "profile">,
-  "profile"
->;
-type Step4Data = Optional<CompleteRegistration, "wallet">;
+type Step3Data = Optional<CompleteRegistration, "wallet">;
 
-export type RegistrationData = Step1Data | Step2Data | Step3Data | Step4Data;
+export type RegistrationData = Step1Data | Step2Data | Step3Data;
 
 type RegStep1 = {
   step: 1;
@@ -111,19 +108,9 @@ type RegStep3 = {
 
 type RegStep4 = {
   step: 4;
-  data: Step4Data;
-};
-
-type RegStep5 = {
-  step: 5;
   data: CompleteRegistration & { status: RegistrationStatus };
 };
 
-export type RegistrationState =
-  | RegStep1
-  | RegStep2
-  | RegStep3
-  | RegStep4
-  | RegStep5;
+export type RegistrationState = RegStep1 | RegStep2 | RegStep3 | RegStep4;
 
 export type RegStep = RegistrationState["step"];

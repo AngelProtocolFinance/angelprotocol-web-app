@@ -2,11 +2,13 @@ import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
 import { ButtonMailTo } from "./common";
 
-export default function ConfirmEmail() {
+export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   /** going to this page should only be thru Signup or Resume
    *  if thru URL, would have empty state, and thus be redirected to Signup
    */
@@ -15,6 +17,7 @@ export default function ConfirmEmail() {
 
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
 
   if (!initReg) {
     return <Navigate to={".."} />;
@@ -23,18 +26,26 @@ export default function ConfirmEmail() {
   const { email, reference } = initReg;
 
   return (
-    <div className="padded-container grid content-start justify-items-center pt-28">
-      <h1>Confirm your email address</h1>
+    <div
+      className={`max-w-lg grid content-start justify-items-center ${classes}`}
+    >
+      <h1 className="text-[2rem] font-bold mb-2 text-center">
+        Confirm your email address
+      </h1>
 
-      <span className="font-normal">
-        We sent an email to {email}. Please confirm your email by clicking on
-        the link in the message.
-      </span>
+      <p className="text-center text-white/75 mb-8 w-full text-lg">
+        We sent an email to <span className="font-semibold">{email}</span>.
+        Please confirm your email by clicking on the link in the message.
+      </p>
       <BtnPrim
+        className="w-full max-w-[26.25rem] mb-4"
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),
-            handleError
+            handleError,
+            () => {
+              showModal(Popup, { message: "Email verification sent!" });
+            }
           );
         }}
         disabled={isLoading}

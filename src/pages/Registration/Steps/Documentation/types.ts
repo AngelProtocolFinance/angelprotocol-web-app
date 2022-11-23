@@ -1,12 +1,3 @@
-import { Documentation } from "../../types";
-import { Asset } from "components/FileDropzone";
+import { Documentation } from "pages/Registration/types";
 
-export type FormValues = Pick<
-  Documentation,
-  "website" | "sdg" | "hasAuthority" | "hasAgreedToTerms"
-> & {
-  proofOfIdentity: Asset;
-  proofOfRegistration: Asset;
-  financialStatements: Asset;
-  auditedFinancialReports: Asset;
-};
+export type FormValues = Omit<Documentation, "level"> & { level: never };

@@ -5,7 +5,6 @@ import {
   DocsUpdateResult,
   EndowmentProposal,
   InitApplication,
-  ProfileUpdateResult,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
@@ -84,13 +83,6 @@ const registration_api = aws.injectEndpoints({
                   draft.Registration = Object.assign(
                     draft.Registration,
                     data as DocsUpdateResult
-                  );
-                  break;
-                }
-                case "profile assets": {
-                  draft.Metadata = Object.assign(
-                    draft.Metadata,
-                    data as ProfileUpdateResult
                   );
                   break;
                 }

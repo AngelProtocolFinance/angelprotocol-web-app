@@ -78,12 +78,6 @@ export type TDocumentation = {
   KycDonorsOnly: boolean;
 };
 
-export type RegProfile = {
-  Banner: FileObject;
-  Logo: FileObject;
-  Overview: string;
-};
-
 //INIT STEP
 export type InitApplication = {
   Registration: InitReg;
@@ -106,17 +100,10 @@ export type DoneDocs = {
   Metadata: InitMeta;
 };
 
-export type DoneProfile = {
-  Registration: InitReg & OrgData & TDocumentation;
-  ContactPerson: InitContact & ContactDetails;
-  Metadata: InitMeta & RegProfile;
-};
-
 export type DoneWallet = {
   Registration: InitReg & OrgData & TDocumentation;
   ContactPerson: InitContact & ContactDetails;
   Metadata: InitMeta &
-    RegProfile &
     WalletData & {
       EndowmentId?: number;
       /** when created 
@@ -130,7 +117,6 @@ export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneDocs
-  | DoneProfile
   | DoneWallet;
 
 type ContactUpdate = {
@@ -144,27 +130,17 @@ type DocsUpdate = {
 } & Omit<TDocumentation, "Tier"> &
   Partial<Pick<InitReg, "UN_SDG">>;
 
-type ProfileUpdate = {
-  type: "profile assets";
-} & Pick<RegProfile, "Logo"> &
-  Partial<Omit<RegProfile, "Logo">>;
-
 type WalletUpdate = {
   type: "wallet";
 } & WalletData;
 
-export type RegistrationUpdate =
-  | ContactUpdate
-  | DocsUpdate
-  | ProfileUpdate
-  | WalletUpdate;
+export type RegistrationUpdate = ContactUpdate | DocsUpdate | WalletUpdate;
 
 export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
   Registration: OrgData;
 };
 export type DocsUpdateResult = InitReg & TDocumentation;
-export type ProfileUpdateResult = RegProfile;
 export type WalletUpdateResult = WalletData;
 
 /** alias to provide context outside registration */

@@ -39,21 +39,21 @@ module.exports = {
       },
 
       green: {
-        d4: "#064e3b",
-        d3: "#065f46",
-        d2: "#047857",
-        d1: "#059669",
-        DEFAULT: "#10b981",
-        l1: "#34d399",
-        l2: "#6ee7b7",
-        l3: "#a7f3d0",
-        l4: "#d1fae5",
-        l5: "#ecfdf5",
+        d4: "#1F4521",
+        d3: "#306C33",
+        d2: "#419345",
+        d1: "#57B55C",
+        DEFAULT: "#7EC682",
+        l1: "#9AD39D",
+        l2: "#B7DFB9",
+        l3: "#D3ECD4",
+        l4: "#EFF8F0",
+        l5: "#FDFEFD",
       },
 
       bluegray: {
         DEFAULT: "#3D5F76",
-        d1:"#283E4D"
+        d1: "#283E4D",
       },
 
       red: {

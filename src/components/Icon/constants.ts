@@ -15,6 +15,7 @@ import {
   AiOutlineLike,
   AiOutlineMedium,
   AiOutlinePlus,
+  AiOutlineQuestionCircle,
   AiOutlineTwitter,
   AiOutlineUpload,
 } from "react-icons/ai";
@@ -152,6 +153,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Moon: FiMoon,
   Sun: BiSun,
   HeartOutline: AiOutlineHeart,
+  Question: AiOutlineQuestionCircle,
   HeartFill: AiFillHeart,
   Picture: ImFilePicture,
   MapPin: RiMapPin2Line,

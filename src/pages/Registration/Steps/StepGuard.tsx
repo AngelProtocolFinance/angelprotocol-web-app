@@ -25,7 +25,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     useEffect(() => {
       if (idRef.current !== stateId) {
         /** if reg is complete, mutations should redirect to summary */
-        if (thisStep < savedStep && savedStep === 5) {
+        if (thisStep < savedStep && savedStep === 4) {
           navigate(`../${savedStep}`, { state: init });
           /** if not complete, just go to next step */
         } else if (thisStep < savedStep) {

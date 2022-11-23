@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import RegLoader from "../../common/RegLoader";
+import Icon from "components/Icon";
 import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
@@ -9,7 +9,7 @@ import WalletSubmission from "./WalletSubmission";
 function WalletRegistration() {
   const {
     data: { wallet: prevWallet },
-  } = useRegState<4>();
+  } = useRegState<3>();
   const { wallet, isLoading } = useGetWallet();
 
   //save prevWallet to intermediate state
@@ -23,8 +23,9 @@ function WalletRegistration() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <RegLoader message="Wallet is loading" />
+      <div className="flex items-center justify-center gap-2">
+        <Icon type="Loading" className="animate-spin" />
+        <span>Wallet is loading</span>
       </div>
     );
   }

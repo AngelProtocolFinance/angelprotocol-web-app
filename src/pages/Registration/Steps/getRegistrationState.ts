@@ -2,21 +2,21 @@ import {
   ContactPerson,
   Documentation,
   InitReg,
-  Profile,
   RegistrationState,
 } from "../types";
 import {
   ContactDetails,
   DoneContact,
   DoneDocs,
-  DoneProfile,
   DoneWallet,
+  FileObject,
   InitContact,
-  RegProfile,
   SavedRegistration,
   TDocumentation,
   WalletData,
 } from "types/aws";
+import { Asset } from "components/registration";
+import { unsdgs } from "constants/unsdgs";
 
 export function getRegistrationState(
   reg: SavedRegistration
@@ -24,26 +24,14 @@ export function getRegistrationState(
   if (isDoneWallet(reg)) {
     const { ContactPerson: c, Registration: r, Metadata: m } = reg;
     return {
-      step: 5,
-      data: {
-        init: getInit(c),
-        contact: formatContactPerson(c, r),
-        documentation: formatDocumentation(r),
-        profile: formatProfile(m),
-        wallet: { address: m.JunoWallet },
-        status: r.RegistrationStatus,
-        endowId: m.EndowmentId,
-      },
-    };
-  } else if (isDoneProfile(reg)) {
-    const { ContactPerson: c, Registration: r, Metadata: m } = reg;
-    return {
       step: 4,
       data: {
         init: getInit(c),
         contact: formatContactPerson(c, r),
         documentation: formatDocumentation(r),
-        profile: formatProfile(m),
+        wallet: { address: m.JunoWallet },
+        status: r.RegistrationStatus,
+        endowId: m.EndowmentId,
       },
     };
   } else if (isDoneDocs(reg)) {
@@ -84,14 +72,6 @@ function getInit(i: InitContact): InitReg {
   };
 }
 
-function formatProfile(m: DoneProfile["Metadata"]): Profile {
-  return {
-    banner: m.Banner,
-    logo: m.Logo,
-    overview: m.Overview,
-  };
-}
-
 function formatContactPerson(
   c: ContactDetails & InitContact,
   r: DoneContact["Registration"]
@@ -111,39 +91,46 @@ function formatContactPerson(
 }
 
 function formatDocumentation({
+  Tier,
   ProofOfIdentity: poi,
   ProofOfRegistration: por,
   FinancialStatements: fs,
-  AuditedFinancialReports: ar,
+  AuditedFinancialReports: afr,
   Website,
   UN_SDG,
+  KycDonorsOnly,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
-    proofOfIdentity: [poi],
-    proofOfRegistration: [por],
+    proofOfIdentity: genFileAsset([poi]),
+    proofOfRegistration: genFileAsset([por]),
     website: Website,
-    sdg: UN_SDG[0] || 1,
+    sdgs: UN_SDG.map((sdg) => ({
+      value: sdg,
+      label: `${sdg} - ${unsdgs[sdg].title}`,
+    })),
 
     //level 2
-    financialStatements: fs || [],
+    financialStatements: genFileAsset(fs || []),
 
     //level 3
-    auditedFinancialReports: ar || [],
+    auditedFinancialReports: genFileAsset(afr || []),
+    /**TODO: must be part of Registration not Metadata */
+    isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //meta
+    level: Tier,
     hasAuthority: true,
     hasAgreedToTerms: true,
   };
 }
 
-function isDoneWallet(data: SavedRegistration): data is DoneWallet {
-  const key: keyof WalletData = "JunoWallet";
-  return key in data.Metadata;
+export function genFileAsset(previews: FileObject[]): Asset {
+  return { files: [], previews };
 }
 
-function isDoneProfile(data: SavedRegistration): data is DoneProfile {
-  const key: keyof RegProfile = "Logo";
+function isDoneWallet(data: SavedRegistration): data is DoneWallet {
+  const key: keyof WalletData = "JunoWallet";
   return key in data.Metadata;
 }
 
