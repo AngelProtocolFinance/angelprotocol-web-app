@@ -16,7 +16,9 @@ import { juno_test_chain_info } from "./chains";
 
 const SUPPORTED_CHAIN_IDS = [
   chainIDs.junoMain,
-  chainIDs.junoTest /*, "pisco-1", "phoenix-1" --> to be added */,
+  chainIDs.junoTest,
+  // chainIDs.terraMain,
+  // chainIDs.terraTest,
 ];
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
