@@ -29,10 +29,10 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     isSuccess,
   } = useChainsQuery(null);
 
-  const isChainsLoading = areChainsLoading || isFetching;
+  const isChainsQueryLoading = areChainsLoading || isFetching;
 
   useEffect(() => {
-    if (isChainsLoading) {
+    if (isChainsQueryLoading) {
       return;
     }
 
@@ -69,7 +69,7 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     setLoading(false);
   }, [
     supportedChainIds,
-    isChainsLoading,
+    isChainsQueryLoading,
     isSuccess,
     isError,
     error,
@@ -77,5 +77,5 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
     handleError,
   ]);
 
-  return { isLoading: isChainsLoading || isLoading, supportedChains };
+  return { isLoading: isChainsQueryLoading || isLoading, supportedChains };
 }
