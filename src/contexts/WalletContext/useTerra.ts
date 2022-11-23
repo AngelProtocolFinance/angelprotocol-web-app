@@ -67,12 +67,12 @@ export default function useTerra() {
     );
 
   const switchChain = async (chainId: chainIDs) => {
-    if (areChainsLoading) {
-      throw new UnexpectedStateError("Chains are still being loaded");
-    }
-
     if (!connection) {
       throw new WalletDisconnectedError();
+    }
+
+    if (areChainsLoading) {
+      throw new UnexpectedStateError("Chains are still being loaded");
     }
 
     if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
