@@ -169,7 +169,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 
   const { chain, isLoading: isChainLoading } = useChainWithBalancesQuery(
-    activeProvider?.providerInfo,
+    activeProvider?.providerInfo?.address,
+    activeProvider?.providerInfo?.chainId,
     disconnect
   );
 

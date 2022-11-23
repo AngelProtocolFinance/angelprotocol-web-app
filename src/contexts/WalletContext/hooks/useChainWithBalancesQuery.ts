@@ -1,7 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ethers, utils } from "ethers";
 import { useCallback, useEffect, useState } from "react";
-import { ProviderInfo } from "../types";
 import { Chain } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { queryContract } from "services/juno/queryContract";
@@ -14,7 +13,8 @@ import { getERC20Holdings } from "../helpers/getERC20Holdings";
 type Result = { chain: Chain; isLoading: boolean };
 
 export function useChainWithBalancesQuery(
-  activeProviderInfo: ProviderInfo | undefined,
+  address: string | undefined,
+  chainId: string | undefined,
   disconnect: () => void
 ): Result {
   const [chainWithBalance, setChainWithBalance] = useState(placeholderChain);
@@ -27,16 +27,12 @@ export function useChainWithBalancesQuery(
     isLoading: isChainLoading,
     isFetching,
     error,
-  } = useChainQuery(activeProviderInfo?.chainId ?? "", {
-    skip: !activeProviderInfo,
-  });
+  } = useChainQuery(chainId, { skip: !chainId });
 
-  const isChainFetching = isChainLoading || isFetching;
-
-  useVerifyChain(activeProviderInfo, chain, isChainFetching, error, disconnect);
+  useVerifyChain(chain, error, disconnect);
 
   useEffect(() => {
-    if (isChainFetching || !activeProviderInfo || !chain) {
+    if (isChainLoading || !address || !chainId || !chain) {
       return;
     }
 
@@ -52,8 +48,6 @@ export function useChainWithBalancesQuery(
           },
           tokens: chain.tokens.map((t) => ({ ...t })),
         };
-
-        const { address, chainId } = activeProviderInfo;
 
         // fetch balances for juno or terra
         if (chain.type === "juno-native" || chain.type === "terra-native") {
@@ -116,18 +110,16 @@ export function useChainWithBalancesQuery(
         setLoading(false);
       }
     })();
-  }, [activeProviderInfo, chain, isChainFetching, handleError]);
+  }, [address, chainId, chain, isChainLoading, handleError]);
 
   return {
     chain: chainWithBalance,
-    isLoading: isLoading || isChainFetching,
+    isLoading: isLoading || isChainLoading || isFetching,
   };
 }
 
 function useVerifyChain(
-  activeProviderInfo: ProviderInfo | undefined,
   chain: Chain | undefined,
-  isLoading: boolean,
   chainError: any,
   disconnect: () => void
 ) {
@@ -152,7 +144,7 @@ function useVerifyChain(
 
   useEffect(() => {
     // no active provider === no connected wallet so no need to run hook
-    if (isLoading || !activeProviderInfo || !chain) {
+    if (!chain) {
       return;
     }
     if (chainError) {
@@ -160,7 +152,7 @@ function useVerifyChain(
     } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
       handle(new WrongNetworkError());
     }
-  }, [activeProviderInfo, chain, chainError, isLoading, handle]);
+  }, [chain, chainError, handle]);
 }
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
