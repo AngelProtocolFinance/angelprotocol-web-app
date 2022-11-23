@@ -208,6 +208,9 @@ export default function useInjectedProvider(
     }
 
     try {
+      // Setting `isLoading` to `true` only so that the appropriate loading indicator is shown when switching chains
+      // No need to set it to `false` in the end, as the page should be reloaded anyway after a successful switch
+      // (see comment above "chainChanged" handler)
       setIsLoading(true);
       await injectedProvider.request({
         method: EIPMethods.wallet_switchEthereumChain,
@@ -215,6 +218,8 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
+        // if an unexpected exception occurs, the chain will not be switched and `isLoading` should be set to `false`
+        setIsLoading(false);
         throw new WalletError(
           switchError?.message || "Unknown error occured",
           switchError?.code || 0
@@ -222,8 +227,6 @@ export default function useInjectedProvider(
       }
 
       await addEthereumChain(injectedProvider, chainId);
-    } finally {
-      setIsLoading(false);
     }
   };
 
