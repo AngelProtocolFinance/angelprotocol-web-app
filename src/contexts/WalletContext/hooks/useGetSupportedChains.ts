@@ -3,6 +3,7 @@ import { BaseChain } from "types/aws";
 import { useChainsQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { logger } from "helpers";
+import { UnexpectedStateError } from "errors/errors";
 import { chainIDs } from "constants/chains";
 
 export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
@@ -49,6 +50,16 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
           `Chain ${suppChainId} not returned in the chains collection`
         );
       });
+
+      if (!supportedChainIds.length) {
+        return handleError(
+          new UnexpectedStateError(
+            `None of the supported chains was returned (${supportedChainIds.join(
+              ", "
+            )})`
+          )
+        );
+      }
 
       setSupportedChains(result);
     }
