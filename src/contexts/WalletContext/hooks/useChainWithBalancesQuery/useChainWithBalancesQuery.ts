@@ -1,14 +1,13 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ethers, utils } from "ethers";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Chain } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { queryContract } from "services/juno/queryContract";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
-import { useErrorContext } from "../../ErrorContext";
-import { placeholderChain } from "../constants";
-import { getERC20Holdings } from "../helpers/getERC20Holdings";
+import { useErrorContext } from "contexts/ErrorContext";
+import { placeholderChain } from "../../constants";
+import { getERC20Holdings } from "../../helpers/getERC20Holdings";
+import useVerifyChain from "./useVerifyChain";
 
 type Result = { chain: Chain; isLoading: boolean };
 
@@ -116,43 +115,6 @@ export function useChainWithBalancesQuery(
     chain: chainWithBalance,
     isLoading: isLoading || isChainLoading || isFetching,
   };
-}
-
-function useVerifyChain(
-  chain: Chain | undefined,
-  chainError: any,
-  disconnect: () => void
-) {
-  const { handleError } = useErrorContext();
-
-  const handle = useCallback(
-    (error: any) => {
-      handleError(error);
-      try {
-        disconnect();
-      } catch (err) {
-        // when wallet is disconnected, the `disconnect` func is recreated,
-        // causing this hook to rerun and throwing the error below.
-        // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectedError)) {
-          handleError(err);
-        }
-      }
-    },
-    [handleError, disconnect]
-  );
-
-  useEffect(() => {
-    // no active provider === no connected wallet so no need to run hook
-    if (!chain) {
-      return;
-    }
-    if (chainError) {
-      handle(chainError);
-    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
-      handle(new WrongNetworkError());
-    }
-  }, [chain, chainError, handle]);
 }
 
 async function getCW20Balance(chain: Chain, walletAddress: string) {
