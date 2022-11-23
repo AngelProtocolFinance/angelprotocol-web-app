@@ -1,3 +1,4 @@
+import banner from "assets/images/hero.png";
 import { useGetter } from "store/accessors";
 import Banner from "./Banner";
 import Cards from "./Cards";
@@ -11,9 +12,12 @@ export default function Marketplace() {
   );
   return (
     <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d4 pb-16">
-      <div className="bg-market-banner-light dark:bg-market-banner-dark bg-cover bg-center">
-        <Banner classes="hidden lg:grid" />
-        <MobileBanner classes="grid lg:hidden" />
+      <div
+        style={{ backgroundImage: `url('${banner}')` }}
+        className="relative bg-cover bg-center before:content-[''] before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90 before:absolute"
+      >
+        <Banner classes="hidden lg:grid isolate" />
+        <MobileBanner classes="grid lg:hidden isolate" />
       </div>
 
       <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2">

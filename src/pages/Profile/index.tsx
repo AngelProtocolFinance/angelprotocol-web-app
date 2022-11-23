@@ -1,8 +1,5 @@
 import { useParams } from "react-router-dom";
-import {
-  useEndowmentDetailsQuery,
-  useEndowmentProfileQuery,
-} from "services/juno/account";
+import { useEndowInfoQuery } from "services/juno/custom";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
@@ -13,34 +10,18 @@ import Skeleton from "./Skeleton";
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const {
-    data: profile,
-    isLoading: isProfileLoading,
-    isError: isProfileError,
-  } = useEndowmentProfileQuery({ id: numId }, { skip: numId === 0 });
+  const { isLoading, isError, data } = useEndowInfoQuery(numId);
 
-  const {
-    data: endowment,
-    isLoading: isEndowLoading,
-    isError: isEndowError,
-  } = useEndowmentDetailsQuery({ id: numId }, { skip: numId === 0 });
-
-  if (isEndowLoading || isProfileLoading) {
+  if (isLoading) {
     return <Skeleton />;
   }
 
-  if (isEndowError || isProfileError || !profile || !endowment) {
+  if (isError || !data) {
     return <PageError />;
   }
 
   return (
-    <ProfileContext.Provider
-      value={{
-        ...profile,
-        kyc_donors_only: endowment.kyc_donors_only,
-        id: numId,
-      }}
-    >
+    <ProfileContext.Provider value={data}>
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />
         <Logo />
