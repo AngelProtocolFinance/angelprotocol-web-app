@@ -54,11 +54,10 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
       });
 
       if (!result.length) {
+        const suppChainsStr = supportedChainIds.join(", ");
         return handleError(
           new UnexpectedStateError(
-            `None of the supported chains were returned (${supportedChainIds.join(
-              ", "
-            )})`
+            `None of the supported chains were returned (${suppChainsStr})`
           )
         );
       }
