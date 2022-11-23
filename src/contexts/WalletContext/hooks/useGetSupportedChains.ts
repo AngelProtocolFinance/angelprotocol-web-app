@@ -16,7 +16,7 @@ export function useGetSupportedChains(supportedChainIds: chainIDs[]) {
         } as BaseChain)
     )
   );
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   const { handleError } = useErrorContext();
 
