@@ -3,6 +3,7 @@ import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
+import SuccessPopup from "components/SuccessPopup";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
 
@@ -34,9 +35,10 @@ export default function useSubmit(props: Props) {
         });
         return;
       }
-      showModal(Popup, {
-        message:
-          "Receipt request submitted and will be sent to the email you provided",
+      showModal(SuccessPopup, {
+        headline: "Get Receipt",
+        title: "Tax Receipt Sent",
+        message: "Your tax receipt has been sent to the email address provided",
       });
       return;
     }
