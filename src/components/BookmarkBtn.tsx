@@ -8,12 +8,14 @@ import Popup from "components/Popup";
 type Props = PropsWithChildren<{
   id: number;
   name: string;
+  logo: string;
   classes?: string;
 }>;
 
 export default function BookmarkBtn({
   id,
   name,
+  logo,
   children,
   classes = "",
 }: Props) {
@@ -38,7 +40,7 @@ export default function BookmarkBtn({
     }
     const res = bookMark
       ? await toggle({ type: "delete", ...bookMark, wallet: wallet.address })
-      : await toggle({ type: "add", name, id, wallet: wallet.address });
+      : await toggle({ type: "add", name, id, logo, wallet: wallet.address });
 
     if ("error" in res) {
       showModal(Popup, { message: "Failed to save bookmark" });
