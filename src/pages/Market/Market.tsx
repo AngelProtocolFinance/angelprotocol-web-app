@@ -1,6 +1,7 @@
 import { CategorizedEndowments } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { useCategorizedEndowmentsQuery } from "services/juno/account";
+import Head from "components/Head";
 import Loader from "components/Loader";
 import Banner from "./Banner";
 import Index from "./Index";
@@ -11,6 +12,12 @@ export default function Market() {
 
   return (
     <div className="grid content-start padded-container pb-16">
+      <Head
+        title="Support an impact organization - Angel Protocol"
+        description="Angel Protocol provides impact stakeholders with the tools to fundraise, coordinate, and invest capital."
+        image="https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png"
+        website="https://app.angelprotocol.io"
+      />
       <Banner />
       {(isLoading && (
         <Loader

@@ -8,6 +8,7 @@ import {
   useEndowmentProfileQuery,
 } from "services/juno/account";
 import ContentLoader from "components/ContentLoader";
+import Head from "components/Head";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
 import { appRoutes } from "constants/routes";
@@ -53,6 +54,11 @@ export default function Profile() {
 
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-[auto_auto_1fr] gap-4 pb-16 content-start">
+      <Head
+        title={profile.name + " - Angel Protocol"}
+        website={profile.url}
+        image={profile.image}
+      />
       <context.Provider
         value={{
           ...profile,
