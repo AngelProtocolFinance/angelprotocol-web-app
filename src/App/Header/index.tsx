@@ -33,7 +33,7 @@ export default function Header({ classes = "" }: { classes?: string }) {
   return (
     <header
       className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg}
-      py-4 transition ease-in-out duration-300 w-full`}
+      py-4 transition-shadow ease-in-out duration-300 w-full`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
         <Logo />
@@ -54,8 +54,8 @@ function hasBanner(location: Location): boolean {
     [
       /**routes with banner */
       appRoutes.index,
-      appRoutes.donate,
-      appRoutes.profile + "/*",
+      appRoutes.donate + "/:id",
+      appRoutes.profile + "/:id",
     ].map((r) => ({ path: r })),
     location
   );
