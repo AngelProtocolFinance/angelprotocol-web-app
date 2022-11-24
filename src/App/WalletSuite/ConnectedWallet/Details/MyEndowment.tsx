@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AP_ID, REVIEWER_ID } from "services/juno/custom";
-import ContentLoader from "components/ContentLoader";
 import { AdminLink } from "components/admin";
+import Logo from "./Logo";
 
 // Placeholder until profile-fetching by wallet address endpoint is created
 const profile = undefined;
@@ -16,7 +15,7 @@ export default function MyEndowment() {
         </h3>
         <div className="flex gap-3">
           {/* Will be added once possible to fetch endowment profile by wallet address */}
-          <Logo logo={""} />
+          <Logo logo={""} className="w-10 h-10" />
           <div className="grid">
             <span className="font-heading font-semibold text-sm">
               {/* Will be added once possible to fetch endowment profile by wallet address */}
@@ -45,23 +44,5 @@ export default function MyEndowment() {
         </div>
       </div>
     )
-  );
-}
-
-function Logo({ logo }: { logo: string }) {
-  const [isLoading, setLoading] = useState(true);
-
-  return (
-    <>
-      {isLoading && <ContentLoader className="w-10 h-10 rounded-full" />}
-      <img
-        src={logo}
-        className={`w-10 h-10 object-contain border border-gray-l2 dark:border-bluegray rounded-full ${
-          isLoading ? "hidden" : ""
-        }`}
-        alt=""
-        onLoad={() => setLoading(false)}
-      />
-    </>
   );
 }
