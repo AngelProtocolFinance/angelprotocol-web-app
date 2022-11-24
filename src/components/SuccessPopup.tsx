@@ -15,7 +15,7 @@ export default function SuccessPopup(props: Props) {
   const { children, headline, title, message } = props;
 
   return (
-    <Dialog.Panel className="fixed-center z-10 flex flex-col bg-white w-full max-w-lg overflow-hidden">
+    <Dialog.Panel className="fixed-center z-10 flex flex-col bg-white sm:w-full w-[90vw] sm:max-w-lg overflow-hidden">
       <div className="relative mb-6">
         <h2 className="text-xl text-gray-d2 font-bold text-center border-b-[1px] bg-orange-l6 border-gray-l2 p-5">
           {headline}
@@ -42,7 +42,7 @@ export default function SuccessPopup(props: Props) {
       <div className="w-full text-end bg-orange-l6 border-t-[1px] border-gray-l2 p-3">
         <BtnPrimary
           type="button"
-          className="px-10 uppercase"
+          className="w-full px-10 uppercase"
           onClick={() => closeModal()}
         >
           Done
