@@ -4,6 +4,7 @@ import { ethers, utils } from "ethers";
 import { BaseChain, Chain, WithdrawLog } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedNetworkError } from "errors/errors";
+import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 import { apesTags } from "./tags";
@@ -17,7 +18,7 @@ export const apes = createApi({
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
-      query: () => "v1/chains",
+      query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
     }),
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
