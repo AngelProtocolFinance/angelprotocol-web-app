@@ -15,7 +15,7 @@ export default function MyEndowment() {
         </h3>
         <div className="flex gap-3">
           {/* Will be added once possible to fetch endowment profile by wallet address */}
-          <Logo logo={""} className="w-10 h-10" />
+          <Logo src={""} className="w-10 h-10" />
           <div className="grid">
             <span className="font-heading font-semibold text-sm">
               {/* Will be added once possible to fetch endowment profile by wallet address */}
