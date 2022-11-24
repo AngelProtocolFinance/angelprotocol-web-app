@@ -9,12 +9,12 @@ export default function Favourites(props: WalletState) {
   const queryState = useBookmarksQuery(props.address);
 
   return (
-    <div className="grid gap-3 p-4 border-b border-gray-l2">
+    <div className="grid gap-3 grow p-4 border-b border-gray-l2">
       <h3 className="flex justify-between gap-2 text-gray-d1 font-heading">
         <span className="font-bold text-sm text-gray-d1">Favourites</span>
-        {/* 
+        {/*
           Just a placeholder link until it is decided what page it should navigate to, see comment:
-          https://app.clickup.com/t/3rcffb9?comment=1134342876&threadedComment=1813673953 
+          https://app.clickup.com/t/3rcffb9?comment=1134342876&threadedComment=1813673953
         */}
         <Link
           to={`${appRoutes.donations}/${props.address}`}
