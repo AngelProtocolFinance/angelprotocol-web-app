@@ -39,9 +39,12 @@ export default function Group({ num, members, title }: Props) {
       }}
     >
       <div className="flex items-center gap-2">
-        <button onClick={toggleGroup}>
-          <Checkbox checked={isAllSelected} classes="top-0.5" />
-        </button>
+        <Checkbox
+          checked={isAllSelected}
+          className="top-0.5"
+          onChange={toggleGroup}
+        />
+
         <Drawer isOpen={isOpen} toggle={toggle}>
           <span className="font-bold text-sm">{title}</span>
         </Drawer>
@@ -57,7 +60,11 @@ export default function Group({ num, members, title }: Props) {
             >
               {({ selected }) => (
                 <>
-                  <Checkbox checked={selected} classes="mr-4 top-[3px]" />
+                  <Checkbox
+                    checked={selected}
+                    className="mr-4 top-[3px]"
+                    readOnly
+                  />
                   SDG #{m} : {unsdgs[m].title}
                 </>
               )}
