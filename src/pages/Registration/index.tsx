@@ -1,13 +1,13 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Resume from "pages/Registration/Resume";
-import Signup from "pages/Registration/Signup";
-import Steps from "./Steps";
-import Success from "./Success";
+import Signup from "./Signup";
 import routes from "./routes";
 
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
+const Steps = lazy(() => import("./Steps"));
+const Resume = lazy(() => import("./Resume"));
+const Success = lazy(() => import("./Success"));
 
 export default function Registration() {
   return (
