@@ -9,7 +9,7 @@ export default function Favourites(props: WalletState) {
   const queryState = useBookmarksQuery(props.address);
 
   return (
-    <div className="grid gap-3 grow p-4 border-b border-gray-l2">
+    <div className="flex flex-col gap-3 grow p-4 border-b border-gray-l2">
       <h3 className="flex justify-between gap-2 text-gray-d1 font-heading">
         <span className="font-bold text-sm text-gray-d1">Favourites</span>
         {/*
