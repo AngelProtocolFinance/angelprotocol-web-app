@@ -191,8 +191,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     error,
   } = useChainQuery(
     {
-      chainId: activeProvider?.providerInfo!.chainId!,
-      address: activeProvider?.providerInfo!.address!,
+      chainId: activeProvider?.providerInfo?.chainId,
+      address: activeProvider?.providerInfo?.address,
     },
     { skip: !activeProvider }
   );

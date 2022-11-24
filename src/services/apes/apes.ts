@@ -24,12 +24,15 @@ export const apes = createApi({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
-    chain: builder.query<Chain, { address: string; chainId: string }>({
+    chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: [{ type: apesTags.chain }],
       async queryFn({ address, chainId }) {
         try {
           if (!chainId) {
-            throw new Error(`Argument chainId missing`);
+            throw new Error(`Argument 'chainId' missing`);
+          }
+          if (!address) {
+            throw new Error(`Argument 'address' missing`);
           }
 
           const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
