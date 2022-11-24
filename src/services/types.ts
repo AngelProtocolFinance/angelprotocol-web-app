@@ -4,6 +4,7 @@ import {
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
+  ProfileResponse,
   Proposal,
 } from "types/contracts";
 
@@ -59,3 +60,6 @@ export type CountryOption = {
 
 /** multicall */
 export type WithBalance<T = Token> = T & { balance: number };
+
+/** endowment */
+export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };
