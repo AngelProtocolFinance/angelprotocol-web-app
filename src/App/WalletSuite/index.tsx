@@ -1,5 +1,5 @@
 import { useGetWallet } from "contexts/WalletContext";
-import ConnectedWallet from "./ConnectedWalletV2";
+import ConnectedWallet from "./ConnectedWallet";
 import WalletSelectorOpener from "./WalletSelectorOpener";
 
 type Props = { menuPlacement?: "top" | "bottom"; classes?: string };
