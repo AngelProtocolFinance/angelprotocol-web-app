@@ -14,9 +14,10 @@ export default function Leaderboard() {
         <QueryLoader
           queryState={queryState}
           messages={{
-            loading: "Loading...",
+            loading: "Fetching data...",
             error: "Failed to get leaderboard data",
           }}
+          classes={{ container: "mt-6" }}
         >
           {(update) => (
             <>
