@@ -12,7 +12,7 @@ export default function Bookmark({ name, id, logo }: EndowmentBookmark) {
         <img
           src={logo}
           alt=""
-          className="w-4 h-4 border border-gray-l2 rounded-full"
+          className="w-4 h-4 border border-gray-l2 dark:border-bluegray rounded-full"
         />
         <span className="truncate max-w-[200px]">{name}</span>
       </Link>

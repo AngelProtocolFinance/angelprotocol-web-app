@@ -37,7 +37,7 @@ export default function Balances({ coins }: { coins: Token[] }) {
           {humanize(coin.balance, 3, true)}
         </div>
       ))}
-      <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1">
+      <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
         <Switch
           checked={hideSmallAmounts}
