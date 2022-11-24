@@ -25,17 +25,10 @@ import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
 
-const SUPPORTED_CHAIN_IDS = [
-  chainIDs.ethMain,
-  chainIDs.ethTest,
-  // chainIDs.binanceMain,
-  chainIDs.binanceTest,
-];
-
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
-  connectorName = prettifyId(providerId),
-  connectorLogo?: string
+  supportedChainIDs: chainIDs[],
+  connectorName = prettifyId(providerId)
 ) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
@@ -48,14 +41,14 @@ export default function useInjectedProvider(
   const addEthereumChain = useAddEthereumChain();
 
   useEffect(() => {
-    SUPPORTED_CHAIN_IDS.forEach((suppChainId) => {
+    supportedChainIDs.forEach((suppChainId) => {
       if (!ethers.providers.getNetwork(Number(suppChainId))) {
         throw new UnexpectedStateError(
           `${suppChainId} not supported by ethers providers`
         );
       }
     });
-  }, []);
+  }, [supportedChainIDs]);
 
   useEffect(() => {
     requestAccess();
@@ -66,7 +59,7 @@ export default function useInjectedProvider(
   }, []);
 
   const { supportedChains, isLoading: areChainsLoading } =
-    useGetSupportedChains(SUPPORTED_CHAIN_IDS);
+    useGetSupportedChains(supportedChainIDs);
 
   /** attachers/detachers */
   const attachChainChangedHandler = (provider: InjectedProvider) => {
@@ -117,7 +110,7 @@ export default function useInjectedProvider(
         });
 
         if (targetChainId) {
-          if (!SUPPORTED_CHAIN_IDS.includes(targetChainId)) {
+          if (!supportedChainIDs.includes(targetChainId)) {
             throw new UnsupportedNetworkError(targetChainId);
           }
 
@@ -129,9 +122,7 @@ export default function useInjectedProvider(
         });
 
         const parsedChainId = `${parseInt(hexChainId, 16)}`;
-        if (
-          !SUPPORTED_CHAIN_IDS.includes(parsedChainId as unknown as chainIDs)
-        ) {
+        if (!supportedChainIDs.includes(parsedChainId as unknown as chainIDs)) {
           throw new UnsupportedNetworkError(parsedChainId);
         }
         setAddress(accounts[0]);
@@ -215,7 +206,7 @@ export default function useInjectedProvider(
     if (!address) {
       throw new WalletDisconnectedError();
     }
-    if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
+    if (!supportedChainIDs.includes(chainId)) {
       throw new UnsupportedNetworkError(chainId);
     }
 
@@ -259,7 +250,7 @@ export default function useInjectedProvider(
   //connection object to render <Connector/>
   const connection: Connection = {
     name: connectorName,
-    logo: connectorLogo ?? WALLET_METADATA[providerId].logo,
+    logo: WALLET_METADATA[providerId].logo,
     installUrl: WALLET_METADATA[providerId].installUrl,
     connect,
   };

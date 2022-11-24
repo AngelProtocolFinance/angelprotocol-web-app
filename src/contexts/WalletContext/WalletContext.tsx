@@ -45,6 +45,15 @@ const initialState: State = {
   isLoading: true,
 };
 
+const XDEFI_EVM_SUPPORTED_CHAIN_IDS = [chainIDs.ethMain, chainIDs.ethTest];
+// const BNB_WALLET_SUPPORTED_CHAIN_IDS = [chainIDs.binanceMain, chainIDs.binanceTest];
+const METAMASK_SUPPORTED_CHAIN_IDS = [
+  chainIDs.ethMain,
+  chainIDs.ethTest,
+  // chainIDs.binanceMain,
+  chainIDs.binanceTest,
+];
+
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
@@ -53,7 +62,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: metamaskInfo,
     supportedChains: metamaskSupportedChains,
     switchChain: switchMetamaskChain,
-  } = useInjectedProvider("metamask");
+  } = useInjectedProvider("metamask", METAMASK_SUPPORTED_CHAIN_IDS);
 
   // const {
   //   isLoading: isBinanceWalletLoading,
@@ -62,7 +71,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   //   providerInfo: binanceWalletInfo,
   //   supportedChains: binanceSupportedChains,
   //   switchChain: switchBinanceChain,
-  // } = useInjectedProvider("binance-wallet");
+  // } = useInjectedProvider("binance-wallet", BNB_WALLET_SUPPORTED_CHAIN_IDS);
 
   const {
     isLoading: isKeplrLoading,
@@ -89,7 +98,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: xdefiInfo,
     supportedChains: xdefiSupportedChains,
     switchChain: switchXdefiChain,
-  } = useInjectedProvider("xdefi-evm");
+  } = useInjectedProvider(
+    "xdefi-evm",
+    XDEFI_EVM_SUPPORTED_CHAIN_IDS,
+    "Xdefi EVM"
+  );
 
   const providerStatuses: ProviderStatus[] = [
     // {
