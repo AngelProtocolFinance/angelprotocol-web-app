@@ -9,12 +9,16 @@ export function useAddEthereumChain() {
   const [getChain] = useLazyChainQuery();
 
   const addEthereumChain = useCallback(
-    async (injectedProvider: InjectedProvider, chainId: string) => {
+    async (
+      injectedProvider: InjectedProvider,
+      address: string,
+      chainId: string
+    ) => {
       if (!chainId || !injectedProvider) {
         return;
       }
       try {
-        const chainToAdd = await getChain(chainId, true).unwrap();
+        const chainToAdd = await getChain({ address, chainId }, true).unwrap();
 
         await injectedProvider.request({
           method: EIPMethods.wallet_addEthereumChain,

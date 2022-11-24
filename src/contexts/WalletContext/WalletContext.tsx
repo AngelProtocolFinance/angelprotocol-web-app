@@ -3,13 +3,17 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, Token } from "types/aws";
-import { WalletDisconnectedError } from "errors/errors";
+import { useChainQuery } from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { useChainWithBalancesQuery } from "./hooks";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -168,11 +172,19 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     [activeProvider]
   );
 
-  const { chain, isLoading: isChainLoading } = useChainWithBalancesQuery(
-    activeProvider?.providerInfo?.address,
-    activeProvider?.providerInfo?.chainId,
-    disconnect
+  const {
+    data: chain = placeholderChain,
+    isLoading: isChainLoading,
+    error,
+  } = useChainQuery(
+    {
+      chainId: activeProvider?.providerInfo!.chainId!,
+      address: activeProvider?.providerInfo!.address!,
+    },
+    { skip: !activeProvider }
   );
+
+  useVerifyChain(chain, error, disconnect);
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
@@ -230,3 +242,40 @@ const setContext = createContext<Setters>({
 
 export const useSetWallet = () => useContext(setContext);
 export const useGetWallet = () => useContext(getContext);
+
+function useVerifyChain(
+  chain: Chain | undefined,
+  chainError: any,
+  disconnect: () => void
+) {
+  const { handleError } = useErrorContext();
+
+  const handle = useCallback(
+    (error: any) => {
+      handleError(error);
+      try {
+        disconnect();
+      } catch (err) {
+        // when wallet is disconnected, the `disconnect` func is recreated,
+        // causing this hook to rerun and throwing the error below.
+        // We ignore this error and rethrow others
+        if (!(err instanceof WalletDisconnectedError)) {
+          handleError(err);
+        }
+      }
+    },
+    [handleError, disconnect]
+  );
+
+  useEffect(() => {
+    // no active provider === no connected wallet so no need to run hook
+    if (!chain) {
+      return;
+    }
+    if (chainError) {
+      handle(chainError);
+    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
+      handle(new WrongNetworkError());
+    }
+  }, [chain, chainError, handle]);
+}

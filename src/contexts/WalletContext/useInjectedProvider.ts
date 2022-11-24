@@ -100,6 +100,8 @@ export default function useInjectedProvider(
 
   const requestAccess = async (isNewConnection = false) => {
     try {
+      console.log("requestAccess", isNewConnection);
+
       const injectedProvider = getProvider(providerId);
       if (
         injectedProvider &&
@@ -226,7 +228,10 @@ export default function useInjectedProvider(
         );
       }
 
-      await addEthereumChain(injectedProvider, chainId);
+      const accounts = await injectedProvider.request<string[]>({
+        method: EIPMethods.eth_requestAccounts,
+      });
+      await addEthereumChain(injectedProvider, accounts[0], chainId);
     }
   };
 
