@@ -98,7 +98,10 @@ export default function useInjectedProvider(
     }
   };
 
-  const requestAccess = async (isNewConnection = false) => {
+  const requestAccess = async (
+    isNewConnection = false,
+    targetChainId?: chainIDs
+  ) => {
     try {
       const injectedProvider = getProvider(providerId);
       if (
@@ -112,6 +115,15 @@ export default function useInjectedProvider(
         const accounts = await injectedProvider.request<string[]>({
           method: EIPMethods.eth_requestAccounts,
         });
+
+        if (targetChainId) {
+          if (!SUPPORTED_CHAIN_IDS.includes(targetChainId)) {
+            throw new UnsupportedNetworkError(targetChainId);
+          }
+
+          return await switchChain(targetChainId);
+        }
+
         const hexChainId = await injectedProvider.request<string>({
           method: EIPMethods.eth_chainId,
         });
@@ -155,7 +167,7 @@ export default function useInjectedProvider(
     removeAllListeners(providerId);
   }
 
-  const connect = async () => {
+  const connect = async (chainId?: chainIDs) => {
     const dwindow = window as Dwindow;
 
     if (!getProvider(providerId)) {
@@ -177,7 +189,7 @@ export default function useInjectedProvider(
       }
 
       setIsLoading(true);
-      await requestAccess(true);
+      await requestAccess(true, chainId);
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
