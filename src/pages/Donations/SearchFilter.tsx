@@ -7,6 +7,7 @@ interface SearchFilterProps {}
 const SearchFilter: FC<SearchFilterProps> = ({}) => {
   return (
     <div>
+      {/* {Mobile} */}
       <Popover className="sm:hidden">
         <Popover.Button
           className={
@@ -17,9 +18,9 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
           <div className="uppercase font-semibold">Filter</div>
         </Popover.Button>
 
-        <Popover.Panel className="fixed top-0 left-0 bg-white min-w-[100vw] min-h-[100vh] z-50 border border-gray-l2">
+        <Popover.Panel className="fixed top-0 left-0 bg-white dark:bg-blue-d6 min-w-[100vw] min-h-[100vh] z-50 border border-gray-l2 dark:border-bluegray">
           <div className="flex flex-col">
-            <div className="flex justify-between border-b-[1px] bg-orange-l6 border-gray-l2">
+            <div className="flex justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
               <h2 className="text-xl text-orange font-bold p-5 uppercase">
                 Filters
               </h2>
@@ -27,8 +28,8 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                 <Icon type="Close" size={24} className="text-gray-d2"></Icon>
               </Popover.Button>
             </div>
-            <div className="flex justify-between bg-orange-l6 border-b-[1px] border-gray-l2 p-5">
-              <h2 className="text-xl text-gray-d2 font-bold uppercase">
+            <div className="flex justify-between bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray p-5">
+              <h2 className="text-xl text-gray-d2 dark:text-white font-bold uppercase">
                 Filter By
               </h2>
               <a href="#" className="text-orange underline">
@@ -36,28 +37,28 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
               </a>
             </div>
             <div>
-              <div className="flex flex-col w-full p-6 gap-6 bg-white">
+              <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Date</label>
+                  <label className="dark:text-white">Date</label>
                   <div className="flex gap-4">
                     <input
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="From"
                     />
                     <input
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="To"
                     />
                   </div>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Recipient</label>
+                  <label className="dark:text-white">Recipient</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select recipient...</div>
@@ -78,11 +79,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Network</label>
+                  <label className="dark:text-white">Network</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select network...</div>
@@ -103,11 +104,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Currency</label>
+                  <label className="dark:text-white">Currency</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select currency...</div>
@@ -128,11 +129,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Status</label>
+                  <label className="dark:text-white">Status</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select status...</div>
@@ -157,41 +158,43 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
           </div>
         </Popover.Panel>
       </Popover>
-      <Popover className="hidden sm:block relative py-3 px-4 border border-gray-l2 rounded-sm">
+
+      {/* {Desktop} */}
+      <Popover className="hidden sm:block relative py-3 px-4 border border-gray-l2 dark:border-bluegray rounded-sm">
         <Popover.Button
           className={
-            "w-full flex justify-between items-center outline-0 text-gray-d2"
+            "w-full flex justify-between items-center outline-0 text-gray-d2 dark:text-white"
           }
         >
           <div className="uppercase font-semibold">Filter</div>
           <Icon type="ArrowDown" size={20}></Icon>
         </Popover.Button>
 
-        <Popover.Panel className="absolute w-full right-[.05rem] z-10 border border-gray-l2 rounded-sm mt-4">
+        <Popover.Panel className="absolute w-full right-[.05rem] z-10 border border-gray-l2 dark:border-bluegray rounded-sm mt-4">
           <div className="flex flex-col">
             <div>
-              <div className="flex flex-col w-full p-6 gap-6 bg-white">
+              <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Date</label>
+                  <label className="dark:text-white">Date</label>
                   <div className="flex gap-4">
                     <input
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="From"
                     />
                     <input
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="To"
                     />
                   </div>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Recipient</label>
+                  <label className="dark:text-white">Recipient</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select recipient...</div>
@@ -212,11 +215,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Network</label>
+                  <label className="dark:text-white">Network</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select network...</div>
@@ -237,11 +240,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Currency</label>
+                  <label className="dark:text-white">Currency</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select currency...</div>
@@ -262,11 +265,11 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
-                  <label>Status</label>
+                  <label className="dark:text-white">Status</label>
                   <Menu>
                     <Menu.Button
                       className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 rounded-sm p-3"
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
                       <div className="text-gray-l2">Select status...</div>
@@ -287,7 +290,7 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
               </div>
-              <div className="py-6 pl-6 bg-orange-l6">
+              <div className="py-6 pl-6 bg-orange-l6 dark:bg-blue-d7">
                 <a href="#" className="text-orange underline">
                   Reset filters
                 </a>

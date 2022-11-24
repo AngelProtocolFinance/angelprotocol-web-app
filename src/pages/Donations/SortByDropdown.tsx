@@ -6,13 +6,13 @@ interface SortByDropdownProps {}
 
 const SortByDropdown: FC<SortByDropdownProps> = ({}) => {
   return (
-    <Popover className="relative py-3 px-4 border border-gray-l2 rounded-sm">
+    <Popover className="relative py-3 px-4 border border-gray-l2 dark:border-bluegray rounded-sm">
       <Popover.Button
-        className={
-          "w-full flex justify-between items-center outline-0 text-gray-d2"
-        }
+        className={"w-full flex justify-between items-center outline-0"}
       >
-        <div className="uppercase font-semibold">Sort by</div>
+        <div className="uppercase font-semibold text-gray-d2 dark:text-gray">
+          Sort by
+        </div>
         <Icon type="ArrowDown" size={20}></Icon>
       </Popover.Button>
 

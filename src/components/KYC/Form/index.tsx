@@ -28,7 +28,7 @@ export default function Form({ classes = "", ...props }: Props) {
   return (
     <div className="flex flex-col">
       <div className="relative">
-        <div className="text-xl font-extrabold text-center border-b-[1px] bg-orange-l6 border-gray-l2 p-5">
+        <div className="text-xl font-extrabold text-center border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5">
           Get Receipt
           <Tooltip
             {...props}
@@ -37,12 +37,12 @@ export default function Form({ classes = "", ...props }: Props) {
         </div>
         <button
           onClick={() => closeModal()}
-          className="absolute right-4 top-3 border border-gray-l2 p-2 rounded-md"
+          className="absolute right-4 top-3 border border-gray-l2 dark:border-bluegray p-2 rounded-md"
         >
           <Icon type="Close" size={24}></Icon>
         </button>
       </div>
-      <div className="w-full text-lg font-extrabold p-5 bg-white text-gray-d2">
+      <div className="w-full text-lg font-extrabold p-5 bg-white dark:bg-blue-d6 text-gray-d2 dark:text-white">
         Please fill in your personal information below if you want to get a tax
         receipt.
       </div>
@@ -96,7 +96,7 @@ export default function Form({ classes = "", ...props }: Props) {
               fieldName="country"
               classes={{
                 container:
-                  "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
+                  "px-4 border border-gray-l2 dark:border-bluegray rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
                 input:
                   "py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
                 error: errorStyle,
@@ -142,7 +142,7 @@ export default function Form({ classes = "", ...props }: Props) {
             their affiliated non-profits with latest news and progress updates.
           </Checkbox>
         </div>
-        <div className="grid grid-cols-2 sm:flex sm:w-full sm:justify-end bg-orange-l6 border-t-[1px] border-gray-l2 p-5">
+        <div className="grid grid-cols-2 sm:flex sm:w-full sm:justify-end bg-orange-l6 dark:bg-blue-d7 border-t-[1px] border-gray-l2 dark:border-bluegray p-5">
           <BtnOutline
             onClick={() => closeModal()}
             type="button"

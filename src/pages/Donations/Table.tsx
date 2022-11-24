@@ -18,11 +18,11 @@ export default function Table(props: { donations: Donation[] }) {
   return (
     <>
       {/* {Desktop} */}
-      <table className="w-full text-sm text-gray-d2 hidden sm:table">
+      <table className="w-full text-sm text-gray-d2 dark:text-white hidden sm:table">
         <TableSection type="thead" rowClass="">
           <Cells
             type="th"
-            cellClass="bg-orange-l6 uppercase font-heading font-semibold text-left text-gray-d2 text-sm border border-gray-l2 p-3"
+            cellClass="bg-orange-l6 dark:bg-blue-d6 uppercase font-heading font-semibold text-left text-gray-d2 dark:text-white text-sm border border-gray-l2 dark:border-bluegray p-3"
           >
             <HeaderButton
               onClick={handleHeaderClick("charityName")}
@@ -71,7 +71,7 @@ export default function Table(props: { donations: Donation[] }) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 even:bg-orange-l6"
+          rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 dark:border-bluegray even:bg-orange-l6 dark:bg-blue-d6"
         >
           {sorted.map(
             ({
@@ -84,7 +84,11 @@ export default function Table(props: { donations: Donation[] }) {
               charityName,
               id: charityId,
             }) => (
-              <Cells key={hash} type="td" cellClass="p-3 border border-gray-l2">
+              <Cells
+                key={hash}
+                type="td"
+                cellClass="p-3 border border-gray-l2 dark:border-bluegray"
+              >
                 <Link
                   to={`${appRoutes.profile}/${charityId}`}
                   className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
@@ -127,18 +131,18 @@ export default function Table(props: { donations: Donation[] }) {
 
       {/* {Mobile} */}
       <div>
-        <div className="grid grid-cols-8 sm:hidden bg-orange-l6 text-gray-d2 border border-gray-l2">
-          <div className="col-span-1 border-r-[1px] border-gray-l2 p-4 place-self-center">
+        <div className="grid grid-cols-8 sm:hidden bg-orange-l6 dark:bg-blue-d6 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
+          <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
             <Icon
               type="ArrowDown"
               size={24}
-              className="text-gray-d2 invisible"
+              className="text-gray-d2 dark:text-white invisible"
             ></Icon>
           </div>
-          <div className="col-span-4 border-r-[1px] border-gray-l2 p-4">
+          <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 uppercase">
             Recipient
           </div>
-          <div className="col-span-3 p-4">Date</div>
+          <div className="col-span-3 p-4 uppercase">Date</div>
         </div>
 
         {sorted.map(
@@ -156,16 +160,16 @@ export default function Table(props: { donations: Donation[] }) {
               <Disclosure>
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="even:bg-orange-l6">
-                      <div className="grid grid-cols-8 sm:hidden bg-orange-l6 text-gray-d2 border-b-[1px] border-x-[1px] border-gray-l2">
-                        <div className="col-span-1 border-r-[1px] border-gray-l2 p-4 place-self-center">
+                    <Disclosure.Button className="even:bg-orange-l6 dark:bg-blue-d6">
+                      <div className="grid grid-cols-8 sm:hidden bg-orange-l6 dark:bg-blue-d6 text-gray-d2 dark:text-white border-b-[1px] border-x-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
                           <Icon
                             type={open ? "ArrowUp" : "ArrowDown"}
                             size={24}
-                            className="text-gray-d2"
+                            className="text-gray-d2 dark:text-white"
                           ></Icon>
                         </div>
-                        <div className="col-span-4 border-r-[1px] border-gray-l2 p-4 text-left">
+                        <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 text-left">
                           <span className="truncate">{charityName}</span>
                         </div>
                         <div className="col-span-3 p-4 text-left">
@@ -174,37 +178,41 @@ export default function Table(props: { donations: Donation[] }) {
                       </div>
                     </Disclosure.Button>
                     <Disclosure.Panel>
-                      <div className="flex flex-col even:bg-orange-l6 border-x-[1px] border-gray-l2">
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2">
-                          <span className="text-gray-d2 font-bold uppercase">
+                      <div className="flex flex-col even:bg-orange-l6 dark:bg-blue-d6 border-x-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Network
                           </span>
-                          <span className="text-gray-d2">{chainName}</span>
+                          <span className="text-gray-d2 dark:text-white">
+                            {chainName}
+                          </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2">
-                          <span className="text-gray-d2 font-bold uppercase">
+                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Currency
                           </span>
-                          <span className="text-gray-d2">{symbol}</span>
+                          <span className="text-gray-d2 dark:text-white">
+                            {symbol}
+                          </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2">
-                          <span className="text-gray-d2 font-bold uppercase">
+                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Amount
                           </span>
-                          <span className="text-gray-d2">
+                          <span className="text-gray-d2 dark:text-white">
                             {humanize(amount, 3)}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2">
-                          <span className="text-gray-d2 font-bold uppercase">
+                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             TX Hash
                           </span>
-                          <span className="text-gray-d2">
+                          <span className="text-gray-d2 dark:text-white">
                             {maskAddress(hash)}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2">
-                          <span className="text-gray-d2 font-bold uppercase">
+                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Status
                           </span>
                           <button className="block bg-green text-white p-1 rounded uppercase text-xs">
@@ -212,7 +220,7 @@ export default function Table(props: { donations: Donation[] }) {
                           </button>
                         </div>
                         <div className="flex justify-between p-4">
-                          <span className="text-gray-d2 font-bold uppercase">
+                          <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Receipt
                           </span>
                           <button
@@ -227,7 +235,7 @@ export default function Table(props: { donations: Donation[] }) {
                           >
                             <Icon
                               type="FatArrowDownload"
-                              className="text-gray-d2 text-2xl"
+                              className="text-gray-d2 dark:text-white text-2xl"
                             />
                           </button>
                         </div>
