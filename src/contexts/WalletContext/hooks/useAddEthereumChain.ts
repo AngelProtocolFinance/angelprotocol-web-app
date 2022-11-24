@@ -14,9 +14,6 @@ export function useAddEthereumChain() {
       address: string,
       chainId: string
     ) => {
-      if (!chainId || !injectedProvider) {
-        return;
-      }
       try {
         const chainToAdd = await getChain({ address, chainId }, true).unwrap();
 
