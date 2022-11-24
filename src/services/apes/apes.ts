@@ -112,7 +112,7 @@ export const apes = createApi({
           return {
             error: {
               status: "CUSTOM_ERROR",
-              error: "Error fetching chain data",
+              error: "Error querying balances",
               data:
                 error instanceof UnsupportedNetworkError
                   ? error.toSerializable()
