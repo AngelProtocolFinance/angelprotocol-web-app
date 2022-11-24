@@ -52,7 +52,13 @@ export default function Form({ classes = "", ...props }: Props) {
         autoComplete="off"
         autoSave="off"
       >
-        <div className="grid grid-cols-2 gap-4 px-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-5">
+          <TextInput<FV>
+            name="email"
+            label="Email address"
+            placeholder="e.g. johndoe@mail.com"
+            classes={{ container: "col-span-full" }}
+          />
           <TextInput<FV>
             name="name.first"
             label="First name"
@@ -103,12 +109,7 @@ export default function Form({ classes = "", ...props }: Props) {
             required={false}
             placeholder="e.g. England"
           />
-          <TextInput<FV>
-            name="email"
-            label="Email address"
-            placeholder="e.g. johndoe@mail.com"
-            classes={{ container: "col-span-full" }}
-          />
+
           <Checkbox<FV>
             name="hasAgreedToTerms"
             classes={{
@@ -118,19 +119,30 @@ export default function Form({ classes = "", ...props }: Props) {
               error: "mt-2",
             }}
           >
-            I have read and I agree with{" "}
+            I declare that I have read and agreed to{" "}
             <a
               className="underline text-orange"
               target="_blank"
               href={TERMS_OF_USE}
               rel="noopener noreferrer"
             >
-              Terms & Conditions
+              Privacy Policy *
             </a>
-            .
+          </Checkbox>
+          <Checkbox<FV>
+            name="agreedToGetUpdates"
+            classes={{
+              container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
+              checkbox:
+                "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+              error: "mt-2",
+            }}
+          >
+            I would like to receive communications from Angel Protocol and/or
+            their affiliated non-profits with latest news and progress updates.
           </Checkbox>
         </div>
-        <div className="w-full text-end bg-orange-l6 border-t-[1px] border-gray-l2 p-5">
+        <div className="grid grid-cols-2 sm:flex sm:w-full sm:justify-end bg-orange-l6 border-t-[1px] border-gray-l2 p-5">
           <BtnOutline
             onClick={() => closeModal()}
             type="button"

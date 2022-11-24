@@ -85,6 +85,7 @@ export type KYC = {
   state: string;
   email: string;
   hasAgreedToTerms: boolean;
+  agreedToGetUpdates: boolean;
 };
 
 export type SkippableKYC = KYC | "skipped";
