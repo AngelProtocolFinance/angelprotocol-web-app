@@ -1,3 +1,4 @@
+import ExtLink from "components/ExtLink";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter() {
@@ -10,13 +11,12 @@ export default function Newsletter() {
         <p className="font-body font-normal text-sm text-center md:text-left">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
-          <a
+          <ExtLink
             href="https://angelprotocol.io/privacy-policy/"
-            rel="noreferrer"
             className="font-bold cursor-pointer underline"
           >
             Privacy Policy
-          </a>
+          </ExtLink>
           .
         </p>
       </div>

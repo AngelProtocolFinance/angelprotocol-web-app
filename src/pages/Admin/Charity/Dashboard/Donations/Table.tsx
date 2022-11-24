@@ -1,5 +1,6 @@
 import { Donation, KYCData } from "types/aws";
 import CsvExporter from "components/CsvExporter";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { HeaderButton, useSort } from "components/donations";
@@ -67,14 +68,12 @@ export default function Table(props: { donations: Donation[] }) {
             <>{humanize(amount, 3)}</>
             <span className="font-mono text-sm">{symbol}</span>
             <>{new Date(date).toLocaleDateString()}</>
-            <a
+            <ExtLink
               href={getTxUrl(chainId, hash)}
-              target="_blank"
-              rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer uppercase text-sm"
             >
               {maskAddress(hash)}
-            </a>
+            </ExtLink>
             {!kycData ? (
               <Icon type="CloseCircle" className="text-2xl text-red-400" />
             ) : (

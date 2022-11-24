@@ -1,4 +1,9 @@
-import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
+import {
+  AdminResources,
+  AdminRoles,
+  EndowmentInfo,
+  ProposalDetails,
+} from "services/types";
 import { SuccessLink } from "slices/transaction/types";
 import { EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
@@ -203,6 +208,22 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    endowInfo: builder.query<EndowmentInfo, number>({
+      providesTags: [{ type: junoTags.custom, id: customTags.proposalDetails }],
+      async queryFn(id) {
+        const [profile, details] = await Promise.all([
+          queryContract("accProfile", contracts.accounts, { id }),
+          queryContract("accEndowment", contracts.accounts, { id }),
+        ]);
+        return {
+          data: {
+            ...profile,
+            ...details,
+            id,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -210,4 +231,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useEndowInfoQuery,
 } = customApi;

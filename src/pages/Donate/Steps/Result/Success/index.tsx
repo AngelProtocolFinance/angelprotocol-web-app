@@ -33,8 +33,6 @@ export default function Success({
       <BtnSec
         as="a"
         href={getTxUrl(chainId, hash)}
-        target="_blank"
-        rel="noopener noreferrer"
         className="flex items-center justify-center gap-3.5 w-full sm:w-auto"
       >
         <Icon type="ExternalLink" size={22} />

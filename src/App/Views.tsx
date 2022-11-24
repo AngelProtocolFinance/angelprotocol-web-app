@@ -9,7 +9,7 @@ const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 // NOTE: Governance will be reenabled when we relaunch the $HALO token
 // const Governance = lazy(() => import("pages/Governance/Governance"));
-const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
+const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));

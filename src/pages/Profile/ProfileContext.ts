@@ -1,16 +1,9 @@
 import { createContext, useContext } from "react";
-import { ProfileResponse } from "types/contracts";
+import { EndowmentInfo } from "services/types";
 
-type ProfileContextType = ProfileResponse & {
-  id: number;
-  kyc_donors_only: boolean;
-};
+const ProfileContext = createContext<EndowmentInfo>({} as EndowmentInfo);
 
-const ProfileContext = createContext<ProfileContextType>(
-  {} as ProfileContextType
-);
-
-export const useProfileContext = (): ProfileContextType => {
+export const useProfileContext = (): EndowmentInfo => {
   const val = useContext(ProfileContext);
 
   if (Object.entries(val).length <= 0) {

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "types/contracts";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
 import { appRoutes } from "constants/routes";
@@ -23,7 +24,7 @@ export default function PollDetails() {
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
           <p>TEXT PROPOSAL</p>
-          <p className="inline-block uppercase ml-auto font-heading font-bold text-xs flex items-center">
+          <p className="uppercase ml-auto font-heading font-bold text-xs inline-flex items-center">
             <span
               className={`aspect-square inline-block w-4 rounded-full ${
                 statusColors[details.status].bg
@@ -36,7 +37,7 @@ export default function PollDetails() {
             </span>
           </p>
         </div>
-        <div className="border-b border-b-2 border-white/40 pb-2 flex justify-between mb-6">
+        <div className="border-b-2 border-white/40 pb-2 flex justify-between mb-6">
           <h3 className="text-xl font-bold text-white">{details.title}</h3>
           <PollAction poll_id={numPollId} />
         </div>
@@ -139,14 +140,9 @@ function DetailsLink(props: { href: string }) {
       <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
         Link
       </h4>
-      <a
-        href={props.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-white"
-      >
+      <ExtLink href={props.href} className="hover:text-white">
         {props.href}
-      </a>
+      </ExtLink>
     </div>
   );
 }

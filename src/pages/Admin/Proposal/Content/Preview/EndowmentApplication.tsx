@@ -1,5 +1,6 @@
-import { AnchorHTMLAttributes, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { EndowmentProposal, FileObject } from "types/aws";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
@@ -8,9 +9,9 @@ export default function EndowmentApplication(props: EndowmentProposal) {
     <PreviewContainer classes="grid">
       <h3 className="text-xl font-semibold">{props.OrganizationName}</h3>
       <p className="text-sm mb-6 flex items-center gap-1">
-        <Url href={props.Website}>
+        <ExtLink href={props.Website}>
           <Icon type="Globe" size={16} />
-        </Url>
+        </ExtLink>
         <span>{props.Email}</span>
       </p>
 
@@ -45,7 +46,7 @@ function Documents({ docs, label }: { docs: FileObject[]; label: string }) {
   return (
     <>
       {docs.map((doc, i) => (
-        <Url
+        <ExtLink
           href={doc.publicUrl}
           key={i}
           className="font-heading uppercase text-sm flex items-center gap-1 text-blue-l5 hover:text-blue-l1 mb-1"
@@ -54,16 +55,8 @@ function Documents({ docs, label }: { docs: FileObject[]; label: string }) {
           <span>
             {label} {docs.length <= 1 ? "" : i + 1}
           </span>
-        </Url>
+        </ExtLink>
       ))}
     </>
-  );
-}
-
-function Url(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return (
-    <a {...props} target="_blank" rel="noopener noreferrer">
-      {props.children}
-    </a>
   );
 }

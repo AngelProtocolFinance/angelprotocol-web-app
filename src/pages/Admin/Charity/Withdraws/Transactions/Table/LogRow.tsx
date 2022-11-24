@@ -1,4 +1,5 @@
 import { WithdrawLog } from "types/aws";
+import ExtLink from "components/ExtLink";
 import { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
 import Amount from "../Amount";
@@ -25,14 +26,12 @@ export default function LogRow(props: WithdrawLog) {
         <>---</>
       )}
       {finalRoute && finalRoute.status === "OK" ? (
-        <a
+        <ExtLink
           className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1"
           href={`${explorerUrls[finalRoute.id]}/${finalRoute.hash}`}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           {maskAddress(finalRoute.hash)}
-        </a>
+        </ExtLink>
       ) : (
         <>---</>
       )}

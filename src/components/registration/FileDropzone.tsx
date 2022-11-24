@@ -7,6 +7,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { FileObject } from "types/aws";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 
 export type Asset = {
@@ -104,16 +105,14 @@ function DropzoneText({
     return (
       <div>
         {previews.map(({ name, publicUrl }) => (
-          <a
+          <ExtLink
             onClickCapture={(ev) => ev.stopPropagation()}
             key={name}
             href={publicUrl}
-            target="_blank"
-            rel="noreferrer"
             className="text-sm block text-blue hover:text-blue-l1"
           >
             {name}
-          </a>
+          </ExtLink>
         ))}
       </div>
     );

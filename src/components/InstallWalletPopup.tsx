@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { WithoutInstallers } from "contexts/WalletContext/types";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
+import ExtLink from "./ExtLink";
 import Icon from "./Icon";
 
 export default function InstallWalletPopup(props: {
@@ -13,10 +14,8 @@ export default function InstallWalletPopup(props: {
       <h2 className="text-lg md:text-xl text-white font-bold font-heading">
         Install Wallet
       </h2>
-      <a
+      <ExtLink
         className="bg-blue-d2 hover:bg-blue rounded-2xl p-3 md:p-5 flex items-center"
-        rel="noreferrer"
-        target="_blank"
         href={installUrl}
       >
         <img
@@ -36,7 +35,7 @@ export default function InstallWalletPopup(props: {
             {installUrl}
           </p>
         </div>
-      </a>
+      </ExtLink>
       <div className="p-3 md:p-5 rounded-2xl bg-blue">
         <p className="text-white/70 text-xs md:text-sm">
           You may need to refresh the page once you have downloaded the wallet.

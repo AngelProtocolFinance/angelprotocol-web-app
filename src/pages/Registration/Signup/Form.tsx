@@ -1,5 +1,6 @@
 import { FormValues as FV } from "./types";
 import Checkbox from "components/Checkbox";
+import ExtLink from "components/ExtLink";
 import {
   BtnPrim,
   BtnSec,
@@ -38,14 +39,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
         }}
       >
         I declare that I have read and agreed to{" "}
-        <a
-          className="underline text-orange"
-          target="_blank"
-          href={PRIVACY_POLICY}
-          rel="noopener noreferrer"
-        >
+        <ExtLink className="underline text-orange" href={PRIVACY_POLICY}>
           Privacy Policy
-        </a>
+        </ExtLink>
       </Checkbox>
 
       <BtnPrim

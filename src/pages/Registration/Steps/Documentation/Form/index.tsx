@@ -1,5 +1,6 @@
 import { FormValues as FV } from "../types";
 import Checkbox from "components/Checkbox";
+import ExtLink from "components/ExtLink";
 import { Label } from "components/form";
 import {
   BtnPrim,
@@ -126,14 +127,9 @@ export default function Form() {
       >
         By checking this box, you declare that you have read and agreed to our{" "}
         {""}
-        <a
-          className="underline text-orange"
-          target="_blank"
-          href={TERMS_OF_USE}
-          rel="noopener noreferrer"
-        >
+        <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
-        </a>
+        </ExtLink>
       </Checkbox>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <BtnSec
