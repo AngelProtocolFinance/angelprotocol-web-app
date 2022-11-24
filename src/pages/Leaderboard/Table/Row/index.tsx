@@ -15,7 +15,7 @@ export default function Row({
 }: LeaderboardEntry) {
   const { locked, liquid } = projectFunds(10, total_lock, total_liq, 20, 5);
   return (
-    <Cells type="td" cellClass="first:pl-2 last:pr-2 py-2">
+    <Cells type="td" cellClass="first:pl-4 last:pr-4 py-3">
       <img
         src={charity_logo || defaultIcon}
         onError={(e) => e.currentTarget.setAttribute("src", defaultIcon)}

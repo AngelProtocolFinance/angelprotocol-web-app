@@ -8,7 +8,7 @@ export default function Leaderboard() {
 
   return (
     <section className="bg-gray-l5 dark:bg-blue-d4 pt-24 pb-16 text-gray-d2 dark:text-white font-work">
-      <div className="padded-container grid content-start mt-6">
+      <div className="padded-container grid content-start mt-8">
         <DonationMetrics />
         <h3 className="mt-6 uppercase text-3xl font-bold">Leaderboard</h3>
         <QueryLoader
