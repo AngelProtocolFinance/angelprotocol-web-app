@@ -4,8 +4,6 @@ import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function EndowmentApplication(props: EndowmentProposal) {
-  const email = props.OrganizationName_ContactEmail!.split("_")[1];
-
   return (
     <PreviewContainer classes="grid">
       <h3 className="text-xl font-semibold">{props.OrganizationName}</h3>
@@ -13,7 +11,7 @@ export default function EndowmentApplication(props: EndowmentProposal) {
         <Url href={props.Website}>
           <Icon type="Globe" size={16} />
         </Url>
-        <span>{email}</span>
+        <span>{props.Email}</span>
       </p>
 
       <Label>Registration Date</Label>

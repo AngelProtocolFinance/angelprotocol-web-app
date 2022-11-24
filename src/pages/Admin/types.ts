@@ -270,8 +270,5 @@ export type ProfileFormValues = ProposalBase &
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
   EndowmentProposal,
-  | "OrganizationName"
-  | "RegistrationDate"
-  | "RegistrationStatus"
-  | "OrganizationName_ContactEmail"
+  "OrganizationName" | "RegistrationDate" | "RegistrationStatus" | "Email"
 >;

@@ -1,6 +1,7 @@
 enum routes {
   index = "",
   resume = "resume",
+  success = "success",
   confirmEmail = "confirm-email",
   verifyEmail = "verify/:token",
   steps = "steps",

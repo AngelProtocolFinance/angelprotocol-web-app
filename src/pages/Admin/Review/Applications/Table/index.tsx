@@ -24,8 +24,8 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"OrganizationName_ContactEmail"}
-            onClick={handleHeaderClick("OrganizationName_ContactEmail")}
+            sortKey={"Email"}
+            onClick={handleHeaderClick("Email")}
           >
             email
           </Header>

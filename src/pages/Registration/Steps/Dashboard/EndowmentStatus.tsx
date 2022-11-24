@@ -1,65 +1,85 @@
 import { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
 import { RegistrationStatus } from "types/aws";
-import { BtnPrim } from "components/registration";
-import { appRoutes } from "constants/routes";
+import { steps } from "pages/Registration/routes";
+import Icon from "components/Icon";
+import { BtnPrim, BtnSec } from "components/registration";
+import { useRegState } from "../StepGuard";
 
 type Props = {
   isSubmitting: boolean;
-  status: RegistrationStatus;
+  status: Exclude<RegistrationStatus, "Active">;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
   endowId?: number;
+  classes?: string;
 };
 
-// NOTE: not handling `RegistrationStatus === "Active"` as the Dashboard is inaccessible when the Endowment is active
 export default function EndowmentStatus({
   onSubmit,
   status,
-  endowId,
   isSubmitting,
+  classes = "",
 }: Props) {
-  return (
-    <div className="flex flex-col w-full gap-4 items-center">
-      <div className="flex w-9/12 items-center justify-end rounded-md border-2 border-white border-solid p-2 px-9 font-bold">
-        <p className="ml-3 mr-auto">Status of Your Endowment</p>
-        {status === "Inactive" && (
+  const { data } = useRegState<4>();
+
+  switch (status) {
+    case "Rejected":
+      return (
+        <div className={`max-sm:grid text-red dark:text-red-l3 ${classes}`}>
+          <p className="mb-6 max-sm:grid justify-items-center gap-2">
+            <Icon
+              type="Info"
+              className="inline relative bottom-px mr-2"
+              size={20}
+            />
+            <span className="max-sm:text-center">
+              Your endowment application has been rejected.
+            </span>
+          </p>
           <BtnPrim
             onClick={onSubmit}
-            className="min-w-[8rem]"
             disabled={isSubmitting}
+            className="min-w-[8rem]"
           >
-            Submit
+            Resubmit
           </BtnPrim>
-        )}
-        {status === "Rejected" && (
-          <>
-            <p className="uppercase w-40 mr-2 text-red">Rejected</p>
-            <BtnPrim onClick={onSubmit} disabled={isSubmitting}>
-              Resubmit
-            </BtnPrim>
-          </>
-        )}
-        {status === "Under Review" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-orange-l1">
-            Under Review
-          </p>
-        )}
-        {status === "Active" && (
-          <p className="flex items-center justify-center w-40 h-10 mr-40 uppercase text-green">
-            Active
-          </p>
-        )}
-      </div>
-      {status === "Active" && (
-        <Link
-          to={`${appRoutes.profile}/${
-            endowId! /** should be defined when status is Active */
-          }`}
-          className="flex w-full justify-center font-heading uppercase font-bold text-sm text-blue underline hover:text-blue-l1"
+        </div>
+      );
+
+    case "Under Review":
+      return (
+        <div
+          className={`max-sm:grid justify-items-center gap-2 text-gray-d1 dark:text-gray ${classes}`}
         >
-          Check out your new Endowment's profile page here
-        </Link>
-      )}
-    </div>
-  );
+          <Icon
+            type="HourglassSplit"
+            className="relative bottom-px inline mr-2"
+          />
+          <span className="max-sm:text-center">
+            Your application has been submitted for review
+          </span>
+        </div>
+      );
+
+    default:
+      return (
+        <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
+          <BtnSec
+            aria-disabled={isSubmitting}
+            as="link"
+            to={`../${steps.wallet}`}
+            state={data.init}
+            className="py-3 min-w-[8rem] text-center"
+          >
+            Back
+          </BtnSec>
+          <BtnPrim
+            disabled={isSubmitting}
+            onClick={onSubmit}
+            className="py-3 min-w-[8rem] text-center"
+          >
+            Continue
+          </BtnPrim>
+        </div>
+      );
+  }
 }
