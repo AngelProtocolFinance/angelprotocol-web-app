@@ -14,7 +14,7 @@ export default function Marketplace() {
     <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d4 pb-16">
       <div
         style={{ backgroundImage: `url('${banner}')` }}
-        className="relative bg-cover bg-center before:content-[''] before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90 before:absolute"
+        className="relative overlay bg-cover bg-center"
       >
         <Banner classes="hidden lg:grid isolate" />
         <MobileBanner classes="grid lg:hidden isolate" />

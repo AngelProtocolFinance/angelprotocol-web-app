@@ -34,13 +34,9 @@ export default function Profile() {
 function Banner() {
   const { image } = useProfileContext();
   return (
-    <div className="relative w-full h-52 sm:h-72">
-      <img
-        src={image}
-        alt=""
-        className="absolute h-full w-full object-cover object-right opacity-10"
-      />
-      <div className="absolute -z-10 bg-blue dark:bg-blue-d3 h-full w-full" />
-    </div>
+    <div
+      className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
+      style={{ backgroundImage: `url('${image}')` }}
+    />
   );
 }

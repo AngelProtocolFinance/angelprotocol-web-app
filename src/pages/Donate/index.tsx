@@ -16,7 +16,7 @@ export default function Donate() {
         style={{
           backgroundImage: `url('${queryState.data?.image || banner}')`,
         }}
-        className="relative w-full object-cover h-72 bg-center bg-cover before:content-[''] before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90 before:absolute"
+        className="relative overlay w-full object-cover h-72 bg-center bg-cover"
       />
 
       <QueryLoader
