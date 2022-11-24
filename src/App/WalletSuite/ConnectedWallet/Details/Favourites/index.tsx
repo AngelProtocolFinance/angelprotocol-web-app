@@ -5,6 +5,8 @@ import { QueryLoader } from "components/admin";
 import { appRoutes } from "constants/routes";
 import Bookmark from "./Bookmark";
 
+const MAX_ELEMENTS_TO_DISPLAY = 7;
+
 export default function Favourites(props: WalletState) {
   const queryState = useBookmarksQuery(props.address);
 
@@ -36,7 +38,7 @@ export default function Favourites(props: WalletState) {
       >
         {(bookmarks) => (
           <ul className="grid gap-1">
-            {bookmarks.map((b) => (
+            {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
               <Bookmark key={b.id} {...b} />
             ))}
           </ul>
