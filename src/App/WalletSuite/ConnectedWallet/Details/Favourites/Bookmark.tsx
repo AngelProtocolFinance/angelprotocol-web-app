@@ -14,7 +14,7 @@ export default function Bookmark({ name, id, logo }: EndowmentBookmark) {
           alt=""
           className="w-4 h-4 border border-gray-l2 rounded-full"
         />
-        {name}
+        <span className="truncate max-w-[200px]">{name}</span>
       </Link>
     </li>
   );
