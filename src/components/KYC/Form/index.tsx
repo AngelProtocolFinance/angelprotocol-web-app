@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
+import ExtLink from "components/ExtLink";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
@@ -98,14 +99,9 @@ export default function Form({ classes = "", ...props }: Props) {
         }}
       >
         I have read and I agree with{" "}
-        <a
-          className="underline text-orange"
-          target="_blank"
-          href={TERMS_OF_USE}
-          rel="noopener noreferrer"
-        >
+        <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
-        </a>
+        </ExtLink>
         .
       </Checkbox>
       {props.type === "post-donation" ? (

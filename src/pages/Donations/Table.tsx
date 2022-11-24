@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
@@ -96,14 +97,12 @@ export default function Table(props: { donations: Donation[] }) {
               </Link>
               <>{humanize(amount, 3)}</>
               <>{new Date(date).toLocaleDateString()}</>
-              <a
+              <ExtLink
                 href={getTxUrl(chainId, hash)}
-                target="_blank"
-                rel="noreferrer noopener"
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"
               >
                 {maskAddress(hash)}
-              </a>
+              </ExtLink>
               <button
                 className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
                 onClick={() =>

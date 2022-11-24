@@ -67,8 +67,6 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
       <BtnPrimary
         as="a"
         href={generateShareLink(shareText, type)}
-        target="_blank"
-        rel="noopener noreferrer"
         className="flex items-center justify-center gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center border border-white rounded">

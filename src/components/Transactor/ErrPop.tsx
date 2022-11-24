@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ErrorStage } from "slices/transaction/types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
@@ -33,14 +34,12 @@ export default function ErrPop(props: ErrorStage) {
       <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
       <p className="text-center text-gray-d2 mb-2 ">{message}</p>
       {chainId && txHash && (
-        <a
+        <ExtLink
           href={getTxUrl(chainId, txHash)}
-          target="_blank"
-          rel="noreferrer noopener"
           className="text-center text-red-l1 cursor-pointer mb-6 text-sm"
         >
           view transaction details
-        </a>
+        </ExtLink>
       )}
       <button
         onClick={acknowledge}
