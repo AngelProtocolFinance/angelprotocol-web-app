@@ -100,8 +100,6 @@ export default function useInjectedProvider(
 
   const requestAccess = async (isNewConnection = false) => {
     try {
-      console.log("requestAccess", isNewConnection);
-
       const injectedProvider = getProvider(providerId);
       if (
         injectedProvider &&
