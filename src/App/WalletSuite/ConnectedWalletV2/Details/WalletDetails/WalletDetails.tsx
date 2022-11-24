@@ -10,7 +10,7 @@ export default function WalletDetails(props: WalletState) {
         <span className="w-56 font-body font-normal text-sm truncate">
           {props.address}
         </span>
-        <Copier text={props.address} className="w-6 h-6" />
+        <Copier text={props.address} classes="w-6 h-6" />
       </div>
       {/* For now just a label until it is decided what exactly needs to be displayed here, see this comment:
       https://app.clickup.com/t/3rcffb9?comment=1134342876&threadedComment=1134387996*/}
