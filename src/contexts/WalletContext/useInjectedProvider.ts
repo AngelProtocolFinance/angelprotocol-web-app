@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import {
   AccountChangeHandler,
-  ChainChangeHandler,
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
@@ -62,19 +61,19 @@ export default function useInjectedProvider(
     useGetSupportedChains(supportedChainIDs);
 
   /** attachers/detachers */
-  const attachChainChangedHandler = (provider: InjectedProvider) => {
-    provider.on("chainChanged", handleChainChange);
+  const attachChainChangedHandler = (injectedProvider: InjectedProvider) => {
+    const provider = new ethers.providers.Web3Provider(injectedProvider, "any");
+    provider.on("network", (_newNetwork, oldNetwork) => {
+      // it is best to reload the page on chain/network changes, as otherwise there might be unexpected behavior
+      // https://docs.ethers.io/v5/concepts/best-practices/
+      if (oldNetwork) {
+        window.location.reload();
+      }
+    });
   };
 
   const attachAccountChangeHandler = (provider: InjectedProvider) => {
     provider.on("accountsChanged", handleAccountsChange);
-  };
-
-  /** event handlers */
-  const handleChainChange: ChainChangeHandler = (_) => {
-    // it is best to reload the page on chain/network changes, as otherwise there might be unexpected behavior
-    // https://docs.ethers.io/v5/concepts/best-practices/
-    window.location.reload();
   };
 
   //useful when user changes account internally via metamask
