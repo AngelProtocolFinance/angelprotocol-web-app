@@ -72,6 +72,9 @@
     "web3.storage": "^4.3.0",
     "yup": "^0.32.9"
   },
+  "resolutions": {
+    "tailwindcss": "3.2.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-syntax-flow": "^7.18.6",

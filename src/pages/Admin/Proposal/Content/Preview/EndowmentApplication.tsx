@@ -1,12 +1,10 @@
 import { PropsWithChildren } from "react";
-import { FileObject, Registration } from "types/aws";
+import { EndowmentProposal, FileObject } from "types/aws";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import PreviewContainer from "./common/PreviewContainer";
 
-export default function EndowmentApplication(props: Registration) {
-  const email = props.OrganizationName_ContactEmail!.split("_")[1];
-
+export default function EndowmentApplication(props: EndowmentProposal) {
   return (
     <PreviewContainer classes="grid">
       <h3 className="text-xl font-semibold">{props.OrganizationName}</h3>
@@ -14,25 +12,25 @@ export default function EndowmentApplication(props: Registration) {
         <ExtLink href={props.Website}>
           <Icon type="Globe" size={16} />
         </ExtLink>
-        <span>{email}</span>
+        <span>{props.Email}</span>
       </p>
 
       <Label>Registration Date</Label>
       <span>{new Date(props.RegistrationDate).toLocaleDateString()}</span>
 
       <Label classes="mt-4 mb-1">Documents</Label>
-      <Documents
-        label="Proof of Identity"
-        docs={props.ProofOfIdentity ? [props.ProofOfIdentity] : []}
-      />
+      <Documents label="Proof of Identity" docs={[props.ProofOfIdentity]} />
       <Documents
         label="Proof of Registration"
-        docs={props.ProofOfRegistration ? [props.ProofOfRegistration] : []}
+        docs={[props.ProofOfRegistration]}
       />
-      <Documents label="Financial Statement" docs={props.FinancialStatements} />
+      <Documents
+        label="Financial Statement"
+        docs={props.FinancialStatements || []}
+      />
       <Documents
         label="Audited Financial Report"
-        docs={props.AuditedFinancialReports}
+        docs={props.AuditedFinancialReports || []}
       />
     </PreviewContainer>
   );

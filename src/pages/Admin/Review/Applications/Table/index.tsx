@@ -1,11 +1,11 @@
-import { EndowmentApplication } from "types/aws";
+import { EndowmentProposal } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import AppRow from "./AppRow";
 import Header from "./Header";
 import StatusSelector from "./StatusSelector";
 import useSortedApplications from "./useSortApplications";
 
-export default function Table(props: { applications: EndowmentApplication[] }) {
+export default function Table(props: { applications: EndowmentProposal[] }) {
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
     useSortedApplications(props.applications);
 
@@ -24,8 +24,8 @@ export default function Table(props: { applications: EndowmentApplication[] }) {
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"OrganizationName_ContactEmail"}
-            onClick={handleHeaderClick("OrganizationName_ContactEmail")}
+            sortKey={"Email"}
+            onClick={handleHeaderClick("Email")}
           >
             email
           </Header>

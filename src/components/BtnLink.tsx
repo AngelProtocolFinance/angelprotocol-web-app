@@ -23,7 +23,8 @@ export function BtnLink(props: BtnLinkProps) {
       return <ExtLink {...rest}>{children}</ExtLink>;
     }
     default: {
-      return <button {...props} />;
+      const { type, ...rest } = props;
+      return <button type={type || "button"} {...rest} />;
     }
   }
 }

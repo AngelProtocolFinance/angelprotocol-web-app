@@ -17,7 +17,7 @@ export default function Success({
   const { name, id } = recipient;
   return (
     <div className={`grid justify-items-center ${classes}`}>
-      <Icon type="CheckCircle" size={96} className="text-[#7EC682] mb-8" />
+      <Icon type="CheckCircle" size={96} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 font-bold text-center leading-relaxed">
         Thank you for your donation of{" "}
         <span className="font-extrabold">

@@ -22,7 +22,7 @@ const awsBaseQuery = retry(
     },
   }),
   // current default for all endpoints, change if necessary
-  { maxRetries: 0 }
+  { maxRetries: 1 }
 );
 
 export const aws = createApi({
