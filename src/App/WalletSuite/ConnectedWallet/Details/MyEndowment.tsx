@@ -50,7 +50,7 @@ function Logo({ logo }: { logo: string }) {
 
   return (
     <>
-      {isLoading && <ContentLoader className="w-10 h-10 rounded" />}
+      {isLoading && <ContentLoader className="w-10 h-10 rounded-full" />}
       <img
         src={logo}
         className={`w-10 h-10 object-contain border border-gray-l2 rounded-full ${
