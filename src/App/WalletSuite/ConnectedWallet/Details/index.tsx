@@ -56,7 +56,7 @@ function DisconnectBtn() {
   return (
     <button
       onClick={disconnect}
-      className="btn h-12 bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg"
+      className="btn h-12 bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
     >
       disconnect
     </button>
