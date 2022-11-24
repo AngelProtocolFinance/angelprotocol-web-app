@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useDonationsQuery } from "services/apes";
 import { QueryLoader } from "components/admin";
 import SearchFilter from "./SearchFilter";
+import SortByDropdown from "./SortByDropdown";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
@@ -17,21 +18,29 @@ export default function Donations() {
 
   return (
     <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-28 text-white/80 bg-white">
-      <div className="flex justify-between mt-10 mb-6">
-        <h1 className="text-2xl font-bold mb-4 text-gray-d2">My Donations</h1>
-        <button className="p-3 px-8 font-semibold bg-orange uppercase rounded-sm">
+      <div className="flex sm:justify-between justify-center mt-10 sm:mb-6">
+        <h1 className="text-2xl font-bold sm:mb-4 text-gray-d2">
+          My Donations
+        </h1>
+        <button className="p-3 px-8 font-semibold bg-orange uppercase rounded-sm hidden sm:block">
           Export to CSV
         </button>
       </div>
-      <div className="grid grid-cols-3 my-8">
-        <div className="col-span-2 mr-4">
+      <div className="grid grid-rows-2 sm:grid-cols-3 my-8">
+        <div className="sm:col-span-2 sm:mr-4">
           <input
             className="py-3 px-4 border border-gray-l2 w-full"
             type="text"
             placeholder="Search donations..."
           />
         </div>
-        <SearchFilter />
+        <div className="hidden sm:block">
+          <SearchFilter />
+        </div>
+        <div className="grid grid-cols-2 sm:hidden mt-2 gap-2">
+          <SearchFilter />
+          <SortByDropdown />
+        </div>
       </div>
       <QueryLoader
         queryState={queryState}
@@ -43,6 +52,9 @@ export default function Donations() {
       >
         {(donations) => <Table donations={donations} />}
       </QueryLoader>
+      <button className="mt-6 p-3 px-8 font-semibold bg-orange uppercase rounded-sm sm:hidden">
+        Export to CSV
+      </button>
     </div>
   );
 }
