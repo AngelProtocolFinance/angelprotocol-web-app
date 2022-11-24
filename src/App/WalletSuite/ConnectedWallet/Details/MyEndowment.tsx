@@ -15,12 +15,15 @@ export default function MyEndowment() {
           My Endowment
         </h3>
         <div className="flex gap-3">
+          {/* Will be added once possible to fetch endowment profile by wallet address */}
           <Logo logo={""} />
           <div className="grid">
             <span className="font-heading font-semibold text-sm">
+              {/* Will be added once possible to fetch endowment profile by wallet address */}
               {"endowment name"}
             </span>
             <div className="flex items-center uppercase font-heading font-semibold text-xs underline text-orange">
+              {/* Will be added once possible to fetch endowment profile by wallet address */}
               <Link to={""} className="pr-1 border-r border-gray-l2">
                 profile
               </Link>
