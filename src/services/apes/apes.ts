@@ -29,10 +29,10 @@ export const apes = createApi({
       async queryFn({ address, chainId }) {
         try {
           if (!chainId) {
-            throw new Error(`Argument 'chainId' missing`);
+            throw new Error("Argument 'chainId' missing");
           }
           if (!address) {
-            throw new Error(`Argument 'address' missing`);
+            throw new Error("Argument 'address' missing");
           }
 
           const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
