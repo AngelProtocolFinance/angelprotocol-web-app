@@ -6,6 +6,7 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
+import { useErrorContext } from "contexts/ErrorContext";
 import { getProvider } from "helpers";
 import {
   UnexpectedStateError,
@@ -37,17 +38,21 @@ export default function useInjectedProvider(
   const [address, setAddress] = useState<string>("");
   const [chainId, setChainId] = useState<string>();
 
+  const { handleError } = useErrorContext();
+
   const addEthereumChain = useAddEthereumChain();
 
   useEffect(() => {
     supportedChainIDs.forEach((suppChainId) => {
       if (!ethers.providers.getNetwork(Number(suppChainId))) {
-        throw new UnexpectedStateError(
-          `${suppChainId} not supported by ethers providers`
+        handleError(
+          new UnexpectedStateError(
+            `${suppChainId} not supported by ethers providers`
+          )
         );
       }
     });
-  }, [supportedChainIDs]);
+  }, [supportedChainIDs, handleError]);
 
   useEffect(() => {
     requestAccess();
