@@ -1,4 +1,5 @@
 import { Listbox } from "@headlessui/react";
+import { BaseChain } from "types/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon, { DrawerIcon } from "components/Icon";
 import { chainIDs } from "constants/chains";
@@ -30,29 +31,33 @@ export default function ChainSelector(props: WalletState) {
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options
-        className={`absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-      >
+      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         {props.supportedChains.map((suppChain) => (
-          <Listbox.Option key={suppChain.chain_id} value={suppChain.chain_id}>
-            {({ active, selected }) => (
-              <span
-                className={`${SELECTOR_STYLE} ${
-                  active ? "bg-orange-l5 dark:bg-blue-d3" : ""
-                } cursor-pointer`}
-              >
-                {suppChain.chain_name}
-                {selected && (
-                  <Icon
-                    type="Check"
-                    className="text-2xl text-gray-d1 dark:text-gray"
-                  />
-                )}
-              </span>
-            )}
-          </Listbox.Option>
+          <Option key={suppChain.chain_id} {...suppChain} />
         ))}
       </Listbox.Options>
     </Listbox>
+  );
+}
+
+function Option({ chain_id, chain_name }: BaseChain) {
+  return (
+    <Listbox.Option value={chain_id}>
+      {({ active, selected }) => (
+        <span
+          className={`${SELECTOR_STYLE} ${
+            active ? "bg-orange-l5 dark:bg-blue-d3" : ""
+          } cursor-pointer`}
+        >
+          {chain_name}
+          {selected && (
+            <Icon
+              type="Check"
+              className="text-2xl text-gray-d1 dark:text-gray"
+            />
+          )}
+        </span>
+      )}
+    </Listbox.Option>
   );
 }
