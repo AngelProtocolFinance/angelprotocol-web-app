@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   Dwindow,
@@ -21,13 +22,13 @@ import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import toPrefixedHex from "./helpers/toPrefixedHex";
-import { useAddEthereumChain, useGetSupportedChains } from "./hooks";
+import { useAddEthereumChain } from "./hooks";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
 
 export default function useInjectedProvider(
   providerId: Extract<ProviderId, "metamask" | "xdefi-evm">, // "binance-wallet" |
-  supportedChainIDs: chainIDs[],
+  supportedChains: BaseChain[],
   connectorName = prettifyId(providerId)
 ) {
   const actionKey = `${providerId}__pref`;
@@ -43,16 +44,16 @@ export default function useInjectedProvider(
   const addEthereumChain = useAddEthereumChain();
 
   useEffect(() => {
-    supportedChainIDs.forEach((suppChainId) => {
-      if (!ethers.providers.getNetwork(Number(suppChainId))) {
+    supportedChains.forEach((suppChain) => {
+      if (!ethers.providers.getNetwork(Number(suppChain.chain_id))) {
         handleError(
           new UnexpectedStateError(
-            `${suppChainId} not supported by ethers providers`
+            `${suppChain.chain_id} not supported by ethers providers`
           )
         );
       }
     });
-  }, [supportedChainIDs, handleError]);
+  }, [supportedChains, handleError]);
 
   useEffect(() => {
     requestAccess();
@@ -61,9 +62,6 @@ export default function useInjectedProvider(
     };
     //eslint-disable-next-line
   }, []);
-
-  const { supportedChains, isLoading: areChainsLoading } =
-    useGetSupportedChains(supportedChainIDs);
 
   /** attachers/detachers */
   const attachChainChangedHandler = (injectedProvider: InjectedProvider) => {
@@ -95,6 +93,15 @@ export default function useInjectedProvider(
     }
   };
 
+  const verifyChainSupported = useCallback(
+    (chainId: string) => {
+      if (!supportedChains.some((x) => x.chain_id === chainId)) {
+        throw new UnsupportedNetworkError(chainId);
+      }
+    },
+    [supportedChains]
+  );
+
   const requestAccess = async (isNewConnection = false) => {
     try {
       const injectedProvider = getProvider(providerId);
@@ -115,9 +122,7 @@ export default function useInjectedProvider(
         });
 
         const parsedChainId = `${parseInt(hexChainId, 16)}`;
-        if (!supportedChainIDs.includes(parsedChainId as unknown as chainIDs)) {
-          throw new UnsupportedNetworkError(parsedChainId);
-        }
+        verifyChainSupported(parsedChainId);
         setAddress(accounts[0]);
         setChainId(parsedChainId);
       }
@@ -185,10 +190,6 @@ export default function useInjectedProvider(
   };
 
   const switchChain = async (chainId: chainIDs) => {
-    if (areChainsLoading) {
-      throw new UnexpectedStateError("Chains are still being loaded");
-    }
-
     const injectedProvider = getProvider(providerId);
 
     if (!injectedProvider) {
@@ -199,9 +200,8 @@ export default function useInjectedProvider(
     if (!address) {
       throw new WalletDisconnectedError();
     }
-    if (!supportedChainIDs.includes(chainId)) {
-      throw new UnsupportedNetworkError(chainId);
-    }
+
+    verifyChainSupported(chainId);
 
     try {
       // Setting `isLoading` to `true` only so that the appropriate loading indicator is shown when switching chains
@@ -252,7 +252,7 @@ export default function useInjectedProvider(
     connection,
     disconnect,
     switchChain,
-    isLoading: isLoading || areChainsLoading,
+    isLoading,
     providerInfo,
     supportedChains,
   };

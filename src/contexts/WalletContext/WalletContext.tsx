@@ -45,12 +45,15 @@ const initialState: State = {
   isLoading: true,
 };
 
-// const BNB_WALLET_SUPPORTED_CHAIN_IDS = [chainIDs.binanceMain, chainIDs.binanceTest];
-const EVM_SUPPORTED_CHAIN_IDS = [
-  chainIDs.ethMain,
-  chainIDs.ethTest,
-  // chainIDs.binanceMain,
-  chainIDs.binanceTest,
+// const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = [
+//   { chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" },
+//   { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
+// ];
+const EVM_SUPPORTED_CHAINS: BaseChain[] = [
+  { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+  { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+  // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+  { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
 ];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
@@ -61,7 +64,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: metamaskInfo,
     supportedChains: metamaskSupportedChains,
     switchChain: switchMetamaskChain,
-  } = useInjectedProvider("metamask", EVM_SUPPORTED_CHAIN_IDS);
+  } = useInjectedProvider("metamask", EVM_SUPPORTED_CHAINS);
 
   // const {
   //   isLoading: isBinanceWalletLoading,
@@ -70,7 +73,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   //   providerInfo: binanceWalletInfo,
   //   supportedChains: binanceSupportedChains,
   //   switchChain: switchBinanceChain,
-  // } = useInjectedProvider("binance-wallet", BNB_WALLET_SUPPORTED_CHAIN_IDS);
+  // } = useInjectedProvider("binance-wallet", BNB_WALLET_SUPPORTED_CHAINS);
 
   const {
     isLoading: isKeplrLoading,
@@ -97,7 +100,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: xdefiInfo,
     supportedChains: xdefiSupportedChains,
     switchChain: switchXdefiChain,
-  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAIN_IDS, "Xdefi EVM");
+  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
 
   const providerStatuses: ProviderStatus[] = [
     // {
