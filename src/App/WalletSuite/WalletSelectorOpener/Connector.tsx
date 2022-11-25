@@ -10,8 +10,8 @@ export default function Connector(props: Connection) {
 
   async function handleConnect() {
     try {
-      await props.connect();
       closeModal();
+      await props.connect();
     } catch (error: any) {
       handleError(error);
     }
