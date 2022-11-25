@@ -36,13 +36,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Test codebase
-        run: yarn run test
+        run: yarn run test --watchAll=false --coverage
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
-  codecov:
-    environment: production
-    runs-on: ubuntu-latest
-    steps:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
