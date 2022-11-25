@@ -1,7 +1,6 @@
 name: JavaScript
 on:
   push:
-    branches:
   pull_request:
     branches:
 jobs:
@@ -36,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Test codebase
-        run: yarn run test --watchAll=false --coverage
+        run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
       - name: Upload coverage to Codecov
