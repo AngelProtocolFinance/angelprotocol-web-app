@@ -6,17 +6,19 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import {
-  UnexpectedStateError,
   UnsupportedNetworkError,
   WalletDisconnectedError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { useGetSupportedChains } from "./hooks";
 
-const SUPPORTED_CHAIN_IDS = [chainIDs.terraMain, chainIDs.terraTest];
+const SUPPORTED_CHAINS: BaseChain[] = [
+  { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
+  { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
+];
 
 export default function useTerra() {
   const {
@@ -31,9 +33,6 @@ export default function useTerra() {
   } = useWallet();
 
   const { showModal } = useModalContext();
-
-  const { supportedChains, isLoading: areChainsLoading } =
-    useGetSupportedChains(SUPPORTED_CHAIN_IDS);
 
   const terraInfo: ProviderInfo | undefined = connection
     ? {
@@ -71,11 +70,7 @@ export default function useTerra() {
       throw new WalletDisconnectedError();
     }
 
-    if (areChainsLoading) {
-      throw new UnexpectedStateError("Chains are still being loaded");
-    }
-
-    if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
+    if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
       throw new UnsupportedNetworkError(chainId);
     }
 
@@ -85,12 +80,12 @@ export default function useTerra() {
   };
 
   return {
-    isTerraLoading: status === WalletStatus.INITIALIZING || areChainsLoading,
+    isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
     disconnectTerra: disconnect,
     terraInfo,
     switchChain,
-    supportedChains,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
 
