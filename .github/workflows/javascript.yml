@@ -1,9 +1,9 @@
 name: JavaScript
 on:
   push:
-    branches: [ master, RC-v1.7]
+    branches:
   pull_request:
-    branches: [ master, RC-v1.7]
+    branches:
 jobs:
   lint:
     name: "Lint codebase"
