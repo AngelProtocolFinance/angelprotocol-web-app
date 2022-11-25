@@ -1,0 +1,58 @@
+import { Listbox } from "@headlessui/react";
+import { WalletState, useSetWallet } from "contexts/WalletContext";
+import Icon, { DrawerIcon } from "components/Icon";
+import { chainIDs } from "constants/chains";
+
+const SELECTOR_STYLE =
+  "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
+
+export default function ChainSelector(props: WalletState) {
+  const { switchChain } = useSetWallet();
+
+  return (
+    <Listbox
+      value={props.chain.chain_id}
+      onChange={(value: chainIDs) => switchChain(value)}
+      as="div"
+      className="relative"
+    >
+      <Listbox.Button
+        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray rounded`}
+      >
+        {({ open }) => (
+          <>
+            {props.chain.chain_name}
+            <DrawerIcon
+              isOpen={open}
+              className="text-2xl text-gray-d1 dark:text-gray"
+              aria-hidden="true"
+            />
+          </>
+        )}
+      </Listbox.Button>
+      <Listbox.Options
+        className={`absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+      >
+        {props.supportedChains.map((suppChain) => (
+          <Listbox.Option key={suppChain.chain_id} value={suppChain.chain_id}>
+            {({ active, selected }) => (
+              <span
+                className={`${SELECTOR_STYLE} ${
+                  active ? "bg-orange-l5 dark:bg-blue-d3" : ""
+                } cursor-pointer`}
+              >
+                {suppChain.chain_name}
+                {selected && (
+                  <Icon
+                    type="Check"
+                    className="text-2xl text-gray-d1 dark:text-gray"
+                  />
+                )}
+              </span>
+            )}
+          </Listbox.Option>
+        ))}
+      </Listbox.Options>
+    </Listbox>
+  );
+}
