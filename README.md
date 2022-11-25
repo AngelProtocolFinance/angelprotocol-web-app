@@ -1,4 +1,5 @@
 # angelprotocol-web-app
+[![codecov](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app/branch/master/graph/badge.svg?token=9KS3RZZHJF)](https://codecov.io/gh/AngelProtocolFinance/angelprotocol-web-app)
 
 Repo for Angel Protocol's React web app.
 

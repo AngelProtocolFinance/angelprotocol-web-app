@@ -9,6 +9,7 @@ notes.md
 
 # testing
 /coverage
+codecov-report.json
 
 # production
 /build
