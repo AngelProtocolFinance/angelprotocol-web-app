@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
+import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
 import {
-  UnexpectedStateError,
   UnsupportedNetworkError,
   WalletError,
   WalletNotInstalledError,
@@ -11,14 +11,13 @@ import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
-import { useGetSupportedChains } from "../hooks";
 import { juno_test_chain_info } from "./chains";
 
-const SUPPORTED_CHAIN_IDS = [
-  chainIDs.junoMain,
-  chainIDs.junoTest,
-  // chainIDs.terraMain,
-  // chainIDs.terraTest,
+const SUPPORTED_CHAINS: BaseChain[] = [
+  { chain_id: chainIDs.junoMain, chain_name: "Juno Mainnet" },
+  { chain_id: chainIDs.junoTest, chain_name: "Juno Testnet" },
+  // { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
+  // { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
 ];
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
@@ -38,14 +37,11 @@ export default function useKeplr() {
     // eslint-disable-next-line
   }, []);
 
-  const { supportedChains, isLoading: areChainsLoading } =
-    useGetSupportedChains(SUPPORTED_CHAIN_IDS);
-
   const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
-      if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
+      if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
         throw new UnsupportedNetworkError(chainId);
       }
 
@@ -104,10 +100,6 @@ export default function useKeplr() {
       throw new WalletNotInstalledError("keplr");
     }
 
-    if (areChainsLoading) {
-      throw new UnexpectedStateError("Chains are still being loaded");
-    }
-
     try {
       setIsLoading(true);
       await requestAccess(chainId, true);
@@ -137,8 +129,8 @@ export default function useKeplr() {
     connection,
     disconnect,
     switchChain,
-    isLoading: isLoading || areChainsLoading,
+    isLoading,
     providerInfo,
-    supportedChains,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
