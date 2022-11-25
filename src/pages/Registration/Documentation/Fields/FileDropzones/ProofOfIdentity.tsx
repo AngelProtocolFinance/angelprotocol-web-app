@@ -13,7 +13,7 @@ export default function ProofOfIdentity() {
 
   return (
     <InputRow
-      htmlFor="proofOfIdentity"
+      htmlFor={isSubmitting ? "" : "proofOfIdentity"}
       label="Your proof of identity"
       infoModal={ProofOfIdentityModal}
       required
