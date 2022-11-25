@@ -22,7 +22,7 @@ import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import toPrefixedHex from "./helpers/toPrefixedHex";
-import { useAddEthereumChain } from "./hooks";
+import { useAddEthereumChain } from "./useAddEthereumChain";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
 
