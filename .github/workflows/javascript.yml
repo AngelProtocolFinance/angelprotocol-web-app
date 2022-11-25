@@ -49,3 +49,8 @@ jobs:
         run: yarn run test
         env:
           REACT_APP_JUNO_LCD_NODE: ${{ secrets.REACT_APP_JUNO_LCD_NODE }}
+          
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
