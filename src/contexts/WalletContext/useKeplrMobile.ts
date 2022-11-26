@@ -1,9 +1,10 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useState } from "react";
-import { ProviderId } from "./types";
+import { Connection, ProviderId, ProviderInfo } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chainIds";
+import { WALLET_METADATA } from "./constants";
 
 type WalletState =
   | { status: "loading" }
@@ -98,5 +99,28 @@ export default function useKeplrMobile() {
     setWalletState({ status: "disconnected", connect });
   }
 
-  return walletState;
+  /** TODO: refactor to just return Meta & WalletState */
+  const providerInfo: ProviderInfo | undefined =
+    walletState.status === "connected"
+      ? {
+          logo: WALLET_METADATA["keplr-mobile"].logo,
+          providerId: "keplr-mobile",
+          chainId: walletState.chainId,
+          address: walletState.address,
+        }
+      : undefined;
+
+  const connection: Connection = {
+    name: "Keplr mobile",
+    logo: WALLET_METADATA["keplr-mobile"].logo,
+    installUrl: WALLET_METADATA["keplr-mobile"].logo,
+    connect,
+  };
+
+  return {
+    connection,
+    disconnect,
+    isLoading: walletState.status === "loading",
+    providerInfo,
+  };
 }

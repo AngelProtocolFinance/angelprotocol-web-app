@@ -6,6 +6,7 @@ export type ProviderId =
   | "leap-wallet"
   | "station"
   | "walletconnect"
+  | "keplr-mobile"
   | "keplr";
 
 export type WithoutInstallers = Exclude<

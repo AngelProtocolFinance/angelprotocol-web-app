@@ -15,11 +15,12 @@ import {
 import { Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
+import useKeplrMobile from "./useKeplrMobile";
 import useTerra from "./useTerra";
 import useXdefi from "./useXdefi";
 
@@ -70,6 +71,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: keplrWalletInfo,
   } = useKeplr();
 
+  const {
+    isLoading: isKeplrMobileLoading,
+    connection: mobileKeplrConnection,
+    disconnect: disconnectMobileKeplr,
+    providerInfo: mobileKeplrWalletInfo,
+  } = useKeplrMobile();
+
   const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
     useTerra();
 
@@ -101,7 +109,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
     },
+    {
+      providerInfo: mobileKeplrWalletInfo,
+      isLoading: !IS_TEST && isKeplrMobileLoading /**exclude if test */,
+    },
   ];
+
+  console.log(providerStatuses);
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -119,6 +133,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "keplr":
         disconnectKeplr();
+        break;
+      case "keplr-mobile":
+        disconnectMobileKeplr();
         break;
       case "xdefi-wallet":
       case "station":
@@ -178,6 +195,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
+            ...(IS_TEST ? [] : [mobileKeplrConnection]),
             xdefiConnection,
             metamaskConnection,
             ...terraConnections,

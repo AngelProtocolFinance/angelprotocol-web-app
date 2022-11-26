@@ -39,6 +39,11 @@ export const WALLET_METADATA: {
     installUrl: "https://www.keplr.app/",
     name: "Keplr",
   },
+  "keplr-mobile": {
+    logo: keplrIcon,
+    installUrl: "https://www.keplr.app/",
+    name: "Keplr",
+  },
 };
 
 export const placeholderChain: Chain = {
