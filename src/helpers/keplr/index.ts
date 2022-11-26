@@ -33,7 +33,7 @@ export async function getKeplrClient(
 
 const sendTx: Keplr["sendTx"] = async (_, tx, mode) => {
   const result = await fetch(
-    /**TODO: should have access to variable rpc_url*/
+    /**TODO: should have access to variable rpc_url via chainId currently __*/
     process.env.REACT_APP_JUNO_LCD_NODE + "/cosmos/tx/v1beta1/txs",
     {
       method: "POST",

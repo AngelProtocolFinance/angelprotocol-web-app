@@ -2,6 +2,7 @@ import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import ModalContext from "contexts/ModalContext";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import ErrorBoundary from "errors/ErrorBoundary";
@@ -19,15 +20,17 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Suspense fallback={<LoaderComponent />}>
-            <App />
-          </Suspense>
-        </BrowserRouter>
-      </Provider>
-    </ErrorBoundary>
+    <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+      <ErrorBoundary>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Suspense fallback={<LoaderComponent />}>
+              <App />
+            </Suspense>
+          </BrowserRouter>
+        </Provider>
+      </ErrorBoundary>
+    </ModalContext>
   </StrictMode>
 );
 
