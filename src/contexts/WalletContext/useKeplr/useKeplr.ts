@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "types/ethereum";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
+import { chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
@@ -33,11 +34,11 @@ export default function useKeplr() {
         await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
-      await dwindow.keplr.enable(CHAIN_ID);
-      const key = await dwindow.keplr.getKey(CHAIN_ID);
+      await dwindow.keplr.enable(chainIds.juno);
+      const key = await dwindow.keplr.getKey(chainIds.juno);
 
       setAddress(key.bech32Address);
-      setChainId(CHAIN_ID);
+      setChainId(chainIds.juno);
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
