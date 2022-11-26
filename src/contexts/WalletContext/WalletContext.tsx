@@ -111,11 +111,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
     {
       providerInfo: mobileKeplrWalletInfo,
-      isLoading: !IS_TEST && isKeplrMobileLoading /**exclude if test */,
+      isLoading: isKeplrMobileLoading,
     },
   ];
 
-  console.log(providerStatuses);
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -160,7 +159,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     isLoading: isChainLoading,
     error,
   } = useChainQuery(
-    { providerInfo: activeProviderInfo! },
+    {
+      providerInfo: activeProviderInfo!,
+    },
     { skip: !activeProviderInfo }
   );
 
@@ -195,6 +196,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
+            /** keplr mobile doesn't work on testnet atleast uni-5 */
             ...(IS_TEST ? [] : [mobileKeplrConnection]),
             xdefiConnection,
             metamaskConnection,
