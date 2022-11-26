@@ -87,14 +87,14 @@ describe("App.tsx tests", () => {
 
     //user goes to Leaderboard
     userEvent.click(leaderboardLink);
-    const loader2 = await screen.findByTestId("loader");
-    expect(loader2).toBeInTheDocument();
+    expect(await screen.findByTestId("loader")).toBeInTheDocument();
     expect(
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
 
     //user goes to Registration
     userEvent.click(registerLink);
+    expect(await screen.findByTestId("loader")).toBeInTheDocument();
     expect(
       await screen.findByRole("button", { name: /start/i })
     ).toBeInTheDocument();
