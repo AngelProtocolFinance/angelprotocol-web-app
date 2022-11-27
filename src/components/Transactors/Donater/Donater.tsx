@@ -21,8 +21,6 @@ export default function Donater(
 ) {
   const { wallet, isLoading } = useGetWallet();
 
-  console.log(wallet, isLoading);
-
   if (isLoading) return <DonateFormLoader />;
   return <DonateContext {...props} tokens={wallet?.coins} />;
 }

@@ -13,6 +13,7 @@ export const connector = new WalletConnect({
     "keplr_enable_wallet_connect_v1",
     "keplr_sign_amino_wallet_connect_v1",
   ],
+  storageId: "wc_keplr",
 });
 
 export function getKeplrWCClient() {
@@ -49,7 +50,7 @@ export async function sendTx(
 
   const result = await fetch(
     /**TODO: should have access to variable rpc_url via chainId currently __*/
-    process.env.REACT_APP_JUNO_LCD_NODE || "" + "/txs",
+    (process.env.REACT_APP_JUNO_LCD_NODE || "") + "/txs",
     {
       method: "POST",
       body: JSON.stringify({ tx: _tx, mode: getModePayload(mode) }),

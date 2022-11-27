@@ -1,8 +1,7 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import { useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
-import { connector as ctor } from "helpers/evm";
+import { useEffect, useRef, useState } from "react";
+import { Connection, ProviderInfo } from "./types";
+import { WCProvider as WCP } from "helpers/evm";
 import { WC_EVENT } from "constants/wallet-connect";
 import { WALLET_METADATA } from "./constants";
 
@@ -16,76 +15,76 @@ type WalletState =
     }
   | { status: "disconnected"; connect(): void };
 
-type Meta = { id: ProviderId; logo: string };
-type Wallet = Meta & WalletState;
+// type Meta = { id: ProviderId; logo: string };
+// type Wallet = Meta & WalletState;
 
 /** NOTE: only use this wallet in mainnet */
 export default function useEVMMObile() {
-  const { handleError } = useErrorContext();
-
+  const uriRef = useRef<string>("");
   const [walletState, setWalletState] = useState<WalletState>({
     status: "disconnected",
     connect,
   });
 
   /** persistent connection */
+  useEffect(() => {
+    if (WCP.connected) {
+      setWalletState({
+        status: "connected",
+        disconnect,
+        address: WCP.accounts[0],
+        chainId: `${WCP.chainId}`,
+      });
+    }
+    //eslint-disable-next-line
+  }, []);
 
   /** new connection */
   async function connect() {
-    setWalletState({ status: "loading" });
+    try {
+      setWalletState({ status: "loading" });
 
-    await ctor.createSession();
-    QRCodeModal.open(
-      ctor.uri,
-      () => {
-        /** modal is closed without connecting */
-        if (!ctor.connected) {
-          setWalletState({ status: "disconnected", connect });
-        }
-      },
-      {
-        mobileLinks: [],
-        desktopLinks: [],
+      if (uriRef.current) {
+        QRCodeModal.open(
+          uriRef.current,
+          () => {
+            setWalletState({ status: "disconnected", connect });
+          },
+          { mobileLinks: [], desktopLinks: [] }
+        );
       }
-    );
-
-    ctor.on(WC_EVENT.connect, async (error, payload) => {
-      try {
-        if (error) {
-          throw Error(error.message);
-        }
-        const { accounts, chainId } = payload.params[0];
-        setWalletState({
-          status: "connected",
-          disconnect,
-          address: accounts[0],
-          chainId: chainId,
-        });
-      } catch (err) {
-        disconnect();
-        handleError(err);
-      } finally {
-        QRCodeModal.close();
-      }
-    });
-    ctor.on(WC_EVENT.update, async (_, payload) => {
-      const { accounts, chainId } = payload.params[0];
+      const accounts = await WCP.enable();
       setWalletState({
         status: "connected",
         disconnect,
         address: accounts[0],
-        chainId: chainId,
+        chainId: `${WCP.chainId}`,
       });
-    });
 
-    ctor.on(WC_EVENT.disconnect, disconnect);
+      WCP.wc.on(
+        WC_EVENT.update,
+        (error, { params: [{ accounts, chainId }] }) => {
+          setWalletState({
+            status: "connected",
+            disconnect,
+            address: accounts[0],
+            chainId: `${chainId}`,
+          });
+        }
+      );
+      WCP.wc.on(WC_EVENT.disconnect, (error) => {
+        setWalletState({ status: "disconnected", connect });
+      });
+    } catch (err) {
+      setWalletState({ status: "disconnected", connect });
+    } finally {
+      uriRef.current = WCP.wc.uri;
+      QRCodeModal.close();
+    }
   }
 
   function disconnect() {
-    ctor.killSession();
-    ctor.off(WC_EVENT.disconnect);
-    ctor.off(WC_EVENT.update);
-    ctor.off(WC_EVENT.disconnect);
+    WCP.disconnect();
     setWalletState({ status: "disconnected", connect });
   }
 

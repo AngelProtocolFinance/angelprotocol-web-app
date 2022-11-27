@@ -27,7 +27,6 @@ export const apes = createApi({
         try {
           const { address, chainId } = args.providerInfo;
           const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
-
           const chain: Chain | { message: string } = await chainRes.json();
 
           if (!chain || "message" in chain) {
@@ -39,7 +38,9 @@ export const apes = createApi({
             const { balances: nativeBalances } = await fetch(
               process.env.REACT_APP_JUNO_LCD_NODE +
                 `/cosmos/bank/v1beta1/balances/${address}`
-            ).then<{ balances: Coin[] }>((res) => res.json());
+            )
+              .then<{ balances: Coin[] }>((res) => res.json())
+              .catch(() => ({ balances: [] as Coin[] }));
 
             // checking providerId to know which specific wallet is connected
             // this way once Terra v2 is enabled on Keplr again, the users will be able to

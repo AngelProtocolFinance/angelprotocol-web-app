@@ -1,24 +1,26 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chainIds";
 import { WC_EVENT } from "constants/wallet-connect";
 import { WALLET_METADATA } from "./constants";
 
-type WalletState =
-  | { status: "loading" }
-  | {
-      status: "connected";
-      address: string;
-      chainId: string;
-      disconnect(): void;
-    }
-  | { status: "disconnected"; connect(): void };
+type WalletInfo = { address: string; chainId: string };
+type Loading = { status: "loading" };
 
-type Meta = { id: ProviderId; logo: string };
-type Wallet = Meta & WalletState;
+type Connected = {
+  status: "connected";
+  disconnect(): void;
+} & WalletInfo;
+
+type Disconnected = { status: "disconnected"; connect(): void };
+
+type WalletState = Loading | Connected | Disconnected;
+
+// type Meta = { id: ProviderId; logo: string };
+// type Wallet = Meta & WalletState;
 
 /** NOTE: only use this wallet in mainnet */
 export default function useKeplrMobile() {
@@ -31,22 +33,13 @@ export default function useKeplrMobile() {
 
   /** persistent connection */
   useEffect(() => {
-    (async () => {
-      if (!ctor.connected) return;
-
-      const keplr = getKeplrWCClient();
-      await keplr.enable(chainIds.juno);
-      const key = await keplr.getKey(chainIds.juno);
-
-      setWalletState({
-        status: "connected",
-        disconnect,
-        address: key.bech32Address,
-        chainId: chainIds.juno,
+    if (ctor.connected) {
+      getWalletInfo().then((info) => {
+        setWalletState({ status: "connected", disconnect, ...info });
       });
-
       ctor.on(WC_EVENT.disconnect, disconnect);
-    })();
+    }
+    //eslint-disable-next-line
   }, []);
 
   /** new connection */
@@ -73,15 +66,10 @@ export default function useKeplrMobile() {
         if (error) {
           throw Error(error.message);
         }
-        const keplr = getKeplrWCClient();
-        await keplr.enable(chainIds.juno);
-        const key = await keplr.getKey(chainIds.juno);
-
         setWalletState({
           status: "connected",
           disconnect,
-          address: key.bech32Address,
-          chainId: chainIds.juno,
+          ...(await getWalletInfo()),
         });
       } catch (err) {
         disconnect();
@@ -90,6 +78,7 @@ export default function useKeplrMobile() {
         QRCodeModal.close();
       }
     });
+
     ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
@@ -124,4 +113,11 @@ export default function useKeplrMobile() {
     isLoading: walletState.status === "loading",
     providerInfo,
   };
+}
+
+async function getWalletInfo(): Promise<WalletInfo> {
+  const keplr = getKeplrWCClient();
+  await keplr.enable(chainIds.juno);
+  const key = await keplr.getKey(chainIds.juno);
+  return { chainId: chainIds.juno, address: key.bech32Address };
 }
