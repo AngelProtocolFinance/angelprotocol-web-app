@@ -24,7 +24,8 @@ import {
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import useDebouncer from "hooks/useDebouncer";
-import { extractFeeAmount, getProvider, logger } from "helpers";
+import { extractFeeAmount, logger } from "helpers";
+import { getProvider } from "helpers/evm";
 import { ap_wallets } from "constants/ap_wallets";
 import { IS_TEST } from "constants/env";
 import { junoDenom } from "constants/tokens";

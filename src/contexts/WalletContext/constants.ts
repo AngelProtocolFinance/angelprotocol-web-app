@@ -24,6 +24,11 @@ export const WALLET_METADATA: {
     installUrl: "https://metamask.io/",
     name: "Metamask",
   },
+  "metamask-mobile": {
+    logo: metamaskIcon,
+    installUrl: "https://metamask.io/",
+    name: "Metamask",
+  },
   "xdefi-wallet": {
     logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",

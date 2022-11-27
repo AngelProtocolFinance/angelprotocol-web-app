@@ -18,6 +18,7 @@ import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
+import useEVMMObile from "./useEVMMobile";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useKeplrMobile from "./useKeplrMobile";
@@ -78,6 +79,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: mobileKeplrWalletInfo,
   } = useKeplrMobile();
 
+  const {
+    isLoading: isMetamaskMobileLoading,
+    connection: mobileMetamaskConnection,
+    disconnect: disconnectMobileMetamask,
+    providerInfo: mobileMetamaskWalletInfo,
+  } = useEVMMObile();
+
   const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
     useTerra();
 
@@ -113,6 +121,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: mobileKeplrWalletInfo,
       isLoading: isKeplrMobileLoading,
     },
+    {
+      providerInfo: mobileMetamaskWalletInfo,
+      isLoading: isMetamaskMobileLoading,
+    },
   ];
 
   const activeProviderInfo = providerStatuses.find(
@@ -123,6 +135,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     switch (activeProviderInfo?.providerId) {
       case "metamask":
         disconnectMetamask();
+        break;
+      case "metamask-mobile":
+        disconnectMobileMetamask();
         break;
       case "binance-wallet":
         disconnectBinanceWallet();
@@ -151,6 +166,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectBinanceWallet,
     disconnectEVMxdefi,
     disconnectKeplr,
+    disconnectMobileKeplr,
+    disconnectMobileMetamask,
     disconnectTerra,
   ]);
 
@@ -198,8 +215,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             keplrConnection,
             /** keplr mobile doesn't work on testnet atleast uni-5 */
             ...(IS_TEST ? [] : [mobileKeplrConnection]),
+
             xdefiConnection,
             metamaskConnection,
+            mobileMetamaskConnection,
             ...terraConnections,
             binanceWalletConnection,
           ],

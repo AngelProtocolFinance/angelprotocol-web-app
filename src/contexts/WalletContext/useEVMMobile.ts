@@ -1,9 +1,8 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
-import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
-import { chainIds } from "constants/chainIds";
+import { connector as ctor } from "helpers/evm";
 import { WC_EVENT } from "constants/wallet-connect";
 import { WALLET_METADATA } from "./constants";
 
@@ -21,7 +20,7 @@ type Meta = { id: ProviderId; logo: string };
 type Wallet = Meta & WalletState;
 
 /** NOTE: only use this wallet in mainnet */
-export default function useKeplrMobile() {
+export default function useEVMMObile() {
   const { handleError } = useErrorContext();
 
   const [walletState, setWalletState] = useState<WalletState>({
@@ -30,24 +29,6 @@ export default function useKeplrMobile() {
   });
 
   /** persistent connection */
-  useEffect(() => {
-    (async () => {
-      if (!ctor.connected) return;
-
-      const keplr = getKeplrWCClient();
-      await keplr.enable(chainIds.juno);
-      const key = await keplr.getKey(chainIds.juno);
-
-      setWalletState({
-        status: "connected",
-        disconnect,
-        address: key.bech32Address,
-        chainId: chainIds.juno,
-      });
-
-      ctor.on(WC_EVENT.disconnect, disconnect);
-    })();
-  }, []);
 
   /** new connection */
   async function connect() {
@@ -68,20 +49,17 @@ export default function useKeplrMobile() {
       }
     );
 
-    ctor.on(WC_EVENT.connect, async (error) => {
+    ctor.on(WC_EVENT.connect, async (error, payload) => {
       try {
         if (error) {
           throw Error(error.message);
         }
-        const keplr = getKeplrWCClient();
-        await keplr.enable(chainIds.juno);
-        const key = await keplr.getKey(chainIds.juno);
-
+        const { accounts, chainId } = payload.params[0];
         setWalletState({
           status: "connected",
           disconnect,
-          address: key.bech32Address,
-          chainId: chainIds.juno,
+          address: accounts[0],
+          chainId: chainId,
         });
       } catch (err) {
         disconnect();
@@ -90,12 +68,23 @@ export default function useKeplrMobile() {
         QRCodeModal.close();
       }
     });
+    ctor.on(WC_EVENT.update, async (_, payload) => {
+      const { accounts, chainId } = payload.params[0];
+      setWalletState({
+        status: "connected",
+        disconnect,
+        address: accounts[0],
+        chainId: chainId,
+      });
+    });
+
     ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
   function disconnect() {
     ctor.killSession();
-    ctor.off(WC_EVENT.connect);
+    ctor.off(WC_EVENT.disconnect);
+    ctor.off(WC_EVENT.update);
     ctor.off(WC_EVENT.disconnect);
     setWalletState({ status: "disconnected", connect });
   }
@@ -104,17 +93,17 @@ export default function useKeplrMobile() {
   const providerInfo: ProviderInfo | undefined =
     walletState.status === "connected"
       ? {
-          logo: WALLET_METADATA["keplr-mobile"].logo,
-          providerId: "keplr-mobile",
+          logo: WALLET_METADATA["metamask-mobile"].logo,
+          providerId: "metamask-mobile",
           chainId: walletState.chainId,
           address: walletState.address,
         }
       : undefined;
 
   const connection: Connection = {
-    name: "Keplr mobile",
-    logo: WALLET_METADATA["keplr-mobile"].logo,
-    installUrl: WALLET_METADATA["keplr-mobile"].logo,
+    name: "EVM mobile",
+    logo: WALLET_METADATA["metamask-mobile"].logo,
+    installUrl: WALLET_METADATA["metamask-mobile"].logo,
     connect,
   };
 
