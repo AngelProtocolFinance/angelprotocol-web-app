@@ -80,7 +80,9 @@ export default function useCreateProposal() {
         wallet,
         msgs: [proposalMsg],
         ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+        tagPayloads: getTagPayloads(
+          propMeta.willExecute && "review_cw3_config"
+        ),
       })
     );
     showModal(TransactionPrompt, {});
