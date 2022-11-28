@@ -18,120 +18,125 @@ export default function Table(props: { donations: Donation[] }) {
   return (
     <>
       {/* {Desktop} */}
-      <table className="w-full text-sm text-gray-d2 dark:text-white hidden sm:table">
-        <TableSection type="thead" rowClass="">
-          <Cells
-            type="th"
-            cellClass="bg-orange-l6 dark:bg-blue-d6 uppercase font-heading font-semibold text-left text-gray-d2 dark:text-white text-sm border border-gray-l2 dark:border-bluegray p-3"
-          >
-            <HeaderButton
-              onClick={handleHeaderClick("charityName")}
-              _activeSortKey={sortKey}
-              _sortKey="charityName"
-              _sortDirection={sortDirection}
+      <div className="hidden sm:block">
+        <table className="w-full text-sm text-gray-d2 dark:text-white">
+          <TableSection type="thead" rowClass="">
+            <Cells
+              type="th"
+              cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-heading font-semibold text-left text-gray-d2 dark:text-white text-sm border border-gray-l2 dark:border-bluegray p-3"
             >
-              Recipient
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("date")}
-              _activeSortKey={sortKey}
-              _sortKey="date"
-              _sortDirection={sortDirection}
-            >
-              Date
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("chainName")}
-              _activeSortKey={sortKey}
-              _sortKey="chainName"
-              _sortDirection={sortDirection}
-            >
-              Network
-            </HeaderButton>
-            <>Currency</>
-            <HeaderButton
-              onClick={handleHeaderClick("amount")}
-              _activeSortKey={sortKey}
-              _sortKey="amount"
-              _sortDirection={sortDirection}
-            >
-              Amount
-            </HeaderButton>
-            <>TX Hash</>
-            <span className="flex justify-center">Status</span>
-            <CsvExporter
-              classes="hover:text-blue justify-center"
-              headers={csvHeaders}
-              data={props.donations}
-              filename="donations.csv"
-            >
-              Receipt
-            </CsvExporter>
-          </Cells>
-        </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 dark:border-bluegray even:bg-orange-l6 dark:bg-blue-d6"
-        >
-          {sorted.map(
-            ({
-              hash,
-              amount,
-              symbol,
-              chainId,
-              date,
-              chainName,
-              charityName,
-              id: charityId,
-            }) => (
-              <Cells
-                key={hash}
-                type="td"
-                cellClass="p-3 border border-gray-l2 dark:border-bluegray"
+              <HeaderButton
+                onClick={handleHeaderClick("charityName")}
+                _activeSortKey={sortKey}
+                _sortKey="charityName"
+                _sortDirection={sortDirection}
               >
-                <Link
-                  to={`${appRoutes.profile}/${charityId}`}
-                  className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
+                Recipient
+              </HeaderButton>
+              <HeaderButton
+                onClick={handleHeaderClick("date")}
+                _activeSortKey={sortKey}
+                _sortKey="date"
+                _sortDirection={sortDirection}
+              >
+                Date
+              </HeaderButton>
+              <HeaderButton
+                onClick={handleHeaderClick("chainName")}
+                _activeSortKey={sortKey}
+                _sortKey="chainName"
+                _sortDirection={sortDirection}
+              >
+                Network
+              </HeaderButton>
+              <>Currency</>
+              <HeaderButton
+                onClick={handleHeaderClick("amount")}
+                _activeSortKey={sortKey}
+                _sortKey="amount"
+                _sortDirection={sortDirection}
+              >
+                Amount
+              </HeaderButton>
+              <>TX Hash</>
+              <span className="flex justify-center">Status</span>
+              <CsvExporter
+                classes="hover:text-blue justify-center"
+                headers={csvHeaders}
+                data={props.donations}
+                filename="donations.csv"
+              >
+                Receipt
+              </CsvExporter>
+            </Cells>
+          </TableSection>
+          <TableSection
+            type="tbody"
+            rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 dark:border-bluegray even:bg-orange-l6 dark:bg-blue-d6 dark:even:bg-blue-d7"
+          >
+            {sorted.map(
+              ({
+                hash,
+                amount,
+                symbol,
+                chainId,
+                date,
+                chainName,
+                charityName,
+                id: charityId,
+              }) => (
+                <Cells
+                  key={hash}
+                  type="td"
+                  cellClass="p-3 border border-gray-l2 dark:border-bluegray"
                 >
-                  <span className="truncate">{charityName}</span>
-                  <Icon type="ExternalLink" className="w-5 h-5" />
-                </Link>
-                <>{new Date(date).toLocaleDateString()}</>
-                <>{chainName}</>
-                <span className="font-mono text-sm">{symbol}</span>
-                <>{humanize(amount, 3)}</>
-                <a
-                  href={getTxUrl(chainId, hash)}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-center text-angel-blue cursor-pointer uppercase text-sm"
-                >
-                  {maskAddress(hash)}
-                </a>
-                <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
-                  Received
-                </button>
-                <button
-                  className="w-full flex justify-center"
-                  onClick={() =>
-                    showKYCForm({
-                      type: "post-donation",
-                      txHash: hash,
-                      classes: "grid gap-5",
-                    })
-                  }
-                >
-                  <Icon type="FatArrowDownload" className="text-2xl" />
-                </button>
-              </Cells>
-            )
-          )}
-        </TableSection>
-      </table>
+                  <Link
+                    to={`${appRoutes.profile}/${charityId}`}
+                    className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
+                  >
+                    <span className="truncate">{charityName}</span>
+                    <Icon type="ExternalLink" className="w-5 h-5" />
+                  </Link>
+                  <>{new Date(date).toLocaleDateString()}</>
+                  <>{chainName}</>
+                  <span className="font-mono text-sm">{symbol}</span>
+                  <>{humanize(amount, 3)}</>
+                  <a
+                    href={getTxUrl(chainId, hash)}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+                  >
+                    {maskAddress(hash)}
+                  </a>
+                  <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
+                    Received
+                  </button>
+                  <button
+                    className="w-full flex justify-center"
+                    onClick={() =>
+                      showKYCForm({
+                        type: "post-donation",
+                        txHash: hash,
+                        classes: "grid gap-5",
+                      })
+                    }
+                  >
+                    <Icon type="FatArrowDownload" className="text-2xl" />
+                  </button>
+                </Cells>
+              )
+            )}
+          </TableSection>
+        </table>
+        <span className="block w-full dark:bg-blue-d7 font-heading font-semibold text-gray-d2 dark:text-white border-x-[1px] border-b-[1px] border-gray-l2 dark:border-bluegray uppercase text-center p-3">
+          Load More
+        </span>
+      </div>
 
       {/* {Mobile} */}
-      <div>
-        <div className="grid grid-cols-8 sm:hidden bg-orange-l6 dark:bg-blue-d6 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
+      <div className="sm:hidden">
+        <div className="grid grid-cols-8 bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
           <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
             <Icon
               type="ArrowDown"
@@ -146,22 +151,33 @@ export default function Table(props: { donations: Donation[] }) {
         </div>
 
         {sorted.map(
-          ({
-            hash,
-            amount,
-            symbol,
-            chainId,
-            date,
-            chainName,
-            charityName,
-            id: charityId,
-          }) => (
+          (
+            {
+              hash,
+              amount,
+              symbol,
+              chainId,
+              date,
+              chainName,
+              charityName,
+              id: charityId,
+            },
+            index
+          ) => (
             <div className="flex flex-col">
               <Disclosure>
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="even:bg-orange-l6 dark:bg-blue-d6">
-                      <div className="grid grid-cols-8 sm:hidden bg-orange-l6 dark:bg-blue-d6 text-gray-d2 dark:text-white border-b-[1px] border-x-[1px] border-gray-l2 dark:border-bluegray">
+                    <Disclosure.Button>
+                      <div
+                        className={`grid grid-cols-8 sm:hidden ${
+                          index % 2 === 0 ? "bg-white" : "bg-orange-l6"
+                        } ${
+                          index % 2 === 0
+                            ? "dark:bg-blue-d6"
+                            : "dark:bg-blue-d7"
+                        } text-gray-d2 dark:text-white border-b-[1px] border-x-[1px] border-gray-l2 dark:border-bluegray`}
+                      >
                         <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
                           <Icon
                             type={open ? "ArrowUp" : "ArrowDown"}
@@ -178,8 +194,8 @@ export default function Table(props: { donations: Donation[] }) {
                       </div>
                     </Disclosure.Button>
                     <Disclosure.Panel>
-                      <div className="flex flex-col even:bg-orange-l6 dark:bg-blue-d6 border-x-[1px] border-gray-l2 dark:border-bluegray">
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <div className="flex flex-col border-x-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Network
                           </span>
@@ -187,7 +203,7 @@ export default function Table(props: { donations: Donation[] }) {
                             {chainName}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between dark:bg-blue-d7 bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Currency
                           </span>
@@ -195,7 +211,7 @@ export default function Table(props: { donations: Donation[] }) {
                             {symbol}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Amount
                           </span>
@@ -203,7 +219,7 @@ export default function Table(props: { donations: Donation[] }) {
                             {humanize(amount, 3)}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             TX Hash
                           </span>
@@ -211,7 +227,7 @@ export default function Table(props: { donations: Donation[] }) {
                             {maskAddress(hash)}
                           </span>
                         </div>
-                        <div className="flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                        <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Status
                           </span>
@@ -219,7 +235,7 @@ export default function Table(props: { donations: Donation[] }) {
                             Received
                           </button>
                         </div>
-                        <div className="flex justify-between p-4">
+                        <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4">
                           <span className="text-gray-d2 dark:text-white font-bold uppercase">
                             Receipt
                           </span>
@@ -247,6 +263,9 @@ export default function Table(props: { donations: Donation[] }) {
             </div>
           )
         )}
+        <span className="block w-full dark:bg-blue-d7 font-heading font-semibold text-gray-d2 dark:text-white border-x-[1px] border-b-[1px] border-gray-l2 dark:border-bluegray uppercase text-center p-3">
+          Load More
+        </span>
       </div>
     </>
   );
