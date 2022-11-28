@@ -19,6 +19,7 @@ export default function useTerra() {
   } = useWallet();
 
   const terraInfo: ProviderInfo | undefined =
+    /** wallets contain wc entry even terraAddress is not resolved */
     connection && wallets[0].terraAddress
       ? {
           providerId:

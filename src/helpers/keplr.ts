@@ -6,9 +6,10 @@ import WalletConnect from "@walletconnect/client/";
 import { Keplr } from "@keplr-wallet/types";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
+import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
-  bridge: "https://bridge.walletconnect.org",
+  bridge: WC_BRIDGE,
   signingMethods: [
     "keplr_enable_wallet_connect_v1",
     "keplr_sign_amino_wallet_connect_v1",

@@ -134,9 +134,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
-      case "evm-wc":
-        disconnectEVMWC();
-        break;
+
       case "binance-wallet":
         disconnectBinanceWallet();
         break;
@@ -148,6 +146,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "keplr-wc":
         disconnectKeplrWC();
+        break;
+      case "evm-wc":
+        disconnectEVMWC();
         break;
       case "xdefi-wallet":
       case "station":
