@@ -4,9 +4,7 @@ import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
@@ -23,8 +21,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, endowment, successLink, successMessage } =
-    useAdminResources();
+  const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
@@ -82,21 +79,14 @@ export default function useWithdraw() {
       sendCosmosTx({
         wallet,
         msgs: [proposal],
-        tagPayloads: [
-          invalidateJunoTags([
-            //no need to invalidate balance, since this is just proposal
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
         //Juno withdrawal
-        successLink,
-        successMessage,
+        ...propMeta,
         onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno
           : (response) =>
               logWithdrawProposal({
                 res: response,
-                proposalLink: successLink,
+                proposalLink: propMeta.successLink,
                 wallet: wallet!, //wallet is defined at this point
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,
