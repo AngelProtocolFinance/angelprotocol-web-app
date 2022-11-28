@@ -21,10 +21,12 @@ interface RequestArguments {
 }
 
 export type AccountChangeHandler = (accounts: string[]) => void;
+export type ChainChangeHandler = (chainId: string) => void;
 
 export type InjectedProvider = {
   chainId: string;
   request: <T>(args: RequestArguments) => Promise<T>;
+  on(ev: "chainChanged", listener: ChainChangeHandler): any;
   on(ev: "accountsChanged", listener: AccountChangeHandler): any;
   removeAllListeners(): unknown;
 };

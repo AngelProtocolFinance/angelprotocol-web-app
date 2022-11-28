@@ -4,6 +4,7 @@ import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
+  ChainChangeHandler,
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
@@ -64,19 +65,17 @@ export default function useInjectedProvider(
   }, []);
 
   /** attachers/detachers */
-  const attachChainChangedHandler = (injectedProvider: InjectedProvider) => {
-    const provider = new ethers.providers.Web3Provider(injectedProvider, "any");
-    provider.on("network", (_newNetwork, oldNetwork) => {
-      // it is best to reload the page on chain/network changes, as otherwise there might be unexpected behavior
-      // https://docs.ethers.io/v5/concepts/best-practices/
-      if (oldNetwork) {
-        window.location.reload();
-      }
-    });
+  const attachChainChangedHandler = (provider: InjectedProvider) => {
+    provider.on("chainChanged", handleChainChange);
   };
 
   const attachAccountChangeHandler = (provider: InjectedProvider) => {
     provider.on("accountsChanged", handleAccountsChange);
+  };
+
+  /** event handlers */
+  const handleChainChange: ChainChangeHandler = (hexChainId) => {
+    setChainId(`${parseInt(hexChainId, 16)}`);
   };
 
   //useful when user changes account internally via metamask
@@ -214,8 +213,6 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
-        // if an unexpected exception occurs, the chain will not be switched and `isLoading` should be set to `false`
-        setIsLoading(false);
         throw new WalletError(
           switchError?.message || "Unknown error occured",
           switchError?.code || 0
@@ -226,6 +223,8 @@ export default function useInjectedProvider(
         method: EIPMethods.eth_requestAccounts,
       });
       await addEthereumChain(injectedProvider, accounts[0], chainId);
+    } finally {
+      setIsLoading(false);
     }
   };
 
