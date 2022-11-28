@@ -3,8 +3,8 @@ import { FormValues as FV, Props } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
-import Icon from "components/Icon";
 import ExtLink from "components/ExtLink";
+import Icon from "components/Icon";
 import { BtnPrimary } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { Label } from "components/form";
@@ -121,14 +121,9 @@ export default function Form({ classes = "", ...props }: Props) {
             }}
           >
             I declare that I have read and agreed to{" "}
-            <a
-              className="underline text-orange"
-              target="_blank"
-              href={TERMS_OF_USE}
-              rel="noopener noreferrer"
-            >
+            <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
               Privacy Policy *
-            </a>
+            </ExtLink>
           </Checkbox>
           <Checkbox<FV>
             name="agreedToGetUpdates"
