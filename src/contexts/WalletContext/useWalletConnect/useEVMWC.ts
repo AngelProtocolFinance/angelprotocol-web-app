@@ -30,7 +30,7 @@ export default function useEVMWC() {
           () => {
             setWalletState({ status: "disconnected", connect });
           },
-          { mobileLinks: [], desktopLinks: [] }
+          { mobileLinks: ["metamask"], desktopLinks: [] }
         );
       }
       const accounts = await WCP.enable();
