@@ -12,7 +12,7 @@ import { useChainQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -45,16 +45,18 @@ const initialState: State = {
   isLoading: true,
 };
 
-// const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = [
-//   { chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" },
-//   { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
-// ];
-const EVM_SUPPORTED_CHAINS: BaseChain[] = [
-  { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
-  { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
-  // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
-  { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
-];
+// const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+//   ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
+//   : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
+const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+    ];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const {

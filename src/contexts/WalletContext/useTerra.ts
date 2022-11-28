@@ -14,11 +14,11 @@ import {
   WalletDisconnectedError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
+import { IS_TEST } from "constants/env";
 
-const SUPPORTED_CHAINS: BaseChain[] = [
-  { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
-  { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
-];
+const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
+  : [{ chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" }];
 
 export default function useTerra() {
   const {

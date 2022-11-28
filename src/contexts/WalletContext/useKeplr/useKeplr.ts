@@ -13,12 +13,15 @@ import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
-const SUPPORTED_CHAINS: BaseChain[] = [
-  { chain_id: chainIDs.junoMain, chain_name: "Juno Mainnet" },
-  { chain_id: chainIDs.junoTest, chain_name: "Juno Testnet" },
-  // { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
-  // { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
-];
+const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.junoTest, chain_name: "Juno Testnet" },
+      // { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.junoMain, chain_name: "Juno Mainnet" },
+      // { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
+    ];
 
 const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
