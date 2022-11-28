@@ -10,7 +10,7 @@ export default function ProofOfRegistration() {
 
   return (
     <InputRow
-      htmlFor="proofOfRegistration"
+      htmlFor={isSubmitting ? "" : "proofOfRegistration"}
       label="Proof of registration as a 501(c)(3) charity or equivalent"
       required
     >

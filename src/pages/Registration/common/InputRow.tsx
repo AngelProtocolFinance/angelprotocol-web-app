@@ -7,7 +7,7 @@ export function InputRow(props: InputProps) {
       <div className="flex items-center gap-2 h-8">
         <label
           htmlFor={props.htmlFor}
-          className="cursor-pointer text-dark-grey"
+          className={`${props.htmlFor ? "cursor-pointer" : ""} text-dark-grey`}
         >
           {props.label}
           {props.required && <span className="text-failed-red ml-0.5">*</span>}
