@@ -19,52 +19,52 @@ export default function useKeplrWC() {
 
   /** persistent connection */
   useEffect(() => {
-    if (ctor.connected) {
-      getWalletInfo().then((info) => {
-        setWalletState({ status: "connected", disconnect, ...info });
-      });
-      ctor.on(WC_EVENT.disconnect, disconnect);
-    }
+    if (ctor.connected) connect(false);
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
-  async function connect() {
-    setWalletState({ status: "loading" });
-
-    await ctor.createSession();
-    QRCodeModal.open(
-      ctor.uri,
-      () => {
-        /** modal is closed without connecting */
-        if (!ctor.connected) {
-          setWalletState({ status: "disconnected", connect });
+  async function connect(isNew = true) {
+    if (isNew) {
+      setWalletState({ status: "loading" });
+      await ctor.createSession();
+      QRCodeModal.open(
+        ctor.uri,
+        () => {
+          /** modal is closed without connecting */
+          if (!ctor.connected) {
+            setWalletState({ status: "disconnected", connect });
+          }
+        },
+        {
+          mobileLinks: [],
+          desktopLinks: [],
         }
-      },
-      {
-        mobileLinks: [],
-        desktopLinks: [],
-      }
-    );
-
-    ctor.on(WC_EVENT.connect, async (error) => {
-      try {
-        if (error) {
-          throw Error(error.message);
+      );
+      ctor.on(WC_EVENT.connect, async (error) => {
+        try {
+          if (error) {
+            throw Error(error.message);
+          }
+          setWalletState({
+            status: "connected",
+            disconnect,
+            ...(await getWalletInfo()),
+          });
+        } catch (err) {
+          disconnect();
+          handleError(err);
+        } finally {
+          QRCodeModal.close();
         }
-        setWalletState({
-          status: "connected",
-          disconnect,
-          ...(await getWalletInfo()),
-        });
-      } catch (err) {
-        disconnect();
-        handleError(err);
-      } finally {
-        QRCodeModal.close();
-      }
-    });
-
+      });
+    } else {
+      setWalletState({
+        status: "connected",
+        disconnect,
+        ...(await getWalletInfo()),
+      });
+    }
     ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
