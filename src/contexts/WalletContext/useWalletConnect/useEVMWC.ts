@@ -15,23 +15,16 @@ export default function useEVMWC() {
 
   /** persistent connection */
   useEffect(() => {
-    if (WCP.connected) {
-      setWalletState({
-        status: "connected",
-        disconnect,
-        address: WCP.accounts[0],
-        chainId: `${WCP.chainId}`,
-      });
-    }
+    if (WCP.wc.connected) connect(false /** re-enable connection again */);
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
-  async function connect() {
+  async function connect(isNew = true) {
     try {
       setWalletState({ status: "loading" });
 
-      if (uriRef.current) {
+      if (uriRef.current || isNew) {
         QRCodeModal.open(
           uriRef.current,
           () => {
@@ -41,6 +34,7 @@ export default function useEVMWC() {
         );
       }
       const accounts = await WCP.enable();
+
       setWalletState({
         status: "connected",
         disconnect,

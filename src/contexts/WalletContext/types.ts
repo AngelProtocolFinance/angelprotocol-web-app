@@ -21,7 +21,7 @@ type Base = {
   name: string;
   network?: true;
 };
-type Single = { connect(args?: string): Promise<void>; networks?: never };
+type Single = { connect(args?: any): Promise<void>; networks?: never };
 type Multi = { connect?: never; networks: Connection[] };
 export type Connection = Base & (Single | Multi);
 
