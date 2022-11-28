@@ -29,7 +29,7 @@ export default function useWalletConnect() {
 
   const wcTerra: Connection = {
     logo: terraIcon,
-    name: "Terra",
+    name: "Terra station",
     connect: async () => {
       if (connection) {
         connectToTerra(connection.type, connection.identifier);
