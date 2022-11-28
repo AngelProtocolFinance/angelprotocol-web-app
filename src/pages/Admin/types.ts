@@ -1,3 +1,4 @@
+import { Coin } from "@cosmjs/proto-signing";
 import { ImgLink } from "components/ImgEditor/types";
 import { CharityApplication, Registration } from "types/aws";
 import {
@@ -177,6 +178,9 @@ export type FormCW3Config = {
   threshold: number;
   duration: number;
   require_execution: boolean;
+  seed_asset?: Asset;
+  seed_split_to_liquid: string; //"0.5,0.9",
+  new_endow_gas_money?: Coin;
 };
 export type CW3ConfigValues = ProposalBase &
   FormCW3Config & { initial: FormCW3Config; isTime: boolean };

@@ -1,4 +1,11 @@
-import { EmbeddedBankMsg, EmbeddedWasmMsg, Threshold, Vote } from "../common";
+import { Coin } from "@cosmjs/proto-signing";
+import {
+  Asset,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  Threshold,
+  Vote,
+} from "../common";
 
 type Duration = { time: number } | { height: number };
 type PercentageRes = {
@@ -54,15 +61,12 @@ export type CW3Config = {
   max_voting_period: Duration;
   //...future needed attr
   require_execution: boolean;
+  seed_asset?: Asset;
+  seed_split_to_liquid: string; //"0.5,0.9",
+  new_endow_gas_money?: Coin;
 };
 
-export type CW3ConfigPayload = {
-  //percent vote to pass poll
-  threshold: Threshold;
-  //poll duration in block height
-  max_voting_period: Duration;
-  require_execution: boolean;
-};
+export type CW3ConfigPayload = Omit<CW3Config, "group_addr">;
 
 export type AdminVoteInfo = {
   voter: string; //"juno123abc.."
