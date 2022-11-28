@@ -1,6 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { WithdrawLog, WithdrawRoute } from "types/aws";
+import ExtLink from "components/ExtLink";
 import { humanize, maskAddress } from "helpers";
 import { explorerUrls } from "./constants";
 
@@ -87,14 +88,12 @@ function Route(props: {
         <span>{humanize(output_amount, 4)} </span>
         <span className="text-xs font-mono">{output_symbol}</span>
       </div>
-      <a
+      <ExtLink
         className="text-sm font-mono text-blue hover:text-blue-l1 active:text-blue-d1 mt-4"
         href={`${explorerUrls[id]}/${hash}`}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         {maskAddress(hash)}
-      </a>
+      </ExtLink>
     </Container>
   );
 }

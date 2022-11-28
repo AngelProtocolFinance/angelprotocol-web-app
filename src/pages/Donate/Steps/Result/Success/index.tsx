@@ -17,7 +17,7 @@ export default function Success({
   const { name, id } = recipient;
   return (
     <div className={`grid justify-items-center ${classes}`}>
-      <Icon type="CheckCircle" size={96} className="text-[#7EC682] mb-8" />
+      <Icon type="CheckCircle" size={96} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 font-bold text-center leading-relaxed">
         Thank you for your donation of{" "}
         <span className="font-extrabold">
@@ -33,8 +33,6 @@ export default function Success({
       <BtnSec
         as="a"
         href={getTxUrl(chainId, hash)}
-        target="_blank"
-        rel="noopener noreferrer"
         className="flex items-center justify-center gap-3.5 w-full sm:w-auto"
       >
         <Icon type="ExternalLink" size={22} />

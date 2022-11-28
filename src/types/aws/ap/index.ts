@@ -48,20 +48,19 @@ export type EndowmentsQueryParams = {
   endow_type?: CapitalizedEndowmentType;
   sdgs?: string; // comma separated sdg values
   tier?: Exclude<EndowmentTier, "Level1">; //for now
+  kyc_only?: boolean;
 };
 
 export interface LeaderboardEntry {
-  endowment_id: string;
-  owner: string;
-  name: string;
+  // chain: NetworkType;
+  charity_logo: string;
+  charity_name: string;
+  endowment_id: number;
   total_liq: number;
   total_lock: number;
   overall: number;
-  logo?: string;
-  overview: string;
-  url: string;
-  tier: number;
-  iconLight?: boolean;
+  //tier: EndowmentTier
+  //charity_owner:string
 }
 
 export interface Update {
@@ -86,6 +85,7 @@ export type Airdrop = {
 export type EndowmentBookmark = {
   id: number;
   name: string;
+  logo: string;
 };
 
 export type UserBookMarkInfo = {

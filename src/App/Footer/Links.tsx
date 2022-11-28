@@ -1,3 +1,4 @@
+import ExtLink from "components/ExtLink";
 import { SECTIONS_DATA } from "./constants";
 
 const linkStyles = "font-body font-semibold text-sm";
@@ -23,13 +24,9 @@ export default function Links() {
 
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
-    <a
-      href={props.href}
-      rel="noreferrer"
-      className={`${linkStyles} cursor-pointer`}
-    >
+    <ExtLink href={props.href} className={`${linkStyles} cursor-pointer`}>
       {props.text}
-    </a>
+    </ExtLink>
   ) : (
     <span className={linkStyles}>{props.text}</span>
   );

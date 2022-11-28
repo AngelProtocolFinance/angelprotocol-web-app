@@ -87,6 +87,10 @@
   .btn-outline-blue:disabled {
     @apply border-gray text-gray cursor-auto;
   }
+
+  .overlay {
+    @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
+  }
 }
 
 @layer utilities {

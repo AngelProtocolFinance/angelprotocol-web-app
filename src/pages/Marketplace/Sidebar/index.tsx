@@ -1,6 +1,7 @@
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { reset, toggle } from "slices/components/marketFilter";
+import KYCFilter from "./KYCFilter";
 import SDGGroups from "./SDGGroups";
 import Types from "./Types";
 
@@ -33,6 +34,8 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           Reset Filters
         </button>
       </div>
+
+      <KYCFilter classes="ml-3 mt-3" />
       <Types />
       <SDGGroups />
     </div>

@@ -2,6 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { Donation } from "types/aws";
 import CsvExporter from "components/CsvExporter";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";

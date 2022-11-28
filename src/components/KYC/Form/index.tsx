@@ -4,6 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
+import ExtLink from "components/ExtLink";
 import { BtnPrimary } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { Label } from "components/form";

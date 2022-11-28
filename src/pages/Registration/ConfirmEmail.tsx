@@ -1,113 +1,62 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { VerifEmailBody } from "./common/types";
-import banner2 from "assets/images/banner-register-2.jpg";
-import { useRegistrationQuery } from "services/aws/registration";
+import { Navigate, useLocation } from "react-router-dom";
+import { InitReg } from "./types";
+import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { UnexpectedStateError } from "errors/errors";
-import { appRoutes } from "constants/routes";
-import { Button, ButtonMailTo } from "./common";
-import useSendVerificationEmail from "./common/useSendVerificationEmail";
-import { GENERIC_ERROR_MESSAGE } from "./constants";
-import routes from "./routes";
+import { BtnPrim } from "components/registration";
+import { handleMutationResult } from "helpers";
+import { ButtonMailTo } from "./common";
 
-export default function ConfirmEmail() {
-  const { application } = useRegistrationQuery();
-  const navigate = useNavigate();
-  const { sendVerificationEmail, isLoading } = useSendVerificationEmail();
+export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
+  /** going to this page should only be thru Signup or Resume
+   *  if thru URL, would have empty state, and thus be redirected to Signup
+   */
+  const { state } = useLocation();
+  const initReg = state as InitReg | undefined; //from non "/steps" navigations
+
+  const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
-  const sendEmail = useCallback(async () => {
-    try {
-      if (!application.ContactPerson.PK) {
-        throw new UnexpectedStateError("Primary key is null");
-      }
+  if (!initReg) {
+    return <Navigate to={".."} />;
+  }
 
-      const emailPayload: VerifEmailBody = {
-        OrganizationName: application.Registration.OrganizationName,
-        Email: application.ContactPerson.Email,
-        FirstName: application.ContactPerson.FirstName,
-        LastName: application.ContactPerson.LastName,
-        Role: application.ContactPerson.Role,
-        PhoneNumber: application.ContactPerson.PhoneNumber,
-      };
-
-      await sendVerificationEmail(application.ContactPerson.PK, emailPayload);
-
-      showModal(Popup, {
-        message:
-          "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
-      });
-    } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
-    }
-  }, [application, handleError, sendVerificationEmail, showModal]);
-
-  // if wallet registration step is already complete, then this was just data update,
-  // so user can be navigated to the dashboard
-  const onContinueClick = () => {
-    const route = application.Metadata.JunoWallet
-      ? routes.dashboard
-      : routes.documentation;
-    navigate(`${appRoutes.register}/${route}`);
-  };
+  const { email, reference } = initReg;
 
   return (
-    <div className="flex flex-col gap-4 font-bold">
-      {!application.ContactPerson.EmailVerified ? (
-        <>
-          <img src={banner2} width="100%" className="rounded-xl" alt="" />
-          <div className="text-4xl">
-            <p>Hi {application.ContactPerson.FirstName}!</p>
-            <span>We're waiting for you to confirm your email address.</span>
-          </div>
-          <span className="font-normal">
-            You can continue to the next registration step, but please note that
-            you will need to verify your email by clicking on the link in the
-            email we've sent you, before the final application submission, in
-            order to be able to register{" "}
-            {application.Registration.OrganizationName} on Angel Protocol.
-          </span>
-        </>
-      ) : (
-        <div className="text-2xl">
-          <p>Thank you for registering</p>
-          <p className="mb-10">
-            {application.Registration.OrganizationName},{" "}
-            {application.ContactPerson.FirstName}!
-          </p>
-        </div>
-      )}
-      <div className="text-2xl">
-        <p>Your registration reference is</p>
-        <p className="text-orange">{application.ContactPerson.PK}</p>
-      </div>
-      <div className="flex flex-col gap-1 items-center mt-3">
-        {!application.ContactPerson.EmailVerified && (
-          <Button
-            onClick={sendEmail}
-            className="btn-outline-blue w-64 h-12 text-sm"
-            isLoading={isLoading}
-          >
-            Resend verification email
-          </Button>
-        )}
-        <Button
-          onClick={onContinueClick}
-          className="btn-orange w-48 h-12 text-sm"
-          disabled={isLoading}
-        >
-          continue
-        </Button>
-        <ButtonMailTo
-          label="Having trouble receiving our emails?"
-          mailTo="support@angelprotocol.io"
-          subject="Charity Registration: Trouble with receiving confirmation email"
-        />
-      </div>
+    <div
+      className={`max-w-lg grid content-start justify-items-center ${classes}`}
+    >
+      <h1 className="text-[2rem] font-bold mb-2 text-center">
+        Confirm your email address
+      </h1>
+
+      <p className="text-center text-white/75 mb-8 w-full text-lg">
+        We sent an email to <span className="font-semibold">{email}</span>.
+        Please confirm your email by clicking on the link in the message.
+      </p>
+      <BtnPrim
+        className="w-full max-w-[26.25rem] mb-4"
+        onClick={async () => {
+          handleMutationResult(
+            await requestEmail({ uuid: reference, email }),
+            handleError,
+            () => {
+              showModal(Popup, { message: "Email verification sent!" });
+            }
+          );
+        }}
+        disabled={isLoading}
+      >
+        Resend verification email
+      </BtnPrim>
+      <ButtonMailTo
+        label="Having trouble receiving our emails?"
+        mailTo="support@angelprotocol.io"
+        subject="Charity Registration: Trouble with receiving confirmation email"
+      />
     </div>
   );
 }

@@ -39,16 +39,16 @@ module.exports = {
       },
 
       green: {
-        d4: "#064e3b",
-        d3: "#065f46",
-        d2: "#047857",
-        d1: "#059669",
-        DEFAULT: "#10b981",
-        l1: "#34d399",
-        l2: "#6ee7b7",
-        l3: "#a7f3d0",
-        l4: "#d1fae5",
-        l5: "#ecfdf5",
+        d4: "#1F4521",
+        d3: "#306C33",
+        d2: "#419345",
+        d1: "#57B55C",
+        DEFAULT: "#7EC682",
+        l1: "#9AD39D",
+        l2: "#B7DFB9",
+        l3: "#D3ECD4",
+        l4: "#EFF8F0",
+        l5: "#FDFEFD",
       },
 
       bluegray: {
@@ -104,10 +104,6 @@ module.exports = {
     },
 
     extend: {
-      backgroundImage: {
-        "market-banner-light": `linear-gradient(rgba(84, 163, 217, 0.9), rgba(84, 163, 217, 0.9)), url('./assets/images/hero.png')`,
-        "market-banner-dark": `linear-gradient(rgba(30, 91, 134, 0.9), rgba(30, 91, 134, 0.9)), url('./assets/images/hero.png')`,
-      },
       fontSize: {
         "2xs": "0.625rem",
         "3xs": ["0.56rem", "0.7rem"],
