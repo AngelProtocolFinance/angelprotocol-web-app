@@ -19,9 +19,7 @@ export default function useTerra() {
   } = useWallet();
 
   const terraInfo: ProviderInfo | undefined =
-    connection &&
-    wallets[0].terraAddress &&
-    !wallets[0].terraAddress.includes("0x")
+    connection && wallets[0].terraAddress
       ? {
           providerId:
             //use connect type as Id if no futher connections stems out of the type
@@ -60,12 +58,6 @@ export default function useTerra() {
   };
 }
 
-function _filter<T extends TerraConnection | Installation>({
-  type,
-  identifier,
-}: T) {
-  return (
-    identifier === "leap-wallet" || identifier === "station"
-    // type === ConnectType.WALLETCONNECT
-  );
+function _filter<T extends TerraConnection | Installation>({ identifier }: T) {
+  return identifier === "leap-wallet" || identifier === "station";
 }

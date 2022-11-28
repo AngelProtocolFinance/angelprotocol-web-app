@@ -1,29 +1,15 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useState } from "react";
-import { Connection, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "../types";
+import { WalletInfo, WalletState } from "./types";
 import { useErrorContext } from "contexts/ErrorContext";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chainIds";
 import { WC_EVENT } from "constants/wallet-connect";
-import { WALLET_METADATA } from "./constants";
-
-type WalletInfo = { address: string; chainId: string };
-type Loading = { status: "loading" };
-
-type Connected = {
-  status: "connected";
-  disconnect(): void;
-} & WalletInfo;
-
-type Disconnected = { status: "disconnected"; connect(): void };
-
-type WalletState = Loading | Connected | Disconnected;
-
-// type Meta = { id: ProviderId; logo: string };
-// type Wallet = Meta & WalletState;
+import { WALLET_METADATA } from "../constants";
 
 /** NOTE: only use this wallet in mainnet */
-export default function useKeplrMobile() {
+export default function useKeplrWC() {
   const { handleError } = useErrorContext();
 
   const [walletState, setWalletState] = useState<WalletState>({
@@ -93,17 +79,17 @@ export default function useKeplrMobile() {
   const providerInfo: ProviderInfo | undefined =
     walletState.status === "connected"
       ? {
-          logo: WALLET_METADATA["keplr-mobile"].logo,
-          providerId: "keplr-mobile",
+          logo: WALLET_METADATA["keplr-wc"].logo,
+          providerId: "keplr-wc",
           chainId: walletState.chainId,
           address: walletState.address,
         }
       : undefined;
 
   const connection: Connection = {
-    name: "Keplr mobile",
-    logo: WALLET_METADATA["keplr-mobile"].logo,
-    installUrl: WALLET_METADATA["keplr-mobile"].logo,
+    name: "Keplr",
+    logo: WALLET_METADATA["keplr-wc"].logo,
+    installUrl: WALLET_METADATA["keplr-wc"].logo,
     connect,
   };
 

@@ -18,7 +18,7 @@ export function getProvider(
     case "metamask":
       return dwindow.ethereum;
     /** only used in sendTx */
-    case "metamask-mobile":
+    case "evm-wc":
       return WCProvider as unknown as InjectedProvider;
     case "xdefi-evm":
       return dwindow.xfi?.ethereum;

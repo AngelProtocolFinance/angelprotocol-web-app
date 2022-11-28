@@ -1,13 +1,13 @@
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
-  | "metamask-mobile"
+  | "evm-wc"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
   | "leap-wallet"
   | "station"
   | "walletconnect"
-  | "keplr-mobile"
+  | "keplr-wc"
   | "keplr";
 
 export type WithoutInstallers = Exclude<

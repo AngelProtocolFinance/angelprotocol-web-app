@@ -1,25 +1,12 @@
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useRef, useState } from "react";
-import { Connection, ProviderInfo } from "./types";
+import { Connection, ProviderInfo } from "../types";
+import { WalletState } from "./types";
 import { WCProvider as WCP } from "helpers/evm";
 import { WC_EVENT } from "constants/wallet-connect";
-import { WALLET_METADATA } from "./constants";
+import { WALLET_METADATA } from "../constants";
 
-type WalletState =
-  | { status: "loading" }
-  | {
-      status: "connected";
-      address: string;
-      chainId: string;
-      disconnect(): void;
-    }
-  | { status: "disconnected"; connect(): void };
-
-// type Meta = { id: ProviderId; logo: string };
-// type Wallet = Meta & WalletState;
-
-/** NOTE: only use this wallet in mainnet */
-export default function useEVMMObile() {
+export default function useEVMWC() {
   const uriRef = useRef<string>("");
   const [walletState, setWalletState] = useState<WalletState>({
     status: "disconnected",
@@ -92,8 +79,8 @@ export default function useEVMMObile() {
   const providerInfo: ProviderInfo | undefined =
     walletState.status === "connected"
       ? {
-          logo: WALLET_METADATA["metamask-mobile"].logo,
-          providerId: "metamask-mobile",
+          logo: WALLET_METADATA["evm-wc"].logo,
+          providerId: "evm-wc",
           chainId: walletState.chainId,
           address: walletState.address,
         }
@@ -101,8 +88,8 @@ export default function useEVMMObile() {
 
   const connection: Connection = {
     name: "EVM mobile",
-    logo: WALLET_METADATA["metamask-mobile"].logo,
-    installUrl: WALLET_METADATA["metamask-mobile"].logo,
+    logo: WALLET_METADATA["evm-wc"].logo,
+    installUrl: WALLET_METADATA["evm-wc"].logo,
     connect,
   };
 

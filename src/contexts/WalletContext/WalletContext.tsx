@@ -18,11 +18,11 @@ import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
-import useEVMMObile from "./useEVMMobile";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
-import useKeplrMobile from "./useKeplrMobile";
 import useTerra from "./useTerra";
+import useWalletConnect from "./useWalletConnect";
+import useKeplrMobile from "./useWalletConnect/useKeplrWC";
 import useXdefi from "./useXdefi";
 
 export type WalletState = {
@@ -72,20 +72,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: keplrWalletInfo,
   } = useKeplr();
 
-  const {
-    isLoading: isKeplrMobileLoading,
-    connection: mobileKeplrConnection,
-    disconnect: disconnectMobileKeplr,
-    providerInfo: mobileKeplrWalletInfo,
-  } = useKeplrMobile();
-
-  const {
-    isLoading: isMetamaskMobileLoading,
-    connection: mobileMetamaskConnection,
-    disconnect: disconnectMobileMetamask,
-    providerInfo: mobileMetamaskWalletInfo,
-  } = useEVMMObile();
-
   const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
     useTerra();
 
@@ -95,6 +81,19 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectEVMxdefi,
     xdefiEVMinfo,
   } = useXdefi();
+
+  const {
+    //terraWC state is already reflected in useTerra
+    EVMWCInfo,
+    isEVMWCLoading,
+    disconnectEVMWC,
+
+    keplrWCInfo,
+    isKeplrWCLoading,
+    disconnectKeplrWC,
+
+    wcConnection,
+  } = useWalletConnect();
 
   const providerStatuses: ProviderStatuses = [
     {
@@ -118,12 +117,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       isLoading: isKeplrLoading,
     },
     {
-      providerInfo: mobileKeplrWalletInfo,
-      isLoading: isKeplrMobileLoading,
+      providerInfo: keplrWCInfo,
+      isLoading: isKeplrWCLoading,
     },
     {
-      providerInfo: mobileMetamaskWalletInfo,
-      isLoading: isMetamaskMobileLoading,
+      providerInfo: EVMWCInfo,
+      isLoading: isEVMWCLoading,
     },
   ];
 
@@ -136,8 +135,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
-      case "metamask-mobile":
-        disconnectMobileMetamask();
+      case "evm-wc":
+        disconnectEVMWC();
         break;
       case "binance-wallet":
         disconnectBinanceWallet();
@@ -148,8 +147,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "keplr":
         disconnectKeplr();
         break;
-      case "keplr-mobile":
-        disconnectMobileKeplr();
+      case "keplr-wc":
+        disconnectKeplrWC();
         break;
       case "xdefi-wallet":
       case "station":
@@ -166,8 +165,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectBinanceWallet,
     disconnectEVMxdefi,
     disconnectKeplr,
-    disconnectMobileKeplr,
-    disconnectMobileMetamask,
+    disconnectKeplrWC,
+    disconnectEVMWC,
     disconnectTerra,
   ]);
 
@@ -213,12 +212,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
-            /** keplr mobile doesn't work on testnet atleast uni-5 */
-            ...(IS_TEST ? [] : [mobileKeplrConnection]),
-
             xdefiConnection,
             metamaskConnection,
-            mobileMetamaskConnection,
+            wcConnection,
             ...terraConnections,
             binanceWalletConnection,
           ],

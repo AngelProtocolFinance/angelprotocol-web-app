@@ -37,7 +37,7 @@ export default function Connector(props: Connection) {
           onClick={toggle}
         >
           <Logo logo={props.logo} />
-          <Name>{isOpen ? "Select network" : props.name}</Name>
+          <Name>{props.name}</Name>
           <Icon
             type={isOpen ? "Up" : "Down"}
             className="ml-auto text-angel-grey"

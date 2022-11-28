@@ -36,7 +36,6 @@ export default function useXdefi() {
   const xdefiConnection: Connection = {
     name: "xdefi",
     logo: WALLET_METADATA["xdefi-wallet"].logo,
-    installUrl: WALLET_METADATA["xdefi-wallet"].installUrl,
     networks: [xdefiTerraConnection, xdefiEVMConnection],
   };
 

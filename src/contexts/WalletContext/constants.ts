@@ -24,7 +24,7 @@ export const WALLET_METADATA: {
     installUrl: "https://metamask.io/",
     name: "Metamask",
   },
-  "metamask-mobile": {
+  "evm-wc": {
     logo: metamaskIcon,
     installUrl: "https://metamask.io/",
     name: "Metamask",
@@ -44,7 +44,7 @@ export const WALLET_METADATA: {
     installUrl: "https://www.keplr.app/",
     name: "Keplr",
   },
-  "keplr-mobile": {
+  "keplr-wc": {
     logo: keplrIcon,
     installUrl: "https://www.keplr.app/",
     name: "Keplr",
