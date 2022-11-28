@@ -43,6 +43,7 @@ export const queryObject: {
   },
   cw3ListVoters: { list_voters: {} },
   cw3Config: { config: {} },
+  reviewCw3Config: { config: {} },
   cw3Proposals(options) {
     return { reverse_proposals: options };
   },

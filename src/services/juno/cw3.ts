@@ -34,7 +34,16 @@ export const cw3Api = junoApi.injectEndpoints({
         return res.data.proposals;
       },
     }),
-
+    reviewCw3Config: builder.query<
+      Result<"reviewCw3Config">,
+      WithAddrArgs<"reviewCw3Config">
+    >({
+      providesTags: [{ type: junoTags.admin, id: adminTags.config }],
+      query: (contract) => genQueryPath("reviewCw3Config", null, contract),
+      transformResponse: (res: Res<"reviewCw3Config">) => {
+        return res.data;
+      },
+    }),
     votes: builder.query<Result<"cw3Votes">, WithAddrArgs<"cw3Votes">>({
       providesTags: [{ type: junoTags.admin, id: adminTags.votes }],
       query: ({ contract, ...args }) =>
@@ -51,4 +60,5 @@ export const {
   useVotesQuery,
   useProposalQuery,
   useCw3ConfigQuery,
+  useReviewCw3ConfigQuery,
 } = cw3Api;
