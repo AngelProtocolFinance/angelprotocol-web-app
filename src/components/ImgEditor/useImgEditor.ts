@@ -32,8 +32,6 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
       //preview & crop valid format only
       if (accept.includes(newFile.type)) {
         const preview = URL.createObjectURL(newFile);
-        setValue(previewPath, preview as any);
-
         showModal(ImgCropper, {
           preview,
           aspect,
@@ -63,12 +61,12 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     }
     const cropped = URL.createObjectURL(blob);
     setValue(previewPath, cropped as any);
-    closeModal();
     onFileChange(
       new File([blob], originalFile.name, {
         type: originalFile.type,
       })
     );
+    closeModal();
   }
 
   function handleReset() {
