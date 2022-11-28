@@ -11,6 +11,9 @@ import { WC_BRIDGE } from "constants/urls";
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,
   signingMethods: [
+    /**https://github.com/chainapsis/keplr-wallet/blob/master/packages/wc-client/src/index.ts
+     * see sendCustomRequest methods
+     */
     "keplr_enable_wallet_connect_v1",
     "keplr_sign_amino_wallet_connect_v1",
   ],
