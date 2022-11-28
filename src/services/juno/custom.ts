@@ -1,12 +1,11 @@
 import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
-import { SuccessLink } from "slices/transaction/types";
-import { EndowmentDetails } from "types/contracts";
+import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
-import { customTags, junoTags } from "./tags";
+import { customTags, defaultProposalTags, junoTags } from "./tags";
 
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
@@ -25,28 +24,42 @@ function isAp(id: number) {
   return id === AP_ID || id === REVIEWER_ID;
 }
 
-class ProposalDisplay {
-  successLink: SuccessLink;
-  successMessage: string;
+async function getPropMeta(
+  endowId: number,
+  cw3: string,
+  config: CW3Config
+): Promise<AdminResources["propMeta"]> {
+  const votersRes = await queryContract("cw3ListVoters", cw3, null);
+  const numVoters = votersRes.voters.length;
 
-  constructor(
-    isSingleMember: boolean,
-    adminHomeUrl: string,
-    adminProposalsUrl: string
-  ) {
-    this.successLink = isSingleMember
-      ? {
-          url: adminHomeUrl,
+  const willExecute =
+    /** single member */
+    numVoters === 1 ||
+    /** multiple members but threshold is lte 1/members given that execution is not required */
+    (!config.require_execution &&
+      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
+
+  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
+
+  return willExecute
+    ? {
+        willExecute,
+        successLink: {
+          url: `${appRoutes.admin}/${endowId}`,
           description: "Go to admin home",
-        }
-      : {
-          url: adminProposalsUrl,
+        },
+        successMessage: "Successful transaction",
+        tagPayloads,
+      }
+    : {
+        willExecute: undefined,
+        successLink: {
+          url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
           description: "Go to proposals",
-        };
-    this.successMessage = isSingleMember
-      ? `Successful transaction`
-      : `Proposal successfully created`;
-  }
+        },
+        successMessage: "Proposal successfully created",
+        tagPayloads,
+      };
 }
 
 export const customApi = junoApi.injectEndpoints({
@@ -89,9 +102,6 @@ export const customApi = junoApi.injectEndpoints({
       providesTags: [{ type: junoTags.custom, id: customTags.adminResources }],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
-        /** special case for ap admin usage */
-        const adminProposalsUrl = `${appRoutes.admin}/${args.endowmentId}/${adminRoutes.proposals}`;
-        const adminHomeUrl = `${appRoutes.admin}/${args.endowmentId}`;
 
         if (isAp(numId)) {
           const { cw3Addr, cw4Addr, role } = getCWs(numId);
@@ -101,17 +111,6 @@ export const customApi = junoApi.injectEndpoints({
           });
 
           if (!!voter.weight) {
-            const listVoters = await queryContract(
-              "cw3ListVoters",
-              cw3Addr,
-              null
-            );
-            const isSingleMember = listVoters.voters.length === 1;
-            const propDisplay = new ProposalDisplay(
-              isSingleMember,
-              adminHomeUrl,
-              adminProposalsUrl
-            );
             const cw3config = await queryContract("cw3Config", cw3Addr, null);
 
             return {
@@ -122,8 +121,7 @@ export const customApi = junoApi.injectEndpoints({
                 endowment: {} as EndowmentDetails, //admin templates shoudn't access this
                 cw3config,
                 role,
-                successLink: propDisplay.successLink,
-                successMessage: propDisplay.successMessage,
+                propMeta: await getPropMeta(numId, cw3Addr, cw3config),
               },
             };
           } else {
@@ -143,17 +141,6 @@ export const customApi = junoApi.injectEndpoints({
         });
 
         if (!!voter.weight) {
-          const listVoters = await queryContract(
-            "cw3ListVoters",
-            endowment.owner,
-            null
-          );
-          const isSingleMember = listVoters.voters.length === 1;
-          const propDisplay = new ProposalDisplay(
-            isSingleMember,
-            adminHomeUrl,
-            adminProposalsUrl
-          );
           const cw3config = await queryContract(
             "cw3Config",
             endowment.owner,
@@ -167,8 +154,7 @@ export const customApi = junoApi.injectEndpoints({
               endowment,
               cw3config,
               role: "charity",
-              successLink: propDisplay.successLink,
-              successMessage: propDisplay.successMessage,
+              propMeta: await getPropMeta(numId, endowment.owner, cw3config),
             },
           };
         }

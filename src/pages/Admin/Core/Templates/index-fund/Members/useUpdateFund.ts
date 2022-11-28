@@ -3,8 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -16,7 +14,7 @@ import IndexFund from "contracts/IndexFund";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
@@ -84,13 +82,7 @@ export default function useUpdateFund() {
         sendCosmosTx({
           wallet,
           msgs: [proposalMsg],
-          tagPayloads: [
-            invalidateJunoTags([
-              { type: junoTags.admin, id: adminTags.proposals },
-            ]),
-          ],
-          successLink,
-          successMessage,
+          ...propMeta,
         })
       );
       setIsLoading(false);

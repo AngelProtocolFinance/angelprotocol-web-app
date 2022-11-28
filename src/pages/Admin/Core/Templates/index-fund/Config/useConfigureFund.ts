@@ -2,8 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
 import { FundConfig } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
@@ -13,13 +11,12 @@ import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import { scaleToStr } from "helpers";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -69,13 +66,7 @@ export default function useConfigureFund() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        ...propMeta,
       })
     );
     showModal(TransactionPrompt, {});
