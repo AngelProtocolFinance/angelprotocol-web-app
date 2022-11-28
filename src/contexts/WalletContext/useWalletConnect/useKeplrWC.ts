@@ -1,4 +1,4 @@
-import QRCodeModal from "@walletconnect/qrcode-modal";
+import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { WalletInfo, WalletState } from "./types";
@@ -7,6 +7,8 @@ import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chainIds";
 import { WC_EVENT } from "constants/wallet-connect";
 import { WALLET_METADATA } from "../constants";
+
+const QRModal = new KeplrQRCodeModalV1();
 
 /** NOTE: only use this wallet in mainnet */
 export default function useKeplrWC() {
@@ -28,19 +30,12 @@ export default function useKeplrWC() {
     if (isNew) {
       setWalletState({ status: "loading" });
       await ctor.createSession();
-      QRCodeModal.open(
-        ctor.uri,
-        () => {
-          /** modal is closed without connecting */
-          if (!ctor.connected) {
-            setWalletState({ status: "disconnected", connect });
-          }
-        },
-        {
-          mobileLinks: [],
-          desktopLinks: [],
+      QRModal.open(ctor.uri, () => {
+        /** modal is closed without connecting */
+        if (!ctor.connected) {
+          setWalletState({ status: "disconnected", connect });
         }
-      );
+      });
       ctor.on(WC_EVENT.connect, async (error) => {
         try {
           if (error) {
@@ -55,7 +50,7 @@ export default function useKeplrWC() {
           disconnect();
           handleError(err);
         } finally {
-          QRCodeModal.close();
+          QRModal.close();
         }
       });
     } else {
