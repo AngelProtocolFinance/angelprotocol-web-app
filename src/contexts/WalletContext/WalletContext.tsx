@@ -15,14 +15,13 @@ import {
 import { Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
+import { EXPECTED_NETWORK_TYPE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 import useWalletConnect from "./useWalletConnect";
-import useKeplrMobile from "./useWalletConnect/useKeplrWC";
 import useXdefi from "./useXdefi";
 
 export type WalletState = {
@@ -211,10 +210,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       <setContext.Provider
         value={{
           connections: [
+            wcConnection,
             keplrConnection,
             xdefiConnection,
             metamaskConnection,
-            wcConnection,
             ...terraConnections,
             binanceWalletConnection,
           ],

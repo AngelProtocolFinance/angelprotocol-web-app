@@ -8,7 +8,7 @@ import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
 
 export const connector = new WalletConnect({
-  bridge: "https://bridge.walletconnect.org", // Required
+  bridge: "https://bridge.walletconnect.org",
   signingMethods: [
     "keplr_enable_wallet_connect_v1",
     "keplr_sign_amino_wallet_connect_v1",
@@ -23,24 +23,20 @@ export function getKeplrWCClient() {
 export async function getKeplrClient(
   providerId: ProviderId,
   chain_id: string,
-  rpc_url: string
+  rpcUrl: string
 ): Promise<SigningCosmWasmClient> {
   const signer =
-    providerId ===
-    ("keplr-mobile" as ProviderId) /** TODO: add keplr-mobile in ProviderId */
+    providerId === "keplr-wc"
       ? getKeplrWCClient().getOfflineSignerOnlyAmino(chain_id)
       : (window as Dwindow).keplr!.getOfflineSigner(chain_id);
-  return await SigningCosmWasmClient.connectWithSigner(
-    "https://juno-rpc.stakely.io",
-    signer
-  );
+  return await SigningCosmWasmClient.connectWithSigner(rpcUrl, signer);
 }
 
 type Mode = Parameters<Keplr["sendTx"]>[2];
 /** matching sender for amino signed tx */
 export async function sendTx(
   chainId: string,
-  /** keplr-mobile can only process amino
+  /** keplr-wc can only process amino
    * | Uint8Array, so can be assignable to constructor
    */
   tx: StdTx | Uint8Array,
@@ -49,7 +45,11 @@ export async function sendTx(
   const _tx = tx as StdTx;
 
   const result = await fetch(
-    /**TODO: should have access to variable rpc_url via chainId currently __*/
+    /**TODO: if keplr needs to be used on other cosmos chains as well, LCD_url should be
+     * determined via chainId
+     */
+
+    /** endpoint definition: https://docs.figment.io/api-reference/node-api/cosmos-lcd/#/txs */
     (process.env.REACT_APP_JUNO_LCD_NODE || "") + "/txs",
     {
       method: "POST",

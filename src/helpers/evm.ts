@@ -3,7 +3,7 @@ import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider } from "types/ethereum";
 
 export const WCProvider = new WalletConnectProvider({
-  infuraId: "2c84f212a9eb40fa9c60f8b5d78f60db",
+  infuraId: process.env.REACT_APP_INFURA_ID,
   qrcodeModalOptions: { mobileLinks: [], desktopLinks: [] },
   storageId: "wc_evm",
 });

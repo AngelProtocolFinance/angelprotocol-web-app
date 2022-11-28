@@ -3,7 +3,6 @@ import { Connection } from "../types";
 import terraIcon from "assets/icons/terra.png";
 import wcIcon from "assets/icons/wallets/wallet-connect.png";
 import { IS_TEST } from "constants/env";
-import { WALLET_METADATA } from "../constants";
 import useEVMWC from "./useEVMWC";
 import useKeplrWC from "./useKeplrWC";
 
