@@ -1,7 +1,10 @@
 import { Dialog } from "@headlessui/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { apesTags, invalidateApesTags } from "services/apes";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Loader from "components/Loader";
+import { useSetter } from "store/accessors";
 import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
 
@@ -9,8 +12,17 @@ type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
 export default function KadoModal() {
   const [isLoading, setLoading] = useState(true);
+  const dispatch = useSetter();
+  const { onModalClose } = useModalContext();
 
   const { wallet } = useGetWallet();
+
+  const handleOnLoad = useCallback(() => {
+    // there is a high chance the user bought some new crypto prior to closing this modal
+    // reload the page to get new wallet balances
+    onModalClose(() => dispatch(invalidateApesTags([apesTags.chain])));
+    setLoading(false);
+  }, [onModalClose, dispatch]);
 
   const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
   const network = !wallet
@@ -32,7 +44,7 @@ export default function KadoModal() {
           isLoading ? "hidden" : ""
         } w-full h-full border-none rounded`}
         title="Buy with Kado"
-        onLoad={() => setLoading(false)}
+        onLoad={handleOnLoad}
       ></iframe>
     </Dialog.Panel>
   );
