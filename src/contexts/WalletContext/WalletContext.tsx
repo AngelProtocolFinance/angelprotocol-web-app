@@ -188,6 +188,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
+    isFetching: isChainFetching,
     error,
   } = useChainQuery(
     {
@@ -224,7 +225,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     <getContext.Provider
       value={{
         wallet: walletState,
-        isLoading: providerStatuses.some((x) => x.isLoading) || isChainLoading,
+        isLoading:
+          providerStatuses.some((x) => x.isLoading) ||
+          isChainLoading ||
+          isChainFetching,
       }}
     >
       <setContext.Provider
