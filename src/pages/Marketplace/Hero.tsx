@@ -1,6 +1,5 @@
 import character from "assets/images/character4.png";
 
-/** */
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
     <div
