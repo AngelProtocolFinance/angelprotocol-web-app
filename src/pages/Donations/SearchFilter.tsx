@@ -28,15 +28,15 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                 <Icon type="Close" size={24} className="text-gray-d2"></Icon>
               </Popover.Button>
             </div>
-            <div className="flex justify-between bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray p-5">
-              <h2 className="text-xl text-gray-d2 dark:text-white font-bold uppercase">
-                Filter By
-              </h2>
+            <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
               <a href="#" className="text-orange underline">
                 Reset filters
               </a>
+              <button className="flex justify-center items-center text-white bg-orange p-3 rounded-md">
+                Apply filter
+              </button>
             </div>
-            <div>
+            <div className="overflow-y-scroll">
               <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Date</label>
@@ -52,31 +52,6 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                       placeholder="To"
                     />
                   </div>
-                </div>
-                <div className="flex flex-col text-gray-d2 gap-2">
-                  <label className="dark:text-white">Recipient</label>
-                  <Menu>
-                    <Menu.Button
-                      className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                      }
-                    >
-                      <div className="text-gray-l2">Select recipient...</div>
-                      <Icon type="ArrowDown" size={30}></Icon>
-                    </Menu.Button>
-                    <Menu.Items>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            className={`${active && "bg-blue-500"}`}
-                            href="/account-settings"
-                          >
-                            Account settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Menu>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Network</label>
@@ -290,10 +265,13 @@ const SearchFilter: FC<SearchFilterProps> = ({}) => {
                   </Menu>
                 </div>
               </div>
-              <div className="py-6 pl-6 bg-orange-l6 dark:bg-blue-d7">
+              <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
                 <a href="#" className="text-orange underline">
                   Reset filters
                 </a>
+                <button className="flex justify-center items-center text-white bg-orange p-3 rounded-md">
+                  Apply filter
+                </button>
               </div>
             </div>
           </div>
