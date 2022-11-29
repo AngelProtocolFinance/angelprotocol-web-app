@@ -6,7 +6,7 @@ import { AmountProps } from ".";
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();
   return (
-    <Dialog.Panel className="grid content-start bg-gray-l5 dark:bg-blue-d4 text-gray-d2 border border-gray-l2 dark:border-bluegray dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
+    <Dialog.Panel className="grid content-start bg-gray-l5 dark:bg-blue-d5 text-gray-d2 border border-gray-l2 dark:border-bluegray dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
       <Amount title="principal" value={locked} />
       <Amount title="impact" value={liquid} />
       <button

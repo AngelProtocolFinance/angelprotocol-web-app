@@ -44,7 +44,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Dialog.Panel className="grid content-start fixed-center z-20 border border-gray-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d4 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
+    <Dialog.Panel className="grid content-start fixed-center z-20 border border-gray-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d5 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray">
         Share on {type}
         <button
