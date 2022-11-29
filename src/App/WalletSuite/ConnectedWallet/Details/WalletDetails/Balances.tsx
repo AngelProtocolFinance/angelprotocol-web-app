@@ -3,18 +3,17 @@ import { useMemo, useState } from "react";
 import { Token } from "types/aws";
 import { humanize } from "helpers";
 
-const criterionAmount = 0.001;
+const MIN_AMOUNT = 0.001;
 
 export default function Balances({ coins }: { coins: Token[] }) {
   const [hideSmallAmounts, setHideSmallAmounts] = useState(true);
 
   const filteredCoins = useMemo(
     () =>
-      coins.filter((coin) =>
-        //show atleast eth
-        coin.balance > 0 && !hideSmallAmounts
-          ? true
-          : +coin.balance > criterionAmount
+      coins.filter(
+        (coin) =>
+          //show atleast eth
+          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
       ),
     [coins, hideSmallAmounts]
   );
