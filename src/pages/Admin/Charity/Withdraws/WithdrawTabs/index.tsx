@@ -15,21 +15,23 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
       className="mt-6 justify-self-center"
       defaultIndex={type === "locked" ? 1 : 0}
     >
-      <Tab.List className="grid grid-cols-2 rounded-md mb-1 overflow-hidden">
+      <Tab.List className="grid grid-cols-2 rounded mb-1 overflow-hidden border border-gray-l2 dark:border-bluegray p-0.5">
         {tabs.map((t) => (
           <Tab
             key={t}
             className={({ selected }) =>
               `${
-                selected ? "bg-blue-l1 text-white" : "bg-white text-gray-d2"
-              } px-4 py-2 uppercase text-sm disabled:text-gray font-bold`
+                selected
+                  ? "bg-blue-l1 dark:bg-blue-d2 text-white"
+                  : "bg-white dark:bg-blue-d4"
+              } rounded px-4 py-2 uppercase text-sm font-bold`
             }
           >
             {accountTypeDisplayValue[t]}
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels className="w-full max-w-md">
+      <Tab.Panels className="w-full max-w-md border rounded border-gray-l2 dark:border-bluegray">
         {tabs.map((t) => (
           <Tab.Panel key={t}>
             <Transactor
