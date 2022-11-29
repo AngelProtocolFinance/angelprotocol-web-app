@@ -9,7 +9,7 @@ import { StageUpdater } from "slices/transaction/types";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
-import { getProvider } from "helpers";
+import { getProvider } from "helpers/evm";
 import { WalletDisconnectedError } from "errors/errors";
 import logDonation from "../../logDonation";
 import transactionSlice, { setStage } from "../../transactionSlice";

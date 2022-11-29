@@ -24,6 +24,11 @@ export const WALLET_METADATA: {
     installUrl: "https://metamask.io/",
     name: "Metamask",
   },
+  "evm-wc": {
+    logo: metamaskIcon,
+    installUrl: "https://metamask.io/",
+    name: "Metamask",
+  },
   "xdefi-wallet": {
     logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
@@ -35,6 +40,11 @@ export const WALLET_METADATA: {
     name: "XDEFI",
   },
   keplr: {
+    logo: keplrIcon,
+    installUrl: "https://www.keplr.app/",
+    name: "Keplr",
+  },
+  "keplr-wc": {
     logo: keplrIcon,
     installUrl: "https://www.keplr.app/",
     name: "Keplr",

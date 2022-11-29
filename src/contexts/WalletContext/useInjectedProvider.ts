@@ -6,7 +6,8 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
-import { getProvider, logger } from "helpers";
+import { logger } from "helpers";
+import { getProvider } from "helpers/evm";
 import { WalletError, WalletNotInstalledError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
