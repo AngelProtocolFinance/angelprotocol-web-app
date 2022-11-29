@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import ReviewCW3Configurer from "pages/Admin/templates/cw3/ReviewCW3Configurer";
 import { templateRoutes as routes } from "../../constants";
 import FundSender from "../../templates/cw3/FundSender";
 import Members from "../../templates/cw4/Members";
 import Nav from "./Nav";
+import ReviewCW3Configurer from "./ReviewCW3Configurer";
 
 export default function Templates() {
   return (
