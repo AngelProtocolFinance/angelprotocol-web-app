@@ -24,15 +24,11 @@ export default function SuccessPopup(props: Props) {
           onClick={() => closeModal()}
           className="absolute right-4 top-3 border border-gray-l2 dark:border-bluegray p-2 rounded-md"
         >
-          <Icon type="Close" size={24} className="dark:text-white"></Icon>
+          <Icon type="Close" size={24} className="dark:text-white" />
         </button>
       </div>
       <div className="flex flex-col justify-center items-center gap-6 pb-8">
-        <Icon
-          type="CheckCircle"
-          size={96}
-          className="text-green opacity-75"
-        ></Icon>
+        <Icon type="CheckCircle" size={96} className="text-green opacity-75" />
         <h2 className="text-xl text-gray-d2 dark:text-white font-bold">
           {title}
         </h2>

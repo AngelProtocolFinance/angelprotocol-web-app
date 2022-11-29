@@ -140,7 +140,7 @@ export default function Table(props: { donations: Donation[] }) {
               type="ArrowDown"
               size={24}
               className="text-gray-d2 dark:text-white invisible"
-            ></Icon>
+            />
           </div>
           <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 uppercase">
             Recipient
@@ -181,7 +181,7 @@ export default function Table(props: { donations: Donation[] }) {
                             type={open ? "ArrowUp" : "ArrowDown"}
                             size={24}
                             className="text-gray-d2 dark:text-white"
-                          ></Icon>
+                          />
                         </div>
                         <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 text-left">
                           <span className="truncate">{charityName}</span>

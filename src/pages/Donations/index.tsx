@@ -1,9 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useDonationsQuery } from "services/apes";
-import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
-import SearchFilter from "./SearchFilter";
-import SortByDropdown from "./SortByDropdown";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";

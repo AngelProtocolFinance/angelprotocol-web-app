@@ -40,7 +40,7 @@ export default function Form({ classes = "", ...props }: Props) {
           onClick={() => closeModal()}
           className="absolute right-4 top-3 border border-gray-l2 dark:border-bluegray p-2 rounded-md"
         >
-          <Icon type="Close" size={24}></Icon>
+          <Icon type="Close" size={24} />
         </button>
       </div>
       <div className="w-full text-lg font-extrabold p-5 bg-white dark:bg-blue-d6 text-gray-d2 dark:text-white">
