@@ -3,7 +3,7 @@ import { WalletState } from "./WalletContext";
 export type WithWallet<T> = T & { wallet: WalletState };
 
 export type ProviderId =
-  // | "binance-wallet"
+  | "binance-wallet"
   | "metamask"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider

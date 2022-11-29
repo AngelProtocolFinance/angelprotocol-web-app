@@ -2,6 +2,7 @@ import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { AccountType, EndowmentBalance } from "types/contracts";
 import Transactor from "components/Transactor";
+import { accountTypeDisplayValue } from "../../constants";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
@@ -24,7 +25,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
               } px-4 py-2 uppercase text-sm disabled:text-gray font-bold`
             }
           >
-            {t}
+            {accountTypeDisplayValue[t]}
           </Tab>
         ))}
       </Tab.List>

@@ -86,11 +86,11 @@ export class WrongNetworkError extends APError {
   }
 }
 
-export class UnsupportedNetworkError extends APError {
+export class UnsupportedChainError extends APError {
   constructor(unsupportedChainId: string) {
     super(
-      "UnsupportedNetworkError",
-      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra and Ethereum. Please switch to one of those and reload the page`
+      "UnsupportedChainError",
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Binance and Ethereum. Please switch to one of those and reload the page`
     );
   }
 }

@@ -59,7 +59,12 @@ export const sendCosmosTx = createAsyncThunk(
         }
         //always invalidate cached chain data to reflect balance changes from fee deduction
         dispatch(invalidateApesTags([{ type: apesTags.chain }]));
-        //invalidate custom cache entries
+
+        /** invalidate custom cache entries, after some delay so that query result
+        would reflect the changes made */
+        await new Promise((r) => {
+          setTimeout(r, 3000);
+        });
         for (const tagPayload of args.tagPayloads || []) {
           dispatch(tagPayload);
         }
