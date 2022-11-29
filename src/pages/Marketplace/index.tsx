@@ -1,4 +1,7 @@
+import { useCallback, useEffect } from "react";
 import banner from "assets/images/hero.png";
+import KadoModal from "pages/Donate/Steps/KadoModal";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetter } from "store/accessors";
 import Banner from "./Banner";
 import Cards from "./Cards";
@@ -10,6 +13,15 @@ export default function Marketplace() {
   const isFilterOpen = useGetter(
     (state) => state.component.marketFilter.isOpen
   );
+  const { showModal } = useModalContext();
+
+  const handleOpenKado = useCallback(
+    () => showModal(KadoModal, {}),
+    [showModal]
+  );
+
+  useEffect(() => handleOpenKado(), []);
+
   return (
     <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d4 pb-16">
       <div
