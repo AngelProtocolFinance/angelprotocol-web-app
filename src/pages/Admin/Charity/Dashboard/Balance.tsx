@@ -11,7 +11,7 @@ export default function Balance({ type }: Props) {
   const queryState = useBalanceQuery({ id: endowmentId });
 
   return (
-    <div className="shadow-inner bg-white/5 rounded-md p-3 text-white/80">
+    <div className="rounded p-3 border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase font-extrabold">
         {accountTypeDisplayValue[type]}
       </h4>

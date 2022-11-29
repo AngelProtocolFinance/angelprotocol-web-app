@@ -8,28 +8,28 @@ type Props = { proposals: Proposal[] };
 export default function Table({ proposals }: Props) {
   return (
     <table>
-      <TableSection rowClass="border-b border-white/30" type="thead">
-        <Cells
-          type="th"
-          cellClass="p-1 uppercase text-white/80 text-left font-heading"
-        >
+      <TableSection
+        rowClass="border-b border-gray-l2 dark:border-bluegray"
+        type="thead"
+      >
+        <Cells type="th" cellClass="p-1 uppercase text-left font-heading">
           <>title</>
           <>status</>
           <>expiry</>
         </Cells>
       </TableSection>
       <TableSection
-        rowClass="last:border-none border-b border-white/10 hover:bg-white/10"
+        rowClass="last:border-none border-b border-gray-l2 dark:border-bluegray hover:bg-blue-l4 hover:dark:bg-blue-d4"
         type="tbody"
       >
         {proposals.map(({ title, status, expires, id }) => (
-          <Cells type="td" cellClass="p-1 text-white/80" key={id}>
+          <Cells type="td" cellClass="p-1" key={id}>
             <>{title}</>
             <span className="uppercase text-xs font-bold">{status}</span>
             <Expiry {...expires} />
             <Link
               to={`${adminRoutes.proposal}/${id}`}
-              className="flex items-center uppercase text-xs hover:text-blue"
+              className="flex items-center uppercase text-xs hover:bg-blue-l4 hover:dark:bg-blue-d4"
             >
               <span>Details</span>
               <Icon type="Forward" />
