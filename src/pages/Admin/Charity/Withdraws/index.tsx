@@ -9,7 +9,7 @@ export default function Withdraws() {
   const queryState = useBalanceQuery({ id: endowmentId });
 
   return (
-    <div className="grid content-start">
+    <div className="grid content-start font-work">
       <QueryLoader
         queryState={queryState}
         messages={{
