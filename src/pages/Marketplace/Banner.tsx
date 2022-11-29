@@ -7,10 +7,10 @@ export default function Banner({ classes = "" }: { classes?: string }) {
       className={`${classes} grid-cols-[3fr_2fr] gap-4 pt-28 pb-16 padded-container content-start text-white `}
     >
       <h1 className="font-extrabold max-w-md text-2xl md:text-3xl lg:text-[2.75rem] self-end">
-        <div className="leading-tight">ANGEL PROTOCOL REDEFINES</div>
-        <div className="leading-tight text-orange">
+        <span className="block leading-tight">ANGEL PROTOCOL REDEFINES</span>
+        <span className="block leading-tight text-orange">
           GLOBAL IMPACT FINANCING.
-        </div>
+        </span>
       </h1>
       <div
         className="row-span-2 self-end w-full h-full relative -bottom-[12%] -left-[18%]"
