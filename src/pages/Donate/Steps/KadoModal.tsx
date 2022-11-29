@@ -18,9 +18,13 @@ export default function KadoModal() {
     : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
 
   return (
-    <Dialog.Panel className="fixed-center z-10 w-[500px] h-[700px] bg-gray-l5 rounded">
+    <Dialog.Panel className="fixed inset-0 sm:fixed-center z-10 sm:w-[500px] sm:h-[700px] bg-gray-l5 dark:bg-blue-d6 sm:border border-gray-l2 dark:border-bluegray sm:rounded">
       {isLoading && (
-        <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
+        <Loader
+          bgColorClass="bg-blue dark:bg-white"
+          gapClass="gap-2"
+          widthClass="w-4"
+        />
       )}
       <iframe
         src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC&fiatList=USD${network}&product=BUY`}
