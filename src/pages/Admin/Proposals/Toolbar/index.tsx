@@ -13,7 +13,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
   });
   return (
     <div
-      className={`flex items-center gap-3 ${classes} border-b pb-2 border-gray-l2 dark:border-bluegray`}
+      className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-gray-l2 dark:border-bluegray`}
     >
       <StatusSelector />
       <GroupSelector />

@@ -23,7 +23,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
               `${
                 selected
                   ? "bg-blue-l1 dark:bg-blue-d2 text-white"
-                  : "bg-white dark:bg-blue-d4"
+                  : "bg-white dark:bg-blue-d6"
               } rounded px-4 py-2 uppercase text-sm font-bold`
             }
           >
