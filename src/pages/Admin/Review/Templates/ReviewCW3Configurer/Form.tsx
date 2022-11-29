@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { CW3ConfigValues, FormCW3Config } from "pages/Admin/types";
+import { CW3ConfigValues, FormReviewCW3Config } from "pages/Admin/types";
 import { FormContainer, Submitter, TextInput } from "components/admin";
 import useCreateProposal from "./useCreateProposal";
 
-type CV = CW3ConfigValues<FormCW3Config>;
+type CV = CW3ConfigValues<FormReviewCW3Config>;
 
 export default function Form() {
   const { createProposal, isSubmitDisabled, isTime } = useCreateProposal();
