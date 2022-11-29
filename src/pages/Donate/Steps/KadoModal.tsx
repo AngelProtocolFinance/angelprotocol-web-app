@@ -1,11 +1,15 @@
 import { Dialog } from "@headlessui/react";
+import { useState } from "react";
 import { useGetWallet } from "contexts/WalletContext";
+import Loader from "components/Loader";
 import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
 export default function KadoModal() {
+  const [isLoading, setLoading] = useState(true);
+
   const { wallet } = useGetWallet();
 
   const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
@@ -14,11 +18,17 @@ export default function KadoModal() {
     : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
 
   return (
-    <Dialog.Panel className="fixed-center z-10">
+    <Dialog.Panel className="fixed-center z-10 w-[500px] h-[700px] bg-gray-l5 rounded">
+      {isLoading && (
+        <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
+      )}
       <iframe
         src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC&fiatList=USD${network}&product=BUY`}
-        className="w-[500px] h-[700px] border-none rounded"
+        className={`${
+          isLoading ? "hidden" : ""
+        } w-full h-full border-none rounded`}
         title="Buy with Kado"
+        onLoad={() => setLoading(false)}
       ></iframe>
     </Dialog.Panel>
   );
