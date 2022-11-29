@@ -1,8 +1,8 @@
 import banner from "assets/images/hero.png";
 import { useGetter } from "store/accessors";
-import Banner from "./Banner";
 import Cards from "./Cards";
-import MobileBanner from "./MobileBanner";
+import Hero from "./Hero";
+import MobileHero from "./MobileHero";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 
@@ -16,8 +16,8 @@ export default function Marketplace() {
         style={{ backgroundImage: `url('${banner}')` }}
         className="relative overlay bg-cover bg-center"
       >
-        <Banner classes="hidden lg:grid isolate" />
-        <MobileBanner classes="grid lg:hidden isolate" />
+        <Hero classes="hidden lg:grid isolate mt-28 mb-16" />
+        <MobileHero classes="grid lg:hidden isolate mt-28" />
       </div>
 
       <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2">
