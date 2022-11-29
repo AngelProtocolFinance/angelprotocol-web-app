@@ -1,8 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
@@ -13,7 +11,7 @@ import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 
 export default function useUpdateOwner() {
-  const { cw3, successLink, successMessage } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
@@ -52,13 +50,7 @@ export default function useUpdateOwner() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        ...propMeta,
       })
     );
     showModal(TransactionPrompt, {});

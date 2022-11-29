@@ -4,7 +4,6 @@ import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Asset } from "components/registration";
 import { genFileSchema } from "schemas/file";
-import { asciiSchema } from "schemas/string";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [
@@ -29,7 +28,7 @@ function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
 export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfIdentity: Yup.object().shape(genAssetShape(true)),
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
-  website: asciiSchema.required("required").url("invalid url"),
+  website: Yup.string().required("required").url("invalid url"),
   sdgs: Yup.array().min(1, "required"),
 
   //level 2-3 fields not required

@@ -2,10 +2,9 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
+import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
@@ -22,8 +21,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, endowment, successLink, successMessage } =
-    useAdminResources();
+  const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const dispatch = useSetter();
 
@@ -31,10 +29,12 @@ export default function useWithdraw() {
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
   function withdraw(data: WithdrawValues) {
-    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
-      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
-      amount: scaleToStr(value /** empty "" */ || "0"),
-    }));
+    const assets: Asset[] = data.amounts.map(
+      ({ value, tokenId, type: tokenType }) => ({
+        info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
+        amount: scaleToStr(value /** empty "" */ || "0"),
+      })
+    );
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
@@ -63,7 +63,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${type} assets from endowment id: ${endowmentId}`,
+          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${endowmentId}`,
           [
             account.createEmbeddedWithdrawMsg({
               id: endowmentId,
@@ -79,21 +79,14 @@ export default function useWithdraw() {
       sendCosmosTx({
         wallet,
         msgs: [proposal],
-        tagPayloads: [
-          invalidateJunoTags([
-            //no need to invalidate balance, since this is just proposal
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
         //Juno withdrawal
-        successLink,
-        successMessage,
+        ...propMeta,
         onSuccess: isJuno
           ? undefined //no need to POST to AWS if destination is juno
           : (response) =>
               logWithdrawProposal({
                 res: response,
-                proposalLink: successLink,
+                proposalLink: propMeta.successLink,
                 wallet: wallet!, //wallet is defined at this point
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,

@@ -4,7 +4,7 @@ import { ethers, utils } from "ethers";
 import { ProviderInfo } from "contexts/WalletContext/types";
 import { Chain, WithdrawLog } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
-import { UnsupportedNetworkError } from "errors/errors";
+import { UnsupportedChainError } from "errors/errors";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 import { apesTags } from "./tags";
@@ -31,7 +31,7 @@ export const apes = createApi({
           const chain: Chain | { message: string } = await chainRes.json();
 
           if (!chain || "message" in chain) {
-            throw new UnsupportedNetworkError(chainId);
+            throw new UnsupportedChainError(chainId);
           }
 
           // fetch balances for juno or terra
@@ -96,7 +96,7 @@ export const apes = createApi({
               status: "CUSTOM_ERROR",
               error: "Error querying balances",
               data:
-                error instanceof UnsupportedNetworkError
+                error instanceof UnsupportedChainError
                   ? error.toSerializable()
                   : error,
             },
