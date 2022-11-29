@@ -130,9 +130,6 @@ export default function Table(props: { donations: Donation[] }) {
             )}
           </TableSection>
         </table>
-        <span className="block w-full dark:bg-blue-d7 font-heading font-semibold text-gray-d2 dark:text-white border-x-[1px] border-b-[1px] border-gray-l2 dark:border-bluegray uppercase text-center p-3">
-          Load More
-        </span>
       </div>
 
       {/* {Mobile} */}
@@ -264,9 +261,6 @@ export default function Table(props: { donations: Donation[] }) {
             </div>
           )
         )}
-        <span className="block w-full dark:bg-blue-d7 font-heading font-semibold text-gray-d2 dark:text-white border-x-[1px] border-b-[1px] border-gray-l2 dark:border-bluegray uppercase text-center p-3">
-          Load More
-        </span>
       </div>
     </>
   );
