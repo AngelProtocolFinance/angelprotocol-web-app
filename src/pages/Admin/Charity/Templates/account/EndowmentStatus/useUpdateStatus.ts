@@ -7,8 +7,6 @@ import {
   StatusChangePayload,
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
@@ -17,12 +15,12 @@ import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { cleanObject } from "helpers/admin/cleanObject";
+import { cleanObject, getTagPayloads } from "helpers/admin";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { cw3, role, successLink, successMessage } = useAdminResources();
+  const { cw3, role, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
@@ -100,13 +98,8 @@ export default function useUpdateStatus() {
       sendCosmosTx({
         wallet,
         msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink,
-        successMessage,
+        ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
       })
     );
     showModal(TransactionPrompt, {});

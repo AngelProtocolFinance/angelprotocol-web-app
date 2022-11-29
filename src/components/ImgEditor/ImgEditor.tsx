@@ -42,9 +42,11 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
           <input {...getInputProps()} />
           <Icon type="Upload" />
         </div>
-        <IconButton disabled={isInitial || isSubmitting} onClick={handleReset}>
-          <Icon type="Undo" />
-        </IconButton>
+        {!isInitial && (
+          <IconButton disabled={isSubmitting} onClick={handleReset}>
+            <Icon type="Undo" />
+          </IconButton>
+        )}
         {
           //allow crop only on new uploaded image
           !isInitial && (

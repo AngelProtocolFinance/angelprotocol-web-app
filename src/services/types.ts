@@ -1,4 +1,4 @@
-import { SuccessLink } from "slices/transaction/types";
+import { SendCosmosTxArgs } from "slices/transaction/types";
 import { Token } from "types/aws";
 import {
   AdminVoteInfo,
@@ -30,8 +30,9 @@ export type AdminResources = {
   endowment: EndowmentDetails;
   cw3config: CW3Config;
   role: AdminRoles;
-  successLink: SuccessLink;
-  successMessage: string;
+  propMeta: Required<
+    Pick<SendCosmosTxArgs, "successLink" | "successMessage" | "tagPayloads">
+  > & { willExecute?: true };
 };
 
 export type ProposalDetails = Proposal & {
