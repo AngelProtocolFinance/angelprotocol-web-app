@@ -1,7 +1,9 @@
-import { CW3ConfigValues as CV } from "pages/Admin/types";
+import { CW3ConfigValues, FormCW3Config } from "../../../types";
 import Checkbox from "components/Checkbox";
 import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
 import usePropose from "./usePropose";
+
+type CV = CW3ConfigValues<FormCW3Config>;
 
 export default function Form() {
   const { configureCW3, isSubmitDisabled, isTime } = usePropose();
