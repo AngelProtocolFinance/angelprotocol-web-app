@@ -1,10 +1,7 @@
 import { Menu, Popover } from "@headlessui/react";
-import type { FC } from "react";
 import Icon from "components/Icon";
 
-interface SearchFilterProps {}
-
-const SearchFilter: FC<SearchFilterProps> = ({}) => {
+const SearchFilter = () => {
   return (
     <div>
       {/* {Mobile} */}
