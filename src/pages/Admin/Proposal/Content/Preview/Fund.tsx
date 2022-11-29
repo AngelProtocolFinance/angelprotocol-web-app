@@ -29,7 +29,7 @@ export default function Fund(props: FundPreview) {
         </KeyValue>
       )}
       <KeyValue _key="expiry">
-        <span className="font-mono text-sm">
+        <span className="text-sm">
           {getExpiry(props.expiry_time, props.expiry_height)}
         </span>
       </KeyValue>
