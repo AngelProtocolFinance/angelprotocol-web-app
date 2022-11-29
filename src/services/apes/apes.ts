@@ -1,10 +1,10 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
-import { ProviderInfo } from "contexts/WalletContext/types";
-import { Chain, WithdrawLog } from "types/aws";
+import { BaseChain, Chain, WithdrawLog } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedChainError } from "errors/errors";
+import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 import { apesTags } from "./tags";
@@ -17,15 +17,24 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
+    chains: builder.query<BaseChain[], unknown>({
+      query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
+    }),
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
-    chain: builder.query<Chain, { providerInfo: ProviderInfo }>({
+    chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: [{ type: apesTags.chain }],
-      async queryFn(args) {
+      async queryFn({ address, chainId }) {
         try {
-          const { address, chainId } = args.providerInfo;
+          if (!chainId) {
+            throw new Error("Argument 'chainId' missing");
+          }
+          if (!address) {
+            throw new Error("Argument 'address' missing");
+          }
+
           const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
 
           const chain: Chain | { message: string } = await chainRes.json();
@@ -33,6 +42,14 @@ export const apes = createApi({
           if (!chain || "message" in chain) {
             throw new UnsupportedChainError(chainId);
           }
+
+          const result: Chain = {
+            ...chain,
+            native_currency: {
+              ...chain.native_currency,
+            },
+            tokens: chain.tokens.map((t) => ({ ...t })),
+          };
 
           // fetch balances for juno or terra
           if (chain.type === "juno-native" || chain.type === "terra-native") {
@@ -51,7 +68,7 @@ export const apes = createApi({
 
             const allBalances = nativeBalances.concat(cw20Balances);
 
-            [chain.native_currency, ...chain.tokens].forEach((token) => {
+            [result.native_currency, ...result.tokens].forEach((token) => {
               const balance = allBalances.find(
                 (x) => x.denom === token.token_id
               );
@@ -60,36 +77,37 @@ export const apes = createApi({
                 token.decimals
               );
             });
+          } else {
+            /**fetch balances for ethereum */
+            const jsonProvider = new ethers.providers.JsonRpcProvider(
+              chain.rpc_url,
+              {
+                chainId: +chain.chain_id,
+                name: chain.chain_name,
+              }
+            );
+            const queryResults = await jsonProvider.getBalance(address);
 
-            return { data: chain };
+            const erc20Holdings = await getERC20Holdings(
+              chain.rpc_url,
+              address,
+              chain.tokens.map((token) => token.token_id)
+            );
+
+            result.native_currency.balance = +utils.formatUnits(
+              queryResults,
+              chain.native_currency.decimals
+            );
+
+            result.tokens.forEach((token) => {
+              const erc20 = erc20Holdings.find(
+                (x) => x.contractAddress === token.token_id
+              );
+              token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
+            });
           }
 
-          /**fetch balances for ethereum */
-          const jsonProvider = new ethers.providers.JsonRpcProvider(
-            chain.rpc_url,
-            { chainId: +chainId, name: chain.chain_name }
-          );
-          const queryResults = await jsonProvider.getBalance(address);
-
-          chain.native_currency.balance = +utils.formatUnits(
-            queryResults,
-            chain.native_currency.decimals
-          );
-
-          const erc20Holdings = await getERC20Holdings(
-            chain.rpc_url,
-            address,
-            chain.tokens.map((token) => token.token_id)
-          );
-
-          chain.tokens.forEach((token) => {
-            const erc20 = erc20Holdings.find(
-              (x) => x.contractAddress === token.token_id
-            );
-            token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
-          });
-
-          return { data: chain };
+          return { data: result };
         } catch (error) {
           return {
             error: {
@@ -108,7 +126,9 @@ export const apes = createApi({
 });
 
 export const {
+  useChainsQuery,
   useChainQuery,
+  useLazyChainQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
 } = apes;
