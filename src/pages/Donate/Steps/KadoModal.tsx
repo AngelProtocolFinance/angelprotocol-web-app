@@ -15,8 +15,7 @@ export default function KadoModal() {
   return (
     <iframe
       src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC&fiatList=USD${network}&product=BUY`}
-      width="500"
-      height="700"
+      className="fixed-center z-10 w-[500px] h-[700px] border-none rounded"
       title="Buy with Kado"
     ></iframe>
   );
