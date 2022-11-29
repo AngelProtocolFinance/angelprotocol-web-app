@@ -7,7 +7,7 @@ export default function Leaderboard() {
   const queryState = useLeaderboardsQuery(null);
 
   return (
-    <section className="bg-gray-l5 dark:bg-blue-d4 pt-24 pb-16 text-gray-d2 dark:text-white font-work">
+    <section className="bg-gray-l5 dark:bg-blue-d4 pb-16 text-gray-d2 dark:text-white font-work">
       <div className="padded-container grid content-start mt-8">
         <DonationMetrics />
         <h3 className="mt-6 uppercase text-3xl font-bold">Leaderboard</h3>
