@@ -3,7 +3,7 @@ import { Connection, ProviderInfo } from "../types";
 import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
 import {
-  UnsupportedNetworkError,
+  UnsupportedChainError,
   WalletError,
   WalletNotInstalledError,
 } from "errors/errors";
@@ -45,7 +45,7 @@ export default function useKeplr() {
       if (!dwindow.keplr) return;
 
       if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
-        throw new UnsupportedNetworkError(chainId);
+        throw new UnsupportedChainError(chainId);
       }
 
       if (chainId === juno_test_chain_info.chainId) {

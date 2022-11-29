@@ -9,10 +9,7 @@ import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import {
-  UnsupportedNetworkError,
-  WalletDisconnectedError,
-} from "errors/errors";
+import { UnsupportedChainError, WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 
@@ -71,7 +68,7 @@ export default function useTerra() {
     }
 
     if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
-      throw new UnsupportedNetworkError(chainId);
+      throw new UnsupportedChainError(chainId);
     }
 
     showModal(Popup, {
