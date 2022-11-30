@@ -17,11 +17,10 @@ export default function Purchaser({ wallet, ...state }: WithWallet<FormStep>) {
     reValidateMode: "onChange",
     defaultValues: state.details || {
       token: _tokens[0],
-      pctLiquidSplit: "0",
+      recipient: "",
 
       //meta
       tokens: _tokens,
-      chainName: wallet.chain.chain_name,
       chainId: wallet.chain.chain_id,
     },
     resolver: yupResolver(schema),

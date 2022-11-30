@@ -1,3 +1,3 @@
-import { DonationDetails } from "slices/donation";
+import { GiftDetails } from "slices/gift";
 
-export type DonateValues = DonationDetails;
+export type DonateValues = GiftDetails;
