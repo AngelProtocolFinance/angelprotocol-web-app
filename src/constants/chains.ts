@@ -10,7 +10,7 @@ export enum chainIDs {
   //add axelar, connext
 }
 
-type Info = { txExplorer: string };
+type Info = { txExplorer: string; addressExplorer: string };
 
 const explorers: { [key in chainIDs]: string } = {
   1: "https://etherscan.io",
@@ -24,18 +24,47 @@ const explorers: { [key in chainIDs]: string } = {
 };
 
 const _chains: { [key in chainIDs]: Info } = {
-  1: { txExplorer: `${explorers[1]}/tx` },
-  5: { txExplorer: `${explorers[5]}/tx` },
-  97: { txExplorer: `${explorers[97]}/tx` },
-  56: { txExplorer: `${explorers[56]}/tx` },
-  "juno-1": { txExplorer: `${explorers["juno-1"]}/txs` },
-  "uni-5": { txExplorer: `${explorers["uni-5"]}/txs` },
-  "phoenix-1": { txExplorer: `${explorers["phoenix-1"]}/tx` },
-  "pisco-1": { txExplorer: `${explorers["pisco-1"]}/tx` },
+  [chainIDs.ethMain]: {
+    txExplorer: `${explorers[chainIDs.ethMain]}/tx`,
+    addressExplorer: `${explorers[chainIDs.ethMain]}/address`,
+  },
+  [chainIDs.ethTest]: {
+    txExplorer: `${explorers[chainIDs.ethTest]}/tx`,
+    addressExplorer: `${explorers[chainIDs.ethTest]}/address`,
+  },
+  [chainIDs.binanceMain]: {
+    txExplorer: `${explorers[chainIDs.binanceMain]}/tx`,
+    addressExplorer: `${explorers[chainIDs.binanceMain]}/address`,
+  },
+  [chainIDs.binanceTest]: {
+    txExplorer: `${explorers[chainIDs.binanceTest]}/tx`,
+    addressExplorer: `${explorers[chainIDs.binanceTest]}/address`,
+  },
+  [chainIDs.junoMain]: {
+    txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
+    addressExplorer: `${explorers[chainIDs.junoMain]}/account`,
+  },
+  [chainIDs.junoTest]: {
+    txExplorer: `${explorers[chainIDs.junoTest]}/txs`,
+    addressExplorer: `${explorers[chainIDs.junoTest]}/account`,
+  },
+  [chainIDs.terraMain]: {
+    txExplorer: `${explorers[chainIDs.terraMain]}/tx`,
+    addressExplorer: `${explorers[chainIDs.terraMain]}/address`,
+  },
+  [chainIDs.terraTest]: {
+    txExplorer: `${explorers[chainIDs.terraTest]}/tx`,
+    addressExplorer: `${explorers[chainIDs.terraTest]}/address`,
+  },
 };
 
 export const chains: { [index: string]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
-    return target[key] ?? { txExplorer: "https://app.angelprotocol.io" }; //TODO: what's good fallback link
+    return (
+      target[key] ?? {
+        txExplorer: "https://app.angelprotocol.io",
+        addressExplorer: "https://app.angelprotocol.io",
+      }
+    ); //TODO: what's good fallback link
   },
 });
