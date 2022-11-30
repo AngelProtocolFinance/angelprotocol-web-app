@@ -1,4 +1,5 @@
 import { useProfileContext } from "pages/Profile/ProfileContext";
+import { maskAddress } from "helpers";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";
 import Socials from "./Socials";
@@ -6,6 +7,8 @@ import Tags from "./Tags";
 
 export default function DetailsColumn({ className }: { className: string }) {
   const profile = useProfileContext();
+
+  console.log(profile);
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -21,6 +24,10 @@ export default function DetailsColumn({ className }: { className: string }) {
             profile.street_address,
             profile.country_of_origin
           )}
+        />
+        <Detail
+          title="endowment address"
+          value={maskAddress(profile.owner, 14)}
         />
         <Tags />
         <Socials />
