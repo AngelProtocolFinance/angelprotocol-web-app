@@ -11,7 +11,7 @@ const Success = lazy(() => import("./Success"));
 
 export default function Registration() {
   return (
-    <section className="grid dark:bg-blue-d5 bg-gray-l5 text-gray-d2 dark:text-white pt-24">
+    <section className="grid dark:bg-blue-d4 bg-gray-l5 text-gray-d2 dark:text-white">
       <Routes>
         <Route
           path={routes.confirmEmail}
