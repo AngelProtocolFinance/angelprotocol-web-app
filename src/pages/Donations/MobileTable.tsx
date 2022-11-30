@@ -4,15 +4,34 @@ import { Donation } from "types/aws";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import { useSort } from "components/donations";
-import MobileRow from "components/donations/MobileRow";
 import { humanize, maskAddress } from "helpers";
+
+interface MobileTableProps {
+  title: string;
+  data: string | JSX.Element;
+}
+
+const MobileRow: FC<MobileTableProps> = ({ title, data }) => {
+  return (
+    <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+        {title}
+      </span>
+      {typeof data === "string" ? (
+        <span className="text-gray-d2 dark:text-white">{data}</span>
+      ) : (
+        data
+      )}
+    </div>
+  );
+};
 
 export default function MobileTable(props: { donations: Donation[] }) {
   const { sorted } = useSort(props.donations);
   const showKYCForm = useKYC();
 
   return (
-    <div className="sm:hidden">
+    <div className="sm:hidden mt-6">
       <div className="grid grid-cols-8 font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
         <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
           <Icon
