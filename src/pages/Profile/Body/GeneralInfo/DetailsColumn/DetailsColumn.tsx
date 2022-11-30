@@ -28,7 +28,10 @@ export default function DetailsColumn({ className }: { className: string }) {
         </Detail>
         <Detail title="endowment address">
           <span className="flex items-center gap-4 w-full">
-            {maskAddress(profile.owner, 14)}
+            <span className="hidden sm:block">
+              {maskAddress(profile.owner, 14)}
+            </span>
+            <span className="sm:hidden">{maskAddress(profile.owner, 10)}</span>
             <Copier text={profile.owner} classes="text-2xl" />
             <ExtLink href={getAddressUrl(CHAIN_ID, profile.owner)}>
               <Icon
