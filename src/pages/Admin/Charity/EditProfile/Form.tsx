@@ -34,7 +34,7 @@ export default function Form() {
         <span>Back to profile</span>
       </Link>
       <TextPrim<UV> label="Proposal title" name="title" required />
-      <TextArea<UV> label="proposal description" name="description" required />
+      <TextArea<UV> label="Proposal description" name="description" required />
       <Label className="-mb-4">Banner</Label>
       <ImgEditor<UV, "image">
         name="image"

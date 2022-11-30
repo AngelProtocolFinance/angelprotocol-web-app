@@ -35,7 +35,7 @@ export function TextInput<T extends FieldValues>({
       </Label>
       <input
         {...props}
-        {...register(name)}
+        {...register(name, { valueAsNumber: type === "number" })}
         disabled={isSubmitting || disabled}
         type={type}
         className={classes?.input}

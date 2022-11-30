@@ -11,7 +11,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
   const is_active = vote === props.vote;
 
   const iconClasses = `opacity-90 ${
-    is_active ? vote_colors[props.vote].icon : "text-gray-d2 "
+    is_active ? vote_colors[props.vote].icon : ""
   }`;
 
   const icon =
@@ -22,20 +22,16 @@ export default function VoteOption<T extends VoteOptionContextType>(
     );
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center border border-gray-l2 dark:border-bluegray rounded bg-orange-l6 dark:bg-blue-d7">
       <label
-        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-gray-l2/10 ${
-          is_active
-            ? `${
-                vote_colors[props.vote].bg
-              } shadow-inner-white pointer-events-none`
-            : "bg-gray-l4"
+        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full ${
+          is_active ? "pointer-events-none" : ""
         }`}
         htmlFor={`__${props.vote}`}
       >
         <span
           className={`text-xl font-heading uppercase text-center ${
-            is_active ? vote_colors[props.vote].text : "text-gray-d2"
+            is_active ? vote_colors[props.vote].text : ""
           }`}
         >
           {props.label}
@@ -55,13 +51,11 @@ export default function VoteOption<T extends VoteOptionContextType>(
 
 const vote_colors: { [key in Vote]: { [index: string]: string } } = {
   yes: {
-    bg: "bg-green-l1/10",
-    icon: "text-green-l1",
-    text: "text-green-l1",
+    icon: "text-green dark:text-green-l2",
+    text: "text-green dark:text-green-l2",
   },
   no: {
-    bg: "bg-red-l1/10",
-    icon: "text-red-l1",
-    text: "text-red-l1",
+    icon: "text-red dark:text-red-l2",
+    text: "text-red dark:text-red-l2",
   },
 };
