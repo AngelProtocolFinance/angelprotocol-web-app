@@ -41,9 +41,9 @@ export default function MobileTable(props: { donations: Donation[] }) {
         ) => (
           <div className="flex flex-col">
             <Disclosure>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button>
+              <>
+                <Disclosure.Button>
+                  {({ open }) => (
                     <div
                       className={`grid grid-cols-8 sm:hidden ${
                         index % 2 === 0 ? "bg-white" : "bg-orange-l6"
@@ -65,73 +65,73 @@ export default function MobileTable(props: { donations: Donation[] }) {
                         {new Date(date).toLocaleDateString()}
                       </div>
                     </div>
-                  </Disclosure.Button>
-                  <Disclosure.Panel>
-                    <div className="flex flex-col border-x-[1px] border-gray-l2 dark:border-bluegray">
-                      <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          Network
-                        </span>
-                        <span className="text-gray-d2 dark:text-white">
-                          {chainName}
-                        </span>
-                      </div>
-                      <div className="flex justify-between dark:bg-blue-d7 bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          Currency
-                        </span>
-                        <span className="text-gray-d2 dark:text-white">
-                          {symbol}
-                        </span>
-                      </div>
-                      <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          Amount
-                        </span>
-                        <span className="text-gray-d2 dark:text-white">
-                          {humanize(amount, 3)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          TX Hash
-                        </span>
-                        <span className="text-gray-d2 dark:text-white">
-                          {maskAddress(hash)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          Status
-                        </span>
-                        <button className="block bg-green text-white p-1 rounded uppercase text-xs">
-                          Received
-                        </button>
-                      </div>
-                      <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4">
-                        <span className="text-gray-d2 dark:text-white font-bold uppercase">
-                          Receipt
-                        </span>
-                        <button
-                          className="block"
-                          onClick={() =>
-                            showKYCForm({
-                              type: "post-donation",
-                              txHash: hash,
-                              classes: "grid gap-5",
-                            })
-                          }
-                        >
-                          <Icon
-                            type="FatArrowDownload"
-                            className="text-gray-d2 dark:text-white text-2xl"
-                          />
-                        </button>
-                      </div>
+                  )}
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  <div className="flex flex-col border-x-[1px] border-gray-l2 dark:border-bluegray">
+                    <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        Network
+                      </span>
+                      <span className="text-gray-d2 dark:text-white">
+                        {chainName}
+                      </span>
                     </div>
-                  </Disclosure.Panel>
-                </>
-              )}
+                    <div className="flex justify-between dark:bg-blue-d7 bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        Currency
+                      </span>
+                      <span className="text-gray-d2 dark:text-white">
+                        {symbol}
+                      </span>
+                    </div>
+                    <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        Amount
+                      </span>
+                      <span className="text-gray-d2 dark:text-white">
+                        {humanize(amount, 3)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        TX Hash
+                      </span>
+                      <span className="text-gray-d2 dark:text-white">
+                        {maskAddress(hash)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        Status
+                      </span>
+                      <button className="block bg-green text-white p-1 rounded uppercase text-xs">
+                        Received
+                      </button>
+                    </div>
+                    <div className="flex justify-between dark:bg-blue-d7  bg-orange-l6 p-4">
+                      <span className="text-gray-d2 dark:text-white font-bold uppercase">
+                        Receipt
+                      </span>
+                      <button
+                        className="block"
+                        onClick={() =>
+                          showKYCForm({
+                            type: "post-donation",
+                            txHash: hash,
+                            classes: "grid gap-5",
+                          })
+                        }
+                      >
+                        <Icon
+                          type="FatArrowDownload"
+                          className="text-gray-d2 dark:text-white text-2xl"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </Disclosure.Panel>
+              </>
             </Disclosure>
           </div>
         )
