@@ -75,7 +75,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                           : "bg-orange-l6 dark:bg-blue-d7"
                       }  ${
                         open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                      } text-gray-d2 dark:text-white border-b border-x-[1px] border-gray-l2 dark:border-bluegray`}
+                      } text-gray-d2 dark:text-white border-b border-x border-gray-l2 dark:border-bluegray`}
                     >
                       <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
                         <DrawerIcon
@@ -98,7 +98,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                   )}
                 </Disclosure.Button>
                 <Disclosure.Panel>
-                  <div className="flex flex-col border-x-[1px] border-gray-l2 dark:border-bluegray">
+                  <div className="flex flex-col border-x border-gray-l2 dark:border-bluegray">
                     <MobileRow
                       className="bg-white dark:bg-blue-d6"
                       title="Network"
