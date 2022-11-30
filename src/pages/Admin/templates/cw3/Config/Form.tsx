@@ -17,7 +17,10 @@ export default function Form() {
       />
       <Checkbox<CV>
         name="require_execution"
-        classes={{ label: "text-sm -ml-1" }}
+        classes={{
+          container:
+            "p-3 bg-red text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-gray-l2 dark:border-bluegray",
+        }}
       >
         Execution required
       </Checkbox>

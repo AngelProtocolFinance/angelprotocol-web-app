@@ -29,7 +29,7 @@ function Denom({ denom }: { denom: string }) {
           alt=""
           className="w-4 h-4 object-contain"
         />
-        <span className={`ml-0.5`}>{tokens[denom].symbol}</span>
+        <span className={`ml-1.5`}>{tokens[denom].symbol}</span>
       </label>
     </div>
   );
