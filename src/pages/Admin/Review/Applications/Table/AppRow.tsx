@@ -21,7 +21,7 @@ export default function AppRow(props: EndowmentProposal) {
 
       <Link
         to={`${adminRoutes.proposal}/${props.poll_id}`}
-        className="uppercase font-heading text-sm hover:text-blue active:text-orange flex gap-1 items-center"
+        className="uppercase text-sm hover:text-blue active:text-orange flex gap-1 items-center"
       >
         <span>Review</span>
         <Icon type="Forward" />

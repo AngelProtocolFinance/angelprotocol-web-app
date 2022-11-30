@@ -13,7 +13,7 @@ export default function Header(
   return (
     <button
       {...restProps}
-      className="w-full flex items-center justify-start gap-1 uppercase font-heading font-semibold text-sm text-white/100"
+      className="w-full flex items-center justify-start gap-1 uppercase font-heading font-semibold text-sm"
     >
       <span>{children}</span>
       {activeSortKey === sortKey && (

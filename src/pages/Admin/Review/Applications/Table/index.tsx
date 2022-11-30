@@ -10,8 +10,11 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
     useSortedApplications(props.applications);
 
   return (
-    <table className="w-full text-white/80 self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-white/30">
+    <table className="w-full self-start font-work">
+      <TableSection
+        type="thead"
+        rowClass="border-b-2 border-gray-l2 dark:border-bluegray"
+      >
         <Cells type="th" cellClass="p-2">
           <Header
             sortDirection={sortDirection}
@@ -43,7 +46,7 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-white/10"
+        rowClass="border-b border-gray-l2 dark:border-bluegray"
       >
         {sortedApplications.length <= 0 ? (
           <Cells type="td" cellClass="px-2 py-3">

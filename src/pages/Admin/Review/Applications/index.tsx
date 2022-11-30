@@ -1,34 +1,21 @@
 import { useEndowmentApplicationsQuery } from "services/aws/registration";
-import Icon from "components/Icon";
+import { QueryLoader } from "components/admin";
 import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
 
 export default function Applications() {
   const { activeStatus } = useGetter((state) => state.admin.applications);
-  const {
-    data = [],
-    isLoading,
-    isError,
-  } = useEndowmentApplicationsQuery(activeStatus);
-  // const data: EndowmentApplication[] = [];
+  const queryState = useEndowmentApplicationsQuery(activeStatus);
 
-  if (isLoading) {
-    return (
-      <p className="text-white place-self-center flex items-center gap-1">
-        <Icon type="Loading" className="animate-spin" />
-        <span>Loading applications</span>
-      </p>
-    );
-  }
-
-  if (isError) {
-    return (
-      <p className="text-red-l1 place-self-center flex items-center gap-1">
-        <Icon type="Warning" />
-        <span>Failed to get applications</span>
-      </p>
-    );
-  }
-
-  return <ApplicationsTable applications={data} />;
+  return (
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Loading applications...",
+        error: "Failed to get applications",
+      }}
+    >
+      {(applications) => <ApplicationsTable applications={applications} />}
+    </QueryLoader>
+  );
 }
