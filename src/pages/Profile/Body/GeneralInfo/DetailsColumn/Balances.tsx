@@ -1,4 +1,4 @@
-import { BalanceInfo } from "types/contracts";
+import { BalanceInfo, EndowmentBalance } from "types/contracts";
 import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
 import { condense, humanize } from "helpers";
@@ -14,62 +14,50 @@ export default function Balances() {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <QueryLoader
+      <Balance
         queryState={queryState}
-        messages={{
-          loading: "Fetching endowment balances",
-          error: "Failed to get endowment balances ",
-        }}
-        classes={{ container: CONTAINER_STYLE }}
-      >
-        {({ tokens_on_hand }) => (
-          <Balance title="Total Value" amount={getTotal(tokens_on_hand)} />
-        )}
-      </QueryLoader>
-      <QueryLoader
+        title="Total Value"
+        getAmount={getTotal}
+      />
+      <Balance
         queryState={queryState}
-        messages={{
-          loading: "Fetching endowment balances",
-          error: "Failed to get endowment balances ",
-        }}
-        classes={{ container: CONTAINER_STYLE }}
-      >
-        {({ tokens_on_hand }) => (
-          <Balance
-            title="Total Endowment Account"
-            amount={getLocked(tokens_on_hand)}
-          />
-        )}
-      </QueryLoader>
-      <QueryLoader
+        title="Total Endowment Account"
+        getAmount={getLocked}
+      />
+      <Balance
         queryState={queryState}
-        messages={{
-          loading: "Fetching endowment balances",
-          error: "Failed to get endowment balances ",
-        }}
-        classes={{ container: CONTAINER_STYLE }}
-      >
-        {({ tokens_on_hand }) => (
-          <Balance
-            title="Total Liquid Account"
-            amount={getLiquid(tokens_on_hand)}
-          />
-        )}
-      </QueryLoader>
+        title="Total Liquid Account"
+        getAmount={getLiquid}
+      />
     </div>
   );
 }
 
-function Balance(props: { title: string; amount: number | string }) {
+function Balance(props: {
+  queryState: { data?: EndowmentBalance; isLoading: boolean; isError: boolean };
+  title: string;
+  getAmount: (balance: BalanceInfo) => number;
+}) {
   return (
-    <div className={CONTAINER_STYLE}>
-      <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
-        {props.title}
-      </h6>
-      <p className="font-work font-normal text-lg text-gray-d1 dark:text-gray">
-        ${humanize(condense(props.amount))}
-      </p>
-    </div>
+    <QueryLoader
+      queryState={props.queryState}
+      messages={{
+        loading: `Fetching ${props.title.toLowerCase()}`,
+        error: `Failed to get ${props.title.toLowerCase()}`,
+      }}
+      classes={{ container: CONTAINER_STYLE }}
+    >
+      {({ tokens_on_hand }) => (
+        <div className={CONTAINER_STYLE}>
+          <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
+            {props.title}
+          </h6>
+          <p className="font-work font-normal text-lg text-gray-d1 dark:text-gray">
+            ${humanize(condense(props.getAmount(tokens_on_hand)))}
+          </p>
+        </div>
+      )}
+    </QueryLoader>
   );
 }
 
