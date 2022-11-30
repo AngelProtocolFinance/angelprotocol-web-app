@@ -14,7 +14,6 @@ import {
   AiOutlineMedium,
   AiOutlinePlus,
   AiOutlineQuestionCircle,
-  AiOutlineTwitter,
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
@@ -34,6 +33,7 @@ import {
   BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
+  BsTwitter,
 } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
@@ -42,7 +42,6 @@ import {
   FaDiscord,
   FaExclamation,
   FaFacebook,
-  FaFacebookF,
   FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
@@ -59,6 +58,7 @@ import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoDash, GoLinkExternal } from "react-icons/go";
+import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdSettings } from "react-icons/io";
 import {
@@ -91,13 +91,13 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  Facebook: FaFacebookF,
+  Facebook: GrFacebookOption,
   Instagram: FaInstagram,
   FacebookCircle: FaFacebook,
   Discord: FaDiscord,
   Plus: AiOutlinePlus,
   Telegram: FaTelegramPlane,
-  Twitter: AiOutlineTwitter,
+  Twitter: BsTwitter,
   Youtube: AiFillYoutube,
   Unsorted: TiArrowUnsorted,
   Medium: AiOutlineMedium,
