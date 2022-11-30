@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
 import { Tooltip } from "components/donation";
@@ -10,17 +11,24 @@ import {
   setRecipient,
 } from "slices/donation";
 import Donater from "./Donater";
+import KadoModal from "./KadoModal";
 import Progress from "./Progress";
 import Result from "./Result";
 import Submit from "./Submit";
 
 export default function Steps(props: DonationRecipient) {
+  const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 
   const dispatch = useSetter();
   useEffect(() => {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
+
+  const handleOpenKado = useCallback(
+    () => showModal(KadoModal, {}),
+    [showModal]
+  );
 
   return (
     <div className="justify-self-center grid padded-container max-w-[35rem]">
@@ -29,6 +37,12 @@ export default function Steps(props: DonationRecipient) {
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
             You're about to make a donation to {props.name}
           </h3>
+          <span className="text-center font-normal text-sm">
+            Don't have crypto in your wallet?{" "}
+            <button className="font-bold underline" onClick={handleOpenKado}>
+              Buy some to make your donation
+            </button>
+          </span>
           <Progress classes="my-12" />
         </>
       )}
