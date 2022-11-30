@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Donation } from "types/aws";
-import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
@@ -56,14 +55,7 @@ export default function Table(props: { donations: Donation[] }) {
           </HeaderButton>
           <>TX Hash</>
           <span className="flex justify-center">Status</span>
-          <CsvExporter
-            classes="hover:text-blue justify-center"
-            headers={csvHeaders}
-            data={props.donations}
-            filename="donations.csv"
-          >
-            Receipt
-          </CsvExporter>
+          <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
       <TableSection
@@ -127,9 +119,3 @@ export default function Table(props: { donations: Donation[] }) {
     </table>
   );
 }
-const csvHeaders: { key: keyof Donation; label: string }[] = [
-  { key: "amount", label: "Amount" },
-  { key: "symbol", label: "Currency" },
-  { key: "date", label: "Date" },
-  { key: "hash", label: "Transaction Hash" },
-];
