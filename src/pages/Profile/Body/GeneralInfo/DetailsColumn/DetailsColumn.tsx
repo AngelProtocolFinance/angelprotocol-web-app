@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { maskAddress } from "helpers";
 import DonateButton from "../../DonateButton";
@@ -17,18 +18,13 @@ export default function DetailsColumn({ className }: { className: string }) {
       <div
         className={`${className} flex flex-col gap-8 w-full lg:w-96 p-4 border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white sm:p-8`}
       >
-        <Detail title="registration no." value={profile.registration_number} />
-        <Detail
-          title="address"
-          value={createAddress(
-            profile.street_address,
-            profile.country_of_origin
-          )}
-        />
-        <Detail
-          title="endowment address"
-          value={maskAddress(profile.owner, 14)}
-        />
+        <Detail title="registration no.">{profile.registration_number}</Detail>
+        <Detail title="address">
+          {createAddress(profile.street_address, profile.country_of_origin)}
+        </Detail>
+        <Detail title="endowment address">
+          {maskAddress(profile.owner, 14)}
+        </Detail>
         <Tags />
         <Socials />
         <DonateButton />
@@ -37,14 +33,14 @@ export default function DetailsColumn({ className }: { className: string }) {
   );
 }
 
-function Detail(props: { title: string; value?: string }) {
+function Detail(props: PropsWithChildren<{ title: string }>) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
       <h6 className="font-header font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>
       <span className="font-work font-normal text-base text-gray-d1 dark:text-gray">
-        {props.value || "no data"}
+        {props.children || "no data"}
       </span>
     </div>
   );
