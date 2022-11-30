@@ -19,7 +19,7 @@ export default function Form() {
         name="require_execution"
         classes={{
           container:
-            "p-3 bg-red text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-gray-l2 dark:border-bluegray",
+            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-gray-l2 dark:border-bluegray",
         }}
       >
         Execution required

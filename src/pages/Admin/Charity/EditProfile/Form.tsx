@@ -94,7 +94,6 @@ export default function Form() {
           name="charity_navigator_rating"
           label="Navigator rating"
           placeholder="Platinum"
-          classes={{ container: "mb-6" }}
         />
       </GroupContainer>
 
@@ -119,7 +118,6 @@ export default function Form() {
           name="linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/angelprotocol"
-          classes={{ container: "mb-6" }}
         />
       </GroupContainer>
 
