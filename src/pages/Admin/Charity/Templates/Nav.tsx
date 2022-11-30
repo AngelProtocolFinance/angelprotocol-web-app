@@ -24,8 +24,12 @@ export default function Nav() {
   );
 }
 
-function Category(props: { title: string; classes?: string }) {
-  return (
-    <h3 className={`px-4 font-bold ${props.classes || ""}`}>{props.title}</h3>
-  );
+function Category({
+  classes = "",
+  title,
+}: {
+  title: string;
+  classes?: string;
+}) {
+  return <h3 className={`px-4 font-bold ${classes}`}>{title}</h3>;
 }
