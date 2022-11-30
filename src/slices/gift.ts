@@ -5,8 +5,8 @@ export type DonationState = FormStep | SubmitStep | TxStep;
 
 const initialState: DonationState = { step: 1 };
 
-const donation = createSlice({
-  name: "donate",
+const gift = createSlice({
+  name: "gift",
   initialState: initialState as DonationState,
   reducers: {
     setDetails: (state, { payload }: PayloadAction<GiftDetails>) => {
@@ -37,9 +37,8 @@ const donation = createSlice({
   },
 });
 
-export default donation.reducer;
-export const { setStep, setDetails, resetDetails, setTxStatus } =
-  donation.actions;
+export default gift.reducer;
+export const { setStep, setDetails, resetDetails, setTxStatus } = gift.actions;
 
 export type TokenWithAmount = Token & { amount: string };
 
@@ -61,7 +60,7 @@ export type SubmitStep = {
   step: 2;
 } & Omit<Required<FormStep>, "step">;
 
-export type TxStatus = { loadingMsg: string } | "error" | { depositId: string };
+export type TxStatus = { loadingMsg: string } | "error" | { code: string };
 export type TxStep = {
   step: 3;
   status: TxStatus;
