@@ -78,7 +78,7 @@ export default function TokenSelector<
             <Combobox.Option
               key={token.token_id}
               className={
-                "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d4 cursor-pointer"
+                "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d5 cursor-pointer"
               }
               value={token}
             >
