@@ -7,7 +7,7 @@ export default function Skeleton() {
       <Banner />
       <Body />
 
-      <Logo className="absolute left-auto top-32 sm:left-20 sm:top-48" />
+      <Logo className="absolute left-auto top-40 sm:left-20 sm:top-48" />
     </section>
   );
 }
