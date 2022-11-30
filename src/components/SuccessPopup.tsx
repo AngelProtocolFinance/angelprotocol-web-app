@@ -17,7 +17,7 @@ export default function SuccessPopup(props: Props) {
   return (
     <Dialog.Panel className="fixed-center z-10 flex flex-col bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg overflow-hidden">
       <div className="relative mb-6">
-        <h2 className="text-xl text-gray-d2 dark:text-white font-bold text-center border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5">
+        <h2 className="text-xl text-gray-d2 dark:text-white font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5">
           {headline}
         </h2>
         <button
@@ -37,7 +37,7 @@ export default function SuccessPopup(props: Props) {
         </p>
       </div>
       <div>{children}</div>
-      <div className="w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t-[1px] border-gray-l2 dark:border-bluegray p-3">
+      <div className="w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray p-3">
         <BtnPrimary
           type="button"
           className="w-full sm:w-[10rem] px-10 uppercase"

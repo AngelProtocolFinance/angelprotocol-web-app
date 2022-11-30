@@ -15,7 +15,7 @@ interface MobileTableProps {
 const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
   return (
     <div
-      className={`flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray ${className}`}
+      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
     >
       <span className="text-gray-d2 dark:text-white font-bold uppercase">
         {title}
@@ -36,14 +36,14 @@ export default function MobileTable(props: { donations: Donation[] }) {
   return (
     <div className="sm:hidden mt-6">
       <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
-        <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
+        <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
           <Icon
             type="ArrowDown"
             size={24}
             className="text-gray-d2 dark:text-white invisible"
           />
         </div>
-        <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 uppercase">
+        <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 uppercase">
           Recipient
         </div>
         <div className="col-span-3 p-4 uppercase">Date</div>
@@ -74,9 +74,9 @@ export default function MobileTable(props: { donations: Donation[] }) {
                         : "bg-orange-l6 dark:bg-blue-d7"
                     }  ${
                       open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                    } text-gray-d2 dark:text-white border-b-[1px] border-x-[1px] border-gray-l2 dark:border-bluegray`}
+                    } text-gray-d2 dark:text-white border-b border-x-[1px] border-gray-l2 dark:border-bluegray`}
                   >
-                    <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
+                    <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
                       <DrawerIcon
                         size={24}
                         className={`${
@@ -85,7 +85,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                         isOpen={open}
                       />
                     </div>
-                    <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 text-left">
+                    <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 text-left">
                       <span className="truncate text-sm">{charityName}</span>
                     </div>
                     <div className="col-span-3 p-4 text-left text-sm">

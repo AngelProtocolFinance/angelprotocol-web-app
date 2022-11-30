@@ -29,7 +29,7 @@ export default function Form({ classes = "", ...props }: Props) {
   return (
     <div className="flex flex-col">
       <div className="relative">
-        <div className="text-xl font-extrabold text-center border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5">
+        <div className="text-xl font-extrabold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5">
           Get Receipt
           <Tooltip
             {...props}
@@ -138,7 +138,7 @@ export default function Form({ classes = "", ...props }: Props) {
             their affiliated non-profits with latest news and progress updates.
           </Checkbox>
         </div>
-        <div className="grid grid-cols-2 sm:flex sm:w-full sm:justify-end bg-orange-l6 dark:bg-blue-d7 border-t-[1px] border-gray-l2 dark:border-bluegray p-5">
+        <div className="grid grid-cols-2 sm:flex sm:w-full sm:justify-end bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray p-5">
           <BtnOutline
             onClick={() => closeModal()}
             type="button"
