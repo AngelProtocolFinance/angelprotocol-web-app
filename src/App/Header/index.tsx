@@ -30,9 +30,11 @@ export default function Header({ classes = "" }: { classes?: string }) {
   const bg =
     !hasBanner(location) || isScrolled ? "bg-blue dark:bg-blue-d3" : "";
 
+  const mb = hasBanner(location) ? "-mb-[6.5rem]" : "mb-0";
+
   return (
     <header
-      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg}
+      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg} ${mb}
       py-4 transition-shadow ease-in-out duration-300 w-full`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto]">
