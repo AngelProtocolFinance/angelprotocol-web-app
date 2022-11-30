@@ -39,7 +39,7 @@ function Detail(props: PropsWithChildren<{ title: string }>) {
       <h6 className="font-header font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>
-      <span className="font-work font-normal text-base text-gray-d1 dark:text-gray">
+      <span className="font-body font-normal text-base text-gray-d1 dark:text-gray">
         {props.children || "no data"}
       </span>
     </div>
