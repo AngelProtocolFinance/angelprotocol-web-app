@@ -5,7 +5,6 @@ import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import { QueryLoader, TextPrim } from "components/admin";
-import { BtnPrim } from "components/registration";
 import Warning from "./Warning";
 
 export default function Submit() {
@@ -20,9 +19,13 @@ export default function Submit() {
   const type = getValues("type");
   if (type === "liquid") {
     return (
-      <BtnPrim type="submit" disabled={isSubmitDisabled} className="mt-2">
+      <button
+        type="submit"
+        disabled={isSubmitDisabled}
+        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+      >
         Create withdraw proposal
-      </BtnPrim>
+      </button>
     );
   }
   //check maturity when locked
@@ -75,9 +78,13 @@ function SubmitWithReason({
           label="Reason"
           classes={{ container: "mb-8" }}
         />
-        <BtnPrim type="submit" disabled={isSubmitDisabled}>
+        <button
+          type="submit"
+          disabled={isSubmitDisabled}
+          className="btn btn-orange rounded px-4 py-2 text-sm"
+        >
           Create withdraw proposal
-        </BtnPrim>
+        </button>
       </>
     );
   }
@@ -91,9 +98,13 @@ function SubmitWithReason({
           Withdrawing endowment funds before maturity is not allowed.
         </Warning>
       )}
-      <BtnPrim type="submit" disabled={!isMatured} className="mt-2">
+      <button
+        type="submit"
+        disabled={!isMatured}
+        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+      >
         Create withdraw proposal
-      </BtnPrim>
+      </button>
     </>
   );
 }

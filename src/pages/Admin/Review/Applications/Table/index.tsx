@@ -48,13 +48,9 @@ export default function Table(props: { applications: EndowmentProposal[] }) {
         type="tbody"
         rowClass="border-b border-gray-l2 dark:border-bluegray"
       >
-        {sortedApplications.length <= 0 ? (
-          <Cells type="td" cellClass="px-2 py-3">
-            <>No applications found</>
-          </Cells>
-        ) : (
-          sortedApplications.map((app) => <AppRow key={app.PK} {...app} />)
-        )}
+        {sortedApplications.map((app) => (
+          <AppRow key={app.PK} {...app} />
+        ))}
       </TableSection>
     </table>
   );

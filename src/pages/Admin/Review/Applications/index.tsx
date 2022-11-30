@@ -13,7 +13,9 @@ export default function Applications() {
       messages={{
         loading: "Loading applications...",
         error: "Failed to get applications",
+        empty: "No applications found",
       }}
+      classes={{ container: "mt-4" }}
     >
       {(applications) => <ApplicationsTable applications={applications} />}
     </QueryLoader>
