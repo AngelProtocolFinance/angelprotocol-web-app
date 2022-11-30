@@ -1,7 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import type { FC } from "react";
 import { Donation } from "types/aws";
-import Icon from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import { useSort } from "components/donations";
 import { humanize, maskAddress } from "helpers";
@@ -9,11 +9,14 @@ import { humanize, maskAddress } from "helpers";
 interface MobileTableProps {
   title: string;
   data: string | JSX.Element;
+  className: string;
 }
 
-const MobileRow: FC<MobileTableProps> = ({ title, data }) => {
+const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
   return (
-    <div className="flex justify-between dark:bg-blue-d7 p-4 border-b-[1px] border-gray-l2 dark:border-bluegray">
+    <div
+      className={`flex justify-between p-4 border-b-[1px] border-gray-l2 dark:border-bluegray ${className}`}
+    >
       <span className="text-gray-d2 dark:text-white font-bold uppercase">
         {title}
       </span>
@@ -32,7 +35,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
 
   return (
     <div className="sm:hidden mt-6">
-      <div className="grid grid-cols-8 font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
+      <div className="grid grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
         <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
           <Icon
             type="ArrowDown"
@@ -66,22 +69,26 @@ export default function MobileTable(props: { donations: Donation[] }) {
                 {({ open }) => (
                   <div
                     className={`grid grid-cols-8 sm:hidden ${
-                      index % 2 === 0 ? "bg-white" : "bg-orange-l6"
-                    } ${
-                      index % 2 === 0 ? "dark:bg-blue-d6" : "dark:bg-blue-d7"
+                      index % 2 === 0
+                        ? "bg-white dark:bg-blue-d6"
+                        : "bg-orange-l6 dark:bg-blue-d7"
+                    }  ${
+                      open ? "bg-orange-l5 dark:bg-blue-d4" : ""
                     } text-gray-d2 dark:text-white border-b-[1px] border-x-[1px] border-gray-l2 dark:border-bluegray`}
                   >
                     <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
-                      <Icon
-                        type={open ? "ArrowUp" : "ArrowDown"}
+                      <DrawerIcon
                         size={24}
-                        className="text-gray-d2 dark:text-white"
+                        className={`${
+                          open ? "text-orange" : "text-gray-d2 dark:text-white"
+                        }`}
+                        isOpen={open}
                       />
                     </div>
                     <div className="col-span-4 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 text-left">
-                      <span className="truncate">{charityName}</span>
+                      <span className="truncate text-sm">{charityName}</span>
                     </div>
-                    <div className="col-span-3 p-4 text-left">
+                    <div className="col-span-3 p-4 text-left text-sm">
                       {new Date(date).toLocaleDateString()}
                     </div>
                   </div>
@@ -89,12 +96,33 @@ export default function MobileTable(props: { donations: Donation[] }) {
               </Disclosure.Button>
               <Disclosure.Panel>
                 <div className="flex flex-col border-x-[1px] border-gray-l2 dark:border-bluegray">
-                  <MobileRow title="Network" data={`${chainName}`} />
-                  <MobileRow title="Currency" data={`${symbol}`} />
-                  <MobileRow title="Amount" data={`${humanize(amount, 3)}`} />
-                  <MobileRow title="TX Hash" data={`${maskAddress(hash)}`} />
-                  <MobileRow title="Status" data="Received" />
                   <MobileRow
+                    className="bg-white dark:bg-blue-d6"
+                    title="Network"
+                    data={`${chainName}`}
+                  />
+                  <MobileRow
+                    className="bg-orange-l6 dark:bg-blue-d7"
+                    title="Currency"
+                    data={`${symbol}`}
+                  />
+                  <MobileRow
+                    className="bg-white dark:bg-blue-d6"
+                    title="Amount"
+                    data={`${humanize(amount, 3)}`}
+                  />
+                  <MobileRow
+                    className="bg-orange-l6 dark:bg-blue-d7"
+                    title="TX Hash"
+                    data={`${maskAddress(hash)}`}
+                  />
+                  <MobileRow
+                    className="bg-white dark:bg-blue-d6"
+                    title="Status"
+                    data="Received"
+                  />
+                  <MobileRow
+                    className="bg-orange-l6 dark:bg-blue-d7"
                     title="Receipt"
                     data={
                       <button
