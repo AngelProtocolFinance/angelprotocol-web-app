@@ -2,10 +2,10 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
-import { Label } from "./";
+import { Label } from ".";
 
-export type TextInputProps<T extends FieldValues> = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
+export type TextAreaProps<T extends FieldValues> = Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   "type" | "autoComplete" | "className" | "name" | "id"
 > & {
   name: Path<T>;
@@ -13,14 +13,14 @@ export type TextInputProps<T extends FieldValues> = Omit<
   label: string;
 };
 
-export function TextInput<T extends FieldValues>({
+export function TextArea<T extends FieldValues>({
   label,
   name,
   classes,
   required,
   disabled,
   ...props
-}: TextInputProps<T>) {
+}: TextAreaProps<T>) {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -32,11 +32,10 @@ export function TextInput<T extends FieldValues>({
       <Label className={classes?.label} required={required} htmlFor={id}>
         {label}
       </Label>
-      <input
+      <textarea
         {...props}
         {...register(name)}
         disabled={isSubmitting || disabled}
-        type="text"
         className={classes?.input}
         autoComplete="off"
       />

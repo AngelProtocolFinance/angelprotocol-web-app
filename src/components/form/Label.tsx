@@ -8,7 +8,7 @@ export function Label({
   return (
     <label
       {...props}
-      className={`${className} block text-sm text-inherit after:ml-1 ${
+      className={`${className} block text-sm after:ml-1 ${
         required !== undefined
           ? required
             ? "after:content-['*'] after:text-red"

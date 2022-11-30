@@ -26,14 +26,9 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
 
 export const url = Yup.string().url("invalid url").nullable();
 
-export const asciiSchema = Yup.string().matches(
-  /^[\x20-\x7E]+$/,
-  "Only ASCII characters are allowed"
-);
-
 export const stringByteSchema = (minBytes: number, maxBytes: number) =>
-  asciiSchema
-    .required(`is required`)
+  Yup.string()
+    .required(`required`)
     .test("min_length", `too short`, getBytesComparer("gt", minBytes))
     .test("max_length", `too long`, getBytesComparer("lt", maxBytes));
 
