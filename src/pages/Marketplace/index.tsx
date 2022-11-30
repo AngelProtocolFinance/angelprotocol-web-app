@@ -11,7 +11,7 @@ export default function Marketplace() {
     (state) => state.component.marketFilter.isOpen
   );
   return (
-    <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d4 pb-16">
+    <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d5 pb-16">
       <div
         style={{ backgroundImage: `url('${banner}')` }}
         className="relative overlay bg-cover bg-center"

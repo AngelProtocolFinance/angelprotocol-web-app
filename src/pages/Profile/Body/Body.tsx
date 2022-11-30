@@ -5,7 +5,7 @@ import UrlDonateSection from "./UrlDonateSection";
 
 export default function Body() {
   return (
-    <div className="flex justify-center items-center w-full h-full bg-gray-l5 text-gray-d2 dark:bg-blue-d4 dark:text-white">
+    <div className="flex justify-center items-center w-full h-full bg-gray-l5 text-gray-d2 dark:bg-blue-d5 dark:text-white">
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 xl:grid-rows-[auto_auto_1fr] xl:grid-cols-[auto_auto] xl:justify-items-start xl:items-end xl:gap-16 xl:pt-6 xl:pb-20">
         <UrlDonateSection className="order-2 xl:order-1 xl:col-span-2" />
 
