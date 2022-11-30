@@ -7,7 +7,7 @@ export default function Form() {
   const { destroyFund, isSubmitDisabled } = useDestroyFund();
   return (
     <FormContainer onSubmit={destroyFund}>
-      <TextInput<FD> title="Proposal Title" name="title" required />
+      <TextInput<FD> title="Proposal title" name="title" required />
       <TextInput<FD>
         title="proposal description"
         name="description"

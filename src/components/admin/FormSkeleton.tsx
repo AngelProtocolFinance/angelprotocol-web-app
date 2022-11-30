@@ -1,7 +1,11 @@
 import { DivContainer } from "./TemplateContainer";
 
 function Loader({ className = "" }: { className?: string }) {
-  return <div className={className + " bg-red/10"} />;
+  return (
+    <div
+      className={className + " bg-gray-l4 dark:bg-bluegray-d1 animate-pulse"}
+    />
+  );
 }
 
 export function FormSkeleton(props: { classes?: string }) {

@@ -7,7 +7,7 @@ export default function Form() {
   const { transferFunds, isSubmitDisabled } = useTransferFunds();
   return (
     <FormContainer onSubmit={transferFunds}>
-      <TextPrim<FS> label="Proposal Title" name="title" required />
+      <TextPrim<FS> label="Proposal title" name="title" required />
       <TextArea<FS> label="Proposal description" name="description" required />
       <Amount />
       <TextPrim<FS> label="Recipient" name="recipient" required />

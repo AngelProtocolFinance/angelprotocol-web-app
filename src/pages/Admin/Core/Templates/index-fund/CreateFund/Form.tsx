@@ -10,7 +10,7 @@ export default function Form() {
   const { createFund } = useCreateFund();
   return (
     <DivContainer>
-      <TextInput title="Proposal Title" name="title" required />
+      <TextInput title="Proposal title" name="title" required />
       <TextInput
         title="proposal description"
         name="description"

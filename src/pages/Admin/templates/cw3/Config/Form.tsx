@@ -7,7 +7,7 @@ export default function Form() {
   const { configureCW3, isSubmitDisabled, isTime } = usePropose();
   return (
     <FormContainer onSubmit={configureCW3}>
-      <TextPrim<CV> label="Proposal Title" name="title" required />
+      <TextPrim<CV> label="Proposal title" name="title" required />
       <TextArea<CV> label="Proposal description" name="description" required />
       <TextPrim<CV> label="Pass threshold ( % )" name="threshold" required />
       <TextPrim<CV>

@@ -6,7 +6,7 @@ export default function Form() {
   const { updateOwner, isSubmitDisabled } = useUpdateOwner();
   return (
     <FormContainer onSubmit={updateOwner}>
-      <TextInput<RV> title="Proposal Title" name="title" required />
+      <TextInput<RV> title="Proposal title" name="title" required />
       <TextInput<RV>
         title="proposal description"
         name="description"

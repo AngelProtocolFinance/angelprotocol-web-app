@@ -13,7 +13,7 @@ export default function Form() {
 
   return (
     <FormContainer onSubmit={configureRegistrar}>
-      <TextInput<RV> title="Proposal Title" name="title" required />
+      <TextInput<RV> title="Proposal title" name="title" required />
       <TextInput<RV>
         title="proposal description"
         name="description"

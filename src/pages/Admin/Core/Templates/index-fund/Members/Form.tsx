@@ -19,7 +19,7 @@ export default function Form() {
   const { updateFund } = useUpdateFund();
   return (
     <FormContainer onSubmit={updateFund}>
-      <TextInput<FV> title="Proposal Title" name="title" required />
+      <TextInput<FV> title="Proposal title" name="title" required />
       <TextInput<FV>
         title="proposal description"
         name="description"

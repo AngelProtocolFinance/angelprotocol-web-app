@@ -41,7 +41,7 @@ export default function Proposals() {
           ))}
         </div>
       )) || (
-        <p className="font-mono place-self-start">
+        <p className="place-self-start">
           {isFilteredProposalsLoading
             ? "loading proposals.."
             : "no proposals found"}

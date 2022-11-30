@@ -10,14 +10,8 @@ export default function Adder() {
         label="Wallet address"
         name="addr"
         placeholder="juno123abc..."
-        classes={{ container: "mb-6" }}
       />
-      <TextSec<T>
-        label="Weight"
-        placeholder="juno123abc..."
-        name="weight"
-        classes={{ container: "mb-6" }}
-      />
+      <TextSec<T> label="Weight" placeholder="juno123abc..." name="weight" />
       <button
         onClick={addMember}
         type="button"
