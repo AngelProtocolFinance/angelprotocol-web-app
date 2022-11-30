@@ -57,7 +57,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
           } ${
             isSubmitting || props.disabled
               ? "cursor-default bg-gray-l4 dark:bg-bluegray-d1"
-              : "bg-gray-l5 dark:bg-blue-d4 cursor-pointer"
+              : "bg-gray-l5 dark:bg-blue-d5 cursor-pointer"
           } ${props.className ?? ""}`,
         })}
       >

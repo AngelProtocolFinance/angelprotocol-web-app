@@ -8,7 +8,7 @@ export default function Menu({ onClose }: { onClose: () => void }) {
   return (
     <Dialog.Panel
       as="div"
-      className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d4 flex flex-col gap-4 shadow-lg pb-8"
+      className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d5 flex flex-col gap-4 shadow-lg pb-8"
     >
       <div className="flex justify-between items-center w-full py-4 padded-container border-b border-gray-l2">
         <Logo />
