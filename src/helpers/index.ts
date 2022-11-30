@@ -5,6 +5,7 @@ export * from "./extractFeeData";
 
 export * from "./getProvider";
 export * from "./getTxUrl";
+export * from "./getAddressUrl";
 export * from "./getWasmAttribute";
 export * from "./idParamToNum";
 export * from "./logger";

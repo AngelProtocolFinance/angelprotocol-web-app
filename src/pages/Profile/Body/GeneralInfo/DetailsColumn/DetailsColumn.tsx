@@ -1,15 +1,19 @@
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
-import { maskAddress } from "helpers";
+import Copier from "components/Copier";
+import ExtLink from "components/ExtLink";
+import Icon from "components/Icon";
+import { getAddressUrl, maskAddress } from "helpers";
+import { IS_TEST } from "constants/env";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
+const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
+
 export default function DetailsColumn({ className }: { className: string }) {
   const profile = useProfileContext();
-
-  console.log(profile);
 
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -23,10 +27,22 @@ export default function DetailsColumn({ className }: { className: string }) {
           {createAddress(profile.street_address, profile.country_of_origin)}
         </Detail>
         <Detail title="endowment address">
-          {maskAddress(profile.owner, 14)}
+          <span className="flex items-center gap-4 w-full">
+            {maskAddress(profile.owner, 14)}
+            <Copier text={profile.owner} classes="text-2xl" />
+            <ExtLink href={getAddressUrl(CHAIN_ID, profile.owner)}>
+              <Icon
+                type="ExternalLink"
+                className="text-2xl hover:text-orange"
+              />
+            </ExtLink>
+          </span>
         </Detail>
+
         <Tags />
+
         <Socials />
+
         <DonateButton />
       </div>
     </div>
