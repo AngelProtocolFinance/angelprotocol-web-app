@@ -39,7 +39,8 @@ export const contracts: Contracts = IS_TEST
         "juno168v32h347du4wc8y5gf6sljkhvktqvn85r2vywekzfwaq4e3sdlqscd5sd",
 
       // accessory
-      gift_cards: "juno1q5q8fgw83fusujz7x339yq352tlxdk2f0q2a6qz72dl0r9lk5y7qwf6w3u",
+      gift_cards:
+        "juno1q5q8fgw83fusujz7x339yq352tlxdk2f0q2a6qz72dl0r9lk5y7qwf6w3u",
 
       //halo
       halo_token: "",
@@ -70,7 +71,8 @@ export const contracts: Contracts = IS_TEST
         "juno1a22f8dxevu3er7vs4lkrca9n8rgf8uvgjd8s2p5eq787vmczq59syuplqx",
 
       // accessory
-      gift_cards: "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
+      gift_cards:
+        "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
 
       //halo
       halo_token: "",
