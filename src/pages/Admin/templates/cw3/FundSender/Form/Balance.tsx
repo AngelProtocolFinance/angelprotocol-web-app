@@ -21,9 +21,8 @@ export default function Balance() {
     <button
       type="button"
       onClick={setMax}
-      className="cursor-pointer font-heading text-sm text-blue hover:text-orange flex gap-1 items-baseline"
+      className="cursor-pointer text-sm text-blue hover:text-orange flex gap-1 items-baseline"
     >
-      <span className="uppercase text-xs">balance:</span>
       <span>{humanize(displayBalance, 3, true)}</span>
       <span>{symbols[denom]}</span>
     </button>

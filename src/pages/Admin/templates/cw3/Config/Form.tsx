@@ -7,24 +7,9 @@ export default function Form() {
   const { configureCW3, isSubmitDisabled, isTime } = usePropose();
   return (
     <FormContainer onSubmit={configureCW3}>
-      <TextPrim<CV>
-        label="Proposal Title"
-        name="title"
-        required
-        classes={{ container: "mb-6" }}
-      />
-      <TextArea<CV>
-        label="Proposal description"
-        name="description"
-        required
-        classes={{ container: "mb-6" }}
-      />
-      <TextPrim<CV>
-        label="Pass threshold ( % )"
-        name="threshold"
-        required
-        classes={{ container: "mb-6" }}
-      />
+      <TextPrim<CV> label="Proposal Title" name="title" required />
+      <TextArea<CV> label="Proposal description" name="description" required />
+      <TextPrim<CV> label="Pass threshold ( % )" name="threshold" required />
       <TextPrim<CV>
         label={`Voting period (${isTime ? "seconds" : "blocks"})`}
         name="duration"
@@ -32,12 +17,12 @@ export default function Form() {
       />
       <Checkbox<CV>
         name="require_execution"
-        classes={{ container: "mt-4", label: "text-sm -ml-1" }}
+        classes={{ label: "text-sm -ml-1" }}
       >
         Execution required
       </Checkbox>
 
-      <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
+      <Submitter type="submit" disabled={isSubmitDisabled}>
         Submit
       </Submitter>
     </FormContainer>

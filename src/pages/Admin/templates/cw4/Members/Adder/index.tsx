@@ -5,7 +5,7 @@ import useAddMember from "./useAddMember";
 export default function Adder() {
   const { addMember } = useAddMember();
   return (
-    <GroupContainer className="mb-2 grid">
+    <GroupContainer className="grid">
       <TextSec<T>
         label="Wallet address"
         name="addr"

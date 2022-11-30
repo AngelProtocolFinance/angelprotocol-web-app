@@ -10,8 +10,8 @@ function Denom({ denom }: { denom: string }) {
   return (
     <div
       className={`cursor-pointer flex items-center ${
-        isActive ? "bg-blue/10 shadow-inner-white" : ""
-      } p-2 rounded-md`}
+        isActive ? "text-orange" : ""
+      } p-2 rounded`}
     >
       <input
         id={denom}

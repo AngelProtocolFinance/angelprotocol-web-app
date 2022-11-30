@@ -9,21 +9,11 @@ export default function Form() {
   const { updateMembers, apCW4Members } = useUpdateMembers();
   return (
     <DivContainer>
-      <TextPrim<T>
-        label="Proposal title"
-        name="title"
-        required
-        classes={{ container: "mb-6" }}
-      />
-      <TextArea<T>
-        label="Proposal description"
-        name="description"
-        required
-        classes={{ container: "mb-6" }}
-      />
+      <TextPrim<T> label="Proposal title" name="title" required />
+      <TextArea<T> label="Proposal description" name="description" required />
 
-      <Label className="text-red dark:text-red-l2 mb-2">Remove member</Label>
-      <div className="mb-7 p-3 rounded border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7">
+      <Label className="text-red dark:text-red-l2 -mb-3">Remove member</Label>
+      <div className="p-3 rounded border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7">
         <div className="flex flex-col gap-2 mb-2">
           {apCW4Members.map((member) => (
             <Member key={member.addr} {...member} />
@@ -31,10 +21,10 @@ export default function Form() {
         </div>
       </div>
 
-      <Label className="text-green dark:text-green-l2 mb-2">Add member</Label>
+      <Label className="text-green dark:text-green-l2 -mb-3">Add member</Label>
       <Adder />
 
-      <Submitter type="button" onClick={updateMembers} _classes="mt-4">
+      <Submitter type="button" onClick={updateMembers}>
         Submit
       </Submitter>
     </DivContainer>
