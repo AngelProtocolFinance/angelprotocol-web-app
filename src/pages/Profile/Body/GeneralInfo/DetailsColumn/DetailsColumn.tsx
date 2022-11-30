@@ -1,5 +1,6 @@
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import DonateButton from "../../DonateButton";
+import Balances from "./Balances";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
@@ -7,20 +8,27 @@ export default function DetailsColumn({ className }: { className: string }) {
   const profile = useProfileContext();
 
   return (
-    <div
-      className={`${className} flex flex-col gap-6 w-full lg:w-96 p-4 border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white sm:p-8`}
-    >
-      <DonateButton />
+    <div className="flex flex-col gap-6 w-full">
+      <Balances />
 
-      <Tags />
+      <div
+        className={`${className} flex flex-col gap-6 w-full lg:w-96 p-4 border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white sm:p-8`}
+      >
+        <DonateButton />
 
-      <Socials className="mb-4" />
+        <Tags />
 
-      <Detail title="registration no." value={profile.registration_number} />
-      <Detail
-        title="address"
-        value={createAddress(profile.street_address, profile.country_of_origin)}
-      />
+        <Socials className="mb-4" />
+
+        <Detail title="registration no." value={profile.registration_number} />
+        <Detail
+          title="address"
+          value={createAddress(
+            profile.street_address,
+            profile.country_of_origin
+          )}
+        />
+      </div>
     </div>
   );
 }

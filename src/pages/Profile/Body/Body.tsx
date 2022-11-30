@@ -1,4 +1,3 @@
-import Balances from "./Balances";
 import GeneralInfo from "./GeneralInfo";
 import NameAddressSection from "./NameAddressSection";
 import UrlDonateSection from "./UrlDonateSection";
@@ -10,8 +9,6 @@ export default function Body() {
         <UrlDonateSection className="order-2 xl:order-1 xl:col-span-2" />
 
         <NameAddressSection className="order-1 xl:order-2 xl:pl-2" />
-
-        <Balances className="order-3 xl:col-span-1 xl:justify-self-end" />
 
         <GeneralInfo className="order-4 xl:col-span-2 w-full h-full" />
       </div>
