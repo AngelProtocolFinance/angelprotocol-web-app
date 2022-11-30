@@ -21,7 +21,7 @@ function Banner() {
 function Body() {
   return (
     <div className="w-full bg-white dark:bg-blue-d4 flex flex-col gap-5 px-6 pt-24 pb-8 sm:pt-6 sm:pb-20 sm:px-20 sm:items-end">
-      <ContentLoader className="h-56 sm:w-1/2 sm:h-28" />
+      <ContentLoader className="h-56 sm:w-5/6 sm:h-28" />
       <ContentLoader className="w-full h-72 sm:h-28" />
       <div className="flex flex-col gap-10 w-full h-full sm:flex-row sm:gap-8">
         <ContentLoader className="w-full h-96 sm:h-[905px]" />
