@@ -50,9 +50,7 @@ describe("Applications", () => {
       </AppWrapper>
     );
     expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
-    expect(
-      screen.getByRole("cell", { name: /no applications found/i })
-    ).toBeInTheDocument();
+    expect(screen.getByText(/no applications found/i)).toBeInTheDocument();
   });
   test("AppRows with poll id shows link to proposal page", () => {
     mockEndowmentApplicationsQuery.mockReturnValue({
