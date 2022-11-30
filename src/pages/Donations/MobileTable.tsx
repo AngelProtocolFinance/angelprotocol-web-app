@@ -35,7 +35,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
 
   return (
     <div className="sm:hidden mt-6">
-      <div className="grid grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
+      <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
         <div className="col-span-1 border-r-[1px] border-gray-l2 dark:border-bluegray p-4 place-self-center">
           <Icon
             type="ArrowDown"
