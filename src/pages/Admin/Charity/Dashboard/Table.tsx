@@ -12,7 +12,7 @@ export default function Table({ proposals }: Props) {
         rowClass="border-b border-gray-l2 dark:border-bluegray"
         type="thead"
       >
-        <Cells type="th" cellClass="p-1 uppercase text-left font-heading">
+        <Cells type="th" cellClass="p-1.5 uppercase text-left font-heading">
           <>title</>
           <>status</>
           <>expiry</>
@@ -23,13 +23,13 @@ export default function Table({ proposals }: Props) {
         type="tbody"
       >
         {proposals.map(({ title, status, expires, id }) => (
-          <Cells type="td" cellClass="p-1" key={id}>
+          <Cells type="td" cellClass="p-1.5" key={id}>
             <>{title}</>
-            <span className="uppercase text-xs font-bold">{status}</span>
+            <span className="uppercase text-sm">{status}</span>
             <Expiry {...expires} />
             <Link
               to={`${adminRoutes.proposal}/${id}`}
-              className="flex items-center uppercase text-xs hover:bg-blue-l4 hover:dark:bg-blue-d4"
+              className="flex items-center uppercase text-sm hover:bg-blue-l4 hover:dark:bg-blue-d4"
             >
               <span>Details</span>
               <Icon type="Forward" />
@@ -44,13 +44,13 @@ export default function Table({ proposals }: Props) {
 function Expiry(props: Expiration) {
   const isTime = "at_time" in props;
   return isTime ? (
-    <span className="font-mono text-sm">
+    <span className="text-sm">
       {new Date(props.at_time / 1e6).toLocaleString()}
     </span>
   ) : (
     <div className="flex gap-1">
       <Icon type="Blockchain" className="relative top-1" />
-      <span className="font-mono">{props.at_height.toLocaleString()}</span>
+      <span>{props.at_height.toLocaleString()}</span>
     </div>
   );
 }

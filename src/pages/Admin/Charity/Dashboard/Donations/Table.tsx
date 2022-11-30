@@ -65,8 +65,10 @@ export default function Table(props: { donations: Donation[] }) {
         {sorted.map(({ hash, amount, symbol, chainId, date, kycData }) => (
           <Cells key={hash} type="td" cellClass="p-2 first:pl-0 last:pr-0">
             <>{humanize(amount, 3)}</>
-            <span className="font-mono text-sm">{symbol}</span>
-            <>{new Date(date).toLocaleDateString()}</>
+            <span className="text-sm">{symbol}</span>
+            <span className="text-sm">
+              {new Date(date).toLocaleDateString()}
+            </span>
             <ExtLink
               href={getTxUrl(chainId, hash)}
               className="text-center text-blue cursor-pointer uppercase text-sm"
