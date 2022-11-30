@@ -40,7 +40,7 @@ export default function SuccessPopup(props: Props) {
       <div className="w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray p-3">
         <BtnPrimary
           type="button"
-          className="w-full sm:w-[10rem] px-10 uppercase"
+          className="w-full sm:w-40 px-10 uppercase"
           onClick={() => closeModal()}
         >
           Done
