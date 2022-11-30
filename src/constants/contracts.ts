@@ -9,6 +9,7 @@ type SC =
   | "cw3ReviewTeam"
   | "cw4GrpReviewTeam"
   | "halo_token"
+  | "gift_cards"
   | "gov"
   | "airdrop"
   | "loop_haloust_pair";
