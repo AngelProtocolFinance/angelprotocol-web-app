@@ -2,11 +2,11 @@ import { useProfileContext } from "pages/Profile/ProfileContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconTypes } from "components/Icon";
 
-export default function Socials({ className }: { className: string }) {
+export default function Socials() {
   const profile = useProfileContext();
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className="flex items-center gap-3">
       {profile.social_media_urls.facebook && (
         <SocialsIcon
           href={profile.social_media_urls.facebook}
