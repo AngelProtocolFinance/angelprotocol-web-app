@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useDonationsQuery } from "services/apes";
 import { QueryLoader } from "components/admin";
+import MobileTable from "./MobileTable";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
@@ -29,7 +30,14 @@ export default function Donations() {
           empty: "No donations found",
         }}
       >
-        {(donations) => <Table donations={donations} />}
+        {(donations) => {
+          return (
+            <>
+              <Table donations={donations} />
+              <MobileTable donations={donations} />
+            </>
+          );
+        }}
       </QueryLoader>
       <button className="mt-6 p-3 px-8 font-semibold bg-orange uppercase rounded-sm sm:hidden">
         Export to CSV
