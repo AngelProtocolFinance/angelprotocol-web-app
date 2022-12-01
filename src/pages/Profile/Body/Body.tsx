@@ -11,19 +11,19 @@ export default function Body() {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 xl:grid-rows-[auto_auto_1fr] xl:grid-cols-[auto_auto] xl:justify-items-start xl:items-end xl:gap-16 xl:pt-6 xl:pb-20">
+      <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[auto_auto] lg:justify-items-start lg:items-end lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
-          className="font-body font-normal text-xs sm:text-sm text-gray-d2 dark:text-white xl:ml-52 xl:mr-auto"
+          className="font-body font-normal text-xs sm:text-sm text-gray-d2 dark:text-white lg:ml-52 lg:mr-auto"
           items={[
             { title: "Marketplace", to: appRoutes.marketplace },
             { title: profile.name, to: `${appRoutes.profile}/${profile.id}` },
           ]}
         />
-        <DonateButton className="order-3 xl:order-2" />
+        <DonateButton className="order-3 lg:order-2" />
 
-        <div className="order-2 xl:order-3 flex flex-col gap-8 w-full items-center font-body">
+        <div className="order-2 lg:order-3 flex flex-col gap-8 w-full items-center font-body">
           <div className="flex flex-col items-center w-full gap-2 text-center">
-            <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
+            <h3 className="font-header font-bold text-3lg w-full max-w-2lg truncate">
               {profile.name}
             </h3>
             <p className="font-normal text-lg">
@@ -53,7 +53,7 @@ export default function Body() {
           </div>
         </div>
 
-        <GeneralInfo className="order-4 xl:col-span-2 w-full h-full" />
+        <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
       </div>
     </div>
   );

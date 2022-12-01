@@ -7,7 +7,7 @@ const logoStyle = `${container} border border-gray-l2 rounded-full object-contai
 
 export default function Logo() {
   return (
-    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate xl:justify-start">
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
       <Image />
     </div>
   );
