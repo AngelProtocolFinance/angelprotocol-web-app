@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Donation } from "types/aws";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
@@ -89,14 +90,12 @@ export default function Table(props: { donations: Donation[] }) {
               <>{chainName}</>
               <span className="font-mono text-sm">{symbol}</span>
               <>{humanize(amount, 3)}</>
-              <a
+              <ExtLink
                 href={getTxUrl(chainId, hash)}
-                target="_blank"
-                rel="noreferrer noopener"
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"
               >
                 {maskAddress(hash)}
-              </a>
+              </ExtLink>
               <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
                 Received
               </button>
