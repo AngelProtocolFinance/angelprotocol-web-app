@@ -19,7 +19,7 @@ export default function Table(props: { donations: Donation[] }) {
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"
-          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-heading font-semibold text-left text-gray-d2 dark:text-white text-sm border border-gray-l2 dark:border-bluegray p-3"
+          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-heading font-semibold text-left text-sm border border-gray-l2 dark:border-bluegray p-3"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
