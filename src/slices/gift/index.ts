@@ -60,7 +60,12 @@ export type SubmitStep = {
   step: 2;
 } & Omit<Required<FormStep>, "step">;
 
-export type TxStatus = { loadingMsg: string } | "error" | { code: string };
+export type TxResult = { hash: string };
+export type GiftCard = { secret: string };
+export type TLoading = { msg: string };
+export type TError = { error: string };
+export type TxStatus = TLoading | TError | TxResult | GiftCard;
+
 export type TxStep = {
   step: 3;
   status: TxStatus;

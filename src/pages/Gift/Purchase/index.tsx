@@ -76,8 +76,8 @@ function CurrStep(props: DonationState) {
 function isHeadingShown(state: DonationState) {
   switch (state.step) {
     case 3:
-      if (state.status === "error") return false;
-      if ("hash" in state.status) return false;
+      if ("error" in state.status) return false;
+      if ("secret" in state.status) return false;
       //only show progress on loading
       return true;
     default:

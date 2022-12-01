@@ -39,7 +39,7 @@ export default function Amount() {
           classes={{ options: "absolute right-0 top-2 z-10" }}
         />
       </div>
-      <div className="empty:mb-2">
+      <div className="empty:mb-2 relative">
         <ErrorMessage
           errors={errors}
           name="token.amount"

@@ -4,7 +4,9 @@ import { useSetter } from "store/accessors";
 import { setStep } from "slices/gift";
 import { appRoutes } from "constants/routes";
 
-export default function Err({ classes = "" }: { classes?: string }) {
+type Props = { msg: string; classes?: string };
+
+export default function Err({ classes = "", msg }: Props) {
   const dispatch = useSetter();
 
   function goToForm() {
@@ -20,10 +22,7 @@ export default function Err({ classes = "" }: { classes?: string }) {
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 font-bold text-center">
         Something went wrong!
       </h3>
-      <p className="text-center">
-        The payment wasn’t processed. Please double check your payment details
-        or change your payment method and try again.
-      </p>
+      <p className="text-center">{msg}</p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <BtnSec as="link" to={appRoutes.marketplace} className="w-full">
           Back to the platform

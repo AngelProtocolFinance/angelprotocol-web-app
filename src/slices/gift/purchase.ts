@@ -3,7 +3,8 @@ import { TxOptions } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
-import { logger } from "helpers";
+import { createAuthToken, getWasmAttribute, logger } from "helpers";
+import { APIs } from "constants/urls";
 import gift, { SubmitStep, TxStatus, setTxStatus } from "./index";
 
 type Args = {
@@ -20,20 +21,54 @@ export const purchase = createAsyncThunk<void, Args>(
     };
 
     try {
-      updateTx({ loadingMsg: "Payment is being processed..." });
+      updateTx({ msg: "Payment is being processed..." });
       const contract = new Contract(wallet);
       const response = await contract.signAndBroadcast(tx);
       if (!response.code) {
-        updateTx({ code: "" });
+        /** recipient is specified, show tx link to purchaser */
+        if (details.recipient) {
+          return updateTx({ hash: response.transactionHash });
+        }
 
-        //invalidate user balance
-        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+        /**if no recipient is provided */
+        /** extract deposit id */
+        const id = getWasmAttribute("deposit_id", response.rawLog);
+        /** generate secret */
+        let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
+        let preImage = `${randNums[0]}${randNums[1]}`;
+        let secret = `ap-${details.chainId}-${preImage}`;
+
+        const res = await fetch(APIs.aws + "/deposit", {
+          headers: {
+            authorization: createAuthToken("angelprotocol-web-app"),
+          },
+          method: "POST",
+          body: JSON.stringify({
+            secret,
+            depositId: Number(id!),
+            chain: details.chainId,
+          }),
+        });
+
+        if (!res.ok) {
+          return updateTx({
+            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${response.transactionHash}`,
+          });
+        }
+        /** no problems, show gift card code to user */
+        updateTx({ secret });
       } else {
-        updateTx("error");
+        updateTx({
+          error:
+            "The payment wasn’t processed. Please double check your payment details or change your payment method and try again.",
+        });
       }
     } catch (err) {
       logger.error(err);
-      updateTx("error");
+      updateTx({ error: "Unexpected error occured. Please try again later." });
+    } finally {
+      /** invalidate user balance */
+      dispatch(invalidateApesTags([{ type: apesTags.chain }]));
     }
   }
 );
