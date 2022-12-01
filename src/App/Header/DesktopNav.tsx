@@ -4,7 +4,7 @@ import { appRoutes } from "constants/routes";
 
 export default function DesktopNav({ classes = "" }: { classes?: string }) {
   return (
-    <nav className={`${classes} items-center font-body text-base`}>
+    <nav className={`${classes} items-center justify-end font-body text-base`}>
       <NavLink className={styler} to={appRoutes.index}>
         Marketplace
       </NavLink>
@@ -24,6 +24,6 @@ export default function DesktopNav({ classes = "" }: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "px-4 text-base text-white hover:text-orange transition ease-in-out duration-300 uppercase font-heading font-semibold",
+  "px-4 text-sm text-white hover:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold",
   "pointer-events-none text-orange"
 );
