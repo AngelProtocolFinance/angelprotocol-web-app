@@ -35,7 +35,7 @@ export default function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span className="flex items-center gap-2 uppercase">
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
-              {profile.street_address}
+              {`${profile.street_address}, ${profile.country_of_origin}`}
             </span>
             {/* {profile.url && ( */}
             <span className="flex items-center gap-2">
