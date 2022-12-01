@@ -1,10 +1,10 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
 import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
 import { SubmitStep, TokenWithAmount, setStep } from "slices/gift";
+import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import { estimateTx } from "./estimateTx";
@@ -13,23 +13,22 @@ type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateTx({ ...props, terraWallet });
+      const _estimate = await estimateTx(props);
       setEstimate(_estimate || "error");
     })();
-  }, [props, terraWallet]);
+  }, [props]);
 
   function goBack() {
     dispatch(setStep(props.step - 1));
   }
 
   function submit({ tx }: Estimate) {
-    console.log(tx);
+    dispatch(purchase({ wallet: props.wallet, tx, details: props.details }));
   }
 
   const { token } = props.details;

@@ -5,17 +5,17 @@ import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
 import { APIs } from "constants/urls";
-import gift, { SubmitStep, TxStatus, setTxStatus } from "./index";
+import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
   wallet: WalletState;
   tx: TxOptions;
-  donation: SubmitStep;
+  details: GiftDetails;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, tx, donation: { details } }, { dispatch }) => {
+  async ({ wallet, tx, details }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
