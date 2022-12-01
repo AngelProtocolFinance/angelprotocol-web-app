@@ -23,7 +23,7 @@ export default function Body() {
 
         <div className="order-2 xl:order-3 flex flex-col gap-8 w-full items-center font-body">
           <div className="flex flex-col items-center w-full gap-2 text-center">
-            <h3 className="font-header font-bold text-3xl w-full max-w-xs">
+            <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
               {profile.name}
             </h3>
             <p className="font-normal text-lg">
@@ -37,18 +37,19 @@ export default function Body() {
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
               {profile.street_address}
             </span>
-            {profile.url && (
-              <span className="flex items-center gap-2">
-                <Icon type="Globe" className="h-6 w-6 text-orange" />
-                <ExtLink
-                  href={profile.url}
-                  title="organization website"
-                  className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
-                >
-                  {profile.url.replace(/^https?:\/\//i, "")}
-                </ExtLink>
-              </span>
-            )}
+            {/* {profile.url && ( */}
+            <span className="flex items-center gap-2">
+              <Icon type="Globe" className="h-6 w-6 text-orange" />
+              <ExtLink
+                href={profile.url}
+                title="organization website"
+                className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+              >
+                {/* {profile.url.replace(/^https?:\/\//i, "")} */}
+                someexampleurl.com
+              </ExtLink>
+            </span>
+            {/* )} */}
           </div>
         </div>
 
