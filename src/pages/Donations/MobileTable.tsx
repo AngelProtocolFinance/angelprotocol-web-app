@@ -6,23 +6,6 @@ import useKYC from "components/KYC/useKYC";
 import { useSort } from "components/donations";
 import { humanize, maskAddress } from "helpers";
 
-interface MobileTableProps {
-  title: string;
-  data: string | JSX.Element;
-  className: string;
-}
-
-const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
-  return (
-    <div
-      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
-    >
-      <span className="font-bold uppercase">{title}</span>
-      {typeof data === "string" ? <span className="">{data}</span> : data}
-    </div>
-  );
-};
-
 export default function MobileTable(props: { donations: Donation[] }) {
   const { sorted } = useSort(props.donations);
   const showKYCForm = useKYC();
@@ -136,3 +119,20 @@ export default function MobileTable(props: { donations: Donation[] }) {
     </div>
   );
 }
+
+interface MobileTableProps {
+  title: string;
+  data: string | JSX.Element;
+  className: string;
+}
+
+const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
+  return (
+    <div
+      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
+    >
+      <span className="font-bold uppercase">{title}</span>
+      {typeof data === "string" ? <span className="">{data}</span> : data}
+    </div>
+  );
+};
