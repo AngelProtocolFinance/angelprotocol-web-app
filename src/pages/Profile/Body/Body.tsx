@@ -19,21 +19,28 @@ export default function Body() {
             { title: profile.name, to: `${appRoutes.profile}/${profile.id}` },
           ]}
         />
-        <DonateButton className="order-4 xl:order-2" />
+        <DonateButton className="order-3 xl:order-2" />
 
-        <div className="order-2 xl:order-3 xl:pl-2">
-          <p className="font-header font-bold text-2xl max-w-[320px] truncate sm:text-3xl">
-            {profile.name}
-          </p>
-          <p>some text</p>
-        </div>
-
-        <div className="order-3 xl:order-4 flex flex-col gap-4">
-          <span className="flex items-center justify-center gap-2 text-sm sm:text-base font-work uppercase">
-            <Icon type="MapPin" className="h-5 w-5 sm:h-6 sm:w-6 text-orange" />
-            {profile.street_address}
-          </span>
-          {profile.url && (
+        <div className="order-2 xl:order-3 flex flex-col gap-8 w-full items-center text-center">
+          <div className="flex flex-col w-full gap-2">
+            <h3 className="font-header font-bold text-3xl w-full max-w-xs">
+              {profile.name}
+            </h3>
+            <p className="font-body font-normal text-lg">
+              This is 140 character tag line. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit. Integer viverra tortor vitae, ornare
+              ac, ultricies.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="flex items-center justify-center gap-2 text-sm sm:text-base font-work uppercase">
+              <Icon
+                type="MapPin"
+                className="h-5 w-5 sm:h-6 sm:w-6 text-orange"
+              />
+              {profile.street_address}
+            </span>
+            {/* {profile.url && ( */}
             <span className="flex items-center justify-center gap-2 w-full font-sans font-medium text-sm sm:w-auto sm:text-base">
               <Icon
                 type="Globe"
@@ -44,10 +51,12 @@ export default function Body() {
                 title="organization url"
                 className="cursor-pointer hover:underline"
               >
-                {profile.url.replace(/^https?:\/\//i, "")}
+                {/* {profile.url.replace(/^https?:\/\//i, "")} */}
+                https://www.example.com
               </ExtLink>
             </span>
-          )}
+            {/* )} */}
+          </div>
         </div>
 
         <GeneralInfo className="order-4 xl:col-span-2 w-full h-full" />
