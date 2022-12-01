@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function Logo({ src, className }: Props) {
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(!!src);
 
   return (
     <>
