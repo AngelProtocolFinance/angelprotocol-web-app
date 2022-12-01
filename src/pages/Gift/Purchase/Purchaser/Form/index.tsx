@@ -8,7 +8,7 @@ import Amount from "./Amount";
 import AmountOptions from "./AmountOptions";
 import Recipient from "./Recipient";
 
-export default function Form() {
+export default function Form({ classes = "" }) {
   const {
     reset,
     handleSubmit,
@@ -27,7 +27,7 @@ export default function Form() {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="grid rounded-md w-full"
+      className={`grid rounded-md w-full ${classes}`}
       autoComplete="off"
     >
       <Recipient classes="mb-8" />

@@ -6,7 +6,11 @@ import { FormStep, TokenWithAmount } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";
 
-export default function Purchaser({ wallet, ...state }: WithWallet<FormStep>) {
+export default function Purchaser({
+  classes = "",
+  wallet,
+  ...state
+}: WithWallet<FormStep> & { classes?: string }) {
   const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
     ...t,
     amount: "0",

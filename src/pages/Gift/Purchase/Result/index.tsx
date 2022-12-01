@@ -4,18 +4,13 @@ import Err from "./Err";
 import Loading from "./Loading";
 import Success from "./Success";
 
-export default function Result({
-  classes = "",
-  ...state
-}: TxStep & { classes?: string }) {
+export default function Result({ ...state }: TxStep) {
   const { status } = state;
   if (errKey in status) {
-    return <Err classes={classes} msg={status.error} />;
+    return <Err {...status} />;
   } else if (loadingKey in status) {
-    return <Loading message={status.msg} classes={classes} />;
+    return <Loading {...status} classes="mb-4 sm:mb-40 sm:mt-20" />;
   } else {
-    return (
-      <Success classes={classes} {...(state.status as GiftCard | TxResult)} />
-    );
+    return <Success {...(state.status as GiftCard | TxResult)} />;
   }
 }

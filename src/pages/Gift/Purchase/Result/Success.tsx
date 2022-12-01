@@ -38,13 +38,13 @@ export default function Success(props: Props) {
 function Result(props: { hash: string }) {
   return (
     <>
-      <p className="text-center mt-4 mb-8">
+      <p className="text-center my-4">
         Giftcard balance is credited to the recipient's wallet.
       </p>
       <BtnSec
         as="a"
         href={getTxUrl(chainIds.juno, props.hash)}
-        className="flex items-center justify-center gap-3.5 w-full sm:w-auto"
+        className="flex items-center justify-center gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
       >
         <Icon type="ExternalLink" size={22} />
         <span>View transaction</span>

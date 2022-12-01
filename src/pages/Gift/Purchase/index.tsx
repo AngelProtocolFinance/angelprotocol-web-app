@@ -12,7 +12,7 @@ import Result from "./Result";
 import Submit from "./Submit";
 import { loadingKey } from "./constants";
 
-export default function Purchase({ classes = "" }: { classes?: string }) {
+export default function Purchase({ classes = "" }) {
   // const state = useGetter((state) => state.gift);
 
   const state: DonationState = {
@@ -82,7 +82,7 @@ function CurrStep(props: DonationState) {
 
     return <Purchaser {...props} wallet={wallet} />;
   } else {
-    return <Result {...props} classes="justify-self-center my-20" />;
+    return <Result {...props} />;
   }
 }
 

@@ -1,16 +1,14 @@
+import { TLoading } from "slices/gift";
 import Loader from "./Loader";
 
 export default function Loading({
-  message,
+  msg,
   classes = "",
-}: {
-  message: string;
-  classes?: string;
-}) {
+}: TLoading & { classes?: string }) {
   return (
     <div className={`grid justify-items-center gap-6 ${classes}`}>
       <Loader thickness={10} classes="w-32" />
-      <p className="text-center">{message}</p>
+      <p className="text-center">{msg}</p>
     </div>
   );
 }
