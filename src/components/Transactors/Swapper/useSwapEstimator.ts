@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { TxOptions } from "slices/transaction/types";
+import { TxOptions } from "types/slices";
 import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
 import {

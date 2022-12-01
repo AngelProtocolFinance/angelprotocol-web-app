@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TxOptions } from "slices/transaction/types";
+import { TxOptions } from "types/slices";
 import { useGovStaker } from "services/juno/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";

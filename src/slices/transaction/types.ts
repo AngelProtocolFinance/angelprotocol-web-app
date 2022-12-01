@@ -6,6 +6,7 @@ import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions"
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Chain } from "types/aws";
+import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 
@@ -96,11 +97,6 @@ type TerraWithTx = BaseArgs & {
 }; //pre-estimated tx
 
 export type TerraSendArgs = TerraWithMsg | TerraWithTx;
-
-export type TxOptions = {
-  msgs: EncodeObject[];
-  fee: StdFee;
-};
 
 type CosmosWithMsg = BaseArgs & {
   msgs: EncodeObject[];

@@ -13,7 +13,7 @@ import { getProvider, logger } from "helpers";
 import transactionSlice from "../../transactionSlice";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
-  `${transactionSlice.name}/junoDonate`,
+  `${transactionSlice.name}/sendDonation`,
   async (
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SendCosmosTxArgs, StageUpdater, TxOptions } from "../types";
+import { SendCosmosTxArgs, StageUpdater } from "../types";
+import { TxOptions } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import Contract from "contracts/Contract";
 import { extractFeeAmount } from "helpers";
