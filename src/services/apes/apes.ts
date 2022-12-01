@@ -26,12 +26,12 @@ export const apes = createApi({
       async queryFn(args) {
         try {
           const { address, chainId } = args.providerInfo;
-          const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
-          const chain: Chain | { message: string } = await chainRes.json();
-
-          if (!chain || "message" in chain) {
-            throw new UnsupportedChainError(chainId);
-          }
+          const chain = await fetch(
+            `${APIs.apes}/v1/chain/${chainId}`
+          ).then<Chain>((res) => {
+            if (!res.ok) throw new UnsupportedChainError(chainId);
+            return res.json();
+          });
 
           // fetch balances for juno or terra
           if (chain.type === "juno-native" || chain.type === "terra-native") {
