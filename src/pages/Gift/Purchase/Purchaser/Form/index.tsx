@@ -1,11 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { DonateValues } from "../types";
-import { BtnPrimary, BtnSec } from "components/donation";
+import { DonateValues as DV } from "../types";
+import { BtnPrim, BtnSec } from "components/registration";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
 import AmountOptions from "./AmountOptions";
+import Recipient from "./Recipient";
 
 export default function Form() {
   const {
@@ -13,10 +14,10 @@ export default function Form() {
     handleSubmit,
     getValues,
     formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<DonateValues>();
+  } = useFormContext<DV>();
 
   const dispatch = useDispatch();
-  function submit(data: DonateValues) {
+  function submit(data: DV) {
     dispatch(setDetails(data));
     reset();
   }
@@ -29,6 +30,7 @@ export default function Form() {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
+      <Recipient classes="mb-8" />
       <Amount />
       <AmountOptions classes="mt-3" />
 
@@ -36,14 +38,14 @@ export default function Form() {
         <BtnSec as="link" to={`${appRoutes.profile}/1`}>
           Cancel
         </BtnSec>
-        <BtnPrimary
+        <BtnPrim
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
           type="submit"
         >
           Continue
-        </BtnPrimary>
+        </BtnPrim>
       </div>
     </form>
   );

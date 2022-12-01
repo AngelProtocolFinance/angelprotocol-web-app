@@ -4,7 +4,7 @@ import Purchase from "./Purchase";
 
 export default function Gift() {
   return (
-    <div className="bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
+    <div className="grid bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <div
         style={{
           backgroundImage: `url('${banner}')`,
@@ -12,7 +12,7 @@ export default function Gift() {
         className="relative overlay w-full h-72 bg-center bg-cover"
       />
       <Routes>
-        <Route index element={<Purchase />} />
+        <Route index element={<Purchase classes="my-20" />} />
       </Routes>
     </div>
   );

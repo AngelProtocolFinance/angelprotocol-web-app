@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DonateValues as DV } from "../../types";
+import { errorStyle } from "components/KYC/Form/TextInput";
 import TokensSelector from "components/TokenSelector";
 import Balance from "./Balance";
 
@@ -17,7 +18,7 @@ export default function Amount() {
   return (
     <div className="grid">
       <div className="flex items-baseline justify-between mb-1">
-        <label htmlFor="amount" className="text-lg font-bold">
+        <label htmlFor="amount" className="font-bold font-heading">
           Enter the donation amount:
         </label>
         <Balance />
@@ -43,7 +44,7 @@ export default function Amount() {
           errors={errors}
           name="token.amount"
           as="p"
-          className="text-red dark:text-red-l2 text-xs text-left my-1"
+          className={errorStyle}
         />
       </div>
       <p className="text-xs">

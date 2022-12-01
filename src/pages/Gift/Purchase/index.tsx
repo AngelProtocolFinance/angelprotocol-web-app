@@ -10,14 +10,16 @@ import Purchaser from "./Purchaser";
 import Result from "./Result";
 import Submit from "./Submit";
 
-export default function Purchase() {
+export default function Purchase({ classes = "" }: { classes?: string }) {
   const state = useGetter((state) => state.gift);
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[35rem]">
+    <div
+      className={`justify-self-center grid padded-container max-w-[32rem] ${classes}`}
+    >
       {isHeadingShown(state) && (
         <>
-          <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
+          <h3 className="text-center text-3xl font-bold leading-snug">
             Purchase Angel Protocol Giftcard
           </h3>
           <Progress classes="my-12" />

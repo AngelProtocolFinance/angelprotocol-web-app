@@ -1,7 +1,7 @@
 import { useGetter } from "store/accessors";
 
 export default function Progress({ classes = "" }: { classes?: string }) {
-  const step = useGetter((state) => state.donation.step);
+  const step = useGetter((state) => state.gift.step);
 
   return (
     <div
@@ -11,7 +11,7 @@ export default function Progress({ classes = "" }: { classes?: string }) {
       <p className="text-center">Finalize payment</p>
       <div className="mt-3 relative h-2 w-full col-span-full bg-gray-l2 dark:bg-bluegray rounded-full overflow-hidden">
         <div
-          style={{ width: `${(step / 3) * 100}%` }}
+          style={{ width: `${(step / 2) * 100}%` }}
           className="h-full bg-orange rounded-full"
         />
       </div>
