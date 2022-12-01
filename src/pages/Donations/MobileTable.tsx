@@ -67,40 +67,25 @@ export default function MobileTable(props: { donations: Donation[] }) {
               </Disclosure.Button>
               <Disclosure.Panel>
                 <div className="flex flex-col border-x border-gray-l2 dark:border-bluegray">
-                  <MobileRow
-                    className="bg-white dark:bg-blue-d6"
-                    title="Network"
-                  >
+                  <Row className="bg-white dark:bg-blue-d6" title="Network">
                     {chainName}
-                  </MobileRow>
-                  <MobileRow
+                  </Row>
+                  <Row
                     className="bg-orange-l6 dark:bg-blue-d7 font-body"
                     title="Currency"
                   >
                     {symbol}
-                  </MobileRow>
-                  <MobileRow
-                    className="bg-white dark:bg-blue-d6"
-                    title="Amount"
-                  >
+                  </Row>
+                  <Row className="bg-white dark:bg-blue-d6" title="Amount">
                     {humanize(amount, 3)}
-                  </MobileRow>
-                  <MobileRow
-                    className="bg-orange-l6 dark:bg-blue-d7"
-                    title="TX Hash"
-                  >
+                  </Row>
+                  <Row className="bg-orange-l6 dark:bg-blue-d7" title="TX Hash">
                     {maskAddress(hash)}
-                  </MobileRow>
-                  <MobileRow
-                    className="bg-white dark:bg-blue-d6"
-                    title="Status"
-                  >
+                  </Row>
+                  <Row className="bg-white dark:bg-blue-d6" title="Status">
                     Received
-                  </MobileRow>
-                  <MobileRow
-                    className="bg-orange-l6 dark:bg-blue-d7"
-                    title="Receipt"
-                  >
+                  </Row>
+                  <Row className="bg-orange-l6 dark:bg-blue-d7" title="Receipt">
                     <button
                       className="block"
                       onClick={() =>
@@ -113,7 +98,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                     >
                       <Icon type="FatArrowDownload" className=" text-2xl" />
                     </button>
-                  </MobileRow>
+                  </Row>
                 </div>
               </Disclosure.Panel>
             </>
@@ -130,7 +115,7 @@ interface MobileTableProps {
   className: string;
 }
 
-const MobileRow: FC<MobileTableProps> = ({ title, children, className }) => {
+const Row: FC<MobileTableProps> = ({ title, children, className }) => {
   return (
     <div
       className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
