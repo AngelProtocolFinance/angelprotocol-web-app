@@ -18,7 +18,7 @@ export default function Donations() {
   );
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-28 bg-white dark:bg-blue-d4">
+    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d4">
       <QueryLoader
         queryState={queryState}
         messages={{
