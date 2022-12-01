@@ -16,7 +16,9 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
         <Fragment key={i}>
           <NavLink
             to={item.to}
-            className={({ isActive }) => (isActive ? "font-bold" : "underline")}
+            className={({ isActive }) =>
+              `max-w-xs truncate ${isActive ? "font-bold" : "underline"}`
+            }
           >
             {item.title}
           </NavLink>
