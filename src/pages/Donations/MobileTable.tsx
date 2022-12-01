@@ -70,46 +70,50 @@ export default function MobileTable(props: { donations: Donation[] }) {
                   <MobileRow
                     className="bg-white dark:bg-blue-d6"
                     title="Network"
-                    data={`${chainName}`}
-                  />
+                  >
+                    {chainName}
+                  </MobileRow>
                   <MobileRow
                     className="bg-orange-l6 dark:bg-blue-d7 font-body"
                     title="Currency"
-                    data={`${symbol}`}
-                  />
+                  >
+                    {symbol}
+                  </MobileRow>
                   <MobileRow
                     className="bg-white dark:bg-blue-d6"
                     title="Amount"
-                    data={`${humanize(amount, 3)}`}
-                  />
+                  >
+                    {humanize(amount, 3)}
+                  </MobileRow>
                   <MobileRow
                     className="bg-orange-l6 dark:bg-blue-d7"
                     title="TX Hash"
-                    data={`${maskAddress(hash)}`}
-                  />
+                  >
+                    {maskAddress(hash)}
+                  </MobileRow>
                   <MobileRow
                     className="bg-white dark:bg-blue-d6"
                     title="Status"
-                    data="Received"
-                  />
+                  >
+                    Received
+                  </MobileRow>
                   <MobileRow
                     className="bg-orange-l6 dark:bg-blue-d7"
                     title="Receipt"
-                    data={
-                      <button
-                        className="block"
-                        onClick={() =>
-                          showKYCForm({
-                            type: "post-donation",
-                            txHash: hash,
-                            classes: "grid gap-5",
-                          })
-                        }
-                      >
-                        <Icon type="FatArrowDownload" className=" text-2xl" />
-                      </button>
-                    }
-                  />
+                  >
+                    <button
+                      className="block"
+                      onClick={() =>
+                        showKYCForm({
+                          type: "post-donation",
+                          txHash: hash,
+                          classes: "grid gap-5",
+                        })
+                      }
+                    >
+                      <Icon type="FatArrowDownload" className=" text-2xl" />
+                    </button>
+                  </MobileRow>
                 </div>
               </Disclosure.Panel>
             </>
@@ -122,17 +126,17 @@ export default function MobileTable(props: { donations: Donation[] }) {
 
 interface MobileTableProps {
   title: string;
-  data: string | JSX.Element;
+  children: string | JSX.Element;
   className: string;
 }
 
-const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
+const MobileRow: FC<MobileTableProps> = ({ title, children, className }) => {
   return (
     <div
       className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
     >
       <span className="font-bold uppercase">{title}</span>
-      {typeof data === "string" ? <span className="">{data}</span> : data}
+      {children}
     </div>
   );
 };
