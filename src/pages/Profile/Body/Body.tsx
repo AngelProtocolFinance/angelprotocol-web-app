@@ -21,41 +21,34 @@ export default function Body() {
         />
         <DonateButton className="order-3 xl:order-2" />
 
-        <div className="order-2 xl:order-3 flex flex-col gap-8 w-full items-center text-center">
-          <div className="flex flex-col w-full gap-2">
+        <div className="order-2 xl:order-3 flex flex-col gap-8 w-full items-center font-body">
+          <div className="flex flex-col items-center w-full gap-2 text-center">
             <h3 className="font-header font-bold text-3xl w-full max-w-xs">
               {profile.name}
             </h3>
-            <p className="font-body font-normal text-lg">
+            <p className="font-normal text-lg">
               This is 140 character tag line. Lorem ipsum dolor sit amet,
               consectetur adipiscing elit. Integer viverra tortor vitae, ornare
               ac, ultricies.
             </p>
           </div>
-          <div className="flex flex-col gap-4">
-            <span className="flex items-center justify-center gap-2 text-sm sm:text-base font-work uppercase">
-              <Icon
-                type="MapPin"
-                className="h-5 w-5 sm:h-6 sm:w-6 text-orange"
-              />
+          <div className="flex flex-col gap-4 items-center font-semibold text-base">
+            <span className="flex items-center gap-2 uppercase">
+              <Icon type="MapPin" className="h-6 w-6 text-orange" />
               {profile.street_address}
             </span>
-            {/* {profile.url && ( */}
-            <span className="flex items-center justify-center gap-2 w-full font-sans font-medium text-sm sm:w-auto sm:text-base">
-              <Icon
-                type="Globe"
-                className="h-5 w-5 sm:h-6 sm:w-6 text-orange"
-              />
-              <ExtLink
-                href={profile.url}
-                title="organization url"
-                className="cursor-pointer hover:underline"
-              >
-                {/* {profile.url.replace(/^https?:\/\//i, "")} */}
-                https://www.example.com
-              </ExtLink>
-            </span>
-            {/* )} */}
+            {profile.url && (
+              <span className="flex items-center gap-2">
+                <Icon type="Globe" className="h-6 w-6 text-orange" />
+                <ExtLink
+                  href={profile.url}
+                  title="organization website"
+                  className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+                >
+                  {profile.url.replace(/^https?:\/\//i, "")}
+                </ExtLink>
+              </span>
+            )}
           </div>
         </div>
 
