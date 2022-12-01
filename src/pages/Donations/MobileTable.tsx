@@ -67,7 +67,10 @@ export default function MobileTable(props: { donations: Donation[] }) {
               </Disclosure.Button>
               <Disclosure.Panel>
                 <div className="flex flex-col border-x border-gray-l2 dark:border-bluegray">
-                  <Row className="bg-white dark:bg-blue-d6" title="Network">
+                  <Row
+                    className="bg-white dark:bg-blue-d6 font-work"
+                    title="Network"
+                  >
                     {chainName}
                   </Row>
                   <Row
