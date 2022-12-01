@@ -1,9 +1,10 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
+import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
-import { SubmitStep, TokenWithAmount, setStep } from "slices/gift";
+import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";

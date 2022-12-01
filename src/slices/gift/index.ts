@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Token } from "types/aws";
+import { TokenWithAmount } from "types/slices";
 
 export type DonationState = FormStep | SubmitStep | TxStep;
 
@@ -39,8 +39,6 @@ const gift = createSlice({
 
 export default gift.reducer;
 export const { setStep, setDetails, resetDetails, setTxStatus } = gift.actions;
-
-export type TokenWithAmount = Token & { amount: string };
 
 export type GiftDetails = {
   token: TokenWithAmount;

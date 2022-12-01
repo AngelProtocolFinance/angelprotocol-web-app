@@ -1,11 +1,12 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
+import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
-import { SubmitStep, TokenWithAmount, setStep } from "slices/donation";
+import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/transaction/transactors";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
