@@ -1,10 +1,8 @@
-import { GiftCard, TError, TLoading, TxResult, TxStep } from "slices/gift";
+import { GiftCard, TxResult, TxStep } from "slices/gift";
+import { errKey, loadingKey } from "../constants";
 import Err from "./Err";
 import Loading from "./Loading";
 import Success from "./Success";
-
-const loadingKey: keyof TLoading = "msg";
-const errKey: keyof TError = "error";
 
 export default function Result({
   classes = "",

@@ -12,7 +12,7 @@ export default function Gift() {
         className="relative overlay w-full h-72 bg-center bg-cover"
       />
       <Routes>
-        <Route index element={<Purchase classes="my-20" />} />
+        <Route index element={<Purchase classes="" />} />
       </Routes>
     </div>
   );

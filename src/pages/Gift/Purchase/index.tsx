@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
 import { DonationState, resetDetails } from "slices/gift";
@@ -9,13 +10,25 @@ import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";
 import Submit from "./Submit";
+import { loadingKey } from "./constants";
 
 export default function Purchase({ classes = "" }: { classes?: string }) {
-  const state = useGetter((state) => state.gift);
+  // const state = useGetter((state) => state.gift);
+
+  const state: DonationState = {
+    step: 3,
+    status: { secret: "ap-UNI-5-12312379171231231237123" },
+    details: {
+      chainId: "uni-5",
+      recipient: "juno123abc8910xyz",
+      token: { ...placeholderChain.native_currency, amount: "1" },
+      tokens: placeholderChain.tokens.map((t) => ({ ...t, amount: "0" })),
+    },
+  };
 
   return (
     <div
-      className={`justify-self-center grid padded-container max-w-[32rem] ${classes}`}
+      className={`justify-self-center grid padded-container w-full max-w-[32rem] ${classes}`}
     >
       {isHeadingShown(state) && (
         <>
@@ -69,17 +82,15 @@ function CurrStep(props: DonationState) {
 
     return <Purchaser {...props} wallet={wallet} />;
   } else {
-    return <Result {...props} classes="justify-self-center mt-16" />;
+    return <Result {...props} classes="justify-self-center my-20" />;
   }
 }
 
 function isHeadingShown(state: DonationState) {
   switch (state.step) {
     case 3:
-      if ("error" in state.status) return false;
-      if ("secret" in state.status) return false;
-      //only show progress on loading
-      return true;
+      /** on tx step, only show if loading */
+      return loadingKey in state.status;
     default:
       return true;
   }

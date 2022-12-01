@@ -72,6 +72,7 @@ import {
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
+  MdOutlineEmail,
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
@@ -117,6 +118,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
   Eye: AiOutlineEye,
+  Email: MdOutlineEmail,
   EyeInvisible: AiOutlineEyeInvisible,
   CaretLeft: AiFillCaretLeft,
   Globe: BiGlobe,
