@@ -11,7 +11,7 @@ export default function Body() {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:items-end lg:gap-16 lg:pt-6 lg:pb-20">
+      <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
           className="font-body font-normal text-xs sm:text-sm text-gray-d2 dark:text-white lg:ml-52"
           items={[
@@ -22,7 +22,7 @@ export default function Body() {
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
-          <div className="flex flex-col items-center w-full gap-2 text-center">
+          <div className="flex flex-col items-center w-full gap-2 text-center lg:text-left">
             <h3 className="font-header font-bold text-3lg w-full max-w-2lg truncate">
               {profile.name}
             </h3>
@@ -32,7 +32,7 @@ export default function Body() {
               ac, ultricies.
             </p>
           </div>
-          <div className="flex flex-col gap-4 items-center font-semibold text-base">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span className="flex items-center gap-2 uppercase">
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
               {profile.street_address}
