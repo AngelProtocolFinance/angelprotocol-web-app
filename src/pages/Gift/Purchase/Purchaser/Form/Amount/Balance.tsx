@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../../types";
+import { FormValues } from "../../types";
 import { humanize } from "helpers";
 
 export default function Balance() {
-  const { watch, setValue } = useFormContext<DonateValues>();
+  const { watch, setValue } = useFormContext<FormValues>();
   const token = watch("token");
   function setMaxVal() {
     setValue("token.amount", humanize(+token.balance, 4), {

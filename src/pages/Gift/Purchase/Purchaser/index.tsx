@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { DonateValues } from "./types";
+import { FormValues } from "./types";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep, TokenWithAmount } from "slices/gift";
 import Form from "./Form";
@@ -16,7 +16,7 @@ export default function Purchaser({
     amount: "0",
   }));
 
-  const methods = useForm<DonateValues>({
+  const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: state.details || {

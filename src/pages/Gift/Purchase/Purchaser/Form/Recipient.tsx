@@ -1,14 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Path, useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
+import { FormValues } from "../types";
 import { errorStyle, textFieldStyle } from "components/gift";
 
 export default function Recipient({ classes = "" }: { classes?: string }) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<DonateValues>();
-  const fieldName: Path<DonateValues> = "recipient";
+  } = useFormContext<FormValues>();
+  const fieldName: Path<FormValues> = "recipient";
   return (
     <div className={`grid ${classes}`}>
       <label htmlFor={fieldName} className="font-bold font-heading mb-3">

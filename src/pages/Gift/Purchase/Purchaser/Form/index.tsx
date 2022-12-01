@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { DonateValues as DV } from "../types";
+import { FormValues as FV } from "../types";
 import { BtnPrim, BtnSec } from "components/gift";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
@@ -14,10 +14,10 @@ export default function Form({ classes = "" }) {
     handleSubmit,
     getValues,
     formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<DV>();
+  } = useFormContext<FV>();
 
   const dispatch = useDispatch();
-  function submit(data: DV) {
+  function submit(data: FV) {
     dispatch(setDetails(data));
     reset();
   }

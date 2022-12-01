@@ -1,12 +1,12 @@
 import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../../types";
+import { FormValues } from "../../types";
 import { humanize } from "helpers";
 
 const SCALE = [1, 2, 5, 10, 20];
 
 export default function AmountOptions({ classes = "" }: { classes?: string }) {
-  const { watch, setValue } = useFormContext<DonateValues>();
+  const { watch, setValue } = useFormContext<FormValues>();
   const { min_donation_amnt, amount } = watch("token");
 
   const min = min_donation_amnt || 100;

@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { DonateValues as DV } from "../../types";
+import { FormValues as FV } from "../../types";
 import TokensSelector from "components/TokenSelector";
 import { errorStyle } from "components/gift";
 import Balance from "./Balance";
@@ -11,7 +11,7 @@ export default function Amount() {
     watch,
     register,
     formState: { errors },
-  } = useFormContext<DV>();
+  } = useFormContext<FV>();
 
   const { min_donation_amnt, symbol } = watch("token");
 
@@ -33,7 +33,7 @@ export default function Amount() {
           placeholder="0.0000"
           className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
         />
-        <TokensSelector<DV, "token">
+        <TokensSelector<FV, "token">
           tokens={getValues("tokens")}
           fieldName="token"
           classes={{ options: "absolute right-0 top-2 z-10" }}
