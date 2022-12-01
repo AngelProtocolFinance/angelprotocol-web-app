@@ -73,7 +73,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                     data={`${chainName}`}
                   />
                   <MobileRow
-                    className="bg-orange-l6 dark:bg-blue-d7"
+                    className="bg-orange-l6 dark:bg-blue-d7 font-body"
                     title="Currency"
                     data={`${symbol}`}
                   />

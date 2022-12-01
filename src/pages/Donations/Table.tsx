@@ -15,11 +15,11 @@ export default function Table(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white">
+    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white font-body">
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"
-          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-heading font-semibold text-left text-sm border border-gray-l2 dark:border-bluegray p-3"
+          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-semibold text-left text-xs font-body border border-gray-l2 dark:border-bluegray p-3"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -88,7 +88,7 @@ export default function Table(props: { donations: Donation[] }) {
               </Link>
               <>{new Date(date).toLocaleDateString()}</>
               <>{chainName}</>
-              <span className="font-mono text-sm">{symbol}</span>
+              <span className="font-body text-sm">{symbol}</span>
               <>{humanize(amount, 3)}</>
               <ExtLink
                 href={getTxUrl(chainId, hash)}
