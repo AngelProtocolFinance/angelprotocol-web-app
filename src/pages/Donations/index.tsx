@@ -30,10 +30,10 @@ export default function Donations() {
         {(donations) => {
           return (
             <>
-              <div className="flex sm:justify-between sm:items-center justify-center mt-10 sm:mb-6">
+              <div className="flex lg:justify-between lg:items-center justify-center mt-10 lg:mb-6">
                 <h1 className="text-3xl font-bold">My Donations</h1>
                 <CsvExporter
-                  classes="hidden sm:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-sm hidden sm:block text-white"
+                  classes="hidden lg:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-sm hidden lg:block text-white"
                   headers={csvHeaders}
                   data={donations}
                   filename="donations.csv"
@@ -44,7 +44,7 @@ export default function Donations() {
               <Table donations={donations} />
               <MobileTable donations={donations} />
               <CsvExporter
-                classes="sm:hidden justify-center text-white mt-6 p-3 px-8 font-semibold bg-orange uppercase rounded-sm"
+                classes="lg:hidden justify-center text-white mt-6 p-3 px-8 font-semibold bg-orange uppercase rounded-sm"
                 headers={csvHeaders}
                 data={donations}
                 filename="donations.csv"

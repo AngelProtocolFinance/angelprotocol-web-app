@@ -15,7 +15,7 @@ export default function Table(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <table className="hidden sm:table w-full text-sm text-gray-d2 dark:text-white">
+    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white">
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"

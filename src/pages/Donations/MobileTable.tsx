@@ -11,7 +11,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <div className="sm:hidden mt-6">
+    <div className="lg:hidden mt-6">
       <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
         <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
           <Icon type="ArrowDown" size={24} className=" invisible" />
@@ -41,7 +41,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
               <Disclosure.Button>
                 {({ open }) => (
                   <div
-                    className={`grid grid-cols-8 sm:hidden ${
+                    className={`grid grid-cols-8 lg:hidden ${
                       index % 2 === 0
                         ? "bg-white dark:bg-blue-d6"
                         : "bg-orange-l6 dark:bg-blue-d7"
