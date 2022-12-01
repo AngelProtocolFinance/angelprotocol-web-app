@@ -1,8 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Path, useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import { errorStyle } from "components/KYC/Form/TextInput";
-import { textFieldStyle } from "components/gift";
+import { errorStyle, textFieldStyle } from "components/gift";
 
 export default function Recipient({ classes = "" }: { classes?: string }) {
   const {

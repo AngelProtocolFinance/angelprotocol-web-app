@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import { Tooltip } from "components/donation";
+import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
 import { DonationState, resetDetails } from "slices/gift";
 import { chainIds } from "constants/chainIds";

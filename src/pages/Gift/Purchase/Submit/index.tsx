@@ -2,8 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { WithWallet } from "contexts/WalletContext";
-import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
-import { BtnOutline } from "components/donation/BtnOutline";
+import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
 import { SubmitStep, TokenWithAmount, setStep } from "slices/gift";
 import { humanize } from "helpers";
@@ -57,11 +56,11 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         </span>
       </Row>
       <TxTotal estimate={estimate} token={token} />
-      <div className="mt-14 grid grid-cols-2 gap-5">
+      <div className="mt-12 grid grid-cols-2 gap-5">
         <BtnSec onClick={goBack} type="button">
           Back
         </BtnSec>
-        <BtnPrimary
+        <BtnPrim
           onClick={
             isNotEstimated
               ? undefined
@@ -73,7 +72,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           type="submit"
         >
           Complete
-        </BtnPrimary>
+        </BtnPrim>
         <BtnOutline
           as="link"
           to={appRoutes.marketplace}

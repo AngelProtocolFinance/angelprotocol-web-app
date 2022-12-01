@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { DonateValues as DV } from "../types";
-import { BtnPrim, BtnSec } from "components/registration";
+import { BtnPrim, BtnSec } from "components/gift";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
