@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { BtnPrimary } from "./donation";
+import { BtnPrimary } from "../donation";
 
 type Props = PropsWithChildren<{
   headline: string;

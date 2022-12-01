@@ -2,8 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
+import SuccessPopup from "components/KYC/SuccessPopup";
 import Popup from "components/Popup";
-import SuccessPopup from "components/SuccessPopup";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
 
