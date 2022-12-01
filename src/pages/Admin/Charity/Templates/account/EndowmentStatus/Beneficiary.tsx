@@ -3,7 +3,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { Label, TextInput } from "components/admin";
+import { TextPrim } from "components/admin";
+import { Label } from "components/form";
 
 const types: V["beneficiaryType"][] = ["wallet", "index fund", "endowment"];
 
@@ -15,7 +16,7 @@ export default function Beneficiary() {
 
   return (
     <div className="mt-6">
-      <Label _required className="mb-2 text-gray-d2">
+      <Label required className="mb-2 text-gray-d2">
         Beneficiary
       </Label>
       <ErrorMessage
@@ -45,30 +46,27 @@ export default function Beneficiary() {
         ))}
       </RadioGroup>
       {type === "wallet" && (
-        <TextInput<V>
-          title="Wallet address"
+        <TextPrim<V>
+          label="Wallet address"
           name="wallet"
           placeholder="juno123abc..."
           required
-          mono
         />
       )}
       {type === "endowment" && (
-        <TextInput<V>
-          title="Endowment id"
+        <TextPrim<V>
+          label="Endowment id"
           name="endowmentId"
           placeholder="1"
           required
-          mono
         />
       )}
       {type === "index fund" && (
-        <TextInput<V>
-          title="Fund id"
+        <TextPrim<V>
+          label="Fund id"
           name="indexFund"
           placeholder="1"
           required
-          mono
         />
       )}
     </div>

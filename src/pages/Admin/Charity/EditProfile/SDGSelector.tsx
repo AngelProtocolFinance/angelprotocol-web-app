@@ -2,6 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { ProfileFormValues } from "pages/Admin/types";
+import { DrawerIcon } from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 
 const sdgs = Object.entries(unsdgs).map(([key, val]) => ({
@@ -19,10 +20,15 @@ export default function SDGSelector() {
       value={value}
       onChange={onChange}
       as="div"
-      className="w-full focus:outline-none rounded-md text-sm uppercase bg-gray-l4 shadow-inner-white relative"
+      className="w-full focus:outline-none rounded text-sm uppercase relative bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray"
     >
-      <Listbox.Button className="w-full p-3 text-left uppercase">
-        {value} - {unsdgs[value].title}
+      <Listbox.Button className="w-full p-3 text-left uppercase flex justify-between items-center">
+        {({ open }) => (
+          <>
+            {value} - {unsdgs[value].title}
+            <DrawerIcon isOpen={open} size={24} />
+          </>
+        )}
       </Listbox.Button>
       <Listbox.Options className="absolute bg-white shadow-2xl z-10 table p-3 rounded">
         {sdgs.map((sdg) => (

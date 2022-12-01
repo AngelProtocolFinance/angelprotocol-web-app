@@ -12,7 +12,7 @@ export default function Withdraw({
   return (
     <PreviewContainer>
       <KeyValue _key="beneficiary" _classes="flex-col gap-2 mt-1">
-        <span className="font-mono text-sm">{beneficiary}</span>
+        <span className="text-sm">{beneficiary}</span>
       </KeyValue>
 
       <KeyValue _key="assets" _classes="flex-col mt-4 gap-2">
@@ -29,7 +29,7 @@ export default function Withdraw({
                   alt=""
                 />
                 <>{humanize(condense(asset.amount), 4)}</>
-                <span className="text-xs font-mono uppercase pl-2">
+                <span className="text-xs uppercase pl-2">
                   {tokens[denom].symbol}
                 </span>
               </Cells>

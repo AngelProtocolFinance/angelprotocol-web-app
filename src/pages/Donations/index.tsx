@@ -15,10 +15,8 @@ export default function Donations() {
   );
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-6 text-white/80">
-      <h1 className="text-2xl font-extrabold uppercase text-white mb-4">
-        My Donations
-      </h1>
+    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-6">
+      <h1 className="text-2xl font-extrabold uppercase mb-4">My Donations</h1>
       <QueryLoader
         queryState={queryState}
         messages={{

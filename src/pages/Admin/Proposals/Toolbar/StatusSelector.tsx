@@ -11,25 +11,22 @@ export default function StatusSelector() {
   }
 
   return (
-    <div className="flex gap-2 items-center">
-      <label
-        htmlFor="status_selector"
-        className="uppercase text-white text-sm font-heading font-bold"
-      >
-        status
+    <div className="flex gap-2 items-center border p-2 border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d4">
+      <label htmlFor="status_selector" className="uppercase text-sm font-bold">
+        status :
       </label>
       <select
         value={activeStatus}
         onChange={handleStatusChange}
         id="status_selector"
-        className="bg-white/10 text-white p-2 text-sm rounded-md focus:outline-none uppercase "
+        className="bg-transparent text-sm focus:outline-none uppercase "
       >
         {Object.entries(pollStatusOptions).map(
           ([optionValue, optionDescription]) => (
             <option
               key={optionValue}
               value={optionValue}
-              className="text-sm text-gray-d2 uppercase p-1"
+              className="text-sm uppercase p-1"
             >
               {optionDescription}
             </option>

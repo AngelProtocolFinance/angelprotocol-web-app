@@ -5,12 +5,12 @@ export default function Toolbar(props: {
   handleSearchTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="flex justify-end bg-gray-d2/10 p-3 sticky top-0 backdrop-filter backdrop-blur-sm">
-      <div className="flex bg-gray-l4 text-gray-d2 shadow-inner-white p-1.5 rounded-md">
+    <div className="flex justify-end bg-orange-l5 dark:bg-blue-d5 p-3 sticky top-0">
+      <div className="flex px-3 py-1.5 rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray">
         <input
           id="__allianceSearch"
           placeholder="name or address"
-          className="font-mono focus:outline-none bg-gray-l2 text-sm"
+          className="focus:outline-none bg-transparent text-sm"
           type="text"
           value={props.searchText}
           onChange={props.handleSearchTextChange}

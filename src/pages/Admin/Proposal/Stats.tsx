@@ -43,7 +43,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         <Stat title="no" value={numNo} pct={pctNo} textColor="text-red-l1" />
       </div>
       <div
-        className="relative mb-8 mt-10 h-4"
+        className="relative mb-8 mt-10 h-4 border border-gray-l2 dark:border-none"
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, 
@@ -65,7 +65,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
       <p className="mt-2 flex items-baseline gap-2">
         <span className="text-sm uppercase">total voted</span>
         <span className="font-bold">{numVoted}</span>
-        <span className="text-sm">{pctVoted}%</span>
+        <span className="text-sm text-gray-d1 dark:text-gray">{pctVoted}%</span>
       </p>
     </div>
   );
@@ -79,11 +79,11 @@ function Stat(props: {
 }) {
   return (
     <p
-      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-white/30 p-4`}
+      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-4`}
     >
       <span className="">{props.title}</span>
       <span className="my-2 text-2xl">{props.value}</span>
-      <span className="text-sm">{props.pct}%</span>
+      <span className="text-sm text-gray-d1 dark:text-gray">{props.pct}%</span>
     </p>
   );
 }

@@ -89,7 +89,7 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-d1 hover:bg-blue border-2 border-white/30"
+      className="text-sm px-6 py-1.5 rounded uppercase btn-orange"
     />
   );
 }

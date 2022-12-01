@@ -7,7 +7,7 @@ import Nav from "./Nav";
 
 export default function Templates() {
   return (
-    <div className="grid gap-2 grid-cols-[auto_1fr]">
+    <div className="grid gap-2 grid-cols-[auto_1fr] mt-2">
       <Nav />
       <Routes>
         {/**_cw3 */}

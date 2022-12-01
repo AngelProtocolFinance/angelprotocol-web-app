@@ -27,7 +27,7 @@ export default function Member(props: AllianceMemberWithFlags) {
         className="w-8 h-8 object-contain"
       />
       <>{props.edits?.name || props.name}</>
-      <span className="font-mono text-sm">{props.wallet}</span>
+      <span className="text-sm">{props.wallet}</span>
       <div>
         {isEditable && (
           <Button

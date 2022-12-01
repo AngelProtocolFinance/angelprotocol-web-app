@@ -16,7 +16,9 @@ export default function EndowmentApplication(props: EndowmentProposal) {
       </p>
 
       <Label>Registration Date</Label>
-      <span>{new Date(props.RegistrationDate).toLocaleDateString()}</span>
+      <span className="text-sm">
+        {new Date(props.RegistrationDate).toLocaleDateString()}
+      </span>
 
       <Label classes="mt-4 mb-1">Documents</Label>
       <Documents label="Proof of Identity" docs={[props.ProofOfIdentity]} />
@@ -49,7 +51,7 @@ function Documents({ docs, label }: { docs: FileObject[]; label: string }) {
         <ExtLink
           href={doc.publicUrl}
           key={i}
-          className="font-heading uppercase text-sm flex items-center gap-1 text-blue-l5 hover:text-blue-l1 mb-1"
+          className="uppercase text-sm flex items-center gap-1 hover:text-blue-l1 mb-1"
         >
           <Icon type="ExternalLink" />
           <span>
