@@ -26,7 +26,7 @@ export default function Body() {
             <h3 className="font-header font-bold text-3lg w-full max-w-2lg truncate">
               {profile.name}
             </h3>
-            <p className="font-normal text-lg">
+            <p className="w-full font-normal text-lg">
               This is 140 character tag line. Lorem ipsum dolor sit amet,
               consectetur adipiscing elit. Integer viverra tortor vitae, ornare
               ac, ultricies.
