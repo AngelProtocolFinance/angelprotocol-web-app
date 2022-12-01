@@ -15,7 +15,7 @@ export default function DetailsColumn({ className }: { className: string }) {
         <Details />
         <Tags />
         <Socials />
-        <DonateButton />
+        <DonateButton className="w-full" />
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export default function DonateButton({
     <BtnLink
       as="link"
       to={appRoutes.donate + `/${profile.id}`}
-      className={`${className} btn btn-orange w-full h-12 max-w-xs px-6 rounded text-base lg:text-sm`}
+      className={`${className} btn btn-orange h-12 max-w-xs px-6 rounded text-base lg:text-sm`}
     >
       Donate now
     </BtnLink>
