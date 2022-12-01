@@ -18,7 +18,7 @@ export default function Donations() {
   );
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d4">
+    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d4 text-gray-d2 dark:text-white">
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -31,9 +31,7 @@ export default function Donations() {
           return (
             <>
               <div className="flex sm:justify-between sm:items-center justify-center mt-10 sm:mb-6">
-                <h1 className="text-3xl font-bold text-gray-d2 dark:text-white">
-                  My Donations
-                </h1>
+                <h1 className="text-3xl font-bold">My Donations</h1>
                 <CsvExporter
                   classes="hidden sm:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-sm hidden sm:block text-white"
                   headers={csvHeaders}

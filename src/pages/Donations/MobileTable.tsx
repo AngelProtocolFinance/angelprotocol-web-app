@@ -17,14 +17,8 @@ const MobileRow: FC<MobileTableProps> = ({ title, data, className }) => {
     <div
       className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
     >
-      <span className="text-gray-d2 dark:text-white font-bold uppercase">
-        {title}
-      </span>
-      {typeof data === "string" ? (
-        <span className="text-gray-d2 dark:text-white">{data}</span>
-      ) : (
-        data
-      )}
+      <span className="font-bold uppercase">{title}</span>
+      {typeof data === "string" ? <span className="">{data}</span> : data}
     </div>
   );
 };
@@ -36,13 +30,9 @@ export default function MobileTable(props: { donations: Donation[] }) {
   return (
     <>
       <div className="sm:hidden mt-6">
-        <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7 text-gray-d2 dark:text-white border border-gray-l2 dark:border-bluegray">
+        <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
           <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
-            <Icon
-              type="ArrowDown"
-              size={24}
-              className="text-gray-d2 dark:text-white invisible"
-            />
+            <Icon type="ArrowDown" size={24} className=" invisible" />
           </div>
           <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 uppercase">
             Recipient
@@ -75,16 +65,12 @@ export default function MobileTable(props: { donations: Donation[] }) {
                           : "bg-orange-l6 dark:bg-blue-d7"
                       }  ${
                         open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                      } text-gray-d2 dark:text-white border-b border-x border-gray-l2 dark:border-bluegray`}
+                      }  border-b border-x border-gray-l2 dark:border-bluegray`}
                     >
                       <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
                         <DrawerIcon
                           size={24}
-                          className={`${
-                            open
-                              ? "text-orange"
-                              : "text-gray-d2 dark:text-white"
-                          }`}
+                          className={`${open ? "text-orange" : ""}`}
                           isOpen={open}
                         />
                       </div>
@@ -138,10 +124,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                             })
                           }
                         >
-                          <Icon
-                            type="FatArrowDownload"
-                            className="text-gray-d2 dark:text-white text-2xl"
-                          />
+                          <Icon type="FatArrowDownload" className=" text-2xl" />
                         </button>
                       }
                     />
