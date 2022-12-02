@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 
 type Props = {
@@ -12,16 +13,15 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
   return (
     <div className={`flex justify-center items-center gap-1 ${className}`}>
       {items.map((item, i) => (
-        <>
+        <Fragment key={i}>
           <NavLink
-            key={`link-${i}`}
             to={item.to}
             className={({ isActive }) => (isActive ? "font-bold" : "underline")}
           >
             {item.title}
           </NavLink>
-          {i < items.length - 1 && <span key={`&gt;-${i}`}>&gt;</span>}
-        </>
+          {i < items.length - 1 && ">"}
+        </Fragment>
       ))}
     </div>
   );

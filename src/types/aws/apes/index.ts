@@ -24,11 +24,14 @@ export type Token = {
     | "placeholder";
 };
 
-export type Chain = {
-  block_explorer_url: string; // https://testnet.snowtrace.io
+export type BaseChain = {
   chain_id: string;
-  lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   chain_name: string; // Avalanche Fuji Testnet
+};
+
+export type Chain = BaseChain & {
+  block_explorer_url: string; // https://testnet.snowtrace.io
+  lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   native_currency: Token;
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
