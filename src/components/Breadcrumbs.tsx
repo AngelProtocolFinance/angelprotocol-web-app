@@ -17,7 +17,11 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
           <NavLink
             to={item.to}
             className={({ isActive }) =>
-              `max-w-xs truncate ${isActive ? "font-bold" : "underline"}`
+              `max-w-xs truncate ${
+                isActive
+                  ? "font-bold cursor-default pointer-events-none"
+                  : "underline"
+              }`
             }
           >
             {item.title}

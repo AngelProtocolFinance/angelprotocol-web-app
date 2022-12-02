@@ -5,6 +5,7 @@ import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
+import createAddress from "./createAddress";
 
 export default function Body() {
   const profile = useProfileContext();
@@ -22,8 +23,8 @@ export default function Body() {
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
-          <div className="flex flex-col items-center w-full gap-2 text-center lg:text-left">
-            <h3 className="font-header font-bold text-3lg w-full max-w-2lg truncate">
+          <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
+            <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
               {profile.name}
             </h3>
             {/* 
@@ -37,21 +38,20 @@ export default function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span className="flex items-center gap-2 uppercase">
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
-              {`${profile.street_address}, ${profile.country_of_origin}`}
+              {createAddress(profile.street_address, profile.country_of_origin)}
             </span>
-            {/* {profile.url && ( */}
-            <span className="flex items-center gap-2">
-              <Icon type="Globe" className="h-6 w-6 text-orange" />
-              <ExtLink
-                href={profile.url}
-                title="organization website"
-                className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
-              >
-                {/* {profile.url.replace(/^https?:\/\//i, "")} */}
-                someexampleurl.com
-              </ExtLink>
-            </span>
-            {/* )} */}
+            {!!profile.url && (
+              <span className="flex items-center gap-2">
+                <Icon type="Globe" className="h-6 w-6 text-orange" />
+                <ExtLink
+                  href={profile.url}
+                  title="organization website"
+                  className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+                >
+                  {profile.url.replace(/^https?:\/\//i, "")}
+                </ExtLink>
+              </span>
+            )}
           </div>
         </div>
 
