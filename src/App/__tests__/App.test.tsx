@@ -28,6 +28,7 @@ jest.mock("services/aws/leaderboard", () => ({
 describe("App.tsx tests", () => {
   const bannerText1 = /angel protocol redefines/i;
   const bannerText2 = /global impact financing/i;
+  const loaderTestId = "loader";
   // const governanceLinkText = /governance/i;
 
   window.scrollTo = jest.fn();
@@ -53,14 +54,23 @@ describe("App.tsx tests", () => {
         name: /leaderboard/i,
       })
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", {
+        name: /register/i,
+      })
+    ).toBeInTheDocument();
 
     // marketplace is being lazy loaded
-    expect(screen.getByTestId("loader")).toBeInTheDocument();
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
 
     //marketplace is finally loaded
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
-    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
-    expect(screen.queryByTestId("loader")).toBeNull();
+    expect(
+      await screen.findByRole("heading", { name: bannerText1 })
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: bannerText2 })
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
     userEvent.click(
@@ -71,6 +81,7 @@ describe("App.tsx tests", () => {
     expect(
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
     userEvent.click(
@@ -78,7 +89,12 @@ describe("App.tsx tests", () => {
         name: /marketplace/i,
       })
     );
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
-    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: bannerText1 })
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: bannerText2 })
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });
