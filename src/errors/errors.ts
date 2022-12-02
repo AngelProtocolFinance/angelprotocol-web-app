@@ -94,6 +94,16 @@ export class UnsupportedChainError extends APError {
     );
   }
 }
+
+export class ManualChainSwitchRequiredError extends APError {
+  constructor(chainId: string) {
+    super(
+      "ManualChainSwitchRequiredError",
+      `Please use your wallet to switch to ${chainId} chain and reload the page`
+    );
+  }
+}
+
 export class CosmosTxSimulationFail extends APError {
   constructor(
     message = "Submission aborted. This transaction is likely to fail"
