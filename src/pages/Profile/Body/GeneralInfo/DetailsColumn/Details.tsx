@@ -5,6 +5,7 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { getAddressUrl, maskAddress } from "helpers";
 import { IS_TEST } from "constants/env";
+import createAddress from "../../createAddress";
 
 const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 
@@ -44,17 +45,4 @@ function Detail(props: PropsWithChildren<{ title: string }>) {
       </span>
     </div>
   );
-}
-
-function createAddress(
-  street_address: string | undefined,
-  country_of_origin: string | undefined
-): string | undefined {
-  if (!street_address) {
-    return country_of_origin;
-  } else if (!country_of_origin) {
-    return street_address;
-  } else {
-    return street_address + ", " + country_of_origin;
-  }
 }
