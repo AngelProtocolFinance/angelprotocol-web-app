@@ -22,7 +22,7 @@ export default function Body() {
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
-          <div className="flex flex-col items-center w-full gap-2 text-center lg:text-left">
+          <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
               {profile.name}
             </h3>
