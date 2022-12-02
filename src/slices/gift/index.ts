@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { TokenWithAmount } from "types/slices";
 
-export type DonationState = FormStep | SubmitStep | TxStep;
+export type GiftState = FormStep | SubmitStep | TxStep;
 
-const initialState: DonationState = { step: 1 };
+const initialState: GiftState = { step: 1 };
 
 const gift = createSlice({
   name: "gift",
-  initialState: initialState as DonationState,
+  initialState: initialState as GiftState,
   reducers: {
     setDetails: (state, { payload }: PayloadAction<GiftDetails>) => {
       return {
@@ -32,7 +32,7 @@ const gift = createSlice({
     },
 
     setStep(state, { payload }: PayloadAction<number>) {
-      state.step = payload as DonationState["step"];
+      state.step = payload as GiftState["step"];
     },
   },
 });

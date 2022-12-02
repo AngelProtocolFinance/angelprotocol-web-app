@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
 import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
-import { DonationState, resetDetails } from "slices/gift";
+import { GiftState, resetDetails } from "slices/gift";
 import { chainIds } from "constants/chainIds";
 import { IS_TEST } from "constants/env";
 import Progress from "./Progress";
@@ -32,7 +32,7 @@ export default function Purchase({ classes = "" }) {
   );
 }
 
-function CurrStep(props: DonationState) {
+function CurrStep(props: GiftState) {
   const dispatch = useSetter();
   const { wallet, isLoading } = useGetWallet();
 
@@ -74,7 +74,7 @@ function CurrStep(props: DonationState) {
   }
 }
 
-function isHeadingShown(state: DonationState) {
+function isHeadingShown(state: GiftState) {
   switch (state.step) {
     case 3:
       /** on tx step, only show if loading */
