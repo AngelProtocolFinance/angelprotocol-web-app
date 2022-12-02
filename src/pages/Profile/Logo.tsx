@@ -1,13 +1,13 @@
 import LogoPlaceholder from "components/LogoPlaceholder";
 import { useProfileContext } from "./ProfileContext";
 
-const container = "h-44 w-44 ";
+const container = "h-48 w-48";
 
-const logoStyle = `${container} border border-gray-l2 rounded-full object-contain dark:border-bluegray bg-white`;
+const logoStyle = `${container} border border-gray-l2 rounded-full object-contain dark:border-bluegray`;
 
 export default function Logo() {
   return (
-    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate xl:justify-start">
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
       <Image />
     </div>
   );
