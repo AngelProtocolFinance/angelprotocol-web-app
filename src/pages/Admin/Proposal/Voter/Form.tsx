@@ -9,7 +9,7 @@ export default function Form() {
   return (
     <form
       onSubmit={vote}
-      className="bg-white grid p-4 rounded-md w-full max-w-lg"
+      className="font-work text-gray-d2 dark:text-white bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray -mt-4 grid p-4 pt-8 rounded w-full max-w-lg"
       autoComplete="off"
     >
       <Status />
@@ -21,7 +21,7 @@ export default function Form() {
 
       <button
         disabled={isSubmitDisabled}
-        className="bg-orange disabled:bg-gray p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="btn btn-orange rounded px-4 py-2"
         type="submit"
       >
         proceed

@@ -85,7 +85,7 @@ export type Airdrop = {
 export type EndowmentBookmark = {
   id: number;
   name: string;
-  logo: string;
+  logo?: string; // old bookmarks do not have this field saved yet
 };
 
 export type UserBookMarkInfo = {

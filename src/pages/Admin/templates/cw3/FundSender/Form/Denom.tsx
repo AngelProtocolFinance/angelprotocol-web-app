@@ -10,8 +10,8 @@ function Denom({ denom }: { denom: string }) {
   return (
     <div
       className={`cursor-pointer flex items-center ${
-        isActive ? "bg-blue/10 shadow-inner-white" : ""
-      } p-2 rounded-md`}
+        isActive ? "text-orange" : ""
+      } p-2 rounded`}
     >
       <input
         id={denom}
@@ -29,7 +29,7 @@ function Denom({ denom }: { denom: string }) {
           alt=""
           className="w-4 h-4 object-contain"
         />
-        <span className={`ml-0.5`}>{tokens[denom].symbol}</span>
+        <span className={`ml-1.5`}>{tokens[denom].symbol}</span>
       </label>
     </div>
   );

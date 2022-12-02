@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .rich-text-toolbar .ql-toolbar .ql-stroke {
+    @apply fill-none stroke-gray-d2 dark:stroke-white;
+  }
+
   .slider {
     @apply appearance-none bg-transparent w-full;
   }

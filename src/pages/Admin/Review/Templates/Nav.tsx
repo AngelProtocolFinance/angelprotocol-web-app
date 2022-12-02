@@ -3,13 +3,13 @@ import { createNavLinkStyler } from "helpers";
 import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(
-  "text-gray-d2 px-4 py-1",
-  "bg-blue text-white pointer-events-none"
+  "px-4 py-1 text-gray-d1 dark:text-gray-l2",
+  "bg-orange-l4 dark:bg-blue-d3 pointer-events-none"
 );
 
 export default function Nav() {
   return (
-    <div className="bg-white flex flex-col py-4 shadow-md rounded-md">
+    <div className="bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray flex flex-col py-4 rounded">
       <Category title="Admin" />
       <NavLink end to={routes.cw4_members} className={styler}>
         Update group members
@@ -21,10 +21,12 @@ export default function Nav() {
   );
 }
 
-function Category(props: { title: string; classes?: string }) {
-  return (
-    <h3 className={`px-4 font-bold text-gray-d2 ${props.classes || ""}`}>
-      {props.title}
-    </h3>
-  );
+function Category({
+  classes = "",
+  title,
+}: {
+  title: string;
+  classes?: string;
+}) {
+  return <h3 className={`px-4 font-bold ${classes}`}>{title}</h3>;
 }

@@ -17,16 +17,14 @@ export default function Member(props: MemberCopy) {
   }
   return (
     <li
-      className={`flex gap-1 text-gray-d2 items-center ${
-        props.is_deleted ? "bg-red-l1/30" : ""
-      } ${props.is_added ? "bg-green-l1/30" : ""} rounded-md p-2 w-full`}
+      className={`flex gap-1 text-gray-d1 dark:text-gray items-center ${
+        props.is_deleted ? "bg-red-l4/30 dark:bg-red-d2/30" : ""
+      } ${
+        props.is_added ? "bg-green-l3 dark:bg-green-l1/30" : ""
+      } rounded-md p-2 w-full`}
     >
       <Icon type="User" />
-      <span
-        className={`${
-          props.is_deleted ? "line-through" : ""
-        } text-sm font-mono`}
-      >
+      <span className={`${props.is_deleted ? "line-through" : ""} text-sm`}>
         {props.addr}
       </span>
       <Icon type="PieChart" className="ml-auto" />

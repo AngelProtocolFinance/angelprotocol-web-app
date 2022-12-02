@@ -6,17 +6,13 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import {
-  Connection,
-  ProviderId,
-  ProviderInfo,
-  ProviderStatuses,
-} from "./types";
-import { Chain, Token } from "types/aws";
+import { Connection, ProviderId, ProviderStatus } from "./types";
+import { BaseChain, Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
-import { useErrorContext } from "../ErrorContext";
+import { chainIDs } from "constants/chains";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
@@ -29,6 +25,7 @@ export type WalletState = {
   address: string;
   chain: Chain;
   providerId: ProviderId;
+  supportedChains: BaseChain[];
   getBalance: (token_id: string) => number;
 };
 
@@ -38,6 +35,7 @@ type State = {
 };
 
 type Setters = {
+  switchChain: (chainId: chainIDs) => Promise<void>;
   disconnect(): void;
   connections: Connection[];
 };
@@ -47,68 +45,106 @@ const initialState: State = {
   isLoading: true,
 };
 
+const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
+  : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
+
+const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+    ];
+
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,
     disconnect: disconnectMetamask,
     providerInfo: metamaskInfo,
-  } = useInjectedProvider("metamask");
+    supportedChains: metamaskSupportedChains,
+    switchChain: switchMetamaskChain,
+  } = useInjectedProvider("metamask", EVM_SUPPORTED_CHAINS);
 
   const {
     isLoading: isBinanceWalletLoading,
     connection: binanceWalletConnection,
     disconnect: disconnectBinanceWallet,
     providerInfo: binanceWalletInfo,
-  } = useInjectedProvider("binance-wallet");
+    supportedChains: binanceSupportedChains,
+    switchChain: switchBinanceChain,
+  } = useInjectedProvider("binance-wallet", BNB_WALLET_SUPPORTED_CHAINS);
 
   const {
     isLoading: isKeplrLoading,
     connection: keplrConnection,
     disconnect: disconnectKeplr,
     providerInfo: keplrWalletInfo,
+    supportedChains: keplrSupportedChains,
+    switchChain: switchKeplrChain,
   } = useKeplr();
 
-  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
-    useTerra();
+  const {
+    isTerraLoading,
+    terraConnections,
+    disconnectTerra,
+    terraInfo,
+    supportedChains: terraSupportedChains,
+    switchChain: switchTerraChain,
+  } = useTerra();
 
   const {
     isLoading: isXdefiLoading, //requesting permission, attaching event listeners
     connection: xdefiConnection,
     disconnect: disconnectXdefi,
     providerInfo: xdefiInfo,
-  } = useInjectedProvider("xdefi-evm");
+    supportedChains: xdefiSupportedChains,
+    switchChain: switchXdefiChain,
+  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
 
-  const providerStatuses: ProviderStatuses = [
+  const providerStatuses: ProviderStatus[] = [
     {
       providerInfo: binanceWalletInfo,
       isLoading: isBinanceWalletLoading,
+      supportedChains: binanceSupportedChains,
+      switchChain: switchBinanceChain,
     },
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
+      supportedChains: metamaskSupportedChains,
+      switchChain: switchMetamaskChain,
     },
 
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
+      supportedChains: terraSupportedChains,
+      switchChain: switchTerraChain,
     },
     {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
+      supportedChains: keplrSupportedChains,
+      switchChain: switchKeplrChain,
     },
     {
       providerInfo: xdefiInfo,
       isLoading: isXdefiLoading,
+      supportedChains: xdefiSupportedChains,
+      switchChain: switchXdefiChain,
     },
   ];
 
-  const activeProviderInfo = providerStatuses.find(
+  const activeProvider = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
-  )?.providerInfo;
+  );
 
   const disconnect = useCallback(() => {
-    switch (activeProviderInfo?.providerId) {
+    switch (activeProvider?.providerInfo!.providerId) {
       case "metamask":
         disconnectMetamask();
         break;
@@ -131,7 +167,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         throw new WalletDisconnectedError();
     }
   }, [
-    activeProviderInfo?.providerId,
+    activeProvider?.providerInfo,
     disconnectMetamask,
     disconnectBinanceWallet,
     disconnectXdefi,
@@ -139,35 +175,52 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectTerra,
   ]);
 
+  const switchChain = useCallback(
+    async (chainId: chainIDs) => {
+      if (!activeProvider) {
+        throw new WalletDisconnectedError();
+      }
+
+      await activeProvider.switchChain(chainId);
+    },
+    [activeProvider]
+  );
+
   const {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
     isFetching: isChainFetching,
     error,
   } = useChainQuery(
-    { providerInfo: activeProviderInfo! },
-    { skip: !activeProviderInfo }
+    {
+      chainId: activeProvider?.providerInfo?.chainId,
+      address: activeProvider?.providerInfo?.address,
+    },
+    { skip: !activeProvider }
   );
 
-  useVerifyChain(activeProviderInfo, chain, error, disconnect);
+  useVerifyChain(chain, error, disconnect);
 
   const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address } = activeProviderInfo;
-      return {
+    if (activeProvider) {
+      const { logo, providerId, address } = activeProvider.providerInfo!;
+      const walletState: WalletState = {
         walletIcon: logo,
         displayCoin: chain.native_currency,
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
         providerId,
+        supportedChains: activeProvider.supportedChains,
         getBalance: (token_id: string) =>
           [chain.native_currency, ...chain.tokens].find(
             (x) => x.token_id === token_id
           )?.balance || 0,
       };
+
+      return walletState;
     }
-  }, [activeProviderInfo, chain]);
+  }, [activeProvider, chain]);
 
   return (
     <getContext.Provider
@@ -189,6 +242,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             binanceWalletConnection,
           ],
           disconnect,
+          switchChain,
         }}
       >
         {props.children}
@@ -197,9 +251,18 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
+const getContext = createContext<State>(initialState);
+const setContext = createContext<Setters>({
+  connections: [],
+  disconnect: async () => {},
+  switchChain: async (_) => {},
+});
+
+export const useSetWallet = () => useContext(setContext);
+export const useGetWallet = () => useContext(getContext);
+
 function useVerifyChain(
-  activeProviderInfo: ProviderInfo | undefined,
-  chain: Chain,
+  chain: Chain | undefined,
   chainError: any,
   disconnect: () => void
 ) {
@@ -224,7 +287,7 @@ function useVerifyChain(
 
   useEffect(() => {
     // no active provider === no connected wallet so no need to run hook
-    if (!activeProviderInfo) {
+    if (!chain) {
       return;
     }
     if (chainError) {
@@ -232,14 +295,5 @@ function useVerifyChain(
     } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
       handle(new WrongNetworkError());
     }
-  }, [activeProviderInfo, chain, chainError, handle]);
+  }, [chain, chainError, handle]);
 }
-
-const getContext = createContext<State>(initialState);
-const setContext = createContext<Setters>({
-  connections: [],
-  disconnect: async () => {},
-});
-
-export const useSetWallet = () => useContext(setContext);
-export const useGetWallet = () => useContext(getContext);

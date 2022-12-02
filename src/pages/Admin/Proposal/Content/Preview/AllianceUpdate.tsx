@@ -45,7 +45,7 @@ function Member(props: AllianceMember) {
         alt=""
       />
       <p className="font-bold text-xs mr-1">{props.name}</p>
-      <span className="font-mono text-xs">{props.wallet}</span>
+      <span className="text-xs">{props.wallet}</span>
     </div>
   );
 }

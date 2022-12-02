@@ -10,11 +10,11 @@ export default function FundSelection<T extends FundIdContext>(props: {
     props.fieldName
   );
   return (
-    <table
-      className="table-auto bg-gray-l4 shadow-inner-white 
-    rounded-md text-gray-d2 text-left"
-    >
-      <TableSection type="thead" rowClass="border-b">
+    <table className="table-auto rounded text-left bg-orange-l6 dark:bg-blue-d7">
+      <TableSection
+        type="thead"
+        rowClass="border-b border-gray-l2 dark:border-bluegray"
+      >
         <Cells type="th" cellClass="px-4 py-2 uppercase">
           <>fund id</>
           <>fund name</>
@@ -28,7 +28,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
         selectedClass="text-blue"
       >
         {unexpiredFundList.map((fund) => (
-          <Cells key={fund.id} cellClass="font-mono px-4 py-2" type="td">
+          <Cells key={fund.id} cellClass="px-4 py-2" type="td">
             <>{fund.id}</>
             <>{fund.name}</>
           </Cells>

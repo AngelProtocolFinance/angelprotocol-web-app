@@ -1,5 +1,5 @@
 import { FundCreatorValues as V } from "pages/Admin/types";
-import { TextInput } from "components/admin";
+import { GroupContainer, TextSec } from "components/admin";
 import Member from "./Member";
 import useAddMember from "./useAddMember";
 
@@ -7,7 +7,7 @@ export default function MemberAdder() {
   const { addMember, newFundMembers } = useAddMember();
 
   return (
-    <div className="shadow-inner-white bg-gray-l4 rounded-md p-3 grid">
+    <GroupContainer>
       {newFundMembers.length > 0 && (
         <div className="flex flex-wrap mb-4 gap-2">
           {newFundMembers.map((addr) => (
@@ -15,12 +15,10 @@ export default function MemberAdder() {
           ))}
         </div>
       )}
-      <TextInput<V>
-        title="endowment address"
+      <TextSec<V>
+        label="Endowment address"
         name="newFundAddr"
         placeholder="juno123abc..."
-        plain
-        mono
       />
       <button
         type="button"
@@ -29,6 +27,6 @@ export default function MemberAdder() {
       >
         + add member
       </button>
-    </div>
+    </GroupContainer>
   );
 }

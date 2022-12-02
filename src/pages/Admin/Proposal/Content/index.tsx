@@ -16,7 +16,7 @@ export default function Content(props: Proposal) {
     <>
       {props.meta && (
         <>
-          <DetailLabel>content</DetailLabel>
+          <DetailLabel classes="mb-2">content</DetailLabel>
           <Preview {...JSON.parse(props.meta)} />
         </>
       )}
@@ -25,7 +25,7 @@ export default function Content(props: Proposal) {
         raw messages
         <button
           onClick={toggleRawMessage}
-          className={`text-3xs font-normal font-mono ml-1 p-1 rounded-sm transition transform ${
+          className={`text-3xs ml-2 p-1 rounded-sm transition transform text-white ${
             isRawBlocksShown ? "bg-orange -rotate-90" : "bg-blue rotate-0"
           }`}
         >
@@ -46,7 +46,7 @@ function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
     : JSON.stringify(props, null, 2);
 
   return (
-    <div className="grid bg-white/10 shadow-inner rounded-md p-2 mb-6 text-sm">
+    <div className="grid rounded text-gray-d1 dark:text-gray border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
       <code className="font-mono whitespace-pre overflow-x-auto">
         {isWASM && <span>to contract: {props.wasm.execute.contract_addr}</span>}
         <br />

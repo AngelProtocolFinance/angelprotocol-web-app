@@ -12,9 +12,9 @@ export function Status(props: { status: ProposalStatus }) {
   );
 }
 export const statusClasses: { [key in ProposalStatus]: string } = {
-  executed: "bg-blue/50",
-  open: "bg-white text-gray-d2",
+  executed: "bg-blue",
+  open: "bg-white text-gray-d2 border border-gray-l2 dark:border-none",
   passed: "bg-green-l1",
   pending: "bg-orange",
-  rejected: "bg-red-l1/50",
+  rejected: "bg-red-l1",
 };

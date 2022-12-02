@@ -20,7 +20,7 @@ export default function EndowmentStatusUpdate(
       </KeyValue>
       {props.beneficiary && (
         <KeyValue _key="beneficiary">
-          <span className="font-mono text-sm">{props.beneficiary}</span>
+          <span className="text-sm">{props.beneficiary}</span>
         </KeyValue>
       )}
     </PreviewContainer>
