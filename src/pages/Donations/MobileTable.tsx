@@ -13,8 +13,8 @@ export default function MobileTable(props: { donations: Donation[] }) {
   return (
     <div className="lg:hidden mt-6">
       <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
-        <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
-          <Icon type="ArrowDown" size={24} className=" invisible" />
+        <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
+          <Icon type="ArrowDown" size={24} className="invisible" />
         </div>
         <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 uppercase">
           Recipient
@@ -49,7 +49,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                       open ? "bg-orange-l5 dark:bg-blue-d4" : ""
                     }  border-b border-x border-gray-l2 dark:border-bluegray`}
                   >
-                    <div className="col-span-1 border-r border-gray-l2 dark:border-bluegray p-4 place-self-center">
+                    <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
                       <DrawerIcon
                         size={24}
                         className={`${open ? "text-orange" : ""}`}
