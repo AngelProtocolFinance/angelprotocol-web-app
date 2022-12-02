@@ -18,7 +18,9 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
             to={item.to}
             className={({ isActive }) =>
               `max-w-xs truncate ${
-                isActive ? "font-bold cursor-default" : "underline"
+                isActive
+                  ? "font-bold cursor-default pointer-events-none"
+                  : "underline"
               }`
             }
           >
