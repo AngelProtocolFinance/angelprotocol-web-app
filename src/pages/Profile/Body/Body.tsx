@@ -40,7 +40,7 @@ export default function Body() {
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
               {createAddress(profile.street_address, profile.country_of_origin)}
             </span>
-            {profile.url && (
+            {!!profile.url && (
               <span className="flex items-center gap-2">
                 <Icon type="Globe" className="h-6 w-6 text-orange" />
                 <ExtLink
