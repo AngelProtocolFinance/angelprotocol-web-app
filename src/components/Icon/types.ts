@@ -75,4 +75,5 @@ export type IconTypes =
   | "Sun"
   | "Picture"
   | "Question"
-  | "MapPin";
+  | "MapPin"
+  | "FatArrowDownload";

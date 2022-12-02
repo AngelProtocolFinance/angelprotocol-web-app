@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
+import { Donation } from "types/aws";
 import { useDonationsQuery } from "services/apes";
+import CsvExporter from "components/CsvExporter";
 import { QueryLoader } from "components/admin";
+import MobileTable from "./MobileTable";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
@@ -15,8 +18,7 @@ export default function Donations() {
   );
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-6">
-      <h1 className="text-2xl font-extrabold uppercase mb-4">My Donations</h1>
+    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -25,8 +27,41 @@ export default function Donations() {
           empty: "No donations found",
         }}
       >
-        {(donations) => <Table donations={donations} />}
+        {(donations) => {
+          return (
+            <>
+              <div className="flex lg:justify-between lg:items-center justify-center mt-10 lg:mb-6">
+                <h1 className="text-3xl font-bold">My Donations</h1>
+                <CsvExporter
+                  classes="hidden lg:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-[4px] hidden lg:block text-white"
+                  headers={csvHeaders}
+                  data={donations}
+                  filename="donations.csv"
+                >
+                  Export to CSV
+                </CsvExporter>
+              </div>
+              <Table donations={donations} />
+              <MobileTable donations={donations} />
+              <CsvExporter
+                classes="lg:hidden justify-center text-white mt-6 p-3 px-8 font-semibold bg-orange uppercase rounded-[4px]"
+                headers={csvHeaders}
+                data={donations}
+                filename="donations.csv"
+              >
+                Export to CSV
+              </CsvExporter>
+            </>
+          );
+        }}
       </QueryLoader>
     </div>
   );
 }
+
+const csvHeaders: { key: keyof Donation; label: string }[] = [
+  { key: "amount", label: "Amount" },
+  { key: "symbol", label: "Currency" },
+  { key: "date", label: "Date" },
+  { key: "hash", label: "Transaction Hash" },
+];

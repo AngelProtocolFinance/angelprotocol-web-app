@@ -45,7 +45,7 @@
     "@cosmjs/encoding": "^0.29.0",
     "@cosmjs/proto-signing": "^0.29.0",
     "@cosmjs/stargate": "^0.29.0",
-    "@headlessui/react": "^1.7.3",
+    "@headlessui/react": "^1.7.4",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.9.8",
     "@keplr-wallet/types": "^0.11.3",

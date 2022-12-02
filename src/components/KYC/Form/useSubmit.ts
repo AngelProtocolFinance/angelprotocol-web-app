@@ -5,6 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
+import SuccessPopup from "../SuccessPopup";
 
 export default function useSubmit(props: Props) {
   const { reset } = useFormContext<FV>();
@@ -34,9 +35,10 @@ export default function useSubmit(props: Props) {
         });
         return;
       }
-      showModal(Popup, {
-        message:
-          "Receipt request submitted and will be sent to the email you provided",
+      showModal(SuccessPopup, {
+        headline: "Get Receipt",
+        title: "Tax Receipt Sent",
+        message: "Your tax receipt has been sent to the email address provided",
       });
       return;
     }
