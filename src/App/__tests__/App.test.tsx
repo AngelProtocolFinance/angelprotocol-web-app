@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
-import AppWrapper from "test/AppWrapper";
+import { store } from "store/store";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -35,9 +37,10 @@ describe("App.tsx tests", () => {
 
   test("Routing", async () => {
     render(
-      <AppWrapper>
+      <Provider store={store}>
         <App />
-      </AppWrapper>
+      </Provider>,
+      { wrapper: BrowserRouter }
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
