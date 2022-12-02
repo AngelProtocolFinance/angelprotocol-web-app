@@ -2,10 +2,10 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import SuccessPopup from "components/KYC/SuccessPopup";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
 import { setKYC } from "slices/donation";
+import SuccessPopup from "../SuccessPopup";
 
 export default function useSubmit(props: Props) {
   const { reset } = useFormContext<FV>();
