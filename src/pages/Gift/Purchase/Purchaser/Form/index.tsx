@@ -30,9 +30,9 @@ export default function Form({ classes = "" }) {
       className={`grid rounded-md w-full ${classes}`}
       autoComplete="off"
     >
-      <Recipient classes="mb-8" />
       <Amount />
       <AmountOptions classes="mt-3" />
+      <Recipient classes="mt-8" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
         <BtnSec as="link" to={`${appRoutes.profile}/1`}>

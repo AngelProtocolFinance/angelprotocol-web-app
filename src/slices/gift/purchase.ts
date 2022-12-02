@@ -38,7 +38,8 @@ export const purchase = createAsyncThunk<void, Args>(
         let preImage = `${randNums[0]}${randNums[1]}`;
         let secret = `ap-${details.chainId}-${preImage}`;
 
-        const res = await fetch(APIs.aws + "/deposit", {
+        updateTx({ msg: "Processing giftcard code..." });
+        const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
           headers: {
             authorization: createAuthToken("angelprotocol-web-app"),
           },

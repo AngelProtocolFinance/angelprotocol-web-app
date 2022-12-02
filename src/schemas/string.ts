@@ -13,10 +13,15 @@ export const requiredContractAddr = requiredString.matches(
 );
 
 export const walletAddr = (network: string = chainIds.juno) =>
-  Yup.string().matches(
-    getWalletAddrPattern(network),
-    "wallet address not valid"
+  Yup.lazy((val) =>
+    val === ""
+      ? Yup.string()
+      : Yup.string().matches(
+          getWalletAddrPattern(network),
+          "wallet address not valid"
+        )
   );
+
 export const requiredWalletAddr = (network: string = chainIds.juno) => {
   return requiredString.matches(
     getWalletAddrPattern(network),

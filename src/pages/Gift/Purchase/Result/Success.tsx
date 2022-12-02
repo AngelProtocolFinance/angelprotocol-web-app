@@ -38,7 +38,7 @@ export default function Success(props: Props) {
 function Result(props: { hash: string }) {
   return (
     <>
-      <p className="text-center my-4">
+      <p className="text-center mt-4 mb-8">
         Giftcard balance is credited to the recipient's wallet.
       </p>
       <BtnSec
@@ -61,11 +61,11 @@ function EmailCode(props: { secret: string }) {
       <p className="text-center font-heading mt-4 mb-8">
         Send the code below to your chosen recipient.
       </p>
-      <div className="border border-gray-l2 dark:border-bluegray rounded-lg overflow-clip">
+      <div className="grid border border-gray-l2 dark:border-bluegray rounded-lg overflow-clip">
         <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-gray-l2 dark:border-bluegray">
           Your giftcard code:
         </p>
-        <p className="bg-orange-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed">
+        <p className="bg-orange-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed break-all">
           {props.secret}
         </p>
       </div>

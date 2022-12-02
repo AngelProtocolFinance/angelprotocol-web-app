@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-// import { placeholderChain } from "contexts/WalletContext/constants";
 import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
 import { DonationState, resetDetails } from "slices/gift";
@@ -14,17 +13,6 @@ import { loadingKey } from "./constants";
 
 export default function Purchase({ classes = "" }) {
   const state = useGetter((state) => state.gift);
-
-  // const state: DonationState = {
-  //   step: 3,
-  //   status: { secret: "ap-UNI-5-12312379171231231237123" },
-  //   details: {
-  //     chainId: "uni-5",
-  //     recipient: "juno123abc8910xyz",
-  //     token: { ...placeholderChain.native_currency, amount: "1" },
-  //     tokens: placeholderChain.tokens.map((t) => ({ ...t, amount: "0" })),
-  //   },
-  // };
 
   return (
     <div
