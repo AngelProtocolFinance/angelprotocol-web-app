@@ -26,11 +26,13 @@ export default function Body() {
             <h3 className="font-header font-bold text-3lg w-full max-w-2lg truncate">
               {profile.name}
             </h3>
+            {/* 
+            This will be added back once charities have a `tagLine` field
             <p className="w-full font-normal text-lg">
               This is 140 character tag line. Lorem ipsum dolor sit amet,
               consectetur adipiscing elit. Integer viverra tortor vitae, ornare
               ac, ultricies.
-            </p>
+            </p> */}
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span className="flex items-center gap-2 uppercase">
