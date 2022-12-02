@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./Signup";
 import routes from "./routes";
@@ -11,7 +11,7 @@ const Success = lazy(() => import("./Success"));
 
 export default function Registration() {
   return (
-    <section className="grid dark:bg-blue-d4 bg-gray-l5 text-gray-d2 dark:text-white">
+    <Suspense fallback={<div className="place-self-center">Loading...</div>}>
       <Routes>
         <Route
           path={routes.confirmEmail}
@@ -42,6 +42,6 @@ export default function Registration() {
         <Route index element={<Signup classes="justify-self-center my-20" />} />
         <Route path="*" element={<Navigate to={routes.index} />} />
       </Routes>
-    </section>
+    </Suspense>
   );
 }

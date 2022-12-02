@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
+import { BaseChain } from "types/aws";
 import { Dwindow } from "types/ethereum";
-import { WalletError, WalletNotInstalledError } from "errors/errors";
+import {
+  UnsupportedChainError,
+  WalletError,
+  WalletNotInstalledError,
+} from "errors/errors";
+import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { juno_test_chain_info } from "./chains";
 
-const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
+const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.junoTest, chain_name: "Juno Testnet" },
+      // { chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.junoMain, chain_name: "Juno Mainnet" },
+      // { chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" },
+    ];
+
+const CHAIN_ID = IS_TEST ? chainIDs.junoTest : chainIDs.junoMain;
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 
@@ -20,23 +36,27 @@ export default function useKeplr() {
   const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
-    (shouldReconnect && requestAccess()) || setIsLoading(false);
-    //eslint-disable-next-line
+    (shouldReconnect && requestAccess(CHAIN_ID)) || setIsLoading(false);
+    // eslint-disable-next-line
   }, []);
 
-  const requestAccess = async (isNewConnection = false) => {
+  const requestAccess = async (chainId: chainIDs, isNewConnection = false) => {
     try {
       if (!dwindow.keplr) return;
 
-      if (IS_TEST) {
+      if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
+        throw new UnsupportedChainError(chainId);
+      }
+
+      if (chainId === juno_test_chain_info.chainId) {
         await dwindow.keplr.experimentalSuggestChain(juno_test_chain_info);
       }
 
-      await dwindow.keplr.enable(CHAIN_ID);
-      const key = await dwindow.keplr.getKey(CHAIN_ID);
+      await dwindow.keplr.enable(chainId);
+      const key = await dwindow.keplr.getKey(chainId);
 
       setAddress(key.bech32Address);
-      setChainId(CHAIN_ID);
+      setChainId(chainId);
       setIsLoading(false);
     } catch (err: any) {
       //if user cancels, set pref to disconnect
@@ -60,7 +80,7 @@ export default function useKeplr() {
     try {
       //connecting xdefi
       setIsLoading(true);
-      await requestAccess(true);
+      await requestAccess(CHAIN_ID, true);
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
@@ -78,6 +98,23 @@ export default function useKeplr() {
     saveUserAction(actionKey, "disconnect");
   }
 
+  const switchChain = async (chainId: chainIDs) => {
+    if (!dwindow.keplr) {
+      throw new WalletNotInstalledError("keplr");
+    }
+
+    try {
+      setIsLoading(true);
+      await requestAccess(chainId, true);
+    } catch (err: any) {
+      setIsLoading(false);
+      throw new WalletError(
+        err?.message || "Unknown error occured",
+        err?.code || 0
+      );
+    }
+  };
+
   const providerInfo: ProviderInfo | undefined =
     address && chainId
       ? {
@@ -94,7 +131,9 @@ export default function useKeplr() {
   return {
     connection,
     disconnect,
+    switchChain,
     isLoading,
     providerInfo,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }

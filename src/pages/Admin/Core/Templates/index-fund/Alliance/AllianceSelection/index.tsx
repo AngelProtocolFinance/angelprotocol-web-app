@@ -9,7 +9,7 @@ export default function AllianceSelection() {
     useAllianceSelection();
 
   return (
-    <div className="h-96 overflow-auto bg-gray-l4 shadow-inner-white rounded-md relative">
+    <div className="h-96 overflow-auto rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray relative">
       <Toolbar
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}
@@ -17,7 +17,7 @@ export default function AllianceSelection() {
       {(filteredMembers.length > 0 && (
         <MemberTable members={filteredMembers} />
       )) || (
-        <p className="pl-4 pt-4 font-mono text-sm text-gray-d2">
+        <p className="pl-4 pt-4 text-sm">
           {`${
             isDebouncing
               ? `searching ${searchText}...`
@@ -33,10 +33,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
   return (
     <table className="table-auto w-full">
       <TableSection type="thead" rowClass="">
-        <Cells
-          type="th"
-          cellClass="text-left uppercase text-gray-d2 font-heading"
-        >
+        <Cells type="th" cellClass="text-left uppercase font-heading">
           <></>
           <>name</>
           <>address</>
@@ -44,7 +41,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b text-gray-d2 hover:bg-blue hover:bg-blue/10"
+        rowClass="border-b border-gray-l2 dark:border-bluegray hover:bg-blue hover:bg-blue/10"
       >
         {props.members.map((member) => (
           <Member key={member.wallet} {...member} />

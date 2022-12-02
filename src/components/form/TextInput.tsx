@@ -1,25 +1,20 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
+import { Classes } from "./types";
 import { Label } from "./";
 
 export type TextInputProps<T extends FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "autoComplete" | "className" | "name" | "id"
+  "autoComplete" | "className" | "name" | "id"
 > & {
   name: Path<T>;
   classes?: Classes;
   label: string;
 };
 
-type Classes = {
-  input?: string;
-  container?: string;
-  label?: string;
-  error?: string;
-};
-
 export function TextInput<T extends FieldValues>({
+  type = "text",
   label,
   name,
   classes,
@@ -40,9 +35,9 @@ export function TextInput<T extends FieldValues>({
       </Label>
       <input
         {...props}
-        {...register(name)}
+        {...register(name, { valueAsNumber: type === "number" })}
         disabled={isSubmitting || disabled}
-        type="text"
+        type={type}
         className={classes?.input}
         autoComplete="off"
       />

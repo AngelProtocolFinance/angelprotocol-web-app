@@ -5,12 +5,12 @@ import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
 
-export default function Donations() {
+export default function Donations({ classes = "" }: { classes?: string }) {
   const { endowmentId } = useAdminResources();
   const queryState = useDonationsQuery({ id: endowmentId });
 
   return (
-    <div className="grid grid-rows-[auto_1fr] mt-10 text-white/80">
+    <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
       <h1 className="text-2xl font-extrabold uppercase mb-2">
         Received donations
       </h1>

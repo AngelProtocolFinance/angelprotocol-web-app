@@ -7,15 +7,17 @@ import { adminRoutes } from "constants/routes";
 import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";
 
-export default function Toolbar(props: { classes?: string }) {
+export default function Toolbar({ classes = "" }: { classes?: string }) {
   const { data: block_height = "0" } = useLatestBlockQuery(null, {
     pollingInterval: 10_000, //ms
   });
   return (
-    <div className={`flex items-center gap-3 ${props.classes || ""}`}>
+    <div
+      className={`flex items-center gap-3 ${classes} border-b-2 pb-3 border-gray-l2 dark:border-bluegray`}
+    >
       <StatusSelector />
       <GroupSelector />
-      <p className="ml-auto text-white/80 font-heading text-sm flex items-center mr-2">
+      <p className="ml-auto text-sm flex items-center mr-2 text-gray-d1 dark:text-gray">
         <span className="font-heading uppercase text-3xs mr-2">
           current block{" "}
         </span>
@@ -25,7 +27,7 @@ export default function Toolbar(props: { classes?: string }) {
 
       <Link
         to={`../${adminRoutes.templates}/${templates.cw4_members}`}
-        className="px-3 pt-1.5 pb-1 text-white bg-blue hover:bg-blue-l1 font-heading text-sm uppercase text-center rounded-md"
+        className="px-3 py-2 text-white bg-blue hover:bg-blue-l1 text-sm uppercase text-center rounded"
       >
         + Create a proposal
       </Link>

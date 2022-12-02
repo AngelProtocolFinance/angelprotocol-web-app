@@ -20,7 +20,7 @@ export function AdminMobileNavPortal({ id }: { id: number }) {
           <h4 className={`${commonNavItemStyle} mb-4 uppercase font-extrabold`}>
             Admin
           </h4>
-          <div className="grid justify-items-start font-heading">
+          <div className="grid justify-items-start font-heading gap-2">
             <NavLink
               end
               to={`${appRoutes.admin}/${id}`}

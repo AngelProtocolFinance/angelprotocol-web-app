@@ -76,7 +76,7 @@ export default function RichText(props: Props) {
 
   return (
     <div
-      className={`relative border-none ${props.classes?.container || ""} ${
+      className={`relative ${props.classes?.container || ""} ${
         props.readOnly ? "toolbar-hidden" : ""
       }`}
     >
@@ -87,7 +87,7 @@ export default function RichText(props: Props) {
       />
       {!props.readOnly && (
         <span
-          className={`absolute top-4 right-4 text-xs uppercase font-mono ${
+          className={`absolute top-4 right-4 text-xs uppercase ${
             props.classes?.charCounter ?? ""
           }`}
         >

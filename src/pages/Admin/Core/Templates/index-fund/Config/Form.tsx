@@ -1,26 +1,20 @@
 import { FundConfigValues as FV } from "pages/Admin/types";
-import { FormContainer, Submitter, TextInput } from "components/admin";
+import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {
   const { configureFund, isSubmitDisabled } = useConfigureFund();
   return (
     <FormContainer onSubmit={configureFund}>
-      <TextInput<FV> title="Proposal Title" name="title" required />
-      <TextInput<FV>
-        title="proposal description"
-        name="description"
-        wide
-        required
-      />
-      <TextInput<FV>
-        title="funding goal ($)"
+      <TextPrim<FV> label="Proposal title" name="title" required />
+      <TextArea<FV> label="Proposal description" name="description" required />
+      <TextPrim<FV>
+        label="Funding goal ($)"
         name="funding_goal"
-        mono
         placeholder="$10,000"
       />
-      <TextInput<FV> title="fund member limit" name="fund_member_limit" mono />
-      <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
+      <TextPrim<FV> label="Fund member limit" name="fund_member_limit" />
+      <TextPrim<FV> label="Fund rotation" name="fund_rotation" />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit

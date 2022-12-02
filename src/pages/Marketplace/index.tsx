@@ -11,7 +11,7 @@ export default function Marketplace() {
     (state) => state.component.marketFilter.isOpen
   );
   return (
-    <div className="w-full grid content-start bg-gray-l5 dark:bg-blue-d5 pb-16">
+    <div className="w-full grid content-start pb-16">
       <div
         style={{ backgroundImage: `url('${banner}')` }}
         className="relative overlay bg-cover bg-center"
@@ -20,7 +20,7 @@ export default function Marketplace() {
         <MobileHero classes="grid lg:hidden isolate mt-28" />
       </div>
 
-      <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen text-gray-d2">
+      <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen">
         <Toolbar classes="my-10 col-span-2" />
         <Sidebar
           classes={`${

@@ -4,7 +4,7 @@ import Purchase from "./Purchase";
 
 export default function Gift() {
   return (
-    <div className="grid bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
+    <div className="grid">
       <div
         style={{
           backgroundImage: `url('${banner}')`,
