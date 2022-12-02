@@ -29,7 +29,8 @@ export const apes = createApi({
           const chain = await fetch(
             `${APIs.apes}/v1/chain/${chainId}`
           ).then<Chain>((res) => {
-            if (!res.ok) throw new UnsupportedChainError(chainId);
+            if (res.status === 400) throw new UnsupportedChainError(chainId);
+            if (!res.ok) throw new Error("failed to fetch chain");
             return res.json();
           });
 
