@@ -26,18 +26,19 @@ export default function MyEndowment() {
           </span>
           <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange">
             {/* Will be added once possible to fetch endowment profile by wallet address */}
-            <Link
-              to={""}
-              className="pr-2 border-r border-gray-l2 dark:border-bluegray"
-            >
+            <Link to={""} className="pr-2">
               profile
             </Link>
             <AdminLink
               label="admin"
-              className="px-2 border-r border-gray-l2 dark:border-bluegray"
+              className="px-2 border-l border-gray-l2 dark:border-bluegray"
               id={AP_ID}
             />
-            <AdminLink label="applications" className="pl-2" id={REVIEWER_ID} />
+            <AdminLink
+              label="applications"
+              className="pl-2 border-l border-gray-l2 dark:border-bluegray"
+              id={REVIEWER_ID}
+            />
           </div>
         </div>
       </div>
