@@ -31,7 +31,7 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[35rem]">
+    <div className="justify-self-center grid padded-container max-w-[35rem] min-h-[600px]">
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold mt-20 leading-snug">

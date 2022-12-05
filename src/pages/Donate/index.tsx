@@ -11,7 +11,7 @@ export default function Donate() {
   const queryState = useEndowInfoQuery(numId, { skip: numId === 0 });
 
   return (
-    <section className="grid content-start min-h-screen w-full font-work pb-20">
+    <section className="grid content-start w-full font-work pb-20">
       <div
         style={{
           backgroundImage: `url('${queryState.data?.image || banner}')`,
