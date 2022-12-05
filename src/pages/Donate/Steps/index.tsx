@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
@@ -11,7 +10,6 @@ import {
   resetDetails,
   setRecipient,
 } from "slices/donation";
-import { appRoutes } from "constants/routes";
 import Donater from "./Donater";
 import KadoModal from "./KadoModal";
 import Progress from "./Progress";
@@ -33,24 +31,10 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid gap-8 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
-      <Breadcrumbs
-        className="font-body font-normal text-xs sm:text-sm justify-self-start sm:justify-self-auto"
-        items={[
-          { title: "Marketplace", to: appRoutes.marketplace },
-          {
-            title: props.name,
-            to: `${appRoutes.profile}/${props.id}`,
-          },
-          {
-            title: "Donate",
-            to: `${appRoutes.donate}/${props.id}`,
-          },
-        ]}
-      />
+    <div className="justify-self-center grid padded-container max-w-[35rem]">
       {isHeadingShown(state) && (
         <>
-          <h3 className="text-center text-3xl font-bold leading-snug">
+          <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
             You're about to make a donation to {props.name}
           </h3>
           <span className="text-center font-normal text-sm">
@@ -59,7 +43,7 @@ export default function Steps(props: DonationRecipient) {
               Buy some to make your donation
             </button>
           </span>
-          <Progress />
+          <Progress classes="my-12" />
         </>
       )}
 
