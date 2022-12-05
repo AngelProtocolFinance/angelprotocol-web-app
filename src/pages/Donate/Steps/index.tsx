@@ -35,7 +35,7 @@ export default function Steps(props: DonationRecipient) {
   return (
     <div className="justify-self-center grid gap-10 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
       <Breadcrumbs
-        className="font-body font-normal text-xs sm:text-sm justify-self-start sm:justify-self-auto -mb-2 sm:mb-0"
+        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto -mb-2 sm:mb-0"
         items={[
           { title: "Marketplace", to: appRoutes.marketplace },
           {
