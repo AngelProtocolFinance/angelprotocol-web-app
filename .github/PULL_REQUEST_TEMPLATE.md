@@ -1,5 +1,4 @@
 Ticket(s):
-
 -
 
 ## Explanation of the solution
