@@ -3,14 +3,7 @@ import { AP_ID, REVIEWER_ID } from "services/juno/custom";
 import { AdminLink } from "components/admin";
 import Logo from "./Logo";
 
-// Placeholder until profile-fetching by wallet address endpoint is created
-const profile = undefined;
-
 export default function MyEndowment() {
-  if (!profile) {
-    return null;
-  }
-
   return (
     <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
