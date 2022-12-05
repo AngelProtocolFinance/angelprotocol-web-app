@@ -1,11 +1,7 @@
 type ReadOnly = {
   readOnly: true;
-  onChange?(...event: any[]): never;
-
-  onError?: never;
-  placeHolder?: never;
-  charLimit?: never;
-};
+  //map editable attr to never
+} & Partial<{ [key in keyof Omit<Editable, "readOnly">]?: never }>;
 
 export type Editable = {
   readOnly?: never;
@@ -13,6 +9,7 @@ export type Editable = {
   onError(error: string): void;
   placeHolder?: string;
   charLimit?: number;
+  disabled?: boolean;
 };
 
 export type EditorClasses = { container?: string; charCounter?: string };
