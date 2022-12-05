@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "../types";
+import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
