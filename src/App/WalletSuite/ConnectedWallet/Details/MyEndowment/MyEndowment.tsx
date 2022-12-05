@@ -10,7 +10,7 @@ export default function MyEndowment() {
       <div className="grid grid-cols-[auto_1fr] gap-3">
         {/* Will be added once possible to fetch endowment profile by wallet address */}
         <Logo src={""} className="w-10 h-10" />
-        <div className="grid">
+        <div className="grid items-center">
           {/* Will be added once possible to fetch endowment profile by wallet address */}
           {/* <span className="font-heading font-semibold text-sm"> */}
           {/* {"endowment name"} */}
