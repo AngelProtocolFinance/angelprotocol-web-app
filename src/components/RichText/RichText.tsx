@@ -43,12 +43,12 @@ export default function RichText(props: Props) {
       quill.on("editor-change", function handleChange() {
         //quill content min length is 1
         const numChars = quill.getLength() - 1;
+        setNumChars(numChars);
 
         if (props.charLimit && numChars > props.charLimit) {
           return props.onError(`character limit reached`);
         }
 
-        setNumChars(numChars);
         props.onChange(
           //quill clean state has residual `\n`
           numChars <= 0 ? "" : JSON.stringify(quill.getContents())
@@ -60,6 +60,7 @@ export default function RichText(props: Props) {
 
   return (
     <div
+      aria-disabled={props.disabled}
       className={`relative ${props.classes?.container || ""} ${
         props.readOnly ? "toolbar-hidden" : ""
       }`}

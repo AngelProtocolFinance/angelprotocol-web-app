@@ -15,7 +15,10 @@ export function RichTextEditor<T extends FieldValues>(
     classes?: EditorClasses & { error?: string };
   } & Pick<Editable, "charLimit" | "placeHolder">
 ) {
-  const { setError } = useFormContext<T>();
+  const {
+    setError,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
   const {
     formState: { errors },
     field: { value, onChange },
@@ -32,6 +35,7 @@ export function RichTextEditor<T extends FieldValues>(
         placeHolder={props.placeHolder}
         charLimit={props.charLimit}
         classes={props.classes}
+        disabled={isSubmitting}
       />
       <ErrorMessage
         errors={errors}
