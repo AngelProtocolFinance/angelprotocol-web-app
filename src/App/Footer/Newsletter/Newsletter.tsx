@@ -12,7 +12,7 @@ export default function Newsletter() {
           agree with our{" "}
           <a
             href="https://angelprotocol.io/privacy-policy/"
-            className="font-bold cursor-pointer underline hover:text-orange transition ease-in-out duration-300"
+            className="font-bold cursor-pointer underline hover:text-orange-l1 active:text-orange transition ease-in-out duration-300"
           >
             Privacy Policy
           </a>
