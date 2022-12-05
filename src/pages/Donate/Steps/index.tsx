@@ -31,10 +31,10 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[35rem]">
+    <div className="justify-self-center grid padded-container max-w-[35rem] py-20">
       {isHeadingShown(state) && (
         <>
-          <h3 className="text-center text-3xl font-bold mt-20 leading-snug">
+          <h3 className="text-center text-3xl font-bold leading-snug">
             You're about to make a donation to {props.name}
           </h3>
           <span className="text-center font-normal text-sm">
