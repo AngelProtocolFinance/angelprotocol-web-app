@@ -10,7 +10,7 @@ export default function App() {
   return (
     <WalletProvider {...chainOptions}>
       <WalletContext>
-        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+        <ModalContext>
           <div className="grid grid-rows-[auto_1fr_auto] bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
             <Header classes="sticky top-0 z-20" />
             <Views />

@@ -20,7 +20,7 @@ export default function AppWrapper(props: PropsWithChildren<{}>) {
   return (
     <MemoryRouter>
       <Provider store={store}>
-        <ModalContext backdropClasses="">
+        <ModalContext>
           <StaticWalletProvider defaultNetwork={testnet}>
             <WalletContext>{props.children}</WalletContext>
           </StaticWalletProvider>
