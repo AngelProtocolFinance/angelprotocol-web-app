@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Suspense } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
@@ -52,71 +52,73 @@ describe("App.tsx tests", () => {
 
   window.scrollTo = jest.fn();
 
-  test("Routing", async () => {
-    renderAppOnRoute();
+  describe("Routing", () => {
+    test("Initial page loads", async () => {
+      renderAppOnRoute();
 
-    // footer is immediately rendered
-    // role here https://www.w3.org/TR/html-aria/#docconformance
-    const footer = screen.getByRole("contentinfo");
-    expect(footer).toBeInTheDocument();
+      // footer is immediately rendered
+      // role here https://www.w3.org/TR/html-aria/#docconformance
+      const footer = screen.getByRole("contentinfo");
+      expect(footer).toBeInTheDocument();
 
-    expect(
-      screen.getByRole("link", {
-        name: /marketplace/i,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: /leaderboard/i,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: /register/i,
-      })
-    ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: /marketplace/i,
+        })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: /leaderboard/i,
+        })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("link", {
+          name: /register/i,
+        })
+      ).toBeInTheDocument();
 
-    //marketplace is being lazy loaded
-    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //marketplace is finally loaded
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
-  });
+      // marketplace is being lazy loaded
+      expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
 
-  test("leaderboard", async () => {
-    renderAppOnRoute();
+      //marketplace is finally loaded
+      expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+      expect(screen.queryByTestId(loaderTestId)).toBeNull();
+    });
 
-    await waitFor(() => expect(screen.queryByTestId(loaderTestId)).toBeNull());
+    test("to Leaderboard", async () => {
+      renderAppOnRoute();
 
-    //user goes to leaderboards
-    fireEvent.click(
-      screen.getByRole("link", {
-        name: /leaderboard/i,
-      })
-    );
+      expect(
+        await screen.findByRole("link", { name: /leaderboard/i })
+      ).toBeInTheDocument();
 
-    //leaderboard is being lazy loaded
-    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //leaderboard is finally loaded
-    expect(
-      await screen.findByRole("heading", { name: /leaderboard/i })
-    ).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
-  });
+      //user goes to leaderboards
+      fireEvent.click(
+        screen.getByRole("link", {
+          name: /leaderboard/i,
+        })
+      );
+      expect(
+        await screen.findByRole("heading", { name: /leaderboard/i })
+      ).toBeInTheDocument();
+      expect(screen.queryByTestId(loaderTestId)).toBeNull();
+    });
 
-  test("to marketplace", async () => {
-    renderAppOnRoute(appRoutes.leaderboard);
+    test("to Marketplace", async () => {
+      renderAppOnRoute(appRoutes.leaderboard);
 
-    await waitFor(() => expect(screen.queryByTestId(loaderTestId)).toBeNull());
+      expect(
+        await screen.findByRole("link", { name: /marketplace/i })
+      ).toBeInTheDocument();
 
-    //user goes back to Marketplace
-    fireEvent.click(
-      screen.getByRole("link", {
-        name: /marketplace/i,
-      })
-    );
-    //marketplace is already lazy loaded on first visit
-    expect(screen.getByText(bannerText1)).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
+      //user goes back to Marketplace
+      fireEvent.click(
+        screen.getByRole("link", {
+          name: /marketplace/i,
+        })
+      );
+      expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+      expect(screen.queryByTestId(loaderTestId)).toBeNull();
+    });
   });
 });
