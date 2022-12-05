@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
+import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
@@ -10,6 +11,7 @@ import {
   resetDetails,
   setRecipient,
 } from "slices/donation";
+import { appRoutes } from "constants/routes";
 import Donater from "./Donater";
 import KadoModal from "./KadoModal";
 import Progress from "./Progress";
@@ -31,7 +33,21 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid padded-container max-w-[35rem] py-20">
+    <div className="justify-self-center grid gap-8 sm:gap-12 padded-container max-w-[35rem] py-20">
+      <Breadcrumbs
+        className="font-body font-normal text-xs sm:text-sm lg:ml-52"
+        items={[
+          { title: "Marketplace", to: appRoutes.marketplace },
+          {
+            title: props.name,
+            to: `${appRoutes.profile}/${props.id}`,
+          },
+          {
+            title: "Donate",
+            to: `${appRoutes.donate}/${props.id}`,
+          },
+        ]}
+      />
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug">
@@ -43,7 +59,7 @@ export default function Steps(props: DonationRecipient) {
               Buy some to make your donation
             </button>
           </span>
-          <Progress classes="my-12" />
+          <Progress />
         </>
       )}
 
