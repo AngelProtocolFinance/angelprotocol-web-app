@@ -33,9 +33,9 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid gap-10 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
+    <div className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20">
       <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto -mb-2 sm:mb-0"
+        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
         items={[
           { title: "Marketplace", to: appRoutes.marketplace },
           {
@@ -50,16 +50,16 @@ export default function Steps(props: DonationRecipient) {
       />
       {isHeadingShown(state) && (
         <>
-          <h3 className="text-center text-3xl font-bold leading-snug">
+          <h3 className="text-center text-3xl font-bold leading-snug mb-4">
             You're about to make a donation to {props.name}
           </h3>
-          <span className="text-center font-normal text-sm -mt-6">
+          <span className="text-center font-normal text-sm">
             Don't have crypto in your wallet?{" "}
             <button className="font-bold underline" onClick={handleOpenKado}>
               Buy some to make your donation
             </button>
           </span>
-          <Progress classes="sm:-mb-2" />
+          <Progress classes="my-12" />
         </>
       )}
 

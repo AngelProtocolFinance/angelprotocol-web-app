@@ -5,7 +5,7 @@ export default function Progress({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} text-sm grid grid-cols-3 justify-items-center gap-2`}
+      className={`${classes} text-sm mb-10 grid grid-cols-3 justify-items-center gap-2`}
     >
       <p className="text-center">Donation method</p>
       <p className="text-center">Donor details</p>
