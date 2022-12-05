@@ -1,5 +1,5 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse, StdFee } from "@cosmjs/stargate";
+import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
