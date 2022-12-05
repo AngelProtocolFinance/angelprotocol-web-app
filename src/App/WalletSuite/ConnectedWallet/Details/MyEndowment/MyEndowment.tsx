@@ -11,10 +11,10 @@ export default function MyEndowment() {
         {/* Will be added once possible to fetch endowment profile by wallet address */}
         <Logo src={""} className="w-10 h-10" />
         <div className="grid">
-          <span className="font-heading font-semibold text-sm">
-            {/* Will be added once possible to fetch endowment profile by wallet address */}
-            {"endowment name"}
-          </span>
+          {/* Will be added once possible to fetch endowment profile by wallet address */}
+          {/* <span className="font-heading font-semibold text-sm"> */}
+          {/* {"endowment name"} */}
+          {/* </span> */}
 
           <Links />
         </div>
