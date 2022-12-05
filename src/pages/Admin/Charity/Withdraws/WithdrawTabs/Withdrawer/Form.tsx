@@ -20,7 +20,7 @@ export default function Form() {
       <Beneficiary classes="mt-6 mb-2" />
       <Warning classes="mt-4 mb-2">
         All withdraws to Ethereum & Binance are processed on a hourly basis by
-        our cross-chain pipelines.
+        our cross-chain pipelines. The minimum withdrawal is $20 USDC.
       </Warning>
       <Warning classes="mb-2">
         We recommend not using crypto exchange addresses for withdrawals. We are
