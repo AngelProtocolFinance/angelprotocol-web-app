@@ -33,9 +33,9 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid gap-8 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
+    <div className="justify-self-center grid gap-10 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
       <Breadcrumbs
-        className="font-body font-normal text-xs sm:text-sm justify-self-start sm:justify-self-auto"
+        className="font-body font-normal text-xs sm:text-sm justify-self-start sm:justify-self-auto -mb-2 sm:mb-0"
         items={[
           { title: "Marketplace", to: appRoutes.marketplace },
           {
@@ -53,13 +53,13 @@ export default function Steps(props: DonationRecipient) {
           <h3 className="text-center text-3xl font-bold leading-snug">
             You're about to make a donation to {props.name}
           </h3>
-          <span className="text-center font-normal text-sm">
+          <span className="text-center font-normal text-sm -mt-6">
             Don't have crypto in your wallet?{" "}
             <button className="font-bold underline" onClick={handleOpenKado}>
               Buy some to make your donation
             </button>
           </span>
-          <Progress />
+          <Progress classes="sm:-mb-2" />
         </>
       )}
 
