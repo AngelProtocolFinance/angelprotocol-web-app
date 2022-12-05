@@ -10,7 +10,7 @@ import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
 export default function Form({ classes = "" }) {
-  const { handleSubmit } = useFormContext<FV>();
+  const { handleSubmit, reset } = useFormContext<FV>();
   const { showModal } = useModalContext();
 
   async function submit({ recipient, secret }: FV) {
@@ -64,7 +64,13 @@ export default function Form({ classes = "" }) {
         charLimit={500}
       />
       <div className="grid grid-cols-2 gap-5 font-body mt-3">
-        <BtnSec>Reset</BtnSec>
+        <BtnSec
+          onClick={() => {
+            reset();
+          }}
+        >
+          Reset
+        </BtnSec>
         <BtnPrim type="submit">Submit</BtnPrim>
         <BtnOutline
           as="link"
