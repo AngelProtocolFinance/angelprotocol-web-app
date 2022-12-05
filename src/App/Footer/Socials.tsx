@@ -10,7 +10,7 @@ export default function Socials() {
           <ExtLink
             key={type}
             href={link}
-            className="hover:text-blue-l1 active:text-blue"
+            className="hover:text-blue-l1 active:text-blue transition ease-in-out duration-300"
           >
             <Icon type={iconType} className="w-6 h-6" title={type} />
           </ExtLink>
