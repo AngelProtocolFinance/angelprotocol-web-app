@@ -39,7 +39,7 @@ export default function KadoModal() {
         />
       )}
       <iframe
-        src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC&fiatList=USD${network}&product=BUY`}
+        src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC&fiatList=USD${network}&product=BUY&networkList=ethereum,juno,terra`}
         className={`${
           isLoading ? "hidden" : ""
         } w-full h-full border-none rounded`}
