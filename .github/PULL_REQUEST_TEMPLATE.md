@@ -1,4 +1,4 @@
-ClickUp tickets:
+Ticket(s):
 
 -
 
