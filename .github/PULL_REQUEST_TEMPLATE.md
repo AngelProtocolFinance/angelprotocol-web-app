@@ -1,4 +1,4 @@
-ClickUp ticket: <ticket_link>
+ClickUp tickets:
 
 ## Explanation of the solution
 
@@ -11,5 +11,3 @@ ClickUp ticket: <ticket_link>
 -
 
 ## UI changes for review
-
-When major UI changes are introduced with a PR, please include links to URLS to compare or screenshots demonstrating the difference and notify on design changes
