@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
-import AppWrapper from "test/AppWrapper";
+import { store } from "store/store";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -26,17 +28,18 @@ jest.mock("services/aws/leaderboard", () => ({
 }));
 
 describe("App.tsx tests", () => {
-  const bannerText1 = /angel protocol redefines/i;
-  const bannerText2 = /global impact financing/i;
+  const bannerText1 = /redefines/i;
+  const loaderTestId = "loader";
   // const governanceLinkText = /governance/i;
 
   window.scrollTo = jest.fn();
 
   test("Routing", async () => {
     render(
-      <AppWrapper>
+      <Provider store={store}>
         <App />
-      </AppWrapper>
+      </Provider>,
+      { wrapper: BrowserRouter }
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
@@ -53,14 +56,18 @@ describe("App.tsx tests", () => {
         name: /leaderboard/i,
       })
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", {
+        name: /register/i,
+      })
+    ).toBeInTheDocument();
 
     // marketplace is being lazy loaded
-    expect(screen.getByTestId("loader")).toBeInTheDocument();
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
 
     //marketplace is finally loaded
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
-    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
-    expect(screen.queryByTestId("loader")).toBeNull();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
     userEvent.click(
@@ -71,6 +78,7 @@ describe("App.tsx tests", () => {
     expect(
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
     userEvent.click(
@@ -79,6 +87,6 @@ describe("App.tsx tests", () => {
       })
     );
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
-    expect(await screen.findByText(bannerText2)).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });
