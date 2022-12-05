@@ -13,10 +13,10 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { TxOptions } from "slices/transaction/types";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
+import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, scaleToStr, toBase64 } from "helpers";
 import {

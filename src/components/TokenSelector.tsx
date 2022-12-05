@@ -6,7 +6,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { TokenWithAmount } from "slices/donation";
+import { TokenWithAmount } from "types/slices";
 import Icon, { DrawerIcon } from "./Icon";
 
 type BaseFormValue = { [index: string]: TokenWithAmount };

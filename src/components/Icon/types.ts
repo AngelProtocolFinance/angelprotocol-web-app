@@ -32,6 +32,7 @@ export type IconTypes =
   | "ExclamationCircle"
   | "ExclamationCircleFill"
   | "Eye"
+  | "Email"
   | "EyeInvisible"
   | "CaretLeft"
   | "Like"

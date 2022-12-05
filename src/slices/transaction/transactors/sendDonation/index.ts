@@ -4,16 +4,17 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { DonateArgs, EstimatedTx } from "../../types";
 import { KYCData } from "types/aws";
+import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import { TokenWithAmount, TxStatus, setTxStatus } from "slices/donation";
+import { TxStatus, setTxStatus } from "slices/donation";
 import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
 import transactionSlice from "../../transactionSlice";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
-  `${transactionSlice.name}/junoDonate`,
+  `${transactionSlice.name}/sendDonation`,
   async (
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }

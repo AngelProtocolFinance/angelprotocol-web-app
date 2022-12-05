@@ -1,44 +1,39 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
-import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
-import { BtnOutline } from "components/donation/BtnOutline";
+import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
-import { sendDonation } from "slices/transaction/transactors";
+import { SubmitStep, setStep } from "slices/gift";
+import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
-import { estimateDonation } from "./estimateDonation";
+import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateDonation({ ...props, terraWallet });
+      const _estimate = await estimateTx(props);
       setEstimate(_estimate || "error");
     })();
-  }, [props, terraWallet]);
+  }, [props]);
 
   function goBack() {
     dispatch(setStep(props.step - 1));
   }
 
   function submit({ tx }: Estimate) {
-    const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx }));
+    dispatch(purchase({ wallet: props.wallet, tx, details: props.details }));
   }
 
   const { token } = props.details;
   const { chain } = props.wallet;
-  const { id: endowId } = props.recipient;
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
 
@@ -61,11 +56,11 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         </span>
       </Row>
       <TxTotal estimate={estimate} token={token} />
-      <div className="mt-14 grid grid-cols-2 gap-5">
+      <div className="mt-12 grid grid-cols-2 gap-5">
         <BtnSec onClick={goBack} type="button">
           Back
         </BtnSec>
-        <BtnPrimary
+        <BtnPrim
           onClick={
             isNotEstimated
               ? undefined
@@ -77,10 +72,10 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           type="submit"
         >
           Complete
-        </BtnPrimary>
+        </BtnPrim>
         <BtnOutline
           as="link"
-          to={appRoutes.profile + `/${endowId}`}
+          to={appRoutes.marketplace}
           className="col-span-full"
         >
           Cancel

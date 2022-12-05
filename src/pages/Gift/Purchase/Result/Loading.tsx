@@ -1,16 +1,14 @@
 import LoaderRing from "components/LoaderRing";
+import { TLoading } from "slices/gift";
 
 export default function Loading({
-  message,
+  msg,
   classes = "",
-}: {
-  message: string;
-  classes?: string;
-}) {
+}: TLoading & { classes?: string }) {
   return (
     <div className={`grid justify-items-center gap-6 ${classes}`}>
-      <LoaderRing thickness={10} classes="w-32" />
-      <p className="text-center">{message}</p>
+      <LoaderRing thickness={10} classes="w-28" />
+      <p className="text-center">{msg}</p>
     </div>
   );
 }

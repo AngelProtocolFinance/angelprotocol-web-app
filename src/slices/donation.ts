@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CountryOption } from "services/types";
-import { Token } from "types/aws";
+import { TokenWithAmount } from "types/slices";
 
 export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
@@ -59,7 +59,6 @@ export const {
   setTxStatus,
 } = donation.actions;
 
-export type TokenWithAmount = Token & { amount: string };
 export type DonationRecipient = {
   id: number;
   name: string;
