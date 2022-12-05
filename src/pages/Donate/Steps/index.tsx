@@ -33,7 +33,7 @@ export default function Steps(props: DonationRecipient) {
   );
 
   return (
-    <div className="justify-self-center grid gap-8 sm:gap-12 padded-container max-w-[35rem] py-20">
+    <div className="justify-self-center grid gap-8 sm:gap-12 padded-container max-w-[35rem] py-8 sm:py-20">
       <Breadcrumbs
         className="font-body font-normal text-xs sm:text-sm justify-self-start sm:justify-self-auto"
         items={[
