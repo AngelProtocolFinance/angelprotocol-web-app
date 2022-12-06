@@ -14,9 +14,9 @@ export default function Links() {
   return (
     <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange">
       {/* Will be added once possible to fetch endowment profile by wallet address */}
-      <Link to={""} className="pr-2">
+      {/* <Link to={""} className="pr-2">
         profile
-      </Link>
+      </Link> */}
       {isApMember && (
         <Link
           to={`${appRoutes.admin}/${AP_ID}`}
