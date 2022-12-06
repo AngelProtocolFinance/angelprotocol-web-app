@@ -4,6 +4,7 @@ import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
+import { routes } from "../../routes";
 import { hashKey } from "../constants";
 
 type Props = { classes?: string } & (TxResult | GiftCard);
@@ -52,10 +53,7 @@ function Result(props: { hash: string }) {
     </>
   );
 }
-function EmailCode(props: { secret: string }) {
-  function sendMail() {
-    alert("redirect to email form");
-  }
+function EmailCode({ secret }: { secret: string }) {
   return (
     <>
       <p className="text-center font-heading mt-4 mb-8">
@@ -66,11 +64,13 @@ function EmailCode(props: { secret: string }) {
           Your giftcard code:
         </p>
         <p className="bg-orange-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed break-all">
-          {props.secret}
+          {secret}
         </p>
       </div>
       <BtnSec
-        onClick={sendMail}
+        as="link"
+        to={`../${routes.mail}`}
+        state={{ secret }}
         className="flex items-center justify-center gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
       >
         <Icon type="Email" size={24} />
