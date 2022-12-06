@@ -33,17 +33,17 @@ function renderAppOnRoute(initialRoute = "/") {
   render(
     <MemoryRouter initialEntries={[initialRoute]}>
       <Provider store={store}>
-        <Suspense
-          fallback={
-            <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
-          }
-        >
+        <Suspense fallback={<LoaderComponent />}>
           <App />
         </Suspense>
       </Provider>
     </MemoryRouter>
   );
 }
+
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
+);
 
 describe("App.tsx tests", () => {
   const bannerText1 = /redefines/i;
