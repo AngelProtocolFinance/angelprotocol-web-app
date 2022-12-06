@@ -1,7 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
 import App from "../App";
@@ -34,12 +33,13 @@ describe("App.tsx tests", () => {
 
   window.scrollTo = jest.fn();
 
-  test("Routing", async () => {
+  test("Visit top level pages", async () => {
     render(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      { wrapper: BrowserRouter }
+      <MemoryRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </MemoryRouter>
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
@@ -62,31 +62,35 @@ describe("App.tsx tests", () => {
       })
     ).toBeInTheDocument();
 
-    // marketplace is being lazy loaded
+    //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-
     //marketplace is finally loaded
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
-    userEvent.click(
+    fireEvent.click(
       screen.getByRole("link", {
         name: /leaderboard/i,
       })
     );
+
+    //leaderboard is being lazy loaded
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
+    //leaderboard is finally loaded
     expect(
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
-    userEvent.click(
+    fireEvent.click(
       screen.getByRole("link", {
         name: /marketplace/i,
       })
     );
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    //marketplace is already lazy loaded on first visit
+    expect(screen.getByText(bannerText1)).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });

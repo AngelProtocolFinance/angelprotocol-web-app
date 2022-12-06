@@ -1,7 +1,7 @@
 import { steps } from "pages/Registration/routes";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec, Separator } from "components/registration";
+import { BtnPrim, BtnSec, LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
 
@@ -79,7 +79,7 @@ export default function WalletSubmission({
             registerWallet(address);
           }}
         >
-          Continue
+          <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </BtnPrim>
       </div>
     </div>

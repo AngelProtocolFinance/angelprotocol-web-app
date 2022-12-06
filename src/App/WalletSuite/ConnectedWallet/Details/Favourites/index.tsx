@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 import { useBookmarksQuery } from "services/aws/aws";
 import { WalletState } from "contexts/WalletContext";
 import { QueryLoader } from "components/admin";
-import { appRoutes } from "constants/routes";
 import Bookmark from "./Bookmark";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
@@ -20,12 +18,12 @@ export default function Favourites(props: WalletState) {
           Just a placeholder link until it is decided what page it should navigate to, see comment:
           https://app.clickup.com/t/3rcffb9?comment=1134342876&threadedComment=1813673953
         */}
-        <Link
-          to={`${appRoutes.donations}/${props.address}`}
+        {/* <Link
+          to={`${appRoutes.donations}/${"some address"}`}
           className="font-heading font-semibold text-xs uppercase underline underline-offset-2 decoration-1 text-orange hover:text-orange-l2 transition ease-in-out duration-300"
         >
           View All
-        </Link>
+        </Link> */}
       </h3>
       <QueryLoader
         queryState={queryState}

@@ -24,6 +24,6 @@ export default function DesktopNav({ classes = "" }: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "px-4 text-sm text-white hover:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold",
+  "px-4 text-sm text-white hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold",
   "pointer-events-none text-orange"
 );

@@ -6,6 +6,7 @@ import {
   BtnPrim,
   BtnSec,
   FileDropzone,
+  LoadText,
   Selector,
   TextInput,
   checkBoxStyle,
@@ -53,7 +54,8 @@ export default function Form() {
         tooltip={fileTooltip}
       />
       <Label className="mb-2 mt-6" required>
-        Select one SDG your organization is aligned with
+        Select the Sustainable Development Goals your organization is the most
+        aligned with
       </Label>
       <Selector<FV, "sdgs", number, true>
         multiple
@@ -146,7 +148,7 @@ export default function Form() {
           type="submit"
           className="py-3 min-w-[8rem] text-center"
         >
-          Continue
+          <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </BtnPrim>
       </div>
     </form>

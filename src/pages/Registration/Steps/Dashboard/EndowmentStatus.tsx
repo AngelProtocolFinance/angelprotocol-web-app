@@ -2,7 +2,7 @@ import { MouseEventHandler } from "react";
 import { RegistrationStatus } from "types/aws";
 import { steps } from "pages/Registration/routes";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec } from "components/registration";
+import { BtnPrim, BtnSec, LoadText } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 type Props = {
@@ -40,7 +40,7 @@ export default function EndowmentStatus({
             disabled={isSubmitting}
             className="min-w-[8rem]"
           >
-            Resubmit
+            <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
           </BtnPrim>
         </div>
       );
@@ -77,7 +77,7 @@ export default function EndowmentStatus({
             onClick={onSubmit}
             className="py-3 min-w-[8rem] text-center"
           >
-            Continue
+            <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </BtnPrim>
         </div>
       );

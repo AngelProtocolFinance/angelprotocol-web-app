@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { DonateValues } from "../types";
 import { BtnPrimary, BtnSec } from "components/donation";
+import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
@@ -16,6 +17,7 @@ export default function Form() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<DonateValues>();
 
+  const endowId = useGetter((state) => state.donation.recipient?.id);
   const dispatch = useDispatch();
   function submit(data: DonateValues) {
     dispatch(setDetails(data));
@@ -35,7 +37,7 @@ export default function Form() {
       <AdvancedOptions classes="mt-10" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <BtnSec as="link" to={`${appRoutes.profile}/1`}>
+        <BtnSec as="link" to={`${appRoutes.profile}/${endowId}`}>
           Cancel
         </BtnSec>
         <BtnPrimary
