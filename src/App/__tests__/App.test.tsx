@@ -1,9 +1,15 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { StaticWalletProvider } from "@terra-money/wallet-provider";
+import { fireEvent, render, screen } from "@testing-library/react";
+// import userEvent from "@testing-library/user-event";
+import { chainOptions } from "chainOptions";
+import { Suspense } from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
+import { act } from "react-test-renderer";
 import { DonationsMetricList, Update } from "types/aws";
+import AppWrapper from "test/AppWrapper";
 import { store } from "store/store";
+import { appRoutes } from "constants/routes";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -36,10 +42,13 @@ describe("App.tsx tests", () => {
 
   test("Routing", async () => {
     render(
-      <Provider store={store}>
-        <App />
-      </Provider>,
-      { wrapper: BrowserRouter }
+      <MemoryRouter>
+        <Provider store={store}>
+          <StaticWalletProvider {...chainOptions}>
+            <App />
+          </StaticWalletProvider>
+        </Provider>
+      </MemoryRouter>
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
@@ -62,31 +71,35 @@ describe("App.tsx tests", () => {
       })
     ).toBeInTheDocument();
 
-    // marketplace is being lazy loaded
+    //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-
     //marketplace is finally loaded
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
-    userEvent.click(
+    fireEvent.click(
       screen.getByRole("link", {
         name: /leaderboard/i,
       })
     );
+
+    //leaderboard is being lazy loaded
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
+    //leaderboard is finally loaded
     expect(
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
-    userEvent.click(
+    fireEvent.click(
       screen.getByRole("link", {
         name: /marketplace/i,
       })
     );
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    //marketplace is already lazy loaded on first visit
+    expect(screen.getByText(bannerText1)).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });
