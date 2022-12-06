@@ -5659,8 +5659,8 @@ __metadata:
     react-csv: ^2.2.2
     react-dom: ^18.2.0
     react-dropzone: ^14.2.2
-    react-hook-form: ^7.39.1
-    react-icons: ^4.6.0
+    react-hook-form: ^7.40.0
+    react-icons: ^4.7.1
     react-redux: ^8.0.2
     react-router-dom: ^6.2.0
     react-scripts: 5.0.1
@@ -16113,21 +16113,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.39.1":
-  version: 7.39.1
-  resolution: "react-hook-form@npm:7.39.1"
+"react-hook-form@npm:^7.40.0":
+  version: 7.40.0
+  resolution: "react-hook-form@npm:7.40.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 5a5a5530451c337f0366ceb7884b376cc20dec4b667789cd9aab4a9e6c8286308449bd6ba03bd89096541a81051c83307c8b45cd90970fa3c7ffc58ef2e3da78
+  checksum: 8187981c14cc2e016c263a7427ffc5617b126efed97003e259efff1af991d12bef5cb599d824385f760a03a0676eb0d19007aa3ebcc65832cfe819b3802530c5
   languageName: node
   linkType: hard
 
-"react-icons@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "react-icons@npm:4.6.0"
+"react-icons@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "react-icons@npm:4.7.1"
   peerDependencies:
     react: "*"
-  checksum: a08375d4563e381e156d826a8d551dd26c1bf7c424a79139173bf4c8df71e884badd7d4f5fe9faa0d73d18ace265bcc89891b65fd8f808812b1011b612ebbc53
+  checksum: ed3cbdc5fc0c4d7d2debf78fdc8c4c80aeacf85a506a9a3c11b1d5922de393ac0a6542012b7fb81761e9280c54d0f26827d50a92b54ec8f0c8e52364d89970b5
   languageName: node
   linkType: hard
 
