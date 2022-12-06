@@ -82,7 +82,7 @@ export default function useEVMWC() {
 
   const connection: Connection = {
     /** metamask for now, but any EVM compatible wallets that supports WC can use this */
-    name: "Metamask",
+    name: "Metamask mobile",
     logo: WALLET_METADATA["evm-wc"].logo,
     installUrl: WALLET_METADATA["evm-wc"].logo,
     connect,
