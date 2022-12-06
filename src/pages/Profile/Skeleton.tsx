@@ -1,13 +1,24 @@
 import ContentLoader from "components/ContentLoader";
-import Loader from "components/Loader";
 
 export default function Skeleton() {
   return (
-    <section className="flex flex-col items-center isolate relative w-full h-full">
+    <section className="pb-8">
       <Banner />
-      <Body />
 
-      <Logo className="absolute left-auto top-40 sm:left-20 sm:top-48" />
+      <div className="w-full padded-container grid lg:grid-cols-[4fr_2fr] gap-6 content-start">
+        <Logo className="col-span-full" />
+        {/** header */}
+        <ContentLoader className="h-40 lg:h-20 mt-20 col-span-full" />
+        {/** content */}
+        <ContentLoader className="h-72" />
+        <ContentLoader className="h-72 lg:col-start-1" />
+        {/** balances */}
+        <div className="grid gap-y-4 lg:col-start-2 lg:row-start-3 lg:row-span-2 self-start">
+          <ContentLoader className="h-32" />
+          <ContentLoader className="h-32" />
+          <ContentLoader className="h-32" />
+        </div>
+      </div>
     </section>
   );
 }
@@ -18,25 +29,12 @@ function Banner() {
   );
 }
 
-function Body() {
-  return (
-    <div className="w-full bg-white dark:bg-blue-d4 flex flex-col gap-5 px-6 pt-24 pb-8 sm:pt-6 sm:pb-20 sm:px-20 sm:items-end">
-      <ContentLoader className="h-56 sm:w-5/6 sm:h-28" />
-      <ContentLoader className="w-full h-72 sm:h-28" />
-      <div className="flex flex-col gap-10 w-full h-full sm:flex-row sm:gap-8">
-        <ContentLoader className="w-full h-96 sm:h-[905px]" />
-        <ContentLoader className="w-full h-96 sm:w-[405px] sm:h-[905px]" />
-      </div>
-    </div>
-  );
-}
-
-function Logo({ className = "" }: { className: string }) {
+function Logo({ className = "" }) {
   return (
     <div
-      className={`${className} box-border h-40 w-40 sm:h-44 sm:w-44 rounded-full bg-blue-l3 object-contain dark:bg-blue`}
+      className={`h-0 relative flex max-lg:justify-center items-center ${className}`}
     >
-      <Loader bgColorClass="bg-white/80" gapClass="gap-2" widthClass="w-4" />
+      <div className="h-40 w-40 sm:h-44 sm:w-44 rounded-full bg-blue-l3 dark:bg-blue" />
     </div>
   );
 }
