@@ -6,7 +6,6 @@ import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
-import createAddress from "./createAddress";
 
 export default function Body() {
   const profile = useProfileContext();
@@ -46,7 +45,7 @@ export default function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span className="flex items-center gap-2 uppercase">
               <Icon type="MapPin" className="h-6 w-6 text-orange" />
-              {createAddress(profile.street_address, profile.country_of_origin)}
+              {profile.street_address}
             </span>
             {!!profile.url && (
               <span className="flex items-center gap-2">
