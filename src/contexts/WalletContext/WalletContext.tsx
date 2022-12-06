@@ -15,7 +15,7 @@ import {
 import { Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EXPECTED_NETWORK_TYPE, IS_MOBILE } from "constants/env";
 import { useErrorContext } from "../ErrorContext";
 import { placeholderChain } from "./constants";
 import useInjectedProvider from "./useInjectedProvider";
@@ -210,14 +210,16 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     >
       <setContext.Provider
         value={{
-          connections: [
-            wcConnection,
-            keplrConnection,
-            xdefiConnection,
-            metamaskConnection,
-            ...terraConnections,
-            binanceWalletConnection,
-          ],
+          connections: IS_MOBILE
+            ? wcConnection.networks
+            : [
+                wcConnection,
+                keplrConnection,
+                xdefiConnection,
+                metamaskConnection,
+                ...terraConnections,
+                binanceWalletConnection,
+              ],
           disconnect,
         }}
       >

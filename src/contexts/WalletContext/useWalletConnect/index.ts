@@ -29,7 +29,7 @@ export default function useWalletConnect() {
 
   const wcTerra: Connection = {
     logo: terraIcon,
-    name: "Terra station",
+    name: "Terra station mobile",
     connect: async () => {
       if (connection) {
         connectToTerra(connection.type, connection.identifier);
@@ -41,9 +41,9 @@ export default function useWalletConnect() {
     name: "Wallet connect",
     logo: wcIcon,
     networks: [
-      wcTerra,
       /** keplr wallet connect can't be used in testnet, experimental suggest chain isn't supported */
       ...(IS_TEST ? [] : [keplrWCConnection]),
+      wcTerra,
       EVMWCConnection,
     ],
   };

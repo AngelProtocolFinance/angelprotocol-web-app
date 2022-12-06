@@ -82,7 +82,7 @@ export default function useKeplrWC() {
       : undefined;
 
   const connection: Connection = {
-    name: "Keplr",
+    name: "Keplr mobile",
     logo: WALLET_METADATA["keplr-wc"].logo,
     installUrl: WALLET_METADATA["keplr-wc"].logo,
     connect,
