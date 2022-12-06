@@ -6,7 +6,6 @@ import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
-import { ButtonMailTo } from "./common";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   /** going to this page should only be thru Signup or Resume
@@ -52,11 +51,13 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
       >
         Resend verification email
       </BtnPrim>
-      <ButtonMailTo
-        label="Having trouble receiving our emails?"
-        mailTo="support@angelprotocol.io"
-        subject="Charity Registration: Trouble with receiving confirmation email"
-      />
+
+      <h3 className="font-bold mb-2 text-center">
+        Having trouble receiving our confirmation emails?
+      </h3>
+      <p className="text-center text-white/75 mb-8 w-full text-lg">
+        Contact us at: support@angelprotocol.io
+      </p>
     </div>
   );
 }

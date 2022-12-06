@@ -190,7 +190,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal13",
   },
   14: {
-    title: "Life below Water",
+    title: "Life Below Water",
     desc: "Conserve and sustainably use the oceans, seas and marine resources for sustainable development.",
     text_light: "text-white",
     text_dark: "text-sdg14",
@@ -202,7 +202,7 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal14",
   },
   15: {
-    title: "Life on Land",
+    title: "Life On Land",
     desc: "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss.",
     text_light: "text-white",
     text_dark: "text-sdg15",
