@@ -1,11 +1,8 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Suspense } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
-import Loader from "components/Loader";
 import { store } from "store/store";
-import { appRoutes } from "constants/routes";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -29,22 +26,6 @@ jest.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
-function renderAppOnRoute(initialRoute = "/") {
-  render(
-    <MemoryRouter initialEntries={[initialRoute]}>
-      <Provider store={store}>
-        <Suspense fallback={<LoaderComponent />}>
-          <App />
-        </Suspense>
-      </Provider>
-    </MemoryRouter>
-  );
-}
-
-const LoaderComponent = () => (
-  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
-);
-
 describe("App.tsx tests", () => {
   const bannerText1 = /redefines/i;
   const loaderTestId = "loader";
@@ -52,9 +33,14 @@ describe("App.tsx tests", () => {
 
   window.scrollTo = jest.fn();
 
-  test("Routing", async () => {
-    renderAppOnRoute();
-
+  test("Visit top level pages", async () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </MemoryRouter>
+    );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
     const footer = screen.getByRole("contentinfo");
@@ -81,12 +67,6 @@ describe("App.tsx tests", () => {
     //marketplace is finally loaded
     expect(await screen.findByText(bannerText1)).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
-  });
-
-  test("leaderboard", async () => {
-    renderAppOnRoute();
-
-    await waitFor(() => expect(screen.queryByTestId(loaderTestId)).toBeNull());
 
     //user goes to leaderboards
     fireEvent.click(
@@ -102,12 +82,6 @@ describe("App.tsx tests", () => {
       await screen.findByRole("heading", { name: /leaderboard/i })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
-  });
-
-  test("to marketplace", async () => {
-    renderAppOnRoute(appRoutes.leaderboard);
-
-    await waitFor(() => expect(screen.queryByTestId(loaderTestId)).toBeNull());
 
     //user goes back to Marketplace
     fireEvent.click(
