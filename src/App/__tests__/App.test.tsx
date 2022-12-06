@@ -35,7 +35,7 @@ describe("App.tsx tests", () => {
 
   window.scrollTo = jest.fn();
 
-  test("Routing", async () => {
+  test("Visit top level pages", async () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
