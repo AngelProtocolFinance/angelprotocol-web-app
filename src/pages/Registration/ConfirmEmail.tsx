@@ -52,7 +52,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Resend verification email
       </BtnPrim>
 
-      <h3 className="text-[1rem] font-bold mb-2 text-center">
+      <h3 className="font-bold mb-2 text-center">
         Having trouble receiving our confirmation emails?
       </h3>
       <p className="text-center text-white/75 mb-8 w-full text-lg">
