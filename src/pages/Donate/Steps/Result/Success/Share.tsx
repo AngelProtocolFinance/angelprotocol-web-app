@@ -61,8 +61,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">@AngelProtocol</span>! Every gift is
         invested to provide sustainable funding for non-profits: Give once, give
-        forever. Please join me in providing charities with financial freedom:
-        https://app.angelprotocol.io
+        forever. Help join the cause: https://app.angelprotocol.io
       </p>
       <BtnPrimary
         as="a"
