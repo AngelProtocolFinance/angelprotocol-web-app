@@ -26,7 +26,7 @@ export default function Balances() {
       />
       <Balance
         queryState={queryState}
-        title="Total Liquid Account"
+        title="Total Current Account"
         getAmount={getLiquid}
       />
     </div>
