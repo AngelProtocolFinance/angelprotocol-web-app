@@ -1,1 +1,1 @@
-export { default } from "./MyEndowment";
+export { default } from "./MyProfile";
