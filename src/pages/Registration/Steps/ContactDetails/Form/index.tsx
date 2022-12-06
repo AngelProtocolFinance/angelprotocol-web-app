@@ -1,7 +1,12 @@
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { Label } from "components/form";
-import { BtnPrim, Selector, TextInput } from "components/registration";
+import {
+  BtnPrim,
+  LoadText,
+  Selector,
+  TextInput,
+} from "components/registration";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 
@@ -101,7 +106,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         className="mt-8 py-3 px-8 w-full sm:w-auto"
         disabled={isSubmitting}
       >
-        Continue
+        <LoadText isLoading={isSubmitting}>Continue</LoadText>
       </BtnPrim>
     </form>
   );

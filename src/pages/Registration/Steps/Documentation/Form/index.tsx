@@ -6,6 +6,7 @@ import {
   BtnPrim,
   BtnSec,
   FileDropzone,
+  LoadText,
   Selector,
   TextInput,
   checkBoxStyle,
@@ -146,7 +147,7 @@ export default function Form() {
           type="submit"
           className="py-3 min-w-[8rem] text-center"
         >
-          Continue
+          <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </BtnPrim>
       </div>
     </form>
