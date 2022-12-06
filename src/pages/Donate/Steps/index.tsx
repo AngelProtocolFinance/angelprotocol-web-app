@@ -55,7 +55,10 @@ export default function Steps(props: DonationRecipient) {
           </h3>
           <span className="text-center font-normal text-sm">
             Don't have crypto in your wallet?{" "}
-            <button className="font-bold underline" onClick={handleOpenKado}>
+            <button
+              className="font-bold underline hover:text-orange transition ease-in-out duration-300"
+              onClick={handleOpenKado}
+            >
               Buy some to make your donation
             </button>
           </span>
