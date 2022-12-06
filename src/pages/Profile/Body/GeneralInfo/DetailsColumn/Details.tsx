@@ -13,8 +13,12 @@ export default function Details() {
 
   return (
     <>
-      <Detail title="registration no.">{profile.registration_number}</Detail>
-      <Detail title="address">{profile.street_address}</Detail>
+      {!!profile.registration_number && (
+        <Detail title="registration no.">{profile.registration_number}</Detail>
+      )}
+      {!!profile.street_address && (
+        <Detail title="address">{profile.street_address}</Detail>
+      )}
       <Detail title="endowment address">
         <span className="flex items-center gap-4 w-full">
           <span className="hidden sm:block">
