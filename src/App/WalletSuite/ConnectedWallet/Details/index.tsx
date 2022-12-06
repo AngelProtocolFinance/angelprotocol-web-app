@@ -4,7 +4,7 @@ import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import Favourites from "./Favourites";
-import MyEndowment from "./MyEndowment";
+import MyProfile from "./MyProfile";
 import WalletDetails from "./WalletDetails";
 
 export default function Details(props: WalletState) {
@@ -13,7 +13,7 @@ export default function Details(props: WalletState) {
       {({ close }) => (
         <>
           <MobileTitle onClose={close} />
-          <MyEndowment />
+          <MyProfile />
           <WalletDetails {...props} />
           <MyDonations address={props.address} />
           <Favourites {...props} />
