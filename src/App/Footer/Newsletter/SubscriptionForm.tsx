@@ -39,11 +39,11 @@ export default function SubscriptionForm() {
       className="flex flex-col items-center gap-4 w-full md:w-4/5 lg:w-full xl:flex-row xl:items-start xl:gap-6"
       onSubmit={handleSubmit(submit)}
     >
-      <div className="flex flex-col gap-1 w-full">
+      <div className="flex flex-col gap-1 w-[80vw] lg:w-full">
         <input
           {...register("email")}
           id="email"
-          className="flex items-center border border-gray-l2 rounded-lg text-base font-body text-black outline-none w-full h-10 px-3 bg-white placeholder:text-gray-d1 disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-gray xl:text-sm"
+          className="flex items-center border border-gray-l2 rounded-sm text-base font-body text-black outline-none w-full h-10 px-3 bg-white placeholder:text-gray-d1 disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-gray xl:text-sm"
           placeholder="Enter your email address here"
           disabled={isSubmitting}
         />
@@ -57,7 +57,7 @@ export default function SubscriptionForm() {
       </div>
       <button
         type="submit"
-        className="btn btn-orange px-3 rounded-lg text-base h-10 w-full xl:w-min"
+        className="btn btn-orange px-3 rounded-sm text-base h-10 w-[80vw] lg:w-full xl:w-min"
         disabled={isSubmitting}
       >
         Subscribe
