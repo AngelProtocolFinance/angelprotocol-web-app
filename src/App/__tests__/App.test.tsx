@@ -1,15 +1,10 @@
 import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { fireEvent, render, screen } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
-import { chainOptions } from "chainOptions";
-import { Suspense } from "react";
+import { chainOptions } from "App/chainOptions";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { act } from "react-test-renderer";
 import { DonationsMetricList, Update } from "types/aws";
-import AppWrapper from "test/AppWrapper";
 import { store } from "store/store";
-import { appRoutes } from "constants/routes";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {

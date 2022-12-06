@@ -1,5 +1,4 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { chainOptions } from "chainOptions";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -28,11 +27,9 @@ root.render(
     <ErrorBoundary>
       <Provider store={store}>
         <BrowserRouter>
-          <WalletProvider {...chainOptions}>
-            <Suspense fallback={<LoaderComponent />}>
-              <App />
-            </Suspense>
-          </WalletProvider>
+          <Suspense fallback={<LoaderComponent />}>
+            <App />
+          </Suspense>
         </BrowserRouter>
       </Provider>
     </ErrorBoundary>
