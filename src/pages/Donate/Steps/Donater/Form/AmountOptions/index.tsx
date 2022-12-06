@@ -1,38 +1,36 @@
-import Decimal from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../../types";
-import { humanize } from "helpers";
+import { humanize, roundDownToNum } from "helpers";
 
-const SCALE = [1, 2, 5, 10, 20];
+const STEPS = [0.1, 0.25, 0.5, 0.75, 1];
+const PRECISION = 4;
 
 export default function AmountOptions({ classes = "" }: { classes?: string }) {
   const { watch, setValue } = useFormContext<DonateValues>();
-  const { min_donation_amnt, amount } = watch("token");
-
-  const min = min_donation_amnt || 100;
-  const steps = SCALE.map((s) => min * s);
+  const { balance, amount } = watch("token");
 
   return (
     <div className={`grid grid-cols-5 gap-2 text-xs ${classes}`}>
-      {steps.map((m) => {
-        const precision = new Decimal(min).decimalPlaces();
+      {STEPS.map((s) => {
+        const stepAmount = roundDownToNum(s * balance, PRECISION);
+
         return (
           <button
             type="button"
-            key={m}
+            key={s}
             onClick={() => {
-              setValue("token.amount", humanize(m, precision), {
+              setValue("token.amount", humanize(stepAmount, PRECISION), {
                 shouldValidate: true,
                 shouldDirty: true,
               });
             }}
             className={`${
-              m === Number(amount)
+              stepAmount === Number(amount)
                 ? "bg-blue-l3 border-blue-l3 dark:bg-blue-d2 dark:border-blue-d2"
                 : "bg-blue-l4 dark:bg-blue-d4 border-gray-l2 dark:border-bluegray"
             }  rounded-full py-1.5 border`}
           >
-            {humanize(m, precision)}
+            {s * 100}%
           </button>
         );
       })}
