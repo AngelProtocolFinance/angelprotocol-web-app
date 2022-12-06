@@ -36,6 +36,10 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   auditedFinancialReports: Yup.object().shape(genAssetShape()),
   //isKYCRequired defaulted to No on default value
 
-  hasAuthority: Yup.bool().isTrue("must have authority"),
-  hasAgreedToTerms: Yup.bool().isTrue("must agree to terms"),
+  hasAuthority: Yup.bool().isTrue(
+    "Please confirm that you have the authority to create this endowment"
+  ),
+  hasAgreedToTerms: Yup.bool().isTrue(
+    "Please confirm that you agree to our Terms and Conditions"
+  ),
 });
