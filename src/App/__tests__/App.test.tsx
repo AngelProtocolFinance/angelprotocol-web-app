@@ -1,6 +1,4 @@
-import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { chainOptions } from "App/chainOptions";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
@@ -39,9 +37,7 @@ describe("App.tsx tests", () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <StaticWalletProvider {...chainOptions}>
-            <App />
-          </StaticWalletProvider>
+          <App />
         </Provider>
       </MemoryRouter>
     );
