@@ -26,7 +26,7 @@ jest.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
-//test comment
+//test comment 2
 
 const heroText = /angel protocol redefines/i;
 const leadText = /leaderboard/i;
