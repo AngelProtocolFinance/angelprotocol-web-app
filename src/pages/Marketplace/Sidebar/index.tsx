@@ -26,9 +26,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
         <h3 className="uppercase font-bold">Filter by</h3>
         <button
           type="button"
-          onClick={() => {
-            dispatch(reset());
-          }}
+          onClick={() => dispatch(reset())}
           className="text-gray-d1 dark:text-gray-l2 text-sm"
         >
           Reset Filters
