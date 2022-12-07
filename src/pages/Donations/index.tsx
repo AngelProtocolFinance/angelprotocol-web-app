@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import { Donation } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
+import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import MobileTable from "./MobileTable";
+import SearchFilter from "./SearchFilter";
 import Table from "./Table";
-
-// import DonationsTable from "./DonationsTable";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
@@ -30,7 +30,7 @@ export default function Donations() {
         {(donations) => {
           return (
             <>
-              <div className="flex lg:justify-between lg:items-center justify-center mt-10 lg:mb-6">
+              <div className="flex lg:justify-between lg:items-center justify-center mt-10">
                 <h1 className="text-3xl font-bold">My Donations</h1>
                 <CsvExporter
                   classes="hidden lg:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-[4px] hidden lg:block text-white"
@@ -40,6 +40,28 @@ export default function Donations() {
                 >
                   Export to CSV
                 </CsvExporter>
+              </div>
+              <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
+                <div className="sm:col-span-2 sm:mr-4">
+                  <label htmlFor="search" className="relative">
+                    <Icon
+                      type="Search"
+                      size={24}
+                      className="absolute top-0 ml-3 text-gray-d1"
+                    ></Icon>
+                    <input
+                      className="py-3 pl-11 pr-4 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6"
+                      type="text"
+                      placeholder="Search donations..."
+                    />
+                  </label>
+                </div>
+                <div className="hidden sm:block">
+                  <SearchFilter />
+                </div>
+                <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
+                  <SearchFilter />
+                </div>
               </div>
               <Table donations={donations} />
               <MobileTable donations={donations} />
