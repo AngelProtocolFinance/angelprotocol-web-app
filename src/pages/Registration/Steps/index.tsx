@@ -22,13 +22,13 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
-    return <p className="place-self-center">fetching registration data</p>;
+    return <p className="place-self-center">Fetching registration data..</p>;
   }
 
   if (isError) {
     return (
       <p className="place-self-center">
-        failed to get registration data - please try again later
+        Failed to get registration data - please try again later
       </p>
     );
   }
@@ -81,8 +81,3 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     </div>
   );
 }
-
-/** hold prev id, while still isFetching
- * could just bundle isFetching & isLoading to sync fresh id with
- * loaded data - but this would disrupt UI with "loading" on every save
- */
