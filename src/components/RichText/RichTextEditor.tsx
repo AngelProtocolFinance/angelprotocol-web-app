@@ -1,13 +1,24 @@
 import { ErrorMessage } from "@hookform/error-message";
 import "quill/dist/quill.bubble.css";
-import { FieldValues, Path, useController } from "react-hook-form";
-import RichText, { EditorClasses } from "./RichText";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
+import { Editable, EditorClasses } from "./types";
+import RichText from "./RichText";
 
-export function RichTextEditor<T extends FieldValues>(props: {
-  fieldName: Path<T>;
-  classes?: EditorClasses & { error?: string };
-  placeHolder?: string;
-}) {
+export function RichTextEditor<T extends FieldValues>(
+  props: {
+    fieldName: Path<T>;
+    classes?: EditorClasses & { error?: string };
+  } & Pick<Editable, "charLimit" | "placeHolder">
+) {
+  const {
+    setError,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
   const {
     formState: { errors },
     field: { value, onChange },
@@ -18,8 +29,13 @@ export function RichTextEditor<T extends FieldValues>(props: {
       <RichText
         content={value}
         onChange={onChange}
-        placeHolder={props.placeHolder || ""}
+        onError={(error) => {
+          setError(props.fieldName, { message: error });
+        }}
+        placeHolder={props.placeHolder}
+        charLimit={props.charLimit}
         classes={props.classes}
+        disabled={isSubmitting}
       />
       <ErrorMessage
         errors={errors}

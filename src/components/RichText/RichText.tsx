@@ -1,26 +1,8 @@
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { useCallback, useState } from "react";
+import { Props } from "./types";
 import "./richtext.css";
-
-type ReadOnly = {
-  readOnly: true;
-  onChange?(...event: any[]): never;
-  placeHolder?: never;
-};
-
-type Editable = {
-  readOnly?: never;
-  onChange(...event: any[]): void;
-  placeHolder: string;
-};
-
-export type EditorClasses = { container?: string; charCounter?: string };
-
-type Props = (ReadOnly | Editable) & {
-  content: string;
-  classes?: EditorClasses;
-};
 
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
@@ -59,23 +41,26 @@ export default function RichText(props: Props) {
       }
 
       quill.on("editor-change", function handleChange() {
-        if (!props.onChange) return;
-        const length = quill.getLength();
-        setNumChars(length - 1); //quill content min length is 1
+        //quill content min length is 1
+        const numChars = quill.getLength() - 1;
+        setNumChars(numChars);
+
+        if (props.charLimit && numChars > props.charLimit) {
+          return props.onError(`character limit reached`);
+        }
+
         props.onChange(
           //quill clean state has residual `\n`
-          length <= 1 ? "" : JSON.stringify(quill.getContents())
+          numChars <= 0 ? "" : JSON.stringify(quill.getContents())
         );
       });
-      /**NOTE: `const quill` will be garbage collected when RichText unmounts,
-       * no need to add quill.off cleanup
-       */
     }
     //eslint-disable-next-line
   }, []);
 
   return (
     <div
+      aria-disabled={props.disabled}
       className={`relative ${props.classes?.container || ""} ${
         props.readOnly ? "toolbar-hidden" : ""
       }`}
@@ -91,7 +76,8 @@ export default function RichText(props: Props) {
             props.classes?.charCounter ?? ""
           }`}
         >
-          chars:{numChars}
+          chars : {numChars}
+          {props.charLimit && ` /${props.charLimit}`}
         </span>
       )}
     </div>

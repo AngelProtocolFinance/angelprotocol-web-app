@@ -1,4 +1,4 @@
-import angelProtocolLogo from "assets/images/angelprotocol-logo-white.svg";
+import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
 
 export default function Logo() {
   return (
