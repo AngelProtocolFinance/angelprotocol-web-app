@@ -52,7 +52,7 @@ export default function BookmarkBtn({
       type="button"
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className={`flex items-center gap-1 ${classes ?? ""}`}
+      className={`flex items-center gap-1 ${classes}`}
     >
       <Icon
         type={
