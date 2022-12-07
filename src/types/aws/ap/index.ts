@@ -22,6 +22,7 @@ export type Endowment = {
   image: string;
   tier: EndowmentTier;
   categories: Categories;
+  kyc_donors_only: boolean;
 
   //profile
   overview: string;
