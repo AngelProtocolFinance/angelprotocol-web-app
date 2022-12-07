@@ -51,7 +51,7 @@ export default function Card({
 
 function SDG({ num }: { num: number }) {
   return (
-    <div className="bg-blue-l4 dark:bg-blue-d4 dark:text-white uppercase rounded-full px-2 py-0.5">
+    <div className="bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 dark:text-white uppercase rounded-full px-2 py-0.5">
       SDG #{num}
     </div>
   );
