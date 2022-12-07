@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Endowment } from "types/aws";
 import BookmarkBtn from "components/BookmarkBtn";
+import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 
 export default function Card({
@@ -11,6 +12,7 @@ export default function Card({
   endow_type,
   categories,
   country_of_origin,
+  kyc_donors_only,
 }: Endowment) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
@@ -18,6 +20,13 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
+        {!kyc_donors_only && (
+          <Icon
+            type="AdminPanel"
+            size={20}
+            className="ml-auto mr-3 text-white hover:text-orange cursor-pointer"
+          />
+        )}
         <BookmarkBtn name={name} id={id} logo={logo} classes="text-red" />
       </div>
       <Link

@@ -1,4 +1,5 @@
 export type IconTypes =
+  | "AdminPanel"
   | "Dash"
   | "Discord"
   | "FilterLeft"
