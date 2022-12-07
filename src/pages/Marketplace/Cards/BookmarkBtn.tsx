@@ -26,7 +26,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
 
   const bookMark = data.find((d) => d.id === id);
-  const isBookMarked = bookMark !== undefined;
+  const isBookmarked = bookMark !== undefined;
 
   async function toogleBookmark() {
     if (!wallet) {
@@ -48,7 +48,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
       className={`flex items-center gap-1 ${
-        isBookMarked || isHovered ? "text-red" : "text-white"
+        isBookmarked || isHovered ? "text-red" : "text-white"
       }`}
       onMouseOver={(e) => {
         e.preventDefault();
@@ -63,7 +63,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
         type={
           isToggling
             ? "Loading"
-            : isBookMarked || isHovered
+            : isBookmarked || isHovered
             ? "HeartFill"
             : "HeartOutline"
         }
