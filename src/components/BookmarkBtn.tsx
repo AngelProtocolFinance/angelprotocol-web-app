@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -19,6 +19,8 @@ export default function BookmarkBtn({
   children,
   classes = "",
 }: Props) {
+  const [isHovered, setHovered] = useState(false);
+
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const {
     data = [],
@@ -53,10 +55,22 @@ export default function BookmarkBtn({
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
       className={`flex items-center gap-1 ${classes}`}
+      onMouseOver={(e) => {
+        e.preventDefault();
+        setHovered(true);
+      }}
+      onMouseLeave={(e) => {
+        e.preventDefault();
+        setHovered(false);
+      }}
     >
       <Icon
         type={
-          isToggling ? "Loading" : isBookMarked ? "HeartFill" : "HeartOutline"
+          isToggling
+            ? "Loading"
+            : isBookMarked || isHovered
+            ? "HeartFill"
+            : "HeartOutline"
         }
         className={isToggling ? "animate-spin" : ""}
         size={20}
