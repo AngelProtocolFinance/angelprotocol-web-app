@@ -25,7 +25,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     return (
-      <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+      <ModalContext>
         <ErrorContext>
           <ErrorHandler error={this.state.error}>
             {this.props.children}

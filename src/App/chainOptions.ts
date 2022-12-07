@@ -1,4 +1,5 @@
 import { WalletControllerChainOptions } from "@terra-money/wallet-provider";
+import { IS_TEST } from "constants/env";
 
 /**
  * from: https://assets.terra.money/chains.json
@@ -39,7 +40,7 @@ const chains = {
 };
 
 export const chainOptions: WalletControllerChainOptions = {
-  defaultNetwork: chains.mainnet,
+  defaultNetwork: IS_TEST ? chains.mainnet : chains.testnet,
   walletConnectChainIds: {
     [chains.mainnet.walletconnectID]: chains.mainnet,
     [chains.testnet.walletconnectID]: chains.testnet,

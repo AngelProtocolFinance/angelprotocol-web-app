@@ -21,7 +21,7 @@ type ContextState = {
 };
 
 export default function ModalContext(
-  props: PropsWithChildren<{ backdropClasses: string; id?: string }>
+  props: PropsWithChildren<{ id?: string }>
 ) {
   const [Modal, setModal] = useState<ReactNode>();
   const [isDismissible, setDismissible] = useState(true);
@@ -70,7 +70,7 @@ export default function ModalContext(
         onClose={closeModal}
         className="relative z-50"
       >
-        <div className={props.backdropClasses} aria-hidden="true" />
+        <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
         {Modal /** should always be wrapped with Dialog.Panel */}
       </Dialog>
 
