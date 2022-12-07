@@ -29,7 +29,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           onClick={() => {
             dispatch(reset());
           }}
-          className="text-gray-d1 dark:text-gray-l2 text-xs"
+          className="text-gray-d1 dark:text-gray-l2 text-sm"
         >
           Reset Filters
         </button>
