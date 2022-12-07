@@ -26,9 +26,10 @@ jest.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
+const heroText = /angel protocol redefines/i;
+const loaderTestId = "loader";
+
 describe("App.tsx tests", () => {
-  const bannerText1 = /redefines/i;
-  const loaderTestId = "loader";
   // const governanceLinkText = /governance/i;
 
   window.scrollTo = jest.fn();
@@ -65,7 +66,9 @@ describe("App.tsx tests", () => {
     //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //marketplace is finally loaded
-    expect(await screen.findByText(bannerText1)).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: heroText })
+    ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes to leaderboards
@@ -74,7 +77,6 @@ describe("App.tsx tests", () => {
         name: /leaderboard/i,
       })
     );
-
     //leaderboard is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //leaderboard is finally loaded
@@ -90,7 +92,7 @@ describe("App.tsx tests", () => {
       })
     );
     //marketplace is already lazy loaded on first visit
-    expect(screen.getByText(bannerText1)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: heroText })).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });
