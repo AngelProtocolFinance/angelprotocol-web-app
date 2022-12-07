@@ -2,7 +2,8 @@ import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
 import Search from "./Search";
-import Sorter from "./Sorter";
+
+// import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
   const isFilterOpen = useGetter(
@@ -25,7 +26,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
         <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
       </button>
       <Search classes="order-first col-span-2 md:order-none md:col-span-1" />
-      <Sorter />
+      {/* <Sorter /> */}
     </div>
   );
 }
