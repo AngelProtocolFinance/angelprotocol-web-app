@@ -67,7 +67,7 @@ describe("App.tsx tests", () => {
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //marketplace is finally loaded
     expect(
-      await screen.findByRole("heading", { name: heroText })
+      await screen.findByRole("heading", { name: heroText }, { timeout: 3000 })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
