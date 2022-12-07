@@ -27,7 +27,7 @@ export default function Card({
             className="ml-auto mr-3 text-white hover:text-orange cursor-pointer"
           />
         )}
-        <BookmarkBtn name={name} id={id} logo={logo} classes="text-red" />
+        <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link
         to={`${appRoutes.profile}/${id}`}

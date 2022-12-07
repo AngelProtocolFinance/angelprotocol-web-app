@@ -9,16 +9,9 @@ type Props = PropsWithChildren<{
   id: number;
   name: string;
   logo: string;
-  classes?: string;
 }>;
 
-export default function BookmarkBtn({
-  id,
-  name,
-  logo,
-  children,
-  classes = "",
-}: Props) {
+export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const [isHovered, setHovered] = useState(false);
 
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
@@ -54,7 +47,9 @@ export default function BookmarkBtn({
       type="button"
       onClick={toogleBookmark}
       disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className={`flex items-center gap-1 ${classes}`}
+      className={`flex items-center gap-1 ${
+        isBookMarked || isHovered ? "text-red" : "text-white"
+      }`}
       onMouseOver={(e) => {
         e.preventDefault();
         setHovered(true);
