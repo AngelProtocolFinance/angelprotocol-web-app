@@ -27,6 +27,10 @@ jest.mock("services/aws/leaderboard", () => ({
 }));
 
 const heroText = /angel protocol redefines/i;
+const leadText = /leaderboard/i;
+const marketLink = /marketplace/i;
+const regLink = /register/i;
+const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
 
 describe("App.tsx tests", () => {
@@ -49,17 +53,17 @@ describe("App.tsx tests", () => {
 
     expect(
       screen.getByRole("link", {
-        name: /marketplace/i,
+        name: marketLink,
       })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", {
-        name: /leaderboard/i,
+        name: leadLink,
       })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", {
-        name: /register/i,
+        name: regLink,
       })
     ).toBeInTheDocument();
 
@@ -74,21 +78,47 @@ describe("App.tsx tests", () => {
     //user goes to leaderboards
     fireEvent.click(
       screen.getByRole("link", {
-        name: /leaderboard/i,
+        name: leadLink,
       })
     );
     //leaderboard is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //leaderboard is finally loaded
     expect(
-      await screen.findByRole("heading", { name: /leaderboard/i })
+      await screen.findByRole("heading", { name: leadText })
     ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
+
+    //user goes to registration
+    fireEvent.click(
+      screen.getByRole("link", {
+        name: regLink,
+      })
+    );
+    //registration is being lazy loaded
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
+    //registration is finally loaded
+    expect(
+      await screen.findByRole("heading", {
+        name: /register to angel protocol/i,
+      })
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
+
+    //user goes back to leaderboard
+    fireEvent.click(
+      screen.getByRole("link", {
+        name: leadLink,
+      })
+    );
+    //leaderboard is already lazy loaded on first visit
+    expect(screen.getByRole("heading", { name: leadText })).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
     fireEvent.click(
       screen.getByRole("link", {
-        name: /marketplace/i,
+        name: marketLink,
       })
     );
     //marketplace is already lazy loaded on first visit
