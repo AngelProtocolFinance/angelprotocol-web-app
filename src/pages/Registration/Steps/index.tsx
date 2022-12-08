@@ -22,13 +22,13 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
-    return <p className="place-self-center">Fetching registration data..</p>;
+    return <p className="place-self-center">Fetching registration data...</p>;
   }
 
   if (isError) {
     return (
       <p className="place-self-center">
-        Failed to get registration data - please try again later
+        Failed to get registration data. Please try again later.
       </p>
     );
   }
