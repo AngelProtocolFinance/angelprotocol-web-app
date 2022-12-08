@@ -13,7 +13,7 @@ export default function Tags() {
           Verification required <Icon type="Info" size={24} />
         </Tag>
       )}
-      <Tag>501 (c) Non-profit</Tag>
+      <Tag>Registered Non-Profit</Tag>
       {profile.categories.sdgs.map((unsdg_num) => (
         <Tag key={unsdg_num}>
           SDG #{unsdg_num} : {unsdgs[unsdg_num].title}
