@@ -4,7 +4,7 @@ export default function Newsletter() {
   return (
     <div className="flex flex-col items-center gap-6 w-full px-1 lg:w-full lg:max-w-xs xl:max-w-md">
       <div className="flex flex-col items-center lg:items-start w-[80vw] lg:w-full">
-        <h6 className="font-header font-black text-sm uppercase">
+        <h6 className="font-header font-bold text-sm uppercase">
           Subscribe to our newsletter
         </h6>
         <p className="font-body font-normal text-xs text-center lg:text-left">
