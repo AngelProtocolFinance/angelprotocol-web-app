@@ -24,10 +24,15 @@ export default function Details() {
             {maskAddress(profile.owner, 14)}
           </span>
           <span className="sm:hidden">{maskAddress(profile.owner, 10)}</span>
-          <Copier text={profile.owner} classes="text-2xl" />
-          <ExtLink href={getAddressUrl(CHAIN_ID, profile.owner)}>
-            <Icon type="ExternalLink" className="text-2xl hover:text-orange" />
-          </ExtLink>
+          <span className="flex items-center gap-3">
+            <Copier text={profile.owner} classes="text-lg" />
+            <ExtLink
+              href={getAddressUrl(CHAIN_ID, profile.owner)}
+              className="text-lg"
+            >
+              <Icon type="ExternalLink" className="hover:text-orange" />
+            </ExtLink>
+          </span>
         </span>
       </Detail>
     </>
