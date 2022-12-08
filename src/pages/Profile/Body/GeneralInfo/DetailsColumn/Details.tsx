@@ -25,7 +25,7 @@ export default function Details() {
           </span>
           <span className="sm:hidden">{maskAddress(profile.owner, 10)}</span>
           <span className="flex items-center gap-3">
-            <Copier text={profile.owner} classes="text-[18px]" />
+            <Copier text={profile.owner} classes="text-lg" />
             <ExtLink
               href={getAddressUrl(CHAIN_ID, profile.owner)}
               className="text-[18px]"
