@@ -27,7 +27,7 @@ export default function Prompt({ type, headline, title, children }: Props) {
       </div>
       <Icon
         type={type === "success" ? "CheckCircle" : "ExclamationCircleFill"}
-        size={92}
+        size={type === "success" ? 92 : 80}
         className={`${
           type === "success" ? "text-green" : "text-red"
         } justify-self-center mb-6 sm:mb-8 mt-4 sm:mt-12`}

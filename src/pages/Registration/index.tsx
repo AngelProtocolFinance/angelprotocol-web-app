@@ -11,7 +11,9 @@ const Success = lazy(() => import("./Success"));
 
 export default function Registration() {
   return (
-    <Suspense fallback={<div className="place-self-center">Loading...</div>}>
+    <Suspense
+      fallback={<div className="place-self-center">Loading page...</div>}
+    >
       <Routes>
         <Route
           path={routes.confirmEmail}

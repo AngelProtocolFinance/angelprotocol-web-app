@@ -3,6 +3,8 @@ import { CompleteRegistration } from "pages/Registration/types";
 import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import Prompt from "components/Prompt";
 import { handleMutationResult } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { useRegState, withStepGuard } from "../StepGuard";
@@ -13,6 +15,7 @@ function Dashboard() {
   const { data } = useRegState<4>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
+  const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
 
   const submit = async ({ init }: CompleteRegistration) => {
@@ -21,6 +24,14 @@ function Dashboard() {
         ref: init.reference,
         chain_id: chainIds.juno,
       }),
+      () => {
+        showModal(Prompt, {
+          type: "success",
+          headline: "Submission",
+          title: "Submitted for review",
+          children: <>Your application has been submitted</>,
+        });
+      },
       handleError
     );
   };
