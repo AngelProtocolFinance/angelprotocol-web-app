@@ -28,7 +28,7 @@ export default function Details() {
             <Copier text={profile.owner} classes="text-lg" />
             <ExtLink
               href={getAddressUrl(CHAIN_ID, profile.owner)}
-              className="text-[18px]"
+              className="text-lg"
             >
               <Icon type="ExternalLink" className="hover:text-orange" />
             </ExtLink>
