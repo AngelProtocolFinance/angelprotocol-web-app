@@ -4,6 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
+import Tooltip from "components/Tooltip";
 
 type Props = PropsWithChildren<{
   id: number;
@@ -42,36 +43,41 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
     }
   }
 
+  const anchorId = `btn-${id}`;
+
   return (
-    <button
-      type="button"
-      onClick={toogleBookmark}
-      disabled={isLoading || isFetching || isToggling || isWalletLoading}
-      className={`flex items-center gap-1 ${
-        isBookmarked || isHovered ? "text-red" : "text-white"
-      }`}
-      onMouseOver={(e) => {
-        e.preventDefault();
-        setHovered(true);
-      }}
-      onMouseLeave={(e) => {
-        e.preventDefault();
-        setHovered(false);
-      }}
-    >
-      <Icon
-        type={
-          isToggling
-            ? "Loading"
-            : isBookmarked || isHovered
-            ? "HeartFill"
-            : "HeartOutline"
-        }
-        className={isToggling ? "animate-spin" : ""}
-        size={20}
-        title="Favorite this endowment for faster access from your wallet dropdown menu"
-      />
-      {children}
-    </button>
+    <>
+      <Tooltip anchorId={anchorId} content="Add to favorites" />
+      <button
+        id={anchorId}
+        type="button"
+        onClick={toogleBookmark}
+        disabled={isLoading || isFetching || isToggling || isWalletLoading}
+        className={`flex items-center gap-1 ${
+          isBookmarked || isHovered ? "text-red" : "text-white"
+        }`}
+        onMouseOver={(e) => {
+          e.preventDefault();
+          setHovered(true);
+        }}
+        onMouseLeave={(e) => {
+          e.preventDefault();
+          setHovered(false);
+        }}
+      >
+        <Icon
+          type={
+            isToggling
+              ? "Loading"
+              : isBookmarked || isHovered
+              ? "HeartFill"
+              : "HeartOutline"
+          }
+          className={isToggling ? "animate-spin" : ""}
+          size={20}
+        />
+        {children}
+      </button>
+    </>
   );
 }
