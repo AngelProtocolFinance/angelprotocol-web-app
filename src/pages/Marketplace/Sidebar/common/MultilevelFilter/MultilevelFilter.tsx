@@ -5,7 +5,6 @@ import Group from "./Group";
 type Props<T> = {
   label: string;
   groups: GroupProps<T>[];
-  onChange: (options: T[]) => void;
 };
 
 export function MultilevelFilter<T>(props: Props<T>) {
@@ -27,7 +26,7 @@ export function MultilevelFilter<T>(props: Props<T>) {
               key={group.key}
               label={group.label}
               options={group.options}
-              onChange={props.onChange}
+              onChange={group.onChange}
               selectedValues={group.selectedValues}
             />
           ))}
