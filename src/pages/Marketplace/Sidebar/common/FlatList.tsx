@@ -24,7 +24,7 @@ export function FlatList<T>(props: Props<T>) {
   return (
     <Listbox
       as="div"
-      className="grid gap-4 px-2 py-3 border-b border-gray-l2"
+      className="grid gap-6 px-2 py-3 border-b border-gray-l2"
       multiple
       value={props.selectedValues}
       onChange={props.onChange}
@@ -35,12 +35,12 @@ export function FlatList<T>(props: Props<T>) {
         </span>
       </Drawer>
       {isOpen && (
-        <Listbox.Options static className="grid">
+        <Listbox.Options static className="flex flex-col gap-4">
           {props.options.map(({ value, displayText }) => (
             <Listbox.Option
               value={value}
               key={JSON.stringify(value)}
-              className="flex items-center gap-4 h-12 p-1 text-sm font-normal font-body cursor-pointer capitalize"
+              className="flex items-center gap-4 w-fit h-8 p-1 text-sm font-normal font-body cursor-pointer capitalize"
             >
               {({ selected }) => (
                 <>
