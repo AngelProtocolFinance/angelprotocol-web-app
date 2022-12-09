@@ -1,7 +1,7 @@
 import { CapitalizedEndowmentType } from "types/contracts";
 import { useGetter, useSetter } from "store/accessors";
 import { setTypes } from "slices/components/marketFilter";
-import { FlatList, FlatListOption } from "./common";
+import { FlatFilter, FlatListOption } from "./common";
 
 const options: FlatListOption<CapitalizedEndowmentType>[] = [
   { displayText: "Registered Non-Profit", key: "Charity", value: "Charity" },
@@ -14,7 +14,7 @@ export default function Types() {
   const dispatch = useSetter();
 
   return (
-    <FlatList
+    <FlatFilter
       label="Type"
       selectedValues={types}
       options={options}

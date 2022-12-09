@@ -1,6 +1,6 @@
 import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
-import { FlatList, FlatListOption } from "./common";
+import { FlatFilter, FlatListOption } from "./common";
 
 const options: FlatListOption<boolean>[] = [
   { displayText: "Required", value: true, key: "true" },
@@ -12,7 +12,7 @@ export default function KYCFilter() {
   const dispatch = useSetter();
 
   return (
-    <FlatList
+    <FlatFilter
       label="Donor verification"
       selectedValues={[isKYCOnly]}
       options={options}

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { GroupProps } from "./types";
 import { Checkbox, Drawer } from ".";
 
-export function FlatList<T>(props: GroupProps<T>) {
+export function FlatFilter<T>(props: GroupProps<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
