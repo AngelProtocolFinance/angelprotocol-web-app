@@ -1,0 +1,102 @@
+import { ErrorMessage } from "@hookform/error-message";
+import { useFormContext } from "react-hook-form";
+import { FormValues as FV } from "./types";
+import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
+import Prompt from "components/Prompt";
+import { BtnPrim, BtnSec, TextInput } from "components/gift";
+import { createAuthToken } from "helpers";
+import { appRoutes } from "constants/routes";
+import { APIs } from "constants/urls";
+
+export default function Form({ classes = "" }) {
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { isSubmitting },
+  } = useFormContext<FV>();
+  const { showModal } = useModalContext();
+
+  async function submit(data: FV) {
+    const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
+      method: "POST",
+      headers: { authorization: createAuthToken("angelprotocol-web-app") },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      return showModal(Prompt, {
+        type: "error",
+        headline: "Claim",
+        title: "Failed to claim gift card",
+      });
+    }
+    showModal(Prompt, {
+      type: "success",
+      headline: "Redeem",
+      title: "Giftcard Redeemed Successfully",
+      children: `Giftcard balance has been credited to your account and you can start donating!`,
+    });
+    reset();
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit(submit)}
+      className={`justify-self-center grid padded-container w-full max-w-[32rem] gap-8 ${classes}`}
+      autoComplete="off"
+    >
+      <Icon
+        type="Giftcard"
+        className="bg-green text-white p-5 rounded-full justify-self-center"
+        size={96}
+      />
+      <h3 className="text-center text-3xl font-bold leading-snug">
+        Redeem Angel Protocol Giftcard
+      </h3>
+      <div className="relative grid w-full border border-gray-l2 dark:border-bluegray rounded-lg overflow-clip">
+        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-gray-l2 dark:border-bluegray">
+          Type your giftcard code here:
+        </p>
+        <textarea
+          disabled={isSubmitting}
+          spellCheck={false}
+          autoComplete="off"
+          style={{ resize: "none" }}
+          placeholder="e.g. ap-uni-5-821438429620466130011364269412975309697"
+          {...register("secret")}
+          className="text-lg bg-orange-l6 dark:bg-blue-d6 disabled:bg-gray-l4 disabled:dark:bg-bluegray-d1 focus:outline-none text-center p-6 pb-4 break-all overflow-hidden font-work"
+        />
+        <ErrorMessage
+          name="secret"
+          as="p"
+          className="text-xs text-red dark:text-red-l2 absolute bottom-2 right-2"
+        />
+      </div>
+      <TextInput<FV>
+        placeholder="e.g. juno1akkesf6xfuny3upfaq6yfvefzfr8jt2jfhvlw2"
+        name="recipient"
+        label="Recipient wallet address"
+        classes={{
+          container: "-mt-4",
+          input: "placeholder:text-gray placeholder:dark:text-gray font-work",
+        }}
+      />
+      <BtnSec
+        type="submit"
+        className="sm:mx-32 text-center"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Redeeming..." : "Redeem your giftcard"}
+      </BtnSec>
+      <BtnPrim
+        aria-disabled={isSubmitting}
+        as="link"
+        to={appRoutes.marketplace}
+        className="sm:mx-32 text-center -mt-3 sm:mt-4"
+      >
+        Back to the platform
+      </BtnPrim>
+    </form>
+  );
+}
