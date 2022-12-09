@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Seo from "components/Seo";
 import Signup from "./Signup";
 import routes from "./routes";
 
@@ -14,6 +15,10 @@ export default function Registration() {
     <Suspense
       fallback={<div className="place-self-center">Loading page...</div>}
     >
+      <Seo
+        title="Charity Registration Portal | Angel Protocol"
+        url="https://app.angelprotocol.io/register"
+      />
       <Routes>
         <Route
           path={routes.confirmEmail}
