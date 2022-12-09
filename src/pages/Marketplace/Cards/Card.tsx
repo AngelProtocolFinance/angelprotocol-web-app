@@ -23,7 +23,7 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
-        {!kyc_donors_only && <KYCIcon id={`kyc-icon-${id}`} />}
+        {!kyc_donors_only && <KYCIcon id={id} />}
         <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link
@@ -47,7 +47,7 @@ export default function Card({
         </div>
         <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
           {categories.sdgs.map((s) => (
-            <SDG id={`sdg-${id}-s`} num={s} key={s} />
+            <SDG id={id} num={s} key={s} />
           ))}
         </div>
       </Link>
@@ -55,12 +55,13 @@ export default function Card({
   );
 }
 
-function SDG({ num, id }: { num: UNSDG_NUMS; id: string }) {
+function SDG({ num, id }: { num: UNSDG_NUMS; id: number }) {
+  const anchorId = `sdg-${id}-${num}`;
   return (
     <>
-      <Tooltip anchorId={id} content={unsdgs[num].title} />
+      <Tooltip anchorId={anchorId} content={unsdgs[num].title} />
       <div
-        id={id}
+        id={anchorId}
         className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg"
       >
         SDG #{num}
@@ -69,12 +70,13 @@ function SDG({ num, id }: { num: UNSDG_NUMS; id: string }) {
   );
 }
 
-function KYCIcon({ id }: { id: string }) {
+function KYCIcon({ id }: { id: number }) {
+  const anchorId = `kyc-icon-${id}`;
   return (
     <>
-      <Tooltip anchorId={id} content="Verification Required" />
+      <Tooltip anchorId={anchorId} content="Verification Required" />
       <Icon
-        id={id}
+        id={anchorId}
         type="AdminPanel"
         size={20}
         className="ml-auto mr-3 text-white hover:text-orange cursor-pointer"
