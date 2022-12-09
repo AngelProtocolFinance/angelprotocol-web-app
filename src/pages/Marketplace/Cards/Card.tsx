@@ -40,9 +40,9 @@ export default function Card({
           }}
         />
         <div className="p-3">
-          <h3 className="font-bold dark:text-white">{name}</h3>
-          <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-0.5">
-            {country_of_origin}
+          <h3 className="font-bold">{name}</h3>
+          <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
+            <span className="font-semibold">HQ:</span> {country_of_origin}
           </p>
         </div>
         <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
