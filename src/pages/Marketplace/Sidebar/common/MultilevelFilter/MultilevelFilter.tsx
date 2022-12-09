@@ -15,7 +15,7 @@ export function MultilevelFilter<T>(props: Props<T>) {
   }
 
   return (
-    <div className="grid gap-6 px-2 py-3 border-b border-gray-l2">
+    <div className="grid gap-6 px-2 py-3 border-b border-gray-l2 dark:border-bluegray">
       <Drawer isOpen={isOpen} toggle={toggle}>
         <span className="font-bold text-xs font-heading">{props.label}</span>
       </Drawer>
