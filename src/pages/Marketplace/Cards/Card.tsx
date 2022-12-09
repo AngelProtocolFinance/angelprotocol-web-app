@@ -23,7 +23,7 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
-        {!kyc_donors_only && <KYCIcon id={`${id}`} />}
+        {!kyc_donors_only && <KYCIcon id={`kyc-icon-${id}`} />}
         <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link
