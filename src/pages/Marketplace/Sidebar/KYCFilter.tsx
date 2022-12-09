@@ -1,8 +1,8 @@
 import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
-import { FlatFilter, FlatListOption } from "./common";
+import { FilterOption, FlatFilter } from "./common";
 
-const options: FlatListOption<boolean>[] = [
+const options: FilterOption<boolean>[] = [
   { displayText: "Required", value: true, key: "true" },
   { displayText: "Not Required", value: false, key: "false" },
 ];

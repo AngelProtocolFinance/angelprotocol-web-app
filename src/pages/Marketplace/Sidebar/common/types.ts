@@ -1,4 +1,4 @@
-export type FlatListOption<T> = {
+export type FilterOption<T> = {
   key?: string | number;
   value: T;
   displayText: string;
@@ -8,6 +8,6 @@ export type GroupProps<T> = {
   key?: string | number;
   label: string;
   selectedValues: T[];
-  options: FlatListOption<T>[];
+  options: FilterOption<T>[];
   onChange: (options: T[]) => void;
 };
