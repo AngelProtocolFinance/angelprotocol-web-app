@@ -33,7 +33,7 @@ export default function Card({
         <img
           loading="lazy"
           src={image}
-          className="h-44 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
+          className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           alt=""
           onError={(e) => {
             e.currentTarget.classList.add("bg-blue-l3");
