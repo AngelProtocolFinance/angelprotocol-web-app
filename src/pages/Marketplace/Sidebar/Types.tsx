@@ -1,15 +1,9 @@
 import { CapitalizedEndowmentType } from "types/contracts";
 import { useGetter, useSetter } from "store/accessors";
 import { setTypes } from "slices/components/marketFilter";
-import { FlatList } from "./common";
+import { FlatList, FlatListOption } from "./common";
 
-type Option = {
-  key: CapitalizedEndowmentType;
-  value: CapitalizedEndowmentType;
-  displayText: string;
-};
-
-const options: Option[] = [
+const options: FlatListOption<CapitalizedEndowmentType>[] = [
   { displayText: "Registered Non-Profit", key: "Charity", value: "Charity" },
   { displayText: "Impact For-Profit", key: "Normal", value: "Normal" },
   // { displayText: "Impact Crowdfunding", key: "ic", value: "ic" },

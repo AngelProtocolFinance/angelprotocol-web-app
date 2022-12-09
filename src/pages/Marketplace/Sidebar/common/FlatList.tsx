@@ -2,11 +2,15 @@ import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { Checkbox, Drawer } from ".";
 
-type Option<T> = { key: string | number; value: T; displayText: string };
+export type FlatListOption<T> = {
+  key: string | number;
+  value: T;
+  displayText: string;
+};
 
 type Props<T> = {
   selectedValues: T[];
-  options: Option<T>[];
+  options: FlatListOption<T>[];
   onChange: (options: T[]) => void;
 };
 
