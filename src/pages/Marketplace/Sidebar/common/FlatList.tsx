@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Checkbox, Drawer } from ".";
 
 export type FlatListOption<T> = {
-  key: string | number;
   value: T;
   displayText: string;
 };
@@ -34,10 +33,10 @@ export function FlatList<T>({ selectedValues, options, onChange }: Props<T>) {
       </Drawer>
       {isOpen && (
         <Listbox.Options static className="grid">
-          {options.map(({ key, value, displayText }) => (
+          {options.map(({ value, displayText }) => (
             <Listbox.Option
               value={value}
-              key={key}
+              key={JSON.stringify(value)}
               className="flex items-center gap-4 h-12 p-1 text-sm font-normal font-body cursor-pointer"
             >
               {({ selected }) => (
