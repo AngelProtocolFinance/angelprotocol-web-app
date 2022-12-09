@@ -3,13 +3,12 @@ import { Drawer, GroupProps } from "..";
 import Group from "./Group";
 
 type Props<T> = {
-  key: string | number;
   label: string;
   groups: GroupProps<T>[];
   onChange: (options: T[]) => void;
 };
 
-export default function MultilevelFilter<T>(props: Props<T>) {
+export function MultilevelFilter<T>(props: Props<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
