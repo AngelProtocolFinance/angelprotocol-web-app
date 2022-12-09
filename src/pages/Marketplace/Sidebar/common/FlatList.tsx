@@ -23,18 +23,19 @@ export function FlatList<T>(props: GroupProps<T>) {
           {props.label}
         </span>
       </Drawer>
+
       {isOpen && (
         <Listbox.Options static className="flex flex-col gap-4">
-          {props.options.map(({ key, value, displayText }) => (
+          {props.options.map((option) => (
             <Listbox.Option
-              value={value}
-              key={key}
+              value={option.value}
+              key={option.key}
               className="flex items-center gap-4 w-fit h-8 p-1 text-sm font-normal font-body cursor-pointer capitalize"
             >
               {({ selected }) => (
                 <>
                   <Checkbox checked={selected} readOnly />
-                  {displayText}
+                  {option.displayText}
                 </>
               )}
             </Listbox.Option>
