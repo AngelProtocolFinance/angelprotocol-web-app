@@ -16,7 +16,7 @@ export default function Card({
 }: Endowment) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
-      <div className="absolute top-3 left-3 right-3 flex justify-between">
+      <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between">
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
