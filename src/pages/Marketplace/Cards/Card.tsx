@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Endowment } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { appRoutes } from "constants/routes";
+import { unsdgs } from "constants/unsdgs";
 import BookmarkBtn from "./BookmarkBtn";
 
 export default function Card({
@@ -45,7 +47,7 @@ export default function Card({
         </div>
         <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
           {categories.sdgs.map((s) => (
-            <SDG num={s} key={s} />
+            <SDG id={`sdg-${id}-s`} num={s} key={s} />
           ))}
         </div>
       </Link>
@@ -53,11 +55,17 @@ export default function Card({
   );
 }
 
-function SDG({ num }: { num: number }) {
+function SDG({ num, id }: { num: UNSDG_NUMS; id: string }) {
   return (
-    <div className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg">
-      SDG #{num}
-    </div>
+    <>
+      <Tooltip anchorId={id} content={unsdgs[num].title} />
+      <div
+        id={id}
+        className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg"
+      >
+        SDG #{num}
+      </div>
+    </>
   );
 }
 
