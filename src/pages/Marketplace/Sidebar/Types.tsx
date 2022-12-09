@@ -4,9 +4,9 @@ import { setTypes } from "slices/components/marketFilter";
 import { FlatList, FlatListOption } from "./common";
 
 const options: FlatListOption<CapitalizedEndowmentType>[] = [
-  { displayText: "Registered Non-Profit", key: "Charity", value: "Charity" },
-  { displayText: "Impact For-Profit", key: "Normal", value: "Normal" },
-  // { displayText: "Impact Crowdfunding", key: "ic", value: "ic" },
+  { displayText: "Registered Non-Profit", value: "Charity" },
+  { displayText: "Impact For-Profit", value: "Normal" },
+  // { displayText: "Impact Crowdfunding", value: "ic" },
 ];
 
 export default function Types() {
@@ -15,6 +15,7 @@ export default function Types() {
 
   return (
     <FlatList
+      label="Type"
       selectedValues={types}
       options={options}
       onChange={(types) => dispatch(setTypes(types))}

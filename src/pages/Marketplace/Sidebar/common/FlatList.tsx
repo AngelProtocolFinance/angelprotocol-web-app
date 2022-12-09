@@ -8,12 +8,13 @@ export type FlatListOption<T> = {
 };
 
 type Props<T> = {
+  label: string;
   selectedValues: T[];
   options: FlatListOption<T>[];
   onChange: (options: T[]) => void;
 };
 
-export function FlatList<T>({ selectedValues, options, onChange }: Props<T>) {
+export function FlatList<T>(props: Props<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
@@ -25,19 +26,21 @@ export function FlatList<T>({ selectedValues, options, onChange }: Props<T>) {
       as="div"
       className="grid gap-4 px-2 py-3 border-b border-gray-l2"
       multiple
-      value={selectedValues}
-      onChange={onChange}
+      value={props.selectedValues}
+      onChange={props.onChange}
     >
       <Drawer isOpen={isOpen} toggle={toggle}>
-        <span className="font-bold text-xs font-heading uppercase">Type</span>
+        <span className="font-bold text-xs font-heading uppercase">
+          {props.label}
+        </span>
       </Drawer>
       {isOpen && (
         <Listbox.Options static className="grid">
-          {options.map(({ value, displayText }) => (
+          {props.options.map(({ value, displayText }) => (
             <Listbox.Option
               value={value}
               key={JSON.stringify(value)}
-              className="flex items-center gap-4 h-12 p-1 text-sm font-normal font-body cursor-pointer"
+              className="flex items-center gap-4 h-12 p-1 text-sm font-normal font-body cursor-pointer capitalize"
             >
               {({ selected }) => (
                 <>
