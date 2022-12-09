@@ -45,6 +45,10 @@ export default function Card({
             <span className="font-semibold">HQ:</span> {country_of_origin}
           </p>
         </div>
+        {/* will be uncommented when the "active in countries" field is available */}
+        {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
+          <span className="font-semibold">Active in:</span> {active_in_countries}
+        </p> */}
         <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
           {categories.sdgs.map((s) => (
             <SDG id={id} num={s} key={s} />
