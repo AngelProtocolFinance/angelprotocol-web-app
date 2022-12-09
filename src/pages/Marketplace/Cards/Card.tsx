@@ -39,20 +39,22 @@ export default function Card({
             e.currentTarget.classList.add("bg-blue-l3");
           }}
         />
-        <div className="p-3">
-          <h3 className="font-bold">{name}</h3>
-          <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
-            <span className="font-semibold">HQ:</span> {country_of_origin}
-          </p>
-        </div>
-        {/* will be uncommented when the "active in countries" field is available */}
-        {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
+        <div className="flex flex-col gap-3 h-32 p-3 pb-4">
+          <div>
+            <h3 className="font-bold">{name}</h3>
+            <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
+              <span className="font-semibold">HQ:</span> {country_of_origin}
+            </p>
+          </div>
+          {/* will be uncommented when the "active in countries" field is available */}
+          {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
           <span className="font-semibold">Active in:</span> {active_in_countries}
         </p> */}
-        <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
-          {categories.sdgs.map((s) => (
-            <SDG id={id} num={s} key={s} />
-          ))}
+          <div className="flex text-3xs font-bold uppercase gap-1">
+            {categories.sdgs.map((s) => (
+              <SDG id={id} num={s} key={s} />
+            ))}
+          </div>
         </div>
       </Link>
     </div>
