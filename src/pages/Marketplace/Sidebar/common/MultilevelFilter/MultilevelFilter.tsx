@@ -15,12 +15,12 @@ export function MultilevelFilter<T>(props: Props<T>) {
   }
 
   return (
-    <div className="px-3 pt-3">
-      <Drawer isOpen={isOpen} toggle={toggle} classes="mb-3">
+    <div className="grid gap-6 px-2 py-3 border-b border-gray-l2">
+      <Drawer isOpen={isOpen} toggle={toggle}>
         <span className="font-bold text-xs font-heading">{props.label}</span>
       </Drawer>
       {isOpen && (
-        <div className="grid gap-y-1 max-h-[30rem] overflow-y-auto scroller">
+        <div className="flex flex-col gap-4 max-h-96 overflow-y-auto scroller">
           {props.groups.map((group) => (
             <Group
               key={group.key}

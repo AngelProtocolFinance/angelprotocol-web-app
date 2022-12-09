@@ -4,7 +4,7 @@ import { GroupProps } from "../types";
 import { Checkbox, Drawer } from "..";
 
 export default function Group<T>(props: GroupProps<T>) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const isAllSelected = props.selectedValues.length === props.options.length;
 
@@ -19,17 +19,13 @@ export default function Group<T>(props: GroupProps<T>) {
   return (
     <Listbox
       as="div"
-      className="grid gap-6 px-2 py-3 border-b border-gray-l2"
+      className="grid gap-6"
       multiple
       value={props.selectedValues}
       onChange={props.onChange}
     >
       <div className="flex items-center gap-2">
-        <Checkbox
-          checked={isAllSelected}
-          className="top-0.5"
-          onChange={toggleGroup}
-        />
+        <Checkbox checked={isAllSelected} onChange={toggleGroup} />
 
         <Drawer isOpen={isOpen} toggle={toggle}>
           <span className="font-bold text-xs font-heading capitalize">

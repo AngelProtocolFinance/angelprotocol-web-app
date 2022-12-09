@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { EndowmentsSortKey, SortDirection } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
+import { UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 
@@ -10,7 +11,7 @@ type State = {
   types: CapitalizedEndowmentType[];
   sort?: Sort;
   //geography
-  sdgs: { [idx: number]: number[] };
+  sdgs: { [idx: number]: UNSDG_NUMS[] };
   kycOnly: boolean;
 };
 const initialState: State = {
@@ -33,7 +34,7 @@ const marketFilter = createSlice({
       state,
       {
         payload: { group, sdgs },
-      }: PayloadAction<{ group: number; sdgs: number[] }>
+      }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
     ) => {
       state.sdgs[group] = sdgs;
     },

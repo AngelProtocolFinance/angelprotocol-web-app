@@ -14,7 +14,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d5 dark:text-white overflow-hidden rounded-md content-start min-w-[18rem] bg-gray-l5 ${classes}`}
+      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d5 dark:text-white overflow-hidden rounded-md content-start w-80 bg-gray-l5 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden dark:bg-blue-d7 border-b border-gray-l2">
         <h3 className="text-orange text-lg font-bold uppercase">Filters</h3>
@@ -33,8 +33,8 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
         </button>
       </div>
 
-      <div className="flex px-2">
-        <div className="flex flex-col">
+      <div className="flex w-full px-2">
+        <div className="flex flex-col w-full">
           <Types />
           <KYCFilter />
           <SDGGroups />
