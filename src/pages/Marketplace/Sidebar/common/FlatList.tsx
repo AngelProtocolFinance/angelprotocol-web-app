@@ -1,20 +1,9 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
+import { GroupProps } from "./types";
 import { Checkbox, Drawer } from ".";
 
-export type FlatListOption<T> = {
-  value: T;
-  displayText: string;
-};
-
-type Props<T> = {
-  label: string;
-  selectedValues: T[];
-  options: FlatListOption<T>[];
-  onChange: (options: T[]) => void;
-};
-
-export function FlatList<T>(props: Props<T>) {
+export function FlatList<T>(props: GroupProps<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
