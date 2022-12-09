@@ -20,13 +20,7 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
-        {!kyc_donors_only && (
-          <Icon
-            type="AdminPanel"
-            size={20}
-            className="ml-auto mr-3 text-white hover:text-orange cursor-pointer"
-          />
-        )}
+        {!kyc_donors_only && <KYCIcon />}
         <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link
@@ -63,5 +57,15 @@ function SDG({ num }: { num: number }) {
     <div className="bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 dark:text-white uppercase rounded-full px-2 py-0.5">
       SDG #{num}
     </div>
+  );
+}
+
+function KYCIcon() {
+  return (
+    <Icon
+      type="AdminPanel"
+      size={20}
+      className="ml-auto mr-3 text-white hover:text-orange cursor-pointer"
+    />
   );
 }
