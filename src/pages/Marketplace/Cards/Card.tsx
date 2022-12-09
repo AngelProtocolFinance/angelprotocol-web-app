@@ -43,7 +43,7 @@ export default function Card({
             {country_of_origin}
           </p>
         </div>
-        <div className="flex text-2xs font-bold px-3 pb-3 gap-1">
+        <div className="flex text-3xs font-bold uppercase px-3 pb-3 gap-1">
           {categories.sdgs.map((s) => (
             <SDG num={s} key={s} />
           ))}
@@ -55,7 +55,7 @@ export default function Card({
 
 function SDG({ num }: { num: number }) {
   return (
-    <div className="bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 dark:text-white uppercase rounded-full px-2 py-0.5">
+    <div className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg">
       SDG #{num}
     </div>
   );
