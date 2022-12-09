@@ -16,7 +16,7 @@ export default function Registration() {
       fallback={<div className="place-self-center">Loading page...</div>}
     >
       <Seo
-        title="Charity Registration Portal | Angel Protocol"
+        title="Registration Portal - Angel Protocol"
         url="https://app.angelprotocol.io/register"
       />
       <Routes>
