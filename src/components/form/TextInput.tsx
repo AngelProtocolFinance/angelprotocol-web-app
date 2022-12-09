@@ -6,7 +6,7 @@ import { Label } from "./";
 
 export type TextInputProps<T extends FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "autoComplete" | "className" | "name" | "id"
+  "autoComplete" | "className" | "name" | "id" | "spellCheck"
 > & {
   name: Path<T>;
   classes?: Classes;
@@ -40,6 +40,7 @@ export function TextInput<T extends FieldValues>({
         type={type}
         className={classes?.input}
         autoComplete="off"
+        spellCheck={false}
       />
       <ErrorMessage
         errors={errors}
