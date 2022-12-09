@@ -47,11 +47,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
 
   return (
     <>
-      <Tooltip
-        anchorId={anchorId}
-        content="Add to favorites"
-        isShown={isHovered}
-      />
+      <Tooltip anchorId={anchorId} content="Add to favorites" />
       <button
         id={anchorId}
         type="button"

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { logger } from "helpers";
 
-type Props = { anchorId: string; content: string; isShown?: true | boolean };
+type Props = { anchorId: string; content: string };
 
-export default function Tooltip({ anchorId, content, isShown }: Props) {
+export default function Tooltip({ anchorId, content }: Props) {
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
+  const [isHovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (!anchorId) {
@@ -22,9 +23,19 @@ export default function Tooltip({ anchorId, content, isShown }: Props) {
 
     setTop(pos.top);
     setLeft(pos.left);
+
+    const handleMouseEnter = () => setHovered(true);
+    const handleMouseLeave = () => setHovered(false);
+    anchor.addEventListener("mouseenter", handleMouseEnter);
+    anchor.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      anchor.removeEventListener("mouseenter", handleMouseEnter);
+      anchor.removeEventListener("mouseleave", handleMouseLeave);
+    };
   }, [anchorId]);
 
-  if (!isShown) {
+  if (!isHovered) {
     return null;
   }
 
