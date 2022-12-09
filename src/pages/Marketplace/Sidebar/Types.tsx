@@ -25,31 +25,27 @@ export default function Types() {
   return (
     <Listbox
       as="div"
-      className="px-3 pt-3"
+      className="grid gap-4 px-2 py-3 border-b border-gray-l2"
       multiple
       value={types}
-      onChange={(types: CapitalizedEndowmentType[]) => {
-        dispatch(setTypes(types));
-      }}
+      onChange={(types: CapitalizedEndowmentType[]) =>
+        dispatch(setTypes(types))
+      }
     >
       <Drawer isOpen={isOpen} toggle={toggle}>
-        <span className="font-bold text-xs font-heading">Type</span>
+        <span className="font-bold text-xs font-heading uppercase">Type</span>
       </Drawer>
       {isOpen && (
-        <Listbox.Options static className="py-4 grid gap-4">
+        <Listbox.Options static className="grid">
           {options.map(({ type, name }) => (
             <Listbox.Option
               value={type}
               key={type}
-              className="gap-1 text-sm cursor-pointer"
+              className="flex items-center gap-4 h-12 p-1 text-sm font-normal font-body cursor-pointer"
             >
               {({ selected }) => (
                 <>
-                  <Checkbox
-                    checked={selected}
-                    className="mr-4 top-[3px]"
-                    readOnly
-                  />
+                  <Checkbox checked={selected} readOnly />
                   {name}
                 </>
               )}
