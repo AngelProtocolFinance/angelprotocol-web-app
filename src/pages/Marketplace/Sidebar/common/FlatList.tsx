@@ -25,10 +25,10 @@ export function FlatList<T>(props: GroupProps<T>) {
       </Drawer>
       {isOpen && (
         <Listbox.Options static className="flex flex-col gap-4">
-          {props.options.map(({ value, displayText }) => (
+          {props.options.map(({ key, value, displayText }) => (
             <Listbox.Option
               value={value}
-              key={JSON.stringify(value)}
+              key={key}
               className="flex items-center gap-4 w-fit h-8 p-1 text-sm font-normal font-body cursor-pointer capitalize"
             >
               {({ selected }) => (

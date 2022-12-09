@@ -3,8 +3,8 @@ import { setKYCOnly } from "slices/components/marketFilter";
 import { FlatList, FlatListOption } from "./common";
 
 const options: FlatListOption<boolean>[] = [
-  { displayText: "Required", value: true },
-  { displayText: "Not Required", value: false },
+  { displayText: "Required", value: true, key: "true" },
+  { displayText: "Not Required", value: false, key: "false" },
 ];
 
 export default function KYCFilter() {
