@@ -36,7 +36,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
       <div className="flex px-2">
         <div className="flex flex-col">
           <Types />
-          <KYCFilter classes="ml-3 mt-3" />
+          <KYCFilter />
           <SDGGroups />
         </div>
       </div>
