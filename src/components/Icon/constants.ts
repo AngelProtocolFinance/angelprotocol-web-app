@@ -69,6 +69,7 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdCardGiftcard,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
   MdOutlineContentCopy,
@@ -161,4 +162,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   MapPin: RiMapPin2Line,
   Dash: GoDash,
   FatArrowDownload: IoMdDownload,
+  Giftcard: MdCardGiftcard,
 };
