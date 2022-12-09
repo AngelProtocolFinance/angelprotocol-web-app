@@ -47,7 +47,7 @@ export default function Card({
             </p>
           </div>
           {/* will be uncommented when the "active in countries" field is available */}
-          {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
+          {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm">
           <span className="font-semibold">Active in:</span> {active_in_countries}
         </p> */}
           <div className="flex text-3xs font-bold uppercase gap-1">
