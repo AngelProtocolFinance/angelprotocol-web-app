@@ -1,4 +1,4 @@
-import { Donation, ReceiptPayload } from "types/aws";
+import { Donation, FilterQuery, ReceiptPayload } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
@@ -25,15 +25,15 @@ const donations_api = apes.injectEndpoints({
         };
       },
     }),
-    donations: builder.query<
-      Donation[],
-      { id: string | number /** TODO: use key when bug is removed in AWS */ }
-    >({
+    donations: builder.query<Donation[], FilterQuery>({
       providesTags: [{ type: apesTags.donations }],
-      query: ({ id }) => ({
-        url: `v2/donation/${id}${IS_TEST ? "/testnet" : ""}`,
-        // headers: { key },
-      }),
+      query: ({ id, ...rest }) => {
+        // remove the undefined params from the rest
+        return {
+          url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+          params: rest,
+        };
+      },
       transformResponse(res: DonationResult) {
         return res.Items;
       },

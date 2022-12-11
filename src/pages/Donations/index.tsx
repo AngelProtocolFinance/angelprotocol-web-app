@@ -1,21 +1,36 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Donation } from "types/aws";
+import { Donation, FilterQuery } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import MobileTable from "./MobileTable";
-import SearchFilter from "./SearchFilter";
 import Table from "./Table";
+import SearchFilter from "./filter/SearchFilter";
 
+type Filters = {
+  transactionDate?: [Date, Date];
+  network?: string;
+  currency?: string;
+  status?: string;
+};
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
-  const queryState = useDonationsQuery(
-    { id: address! },
-    {
-      skip: !address,
-    }
-  );
+  const [filterValues, setFilterValues] = useState<FilterQuery>({
+    id: address,
+  });
+  const queryState = useDonationsQuery(filterValues, {
+    skip: !address,
+  });
+
+  useEffect(() => {
+    console.log(filterValues);
+  }, [filterValues]);
+
+  const updateFilterValues = (values: Filters) => {
+    setFilterValues({ ...filterValues, ...values });
+  };
 
   return (
     <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
@@ -57,10 +72,10 @@ export default function Donations() {
                   </label>
                 </div>
                 <div className="hidden sm:block">
-                  <SearchFilter />
+                  <SearchFilter updateFilterValues={updateFilterValues} />
                 </div>
                 <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
-                  <SearchFilter />
+                  <SearchFilter updateFilterValues={updateFilterValues} />
                 </div>
               </div>
               <Table donations={donations} />

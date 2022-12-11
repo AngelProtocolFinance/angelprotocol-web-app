@@ -53,6 +53,14 @@ type FiatTx = TxBase & {
   paymentMethod: string;
 };
 
+export type FilterQuery = {
+  id: string | undefined;
+  transactionDate?: [Date, Date];
+  network?: string;
+  currency?: string;
+  status?: string;
+};
+
 type TxDetails = FiatTx | CryptoTx;
 
 export type TxLogPayload = TxDetails & { kycData?: KYCData };
