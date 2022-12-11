@@ -13,11 +13,11 @@ function Footer() {
 
       <Separator />
 
-      <section className="padded-container flex flex-col items-center gap-2 w-full py-4">
+      <section className="padded-container flex flex-col items-center gap-2 w-full pt-6 pb-12">
         <Socials />
         <p className="font-body font-normal text-white text-center text-2xs uppercase">
           Copyright {new Date().getFullYear()} Angel Protocol. All rights
-          reserved
+          reserved.
         </p>
       </section>
     </footer>
@@ -26,4 +26,4 @@ function Footer() {
 
 export default memo(Footer);
 
-const Separator = () => <div className="w-full h-px bg-gray-l2" />;
+const Separator = () => <div className="w-[97vw] h-px bg-gray-l2" />;

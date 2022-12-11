@@ -95,7 +95,7 @@ export const SECTIONS_DATA: Section[] = [
     title: "Docs",
     links: [
       { text: "Litepaper", href: LITEPAPER },
-      { text: "FAQs (coming soon)" },
+      { text: "FAQs", href: "https://intercom.help/angel-protocol/en" },
       { text: "Technical doc (coming soon)" },
     ],
   },
@@ -105,6 +105,10 @@ export const SECTIONS_DATA: Section[] = [
       {
         text: "Privacy policy",
         href: "https://angelprotocol.io/privacy-policy/",
+      },
+      {
+        text: "Terms of Use",
+        href: "https://angelprotocol.io/terms-of-use/",
       },
     ],
   },
