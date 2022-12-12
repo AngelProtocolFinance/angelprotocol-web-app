@@ -8,12 +8,9 @@ import { schema } from "./schema";
 
 export default function Mailer({ classes = "" }) {
   const { state } = useLocation();
-  console.log(state);
   let _state = state as { secret: string } | null;
 
   const methods = useForm<FormValues>({
-    mode: "onChange",
-    reValidateMode: "onChange",
     defaultValues: {
       recipient: { name: "", email: "" },
       message: "",

@@ -46,7 +46,7 @@ function Detail(props: PropsWithChildren<{ title: string }>) {
         {props.title}
       </h6>
       <span className="font-body font-normal text-base text-gray-d1 dark:text-gray">
-        {props.children || "no data"}
+        {props.children || "-"}
       </span>
     </div>
   );

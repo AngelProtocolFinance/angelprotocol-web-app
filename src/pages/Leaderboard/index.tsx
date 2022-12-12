@@ -1,4 +1,5 @@
 import { useLeaderboardsQuery } from "services/aws/leaderboard";
+import Seo from "components/Seo";
 import { QueryLoader } from "components/admin";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
@@ -8,6 +9,10 @@ export default function Leaderboard() {
 
   return (
     <section className="padded-container grid content-start mt-8 pb-16 font-work">
+      <Seo
+        title="Leaderboad - Angel Protocol"
+        url="https://app.angelprotocol.io/leaderboard"
+      />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl font-bold">Leaderboard</h3>
       <QueryLoader
