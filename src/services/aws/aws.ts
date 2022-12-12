@@ -39,20 +39,7 @@ export const aws = createApi({
       query: (paramsObj) => {
         const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
-        const selectedSDGs = Object.entries(paramsObj.sdgGroups).flatMap(
-          ([, members]) => members
-        );
-
-        const params: EndowmentsQueryParams = {
-          query: paramsObj.query || "matchall",
-          sort: paramsObj.sort
-            ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
-            : "default",
-          endow_types: paramsObj.endow_types.join(",") || undefined,
-          tiers: paramsObj.tiers.join(",") || undefined,
-          sdgs: selectedSDGs.join(",") || undefined,
-          kyc_only: paramsObj.kyc_only.join(",") || undefined,
-        };
+        const params: EndowmentsQueryParams = getParams(paramsObj);
 
         return { url: `/v2/endowments/${network}`, params };
       },
@@ -99,3 +86,22 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
+
+function getParams(paramsObj: EndowmentsQueryRequest): EndowmentsQueryParams {
+  const selectedSDGs = Object.entries(paramsObj.sdgGroups).flatMap(
+    ([, members]) => members
+  );
+
+  const params: EndowmentsQueryParams = {
+    query: paramsObj.query || "matchall",
+    sort: paramsObj.sort
+      ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
+      : "default",
+    endow_types: paramsObj.endow_types.join(",") || undefined,
+    tiers: paramsObj.tiers.join(",") || undefined,
+    sdgs: selectedSDGs.join(",") || undefined,
+    kyc_only: paramsObj.kyc_only.join(",") || undefined,
+  };
+
+  return params;
+}
