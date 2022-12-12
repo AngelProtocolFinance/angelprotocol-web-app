@@ -14,7 +14,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d5 dark:text-white overflow-hidden rounded-md content-start md:w-80 bg-gray-l5 ${classes}`}
+      className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d5 dark:text-white overflow-y-auto md:overflow-hidden rounded-md content-start md:w-80 bg-gray-l5 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l2">
         <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
