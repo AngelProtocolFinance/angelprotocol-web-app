@@ -7,7 +7,8 @@ import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
-import AmountOptions from "./AmountOptions";
+
+// import AmountOptions from "./AmountOptions";
 
 export default function Form() {
   const {
@@ -33,7 +34,7 @@ export default function Form() {
       autoComplete="off"
     >
       <Amount />
-      <AmountOptions classes="mt-3" />
+      {/*<AmountOptions classes="mt-3" />*/}
       <AdvancedOptions classes="mt-10" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
