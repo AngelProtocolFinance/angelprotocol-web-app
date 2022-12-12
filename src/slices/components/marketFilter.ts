@@ -45,7 +45,7 @@ export const SDG_GROUPS: {
 type State = {
   isOpen: boolean;
   searchText: string;
-  types: CapitalizedEndowmentType[];
+  endow_types: CapitalizedEndowmentType[];
   sort?: Sort;
   //geography
   sdgs: { [idx: number]: UNSDG_NUMS[] };
@@ -59,7 +59,7 @@ const initialState: State = {
   ),
   isOpen: false,
   searchText: "",
-  types: ["Charity", "Normal"],
+  endow_types: ["Charity", "Normal"],
   kycOnly: [true, false],
   tiers: ["Level3"],
 };
@@ -93,7 +93,7 @@ const marketFilter = createSlice({
       state,
       { payload }: PayloadAction<CapitalizedEndowmentType[]>
     ) => {
-      state.types = payload;
+      state.endow_types = payload;
     },
     toggle(state) {
       state.isOpen = !state.isOpen;

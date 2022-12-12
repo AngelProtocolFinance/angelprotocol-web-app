@@ -10,7 +10,9 @@ const options: FilterOption<CapitalizedEndowmentType>[] = [
 ];
 
 export default function Types() {
-  const { types } = useGetter((state) => state.component.marketFilter);
+  const { endow_types: types } = useGetter(
+    (state) => state.component.marketFilter
+  );
   const dispatch = useSetter();
 
   return (

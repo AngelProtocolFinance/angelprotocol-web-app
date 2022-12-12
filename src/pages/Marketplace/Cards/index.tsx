@@ -9,7 +9,7 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, sort, searchText, kycOnly, tiers } = useGetter(
+  const { sdgs, endow_types, sort, searchText, kycOnly, tiers } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -18,7 +18,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_type: types.join(",") || undefined,
+    endow_types: endow_types.join(",") || undefined,
     tier: tiers.join(","),
     sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
     kyc_only: kycOnly.join(",") || undefined,
