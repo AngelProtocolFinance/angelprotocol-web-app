@@ -9,7 +9,7 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, types, sort, searchText, kycOnly } = useGetter(
+  const { sdgs, types, sort, searchText, kycOnly, tiers } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -19,7 +19,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_type: types.join(",") || undefined,
-    tier: "Level3",
+    tier: tiers.join(","),
     sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
     kyc_only: kycOnly.join(",") || undefined,
   });

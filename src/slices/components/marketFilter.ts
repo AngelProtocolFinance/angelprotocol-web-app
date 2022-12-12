@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { EndowmentsSortKey, SortDirection } from "types/aws";
-import { CapitalizedEndowmentType } from "types/contracts";
+import { CapitalizedEndowmentType, EndowmentTier } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
@@ -50,6 +50,7 @@ type State = {
   //geography
   sdgs: { [idx: number]: UNSDG_NUMS[] };
   kycOnly: boolean[];
+  tiers: Exclude<EndowmentTier, "Level1">[];
 };
 const initialState: State = {
   sdgs: SDG_GROUPS.reduce(
@@ -60,6 +61,7 @@ const initialState: State = {
   searchText: "",
   types: ["Charity", "Normal"],
   kycOnly: [true, false],
+  tiers: ["Level3"],
 };
 
 const marketFilter = createSlice({
