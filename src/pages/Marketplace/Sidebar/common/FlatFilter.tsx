@@ -13,7 +13,7 @@ export function FlatFilter<T>(props: GroupProps<T>) {
   return (
     <Listbox
       as="div"
-      className="grid gap-6 px-2 py-3 border-b border-gray-l2 dark:border-bluegray"
+      className="grid gap-6 px-2 py-4 border-b border-gray-l2 dark:border-bluegray"
       multiple
       value={props.selectedValues}
       onChange={props.onChange}

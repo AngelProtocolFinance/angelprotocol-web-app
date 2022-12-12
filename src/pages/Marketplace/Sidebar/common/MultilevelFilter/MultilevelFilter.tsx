@@ -17,7 +17,7 @@ export function MultilevelFilter<T>(props: Props<T>) {
 
   return (
     <div
-      className={`grid gap-6 px-2 py-3 ${
+      className={`grid gap-6 px-2 py-4 ${
         props.hideBottomBorder
           ? ""
           : "border-b border-gray-l2 dark:border-bluegray"
