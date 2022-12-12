@@ -12,14 +12,14 @@ type State = {
   sort?: Sort;
   //geography
   sdgs: { [idx: number]: UNSDG_NUMS[] };
-  kycOnly: boolean;
+  kycOnly: boolean[];
 };
 const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
   isOpen: false,
   searchText: "",
   types: ["Charity", "Normal"],
-  kycOnly: false,
+  kycOnly: [true, false],
 };
 
 const marketFilter = createSlice({
@@ -41,7 +41,7 @@ const marketFilter = createSlice({
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
     },
-    setKYCOnly: (state, { payload }: PayloadAction<boolean>) => {
+    setKYCOnly: (state, { payload }: PayloadAction<boolean[]>) => {
       state.kycOnly = payload;
     },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {

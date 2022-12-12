@@ -49,7 +49,7 @@ export type EndowmentsQueryParams = {
   endow_type?: string; // comma separated CapitalizedEndowmentType values
   sdgs?: string; // comma separated sdg values
   tier?: Exclude<EndowmentTier, "Level1">; //for now
-  kyc_only?: boolean;
+  kyc_only?: string; // comma separated boolean values
 };
 
 export interface LeaderboardEntry {

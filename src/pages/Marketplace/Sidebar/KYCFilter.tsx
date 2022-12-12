@@ -8,15 +8,15 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function KYCFilter() {
-  const isKYCOnly = useGetter((state) => state.component.marketFilter.kycOnly);
+  const kycOnly = useGetter((state) => state.component.marketFilter.kycOnly);
   const dispatch = useSetter();
 
   return (
     <FlatFilter
       label="Donor verification"
-      selectedValues={[isKYCOnly]}
+      selectedValues={kycOnly}
       options={options}
-      onChange={() => dispatch(setKYCOnly(!isKYCOnly))}
+      onChange={(options) => dispatch(setKYCOnly(options))}
     />
   );
 }
