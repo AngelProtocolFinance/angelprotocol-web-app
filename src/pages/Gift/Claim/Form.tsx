@@ -2,10 +2,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
-import { BtnPrim, BtnSec, TextInput } from "components/gift";
+import { BtnPrim, BtnSec } from "components/gift";
 import { createAuthToken } from "helpers";
+import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
@@ -17,12 +19,18 @@ export default function Form({ classes = "" }) {
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
+  const { wallet } = useGetWallet();
 
   async function submit(data: FV) {
     const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
       method: "POST",
       headers: { authorization: createAuthToken("angelprotocol-web-app") },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        secret: data.secret,
+        /** restricted by submit button */
+        recipient: wallet?.address,
+        chain: wallet?.chain.chain_id,
+      }),
     });
     if (!res.ok) {
       return showModal(Prompt, {
@@ -73,21 +81,20 @@ export default function Form({ classes = "" }) {
           className="text-xs text-red dark:text-red-l2 absolute bottom-2 right-2"
         />
       </div>
-      <TextInput<FV>
-        placeholder="e.g. juno1akkesf6xfuny3upfaq6yfvefzfr8jt2jfhvlw2"
-        name="recipient"
-        label="Recipient wallet address"
-        classes={{
-          container: "-mt-4",
-          input: "placeholder:text-gray placeholder:dark:text-gray font-work",
-        }}
-      />
       <BtnSec
         type="submit"
         className="sm:mx-32 text-center"
-        disabled={isSubmitting}
+        disabled={
+          isSubmitting || !wallet || wallet.chain.chain_id !== chainIds.juno
+        }
       >
-        {isSubmitting ? "Redeeming..." : "Redeem your giftcard"}
+        {isSubmitting
+          ? "Redeeming..."
+          : !wallet
+          ? "Connect wallet to claim"
+          : wallet.chain.chain_id !== chainIds.juno
+          ? "Kindly connect Keplr wallet"
+          : "Redeem your giftcard"}
       </BtnSec>
       <BtnPrim
         aria-disabled={isSubmitting}
