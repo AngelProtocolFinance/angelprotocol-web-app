@@ -24,11 +24,11 @@ export default function Group<T>(props: GroupProps<T>) {
       value={props.selectedValues}
       onChange={props.onChange}
     >
-      <div className="flex items-center gap-4 h-8 p-1 text-sm font-bold font-body cursor-pointer capitalize">
+      <div className="flex items-center gap-4 h-8 p-1 cursor-pointer">
         <Checkbox checked={isAllSelected} onChange={toggleGroup} />
 
         <Drawer isOpen={isOpen} toggle={toggle}>
-          <span className="font-bold text-sm font-heading capitalize">
+          <span className="text-sm font-bold font-body capitalize">
             {props.label}
           </span>
         </Drawer>
