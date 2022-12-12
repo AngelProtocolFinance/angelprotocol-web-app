@@ -48,7 +48,7 @@ export type EndowmentsQueryParams = {
   start?: number; //to load next page, set start to ItemCutOff + 1
   endow_types?: string; // comma separated CapitalizedEndowmentType values
   sdgs?: string; // comma separated sdg values
-  tier?: string; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  tiers?: string; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only?: string; // comma separated boolean values
 };
 

@@ -19,7 +19,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || undefined,
-    tier: tiers.join(","),
+    tiers: tiers.join(","),
     sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
     kyc_only: kycOnly.join(",") || undefined,
   });
