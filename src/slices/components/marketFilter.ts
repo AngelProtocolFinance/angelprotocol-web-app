@@ -5,6 +5,43 @@ import { UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 
+export const SDG_GROUPS: {
+  key: number;
+  label: string;
+  options: UNSDG_NUMS[];
+}[] = [
+  {
+    key: 1,
+    label: "Reducing overall inequality",
+    options: [1, 2, 10],
+  },
+  {
+    key: 2,
+    label: "Access to safe conditions",
+    options: [3, 6, 7],
+  },
+  {
+    key: 3,
+    label: "Sustainable growth",
+    options: [8, 9, 16],
+  },
+  {
+    key: 4,
+    label: "Equality through education",
+    options: [4, 5],
+  },
+  {
+    key: 5,
+    label: "Sustainable partnerships",
+    options: [11, 12, 17],
+  },
+  {
+    key: 6,
+    label: "Holistic climate action",
+    options: [13, 14, 15],
+  },
+];
+
 type State = {
   isOpen: boolean;
   searchText: string;
@@ -15,7 +52,10 @@ type State = {
   kycOnly: boolean[];
 };
 const initialState: State = {
-  sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
+  sdgs: SDG_GROUPS.reduce(
+    (prev, curr) => ({ ...prev, [curr.key]: [...curr.options] }),
+    {} as { [idx: number]: UNSDG_NUMS[] }
+  ),
   isOpen: false,
   searchText: "",
   types: ["Charity", "Normal"],
