@@ -28,7 +28,6 @@ const donations_api = apes.injectEndpoints({
     donations: builder.query<Donation[], FilterQuery>({
       providesTags: [{ type: apesTags.donations }],
       query: ({ id, ...rest }) => {
-        // remove the undefined params from the rest
         return {
           url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
           params: rest,

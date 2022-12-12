@@ -7,6 +7,7 @@ export type Donation = {
   hash: string;
   id: string; // charity ID
   symbol: string;
+  usdValue: number;
   kycData?: KYCData;
 };
 
@@ -53,12 +54,17 @@ type FiatTx = TxBase & {
   paymentMethod: string;
 };
 
+export type Filters = {
+  transactionDate?: string;
+  chainName?: string;
+  currency?: string;
+};
+
 export type FilterQuery = {
   id: string | undefined;
-  transactionDate?: [Date, Date];
-  network?: string;
+  transactionDate?: string;
+  chainName?: string;
   currency?: string;
-  status?: string;
 };
 
 type TxDetails = FiatTx | CryptoTx;

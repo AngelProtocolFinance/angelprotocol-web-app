@@ -1,25 +1,11 @@
 import { Listbox, Popover } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Filters } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { FormValues } from "./schema";
-
-const networks = [
-  { id: 1, name: "Juno Testnet" },
-  { id: 2, name: "Another Network" },
-];
-
-const currencies = [
-  { id: 1, name: "USD" },
-  { id: 2, name: "EUR" },
-];
-
-const allStatus = [
-  { id: 1, name: "Received" },
-  { id: 2, name: "Not Received" },
-];
 
 const SearchFilter = ({
   updateFilterValues,
@@ -28,7 +14,6 @@ const SearchFilter = ({
 }) => {
   const [selectedNetwork, setSelectedNetwork] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
-  const [selectedStatus, setSelectedStatus] = useState(null);
   const { handleError } = useErrorContext();
   const {
     handleSubmit,
@@ -39,14 +24,32 @@ const SearchFilter = ({
     reValidateMode: "onSubmit",
   });
 
+  useEffect(() => {
+    console.log(selectedNetwork);
+  }, [selectedNetwork]);
+
   async function submit(data: FormValues) {
-    const filters = {
-      transactionDate: [data.startDate, data.endDate],
-      network: selectedNetwork || undefined,
-      currency: selectedCurrency || undefined,
-      status: selectedStatus || undefined,
+    const filters: Filters = {
+      transactionDate: "",
+      chainName: "",
+      currency: "",
     };
-    updateFilterValues(filters);
+
+    !data.startDate || !data.endDate
+      ? delete filters.transactionDate
+      : (filters.transactionDate = `${data.startDate.toUTCString()} ${data.endDate.toUTCString()}`);
+    !selectedNetwork
+      ? delete filters.chainName
+      : (filters.chainName = selectedNetwork);
+    !selectedCurrency
+      ? delete filters.currency
+      : (filters.currency = selectedCurrency);
+
+    console.log(filters);
+
+    if (!isEmpty(filters)) {
+      updateFilterValues(filters);
+    }
   }
 
   return (
@@ -132,26 +135,6 @@ const SearchFilter = ({
                       {currencies.map((currency) => (
                         <Listbox.Option key={currency.id} value={currency}>
                           {currency.name}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Listbox>
-                </div>
-                <div className="flex flex-col text-gray-d2 gap-2">
-                  <label className="dark:text-white">Status</label>
-                  <Listbox>
-                    <Listbox.Button
-                      className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                      }
-                    >
-                      <div className="text-gray-l2">Select status...</div>
-                      <Icon type="ArrowDown" size={30}></Icon>
-                    </Listbox.Button>
-                    <Listbox.Options>
-                      {allStatus.map((status) => (
-                        <Listbox.Option key={status.id} value={status}>
-                          {status.name}
                         </Listbox.Option>
                       ))}
                     </Listbox.Options>
@@ -260,30 +243,6 @@ const SearchFilter = ({
                         </Listbox.Options>
                       </Listbox>
                     </div>
-                    <div className="flex flex-col text-gray-d2 gap-2">
-                      <label className="dark:text-white">Status</label>
-                      <Listbox
-                        value={selectedStatus}
-                        onChange={setSelectedStatus}
-                        name="status"
-                      >
-                        <Listbox.Button
-                          className={
-                            "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                          }
-                        >
-                          <div className="text-gray-l2">Select status...</div>
-                          <Icon type="ArrowDown" size={30}></Icon>
-                        </Listbox.Button>
-                        <Listbox.Options>
-                          {allStatus.map((status) => (
-                            <Listbox.Option key={status.id} value={status}>
-                              {status.name}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Listbox>
-                    </div>
                   </div>
                   <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
                     <a href="#" className="text-orange underline">
@@ -306,3 +265,17 @@ const SearchFilter = ({
   );
 };
 export default SearchFilter;
+
+const networks = [
+  { id: 1, name: "Juno Testnet" },
+  { id: 2, name: "Another Network" },
+];
+
+const currencies = [
+  { id: 1, name: "USD" },
+  { id: 2, name: "EUR" },
+];
+
+function isEmpty(obj: Object) {
+  return Object.keys(obj).length === 0;
+}

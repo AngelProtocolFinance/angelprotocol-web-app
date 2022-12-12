@@ -32,6 +32,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
             date,
             chainName,
             charityName,
+            usdValue,
             id: charityId,
           },
           index
@@ -82,11 +83,11 @@ export default function MobileTable(props: { donations: Donation[] }) {
                   <Row className="bg-white dark:bg-blue-d6" title="Amount">
                     {humanize(amount, 3)}
                   </Row>
+                  <Row className="bg-white dark:bg-blue-d6" title="USD Value">
+                    {`$${humanize(usdValue, 2)}`}
+                  </Row>
                   <Row className="bg-orange-l6 dark:bg-blue-d7" title="TX Hash">
                     {maskAddress(hash)}
-                  </Row>
-                  <Row className="bg-white dark:bg-blue-d6" title="Status">
-                    Received
                   </Row>
                   <Row className="bg-orange-l6 dark:bg-blue-d7" title="Receipt">
                     <button

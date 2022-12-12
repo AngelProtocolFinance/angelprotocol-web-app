@@ -15,7 +15,7 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: [apesTags.chain, apesTags.withdraw_logs],
+  tagTypes: [apesTags.chain, apesTags.withdraw_logs, apesTags.donations],
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,

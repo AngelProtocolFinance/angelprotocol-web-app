@@ -54,8 +54,15 @@ export default function Table(props: { donations: Donation[] }) {
           >
             Amount
           </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("usdValue")}
+            _activeSortKey={sortKey}
+            _sortKey="usdValue"
+            _sortDirection={sortDirection}
+          >
+            USD Value
+          </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
@@ -72,6 +79,7 @@ export default function Table(props: { donations: Donation[] }) {
             date,
             chainName,
             charityName,
+            usdValue,
             id: charityId,
           }) => (
             <Cells
@@ -90,15 +98,13 @@ export default function Table(props: { donations: Donation[] }) {
               <>{chainName}</>
               <span className="font-body text-sm">{symbol}</span>
               <>{humanize(amount, 3)}</>
+              <>{`$${humanize(usdValue, 2)}`}</>
               <ExtLink
                 href={getTxUrl(chainId, hash)}
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"
               >
                 {maskAddress(hash)}
               </ExtLink>
-              <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
-                Received
-              </button>
               <button
                 className="w-full flex justify-center"
                 onClick={() =>
