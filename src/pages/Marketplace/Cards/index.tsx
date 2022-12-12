@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   updateAWSQueryData,
   useEndowmentsQuery,
@@ -15,10 +16,12 @@ export default function Cards({ classes = "" }: { classes?: string }) {
 
   const selectedSDGs = Object.entries(sdgs).flatMap(([, members]) => members);
 
+  useEffect(() => console.log(types.join(",")), [types]);
+
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_type: types[0],
+    endow_type: types.join(",") || undefined,
     tier: "Level3",
     sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
     kyc_only: kycOnly || undefined,

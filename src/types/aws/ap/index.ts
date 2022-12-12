@@ -46,7 +46,7 @@ export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: SortValue;
   start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_type?: CapitalizedEndowmentType;
+  endow_type?: string; // comma separated CapitalizedEndowmentType values
   sdgs?: string; // comma separated sdg values
   tier?: Exclude<EndowmentTier, "Level1">; //for now
   kyc_only?: boolean;

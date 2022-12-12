@@ -18,7 +18,7 @@ const initialState: State = {
   sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
   isOpen: false,
   searchText: "",
-  types: ["Charity"],
+  types: ["Charity", "Normal"],
   kycOnly: false,
 };
 
@@ -51,9 +51,7 @@ const marketFilter = createSlice({
       state,
       { payload }: PayloadAction<CapitalizedEndowmentType[]>
     ) => {
-      // state.types = payload; //TODO: enable multiple types
-      //set only single type
-      state.types = [payload[payload.length - 1]];
+      state.types = payload;
     },
     toggle(state) {
       state.isOpen = !state.isOpen;
