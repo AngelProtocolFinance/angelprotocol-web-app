@@ -17,7 +17,7 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
       className={`border border-gray-l2 dark:border-bluegray dark:bg-blue-d5 dark:text-white overflow-hidden rounded-md content-start md:w-80 bg-gray-l5 ${classes}`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l2">
-        <h3 className="text-orange text-xl font-bold uppercase">Filters</h3>
+        <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
         <button onClick={toggleFilter} className="active:text-orange">
           <Icon type="Close" size={25} />
         </button>
