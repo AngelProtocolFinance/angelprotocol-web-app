@@ -5,6 +5,7 @@ import Group from "./Group";
 type Props<T> = {
   label: string;
   groups: GroupProps<T>[];
+  hideBottomBorder?: boolean;
 };
 
 export function MultilevelFilter<T>(props: Props<T>) {
@@ -15,7 +16,13 @@ export function MultilevelFilter<T>(props: Props<T>) {
   }
 
   return (
-    <div className="grid gap-6 px-2 py-3 border-b border-gray-l2 dark:border-bluegray">
+    <div
+      className={`grid gap-6 px-2 py-3 ${
+        props.hideBottomBorder
+          ? ""
+          : "border-b border-gray-l2 dark:border-bluegray"
+      }`}
+    >
       <Drawer isOpen={isOpen} toggle={toggle}>
         <span className="font-bold text-xs font-heading">{props.label}</span>
       </Drawer>

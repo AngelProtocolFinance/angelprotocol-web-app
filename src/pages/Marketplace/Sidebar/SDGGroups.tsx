@@ -30,7 +30,9 @@ export default function SDGGroups() {
     return result;
   }, [sdgs, dispatch]);
 
-  return <MultilevelFilter label="SDG Group" groups={groups} />;
+  return (
+    <MultilevelFilter label="SDG Group" groups={groups} hideBottomBorder />
+  );
 }
 
 const GROUP_DATA: {
