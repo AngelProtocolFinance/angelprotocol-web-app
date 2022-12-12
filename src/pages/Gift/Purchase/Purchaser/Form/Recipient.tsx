@@ -22,7 +22,7 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
         {...register(fieldName)}
         id={fieldName}
         type="text"
-        className={textFieldStyle}
+        className={textFieldStyle + " font-work"}
         placeholder="e.g. juno123abc8910xyz.."
         autoComplete="off"
       />

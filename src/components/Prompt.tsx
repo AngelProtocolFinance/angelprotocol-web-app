@@ -32,13 +32,13 @@ export default function Prompt({ type, headline, title, children }: Props) {
           type === "success" ? "text-green" : "text-red"
         } justify-self-center mb-6 sm:mb-8 mt-4 sm:mt-12`}
       />
-      <h3 className="font-bold text-center text-3xl mb-2 leading-normal">
+      <h3 className="font-bold text-center text-3xl mb-2 leading-normal px-3 sm:px-8">
         {title}
       </h3>
       <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
         {children}
       </div>
-      <div className=" p-3 sm:px-8 sm:py-4 w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray">
+      <div className="p-3 sm:px-8 sm:py-4 w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray">
         <button
           type="button"
           className="rounded btn-orange font-body px-8 py-2 max-sm:w-full"

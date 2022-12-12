@@ -77,4 +77,5 @@ export type IconTypes =
   | "Picture"
   | "Question"
   | "MapPin"
+  | "Giftcard"
   | "FatArrowDownload";
