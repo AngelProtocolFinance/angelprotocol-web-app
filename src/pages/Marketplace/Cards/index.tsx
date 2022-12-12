@@ -9,19 +9,16 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgs, endow_types, sort, searchText, kycOnly, tiers } = useGetter(
-    (state) => state.component.marketFilter
-  );
-
-  const selectedSDGs = Object.entries(sdgs).flatMap(([, members]) => members);
+  const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers } =
+    useGetter((state) => state.component.marketFilter);
 
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    query: searchText || "matchall",
-    sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_types: endow_types.join(",") || undefined,
-    tiers: tiers.join(",") || undefined,
-    sdgs: selectedSDGs.length > 0 ? selectedSDGs.join(",") : undefined,
-    kyc_only: kycOnly.join(",") || undefined,
+    query: searchText,
+    sort,
+    endow_types,
+    tiers,
+    sdgGroups,
+    kyc_only,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();

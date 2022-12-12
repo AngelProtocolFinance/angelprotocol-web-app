@@ -8,7 +8,7 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function KYCFilter() {
-  const kycOnly = useGetter((state) => state.component.marketFilter.kycOnly);
+  const kycOnly = useGetter((state) => state.component.marketFilter.kyc_only);
   const dispatch = useSetter();
 
   return (

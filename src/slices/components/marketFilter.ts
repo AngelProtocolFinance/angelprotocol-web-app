@@ -1,9 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { EndowmentsSortKey, SortDirection } from "types/aws";
+import { SdgGroups, Sort } from "types/aws";
 import { CapitalizedEndowmentType, EndowmentTier } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
-
-export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 
 export const SDG_GROUPS: {
   key: number;
@@ -48,19 +46,19 @@ type State = {
   endow_types: CapitalizedEndowmentType[];
   sort?: Sort;
   //geography
-  sdgs: { [idx: number]: UNSDG_NUMS[] };
-  kycOnly: boolean[];
+  sdgGroups: SdgGroups;
+  kyc_only: boolean[];
   tiers: Exclude<EndowmentTier, "Level1">[];
 };
 const initialState: State = {
-  sdgs: SDG_GROUPS.reduce(
+  sdgGroups: SDG_GROUPS.reduce(
     (prev, curr) => ({ ...prev, [curr.key]: [...curr.options] }),
-    {} as { [idx: number]: UNSDG_NUMS[] }
+    {} as SdgGroups
   ),
   isOpen: false,
   searchText: "",
   endow_types: ["Charity", "Normal"],
-  kycOnly: [true, false],
+  kyc_only: [true, false],
   tiers: ["Level3"],
 };
 
@@ -78,13 +76,13 @@ const marketFilter = createSlice({
         payload: { group, sdgs },
       }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
     ) => {
-      state.sdgs[group] = sdgs;
+      state.sdgGroups[group] = sdgs;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
     },
     setKYCOnly: (state, { payload }: PayloadAction<boolean[]>) => {
-      state.kycOnly = payload;
+      state.kyc_only = payload;
     },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;

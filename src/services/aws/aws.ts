@@ -3,6 +3,7 @@ import {
   Endowment,
   EndowmentBookmark,
   EndowmentsQueryParams,
+  EndowmentsQueryRequest,
   PaginatedAWSQueryRes,
   UserBookMarkInfo,
 } from "types/aws";
@@ -32,11 +33,27 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowments: builder.query<
       PaginatedAWSQueryRes<Endowment[]>,
-      EndowmentsQueryParams
+      EndowmentsQueryRequest
     >({
       providesTags: [{ type: awsTags.endowments }],
-      query: (params) => {
+      query: (paramsObj) => {
         const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+
+        const selectedSDGs = Object.entries(paramsObj.sdgGroups).flatMap(
+          ([, members]) => members
+        );
+
+        const params: EndowmentsQueryParams = {
+          query: paramsObj.query || "matchall",
+          sort: paramsObj.sort
+            ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
+            : "default",
+          endow_types: paramsObj.endow_types.join(",") || undefined,
+          tiers: paramsObj.tiers.join(",") || undefined,
+          sdgs: selectedSDGs.join(",") || undefined,
+          kyc_only: paramsObj.kyc_only.join(",") || undefined,
+        };
+
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
