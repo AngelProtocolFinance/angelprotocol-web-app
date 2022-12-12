@@ -91,7 +91,7 @@ export default function Form({ classes = "" }) {
         {isSubmitting
           ? "Redeeming..."
           : !wallet
-          ? "Connect wallet to claim"
+          ? "Connect wallet to redeem"
           : wallet.chain.chain_id !== chainIds.juno
           ? "Kindly connect Keplr wallet"
           : "Redeem your giftcard"}
