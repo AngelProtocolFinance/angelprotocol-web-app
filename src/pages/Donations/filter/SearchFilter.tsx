@@ -189,6 +189,8 @@ const SearchFilter = ({
                         placeholder="To"
                         min={startDate}
                         max={new Date().toISOString().split("T")[0]}
+                        disabled={startDate ? false : true}
+                        defaultValue={startDate && startDate}
                       />
                     </div>
                     <ErrorMessage
