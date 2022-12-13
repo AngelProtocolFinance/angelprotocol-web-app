@@ -13,6 +13,8 @@ import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { awsTags } from "./tags";
 
+const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+
 const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
@@ -36,11 +38,8 @@ export const aws = createApi({
       EndowmentsQueryRequest
     >({
       providesTags: [{ type: awsTags.endowments }],
-      query: (paramsObj) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
-
-        const params: EndowmentsQueryParams = getParams(paramsObj);
-
+      query: (request) => {
+        const params: EndowmentsQueryParams = getParams(request);
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
@@ -48,7 +47,6 @@ export const aws = createApi({
     bookmarks: builder.query<EndowmentBookmark[], string>({
       providesTags: [{ type: awsTags.bookmarks }],
       query: (walletAddr) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return `/v1/bookmarks/${walletAddr}/${network}`;
       },
       transformResponse(res: UserBookMarkInfo) {
@@ -61,7 +59,6 @@ export const aws = createApi({
     >({
       invalidatesTags: [{ type: awsTags.bookmarks }],
       query: ({ type, ...payload }) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return {
           url: "/v1/bookmarks",
           method: type === "add" ? "POST" : "DELETE",
