@@ -31,6 +31,7 @@ const shape: SchemaShape<ProfileFormValues> = {
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
   image: fileObj,
+  logo: fileObj,
   url: url.required("required"),
   // registration_number: no need to validate
   // country_city_origin: no need to validate
