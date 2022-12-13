@@ -47,7 +47,7 @@ export default function Form() {
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
       <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
