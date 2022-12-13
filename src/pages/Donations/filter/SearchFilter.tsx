@@ -34,7 +34,7 @@ const SearchFilter = ({
 
     !data.startDate || !data.endDate
       ? delete filters.transactionDate
-      : (filters.transactionDate = `${data.startDate.toUTCString()} ${data.endDate.toUTCString()}`);
+      : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
     !data.network
       ? delete filters.chainName
       : (filters.chainName = data.network);
