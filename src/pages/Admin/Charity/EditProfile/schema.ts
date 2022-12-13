@@ -4,12 +4,8 @@ import { SchemaShape } from "schemas/types";
 import { CountryOption } from "services/types";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
-<<<<<<< Updated upstream
 import { positiveNumber } from "schemas/number";
-import { stringByteSchema, url } from "schemas/string";
-=======
 import { requiredString, stringByteSchema, url } from "schemas/string";
->>>>>>> Stashed changes
 import { proposalShape } from "../../constants";
 
 export const VALID_MIME_TYPES = [
