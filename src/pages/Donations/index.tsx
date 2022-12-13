@@ -27,9 +27,9 @@ export default function Donations() {
   };
 
   return (
-    <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
+    <div className="relative grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <div className="flex lg:justify-between lg:items-center justify-center mt-10">
-        <h1 className="relative text-3xl font-bold">My Donations</h1>
+        <h1 className="text-3xl font-bold">My Donations</h1>
       </div>
       <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
         <div className="sm:col-span-2 sm:mr-4">
@@ -109,7 +109,7 @@ export default function Donations() {
           return (
             <>
               <CsvExporter
-                classes="absolute hidden lg:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-[4px] text-white right-[5.8rem] top-[8.5rem]"
+                classes="absolute right-0 mr-5 top-11 hidden lg:flex justify-center p-3 px-8 font-semibold bg-orange uppercase rounded-[4px] text-white"
                 headers={csvHeaders}
                 data={donations}
                 filename="donations.csv"
