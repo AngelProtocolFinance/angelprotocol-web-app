@@ -87,7 +87,7 @@ export default function Form() {
       <GroupContainer>
         <TextSec<UV>
           name="number_of_employees"
-          label="Number of employeees"
+          label="Number of employees"
           placeholder="50 - 100"
         />
       </GroupContainer>
