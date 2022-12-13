@@ -35,14 +35,18 @@ export default function Form() {
       </Link>
       <TextPrim<UV> label="Proposal title" name="title" required />
       <TextArea<UV> label="Proposal description" name="description" required />
-      <Label className="-mb-4">Banner</Label>
+      <Label className="-mb-4" required>
+        Banner
+      </Label>
       <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
         classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
-      <Label className="-mb-4">Logo</Label>
+      <Label className="-mb-4" required>
+        Logo
+      </Label>
       <ImgEditor<UV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
