@@ -4,7 +4,6 @@ import { SchemaShape } from "schemas/types";
 import { CountryOption } from "services/types";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
-import { positiveNumber } from "schemas/number";
 import { requiredString, stringByteSchema, url } from "schemas/string";
 import { proposalShape } from "../../constants";
 
@@ -38,7 +37,6 @@ const shape: SchemaShape<ProfileFormValues> = {
   facebook: url,
   twitter: url,
   linkedin: url,
-  number_of_employees: positiveNumber,
   // average_annual_budget: render string as is
   // annual_revenue: render string as is
   // charity_navigator_rating: render string as is
