@@ -136,6 +136,7 @@ export default function Donations() {
 
 const csvHeaders: { key: keyof Donation; label: string }[] = [
   { key: "amount", label: "Amount" },
+  { key: "usdValue", label: "USD Value" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
