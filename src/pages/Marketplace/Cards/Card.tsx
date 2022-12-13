@@ -39,7 +39,7 @@ export default function Card({
             e.currentTarget.classList.add("bg-blue-l3");
           }}
         />
-        <div className="flex flex-col justify-between gap-3 h-32 p-3 pb-4">
+        <div className="flex flex-col justify-between gap-3 md:h-32 p-3 pb-4">
           <div>
             <h3 className="font-bold">{name}</h3>
             <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
