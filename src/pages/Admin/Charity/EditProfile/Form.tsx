@@ -54,7 +54,9 @@ export default function Form() {
       <TextPrim<UV> name="name" label="Charity Name" />
       <TextPrim<UV> name="registration_number" label="Registration number" />
       <TextPrim<UV> name="street_address" label="Street address" />
-      <Label className="-mb-4">Country</Label>
+      <Label className="-mb-4" required>
+        Country
+      </Label>
       <CountrySelector<UV, "country">
         fieldName="country"
         classes={{
