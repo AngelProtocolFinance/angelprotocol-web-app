@@ -90,11 +90,6 @@ export default function Form() {
           label="Number of employeees"
           placeholder="50 - 100"
         />
-        <TextSec<UV>
-          name="charity_navigator_rating"
-          label="Navigator rating"
-          placeholder="Platinum"
-        />
       </GroupContainer>
 
       <Label className="-mb-4 font-bold">Social Media</Label>

@@ -42,7 +42,6 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
     twitter: props.social_media_urls.twitter || "",
     linkedin: props.social_media_urls.linkedin || "",
     number_of_employees: props.number_of_employees || 1,
-    charity_navigator_rating: props.charity_navigator_rating || "",
 
     //endowment settings
     name: props.name,
