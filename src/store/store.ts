@@ -14,7 +14,7 @@ export const store = configureStore({
   reducer: {
     transaction: transactionReducer,
     admin: adminReducer,
-    donation: donation,
+    donation,
     gift,
     auth: authReducer,
     component: componentReducer,
