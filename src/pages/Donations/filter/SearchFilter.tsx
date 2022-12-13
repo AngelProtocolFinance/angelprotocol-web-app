@@ -1,6 +1,6 @@
 import { Listbox, Popover } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Filters } from "types/aws";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -23,6 +23,7 @@ const SearchFilter = ({
   } = useForm<FormValues>({
     reValidateMode: "onSubmit",
   });
+  const buttonRef = useRef<any>();
 
   async function submit(data: FormValues) {
     const filters: Filters = {
@@ -44,6 +45,7 @@ const SearchFilter = ({
     if (!isEmpty(filters)) {
       updateFilterValues(filters);
     }
+    buttonRef.current?.click();
   }
 
   return (
@@ -143,6 +145,7 @@ const SearchFilter = ({
       {/* {Desktop} */}
       <Popover className="hidden sm:block relative py-3 px-4 border border-gray-l2 dark:border-bluegray rounded-sm">
         <Popover.Button
+          ref={buttonRef}
           className={
             "w-full flex justify-between items-center outline-0 text-gray-d2 dark:text-white"
           }
@@ -152,93 +155,91 @@ const SearchFilter = ({
         </Popover.Button>
 
         <Popover.Panel className="absolute w-full right-[.05rem] z-10 border border-gray-l2 dark:border-bluegray rounded-sm mt-4">
-          {({ close }) => (
-            <form onSubmit={handleSubmit(submit)} method="get">
-              <div className="flex flex-col">
-                <div>
-                  <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
-                    <div className="flex flex-col text-gray-d2 gap-2">
-                      <label className="dark:text-white">Date</label>
-                      <div className="flex gap-4">
-                        <input
-                          {...register("startDate")}
-                          type="date"
-                          className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
-                          placeholder="From"
-                          min="2018-12-31"
-                          max={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setStartDate(e.target.value)}
-                        />
-                        <input
-                          {...register("endDate")}
-                          type="date"
-                          className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
-                          placeholder="To"
-                          min={startDate}
-                          max={new Date().toISOString().split("T")[0]}
-                        />
-                      </div>
-                      <ErrorMessage
-                        errors={errors}
-                        as="p"
-                        name="startDate"
-                        className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+          <form onSubmit={handleSubmit(submit)} method="get">
+            <div className="flex flex-col">
+              <div>
+                <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
+                  <div className="flex flex-col text-gray-d2 gap-2">
+                    <label className="dark:text-white">Date</label>
+                    <div className="flex gap-4">
+                      <input
+                        {...register("startDate")}
+                        type="date"
+                        className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
+                        placeholder="From"
+                        min="2018-12-31"
+                        max={new Date().toISOString().split("T")[0]}
+                        onChange={(e) => setStartDate(e.target.value)}
                       />
-                      <ErrorMessage
-                        errors={errors}
-                        as="p"
-                        name="endDate"
-                        className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+                      <input
+                        {...register("endDate")}
+                        type="date"
+                        className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
+                        placeholder="To"
+                        min={startDate}
+                        max={new Date().toISOString().split("T")[0]}
                       />
                     </div>
-                    <div className="flex flex-col text-gray-d2 gap-2">
-                      <label className="dark:text-white">Network</label>
-                      <select
-                        {...register("network")}
-                        className={
-                          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                        }
-                      >
-                        <option value="">Select a network...</option>
-                        {networks.map((network) => (
-                          <option key={network.id} value={network.name}>
-                            {network.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col text-gray-d2 gap-2">
-                      <label className="dark:text-white">Currency</label>
-                      <select
-                        {...register("currency")}
-                        className={
-                          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                        }
-                      >
-                        <option value="">Select a currency...</option>
-                        {currencies.map((currency) => (
-                          <option key={currency.id} value={currency.name}>
-                            {currency.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <ErrorMessage
+                      errors={errors}
+                      as="p"
+                      name="startDate"
+                      className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      as="p"
+                      name="endDate"
+                      className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+                    />
                   </div>
-                  <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
-                    <button type="button" className="text-orange underline">
-                      Reset filters
-                    </button>
-                    <button
-                      type="submit"
-                      className="flex justify-center items-center text-white bg-orange p-3 rounded-md"
+                  <div className="flex flex-col text-gray-d2 gap-2">
+                    <label className="dark:text-white">Network</label>
+                    <select
+                      {...register("network")}
+                      className={
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                      }
                     >
-                      Apply filter
-                    </button>
+                      <option value="">Select a network...</option>
+                      {networks.map((network) => (
+                        <option key={network.id} value={network.name}>
+                          {network.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex flex-col text-gray-d2 gap-2">
+                    <label className="dark:text-white">Currency</label>
+                    <select
+                      {...register("currency")}
+                      className={
+                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                      }
+                    >
+                      <option value="">Select a currency...</option>
+                      {currencies.map((currency) => (
+                        <option key={currency.id} value={currency.name}>
+                          {currency.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
+                <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
+                  <button type="button" className="text-orange underline">
+                    Reset filters
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex justify-center items-center text-white bg-orange p-3 rounded-md"
+                  >
+                    Apply filter
+                  </button>
+                </div>
               </div>
-            </form>
-          )}
+            </div>
+          </form>
         </Popover.Panel>
       </Popover>
     </div>
