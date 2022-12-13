@@ -17,10 +17,10 @@ import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import SDGSelector from "./SDGSelector";
 import { VALID_MIME_TYPES } from "./schema";
-import useEditForm from "./useEditProfile";
+import useEditProfile from "./useEditProfile";
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditForm();
+  const { editProfile, isSubmitDisabled, id } = useEditProfile();
   return (
     <FormContainer
       onSubmit={editProfile}
