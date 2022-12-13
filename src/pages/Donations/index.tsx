@@ -42,7 +42,7 @@ export default function Donations() {
             <input
               className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6"
               type="text"
-              placeholder="Search donations..."
+              placeholder="Search by recipient name, network or currency..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
