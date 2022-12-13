@@ -7,7 +7,8 @@ import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import MobileTable from "./MobileTable";
 import Table from "./Table";
-import SearchFilter from "./filter/SearchFilter";
+import DesktopSearchFilter from "./filter/DesktopSearchFilter";
+import MobileSearchFilter from "./filter/MobileSearchFilter";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
@@ -48,13 +49,13 @@ export default function Donations() {
           </label>
         </div>
         <div className="hidden sm:block">
-          <SearchFilter
+          <DesktopSearchFilter
             updateFilterValues={updateFilterValues}
             address={address}
           />
         </div>
         <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
-          <SearchFilter
+          <MobileSearchFilter
             updateFilterValues={updateFilterValues}
             address={address}
           />
