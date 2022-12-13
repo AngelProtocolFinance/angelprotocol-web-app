@@ -1,9 +1,10 @@
 import * as Yup from "yup";
 import { ProfileFormValues } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
+import { CountryOption } from "services/types";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
-import { stringByteSchema, url } from "schemas/string";
+import { requiredString, stringByteSchema, url } from "schemas/string";
 import { proposalShape } from "../../constants";
 
 export const VALID_MIME_TYPES = [
@@ -29,6 +30,9 @@ const shape: SchemaShape<ProfileFormValues> = {
   url: url,
   // registration_number: no need to validate
   // country_city_origin: no need to validate
+  country: Yup.object().shape<SchemaShape<CountryOption>>({
+    name: requiredString,
+  }),
   contact_email: Yup.string().email("invalid email"),
   facebook: url,
   twitter: url,
