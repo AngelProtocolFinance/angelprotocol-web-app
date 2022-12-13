@@ -2,19 +2,19 @@ import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { DonateArgs, EstimatedTx } from "../../types";
+import { EstimatedTx, TxStatus } from "../types";
+import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import { TxStatus, setTxStatus } from "slices/donation";
 import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
-import transactionSlice from "../../transactionSlice";
+import donation, { setTxStatus } from "../donation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
-  `${transactionSlice.name}/sendDonation`,
+  `${donation.name}/sendDonation`,
   async (
     { wallet, tx, donation: { details, kyc, recipient } },
     { dispatch }

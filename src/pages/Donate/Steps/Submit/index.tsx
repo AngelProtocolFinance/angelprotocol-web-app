@@ -7,7 +7,7 @@ import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
-import { sendDonation } from "slices/transaction/transactors";
+import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
