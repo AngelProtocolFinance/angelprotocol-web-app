@@ -57,7 +57,7 @@ export const initialState: State = {
   ),
   isOpen: false,
   searchText: "",
-  endow_types: ["Charity", "Normal"],
+  endow_types: ["Charity"],
   kyc_only: [true, false],
   tiers: ["Level3"],
 };
