@@ -9,19 +9,19 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
+import { ImgLink } from "components/ImgEditor";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { uploadToIpfs } from "helpers";
 import {
   cleanObject,
   genDiffMeta,
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
+import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -45,22 +45,14 @@ export default function useEditProfile() {
     ...data
   }: ProfileFormValues) => {
     try {
-      let imgUrl: string = "";
-      //means new image file is selected
-      if (data.image.file) {
-        showModal(Popup, { message: "Uploading image.." });
-        [imgUrl] = await uploadToIpfs([data.image.file]);
-      } else {
-        imgUrl = data.image.publicUrl;
-      }
-
+      const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
       const flatData: FlatProfileWithSettings = {
         ...data,
         country: data.country.name,
-        image: imgUrl,
-        logo: data.logo.preview,
+        image: bannerUrl,
+        logo: logoUrl,
       };
 
       const diff = getPayloadDiff(initial, flatData);
@@ -94,8 +86,8 @@ export default function useEditProfile() {
         cleanObject({
           id: profilePayload.id,
           name,
-          image: imgUrl,
-          logo: data.logo.publicUrl,
+          image: bannerUrl,
+          logo: logoUrl,
           categories: { sdgs: [sdg], general: [] },
         })
       );
@@ -132,4 +124,12 @@ export default function useEditProfile() {
     isSubmitDisabled: isSubmitting || !isDirty,
     id: endowmentId,
   };
+}
+
+async function getImgUrls(imgs: ImgLink[]): Promise<string[]> {
+  const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
+  const cid = await uploadToIpfs(files);
+  return imgs.map((img) =>
+    img.file && cid ? genPublicUrl(cid, img.file.name) : img.publicUrl
+  );
 }

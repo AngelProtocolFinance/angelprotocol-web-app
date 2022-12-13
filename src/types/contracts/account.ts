@@ -138,10 +138,10 @@ export interface ProfileUpdate {
   facebook?: string;
   twitter?: string;
   linkedin?: string;
-  number_of_employees?: number;
+  // number_of_employees?: number;s
   // average_annual_budget?: string;
   // annual_revenue?: string;
-  charity_navigator_rating?: string;
+  // charity_navigator_rating?: string;
 }
 
 export interface EndowmentSettingsPayload {
