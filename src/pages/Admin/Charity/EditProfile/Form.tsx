@@ -122,6 +122,7 @@ export default function Form() {
       </GroupContainer>
 
       <TextPrim<UV>
+        disabled={true}
         name="contact_email"
         label="Contact email"
         placeholder="hello@angelprotocol.io"
