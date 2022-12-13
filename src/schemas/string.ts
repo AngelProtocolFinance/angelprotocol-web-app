@@ -29,6 +29,8 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
   );
 };
 
+// if the regex match validation is not applied conditionally, it wouldn't allow for empty strings/nulls to pass through
+// to other matchers (like `required()`) as it would always be a required field
 export const url = Yup.string()
   .when({
     is: (value: string) => !!value,
