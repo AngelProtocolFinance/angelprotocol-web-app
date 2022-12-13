@@ -103,7 +103,11 @@ export default function Form() {
         />
       </GroupContainer>
 
-      <TextPrim<UV> name="contact_email" label="Contact email" />
+      <TextPrim<UV>
+        name="contact_email"
+        label="Contact email"
+        disabled={true}
+      />
 
       <Submitter disabled={isSubmitDisabled} type="submit">
         Submit
