@@ -8,7 +8,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { CountryOption } from "services/types";
-import ukflag from "assets/icons/uk-flag.png";
 import unknownFlag from "assets/icons/unknown-flag.jpeg";
 import { useLazyCountryFlagQuery } from "services/countries";
 import Icon, { DrawerIcon } from "../Icon";
@@ -18,7 +17,7 @@ type BaseFormShape = { [index: string]: CountryOption };
 
 export const placeHolderCountryOption: CountryOption = {
   name: "",
-  flag: ukflag,
+  flag: "",
 };
 
 const containerStyle =
