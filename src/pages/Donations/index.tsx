@@ -5,10 +5,10 @@ import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
-import DesktopSearchFilter from "./DesktopSearchFilter";
-import MobileSearchFilter from "./MobileSearchFilter";
-import MobileTable from "./MobileTable";
-import Table from "./Table";
+import DesktopSearchFilter from "../../components/donations/DesktopSearchFilter";
+import MobileSearchFilter from "../../components/donations/MobileSearchFilter";
+import MobileTable from "../../components/donations/MobileTable";
+import Table from "../../components/donations/Table";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
