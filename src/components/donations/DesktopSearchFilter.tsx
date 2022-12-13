@@ -28,9 +28,11 @@ const DesktopSearchFilter = ({
   };
 
   async function submit(data: FilterFormValues) {
-    !data.startDate || !data.endDate
-      ? delete filters.transactionDate
-      : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
+    if (startDate) {
+      !data.startDate || !data.endDate
+        ? delete filters.transactionDate
+        : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
+    }
     !data.network
       ? delete filters.chainName
       : (filters.chainName = data.network);
@@ -133,6 +135,8 @@ const DesktopSearchFilter = ({
                       network: "",
                       currency: "",
                     });
+                    setStartDate("");
+                    setIsNetworkSelected(false);
                     updateFilterValues(filters);
                   }}
                 >
