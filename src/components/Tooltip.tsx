@@ -1,40 +1,41 @@
 import { Transition } from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { RefObject } from "react";
 import { createPortal } from "react-dom";
-import { logger } from "helpers";
 
-type Props = { anchorId: string; content: string };
+type Props<T extends HTMLElement> = {
+  content: string;
+  anchorRef?: RefObject<T>;
+};
 
-export default function Tooltip({ anchorId, content }: Props) {
+export default function Tooltip<T extends HTMLElement>({
+  content,
+  anchorRef,
+}: Props<T>) {
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
   const [isHovered, setHovered] = useState(false);
 
   useEffect(() => {
-    if (!anchorId) {
+    if (!anchorRef?.current) {
       return;
     }
 
-    const anchor = document.getElementById(anchorId);
-    if (!anchor) {
-      return logger.error(`No element with ID '${anchorId}'`);
-    }
-
-    const pos = anchor.getBoundingClientRect();
-
-    setTop(pos.top);
-    setLeft(pos.left);
+    const element = anchorRef.current;
+    const rect = element.getBoundingClientRect();
+    setTop(rect.top);
+    setLeft(rect.left);
 
     const handleMouseEnter = () => setHovered(true);
     const handleMouseLeave = () => setHovered(false);
-    anchor.addEventListener("mouseenter", handleMouseEnter);
-    anchor.addEventListener("mouseleave", handleMouseLeave);
+    element.addEventListener("mouseenter", handleMouseEnter);
+    element.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      anchor.removeEventListener("mouseenter", handleMouseEnter);
-      anchor.removeEventListener("mouseleave", handleMouseLeave);
+      element.removeEventListener("mouseenter", handleMouseEnter);
+      element.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [anchorId]);
+  }, [anchorRef]);
 
   return createPortal(
     <Transition

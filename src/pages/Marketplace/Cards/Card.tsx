@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Endowment } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
@@ -23,7 +24,7 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
-        {!kyc_donors_only && <KYCIcon id={id} className="ml-auto" />}
+        {!kyc_donors_only && <KYCIcon className="ml-auto" />}
         <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link
@@ -52,7 +53,7 @@ export default function Card({
         </p> */}
           <div className="flex text-3xs font-bold uppercase gap-1">
             {categories.sdgs.map((s) => (
-              <SDG id={id} num={s} key={s} />
+              <SDG num={s} key={s} />
             ))}
           </div>
         </div>
@@ -61,13 +62,13 @@ export default function Card({
   );
 }
 
-function SDG({ num, id }: { num: UNSDG_NUMS; id: number }) {
-  const anchorId = `sdg-${id}-${num}`;
+function SDG({ num }: { num: UNSDG_NUMS }) {
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <>
-      <Tooltip anchorId={anchorId} content={unsdgs[num].title} />
+      <Tooltip anchorRef={ref} content={unsdgs[num].title} />
       <div
-        id={anchorId}
+        ref={ref}
         className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg"
       >
         SDG #{num}
@@ -76,17 +77,18 @@ function SDG({ num, id }: { num: UNSDG_NUMS; id: number }) {
   );
 }
 
-function KYCIcon({ id, className = "" }: { id: number; className?: string }) {
-  const anchorId = `kyc-icon-${id}`;
+function KYCIcon({ className = "" }: { className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
   return (
     <>
-      <Tooltip anchorId={anchorId} content="Verification Required" />
-      <Icon
-        id={anchorId}
-        type="AdminPanel"
-        size={20}
-        className={`text-white hover:text-orange cursor-pointer ${className}`}
-      />
+      <Tooltip anchorRef={ref} content="Verification Required" />
+      <div ref={ref} className={className}>
+        <Icon
+          type="AdminPanel"
+          size={20}
+          className="text-white hover:text-orange cursor-pointer"
+        />
+      </div>
     </>
   );
 }

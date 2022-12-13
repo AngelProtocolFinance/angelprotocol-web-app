@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useRef, useState } from "react";
 import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
@@ -14,6 +14,7 @@ type Props = PropsWithChildren<{
 
 export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const [isHovered, setHovered] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
 
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const {
@@ -43,13 +44,11 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
     }
   }
 
-  const anchorId = `btn-${id}`;
-
   return (
     <>
-      <Tooltip anchorId={anchorId} content="Add to favorites" />
+      <Tooltip anchorRef={ref} content="Add to favorites" />
       <button
-        id={anchorId}
+        ref={ref}
         type="button"
         onClick={toogleBookmark}
         disabled={isLoading || isFetching || isToggling || isWalletLoading}
