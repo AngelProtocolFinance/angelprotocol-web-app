@@ -2,15 +2,18 @@ import { Listbox, Popover } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Filters } from "types/aws";
+import { Chain, Filters } from "types/aws";
+import { useChainQuery, useChainsQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { FormValues } from "./schema";
 
 const SearchFilter = ({
   updateFilterValues,
+  address,
 }: {
   updateFilterValues: Function;
+  address: string | undefined;
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const { handleError } = useErrorContext();
@@ -24,6 +27,8 @@ const SearchFilter = ({
     reValidateMode: "onSubmit",
   });
   const buttonRef = useRef<any>();
+  const { data: networks } = useChainsQuery("");
+  // const { data: currencies } = useChainQuery({ address: address });
 
   async function submit(data: FormValues) {
     const filters: Filters = {
@@ -42,7 +47,7 @@ const SearchFilter = ({
       ? delete filters.denomination
       : (filters.denomination = data.currency);
 
-    if (!isEmpty(filters)) {
+    if (Object.keys(filters).length !== 0) {
       updateFilterValues(filters);
     }
     buttonRef.current?.click();
@@ -108,15 +113,18 @@ const SearchFilter = ({
                       <Icon type="ArrowDown" size={30}></Icon>
                     </Listbox.Button>
                     <Listbox.Options>
-                      {networks.map((network) => (
-                        <Listbox.Option key={network.id} value={network}>
-                          {network.name}
+                      {networks?.map((network) => (
+                        <Listbox.Option
+                          key={network.chain_id}
+                          value={network.chain_name}
+                        >
+                          {network.chain_name}
                         </Listbox.Option>
                       ))}
                     </Listbox.Options>
                   </Listbox>
                 </div>
-                <div className="flex flex-col text-gray-d2 gap-2">
+                {/* <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Currency</label>
                   <Listbox>
                     <Listbox.Button
@@ -128,14 +136,17 @@ const SearchFilter = ({
                       <Icon type="ArrowDown" size={30}></Icon>
                     </Listbox.Button>
                     <Listbox.Options>
-                      {currencies.map((currency) => (
-                        <Listbox.Option key={currency.id} value={currency}>
-                          {currency.name}
+                      {currencies?.map((currency: Chain) => (
+                        <Listbox.Option
+                          key={currency.chain_id}
+                          value={currency.native_currency}
+                        >
+                          {currency.native_currency}
                         </Listbox.Option>
                       ))}
                     </Listbox.Options>
                   </Listbox>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -202,14 +213,17 @@ const SearchFilter = ({
                       }
                     >
                       <option value="">Select a network...</option>
-                      {networks.map((network) => (
-                        <option key={network.id} value={network.name}>
-                          {network.name}
+                      {networks?.map((network) => (
+                        <option
+                          key={network.chain_id}
+                          value={network.chain_name}
+                        >
+                          {network.chain_name}
                         </option>
                       ))}
                     </select>
                   </div>
-                  <div className="flex flex-col text-gray-d2 gap-2">
+                  {/* <div className="flex flex-col text-gray-d2 gap-2">
                     <label className="dark:text-white">Currency</label>
                     <select
                       {...register("currency")}
@@ -218,13 +232,16 @@ const SearchFilter = ({
                       }
                     >
                       <option value="">Select a currency...</option>
-                      {currencies.map((currency) => (
-                        <option key={currency.id} value={currency.name}>
-                          {currency.name}
+                      {currencies?.map((currency: Chain) => (
+                        <option
+                          key={currency.chain_id}
+                          value={currency.native_currency}
+                        >
+                          {currency.native_currency}
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
                   <button type="button" className="text-orange underline">
@@ -246,41 +263,3 @@ const SearchFilter = ({
   );
 };
 export default SearchFilter;
-
-const networks = [
-  { id: 1, name: "Juno Testnet" },
-  { id: 2, name: "Another Network" },
-];
-
-const currencies = [
-  { id: 1, name: "USD" },
-  { id: 2, name: "EUR" },
-];
-
-function isEmpty(obj: Object) {
-  return Object.keys(obj).length === 0;
-}
-
-{
-  /* <Listbox
-    value={selectedNetwork}
-    onChange={setSelectedNetwork}
-    name="network"
-  >
-    <Listbox.Button
-      className={
-        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-      }
-    >
-      <div className="text-gray-l2">Select network...</div>
-      <Icon type="ArrowDown" size={30}></Icon>
-    </Listbox.Button>
-    <Listbox.Options>
-      {networks.map((network) => (
-        <Listbox.Option key={network.id} value={network}>
-          {network.name}
-        </Listbox.Option>
-      ))}
-    </Listbox.Options>
-  </Listbox> */
-}

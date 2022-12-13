@@ -48,10 +48,16 @@ export default function Donations() {
           </label>
         </div>
         <div className="hidden sm:block">
-          <SearchFilter updateFilterValues={updateFilterValues} />
+          <SearchFilter
+            updateFilterValues={updateFilterValues}
+            address={address}
+          />
         </div>
         <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
-          <SearchFilter updateFilterValues={updateFilterValues} />
+          <SearchFilter
+            updateFilterValues={updateFilterValues}
+            address={address}
+          />
         </div>
       </div>
       <QueryLoader
