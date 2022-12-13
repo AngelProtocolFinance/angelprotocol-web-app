@@ -94,10 +94,10 @@ function getParams(paramsObj: EndowmentsQueryRequest): EndowmentsQueryParams {
     sort: paramsObj.sort
       ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
       : "default",
-    endow_types: paramsObj.endow_types.join(",") || undefined,
-    tiers: paramsObj.tiers.join(",") || undefined,
-    sdgs: selectedSDGs.join(",") || undefined,
-    kyc_only: paramsObj.kyc_only.join(",") || undefined,
+    endow_types: paramsObj.endow_types.join(",") || null,
+    tiers: paramsObj.tiers.join(",") || null,
+    sdgs: selectedSDGs.join(",") || 0,
+    kyc_only: paramsObj.kyc_only.join(",") || null,
   };
 
   return params;

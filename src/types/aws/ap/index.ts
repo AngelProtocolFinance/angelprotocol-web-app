@@ -57,10 +57,10 @@ export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_types?: string; // comma separated CapitalizedEndowmentType values
-  sdgs?: string; // comma separated sdg values
-  tiers?: string; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
-  kyc_only?: string; // comma separated boolean values
+  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
+  tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  kyc_only: string | null; // comma separated boolean values
 };
 
 export interface LeaderboardEntry {
