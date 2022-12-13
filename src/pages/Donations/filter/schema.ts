@@ -4,6 +4,8 @@ import { SchemaShape } from "schemas/types";
 export type FormValues = {
   startDate: Date;
   endDate: Date;
+  network: string;
+  currency: string;
 };
 
 const shape: SchemaShape<FormValues> = {

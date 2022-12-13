@@ -12,40 +12,34 @@ const SearchFilter = ({
 }: {
   updateFilterValues: Function;
 }) => {
-  const [selectedNetwork, setSelectedNetwork] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [startDate, setStartDate] = useState<string>("");
   const { handleError } = useErrorContext();
   const {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { isSubmitting, errors },
   } = useForm<FormValues>({
     reValidateMode: "onSubmit",
   });
 
-  useEffect(() => {
-    console.log(selectedNetwork);
-  }, [selectedNetwork]);
-
   async function submit(data: FormValues) {
     const filters: Filters = {
       transactionDate: "",
       chainName: "",
-      currency: "",
+      denomination: "",
     };
 
     !data.startDate || !data.endDate
       ? delete filters.transactionDate
       : (filters.transactionDate = `${data.startDate.toUTCString()} ${data.endDate.toUTCString()}`);
-    !selectedNetwork
+    !data.network
       ? delete filters.chainName
-      : (filters.chainName = selectedNetwork);
-    !selectedCurrency
-      ? delete filters.currency
-      : (filters.currency = selectedCurrency);
-
-    console.log(filters);
+      : (filters.chainName = data.network);
+    !data.currency
+      ? delete filters.denomination
+      : (filters.denomination = data.currency);
 
     if (!isEmpty(filters)) {
       updateFilterValues(filters);
@@ -172,14 +166,16 @@ const SearchFilter = ({
                           className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                           placeholder="From"
                           min="2018-12-31"
-                          max={new Date().toString()}
+                          max={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setStartDate(e.target.value)}
                         />
                         <input
                           {...register("endDate")}
                           type="date"
                           className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                           placeholder="To"
-                          max={new Date().toString()}
+                          min={startDate}
+                          max={new Date().toISOString().split("T")[0]}
                         />
                       </div>
                       <ErrorMessage
@@ -197,57 +193,41 @@ const SearchFilter = ({
                     </div>
                     <div className="flex flex-col text-gray-d2 gap-2">
                       <label className="dark:text-white">Network</label>
-                      <Listbox
-                        value={selectedNetwork}
-                        onChange={setSelectedNetwork}
-                        name="network"
+                      <select
+                        {...register("network")}
+                        className={
+                          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                        }
                       >
-                        <Listbox.Button
-                          className={
-                            "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                          }
-                        >
-                          <div className="text-gray-l2">Select network...</div>
-                          <Icon type="ArrowDown" size={30}></Icon>
-                        </Listbox.Button>
-                        <Listbox.Options>
-                          {networks.map((network) => (
-                            <Listbox.Option key={network.id} value={network}>
-                              {network.name}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Listbox>
+                        <option value="">Select a network...</option>
+                        {networks.map((network) => (
+                          <option key={network.id} value={network.name}>
+                            {network.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="flex flex-col text-gray-d2 gap-2">
                       <label className="dark:text-white">Currency</label>
-                      <Listbox
-                        value={selectedCurrency}
-                        onChange={setSelectedCurrency}
-                        name="currency"
+                      <select
+                        {...register("currency")}
+                        className={
+                          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                        }
                       >
-                        <Listbox.Button
-                          className={
-                            "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                          }
-                        >
-                          <div className="text-gray-l2">Select currency...</div>
-                          <Icon type="ArrowDown" size={30}></Icon>
-                        </Listbox.Button>
-                        <Listbox.Options>
-                          {currencies.map((currency) => (
-                            <Listbox.Option key={currency.id} value={currency}>
-                              {currency.name}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Listbox>
+                        <option value="">Select a currency...</option>
+                        {currencies.map((currency) => (
+                          <option key={currency.id} value={currency.name}>
+                            {currency.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                   <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
-                    <a href="#" className="text-orange underline">
+                    <button type="button" className="text-orange underline">
                       Reset filters
-                    </a>
+                    </button>
                     <button
                       type="submit"
                       className="flex justify-center items-center text-white bg-orange p-3 rounded-md"
@@ -278,4 +258,28 @@ const currencies = [
 
 function isEmpty(obj: Object) {
   return Object.keys(obj).length === 0;
+}
+
+{
+  /* <Listbox
+    value={selectedNetwork}
+    onChange={setSelectedNetwork}
+    name="network"
+  >
+    <Listbox.Button
+      className={
+        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+      }
+    >
+      <div className="text-gray-l2">Select network...</div>
+      <Icon type="ArrowDown" size={30}></Icon>
+    </Listbox.Button>
+    <Listbox.Options>
+      {networks.map((network) => (
+        <Listbox.Option key={network.id} value={network}>
+          {network.name}
+        </Listbox.Option>
+      ))}
+    </Listbox.Options>
+  </Listbox> */
 }
