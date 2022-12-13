@@ -42,26 +42,22 @@ export default function Form() {
         aspect={[4, 1]}
         classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
+      <Label className="-mb-4">Logo</Label>
+      <ImgEditor<UV, "logo">
+        name="logo"
+        accept={VALID_MIME_TYPES}
+        aspect={[1, 1]}
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+      />
       <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
-      <TextPrim<UV>
-        name="name"
-        label="Charity Name"
-        placeholder="The charitable charity"
-      />
-      <TextPrim<UV>
-        name="registration_number"
-        label="Registration number"
-        placeholder="AP2022HLO"
-      />
-      <TextPrim<UV>
-        name="street_address"
-        label="Street address"
-        placeholder="Manila, Philippines"
-      />
-      <Label className="-mb-4">Country</Label>
+      <TextPrim<UV> name="name" label="Charity Name" />
+      <TextPrim<UV> name="registration_number" label="Registration number" />
+      <TextPrim<UV> name="street_address" label="Street address" />
+      <Label className="-mb-4" required>
+        Country
+      </Label>
       <CountrySelector<UV, "country">
-        placeholder="United Kingdom"
         fieldName="country"
         classes={{
           container:
@@ -74,7 +70,7 @@ export default function Form() {
       <Label className="-mb-4">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"
-        placeHolder="a short overview of your charity"
+        placeHolder="A short overview of your charity"
         classes={{
           container:
             "rich-text-toolbar border border-gray-l2 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
@@ -82,20 +78,6 @@ export default function Form() {
           charCounter: "text-gray-d1 dark:text-gray",
         }}
       />
-
-      <Label className="-mb-4 font-bold">Organization</Label>
-      <GroupContainer>
-        <TextSec<UV>
-          name="number_of_employees"
-          label="Number of employeees"
-          placeholder="50 - 100"
-        />
-        <TextSec<UV>
-          name="charity_navigator_rating"
-          label="Navigator rating"
-          placeholder="Platinum"
-        />
-      </GroupContainer>
 
       <Label className="-mb-4 font-bold">Social Media</Label>
       <GroupContainer>
@@ -107,24 +89,24 @@ export default function Form() {
         <TextSec<UV>
           name="facebook"
           label="Facebook"
-          placeholder="https://facebook.com/angelprotocol"
+          placeholder="https://facebook.com/"
         />
         <TextSec<UV>
           name="twitter"
           label="Twitter"
-          placeholder="https://twitter.com/angelprotocol"
+          placeholder="https://twitter.com/"
         />
         <TextSec<UV>
           name="linkedin"
           label="Linkedin"
-          placeholder="https://linkedin.com/angelprotocol"
+          placeholder="https://linkedin.com/"
         />
       </GroupContainer>
 
       <TextPrim<UV>
         name="contact_email"
         label="Contact email"
-        placeholder="hello@angelprotocol.io"
+        disabled={true}
       />
 
       <Submitter disabled={isSubmitDisabled} type="submit">
