@@ -26,6 +26,7 @@ export default function EditProfile() {
   if (
     isLoading ||
     isFetching ||
+    // checking whether there is a pending tx helprs avoid the page blinking after waiting for endowment profile to be re-loaded
     stage.step === "broadcast" ||
     stage.step === "submit"
   )
