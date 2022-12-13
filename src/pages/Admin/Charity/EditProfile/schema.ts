@@ -18,7 +18,6 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
   file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
     is: (value: string) => !value,
     then: (schema) => schema.required(),
-    otherwise: (schema) => schema.optional(),
   }),
 });
 
