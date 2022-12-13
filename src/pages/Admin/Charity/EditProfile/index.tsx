@@ -17,10 +17,11 @@ export default function EditProfile() {
   const {
     data: profile,
     isLoading,
+    isFetching,
     isError,
   } = useEndowmentProfileQuery({ id: endowmentId });
 
-  if (isLoading)
+  if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
