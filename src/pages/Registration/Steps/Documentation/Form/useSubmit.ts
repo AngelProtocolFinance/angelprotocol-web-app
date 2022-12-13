@@ -27,6 +27,7 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
+    level,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {

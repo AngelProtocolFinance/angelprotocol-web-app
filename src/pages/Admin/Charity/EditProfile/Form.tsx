@@ -42,6 +42,13 @@ export default function Form() {
         aspect={[4, 1]}
         classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
+      <Label className="-mb-4">Logo</Label>
+      <ImgEditor<UV, "logo">
+        name="logo"
+        accept={VALID_MIME_TYPES}
+        aspect={[1, 1]}
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+      />
       <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
       <TextPrim<UV>
