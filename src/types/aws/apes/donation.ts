@@ -67,6 +67,13 @@ export type FilterQuery = {
   denomination?: string;
 };
 
+export type FilterFormValues = {
+  startDate: Date;
+  endDate: Date;
+  network: string;
+  currency: string;
+};
+
 type TxDetails = FiatTx | CryptoTx;
 
 export type TxLogPayload = TxDetails & { kycData?: KYCData };

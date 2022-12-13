@@ -1,11 +1,9 @@
 import { Popover } from "@headlessui/react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Chain, Filters } from "types/aws";
+import { Chain, FilterFormValues, Filters } from "types/aws";
 import { useChainQuery, useChainsQuery } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
-import { FormValues } from "./schema";
 
 const MobileSearchFilter = ({
   updateFilterValues,
@@ -16,14 +14,7 @@ const MobileSearchFilter = ({
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [isNetworkSelected, setIsNetworkSelected] = useState<Boolean>(false);
-  const { handleError } = useErrorContext();
-  const {
-    handleSubmit,
-    register,
-    reset,
-    control,
-    formState: { isSubmitting, errors },
-  } = useForm<FormValues>({
+  const { handleSubmit, register, reset } = useForm<FilterFormValues>({
     reValidateMode: "onSubmit",
   });
   const buttonRef = useRef<any>();
@@ -36,7 +27,7 @@ const MobileSearchFilter = ({
     denomination: "",
   };
 
-  async function submit(data: FormValues) {
+  async function submit(data: FilterFormValues) {
     !data.startDate || !data.endDate
       ? delete filters.transactionDate
       : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
