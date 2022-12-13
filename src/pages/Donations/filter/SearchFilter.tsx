@@ -90,39 +90,41 @@ const SearchFilter = ({
                   <label className="dark:text-white">Date</label>
                   <div className="flex gap-4">
                     <input
+                      {...register("startDate")}
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="From"
+                      min="2018-12-31"
+                      max={new Date().toISOString().split("T")[0]}
+                      onChange={(e) => setStartDate(e.target.value)}
                     />
                     <input
+                      {...register("endDate")}
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
                       placeholder="To"
+                      min={startDate}
+                      max={new Date().toISOString().split("T")[0]}
+                      disabled={startDate ? false : true}
+                      defaultValue={startDate && startDate}
                     />
                   </div>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Network</label>
-                  <Listbox>
-                    <Listbox.Button
-                      className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                      }
-                    >
-                      <div className="text-gray-l2">Select network...</div>
-                      <Icon type="ArrowDown" size={30}></Icon>
-                    </Listbox.Button>
-                    <Listbox.Options>
-                      {networks?.map((network) => (
-                        <Listbox.Option
-                          key={network.chain_id}
-                          value={network.chain_name}
-                        >
-                          {network.chain_name}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Listbox>
+                  <select
+                    {...register("network")}
+                    className={
+                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                    }
+                  >
+                    <option value="">Select a network...</option>
+                    {networks?.map((network) => (
+                      <option key={network.chain_id} value={network.chain_name}>
+                        {network.chain_name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {/* <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Currency</label>
