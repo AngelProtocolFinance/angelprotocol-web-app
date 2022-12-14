@@ -16,7 +16,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr_auto] gap-3`}
+      className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr] gap-3`}
     >
       <button
         onClick={toggleFilter}
