@@ -1,25 +1,53 @@
 import { Popover } from "@headlessui/react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useBookmarksQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
+import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import Bookmarks from "./Bookmarks";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
 
 export default function Details(props: WalletState) {
+  const {
+    data: bookmarks,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useBookmarksQuery(props.address);
+
+  useEffect(() => {
+    if (!isLoading && !isFetching && isError) {
+      logger.error(error);
+    }
+  }, [isLoading, isFetching, isError, error]);
+
   return (
     <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-gray-l2 dark:border-bluegray shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
-      {({ close }) => (
-        <>
-          <MobileTitle onClose={close} />
-          <MyEndowments />
-          <WalletDetails {...props} />
-          <MyDonations address={props.address} />
-          <Bookmarks address={props.address} />
-          <DisconnectBtn />
-        </>
-      )}
+      {({ close }) => {
+        if (isLoading || isFetching) {
+          return (
+            <div className="flex items-center justify-center w-full h-full sm:h-96">
+              <LoaderRing thickness={10} classes="w-16" />
+            </div>
+          );
+        }
+
+        return (
+          <>
+            <MobileTitle onClose={close} />
+            <MyEndowments endowments={bookmarks} />
+            <WalletDetails {...props} />
+            <MyDonations address={props.address} />
+            <Bookmarks address={props.address} />
+            <DisconnectBtn />
+          </>
+        );
+      }}
     </Popover.Panel>
   );
 }
