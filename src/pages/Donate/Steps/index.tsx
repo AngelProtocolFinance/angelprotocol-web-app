@@ -3,6 +3,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
+import KadoModal from "components/KadoModal";
 import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -13,7 +14,6 @@ import {
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
 import Donater from "./Donater";
-import KadoModal from "./KadoModal";
 import Progress from "./Progress";
 import Result from "./Result";
 import Submit from "./Submit";
