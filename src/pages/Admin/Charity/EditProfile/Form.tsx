@@ -62,7 +62,7 @@ export default function Form() {
         Country
       </Label>
       <CountrySelector<UV, "country">
-        placeholder="United Kingdom"
+        placeholder="Select a country"
         fieldName="country"
         classes={{
           container:
