@@ -53,7 +53,9 @@ export default function Details(props: WalletState) {
                 />
               ))}
 
-            <MyEndowments endowments={profile?.admin} />
+            {!!profile?.admin?.length && (
+              <MyEndowments endowments={profile.admin} />
+            )}
             <WalletDetails {...props} />
             <MyDonations address={props.address} />
             <Bookmarks bookmarks={profile?.endowments} isError={isError} />

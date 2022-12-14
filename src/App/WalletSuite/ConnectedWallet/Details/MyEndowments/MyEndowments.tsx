@@ -3,9 +3,9 @@ import { EndowmentBookmark } from "types/aws";
 import { appRoutes } from "constants/routes";
 import Logo from "../Logo";
 
-type Props = { endowments?: EndowmentBookmark[] };
+type Props = { endowments: EndowmentBookmark[] };
 
-export default function MyEndowments({ endowments = [] }: Props) {
+export default function MyEndowments({ endowments }: Props) {
   return (
     <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
