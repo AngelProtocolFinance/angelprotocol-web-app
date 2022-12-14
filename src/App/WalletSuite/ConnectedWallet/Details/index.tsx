@@ -7,9 +7,11 @@ import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
+import AdminLinks from "./AdminLinks";
 import Bookmarks from "./Bookmarks";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
+import useIsMember from "./useIsMember";
 
 export default function Details(props: WalletState) {
   const {
@@ -19,6 +21,8 @@ export default function Details(props: WalletState) {
     isError,
     error,
   } = useProfileQuery(props.address);
+
+  const isMemberResult = useIsMember();
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
@@ -40,6 +44,15 @@ export default function Details(props: WalletState) {
         return (
           <>
             <MobileTitle onClose={close} />
+
+            {isMemberResult.isApMember ||
+              (isMemberResult.isReviewMember && (
+                <AdminLinks
+                  isApMember={isMemberResult.isApMember}
+                  isReviewMember={isMemberResult.isReviewMember}
+                />
+              ))}
+
             <MyEndowments endowments={profile?.admin} />
             <WalletDetails {...props} />
             <MyDonations address={props.address} />
