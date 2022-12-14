@@ -98,6 +98,7 @@ function getParams(paramsObj: EndowmentsQueryRequest): EndowmentsQueryParams {
     tiers: paramsObj.tiers.join(",") || null,
     sdgs: selectedSDGs.join(",") || 0,
     kyc_only: paramsObj.kyc_only.join(",") || null,
+    start: paramsObj.start || undefined,
   };
 
   return params;
