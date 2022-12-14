@@ -43,15 +43,9 @@ export const aws = createApi({
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
-
-    bookmarks: builder.query<EndowmentBookmark[], string>({
+    profile: builder.query<UserBookMarkInfo, string>({
       providesTags: [{ type: awsTags.bookmarks }],
-      query: (walletAddr) => {
-        return `/v1/bookmarks/${walletAddr}/${network}`;
-      },
-      transformResponse(res: UserBookMarkInfo) {
-        return res.endowments;
-      },
+      query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
       unknown,
@@ -71,7 +65,7 @@ export const aws = createApi({
 });
 
 export const {
-  useBookmarksQuery,
+  useProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
 

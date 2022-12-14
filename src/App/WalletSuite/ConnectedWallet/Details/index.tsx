@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useBookmarksQuery } from "services/aws/aws";
+import { useProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
@@ -13,12 +13,12 @@ import WalletDetails from "./WalletDetails";
 
 export default function Details(props: WalletState) {
   const {
-    data: bookmarks,
+    data: profile,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useBookmarksQuery(props.address);
+  } = useProfileQuery(props.address);
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
@@ -40,10 +40,10 @@ export default function Details(props: WalletState) {
         return (
           <>
             <MobileTitle onClose={close} />
-            <MyEndowments endowments={bookmarks} />
+            <MyEndowments endowments={profile?.admin} />
             <WalletDetails {...props} />
             <MyDonations address={props.address} />
-            <Bookmarks bookmarks={bookmarks} isError={isError} />
+            <Bookmarks bookmarks={profile?.endowments} isError={isError} />
             <DisconnectBtn />
           </>
         );

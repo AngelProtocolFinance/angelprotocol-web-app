@@ -1,5 +1,5 @@
 import { PropsWithChildren, useRef, useState } from "react";
-import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
+import { useProfileQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
@@ -18,16 +18,19 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
 
   const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const {
-    data = [],
-    isLoading,
+    data,
+    isLoading: isProfileLoading,
     isFetching,
-  } = useBookmarksQuery(wallet?.address!, {
+  } = useProfileQuery(wallet?.address!, {
     skip: !wallet,
   });
   const { showModal } = useModalContext();
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
 
-  const bookMark = data.find((d) => d.id === id);
+  const isLoading =
+    isProfileLoading || isFetching || isToggling || isWalletLoading;
+
+  const bookMark = data?.endowments?.find((d) => d.id === id);
   const isBookmarked = bookMark !== undefined;
 
   async function toogleBookmark() {
@@ -51,7 +54,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
         ref={ref}
         type="button"
         onClick={toogleBookmark}
-        disabled={isLoading || isFetching || isToggling || isWalletLoading}
+        disabled={isLoading}
         className={`flex items-center gap-1 ${
           isBookmarked || isHovered ? "text-red" : "text-white"
         }`}
@@ -66,13 +69,13 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
       >
         <Icon
           type={
-            isToggling
+            isLoading
               ? "Loading"
               : isBookmarked || isHovered
               ? "HeartFill"
               : "HeartOutline"
           }
-          className={isToggling ? "animate-spin" : ""}
+          className={isLoading ? "animate-spin" : ""}
           size={20}
         />
         {children}

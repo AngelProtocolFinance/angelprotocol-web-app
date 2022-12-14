@@ -103,6 +103,7 @@ export type EndowmentBookmark = {
 export type UserBookMarkInfo = {
   wallet: string;
   network: NetworkType;
+  admin: EndowmentBookmark[];
   endowments: EndowmentBookmark[];
 };
 
