@@ -45,6 +45,18 @@ export const sendCosmosTx = createAsyncThunk(
       const response = await contract.signAndBroadcast(tx);
 
       if (!response.code) {
+        //always invalidate cached chain data to reflect balance changes from fee deduction
+        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+
+        /** invalidate custom cache entries, after some delay so that query result
+        would reflect the changes made */
+        await new Promise((r) => {
+          setTimeout(r, 3000);
+        });
+        for (const tagPayload of args.tagPayloads || []) {
+          dispatch(tagPayload);
+        }
+
         if (args.onSuccess) {
           //success thunk should show user final success msg
           dispatch(args.onSuccess(response, args.wallet.chain));
@@ -57,17 +69,6 @@ export const sendCosmosTx = createAsyncThunk(
             chainId: args.wallet.chain.chain_id,
             successLink: args.successLink,
           });
-        }
-        //always invalidate cached chain data to reflect balance changes from fee deduction
-        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
-
-        /** invalidate custom cache entries, after some delay so that query result
-        would reflect the changes made */
-        await new Promise((r) => {
-          setTimeout(r, 3000);
-        });
-        for (const tagPayload of args.tagPayloads || []) {
-          dispatch(tagPayload);
         }
       } else {
         updateStage({

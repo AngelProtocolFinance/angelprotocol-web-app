@@ -5,7 +5,6 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { getAddressUrl, maskAddress } from "helpers";
 import { IS_TEST } from "constants/env";
-import createAddress from "../../createAddress";
 
 const CHAIN_ID = IS_TEST ? "uni-5" : "juno-1";
 
@@ -14,10 +13,12 @@ export default function Details() {
 
   return (
     <>
-      <Detail title="registration no.">{profile.registration_number}</Detail>
-      <Detail title="address">
-        {createAddress(profile.street_address, profile.country_of_origin)}
-      </Detail>
+      {!!profile.registration_number && (
+        <Detail title="registration no.">{profile.registration_number}</Detail>
+      )}
+      {!!profile.street_address && (
+        <Detail title="address">{profile.street_address}</Detail>
+      )}
       <Detail title="endowment address">
         <span className="flex items-center gap-4 w-full">
           <span className="hidden sm:block">
