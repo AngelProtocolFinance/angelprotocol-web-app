@@ -29,7 +29,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.admin, awsTags.cha, awsTags.bookmarks, awsTags.endowments],
+  tagTypes: [awsTags.admin, awsTags.cha, awsTags.profile, awsTags.endowments],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -44,14 +44,14 @@ export const aws = createApi({
       },
     }),
     profile: builder.query<WalletProfile, string>({
-      providesTags: [{ type: awsTags.bookmarks }],
+      providesTags: [{ type: awsTags.profile }],
       query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
       unknown,
       { type: "add" | "delete"; wallet: string } & EndowmentBookmark
     >({
-      invalidatesTags: [{ type: awsTags.bookmarks }],
+      invalidatesTags: [{ type: awsTags.profile }],
       query: ({ type, ...payload }) => {
         return {
           url: "/v1/bookmarks",
