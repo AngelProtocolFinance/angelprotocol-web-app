@@ -5,7 +5,7 @@ import {
   EndowmentTier,
   SocialMedialUrls,
 } from "../../contracts";
-import { NetworkType } from "../../lists";
+import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
@@ -22,6 +22,7 @@ export type Endowment = {
   image: string;
   tier: EndowmentTier;
   categories: Categories;
+  kyc_donors_only: boolean;
 
   //profile
   overview: string;
@@ -39,16 +40,27 @@ export type Endowment = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
-export type SortValue = "default" | `${EndowmentsSortKey}+${SortDirection}`;
+export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
+export type SdgGroups = { [idx: number]: UNSDG_NUMS[] };
+
+export type EndowmentsQueryRequest = {
+  query: string; //set to "matchAll" if no search query
+  sort?: Sort;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_types: CapitalizedEndowmentType[];
+  sdgGroups: SdgGroups;
+  tiers: Exclude<EndowmentTier, "Level1">[]; // "Level1" excluded for now
+  kyc_only: boolean[]; // comma separated boolean values
+};
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
-  sort: SortValue;
+  sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_type?: CapitalizedEndowmentType;
-  sdgs?: string; // comma separated sdg values
-  tier?: Exclude<EndowmentTier, "Level1">; //for now
-  kyc_only?: boolean;
+  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
+  tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  kyc_only: string | null; // comma separated boolean values
 };
 
 export interface LeaderboardEntry {

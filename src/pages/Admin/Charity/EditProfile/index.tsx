@@ -9,18 +9,27 @@ import { ProfileResponse } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useEndowmentProfileQuery } from "services/juno/account";
 import { FormError, FormSkeleton } from "components/admin";
+import { useGetter } from "store/accessors";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function EditProfile() {
   const { endowmentId } = useAdminResources();
+  const stage = useGetter((state) => state.transaction.stage);
   const {
     data: profile,
     isLoading,
+    isFetching,
     isError,
   } = useEndowmentProfileQuery({ id: endowmentId });
 
-  if (isLoading)
+  if (
+    isLoading ||
+    isFetching ||
+    // checking whether there is a pending tx helprs avoid the page blinking after waiting for endowment profile to be re-loaded
+    stage.step === "broadcast" ||
+    stage.step === "submit"
+  )
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;

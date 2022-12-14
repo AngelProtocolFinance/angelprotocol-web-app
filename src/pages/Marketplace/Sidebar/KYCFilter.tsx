@@ -1,27 +1,22 @@
 import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
-import { Checkbox } from "./common";
+import { FilterOption, FlatFilter } from "./common";
 
-const ID = `__kyc_check`;
-export default function KYCFilter({ classes = "" }: { classes?: string }) {
-  const isKYCOnly = useGetter((state) => state.component.marketFilter.kycOnly);
+const options: FilterOption<boolean>[] = [
+  { displayText: "Required", value: true, key: "true" },
+  { displayText: "Not Required", value: false, key: "false" },
+];
+
+export default function KYCFilter() {
+  const kycOnly = useGetter((state) => state.component.marketFilter.kyc_only);
   const dispatch = useSetter();
 
   return (
-    <div className={`grid ${classes}`}>
-      <span className="font-bold text-xs font-heading uppercase">KYC</span>
-      <div className="flex items-center mt-2">
-        <Checkbox
-          id={ID}
-          checked={isKYCOnly}
-          onChange={() => {
-            dispatch(setKYCOnly(!isKYCOnly));
-          }}
-        />
-        <label htmlFor={ID} className="ml-4 text-sm">
-          Required
-        </label>
-      </div>
-    </div>
+    <FlatFilter
+      label="Donor verification"
+      selectedValues={kycOnly}
+      options={options}
+      onChange={(options) => dispatch(setKYCOnly(options))}
+    />
   );
 }

@@ -70,6 +70,7 @@ import {
 } from "react-icons/io5";
 import {
   MdCardGiftcard,
+  MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
   MdOutlineContentCopy,
@@ -85,6 +86,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  AdminPanel: MdOutlineAdminPanelSettings,
   FilterLeft: BsFilterLeft,
   Filter: MdOutlineFilterAlt,
   FileDownload: MdOutlineFileDownload,

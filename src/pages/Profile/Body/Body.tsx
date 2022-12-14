@@ -6,7 +6,6 @@ import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
-import createAddress from "./createAddress";
 
 export default function Body() {
   const profile = useProfileContext();
@@ -43,24 +42,28 @@ export default function Body() {
               ac, ultricies.
             </p> */}
           </div>
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-            <span className="flex items-center gap-2 uppercase">
-              <Icon type="MapPin" className="h-6 w-6 text-orange" />
-              {createAddress(profile.street_address, profile.country_of_origin)}
-            </span>
-            {!!profile.url && (
-              <span className="flex items-center gap-2">
-                <Icon type="Globe" className="h-6 w-6 text-orange" />
-                <ExtLink
-                  href={profile.url}
-                  title="organization website"
-                  className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
-                >
-                  {profile.url.replace(/^https?:\/\//i, "")}
-                </ExtLink>
-              </span>
-            )}
-          </div>
+          {(!!profile.street_address || !!profile.url) && (
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
+              {!!profile.street_address && (
+                <span className="flex items-center gap-2 uppercase">
+                  <Icon type="MapPin" className="h-6 w-6 text-orange" />
+                  {profile.street_address}
+                </span>
+              )}
+              {!!profile.url && (
+                <span className="flex items-center gap-2">
+                  <Icon type="Globe" className="h-6 w-6 text-orange" />
+                  <ExtLink
+                    href={profile.url}
+                    title="organization website"
+                    className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+                  >
+                    {profile.url.replace(/^https?:\/\//i, "")}
+                  </ExtLink>
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
