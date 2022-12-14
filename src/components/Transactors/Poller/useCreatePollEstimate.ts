@@ -8,7 +8,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "slices/transaction/transactionSlice";
+} from "slices/transaction/transaction";
 import Gov from "contracts/Gov";
 import { extractFeeAmount, processEstimateError } from "helpers";
 import { denoms } from "constants/tokens";

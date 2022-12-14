@@ -1,16 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SendCosmosTxArgs, StageUpdater } from "../types";
+import { StageUpdater, Tx, TxArgs } from "./types";
 import { TxOptions } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import Contract from "contracts/Contract";
 import { extractFeeAmount } from "helpers";
 import { WalletDisconnectedError } from "errors/errors";
-import handleTxError from "../handleTxError";
-import transactionSlice, { setStage } from "../transactionSlice";
+import handleTxError from "./handleTxError";
+import transactionSlice, { setStage } from "./transaction";
 
 export const sendCosmosTx = createAsyncThunk(
   `${transactionSlice.name}/sendCosmosTx`,
-  async (args: SendCosmosTxArgs, { dispatch }) => {
+  async (args: TxArgs, { dispatch }) => {
     const updateStage: StageUpdater = (update) => {
       dispatch(setStage(update));
     };
@@ -44,6 +44,12 @@ export const sendCosmosTx = createAsyncThunk(
 
       const response = await contract.signAndBroadcast(tx);
 
+      const txRes: Tx = {
+        hash: response.transactionHash,
+        chainID: args.wallet.chain.chain_id,
+        rawLog: response.rawLog,
+      };
+
       if (!response.code) {
         if (args.onSuccess) {
           //success thunk should show user final success msg
@@ -52,9 +58,7 @@ export const sendCosmosTx = createAsyncThunk(
           updateStage({
             step: "success",
             message: args.successMessage || "Transaction succesful!",
-            txHash: response.transactionHash,
-            rawLog: response.rawLog,
-            chainId: args.wallet.chain.chain_id,
+            tx: txRes,
             successLink: args.successLink,
           });
         }
@@ -73,8 +77,7 @@ export const sendCosmosTx = createAsyncThunk(
         updateStage({
           step: "error",
           message: "Transaction failed",
-          txHash: response.transactionHash,
-          chainId: args.wallet.chain.chain_id,
+          tx: txRes,
         });
       }
     } catch (err) {

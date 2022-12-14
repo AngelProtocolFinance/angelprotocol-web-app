@@ -4,7 +4,7 @@ import { apesTags, invalidateApesTags } from "services/apes";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import Gov from "contracts/Gov";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 

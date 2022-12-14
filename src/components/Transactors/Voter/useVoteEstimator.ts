@@ -11,7 +11,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "slices/transaction/transactionSlice";
+} from "slices/transaction/transaction";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import { extractFeeAmount, processEstimateError, scale } from "helpers";

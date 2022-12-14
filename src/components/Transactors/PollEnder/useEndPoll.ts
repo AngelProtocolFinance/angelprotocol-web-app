@@ -4,7 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import Gov from "contracts/Gov";
 
 export default function useEndPoll(pollId: number) {

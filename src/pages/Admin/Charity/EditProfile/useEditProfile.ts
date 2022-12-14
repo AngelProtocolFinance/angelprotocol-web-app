@@ -12,7 +12,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import {

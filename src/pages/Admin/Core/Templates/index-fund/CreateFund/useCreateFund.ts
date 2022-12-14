@@ -8,7 +8,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import { cleanObject } from "helpers/admin";

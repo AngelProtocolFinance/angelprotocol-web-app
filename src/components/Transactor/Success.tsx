@@ -4,14 +4,14 @@ import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
-import { setStage } from "slices/transaction/transactionSlice";
+import { setStage } from "slices/transaction/transaction";
 import { getTxUrl } from "helpers";
 
 export default function Success(props: SuccessStage) {
   const { closeModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chainId, txHash, message, successLink } = props;
+  const { tx, message, successLink } = props;
 
   function acknowledge() {
     dispatch(setStage({ step: "initial" }));
@@ -31,9 +31,9 @@ export default function Success(props: SuccessStage) {
       <Icon type="CheckCircle" className="text-blue-d1 text-3xl mb-1" />
       <p className="text-center text-blue-d1 mb-2 font-bold">{message}</p>
 
-      {chainId && txHash && (
+      {tx && (
         <ExtLink
-          href={getTxUrl(chainId, txHash)}
+          href={getTxUrl(tx.chainID, tx.hash)}
           className="text-center text-blue cursor-pointer mb-6 text-sm"
         >
           view transaction details

@@ -9,7 +9,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "slices/transaction/transactionSlice";
+} from "slices/transaction/transaction";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import {

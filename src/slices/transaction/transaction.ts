@@ -15,7 +15,7 @@ const initialState: IState = {
   stage: { step: "initial" },
 };
 
-const transactionSlice = createSlice({
+const transaction = createSlice({
   name: "transaction",
   initialState,
   reducers: {
@@ -45,7 +45,7 @@ const transactionSlice = createSlice({
   },
 });
 
-export default transactionSlice.reducer;
+export default transaction.reducer;
 export const {
   setFormError,
   setFormLoading,
@@ -53,4 +53,4 @@ export const {
   setFee,
   setStage,
   resetTxFormState,
-} = transactionSlice.actions;
+} = transaction.actions;

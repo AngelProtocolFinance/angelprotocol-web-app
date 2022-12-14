@@ -4,7 +4,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
-import { resetTxFormState } from "slices/transaction/transactionSlice";
+import { resetTxFormState } from "slices/transaction/transaction";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";

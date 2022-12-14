@@ -4,9 +4,7 @@ import { SuccessLink } from "slices/transaction/types";
 import { AccountType } from "types/contracts";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import transactionSlice, {
-  setStage,
-} from "slices/transaction/transactionSlice";
+import transactionSlice, { setStage } from "slices/transaction/transaction";
 import {
   createAuthToken,
   getWasmAttribute,
@@ -55,8 +53,7 @@ export const logWithdrawProposal = createAsyncThunk<void, Params>(
         setStage({
           step: "success",
           message: "Withdraw proposal submitted",
-          txHash: res.transactionHash,
-          chainId: wallet.chain.chain_id,
+          tx: { hash: res.transactionHash, chainID: wallet.chain.chain_id },
           successLink: proposalLink,
         })
       );
@@ -72,7 +69,7 @@ export const logWithdrawProposal = createAsyncThunk<void, Params>(
         setStage({
           step: "error",
           message: `Failed to log created withdraw proposal. Contact support@angelprotocol.io`,
-          txHash: res.transactionHash,
+          tx: { hash: res.transactionHash, chainID: wallet.chain.chain_id },
         })
       );
     }

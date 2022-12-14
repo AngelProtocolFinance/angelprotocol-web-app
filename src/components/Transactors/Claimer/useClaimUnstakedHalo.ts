@@ -1,7 +1,7 @@
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import useClaimEstimator from "./useClaimEstimator";
 
 export default function useClaimUnstakedHalo() {

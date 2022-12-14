@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
 import { scaleToStr } from "helpers";

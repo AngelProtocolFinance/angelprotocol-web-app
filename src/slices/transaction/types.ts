@@ -2,7 +2,6 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { DeliverTxResponse } from "@cosmjs/stargate";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain } from "types/aws";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
@@ -18,51 +17,37 @@ export type FormError =
     }
   | string;
 
-/**
- * BaseStage
- * - step
- * - message
- * - txhash
- * - chainId
- */
+export type Tx = { hash: string; chainID: string; rawLog?: string };
 
 export type InitialStage = {
   step: "initial";
-  message?: never;
-  txHash?: never;
-  chainId?: never;
+  tx?: never;
 };
 
 export type SubmitStage = {
   step: "submit";
   message: string;
-  txHash?: never;
-  chainId?: never;
+  tx?: never;
 };
 
 export type BroadcastStage = {
   step: "broadcast";
   message: string;
-  txHash: string;
-  chainId: string;
+  tx: Tx;
 };
 
 export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: "success";
   message: string;
-  txHash: string; //leave "" to not render tx link
-  chainId: string; //leave "" to not render tx link
-  rawLog?: string;
+  tx: Tx;
   successLink?: SuccessLink;
 };
 
 export type ErrorStage = {
   step: "error";
   message: string;
-  //supply these two if want to show tx link
-  txHash?: string;
-  chainId?: string;
+  tx?: Tx;
 };
 
 export type Stage =
@@ -71,6 +56,7 @@ export type Stage =
   | BroadcastStage
   | SuccessStage
   | ErrorStage;
+
 export type StageUpdater = (update: Stage) => void;
 
 type BaseArgs = {
@@ -84,25 +70,14 @@ type BaseArgs = {
   ): AsyncThunkAction<void, any, {}>;
 };
 
-type TerraWithMsg = BaseArgs & {
-  msgs: Msg[];
-  tx?: never;
-}; //tx created onflight
-type TerraWithTx = BaseArgs & {
-  msgs?: never;
-  tx: CreateTxOptions;
-}; //pre-estimated tx
-
-export type TerraSendArgs = TerraWithMsg | TerraWithTx;
-
-type CosmosWithMsg = BaseArgs & {
+type WithMsg = BaseArgs & {
   msgs: EncodeObject[];
   tx?: never;
 };
 
-type CosmosWithTx = BaseArgs & {
+type WithTx = BaseArgs & {
   msgs?: never;
   tx: TxOptions;
 };
 
-export type SendCosmosTxArgs = CosmosWithMsg | CosmosWithTx;
+export type TxArgs = WithMsg | WithTx;

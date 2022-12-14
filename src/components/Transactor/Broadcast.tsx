@@ -3,16 +3,12 @@ import ExtLink from "components/ExtLink";
 import Loader from "components/Loader";
 import { getTxUrl } from "helpers";
 
-export default function Broadcast({
-  chainId,
-  message,
-  txHash,
-}: BroadcastStage) {
+export default function Broadcast({ message, tx }: BroadcastStage) {
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-[15rem] content-center">
       <p className="text-center text-gray-d2 mb-2">{message}</p>
       <ExtLink
-        href={getTxUrl(chainId, txHash)}
+        href={getTxUrl(tx.chainID, tx.hash)}
         className="text-center text-blue cursor-pointer mb-6"
       >
         view transaction status

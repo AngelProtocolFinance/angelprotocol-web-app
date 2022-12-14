@@ -6,7 +6,7 @@ import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import { scaleToStr } from "helpers";

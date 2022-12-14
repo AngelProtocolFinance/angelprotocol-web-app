@@ -5,7 +5,7 @@ import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import Airdrop from "contracts/Airdrop";
 import { condense } from "helpers";
 

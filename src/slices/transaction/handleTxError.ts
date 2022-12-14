@@ -32,14 +32,13 @@ export default function handleTxError(error: any, handler: StageUpdater) {
     handler({
       step: "error",
       message: error.message,
-      txHash: error.txHash,
-      chainId: error.chain.chain_id,
+      tx: { hash: error.txHash, chainID: error.chain.chain_id },
     });
   } else if (error instanceof LogDonationFail) {
     handler({
       step: "error",
       message: error.message,
-      txHash: error.txHash,
+      tx: { hash: error.txHash, chainID: error.chainId },
     });
   } else if (error instanceof LogApplicationUpdateError) {
     handler({

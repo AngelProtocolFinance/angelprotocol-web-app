@@ -3,7 +3,7 @@ import { VoteValues } from "./types";
 import { invalidateJunoTags } from "services/juno";
 import { junoTags } from "services/juno/tags";
 import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { sendCosmosTx } from "slices/transaction";
 import useVoteEstimator from "./useVoteEstimator";
 
 export default function useVote() {

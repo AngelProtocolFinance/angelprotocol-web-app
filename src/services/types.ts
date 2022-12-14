@@ -1,4 +1,3 @@
-import { SendCosmosTxArgs } from "slices/transaction/types";
 import { Token } from "types/aws";
 import {
   AdminVoteInfo,
@@ -7,6 +6,7 @@ import {
   ProfileResponse,
   Proposal,
 } from "types/contracts";
+import { TxArgs } from "slices/transaction";
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -31,7 +31,7 @@ export type AdminResources = {
   cw3config: CW3Config;
   role: AdminRoles;
   propMeta: Required<
-    Pick<SendCosmosTxArgs, "successLink" | "successMessage" | "tagPayloads">
+    Pick<TxArgs, "successLink" | "successMessage" | "tagPayloads">
   > & { willExecute?: true };
 };
 
