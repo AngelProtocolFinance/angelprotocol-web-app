@@ -19,6 +19,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     tiers,
     sdgGroups,
     kyc_only,
+    start: 0,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
