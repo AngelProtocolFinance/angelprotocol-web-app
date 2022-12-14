@@ -5,7 +5,7 @@ import {
   EndowmentsQueryParams,
   EndowmentsQueryRequest,
   PaginatedAWSQueryRes,
-  UserBookMarkInfo,
+  WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
@@ -43,7 +43,7 @@ export const aws = createApi({
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
-    profile: builder.query<UserBookMarkInfo, string>({
+    profile: builder.query<WalletProfile, string>({
       providesTags: [{ type: awsTags.bookmarks }],
       query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),

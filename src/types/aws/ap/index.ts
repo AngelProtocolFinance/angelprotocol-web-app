@@ -100,7 +100,7 @@ export type EndowmentBookmark = {
   logo?: string; // old bookmarks do not have this field saved yet
 };
 
-export type UserBookMarkInfo = {
+export type WalletProfile = {
   wallet: string;
   network: NetworkType;
   admin: EndowmentBookmark[];
