@@ -54,7 +54,7 @@ type FiatTx = TxBase & {
   paymentMethod: string;
 };
 
-export type FilterQuery = {
+export type DonationsQueryParams = {
   id: string | undefined;
   transactionDate?: string;
   chainName?: string;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Donation, FilterQuery } from "types/aws";
+import { Donation, DonationsQueryParams } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
@@ -12,7 +12,7 @@ import Table from "../../components/donations/Table";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
-  const [filterValues, setFilterValues] = useState<FilterQuery>({
+  const [filterValues, setFilterValues] = useState<DonationsQueryParams>({
     id: address,
   });
   const [searchTerm, setSearchTerm] = useState<string>("");
