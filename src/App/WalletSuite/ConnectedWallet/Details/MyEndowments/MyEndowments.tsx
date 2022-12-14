@@ -18,16 +18,16 @@ export default function MyEndowments({ endowments }: Props) {
             {/* Will be added once possible to fetch endowment profile by wallet address */}
             <span className="font-heading font-semibold text-sm">{e.name}</span>
 
-            <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 ">
+            <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2">
               <Link
                 to={`${appRoutes.profile}/${e.id}`}
-                className="pr-2 text-orange hover:text-orange-l2"
+                className="pr-2 text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
               >
                 profile
               </Link>
               <Link
                 to={`${appRoutes.admin}/${e.id}`}
-                className="px-2 border-l border-gray-l2 dark:border-bluegray text-orange hover:text-orange-l2"
+                className="px-2 border-l border-gray-l2 dark:border-bluegray text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
               >
                 admin
               </Link>
