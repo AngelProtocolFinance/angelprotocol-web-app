@@ -16,7 +16,7 @@ export default function Details(props: WalletState) {
           <MyEndowments />
           <WalletDetails {...props} />
           <MyDonations address={props.address} />
-          <Favourites {...props} />
+          <Favourites address={props.address} />
           <DisconnectBtn />
         </>
       )}
