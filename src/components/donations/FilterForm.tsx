@@ -53,9 +53,9 @@ const FilterForm = ({
           "w-full flex justify-center sm:justify-between items-center text-white bg-orange p-3 sm:p-0 sm:bg-white outline-0 sm:text-gray-d2 dark:text-white"
         }
       >
-        <Icon className="sm:hidden" type="Filter" size={20}></Icon>
+        <Icon className="sm:hidden" type="Filter" size={20} />
         <div className="uppercase font-semibold">Filter</div>
-        <Icon className="hidden sm:inline" type="ArrowDown" size={20}></Icon>
+        <Icon className="hidden sm:inline" type="ArrowDown" size={20} />
       </Popover.Button>
 
       <Popover.Panel className="fixed bg-white dark:bg-blue-d6 min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
@@ -66,7 +66,7 @@ const FilterForm = ({
                 Filters
               </h2>
               <Popover.Button className="p-5">
-                <Icon type="Close" size={24} className="text-gray-d2"></Icon>
+                <Icon type="Close" size={24} className="text-gray-d2" />
               </Popover.Button>
             </div>
             <div className="flex sm:hidden justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
