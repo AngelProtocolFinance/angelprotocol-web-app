@@ -13,7 +13,7 @@ export default function AdminLinks(props: Props) {
       <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange">
         {props.isApMember && (
           <Link to={`${appRoutes.admin}/${AP_ID}`} className="pr-2">
-            admin
+            ap admin
           </Link>
         )}
         {props.isReviewMember && (
