@@ -6,8 +6,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { Filters } from "components/donations";
-import DesktopSearchFilter from "../../components/donations/DesktopSearchFilter";
-import MobileSearchFilter from "../../components/donations/MobileSearchFilter";
+import FilterForm from "../../components/donations/FilterForm";
 import MobileTable from "../../components/donations/MobileTable";
 import Table from "../../components/donations/Table";
 
@@ -49,12 +48,12 @@ export default function Donations() {
             />
           </label>
         </div>
-        <div className="hidden sm:block">
-          <DesktopSearchFilter updateFilterValues={updateFilterValues} />
+        <FilterForm updateFilterValues={updateFilterValues} />
+        {/* <div className="hidden sm:block">
         </div>
         <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
           <MobileSearchFilter updateFilterValues={updateFilterValues} />
-        </div>
+        </div> */}
       </div>
       <QueryLoader
         queryState={queryState}

@@ -5,7 +5,7 @@ import { FilterFormValues, Filters } from "./types";
 import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
 
-const DesktopSearchFilter = ({
+const FilterForm = ({
   updateFilterValues,
 }: {
   updateFilterValues: Function;
@@ -46,20 +46,59 @@ const DesktopSearchFilter = ({
   }
 
   return (
-    <Popover className="hidden sm:block relative py-3 px-4 border border-gray-l2 dark:border-bluegray rounded-sm">
+    <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm">
       <Popover.Button
         ref={buttonRef}
         className={
-          "w-full flex justify-between items-center outline-0 text-gray-d2 dark:text-white"
+          "w-full flex justify-center sm:justify-between items-center text-white bg-orange p-3 sm:p-0 sm:bg-white outline-0 sm:text-gray-d2 dark:text-white"
         }
       >
+        <Icon className="sm:hidden" type="Filter" size={20}></Icon>
         <div className="uppercase font-semibold">Filter</div>
-        <Icon type="ArrowDown" size={20}></Icon>
+        <Icon className="hidden sm:inline" type="ArrowDown" size={20}></Icon>
       </Popover.Button>
 
-      <Popover.Panel className="absolute w-full right-[.05rem] z-10 border border-gray-l2 dark:border-bluegray rounded-sm mt-4">
+      <Popover.Panel className="fixed bg-white dark:bg-blue-d6 min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
         <form onSubmit={handleSubmit(submit)} method="get">
           <div className="flex flex-col">
+            <div className="flex sm:hidden justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
+              <h2 className="text-xl text-orange font-bold p-5 uppercase">
+                Filters
+              </h2>
+              <Popover.Button className="p-5">
+                <Icon type="Close" size={24} className="text-gray-d2"></Icon>
+              </Popover.Button>
+            </div>
+            <div className="flex sm:hidden justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
+              <button
+                type="button"
+                className="text-orange underline"
+                onClick={() => {
+                  reset({
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    network: "",
+                    currency: "",
+                  });
+                  setStartDate("");
+                  setIsNetworkSelected(false);
+                  updateFilterValues(filters);
+                }}
+              >
+                Reset filters
+              </button>
+              <button
+                type="submit"
+                className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
+                disabled={
+                  startDate || isNetworkSelected || isCurrencySelected
+                    ? false
+                    : true
+                }
+              >
+                Apply filter
+              </button>
+            </div>
             <div>
               <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
                 <div className="flex flex-col text-gray-d2 gap-2">
@@ -121,7 +160,7 @@ const DesktopSearchFilter = ({
                   </select>
                 </div>
               </div>
-              <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
+              <div className="hidden sm:flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
                 <button
                   type="button"
                   className="text-orange underline"
@@ -158,4 +197,4 @@ const DesktopSearchFilter = ({
     </Popover>
   );
 };
-export default DesktopSearchFilter;
+export default FilterForm;

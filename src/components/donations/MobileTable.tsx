@@ -11,7 +11,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <div className="lg:hidden mt-6">
+    <div className="lg:hidden">
       <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
         <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
           <Icon type="ArrowDown" size={24} className="invisible" />
