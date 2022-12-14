@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import AdminLinks from "./AdminLinks";
 import Bookmarks from "./Bookmarks";
+import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
 import useIsMember from "./useIsMember";
@@ -43,7 +43,7 @@ export default function Details(props: WalletState) {
 
         return (
           <>
-            <MobileTitle onClose={close} />
+            <MobileTitle className="sm:hidden" onClose={close} />
 
             {(isMemberResult.isApMember || isMemberResult.isReviewMember) && (
               <AdminLinks
@@ -64,20 +64,6 @@ export default function Details(props: WalletState) {
         );
       }}
     </Popover.Panel>
-  );
-}
-
-function MobileTitle({ onClose }: { onClose: () => void }) {
-  return (
-    <h3 className="flex sm:hidden justify-between items-center w-full px-4 py-3 bg-orange-l6 border-b border-gray-l2 dark:border-bluegray font-heading font-black text-xl text-orange uppercase dark:bg-blue-d7">
-      Wallet
-      <button
-        className="flex items-center justify-center w-10 h-10 dark:border-bluegray dark:hover:border-bluegray-d1 text-gray-d2 hover:text-black dark:text-white dark:hover:text-gray"
-        onClick={onClose}
-      >
-        <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
-      </button>
-    </h3>
   );
 }
 
