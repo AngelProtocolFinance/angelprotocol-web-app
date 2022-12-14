@@ -54,24 +54,11 @@ type FiatTx = TxBase & {
   paymentMethod: string;
 };
 
-export type Filters = {
-  transactionDate?: string;
-  chainName?: string;
-  denomination?: string;
-};
-
 export type FilterQuery = {
   id: string | undefined;
   transactionDate?: string;
   chainName?: string;
   denomination?: string;
-};
-
-export type FilterFormValues = {
-  startDate: Date;
-  endDate: Date;
-  network: string;
-  currency: string;
 };
 
 type TxDetails = FiatTx | CryptoTx;

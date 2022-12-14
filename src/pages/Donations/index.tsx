@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Donation, FilterQuery, Filters } from "types/aws";
+import { Donation, FilterQuery } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
+import { Filters } from "components/donations";
 import DesktopSearchFilter from "../../components/donations/DesktopSearchFilter";
 import MobileSearchFilter from "../../components/donations/MobileSearchFilter";
 import MobileTable from "../../components/donations/MobileTable";

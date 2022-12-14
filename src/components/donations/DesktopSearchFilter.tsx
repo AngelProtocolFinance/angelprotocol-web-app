@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FilterFormValues, Filters } from "types/aws";
+import { FilterFormValues, Filters } from "./types";
 import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
 
