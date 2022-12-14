@@ -5,7 +5,7 @@ import {
   EndowmentsQueryParams,
   EndowmentsQueryRequest,
   PaginatedAWSQueryRes,
-  UserBookMarkInfo,
+  WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
@@ -29,7 +29,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.admin, awsTags.cha, awsTags.bookmarks, awsTags.endowments],
+  tagTypes: [awsTags.admin, awsTags.profile, awsTags.endowments],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -43,21 +43,15 @@ export const aws = createApi({
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
-
-    bookmarks: builder.query<EndowmentBookmark[], string>({
-      providesTags: [{ type: awsTags.bookmarks }],
-      query: (walletAddr) => {
-        return `/v1/bookmarks/${walletAddr}/${network}`;
-      },
-      transformResponse(res: UserBookMarkInfo) {
-        return res.endowments;
-      },
+    profile: builder.query<WalletProfile, string>({
+      providesTags: [{ type: awsTags.profile }],
+      query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
       unknown,
       { type: "add" | "delete"; wallet: string } & EndowmentBookmark
     >({
-      invalidatesTags: [{ type: awsTags.bookmarks }],
+      invalidatesTags: [{ type: awsTags.profile }],
       query: ({ type, ...payload }) => {
         return {
           url: "/v1/bookmarks",
@@ -71,7 +65,7 @@ export const aws = createApi({
 });
 
 export const {
-  useBookmarksQuery,
+  useProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
 
