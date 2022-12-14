@@ -17,10 +17,10 @@ import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import SDGSelector from "./SDGSelector";
 import { VALID_MIME_TYPES } from "./schema";
-import useEditForm from "./useEditProfile";
+import useEditProfile from "./useEditProfile";
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditForm();
+  const { editProfile, isSubmitDisabled, id } = useEditProfile();
   return (
     <FormContainer
       onSubmit={editProfile}
@@ -35,14 +35,18 @@ export default function Form() {
       </Link>
       <TextPrim<UV> label="Proposal title" name="title" required />
       <TextArea<UV> label="Proposal description" name="description" required />
-      <Label className="-mb-4">Banner</Label>
+      <Label className="-mb-4" required>
+        Banner
+      </Label>
       <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
         classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
-      <Label className="-mb-4">Logo</Label>
+      <Label className="-mb-4" required>
+        Logo
+      </Label>
       <ImgEditor<UV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
@@ -58,6 +62,7 @@ export default function Form() {
         Country
       </Label>
       <CountrySelector<UV, "country">
+        placeholder="Select a country"
         fieldName="country"
         classes={{
           container:

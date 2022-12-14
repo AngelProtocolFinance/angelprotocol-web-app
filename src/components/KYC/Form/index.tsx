@@ -66,7 +66,7 @@ export default function Form({ classes = "", ...props }: Props) {
         </Label>
 
         <CountrySelector<FV, "country">
-          placeholder="United Kingdom"
+          placeholder="Select a country"
           fieldName="country"
           classes={{
             container:

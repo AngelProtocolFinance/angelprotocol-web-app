@@ -51,17 +51,6 @@ export const sendCosmosTx = createAsyncThunk(
       };
 
       if (!response.code) {
-        if (args.onSuccess) {
-          //success thunk should show user final success msg
-          dispatch(args.onSuccess(response, args.wallet.chain));
-        } else {
-          updateStage({
-            step: "success",
-            message: args.successMessage || "Transaction succesful!",
-            tx: txRes,
-            successLink: args.successLink,
-          });
-        }
         //always invalidate cached chain data to reflect balance changes from fee deduction
         dispatch(invalidateApesTags([{ type: apesTags.chain }]));
 
@@ -72,6 +61,18 @@ export const sendCosmosTx = createAsyncThunk(
         });
         for (const tagPayload of args.tagPayloads || []) {
           dispatch(tagPayload);
+        }
+
+        if (args.onSuccess) {
+          //success thunk should show user final success msg
+          dispatch(args.onSuccess(response, args.wallet.chain));
+        } else {
+          updateStage({
+            step: "success",
+            message: args.successMessage || "Transaction succesful!",
+            tx: txRes,
+            successLink: args.successLink,
+          });
         }
       } else {
         updateStage({

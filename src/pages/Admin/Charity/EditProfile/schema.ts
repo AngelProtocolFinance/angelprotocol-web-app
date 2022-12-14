@@ -14,9 +14,12 @@ export const VALID_MIME_TYPES = [
   "image/svg",
 ];
 
-const imgShape: SchemaShape<ImgLink> = {
-  file: genFileSchema(1e6, VALID_MIME_TYPES).optional(),
-};
+const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
+  file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
+    is: (value: string) => !value,
+    then: (schema) => schema.required(),
+  }),
+});
 
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<ProfileFormValues> = {
@@ -26,8 +29,9 @@ const shape: SchemaShape<ProfileFormValues> = {
   //sdgNum: no need to validate, selected from dropdown with default value
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
-  image: Yup.object().shape(imgShape),
-  url: url,
+  image: fileObj,
+  logo: fileObj,
+  url: url.required("required"),
   // registration_number: no need to validate
   // country_city_origin: no need to validate
   country: Yup.object().shape<SchemaShape<CountryOption>>({

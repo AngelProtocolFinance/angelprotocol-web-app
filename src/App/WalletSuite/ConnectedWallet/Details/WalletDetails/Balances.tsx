@@ -1,6 +1,8 @@
 import { Switch } from "@headlessui/react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Token } from "types/aws";
+import { useModalContext } from "contexts/ModalContext";
+import KadoModal from "components/KadoModal";
 import { humanize } from "helpers";
 
 const MIN_AMOUNT = 0.001;
@@ -18,8 +20,24 @@ export default function Balances({ coins }: { coins: Token[] }) {
     [coins, hideSmallAmounts]
   );
 
+  const { showModal } = useModalContext();
+  const handleOpenKado = useCallback(
+    () => showModal(KadoModal, {}),
+    [showModal]
+  );
+
   if (!filteredCoins.length) {
-    return <span className="flex justify-center">wallet is empty</span>;
+    return (
+      <span className="text-sm">
+        Your wallet is empty.{" "}
+        <button
+          className="font-bold underline hover:text-orange transition ease-in-out duration-300"
+          onClick={handleOpenKado}
+        >
+          Buy some crypto here
+        </button>
+      </span>
+    );
   }
 
   return (
