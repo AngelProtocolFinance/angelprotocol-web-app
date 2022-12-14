@@ -18,7 +18,7 @@ export default function MyEndowments({ endowments }: Props) {
             {/* Will be added once possible to fetch endowment profile by wallet address */}
             <span className="font-heading font-semibold text-sm">{e.name}</span>
 
-            <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange">
+            <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange hover:text-orange-l2">
               <Link to={`${appRoutes.profile}/${e.id}`} className="pr-2">
                 profile
               </Link>

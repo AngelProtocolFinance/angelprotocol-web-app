@@ -10,7 +10,7 @@ export default function AdminLinks(props: Props) {
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
         Platform Administration
       </h3>
-      <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange">
+      <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2 decoration-1 text-orange hover:text-orange-l2">
         {props.isApMember && (
           <Link to={`${appRoutes.admin}/${AP_ID}`} className="pr-2">
             ap admin
