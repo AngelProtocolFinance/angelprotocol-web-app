@@ -27,7 +27,6 @@ export default function EditProfile() {
     isLoading ||
     isFetching ||
     // checking whether there is a pending tx helprs avoid the page blinking after waiting for endowment profile to be re-loaded
-    stage.step === "broadcast" ||
     stage.step === "submit"
   )
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;

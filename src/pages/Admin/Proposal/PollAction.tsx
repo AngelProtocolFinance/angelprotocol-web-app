@@ -7,7 +7,6 @@ import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
@@ -38,8 +37,6 @@ export default function PollAction(props: ProposalDetails) {
         tagPayloads: extractTagFromMeta(props.meta),
       })
     );
-
-    showModal(TransactionPrompt, {});
   }
 
   const isExpired =

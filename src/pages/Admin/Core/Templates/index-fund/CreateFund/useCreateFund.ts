@@ -6,7 +6,6 @@ import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
@@ -92,7 +91,6 @@ export default function useCreateFund() {
         ...propMeta,
       })
     );
-    showModal(TransactionPrompt, {});
 
     setSubmitting(false);
   }

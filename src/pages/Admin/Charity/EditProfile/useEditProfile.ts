@@ -10,7 +10,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
@@ -113,7 +112,6 @@ export default function useEditProfile() {
           tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
         })
       );
-      showModal(TransactionPrompt, {});
     } catch (err) {
       handleError(err);
     }

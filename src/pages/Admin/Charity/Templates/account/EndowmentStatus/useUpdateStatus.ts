@@ -10,7 +10,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
@@ -102,7 +101,6 @@ export default function useUpdateStatus() {
         tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return { updateStatus: handleSubmit(updateStatus) };

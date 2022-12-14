@@ -4,9 +4,7 @@ import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
@@ -18,7 +16,6 @@ export default function useUpdateFund() {
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { handleError } = useErrorContext();
 
@@ -86,7 +83,6 @@ export default function useUpdateFund() {
         })
       );
       setIsLoading(false);
-      showModal(TransactionPromp, {});
       reset();
     } catch (err) {
       setIsLoading(false);

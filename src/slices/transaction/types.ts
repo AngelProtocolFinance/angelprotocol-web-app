@@ -3,12 +3,10 @@ import { DeliverTxResponse } from "@cosmjs/stargate";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { Chain } from "types/aws";
-import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 
 export type Tag = TagDescription<string>;
 export type TagPayload = PayloadAction<Tag[], string>;
-export type Step = "form" | "submit" | "broadcast" | "success" | "error";
 
 export type FormError =
   | {
@@ -30,12 +28,6 @@ export type SubmitStage = {
   tx?: never;
 };
 
-export type BroadcastStage = {
-  step: "broadcast";
-  message: string;
-  tx: Tx;
-};
-
 export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: "success";
@@ -50,34 +42,20 @@ export type ErrorStage = {
   tx?: Tx;
 };
 
-export type Stage =
-  | InitialStage
-  | SubmitStage
-  | BroadcastStage
-  | SuccessStage
-  | ErrorStage;
+export type Stage = InitialStage | SubmitStage | SuccessStage | ErrorStage;
+
+export type Step = Stage["step"];
 
 export type StageUpdater = (update: Stage) => void;
 
-type BaseArgs = {
+export type TxArgs = {
   tagPayloads?: TagPayload[];
   successMessage?: string;
   successLink?: SuccessLink;
   wallet: WalletState | undefined;
+  msgs: EncodeObject[];
   onSuccess?(
     res: DeliverTxResponse,
     chain: Chain
   ): AsyncThunkAction<void, any, {}>;
 };
-
-type WithMsg = BaseArgs & {
-  msgs: EncodeObject[];
-  tx?: never;
-};
-
-type WithTx = BaseArgs & {
-  msgs?: never;
-  tx: TxOptions;
-};
-
-export type TxArgs = WithMsg | WithTx;

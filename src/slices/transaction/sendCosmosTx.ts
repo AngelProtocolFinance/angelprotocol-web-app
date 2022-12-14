@@ -21,26 +21,21 @@ export const sendCosmosTx = createAsyncThunk(
       }
       updateStage({ step: "submit", message: "Submitting transaction..." });
       const contract = new Contract(args.wallet);
-      let tx: TxOptions;
-      if (args.tx) {
-        //pre-estimated tx doesn't need additional checks
-        tx = args.tx;
-      } else {
-        const fee = await contract.estimateFee(args.msgs);
 
-        const feeAmount = extractFeeAmount(
-          fee,
-          args.wallet.chain.native_currency.token_id
-        );
-        if (feeAmount > args.wallet.displayCoin.balance) {
-          updateStage({
-            step: "error",
-            message: `Not enough balance to pay for fees`,
-          });
-          return;
-        }
-        tx = { msgs: args.msgs, fee };
+      const fee = await contract.estimateFee(args.msgs);
+      const feeAmount = extractFeeAmount(
+        fee,
+        args.wallet.chain.native_currency.token_id
+      );
+
+      if (feeAmount > args.wallet.displayCoin.balance) {
+        return updateStage({
+          step: "error",
+          message: `Not enough balance to pay for fees`,
+        });
       }
+
+      const tx: TxOptions = { msgs: args.msgs, fee };
 
       const response = await contract.signAndBroadcast(tx);
 

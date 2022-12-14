@@ -5,7 +5,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
@@ -83,7 +82,6 @@ export default function useUpdateMembers() {
         tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
       })
     );
-    showModal(TransactionPromp, {});
     reset();
   }
 

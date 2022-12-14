@@ -5,7 +5,6 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
@@ -69,7 +68,6 @@ export default function useConfigureFund() {
         ...propMeta,
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {
