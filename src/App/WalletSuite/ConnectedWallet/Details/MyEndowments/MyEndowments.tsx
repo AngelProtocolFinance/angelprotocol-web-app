@@ -11,22 +11,23 @@ export default function MyEndowments({ endowments }: Props) {
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
         My Endowments
       </h3>
-      {endowments.map((e) => (
-        <div key={e.id} className="grid grid-cols-[auto_1fr] gap-3">
-          <Logo src={e.logo} className="w-10 h-10" />
+      {endowments.map((endowment) => (
+        <div key={endowment.id} className="grid grid-cols-[auto_1fr] gap-3">
+          <Logo src={endowment.logo} className="w-10 h-10" />
           <div className="grid items-center">
-            {/* Will be added once possible to fetch endowment profile by wallet address */}
-            <span className="font-heading font-semibold text-sm">{e.name}</span>
+            <span className="font-heading font-semibold text-sm">
+              {endowment.name}
+            </span>
 
             <div className="flex items-center uppercase font-heading font-semibold text-xs underline underline-offset-2">
               <Link
-                to={`${appRoutes.profile}/${e.id}`}
+                to={`${appRoutes.profile}/${endowment.id}`}
                 className="pr-2 text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
               >
                 profile
               </Link>
               <Link
-                to={`${appRoutes.admin}/${e.id}`}
+                to={`${appRoutes.admin}/${endowment.id}`}
                 className="px-2 border-l border-gray-l2 dark:border-bluegray text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
               >
                 admin
