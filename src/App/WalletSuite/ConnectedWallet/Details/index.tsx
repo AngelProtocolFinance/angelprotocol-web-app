@@ -45,13 +45,12 @@ export default function Details(props: WalletState) {
           <>
             <MobileTitle onClose={close} />
 
-            {isMemberResult.isApMember ||
-              (isMemberResult.isReviewMember && (
-                <AdminLinks
-                  isApMember={isMemberResult.isApMember}
-                  isReviewMember={isMemberResult.isReviewMember}
-                />
-              ))}
+            {(isMemberResult.isApMember || isMemberResult.isReviewMember) && (
+              <AdminLinks
+                isApMember={isMemberResult.isApMember}
+                isReviewMember={isMemberResult.isReviewMember}
+              />
+            )}
 
             {!!profile?.admin?.length && (
               <MyEndowments endowments={profile.admin} />
