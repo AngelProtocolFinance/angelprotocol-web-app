@@ -4,14 +4,13 @@ import { Airdrops } from "types/aws";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import Airdrop from "contracts/Airdrop";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
+  const { sendTx, isSending } = useCosmosTxSender(true);
 
   const totalClaimable = useMemo(
     () =>
@@ -22,26 +21,23 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
     [airdrops]
   );
 
-  const claimAirdrop = (isStake: boolean) => () => {
+  const claimAirdrop = (isStake: boolean) => async () => {
     const airdropContract = new Airdrop(wallet);
     const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: claimAirdropMsgs,
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.gov, id: govTags.staker },
-            { type: junoTags.gov, id: govTags.halo_balance },
-          ]),
-        ],
-      })
-    );
+    await sendTx({
+      msgs: claimAirdropMsgs,
+      tagPayloads: [
+        invalidateJunoTags([
+          { type: junoTags.gov, id: govTags.staker },
+          { type: junoTags.gov, id: govTags.halo_balance },
+        ]),
+      ],
+    });
   };
 
-  return { totalClaimable: totalClaimable.toNumber(), claimAirdrop };
+  return { totalClaimable: totalClaimable.toNumber(), claimAirdrop, isSending };
 }

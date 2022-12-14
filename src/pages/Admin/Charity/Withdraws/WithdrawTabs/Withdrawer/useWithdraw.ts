@@ -5,10 +5,9 @@ import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
@@ -23,7 +22,7 @@ export default function useWithdraw() {
 
   const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   const type = getValues("type");
 
@@ -75,27 +74,24 @@ export default function useWithdraw() {
           JSON.stringify(meta)
         );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposal],
-        //Juno withdrawal
-        ...propMeta,
-        onSuccess: isJuno
-          ? undefined //no need to POST to AWS if destination is juno
-          : (response) =>
-              logWithdrawProposal({
-                res: response,
-                proposalLink: propMeta.successLink,
-                wallet: wallet!, //wallet is defined at this point
-                endowment_multisig: cw3,
-                proposal_chain_id: chainIds.juno,
-                target_chain: data.network,
-                target_wallet: data.beneficiary,
-                type: data.type,
-              }),
-      })
-    );
+    sendTx({
+      msgs: [proposal],
+      //Juno withdrawal
+      ...propMeta,
+      onSuccess: isJuno
+        ? undefined //no need to POST to AWS if destination is juno
+        : (response) =>
+            logWithdrawProposal({
+              res: response,
+              proposalLink: propMeta.successLink,
+              wallet: wallet!, //wallet is defined at this point
+              endowment_multisig: cw3,
+              proposal_chain_id: chainIds.juno,
+              target_chain: data.network,
+              target_wallet: data.beneficiary,
+              type: data.type,
+            }),
+    });
   }
 
   return {

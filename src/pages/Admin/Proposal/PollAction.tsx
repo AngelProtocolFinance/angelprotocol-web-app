@@ -2,41 +2,37 @@ import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "pages/Admin/types";
 import { ProposalDetails } from "services/types";
 import { TagPayload } from "slices/transaction/types";
-import useAdminVoter from "pages/Admin/Proposal/Voter/useVoter";
 import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
 import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
+import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {
   const { data: latestBlock = "0" } = useLatestBlockQuery(null);
   const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
   const { cw3 } = useAdminResources();
+  const { showModal } = useModalContext();
 
-  const showAdminVoter = useAdminVoter({
-    proposalId: props.id,
-    type: props.proposal_type,
-    existingReason: props.description, //prev NO reason is saved in proposal description
-  });
+  // const showAdminVoter = u({
+  //   proposalId: props.id,
+  //   type: props.proposal_type,
+  //   existingReason: props.description, //prev NO reason is saved in proposal description
+  // });
 
-  function executeProposal() {
+  async function executeProposal() {
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [execMsg],
-        tagPayloads: extractTagFromMeta(props.meta),
-      })
-    );
+    await sendTx({
+      msgs: [execMsg],
+      tagPayloads: extractTagFromMeta(props.meta),
+    });
   }
 
   const isExpired =
@@ -72,7 +68,19 @@ export default function PollAction(props: ProposalDetails) {
     if (V) {
       node = <Text>you voted {userVote.vote}</Text>;
     } else {
-      node = <Button onClick={showAdminVoter}>Vote</Button>;
+      node = (
+        <Button
+          onClick={() => {
+            showModal(Voter, {
+              type: props.proposal_type,
+              proposalId: props.id,
+              existingReason: props.description,
+            });
+          }}
+        >
+          Vote
+        </Button>
+      );
     }
   }
   return <>{node}</>;

@@ -11,9 +11,9 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import {
   cleanObject,
   genDiffMeta,
@@ -32,10 +32,10 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<ProfileFormValues>();
+
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
-  const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
+  const sendTx = useCosmosTxSender();
 
   const editProfile = async ({
     title,
@@ -104,14 +104,11 @@ export default function useEditProfile() {
         JSON.stringify(profileUpdateMeta)
       );
 
-      dispatch(
-        sendCosmosTx({
-          wallet,
-          msgs: [proposalMsg],
-          ...propMeta,
-          tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
-        })
-      );
+      await sendTx({
+        msgs: [proposalMsg],
+        ...propMeta,
+        tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
+      });
     } catch (err) {
       handleError(err);
     }

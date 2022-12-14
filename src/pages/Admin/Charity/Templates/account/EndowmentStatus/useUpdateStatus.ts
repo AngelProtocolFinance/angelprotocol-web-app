@@ -10,17 +10,16 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { cleanObject, getTagPayloads } from "helpers/admin";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const dispatch = useSetter();
   const { cw3, role, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
+  const sendTx = useCosmosTxSender();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
@@ -93,14 +92,11 @@ export default function useUpdateStatus() {
       JSON.stringify(statusUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
-      })
-    );
+    sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
+    });
   }
 
   return { updateStatus: handleSubmit(updateStatus) };

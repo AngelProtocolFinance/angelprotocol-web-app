@@ -8,10 +8,9 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof RegistrarConfigPayload;
@@ -24,7 +23,7 @@ export default function useConfigureRegistrar() {
     formState: { isDirty, isSubmitting },
   } = useFormContext<RegistrarConfigValues>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function configureRegistrar({
     title,
@@ -66,13 +65,10 @@ export default function useConfigureRegistrar() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
   }
 
   return {

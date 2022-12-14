@@ -8,9 +8,8 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
@@ -25,7 +24,7 @@ export default function usePropose() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function configureCW3({
     title,
@@ -69,14 +68,11 @@ export default function usePropose() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
-      })
-    );
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+    });
   }
 
   return {

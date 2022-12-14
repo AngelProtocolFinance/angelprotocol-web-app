@@ -10,68 +10,70 @@ import {
 import { FC } from "react";
 
 type Func = () => void;
-type Opener = <T extends {}>(Modal: FC<T>, props: T) => void;
-type ContextState = {
+type Opener = <T extends {}>(
+  Modal: FC<T>,
+  props: T,
+  options?: { isDismissible?: boolean }
+) => void;
+
+type ModalState = {
+  Modal: ReactNode;
   isDismissible: boolean;
-  showModal: Opener;
-  closeModal: Func;
-  onModalClose: (func: Func) => void;
-  setDismissible: (value: boolean) => void;
+};
+
+type ContextState = {
+  //state
+  isDismissible: boolean;
   isModalOpen: boolean;
+
+  //setter
+  showModal: Opener;
+  closeModal(): void;
+  setIsDismissible(isDismissible: boolean): void;
 };
 
 export default function ModalContext(
   props: PropsWithChildren<{ id?: string }>
 ) {
-  const [Modal, setModal] = useState<ReactNode>();
-  const [isDismissible, setDismissible] = useState(true);
-  const [onClose, setOnClose] = useState<Func>();
+  const [state, setState] = useState<ModalState>();
 
-  const showModal: Opener = useCallback((Modal, props) => {
-    setModal(<Modal {...props} />);
-    // track last active element
+  const showModal: Opener = useCallback((Modal, props, options) => {
+    const { isDismissible = true } = options || {};
+    setState({
+      Modal: <Modal {...props} />,
+      isDismissible,
+    });
   }, []);
 
-  const closeModal: Func = useCallback(() => {
-    if (!isDismissible) {
-      return;
-    }
-    setModal(undefined);
-    if (onClose) {
-      onClose();
-      setOnClose(undefined);
-    }
-  }, [isDismissible, onClose]);
+  const closeModal = useCallback(() => {
+    setState((prev) => (prev?.isDismissible ? undefined : prev));
+  }, []);
 
-  const onModalClose = useCallback((func: Func) => setOnClose(() => func), []);
-
-  const handleSetDismissible = useCallback(
-    (value: boolean) => {
-      if (value !== isDismissible) {
-        setDismissible(value);
-      }
+  const setIsDismissible = useCallback(
+    (isDismissible: ModalState["isDismissible"]) => {
+      setState((prev) => (prev ? { ...prev, isDismissible } : prev));
     },
-    [isDismissible]
+    []
   );
 
   return (
     <Context.Provider
       value={{
-        isDismissible,
-        isModalOpen: !!Modal,
+        isDismissible: !!state?.isDismissible,
+        isModalOpen: !!state?.Modal,
+
+        setIsDismissible,
         showModal,
         closeModal,
-        onModalClose,
-        setDismissible: handleSetDismissible,
       }}
     >
       <Dialog
-        open={Modal !== undefined}
+        open={state !== undefined}
         onClose={closeModal}
         className="relative z-50"
       >
         <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
-        {Modal /** should always be wrapped with Dialog.Panel */}
+        {state?.Modal /** should always be wrapped with Dialog.Panel */}
       </Dialog>
 
       {props.children}

@@ -5,10 +5,9 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 
@@ -22,7 +21,7 @@ export default function useConfigureFund() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FundConfigValues>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function configureFund({
     title,
@@ -61,13 +60,10 @@ export default function useConfigureFund() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
+    sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
   }
 
   return {
