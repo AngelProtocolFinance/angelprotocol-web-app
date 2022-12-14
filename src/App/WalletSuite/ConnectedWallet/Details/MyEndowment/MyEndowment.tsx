@@ -1,11 +1,11 @@
 import Logo from "../Logo";
 import Links from "./Links";
 
-export default function MyProfile() {
+export default function MyEndowment() {
   return (
     <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
-        My Profile
+        My Endowment
       </h3>
       <div className="grid grid-cols-[auto_1fr] gap-3">
         {/* Will be added once possible to fetch endowment profile by wallet address */}
