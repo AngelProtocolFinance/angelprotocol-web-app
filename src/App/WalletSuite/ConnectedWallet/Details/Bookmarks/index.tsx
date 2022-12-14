@@ -4,7 +4,7 @@ import Bookmark from "./Bookmark";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
-export default function Favourites({ address }: { address: string }) {
+export default function Bookmarks({ address }: { address: string }) {
   const queryState = useBookmarksQuery(address);
 
   return (

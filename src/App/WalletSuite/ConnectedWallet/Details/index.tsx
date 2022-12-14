@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import Favourites from "./Favourites";
+import Bookmarks from "./Bookmarks";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
 
@@ -16,7 +16,7 @@ export default function Details(props: WalletState) {
           <MyEndowments />
           <WalletDetails {...props} />
           <MyDonations address={props.address} />
-          <Favourites address={props.address} />
+          <Bookmarks address={props.address} />
           <DisconnectBtn />
         </>
       )}
