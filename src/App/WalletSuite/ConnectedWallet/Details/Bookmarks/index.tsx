@@ -1,12 +1,12 @@
-import { useBookmarksQuery } from "services/aws/aws";
+import { EndowmentBookmark } from "types/aws";
 import { QueryLoader } from "components/admin";
 import Bookmark from "./Bookmark";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
-export default function Bookmarks({ address }: { address: string }) {
-  const queryState = useBookmarksQuery(address);
+type Props = { bookmarks: EndowmentBookmark[] | undefined; isError: boolean };
 
+export default function Bookmarks({ bookmarks, isError }: Props) {
   return (
     <div className="flex flex-col gap-3 min-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="flex justify-between gap-2 font-heading">
@@ -25,11 +25,10 @@ export default function Bookmarks({ address }: { address: string }) {
         </Link> */}
       </h3>
       <QueryLoader
-        queryState={queryState}
+        queryState={{ data: bookmarks, isError: isError, isLoading: false }}
         messages={{
           empty: "No favourites",
           error: "Failed to get favorite organisations.",
-          loading: "Fetching favourites...",
         }}
         classes={{ container: "text-xs gap-1" }}
       >
