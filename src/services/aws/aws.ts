@@ -29,7 +29,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.admin, awsTags.cha, awsTags.profile, awsTags.endowments],
+  tagTypes: [awsTags.admin, awsTags.profile, awsTags.endowments],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
