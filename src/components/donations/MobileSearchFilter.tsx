@@ -1,25 +1,24 @@
 import { Popover } from "@headlessui/react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Chain, FilterFormValues, Filters } from "types/aws";
-import { useChainQuery, useChainsQuery } from "services/apes";
+import { FilterFormValues, Filters } from "types/aws";
+import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
 
 const MobileSearchFilter = ({
   updateFilterValues,
-  address,
 }: {
   updateFilterValues: Function;
-  address: string | undefined;
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [isNetworkSelected, setIsNetworkSelected] = useState<Boolean>(false);
+  const [isCurrencySelected, setIsCurrencySelected] = useState<Boolean>(false);
   const { handleSubmit, register, reset } = useForm<FilterFormValues>({
     reValidateMode: "onSubmit",
   });
   const buttonRef = useRef<any>();
   const { data: networks } = useChainsQuery("");
-  // const { data: currencies } = useChainQuery({ address: address });
+  const { data: currencies } = useCurrenciesQuery();
 
   const filters: Filters = {
     transactionDate: "",
@@ -33,10 +32,10 @@ const MobileSearchFilter = ({
         ? delete filters.transactionDate
         : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
     }
-    !data.network
+    data.network === ""
       ? delete filters.chainName
       : (filters.chainName = data.network);
-    !data.currency
+    data.currency === ""
       ? delete filters.denomination
       : (filters.denomination = data.currency);
 
@@ -85,7 +84,6 @@ const MobileSearchFilter = ({
                     setStartDate("");
                     setIsNetworkSelected(false);
                     updateFilterValues(filters);
-                    updateFilterValues(filters);
                   }}
                 >
                   Reset filters
@@ -93,7 +91,11 @@ const MobileSearchFilter = ({
                 <button
                   type="submit"
                   className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
-                  disabled={startDate || isNetworkSelected ? false : true}
+                  disabled={
+                    startDate || isNetworkSelected || isCurrencySelected
+                      ? false
+                      : true
+                  }
                 >
                   Apply filter
                 </button>
@@ -144,29 +146,23 @@ const MobileSearchFilter = ({
                       ))}
                     </select>
                   </div>
-                  {/* <div className="flex flex-col text-gray-d2 gap-2">
-                  <label className="dark:text-white">Currency</label>
-                  <Listbox>
-                    <Listbox.Button
+                  <div className="flex flex-col text-gray-d2 gap-2">
+                    <label className="dark:text-white">Currency</label>
+                    <select
+                      {...register("currency")}
+                      onChange={() => setIsCurrencySelected(true)}
                       className={
                         "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
                       }
                     >
-                      <div className="text-gray-l2">Select currency...</div>
-                      <Icon type="ArrowDown" size={30}></Icon>
-                    </Listbox.Button>
-                    <Listbox.Options>
-                      {currencies?.map((currency: Chain) => (
-                        <Listbox.Option
-                          key={currency.chain_id}
-                          value={currency.native_currency}
-                        >
-                          {currency.native_currency}
-                        </Listbox.Option>
+                      <option value="">Select a currency...</option>
+                      {currencies?.map((currency) => (
+                        <option key={currency.token_id} value={currency.symbol}>
+                          {currency.symbol}
+                        </option>
                       ))}
-                    </Listbox.Options>
-                  </Listbox>
-                </div> */}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>

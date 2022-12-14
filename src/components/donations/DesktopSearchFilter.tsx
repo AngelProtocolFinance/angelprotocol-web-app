@@ -1,25 +1,24 @@
 import { Popover } from "@headlessui/react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Chain, FilterFormValues, Filters } from "types/aws";
-import { useChainQuery, useChainsQuery } from "services/apes";
+import { FilterFormValues, Filters } from "types/aws";
+import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
 
 const DesktopSearchFilter = ({
   updateFilterValues,
-  address,
 }: {
   updateFilterValues: Function;
-  address: string | undefined;
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [isNetworkSelected, setIsNetworkSelected] = useState<Boolean>(false);
+  const [isCurrencySelected, setIsCurrencySelected] = useState<Boolean>(false);
   const { handleSubmit, register, reset } = useForm<FilterFormValues>({
     reValidateMode: "onSubmit",
   });
   const buttonRef = useRef<any>();
   const { data: networks } = useChainsQuery("");
-  // const { data: currencies } = useChainQuery({ address: address });
+  const { data: currencies } = useCurrenciesQuery();
 
   const filters: Filters = {
     transactionDate: "",
@@ -33,10 +32,10 @@ const DesktopSearchFilter = ({
         ? delete filters.transactionDate
         : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
     }
-    !data.network
+    data.network === ""
       ? delete filters.chainName
       : (filters.chainName = data.network);
-    !data.currency
+    data.currency === ""
       ? delete filters.denomination
       : (filters.denomination = data.currency);
 
@@ -104,25 +103,23 @@ const DesktopSearchFilter = ({
                     ))}
                   </select>
                 </div>
-                {/* <div className="flex flex-col text-gray-d2 gap-2">
-                    <label className="dark:text-white">Currency</label>
-                    <select
-                      {...register("currency")}
-                      className={
-                        "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
-                      }
-                    >
-                      <option value="">Select a currency...</option>
-                      {currencies?.map((currency: Chain) => (
-                        <option
-                          key={currency.chain_id}
-                          value={currency.native_currency}
-                        >
-                          {currency.native_currency}
-                        </option>
-                      ))}
-                    </select>
-                  </div> */}
+                <div className="flex flex-col text-gray-d2 gap-2">
+                  <label className="dark:text-white">Currency</label>
+                  <select
+                    {...register("currency")}
+                    onChange={() => setIsCurrencySelected(true)}
+                    className={
+                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                    }
+                  >
+                    <option value="">Select a currency...</option>
+                    {currencies?.map((currency) => (
+                      <option key={currency.token_id} value={currency.symbol}>
+                        {currency.symbol}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
                 <button
@@ -145,7 +142,11 @@ const DesktopSearchFilter = ({
                 <button
                   type="submit"
                   className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
-                  disabled={startDate || isNetworkSelected ? false : true}
+                  disabled={
+                    startDate || isNetworkSelected || isCurrencySelected
+                      ? false
+                      : true
+                  }
                 >
                   Apply filter
                 </button>

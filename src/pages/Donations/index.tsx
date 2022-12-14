@@ -49,16 +49,10 @@ export default function Donations() {
           </label>
         </div>
         <div className="hidden sm:block">
-          <DesktopSearchFilter
-            updateFilterValues={updateFilterValues}
-            address={address}
-          />
+          <DesktopSearchFilter updateFilterValues={updateFilterValues} />
         </div>
         <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
-          <MobileSearchFilter
-            updateFilterValues={updateFilterValues}
-            address={address}
-          />
+          <MobileSearchFilter updateFilterValues={updateFilterValues} />
         </div>
       </div>
       <QueryLoader

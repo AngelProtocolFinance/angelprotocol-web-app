@@ -1,4 +1,4 @@
-import { Donation, FilterQuery, ReceiptPayload } from "types/aws";
+import { Donation, FilterQuery, ReceiptPayload, Token } from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
@@ -37,7 +37,14 @@ const donations_api = apes.injectEndpoints({
         return res.Items;
       },
     }),
+    currencies: builder.query<Token[], void>({
+      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
+    }),
   }),
 });
 
-export const { useRequestReceiptMutation, useDonationsQuery } = donations_api;
+export const {
+  useRequestReceiptMutation,
+  useDonationsQuery,
+  useCurrenciesQuery,
+} = donations_api;
