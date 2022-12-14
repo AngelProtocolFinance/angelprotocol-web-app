@@ -7,8 +7,6 @@ import { appRoutes } from "constants/routes";
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
-// NOTE: Governance will be reenabled when we relaunch the $HALO token
-// const Governance = lazy(() => import("pages/Governance/Governance"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
@@ -23,7 +21,6 @@ export default function Views() {
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
         <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
-        {/* <Route path={`${appRoutes.govern}/*`} element={<Governance />} /> */}
         <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
         <Route
           path={`${appRoutes.donations}/:address`}
