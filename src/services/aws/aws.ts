@@ -3,6 +3,7 @@ import {
   Endowment,
   EndowmentBookmark,
   EndowmentsQueryParams,
+  EndowmentsQueryRequest,
   PaginatedAWSQueryRes,
   UserBookMarkInfo,
 } from "types/aws";
@@ -11,6 +12,8 @@ import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { awsTags } from "./tags";
+
+const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -32,11 +35,11 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowments: builder.query<
       PaginatedAWSQueryRes<Endowment[]>,
-      EndowmentsQueryParams
+      EndowmentsQueryRequest
     >({
       providesTags: [{ type: awsTags.endowments }],
-      query: (params) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+      query: (request) => {
+        const params: EndowmentsQueryParams = getParams(request);
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
@@ -44,7 +47,6 @@ export const aws = createApi({
     bookmarks: builder.query<EndowmentBookmark[], string>({
       providesTags: [{ type: awsTags.bookmarks }],
       query: (walletAddr) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return `/v1/bookmarks/${walletAddr}/${network}`;
       },
       transformResponse(res: UserBookMarkInfo) {
@@ -57,7 +59,6 @@ export const aws = createApi({
     >({
       invalidatesTags: [{ type: awsTags.bookmarks }],
       query: ({ type, ...payload }) => {
-        const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
         return {
           url: "/v1/bookmarks",
           method: type === "add" ? "POST" : "DELETE",
@@ -82,3 +83,22 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
+
+function getParams(paramsObj: EndowmentsQueryRequest): EndowmentsQueryParams {
+  const selectedSDGs = Object.entries(paramsObj.sdgGroups).flatMap(
+    ([, members]) => members
+  );
+
+  const params: EndowmentsQueryParams = {
+    query: paramsObj.query || "matchall",
+    sort: paramsObj.sort
+      ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
+      : "default",
+    endow_types: paramsObj.endow_types.join(",") || null,
+    tiers: paramsObj.tiers.join(",") || null,
+    sdgs: selectedSDGs.join(",") || 0,
+    kyc_only: paramsObj.kyc_only.join(",") || null,
+  };
+
+  return params;
+}

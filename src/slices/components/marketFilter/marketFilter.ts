@@ -1,25 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { EndowmentsSortKey, SortDirection } from "types/aws";
+import { Sort } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
-
-export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
-
-type State = {
-  isOpen: boolean;
-  searchText: string;
-  types: CapitalizedEndowmentType[];
-  sort?: Sort;
-  //geography
-  sdgs: { [idx: number]: number[] };
-  kycOnly: boolean;
-};
-const initialState: State = {
-  sdgs: { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
-  isOpen: false,
-  searchText: "",
-  types: [],
-  kycOnly: false,
-};
+import { UNSDG_NUMS } from "types/lists";
+import { initialState } from "./constants";
 
 const marketFilter = createSlice({
   name: "marketFilter",
@@ -33,15 +16,15 @@ const marketFilter = createSlice({
       state,
       {
         payload: { group, sdgs },
-      }: PayloadAction<{ group: number; sdgs: number[] }>
+      }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
     ) => {
-      state.sdgs[group] = sdgs;
+      state.sdgGroups[group] = sdgs;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
     },
-    setKYCOnly: (state, { payload }: PayloadAction<boolean>) => {
-      state.kycOnly = payload;
+    setKYCOnly: (state, { payload }: PayloadAction<boolean[]>) => {
+      state.kyc_only = payload;
     },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;
@@ -50,9 +33,7 @@ const marketFilter = createSlice({
       state,
       { payload }: PayloadAction<CapitalizedEndowmentType[]>
     ) => {
-      // state.types = payload; //TODO: enable multiple types
-      //set only single type
-      state.types = [payload[payload.length - 1]];
+      state.endow_types = payload;
     },
     toggle(state) {
       state.isOpen = !state.isOpen;
