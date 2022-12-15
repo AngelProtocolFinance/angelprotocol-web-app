@@ -1,6 +1,7 @@
 import { Switch } from "@headlessui/react";
 import { Token } from "types/aws";
 import { WalletState } from "contexts/WalletContext";
+import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
 import useBalances from "./useBalances";
 
@@ -57,7 +58,11 @@ export default function Balances(props: WalletState) {
 function GiftcardBalances({ coins }: { coins: Token[] }) {
   return (
     <>
-      <span className="flex items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
+      <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
+        <Icon
+          type="Giftcard"
+          className="bg-green text-white rounded-full p-1 w-6 h-6"
+        />
         Giftcard balances
       </span>
       <CoinBalances coins={coins} />
