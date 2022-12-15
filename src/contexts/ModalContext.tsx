@@ -9,16 +9,16 @@ import {
 } from "react";
 import { FC } from "react";
 
+type ModalOptions = { isDismissible: boolean; onClose(): void };
+type ModalState = {
+  Modal: ReactNode;
+} & ModalOptions;
+
 type Opener = <T extends {}>(
   Modal: FC<T>,
   props: T,
-  options?: { isDismissible?: boolean }
+  options?: Partial<ModalOptions>
 ) => void;
-
-type ModalState = {
-  Modal: ReactNode;
-  isDismissible: boolean;
-};
 
 type ContextState = {
   //state
@@ -28,7 +28,10 @@ type ContextState = {
   //setter
   showModal: Opener;
   closeModal(): void;
-  setIsDismissible(isDismissible: boolean): void;
+  setModalOption<T extends keyof ModalOptions>(
+    option: T,
+    val: ModalOptions[T]
+  ): void;
 };
 
 export default function ModalContext(
@@ -37,20 +40,23 @@ export default function ModalContext(
   const [state, setState] = useState<ModalState>();
 
   const showModal: Opener = useCallback((Modal, props, options) => {
-    const { isDismissible = true } = options || {};
+    const { isDismissible = true, onClose = () => {} } = options || {};
     setState({
       Modal: <Modal {...props} />,
       isDismissible,
+      onClose,
     });
   }, []);
 
   const closeModal = useCallback(() => {
-    setState((prev) => (prev?.isDismissible ? undefined : prev));
-  }, []);
+    if (state?.isDismissible) return;
+    state?.onClose();
+    setState(undefined);
+  }, [state]);
 
-  const setIsDismissible = useCallback(
-    (isDismissible: ModalState["isDismissible"]) => {
-      setState((prev) => (prev ? { ...prev, isDismissible } : prev));
+  const setModalOption = useCallback(
+    <T extends keyof ModalOptions>(option: T, val: ModalOptions[T]) => {
+      setState((prev) => (prev ? { ...prev, [option]: val } : prev));
     },
     []
   );
@@ -61,7 +67,7 @@ export default function ModalContext(
         isDismissible: !!state?.isDismissible,
         isModalOpen: !!state?.Modal,
 
-        setIsDismissible,
+        setModalOption,
         showModal,
         closeModal,
       }}

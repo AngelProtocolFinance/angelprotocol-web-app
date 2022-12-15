@@ -19,7 +19,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
   const { wallet } = useGetWallet();
   /** use this state to show loading to modal forms */
   const [isSending, setIsSending] = useState(false);
-  const { showModal, setIsDismissible } = useModalContext();
+  const { showModal, setModalOption } = useModalContext();
   const dispatch = useSetter();
 
   const sendTx: Sender = async ({
@@ -42,7 +42,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
 
       if (isSenderInModal) {
         setIsSending(true);
-        setIsDismissible(false);
+        setModalOption("isDismissible", false);
       } else {
         showModal(
           TxPrompt,
