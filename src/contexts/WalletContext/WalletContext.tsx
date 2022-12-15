@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, Token } from "types/aws";
-import { GenericBalance } from "types/contracts";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
 import { useGiftcardBalanceQuery } from "services/juno/custom";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -203,8 +203,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
-  const { data: giftcardBalance, isLoading: isGcLoading } =
-    useGetGiftcardBalance(activeProvider?.providerInfo?.address, chain);
+  const { data: giftcardTokens, isLoading: isGcLoading } = useGetGiftcardTokens(
+    activeProvider?.providerInfo?.address,
+    chain
+  );
 
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
@@ -303,28 +305,45 @@ function useVerifyChain(
   }, [chain, chainError, handle]);
 }
 
-function useGetGiftcardBalance(
+function useGetGiftcardTokens(
   addr = "",
   chain: Chain
 ): {
-  data?: GenericBalance;
+  data: Token[];
   isLoading: boolean;
 } {
   const { handleError } = useErrorContext();
 
-  const { data, isLoading, isFetching, isError, error } =
-    useGiftcardBalanceQuery(
-      { addr },
-      { skip: !addr || chain.type !== "juno-native" }
-    );
+  const supportedTokens = useMemo(
+    () => [chain.native_currency, ...chain.tokens],
+    [chain]
+  );
+
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGiftcardBalanceQuery(
+    { addr, supportedTokens },
+    { skip: !addr || chain.type !== "juno-native" }
+  );
 
   const isAnyLoading = isLoading || isFetching;
 
   useEffect(() => {
-    if (!isAnyLoading && isError) {
-      handleError(error);
+    if (isAnyLoading) {
+      return;
     }
-  }, [isAnyLoading, isError, error, handleError]);
+
+    if (isError) {
+      return handleError(
+        error || "Error occurred loading giftcard balances",
+        GENERIC_ERROR_MESSAGE
+      );
+    }
+  }, [error, isAnyLoading, isError, handleError]);
 
   return { data, isLoading: isAnyLoading };
 }

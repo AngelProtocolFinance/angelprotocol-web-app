@@ -1,3 +1,4 @@
+import { Token } from "types/aws";
 import {
   AdminVoteInfo,
   AllianceMember,
@@ -59,7 +60,7 @@ export interface ContractQueries {
   giftcardBalance: {
     args: Addr;
     res: Q<GenericBalance>;
-    result: GenericBalance;
+    result: Token[];
   };
 
   govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
