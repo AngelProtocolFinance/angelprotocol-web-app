@@ -1,6 +1,6 @@
-import Decimal from "decimal.js";
 import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { govTags, junoTags } from "services/juno/tags";
+import { condenseToNum } from "helpers";
 import { junoApi } from "./";
 import { genQueryPath } from "./queryContract/genQueryPath";
 
@@ -14,7 +14,7 @@ export const cw20Api = junoApi.injectEndpoints({
       query: ({ contract, ...args }) =>
         genQueryPath("cw20Balance", args, contract),
       transformResponse: (res: Res<"cw20Balance">) => {
-        return new Decimal(res.data.balance).div(1e6).toNumber();
+        return condenseToNum(res.data.balance);
       },
     }),
     cw20Info: builder.query<Result<"cw20Info">, WithAddrArgs<"cw20Info">>({

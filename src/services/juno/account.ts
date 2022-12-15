@@ -24,7 +24,6 @@ export const account_api = junoApi.injectEndpoints({
         };
       },
     }),
-
     endowmentProfile: builder.query<Result<"accProfile">, Args<"accProfile">>({
       providesTags: [{ type: junoTags.account, id: accountTags.profile }],
       query: (args) => genQueryPath("accProfile", args, accounts),
