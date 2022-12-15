@@ -5,7 +5,7 @@ import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import Airdrop from "contracts/Airdrop";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {

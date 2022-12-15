@@ -4,7 +4,7 @@ import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt/Prompt";
+import Prompt from "components/Prompt";
 import { handleMutationResult } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { useRegState, withStepGuard } from "../StepGuard";

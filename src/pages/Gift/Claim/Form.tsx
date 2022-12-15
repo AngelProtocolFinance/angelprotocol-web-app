@@ -4,7 +4,7 @@ import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import Prompt from "components/Prompt/Prompt";
+import Prompt from "components/Prompt";
 import { BtnPrim, BtnSec } from "components/gift";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
