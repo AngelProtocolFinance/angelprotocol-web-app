@@ -6,7 +6,6 @@ export * from "./airdrop";
 export * from "./common";
 export * from "./cw4";
 export * from "./cw20";
-export * from "./giftcard";
 export * from "./governance";
 export * from "./indexfund";
 export * from "./lp";

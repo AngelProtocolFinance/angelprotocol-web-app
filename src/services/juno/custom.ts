@@ -6,7 +6,7 @@ import {
   ProposalDetails,
 } from "services/types";
 import { CW3Config, EndowmentDetails } from "types/contracts";
-import { condenseToNum, idParamToNum } from "helpers";
+import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
@@ -179,7 +179,7 @@ export const customApi = junoApi.injectEndpoints({
       query: (args) =>
         genQueryPath("giftcardBalance", args, contracts.gift_cards),
       transformResponse: (res: Res<"giftcardBalance">) => {
-        return condenseToNum(res.data.balance);
+        return res.data;
       },
     }),
     proposalDetails: builder.query<

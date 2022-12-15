@@ -11,7 +11,7 @@ import {
   EndowmentEntry,
   EndowmentQueryOptions,
   FundDetails,
-  GiftcardBalance,
+  GenericBalance,
   GovConfig,
   GovStaker,
   GovState,
@@ -56,7 +56,11 @@ export interface ContractQueries {
 
   lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
 
-  giftcardBalance: { args: Addr; res: Q<GiftcardBalance>; result: number };
+  giftcardBalance: {
+    args: Addr;
+    res: Q<GenericBalance>;
+    result: GenericBalance;
+  };
 
   govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
   govState: { args: null; res: Q<GovState>; result: GovState };
