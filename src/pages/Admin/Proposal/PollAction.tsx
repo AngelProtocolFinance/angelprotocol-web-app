@@ -18,12 +18,6 @@ export default function PollAction(props: ProposalDetails) {
   const { cw3 } = useAdminResources();
   const { showModal } = useModalContext();
 
-  // const showAdminVoter = u({
-  //   proposalId: props.id,
-  //   type: props.proposal_type,
-  //   existingReason: props.description, //prev NO reason is saved in proposal description
-  // });
-
   async function executeProposal() {
     const contract = new CW3(wallet, cw3);
     const execMsg = contract.createExecProposalMsg(props.id);
