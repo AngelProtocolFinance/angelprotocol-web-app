@@ -7,8 +7,10 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, Token } from "types/aws";
+import { BaseChain, Chain, ChainType, Token } from "types/aws";
+import { GenericBalance } from "types/contracts";
 import { useChainQuery } from "services/apes";
+import { useGiftcardBalanceQuery } from "services/juno/custom";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chains";
@@ -201,6 +203,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
+  const { data: giftcardBalance, isLoading: isGcLoading } =
+    useGetGiftcardBalance(activeProvider?.providerInfo?.address, chain);
+
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
       const { logo, providerId, address } = activeProvider.providerInfo!;
@@ -296,4 +301,30 @@ function useVerifyChain(
       handle(new WrongNetworkError());
     }
   }, [chain, chainError, handle]);
+}
+
+function useGetGiftcardBalance(
+  addr = "",
+  chain: Chain
+): {
+  data?: GenericBalance;
+  isLoading: boolean;
+} {
+  const { handleError } = useErrorContext();
+
+  const { data, isLoading, isFetching, isError, error } =
+    useGiftcardBalanceQuery(
+      { addr },
+      { skip: !addr || chain.type !== "juno-native" }
+    );
+
+  const isAnyLoading = isLoading || isFetching;
+
+  useEffect(() => {
+    if (!isAnyLoading && isError) {
+      handleError(error);
+    }
+  }, [isAnyLoading, isError, error, handleError]);
+
+  return { data, isLoading: isAnyLoading };
 }
