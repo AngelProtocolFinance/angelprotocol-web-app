@@ -1,8 +1,8 @@
 import { errors } from "ethers";
-import { StageUpdater } from "slices/transaction/types";
 import { logger } from "helpers";
 
-export default function handleEthError(error: any, handler: StageUpdater) {
+/** TODO: use this with sendDonation */
+export default function handleEthError(error: any, handler: any) {
   logger.error(error);
 
   switch (error?.code) {

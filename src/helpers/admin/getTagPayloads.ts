@@ -1,5 +1,5 @@
 import { ProposalMeta } from "pages/Admin/types";
-import { TagPayload } from "slices/transaction/types";
+import { TagPayload } from "services/types";
 import { invalidateJunoTags } from "services/juno";
 import {
   accountTags,

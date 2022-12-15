@@ -7,11 +7,11 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
-import { logWithdrawProposal } from "./logWithdrawProposal";
+import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
   const {
@@ -22,8 +22,9 @@ export default function useWithdraw() {
 
   const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const sendTx = useCosmosTxSender();
 
+  const sendTx = useCosmosTxSender();
+  const logProposal = useLogWithdrawProposal(propMeta.successMeta);
   const type = getValues("type");
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
@@ -80,17 +81,18 @@ export default function useWithdraw() {
       ...propMeta,
       onSuccess: isJuno
         ? undefined //no need to POST to AWS if destination is juno
-        : (response) =>
-            logWithdrawProposal({
-              res: response,
-              proposalLink: propMeta.successLink,
-              wallet: wallet!, //wallet is defined at this point
-              endowment_multisig: cw3,
-              proposal_chain_id: chainIds.juno,
-              target_chain: data.network,
-              target_wallet: data.beneficiary,
-              type: data.type,
-            }),
+        : async (response, chain) =>
+            await logProposal(
+              {
+                endowment_multisig: cw3,
+                proposal_chain_id: chainIds.juno,
+                target_chain: data.network,
+                target_wallet: data.beneficiary,
+                type: data.type,
+              },
+              response,
+              chain
+            ),
     });
   }
 

@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { cleanObject } from "helpers/admin";
 import { INIT_SPLIT } from ".";
 

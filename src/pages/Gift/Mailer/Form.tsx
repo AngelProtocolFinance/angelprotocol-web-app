@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
+import Prompt from "components/Prompt/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
 import { BtnOutline, BtnPrim, BtnSec, TextInput } from "components/gift";

@@ -10,7 +10,6 @@ export * from "./getWasmAttribute";
 export * from "./idParamToNum";
 export * from "./logger";
 export * from "./maskAddress";
-export * from "./processEstimateError";
 export * from "./theme";
 export * from "./toBase64";
 export * from "./uploadToIpfs";

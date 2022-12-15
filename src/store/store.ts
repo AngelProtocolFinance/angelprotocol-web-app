@@ -8,11 +8,9 @@ import authReducer from "slices/authSlice";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
-import transactionReducer from "slices/transaction/transaction";
 
 export const store = configureStore({
   reducer: {
-    transaction: transactionReducer,
     admin: adminReducer,
     donation,
     gift,

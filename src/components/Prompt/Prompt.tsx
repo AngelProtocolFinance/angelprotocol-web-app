@@ -1,14 +1,8 @@
 import { Dialog } from "@headlessui/react";
-import { PropsWithChildren } from "react";
+import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "./Icon";
-import LoaderRing from "./LoaderRing";
-
-type Props = PropsWithChildren<{
-  type: "success" | "error" | "loading";
-  headline: string;
-  title: string;
-}>;
+import Icon from "../Icon";
+import LoaderRing from "../LoaderRing";
 
 export default function Prompt({ type, headline, title, children }: Props) {
   const { closeModal } = useModalContext();
@@ -27,9 +21,11 @@ export default function Prompt({ type, headline, title, children }: Props) {
         </button>
       </div>
       <PromptIcon type={type} classes="mb-6 sm:mb-8 mt-4 sm:mt-12" />
-      <h3 className="font-bold text-center text-3xl mb-2 leading-normal px-3 sm:px-8">
-        {title}
-      </h3>
+      {title && (
+        <h3 className="font-bold text-center text-3xl mb-2 leading-normal px-3 sm:px-8">
+          {title}
+        </h3>
+      )}
       <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
         {children}
       </div>

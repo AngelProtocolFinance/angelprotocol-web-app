@@ -10,7 +10,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 
 type Key = keyof RegistrarConfigPayload;

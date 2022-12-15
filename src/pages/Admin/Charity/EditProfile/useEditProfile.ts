@@ -7,13 +7,11 @@ import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import { useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import {
   cleanObject,
   genDiffMeta,

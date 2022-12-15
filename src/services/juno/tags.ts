@@ -1,5 +1,4 @@
-import { JunoTags } from "services/types";
-import { Tag } from "slices/transaction/types";
+import { JunoTags, Tag } from "services/types";
 
 export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",

@@ -1,3 +1,5 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { Token } from "types/aws";
 import {
   AdminVoteInfo,
@@ -6,7 +8,10 @@ import {
   ProfileResponse,
   Proposal,
 } from "types/contracts";
-import { TxArgs } from "slices/transaction";
+import { TxArgs } from "hooks/useCosmosTxSender";
+
+export type Tag = TagDescription<string>;
+export type TagPayload = PayloadAction<Tag[], string>;
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -30,9 +35,9 @@ export type AdminResources = {
   endowment: EndowmentDetails;
   cw3config: CW3Config;
   role: AdminRoles;
-  propMeta: Required<
-    Pick<TxArgs, "successLink" | "successMessage" | "tagPayloads">
-  > & { willExecute?: true };
+  propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
+    willExecute?: true;
+  };
 };
 
 export type ProposalDetails = Proposal & {

@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { contracts } from "constants/contracts";

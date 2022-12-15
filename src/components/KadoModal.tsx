@@ -24,7 +24,7 @@ export default function KadoModal() {
     return () => {
       dispatch(invalidateApesTags([apesTags.chain]));
     };
-  }, []);
+  }, [dispatch]);
 
   const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
   const network = !wallet

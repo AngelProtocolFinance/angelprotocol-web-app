@@ -8,7 +8,7 @@ import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
