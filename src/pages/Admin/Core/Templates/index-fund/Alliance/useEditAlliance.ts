@@ -83,7 +83,7 @@ export default function useEditAlliance() {
       JSON.stringify(editAllianceMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
     });

@@ -22,7 +22,7 @@ export default function useUpdateStatus() {
   const sendTx = useCosmosTxSender();
   const { showModal } = useModalContext();
 
-  function updateStatus(data: EndowmentUpdateValues) {
+  async function updateStatus(data: EndowmentUpdateValues) {
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
@@ -92,7 +92,7 @@ export default function useUpdateStatus() {
       JSON.stringify(statusUpdateMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),

@@ -60,7 +60,7 @@ export default function useConfigureFund() {
       JSON.stringify(configUpdateMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
     });

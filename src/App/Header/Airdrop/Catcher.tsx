@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { Airdrops } from "types/aws";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -8,7 +9,7 @@ export default function Catcher(props: { airdrops: Airdrops }) {
     props.airdrops
   );
   return (
-    <div className="bg-white flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-[15rem] w-full">
+    <Dialog.Panel className="fixed-center z-20 w-full max-w-md bg-white flex flex-col rounded-md items-center p-4 shadow-lg min-h-[15rem]">
       <Icon type="Parachute" className="text-blue text-4xl" />
       <h2 className="text-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop
@@ -31,7 +32,7 @@ export default function Catcher(props: { airdrops: Airdrops }) {
       >
         Claim
       </Action>
-    </div>
+    </Dialog.Panel>
   );
 }
 

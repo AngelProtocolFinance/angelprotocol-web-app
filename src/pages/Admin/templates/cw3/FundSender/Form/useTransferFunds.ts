@@ -25,7 +25,7 @@ export default function useTransferFunds() {
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 
-  function transferFunds(data: FundSendValues) {
+  async function transferFunds(data: FundSendValues) {
     const balance =
       data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
@@ -71,7 +71,7 @@ export default function useTransferFunds() {
       JSON.stringify(fundTransferMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),

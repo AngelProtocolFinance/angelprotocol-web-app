@@ -28,7 +28,7 @@ export default function useWithdraw() {
   const type = getValues("type");
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
-  function withdraw(data: WithdrawValues) {
+  async function withdraw(data: WithdrawValues) {
     const assets: Asset[] = data.amounts.map(
       ({ value, tokenId, type: tokenType }) => ({
         info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
@@ -75,7 +75,7 @@ export default function useWithdraw() {
           JSON.stringify(meta)
         );
 
-    sendTx({
+    await sendTx({
       msgs: [proposal],
       //Juno withdrawal
       ...propMeta,

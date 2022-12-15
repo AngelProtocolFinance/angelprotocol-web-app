@@ -75,7 +75,7 @@ export default function useUpdateFund() {
         JSON.stringify(fundUpdateMembersMeta)
       );
 
-      sendTx({
+      await sendTx({
         msgs: [proposalMsg],
         ...propMeta,
       });

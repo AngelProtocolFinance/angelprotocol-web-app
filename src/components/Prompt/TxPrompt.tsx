@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import {
   TxState,
@@ -11,18 +12,23 @@ import { getTxUrl } from "helpers";
 import Prompt from "./Prompt";
 
 export function TxPrompt(props: TxState) {
+  const { closeModal } = useModalContext();
+  const navigate = useNavigate();
   const { message, ...rest } = toPrompt(props);
   return (
     <Prompt {...rest}>
       <p>{message}</p>
       {isSuccess(props) && props.success.link && (
         <>
-          <Link
-            to={props.success.link.url}
+          <button
+            onClick={() => {
+              navigate(props.success.link!.url);
+              closeModal();
+            }}
             className="inline-block justify-self-center bg-blue uppercase text-xs py-1 px-2 text-white rounded mt-4"
           >
             {props.success.link.description}
-          </Link>
+          </button>
         </>
       )}
       {(isError(props) || isSuccess(props)) && props.tx && (

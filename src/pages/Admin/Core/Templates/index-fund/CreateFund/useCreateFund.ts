@@ -82,7 +82,7 @@ export default function useCreateFund() {
       JSON.stringify(createFundMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
     });

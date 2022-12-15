@@ -9,7 +9,6 @@ import {
 } from "react";
 import { FC } from "react";
 
-type Func = () => void;
 type Opener = <T extends {}>(
   Modal: FC<T>,
   props: T,

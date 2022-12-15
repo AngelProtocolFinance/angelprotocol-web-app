@@ -44,5 +44,9 @@ export default function useVote() {
     });
   }
 
-  return { vote: handleSubmit(vote), isSubmitDisabled: !isValid, isSending };
+  return {
+    vote: handleSubmit(vote),
+    isSubmitDisabled: !isValid || isSending,
+    isSending,
+  };
 }

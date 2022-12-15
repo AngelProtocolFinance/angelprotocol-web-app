@@ -44,7 +44,7 @@ export default function useUpdateOwner() {
       JSON.stringify(ownerUpdateMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
     });
