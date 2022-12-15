@@ -3,19 +3,16 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, Token } from "types/aws";
-import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
-import { useGiftcardBalanceQuery } from "services/juno/giftcard";
-import { useErrorContext } from "contexts/ErrorContext";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
+import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
+import { IS_TEST } from "constants/env";
 import { placeholderChain } from "./constants";
+import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -265,83 +262,3 @@ const setContext = createContext<Setters>({
 
 export const useSetWallet = () => useContext(setContext);
 export const useGetWallet = () => useContext(getContext);
-
-function useVerifyChain(
-  chain: Chain | undefined,
-  chainError: any,
-  disconnect: () => void
-) {
-  const { handleError } = useErrorContext();
-
-  const handle = useCallback(
-    (error: any) => {
-      handleError(error);
-      try {
-        disconnect();
-      } catch (err) {
-        // when wallet is disconnected, the `disconnect` func is recreated,
-        // causing this hook to rerun and throwing the error below.
-        // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectedError)) {
-          handleError(err);
-        }
-      }
-    },
-    [handleError, disconnect]
-  );
-
-  useEffect(() => {
-    // no active provider === no connected wallet so no need to run hook
-    if (!chain) {
-      return;
-    }
-    if (chainError) {
-      handle(chainError);
-    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
-      handle(new WrongNetworkError());
-    }
-  }, [chain, chainError, handle]);
-}
-
-function useGetGiftcardTokens(
-  addr = "",
-  chain: Chain
-): {
-  data: Token[];
-  isLoading: boolean;
-} {
-  const { handleError } = useErrorContext();
-
-  const supportedTokens = useMemo(
-    () => [chain.native_currency, ...chain.tokens],
-    [chain]
-  );
-
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useGiftcardBalanceQuery(
-    { addr, supportedTokens },
-    { skip: !addr || chain.type !== "juno-native" }
-  );
-
-  const isAnyLoading = isLoading || isFetching;
-
-  useEffect(() => {
-    if (isAnyLoading) {
-      return;
-    }
-
-    if (isError) {
-      return handleError(
-        error || "Error occurred loading giftcard balances",
-        GENERIC_ERROR_MESSAGE
-      );
-    }
-  }, [error, isAnyLoading, isError, handleError]);
-
-  return { data, isLoading: isAnyLoading };
-}
