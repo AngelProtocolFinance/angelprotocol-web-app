@@ -13,7 +13,9 @@ const FilterForm = ({
 }: {
   updateFilterValues: Function;
 }) => {
-  const [selectedStartDate, setSelectedStartDate] = useState<string>("");
+  const [selectedStartDate, setSelectedStartDate] = useState<
+    Date | null | string
+  >(null);
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
   const [selectedCurrency, setSelectedCurrency] = useState<string>("");
   const {
@@ -37,16 +39,12 @@ const FilterForm = ({
 
   async function submit(data: FilterFormValues) {
     if (selectedStartDate) {
-      !data.startDate || !data.endDate
-        ? delete filters.transactionDate
-        : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
+      data.startDate && data.endDate
+        ? (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`)
+        : (filters.transactionDate = "");
     }
-    selectedNetwork === ""
-      ? delete filters.chainName
-      : (filters.chainName = selectedNetwork);
-    selectedCurrency === ""
-      ? delete filters.denomination
-      : (filters.denomination = selectedCurrency);
+    filters.chainName = selectedNetwork;
+    filters.denomination = selectedCurrency;
 
     if (Object.keys(filters).length !== 0) {
       updateFilterValues(filters);
@@ -127,7 +125,6 @@ const FilterForm = ({
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
                       disabled={selectedStartDate ? false : true}
-                      defaultValue={selectedStartDate && selectedStartDate}
                     />
                   </div>
                   <ErrorMessage

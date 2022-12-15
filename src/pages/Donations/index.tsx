@@ -9,6 +9,7 @@ import { Filters } from "components/donations";
 import FilterForm from "components/donations/Filter/FilterForm";
 import MobileTable from "components/donations/MobileTable";
 import Table from "components/donations/Table";
+import removeEmptyValue from "helpers/removeEmptyValue";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
@@ -21,8 +22,10 @@ export default function Donations() {
   });
   const { isLoading, isFetching, refetch } = queryState;
 
-  const updateFilterValues = (values: Filters) => {
-    setFilterValues({ ...filterValues, ...values });
+  const updateFilterValues = (formValues: Filters) => {
+    const trimmedFilters = removeEmptyValue({ ...filterValues, ...formValues });
+    console.log(trimmedFilters);
+    setFilterValues(trimmedFilters as DonationsQueryParams);
     refetch();
   };
 
