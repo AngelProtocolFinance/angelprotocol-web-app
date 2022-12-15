@@ -10,9 +10,9 @@ const FilterForm = ({
 }: {
   updateFilterValues: Function;
 }) => {
-  const [startDate, setStartDate] = useState<string>("");
-  const [isNetworkSelected, setIsNetworkSelected] = useState<Boolean>(false);
-  const [isCurrencySelected, setIsCurrencySelected] = useState<Boolean>(false);
+  const [selectedStartDate, setSelectedStartDate] = useState<string>("");
+  const [selectedNetwork, setSelectedNetwork] = useState<string>("");
+  const [selectedCurrency, setSelectedCurrency] = useState<string>("");
   const { handleSubmit, register, reset } = useForm<FilterFormValues>({
     reValidateMode: "onSubmit",
   });
@@ -27,17 +27,17 @@ const FilterForm = ({
   };
 
   async function submit(data: FilterFormValues) {
-    if (startDate) {
+    if (selectedStartDate) {
       !data.startDate || !data.endDate
         ? delete filters.transactionDate
         : (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`);
     }
-    data.network === ""
+    selectedNetwork === ""
       ? delete filters.chainName
-      : (filters.chainName = data.network);
-    data.currency === ""
+      : (filters.chainName = selectedNetwork);
+    selectedCurrency === ""
       ? delete filters.denomination
-      : (filters.denomination = data.currency);
+      : (filters.denomination = selectedCurrency);
 
     if (Object.keys(filters).length !== 0) {
       updateFilterValues(filters);
@@ -80,8 +80,9 @@ const FilterForm = ({
                     network: "",
                     currency: "",
                   });
-                  setStartDate("");
-                  setIsNetworkSelected(false);
+                  setSelectedStartDate("");
+                  setSelectedNetwork("");
+                  setSelectedCurrency("");
                   updateFilterValues(filters);
                 }}
               >
@@ -91,7 +92,7 @@ const FilterForm = ({
                 type="submit"
                 className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                 disabled={
-                  startDate || isNetworkSelected || isCurrencySelected
+                  selectedStartDate || selectedNetwork || selectedCurrency
                     ? false
                     : true
                 }
@@ -111,25 +112,24 @@ const FilterForm = ({
                       placeholder="From"
                       min="2018-12-31"
                       max={new Date().toISOString().split("T")[0]}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e) => setSelectedStartDate(e.target.value)}
                     />
                     <input
                       {...register("endDate")}
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
-                      min={startDate}
+                      min={selectedStartDate}
                       max={new Date().toISOString().split("T")[0]}
-                      disabled={startDate ? false : true}
-                      defaultValue={startDate && startDate}
+                      disabled={selectedStartDate ? false : true}
+                      defaultValue={selectedStartDate && selectedStartDate}
                     />
                   </div>
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Network</label>
                   <select
-                    {...register("network")}
-                    onChange={() => setIsNetworkSelected(true)}
+                    onChange={(e) => setSelectedNetwork(e.target.value)}
                     className={
                       "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                     }
@@ -145,8 +145,7 @@ const FilterForm = ({
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Currency</label>
                   <select
-                    {...register("currency")}
-                    onChange={() => setIsCurrencySelected(true)}
+                    onChange={(e) => setSelectedCurrency(e.target.value)}
                     className={
                       "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                     }
@@ -171,8 +170,9 @@ const FilterForm = ({
                       network: "",
                       currency: "",
                     });
-                    setStartDate("");
-                    setIsNetworkSelected(false);
+                    setSelectedStartDate("");
+                    setSelectedNetwork("");
+                    setSelectedCurrency("");
                     updateFilterValues(filters);
                   }}
                 >
@@ -182,7 +182,7 @@ const FilterForm = ({
                   type="submit"
                   className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                   disabled={
-                    startDate || isNetworkSelected || isCurrencySelected
+                    selectedStartDate || selectedNetwork || selectedCurrency
                       ? false
                       : true
                   }
