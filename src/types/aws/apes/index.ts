@@ -29,6 +29,12 @@ export type BaseChain = {
   chain_name: string; // Avalanche Fuji Testnet
 };
 
+export type ChainType =
+  | "juno-native"
+  | "terra-native"
+  | "evm-native"
+  | "placeholder";
+
 export type Chain = BaseChain & {
   block_explorer_url: string; // https://testnet.snowtrace.io
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
@@ -36,7 +42,7 @@ export type Chain = BaseChain & {
   network_type: NetworkType;
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
-  type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
+  type: ChainType; // | "sol" | "btc" | ...
 };
 
 export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
