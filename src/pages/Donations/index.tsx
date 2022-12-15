@@ -20,7 +20,7 @@ export default function Donations() {
   const queryState = useDonationsQuery(filterValues, {
     skip: !address,
   });
-  const { isLoading, isFetching, refetch } = queryState;
+  const { isLoading, refetch } = queryState;
 
   const updateFilterValues = (formValues: Filters) => {
     const trimmedFilters = removeEmptyValue({ ...filterValues, ...formValues });
@@ -34,7 +34,7 @@ export default function Donations() {
       <div className="flex lg:justify-between lg:items-center justify-center mt-10">
         <h1 className="text-3xl font-bold">My Donations</h1>
       </div>
-      {!isLoading && !isFetching && (
+      {!isLoading && (
         <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
           <div className="sm:col-span-2 sm:mr-4">
             <label htmlFor="search" className="relative">
