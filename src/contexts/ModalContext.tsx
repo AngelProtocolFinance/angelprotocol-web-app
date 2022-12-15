@@ -49,7 +49,7 @@ export default function ModalContext(
   }, []);
 
   const closeModal = useCallback(() => {
-    if (state?.isDismissible) return;
+    if (!state?.isDismissible) return;
     state?.onClose();
     setState(undefined);
   }, [state]);
