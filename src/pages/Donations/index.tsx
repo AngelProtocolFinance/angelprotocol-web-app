@@ -19,7 +19,7 @@ export default function Donations() {
   const queryState = useDonationsQuery(filterValues, {
     skip: !address,
   });
-  const { refetch } = queryState;
+  const { isLoading, isFetching, refetch } = queryState;
 
   const updateFilterValues = (values: Filters) => {
     setFilterValues({ ...filterValues, ...values });
@@ -31,30 +31,27 @@ export default function Donations() {
       <div className="flex lg:justify-between lg:items-center justify-center mt-10">
         <h1 className="text-3xl font-bold">My Donations</h1>
       </div>
-      <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
-        <div className="sm:col-span-2 sm:mr-4">
-          <label htmlFor="search" className="relative">
-            <Icon
-              type="Search"
-              size={24}
-              className="absolute top-0 ml-3 text-gray-d1"
-            ></Icon>
-            <input
-              className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6"
-              type="text"
-              placeholder="Search by recipient name, network or currency..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </label>
+      {!isLoading && !isFetching && (
+        <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
+          <div className="sm:col-span-2 sm:mr-4">
+            <label htmlFor="search" className="relative">
+              <Icon
+                type="Search"
+                size={24}
+                className="absolute top-0 ml-3 text-gray-d1"
+              ></Icon>
+              <input
+                className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6"
+                type="text"
+                placeholder="Search by recipient name, network or currency..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </label>
+          </div>
+          <FilterForm updateFilterValues={updateFilterValues} />
         </div>
-        <FilterForm updateFilterValues={updateFilterValues} />
-        {/* <div className="hidden sm:block">
-        </div>
-        <div className="grid grid-cols-1 sm:hidden mt-2 gap-2">
-          <MobileSearchFilter updateFilterValues={updateFilterValues} />
-        </div> */}
-      </div>
+      )}
       <QueryLoader
         queryState={queryState}
         messages={{
