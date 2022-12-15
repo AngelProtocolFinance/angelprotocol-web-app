@@ -32,6 +32,10 @@ export default function Balances(props: WalletState) {
     <>
       {!!filteredCoins.length && <CoinBalances coins={filteredCoins} />}
 
+      {!!filteredCoins.length && !!filteredGcCoins.length && (
+        <div className="border-t border-gray-l2 dark:border-bluegray" />
+      )}
+
       {!!filteredGcCoins.length && <GiftcardBalances coins={filteredGcCoins} />}
 
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
