@@ -1,42 +1,17 @@
 import { Switch } from "@headlessui/react";
-import { useCallback, useMemo, useState } from "react";
 import { Token } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
-import KadoModal from "components/KadoModal";
-import { humanize } from "helpers";
+import { WalletState } from "contexts/WalletContext";
+import CoinBalances from "./CoinBalances";
+import useBalances from "./useBalances";
 
-const MIN_AMOUNT = 0.001;
-
-type Props = { coins: Token[]; giftcardCoins: Token[] };
-
-export default function Balances({ coins, giftcardCoins }: Props) {
-  const [hideSmallAmounts, setHideSmallAmounts] = useState(true);
-
-  const filteredCoins = useMemo(
-    () =>
-      coins.filter(
-        (coin) =>
-          //show atleast eth
-          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
-      ),
-    [coins, hideSmallAmounts]
-  );
-
-  const filteredGcCoins = useMemo(
-    () =>
-      giftcardCoins.filter(
-        (coin) =>
-          //show atleast eth
-          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
-      ),
-    [giftcardCoins, hideSmallAmounts]
-  );
-
-  const { showModal } = useModalContext();
-  const handleOpenKado = useCallback(
-    () => showModal(KadoModal, {}),
-    [showModal]
-  );
+export default function Balances(props: WalletState) {
+  const {
+    hideSmallAmounts,
+    filteredCoins,
+    filteredGcCoins,
+    setHideSmallAmounts,
+    handleBuyCrypto,
+  } = useBalances(props.coins, props.giftcardCoins);
 
   if (!filteredCoins.length && !filteredGcCoins.length) {
     return (
@@ -44,7 +19,7 @@ export default function Balances({ coins, giftcardCoins }: Props) {
         Your wallet is empty.{" "}
         <button
           className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-          onClick={handleOpenKado}
+          onClick={handleBuyCrypto}
         >
           Buy some crypto here
         </button>
@@ -86,25 +61,6 @@ function GiftcardBalances({ coins }: { coins: Token[] }) {
         Giftcard balances
       </span>
       <CoinBalances coins={coins} />
-    </>
-  );
-}
-
-function CoinBalances({ coins }: { coins: Token[] }) {
-  return (
-    <>
-      {coins.map((coin) => (
-        <div
-          key={coin.token_id}
-          className="flex justify-between items-center gap-2 font-heading font-bold text-sm"
-        >
-          <span className="flex items-center gap-2">
-            <img src={coin.logo} className="w-6 h-6 object-contain" alt="" />
-            {coin.symbol}
-          </span>
-          {humanize(coin.balance, 3, true)}
-        </div>
-      ))}
     </>
   );
 }
