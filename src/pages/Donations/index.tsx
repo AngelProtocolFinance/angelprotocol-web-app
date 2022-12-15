@@ -6,7 +6,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { Filters } from "components/donations";
-import FilterForm from "components/donations/FilterForm";
+import FilterForm from "components/donations/Filter/FilterForm";
 import MobileTable from "components/donations/MobileTable";
 import Table from "components/donations/Table";
 

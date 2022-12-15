@@ -1,9 +1,12 @@
 import { Popover } from "@headlessui/react";
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FilterFormValues, Filters } from "./types";
+import { FilterFormValues, Filters } from "../types";
 import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
+import { schema } from "./schema";
 
 const FilterForm = ({
   updateFilterValues,
@@ -13,7 +16,13 @@ const FilterForm = ({
   const [selectedStartDate, setSelectedStartDate] = useState<string>("");
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
   const [selectedCurrency, setSelectedCurrency] = useState<string>("");
-  const { handleSubmit, register, reset } = useForm<FilterFormValues>({
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<FilterFormValues>({
+    resolver: yupResolver(schema(selectedStartDate)),
     reValidateMode: "onSubmit",
   });
   const buttonRef = useRef<any>();
@@ -110,8 +119,6 @@ const FilterForm = ({
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="From"
-                      min="2018-12-31"
-                      max={new Date().toISOString().split("T")[0]}
                       onChange={(e) => setSelectedStartDate(e.target.value)}
                     />
                     <input
@@ -119,12 +126,22 @@ const FilterForm = ({
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
-                      min={selectedStartDate}
-                      max={new Date().toISOString().split("T")[0]}
                       disabled={selectedStartDate ? false : true}
                       defaultValue={selectedStartDate && selectedStartDate}
                     />
                   </div>
+                  <ErrorMessage
+                    errors={errors}
+                    as="span"
+                    name="startDate"
+                    className="w-full text-xs text-red-l4 dark:text-red-l2"
+                  />
+                  <ErrorMessage
+                    errors={errors}
+                    as="p"
+                    name="endDate"
+                    className="w-full text-xs text-red-l4 dark:text-red-l2"
+                  />
                 </div>
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Network</label>
