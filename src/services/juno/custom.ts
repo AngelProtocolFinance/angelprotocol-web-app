@@ -1,3 +1,4 @@
+import { Args, Res, Result } from "./queryContract/types";
 import {
   AdminResources,
   AdminRoles,
@@ -5,11 +6,12 @@ import {
   ProposalDetails,
 } from "services/types";
 import { CW3Config, EndowmentDetails } from "types/contracts";
-import { idParamToNum } from "helpers";
+import { condenseToNum, idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
+import { genQueryPath } from "./queryContract/genQueryPath";
 import { customTags, defaultProposalTags, junoTags } from "./tags";
 
 export const AP_ID = 0;
@@ -167,6 +169,17 @@ export const customApi = junoApi.injectEndpoints({
         return { data: undefined };
 
         //query is member
+      },
+    }),
+    giftcardBalance: builder.query<
+      Result<"giftcardBalance">,
+      Args<"giftcardBalance">
+    >({
+      providesTags: [{ type: junoTags.custom, id: customTags.giftcard }],
+      query: (args) =>
+        genQueryPath("giftcardBalance", args, contracts.gift_cards),
+      transformResponse: (res: Res<"giftcardBalance">) => {
+        return condenseToNum(res.data.balance);
       },
     }),
     proposalDetails: builder.query<
