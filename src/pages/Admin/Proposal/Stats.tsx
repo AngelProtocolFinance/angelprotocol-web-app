@@ -1,6 +1,6 @@
-import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { ProposalDetails } from "services/types";
+import { roundDownToNum } from "helpers";
 
 export default function Stats({ votes, threshold }: ProposalDetails) {
   const [numYes, numNo] = useMemo(
@@ -89,9 +89,5 @@ function Stat(props: {
 }
 
 function getPct(numerator: number, denominator: number) {
-  return roundDown((numerator / denominator) * 100);
-}
-
-export function roundDown(num: number, precision = 2) {
-  return +new Decimal(num).toFixed(precision, Decimal.ROUND_DOWN);
+  return roundDownToNum((numerator / denominator) * 100);
 }

@@ -1,15 +1,20 @@
+import { utils } from "ethers";
+import { Args, Res, Result } from "./queryContract/types";
 import {
   AdminResources,
   AdminRoles,
   EndowmentInfo,
   ProposalDetails,
 } from "services/types";
+import { Token } from "types/aws";
 import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
+import { UnexpectedStateError } from "errors/errors";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
+import { genQueryPath } from "./queryContract/genQueryPath";
 import { customTags, defaultProposalTags, junoTags } from "./tags";
 
 export const AP_ID = 0;
@@ -169,6 +174,42 @@ export const customApi = junoApi.injectEndpoints({
         //query is member
       },
     }),
+    giftcardBalance: builder.query<
+      Result<"giftcardBalance">,
+      Args<"giftcardBalance"> & { supportedTokens: Token[] }
+    >({
+      providesTags: [{ type: junoTags.custom, id: customTags.giftcard }],
+      query: (args) =>
+        genQueryPath("giftcardBalance", args, contracts.gift_cards),
+      transformResponse: (res: Res<"giftcardBalance">, _, args) => {
+        function toToken(denom: string, amount: string) {
+          const token = args.supportedTokens.find((t) => t.token_id === denom);
+
+          if (!token) {
+            throw new UnexpectedStateError(
+              `Giftcard contains unsupported token: ${denom}`
+            );
+          }
+
+          const result: Token = {
+            ...token,
+            balance: +utils.formatUnits(amount, token.decimals),
+          };
+
+          return result;
+        }
+
+        const balances: Token[] = res.data.cw20
+          .map((cw20) => toToken(cw20.address, cw20.amount))
+          .concat(
+            res.data.native.map((native) =>
+              toToken(native.denom, native.amount)
+            )
+          );
+
+        return balances;
+      },
+    }),
     proposalDetails: builder.query<
       ProposalDetails | undefined,
       { id?: string; cw3: string; voter: string }
@@ -218,4 +259,5 @@ export const {
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowInfoQuery,
+  useGiftcardBalanceQuery,
 } = customApi;

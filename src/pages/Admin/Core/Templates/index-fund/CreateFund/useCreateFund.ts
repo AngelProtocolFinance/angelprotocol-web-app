@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
@@ -11,6 +10,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import { condense, roundDown } from "helpers";
 import { cleanObject } from "helpers/admin";
 import { INIT_SPLIT } from ".";
 
@@ -58,7 +58,7 @@ export default function useCreateFund() {
       split_to_liquid:
         splitToLiquid === INIT_SPLIT
           ? undefined
-          : new Decimal(splitToLiquid).div(100).toFixed(2, Decimal.ROUND_DOWN),
+          : roundDown(condense(splitToLiquid)),
       expiry_time:
         expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
       expiry_height: expiryHeight === "" ? undefined : +expiryHeight,

@@ -1,38 +1,26 @@
 import { Switch } from "@headlessui/react";
-import { useCallback, useMemo, useState } from "react";
 import { Token } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
-import KadoModal from "components/KadoModal";
-import { humanize } from "helpers";
+import { WalletState } from "contexts/WalletContext";
+import Icon from "components/Icon";
+import CoinBalances from "./CoinBalances";
+import useBalances from "./useBalances";
 
-const MIN_AMOUNT = 0.001;
+export default function Balances(props: WalletState) {
+  const {
+    hideSmallAmounts,
+    filteredCoins,
+    filteredGcCoins,
+    setHideSmallAmounts,
+    handleBuyCrypto,
+  } = useBalances(props.coins, props.giftcardCoins);
 
-export default function Balances({ coins }: { coins: Token[] }) {
-  const [hideSmallAmounts, setHideSmallAmounts] = useState(true);
-
-  const filteredCoins = useMemo(
-    () =>
-      coins.filter(
-        (coin) =>
-          //show atleast eth
-          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
-      ),
-    [coins, hideSmallAmounts]
-  );
-
-  const { showModal } = useModalContext();
-  const handleOpenKado = useCallback(
-    () => showModal(KadoModal, {}),
-    [showModal]
-  );
-
-  if (!filteredCoins.length) {
+  if (!filteredCoins.length && !filteredGcCoins.length) {
     return (
       <span className="text-sm">
         Your wallet is empty.{" "}
         <button
           className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-          onClick={handleOpenKado}
+          onClick={handleBuyCrypto}
         >
           Buy some crypto here
         </button>
@@ -42,18 +30,14 @@ export default function Balances({ coins }: { coins: Token[] }) {
 
   return (
     <>
-      {filteredCoins.map((coin) => (
-        <div
-          key={coin.token_id}
-          className="flex justify-between items-center gap-2 font-heading font-bold text-sm"
-        >
-          <span className="flex items-center gap-2">
-            <img src={coin.logo} className="w-6 h-6 object-contain" alt="" />
-            {coin.symbol}
-          </span>
-          {humanize(coin.balance, 3, true)}
-        </div>
-      ))}
+      {!!filteredCoins.length && <CoinBalances coins={filteredCoins} />}
+
+      {!!filteredCoins.length && !!filteredGcCoins.length && (
+        <div className="border-t border-gray-l2 dark:border-bluegray" />
+      )}
+
+      {!!filteredGcCoins.length && <GiftcardBalances coins={filteredGcCoins} />}
+
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
         <Switch
@@ -71,6 +55,21 @@ export default function Balances({ coins }: { coins: Token[] }) {
           />
         </Switch>
       </div>
+    </>
+  );
+}
+
+function GiftcardBalances({ coins }: { coins: Token[] }) {
+  return (
+    <>
+      <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
+        <Icon
+          type="Giftcard"
+          className="bg-green text-white rounded-full p-1 w-6 h-6"
+        />
+        Giftcard balances
+      </span>
+      <CoinBalances coins={coins} />
     </>
   );
 }

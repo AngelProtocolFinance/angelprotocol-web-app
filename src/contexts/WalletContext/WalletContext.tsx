@@ -8,7 +8,9 @@ import {
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, Token } from "types/aws";
+import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
+import { useGiftcardBalanceQuery } from "services/juno/custom";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chains";
@@ -22,11 +24,11 @@ export type WalletState = {
   walletIcon: string;
   displayCoin: Token;
   coins: Token[];
+  giftcardCoins: Token[];
   address: string;
   chain: Chain;
   providerId: ProviderId;
   supportedChains: BaseChain[];
-  getBalance: (token_id: string) => number;
 };
 
 type State = {
@@ -201,6 +203,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
+  const { data: giftcardCoins, isLoading: isGcLoading } = useGetGiftcardTokens(
+    activeProvider?.providerInfo?.address,
+    chain
+  );
+
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
       const { logo, providerId, address } = activeProvider.providerInfo!;
@@ -210,17 +217,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
+        giftcardCoins,
         providerId,
         supportedChains: activeProvider.supportedChains,
-        getBalance: (token_id: string) =>
-          [chain.native_currency, ...chain.tokens].find(
-            (x) => x.token_id === token_id
-          )?.balance || 0,
       };
 
       return walletState;
     }
-  }, [activeProvider, chain]);
+  }, [activeProvider, giftcardCoins, chain]);
 
   return (
     <getContext.Provider
@@ -229,7 +233,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading:
           providerStatuses.some((x) => x.isLoading) ||
           isChainLoading ||
-          isChainFetching,
+          isChainFetching ||
+          isGcLoading,
       }}
     >
       <setContext.Provider
@@ -296,4 +301,47 @@ function useVerifyChain(
       handle(new WrongNetworkError());
     }
   }, [chain, chainError, handle]);
+}
+
+function useGetGiftcardTokens(
+  addr = "",
+  chain: Chain
+): {
+  data: Token[];
+  isLoading: boolean;
+} {
+  const { handleError } = useErrorContext();
+
+  const supportedTokens = useMemo(
+    () => [chain.native_currency, ...chain.tokens],
+    [chain]
+  );
+
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGiftcardBalanceQuery(
+    { addr, supportedTokens },
+    { skip: !addr || chain.type !== "juno-native" }
+  );
+
+  const isAnyLoading = isLoading || isFetching;
+
+  useEffect(() => {
+    if (isAnyLoading) {
+      return;
+    }
+
+    if (isError) {
+      return handleError(
+        error || "Error occurred loading giftcard balances",
+        GENERIC_ERROR_MESSAGE
+      );
+    }
+  }, [error, isAnyLoading, isError, handleError]);
+
+  return { data, isLoading: isAnyLoading };
 }
