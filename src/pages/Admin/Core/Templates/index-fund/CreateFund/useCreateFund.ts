@@ -1,4 +1,3 @@
-import Decimal from "decimal.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
