@@ -7,7 +7,7 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, ChainType, Token } from "types/aws";
+import { BaseChain, Chain, Token } from "types/aws";
 import { GenericBalance } from "types/contracts";
 import { useChainQuery } from "services/apes";
 import { useGiftcardBalanceQuery } from "services/juno/custom";
