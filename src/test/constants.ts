@@ -15,5 +15,4 @@ export const PLACEHOLDER_WALLET: WalletState = {
       chain_name: placeholderChain.chain_name,
     },
   ],
-  getBalance: (_: string) => 0,
 };
