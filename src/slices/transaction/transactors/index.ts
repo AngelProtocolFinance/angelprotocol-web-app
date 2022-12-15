@@ -1,1 +1,1 @@
-export * from "./sendCosmosTx";
+export { sendCosmosTx } from "./sendCosmosTx";
