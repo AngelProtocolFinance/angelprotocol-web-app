@@ -231,4 +231,5 @@ export const {
   useAdminResourcesQuery,
   useProposalDetailsQuery,
   useEndowInfoQuery,
+  useGiftcardBalanceQuery,
 } = customApi;
