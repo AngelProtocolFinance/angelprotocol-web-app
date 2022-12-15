@@ -10,7 +10,7 @@ import { Connection, ProviderId, ProviderStatus } from "./types";
 import { BaseChain, Chain, Token } from "types/aws";
 import { GENERIC_ERROR_MESSAGE } from "pages/Registration/constants";
 import { useChainQuery } from "services/apes";
-import { useGiftcardBalanceQuery } from "services/juno/custom";
+import { useGiftcardBalanceQuery } from "services/juno/giftcard";
 import { useErrorContext } from "contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
 import { chainIDs } from "constants/chains";
