@@ -24,6 +24,7 @@ export type WalletState = {
   walletIcon: string;
   displayCoin: Token;
   coins: Token[];
+  giftcardCoins: Token[];
   address: string;
   chain: Chain;
   providerId: ProviderId;
@@ -203,7 +204,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
-  const { data: giftcardTokens, isLoading: isGcLoading } = useGetGiftcardTokens(
+  const { data: giftcardCoins, isLoading: isGcLoading } = useGetGiftcardTokens(
     activeProvider?.providerInfo?.address,
     chain
   );
@@ -217,6 +218,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
+        giftcardCoins,
         providerId,
         supportedChains: activeProvider.supportedChains,
         getBalance: (token_id: string) =>
@@ -227,7 +229,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
       return walletState;
     }
-  }, [activeProvider, chain]);
+  }, [activeProvider, giftcardCoins, chain]);
 
   return (
     <getContext.Provider
@@ -236,7 +238,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading:
           providerStatuses.some((x) => x.isLoading) ||
           isChainLoading ||
-          isChainFetching,
+          isChainFetching ||
+          isGcLoading,
       }}
     >
       <setContext.Provider
