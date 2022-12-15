@@ -46,11 +46,11 @@ const FilterForm = ({
   }
 
   return (
-    <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm">
+    <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm dark:bg-blue-d6">
       <Popover.Button
         ref={buttonRef}
         className={
-          "w-full flex justify-center sm:justify-between items-center text-white bg-orange p-3 sm:p-0 sm:bg-white outline-0 sm:text-gray-d2 dark:text-white"
+          "w-full flex justify-center sm:justify-between items-center text-white bg-orange p-3 sm:p-0 sm:bg-white dark:bg-blue-d6 outline-0 sm:text-gray-d2 dark:text-white"
         }
       >
         <Icon className="sm:hidden" type="Filter" size={20} />
@@ -58,7 +58,7 @@ const FilterForm = ({
         <Icon className="hidden sm:inline" type="ArrowDown" size={20} />
       </Popover.Button>
 
-      <Popover.Panel className="fixed bg-white dark:bg-blue-d6 min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
+      <Popover.Panel className="fixed min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
         <form onSubmit={handleSubmit(submit)} method="get">
           <div className="flex flex-col">
             <div className="flex sm:hidden justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
@@ -100,14 +100,14 @@ const FilterForm = ({
               </button>
             </div>
             <div>
-              <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d6">
+              <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
                 <div className="flex flex-col text-gray-d2 gap-2">
                   <label className="dark:text-white">Date</label>
                   <div className="flex gap-4">
                     <input
                       {...register("startDate")}
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="From"
                       min="2018-12-31"
                       max={new Date().toISOString().split("T")[0]}
@@ -116,7 +116,7 @@ const FilterForm = ({
                     <input
                       {...register("endDate")}
                       type="date"
-                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm"
+                      className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
                       min={startDate}
                       max={new Date().toISOString().split("T")[0]}
@@ -131,7 +131,7 @@ const FilterForm = ({
                     {...register("network")}
                     onChange={() => setIsNetworkSelected(true)}
                     className={
-                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                     }
                   >
                     <option value="">Select a network...</option>
@@ -148,7 +148,7 @@ const FilterForm = ({
                     {...register("currency")}
                     onChange={() => setIsCurrencySelected(true)}
                     className={
-                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3"
+                      "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                     }
                   >
                     <option value="">Select a currency...</option>
