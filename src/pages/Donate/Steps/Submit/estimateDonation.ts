@@ -25,10 +25,11 @@ export async function estimateDonation({
 
   try {
     if (chain.type === "juno-native") {
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
       if (token.type === "juno-native" || token.type === "ibc") {
         const contract = new Account(wallet);
         const msg = contract.createTransferNativeMsg(
-          token.amount,
+          scaledAmount,
           ap_wallets.juno_deposit,
           token.token_id
         );
@@ -43,7 +44,7 @@ export async function estimateDonation({
       } else {
         const contract = new CW20(wallet, token.token_id);
         const msg = contract.createTransferMsg(
-          token.amount,
+          scaledAmount,
           ap_wallets.juno_deposit
         );
         const fee = await contract.estimateFee([msg]);
@@ -57,10 +58,10 @@ export async function estimateDonation({
     }
     // terra native transaction, send or contract interaction
     else if (chain.type === "terra-native") {
-      const amount = scaleToStr(token.amount);
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
       if (token.type === "terra-native" || token.type === "ibc") {
         const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-          new Coin(token.token_id, amount),
+          new Coin(token.token_id, scaledAmount),
         ]);
 
         const fee = await estimateTerraFee(wallet, [msg]);
@@ -78,7 +79,7 @@ export async function estimateDonation({
       } else {
         const msg = new MsgExecuteContract(wallet.address, token.token_id, {
           transfer: {
-            amount,
+            amount: scaledAmount,
             recipient: ap_wallets.terra,
           },
         });
@@ -104,12 +105,15 @@ export async function estimateDonation({
       const signer = provider.getSigner();
       const sender = await signer.getAddress();
       const gasPrice = await signer.getGasPrice();
-      const wei_amount = ethers.utils.parseEther(`${token.amount}`);
+      const scaledAmount = ethers.utils.parseUnits(
+        `${token.amount}`,
+        token.decimals
+      );
 
       const tx: TransactionRequest = {
         from: sender,
         to: ap_wallets.eth,
-        value: wei_amount,
+        value: scaledAmount,
       };
 
       let feeAmount = 0;
@@ -127,7 +131,7 @@ export async function estimateDonation({
         );
         const gasLimit = await ER20Contract.estimateGas.transfer(
           tx.to,
-          wei_amount
+          scaledAmount
         );
         const minFee = gasLimit.mul(gasPrice);
         feeAmount = parseFloat(
