@@ -18,7 +18,7 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Dwindow } from "types/ethereum";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
-import { logger, scaleToStr, toBase64 } from "helpers";
+import { logger, toBase64 } from "helpers";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -101,7 +101,7 @@ export default class Contract {
   }
 
   createTransferNativeMsg(
-    amount: number | string,
+    scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
@@ -113,7 +113,7 @@ export default class Contract {
         amount: [
           {
             denom,
-            amount: scaleToStr(amount),
+            amount: scaledAmount,
           },
         ],
       },
