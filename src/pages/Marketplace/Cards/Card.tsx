@@ -2,11 +2,11 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Endowment } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
+import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import BookmarkBtn from "./BookmarkBtn";
 
 export default function Card({
   name,
