@@ -7,28 +7,18 @@ const MIN_AMOUNT = 0.001;
 
 export default function useBalances(coins: Token[], giftcardCoins: Token[]) {
   const [hideSmallAmounts, setHideSmallAmounts] = useState(true);
+  const { showModal } = useModalContext();
 
   const filteredCoins = useMemo(
-    () =>
-      coins.filter(
-        (coin) =>
-          //show atleast eth
-          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
-      ),
+    () => getFiltered(coins, hideSmallAmounts),
     [coins, hideSmallAmounts]
   );
 
   const filteredGcCoins = useMemo(
-    () =>
-      giftcardCoins.filter(
-        (coin) =>
-          //show atleast eth
-          (coin.balance > 0 && !hideSmallAmounts) || coin.balance > MIN_AMOUNT
-      ),
+    () => getFiltered(giftcardCoins, hideSmallAmounts),
     [giftcardCoins, hideSmallAmounts]
   );
 
-  const { showModal } = useModalContext();
   const handleBuyCrypto = useCallback(
     () => showModal(KadoModal, {}),
     [showModal]
@@ -42,3 +32,10 @@ export default function useBalances(coins: Token[], giftcardCoins: Token[]) {
     handleBuyCrypto,
   };
 }
+
+const getFiltered = (coins: Token[], shouldFilter: boolean) =>
+  coins.filter(
+    (coin) =>
+      //show atleast eth
+      (coin.balance > 0 && !shouldFilter) || coin.balance > MIN_AMOUNT
+  );

@@ -13,7 +13,7 @@ export default function Body() {
   return (
     <div className="flex justify-center items-center w-full h-full">
       <Seo
-        title={`${profile.name} - Angel Protocol`}
+        title={`Donate to ${profile.name} - Angel Protocol`}
         description={`${profile.overview.slice(0, 140)}`}
         name={`${profile.name}`}
         image={`${profile.logo}`}
