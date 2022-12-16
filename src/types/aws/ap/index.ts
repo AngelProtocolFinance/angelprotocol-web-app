@@ -14,7 +14,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 export type Endowment = {
   //EndowmentEntry
   id: number; //int
-  owner: String;
+  owner: string;
   status: keyof EndowmentStatus;
   endow_type: CapitalizedEndowmentType;
   name: string;
@@ -100,9 +100,10 @@ export type EndowmentBookmark = {
   logo?: string; // old bookmarks do not have this field saved yet
 };
 
-export type UserBookMarkInfo = {
+export type WalletProfile = {
   wallet: string;
   network: NetworkType;
+  admin: EndowmentBookmark[];
   endowments: EndowmentBookmark[];
 };
 

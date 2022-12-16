@@ -51,6 +51,7 @@ export enum customTags {
   adminResources,
   proposalDetails,
   endowmentInfo,
+  giftcard,
 }
 
 export const defaultProposalTags: Tag[] = [

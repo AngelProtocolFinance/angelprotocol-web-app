@@ -1,40 +1,69 @@
 import { Popover } from "@headlessui/react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
+import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
-import Favourites from "./Favourites";
-import MyProfile from "./MyProfile";
+import AdminLinks from "./AdminLinks";
+import Bookmarks from "./Bookmarks";
+import MobileTitle from "./MobileTitle";
+import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
+import useIsMember from "./useIsMember";
 
 export default function Details(props: WalletState) {
+  const {
+    data: profile,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useProfileQuery(props.address);
+
+  const isMemberResult = useIsMember();
+
+  useEffect(() => {
+    if (!isLoading && !isFetching && isError) {
+      logger.error(error);
+    }
+  }, [isLoading, isFetching, isError, error]);
+
   return (
     <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-gray-l2 dark:border-bluegray shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
-      {({ close }) => (
-        <>
-          <MobileTitle onClose={close} />
-          <MyProfile />
-          <WalletDetails {...props} />
-          <MyDonations address={props.address} />
-          <Favourites {...props} />
-          <DisconnectBtn />
-        </>
-      )}
-    </Popover.Panel>
-  );
-}
+      {({ close }) => {
+        if (isLoading || isFetching) {
+          return (
+            <div className="flex items-center justify-center w-full h-full sm:h-96">
+              <LoaderRing thickness={10} classes="w-16" />
+            </div>
+          );
+        }
 
-function MobileTitle({ onClose }: { onClose: () => void }) {
-  return (
-    <h3 className="flex sm:hidden justify-between items-center w-full px-4 py-3 bg-orange-l6 border-b border-gray-l2 dark:border-bluegray font-heading font-black text-xl text-orange uppercase dark:bg-blue-d7">
-      Wallet
-      <button
-        className="flex items-center justify-center w-10 h-10 dark:border-bluegray dark:hover:border-bluegray-d1 text-gray-d2 hover:text-black dark:text-white dark:hover:text-gray"
-        onClick={onClose}
-      >
-        <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
-      </button>
-    </h3>
+        return (
+          <>
+            <MobileTitle className="sm:hidden" onClose={close} />
+
+            {(isMemberResult.isApMember || isMemberResult.isReviewMember) && (
+              <AdminLinks
+                isApMember={isMemberResult.isApMember}
+                isReviewMember={isMemberResult.isReviewMember}
+              />
+            )}
+
+            {!!profile?.admin?.length && (
+              <MyEndowments endowments={profile.admin} />
+            )}
+
+            <WalletDetails {...props} />
+            <MyDonations address={props.address} />
+            <Bookmarks bookmarks={profile?.endowments} isError={isError} />
+            <DisconnectBtn />
+          </>
+        );
+      }}
+    </Popover.Panel>
   );
 }
 
