@@ -16,6 +16,7 @@ export const templates: { [key in Templates]: string } = {
   cw3_config: "cw3_config",
   cw3_transfer: "cw3_transfer",
   cw3_application: "",
+  review_cw3_config: "review_cw3_config",
 
   //cw4
   cw4_members: "cw4_members",

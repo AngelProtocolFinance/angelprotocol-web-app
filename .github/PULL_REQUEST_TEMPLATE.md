@@ -1,4 +1,5 @@
-ClickUp ticket: <ticket_link>
+Ticket(s):
+-
 
 ## Explanation of the solution
 

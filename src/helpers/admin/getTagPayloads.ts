@@ -44,6 +44,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       });
       break;
 
+    case "review_cw3_config":
     case "cw3_config":
       _tags.push({
         type: junoTags.admin,
