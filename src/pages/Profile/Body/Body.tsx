@@ -1,3 +1,4 @@
+import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
@@ -31,9 +32,16 @@ export default function Body() {
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
-            <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
-              {profile.name}
-            </h3>
+            <div className="flex items-center gap-3">
+              <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
+                {profile.name}
+              </h3>
+              <BookmarkBtn
+                name={profile.name}
+                id={profile.id}
+                logo={profile.logo}
+              />
+            </div>
             {/* 
             This will be added back once charities have a `tagLine` field
             <p className="w-full font-normal text-lg">
