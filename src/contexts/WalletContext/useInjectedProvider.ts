@@ -4,9 +4,9 @@ import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
-  Dwindow,
   InjectedProvider,
 } from "types/ethereum";
+import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {
   UnexpectedStateError,

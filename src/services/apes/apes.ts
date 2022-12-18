@@ -1,7 +1,7 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ethers, utils } from "ethers";
 import { BaseChain, Chain, WithdrawLog } from "types/aws";
+import { Coin } from "types/cosmos";
 import { queryContract } from "services/juno/queryContract";
 import { UnsupportedChainError } from "errors/errors";
 import { IS_TEST } from "constants/env";

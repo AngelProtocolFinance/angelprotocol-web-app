@@ -1,4 +1,4 @@
-import { Coin, LCDClient } from "@terra-money/terra.js";
+import { Coin, LCDClient } from "types/terra";
 
 const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate
 

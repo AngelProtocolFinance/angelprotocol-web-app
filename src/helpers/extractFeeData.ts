@@ -1,8 +1,11 @@
-import { StdFee } from "@cosmjs/stargate";
-import { Fee } from "@terra-money/terra.js";
+import { StdFee } from "types/cosmos";
+import { TerraFee } from "types/terra";
 import { condenseToNum } from "./decimal";
 
-export function extractFeeAmount(stdFee: Fee | StdFee, denom: string): number {
+export function extractFeeAmount(
+  stdFee: TerraFee | StdFee,
+  denom: string
+): number {
   const stdFeeAmount =
     "gas" in stdFee
       ? stdFee.amount.find((a) => a.denom === denom)!.amount

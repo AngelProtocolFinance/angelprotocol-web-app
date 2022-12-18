@@ -1,4 +1,4 @@
-import { Coin } from "@cosmjs/proto-signing";
+import { Coin } from "types/cosmos";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 

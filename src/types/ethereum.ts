@@ -1,17 +1,12 @@
 import { ethers } from "ethers";
-import { Keplr } from "@keplr-wallet/types";
 
-export interface Dwindow extends Window {
-  xfi?: {
-    ethereum?: any;
-    terra?: any;
-  };
-  ethereum?: any;
-  BinanceChain?: any;
-  keplr?: Keplr;
-}
+export type {
+  TransactionRequest,
+  TransactionResponse,
+} from "@ethersproject/abstract-provider";
 
-export interface Web3Provider extends ethers.providers.Web3Provider {}
+export const { Contract: EVMContract } = ethers;
+export const { Web3Provider, JsonRpcProvider } = ethers.providers;
 
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 //request

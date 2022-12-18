@@ -1,12 +1,12 @@
-import { TimeoutError } from "@cosmjs/stargate";
+import { StageUpdater } from "slices/transaction/types";
+import { TimeoutError } from "types/cosmos";
 import {
   CreateTxFailed,
   Timeout,
   TxFailed,
   TxUnspecifiedError,
   UserDenied,
-} from "@terra-money/wallet-provider";
-import { StageUpdater } from "slices/transaction/types";
+} from "types/terra";
 import { logger } from "helpers";
 import {
   CosmosTxSimulationFail,

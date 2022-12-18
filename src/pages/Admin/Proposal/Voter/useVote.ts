@@ -1,6 +1,6 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
+import { MsgExecuteContractEncodeObject } from "types/cosmos";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, customTags, junoTags } from "services/juno/tags";

@@ -1,14 +1,18 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
-import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
-import { ethers } from "ethers";
 import { Estimate } from "./types";
+import { EVMContract, TransactionRequest, Web3Provider } from "types/ethereum";
+import {
+  Coin,
+  MsgExecuteContract,
+  MsgSend,
+  TerraConnectedWallet,
+} from "types/terra";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
+import { formatUnits, parseUnits } from "helpers/evm";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 
@@ -18,7 +22,7 @@ export async function estimateDonation({
   terraWallet,
 }: SubmitStep & {
   wallet: WalletState;
-  terraWallet?: ConnectedWallet;
+  terraWallet?: TerraConnectedWallet;
 }): Promise<Estimate | null> {
   const { chain } = wallet;
   const { native_currency } = chain;
@@ -98,17 +102,12 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = new ethers.providers.Web3Provider(
-        getProvider(wallet.providerId) as any
-      );
+      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
       //no network request
       const signer = provider.getSigner();
       const sender = await signer.getAddress();
       const gasPrice = await signer.getGasPrice();
-      const scaledAmount = ethers.utils.parseUnits(
-        `${token.amount}`,
-        token.decimals
-      );
+      const scaledAmount = parseUnits(`${token.amount}`, token.decimals);
 
       const tx: TransactionRequest = {
         from: sender,
@@ -120,11 +119,9 @@ export async function estimateDonation({
       if (token.type === "evm-native") {
         const gasLimit = await signer.estimateGas(tx);
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       } else {
-        const ER20Contract: any = new ethers.Contract(
+        const ER20Contract: any = new EVMContract(
           token.token_id,
           ERC20Abi,
           signer
@@ -134,11 +131,8 @@ export async function estimateDonation({
           scaledAmount
         );
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       }
-
       return {
         fee: { amount: feeAmount, symbol: native_currency.symbol },
         tx: { type: "evm", val: tx },

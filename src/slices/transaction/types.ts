@@ -1,10 +1,9 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
 import { AsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { Chain } from "types/aws";
+import { DeliverTxResponse, EncodeObject } from "types/cosmos";
 import { TxOptions } from "types/slices";
+import { CreateTxOptions, Msg } from "types/terra";
 import { WalletState } from "contexts/WalletContext";
 
 export type Tag = TagDescription<string>;
