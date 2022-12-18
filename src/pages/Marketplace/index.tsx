@@ -1,4 +1,4 @@
-import banner from "assets/images/hero.png";
+import banner from "assets/images/hands-blue.jpg";
 import { useGetter } from "store/accessors";
 import Cards from "./Cards";
 import Hero from "./Hero";

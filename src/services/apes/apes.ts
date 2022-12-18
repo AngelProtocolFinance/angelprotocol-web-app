@@ -35,13 +35,13 @@ export const apes = createApi({
             throw new Error("Argument 'address' missing");
           }
 
-          const chainRes = await fetch(`${APIs.apes}/v1/chain/${chainId}`);
-
-          const chain: Chain | { message: string } = await chainRes.json();
-
-          if (!chain || "message" in chain) {
-            throw new UnsupportedChainError(chainId);
-          }
+          const chain = await fetch(
+            `${APIs.apes}/v1/chain/${chainId}`
+          ).then<Chain>((res) => {
+            if (res.status === 400) throw new UnsupportedChainError(chainId);
+            if (!res.ok) throw new Error("failed to fetch chain");
+            return res.json();
+          });
 
           const result: Chain = {
             ...chain,

@@ -1,7 +1,7 @@
 import { Web3Storage } from "web3.storage";
 
 //https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
-export const IPFS_GATEWAY = "https://ipfs.io/ipfs"; //public
+export const IPFS_GATEWAY = "https://dweb.link/ipfs"; //public
 
 export async function uploadToIpfs(files: File[]): Promise<string | null> {
   if (files.length <= 0) return null;

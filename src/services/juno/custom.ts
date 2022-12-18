@@ -170,7 +170,7 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
     proposalDetails: builder.query<
-      ProposalDetails | undefined,
+      ProposalDetails,
       { id?: string; cw3: string; voter: string }
     >({
       providesTags: [{ type: junoTags.custom, id: customTags.proposalDetails }],
@@ -178,13 +178,15 @@ export const customApi = junoApi.injectEndpoints({
         const id = Number(args.id);
 
         if (isNaN(id)) {
-          return { data: undefined };
+          return { error: undefined };
         }
 
-        const proposal = await queryContract("cw3Proposal", args.cw3, { id });
-        const votesRes = await queryContract("cw3Votes", args.cw3, {
-          proposal_id: id,
-        });
+        const [proposal, votesRes] = await Promise.all([
+          queryContract("cw3Proposal", args.cw3, { id }),
+          queryContract("cw3Votes", args.cw3, {
+            proposal_id: id,
+          }),
+        ]);
 
         return {
           data: {

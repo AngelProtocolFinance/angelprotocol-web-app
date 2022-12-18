@@ -24,6 +24,7 @@ import {
   Proposal,
   QueryRes as Q,
   RegistrarConfig,
+  ReviewCW3Config,
   Simulation,
   VaultListOptions,
   VaultListRes,
@@ -81,7 +82,12 @@ export interface ContractQueries {
   cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
   cw3ListVoters: { args: null; res: Q<CW3ListVoters>; result: CW3ListVoters };
   cw3Config: { args: null; res: Q<CW3Config>; result: CW3Config };
-  cw3Propsosals: {
+  reviewCw3Config: {
+    args: null;
+    res: Q<ReviewCW3Config>;
+    result: ReviewCW3Config;
+  };
+  cw3Proposals: {
     args: PageOptions;
     res: Q<{ proposals: Proposal[] }>;
     result: Proposal[];

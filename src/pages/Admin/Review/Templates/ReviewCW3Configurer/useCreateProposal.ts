@@ -1,40 +1,42 @@
 import { useFormContext } from "react-hook-form";
 import {
-  CW3ConfigUpdateMeta,
   CW3ConfigValues,
-  FormCW3Config,
+  FormReviewCW3Config,
+  ReviewCW3ConfigUpdateMeta,
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendCosmosTx } from "slices/transaction/transactors";
-import CW3 from "contracts/CW3";
+import CW3Review from "contracts/CW3/CW3Review";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
-type Key = keyof FormCW3Config;
-type Value = FormCW3Config[Key];
+type Key = keyof FormReviewCW3Config;
+type Value = FormReviewCW3Config[Key];
 
-export default function usePropose() {
-  const { cw3, propMeta } = useAdminResources();
+export default function useCreateProposal() {
+  const { propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     getValues,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<CW3ConfigValues<FormCW3Config>>();
+  } = useFormContext<CW3ConfigValues<FormReviewCW3Config>>();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
-  async function configureCW3({
+  async function createProposal({
     title,
     description,
     initial,
     isTime,
+    new_endow_gas_money,
+    seed_asset,
     ...newData
-  }: CW3ConfigValues<FormCW3Config>) {
+  }: CW3ConfigValues<FormReviewCW3Config>) {
     const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 
@@ -43,7 +45,7 @@ export default function usePropose() {
       return;
     }
 
-    const contract = new CW3(wallet, cw3);
+    const contract = new CW3Review(wallet);
 
     const configUpdateMsg = contract.createEmbeddedUpdateConfigMsg({
       threshold: {
@@ -55,10 +57,13 @@ export default function usePropose() {
         ? { time: newData.duration }
         : { height: newData.duration },
       require_execution: newData.require_execution,
+      seed_split_to_liquid: newData.seed_split_to_liquid,
+      new_endow_gas_money,
+      seed_asset,
     });
 
-    const configUpdateMeta: CW3ConfigUpdateMeta = {
-      type: "cw3_config",
+    const configUpdateMeta: ReviewCW3ConfigUpdateMeta = {
+      type: "review_cw3_config",
       data: genDiffMeta(diffEntries, initial),
     };
 
@@ -75,7 +80,9 @@ export default function usePropose() {
         wallet,
         msgs: [proposalMsg],
         ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+        tagPayloads: getTagPayloads(
+          propMeta.willExecute && "review_cw3_config"
+        ),
       })
     );
     showModal(TransactionPrompt, {});
@@ -83,7 +90,7 @@ export default function usePropose() {
 
   return {
     isTime: getValues("isTime"),
-    configureCW3: handleSubmit(configureCW3),
+    createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }
