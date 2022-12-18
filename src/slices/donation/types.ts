@@ -1,5 +1,5 @@
 import { CountryOption } from "services/types";
-import { TransactionRequest } from "types/ethereum";
+import { TransactionRequest } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { CreateTxOptions, TerraConnectedWallet } from "types/terra";
 import { WalletState } from "contexts/WalletContext";

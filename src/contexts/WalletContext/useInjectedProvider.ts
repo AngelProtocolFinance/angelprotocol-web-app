@@ -5,7 +5,7 @@ import {
   AccountChangeHandler,
   ChainChangeHandler,
   InjectedProvider,
-} from "types/ethereum";
+} from "types/evm";
 import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {

@@ -1,6 +1,6 @@
 import ERC20Abi from "abi/ERC20.json";
 import { Estimate } from "./types";
-import { EVMContract, TransactionRequest, Web3Provider } from "types/ethereum";
+import { EVMContract, TransactionRequest, Web3Provider } from "types/evm";
 import {
   Coin,
   MsgExecuteContract,

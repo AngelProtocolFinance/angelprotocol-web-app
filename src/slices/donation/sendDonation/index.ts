@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
-import { TransactionResponse } from "types/ethereum";
+import { TransactionResponse } from "types/evm";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
