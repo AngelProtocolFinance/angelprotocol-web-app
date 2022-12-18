@@ -1,4 +1,4 @@
-import { ChainInfo } from "@keplr-wallet/types";
+import { ChainInfo } from "types/cosmos";
 
 // is used only when running on Juno Testnet
 export const juno_test_chain_info: ChainInfo = {

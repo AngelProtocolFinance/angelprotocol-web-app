@@ -1,4 +1,4 @@
-import { Keplr } from "@keplr-wallet/types";
+import { Keplr } from "./cosmos";
 
 export interface Dwindow extends Window {
   xfi?: {
