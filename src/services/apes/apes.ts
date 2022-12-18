@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ethers, utils } from "ethers";
 import { BaseChain, Chain, WithdrawLog } from "types/aws";
 import { Coin } from "types/cosmos";
+import { JsonRpcProvider } from "types/evm";
 import { queryContract } from "services/juno/queryContract";
+import { formatUnits } from "helpers/evm";
 import { UnsupportedChainError } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
@@ -72,20 +73,17 @@ export const apes = createApi({
               const balance = allBalances.find(
                 (x) => x.denom === token.token_id
               );
-              token.balance = +utils.formatUnits(
+              token.balance = +formatUnits(
                 balance?.amount ?? 0,
                 token.decimals
               );
             });
           } else {
             /**fetch balances for ethereum */
-            const jsonProvider = new ethers.providers.JsonRpcProvider(
-              chain.rpc_url,
-              {
-                chainId: +chain.chain_id,
-                name: chain.chain_name,
-              }
-            );
+            const jsonProvider = new JsonRpcProvider(chain.rpc_url, {
+              chainId: +chain.chain_id,
+              name: chain.chain_name,
+            });
             const queryResults = await jsonProvider.getBalance(address);
 
             const erc20Holdings = await getERC20Holdings(
@@ -94,7 +92,7 @@ export const apes = createApi({
               chain.tokens.map((token) => token.token_id)
             );
 
-            result.native_currency.balance = +utils.formatUnits(
+            result.native_currency.balance = +formatUnits(
               queryResults,
               chain.native_currency.decimals
             );

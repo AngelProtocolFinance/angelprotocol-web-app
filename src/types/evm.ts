@@ -5,7 +5,7 @@ export type {
   TransactionResponse,
 } from "@ethersproject/abstract-provider";
 
-export const { Contract: EVMContract } = ethers;
+export const { Contract: EVMContract, errors: EVMErrors } = ethers;
 export const { Web3Provider, JsonRpcProvider } = ethers.providers;
 
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/

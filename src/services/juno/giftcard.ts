@@ -1,6 +1,6 @@
-import { utils } from "ethers";
 import { Args, Res, Result } from "./queryContract/types";
 import { Token } from "types/aws";
+import { formatUnits } from "helpers/evm";
 import { UnexpectedStateError } from "errors/errors";
 import { contracts } from "constants/contracts";
 import { junoApi } from ".";
@@ -28,7 +28,7 @@ export const giftcardApi = junoApi.injectEndpoints({
 
           const result: Token = {
             ...token,
-            balance: +utils.formatUnits(amount, token.decimals),
+            balance: +formatUnits(amount, token.decimals),
           };
 
           return result;
