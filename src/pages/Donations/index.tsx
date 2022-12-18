@@ -30,7 +30,7 @@ export default function Donations() {
   };
 
   return (
-    <div className="relative grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
+    <div className="relative padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <div className="flex lg:justify-between lg:items-center justify-center mt-10">
         <h1 className="text-3xl font-bold">My Donations</h1>
       </div>
