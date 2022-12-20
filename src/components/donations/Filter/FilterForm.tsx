@@ -185,8 +185,6 @@ const FilterForm = ({
                     reset({
                       startDate: new Date(),
                       endDate: new Date(),
-                      network: "",
-                      currency: "",
                     });
                     setSelectedStartDate("");
                     setSelectedNetwork("");
