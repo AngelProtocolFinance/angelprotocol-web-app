@@ -2,7 +2,7 @@ import { Popover } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { FilterFormValues, Filters } from "../types";
 import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
@@ -22,10 +22,14 @@ const FilterForm = ({
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FilterFormValues>({
     resolver: yupResolver(schema(selectedStartDate)),
     reValidateMode: "onSubmit",
+    defaultValues: {
+      startDate: new Date(),
+      endDate: new Date(),
+    },
   });
   const buttonRef = useRef<any>();
   const { data: networks } = useChainsQuery("");
@@ -124,7 +128,7 @@ const FilterForm = ({
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
-                      disabled={selectedStartDate ? false : true}
+                      disabled={!isValid}
                     />
                   </div>
                   <ErrorMessage
