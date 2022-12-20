@@ -2,7 +2,7 @@ import { Popover } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
-import { useForm, useFormState } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FilterFormValues, Filters } from "../types";
 import { useChainsQuery, useCurrenciesQuery } from "services/apes";
 import Icon from "components/Icon";
@@ -13,9 +13,6 @@ const FilterForm = ({
 }: {
   updateFilterValues: Function;
 }) => {
-  const [selectedStartDate, setSelectedStartDate] = useState<
-    Date | null | string
-  >(null);
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
   const [selectedCurrency, setSelectedCurrency] = useState<string>("");
   const {
@@ -24,8 +21,8 @@ const FilterForm = ({
     reset,
     formState: { errors, isValid },
   } = useForm<FilterFormValues>({
-    resolver: yupResolver(schema(selectedStartDate)),
-    reValidateMode: "onSubmit",
+    resolver: yupResolver(schema),
+    reValidateMode: "onChange",
     defaultValues: {
       startDate: new Date(),
       endDate: new Date(),
@@ -42,11 +39,9 @@ const FilterForm = ({
   };
 
   async function submit(data: FilterFormValues) {
-    if (selectedStartDate) {
-      data.startDate && data.endDate
-        ? (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`)
-        : (filters.transactionDate = "");
-    }
+    data.startDate && data.endDate
+      ? (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`)
+      : (filters.transactionDate = "");
     filters.chainName = selectedNetwork;
     filters.denomination = selectedCurrency;
 
@@ -88,10 +83,7 @@ const FilterForm = ({
                   reset({
                     startDate: new Date(),
                     endDate: new Date(),
-                    network: "",
-                    currency: "",
                   });
-                  setSelectedStartDate("");
                   setSelectedNetwork("");
                   setSelectedCurrency("");
                   updateFilterValues(filters);
@@ -103,9 +95,7 @@ const FilterForm = ({
                 type="submit"
                 className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                 disabled={
-                  selectedStartDate || selectedNetwork || selectedCurrency
-                    ? false
-                    : true
+                  isValid || selectedNetwork || selectedCurrency ? false : true
                 }
               >
                 Apply filter
@@ -121,7 +111,6 @@ const FilterForm = ({
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="From"
-                      onChange={(e) => setSelectedStartDate(e.target.value)}
                     />
                     <input
                       {...register("endDate")}
@@ -188,7 +177,6 @@ const FilterForm = ({
                       startDate: new Date(),
                       endDate: new Date(),
                     });
-                    setSelectedStartDate("");
                     setSelectedNetwork("");
                     setSelectedCurrency("");
                     updateFilterValues(filters);
@@ -200,7 +188,7 @@ const FilterForm = ({
                   type="submit"
                   className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                   disabled={
-                    selectedStartDate || selectedNetwork || selectedCurrency
+                    isValid || selectedNetwork || selectedCurrency
                       ? false
                       : true
                   }
