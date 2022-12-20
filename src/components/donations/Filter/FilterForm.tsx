@@ -51,6 +51,13 @@ const FilterForm = ({
     buttonRef.current?.click();
   }
 
+  const formReset = () => {
+    reset();
+    setSelectedNetwork("");
+    setSelectedCurrency("");
+    updateFilterValues(filters);
+  };
+
   return (
     <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 sm:max-h-[3.1rem] border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm dark:bg-blue-d6">
       <Popover.Button
@@ -79,15 +86,7 @@ const FilterForm = ({
               <button
                 type="button"
                 className="text-orange underline"
-                onClick={() => {
-                  reset({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                  });
-                  setSelectedNetwork("");
-                  setSelectedCurrency("");
-                  updateFilterValues(filters);
-                }}
+                onClick={formReset}
               >
                 Reset filters
               </button>
@@ -171,15 +170,7 @@ const FilterForm = ({
                 <button
                   type="button"
                   className="text-orange underline"
-                  onClick={() => {
-                    reset({
-                      startDate: new Date(),
-                      endDate: new Date(),
-                    });
-                    setSelectedNetwork("");
-                    setSelectedCurrency("");
-                    updateFilterValues(filters);
-                  }}
+                  onClick={formReset}
                 >
                   Reset filters
                 </button>
