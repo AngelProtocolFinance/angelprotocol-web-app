@@ -19,7 +19,7 @@ const FilterForm = ({
     handleSubmit,
     register,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isDirty },
   } = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
@@ -40,7 +40,7 @@ const FilterForm = ({
 
   async function submit(data: FilterFormValues) {
     data.startDate && data.endDate
-      ? (filters.transactionDate = `${data.startDate.toString()} ${data.endDate.toString()}`)
+      ? (filters.transactionDate = `${data.startDate.toISOString()} ${data.endDate.toISOString()}`)
       : (filters.transactionDate = "");
     filters.chainName = selectedNetwork;
     filters.denomination = selectedCurrency;
@@ -95,7 +95,7 @@ const FilterForm = ({
                 type="submit"
                 className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                 disabled={
-                  isValid || selectedNetwork || selectedCurrency ? false : true
+                  isDirty || selectedNetwork || selectedCurrency ? false : true
                 }
               >
                 Apply filter
@@ -117,7 +117,6 @@ const FilterForm = ({
                       type="date"
                       className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
                       placeholder="To"
-                      disabled={!isValid}
                     />
                   </div>
                   <ErrorMessage
@@ -188,7 +187,7 @@ const FilterForm = ({
                   type="submit"
                   className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
                   disabled={
-                    isValid || selectedNetwork || selectedCurrency
+                    isDirty || selectedNetwork || selectedCurrency
                       ? false
                       : true
                   }
