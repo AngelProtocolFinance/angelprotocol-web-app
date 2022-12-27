@@ -6,7 +6,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
 import { Filters } from "components/donations";
-import FilterForm from "components/donations/Filter/FilterForm";
+import Filter from "components/donations/Filter";
 import MobileTable from "components/donations/MobileTable";
 import Table from "components/donations/Table";
 import removeEmptyValue from "helpers/removeEmptyValue";
@@ -52,7 +52,7 @@ export default function Donations() {
               />
             </label>
           </div>
-          <FilterForm updateFilterValues={updateFilterValues} />
+          <Filter updateFilterValues={updateFilterValues} />
         </div>
       )}
       <QueryLoader
