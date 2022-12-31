@@ -5414,7 +5414,6 @@ __metadata:
     source-map-explorer: ^2.5.2
     stream-browserify: ^3.0.0
     typescript: <4.8.0
-    util: ^0.12.4
     web-vitals: ^3.0.2
     web3.storage: ^4.3.0
     yup: ^0.32.9
@@ -17070,7 +17069,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.3, util@npm:^0.12.4":
+"util@npm:^0.12.3":
   version: 0.12.4
   resolution: "util@npm:0.12.4"
   dependencies:
