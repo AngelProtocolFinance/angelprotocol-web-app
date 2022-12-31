@@ -1,5 +1,1 @@
-import { ethers } from "ethers";
-
-export const {
-  utils: { parseUnits, formatUnits },
-} = ethers;
+export { parseUnits, formatUnits } from "@ethersproject/units";

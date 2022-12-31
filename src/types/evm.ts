@@ -1,12 +1,13 @@
-import { ethers } from "ethers";
-
+export { ErrorCode as EVMErrors } from "@ethersproject/logger";
+export { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 export type {
   TransactionRequest,
   TransactionResponse,
-} from "@ethersproject/abstract-provider";
+} from "@ethersproject/providers";
 
-export const { Contract: EVMContract, errors: EVMErrors } = ethers;
-export const { Web3Provider, JsonRpcProvider } = ethers.providers;
+export { Contract as EVMContract } from "@ethersproject/contracts";
+
+// export const { Web3Provider, JsonRpcProvider } = ethers.providers;
 
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 //request
