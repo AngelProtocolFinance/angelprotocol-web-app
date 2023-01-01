@@ -1,17 +1,17 @@
 import type { FC } from "react";
-import { Token } from "types/aws";
+import { useCurrenciesQuery } from "services/apes";
 
 type CurrencyDropdownProps = {
   selectedCurrency: string;
   setSelectedCurrency: Function;
-  currencies: Token[] | undefined;
 };
 
 const CurrencyDropdown: FC<CurrencyDropdownProps> = ({
   selectedCurrency,
   setSelectedCurrency,
-  currencies,
 }) => {
+  const { data: currencies } = useCurrenciesQuery();
+
   return (
     <div className="flex flex-col text-gray-d2 gap-2">
       <label className="dark:text-white">Currency</label>

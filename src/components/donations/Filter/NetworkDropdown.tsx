@@ -1,17 +1,16 @@
 import type { FC } from "react";
-import { BaseChain } from "types/aws";
+import { useChainsQuery } from "services/apes";
 
 type NetworkDropdownProps = {
   selectedNetwork: string;
   setSelectedNetwork: Function;
-  networks: BaseChain[] | undefined;
 };
 
 const NetworkDropdown: FC<NetworkDropdownProps> = ({
   selectedNetwork,
   setSelectedNetwork,
-  networks,
 }) => {
+  const { data: networks } = useChainsQuery("");
   return (
     <div className="flex flex-col text-gray-d2 gap-2">
       <label className="dark:text-white">Network</label>
