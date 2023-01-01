@@ -5,15 +5,17 @@ import {
   EndowmentInfo,
   ProposalDetails,
 } from "services/types";
-import { TToken } from "types/aws";
+import { Chain, FetchedChain, TToken } from "types/aws";
 import { CW3Config, EndowmentDetails } from "types/contracts";
 import { BigNumber, EVMContract, JsonRpcProvider } from "types/evm";
 import { Coin } from "types/terra";
+import { ConnectedWallet } from "contexts/Wallet";
 import { condenseToNum, idParamToNum } from "helpers";
 import { formatUnits } from "helpers/evm";
 import { chains } from "constants/chainsV2";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { APIs } from "constants/urls";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { customTags, defaultProposalTags, junoTags } from "./tags";
@@ -80,7 +82,7 @@ async function getPropMeta(
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     balance: builder.query<
-      number,
+      number | { balance: number; giftcard: number },
       TToken & { chainId: string; address: string }
     >({
       providesTags(result, meta, args) {

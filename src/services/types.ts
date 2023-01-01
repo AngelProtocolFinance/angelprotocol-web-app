@@ -1,6 +1,7 @@
+import { Coin } from "@cosmjs/proto-signing";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { Token } from "types/aws";
+import { TToken, Token } from "types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -63,6 +64,10 @@ export type CountryOption = {
   name: string;
   flag: string;
 };
+
+export type CosmosBalances = { balances: Coin[] };
+
+export type TokenWithBalance = TToken & { balance: number; gift?: number };
 
 /** multicall */
 export type WithBalance<T = Token> = T & { balance: number };

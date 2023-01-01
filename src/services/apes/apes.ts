@@ -1,10 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseChain, Chain, WithdrawLog } from "types/aws";
+import { CosmosBalances, TokenWithBalance } from "services/types";
+import { BaseChain, Chain, FetchedChain, TToken, WithdrawLog } from "types/aws";
+import { GenericBalance } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { JsonRpcProvider } from "types/evm";
 import { queryContract } from "services/juno/queryContract";
+import { condenseToNum } from "helpers";
 import { formatUnits } from "helpers/evm";
 import { UnsupportedChainError } from "errors/errors";
+import { chains } from "constants/chainsV2";
+import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
@@ -24,6 +29,82 @@ export const apes = createApi({
     withdrawLogs: builder.query<WithdrawLog[], string>({
       providesTags: [{ type: apesTags.withdraw_logs }],
       query: (cw3) => `v1/withdraw/${cw3}`,
+    }),
+    balances: builder.query<
+      TokenWithBalance[],
+      { address: string; chainId: string }
+    >({
+      providesTags: [{ type: apesTags.chain }],
+      async queryFn({ address, chainId }, api, options, baseQuery) {
+        const chain = chains[chainId];
+        const { data } = await baseQuery(`v1/chain/${chainId}`);
+        const _chain = data as FetchedChain;
+        const tokens = segragate([_chain.native_currency, ..._chain.tokens]);
+
+        // fetch balances for juno or terra
+        if (chain.type === "cosmos" || chain.type === "terra") {
+          const [nativeBalances, giftcardBalances, ...cw20s] =
+            await Promise.allSettled([
+              fetch(
+                chain.lcd + `/cosmos/bank/v1beta1/balances/${address}`
+              ).then<CosmosBalances>((res) => {
+                if (!res.ok) throw new Error("failed to get native balances");
+                return res.json();
+              }),
+              queryContract("giftcardBalance", contracts.gift_cards, {
+                addr: address,
+              }),
+              ...tokens.alts.map((x) =>
+                queryContract("cw20Balance", x.token_id, {
+                  addr: address,
+                })
+              ),
+            ]);
+
+          return {
+            data: [
+              //native balances
+              ...tokens.natives.map((t) => ({
+                ...t,
+                balance: extractNativeBal(nativeBalances, t),
+                gift: extractGiftCardBal(giftcardBalances, t, "native"),
+              })),
+              ...cw20s.map((result, i) => {
+                const token = tokens.alts[i];
+                return {
+                  ...token,
+                  balance:
+                    result.status === "rejected"
+                      ? 0
+                      : condenseToNum(result.value.balance, token.decimals),
+                  gift: extractGiftCardBal(giftcardBalances, token, "cw20"),
+                };
+              }),
+            ],
+          };
+        } else {
+          /**fetch balances for ethereum */
+          const native = tokens.natives[0]; //evm chains have only one gas token
+          const jsonProvider = new JsonRpcProvider(chain.rpc);
+          const [nativeBal, erc20s] = await Promise.allSettled([
+            jsonProvider.getBalance(address),
+            getERC20Holdings(chain.rpc, address, tokens.alts),
+          ]);
+
+          return {
+            data: [
+              {
+                ...native,
+                balance: +formatUnits(
+                  nativeBal.status === "fulfilled" ? nativeBal.value : "0",
+                  native.decimals
+                ),
+              },
+              ...(erc20s.status === "fulfilled" ? erc20s.value : []),
+            ],
+          };
+        }
+      },
     }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: [{ type: apesTags.chain }],
@@ -89,7 +170,7 @@ export const apes = createApi({
             const erc20Holdings = await getERC20Holdings(
               chain.rpc_url,
               address,
-              chain.tokens.map((token) => token.token_id)
+              chain.tokens.map((token) => token.token_id) as any
             );
 
             result.native_currency.balance = +formatUnits(
@@ -99,7 +180,7 @@ export const apes = createApi({
 
             result.tokens.forEach((token) => {
               const erc20 = erc20Holdings.find(
-                (x) => x.contractAddress === token.token_id
+                (x: any) => x.contractAddress === token.token_id
               );
               token.balance = +(erc20?.balance ?? 0); // erc20 balance is already in decimal format
             });
@@ -148,4 +229,43 @@ async function getCW20Balance(chain: Chain, walletAddress: string) {
 
   const cw20Balances = await Promise.all(cw20BalancePromises);
   return cw20Balances;
+}
+
+type TokenType = "natives" | "alts";
+function segragate(tokens: TToken[]): { [key in TokenType]: TToken[] } {
+  return tokens.reduce((result, token) => {
+    const type: TokenType =
+      token.type === "ibc" || token.type.includes("native")
+        ? "natives"
+        : "alts";
+    result[type] ||= [];
+    result[type].push(token);
+    return result;
+  }, {} as any);
+}
+
+function extractNativeBal(
+  result: PromiseSettledResult<CosmosBalances>,
+  token: TToken
+): number {
+  if (result.status === "rejected") return 0;
+  return condenseToNum(
+    result.value.balances.find((bal) => bal.denom === token.token_id)?.amount ||
+      "0",
+    token.decimals
+  );
+}
+
+function extractGiftCardBal(
+  result: PromiseSettledResult<GenericBalance>,
+  { token_id, decimals }: TToken,
+  type: keyof GenericBalance
+) {
+  if (result.status === "rejected") return 0;
+  const balance =
+    type === "native"
+      ? result.value[type].find((t) => t.denom === token_id)?.amount || "0"
+      : result.value[type].find((t) => t.address === token_id)?.amount || "0";
+
+  return condenseToNum(balance, decimals);
 }

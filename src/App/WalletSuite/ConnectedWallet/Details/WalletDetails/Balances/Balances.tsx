@@ -1,11 +1,15 @@
 import { Switch } from "@headlessui/react";
+import { useState } from "react";
 import { Token } from "types/aws";
 import { WalletState } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
 import useBalances from "./useBalances";
 
+const MIN_AMOUNT = 0.001;
 export default function Balances(props: WalletState) {
+  const [isSmallAmountsHidden, setIsSmallAmountsHidden] = useState(false);
+
   const {
     hideSmallAmounts,
     filteredCoins,

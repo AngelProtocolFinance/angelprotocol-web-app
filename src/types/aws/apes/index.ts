@@ -56,6 +56,11 @@ export type Chain = BaseChain & {
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
+export type FetchedChain = {
+  native_currency: TToken;
+  tokens: TToken[];
+};
+
 export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
 export type RouterId = "axelar" | "connext";
 
