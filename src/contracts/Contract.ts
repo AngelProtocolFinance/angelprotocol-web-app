@@ -1,24 +1,20 @@
-import {
-  MsgExecuteContractEncodeObject,
-  SigningCosmWasmClient,
-} from "@cosmjs/cosmwasm-stargate";
-import { toUtf8 } from "@cosmjs/encoding";
-import { EncodeObject } from "@cosmjs/proto-signing";
+import { Chain } from "types/aws";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import {
   Coin,
   DeliverTxResponse,
+  EncodeObject,
   GasPrice,
+  MsgExecuteContractEncodeObject,
   MsgSendEncodeObject,
+  SigningCosmWasmClient,
   StdFee,
-  calculateFee,
-  isDeliverTxFailure,
-} from "@cosmjs/stargate";
-import { Chain } from "types/aws";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { Dwindow } from "types/ethereum";
+} from "types/cosmos";
 import { TxOptions } from "types/slices";
+import { Dwindow } from "types/window";
 import { WalletState } from "contexts/WalletContext";
-import { logger, scaleToStr, toBase64 } from "helpers";
+import { logger, toBase64 } from "helpers";
+import { calculateFee, isDeliverTxFailure, toUtf8 } from "helpers/cosmos";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -101,7 +97,7 @@ export default class Contract {
   }
 
   createTransferNativeMsg(
-    amount: number | string,
+    scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
@@ -113,7 +109,7 @@ export default class Contract {
         amount: [
           {
             denom,
-            amount: scaleToStr(amount),
+            amount: scaledAmount,
           },
         ],
       },

@@ -1,14 +1,18 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
-import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
-import { ethers } from "ethers";
 import { Estimate } from "./types";
+import { EVMContract, TransactionRequest, Web3Provider } from "types/evm";
+import {
+  Coin,
+  MsgExecuteContract,
+  MsgSend,
+  TerraConnectedWallet,
+} from "types/terra";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
+import { formatUnits, parseUnits } from "helpers/evm";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 
@@ -18,17 +22,18 @@ export async function estimateDonation({
   terraWallet,
 }: SubmitStep & {
   wallet: WalletState;
-  terraWallet?: ConnectedWallet;
+  terraWallet?: TerraConnectedWallet;
 }): Promise<Estimate | null> {
   const { chain } = wallet;
   const { native_currency } = chain;
 
   try {
     if (chain.type === "juno-native") {
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
       if (token.type === "juno-native" || token.type === "ibc") {
         const contract = new Account(wallet);
         const msg = contract.createTransferNativeMsg(
-          token.amount,
+          scaledAmount,
           ap_wallets.juno_deposit,
           token.token_id
         );
@@ -43,7 +48,7 @@ export async function estimateDonation({
       } else {
         const contract = new CW20(wallet, token.token_id);
         const msg = contract.createTransferMsg(
-          token.amount,
+          scaledAmount,
           ap_wallets.juno_deposit
         );
         const fee = await contract.estimateFee([msg]);
@@ -57,10 +62,10 @@ export async function estimateDonation({
     }
     // terra native transaction, send or contract interaction
     else if (chain.type === "terra-native") {
-      const amount = scaleToStr(token.amount);
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
       if (token.type === "terra-native" || token.type === "ibc") {
         const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-          new Coin(token.token_id, amount),
+          new Coin(token.token_id, scaledAmount),
         ]);
 
         const fee = await estimateTerraFee(wallet, [msg]);
@@ -78,7 +83,7 @@ export async function estimateDonation({
       } else {
         const msg = new MsgExecuteContract(wallet.address, token.token_id, {
           transfer: {
-            amount,
+            amount: scaledAmount,
             recipient: ap_wallets.terra,
           },
         });
@@ -97,44 +102,37 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = new ethers.providers.Web3Provider(
-        getProvider(wallet.providerId) as any
-      );
+      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
       //no network request
       const signer = provider.getSigner();
       const sender = await signer.getAddress();
       const gasPrice = await signer.getGasPrice();
-      const wei_amount = ethers.utils.parseEther(`${token.amount}`);
+      const scaledAmount = parseUnits(`${token.amount}`, token.decimals);
 
       const tx: TransactionRequest = {
         from: sender,
         to: ap_wallets.eth,
-        value: wei_amount,
+        value: scaledAmount,
       };
 
       let feeAmount = 0;
       if (token.type === "evm-native") {
         const gasLimit = await signer.estimateGas(tx);
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       } else {
-        const ER20Contract: any = new ethers.Contract(
+        const ER20Contract: any = new EVMContract(
           token.token_id,
           ERC20Abi,
           signer
         );
         const gasLimit = await ER20Contract.estimateGas.transfer(
           tx.to,
-          wei_amount
+          scaledAmount
         );
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       }
-
       return {
         fee: { amount: feeAmount, symbol: native_currency.symbol },
         tx: { type: "evm", val: tx },

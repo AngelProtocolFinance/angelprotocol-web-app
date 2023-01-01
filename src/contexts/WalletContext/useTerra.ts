@@ -1,12 +1,12 @@
-import {
-  ConnectType,
-  Installation,
-  Connection as TerraConnection,
-  WalletStatus,
-  useWallet,
-} from "@terra-money/wallet-provider";
+import { useWallet } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
+import {
+  ConnectType,
+  TerraConnection,
+  TerraInstallation,
+  WalletStatus,
+} from "types/terra";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,
@@ -84,7 +84,7 @@ export default function useTerra() {
   };
 }
 
-function _filter<T extends TerraConnection | Installation>(conn: T) {
+function _filter<T extends TerraConnection | TerraInstallation>(conn: T) {
   const identifier = conn.identifier as ProviderId;
 
   return (

@@ -4,9 +4,9 @@ import { BaseChain } from "types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
-  Dwindow,
   InjectedProvider,
-} from "types/ethereum";
+} from "types/evm";
+import { Dwindow } from "types/window";
 import { getProvider } from "helpers";
 import {
   UnexpectedStateError,
@@ -21,7 +21,7 @@ import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import toPrefixedHex from "./helpers/toPrefixedHex";
-import { useAddEthereumChain } from "./useAddEthereumChain";
+import { useAddEthereumChain } from "./hooks";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
 

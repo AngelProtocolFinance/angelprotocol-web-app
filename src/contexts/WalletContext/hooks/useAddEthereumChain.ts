@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import { InjectedProvider } from "types/ethereum";
+import { InjectedProvider } from "types/evm";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import toPrefixedHex from "./helpers/toPrefixedHex";
+import toPrefixedHex from "../helpers/toPrefixedHex";
 
 export function useAddEthereumChain() {
   const [getChain] = useLazyChainQuery();

@@ -40,7 +40,7 @@ export default function useTransferFunds() {
     const cw20Contract = new CW20(wallet, contracts.halo_token);
     if (data.denom === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
-        data.amount,
+        scaleToStr(data.amount), //halo decimals:6
         data.recipient
       );
     } else {

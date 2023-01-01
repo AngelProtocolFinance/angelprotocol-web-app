@@ -1,5 +1,4 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
-import { StdFee } from "@cosmjs/stargate";
+import { EncodeObject, StdFee } from "types/cosmos";
 import { Token } from "./aws";
 
 export type TxOptions = {

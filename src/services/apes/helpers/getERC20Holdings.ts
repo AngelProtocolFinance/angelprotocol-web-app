@@ -3,8 +3,8 @@ import {
   ContractCallReturnContext,
   Multicall,
 } from "ethereum-multicall";
-import { utils } from "ethers";
 import { ERC20Token } from "types/contracts";
+import { formatUnits } from "helpers/evm";
 import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
 export async function getERC20Holdings(
@@ -42,6 +42,6 @@ function buildToken(
     symbol: callsReturnContext[CallIndexes.SYMBOL].returnValues[0],
     decimals,
     name: callsReturnContext[CallIndexes.NAME].returnValues[0],
-    balance: utils.formatUnits(balance, decimals),
+    balance: formatUnits(balance, decimals),
   };
 }

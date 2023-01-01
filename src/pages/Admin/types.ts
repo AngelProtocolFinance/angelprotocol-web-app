@@ -15,6 +15,7 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
+import { Coin } from "types/cosmos";
 import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
@@ -34,6 +35,7 @@ export type Templates =
   | "cw3_config"
   | "cw3_transfer"
   | "cw3_application"
+  | "review_cw3_config"
 
   //cw4
   | "cw4_members"
@@ -107,6 +109,11 @@ export type CW3ConfigUpdateMeta = MetaConstructor<
   DiffSet<FormCW3Config>
 >;
 
+export type ReviewCW3ConfigUpdateMeta = MetaConstructor<
+  "review_cw3_config",
+  DiffSet<FormReviewCW3Config>
+>;
+
 export type FundSendMeta = MetaConstructor<
   "cw3_transfer",
   Pick<FundSendPayload, "amount" | "denom" | "recipient">
@@ -157,6 +164,7 @@ export type ProposalMeta =
   //cw3
   | ApplicationMeta
   | CW3ConfigUpdateMeta
+  | ReviewCW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
@@ -173,13 +181,18 @@ export type ProposalBase = {
 export type FundIdContext = { fundId: string };
 export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
-export type FormCW3Config = {
+export interface FormCW3Config {
   threshold: number;
   duration: number;
   require_execution: boolean;
-};
-export type CW3ConfigValues = ProposalBase &
-  FormCW3Config & { initial: FormCW3Config; isTime: boolean };
+}
+export interface FormReviewCW3Config extends FormCW3Config {
+  seed_asset?: Asset;
+  seed_split_to_liquid: string; //"0.5,0.9",
+  new_endow_gas_money?: Coin;
+}
+export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
+  T & { initial: T; isTime: boolean };
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;

@@ -22,7 +22,7 @@ export default function usePropose() {
     getValues,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
-  } = useFormContext<CW3ConfigValues>();
+  } = useFormContext<CW3ConfigValues<FormCW3Config>>();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 
@@ -32,7 +32,7 @@ export default function usePropose() {
     initial,
     isTime,
     ...newData
-  }: CW3ConfigValues) {
+  }: CW3ConfigValues<FormCW3Config>) {
     const diff = getPayloadDiff(initial, newData);
     const diffEntries = Object.entries(diff) as [Key, Value][];
 

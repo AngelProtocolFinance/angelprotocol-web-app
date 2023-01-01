@@ -2,11 +2,11 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Endowment } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
+import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import BookmarkBtn from "./BookmarkBtn";
 
 export default function Card({
   name,
@@ -24,7 +24,7 @@ export default function Card({
         <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
-        {!kyc_donors_only && <KYCIcon className="ml-auto" />}
+        {kyc_donors_only && <KYCIcon className="ml-auto" />}
         <BookmarkBtn name={name} id={id} logo={logo} />
       </div>
       <Link

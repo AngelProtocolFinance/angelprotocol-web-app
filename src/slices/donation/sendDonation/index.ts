@@ -1,10 +1,9 @@
-import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
-import { ethers } from "ethers";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
+import { EVMContract, TransactionResponse, Web3Provider } from "types/evm";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
@@ -59,7 +58,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           chainName: wallet.chain.chain_name,
           charityName: recipient.name,
           denomination: token.symbol,
-          splitLiq: `${+pctLiquidSplit / 100}`,
+          splitLiq: pctLiquidSplit,
           transactionId: hash,
           transactionDate: new Date().toISOString(),
           walletAddress: wallet.address,
@@ -102,15 +101,13 @@ async function sendTransaction(
     }
     //evm donations
     default: {
-      const provider = new ethers.providers.Web3Provider(
-        getProvider(wallet.providerId) as any
-      );
+      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
       const signer = provider.getSigner();
       let response: TransactionResponse;
       if (wallet.chain.native_currency.token_id === token.token_id) {
         response = await signer.sendTransaction(tx.val);
       } else {
-        const ER20Contract: any = new ethers.Contract(
+        const ER20Contract: any = new EVMContract(
           token.token_id,
           ERC20Abi,
           signer

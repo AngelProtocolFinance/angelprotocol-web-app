@@ -10,21 +10,19 @@ export default class CW20 extends Contract {
     this.address = address;
   }
 
-  createEmbeddedTransferMsg(amount: number, recipient: string) {
+  createEmbeddedTransferMsg(scaledAmount: string, recipient: string) {
     return this.createEmbeddedWasmMsg(this.address, {
       transfer: {
-        //convert to uamount
-        amount: scaleToStr(amount),
+        amount: scaledAmount,
         recipient,
       },
     });
   }
 
-  createTransferMsg(amount: number | string, recipient: string) {
+  createTransferMsg(scaledAmount: string, recipient: string) {
     return this.createExecuteContractMsg(this.address, {
       transfer: {
-        //convert to uamount
-        amount: scaleToStr(amount),
+        amount: scaledAmount,
         recipient,
       },
     });

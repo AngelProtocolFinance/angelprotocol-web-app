@@ -1,6 +1,6 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Estimate } from "./types";
+import { MsgExecuteContractEncodeObject } from "types/cosmos";
+import { TerraConnectedWallet } from "types/terra";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
@@ -13,7 +13,7 @@ export async function estimateTx({
   wallet,
 }: SubmitStep & {
   wallet: WalletState;
-  terraWallet?: ConnectedWallet;
+  terraWallet?: TerraConnectedWallet;
 }): Promise<Estimate | null> {
   const { chain } = wallet;
   const { native_currency } = chain;

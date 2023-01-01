@@ -31,7 +31,7 @@ function CW3ConfigContext(cw3Config: CW3Config) {
     require_execution: cw3Config.require_execution,
   };
 
-  const methods = useForm<CW3ConfigValues>({
+  const methods = useForm<CW3ConfigValues<FormCW3Config>>({
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
