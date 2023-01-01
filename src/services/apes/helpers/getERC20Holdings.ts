@@ -5,7 +5,6 @@ import {
 } from "ethereum-multicall";
 import { TokenWithBalance } from "services/types";
 import { TToken } from "types/aws";
-import { ERC20Token } from "types/contracts";
 import { formatUnits } from "helpers/evm";
 import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
