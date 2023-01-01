@@ -9,6 +9,8 @@ export type {
   TransactionResponse,
 } from "@ethersproject/providers";
 
+export type { BigNumber } from "@ethersproject/bignumber";
+
 export { Contract as EVMContract } from "@ethersproject/contracts";
 
 // export const { Web3Provider, JsonRpcProvider } = ethers.providers;
