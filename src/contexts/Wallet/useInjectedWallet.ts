@@ -72,41 +72,40 @@ export default function useInjectedWallet(
   };
 
   async function switchChain(chainId: string) {
-    if (state.status !== "connected") return;
-    const provider = getProvider(id)!; //can't switch when wallet is not connected
-
-    //same chains constant is used to render switch options
-    const chain = chains[chainId];
-    const tokens = await getTokens(chainId).unwrap();
-    const native = tokens[0]; //evm chains have only one native token
-
-    await provider
-      .request({
-        method: EIPMethods.wallet_switchEthereumChain,
-        params: [{ chainId: toPrefixedHex(chainId) }],
-      })
-      .catch(() =>
-        provider.request({
-          method: EIPMethods.wallet_addEthereumChain,
-          params: [
-            {
-              chainId: toPrefixedHex(chainId),
-              chainName: chain.name,
-              nativeCurrency: {
-                //TODO: add native currency to chain
-                name: native.name,
-                symbol: native.symbol,
-                decimals: native.decimals,
-              },
-              rpcUrls: chain.rpc,
-              blockExplorerUrls: chain.txExplorer,
-            },
-          ],
+    try {
+      if (state.status !== "connected") return;
+      const provider = getProvider(id)!; //can't switch when wallet is not connected
+      const chain = chains[chainId];
+      //TODO:also hardcode basic native details for chain?
+      const tokens = await getTokens(chainId).unwrap();
+      const native = tokens[0]; //evm chains have only one native token
+      await provider
+        .request({
+          method: EIPMethods.wallet_switchEthereumChain,
+          params: [{ chainId: toPrefixedHex(chainId) }],
         })
-      )
-      .catch(() => {
-        toast.error("Failed to switch chain");
-      });
+        .catch(() =>
+          provider.request({
+            method: EIPMethods.wallet_addEthereumChain,
+            params: [
+              {
+                chainId: toPrefixedHex(chainId),
+                chainName: chain.name,
+                nativeCurrency: {
+                  //TODO: add native currency to chain
+                  name: native.name,
+                  symbol: native.symbol,
+                  decimals: native.decimals,
+                },
+                rpcUrls: chain.rpc,
+                blockExplorerUrls: chain.txExplorer,
+              },
+            ],
+          })
+        );
+    } catch (err) {
+      toast.error("Failed to switch chain");
+    }
   }
 
   async function connect(isNew /** new connection */ = true) {
