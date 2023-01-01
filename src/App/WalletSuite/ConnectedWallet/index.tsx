@@ -1,9 +1,7 @@
 import { Popover } from "@headlessui/react";
-import { WalletState, useGetWallet } from "contexts/WalletContext";
 import withConnectedWallet, { useConnectedWallet } from "contexts/WalletGuard";
 import { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
-import { chains } from "constants/chainsV2";
 import SupportedNetworksMenu from "../SupportedNetworksMenu";
 import WalletSelectorOpener from "../WalletSelectorOpener";
 import { COMMON_BUTTON_STYLE } from "../constants";

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
 import { ConnectedWallet } from "contexts/Wallet";
-import { WalletState, useSetWallet } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
@@ -14,16 +13,16 @@ import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
 import useIsMember from "./useIsMember";
 
-export default function Details({ address, disconnect }: ConnectedWallet) {
+export default function Details(props: ConnectedWallet) {
   const {
     data: profile,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useProfileQuery(address);
+  } = useProfileQuery(props.address);
 
-  const isMemberResult = useIsMember();
+  const isMemberResult = useIsMember(props);
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
@@ -58,10 +57,10 @@ export default function Details({ address, disconnect }: ConnectedWallet) {
             )}
 
             {/* <WalletDetails {...props} /> */}
-            <MyDonations address={address} />
+            <MyDonations address={props.address} />
             <Bookmarks bookmarks={profile?.endowments} isError={isError} />
             <button
-              onClick={disconnect}
+              onClick={props.disconnect}
               className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
             >
               disconnect
