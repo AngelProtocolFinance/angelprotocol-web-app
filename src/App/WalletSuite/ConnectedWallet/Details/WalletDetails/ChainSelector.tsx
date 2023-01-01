@@ -1,30 +1,21 @@
 import { Listbox } from "@headlessui/react";
-import { BaseChain } from "types/aws";
-import { useErrorContext } from "contexts/ErrorContext";
-import { WalletState, useSetWallet } from "contexts/WalletContext";
+import { ConnectedWallet } from "contexts/Wallet";
 import Icon, { DrawerIcon } from "components/Icon";
-import { chainIDs } from "constants/chains";
+import { chains } from "constants/chainsV2";
 
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
 
-export default function ChainSelector(props: WalletState) {
-  const { handleError } = useErrorContext();
+export default function ChainSelector(props: ConnectedWallet) {
+  if (props.type !== "evm") return null;
 
-  const { switchChain } = useSetWallet();
-
-  const handleSwitch = async (chainId: chainIDs) => {
-    try {
-      await switchChain(chainId);
-    } catch (e) {
-      handleError(e);
-    }
-  };
+  const supportedChains = Object.entries(chains).map(([chainId]) => chainId);
+  const chain = chains[props.chainId];
 
   return (
     <Listbox
-      value={props.chain.chain_id}
-      onChange={handleSwitch}
+      value={props.chainId}
+      onChange={async (chainId: string) => await props.switchChain(chainId)}
       as="div"
       className="relative"
     >
@@ -33,7 +24,7 @@ export default function ChainSelector(props: WalletState) {
       >
         {({ open }) => (
           <>
-            {props.chain.chain_name}
+            {chain.name}
             <DrawerIcon
               isOpen={open}
               className="text-2xl text-gray-d1 dark:text-gray"
@@ -43,24 +34,25 @@ export default function ChainSelector(props: WalletState) {
         )}
       </Listbox.Button>
       <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-        {props.supportedChains.map((suppChain) => (
-          <Option key={suppChain.chain_id} {...suppChain} />
+        {supportedChains.map((id) => (
+          <Option key={id} id={id} />
         ))}
       </Listbox.Options>
     </Listbox>
   );
 }
 
-function Option({ chain_id, chain_name }: BaseChain) {
+function Option({ id }: { id: string }) {
+  const chain = chains[id];
   return (
-    <Listbox.Option value={chain_id}>
+    <Listbox.Option value={id}>
       {({ active, selected }) => (
         <span
           className={`${SELECTOR_STYLE} ${
             active ? "bg-orange-l5 dark:bg-blue-d3" : ""
           } cursor-pointer`}
         >
-          {chain_name}
+          {chain.name}
           {selected && (
             <Icon
               type="Check"

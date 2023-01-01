@@ -26,7 +26,7 @@ type Cosmos = {
 type EVM = {
   type: "evm";
   signer: JsonRpcSigner;
-  switchChain(chainId: string): void;
+  switchChain(chainId: string): Promise<void>;
 };
 
 export type ConnectedToChainType = Connected & (Terra | Cosmos | EVM);
