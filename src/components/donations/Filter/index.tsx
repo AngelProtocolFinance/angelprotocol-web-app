@@ -19,10 +19,6 @@ const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
   } = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: {
-      startDate: new Date(),
-      endDate: new Date(),
-    },
   });
 
   const filters: Filters = {
