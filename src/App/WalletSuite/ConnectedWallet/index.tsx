@@ -1,29 +1,40 @@
 import { Popover } from "@headlessui/react";
 import { WalletState, useGetWallet } from "contexts/WalletContext";
+import withConnectedWallet, { useConnectedWallet } from "contexts/WalletGuard";
 import { DrawerIcon } from "components/Icon";
 import { maskAddress } from "helpers";
+import { chains } from "constants/chainsV2";
+import SupportedNetworksMenu from "../SupportedNetworksMenu";
+import WalletSelectorOpener from "../WalletSelectorOpener";
 import { COMMON_BUTTON_STYLE } from "../constants";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
-export default function ConnectedWallet(props: WalletState) {
-  const { isLoading } = useGetWallet();
-  const maskedAddr = maskAddress(props.address);
+function Wallet() {
+  const wallet = useConnectedWallet();
 
   return (
     <Popover as="div" className="relative">
-      <Popover.Button
-        disabled={isLoading}
-        className={`${COMMON_BUTTON_STYLE} text-xs normal-case`}
-      >
+      <Popover.Button className={`${COMMON_BUTTON_STYLE} text-xs normal-case`}>
         {({ open }) => (
           <>
-            <span>{maskedAddr}</span>
+            <span>{maskAddress(wallet.address)}</span>
             <DrawerIcon isOpen={open} className="text-2xl opacity-50" />
           </>
         )}
       </Popover.Button>
-      <Details {...props} />
+      <Details {...wallet} />
     </Popover>
   );
 }
+
+export default withConnectedWallet(Wallet, {
+  type: "replacement",
+  loading: (
+    <button className={COMMON_BUTTON_STYLE} disabled>
+      Loading...
+    </button>
+  ),
+  disconnected: WalletSelectorOpener,
+  unsupported: SupportedNetworksMenu,
+});

@@ -43,6 +43,7 @@ export default function withConnectedWallet<T extends object>(
 ) {
   return function WalletGuard(props: T) {
     const wallet = useWalletContext();
+
     const {
       loading: Loader,
       disconnected: Connector,

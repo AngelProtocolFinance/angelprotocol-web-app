@@ -1,12 +1,15 @@
 import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
-import { useSetWallet } from "contexts/WalletContext";
+import { DisconnectedWallet } from "contexts/Wallet";
 import Icon from "components/Icon";
 import Connector from "./Connector";
 
-export default function WalletModal() {
+export default function WalletModal({
+  wallets,
+}: {
+  wallets: DisconnectedWallet[];
+}) {
   const { closeModal } = useModalContext();
-  const { connections } = useSetWallet();
 
   return (
     <Dialog.Panel className="fixed inset-0 sm:fixed-center z-20 grid sm:items-center w-full sm:max-w-lg h-full sm:h-fit sm:border border-gray-l2 sm:rounded bg-gray-l5 text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white shadow-[0_0_60px_rgba(0,0,0,0.3)]">
@@ -27,8 +30,9 @@ export default function WalletModal() {
           Select one of the available wallets to continue
         </p>
         <div className="grid sm:grid-cols-2 gap-4 w-full">
-          {!!connections.length &&
-            connections.map((conn) => <Connector key={conn.name} {...conn} />)}
+          {wallets.map((wallet) => (
+            <Connector key={wallet.id} {...wallet} />
+          ))}
         </div>
       </div>
     </Dialog.Panel>

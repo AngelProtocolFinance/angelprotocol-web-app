@@ -1,25 +1,25 @@
 import { useModalContext } from "contexts/ModalContext";
+import { DisconnectedWallet } from "contexts/Wallet";
 import Icon from "components/Icon";
 import { COMMON_BUTTON_STYLE } from "../constants";
 import WalletModal from "./WalletModal";
 
-type Props = { isLoading: boolean };
-
-export default function WalletSelectorOpener(props: Props) {
+export default function WalletSelectorOpener({
+  wallets,
+}: {
+  wallets: DisconnectedWallet[];
+}) {
   const { showModal } = useModalContext();
 
-  const handleClick = () => showModal(WalletModal, {});
+  const handleClick = () => showModal(WalletModal, { wallets });
 
   return (
     <button
       className={`${COMMON_BUTTON_STYLE} text-base`}
-      disabled={props.isLoading}
       onClick={handleClick}
     >
       <Icon type="Wallet" size={20} />
-      <span className="uppercase">
-        {props.isLoading ? "Loading" : "Connect"}
-      </span>
+      <span className="uppercase">Connect</span>
     </button>
   );
 }

@@ -1,31 +1,21 @@
 import { useState } from "react";
-import { Connection } from "contexts/WalletContext/types";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { DisconnectedWallet } from "contexts/Wallet";
 import ContentLoader from "components/ContentLoader";
 
-export default function Connector(props: Connection) {
-  const { handleError } = useErrorContext();
+export default function Connector({ connect, logo, name }: DisconnectedWallet) {
   const { closeModal } = useModalContext();
-
-  async function handleConnect() {
-    try {
-      closeModal();
-      await props.connect();
-    } catch (error: any) {
-      handleError(error);
-    }
-  }
 
   return (
     <button
       className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l2 rounded bg-white hover:bg-orange-l5 dark:bg-blue/50 hover:dark:bg-blue-d3 dark:border-none"
-      onClick={handleConnect}
+      onClick={() => {
+        closeModal();
+        connect();
+      }}
     >
-      <Logo logo={props.logo} />
-      <span className="font-heading font-bold text-sm capitalize">
-        {props.name}
-      </span>
+      <Logo logo={logo} />
+      <span className="font-heading font-bold text-sm capitalize">{name}</span>
     </button>
   );
 }

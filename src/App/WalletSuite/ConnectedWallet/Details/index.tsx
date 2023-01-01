@@ -2,6 +2,7 @@ import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
+import { ConnectedWallet } from "contexts/Wallet";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
@@ -13,14 +14,14 @@ import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
 import useIsMember from "./useIsMember";
 
-export default function Details(props: WalletState) {
+export default function Details({ address, disconnect }: ConnectedWallet) {
   const {
     data: profile,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useProfileQuery(props.address);
+  } = useProfileQuery(address);
 
   const isMemberResult = useIsMember();
 
@@ -56,10 +57,15 @@ export default function Details(props: WalletState) {
               <MyEndowments endowments={profile.admin} />
             )}
 
-            <WalletDetails {...props} />
-            <MyDonations address={props.address} />
+            {/* <WalletDetails {...props} /> */}
+            <MyDonations address={address} />
             <Bookmarks bookmarks={profile?.endowments} isError={isError} />
-            <DisconnectBtn />
+            <button
+              onClick={disconnect}
+              className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
+            >
+              disconnect
+            </button>
           </>
         );
       }}
@@ -77,17 +83,5 @@ function MyDonations({ address }: { address: string }) {
         My Donations
       </Link>
     </div>
-  );
-}
-
-function DisconnectBtn() {
-  const { disconnect } = useSetWallet();
-  return (
-    <button
-      onClick={disconnect}
-      className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
-    >
-      disconnect
-    </button>
   );
 }
