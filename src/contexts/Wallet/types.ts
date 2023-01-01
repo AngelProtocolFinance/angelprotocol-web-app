@@ -23,7 +23,11 @@ type Cosmos = {
   type: "cosmos";
   post: SigningCosmWasmClient["signAndBroadcast"];
 };
-type EVM = { type: "evm"; signer: JsonRpcSigner };
+type EVM = {
+  type: "evm";
+  signer: JsonRpcSigner;
+  switchChain(chainId: string): void;
+};
 
 export type ConnectedToChainType = Connected & (Terra | Cosmos | EVM);
 

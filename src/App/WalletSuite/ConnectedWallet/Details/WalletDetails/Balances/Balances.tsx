@@ -1,60 +1,66 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import { Token } from "types/aws";
-import { WalletState } from "contexts/WalletContext";
+import { useBalancesQuery } from "services/apes";
+import { ConnectedWallet } from "contexts/Wallet";
 import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
-import useBalances from "./useBalances";
+import KadoOpener from "./KadoOpener";
 
 const MIN_AMOUNT = 0.001;
-export default function Balances(props: WalletState) {
-  const [isSmallAmountsHidden, setIsSmallAmountsHidden] = useState(false);
+export default function Balances(props: ConnectedWallet) {
+  const [isSmallAmountsShown, setIsSmallAmountsShown] = useState(false);
 
-  const {
-    hideSmallAmounts,
-    filteredCoins,
-    filteredGcCoins,
-    setHideSmallAmounts,
-    handleBuyCrypto,
-  } = useBalances(props.coins, props.giftcardCoins);
+  const { data: tokens } = useBalancesQuery(
+    {
+      address: props.address,
+      chainId: props.chainId,
+    },
+    {
+      selectFromResult({ data = [] }) {
+        return {
+          data: data.filter(
+            (token) =>
+              //show atleast native
+              (token.balance > 0 && !isSmallAmountsShown) ||
+              token.balance > MIN_AMOUNT
+          ),
+        };
+      },
+    }
+  );
 
-  if (!filteredCoins.length && !filteredGcCoins.length) {
+  const isEmpty = tokens.length <= 0;
+
+  if (isEmpty) {
     return (
       <span className="text-sm">
-        Your wallet is empty.{" "}
-        <button
-          className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-          onClick={handleBuyCrypto}
-        >
-          Buy some crypto here
-        </button>
+        Your wallet is empty. <KadoOpener />
       </span>
     );
   }
 
   return (
     <>
-      {!!filteredCoins.length && <CoinBalances coins={filteredCoins} />}
+      {!isEmpty && <CoinBalances coins={tokens} />}
 
-      {!!filteredCoins.length && !!filteredGcCoins.length && (
+      {!isEmpty && (
         <div className="border-t border-gray-l2 dark:border-bluegray" />
       )}
-
-      {!!filteredGcCoins.length && <GiftcardBalances coins={filteredGcCoins} />}
 
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
         <Switch
-          checked={hideSmallAmounts}
-          onChange={setHideSmallAmounts}
+          checked={isSmallAmountsShown}
+          onChange={(val) => setIsSmallAmountsShown(val)}
           className={`${
-            hideSmallAmounts ? "bg-orange" : "bg-gray-l1"
+            isSmallAmountsShown ? "bg-orange" : "bg-gray-l1"
           } relative flex h-4 w-8 items-center rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-l2`}
         >
           <span className="sr-only">Hide small amounts</span>
           <span
             className={`${
-              hideSmallAmounts ? "translate-x-[1.125rem]" : "translate-x-0.5"
+              isSmallAmountsShown ? "translate-x-[1.125rem]" : "translate-x-0.5"
             } pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white transition duration-200 ease-in-out`}
           />
         </Switch>

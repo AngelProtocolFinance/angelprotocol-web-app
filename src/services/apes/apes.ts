@@ -106,6 +106,12 @@ export const apes = createApi({
         }
       },
     }),
+    tokens: builder.query<TToken[], string>({
+      query: (chainId) => `v1/chain/${chainId}`,
+      transformResponse(res: FetchedChain) {
+        return [res.native_currency, ...res.tokens];
+      },
+    }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
       providesTags: [{ type: apesTags.chain }],
       async queryFn({ address, chainId }) {
@@ -205,9 +211,11 @@ export const apes = createApi({
 });
 
 export const {
+  useBalancesQuery,
   useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
+  useLazyTokensQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
 } = apes;

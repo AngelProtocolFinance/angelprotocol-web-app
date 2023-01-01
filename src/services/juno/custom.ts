@@ -1,21 +1,13 @@
-import ERC20Abi from "abi/ERC20.json";
 import {
   AdminResources,
   AdminRoles,
   EndowmentInfo,
   ProposalDetails,
 } from "services/types";
-import { Chain, FetchedChain, TToken } from "types/aws";
 import { CW3Config, EndowmentDetails } from "types/contracts";
-import { BigNumber, EVMContract, JsonRpcProvider } from "types/evm";
-import { Coin } from "types/terra";
-import { ConnectedWallet } from "contexts/Wallet";
-import { condenseToNum, idParamToNum } from "helpers";
-import { formatUnits } from "helpers/evm";
-import { chains } from "constants/chainsV2";
+import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { APIs } from "constants/urls";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { customTags, defaultProposalTags, junoTags } from "./tags";
@@ -81,54 +73,6 @@ async function getPropMeta(
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
-    balance: builder.query<
-      number | { balance: number; giftcard: number },
-      TToken & { chainId: string; address: string }
-    >({
-      providesTags(result, meta, args) {
-        return result !== undefined
-          ? [{ type: "balance", id: args.token_id }]
-          : [];
-      },
-      async queryFn({ chainId, address, ...coin }) {
-        const chain = chains[chainId];
-        switch (coin.type) {
-          case "juno-native":
-          case "terra-native":
-          case "ibc": {
-            const { balance } = await fetch(
-              `${chain.lcd}/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${coin.token_id}`
-            ).then<{ balance: Coin.Data }>((res) => {
-              if (!res.ok) {
-                throw new Error(`failed to fetch balance ${coin.token_id}`);
-              }
-              return res.json();
-            });
-
-            return { data: condenseToNum(balance.amount, coin.decimals) };
-          }
-          case "cw20": {
-            const { balance } = await queryContract(
-              "cw20Balance",
-              coin.token_id,
-              { addr: address },
-              chain.lcd
-            );
-            return { data: condenseToNum(balance, coin.decimals) };
-          }
-          case "erc20": {
-            const provider = new JsonRpcProvider(chain.rpc);
-            const contract = new EVMContract(coin.token_id, ERC20Abi, provider);
-            const balance = contract.balanceOf(address) as Promise<BigNumber>;
-            return { data: +formatUnits(await balance, coin.decimals) };
-          }
-          default: /** evm native */
-            const provider = new JsonRpcProvider(chain.rpc);
-            const balance = await provider.getBalance(address);
-            return { data: +formatUnits(balance, coin.decimals) };
-        }
-      },
-    }),
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
       providesTags: [{ type: junoTags.custom, id: customTags.isMember }],
       async queryFn(args) {
