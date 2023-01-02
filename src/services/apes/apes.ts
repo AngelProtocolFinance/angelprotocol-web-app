@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CosmosBalances, TokenWithBalance } from "services/types";
 import { BaseChain, Chain, FetchedChain, TToken, WithdrawLog } from "types/aws";
-import { GenericBalance } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { JsonRpcProvider } from "types/evm";
 import { queryContract } from "services/juno/queryContract";
@@ -14,6 +13,8 @@ import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 import { apesTags } from "./tags";
+
+type BalMap = { [index: string]: string | undefined };
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -43,43 +44,62 @@ export const apes = createApi({
 
         // fetch balances for juno or terra
         if (chain.type === "cosmos" || chain.type === "terra") {
-          const [nativeBalances, giftcardBalances, ...cw20s] =
-            await Promise.allSettled([
-              fetch(
-                chain.lcd + `/cosmos/bank/v1beta1/balances/${address}`
-              ).then<CosmosBalances>((res) => {
+          const [natives, gifts, ...cw20s] = await Promise.allSettled([
+            fetch(chain.lcd + `/cosmos/bank/v1beta1/balances/${address}`)
+              .then<CosmosBalances>((res) => {
                 if (!res.ok) throw new Error("failed to get native balances");
                 return res.json();
-              }),
-              queryContract("giftcardBalance", contracts.gift_cards, {
+              })
+              //transform for easy access
+              .then(({ balances }) => toMap(balances)),
+            queryContract(
+              "giftcardBalance",
+              contracts.gift_cards,
+              {
                 addr: address,
-              }),
-              ...tokens.alts.map((x) =>
-                queryContract("cw20Balance", x.token_id, {
-                  addr: address,
-                })
-              ),
-            ]);
+              },
+              chain.lcd
+            ).then(({ native, cw20 }) =>
+              toMap([
+                ...native,
+                ...cw20.map<Coin>(({ address, amount }) => ({
+                  denom: address,
+                  amount: amount,
+                })),
+              ])
+            ),
+            ...tokens.alts.map((x) =>
+              queryContract("cw20Balance", x.token_id, {
+                addr: address,
+              })
+            ),
+          ]);
 
           return {
             data: [
               //native balances
               ...tokens.natives.map((t) => ({
                 ...t,
-                balance: extractNativeBal(nativeBalances, t),
-                gift: extractGiftCardBal(giftcardBalances, t, "native"),
+                balance: getBal(natives, t),
+                gift: getBal(gifts, t),
               })),
-              ...cw20s.map((result, i) => {
-                const token = tokens.alts[i];
-                return {
-                  ...token,
-                  balance:
-                    result.status === "rejected"
-                      ? 0
-                      : condenseToNum(result.value.balance, token.decimals),
-                  gift: extractGiftCardBal(giftcardBalances, token, "cw20"),
-                };
-              }),
+              //cw20 tokens
+              ...tokens.alts.map((t) => ({
+                ...t,
+                balance: getBal(
+                  toMap(
+                    cw20s.map<Coin>((result) => ({
+                      denom: t.token_id,
+                      amount:
+                        result.status === "fulfilled"
+                          ? result.value.balance
+                          : "0",
+                    }))
+                  ),
+                  t
+                ),
+                gift: getBal(gifts, t),
+              })),
             ],
           };
         } else {
@@ -253,28 +273,27 @@ function segragate(tokens: TToken[]): { [key in TokenType]: TToken[] } {
   }, {} as any);
 }
 
-function extractNativeBal(
-  result: PromiseSettledResult<CosmosBalances>,
-  token: TToken
-): number {
-  if (result.status === "rejected") return 0;
-  return condenseToNum(
-    result.value.balances.find((bal) => bal.denom === token.token_id)?.amount ||
-      "0",
-    token.decimals
+function toMap(coins: Coin[]): BalMap {
+  return Object.entries(coins).reduce(
+    (result, [, { denom, amount }]) => ({
+      ...result,
+      [denom]: amount,
+    }),
+    {}
   );
 }
-
-function extractGiftCardBal(
-  result: PromiseSettledResult<GenericBalance>,
-  { token_id, decimals }: TToken,
-  type: keyof GenericBalance
+function getBal(
+  map: PromiseSettledResult<BalMap> | BalMap,
+  { token_id, decimals }: TToken
 ) {
-  if (result.status === "rejected") return 0;
-  const balance =
-    type === "native"
-      ? result.value[type].find((t) => t.denom === token_id)?.amount || "0"
-      : result.value[type].find((t) => t.address === token_id)?.amount || "0";
+  if (isPromise(map)) {
+    if (map.status === "rejected") return 0;
+    return condenseToNum(map.value[token_id] || "0", decimals);
+  }
+  return condenseToNum(map[token_id] || "0", decimals);
+}
 
-  return condenseToNum(balance, decimals);
+function isPromise<T>(val: any): val is PromiseSettledResult<T> {
+  const key: keyof PromiseSettledResult<any> = "status";
+  return key in val;
 }
