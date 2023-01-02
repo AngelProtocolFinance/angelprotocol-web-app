@@ -246,6 +246,7 @@ function segragate(tokens: TToken[]): { [key in TokenType]: TToken[] } {
       token.type === "ibc" || token.type.includes("native")
         ? "natives"
         : "alts";
+    result["alts"] ||= []; //init alts all the same
     result[type] ||= [];
     result[type].push(token);
     return result;

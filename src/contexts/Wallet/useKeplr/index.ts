@@ -68,6 +68,7 @@ export default function useKeplr(): Wallet {
 
   function disconnect() {
     setState({ status: "disconnected", connect });
+    saveUserAction(actionKey, "disconnect");
   }
 
   return { ...state, logo: icon, id: "keplr", name: "Keplr" };

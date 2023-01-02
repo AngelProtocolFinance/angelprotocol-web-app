@@ -17,13 +17,15 @@ export default function Balances(props: ConnectedWallet) {
       chainId: props.chainId,
     },
     {
-      selectFromResult({ data = [] }) {
+      selectFromResult({ data = [], error }) {
         return {
+          error,
           data: data.filter(
             (token) =>
               //show atleast native
               (token.balance > 0 && !isSmallAmountsShown) ||
-              token.balance > MIN_AMOUNT
+              token.balance > MIN_AMOUNT ||
+              (token.gift || 0) > 0
           ),
         };
       },

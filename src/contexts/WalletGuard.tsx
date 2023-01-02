@@ -5,7 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { chains } from "constants/chains";
+import { chains } from "constants/chainsV2";
 import {
   ConnectedWallet,
   DisconnectedWallet,
@@ -43,7 +43,6 @@ export default function withConnectedWallet<T extends object>(
 ) {
   return function WalletGuard(props: T) {
     const wallet = useWalletContext();
-
     const {
       loading: Loader,
       disconnected: Connector,
