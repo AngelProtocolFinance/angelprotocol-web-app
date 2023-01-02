@@ -57,7 +57,10 @@ export default function ModalContext(
 
   const setModalOption = useCallback(
     <T extends keyof ModalOptions>(option: T, val: ModalOptions[T]) => {
-      setState((prev) => (prev ? { ...prev, [option]: val } : prev));
+      setState((prev) => {
+        if (!prev) throw new Error("there's no modal to update");
+        return { ...prev, [option]: val };
+      });
     },
     []
   );
@@ -66,7 +69,7 @@ export default function ModalContext(
     <Context.Provider
       value={{
         isDismissible: !!state?.isDismissible,
-        isModalOpen: !!state?.Modal,
+        isModalOpen: !!state,
 
         setModalOption,
         showModal,
