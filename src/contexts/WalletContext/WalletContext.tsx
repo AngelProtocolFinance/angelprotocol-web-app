@@ -191,6 +191,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
+    isFetching: isChainFetching,
     error,
   } = useChainQuery(
     {
@@ -232,6 +233,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading:
           providerStatuses.some((x) => x.isLoading) ||
           isChainLoading ||
+          isChainFetching ||
           isGcLoading,
       }}
     >
