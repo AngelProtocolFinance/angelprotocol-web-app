@@ -20,13 +20,12 @@ export default function Donations() {
   const queryState = useDonationsQuery(filterValues, {
     skip: !address,
   });
-  const { isLoading, refetch } = queryState;
+  const { isLoading } = queryState;
 
   const updateFilterValues = (formValues: Filters) => {
     const trimmedFilters = removeEmptyValue({ ...filterValues, ...formValues });
     console.log(trimmedFilters);
     setFilterValues(trimmedFilters as DonationsQueryParams);
-    refetch();
   };
 
   return (
