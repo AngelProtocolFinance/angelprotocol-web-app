@@ -73,11 +73,7 @@ export default function ModalContext(
         closeModal,
       }}
     >
-      <Dialog
-        open={state !== undefined}
-        onClose={closeModal}
-        className="relative z-50"
-      >
+      <Dialog open={!!state} onClose={closeModal} className="relative z-50">
         <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
         {state?.Modal /** should always be wrapped with Dialog.Panel */}
       </Dialog>
