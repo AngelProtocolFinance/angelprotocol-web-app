@@ -1,5 +1,6 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { Flip, ToastContainer, TypeOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 import ModalContext from "contexts/ModalContext";
 import Wallet from "contexts/Wallet";
 import WalletContext from "contexts/WalletContext";

@@ -27,8 +27,10 @@ type EVM = {
   type: "evm";
   signer: JsonRpcSigner;
   switchChain(chainId: string): Promise<void>;
+  isSwitching: boolean;
 };
 
+export type EVMWallet = Connected & EVM;
 export type ConnectedToChainType = Connected & (Terra | Cosmos | EVM);
 
 type Disconnected = { status: "disconnected"; connect(args?: any): void };

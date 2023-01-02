@@ -2,7 +2,7 @@ import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
-import { ConnectedWallet } from "contexts/Wallet";
+import { ConnectedWallet, isEVM } from "contexts/Wallet";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
@@ -52,8 +52,9 @@ export default function Details(props: ConnectedWallet) {
             <MyDonations address={props.address} />
             <Bookmarks bookmarks={profile?.endowments} isError={isError} />
             <button
+              disabled={isEVM(props) && props.isSwitching}
               onClick={props.disconnect}
-              className="btn h-12 flex-none bg-orange-l5 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
+              className="btn h-12 flex-none bg-orange-l5 disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1 dark:bg-blue-d5 hover:bg-orange-l3 hover:dark:bg-blue-d7 uppercase font-body font-bold text-base sm:rounded-b-lg "
             >
               disconnect
             </button>

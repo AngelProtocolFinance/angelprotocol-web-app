@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { ConnectedWallet } from "contexts/Wallet";
+import { ConnectedWallet, isEVM } from "contexts/Wallet";
 import Icon, { DrawerIcon } from "components/Icon";
 import { chains } from "constants/chainsV2";
 
@@ -7,24 +7,32 @@ const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
 
 export default function ChainSelector(props: ConnectedWallet) {
-  if (props.type !== "evm") return null;
-
   const supportedChains = Object.entries(chains).map(([chainId]) => chainId);
   const chain = chains[props.chainId];
 
+  if (!isEVM(props))
+    return (
+      <p
+        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray rounded`}
+      >
+        {chain.name}
+      </p>
+    );
+
   return (
     <Listbox
+      disabled={props.isSwitching}
       value={props.chainId}
       onChange={async (chainId: string) => await props.switchChain(chainId)}
       as="div"
       className="relative"
     >
       <Listbox.Button
-        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray rounded`}
+        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1 rounded`}
       >
         {({ open }) => (
           <>
-            {chain.name}
+            {props.isSwitching ? "Switching..." : chain.name}
             <DrawerIcon
               isOpen={open}
               className="text-2xl text-gray-d1 dark:text-gray"

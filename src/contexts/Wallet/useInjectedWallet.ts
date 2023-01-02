@@ -9,10 +9,12 @@ import {
 import { Dwindow } from "types/window";
 import { useLazyTokensQuery } from "services/apes";
 import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";
+import { logger } from "helpers";
 import { getProvider } from "helpers/getProvider";
 import { chains } from "constants/chainsV2";
 import { EIPMethods } from "constants/ethereum";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
+import { isEVM } from "./helpers/walletType";
 
 export default function useInjectedWallet(
   meta: WalletMeta & { installUrl: string }
@@ -73,7 +75,7 @@ export default function useInjectedWallet(
 
   async function switchChain(chainId: string) {
     try {
-      if (state.status !== "connected") return;
+      setState((p) => (isEVM(p) ? { ...p, isSwitching: true } : p));
       const provider = getProvider(id)!; //can't switch when wallet is not connected
       const chain = chains[chainId];
       //TODO:also hardcode basic native details for chain?
@@ -84,27 +86,31 @@ export default function useInjectedWallet(
           method: EIPMethods.wallet_switchEthereumChain,
           params: [{ chainId: toPrefixedHex(chainId) }],
         })
-        .catch(() =>
-          provider.request({
-            method: EIPMethods.wallet_addEthereumChain,
-            params: [
-              {
-                chainId: toPrefixedHex(chainId),
-                chainName: chain.name,
-                nativeCurrency: {
-                  //TODO: add native currency to chain
-                  name: native.name,
-                  symbol: native.symbol,
-                  decimals: native.decimals,
+        .catch(
+          async () =>
+            await provider.request({
+              method: EIPMethods.wallet_addEthereumChain,
+              params: [
+                {
+                  chainId: toPrefixedHex(chainId),
+                  chainName: chain.name,
+                  nativeCurrency: {
+                    //TODO: add native currency to chain
+                    name: native.name,
+                    symbol: native.symbol,
+                    decimals: native.decimals,
+                  },
+                  rpcUrls: [chain.rpc],
+                  blockExplorerUrls: [chain.txExplorer],
                 },
-                rpcUrls: chain.rpc,
-                blockExplorerUrls: chain.txExplorer,
-              },
-            ],
-          })
+              ],
+            })
         );
     } catch (err) {
+      logger.error(err);
       toast.error("Failed to switch chain");
+    } finally {
+      setState((p) => (isEVM(p) ? { ...p, isSwitching: false } : p));
     }
   }
 
@@ -149,6 +155,7 @@ export default function useInjectedWallet(
         chainId: `${parseInt(hexChainId, 16)}`,
         disconnect,
         switchChain,
+        isSwitching: false,
         signer: new Web3Provider(provider).getSigner(),
       });
 
