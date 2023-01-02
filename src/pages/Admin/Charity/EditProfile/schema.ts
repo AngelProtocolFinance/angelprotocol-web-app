@@ -32,7 +32,7 @@ const shape: SchemaShape<ProfileFormValues> = {
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
-  // registration_number: no need to validate
+  registration_number: requiredString,
   // country_city_origin: no need to validate
   country: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
