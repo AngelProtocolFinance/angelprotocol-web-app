@@ -11,6 +11,8 @@ import GeneralInfo from "./GeneralInfo";
 export default function Body() {
   const profile = useProfileContext();
 
+  console.log(profile);
+
   return (
     <div className="flex justify-center items-center w-full h-full">
       <Seo
@@ -50,15 +52,15 @@ export default function Body() {
               ac, ultricies.
             </p> */}
           </div>
-          {(!!profile.street_address || !!profile.url) && (
+          {(profile.country_of_origin || profile.url) && (
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-              {!!profile.street_address && (
+              {profile.country_of_origin && (
                 <span className="flex items-center gap-2 uppercase">
                   <Icon type="MapPin" className="h-6 w-6 text-orange" />
-                  {profile.street_address}
+                  {profile.country_of_origin}
                 </span>
               )}
-              {!!profile.url && (
+              {profile.url && (
                 <span className="flex items-center gap-2">
                   <Icon type="Globe" className="h-6 w-6 text-orange" />
                   <ExtLink
