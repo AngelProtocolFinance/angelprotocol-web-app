@@ -25,7 +25,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
           matches from the Angel Alliance.
         </span>
         <ExtLink
-          className="z-[1] block rounded-md btn-orange uppercase px-4 py-2 mb-16 font-bold text-sm mt-5"
+          className="z-[1] inline-block rounded-md btn-orange uppercase px-4 py-2 mb-16 font-bold text-sm mt-5"
           href="https://longevity.angelprotocol.io"
         >
           Donate Now
