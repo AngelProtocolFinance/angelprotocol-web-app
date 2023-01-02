@@ -11,8 +11,6 @@ import GeneralInfo from "./GeneralInfo";
 export default function Body() {
   const profile = useProfileContext();
 
-  console.log(profile);
-
   return (
     <div className="flex justify-center items-center w-full h-full">
       <Seo
