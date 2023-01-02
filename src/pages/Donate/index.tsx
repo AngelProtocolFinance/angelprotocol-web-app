@@ -28,7 +28,7 @@ export default function Donate() {
         classes={{ container: "text-center mt-8" }}
       >
         {(endowment) => (
-          <span>
+          <>
             <Seo
               title={`Donate to ${endowment.name} - Angel Protocol`}
               description={`${endowment.overview.slice(0, 140)}`}
@@ -41,7 +41,7 @@ export default function Donate() {
               id={numId}
               isKYCRequired={endowment.kyc_donors_only}
             />
-          </span>
+          </>
         )}
       </QueryLoader>
     </section>
