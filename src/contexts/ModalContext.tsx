@@ -49,8 +49,9 @@ export default function ModalContext(
   }, []);
 
   const closeModal = useCallback(() => {
-    if (!state?.isDismissible) return;
-    state?.onClose();
+    if (!state) throw new Error("there's no modal to close");
+    if (!state.isDismissible) return;
+    state.onClose();
     setState(undefined);
   }, [state]);
 
