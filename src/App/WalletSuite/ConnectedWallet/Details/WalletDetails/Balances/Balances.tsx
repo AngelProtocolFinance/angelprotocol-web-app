@@ -1,55 +1,16 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
-import { Token } from "types/aws";
-import { useBalancesQuery } from "services/apes";
-import { ConnectedWallet } from "contexts/Wallet";
-import Icon from "components/Icon";
+// import { Token } from "types/aws";
+// import { ConnectedWallet } from "contexts/Wallet";
+// import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
-import KadoOpener from "./KadoOpener";
 
-const MIN_AMOUNT = 0.001;
-export default function Balances(props: ConnectedWallet) {
+export default function Balances() {
   const [isSmallAmountsShown, setIsSmallAmountsShown] = useState(false);
-
-  const { data: tokens } = useBalancesQuery(
-    {
-      address: props.address,
-      chainId: props.chainId,
-    },
-    {
-      selectFromResult({ data = [], error }) {
-        return {
-          error,
-          data: data.filter(
-            (token) =>
-              //show atleast native
-              (token.balance > 0 && !isSmallAmountsShown) ||
-              token.balance > MIN_AMOUNT ||
-              (token.gift || 0) > 0
-          ),
-        };
-      },
-    }
-  );
-
-  const isEmpty = tokens.length <= 0;
-
-  if (isEmpty) {
-    return (
-      <span className="text-sm">
-        Your wallet is empty. <KadoOpener />
-      </span>
-    );
-  }
 
   return (
     <>
-      {!isEmpty && <CoinBalances coins={tokens} />}
-
-      {!isEmpty && (
-        <div className="border-t border-gray-l2 dark:border-bluegray" />
-      )}
-
+      <CoinBalances isSmallAmountsShown={isSmallAmountsShown} />
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
         <Switch
@@ -71,17 +32,17 @@ export default function Balances(props: ConnectedWallet) {
   );
 }
 
-function GiftcardBalances({ coins }: { coins: Token[] }) {
-  return (
-    <>
-      <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
-        <Icon
-          type="Giftcard"
-          className="bg-green text-white rounded-full p-1 w-6 h-6"
-        />
-        Giftcard balances
-      </span>
-      <CoinBalances coins={coins} />
-    </>
-  );
-}
+// function GiftcardBalances({ coins }: { coins: Token[] }) {
+//   return (
+//     <>
+//       <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
+//         <Icon
+//           type="Giftcard"
+//           className="bg-green text-white rounded-full p-1 w-6 h-6"
+//         />
+//         Giftcard balances
+//       </span>
+//       {/* <CoinBalances coins={coins} /> */}
+//     </>
+//   );
+// }
