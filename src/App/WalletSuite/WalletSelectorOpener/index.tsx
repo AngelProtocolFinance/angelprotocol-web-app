@@ -12,7 +12,7 @@ export default function WalletSelectorOpener(props: Props) {
 
   return (
     <button
-      className={`${COMMON_BUTTON_STYLE} text-base`}
+      className={`${COMMON_BUTTON_STYLE} gap-1 text-sm`}
       disabled={props.isLoading}
       onClick={handleClick}
     >
