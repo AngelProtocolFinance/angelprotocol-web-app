@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import banner from "assets/images/hero.png";
 import { useEndowInfoQuery } from "services/juno/custom";
+import Seo from "components/Seo";
 import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
 import Steps from "./Steps";
@@ -18,7 +19,6 @@ export default function Donate() {
         }}
         className="relative overlay w-full object-cover h-72 bg-center bg-cover"
       />
-
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -28,11 +28,20 @@ export default function Donate() {
         classes={{ container: "text-center mt-8" }}
       >
         {(endowment) => (
-          <Steps
-            name={endowment.name}
-            id={numId}
-            isKYCRequired={endowment.kyc_donors_only}
-          />
+          <>
+            <Seo
+              title={`Donate to ${endowment.name} - Angel Protocol`}
+              description={`${endowment.overview.slice(0, 140)}`}
+              name={`${endowment.name}`}
+              image={`${endowment.logo}`}
+              url={`https://app.angelprotocol.io/donate/${endowment.id}`}
+            />
+            <Steps
+              name={endowment.name}
+              id={numId}
+              isKYCRequired={endowment.kyc_donors_only}
+            />
+          </>
         )}
       </QueryLoader>
     </section>
