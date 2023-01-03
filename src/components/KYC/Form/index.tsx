@@ -3,12 +3,14 @@ import { FormValues as FV, Props } from "../types";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
+import { Selector } from "components/Selector";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
+import { states } from "./us-states";
 import useSubmit from "./useSubmit";
 
 export const formStyle =
@@ -77,6 +79,17 @@ export default function Form({ classes = "", ...props }: Props) {
           }}
         />
       </div>
+      <div className="grid relative">
+        <Label htmlFor="country" className="mb-2" required={false}>
+          State
+        </Label>
+        <Selector<FV, "USState", string, false>
+          name="USState"
+          options={states}
+          classes={{ container: "bg-white dark:bg-blue-d6" }}
+        />
+      </div>
+
       <TextInput<FV>
         name="state"
         label="State"

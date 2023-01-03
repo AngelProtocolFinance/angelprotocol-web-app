@@ -14,7 +14,12 @@ const shape: SchemaShape<FormValues> = {
   }),
   city: requiredString,
   postalCode: requiredString,
-  country: Yup.object({ name: requiredString }),
+  country: Yup.object().shape<SchemaShape<FormValues["country"]>>({
+    name: requiredString,
+  }),
+  USState: Yup.object().shape<SchemaShape<FormValues["USState"]>>({
+    value: Yup.string(),
+  }),
   email: Yup.string().email("invalid").required("required"),
   hasAgreedToTerms: Yup.boolean().oneOf(
     [true],
