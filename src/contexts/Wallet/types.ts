@@ -21,7 +21,7 @@ type Connected = {
 type Terra = { type: "terra"; post: TerraConnectedWallet["post"] };
 type Cosmos = {
   type: "cosmos";
-  post: SigningCosmWasmClient["signAndBroadcast"];
+  client: SigningCosmWasmClient;
 };
 type EVM = {
   type: "evm";
@@ -31,6 +31,7 @@ type EVM = {
 };
 
 export type EVMWallet = Connected & EVM;
+export type CosmosWallet = Connected & Cosmos;
 export type ConnectedToChainType = Connected & (Terra | Cosmos | EVM);
 
 type Disconnected = { status: "disconnected"; connect(args?: any): void };

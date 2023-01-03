@@ -54,7 +54,7 @@ export default function useKeplr(): Wallet {
         address: key.bech32Address,
         chainId: chainIds.juno,
         disconnect,
-        post: client.signAndBroadcast.bind(client),
+        client,
       });
       saveUserAction(actionKey, "connect");
     } catch (err) {
