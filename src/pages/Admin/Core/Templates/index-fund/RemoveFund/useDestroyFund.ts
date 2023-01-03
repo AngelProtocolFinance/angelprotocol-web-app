@@ -4,19 +4,17 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useDestroyFund() {
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<FundDestroyValues>();
-  const dispatch = useSetter();
   const { showModal } = useModalContext();
+  const sendTx = useCosmosTxSender();
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
 
@@ -45,14 +43,10 @@ export default function useDestroyFund() {
       JSON.stringify(removeFundMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
   }
 
   return {

@@ -6,7 +6,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   for (const key in prev) {
     const n = next[key];
     const p = prev[key];
-    if (p !== n && hasValue(n)) {
+    if (p !== n && hasValue(n, [""])) {
       diff[key] = n;
     }
   }
@@ -18,7 +18,7 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   for (const key in next) {
     const n = next[key];
     const p = prev[key];
-
+    //dont consider "" if prev has no value
     if (hasNoValue(p) && hasValue(n)) {
       diff[key] = n;
     }
@@ -30,8 +30,8 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
 const isZero = (val: any) => val === 0;
 
 //anything truthy, plus 0 and false
-function hasValue(val: any): boolean {
-  return !!val || isZero(val) || val === false;
+function hasValue(val: any, exempts: any[] = []): boolean {
+  return !!val || isZero(val) || val === false || exempts.includes(val);
 }
 
 // undefined | null || "" are treated as noValue

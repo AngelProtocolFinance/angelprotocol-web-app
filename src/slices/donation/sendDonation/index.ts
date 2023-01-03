@@ -8,10 +8,10 @@ import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
-import logDonation from "slices/transaction/logDonation";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
 import donation, { setTxStatus } from "../donation";
+import logDonation from "./logDonation";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,

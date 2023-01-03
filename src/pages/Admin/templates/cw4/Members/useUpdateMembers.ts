@@ -5,11 +5,10 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import CW4 from "contracts/CW4";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
@@ -18,7 +17,7 @@ export default function useUpdateMembers() {
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function updateMembers() {
     const isValid = await trigger(["description", "title"], {
@@ -75,15 +74,11 @@ export default function useUpdateMembers() {
       JSON.stringify(memberUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
-      })
-    );
-    showModal(TransactionPromp, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "cw4_members"),
+    });
     reset();
   }
 

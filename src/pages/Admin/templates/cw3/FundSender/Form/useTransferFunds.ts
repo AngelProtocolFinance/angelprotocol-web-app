@@ -6,11 +6,9 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { getTagPayloads } from "helpers/admin";
 import { contracts } from "constants/contracts";
@@ -21,13 +19,13 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
-  const dispatch = useSetter();
   const { cw3, propMeta } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
   const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
+  const sendTx = useCosmosTxSender();
 
-  function transferFunds(data: FundSendValues) {
+  async function transferFunds(data: FundSendValues) {
     const balance =
       data.denom === axlUSDCDenom ? data.usdBalance : data.haloBalance;
     if (data.amount > balance) {
@@ -73,15 +71,11 @@ export default function useTransferFunds() {
       JSON.stringify(fundTransferMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_transfer"),
+    });
   }
 
   return {

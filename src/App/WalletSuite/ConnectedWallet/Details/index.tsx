@@ -7,7 +7,7 @@ import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import AdminLinks from "./AdminLinks";
-import Bookmarks from "./Bookmarks";
+import Favourites from "./Favourites";
 import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
@@ -58,7 +58,7 @@ export default function Details(props: WalletState) {
 
             <WalletDetails {...props} />
             <MyDonations address={props.address} />
-            <Bookmarks bookmarks={profile?.endowments} isError={isError} />
+            <Favourites bookmarks={profile?.endowments} isError={isError} />
             <DisconnectBtn />
           </>
         );

@@ -1,7 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { AccountType, EndowmentBalance } from "types/contracts";
-import Transactor from "components/Transactor";
 import { accountTypeDisplayValue } from "../../constants";
 import Withdrawer from "./Withdrawer";
 
@@ -34,11 +33,7 @@ export default function WithdrawTabs({ tokens_on_hand }: EndowmentBalance) {
       <Tab.Panels className="w-full max-w-md border rounded border-gray-l2 dark:border-bluegray">
         {tabs.map((t) => (
           <Tab.Panel key={t}>
-            <Transactor
-              Content={Withdrawer}
-              contentProps={{ balance: tokens_on_hand[t], type: t }}
-              inModal={false}
-            />
+            <Withdrawer balance={tokens_on_hand[t]} type={t} />
           </Tab.Panel>
         ))}
       </Tab.Panels>
