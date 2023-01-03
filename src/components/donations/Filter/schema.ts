@@ -5,7 +5,7 @@ export const schema = Yup.object().shape({
     .transform((curr, orig) => (orig === "" ? null : curr))
     .nullable(true)
     .min("2018-12-31", "Date is too early")
-    .max(new Date())
+    .max(new Date(), "Start date must be before today")
     .default(new Date())
     .notRequired(),
   endDate: Yup.date()
@@ -18,6 +18,6 @@ export const schema = Yup.object().shape({
         "End date must be after start date"
       ),
     })
-    .max(new Date())
+    .max(new Date(), "End date must be before today")
     .default(new Date()),
 });
