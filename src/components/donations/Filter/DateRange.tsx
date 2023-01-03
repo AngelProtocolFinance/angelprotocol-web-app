@@ -14,13 +14,13 @@ const DateRange: FC<DateRangeProps> = ({ register, errors }) => {
         <input
           {...register("startDate")}
           type="date"
-          className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
+          className="filter-date w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
           placeholder="From"
         />
         <input
           {...register("endDate")}
           type="date"
-          className="w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
+          className="filter-date w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
           placeholder="To"
         />
       </div>

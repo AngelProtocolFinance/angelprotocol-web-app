@@ -197,3 +197,9 @@
 #react-select-3-listbox {
   color: black !important;
 }
+
+.filter-date[type="date"]::-webkit-inner-spin-button,
+.filter-date[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
