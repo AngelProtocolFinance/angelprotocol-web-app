@@ -69,7 +69,17 @@ function PromptIcon({
           className={common + " text-red"}
         />
       );
-    default:
+    case "loading":
       return <LoaderRing thickness={12} classes={common + " h-24"} />;
+    case "info":
+      return (
+        <Icon
+          type="InfoTriangle"
+          size={80}
+          className={common + " text-blue-l2"}
+        />
+      );
+    default:
+      return null;
   }
 }

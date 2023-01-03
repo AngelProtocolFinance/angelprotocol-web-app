@@ -31,6 +31,7 @@ import {
 import {
   BsExclamationCircle,
   BsExclamationCircleFill,
+  BsFillExclamationTriangleFill,
   BsFilterLeft,
   BsHourglassSplit,
   BsTwitter,
@@ -165,4 +166,5 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Dash: GoDash,
   FatArrowDownload: IoMdDownload,
   Giftcard: MdCardGiftcard,
+  InfoTriangle: BsFillExclamationTriangleFill,
 };
