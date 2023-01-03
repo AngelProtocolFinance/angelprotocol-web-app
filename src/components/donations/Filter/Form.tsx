@@ -31,28 +31,8 @@ const Form: FC<FormProps> = (props) => {
           <Icon type="Close" size={24} className="text-gray-d2" />
         </Popover.Button>
       </div>
-      <div className="flex sm:hidden justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
-        <button
-          type="button"
-          className="text-orange underline"
-          onClick={props.formReset}
-        >
-          Reset filters
-        </button>
-        <button
-          type="submit"
-          className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
-          disabled={
-            props.isDirty || props.selectedNetwork || props.selectedCurrency
-              ? false
-              : true
-          }
-        >
-          Apply filter
-        </button>
-      </div>
-      <div>
-        <div className="flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
+      <div className="grid grid-cols-1">
+        <div className="order-2 sm:order-1 flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
           <DateRange register={props.register} errors={props.errors} />
           <NetworkDropdown
             selectedNetwork={props.selectedNetwork}
@@ -64,7 +44,7 @@ const Form: FC<FormProps> = (props) => {
             setSelectedCurrency={props.setSelectedCurrency}
           />
         </div>
-        <div className="hidden sm:flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
+        <div className="order-1 sm:order-2 flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
           <button
             type="button"
             className="text-orange underline"
