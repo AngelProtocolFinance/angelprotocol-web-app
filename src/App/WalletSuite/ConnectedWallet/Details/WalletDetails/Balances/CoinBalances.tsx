@@ -50,24 +50,21 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
           key={t.token_id}
           className="flex items-center font-heading font-bold text-sm"
         >
-          <span className="flex items-center gap-2 mr-auto">
-            <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
-            {t.symbol}
-          </span>
+          <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
+          <span className="mr-auto ml-2">{t.symbol}</span>
+
           {t.gift && (
-            <div className="mr-2">
+            <>
               <Icon
                 type="Giftcard"
                 className="text-green w-4 h-4 inline-block mr-0.5 relative bottom-px"
               />
-              <span className="font-normal text-xs">
+              <span className="font-normal text-xs border-r border-gray-l2 dark:border-bluegray pr-1">
                 {humanize(t.gift, 3, true)}
               </span>
-            </div>
+            </>
           )}
-          {humanize(t.balance, 3, true)}
-
-          {/** show giftcard balance here */}
+          <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}
       {tokens.length && (
