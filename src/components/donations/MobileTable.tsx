@@ -58,7 +58,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
                       />
                     </div>
                     <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 text-left">
-                      <span className="truncate text-sm">{charityName}</span>
+                      <p className="text-sm">{charityName}</p>
                     </div>
                     <div className="col-span-3 p-4 text-left text-sm">
                       {new Date(date).toLocaleDateString()}
