@@ -4,13 +4,18 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "../Icon";
 import LoaderRing from "../LoaderRing";
 
-export default function Prompt({ type, headline, title, children }: Props) {
+export default function Prompt({
+  type,
+  headline = "",
+  title,
+  children,
+}: Props) {
   const { closeModal, isDismissible } = useModalContext();
 
   return (
     <Dialog.Panel className="fixed-center z-10 grid text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
       <div className="relative">
-        <p className="text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5 font-work">
+        <p className="empty:h-16 text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5 font-work">
           {headline}
         </p>
         {isDismissible && (
