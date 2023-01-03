@@ -19,14 +19,14 @@ describe("getPayloadDiff", () => {
     ).toStrictEqual({ a: 4, b: 5, c: 6 });
   });
 
-  test("if prev !== next, include next if it's truthy (including 0, and false)", () => {
+  test("if prev !== next, include next if it's truthy (including 0, '', and false)", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
         { a: 1, b: "a", c: 3, d:undefined, e:"", f:4, },
         { a: 0, b: "b", c: "", d: null, e: undefined, f: false }
       )
-    ).toStrictEqual({ a: 0, b: "b", f: false });
+    ).toStrictEqual({ a: 0, b: "b", c: "", f: false });
   });
 
   test("include attributes not in prev but in next, given that next is truthy (including 0, and false)", () => {
