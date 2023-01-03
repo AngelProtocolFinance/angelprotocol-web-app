@@ -1,71 +1,44 @@
 import { Popover } from "@headlessui/react";
-import { FC } from "react";
+import { FC, FormEventHandler } from "react";
+import { FilterFormValues as FV } from "../types";
 import Icon from "components/Icon";
+import Controls from "./Controls";
 import CurrencyDropdown from "./CurrencyDropdown";
-import DateRange from "./DateRange";
+import DateInput from "./DateInput";
 import NetworkDropdown from "./NetworkDropdown";
 
-type FormProps = {
-  selectedNetwork: string;
-  selectedCurrency: string;
-  setSelectedNetwork: Function;
-  setSelectedCurrency: Function;
-  handleSubmit: Function;
-  submit: Function;
-  formReset: any;
-  register: any;
-  errors: Object;
-  isDirty: Boolean;
-};
-
-const Form: FC<FormProps> = (props) => {
+const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
+  submit,
+}) => {
   return (
-    <form
-      className="flex flex-col h-screen bg-white sm:h-fit"
-      onSubmit={props.handleSubmit(props.submit)}
-      method="get"
-    >
-      <div className="flex sm:hidden justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
-        <h2 className="text-xl text-orange font-bold p-5 uppercase">Filters</h2>
-        <Popover.Button className="p-5">
-          <Icon type="Close" size={24} className="text-gray-d2" />
-        </Popover.Button>
-      </div>
-      <div className="grid grid-cols-1">
-        <div className="order-2 sm:order-1 flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
-          <DateRange register={props.register} errors={props.errors} />
-          <NetworkDropdown
-            selectedNetwork={props.selectedNetwork}
-            setSelectedNetwork={props.setSelectedNetwork}
-          />
-
-          <CurrencyDropdown
-            selectedCurrency={props.selectedCurrency}
-            setSelectedCurrency={props.setSelectedCurrency}
-          />
+    <Popover.Panel className="fixed min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
+      <form
+        className="flex flex-col h-screen bg-white sm:h-fit"
+        onSubmit={submit}
+        method="get"
+      >
+        <div className="flex sm:hidden justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
+          <h2 className="text-xl text-orange font-bold p-5 uppercase">
+            Filters
+          </h2>
+          <Popover.Button className="p-5">
+            <Icon type="Close" size={24} className="text-gray-d2" />
+          </Popover.Button>
         </div>
-        <div className="order-1 sm:order-2 flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5">
-          <button
-            type="button"
-            className="text-orange underline"
-            onClick={props.formReset}
-          >
-            Reset filters
-          </button>
-          <button
-            type="submit"
-            className="flex justify-center items-center text-white bg-orange p-3 rounded-md disabled:bg-gray"
-            disabled={
-              props.isDirty || props.selectedNetwork || props.selectedCurrency
-                ? false
-                : true
-            }
-          >
-            Apply filter
-          </button>
+        <div className="grid grid-cols-1">
+          <div className="order-2 sm:order-1 flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
+            <div className="grid gap-2 grid-cols-2">
+              <label className="col-span-full">Date</label>
+              <DateInput<FV> name="startDate" placeholder="From" />
+              <DateInput<FV> name="endDate" placeholder="To" />
+            </div>
+            <NetworkDropdown />
+            <CurrencyDropdown />
+          </div>
+          <Controls classes="order-1 sm:order-2" />
         </div>
-      </div>
-    </form>
+      </form>
+    </Popover.Panel>
   );
 };
 export default Form;

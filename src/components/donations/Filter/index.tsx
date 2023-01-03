@@ -1,55 +1,39 @@
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FC, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { FilterFormValues, Filters } from "../types";
 import Icon from "components/Icon";
 import Form from "./Form";
 import { schema } from "./schema";
 
-type FilterProps = {
-  updateFilterValues: Function;
-};
+const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-const Filter: FC<FilterProps> = ({ updateFilterValues }) => {
-  const buttonRef = useRef<any>();
-  const [selectedNetwork, setSelectedNetwork] = useState<string>("");
-  const [selectedCurrency, setSelectedCurrency] = useState<string>("");
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm<FilterFormValues>({
+  const methods = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
   });
+
+  const { handleSubmit } = methods;
 
   const filters: Filters = {
     transactionDate: "",
     chainName: "",
     denomination: "",
   };
-
   async function submit(data: FilterFormValues) {
     data.startDate && data.endDate
       ? (filters.transactionDate = `${data.startDate.toISOString()} ${data.endDate.toISOString()}`)
       : (filters.transactionDate = "");
-    filters.chainName = selectedNetwork;
-    filters.denomination = selectedCurrency;
+    data.network !== "default" && (filters.chainName = data.network);
+    data.currency !== "default" && (filters.denomination = data.currency);
 
     if (Object.keys(filters).length !== 0) {
       updateFilterValues(filters);
     }
     buttonRef.current?.click();
   }
-
-  const formReset = () => {
-    reset();
-    setSelectedNetwork("");
-    setSelectedCurrency("");
-    updateFilterValues(filters);
-  };
 
   return (
     <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 sm:max-h-[3.1rem] border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm dark:bg-blue-d6">
@@ -64,20 +48,9 @@ const Filter: FC<FilterProps> = ({ updateFilterValues }) => {
         <Icon className="hidden sm:inline" type="ArrowDown" size={20} />
       </Popover.Button>
 
-      <Popover.Panel className="fixed min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
-        <Form
-          selectedNetwork={selectedNetwork}
-          selectedCurrency={selectedCurrency}
-          setSelectedNetwork={setSelectedNetwork}
-          setSelectedCurrency={setSelectedCurrency}
-          handleSubmit={handleSubmit}
-          submit={submit}
-          formReset={formReset}
-          register={register}
-          errors={errors}
-          isDirty={isDirty}
-        />
-      </Popover.Panel>
+      <FormProvider {...methods}>
+        <Form submit={handleSubmit(submit)} />
+      </FormProvider>
     </Popover>
   );
 };
