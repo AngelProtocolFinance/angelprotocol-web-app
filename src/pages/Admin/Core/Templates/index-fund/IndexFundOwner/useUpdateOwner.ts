@@ -5,11 +5,9 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();
@@ -20,7 +18,7 @@ export default function useUpdateOwner() {
   } = useFormContext<IndexFundOwnerValues>();
 
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function updateOwner(data: IndexFundOwnerValues) {
     //check for changes
@@ -47,14 +45,10 @@ export default function useUpdateOwner() {
       JSON.stringify(ownerUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
   }
 
   return {

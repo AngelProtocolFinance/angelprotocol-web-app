@@ -1,1 +1,0 @@
-export { sendCosmosTx } from "./sendCosmosTx";

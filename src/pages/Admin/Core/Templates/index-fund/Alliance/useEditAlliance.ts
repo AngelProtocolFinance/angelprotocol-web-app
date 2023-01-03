@@ -5,11 +5,10 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
@@ -19,7 +18,7 @@ export default function useEditAlliance() {
     (state) => state.admin.allianceMembers
   );
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function editAlliance() {
     const isValid = await trigger(["description", "title"], {
@@ -84,14 +83,10 @@ export default function useEditAlliance() {
       JSON.stringify(editAllianceMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
-    showModal(TransactionPromp, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
     reset();
   }
 

@@ -14,16 +14,18 @@ type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 export default function KadoModal() {
   const [isLoading, setLoading] = useState(true);
   const dispatch = useSetter();
-  const { onModalClose, closeModal } = useModalContext();
+  const { closeModal, setModalOption } = useModalContext();
 
   const { wallet } = useGetWallet();
 
   const handleOnLoad = useCallback(() => {
     // there is a high chance the user bought some new crypto prior to closing this modal
     // reload the page to get new wallet balances
-    onModalClose(() => dispatch(invalidateApesTags([apesTags.chain])));
+    setModalOption("onClose", () =>
+      dispatch(invalidateApesTags([apesTags.chain]))
+    );
     setLoading(false);
-  }, [onModalClose, dispatch]);
+  }, [setModalOption, dispatch]);
 
   const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
   const network = !wallet

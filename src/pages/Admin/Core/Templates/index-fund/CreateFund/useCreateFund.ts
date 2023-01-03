@@ -3,13 +3,11 @@ import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
 import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { condense, roundDown } from "helpers";
 import { cleanObject } from "helpers/admin";
 import { INIT_SPLIT } from ".";
@@ -17,8 +15,7 @@ import { INIT_SPLIT } from ".";
 export default function useCreateFund() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
 
@@ -85,14 +82,10 @@ export default function useCreateFund() {
       JSON.stringify(createFundMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
 
     setSubmitting(false);
   }

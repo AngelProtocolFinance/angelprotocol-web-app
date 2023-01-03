@@ -49,20 +49,24 @@ async function getPropMeta(
   return willExecute
     ? {
         willExecute,
-        successLink: {
-          url: `${appRoutes.admin}/${endowId}`,
-          description: "Go to admin home",
+        successMeta: {
+          message: "Successful transaction",
+          link: {
+            url: `${appRoutes.admin}/${endowId}`,
+            description: "Go to admin home",
+          },
         },
-        successMessage: "Successful transaction",
         tagPayloads,
       }
     : {
         willExecute: undefined,
-        successLink: {
-          url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-          description: "Go to proposals",
+        successMeta: {
+          message: "Proposal successfully created",
+          link: {
+            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
+            description: "Go to proposals",
+          },
         },
-        successMessage: "Proposal successfully created",
         tagPayloads,
       };
 }

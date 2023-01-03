@@ -6,7 +6,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
-import { StageUpdater } from "slices/transaction/types";
+import { TxError } from "./types";
 import { logger } from "helpers";
 import {
   CosmosTxSimulationFail,
@@ -17,46 +17,45 @@ import {
   WalletDisconnectedError,
 } from "errors/errors";
 
-export default function handleTxError(error: any, handler: StageUpdater) {
+export default function handleTxError(
+  error: any,
+  prompt: (state: TxError) => void
+) {
   logger.error(error);
 
   if (error instanceof WalletDisconnectedError) {
-    handler({ step: "error", message: error.message });
+    prompt({ error: error.message });
   } else if (error instanceof UserDenied) {
-    handler({ step: "error", message: "Transaction aborted" });
+    prompt({ error: "Transaction aborted" });
   } else if (error instanceof CreateTxFailed) {
-    handler({ step: "error", message: "Failed to create transaction" });
+    prompt({ error: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
-    handler({ step: "error", message: "Transaction failed" });
+    prompt({ error: "Transaction failed" });
   } else if (error instanceof TxResultFail) {
-    handler({
-      step: "error",
-      message: error.message,
-      txHash: error.txHash,
-      chainId: error.chain.chain_id,
+    prompt({
+      error: error.message,
+      tx: { hash: error.txHash, chainID: error.chain.chain_id },
     });
   } else if (error instanceof LogDonationFail) {
-    handler({
-      step: "error",
-      message: error.message,
-      txHash: error.txHash,
+    prompt({
+      error: error.message,
+      tx: { hash: error.txHash, chainID: error.chainId },
     });
   } else if (error instanceof LogApplicationUpdateError) {
-    handler({
-      step: "error",
-      message: error.message,
+    prompt({
+      error: error.message,
     });
   } else if (error instanceof Timeout || error instanceof TimeoutError) {
-    handler({ step: "error", message: error.message });
+    prompt({ error: error.message });
   } else if (error instanceof TxUnspecifiedError) {
-    handler({ step: "error", message: "Unspecified error occured" });
+    prompt({ error: "Unspecified error occured" });
   } else if (error instanceof UnexpectedStateError) {
-    handler({ step: "error", message: error.message });
+    prompt({ error: error.message });
   } else if (error instanceof CosmosTxSimulationFail) {
-    handler({ step: "error", message: error.message });
+    prompt({ error: error.message });
     //any error we are not sure the contents of should just be defaulted to `unknown`
     //to avoid dumping to user long Error.message
   } else {
-    handler({ step: "error", message: "Unknown error occured" });
+    prompt({ error: "Unknown error occured" });
   }
 }
