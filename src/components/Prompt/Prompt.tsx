@@ -13,13 +13,14 @@ export default function Prompt({ type, headline, title, children }: Props) {
         <p className="text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray p-5 font-work">
           {headline}
         </p>
-        <button
-          disabled={!isDismissible}
-          onClick={() => closeModal()}
-          className="border border-gray-l2 dark:border-bluegray p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-bluegray-d1 disabled:dark:border-bluegray-d1"
-        >
-          <Icon type="Close" size={24} />
-        </button>
+        {isDismissible && (
+          <button
+            onClick={closeModal}
+            className="border border-gray-l2 dark:border-bluegray p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-bluegray-d1 disabled:dark:border-bluegray-d1"
+          >
+            <Icon type="Close" size={24} />
+          </button>
+        )}
       </div>
       <PromptIcon type={type} classes="mb-6 sm:mb-8 mt-4 sm:mt-12" />
       {title && (
@@ -35,7 +36,7 @@ export default function Prompt({ type, headline, title, children }: Props) {
           <button
             type="button"
             className="rounded btn-orange font-body px-8 py-2 max-sm:w-full"
-            onClick={() => closeModal()}
+            onClick={closeModal}
           >
             {type === "success" ? "Done" : "Ok"}
           </button>

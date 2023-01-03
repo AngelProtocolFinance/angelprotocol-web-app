@@ -144,7 +144,5 @@ export const PLACEHOLDER_WALLET: ConnectedWallet = {
   disconnect: () => {
     throw new Error("placeholder wallet shoudn't be used");
   },
-  post: () => {
-    throw new Error("placeholder wallet shoudn't be used");
-  },
+  client: {} as any,
 };

@@ -19,27 +19,23 @@ export function TxPrompt(props: TxState) {
     <Prompt {...rest}>
       <p>{message}</p>
       {isSuccess(props) && props.success.link && (
-        <>
-          <button
-            onClick={() => {
-              navigate(props.success.link!.url);
-              closeModal();
-            }}
-            className="inline-block justify-self-center bg-blue uppercase text-xs py-1 px-2 text-white rounded mt-4"
-          >
-            {props.success.link.description}
-          </button>
-        </>
+        <button
+          onClick={() => {
+            navigate(props.success.link!.url);
+            closeModal();
+          }}
+          className="inline-block justify-self-center bg-blue uppercase text-xs py-1 px-2 text-white rounded mt-4"
+        >
+          {props.success.link.description}
+        </button>
       )}
       {(isError(props) || isSuccess(props)) && props.tx && (
-        <>
-          <ExtLink
-            href={getTxUrl(props.tx.chainID, props.tx.hash)}
-            className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2 hover:dark:text-orange-l2"
-          >
-            transaction details
-          </ExtLink>
-        </>
+        <ExtLink
+          href={getTxUrl(props.tx.chainID, props.tx.hash)}
+          className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2 hover:dark:text-orange-l2"
+        >
+          transaction details
+        </ExtLink>
       )}
     </Prompt>
   );

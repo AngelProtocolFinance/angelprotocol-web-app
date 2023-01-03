@@ -28,7 +28,7 @@ export default function useEditProfile() {
   const { endowmentId, cw3, propMeta } = useAdminResources();
   const {
     handleSubmit,
-    formState: { isSubmitting, isDirty, isValid },
+    formState: { isSubmitting, isDirty },
   } = useFormContext<ProfileFormValues>();
 
   const { wallet } = useGetWallet();
@@ -114,7 +114,7 @@ export default function useEditProfile() {
 
   return {
     editProfile: handleSubmit(editProfile),
-    isSubmitDisabled: isSubmitting || !isDirty || !isValid,
+    isSubmitDisabled: isSubmitting || !isDirty,
     id: endowmentId,
   };
 }

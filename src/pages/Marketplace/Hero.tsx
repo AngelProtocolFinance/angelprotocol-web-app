@@ -1,4 +1,5 @@
 import character from "assets/images/three-logos-white.png";
+import ExtLink from "components/ExtLink";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
@@ -19,20 +20,16 @@ export default function Hero({ classes = "" }: { classes?: string }) {
         Every second, someone dies of age-related diseases such as Parkinson's
         or Alzheimer's. If your support helps shorten the timetable for curing
         these diseases by just one second, you will have saved someone's life.
-        <p className="my-4">
+        <span className="my-4 block">
           If you contribute now, your donation will be doubled thanks to $10K in
           matches from the Angel Alliance.
-        </p>
-        <div className="mt-5">
-          <a
-            className="z-[1] rounded-md btn-orange uppercase px-4 py-2 mb-16 mt-6 font-bold text-sm mt-5"
-            target="_blank"
-            href="https://longevity.angelprotocol.io"
-            rel="noreferrer"
-          >
-            Donate Now
-          </a>
-        </div>
+        </span>
+        <ExtLink
+          className="z-[1] inline-block rounded-md btn-orange uppercase px-4 py-2 mb-16 font-bold text-sm mt-5"
+          href="https://longevity.angelprotocol.io"
+        >
+          Donate Now
+        </ExtLink>
       </p>
     </div>
   );

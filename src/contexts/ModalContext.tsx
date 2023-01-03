@@ -49,14 +49,18 @@ export default function ModalContext(
   }, []);
 
   const closeModal = useCallback(() => {
-    if (!state?.isDismissible) return;
-    state?.onClose();
+    if (!state) throw new Error("there's no modal to close");
+    if (!state.isDismissible) return;
+    state.onClose();
     setState(undefined);
   }, [state]);
 
   const setModalOption = useCallback(
     <T extends keyof ModalOptions>(option: T, val: ModalOptions[T]) => {
-      setState((prev) => (prev ? { ...prev, [option]: val } : prev));
+      setState((prev) => {
+        if (!prev) throw new Error("there's no modal to update");
+        return { ...prev, [option]: val };
+      });
     },
     []
   );
@@ -65,18 +69,14 @@ export default function ModalContext(
     <Context.Provider
       value={{
         isDismissible: !!state?.isDismissible,
-        isModalOpen: !!state?.Modal,
+        isModalOpen: !!state,
 
         setModalOption,
         showModal,
         closeModal,
       }}
     >
-      <Dialog
-        open={state !== undefined}
-        onClose={closeModal}
-        className="relative z-50"
-      >
+      <Dialog open={!!state} onClose={closeModal} className="relative z-50">
         <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
         {state?.Modal /** should always be wrapped with Dialog.Panel */}
       </Dialog>

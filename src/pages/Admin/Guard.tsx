@@ -10,7 +10,7 @@ import Loader from "components/Loader";
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { wallet, isLoading: isWalletLoading } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
@@ -20,9 +20,6 @@ export function Guard(props: {
     },
     { skip: !wallet || !id }
   );
-
-  if (isWalletLoading)
-    return <GuardPrompt message="Connecting wallet" showLoader />;
 
   if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
 
