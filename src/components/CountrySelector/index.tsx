@@ -30,6 +30,7 @@ export default function CountrySelector<
   K extends Path<T>
 >(props: {
   fieldName: T[K] extends CountryOption ? K : never;
+  otherFieldToReset?: T[K] extends CountryOption ? Path<T> : never;
   placeholder?: string;
   classes?: {
     container?: string;
@@ -38,6 +39,7 @@ export default function CountrySelector<
   };
 }) {
   const {
+    resetField,
     formState: { errors },
   } = useFormContext<BaseFormShape>();
 
@@ -97,6 +99,7 @@ export default function CountrySelector<
           onClick={() => {
             onCountryChange(placeHolderCountryOption);
             setQuery("");
+            props.otherFieldToReset && resetField(props.otherFieldToReset);
           }}
         >
           <Icon type="Close" size={16} />

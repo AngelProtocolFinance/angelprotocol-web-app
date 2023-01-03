@@ -18,11 +18,15 @@ export const formStyle =
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
+    watch,
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
   const isPostKyc = props.type === "post-donation";
+
+  const country = watch("country.name");
+  const isUS = /united states/i.test(country);
 
   return (
     <form
@@ -70,6 +74,7 @@ export default function Form({ classes = "", ...props }: Props) {
         <CountrySelector<FV, "country">
           placeholder="Select a country"
           fieldName="country"
+          otherFieldToReset="USState"
           classes={{
             container:
               "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
@@ -79,23 +84,26 @@ export default function Form({ classes = "", ...props }: Props) {
           }}
         />
       </div>
-      <div className="grid relative">
-        <Label htmlFor="country" className="mb-2" required={false}>
-          State
-        </Label>
-        <Selector<FV, "USState", string, false>
-          name="USState"
-          options={states}
-          classes={{ container: "bg-white dark:bg-blue-d6" }}
+      {isUS ? (
+        <div className="grid relative">
+          <Label htmlFor="USState" className="mb-2" required={false}>
+            State
+          </Label>
+          <Selector<FV, "USState", string, false>
+            name="USState"
+            options={states}
+            classes={{ container: "bg-white dark:bg-blue-d6" }}
+          />
+        </div>
+      ) : (
+        <TextInput<FV>
+          name="state"
+          label="State"
+          required={false}
+          placeholder="e.g. England"
         />
-      </div>
+      )}
 
-      <TextInput<FV>
-        name="state"
-        label="State"
-        required={false}
-        placeholder="e.g. England"
-      />
       <TextInput<FV>
         name="email"
         label="Email address"
