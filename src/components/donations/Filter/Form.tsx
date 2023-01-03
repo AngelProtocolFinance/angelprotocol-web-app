@@ -21,7 +21,7 @@ type FormProps = {
 const Form: FC<FormProps> = (props) => {
   return (
     <form
-      className="flex flex-col"
+      className="flex flex-col h-screen bg-white sm:h-fit"
       onSubmit={props.handleSubmit(props.submit)}
       method="get"
     >
