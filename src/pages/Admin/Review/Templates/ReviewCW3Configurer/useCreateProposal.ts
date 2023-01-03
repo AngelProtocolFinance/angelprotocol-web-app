@@ -8,10 +8,8 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3Review from "contracts/CW3/CW3Review";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormReviewCW3Config;
@@ -26,7 +24,7 @@ export default function useCreateProposal() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues<FormReviewCW3Config>>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function createProposal({
     title,
@@ -75,17 +73,11 @@ export default function useCreateProposal() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(
-          propMeta.willExecute && "review_cw3_config"
-        ),
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "review_cw3_config"),
+    });
   }
 
   return {
