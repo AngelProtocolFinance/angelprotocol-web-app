@@ -1,13 +1,17 @@
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FilterFormValues, Filters } from "../types";
 import Icon from "components/Icon";
 import Form from "./Form";
 import { schema } from "./schema";
 
-const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
+type FilterProps = {
+  updateFilterValues: Function;
+};
+
+const Filter: FC<FilterProps> = ({ updateFilterValues }) => {
   const buttonRef = useRef<any>();
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
   const [selectedCurrency, setSelectedCurrency] = useState<string>("");
