@@ -3,7 +3,7 @@ import { EndowmentBookmark } from "types/aws";
 import { appRoutes } from "constants/routes";
 import Logo from "../Logo";
 
-export default function Bookmark({ name, id, logo }: EndowmentBookmark) {
+export default function Favourite({ name, id, logo }: EndowmentBookmark) {
   return (
     <li>
       <Link

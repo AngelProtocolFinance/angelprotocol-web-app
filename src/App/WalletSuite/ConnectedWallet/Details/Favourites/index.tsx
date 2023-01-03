@@ -1,12 +1,12 @@
 import { EndowmentBookmark } from "types/aws";
 import { QueryLoader } from "components/admin";
-import Bookmark from "./Bookmark";
+import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
 type Props = { bookmarks: EndowmentBookmark[] | undefined; isError: boolean };
 
-export default function Bookmarks({ bookmarks, isError }: Props) {
+export default function Favourites({ bookmarks, isError }: Props) {
   return (
     <div className="flex flex-col gap-3 min-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="flex justify-between gap-2 font-heading">
@@ -35,7 +35,7 @@ export default function Bookmarks({ bookmarks, isError }: Props) {
         {(bookmarks) => (
           <ul className="grid gap-1">
             {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
-              <Bookmark key={b.id} {...b} />
+              <Favourite key={b.id} {...b} />
             ))}
           </ul>
         )}
