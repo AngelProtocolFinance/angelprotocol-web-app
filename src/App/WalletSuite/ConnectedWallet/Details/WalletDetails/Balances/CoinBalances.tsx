@@ -1,5 +1,6 @@
 import { useBalancesQuery } from "services/apes";
 import { useConnectedWallet } from "contexts/WalletGuard";
+import Icon from "components/Icon";
 import { humanize } from "helpers";
 import KadoOpener from "./KadoOpener";
 
@@ -47,17 +48,31 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
       {tokens.map((t) => (
         <div
           key={t.token_id}
-          className="flex justify-between items-center gap-2 font-heading font-bold text-sm "
+          className="flex items-center font-heading font-bold text-sm"
         >
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 mr-auto">
             <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
             {t.symbol}
           </span>
+          {t.gift && (
+            <div className="mr-2">
+              <Icon
+                type="Giftcard"
+                className="text-green w-4 h-4 inline-block mr-0.5 relative bottom-px"
+              />
+              <span className="font-normal text-xs">
+                {humanize(t.gift, 3, true)}
+              </span>
+            </div>
+          )}
           {humanize(t.balance, 3, true)}
 
           {/** show giftcard balance here */}
         </div>
       ))}
+      {tokens.length && (
+        <div className="border-t border-gray-l2 dark:border-bluegray" />
+      )}
     </>
   );
 }

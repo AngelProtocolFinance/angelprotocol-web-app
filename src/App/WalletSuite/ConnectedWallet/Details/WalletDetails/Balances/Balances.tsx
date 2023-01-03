@@ -1,8 +1,5 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
-// import { Token } from "types/aws";
-// import { ConnectedWallet } from "contexts/Wallet";
-// import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
 
 export default function Balances() {
@@ -31,18 +28,3 @@ export default function Balances() {
     </>
   );
 }
-
-// function GiftcardBalances({ coins }: { coins: Token[] }) {
-//   return (
-//     <>
-//       <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
-//         <Icon
-//           type="Giftcard"
-//           className="bg-green text-white rounded-full p-1 w-6 h-6"
-//         />
-//         Giftcard balances
-//       </span>
-//       {/* <CoinBalances coins={coins} /> */}
-//     </>
-//   );
-// }
