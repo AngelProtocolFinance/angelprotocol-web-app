@@ -6,14 +6,6 @@ import Menu from "./Menu";
 export function Opener({ classes = "" }: { classes?: string }) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
-  const handleCloseModal = () => {
-    closeModal();
-  };
-
-  const openMenu = () => {
-    showModal(Menu, { onClose: handleCloseModal });
-  };
-
   useHandleScreenResize(
     (screenSize) => {
       if (screenSize >= SCREEN_LG) {
@@ -27,7 +19,7 @@ export function Opener({ classes = "" }: { classes?: string }) {
 
   return (
     <button
-      onClick={openMenu}
+      onClick={() => showModal(Menu, {})}
       className={`${classes} items-center text-white justify-center`}
     >
       <Icon type="Menu" size={24} />
