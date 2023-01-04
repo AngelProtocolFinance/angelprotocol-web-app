@@ -19,7 +19,7 @@ export default function MyEndowments() {
     );
   }
 
-  if (isError || !data) {
+  if (isError) {
     return (
       <Container>
         <Heading />
@@ -28,12 +28,12 @@ export default function MyEndowments() {
     );
   }
 
-  if (!data.admin.length) return null;
+  if (!data?.admin?.length) return null;
 
   return (
     <Container>
       <Heading />
-      {data.admin.map((endowment) => (
+      {data?.admin?.map((endowment) => (
         <div key={endowment.id} className="grid grid-cols-[auto_1fr] gap-3">
           <Logo src={endowment.logo} className="w-10 h-10" />
 
