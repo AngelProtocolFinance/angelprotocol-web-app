@@ -7,7 +7,7 @@ import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
-import { chainIDs } from "constants/chains";
+import { ChainIDs } from "constants/chains";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
@@ -31,7 +31,7 @@ export default function KadoModal() {
     ? `&onToAddress=${wallet.address}`
     : "";
   const network = isConnected(wallet)
-    ? `&network=${getKadoNetworkValue(wallet.chainId)}`
+    ? `&network=${getKadoNetworkValue(wallet.chainId as ChainIDs)}`
     : "";
 
   return (
@@ -67,19 +67,19 @@ export default function KadoModal() {
   );
 }
 
-function getKadoNetworkValue(chainId: string): KADO_NETWORK_VALUES {
+function getKadoNetworkValue(chainId: ChainIDs): KADO_NETWORK_VALUES {
   switch (chainId) {
     // if Binance, just default to ethereum
-    case chainIDs.binanceMain:
-    case chainIDs.binanceTest:
-    case chainIDs.ethMain:
-    case chainIDs.ethTest:
+    case "56":
+    case "97":
+    case "1":
+    case "5":
       return "ethereum";
-    case chainIDs.junoMain:
-    case chainIDs.junoTest:
+    case "juno-1":
+    case "uni-5":
       return "juno";
-    case chainIDs.terraMain:
-    case chainIDs.terraTest:
+    case "phoenix-1":
+    case "pisco-1":
       return "terra";
     default:
       logger.error(`${chainId} is not supported`);

@@ -4,7 +4,7 @@ import { Wallet, WalletState } from "../types";
 import { GasPrice, SigningCosmWasmClient } from "types/cosmos";
 import { Dwindow } from "types/window";
 import icon from "assets/icons/wallets/keplr.png";
-import { chainIds, chains } from "constants/chainsV2";
+import { chainIds, chains } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
 import { junoTestnet } from "./chain-infos";

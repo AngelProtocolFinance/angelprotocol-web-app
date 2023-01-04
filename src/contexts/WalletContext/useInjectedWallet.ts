@@ -11,7 +11,7 @@ import { useLazyTokensQuery } from "services/apes";
 import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";
 import { logger } from "helpers";
 import { getProvider } from "helpers/getProvider";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import { isEVM } from "./helpers/walletType";

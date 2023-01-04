@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { ConnectedWallet, isEVM } from "contexts/WalletContext";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";

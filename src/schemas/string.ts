@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { chainIds } from "constants/chainIds";
+import { chainIds } from "constants/chains";
 
 export const requiredString = Yup.string().required("required");
 

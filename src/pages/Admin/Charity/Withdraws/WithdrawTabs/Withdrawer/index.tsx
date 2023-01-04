@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Amount, WithdrawValues, WithdrawerProps } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { condense, roundDown } from "helpers";
-import { chainIds } from "constants/chainIds";
+import { chainIds } from "constants/chains";
 import Form from "./Form";
 import { schema } from "./schema";
 

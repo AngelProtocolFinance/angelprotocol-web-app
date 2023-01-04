@@ -3,7 +3,7 @@ import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
-import { chainIds } from "constants/chainIds";
+import { chainIds } from "constants/chains";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];

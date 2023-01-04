@@ -7,7 +7,7 @@ import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { estimateTx } from "./estimateTx";
 

@@ -9,7 +9,7 @@ import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIds } from "constants/chainIds";
+import { chainIds } from "constants/chains";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

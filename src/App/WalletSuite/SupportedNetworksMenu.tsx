@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { ConnectedWallet, isEVM } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import ChainSelector from "./Details/ChainSelector";
 
 export default function SupportedNetworksMenu(wallet: ConnectedWallet) {

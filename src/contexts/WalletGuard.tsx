@@ -5,7 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import {
   ConnectedWallet,
   DisconnectedWallet,

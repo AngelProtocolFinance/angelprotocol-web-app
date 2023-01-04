@@ -1,5 +1,5 @@
 import { ChainInfo } from "types/cosmos";
-import { StaticRegistry, _chains } from "constants/chainsV2";
+import { StaticRegistry, _chains } from "constants/chains";
 
 const id: keyof StaticRegistry = "uni-5";
 const chain = _chains[id];

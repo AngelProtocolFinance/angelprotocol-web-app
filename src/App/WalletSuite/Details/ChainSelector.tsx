@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { EVMWallet } from "contexts/WalletContext";
 import Icon, { DrawerIcon } from "components/Icon";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 text-sm";

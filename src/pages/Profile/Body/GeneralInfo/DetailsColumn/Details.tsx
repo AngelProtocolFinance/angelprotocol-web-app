@@ -5,7 +5,7 @@ import { useProfileContext } from "pages/Profile/ProfileContext";
 // import Copier from "components/Copier";
 // import ExtLink from "components/ExtLink";
 // import Icon from "components/Icon";
-// import { getAddressUrl, maskAddress } from "helpers";
+// import { maskAddress } from "helpers";
 
 export default function Details() {
   const profile = useProfileContext();

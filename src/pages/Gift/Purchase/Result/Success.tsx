@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { BtnPrim, BtnSec } from "components/gift";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
-import { chainIds } from "constants/chainIds";
+import { chainIds } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";

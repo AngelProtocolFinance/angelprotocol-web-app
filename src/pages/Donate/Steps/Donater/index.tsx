@@ -6,7 +6,7 @@ import { useBalancesQuery } from "services/apes";
 import { WithWallet } from "contexts/WalletContext";
 import { Tooltip } from "components/donation";
 import { FormStep } from "slices/donation";
-import { Chain, chains } from "constants/chainsV2";
+import { Chain, chains } from "constants/chains";
 import Form from "./Form";
 import { schema } from "./schema";
 

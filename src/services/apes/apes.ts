@@ -7,7 +7,7 @@ import { queryContract } from "services/juno/queryContract";
 import { condenseToNum } from "helpers";
 import { formatUnits } from "helpers/evm";
 import { UnsupportedChainError } from "errors/errors";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";

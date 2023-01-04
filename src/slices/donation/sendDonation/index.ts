@@ -7,7 +7,7 @@ import { EVMContract, TransactionResponse, Web3Provider } from "types/evm";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { getProvider, logger } from "helpers";
-import { chains } from "constants/chainsV2";
+import { chains } from "constants/chains";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";
 
