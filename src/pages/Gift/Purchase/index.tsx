@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { useGetWallet } from "contexts/WalletContext";
+import { useWalletContext } from "contexts/Wallet";
 import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
-import { chainIds } from "constants/chainIds";
-import { IS_TEST } from "constants/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";
@@ -34,7 +32,7 @@ export default function Purchase({ classes = "" }) {
 
 function CurrStep(props: GiftState) {
   const dispatch = useSetter();
-  const { wallet, isLoading } = useGetWallet();
+  const wallet = useWalletContext();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
@@ -42,11 +40,11 @@ function CurrStep(props: GiftState) {
   }, [wallet, dispatch]);
 
   if (props.step === 2 || props.step === 1) {
-    if (isLoading) {
+    if (wallet === "loading") {
       return <Tooltip type="Loading" message="Loading wallet" />;
     }
 
-    if (!wallet) {
+    if (Array.isArray(wallet)) {
       return (
         <Tooltip
           type="Info"
@@ -55,11 +53,11 @@ function CurrStep(props: GiftState) {
       );
     }
 
-    if (wallet.chain.chain_id !== chainIds.juno) {
+    if (wallet.type !== "cosmos") {
       return (
         <Tooltip
           type="Info"
-          message={`Kindly switch to Juno ${IS_TEST ? "Testnet" : "Mainnet"}`}
+          message="Connected wallet doesn't support this transaction."
         />
       );
     }

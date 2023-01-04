@@ -3,15 +3,13 @@ import { OwnerUpdateMeta } from "pages/Admin/types";
 import { IndexFundOwnerValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateOwner() {
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },

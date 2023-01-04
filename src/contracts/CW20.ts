@@ -1,11 +1,11 @@
-import { WalletState } from "contexts/WalletContext";
+import { CosmosWallet } from "contexts/Wallet";
 import { scaleToStr, toBase64 } from "helpers";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
   address: string;
 
-  constructor(wallet: WalletState | undefined, address: string) {
+  constructor(wallet: CosmosWallet, address: string) {
     super(wallet);
     this.address = address;
   }

@@ -4,16 +4,14 @@ import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { handleError } = useErrorContext();

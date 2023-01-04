@@ -10,6 +10,7 @@ export enum denoms {
   halo = "halo_contract_addr", //replace with halo contract addr
   ujuno = "ujuno",
   ujunox = "ujunox",
+  luna = "uluna",
 }
 
 export const junoDenom = IS_TEST ? denoms.ujunox : denoms.ujuno;
@@ -21,6 +22,7 @@ const _symbols: { [key in denoms]: string } = {
   [denoms.halo]: "HALO",
   [denoms.ujuno]: "JUNO",
   [denoms.ujunox]: "JUNOX",
+  [denoms.luna]: "LUNA",
 };
 
 export const symbols: { [index: string]: string } = new Proxy(_symbols, {
@@ -36,6 +38,7 @@ const _tokens: { [key in denoms]: CoinAsset } = {
   [denoms.halo]: { icon: haloIcon, symbol: _symbols[denoms.halo] },
   [denoms.ujuno]: { icon: junoIcon, symbol: _symbols.ujuno },
   [denoms.ujunox]: { icon: junoIcon, symbol: _symbols.ujunox },
+  [denoms.luna]: { icon: "", symbol: "" },
 };
 
 export const tokens: { [index: string]: CoinAsset } = new Proxy(_tokens, {

@@ -30,9 +30,7 @@ type EVM = {
   isSwitching: boolean;
 };
 
-export type EVMWallet = Connected & EVM;
-export type CosmosWallet = Connected & Cosmos;
-export type ConnectedToChainType = Connected & (Terra | Cosmos | EVM);
+export type ConnectedToChainType = Connected & (Terra | EVM | Cosmos);
 
 type Disconnected = { status: "disconnected"; connect(args?: any): void };
 type Loading = { status: "loading" };
@@ -48,7 +46,15 @@ export type Wallet = WalletMeta & WalletState;
 export type ConnectedWallet = WalletMeta & ConnectedToChainType;
 export type DisconnectedWallet = WalletMeta & Disconnected;
 
+type BaseWallet = Connected & WalletMeta;
+export type EVMWallet = BaseWallet & EVM;
+export type CosmosWallet = BaseWallet & Cosmos;
+export type TerraWallet = BaseWallet & Terra;
+
 export type ContextState =
   | "loading" /** consolidate all LoadingWallet*/
   | ConnectedWallet
   | DisconnectedWallet[];
+
+export type WithWallet<T> = T & { wallet: ConnectedWallet };
+export type WithCosmosWallet<T> = T & { wallet: CosmosWallet };

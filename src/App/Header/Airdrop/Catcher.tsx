@@ -1,10 +1,12 @@
 import { Dialog } from "@headlessui/react";
 import { Airdrops } from "types/aws";
+import withConnectedWallet from "contexts/WalletGuard";
 import Icon from "components/Icon";
+import Prompt from "components/Prompt";
 import { humanize } from "helpers";
 import useClaimAirdrop from "./useClaimAirdrop";
 
-export default function Catcher(props: { airdrops: Airdrops }) {
+function Catcher(props: { airdrops: Airdrops }) {
   const { claimAirdrop, totalClaimable, isSending } = useClaimAirdrop(
     props.airdrops
   );
@@ -35,6 +37,25 @@ export default function Catcher(props: { airdrops: Airdrops }) {
     </Dialog.Panel>
   );
 }
+
+export default withConnectedWallet(Catcher, {
+  type: "replacement",
+  loading: (
+    <Prompt type="loading" headline="Wallet">
+      Connecting wallet...
+    </Prompt>
+  ),
+  disconnected: (
+    <Prompt type="error" headline="Wallet">
+      Wallet is disconnected
+    </Prompt>
+  ),
+  unsupported: (
+    <Prompt type="error" headline="Wallet">
+      Wallet network is not supported by this transaction.
+    </Prompt>
+  ),
+});
 
 function Action({
   className,

@@ -4,18 +4,16 @@ import { MsgExecuteContractEncodeObject } from "types/cosmos";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, customTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useVote() {
   const {
     handleSubmit,
     formState: { isValid },
   } = useFormContext<VV>();
-  const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
+  const { cw3, wallet } = useAdminResources();
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {

@@ -1,7 +1,6 @@
 import { Estimate } from "./types";
 import { MsgExecuteContractEncodeObject } from "types/cosmos";
-import { TerraConnectedWallet } from "types/terra";
-import { WalletState } from "contexts/WalletContext";
+import { WithCosmosWallet } from "contexts/Wallet";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
@@ -9,14 +8,10 @@ import { extractFeeAmount, logger, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 
 export async function estimateTx({
-  details: { token, recipient },
+  details: { token, recipient, tokens },
   wallet,
-}: SubmitStep & {
-  wallet: WalletState;
-  terraWallet?: TerraConnectedWallet;
-}): Promise<Estimate | null> {
-  const { chain } = wallet;
-  const { native_currency } = chain;
+}: WithCosmosWallet<SubmitStep>): Promise<Estimate | null> {
+  const native = tokens[0];
   try {
     const gcContract = new GiftCard(wallet);
     let msg: MsgExecuteContractEncodeObject;
@@ -34,10 +29,10 @@ export async function estimateTx({
       );
     }
     const fee = await gcContract.estimateFee([msg]);
-    const feeAmount = extractFeeAmount(fee, native_currency.token_id);
+    const feeAmount = extractFeeAmount(fee, native.token_id);
 
     return {
-      fee: { amount: feeAmount, symbol: native_currency.symbol },
+      fee: { amount: feeAmount, symbol: native.symbol },
       tx: { fee, msgs: [msg] },
     };
   } catch (err) {

@@ -34,7 +34,7 @@ export default function handleTxError(
   } else if (error instanceof TxResultFail) {
     prompt({
       error: error.message,
-      tx: { hash: error.txHash, chainID: error.chain.chain_id },
+      tx: { hash: error.txHash, chainID: error.chainId },
     });
   } else if (error instanceof LogDonationFail) {
     prompt({

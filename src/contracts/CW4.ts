@@ -1,11 +1,11 @@
 import { CW4Member } from "types/contracts";
-import { WalletState } from "contexts/WalletContext";
+import { CosmosWallet } from "contexts/Wallet";
 import Contract from "./Contract";
 
 export default class CW4 extends Contract {
   address: string;
 
-  constructor(wallet: WalletState | undefined, address: string) {
+  constructor(wallet: CosmosWallet, address: string) {
     super(wallet);
     this.address = address;
   }

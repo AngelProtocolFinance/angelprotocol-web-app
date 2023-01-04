@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { BtnPrimary, BtnSec } from "components/donation";
 import { TxStep } from "slices/donation";
-import { getTxUrl, humanize } from "helpers";
+import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import Share, { SocialMedia } from "./Share";
 
@@ -11,7 +11,7 @@ export default function Success({
 }: Omit<TxStep, "status"> & { classes?: string; hash: string }) {
   const {
     hash,
-    details: { chainId, token },
+    details: { chain, token },
     recipient,
   } = state;
   const { name, id } = recipient;
@@ -32,7 +32,7 @@ export default function Success({
 
       <BtnSec
         as="a"
-        href={getTxUrl(chainId, hash)}
+        href={`${chain.txExplorer}${hash}`}
         className="flex items-center justify-center gap-3.5 w-full sm:w-auto"
       >
         <Icon type="ExternalLink" size={22} />

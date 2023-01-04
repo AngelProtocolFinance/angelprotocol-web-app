@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
 import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
@@ -13,8 +12,7 @@ import { cleanObject } from "helpers/admin";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
   const sendTx = useCosmosTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);

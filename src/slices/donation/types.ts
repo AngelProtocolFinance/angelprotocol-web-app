@@ -1,8 +1,9 @@
 import { CountryOption } from "services/types";
 import { TransactionRequest } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
-import { CreateTxOptions, TerraConnectedWallet } from "types/terra";
-import { WalletState } from "contexts/WalletContext";
+import { CreateTxOptions } from "types/terra";
+import { CosmosWallet, EVMWallet, TerraWallet } from "contexts/Wallet";
+import { Chain } from "constants/chainsV2";
 
 export type DonationRecipient = {
   id: number;
@@ -15,8 +16,7 @@ export type DonationDetails = {
   pctLiquidSplit: string;
 
   //meta
-  chainId: string;
-  chainName: string;
+  chain: Chain;
   tokens: TokenWithAmount[];
 };
 
@@ -61,13 +61,15 @@ export type TxStep = {
   status: TxStatus;
 } & Omit<SubmitStep, "step">;
 
-export type EstimatedTx =
-  | { type: "cosmos"; val: TxOptions }
-  | { type: "terra"; val: CreateTxOptions; wallet: TerraConnectedWallet }
-  | { type: "evm"; val: TransactionRequest };
+export type Fee = { amount: number; symbol: string };
+
+//prettier-ignore
+export type Estimate =
+  | { type: CosmosWallet["type"]; fee: Fee; tx: TxOptions; wallet: CosmosWallet }
+  | { type: TerraWallet["type"]; fee: Fee; tx: CreateTxOptions; wallet: TerraWallet }
+  | { type: EVMWallet["type"]; fee: Fee; tx: TransactionRequest; wallet: EVMWallet };
 
 export type DonateArgs = {
-  wallet: WalletState;
-  tx: EstimatedTx;
+  estimate: Estimate;
   donation: SubmitStep;
 };

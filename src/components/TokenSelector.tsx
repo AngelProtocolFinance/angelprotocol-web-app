@@ -82,20 +82,16 @@ export default function TokenSelector<
               }
               value={token}
             >
-              {({ selected }) =>
-                !selected ? (
-                  <>
-                    <img
-                      alt=""
-                      src={token.logo}
-                      className="w-6 h-6 object-contain"
-                    />
-                    <span className="text-sm">{token.symbol}</span>
-                  </>
-                ) : (
-                  <></>
-                )
-              }
+              {({ selected }) => (
+                <>
+                  <img
+                    alt=""
+                    src={token.logo}
+                    className="w-6 h-6 object-contain"
+                  />
+                  <span className="text-sm">{token.symbol}</span>
+                </>
+              )}
             </Combobox.Option>
           ))
         )}

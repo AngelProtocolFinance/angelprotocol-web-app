@@ -7,7 +7,6 @@ import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
@@ -25,13 +24,12 @@ import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 const PLACEHOLDER_OVERVIEW = "[text]";
 
 export default function useEditProfile() {
-  const { endowmentId, cw3, propMeta } = useAdminResources();
+  const { endowmentId, cw3, propMeta, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<ProfileFormValues>();
 
-  const { wallet } = useGetWallet();
   const { handleError } = useErrorContext();
   const sendTx = useCosmosTxSender();
 

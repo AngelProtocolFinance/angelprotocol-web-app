@@ -1,6 +1,7 @@
 import { Simulation } from "types/contracts";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
+import { junoDenom } from "constants/tokens";
 import CW20 from "./CW20";
 import Contract from "./Contract";
 
@@ -11,7 +12,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: this.wallet?.chain.native_currency.token_id,
+            denom: junoDenom,
           },
         }
       : {
@@ -38,7 +39,7 @@ export default class LP extends Contract {
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     // we should never allow creating messages without a connected wallet
-    const denom = this.wallet!.chain.native_currency.token_id;
+    const denom = junoDenom;
 
     return this.createExecuteContractMsg(
       LP.address,

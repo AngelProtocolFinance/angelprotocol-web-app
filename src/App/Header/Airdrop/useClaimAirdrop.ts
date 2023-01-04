@@ -3,13 +3,16 @@ import { useMemo } from "react";
 import { Airdrops } from "types/aws";
 import { invalidateJunoTags } from "services/juno";
 import { govTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
+import { useModalContext } from "contexts/ModalContext";
+import { useConnectedWallet } from "contexts/WalletGuard";
+import { TxPrompt } from "components/Prompt";
 import Airdrop from "contracts/Airdrop";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { condense } from "helpers";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
-  const { wallet } = useGetWallet();
+  const wallet = useConnectedWallet();
+  const { showModal } = useModalContext();
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   const totalClaimable = useMemo(
@@ -22,6 +25,11 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   );
 
   const claimAirdrop = (isStake: boolean) => async () => {
+    if (wallet.type !== "cosmos") {
+      return showModal(TxPrompt, {
+        error: "Connected wallet doesn't support this transaction",
+      });
+    }
     const airdropContract = new Airdrop(wallet);
     const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,

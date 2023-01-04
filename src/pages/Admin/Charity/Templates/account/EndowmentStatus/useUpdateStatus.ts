@@ -8,7 +8,6 @@ import {
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
@@ -17,8 +16,7 @@ import { cleanObject, getTagPayloads } from "helpers/admin";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const { cw3, role, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, role, propMeta, wallet } = useAdminResources();
   const sendTx = useCosmosTxSender();
   const { showModal } = useModalContext();
 

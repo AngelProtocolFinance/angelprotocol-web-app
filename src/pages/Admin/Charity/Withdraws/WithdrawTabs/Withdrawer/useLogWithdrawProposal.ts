@@ -26,7 +26,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
   async function logWithdrawProposal(
     info: ProposalInfo,
-    ...[res, chain]: Parameters<TxOnSuccess>
+    ...[res, chainID]: Parameters<TxOnSuccess>
   ) {
     try {
       showModal(
@@ -55,7 +55,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
       showModal(TxPrompt, {
         success: successMeta || { message: "Withdraw proposal submitted" },
-        tx: { hash: res.transactionHash, chainID: chain.chain_id },
+        tx: { hash: res.transactionHash, chainID },
       });
 
       dispatch(invalidateApesTags([apesTags.withdraw_logs]));

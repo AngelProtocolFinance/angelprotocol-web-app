@@ -1,5 +1,4 @@
 import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/aws";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
@@ -113,12 +112,12 @@ export class CosmosTxSimulationFail extends APError {
 }
 
 export class TxResultFail extends Error {
-  chain: Chain;
+  chainId: string;
   txHash: string;
-  constructor(chain: Chain, txHash: string) {
+  constructor(chainId: string, txHash: string) {
     //No need to dump to user technical details of why result failed, a link to failed tx is sufficient
     super("Failed to broadcast transaction");
-    this.chain = chain;
+    this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFail";
   }

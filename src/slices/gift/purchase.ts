@@ -1,14 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
-import Contract from "contracts/Contract";
+import { CosmosWallet } from "contexts/Wallet";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
-  wallet: WalletState;
+  wallet: CosmosWallet;
   tx: TxOptions;
   details: GiftDetails;
 };
@@ -22,8 +21,11 @@ export const purchase = createAsyncThunk<void, Args>(
 
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const contract = new Contract(wallet);
-      const response = await contract.signAndBroadcast(tx);
+      const response = await wallet.client.signAndBroadcast(
+        wallet.address,
+        tx.msgs,
+        tx.fee
+      );
       if (!response.code) {
         /** recipient is specified, show tx link to purchaser */
         if (details.recipient) {

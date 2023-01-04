@@ -4,7 +4,6 @@ import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
@@ -20,8 +19,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, endowmentId, endowment, propMeta, wallet } = useAdminResources();
 
   const sendTx = useCosmosTxSender();
   const logProposal = useLogWithdrawProposal(propMeta.successMeta);
@@ -81,7 +79,7 @@ export default function useWithdraw() {
       ...propMeta,
       onSuccess: isJuno
         ? undefined //no need to POST to AWS if destination is juno
-        : async (response, chain) =>
+        : async (response, chainId) =>
             await logProposal(
               {
                 endowment_multisig: cw3,
@@ -91,7 +89,7 @@ export default function useWithdraw() {
                 type: data.type,
               },
               response,
-              chain
+              chainId
             ),
     });
   }

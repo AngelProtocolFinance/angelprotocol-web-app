@@ -1,14 +1,13 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
-import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { WithWallet } from "contexts/Wallet";
 import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
+import { Estimate, SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { humanize } from "helpers";
+import { chains } from "constants/chainsV2";
 import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
 
@@ -16,28 +15,27 @@ type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   useEffect(() => {
     (async () => {
       setEstimate("loading");
-      const _estimate = await estimateDonation({ ...props, terraWallet });
+      const _estimate = await estimateDonation(props);
       setEstimate(_estimate || "error");
     })();
-  }, [props, terraWallet]);
+  }, [props]);
 
   function goBack() {
     dispatch(setStep(props.step - 1));
   }
 
-  function submit({ tx }: Estimate) {
+  function submit(estimate: Estimate) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx }));
+    dispatch(sendDonation({ donation, estimate }));
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
+  const chain = chains[props.wallet.chainId];
   const { id: endowId } = props.recipient;
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
@@ -53,7 +51,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
+        <span>{chain.name}</span>
       </Row>
       <Row title="Amount:">
         <span>

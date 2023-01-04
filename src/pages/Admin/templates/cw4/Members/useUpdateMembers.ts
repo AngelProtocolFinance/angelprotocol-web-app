@@ -3,7 +3,6 @@ import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
 import { CW4Member } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
@@ -13,9 +12,8 @@ import { getTagPayloads } from "helpers/admin";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const { cw3, cw4, propMeta } = useAdminResources();
+  const { cw3, cw4, propMeta, wallet } = useAdminResources();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
-  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 

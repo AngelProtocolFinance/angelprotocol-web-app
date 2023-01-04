@@ -2,7 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { useBalancesQuery } from "services/apes";
+import { WithCosmosWallet } from "contexts/Wallet";
 import { FormStep } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -11,25 +12,47 @@ export default function Purchaser({
   classes = "",
   wallet,
   ...state
-}: WithWallet<FormStep> & { classes?: string }) {
-  const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
-    ...t,
-    amount: "0",
-  }));
+}: WithCosmosWallet<FormStep> & { classes?: string }) {
+  const { chainId, address } = wallet;
+  const { data: tokens = [], isLoading } = useBalancesQuery({
+    address,
+    chainId,
+  });
 
+  if (isLoading) {
+    return <p>Fetching balances..</p>;
+  }
+
+  return (
+    <Context
+      chainId={wallet.chainId}
+      state={state}
+      tokens={tokens.map((t) => ({ ...t, amount: "0" }))}
+    />
+  );
+}
+
+type Props = {
+  chainId: string;
+  tokens: TokenWithAmount[];
+  state: FormStep;
+};
+
+function Context({ tokens, state, chainId }: Props) {
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: state.details || {
-      token: _tokens[0],
+      token: tokens[0],
       recipient: "",
 
       //meta
-      tokens: _tokens,
-      chainId: wallet.chain.chain_id,
+      tokens: tokens,
+      chainId: chainId,
     },
     resolver: yupResolver(schema),
   });
+
   return (
     <FormProvider {...methods}>
       <Form />

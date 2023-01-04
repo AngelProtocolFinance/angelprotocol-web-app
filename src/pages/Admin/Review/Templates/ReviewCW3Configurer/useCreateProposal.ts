@@ -6,7 +6,6 @@ import {
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import CW3Review from "contracts/CW3/CW3Review";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
@@ -16,8 +15,7 @@ type Key = keyof FormReviewCW3Config;
 type Value = FormReviewCW3Config[Key];
 
 export default function useCreateProposal() {
-  const { propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { propMeta, wallet } = useAdminResources();
   const {
     getValues,
     handleSubmit,

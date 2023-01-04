@@ -1,17 +1,20 @@
 import { Msg, TerraFee } from "types/terra";
-import { WalletState } from "contexts/WalletContext";
+import { ConnectedWallet } from "contexts/Wallet";
+import { chains } from "constants/chainsV2";
+import { denoms } from "constants/tokens";
 import getTerraClient from "./getTerraClient";
 
 export default async function estimateTerraFee(
-  wallet: WalletState,
+  wallet: ConnectedWallet,
   msgs: Msg[]
 ): Promise<TerraFee> {
-  const client = getTerraClient(wallet.chain.chain_id, wallet.chain.lcd_url);
+  const chain = chains[wallet.chainId];
+  const client = getTerraClient(wallet.chainId, chain.lcd);
 
   const account = await client.auth.accountInfo(wallet.address);
 
   return await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
-    { msgs, feeDenoms: [wallet.chain.native_currency.token_id] }
+    { msgs, feeDenoms: [denoms.luna] }
   );
 }

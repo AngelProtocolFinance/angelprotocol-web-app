@@ -4,7 +4,6 @@ import { FundSendValues } from "pages/Admin/types";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import CW20 from "contracts/CW20";
@@ -19,9 +18,8 @@ export default function useTransferFunds() {
     handleSubmit,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
-  const { cw3, propMeta } = useAdminResources();
+  const { cw3, propMeta, wallet } = useAdminResources();
   //TODO: use wallet token[] to list amounts to transfer
-  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 

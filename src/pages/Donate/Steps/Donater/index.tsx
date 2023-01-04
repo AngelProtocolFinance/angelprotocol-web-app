@@ -2,28 +2,52 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { useBalancesQuery } from "services/apes";
+import { WithWallet } from "contexts/Wallet";
+import { Tooltip } from "components/donation";
 import { FormStep } from "slices/donation";
+import { Chain, chains } from "constants/chainsV2";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Donater({ wallet, ...state }: WithWallet<FormStep>) {
-  const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
-    ...t,
-    amount: "0",
-  }));
+  const { chainId, address } = wallet;
+  const chain = chains[chainId];
+  const { data: tokens = [], isLoading } = useBalancesQuery({
+    address,
+    chainId,
+  });
 
+  if (isLoading) {
+    return <Tooltip type="Loading" message="Fetching balances.." />;
+  }
+
+  return (
+    <Context
+      chain={chain}
+      state={state}
+      tokens={tokens.map((t) => ({ ...t, amount: "0" }))}
+    />
+  );
+}
+
+type Props = {
+  chain: Chain;
+  tokens: TokenWithAmount[];
+  state: FormStep;
+};
+
+function Context({ tokens, state, chain }: Props) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: state.details || {
-      token: _tokens[0],
+      token: tokens[0],
       pctLiquidSplit: "0",
 
       //meta
-      tokens: _tokens,
-      chainName: wallet.chain.chain_name,
-      chainId: wallet.chain.chain_id,
+      tokens,
+      chain,
     },
     resolver: yupResolver(schema),
   });

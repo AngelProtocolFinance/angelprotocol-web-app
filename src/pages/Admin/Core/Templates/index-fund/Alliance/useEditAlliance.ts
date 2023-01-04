@@ -3,7 +3,6 @@ import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
@@ -12,8 +11,7 @@ import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );

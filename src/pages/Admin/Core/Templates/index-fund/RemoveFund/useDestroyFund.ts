@@ -2,11 +2,10 @@ import { useFormContext } from "react-hook-form";
 import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useDestroyFund() {
   const {
@@ -15,8 +14,7 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {

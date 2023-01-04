@@ -1,18 +1,19 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { WithCosmosWallet } from "contexts/Wallet";
 import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
 import { humanize } from "helpers";
+import { chains } from "constants/chainsV2";
 import { appRoutes } from "constants/routes";
 import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";
 
-export default function Submit(props: WithWallet<SubmitStep>) {
+export default function Submit(props: WithCosmosWallet<SubmitStep>) {
   const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
@@ -33,7 +34,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
+  const chain = chains[props.wallet.chainId];
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
 
@@ -48,7 +49,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
+        <span>{chain.name}</span>
       </Row>
       <Row title="Amount:">
         <span>

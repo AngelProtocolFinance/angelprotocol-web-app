@@ -3,25 +3,39 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
+import {
+  WithCosmosWallet,
+  isConnected,
+  isDisconnected,
+  useWalletContext,
+} from "contexts/Wallet";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
+
+type State = WithCosmosWallet<AdminResources>;
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
   const { id } = useParams<AdminParams>();
-
+  const user = isConnected(wallet) ? wallet.address : "";
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
-      user: wallet?.address!,
+      user,
       endowmentId: id!,
     },
-    { skip: !wallet || !id }
+    { skip: !user || !id }
   );
 
-  if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
+  if (wallet === "loading")
+    return <GuardPrompt message="Connecting wallet.." showLoader />;
+
+  if (isDisconnected(wallet))
+    return <GuardPrompt message="Wallet is not connected" />;
+
+  if (wallet.type !== "cosmos")
+    return <GuardPrompt message="Admin doesn't support connected wallet" />;
 
   if (isLoading)
     return <GuardPrompt message="Checking wallet credentials" showLoader />;
@@ -31,12 +45,14 @@ export function Guard(props: {
   if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
 
   return (
-    <context.Provider value={data}>{props.children(data)}</context.Provider>
+    <context.Provider value={{ ...data, wallet }}>
+      {props.children(data)}
+    </context.Provider>
   );
 }
 
-const context = createContext({} as AdminResources);
-export const useAdminResources = (): AdminResources => {
+const context = createContext({} as State);
+export const useAdminResources = (): State => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {

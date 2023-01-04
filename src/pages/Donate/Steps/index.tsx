@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { useWalletContext } from "contexts/Wallet";
 import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import KadoModal from "components/KadoModal";
@@ -73,7 +73,7 @@ export default function Steps(props: DonationRecipient) {
 
 function CurrStep(props: DonationState) {
   const dispatch = useSetter();
-  const { wallet, isLoading } = useGetWallet();
+  const wallet = useWalletContext();
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
@@ -81,11 +81,11 @@ function CurrStep(props: DonationState) {
   }, [wallet, dispatch]);
 
   if (props.step <= 3) {
-    if (isLoading) {
+    if (wallet === "loading") {
       return <Tooltip type="Loading" message="Loading wallet" />;
     }
 
-    if (!wallet) {
+    if (Array.isArray(wallet)) {
       return (
         <Tooltip
           type="Info"

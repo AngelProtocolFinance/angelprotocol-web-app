@@ -6,7 +6,6 @@ import {
 import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
@@ -16,8 +15,7 @@ import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, propMeta } = useAdminResources();
-  const { wallet } = useGetWallet();
+  const { cw3, propMeta, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },

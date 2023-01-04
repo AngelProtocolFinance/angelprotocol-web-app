@@ -1,11 +1,11 @@
 import { ApplicationVote } from "types/contracts";
 import { ReviewCW3ConfigPayload } from "types/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { CosmosWallet } from "contexts/Wallet";
 import { contracts } from "constants/contracts";
 import CW3 from ".";
 
 export default class CW3Review extends CW3 {
-  constructor(wallet: WalletState | undefined) {
+  constructor(wallet: CosmosWallet) {
     super(wallet, contracts.cw3ReviewTeam);
   }
 
