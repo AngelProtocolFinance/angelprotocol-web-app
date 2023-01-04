@@ -10,7 +10,7 @@ import {
   ConnectedWallet,
   DisconnectedWallet,
   useWalletContext,
-} from "./Wallet";
+} from "./WalletContext";
 
 type Classes = {
   container?: string;

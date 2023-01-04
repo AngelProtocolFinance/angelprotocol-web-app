@@ -1,25 +1,15 @@
 import keplrWalletLogo from "assets/icons/wallets/keplr.png";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useSetWallet } from "contexts/WalletContext";
+import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 
 export default function KeplrConnector() {
-  const { connections } = useSetWallet();
-  const { handleError } = useErrorContext();
-
-  async function handleConnect() {
-    try {
-      //wallet is connected at this point
-      const keplrConnection = connections.find((c) => c.name === "Keplr")!;
-      //keplr connection is single connection
-      await keplrConnection!.connect!();
-    } catch (err: any) {
-      handleError(err);
-    }
-  }
+  const wallet = useWalletContext();
+  const keplr = isDisconnected(wallet)
+    ? wallet.find((w) => w.id === "keplr")
+    : undefined;
 
   return (
     <button
-      onClick={handleConnect}
+      onClick={() => keplr?.connect()}
       className="flex items-center border border-gray-l2 dark:border-bluegray w-full p-4 rounded"
     >
       <img

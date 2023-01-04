@@ -2,12 +2,15 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import {
+  isConnected,
+  isDisconnected,
+  useWalletContext,
+} from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { BtnPrim, BtnSec } from "components/gift";
 import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
@@ -19,7 +22,8 @@ export default function Form({ classes = "" }) {
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
+
+  const wallet = useWalletContext();
 
   async function submit(data: FV) {
     const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
@@ -28,8 +32,8 @@ export default function Form({ classes = "" }) {
       body: JSON.stringify({
         secret: data.secret,
         /** restricted by submit button */
-        recipient: wallet?.address,
-        chain: wallet?.chain.chain_id,
+        recipient: isConnected(wallet) && wallet.address,
+        chain: isConnected(wallet) && wallet.chainId,
       }),
     });
     if (!res.ok) {
@@ -85,14 +89,16 @@ export default function Form({ classes = "" }) {
         type="submit"
         className="sm:mx-32 text-center"
         disabled={
-          isSubmitting || !wallet || wallet.chain.chain_id !== chainIds.juno
+          isSubmitting ||
+          !isConnected(wallet) ||
+          !(isConnected(wallet) && wallet.type !== "cosmos")
         }
       >
         {isSubmitting
           ? "Redeeming..."
-          : !wallet
+          : wallet === "loading" || isDisconnected(wallet)
           ? "Connect wallet to redeem"
-          : wallet.chain.chain_id !== chainIds.juno
+          : wallet.type !== "cosmos"
           ? "Kindly connect Keplr wallet"
           : "Redeem your giftcard"}
       </BtnSec>

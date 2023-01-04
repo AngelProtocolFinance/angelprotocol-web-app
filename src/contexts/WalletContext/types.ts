@@ -1,41 +1,60 @@
-import { BaseChain } from "types/aws";
-import { chainIDs } from "constants/chains";
-import { WalletState } from "./WalletContext";
-
-export type WithWallet<T> = T & { wallet: WalletState };
+import { SigningCosmWasmClient } from "types/cosmos";
+import { JsonRpcSigner } from "types/evm";
+import { TerraConnectedWallet } from "types/terra";
 
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
-  | "leap-wallet"
   | "station"
   | "walletconnect"
   | "keplr";
 
-export type WithoutInstallers = Exclude<
-  ProviderId,
-  "station" | "walletconnect" | "leap-wallet"
->;
-
-export type Connection = {
-  logo: string;
-  installUrl?: string;
-  name: string;
-  connect(args?: string): Promise<void>;
-};
-
-export type ProviderInfo = {
-  providerId: ProviderId;
-  logo: string;
-  chainId: string;
+type Connected = {
+  status: "connected";
   address: string;
+  chainId: string;
+  disconnect(): void;
 };
 
-export type ProviderStatus = {
-  providerInfo?: ProviderInfo;
-  isLoading: boolean;
-  supportedChains: BaseChain[];
-  switchChain: (chainId: chainIDs) => Promise<void>;
+type Terra = { type: "terra"; post: TerraConnectedWallet["post"] };
+type Cosmos = {
+  type: "cosmos";
+  client: SigningCosmWasmClient;
 };
+type EVM = {
+  type: "evm";
+  signer: JsonRpcSigner;
+  switchChain(chainId: string): Promise<void>;
+  isSwitching: boolean;
+};
+
+export type ConnectedToChainType = Connected & (Terra | EVM | Cosmos);
+
+type Disconnected = { status: "disconnected"; connect(args?: any): void };
+type Loading = { status: "loading" };
+
+export type WalletState = ConnectedToChainType | Disconnected | Loading;
+export type WalletMeta = {
+  logo: string;
+  id: ProviderId;
+  name: string;
+};
+export type Wallet = WalletMeta & WalletState;
+
+export type ConnectedWallet = WalletMeta & ConnectedToChainType;
+export type DisconnectedWallet = WalletMeta & Disconnected;
+
+type BaseWallet = Connected & WalletMeta;
+export type EVMWallet = BaseWallet & EVM;
+export type CosmosWallet = BaseWallet & Cosmos;
+export type TerraWallet = BaseWallet & Terra;
+
+export type ContextState =
+  | "loading" /** consolidate all LoadingWallet*/
+  | ConnectedWallet
+  | DisconnectedWallet[];
+
+export type WithWallet<T> = T & { wallet: ConnectedWallet };
+export type WithCosmosWallet<T> = T & { wallet: CosmosWallet };

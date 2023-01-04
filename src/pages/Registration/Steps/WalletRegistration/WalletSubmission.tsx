@@ -1,22 +1,21 @@
 import { steps } from "pages/Registration/routes";
-import { WalletState, useSetWallet } from "contexts/WalletContext";
+import { ConnectedWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { BtnPrim, BtnSec, LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
 
-export type Wallet = { address: string };
-
 export default function WalletSubmission({
   address,
-  providerId,
-  walletIcon,
-}: WalletState) {
-  const { disconnect } = useSetWallet();
+  id,
+  name,
+  logo,
+  disconnect,
+}: ConnectedWallet) {
   const { isSubmitting, registerWallet } = useRegisterWallet();
   const { data } = useRegState<3>();
 
-  if (providerId !== "keplr") {
+  if (id !== "keplr") {
     return (
       <div className="text-center md:text-left">
         <h3 className="text-lg font-bold mb-4 flex items-center justify-center md:justify-start gap-3">
@@ -25,7 +24,7 @@ export default function WalletSubmission({
         </h3>
         <p className="text-gray-d1 dark:text-gray text-sm">
           connected wallet{" "}
-          <span className="font-semibold capitalize">{providerId}</span> is not
+          <span className="font-semibold capitalize">{id}</span> is not
           supported for registration.
         </p>
 
@@ -43,11 +42,11 @@ export default function WalletSubmission({
       </h3>
       <div className="grid grid-cols-[auto_1fr] items-center border border-gray-l2 dark:border-bluegray p-4 rounded mt-8">
         <img
-          src={walletIcon}
+          src={logo}
           alt=""
           className="w-10 h-10 object-contain row-span-2 mr-4"
         />
-        <h6 className="capitalize font-bold text-lg mb-1">{providerId}</h6>
+        <h6 className="capitalize font-bold text-lg mb-1">{name}</h6>
         <span className="text-sm truncate">{address}</span>
       </div>
 

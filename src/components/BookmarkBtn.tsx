@@ -1,7 +1,7 @@
 import { PropsWithChildren, useRef, useState } from "react";
 import { useProfileQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
 import Tooltip from "components/Tooltip";
@@ -16,19 +16,20 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 
-  const { wallet, isLoading: isWalletLoading } = useGetWallet();
+  const wallet = useWalletContext();
+  const user = isConnected(wallet) ? wallet.address : "";
   const {
     data,
     isLoading: isProfileLoading,
     isFetching,
-  } = useProfileQuery(wallet?.address!, {
-    skip: !wallet,
+  } = useProfileQuery(user, {
+    skip: !user,
   });
   const { showModal } = useModalContext();
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
 
   const isLoading =
-    isProfileLoading || isFetching || isToggling || isWalletLoading;
+    isProfileLoading || isFetching || isToggling || wallet === "loading";
 
   const bookMark = data?.endowments?.find((d) => d.id === id);
   const isBookmarked = bookMark !== undefined;
@@ -39,8 +40,8 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
       return;
     }
     const res = bookMark
-      ? await toggle({ type: "delete", ...bookMark, wallet: wallet.address })
-      : await toggle({ type: "add", name, id, logo, wallet: wallet.address });
+      ? await toggle({ type: "delete", ...bookMark, wallet: user })
+      : await toggle({ type: "add", name, id, logo, wallet: user });
 
     if ("error" in res) {
       showModal(Popup, { message: "Failed to save bookmark" });

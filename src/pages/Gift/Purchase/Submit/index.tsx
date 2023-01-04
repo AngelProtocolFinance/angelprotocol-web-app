@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
-import { WithCosmosWallet } from "contexts/Wallet";
+import { WithCosmosWallet } from "contexts/WalletContext";
 import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";

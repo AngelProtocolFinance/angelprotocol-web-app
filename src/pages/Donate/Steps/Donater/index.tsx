@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { useBalancesQuery } from "services/apes";
-import { WithWallet } from "contexts/Wallet";
+import { WithWallet } from "contexts/WalletContext";
 import { Tooltip } from "components/donation";
 import { FormStep } from "slices/donation";
 import { Chain, chains } from "constants/chainsV2";

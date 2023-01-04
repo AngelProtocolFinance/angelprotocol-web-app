@@ -1,5 +1,3 @@
-import { WithoutInstallers } from "contexts/WalletContext/types";
-import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
@@ -120,17 +118,6 @@ export class TxResultFail extends Error {
     this.chainId = chainId;
     this.txHash = txHash;
     this.name = "TxResultFail";
-  }
-}
-
-export class WalletNotInstalledError extends APError {
-  providerId: WithoutInstallers;
-  constructor(providerId: WithoutInstallers) {
-    super(
-      "WalletNotInstalledError",
-      `Wallet ${WALLET_METADATA[providerId].name} not installed`
-    );
-    this.providerId = providerId;
   }
 }
 

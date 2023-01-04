@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/Wallet";
+import { WithWallet } from "contexts/WalletContext";
 import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";

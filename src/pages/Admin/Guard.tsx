@@ -8,7 +8,7 @@ import {
   isConnected,
   isDisconnected,
   useWalletContext,
-} from "contexts/Wallet";
+} from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 

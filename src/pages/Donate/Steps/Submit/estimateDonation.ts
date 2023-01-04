@@ -1,7 +1,7 @@
 import ERC20Abi from "abi/ERC20.json";
 import { EVMContract, TransactionRequest, Web3Provider } from "types/evm";
 import { Coin, MsgExecuteContract, MsgSend } from "types/terra";
-import { WithWallet } from "contexts/Wallet";
+import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";

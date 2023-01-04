@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { useBalancesQuery } from "services/apes";
-import { WithCosmosWallet } from "contexts/Wallet";
+import { WithCosmosWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";

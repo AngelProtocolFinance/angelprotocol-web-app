@@ -1,25 +1,16 @@
 import { useWallet } from "@terra-money/wallet-provider";
-import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
+import { toast } from "react-toastify";
+import { ProviderId, Wallet } from "./types";
 import {
   ConnectType,
   TerraConnection,
   TerraInstallation,
   WalletStatus,
 } from "types/terra";
-import {
-  ManualChainSwitchRequiredError,
-  UnsupportedChainError,
-  WalletDisconnectedError,
-} from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
+import { Dwindow } from "types/window";
 
-const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
-  : [{ chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" }];
-
-export default function useTerra() {
+const XDEFI_ID = "xdefi-wallet";
+export default function useTerra2(): Wallet[] {
   const {
     availableConnections,
     availableInstallations,
@@ -29,68 +20,58 @@ export default function useTerra() {
     status,
     connect,
     disconnect,
+    post,
   } = useWallet();
 
-  const terraInfo: ProviderInfo | undefined = connection
-    ? {
-        providerId:
-          //use connect type as Id if no futher connections stems out of the type
-          (connection?.identifier as ProviderId) ||
-          connection.type.toLowerCase(),
-        logo: connection?.icon!,
-        chainId: network.chainID,
-        address: wallets[0].terraAddress,
-      }
-    : undefined;
+  function toWallet(c: TerraInstallation | TerraConnection): Wallet {
+    return {
+      id: (c?.identifier as ProviderId) || c.type.toLowerCase(),
+      type: "terra",
+      logo: connection?.icon || c.icon,
+      name: c.name,
+      ...(status === WalletStatus.INITIALIZING
+        ? { status: "loading" }
+        : WalletStatus.WALLET_CONNECTED && wallets[0]
+        ? {
+            status: "connected",
+            disconnect,
+            address: wallets[0].terraAddress,
+            chainId: network.chainID,
+            post,
+          }
+        : {
+            status: "disconnected",
+            connect: () => {
+              /** if installation */
+              if ("url" in c) {
+                window.open(c.url, "_blank", "noopener noreferrer");
+              } else {
+                /** don't connect terra if xdefi is prioritized*/
+                const xfiEth = (window as Dwindow).xfi?.ethereum;
+                if (c.identifier !== XDEFI_ID && xfiEth?.isMetaMask) {
+                  return toast.warning(
+                    "Kindly remove priority to Xdefi and reload the page"
+                  );
+                }
+                connect(c.type, c.identifier);
+              }
+            },
+          }),
+    };
+  }
 
-  const terraConnections: Connection[] = availableConnections
+  return availableConnections
     .filter(_filter)
-    .map((connection) => ({
-      logo: connection.icon,
-      name: connection.name,
-      connect: async () => {
-        connect(connection.type, connection.identifier);
-      },
-    }))
-    .concat(
-      availableInstallations.filter(_filter).map(({ name, icon, url }) => ({
-        logo: icon,
-        name,
-        connect: async () => {
-          window.open(url, "_blank", "noopener noreferrer");
-        },
-      }))
-    );
-
-  const switchChain = async (chainId: chainIDs) => {
-    if (!connection) {
-      throw new WalletDisconnectedError();
-    }
-
-    if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
-      throw new UnsupportedChainError(chainId);
-    }
-
-    throw new ManualChainSwitchRequiredError(chainId);
-  };
-
-  return {
-    isTerraLoading: status === WalletStatus.INITIALIZING,
-    terraConnections,
-    disconnectTerra: disconnect,
-    terraInfo,
-    switchChain,
-    supportedChains: SUPPORTED_CHAINS,
-  };
+    .map((c) => toWallet(c))
+    .concat(availableInstallations.filter(_filter).map((i) => toWallet(i)));
 }
 
 function _filter<T extends TerraConnection | TerraInstallation>(conn: T) {
-  const identifier = conn.identifier as ProviderId;
-
+  const id = conn.identifier;
   return (
-    identifier === "xdefi-wallet" ||
-    identifier === "leap-wallet" ||
-    identifier === "station" ||
+    id === XDEFI_ID ||
+    id === "leap-wallet" ||
+    id === "station" ||
     conn.type === ConnectType.WALLETCONNECT
   );
 }

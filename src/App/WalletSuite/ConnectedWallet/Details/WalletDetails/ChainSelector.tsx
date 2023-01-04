@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { ConnectedWallet, isEVM } from "contexts/Wallet";
+import { ConnectedWallet, isEVM } from "contexts/WalletContext";
 import Icon, { DrawerIcon } from "components/Icon";
 import { chains } from "constants/chainsV2";
 

@@ -4,7 +4,7 @@ import {
   EmbeddedWasmMsg,
   Vote,
 } from "types/contracts";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import Contract from "../Contract";
 
 export default class CW3 extends Contract {

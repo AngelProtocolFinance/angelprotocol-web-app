@@ -1,6 +1,6 @@
 import { ApplicationVote } from "types/contracts";
 import { ReviewCW3ConfigPayload } from "types/contracts";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import { contracts } from "constants/contracts";
 import CW3 from ".";
 

@@ -2,7 +2,7 @@ import { CountryOption } from "services/types";
 import { TransactionRequest } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { CreateTxOptions } from "types/terra";
-import { CosmosWallet, EVMWallet, TerraWallet } from "contexts/Wallet";
+import { CosmosWallet, EVMWallet, TerraWallet } from "contexts/WalletContext";
 import { Chain } from "constants/chainsV2";
 
 export type DonationRecipient = {

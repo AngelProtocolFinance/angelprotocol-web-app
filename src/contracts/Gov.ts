@@ -1,5 +1,5 @@
 import { Vote } from "types/contracts";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import CW20 from "./CW20";

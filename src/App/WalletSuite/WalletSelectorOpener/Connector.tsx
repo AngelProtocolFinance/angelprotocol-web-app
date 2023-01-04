@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import { DisconnectedWallet } from "contexts/Wallet";
+import { DisconnectedWallet } from "contexts/WalletContext";
 import ContentLoader from "components/ContentLoader";
 
 export default function Connector({ connect, logo, name }: DisconnectedWallet) {

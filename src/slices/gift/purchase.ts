@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";

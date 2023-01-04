@@ -1,10 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import { useGetWallet } from "contexts/WalletContext";
 import { textPrimStyle } from "components/admin";
 import { Label } from "components/form";
-import { denoms, symbols } from "constants/tokens";
+import { denoms, junoDenom, symbols } from "constants/tokens";
 import Balance from "./Balance";
 import Denom from "./Denom";
 
@@ -15,13 +14,8 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<FundSendValues>();
 
-  const { wallet } = useGetWallet();
-  const native_currency = wallet!.chain.native_currency; // wallet exists, otherwise wouldn't be able to donate
-
   const denomText =
-    watch("denom") === native_currency.token_id
-      ? native_currency.symbol
-      : symbols[denoms.halo];
+    watch("denom") === junoDenom ? symbols[junoDenom] : symbols[denoms.halo];
 
   return (
     <div className="grid">
@@ -41,7 +35,7 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex">
-          <Denom denom={native_currency.token_id} />
+          <Denom denom={junoDenom} />
           <Denom denom={denoms.halo} />
         </div>
         <ErrorMessage

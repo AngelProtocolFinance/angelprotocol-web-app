@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetWallet } from "contexts/WalletContext";
+import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";
@@ -10,7 +10,7 @@ function WalletRegistration() {
   const {
     data: { wallet: prevWallet },
   } = useRegState<3>();
-  const { wallet, isLoading } = useGetWallet();
+  const wallet = useWalletContext();
 
   //save prevWallet to intermediate state
   const [prevAddr, setPrevAddr] = useState(prevWallet?.address);
@@ -21,7 +21,7 @@ function WalletRegistration() {
     );
   }
 
-  if (isLoading) {
+  if (wallet === "loading") {
     return (
       <div className="flex items-center justify-center gap-2">
         <Icon type="Loading" className="animate-spin" />
@@ -30,7 +30,7 @@ function WalletRegistration() {
     );
   }
 
-  if (!wallet) {
+  if (isDisconnected(wallet)) {
     return <ChooseWallet />;
   }
 

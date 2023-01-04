@@ -1,4 +1,4 @@
-import { ConnectedWallet } from "contexts/Wallet";
+import { ConnectedWallet } from "contexts/WalletContext";
 import Address from "./Address";
 import Balances from "./Balances";
 import ChainSelector from "./ChainSelector";

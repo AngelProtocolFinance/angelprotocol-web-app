@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
-import { DisconnectedWallet } from "contexts/Wallet";
+import { DisconnectedWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Connector from "./Connector";
 

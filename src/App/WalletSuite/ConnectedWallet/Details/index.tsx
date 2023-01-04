@@ -2,7 +2,7 @@ import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/aws";
-import { ConnectedWallet, isEVM } from "contexts/Wallet";
+import { ConnectedWallet, isEVM } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";

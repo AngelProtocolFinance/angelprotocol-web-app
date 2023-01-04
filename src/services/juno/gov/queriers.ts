@@ -1,25 +1,27 @@
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { useGovStakerQuery, useGovStakerState } from "./gov";
 import { staker } from "./placeholders";
 
 export function useGovStaker() {
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
+  const user = isConnected(wallet) ? wallet.address : "";
   const { data = staker } = useGovStakerQuery(
     {
-      addr: wallet?.address!,
+      addr: user,
     },
-    { skip: !wallet }
+    { skip: !user }
   );
   return data;
 }
 
 export function useCachedGovStaker() {
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
+  const user = isConnected(wallet) ? wallet.address : "";
   const { data = staker } = useGovStakerState(
     {
-      addr: wallet?.address!,
+      addr: user,
     },
-    { skip: !wallet }
+    { skip: !user }
   );
   return data;
 }

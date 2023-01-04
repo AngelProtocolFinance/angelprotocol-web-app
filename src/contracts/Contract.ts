@@ -7,7 +7,7 @@ import {
   MsgSendEncodeObject,
   StdFee,
 } from "types/cosmos";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
 import { calculateFee, toUtf8 } from "helpers/cosmos";
 import { CosmosTxSimulationFail } from "errors/errors";

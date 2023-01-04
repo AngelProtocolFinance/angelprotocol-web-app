@@ -1,5 +1,5 @@
 import { Popover } from "@headlessui/react";
-import { ConnectedWallet } from "contexts/Wallet";
+import { ConnectedWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { chains } from "constants/chainsV2";
 

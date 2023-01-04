@@ -1,4 +1,4 @@
-import { ConnectedToChainType } from "contexts/Wallet";
+import { ConnectedToChainType } from "contexts/WalletContext";
 import { IS_TEST } from "./env";
 
 export type Chain = {

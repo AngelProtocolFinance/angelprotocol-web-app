@@ -1,6 +1,6 @@
 import { Estimate } from "./types";
 import { MsgExecuteContractEncodeObject } from "types/cosmos";
-import { WithCosmosWallet } from "contexts/Wallet";
+import { WithCosmosWallet } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";

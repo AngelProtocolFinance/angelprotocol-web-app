@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { DetailLabel, QueryLoader, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
@@ -12,8 +11,7 @@ import Stats from "./Stats";
 import Votes from "./Votes";
 
 export default function Proposal() {
-  const { wallet } = useGetWallet();
-  const { cw3 } = useAdminResources();
+  const { cw3, wallet } = useAdminResources();
   const params = useParams<ProposalParams>();
   const queryState = useProposalDetailsQuery(
     {

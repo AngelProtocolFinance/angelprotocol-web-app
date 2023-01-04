@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import { useWalletContext } from "contexts/Wallet";
+import { useWalletContext } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import KadoModal from "components/KadoModal";

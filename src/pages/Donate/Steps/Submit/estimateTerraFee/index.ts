@@ -1,5 +1,5 @@
 import { Msg, TerraFee } from "types/terra";
-import { ConnectedWallet } from "contexts/Wallet";
+import { ConnectedWallet } from "contexts/WalletContext";
 import { chains } from "constants/chainsV2";
 import { denoms } from "constants/tokens";
 import getTerraClient from "./getTerraClient";

@@ -1,5 +1,5 @@
 import { CW4Member } from "types/contracts";
-import { CosmosWallet } from "contexts/Wallet";
+import { CosmosWallet } from "contexts/WalletContext";
 import Contract from "./Contract";
 
 export default class CW4 extends Contract {

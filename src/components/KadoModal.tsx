@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
@@ -16,7 +16,7 @@ export default function KadoModal() {
   const dispatch = useSetter();
   const { closeModal, setModalOption } = useModalContext();
 
-  const { wallet } = useGetWallet();
+  const wallet = useWalletContext();
 
   const handleOnLoad = useCallback(() => {
     // there is a high chance the user bought some new crypto prior to closing this modal
@@ -27,10 +27,12 @@ export default function KadoModal() {
     setLoading(false);
   }, [setModalOption, dispatch]);
 
-  const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
-  const network = !wallet
-    ? ""
-    : `&network=${getKadoNetworkValue(wallet.chain.chain_id)}`;
+  const onToAddress = isConnected(wallet)
+    ? `&onToAddress=${wallet.address}`
+    : "";
+  const network = isConnected(wallet)
+    ? `&network=${getKadoNetworkValue(wallet.chainId)}`
+    : "";
 
   return (
     <Dialog.Panel className="fixed inset-0 sm:fixed-center z-10 flex flex-col sm:w-[500px] sm:h-[700px] bg-gray-l5 dark:bg-blue-d6 sm:border border-gray-l2 dark:border-bluegray sm:rounded">
