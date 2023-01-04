@@ -1,16 +1,39 @@
-import { EndowmentBookmark } from "types/aws";
+import { PropsWithChildren } from "react";
+import { useProfileQuery } from "services/aws/aws";
+import { useConnectedWallet } from "contexts/WalletGuard";
 import Logo from "../Logo";
 import Links from "./Links";
 
-type Props = { endowments: EndowmentBookmark[] };
+export default function MyEndowments() {
+  const wallet = useConnectedWallet();
+  const { data, isLoading, isFetching, isError } = useProfileQuery(
+    wallet.address
+  );
 
-export default function MyEndowments({ endowments }: Props) {
+  if (isLoading || isFetching) {
+    return (
+      <Container>
+        <Heading />
+        <span>....</span>
+      </Container>
+    );
+  }
+
+  if (isError || !data) {
+    return (
+      <Container>
+        <Heading />
+        <span>Failed to load endowments</span>
+      </Container>
+    );
+  }
+
+  if (!data.admin.length) return null;
+
   return (
-    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
-      <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
-        My Endowments
-      </h3>
-      {endowments.map((endowment) => (
+    <Container>
+      <Heading />
+      {data.admin.map((endowment) => (
         <div key={endowment.id} className="grid grid-cols-[auto_1fr] gap-3">
           <Logo src={endowment.logo} className="w-10 h-10" />
 
@@ -20,10 +43,25 @@ export default function MyEndowments({ endowments }: Props) {
           </div>
         </div>
       ))}
-    </div>
+    </Container>
   );
 }
 
 const Name = ({ value }: { value: string }) => (
   <span className="font-heading font-semibold text-sm">{value}</span>
 );
+
+function Heading() {
+  return (
+    <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
+      My Endowments
+    </h3>
+  );
+}
+function Container({ children }: PropsWithChildren) {
+  return (
+    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
+      {children}
+    </div>
+  );
+}
