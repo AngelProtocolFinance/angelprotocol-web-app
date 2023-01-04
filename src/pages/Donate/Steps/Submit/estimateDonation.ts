@@ -5,36 +5,57 @@ import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
+import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
 import { formatUnits, parseUnits } from "helpers/evm";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
+import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
-  details: { token, tokens },
+  recipient,
+  details: { token, tokens, pctLiquidSplit },
   wallet,
 }: WithWallet<SubmitStep>): Promise<Estimate | null> {
   const native = tokens[0];
 
   try {
     if (wallet.type === "cosmos") {
-      const scaledAmount = scaleToStr(token.amount, token.decimals);
+      const { fromBal, fromGift } = getBreakdown(token);
+      const giftMsg = fromGift
+        ? [
+            new GiftCard(wallet).createSpendMsg(
+              recipient.id,
+              token,
+              pctLiquidSplit
+            ),
+          ]
+        : [];
+
+      const scaledAmount = scaleToStr(fromBal, token.decimals);
       if (token.type === "juno-native" || token.type === "ibc") {
         const contract = new Account(wallet);
-        const msg = contract.createTransferNativeMsg(
-          scaledAmount,
-          ap_wallets.juno_deposit,
-          token.token_id
-        );
 
-        const fee = await contract.estimateFee([msg]);
+        const sendMsg = fromBal
+          ? [
+              contract.createTransferNativeMsg(
+                scaledAmount,
+                ap_wallets.juno_deposit,
+                token.token_id
+              ),
+            ]
+          : [];
+
+        const msgs = [...sendMsg, ...giftMsg];
+        console.log(msgs);
+        const fee = await contract.estimateFee(msgs);
         const feeAmount = extractFeeAmount(fee, native.token_id);
 
         return {
           type: wallet.type,
           wallet,
           fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs: [msg] },
+          tx: { fee, msgs },
         };
       } else {
         const contract = new CW20(wallet, token.token_id);
@@ -49,7 +70,7 @@ export async function estimateDonation({
           type: wallet.type,
           wallet,
           fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs: [msg] },
+          tx: { fee, msgs: [msg, ...giftMsg] },
         };
       }
     }
