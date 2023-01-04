@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Tx, TxArgs } from "./types";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { useConnectedWallet } from "contexts/WalletGuard";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
 import handleTxError from "./handleTxError";
@@ -13,7 +13,7 @@ type Sender = (args: TxArgs) => Promise<void>;
 export default function useCosmosTxSender<T extends boolean = false>(
   isSenderInModal: T = false as any
 ): T extends true ? { sendTx: Sender; isSending: boolean } : Sender {
-  const wallet = useConnectedWallet();
+  const wallet = useWalletContext();
   /** use this state to show loading to modal forms */
   const [isSending, setIsSending] = useState(false);
   const { showModal, setModalOption } = useModalContext();
@@ -26,7 +26,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
     successMeta,
   }) => {
     try {
-      if (!wallet) {
+      if (!isConnected(wallet)) {
         return showModal(TxPrompt, { error: "Wallet is not connected" });
       }
       if (wallet.type !== "cosmos") {
