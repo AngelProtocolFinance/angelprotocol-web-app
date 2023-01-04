@@ -1,10 +1,12 @@
 import { Dialog } from "@headlessui/react";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Logo from "../../Logo";
 import { adminMobileNavId } from "../constants";
 import Links from "./Links";
 
-export default function Menu({ onClose }: { onClose: () => void }) {
+export default function Menu() {
+  const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
       as="div"
@@ -13,7 +15,7 @@ export default function Menu({ onClose }: { onClose: () => void }) {
       <div className="flex justify-between items-center w-full py-4 padded-container border-b border-gray-l2">
         <Logo />
         <button
-          onClick={onClose}
+          onClick={closeModal}
           className="flex items-center text-white justify-center"
         >
           <Icon type="Close" size={32} />

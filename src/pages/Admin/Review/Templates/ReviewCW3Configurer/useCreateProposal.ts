@@ -73,7 +73,7 @@ export default function useCreateProposal() {
       JSON.stringify(configUpdateMeta)
     );
 
-    sendTx({
+    await sendTx({
       msgs: [proposalMsg],
       ...propMeta,
       tagPayloads: getTagPayloads(propMeta.willExecute && "review_cw3_config"),

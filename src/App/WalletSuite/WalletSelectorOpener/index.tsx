@@ -15,7 +15,7 @@ export default function WalletSelectorOpener({
 
   return (
     <button
-      className={`${COMMON_BUTTON_STYLE} text-base`}
+      className={`${COMMON_BUTTON_STYLE} gap-1 text-sm`}
       onClick={handleClick}
     >
       <Icon type="Wallet" size={20} />
