@@ -6,28 +6,32 @@ import { humanize } from "helpers";
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
   const token = watch("token");
-  function setMaxVal() {
-    setValue("token.amount", humanize(token.balance + (token.gift || 0), 4), {
+  function setMaxVal(amount: number) {
+    setValue("token.amount", humanize(amount, 4), {
       shouldDirty: true,
       shouldValidate: true,
     });
   }
+
   return (
-    <button
-      type="button"
-      onClick={setMaxVal}
-      className="text-right hover:text-blue text-xs"
-    >
-      <span>
+    <>
+      <button
+        type="button"
+        onClick={() => setMaxVal(token.balance)}
+        className="text-right hover:text-blue text-xs flex"
+      >
         BAL: {humanize(+token.balance, 3)} {token.symbol}
-      </span>
+      </button>
       {token.gift && (
-        <>
-          <span>+</span>
-          <Icon type="Giftcard" className="w-4 h-4 text-green" />
-          {humanize(+token.balance, 3)}
-        </>
+        <button
+          type="button"
+          onClick={() => setMaxVal(token.gift || 0)}
+          className="text-right hover:text-blue text-xs flex"
+        >
+          <Icon type="Giftcard" className="w-4 h-4 text-green mr-0.5" />
+          {humanize(+token.gift, 3)}
+        </button>
       )}
-    </button>
+    </>
   );
 }

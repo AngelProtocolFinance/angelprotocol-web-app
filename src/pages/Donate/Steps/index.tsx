@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import { useWalletContext } from "contexts/WalletContext";
+import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import KadoModal from "components/KadoModal";
@@ -77,7 +77,7 @@ function CurrStep(props: DonationState) {
 
   /** reset form state when user disconnects, user might change wallet */
   useEffect(() => {
-    !wallet && dispatch(resetDetails());
+    isDisconnected(wallet) && dispatch(resetDetails());
   }, [wallet, dispatch]);
 
   if (props.step <= 3) {

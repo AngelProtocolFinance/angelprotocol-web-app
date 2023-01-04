@@ -24,6 +24,7 @@ export default function Donater({ wallet, ...state }: WithWallet<FormStep>) {
 
   return (
     <Context
+      key={chainId}
       chain={chain}
       state={state}
       tokens={tokens.map((t) => ({ ...t, amount: "0" }))}
