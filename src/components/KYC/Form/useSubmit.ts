@@ -14,7 +14,7 @@ export default function useSubmit(props: Props) {
   const { showModal } = useModalContext();
 
   const submit = async (data: FV) => {
-    const { name, address, email, city, state, USState, postalCode, country } =
+    const { name, address, email, city, state, usState, postalCode, country } =
       data;
     if (props.type === "post-donation") {
       const response = await submitRequest({
@@ -22,7 +22,7 @@ export default function useSubmit(props: Props) {
         email,
         streetAddress: `${address.street} ${address.complement}`,
         city,
-        state: USState.value || state,
+        state: usState.value || state,
         zipCode: postalCode,
         country: country.name,
         consent_tax: true,

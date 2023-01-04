@@ -17,7 +17,7 @@ const shape: SchemaShape<FormValues> = {
   country: Yup.object().shape<SchemaShape<FormValues["country"]>>({
     name: requiredString,
   }),
-  //  USState: no need to validate, optional and preselected
+  //  usState: no need to validate, optional and preselected
   email: Yup.string().email("invalid").required("required"),
   hasAgreedToTerms: Yup.boolean().oneOf(
     [true],

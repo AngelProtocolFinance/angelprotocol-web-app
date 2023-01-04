@@ -20,6 +20,7 @@ export default function Form({ classes = "", ...props }: Props) {
   const {
     watch,
     handleSubmit,
+    resetField,
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
@@ -74,7 +75,7 @@ export default function Form({ classes = "", ...props }: Props) {
         <CountrySelector<FV, "country">
           placeholder="Select a country"
           fieldName="country"
-          otherFieldToReset="USState"
+          onReset={() => resetField("usState")}
           classes={{
             container:
               "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
@@ -86,11 +87,11 @@ export default function Form({ classes = "", ...props }: Props) {
       </div>
       {isUS ? (
         <div className="grid relative">
-          <Label htmlFor="USState" className="mb-2" required={false}>
+          <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "USState", string, false>
-            name="USState"
+          <Selector<FV, "usState", string, false>
+            name="usState"
             options={states}
             classes={{ container: "bg-white dark:bg-blue-d6" }}
           />

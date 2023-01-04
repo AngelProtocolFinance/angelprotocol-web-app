@@ -16,7 +16,7 @@ export default function KYC(props: Props) {
       defaultValues = {
         hasAgreedToTerms: true,
         country: placeHolderCountryOption,
-        USState: { label: "", value: "" },
+        usState: { label: "", value: "" },
       };
     } else {
       defaultValues = { ...kyc };
@@ -24,7 +24,7 @@ export default function KYC(props: Props) {
   } else {
     defaultValues = {
       country: placeHolderCountryOption,
-      USState: { label: "", value: "" },
+      usState: { label: "", value: "" },
     };
   }
 

@@ -29,7 +29,7 @@ export type KYC = {
   postalCode: string;
   country: CountryOption;
   state: string;
-  USState: OptionType<string>;
+  usState: OptionType<string>;
   email: string;
   hasAgreedToTerms: boolean;
   agreedToGetUpdates: boolean;
