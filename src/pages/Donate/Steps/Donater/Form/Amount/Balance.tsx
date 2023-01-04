@@ -14,7 +14,7 @@ export default function Balance() {
   }
 
   return (
-    <>
+    <div className="flex items-center gap-2">
       <button
         type="button"
         onClick={() => setMaxVal(token.balance)}
@@ -32,6 +32,6 @@ export default function Balance() {
           {humanize(+token.gift, 3)}
         </button>
       )}
-    </>
+    </div>
   );
 }
