@@ -24,6 +24,7 @@ function Dashboard() {
         ref: init.reference,
         chain_id: chainIds.juno,
       }),
+      handleError,
       () => {
         showModal(Prompt, {
           type: "success",
@@ -31,8 +32,7 @@ function Dashboard() {
           title: "Submitted for review",
           children: <>Your application has been submitted</>,
         });
-      },
-      handleError
+      }
     );
   };
 
