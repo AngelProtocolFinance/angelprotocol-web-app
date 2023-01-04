@@ -6,11 +6,13 @@ import { ConnectedWallet, isEVM } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
+import Address from "./Address";
 import AdminLinks from "./AdminLinks";
+import Balances from "./Balances";
+import ChainSelector from "./ChainSelector";
 import Favourites from "./Favourites";
 import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
-import WalletDetails from "./WalletDetails";
 
 export default function Details(props: ConnectedWallet) {
   const {
@@ -48,7 +50,11 @@ export default function Details(props: ConnectedWallet) {
               <MyEndowments endowments={profile.admin} />
             )}
 
-            <WalletDetails {...props} />
+            <div className="grid gap-3 p-4 border-b border-gray-l2 dark:border-bluegray">
+              <Balances />
+              <Address value={props.address} />
+              <ChainSelector {...props} />
+            </div>
             <MyDonations address={props.address} />
             <Favourites bookmarks={profile?.endowments} isError={isError} />
             <button

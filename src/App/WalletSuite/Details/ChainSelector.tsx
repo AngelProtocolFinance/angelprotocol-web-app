@@ -4,7 +4,7 @@ import Icon, { DrawerIcon } from "components/Icon";
 import { chains } from "constants/chainsV2";
 
 const SELECTOR_STYLE =
-  "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";
+  "flex justify-between items-center w-full p-4 pl-3 text-sm";
 
 export default function ChainSelector(props: ConnectedWallet) {
   const supportedChains = Object.entries(chains).map(([chainId]) => chainId);
