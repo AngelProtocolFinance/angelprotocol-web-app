@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useProfileQuery } from "services/aws/aws";
+import { useEndowmentProfileQuery } from "services/juno/account";
 import { useConnectedWallet } from "contexts/WalletGuard";
 import Logo from "../Logo";
 import Links from "./Links";
@@ -30,18 +31,13 @@ export default function MyEndowments() {
 
   if (!data?.admin?.length) return null;
 
+  console.log(data);
+
   return (
     <Container>
       <Heading />
-      {data?.admin?.map((endowment) => (
-        <div key={endowment.id} className="grid grid-cols-[auto_1fr] gap-3">
-          <Logo src={endowment.logo} className="w-10 h-10" />
-
-          <div className="grid items-center">
-            <Name value={endowment.name} />
-            <Links endowmentId={endowment.id} />
-          </div>
-        </div>
+      {data?.admin?.map((id) => (
+        <Portal key={id} id={id} />
       ))}
     </Container>
   );
@@ -50,6 +46,19 @@ export default function MyEndowments() {
 const Name = ({ value }: { value: string }) => (
   <span className="font-heading font-semibold text-sm">{value}</span>
 );
+
+function Portal({ id }: { id: number }) {
+  const { data: profile } = useEndowmentProfileQuery({ id });
+  return (
+    <div className="grid grid-cols-[auto_1fr] gap-3">
+      <Logo src={profile?.logo || ""} className="w-10 h-10" />
+      <div className="grid items-center">
+        <Name value={profile?.name ?? "Endowment"} />
+        <Links endowmentId={id} />
+      </div>
+    </div>
+  );
+}
 
 function Heading() {
   return (

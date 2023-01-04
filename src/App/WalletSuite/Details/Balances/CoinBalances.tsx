@@ -8,7 +8,11 @@ const MIN_AMOUNT = 0.001;
 export default function CoinBalances({ isSmallAmountsShown = true }) {
   const { address, chainId } = useConnectedWallet();
 
-  const { data: tokens, isLoading } = useBalancesQuery(
+  const {
+    data: tokens,
+    isLoading,
+    isFetching,
+  } = useBalancesQuery(
     {
       address,
       chainId,
@@ -29,7 +33,7 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
     }
   );
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <p className="text-sm text-gray-d1 dark:text-gray">fetching balances..</p>
     );

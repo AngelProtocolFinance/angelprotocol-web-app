@@ -1,6 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { ConnectedWallet, isEVM } from "contexts/WalletContext";
+import { chains } from "constants/chainsV2";
 import { appRoutes } from "constants/routes";
 import Address from "./Address";
 import AdminLinks from "./AdminLinks";
@@ -11,6 +12,7 @@ import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
 
 export default function Details(props: ConnectedWallet) {
+  const currChain = chains[props.chainId].name;
   return (
     <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-gray-l2 dark:border-bluegray shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
       {({ close }) => (
@@ -21,7 +23,11 @@ export default function Details(props: ConnectedWallet) {
           <div className="grid gap-3 p-4 border-b border-gray-l2 dark:border-bluegray">
             <Balances />
             <Address value={props.address} />
-            <ChainSelector {...props} />
+            {(props.type === "evm" && <ChainSelector {...props} />) || (
+              <p className="w-full p-4 pl-3 text-sm border border-gray-l2 dark:border-bluegray rounded">
+                {currChain}
+              </p>
+            )}
           </div>
           <MyDonations address={props.address} />
           <Favourites />
