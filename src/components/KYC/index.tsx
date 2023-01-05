@@ -3,11 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
 import { placeHolderCountryOption } from "components/CountrySelector";
+import useScrollTo from "hooks/useScrollTo";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
 export default function KYC(props: Props) {
   const isOnDonation = props.type === "on-donation";
+  useScrollTo("steps");
 
   let defaultValues: Partial<FormValues> = {};
   if (isOnDonation && props.state.kyc) {

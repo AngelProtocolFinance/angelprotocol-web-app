@@ -66,7 +66,9 @@ export default function Steps(props: DonationRecipient) {
         </>
       )}
 
-      <CurrStep {...state} />
+      <div id="steps">
+        <CurrStep {...state} />
+      </div>
     </div>
   );
 }
