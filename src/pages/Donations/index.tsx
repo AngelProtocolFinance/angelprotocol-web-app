@@ -24,7 +24,6 @@ export default function Donations() {
 
   const updateFilterValues = (formValues: Filters) => {
     const trimmedFilters = removeEmptyValue({ ...filterValues, ...formValues });
-    console.log(trimmedFilters);
     setFilterValues(trimmedFilters as DonationsQueryParams);
   };
 
