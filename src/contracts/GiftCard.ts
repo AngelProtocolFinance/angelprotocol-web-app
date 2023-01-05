@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { Asset, DepositPayload } from "types/contracts";
+import { Asset } from "types/contracts";
 import { TokenWithAmount } from "types/slices";
 import { roundDown, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
@@ -42,16 +42,12 @@ export default class GiftCard extends Contract {
     const liqPct = roundDown(+liquidSplit / 100);
     const lockPct = roundDown(1 - +liquidSplit / 100);
 
-    const payload: DepositPayload = {
-      id: endowId,
-      locked_percentage: lockPct,
-      liquid_percentage: liqPct,
-    };
-
     return this.createExecuteContractMsg(GiftCard.address, {
       spend: {
         asset,
-        deposit_msg: { deposit: payload },
+        endow_id: endowId,
+        locked_percentage: lockPct,
+        liquid_percentage: liqPct,
       },
     });
   }
