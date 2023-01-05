@@ -1,3 +1,4 @@
+import { fromUtf8 } from "@cosmjs/encoding";
 import ERC20Abi from "abi/ERC20.json";
 import { EVMContract, TransactionRequest, Web3Provider } from "types/evm";
 import { Coin, MsgExecuteContract, MsgSend } from "types/terra";
@@ -22,92 +23,72 @@ export async function estimateDonation({
   try {
     if (wallet.type === "cosmos") {
       const { fromBal, fromGift } = getBreakdown(token);
-      const giftMsg = fromGift
-        ? [
-            new GiftCard(wallet).createSpendMsg(
-              recipient.id,
-              token,
-              pctLiquidSplit
-            ),
-          ]
-        : [];
-
-      const scaledAmount = scaleToStr(fromBal, token.decimals);
-      if (token.type === "juno-native" || token.type === "ibc") {
-        const contract = new Account(wallet);
-
-        const sendMsg = fromBal
-          ? [
-              contract.createTransferNativeMsg(
+      const scaledAmount = scaleToStr(token.amount, token.decimals);
+      const contract = new Account(wallet);
+      const msgs = [];
+      if (fromBal) {
+        msgs.push(
+          token.type === "juno-native" || token.type === "ibc"
+            ? contract.createTransferNativeMsg(
                 scaledAmount,
                 ap_wallets.juno_deposit,
                 token.token_id
-              ),
-            ]
-          : [];
-
-        const msgs = [...sendMsg, ...giftMsg];
-        console.log(msgs);
-        const fee = await contract.estimateFee(msgs);
-        const feeAmount = extractFeeAmount(fee, native.token_id);
-
-        return {
-          type: wallet.type,
-          wallet,
-          fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs },
-        };
-      } else {
-        const contract = new CW20(wallet, token.token_id);
-        const msg = contract.createTransferMsg(
-          scaledAmount,
-          ap_wallets.juno_deposit
+              )
+            : new CW20(wallet, token.token_id).createTransferMsg(
+                scaledAmount,
+                ap_wallets.juno_deposit
+              )
         );
-        const fee = await contract.estimateFee([msg]);
-        const feeAmount = extractFeeAmount(fee, native.token_id);
-
-        return {
-          type: wallet.type,
-          wallet,
-          fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs: [msg, ...giftMsg] },
-        };
       }
+      if (fromGift) {
+        msgs.push(
+          new GiftCard(wallet).createSpendMsg(
+            recipient.id,
+            fromGift,
+            token,
+            pctLiquidSplit
+          )
+        );
+      }
+
+      const msg: any = msgs[0];
+      console.log(JSON.parse(fromUtf8(msg.value.msg)));
+
+      const fee = await contract.estimateFee(msgs);
+      const feeAmount = extractFeeAmount(fee, native.token_id);
+
+      return {
+        type: wallet.type,
+        wallet,
+        fee: { amount: feeAmount, symbol: native.symbol },
+        tx: { fee, msgs },
+      };
     }
     // terra native transaction, send or contract interaction
     else if (wallet.type === "terra") {
       const scaledAmount = scaleToStr(token.amount, token.decimals);
-      if (token.type === "terra-native" || token.type === "ibc") {
-        const msg = new MsgSend(wallet.address, ap_wallets.terra, [
-          new Coin(token.token_id, scaledAmount),
-        ]);
 
-        const fee = await estimateTerraFee(wallet, [msg]);
-        const feeAmount = extractFeeAmount(fee, native.token_id);
+      const msg =
+        token.type === "terra-native" || token.type === "ibc"
+          ? new MsgSend(wallet.address, ap_wallets.terra, [
+              new Coin(token.token_id, scaledAmount),
+            ])
+          : new MsgExecuteContract(wallet.address, token.token_id, {
+              transfer: {
+                amount: scaledAmount,
+                recipient: ap_wallets.terra,
+              },
+            });
 
-        return {
-          type: wallet.type,
-          wallet,
-          fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs: [msg] },
-        };
-      } else {
-        const msg = new MsgExecuteContract(wallet.address, token.token_id, {
-          transfer: {
-            amount: scaledAmount,
-            recipient: ap_wallets.terra,
-          },
-        });
-        const fee = await estimateTerraFee(wallet, [msg]);
-        const feeAmount = extractFeeAmount(fee, native.token_id);
+      const fee = await estimateTerraFee(wallet, [msg]);
+      const feeAmount = extractFeeAmount(fee, native.token_id);
 
-        return {
-          type: wallet.type,
-          wallet,
-          fee: { amount: feeAmount, symbol: native.symbol },
-          tx: { fee, msgs: [msg] },
-        };
-      }
+      return {
+        type: wallet.type,
+        wallet,
+        fee: { amount: feeAmount, symbol: native.symbol },
+        tx: { fee, msgs: [msg] },
+      };
     }
     // evm transactions
     else {

@@ -1,7 +1,7 @@
 import { Asset, DepositPayload } from "types/contracts";
 import { Coin } from "types/cosmos";
 import { TokenWithAmount } from "types/slices";
-import { roundDown, roundDownToNum, scaleToStr } from "helpers";
+import { roundDown, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -28,11 +28,12 @@ export default class GiftCard extends Contract {
 
   createSpendMsg(
     endowId: number,
+    amount: number,
     token: TokenWithAmount,
     liquidSplit: string /** "1"- "100" */
   ) {
     const asset: Asset = {
-      amount: scaleToStr(token.amount, token.decimals),
+      amount: scaleToStr(amount, token.decimals),
       info:
         token.type === "cw20"
           ? { cw20: token.token_id }
