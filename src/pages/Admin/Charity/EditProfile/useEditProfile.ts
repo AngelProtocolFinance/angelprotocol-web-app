@@ -103,10 +103,11 @@ export default function useEditProfile() {
         JSON.stringify(profileUpdateMeta)
       );
 
+      const { successMeta: defaultMeta, willExecute, ...meta } = propMeta;
       await sendTx({
         msgs: [proposalMsg],
-        ...propMeta,
-        successMeta: propMeta.willExecute
+        ...meta,
+        successMeta: willExecute
           ? {
               message: "Profile has been updated!",
               link: {
@@ -114,8 +115,8 @@ export default function useEditProfile() {
                 description: "checkout new changes",
               },
             }
-          : propMeta.successMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
+          : defaultMeta,
+        tagPayloads: getTagPayloads(willExecute && "acc_profile"),
       });
     } catch (err) {
       handleError(err);
