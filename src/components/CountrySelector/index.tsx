@@ -30,6 +30,7 @@ export default function CountrySelector<
   K extends Path<T>
 >(props: {
   fieldName: T[K] extends CountryOption ? K : never;
+  onReset?(): void;
   placeholder?: string;
   classes?: {
     container?: string;
@@ -97,6 +98,7 @@ export default function CountrySelector<
           onClick={() => {
             onCountryChange(placeHolderCountryOption);
             setQuery("");
+            props.onReset && props.onReset();
           }}
         >
           <Icon type="Close" size={16} />

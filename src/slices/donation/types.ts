@@ -4,6 +4,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
+import { OptionType } from "components/Selector";
 
 export type DonationRecipient = {
   id: number;
@@ -28,6 +29,7 @@ export type KYC = {
   postalCode: string;
   country: CountryOption;
   state: string;
+  usState: OptionType<string>;
   email: string;
   hasAgreedToTerms: boolean;
   agreedToGetUpdates: boolean;

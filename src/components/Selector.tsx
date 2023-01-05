@@ -3,13 +3,13 @@ import { ErrorMessage } from "@hookform/error-message";
 import { ReactNode } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
-import { errorStyle } from "./constants";
 
 type ValKey = string | number;
 
 export type OptionType<V> = { label: string; value: V };
 type Classes = {
   container?: string;
+  button?: string;
 };
 
 type VarOption<M extends boolean, V extends ValKey> = M extends true
@@ -46,7 +46,7 @@ export function Selector<
   classes,
   multiple,
 }: Props<T, K, ValueType, Multiple>) {
-  const { container = "" } = classes || {};
+  const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange: onSelectedChange },
@@ -68,7 +68,9 @@ export function Selector<
         className={`relative ${container}`}
         multiple={multiple}
       >
-        <Listbox.Button className="w-full flex justify-between items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-transparent disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1">
+        <Listbox.Button
+          className={`${button} w-full flex justify-between items-center text-sm rounded border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+        >
           {({ open }) => (
             <>
               <span className={multiple ? "truncate" : ""}>
@@ -102,7 +104,7 @@ export function Selector<
           name={(multiple ? name : labelId) as any}
           errors={errors}
           as="p"
-          className={errorStyle}
+          className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
         />
       </Listbox>
       {children && children(selected as any)}
