@@ -29,7 +29,7 @@ export default function Views() {
         />
         <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
         <Route
-          path={`${appRoutes.donate}/:apiKey`}
+          path={`${appRoutes.donate_widget}/:apiKey`}
           element={<DonateWidget />}
         />
         <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
