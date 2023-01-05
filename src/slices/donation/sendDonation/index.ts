@@ -67,7 +67,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         updateTx({ hash });
 
         //invalidate cache entries
-        dispatch(invalidateApesTags(["chain", "donations"]));
+        dispatch(invalidateApesTags(["balances", "donations"]));
       } else {
         updateTx("error");
       }

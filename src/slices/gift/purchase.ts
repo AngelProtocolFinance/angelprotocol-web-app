@@ -26,6 +26,8 @@ export const purchase = createAsyncThunk<void, Args>(
         tx.msgs,
         tx.fee
       );
+
+      invalidateApesTags(["balances"]);
       if (!response.code) {
         /** recipient is specified, show tx link to purchaser */
         if (details.recipient) {
