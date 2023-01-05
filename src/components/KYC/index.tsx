@@ -16,12 +16,16 @@ export default function KYC(props: Props) {
       defaultValues = {
         hasAgreedToTerms: true,
         country: placeHolderCountryOption,
+        usState: { label: "", value: "" },
       };
     } else {
       defaultValues = { ...kyc };
     }
   } else {
-    defaultValues = { country: placeHolderCountryOption };
+    defaultValues = {
+      country: placeHolderCountryOption,
+      usState: { label: "", value: "" },
+    };
   }
 
   const methods = useForm<FormValues>({

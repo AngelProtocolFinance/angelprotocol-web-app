@@ -4,7 +4,7 @@ import { useCountriesQuery } from "services/countries";
 import { QueryLoader } from "components/admin";
 
 const containerStyle =
-  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d2 shadow-lg rounded overflow-y-scroll scroller";
+  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
 
 export default function Options({ query }: { query: string }) {
   const queryState = useCountriesQuery({});
@@ -37,7 +37,7 @@ export default function Options({ query }: { query: string }) {
                   <li
                     className={`${
                       active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                    } flex gap-2 p-2`}
+                    } flex gap-2 p-2 text-sm`}
                   >
                     <img
                       loading="lazy"

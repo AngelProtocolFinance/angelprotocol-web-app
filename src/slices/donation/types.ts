@@ -3,6 +3,7 @@ import { TransactionRequest } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { CreateTxOptions } from "types/terra";
 import { CosmosWallet, EVMWallet, TerraWallet } from "contexts/WalletContext";
+import { OptionType } from "components/Selector";
 import { Chain } from "constants/chains";
 
 export type DonationRecipient = {
@@ -27,6 +28,7 @@ export type KYC = {
   postalCode: string;
   country: CountryOption;
   state: string;
+  usState: OptionType<string>;
   email: string;
   hasAgreedToTerms: boolean;
   agreedToGetUpdates: boolean;

@@ -1,13 +1,13 @@
 import { FormValues as FV } from "../types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
+import { Selector } from "components/Selector";
 import { Label } from "components/form";
 import {
   BtnPrim,
   BtnSec,
   FileDropzone,
   LoadText,
-  Selector,
   TextInput,
   checkBoxStyle,
 } from "components/registration";
