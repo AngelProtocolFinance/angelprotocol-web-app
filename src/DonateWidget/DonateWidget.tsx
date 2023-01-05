@@ -4,10 +4,13 @@ import { QueryLoader } from "components/admin";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
+import { setToLightMode } from "helpers";
 
 export default function DonateWidget() {
   // const { apiKey } = useParams<{ apiKey: string }>();
   // const queryState = useEndowInfoByAPIKeyQuery(apiKey, { skip: !apiKey });
+
+  useEffect(() => setToLightMode(), []);
 
   return (
     <QueryLoader
