@@ -28,7 +28,6 @@ export type IconTypes =
   | "CloseCircle"
   | "StopWatch"
   | "Info"
-  | "InfoTriangle"
   | "CheckCircle"
   | "Exclamation"
   | "ExclamationCircle"

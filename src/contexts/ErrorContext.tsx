@@ -40,7 +40,6 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else if (instanceOfAPError(error)) {
         if (error instanceof WalletNotInstalledError) {
           showModal(Prompt, {
-            type: "info",
             headline: "Install Wallet",
             children: <InstallWallet providerId={error.providerId} />,
           });

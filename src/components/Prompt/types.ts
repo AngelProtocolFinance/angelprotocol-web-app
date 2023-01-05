@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 export type Props = PropsWithChildren<{
-  type?: "success" | "error" | "loading" | "info";
+  type?: "success" | "error" | "loading";
   headline?: string;
   title?: string;
 }>;
