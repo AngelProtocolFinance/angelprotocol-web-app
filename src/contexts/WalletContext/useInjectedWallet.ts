@@ -7,7 +7,7 @@ import {
   Web3Provider,
 } from "types/evm";
 import { Dwindow } from "types/window";
-import { useLazyTokensQuery } from "services/apes";
+import { useLazyChainQuery } from "services/apes";
 import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";
 import { logger } from "helpers";
 import { getProvider } from "helpers/getProvider";
@@ -27,7 +27,7 @@ export default function useInjectedWallet(
     connect,
   });
 
-  const [getTokens] = useLazyTokensQuery();
+  const [fetchChain] = useLazyChainQuery();
 
   /** persistent connection */
   useEffect(() => {
@@ -79,8 +79,8 @@ export default function useInjectedWallet(
       const provider = getProvider(id)!; //can't switch when wallet is not connected
       const chain = chains[chainId];
       //TODO:also hardcode basic native details for chain?
-      const tokens = await getTokens(chainId).unwrap();
-      const native = tokens[0]; //evm chains have only one native token
+      const fetched = await fetchChain(chainId).unwrap();
+      const native = fetched.native_currency; //evm chains have only one native token
       await provider
         .request({
           method: EIPMethods.wallet_switchEthereumChain,
