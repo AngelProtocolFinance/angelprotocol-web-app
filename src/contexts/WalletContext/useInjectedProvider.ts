@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Wallet, WalletMeta, WalletState } from "./types";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
-import { Dwindow } from "types/window";
 import { useLazyChainQuery } from "services/apes";
 import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";
 import { logger } from "helpers";
 import { getProvider } from "helpers/getProvider";
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
+import { isXdefiPrioritized } from "./helpers/assertions";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import { isEVM } from "./helpers/walletType";
 
@@ -121,11 +121,10 @@ export default function useInjectedWallet(
       /** isMobile check not needed, just hide this wallet on mobile */
 
       /** xdefi checks */
-      const xfiEth = (window as Dwindow).xfi?.ethereum;
-      if (id === "xdefi-evm" && !xfiEth?.isMetaMask) {
+      if (id === "xdefi-evm" && !isXdefiPrioritized()) {
         if (!isNew) return;
         return toast.warn("Kindly prioritize Xdefi and reload the page");
-      } else if (id !== "xdefi-evm" && xfiEth?.isMetaMask) {
+      } else if (id !== "xdefi-evm" && isXdefiPrioritized()) {
         if (!isNew) return;
         return toast.warn(
           "Kindly remove priority to Xdefi and reload the page"
