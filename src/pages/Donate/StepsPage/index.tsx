@@ -120,14 +120,8 @@ function CurrStep(props: DonationState) {
   }
 }
 
-function isHeadingShown(state: DonationState) {
-  switch (state.step) {
-    case 4:
-      if (state.status === "error") return false;
-      if ("hash" in state.status) return false;
-      //only show progress on loading
-      return true;
-    default:
-      return true;
-  }
+function isHeadingShown(state: DonationState): boolean {
+  return (
+    state.step !== 4 || (state.status !== "error" && !("hash" in state.status))
+  );
 }
