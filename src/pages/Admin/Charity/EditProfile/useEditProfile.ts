@@ -19,6 +19,7 @@ import {
   getTagPayloads,
 } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { appRoutes } from "constants/routes";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -105,6 +106,15 @@ export default function useEditProfile() {
       await sendTx({
         msgs: [proposalMsg],
         ...propMeta,
+        successMeta: propMeta.willExecute
+          ? {
+              message: "Profile has been updated!",
+              link: {
+                url: `${appRoutes.profile}/${endowmentId}`,
+                description: "checkout new changes",
+              },
+            }
+          : propMeta.successMeta,
         tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
       });
     } catch (err) {
