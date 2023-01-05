@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useWalletContext } from "contexts/WalletContext";
+import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { Tooltip } from "components/gift";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
@@ -44,7 +44,7 @@ function CurrStep(props: GiftState) {
       return <Tooltip type="Loading" message="Loading wallet" />;
     }
 
-    if (Array.isArray(wallet)) {
+    if (isDisconnected(wallet)) {
       return (
         <Tooltip
           type="Info"

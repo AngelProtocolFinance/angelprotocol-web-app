@@ -85,7 +85,7 @@ function CurrStep(props: DonationState) {
       return <Tooltip type="Loading" message="Loading wallet" />;
     }
 
-    if (Array.isArray(wallet)) {
+    if (isDisconnected(wallet)) {
       return (
         <Tooltip
           type="Info"
