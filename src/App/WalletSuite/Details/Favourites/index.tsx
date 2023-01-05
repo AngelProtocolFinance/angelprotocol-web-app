@@ -7,7 +7,7 @@ const MAX_ELEMENTS_TO_DISPLAY = 7;
 
 export default function Favourites() {
   const wallet = useConnectedWallet();
-  const { data: profile, isError } = useProfileQuery(wallet.address);
+  const queryState = useProfileQuery(wallet.address);
 
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
@@ -27,20 +27,16 @@ export default function Favourites() {
         </Link> */}
       </h3>
       <QueryLoader
-        queryState={{
-          data: profile?.endowments,
-          isError: isError,
-          isLoading: false,
-        }}
+        queryState={queryState}
         messages={{
-          empty: "No favourites",
+          loading: "Fetching favorites..",
           error: "Failed to get favorite organisations.",
         }}
         classes={{ container: "text-xs gap-1" }}
       >
-        {(bookmarks) => (
+        {(profile) => (
           <ul className="grid gap-1">
-            {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
+            {profile.endowments?.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
               <Favourite key={b.id} {...b} />
             ))}
           </ul>
