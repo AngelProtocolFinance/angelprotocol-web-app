@@ -3,12 +3,14 @@ import { FormValues as FV, Props } from "../types";
 import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
+import { Selector } from "components/Selector";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
+import { states } from "./us-states";
 import useSubmit from "./useSubmit";
 
 export const formStyle =
@@ -16,11 +18,16 @@ export const formStyle =
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
+    watch,
     handleSubmit,
+    resetField,
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const submit = useSubmit(props);
   const isPostKyc = props.type === "post-donation";
+
+  const country = watch("country.name");
+  const isUS = /united states/i.test(country);
 
   return (
     <form
@@ -68,6 +75,7 @@ export default function Form({ classes = "", ...props }: Props) {
         <CountrySelector<FV, "country">
           placeholder="Select a country"
           fieldName="country"
+          onReset={() => resetField("usState")}
           classes={{
             container:
               "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
@@ -77,12 +85,26 @@ export default function Form({ classes = "", ...props }: Props) {
           }}
         />
       </div>
-      <TextInput<FV>
-        name="state"
-        label="State"
-        required={false}
-        placeholder="e.g. England"
-      />
+      {isUS ? (
+        <div className="grid relative">
+          <Label htmlFor="usState" className="mb-2" required={false}>
+            State
+          </Label>
+          <Selector<FV, "usState", string, false>
+            name="usState"
+            options={states}
+            classes={{ container: "bg-white dark:bg-blue-d6" }}
+          />
+        </div>
+      ) : (
+        <TextInput<FV>
+          name="state"
+          label="State"
+          required={false}
+          placeholder="e.g. England"
+        />
+      )}
+
       <TextInput<FV>
         name="email"
         label="Email address"

@@ -1,5 +1,5 @@
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "components/registration";
+import { OptionType } from "components/Selector";
 
 export const roles: { [key in ContactRoles]: string } = {
   president: "Chairperson / President",

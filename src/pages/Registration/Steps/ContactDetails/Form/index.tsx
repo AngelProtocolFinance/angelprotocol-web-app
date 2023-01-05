@@ -1,12 +1,8 @@
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
+import { Selector } from "components/Selector";
 import { Label } from "components/form";
-import {
-  BtnPrim,
-  LoadText,
-  Selector,
-  TextInput,
-} from "components/registration";
+import { BtnPrim, LoadText, TextInput } from "components/registration";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 
