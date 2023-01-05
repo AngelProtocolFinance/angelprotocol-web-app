@@ -1,9 +1,10 @@
 import { Donation, KYCData } from "types/aws";
 import CsvExporter from "components/CsvExporter";
 import ExtLink from "components/ExtLink";
+import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { HeaderButton, useSort } from "components/donations";
+import { useSort } from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 
 export default function Table(props: { donations: Donation[] }) {
