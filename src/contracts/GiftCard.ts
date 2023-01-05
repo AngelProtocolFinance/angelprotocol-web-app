@@ -1,5 +1,5 @@
+import { Coin } from "@cosmjs/proto-signing";
 import { Asset, DepositPayload } from "types/contracts";
-import { Coin } from "types/cosmos";
 import { TokenWithAmount } from "types/slices";
 import { roundDown, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";

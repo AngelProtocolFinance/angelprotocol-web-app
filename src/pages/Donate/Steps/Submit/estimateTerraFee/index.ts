@@ -1,4 +1,4 @@
-import { Msg, TerraFee } from "types/terra";
+import type { Fee, Msg } from "@terra-money/terra.js";
 import { ConnectedWallet } from "contexts/WalletContext";
 import { chains } from "constants/chains";
 import { denoms } from "constants/tokens";
@@ -7,7 +7,7 @@ import getTerraClient from "./getTerraClient";
 export default async function estimateTerraFee(
   wallet: ConnectedWallet,
   msgs: Msg[]
-): Promise<TerraFee> {
+): Promise<Fee> {
   const chain = chains[wallet.chainId];
   const client = getTerraClient(wallet.chainId, chain.lcd);
 

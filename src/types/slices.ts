@@ -1,5 +1,6 @@
+import { EncodeObject } from "@cosmjs/proto-signing";
+import { StdFee } from "@cosmjs/stargate";
 import { TokenWithBalance } from "services/types";
-import { EncodeObject, StdFee } from "types/cosmos";
 
 export type TxOptions = {
   msgs: EncodeObject[];

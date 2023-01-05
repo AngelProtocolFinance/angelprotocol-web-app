@@ -1,4 +1,4 @@
-import { ChainInfo } from "types/cosmos";
+import { ChainInfo } from "@keplr-wallet/types";
 import { StaticRegistry, _chains } from "constants/chains";
 
 const id: keyof StaticRegistry = "uni-5";

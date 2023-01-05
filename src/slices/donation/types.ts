@@ -1,7 +1,7 @@
+import { TransactionRequest } from "@ethersproject/providers";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { CountryOption } from "services/types";
-import { TransactionRequest } from "types/evm";
 import { TokenWithAmount, TxOptions } from "types/slices";
-import { CreateTxOptions } from "types/terra";
 import { CosmosWallet, EVMWallet, TerraWallet } from "contexts/WalletContext";
 import { OptionType } from "components/Selector";
 import { Chain } from "constants/chains";

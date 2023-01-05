@@ -1,4 +1,4 @@
-import { parseRawLog } from "./cosmos";
+import { parseRawLog } from "@cosmjs/stargate/build/logs";
 
 export function getWasmAttribute(attribute: string, rawLog?: string) {
   const logs = parseRawLog(rawLog);

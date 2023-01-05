@@ -1,9 +1,10 @@
+import { Contract } from "@ethersproject/contracts";
+import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { Estimate, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
-import { EVMContract, TransactionResponse, Web3Provider } from "types/evm";
 import { TokenWithAmount } from "types/slices";
 import { apesTags, invalidateApesTags } from "services/apes";
 import { getProvider, logger } from "helpers";
@@ -107,7 +108,7 @@ async function sendTransaction(
       if (token.type === "evm-native") {
         response = await signer.sendTransaction(tx);
       } else {
-        const ER20Contract: any = new EVMContract(
+        const ER20Contract: any = new Contract(
           token.token_id,
           ERC20Abi,
           signer

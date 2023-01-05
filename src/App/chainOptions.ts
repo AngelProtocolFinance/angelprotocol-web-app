@@ -1,4 +1,4 @@
-import { WalletControllerChainOptions } from "types/terra";
+import { WalletControllerChainOptions } from "@terra-money/wallet-provider";
 import { IS_TEST } from "constants/env";
 
 /**

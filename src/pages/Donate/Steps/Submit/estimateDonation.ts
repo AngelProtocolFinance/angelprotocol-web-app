@@ -1,14 +1,15 @@
 import { fromUtf8 } from "@cosmjs/encoding";
+import { Contract } from "@ethersproject/contracts";
+import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
+import { formatUnits, parseUnits } from "@ethersproject/units";
+import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
-import { EVMContract, TransactionRequest, Web3Provider } from "types/evm";
-import { Coin, MsgExecuteContract, MsgSend } from "types/terra";
 import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
-import { formatUnits, parseUnits } from "helpers/evm";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
@@ -111,7 +112,7 @@ export async function estimateDonation({
         const minFee = gasLimit.mul(gasPrice);
         feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       } else {
-        const ER20Contract: any = new EVMContract(
+        const ER20Contract: any = new Contract(
           token.token_id,
           ERC20Abi,
           signer

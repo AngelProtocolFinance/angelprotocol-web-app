@@ -1,5 +1,5 @@
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { Estimate } from "./types";
-import { MsgExecuteContractEncodeObject } from "types/cosmos";
 import { WithCosmosWallet } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";

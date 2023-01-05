@@ -1,3 +1,4 @@
+import { formatUnits } from "@ethersproject/units";
 import {
   ContractCallContext,
   ContractCallReturnContext,
@@ -5,7 +6,6 @@ import {
 } from "ethereum-multicall";
 import { TokenWithBalance } from "services/types";
 import { Token } from "types/aws";
-import { formatUnits } from "helpers/evm";
 import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
 export async function getERC20Holdings(

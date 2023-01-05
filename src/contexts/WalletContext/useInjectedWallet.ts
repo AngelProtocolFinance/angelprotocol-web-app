@@ -1,11 +1,8 @@
+import { Web3Provider } from "@ethersproject/providers";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Wallet, WalletMeta, WalletState } from "./types";
-import {
-  AccountChangeHandler,
-  ChainChangeHandler,
-  Web3Provider,
-} from "types/evm";
+import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { Dwindow } from "types/window";
 import { useLazyChainQuery } from "services/apes";
 import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";

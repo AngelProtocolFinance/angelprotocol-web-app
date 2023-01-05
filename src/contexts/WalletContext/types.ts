@@ -1,6 +1,6 @@
-import { SigningCosmWasmClient } from "types/cosmos";
-import { JsonRpcSigner } from "types/evm";
-import { TerraConnectedWallet } from "types/terra";
+import type { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import type { JsonRpcSigner } from "@ethersproject/providers";
+import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 
 export type ProviderId =
   | "binance-wallet"

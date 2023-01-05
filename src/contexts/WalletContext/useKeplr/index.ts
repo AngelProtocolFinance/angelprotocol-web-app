@@ -1,7 +1,8 @@
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { GasPrice } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Wallet, WalletState } from "../types";
-import { GasPrice, SigningCosmWasmClient } from "types/cosmos";
 import { Dwindow } from "types/window";
 import icon from "assets/icons/wallets/keplr.png";
 import { chainIds, chains } from "constants/chains";

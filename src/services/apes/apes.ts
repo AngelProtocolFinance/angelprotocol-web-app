@@ -1,11 +1,11 @@
+import { Coin } from "@cosmjs/proto-signing";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { formatUnits } from "@ethersproject/units";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CosmosBalances, TokenWithBalance } from "services/types";
 import { FetchedChain, Token, WithdrawLog } from "types/aws";
-import { Coin } from "types/cosmos";
-import { JsonRpcProvider } from "types/evm";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum } from "helpers";
-import { formatUnits } from "helpers/evm";
 import { chains } from "constants/chains";
 import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";

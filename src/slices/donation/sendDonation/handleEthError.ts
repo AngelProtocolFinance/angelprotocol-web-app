@@ -1,4 +1,4 @@
-import { EVMErrors } from "types/evm";
+import { ErrorCode as errors } from "@ethersproject/logger";
 import { logger } from "helpers";
 
 /** TODO: use this with sendDonation */
@@ -16,19 +16,19 @@ export default function handleEthError(error: any, handler: any) {
       break;
     //https://eips.ethereum.org/EIPS/eip-1474#error-codes
     case 32603:
-    case EVMErrors.SERVER_ERROR:
+    case errors.SERVER_ERROR:
       handler({
         step: "error",
         message: "Error connecting to server. Please try again later.",
       });
       break;
-    case EVMErrors.TIMEOUT:
+    case errors.TIMEOUT:
       handler({
         step: "error",
         message: "Transaction timed out.",
       });
       break;
-    case EVMErrors.ACTION_REJECTED:
+    case errors.ACTION_REJECTED:
       handler({
         step: "error",
         message: "Transaction cancelled.",

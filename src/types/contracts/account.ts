@@ -1,4 +1,4 @@
-import { Coin } from "types/cosmos";
+import { Coin } from "@cosmjs/proto-signing";
 import {
   Asset,
   CapitalizedEndowmentType,

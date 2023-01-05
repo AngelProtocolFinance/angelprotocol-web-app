@@ -1,12 +1,12 @@
-import { useWallet } from "@terra-money/wallet-provider";
-import { toast } from "react-toastify";
-import { ProviderId, Wallet } from "./types";
 import {
   ConnectType,
-  TerraConnection,
-  TerraInstallation,
+  Connection,
+  Installation,
   WalletStatus,
-} from "types/terra";
+  useWallet,
+} from "@terra-money/wallet-provider";
+import { toast } from "react-toastify";
+import { ProviderId, Wallet } from "./types";
 import { Dwindow } from "types/window";
 
 const XDEFI_ID = "xdefi-wallet";
@@ -23,7 +23,7 @@ export default function useTerra2(): Wallet[] {
     post,
   } = useWallet();
 
-  function toWallet(c: TerraInstallation | TerraConnection): Wallet {
+  function toWallet(c: Installation | Connection): Wallet {
     return {
       id: (c?.identifier as ProviderId) || c.type.toLowerCase(),
       type: "terra",
@@ -66,7 +66,7 @@ export default function useTerra2(): Wallet[] {
     .concat(availableInstallations.filter(_filter).map((i) => toWallet(i)));
 }
 
-function _filter<T extends TerraConnection | TerraInstallation>(conn: T) {
+function _filter<T extends Connection | Installation>(conn: T) {
   const id = conn.identifier;
   return (
     id === XDEFI_ID ||

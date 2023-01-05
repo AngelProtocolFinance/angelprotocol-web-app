@@ -1,12 +1,12 @@
-import { TxError } from "./types";
-import { TimeoutError } from "types/cosmos";
+import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,
   Timeout,
   TxFailed,
   TxUnspecifiedError,
   UserDenied,
-} from "types/terra";
+} from "@terra-money/wallet-provider";
+import { TxError } from "./types";
 import { logger } from "helpers";
 import {
   CosmosTxSimulationFail,

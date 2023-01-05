@@ -1,15 +1,15 @@
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
+import { toUtf8 } from "@cosmjs/encoding";
+import { Coin, EncodeObject } from "@cosmjs/proto-signing";
 import {
-  Coin,
-  EncodeObject,
   GasPrice,
-  MsgExecuteContractEncodeObject,
   MsgSendEncodeObject,
   StdFee,
-} from "types/cosmos";
+  calculateFee,
+} from "@cosmjs/stargate";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { CosmosWallet } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
-import { calculateFee, toUtf8 } from "helpers/cosmos";
 import { CosmosTxSimulationFail } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { junoDenom } from "constants/tokens";
