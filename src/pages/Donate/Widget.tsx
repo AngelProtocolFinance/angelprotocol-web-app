@@ -1,3 +1,5 @@
+import Steps from "./Steps";
+
 export default function Widget() {
-  return <div>Widget</div>;
+  return <Steps />;
 }
