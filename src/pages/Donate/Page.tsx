@@ -1,28 +1,21 @@
 import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
-import KYC from "components/KYC";
 import KadoModal from "components/KadoModal";
-import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
-  resetDetails,
   setRecipient,
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
-import Donater from "./Donater";
-import Progress from "./Progress";
-import Result from "./Result";
-import Submit from "./Submit";
+import Steps from "./Steps";
 
-export default function StepsPage(props: DonationRecipient) {
+export default function Page(props: DonationRecipient) {
   const { showModal } = useModalContext();
+  const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
 
-  const dispatch = useSetter();
   useEffect(() => {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
@@ -48,6 +41,7 @@ export default function StepsPage(props: DonationRecipient) {
           },
         ]}
       />
+
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug mb-4">
@@ -62,62 +56,12 @@ export default function StepsPage(props: DonationRecipient) {
               Buy some to make your donation
             </button>
           </span>
-          <Progress classes="my-12" />
         </>
       )}
 
-      <CurrStep {...state} />
+      <Steps />
     </div>
   );
-}
-
-function CurrStep(props: DonationState) {
-  const dispatch = useSetter();
-  const { wallet, isLoading } = useGetWallet();
-
-  /** reset form state when user disconnects, user might change wallet */
-  useEffect(() => {
-    !wallet && dispatch(resetDetails());
-  }, [wallet, dispatch]);
-
-  if (props.step <= 3) {
-    if (isLoading) {
-      return <Tooltip type="Loading" message="Loading wallet" />;
-    }
-
-    if (!wallet) {
-      return (
-        <Tooltip
-          type="Info"
-          message="You need to connect your wallet to make a donation"
-        />
-      );
-    }
-    switch (props.step) {
-      case 3: {
-        return <Submit {...props} wallet={wallet} />;
-      }
-      case 2: {
-        return (
-          <KYC
-            type="on-donation"
-            state={props}
-            classes="grid gap-5 sm:grid-cols-2"
-          />
-        );
-      }
-      case 1: {
-        return <Donater {...props} wallet={wallet} />;
-      }
-      default: {
-        return <></>; // <Steps /> sets to step 1 onMount
-      }
-    }
-  } else if (props.step === 4) {
-    return <Result {...props} classes="justify-self-center mt-16" />;
-  } else {
-    return <></>;
-  }
 }
 
 function isHeadingShown(state: DonationState): boolean {
