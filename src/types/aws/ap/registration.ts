@@ -39,7 +39,7 @@ export type InitReg = {
   PK: string;
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
-  RegistrationStatus: "Inactive";
+  RegistrationStatus: RegistrationStatus;
   UN_SDG: UNSDG_NUMS[];
 };
 
