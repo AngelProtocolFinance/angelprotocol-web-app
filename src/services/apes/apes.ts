@@ -7,7 +7,6 @@ import { UnsupportedChainError } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
-import { apesTags } from "./tags";
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -15,17 +14,17 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: [apesTags.chain, apesTags.withdraw_logs],
+  tagTypes: ["chain", "withdraw_logs", "donations"],
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
     }),
     withdrawLogs: builder.query<WithdrawLog[], string>({
-      providesTags: [{ type: apesTags.withdraw_logs }],
+      providesTags: ["withdraw_logs"],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
     chain: builder.query<Chain, { address?: string; chainId?: string }>({
-      providesTags: [{ type: apesTags.chain }],
+      providesTags: ["chain"],
       async queryFn({ address, chainId }) {
         try {
           if (!chainId) {

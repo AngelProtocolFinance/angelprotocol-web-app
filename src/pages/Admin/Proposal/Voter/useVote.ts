@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { adminTags, customTags, junoTags } from "services/juno/tags";
+import { adminTags, customTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
@@ -37,8 +37,8 @@ export default function useVote() {
       msgs: [voteMsg],
       tagPayloads: [
         invalidateJunoTags([
-          { type: junoTags.custom, id: customTags.proposalDetails },
-          { type: junoTags.admin, id: adminTags.proposals },
+          { type: "custom", id: customTags.proposalDetails },
+          { type: "admin", id: adminTags.proposals },
         ]),
       ],
     });

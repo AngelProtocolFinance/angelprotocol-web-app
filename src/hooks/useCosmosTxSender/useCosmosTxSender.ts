@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
 import { TxOptions } from "types/slices";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
@@ -75,7 +75,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
 
       if (!response.code) {
         //always invalidate cached chain data to reflect balance changes from fee deduction
-        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+        dispatch(invalidateApesTags(["chain"]));
 
         /** invalidate custom cache entries, after some delay so that query result
               would reflect the changes made */

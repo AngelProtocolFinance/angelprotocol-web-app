@@ -11,7 +11,6 @@ import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
-import { awsTags } from "./tags";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
@@ -29,7 +28,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.admin, awsTags.profile, awsTags.endowments],
+  tagTypes: ["airdrop", "admin", "profile", "endowments"],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -37,21 +36,21 @@ export const aws = createApi({
       PaginatedAWSQueryRes<Endowment[]>,
       EndowmentsQueryRequest
     >({
-      providesTags: [{ type: awsTags.endowments }],
+      providesTags: [{ type: "endowments" }],
       query: (request) => {
         const params: EndowmentsQueryParams = getParams(request);
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
     profile: builder.query<WalletProfile, string>({
-      providesTags: [{ type: awsTags.profile }],
+      providesTags: [{ type: "profile" }],
       query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
       unknown,
       { type: "add" | "delete"; wallet: string } & EndowmentBookmark
     >({
-      invalidatesTags: [{ type: awsTags.profile }],
+      invalidatesTags: [{ type: "profile" }],
       query: ({ type, ...payload }) => {
         return {
           url: "/v1/bookmarks",

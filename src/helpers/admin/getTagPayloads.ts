@@ -6,7 +6,6 @@ import {
   adminTags,
   defaultProposalTags,
   indexfundTags,
-  junoTags,
   registrarTags,
 } from "services/juno/tags";
 
@@ -16,7 +15,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   switch (type) {
     case "if_alliance":
       _tags.push({
-        type: junoTags.indexfund,
+        type: "indexfund",
         id: indexfundTags.alliance_members,
       });
       break;
@@ -24,7 +23,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "if_create":
     case "if_members": //fund members shown via selecFromResult (fund_list)
       _tags.push({
-        type: junoTags.indexfund,
+        type: "indexfund",
         id: indexfundTags.fund_list,
       });
       break;
@@ -32,14 +31,14 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "if_config":
     case "if_owner":
       _tags.push({
-        type: junoTags.indexfund,
+        type: "indexfund",
         id: indexfundTags.config,
       });
       break;
 
     case "cw4_members":
       _tags.push({
-        type: junoTags.admin,
+        type: "admin",
         id: adminTags.members,
       });
       break;
@@ -47,28 +46,28 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "review_cw3_config":
     case "cw3_config":
       _tags.push({
-        type: junoTags.admin,
+        type: "admin",
         id: adminTags.config,
       });
       break;
 
     case "acc_withdraw":
       _tags.push({
-        type: junoTags.account,
+        type: "account",
         id: accountTags.balance,
       });
       break;
 
     case "acc_profile":
       _tags.push({
-        type: junoTags.account,
+        type: "account",
         id: accountTags.profile,
       });
       break;
 
     case "acc_endow_status":
       _tags.push({
-        type: junoTags.account,
+        type: "account",
         id: accountTags.endowments,
       });
       break;
@@ -76,7 +75,7 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
     case "reg_owner":
     case "reg_config":
       _tags.push({
-        type: junoTags.registrar,
+        type: "registrar",
         id: registrarTags.config,
       });
       break;

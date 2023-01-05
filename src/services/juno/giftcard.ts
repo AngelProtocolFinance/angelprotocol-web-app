@@ -5,7 +5,7 @@ import { UnexpectedStateError } from "errors/errors";
 import { contracts } from "constants/contracts";
 import { junoApi } from ".";
 import { genQueryPath } from "./queryContract/genQueryPath";
-import { customTags, junoTags } from "./tags";
+import { customTags } from "./tags";
 
 export const giftcardApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,7 +13,7 @@ export const giftcardApi = junoApi.injectEndpoints({
       Result<"giftcardBalance">,
       Args<"giftcardBalance"> & { supportedTokens: Token[] }
     >({
-      providesTags: [{ type: junoTags.custom, id: customTags.giftcard }],
+      providesTags: [{ type: "custom", id: customTags.giftcard }],
       query: (args) =>
         genQueryPath("giftcardBalance", args, contracts.gift_cards),
       transformResponse: (res: Res<"giftcardBalance">, _, args) => {
