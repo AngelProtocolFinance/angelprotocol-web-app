@@ -17,7 +17,7 @@ export function Steps() {
 
   return (
     <div className="justify-self-center grid">
-      {isHeadingShown(state) && (
+      {!isFinalized(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug mb-4">
             You're about to make a donation to {state.recipient?.name}
@@ -40,8 +40,8 @@ export function Steps() {
   );
 }
 
-function isHeadingShown(state: DonationState): boolean {
+function isFinalized(state: DonationState): boolean {
   return (
-    state.step !== 4 || (state.status !== "error" && !("hash" in state.status))
+    state.step === 4 && (state.status === "error" || "hash" in state.status)
   );
 }
