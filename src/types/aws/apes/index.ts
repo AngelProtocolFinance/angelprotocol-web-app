@@ -1,5 +1,4 @@
 import { ProposalStatus } from "../../contracts";
-import { NetworkType } from "../../lists";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
@@ -44,16 +43,6 @@ export type TToken = {
 export type BaseChain = {
   chain_id: string;
   chain_name: string; // Avalanche Fuji Testnet
-};
-
-export type Chain = BaseChain & {
-  block_explorer_url: string; // https://testnet.snowtrace.io
-  lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
-  native_currency: Token;
-  network_type: NetworkType;
-  rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
-  tokens: Token[];
-  type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
 };
 
 export type FetchedChain = {
