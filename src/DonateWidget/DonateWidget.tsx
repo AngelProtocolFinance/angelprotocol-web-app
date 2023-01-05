@@ -1,10 +1,8 @@
 // import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { QueryLoader } from "components/admin";
-import { Steps } from "components/donation";
-import { useSetter } from "store/accessors";
-import { setRecipient } from "slices/donation";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+import Content from "./Content";
 
 const isPrevThemeDark = isPrevDark();
 
@@ -48,14 +46,4 @@ export default function DonateWidget() {
       )}
     </QueryLoader>
   );
-}
-
-function Content(props: { id: number; name: string; isKYCRequired: boolean }) {
-  const dispatch = useSetter();
-
-  useEffect(() => {
-    dispatch(setRecipient(props));
-  }, [dispatch, props]);
-
-  return <Steps />;
 }
