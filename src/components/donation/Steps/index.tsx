@@ -11,7 +11,7 @@ import Progress from "./Progress";
 import Result from "./Result";
 import Submit from "./Submit";
 
-export default function Steps() {
+export function Steps() {
   const state = useGetter((state) => state.donation);
 
   return (

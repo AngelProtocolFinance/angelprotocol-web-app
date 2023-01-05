@@ -1,11 +1,11 @@
 // import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { QueryLoader } from "components/admin";
+import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
-import Steps from "./Steps";
 
-export default function Widget() {
+export default function DonateWidget() {
   // const { apiKey } = useParams<{ apiKey: string }>();
   // const queryState = useEndowInfoByAPIKeyQuery(apiKey, { skip: !apiKey });
 

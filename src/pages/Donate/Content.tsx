@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Breadcrumbs from "components/Breadcrumbs";
 import KadoModal from "components/KadoModal";
+import { Steps } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
@@ -9,7 +10,6 @@ import {
   setRecipient,
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
-import Steps from "./Steps";
 
 export default function Page(props: DonationRecipient) {
   const { showModal } = useModalContext();

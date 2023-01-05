@@ -11,7 +11,7 @@ const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateWidget = lazy(() => import("pages/Donate/Widget"));
+const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Gift = lazy(() => import("pages/Gift"));
 
 export default function Views() {
