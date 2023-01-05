@@ -4,7 +4,7 @@ import {
   Multicall,
 } from "ethereum-multicall";
 import { TokenWithBalance } from "services/types";
-import { TToken } from "types/aws";
+import { Token } from "types/aws";
 import { formatUnits } from "helpers/evm";
 import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
@@ -12,7 +12,7 @@ export async function getERC20Holdings(
   //ethers.providers
   nodeUrl: string,
   holderAddress: string,
-  tokens: TToken[]
+  tokens: Token[]
 ): Promise<TokenWithBalance[]> {
   if (tokens.length <= 0) return [];
 

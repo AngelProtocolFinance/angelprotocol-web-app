@@ -31,8 +31,6 @@ export default function MyEndowments() {
 
   if (!data?.admin?.length) return null;
 
-  console.log(data);
-
   return (
     <Container>
       <Heading />

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CosmosBalances, TokenWithBalance } from "services/types";
-import { BaseChain, FetchedChain, TToken, WithdrawLog } from "types/aws";
+import { FetchedChain, Token, WithdrawLog } from "types/aws";
 import { Coin } from "types/cosmos";
 import { JsonRpcProvider } from "types/evm";
 import { queryContract } from "services/juno/queryContract";
@@ -23,7 +23,7 @@ export const apes = createApi({
   }),
   tagTypes: [apesTags.chain, apesTags.withdraw_logs],
   endpoints: (builder) => ({
-    chains: builder.query<BaseChain[], unknown>({
+    chains: builder.query<FetchedChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
     }),
     chain: builder.query<FetchedChain, string>({
@@ -141,7 +141,7 @@ export const {
 } = apes;
 
 type TokenType = "natives" | "alts";
-function segragate(tokens: TToken[]): { [key in TokenType]: TToken[] } {
+function segragate(tokens: Token[]): { [key in TokenType]: Token[] } {
   return tokens.reduce((result, token) => {
     const type: TokenType =
       token.type === "ibc" || token.type.includes("native")
@@ -165,7 +165,7 @@ function toMap(coins: Coin[]): BalMap {
 }
 function getBal(
   map: PromiseSettledResult<BalMap> | BalMap,
-  { token_id, decimals }: TToken
+  { token_id, decimals }: Token
 ) {
   if (isPromise(map)) {
     if (map.status === "rejected") return 0;
