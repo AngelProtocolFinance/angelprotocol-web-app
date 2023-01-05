@@ -69,7 +69,9 @@ function PromptIcon({
           className={common + " text-red"}
         />
       );
-    default:
+    case "loading":
       return <LoaderRing thickness={12} classes={common + " h-24"} />;
+    default:
+      return null;
   }
 }
