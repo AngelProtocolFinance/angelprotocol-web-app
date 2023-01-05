@@ -42,7 +42,7 @@ export default function Donations() {
                 className="absolute top-0 ml-3 text-gray-d1"
               />
               <input
-                className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6"
+                className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6 rounded-md"
                 type="text"
                 placeholder="Search by recipient name, network or currency..."
                 value={searchTerm}
