@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
 } from "react";
-import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { logger } from "helpers";
 import {
@@ -12,6 +11,7 @@ import {
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "errors/errors";
+import { useModalContext } from "../ModalContext";
 import InstallWallet from "./InstallWalletContent";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
