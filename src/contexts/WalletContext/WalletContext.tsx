@@ -3,26 +3,26 @@ import { ConnectedWallet, ContextState, DisconnectedWallet } from "./types";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import useInjectedWallet from "./useInjectedWallet";
-import useKeplr from "./useKeplr";
+import useInjectedProvider from "./useInjectedProvider";
+import useKeplr from "./useKeplr/useKeplr";
 import useTerra from "./useTerra";
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
-  const metamask = useInjectedWallet({
+  const metamask = useInjectedProvider({
     id: "metamask",
     logo: metamaskIcon,
     name: "Metamask",
     installUrl:
       "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
   });
-  const binance = useInjectedWallet({
+  const binance = useInjectedProvider({
     id: "binance-wallet",
     logo: binanceWalletIcon,
     name: "Binance wallet",
     installUrl:
       "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp",
   });
-  const xdefiEvm = useInjectedWallet({
+  const xdefiEvm = useInjectedProvider({
     id: "xdefi-evm",
     logo: xdefiIcon,
     name: "Xdefi ethereum",
