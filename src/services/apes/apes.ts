@@ -71,9 +71,14 @@ export const apes = createApi({
               ])
             ),
             ...tokens.alts.map((x) =>
-              queryContract("cw20Balance", x.token_id, {
-                addr: address,
-              })
+              queryContract(
+                "cw20Balance",
+                x.token_id,
+                {
+                  addr: address,
+                },
+                chain.lcd
+              )
             ),
           ]);
 

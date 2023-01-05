@@ -22,7 +22,7 @@ export default function Balance() {
       >
         BAL: {humanize(+token.balance, 3)} {token.symbol}
       </button>
-      {token.gift && (
+      {token.gift ? (
         <button
           type="button"
           onClick={() => setMaxVal(token.gift || 0)}
@@ -31,7 +31,7 @@ export default function Balance() {
           <Icon type="Giftcard" className="w-4 h-4 text-green mr-0.5" />
           {humanize(+token.gift, 3)}
         </button>
-      )}
+      ) : null}
     </div>
   );
 }

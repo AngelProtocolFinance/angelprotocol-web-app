@@ -21,7 +21,7 @@ export default function TokenSelector<
 }) {
   const { setValue } = useFormContext<BaseFormValue>();
   const {
-    field: { onChange: onTokenChange, value: token },
+    field: { onChange: onTokenChange, value: token = initialToken },
   } = useController<BaseFormValue>({
     name: props.fieldName,
   });
@@ -91,3 +91,16 @@ export default function TokenSelector<
     </Combobox>
   );
 }
+
+const initialToken: TokenWithAmount = {
+  amount: "0",
+  approved: true,
+  balance: 0,
+  decimals: 6,
+  logo: "",
+  min_donation_amnt: 0,
+  name: "",
+  symbol: "",
+  token_id: "",
+  type: "evm-native",
+};

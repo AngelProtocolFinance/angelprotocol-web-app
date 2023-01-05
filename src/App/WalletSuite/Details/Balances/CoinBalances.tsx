@@ -57,7 +57,7 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
           <img src={t.logo} className="w-6 h-6 object-contain" alt="" />
           <span className="mr-auto ml-2">{t.symbol}</span>
 
-          {t.gift && (
+          {t.gift ? (
             <>
               <Icon
                 type="Giftcard"
@@ -67,7 +67,7 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
                 {humanize(t.gift, 3, true)}
               </span>
             </>
-          )}
+          ) : null}
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}

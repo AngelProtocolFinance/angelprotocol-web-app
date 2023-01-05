@@ -59,11 +59,11 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       <Row title="Amount:">
         {token.symbol} {humanize(fromBal, 4)}
       </Row>
-      {fromGift && (
+      {fromGift ? (
         <Row title="Giftcard:">
           {token.symbol} {humanize(fromGift, 4)}
         </Row>
-      )}
+      ) : null}
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <BtnSec onClick={goBack} type="button">
