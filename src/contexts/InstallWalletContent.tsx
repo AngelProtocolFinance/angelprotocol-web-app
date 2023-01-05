@@ -9,7 +9,7 @@ export default function InstallWallet(props: {
   const { installUrl, logo, name } = WALLET_METADATA[props.providerId];
 
   return (
-    <div className="flex flex-col gap-5 w-full px-4 pb-4">
+    <div className="flex flex-col gap-5 w-full px-4 pt-8 pb-4">
       <ExtLink
         className="border border-blue-l1 dark:border-none dark:bg-blue-d2 hover:bg-blue rounded-2xl p-3 md:p-5 flex items-center"
         href={installUrl}
