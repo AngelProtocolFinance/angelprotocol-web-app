@@ -4,13 +4,27 @@ import { QueryLoader } from "components/admin";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
-import { setToLightMode } from "helpers";
+import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+
+const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
   // const { apiKey } = useParams<{ apiKey: string }>();
   // const queryState = useEndowInfoByAPIKeyQuery(apiKey, { skip: !apiKey });
 
-  useEffect(() => setToLightMode(), []);
+  /**
+   * need to set the theme to light, but after widget is closed we need to
+   * reverse the user selected theme on the main webapp to the previous theme
+   */
+  useEffect(() => {
+    if (isPrevThemeDark) {
+      setToLightMode();
+    }
+
+    return () => {
+      isPrevThemeDark && setToDarkMode();
+    };
+  }, []);
 
   return (
     <QueryLoader
