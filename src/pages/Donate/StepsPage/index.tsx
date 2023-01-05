@@ -18,7 +18,7 @@ import Progress from "./Progress";
 import Result from "./Result";
 import Submit from "./Submit";
 
-export default function Steps(props: DonationRecipient) {
+export default function StepsPage(props: DonationRecipient) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 
