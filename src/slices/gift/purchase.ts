@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "types/slices";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { CosmosWallet } from "contexts/WalletContext";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
 import { APIs } from "constants/urls";
@@ -71,7 +71,7 @@ export const purchase = createAsyncThunk<void, Args>(
       updateTx({ error: "Unexpected error occured. Please try again later." });
     } finally {
       /** invalidate user balance */
-      dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+      dispatch(invalidateApesTags(["balances"]));
     }
   }
 );

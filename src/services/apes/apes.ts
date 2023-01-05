@@ -11,7 +11,6 @@ import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
-import { apesTags } from "./tags";
 
 type BalMap = { [index: string]: string | undefined };
 
@@ -21,7 +20,7 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: [apesTags.chain, apesTags.withdraw_logs],
+  tagTypes: ["chain", "withdraw_logs", "balances", "donations"],
   endpoints: (builder) => ({
     chains: builder.query<FetchedChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
@@ -30,14 +29,14 @@ export const apes = createApi({
       query: (chainId) => `v1/chain/${chainId}`,
     }),
     withdrawLogs: builder.query<WithdrawLog[], string>({
-      providesTags: [{ type: apesTags.withdraw_logs }],
+      providesTags: ["withdraw_logs"],
       query: (cw3) => `v1/withdraw/${cw3}`,
     }),
     balances: builder.query<
       TokenWithBalance[],
       { address: string; chainId: string }
     >({
-      providesTags: [{ type: apesTags.chain }],
+      providesTags: ["balances"],
       async queryFn({ address, chainId }, api, options, baseQuery) {
         const chain = chains[chainId];
         const { data } = await baseQuery(`v1/chain/${chainId}`);

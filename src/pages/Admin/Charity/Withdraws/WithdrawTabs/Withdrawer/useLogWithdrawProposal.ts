@@ -1,5 +1,5 @@
 import { AccountType } from "types/contracts";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
@@ -58,7 +58,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         tx: { hash: res.transactionHash, chainID },
       });
 
-      dispatch(invalidateApesTags([apesTags.withdraw_logs]));
+      dispatch(invalidateApesTags(["withdraw_logs"]));
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {

@@ -1,7 +1,7 @@
 import { isDeliverTxSuccess } from "@cosmjs/stargate";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
@@ -66,7 +66,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
 
       if (isDeliverTxSuccess(response)) {
         //always invalidate cached chain data to reflect balance changes from fee deduction
-        dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+        dispatch(invalidateApesTags(["balances"]));
 
         /** invalidate custom cache entries, after some delay so that query result
               would reflect the changes made */
