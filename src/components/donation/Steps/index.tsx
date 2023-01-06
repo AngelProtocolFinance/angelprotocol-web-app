@@ -19,10 +19,10 @@ export function Steps() {
     <div className="justify-self-center grid">
       {!isFinalized(state) && (
         <>
-          <h3 className="text-center text-3xl font-bold leading-snug mb-4">
+          <h3 className="text-center text-xl sm:text-3xl font-bold leading-snug mb-4">
             You're about to make a donation to {state.recipient?.name}
           </h3>
-          <span className="text-center font-normal text-sm">
+          <span className="text-center font-normal text-xs sm:text-sm">
             Don't have crypto in your wallet?{" "}
             <button
               className="font-bold underline hover:text-orange transition ease-in-out duration-300"
