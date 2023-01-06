@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { FilterFormValues } from "../types";
 import { DonationsQueryParams } from "types/aws";
 import Icon from "components/Icon";
-import removeEmptyValue from "helpers/removeEmptyValue";
+import { cleanObject } from "helpers/cleanObject";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -37,7 +37,7 @@ const Filter = ({ setFilterValues }: { setFilterValues: Function }) => {
 
   async function submit(data: FilterFormValues) {
     let filters = transformToDonationsQueryParams(data);
-    removeEmptyValue(filters);
+    cleanObject(filters);
     setFilterValues(() => {
       return { ...filters };
     });

@@ -12,12 +12,8 @@ import { ImgLink } from "components/ImgEditor";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import {
-  cleanObject,
-  genDiffMeta,
-  getPayloadDiff,
-  getTagPayloads,
-} from "helpers/admin";
+import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 
 // import optimizeImage from "./optimizeImage";
