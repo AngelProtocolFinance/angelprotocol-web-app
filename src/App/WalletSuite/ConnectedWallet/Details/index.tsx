@@ -56,7 +56,7 @@ export default function Details(props: WalletState) {
               <MyEndowments endowments={profile.admin} />
             )}
 
-            <WalletDetails {...props} />
+            {/* <WalletDetails {...props} /> */}
             <MyDonations address={props.address} />
             <Favourites bookmarks={profile?.endowments} isError={isError} />
             <DisconnectBtn />
