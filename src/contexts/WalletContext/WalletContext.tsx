@@ -258,11 +258,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [
             keplrConnection,
+            ...(IS_TEST ? [] : [keplrWCConnection]),
             metamaskConnection,
+            binanceWalletConnection,
             xdefiConnection,
             ...terraConnections,
-            binanceWalletConnection,
-            ...(IS_TEST ? [] : [keplrWCConnection]),
           ],
           disconnect,
           switchChain,
