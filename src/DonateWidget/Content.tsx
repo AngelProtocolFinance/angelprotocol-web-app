@@ -20,7 +20,9 @@ export default function Content(props: {
   return (
     <div className="padded-container flex flex-col max-w-3xl h-screen">
       <header className="flex justify-between items-center w-full h-[90px]">
-        <span>{getPossessiveForm(props.name)} endowment</span>
+        <h1 className="text-3xl font-heading font-bold">
+          {getPossessiveForm(props.name)} endowment
+        </h1>
         <WalletSuite />
       </header>
       <section className="h-full">
