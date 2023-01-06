@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
+import APLogo from "components/APLogo";
 import Balances from "components/Balances";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
@@ -41,7 +41,7 @@ export default function Content(props: {
         <Steps />
       </section>
       <footer className="flex justify-center items-center h-20 bg-blue dark:bg-blue-d3">
-        <img src={angelProtocolLogo} alt="" className="w-20 object-contain" />
+        <APLogo className="w-20" />
       </footer>
     </div>
   );
