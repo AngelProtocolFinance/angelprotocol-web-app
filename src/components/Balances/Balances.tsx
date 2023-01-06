@@ -3,14 +3,12 @@ import { useBalanceQuery } from "services/juno/account";
 import { QueryLoader } from "components/admin";
 import { condense, humanize } from "helpers";
 import { axlUSDCDenom } from "constants/tokens";
-import { useProfileContext } from "../../../ProfileContext";
 
 const CONTAINER_STYLE =
   "flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray md:items-start md:h-28 md:px-6 md:py-04";
 
-export default function Balances() {
-  const profile = useProfileContext();
-  const queryState = useBalanceQuery({ id: profile.id });
+export default function Balances({ profileId }: { profileId: number }) {
+  const queryState = useBalanceQuery({ id: profileId });
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
