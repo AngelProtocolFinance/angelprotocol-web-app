@@ -17,10 +17,11 @@ export function getProvider(
       return dwindow.BinanceChain;
     case "metamask":
       return dwindow.ethereum;
-    case "xdefi-evm":
-      return dwindow.xfi?.ethereum;
+    /** only used in sendTx */
     case "evm-wc":
       return WCProvider as unknown as InjectedProvider;
+    case "xdefi-evm":
+      return dwindow.xfi?.ethereum;
     default:
       return undefined;
   }

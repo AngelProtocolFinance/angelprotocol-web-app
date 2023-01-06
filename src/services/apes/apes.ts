@@ -53,13 +53,11 @@ export const apes = createApi({
 
           // fetch balances for juno or terra
           if (chain.type === "juno-native" || chain.type === "terra-native") {
-            const balancesRes = await fetch(
+            const { balances: nativeBalances } = await fetch(
               chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`
-            );
-
-            // returns only positive balances
-            const { balances: nativeBalances }: { balances: Coin[] } =
-              await balancesRes.json();
+            )
+              .then<{ balances: Coin[] }>((res) => res.json())
+              .catch(() => ({ balances: [] as Coin[] }));
 
             // checking providerId to know which specific wallet is connected
             // this way once Terra v2 is enabled on Keplr again, the users will be able to
