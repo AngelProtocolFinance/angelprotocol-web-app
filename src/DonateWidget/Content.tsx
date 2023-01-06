@@ -22,7 +22,20 @@ export default function Content(props: {
         <span>{getPossessiveForm(props.name)} endowment</span>
         <WalletSuite />
       </header>
-      <Steps />
+      <section>
+        <p>
+          Donate today to {getPossessiveForm(props.name)} endowment. Your
+          donation will be protected and compounded in perpetuity to provide{" "}
+          {props.name} with a long-term, sustainable runway. Give once, give
+          forever!
+        </p>
+        <p>
+          Make sure to check out the many crypto and fiat donation options. You
+          will be given the chance to provide your personal details to receive
+          an immediate tax receipt.
+        </p>
+        <Steps />
+      </section>
     </div>
   );
 }

@@ -7,11 +7,17 @@ import { axlUSDCDenom } from "constants/tokens";
 const CONTAINER_STYLE =
   "flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray md:items-start md:h-28 md:px-6 md:py-04";
 
-export default function Balances({ profileId }: { profileId: number }) {
+type Props = { profileId: number; direction?: "row" | "column" };
+
+export default function Balances({ profileId, direction = "row" }: Props) {
   const queryState = useBalanceQuery({ id: profileId });
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div
+      className={`flex ${
+        direction === "column" ? "flex-col" : ""
+      } items-center gap-4 w-full`}
+    >
       <Balance
         queryState={queryState}
         title="Total Value"

@@ -10,7 +10,7 @@ export default function DetailsColumn({ className }: { className: string }) {
 
   return (
     <div className="flex flex-col gap-6 w-full">
-      <Balances profileId={profile.id} />
+      <Balances profileId={profile.id} direction="column" />
 
       <div
         className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-gray-l2 rounded text-gray-d2 dark:bg-blue-d6 dark:border-bluegray dark:text-white`}
