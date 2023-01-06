@@ -1,6 +1,7 @@
 // import { useParams } from "react-router-dom";
 import WalletSuite from "App/WalletSuite";
 import { useEffect } from "react";
+import Balances from "components/Balances";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
@@ -34,6 +35,7 @@ export default function Content(props: {
           will be given the chance to provide your personal details to receive
           an immediate tax receipt.
         </p>
+        <Balances profileId={props.id} />
         <Steps />
       </section>
     </div>
