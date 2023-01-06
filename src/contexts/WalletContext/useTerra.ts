@@ -7,6 +7,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
+import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,
@@ -64,6 +65,14 @@ export default function useTerra() {
       }))
     );
 
+  const wcConnection: Connection = {
+    name: "Terra Station Mobile",
+    logo: station_icon,
+    async connect() {
+      connect(ConnectType.WALLETCONNECT);
+    },
+  };
+
   const switchChain = async (chainId: chainIDs) => {
     if (!connection) {
       throw new WalletDisconnectedError();
@@ -79,6 +88,7 @@ export default function useTerra() {
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
+    wcConnection,
     disconnectTerra: disconnect,
     terraInfo,
     switchChain,
@@ -92,7 +102,6 @@ function _filter<T extends TerraConnection | Installation>(conn: T) {
   return (
     identifier === "xdefi-wallet" ||
     identifier === "leap-wallet" ||
-    identifier === "station" ||
-    conn.type === ConnectType.WALLETCONNECT
+    identifier === "station"
   );
 }

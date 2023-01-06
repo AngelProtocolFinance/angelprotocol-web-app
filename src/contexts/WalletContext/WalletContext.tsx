@@ -80,6 +80,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     isTerraLoading,
     terraConnections,
+    wcConnection: terraWCConnection,
     disconnectTerra,
     terraInfo,
     supportedChains: terraSupportedChains,
@@ -253,8 +254,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [activeProvider, giftcardCoins, chain]);
 
   const wcConnections = [
+    /** keplr wc client doesn't support has suggestChain so testnet info can't be integrated */
     ...(IS_TEST ? [] : [keplrWCConnection]),
     evmWCConnection,
+    terraWCConnection,
   ];
 
   return (
