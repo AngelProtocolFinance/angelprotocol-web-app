@@ -12,6 +12,7 @@ export type ProviderId =
   | "leap-wallet"
   | "station"
   | "walletconnect"
+  | "keplr-wc"
   | "keplr";
 
 export type WithoutInstallers = Exclude<
@@ -23,7 +24,7 @@ export type Connection = {
   logo: string;
   installUrl?: string;
   name: string;
-  connect(args?: string): Promise<void>;
+  connect(args?: any): Promise<void>;
 };
 
 export type ProviderInfo = {

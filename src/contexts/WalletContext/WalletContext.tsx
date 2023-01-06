@@ -16,6 +16,7 @@ import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
+import useKeplrWC from "./wallet-connect/useKeplrWC";
 
 export type WalletState = {
   walletIcon: string;
@@ -104,6 +105,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     switchChain: switchXdefiChain,
   } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
 
+  const {
+    isLoading: isKeplrWCLoading,
+    connection: keplrWCConnection,
+    disconnect: disconnectKeplrWC,
+    providerInfo: keplrWCInfo,
+  } = useKeplrWC();
+
   const providerStatuses: ProviderStatus[] = [
     {
       providerInfo: binanceWalletInfo,
@@ -136,6 +144,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       supportedChains: xdefiSupportedChains,
       switchChain: switchXdefiChain,
     },
+    {
+      providerInfo: keplrWCInfo,
+      isLoading: isKeplrWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc keplr can't switch chain");
+      },
+    },
   ];
 
   const activeProvider = providerStatuses.find(
@@ -155,6 +171,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "keplr":
         disconnectKeplr();
+        break;
+      case "keplr-wc":
+        disconnectKeplrWC();
         break;
       case "xdefi-wallet":
       case "station":
@@ -242,6 +261,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             xdefiConnection,
             ...terraConnections,
             binanceWalletConnection,
+            ...(IS_TEST ? [] : [keplrWCConnection]),
           ],
           disconnect,
           switchChain,

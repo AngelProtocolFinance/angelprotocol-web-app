@@ -2427,7 +2427,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/keccak256@npm:5.7.0, @ethersproject/keccak256@npm:^5.7.0":
+"@ethersproject/keccak256@npm:5.7.0, @ethersproject/keccak256@npm:^5.5.0, @ethersproject/keccak256@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/keccak256@npm:5.7.0"
   dependencies:
@@ -3242,6 +3242,65 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@keplr-wallet/common@npm:0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/common@npm:0.11.31"
+  dependencies:
+    "@keplr-wallet/crypto": 0.11.31
+    buffer: ^6.0.3
+    delay: ^4.4.0
+  checksum: efd6c9344c7fa7cd799db39b37891cd3bf60af241205efd9bdb1903188e62490edc3ec94cd272a9484c363a34a7924b5dd0a73ec7d53e682758a1b1654d847c0
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/crypto@npm:0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/crypto@npm:0.11.31"
+  dependencies:
+    "@ethersproject/keccak256": ^5.5.0
+    bip32: ^2.0.6
+    bip39: ^3.0.3
+    bs58check: ^2.1.2
+    buffer: ^6.0.3
+    crypto-js: ^4.0.0
+    elliptic: ^6.5.3
+    sha.js: ^2.4.11
+  checksum: 06ef0953107c52b2ca6c1c723c4af2edd801e1df26d041f342f9bb55f091c1f4a3a47a6d7164d8c687a7a10dcde5840c0b9d450c21fa10886e8f7153d1c81eb3
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/provider@npm:0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/provider@npm:0.11.31"
+  dependencies:
+    "@keplr-wallet/router": 0.11.31
+    "@keplr-wallet/types": 0.11.31
+    buffer: ^6.0.3
+    deepmerge: ^4.2.2
+    long: ^4.0.0
+    secretjs: 0.17.7
+  checksum: 32302842f78818c18993719c1650c41c1f5bc5e803b8c42073c7d791e416f9b4d4605d9ade946a79ef0572da3c5c13f41167d0e06af7ae64b423bae9c6c5a389
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/router@npm:0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/router@npm:0.11.31"
+  checksum: c78485ab69c7e0f1fbd47702e849e7cd09c8d5548aa481db15448e80d53a326e4deeac9bc675f7d1071f6bb15a9b3fa4a87511e05730bc91a8d6b1ea86eb6490
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/types@npm:0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/types@npm:0.11.31"
+  dependencies:
+    axios: ^0.27.2
+    long: ^4.0.0
+    secretjs: 0.17.7
+  checksum: ba75750ebba578884a3db99bd607b6fc34725feb0a6c6164a66a22a5ab12b6d118d804a6a33d7c149e4932f99fedbeeadbfd8545d9567a8703c4b9592220cb4a
+  languageName: node
+  linkType: hard
+
 "@keplr-wallet/types@npm:^0.11.3":
   version: 0.11.3
   resolution: "@keplr-wallet/types@npm:0.11.3"
@@ -3252,6 +3311,35 @@ __metadata:
     long: ^4.0.0
     secretjs: 0.17.7
   checksum: c507267f76ae3985409c52cadd0d515b4ebc4775d9cd82ae9c166cd310ee916d3edb9e7811649a542da35d616f94df656614649f0c751842e789939aed5ec337
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/wc-client@npm:^0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/wc-client@npm:0.11.31"
+  dependencies:
+    "@keplr-wallet/common": 0.11.31
+    "@keplr-wallet/provider": 0.11.31
+    "@keplr-wallet/types": 0.11.31
+    "@walletconnect/types": ^1.6.4
+    "@walletconnect/utils": ^1.6.4
+    buffer: ^6.0.3
+    deepmerge: ^4.2.2
+    secretjs: 0.17.7
+  checksum: 00d49506df10eba1bbacba73b5bd4fe319b72f2487f692c91aa090469de00a545be91ef5b74538d7946bbde50d55b35a6fa7254ef2b5aec9b92e654bd96fb8f7
+  languageName: node
+  linkType: hard
+
+"@keplr-wallet/wc-qrcode-modal@npm:^0.11.31":
+  version: 0.11.31
+  resolution: "@keplr-wallet/wc-qrcode-modal@npm:0.11.31"
+  dependencies:
+    "@walletconnect/browser-utils": ^1.6.5
+    "@walletconnect/types": ^1.6.5
+    qrcode.react: ^1.0.1
+    react: ^16.14.0
+    react-dom: ^16.14.0
+  checksum: 04cd59b4e0f33cdc65e909592c991006695b7eea39769fb13c008d58fa9112b8baea244575dc596c1dc2f973b20fee8b5df7ff649e8402955aff5857c78e22dd
   languageName: node
   linkType: hard
 
@@ -4742,7 +4830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/browser-utils@npm:^1.8.0":
+"@walletconnect/browser-utils@npm:^1.6.5, @walletconnect/browser-utils@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/browser-utils@npm:1.8.0"
   dependencies:
@@ -4755,7 +4843,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/core@npm:^1.6.6":
+"@walletconnect/client@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@walletconnect/client@npm:1.8.0"
+  dependencies:
+    "@walletconnect/core": ^1.8.0
+    "@walletconnect/iso-crypto": ^1.8.0
+    "@walletconnect/types": ^1.8.0
+    "@walletconnect/utils": ^1.8.0
+  checksum: 48aab7d11eeaaccf6612d335766eb6439f2ce3c446a87b7a974b6fb11076d3bc000f947c0822790fdaa6ba50df073c581750eb5dcda47359bf29c94b76919394
+  languageName: node
+  linkType: hard
+
+"@walletconnect/core@npm:^1.6.6, @walletconnect/core@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/core@npm:1.8.0"
   dependencies:
@@ -4796,7 +4896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/iso-crypto@npm:^1.6.6":
+"@walletconnect/iso-crypto@npm:^1.6.6, @walletconnect/iso-crypto@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/iso-crypto@npm:1.8.0"
   dependencies:
@@ -4855,14 +4955,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0":
+"@walletconnect/types@npm:^1.6.4, @walletconnect/types@npm:^1.6.5, @walletconnect/types@npm:^1.6.6, @walletconnect/types@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/types@npm:1.8.0"
   checksum: 194d615888068030183489222641332987846aa5c6bcf0a62fa60ca7a282b9f94932c49fcd2b293a859e98624fe3e7a2d3c5fb66545fe30d3391e7ac91a99e34
   languageName: node
   linkType: hard
 
-"@walletconnect/utils@npm:^1.6.6, @walletconnect/utils@npm:^1.8.0":
+"@walletconnect/utils@npm:^1.6.4, @walletconnect/utils@npm:^1.6.6, @walletconnect/utils@npm:^1.8.0":
   version: 1.8.0
   resolution: "@walletconnect/utils@npm:1.8.0"
   dependencies:
@@ -5382,6 +5482,8 @@ __metadata:
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": ^2.9.8
     "@keplr-wallet/types": ^0.11.3
+    "@keplr-wallet/wc-client": ^0.11.31
+    "@keplr-wallet/wc-qrcode-modal": ^0.11.31
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
     "@terra-money/terra.js": ^3.1.7
@@ -5402,6 +5504,7 @@ __metadata:
     "@types/react-helmet": ^6.1.6
     "@types/react-router-dom": ^5.1.8
     "@types/react-test-renderer": 18.0.0
+    "@walletconnect/client": ^1.8.0
     buffer: ^6.0.3
     compress.js: ^1.2.2
     cropperjs: ^1.5.12
@@ -6338,7 +6441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bs58check@npm:<3.0.0, bs58check@npm:^2.1.1":
+"bs58check@npm:<3.0.0, bs58check@npm:^2.1.1, bs58check@npm:^2.1.2":
   version: 2.1.2
   resolution: "bs58check@npm:2.1.2"
   dependencies:
@@ -7125,6 +7228,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"crypto-js@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "crypto-js@npm:4.1.1"
+  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
+  languageName: node
+  linkType: hard
+
 "crypto-random-string@npm:^2.0.0":
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
@@ -7575,6 +7685,13 @@ __metadata:
   version: 1.0.0
   resolution: "defined@npm:1.0.0"
   checksum: 77672997c5001773371c4dbcce98da0b3dc43089d6da2ad87c4b800adb727633cea8723ea3889fe0c2112a2404e2fd07e3bfd0e55f7426aa6441d8992045dbd5
+  languageName: node
+  linkType: hard
+
+"delay@npm:^4.4.0":
+  version: 4.4.1
+  resolution: "delay@npm:4.4.1"
+  checksum: 97b001126a3979a398b6c5f33e437d78acda3b19731d9e6f991a05e2e09e7a410d655b8fdcaedc05743928bb533c0ac9401826cccb2af71c81d2cab50e199351
   languageName: node
   linkType: hard
 
@@ -14382,7 +14499,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -14506,6 +14623,26 @@ __metadata:
   version: 1.5.1
   resolution: "q@npm:1.5.1"
   checksum: 147baa93c805bc1200ed698bdf9c72e9e42c05f96d007e33a558b5fdfd63e5ea130e99313f28efc1783e90e6bdb4e48b67a36fcc026b7b09202437ae88a1fb12
+  languageName: node
+  linkType: hard
+
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: 5ac6c393967bdeaa660e7fd3a501a25eb538c1f6008a4d30ab2b97bbe520e5c236530090773f1578aa0a523cdaa6923c866615e21143f9e7cd22abd41c789b69
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "qrcode.react@npm:1.0.1"
+  dependencies:
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.0
+    qr.js: 0.0.0
+  peerDependencies:
+    react: ^15.5.3 || ^16.0.0 || ^17.0.0
+  checksum: 154a9557d103fa776cd99bc0d2600b862be74872ff965052533bc38ea0606c4d0965b4dd6df93e53f1db86699517a25db2718bbbc08c5d535a90c0d335552e9a
   languageName: node
   linkType: hard
 
@@ -14733,6 +14870,20 @@ __metadata:
     strip-ansi: ^6.0.1
     text-table: ^0.2.0
   checksum: 2c6917e47f03d9595044770b0f883a61c6b660fcaa97b8ba459a1d57c9cca9aa374cd51296b22d461ff5e432105dbe6f04732dab128e52729c79239e1c23ab56
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^16.14.0":
+  version: 16.14.0
+  resolution: "react-dom@npm:16.14.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+    scheduler: ^0.19.1
+  peerDependencies:
+    react: ^16.14.0
+  checksum: 5a5c49da0f106b2655a69f96c622c347febcd10532db391c262b26aec225b235357d9da1834103457683482ab1b229af7a50f6927a6b70e53150275e31785544
   languageName: node
   linkType: hard
 
@@ -14998,6 +15149,17 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 6b6980ced93fa2b72662d5e4ab3b4896833586940047ce52ca9aca801e5432adf05fcbe28289b0af3ce6a2a7c590974e25dcc8aa43d0de658bfe8bbcd686f958
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.14.0":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+  checksum: 8484f3ecb13414526f2a7412190575fc134da785c02695eb92bb6028c930bfe1c238d7be2a125088fec663cc7cda0a3623373c46807cf2c281f49c34b79881ac
   languageName: node
   linkType: hard
 
@@ -15556,6 +15718,16 @@ __metadata:
   dependencies:
     xmlchars: ^2.2.0
   checksum: 5636b55cf15f7cf0baa73f2797bf992bdcf75d1b39d82c0aa4608555c774368f6ac321cb641fd5f3d3ceb87805122cd47540da6a7b5960fe0dbdb8f8c263f000
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.19.1":
+  version: 0.19.1
+  resolution: "scheduler@npm:0.19.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: 73e185a59e2ff5aa3609f5b9cb97ddd376f89e1610579d29939d952411ca6eb7a24907a4ea4556569dacb931467a1a4a56d94fe809ef713aa76748642cd96a6c
   languageName: node
   linkType: hard
 
