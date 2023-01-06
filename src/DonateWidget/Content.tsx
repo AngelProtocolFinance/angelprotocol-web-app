@@ -1,7 +1,7 @@
-import WalletSuite from "App/WalletSuite";
 import { useEffect } from "react";
 import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
 import Balances from "components/Balances";
+import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
