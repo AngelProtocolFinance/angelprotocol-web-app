@@ -3,17 +3,13 @@ import { useBalanceQuery } from "services/juno/account";
 import { axlUSDCDenom } from "constants/tokens";
 import Balance from "./Balance";
 
-type Props = { profileId: number; direction?: "row" | "column" };
+type Props = { profileId: number };
 
-export default function Balances({ profileId, direction = "row" }: Props) {
+export default function Balances({ profileId }: Props) {
   const queryState = useBalanceQuery({ id: profileId });
 
   return (
-    <div
-      className={`flex ${
-        direction === "column" ? "flex-col" : ""
-      } items-center gap-4 w-full`}
-    >
+    <div className="flex items-center gap-4 w-full">
       <Balance
         queryState={queryState}
         title="Total Value"

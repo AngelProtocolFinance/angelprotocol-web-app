@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import APLogo from "components/APLogo";
-import Balances from "components/Balances";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
+import Balances from "./Balances";
 
 export default function Content(props: {
   id: number;
