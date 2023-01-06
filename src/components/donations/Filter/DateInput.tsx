@@ -18,7 +18,7 @@ export default function DateInput<T extends FieldValues>({
       <input
         {...register(name as any)}
         type="date"
-        className="relative w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-sm dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
+        className="relative w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
         placeholder={placeholder}
       />
       <ErrorMessage

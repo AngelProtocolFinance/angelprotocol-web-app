@@ -36,7 +36,7 @@ const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
   }
 
   return (
-    <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 sm:max-h-[3.1rem] border border-gray-l2 dark:border-bluegray rounded-md sm:rounded-sm dark:bg-blue-d6">
+    <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 sm:max-h-[3.1rem] border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:bg-blue-d6">
       <Popover.Button
         ref={buttonRef}
         className={

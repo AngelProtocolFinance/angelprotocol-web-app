@@ -12,7 +12,7 @@ const CurrencyDropdown: FC = () => {
       <select
         {...register("currency")}
         className={
-          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-sm p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
+          "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-md border-collapse p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
         }
       >
         <option value="default">

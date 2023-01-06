@@ -11,12 +11,8 @@ const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
   submit,
 }) => {
   return (
-    <Popover.Panel className="fixed min-w-[100vw] min-h-[100vh] top-0 left-0 sm:top-auto sm:left-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:rounded-sm sm:mt-4">
-      <form
-        className="flex flex-col h-screen bg-white sm:h-fit"
-        onSubmit={submit}
-        method="get"
-      >
+    <Popover.Panel className="fixed min-w-[100vw] min-h-[100vh] top-0 left-0 right-0 bottom-0 sm:top-auto sm:left-auto sm:bottom-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:mt-4 sm:rounded-md sm:border-collapse sm:overflow-hidden bg-white">
+      <form className="flex flex-col" onSubmit={submit} method="get">
         <div className="flex sm:hidden justify-between border-b-[1px] bg-orange-l6 dark:bg-blue-d7 border-gray-l2 dark:border-bluegray">
           <h2 className="text-xl text-orange font-bold p-5 uppercase">
             Filters
