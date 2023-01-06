@@ -1,5 +1,6 @@
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
+import { useFormContext } from "react-hook-form";
 import { FilterFormValues as FV } from "../types";
 import Icon from "components/Icon";
 import Controls from "./Controls";
@@ -10,6 +11,14 @@ import NetworkDropdown from "./NetworkDropdown";
 const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
   submit,
 }) => {
+  const { setValue } = useFormContext<FV>();
+
+  const handleStartDateChange = () => {
+    setValue("endDate", new Date().toISOString().slice(0, 10), {
+      shouldDirty: true,
+    });
+  };
+
   return (
     <Popover.Panel
       as="form"
@@ -27,7 +36,11 @@ const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
         <div className="order-2 sm:order-1 flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
           <div className="grid gap-2 grid-cols-2">
             <label className="col-span-full">Date</label>
-            <DateInput<FV> name="startDate" placeholder="From" />
+            <DateInput<FV>
+              name="startDate"
+              placeholder="From"
+              onChange={handleStartDateChange}
+            />
             <DateInput<FV> name="endDate" placeholder="To" />
           </div>
           <NetworkDropdown />

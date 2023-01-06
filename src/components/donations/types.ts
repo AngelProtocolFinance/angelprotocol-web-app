@@ -7,8 +7,8 @@ export type SortKey = keyof Pick<
 >;
 
 export type FilterFormValues = {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   network: string;
   currency: string;
 };

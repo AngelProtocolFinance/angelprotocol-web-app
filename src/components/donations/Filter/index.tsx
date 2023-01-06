@@ -17,6 +17,12 @@ const Filter = ({ setFilterValues }: { setFilterValues: Function }) => {
   const methods = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
+    defaultValues: {
+      startDate: "",
+      endDate: "",
+      network: "default",
+      currency: "default",
+    },
   });
 
   const { handleSubmit } = methods;
@@ -28,7 +34,9 @@ const Filter = ({ setFilterValues }: { setFilterValues: Function }) => {
       id: address,
       transactionDate:
         data.startDate && data.endDate
-          ? `${data.startDate.toISOString()} ${data.endDate.toISOString()}`
+          ? `${new Date(data.startDate).toISOString()} ${new Date(
+              data.endDate
+            ).toISOString()}`
           : "",
       chainName: data.network !== "default" ? data.network : "",
       denomination: data.currency !== "default" ? data.currency : "",
