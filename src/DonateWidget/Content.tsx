@@ -25,14 +25,14 @@ export default function Content(props: {
         </h1>
         <WalletSuite />
       </header>
-      <section className="h-full">
-        <p>
+      <section className="flex flex-col gap-5 h-full">
+        <p className="font-body">
           Donate today to {getPossessiveForm(props.name)} endowment. Your
           donation will be protected and compounded in perpetuity to provide{" "}
           {props.name} with a long-term, sustainable runway. Give once, give
           forever!
         </p>
-        <p>
+        <p className="font-body">
           Make sure to check out the many crypto and fiat donation options. You
           will be given the chance to provide your personal details to receive
           an immediate tax receipt.
