@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   updateAWSQueryData,
   useEndowmentsQuery,
@@ -12,13 +13,18 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers } =
     useGetter((state) => state.component.marketFilter);
 
+  const selectedSDGs = useMemo(
+    () => Object.entries(sdgGroups).flatMap(([, members]) => members),
+    [sdgGroups]
+  );
+
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    query: searchText,
-    sort,
-    endow_types,
-    tiers,
-    sdgGroups,
-    kyc_only,
+    query: searchText || "matchall",
+    sort: sort ? `${sort.key}+${sort.direction}` : "default",
+    endow_types: endow_types.join(",") || null,
+    tiers: tiers.join(",") || null,
+    sdgs: selectedSDGs.join(",") || 0,
+    kyc_only: kyc_only.join(",") || null,
     start: 0,
   });
 

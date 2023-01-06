@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Sort } from "types/aws";
+import { Sort } from "./types";
 import { CapitalizedEndowmentType } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { initialState } from "./constants";
