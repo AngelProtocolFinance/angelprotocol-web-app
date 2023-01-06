@@ -190,6 +190,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     disconnectBinanceWallet,
     disconnectXdefi,
     disconnectKeplr,
+    disconnectKeplrWC,
     disconnectTerra,
   ]);
 
