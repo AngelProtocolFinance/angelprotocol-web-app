@@ -19,9 +19,6 @@ export function Steps({ className = "" }: { className?: string }) {
     <div className={`justify-self-center grid ${className}`}>
       {!isFinalized(state) && (
         <>
-          <h3 className="text-center text-xl sm:text-3xl font-bold leading-snug mb-4">
-            You're about to make a donation to {state.recipient?.name}
-          </h3>
           <span className="text-center font-normal text-xs sm:text-sm">
             Don't have crypto in your wallet?{" "}
             <button

@@ -40,7 +40,7 @@ export default function Content(props: {
           </p>
           <Balances profileId={props.id} />
 
-          <Steps className="w-3/4" />
+          <Steps className="mt-5 w-3/4" />
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
