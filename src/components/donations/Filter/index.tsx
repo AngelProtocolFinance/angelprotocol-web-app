@@ -2,13 +2,17 @@ import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FilterFormValues, Filters } from "../types";
+import { useParams } from "react-router-dom";
+import { FilterFormValues } from "../types";
+import { DonationsQueryParams } from "types/aws";
 import Icon from "components/Icon";
+import removeEmptyValue from "helpers/removeEmptyValue";
 import Form from "./Form";
 import { schema } from "./schema";
 
-const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
+const Filter = ({ setFilterValues }: { setFilterValues: Function }) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const { address } = useParams<{ address: string }>();
 
   const methods = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
@@ -17,21 +21,26 @@ const Filter = ({ updateFilterValues }: { updateFilterValues: Function }) => {
 
   const { handleSubmit } = methods;
 
-  const filters: Filters = {
-    transactionDate: "",
-    chainName: "",
-    denomination: "",
+  const transformToDonationsQueryParams = (
+    data: FilterFormValues
+  ): DonationsQueryParams => {
+    return {
+      id: address,
+      transactionDate:
+        data.startDate && data.endDate
+          ? `${data.startDate.toISOString()} ${data.endDate.toISOString()}`
+          : "",
+      chainName: data.network !== "default" ? data.network : "",
+      denomination: data.currency !== "default" ? data.currency : "",
+    };
   };
-  async function submit(data: FilterFormValues) {
-    data.startDate && data.endDate
-      ? (filters.transactionDate = `${data.startDate.toISOString()} ${data.endDate.toISOString()}`)
-      : (filters.transactionDate = "");
-    data.network !== "default" && (filters.chainName = data.network);
-    data.currency !== "default" && (filters.denomination = data.currency);
 
-    if (Object.keys(filters).length !== 0) {
-      updateFilterValues(filters);
-    }
+  async function submit(data: FilterFormValues) {
+    let filters = transformToDonationsQueryParams(data);
+    removeEmptyValue(filters);
+    setFilterValues(() => {
+      return { ...filters };
+    });
     buttonRef.current?.click();
   }
 

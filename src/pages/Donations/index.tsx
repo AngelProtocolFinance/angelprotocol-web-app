@@ -5,11 +5,9 @@ import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
-import { Filters } from "components/donations";
 import Filter from "components/donations/Filter";
 import MobileTable from "components/donations/MobileTable";
 import Table from "components/donations/Table";
-import removeEmptyValue from "helpers/removeEmptyValue";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
@@ -21,11 +19,6 @@ export default function Donations() {
     skip: !address,
   });
   const { isLoading } = queryState;
-
-  const updateFilterValues = (formValues: Filters) => {
-    const trimmedFilters = removeEmptyValue({ ...filterValues, ...formValues });
-    setFilterValues(trimmedFilters as DonationsQueryParams);
-  };
 
   return (
     <div className="relative padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
@@ -50,7 +43,7 @@ export default function Donations() {
               />
             </label>
           </div>
-          <Filter updateFilterValues={updateFilterValues} />
+          <Filter setFilterValues={setFilterValues} />
         </div>
       )}
       <QueryLoader

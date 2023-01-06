@@ -12,9 +12,3 @@ export type FilterFormValues = {
   network: string;
   currency: string;
 };
-
-export type Filters = {
-  transactionDate?: string;
-  chainName?: string;
-  denomination?: string;
-};
