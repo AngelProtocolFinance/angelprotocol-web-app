@@ -1,17 +1,13 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import { WalletState } from "contexts/WalletContext";
-import CoinBalances from "./CoinBalances";
+import Coins from "./Coins";
 
 export default function Balances(props: WalletState) {
   const [smallAmountsHidden, setIsSmallAmountsHidden] = useState(true);
   return (
     <>
-      <CoinBalances
-        tokens={props.coins}
-        smallAmountsHidden={smallAmountsHidden}
-      />
-
+      <Coins tokens={props.coins} smallAmountsHidden={smallAmountsHidden} />
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
         <Switch
