@@ -26,7 +26,7 @@ export default function Content(props: {
           </h1>
           <WalletSuite />
         </header>
-        <section className="flex flex-col gap-5 h-full">
+        <section className="flex flex-col items-center gap-5 h-full">
           <p className="font-body text-sm sm:text-base">
             Donate today to {getPossessiveForm(props.name)} endowment. Your
             donation will be protected and compounded in perpetuity to provide{" "}
@@ -39,7 +39,8 @@ export default function Content(props: {
             receive an immediate tax receipt.
           </p>
           <Balances profileId={props.id} />
-          <Steps />
+
+          <Steps className="w-3/4" />
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">

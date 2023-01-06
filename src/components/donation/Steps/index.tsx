@@ -6,7 +6,7 @@ import { DonationState } from "slices/donation";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
-export function Steps() {
+export function Steps({ className = "" }: { className?: string }) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 
@@ -16,7 +16,7 @@ export function Steps() {
   );
 
   return (
-    <div className="justify-self-center grid">
+    <div className={`justify-self-center grid ${className}`}>
       {!isFinalized(state) && (
         <>
           <h3 className="text-center text-xl sm:text-3xl font-bold leading-snug mb-4">
