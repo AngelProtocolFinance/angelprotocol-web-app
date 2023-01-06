@@ -1,4 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
+import { Asset } from "types/contracts";
+import { TokenWithAmount } from "types/slices";
+import { roundDown, scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
@@ -22,5 +25,31 @@ export default class GiftCard extends Contract {
       this.createDepositObject(recipient),
       funds
     );
+  }
+
+  createSpendMsg(
+    endowId: number,
+    amount: number,
+    token: TokenWithAmount,
+    liquidSplit: string /** "1"- "100" */
+  ) {
+    const asset: Asset = {
+      amount: scaleToStr(amount, token.decimals),
+      info:
+        token.type === "cw20"
+          ? { cw20: token.token_id }
+          : { native: token.token_id },
+    };
+    const liqPct = roundDown(+liquidSplit / 100);
+    const lockPct = roundDown(1 - +liquidSplit / 100);
+
+    return this.createExecuteContractMsg(GiftCard.address, {
+      spend: {
+        asset,
+        endow_id: endowId,
+        locked_percentage: lockPct,
+        liquid_percentage: liqPct,
+      },
+    });
   }
 }
