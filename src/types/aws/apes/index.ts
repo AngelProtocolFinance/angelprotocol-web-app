@@ -1,5 +1,3 @@
-import { Coin } from "@cosmjs/proto-signing";
-import { condenseToNum } from "helpers";
 import { ProposalStatus } from "../../contracts";
 import { NetworkType } from "../../lists";
 import { WithBalance } from "../../utils";

@@ -1,7 +1,7 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import { WalletState } from "contexts/WalletContext";
-import Coins from "./CoinBalances";
+import Coins from "./Coins";
 
 export default function Balances(props: WalletState) {
   const [smallAmountsHidden, setIsSmallAmountsHidden] = useState(true);

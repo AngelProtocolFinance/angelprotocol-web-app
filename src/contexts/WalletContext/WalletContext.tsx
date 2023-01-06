@@ -6,7 +6,7 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, Token, TokenWithBalance } from "types/aws";
+import { BaseChain, Chain, TokenWithBalance } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
