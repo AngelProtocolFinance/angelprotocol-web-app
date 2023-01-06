@@ -24,6 +24,14 @@ export default function DonateWidget() {
     };
   }, []);
 
+  useEffect(() => {
+    const w = window as any;
+    if ("Intercom" in w) {
+      w.Intercom("update", { hide_default_launcher: true });
+      w.Intercom("hide");
+    }
+  }, []);
+
   return (
     <QueryLoader
       queryState={{
