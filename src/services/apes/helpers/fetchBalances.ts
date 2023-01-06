@@ -15,7 +15,7 @@ export async function fetchBalances(
   chain: FetchedChain,
   address: string
 ): Promise<TokenWithBalance[]> {
-  const tokens = segragate([chain.native_currency, ...chain.tokens]);
+  const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
     const [natives, gifts, ...cw20s] = await Promise.allSettled([
       fetch(chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`)
