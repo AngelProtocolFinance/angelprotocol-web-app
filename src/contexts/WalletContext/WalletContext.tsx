@@ -10,13 +10,17 @@ import { BaseChain, Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
-import { placeholderChain } from "./constants";
+import { IS_MOBILE, IS_TEST } from "constants/env";
+import {
+  BNB_WALLET_SUPPORTED_CHAINS,
+  EVM_SUPPORTED_CHAINS,
+  placeholderChain,
+} from "./constants";
 import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useKeplrWC from "./wallet-connect/useKeplrWC";
+import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 export type WalletState = {
   walletIcon: string;
@@ -44,20 +48,6 @@ const initialState: State = {
   wallet: undefined,
   isLoading: true,
 };
-
-const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
-  : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
-
-const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [
-      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
-      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
-    ]
-  : [
-      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
-      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
-    ];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
@@ -112,6 +102,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: keplrWCInfo,
   } = useKeplrWC();
 
+  const {
+    isLoading: isEVMWCLoading,
+    connection: evmWCConnection,
+    disconnect: disconnectEVMWC,
+    providerInfo: evmWCInfo,
+  } = useEVMWC();
+
   const providerStatuses: ProviderStatus[] = [
     {
       providerInfo: binanceWalletInfo,
@@ -152,6 +149,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         throw new Error("wc keplr can't switch chain");
       },
     },
+    {
+      providerInfo: evmWCInfo,
+      isLoading: isEVMWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc-evm can't switch chain");
+      },
+    },
   ];
 
   const activeProvider = providerStatuses.find(
@@ -162,6 +167,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     switch (activeProvider?.providerInfo!.providerId) {
       case "metamask":
         disconnectMetamask();
+        break;
+      case "evm-wc":
+        disconnectEVMWC();
         break;
       case "binance-wallet":
         disconnectBinanceWallet();
@@ -187,6 +195,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProvider?.providerInfo,
     disconnectMetamask,
+    disconnectEVMWC,
     disconnectBinanceWallet,
     disconnectXdefi,
     disconnectKeplr,
@@ -243,6 +252,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [activeProvider, giftcardCoins, chain]);
 
+  const wcConnections = [
+    ...(IS_TEST ? [] : [keplrWCConnection]),
+    evmWCConnection,
+  ];
+
   return (
     <getContext.Provider
       value={{
@@ -256,14 +270,16 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     >
       <setContext.Provider
         value={{
-          connections: [
-            keplrConnection,
-            ...(IS_TEST ? [] : [keplrWCConnection]),
-            metamaskConnection,
-            binanceWalletConnection,
-            xdefiConnection,
-            ...terraConnections,
-          ],
+          connections: IS_MOBILE
+            ? wcConnections
+            : [
+                keplrConnection,
+                metamaskConnection,
+                binanceWalletConnection,
+                xdefiConnection,
+                ...terraConnections,
+                ...wcConnections,
+              ],
           disconnect,
           switchChain,
         }}

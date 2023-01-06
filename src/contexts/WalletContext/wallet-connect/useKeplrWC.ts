@@ -11,7 +11,7 @@ import { WC_EVENT } from "./constants";
 const QRModal = new KeplrQRCodeModalV1();
 
 /** NOTE: only use this wallet in mainnet */
-export default function useKeplrWC() {
+export function useKeplrWC() {
   const { handleError } = useErrorContext();
 
   const [walletState, setWalletState] = useState<WalletState>({
