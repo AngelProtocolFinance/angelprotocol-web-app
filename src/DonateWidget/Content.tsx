@@ -19,7 +19,7 @@ export default function Content(props: {
 
   return (
     <div className="padded-container justify-self-center grid max-w-3xl">
-      <header className="sticky top-0 z-20 flex justify-between items-center w-full h-[90px]">
+      <header className="flex justify-between items-center w-full h-[90px]">
         <span>{getPossessiveForm(props.name)} endowment</span>
         <WalletSuite />
       </header>
