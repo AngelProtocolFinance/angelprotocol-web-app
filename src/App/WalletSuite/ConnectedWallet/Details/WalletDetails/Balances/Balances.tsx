@@ -1,5 +1,5 @@
 import { Switch } from "@headlessui/react";
-import { Token } from "types/aws";
+import { TokenWithBalance } from "types/aws";
 import { WalletState } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import CoinBalances from "./CoinBalances";
@@ -9,12 +9,11 @@ export default function Balances(props: WalletState) {
   const {
     hideSmallAmounts,
     filteredCoins,
-    filteredGcCoins,
     setHideSmallAmounts,
     handleBuyCrypto,
-  } = useBalances(props.coins, props.giftcardCoins);
+  } = useBalances(props.coins);
 
-  if (!filteredCoins.length && !filteredGcCoins.length) {
+  if (!filteredCoins.length) {
     return (
       <span className="text-sm">
         Your wallet is empty.{" "}
@@ -32,11 +31,9 @@ export default function Balances(props: WalletState) {
     <>
       {!!filteredCoins.length && <CoinBalances coins={filteredCoins} />}
 
-      {!!filteredCoins.length && !!filteredGcCoins.length && (
+      {!!filteredCoins.length && (
         <div className="border-t border-gray-l2 dark:border-bluegray" />
       )}
-
-      {!!filteredGcCoins.length && <GiftcardBalances coins={filteredGcCoins} />}
 
       <div className="flex justify-between items-center font-heading font-semibold text-sm text-gray-d1 dark:text-gray">
         Hide small amounts:
@@ -59,7 +56,7 @@ export default function Balances(props: WalletState) {
   );
 }
 
-function GiftcardBalances({ coins }: { coins: Token[] }) {
+function GiftcardBalances({ coins }: { coins: TokenWithBalance[] }) {
   return (
     <>
       <span className="flex items-center gap-2 font-heading font-semibold text-sm text-gray-d1 dark:text-gray">

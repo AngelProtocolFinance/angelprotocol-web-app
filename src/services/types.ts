@@ -64,8 +64,5 @@ export type CountryOption = {
   flag: string;
 };
 
-/** multicall */
-export type WithBalance<T = Token> = T & { balance: number };
-
 /** endowment */
 export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };

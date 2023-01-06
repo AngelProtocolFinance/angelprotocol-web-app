@@ -1,7 +1,7 @@
-import { Token } from "types/aws";
+import { Token, TokenWithBalance } from "types/aws";
 import { humanize } from "helpers";
 
-export default function CoinBalances({ coins }: { coins: Token[] }) {
+export default function CoinBalances({ coins }: { coins: TokenWithBalance[] }) {
   return (
     <>
       {coins.map((coin) => (

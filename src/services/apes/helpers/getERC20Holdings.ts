@@ -1,47 +1,54 @@
-import {
-  ContractCallContext,
-  ContractCallReturnContext,
-  Multicall,
-} from "ethereum-multicall";
-import { utils } from "ethers";
-import { ERC20Token } from "types/contracts";
-import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
+import ERC20Abi from "abi/ERC20.json";
+import { Multicall } from "ethereum-multicall";
+import { CallContext } from "ethereum-multicall/dist/esm/models";
+import { formatUnits } from "ethers/lib/utils";
+import { BalMap } from "./types";
+import { Token } from "types/aws";
 
+enum CALL_IDX {
+  BALANCE,
+  DECIMALS,
+}
 export async function getERC20Holdings(
   //ethers.providers
   nodeUrl: string,
   holderAddress: string,
-  ERC20ContractAddresses: string[]
-) {
-  if (ERC20ContractAddresses.length <= 0) return [];
+  tokens: Token[]
+): Promise<BalMap> {
+  if (tokens.length <= 0) return {};
 
   const multicall = new Multicall({
     nodeUrl,
     tryAggregate: true,
   });
 
-  const ERC20CallContexts: ContractCallContext[] = ERC20ContractAddresses.map(
-    (contractAddr) =>
-      buildERC20CallContext(contractAddr, holderAddress, contractAddr)
+  const res = await multicall.call(
+    tokens.map(({ token_id }) => {
+      const calls: CallContext[] = [];
+      calls[CALL_IDX.BALANCE] = {
+        reference: "balance",
+        methodName: "balanceOf",
+        methodParameters: [holderAddress],
+      };
+      calls[CALL_IDX.DECIMALS] = {
+        reference: "decimals",
+        methodName: "decimals",
+        methodParameters: [],
+      };
+      return {
+        abi: ERC20Abi,
+        calls,
+        reference: token_id,
+        contractAddress: token_id,
+      };
+    })
   );
-  const contractCallResults = await multicall.call(ERC20CallContexts);
-  return Object.entries(contractCallResults.results).map(
-    ([_, contractCallReturnContext]) => buildToken(contractCallReturnContext)
-  );
-}
-
-function buildToken(
-  contractCallReturnContext: ContractCallReturnContext
-): ERC20Token {
-  const { callsReturnContext, originalContractCallContext } =
-    contractCallReturnContext;
-  const decimals = callsReturnContext[CallIndexes.DECIMALS].returnValues[0];
-  const balance = callsReturnContext[CallIndexes.BALANCE].returnValues[0];
-  return {
-    contractAddress: originalContractCallContext.contractAddress,
-    symbol: callsReturnContext[CallIndexes.SYMBOL].returnValues[0],
-    decimals,
-    name: callsReturnContext[CallIndexes.NAME].returnValues[0],
-    balance: utils.formatUnits(balance, decimals),
-  };
+  return Object.entries(res.results).reduce((map, [_, result]) => {
+    const { callsReturnContext: ctx, originalContractCallContext: callCTX } =
+      result;
+    const decimals = ctx[CALL_IDX.DECIMALS].returnValues[0];
+    const balance = ctx[CALL_IDX.BALANCE].returnValues[0];
+    map[callCTX.contractAddress] = +formatUnits(balance, decimals);
+    return map;
+  }, {} as BalMap);
 }

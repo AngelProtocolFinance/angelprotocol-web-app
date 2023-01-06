@@ -1,5 +1,8 @@
+import { Coin } from "@cosmjs/proto-signing";
+import { condenseToNum } from "helpers";
 import { ProposalStatus } from "../../contracts";
 import { NetworkType } from "../../lists";
+import { WithBalance } from "../../utils";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file
@@ -7,7 +10,6 @@ import { NetworkType } from "../../lists";
 
 export type Token = {
   approved: boolean; // true
-  balance: number; // 0 --> not returned by APES but dynamically calculated and set
   decimals: number; // 6
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   min_donation_amnt: number;
@@ -24,12 +26,14 @@ export type Token = {
     | "placeholder";
 };
 
+export type TokenWithBalance = WithBalance<Token> & { gift?: number };
+
 export type BaseChain = {
   chain_id: string;
   chain_name: string; // Avalanche Fuji Testnet
 };
 
-export type Chain = BaseChain & {
+export type FetchedChain = BaseChain & {
   block_explorer_url: string; // https://testnet.snowtrace.io
   lcd_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   native_currency: Token;
@@ -37,6 +41,11 @@ export type Chain = BaseChain & {
   rpc_url: string; // https://api.avax-test.network/ext/bc/C/rpc
   tokens: Token[];
   type: "juno-native" | "terra-native" | "evm-native" | "placeholder"; // | "sol" | "btc" | ...
+};
+
+export type Chain = Omit<FetchedChain, "native_currency" | "tokens"> & {
+  tokens: TokenWithBalance[];
+  native_currency: TokenWithBalance;
 };
 
 export type RouteStatus = "OK" | "DEPOSIT_CONFIRMED" | "PENDING";
