@@ -16,11 +16,11 @@ export default function Table(props: { donations: Donation[] }) {
   const showKYCForm = useKYC();
 
   return (
-    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white font-body">
+    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white font-body border border-gray-l2 border-b-0 rounded-md dark:border-bluegray border-separate border-spacing-0 overflow-hidden">
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"
-          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-semibold text-left text-xs font-body border border-gray-l2 dark:border-bluegray p-3"
+          cellClass="px-3 py-4 bg-orange-l6 dark:bg-blue-d7 uppercase font-semibold text-left text-xs font-body border border-gray-l2 dark:border-bluegray border-t-0 border-l-0 last:border-r-0"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -69,7 +69,7 @@ export default function Table(props: { donations: Donation[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 dark:border-bluegray even:bg-orange-l6 dark:bg-blue-d6 dark:even:bg-blue-d7"
+        rowClass="hover:bg-blue hover:bg-blue/10 even:bg-orange-l6 dark:bg-blue-d6 dark:even:bg-blue-d"
       >
         {sorted.map(
           ({
@@ -86,7 +86,7 @@ export default function Table(props: { donations: Donation[] }) {
             <Cells
               key={hash}
               type="td"
-              cellClass="p-3 border border-gray-l2 dark:border-bluegray"
+              cellClass="p-3 border border-gray-l2 dark:border-bluegray border-t-0 border-l-0 last:border-r-0"
             >
               <Link
                 to={`${appRoutes.profile}/${charityId}`}
