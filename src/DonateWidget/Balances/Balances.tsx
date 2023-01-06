@@ -9,7 +9,7 @@ export default function Balances({ profileId }: Props) {
   const queryState = useBalanceQuery({ id: profileId });
 
   return (
-    <div className="flex items-center gap-4 w-full">
+    <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
       <Balance
         queryState={queryState}
         title="Total Value"
