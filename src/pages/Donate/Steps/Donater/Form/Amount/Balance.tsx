@@ -6,7 +6,7 @@ import { humanize } from "helpers";
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
   const token = watch("token");
-  function setMaxVal(amount: string | number) {
+  function setMaxVal(amount: number) {
     setValue("token.amount", humanize(amount, 4), {
       shouldDirty: true,
       shouldValidate: true,
