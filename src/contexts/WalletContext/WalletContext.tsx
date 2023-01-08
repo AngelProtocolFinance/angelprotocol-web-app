@@ -6,22 +6,21 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, Token } from "types/aws";
+import { BaseChain, Chain, TokenWithBalance } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { placeholderChain } from "./constants";
-import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
+import { useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 
 export type WalletState = {
   walletIcon: string;
-  displayCoin: Token;
-  coins: Token[];
-  giftcardCoins: Token[];
+  displayCoin: TokenWithBalance;
+  coins: TokenWithBalance[];
   address: string;
   chain: Chain;
   providerId: ProviderId;
@@ -200,11 +199,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
-  const { data: giftcardCoins, isLoading: isGcLoading } = useGetGiftcardTokens(
-    activeProvider?.providerInfo?.address,
-    chain
-  );
-
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
       const { logo, providerId, address } = activeProvider.providerInfo!;
@@ -214,14 +208,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
-        giftcardCoins,
         providerId,
         supportedChains: activeProvider.supportedChains,
       };
 
       return walletState;
     }
-  }, [activeProvider, giftcardCoins, chain]);
+  }, [activeProvider, chain]);
 
   return (
     <getContext.Provider
@@ -230,8 +223,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading:
           providerStatuses.some((x) => x.isLoading) ||
           isChainLoading ||
-          isChainFetching ||
-          isGcLoading,
+          isChainFetching,
       }}
     >
       <setContext.Provider
