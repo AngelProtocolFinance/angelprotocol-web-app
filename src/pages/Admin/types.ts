@@ -1,6 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ImgLink } from "components/ImgEditor/types";
-import { CharityApplication, Registration } from "types/aws";
+import { CountryOption } from "services/types";
+import { EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -99,11 +100,10 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
-export type CharityApplicationMeta = MetaConstructor<
+export type ApplicationMeta = MetaConstructor<
   "cw3_application",
-  Registration
+  EndowmentProposal
 >;
-
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
   DiffSet<FormCW3Config>
@@ -162,7 +162,7 @@ export type ProposalMeta =
   //cw4
   | CW4MemberUpdateMeta
   //cw3
-  | CharityApplicationMeta
+  | ApplicationMeta
   | CW3ConfigUpdateMeta
   | ReviewCW3ConfigUpdateMeta
   | FundSendMeta
@@ -258,9 +258,10 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type ProfileWithSettings = ProfileUpdate &
+export type ProfileWithSettings = Omit<ProfileUpdate, "country_of_origin"> &
   Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
+    country: CountryOption;
     sdg: UNSDG_NUMS;
     image: ImgLink;
     logo: ImgLink;
@@ -268,10 +269,11 @@ export type ProfileWithSettings = ProfileUpdate &
 
 export type FlatProfileWithSettings = Omit<
   ProfileWithSettings,
-  "image" | "logo"
+  "image" | "logo" | "country"
 > & {
   image: string;
   logo: string;
+  country: string;
 };
 
 export type ProfileFormValues = ProposalBase &
@@ -281,9 +283,6 @@ export type ProfileFormValues = ProposalBase &
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  CharityApplication,
-  | "CharityName"
-  | "RegistrationDate"
-  | "RegistrationStatus"
-  | "CharityName_ContactEmail"
+  EndowmentProposal,
+  "OrganizationName" | "RegistrationDate" | "RegistrationStatus" | "Email"
 >;

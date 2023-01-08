@@ -1,34 +1,23 @@
-import { useCharityApplicationsQuery } from "services/aws/registration";
-import Icon from "components/Icon";
+import { useEndowmentApplicationsQuery } from "services/aws/registration";
+import { QueryLoader } from "components/admin";
 import { useGetter } from "store/accessors";
 import ApplicationsTable from "./Table";
 
 export default function Applications() {
   const { activeStatus } = useGetter((state) => state.admin.applications);
-  const {
-    data = [],
-    isLoading,
-    isError,
-  } = useCharityApplicationsQuery(activeStatus);
-  // const data: CharityApplication[] = [];
+  const queryState = useEndowmentApplicationsQuery(activeStatus);
 
-  if (isLoading) {
-    return (
-      <p className="text-white-grey place-self-center flex items-center gap-1">
-        <Icon type="Loading" className="animate-spin" />
-        <span>Loading applications</span>
-      </p>
-    );
-  }
-
-  if (isError) {
-    return (
-      <p className="text-rose-400 place-self-center flex items-center gap-1">
-        <Icon type="Warning" />
-        <span>Failed to get applications</span>
-      </p>
-    );
-  }
-
-  return <ApplicationsTable applications={data} />;
+  return (
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Loading applications...",
+        error: "Failed to get applications",
+        empty: "No applications found",
+      }}
+      classes={{ container: "mt-4" }}
+    >
+      {(applications) => <ApplicationsTable applications={applications} />}
+    </QueryLoader>
+  );
 }

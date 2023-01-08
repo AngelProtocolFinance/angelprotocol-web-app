@@ -31,6 +31,11 @@ export const queryObject: {
     return { balance: { address: addr } };
   },
 
+  /** giftcard */
+  giftcardBalance({ addr }) {
+    return { Balance: { address: addr } };
+  },
+
   /** cw4 member */
   cw4Members: { list_members: {} },
   cw4Member({ addr }) {

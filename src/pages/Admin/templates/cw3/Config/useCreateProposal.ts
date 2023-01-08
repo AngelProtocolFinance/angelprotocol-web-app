@@ -6,18 +6,16 @@ import {
 } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "helpers/admin";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];
 
-export default function useCreateProposal() {
+export default function usePropose() {
   const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
@@ -26,7 +24,7 @@ export default function useCreateProposal() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues<FormCW3Config>>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function createProposal({
     title,
@@ -70,15 +68,11 @@ export default function useCreateProposal() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        ...propMeta,
-        tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "cw3_config"),
+    });
   }
 
   return {

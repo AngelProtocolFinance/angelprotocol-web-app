@@ -1,11 +1,11 @@
-import { ButtonHTMLAttributes, useEffect } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
 import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
-import Icon from "components/Icon";
-import { QueryLoader, TextInput } from "components/admin";
+import { QueryLoader, TextPrim } from "components/admin";
+import Warning from "./Warning";
 
 export default function Submit() {
   const { endowment } = useAdminResources();
@@ -19,9 +19,13 @@ export default function Submit() {
   const type = getValues("type");
   if (type === "liquid") {
     return (
-      <Button type="submit" disabled={isSubmitDisabled}>
+      <button
+        type="submit"
+        disabled={isSubmitDisabled}
+        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+      >
         Create withdraw proposal
-      </Button>
+      </button>
     );
   }
   //check maturity when locked
@@ -65,11 +69,22 @@ function SubmitWithReason({
   if (endowment.endow_type === "Charity") {
     return (
       <>
-        <Warning message="Withdrawing from endowment funds requires Angel Protocol team approval." />
-        <TextInput<WV> name="reason" title="Reason" />
-        <Button type="submit" disabled={isSubmitDisabled}>
+        <Warning classes="mb-4">
+          Withdrawing from endowment funds requires Angel Protocol team
+          approval.
+        </Warning>
+        <TextPrim<WV>
+          name="reason"
+          label="Reason"
+          classes={{ container: "mb-8" }}
+        />
+        <button
+          type="submit"
+          disabled={isSubmitDisabled}
+          className="btn btn-orange rounded px-4 py-2 text-sm"
+        >
           Create withdraw proposal
-        </Button>
+        </button>
       </>
     );
   }
@@ -79,29 +94,17 @@ function SubmitWithReason({
   return (
     <>
       {!isMatured && (
-        <Warning message="Withdrawing endowment funds before maturity is not allowed." />
+        <Warning>
+          Withdrawing endowment funds before maturity is not allowed.
+        </Warning>
       )}
-      <Button type="submit" disabled={!isMatured}>
+      <button
+        type="submit"
+        disabled={!isMatured}
+        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+      >
         Create withdraw proposal
-      </Button>
+      </button>
     </>
-  );
-}
-
-function Warning({ message }: { message: string }) {
-  return (
-    <p className="p-2 text-sm bg-amber-50 text-amber-600 mb-4">
-      <Icon type="Info" className="inline-block relative bottom-0.5 mr-1" />
-      {message}
-    </p>
-  );
-}
-
-function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
-    />
   );
 }

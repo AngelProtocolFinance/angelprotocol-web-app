@@ -13,6 +13,8 @@ export enum appRoutes {
   govern = "/govern",
   endowment_admin = "/endowment-admin",
   donations = "/donations",
+  donate = "/donate",
+  gift = "/gift",
 }
 
 export enum governRoutes {
@@ -20,7 +22,7 @@ export enum governRoutes {
   pollDetails = "pollDetails",
 }
 
-export enum charityRoutes {
+export enum profileRoutes {
   overview = "overview",
   endowment = "endowment",
   programs = "programs",

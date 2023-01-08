@@ -5,7 +5,7 @@ import Copier from "./Copier";
 // Mock copy button
 const CopyButton = () => {
   const textToCopy = "S4mple-Text+2_Copy0";
-  return <Copier text={textToCopy} colorClass="text-angel-grey text-lg" />;
+  return <Copier text={textToCopy} />;
 };
 
 // Mock of Clipboard API

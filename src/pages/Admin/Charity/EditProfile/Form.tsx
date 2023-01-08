@@ -3,21 +3,24 @@ import { ProfileFormValues as UV } from "pages/Admin/types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
-import RichTextEditor from "components/RichTextEditor";
+import { RichTextEditor } from "components/RichText";
 import {
   FormContainer,
   GroupContainer,
-  Label,
   Submitter,
-  TextInput,
+  TextArea,
+  TextPrim,
+  TextSec,
+  errorStyle,
 } from "components/admin";
+import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import SDGSelector from "./SDGSelector";
 import { VALID_MIME_TYPES } from "./schema";
-import useEditForm from "./useEditProfile";
+import useEditProfile from "./useEditProfile";
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditForm();
+  const { editProfile, isSubmitDisabled, id } = useEditProfile();
   return (
     <FormContainer
       onSubmit={editProfile}
@@ -25,111 +28,90 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.profile}/${id}`}
-        className="text-angel-blue hover:text-sky-300 text-sm font-semibold flex items-center gap-1"
+        className="text-blue hover:text-orange text-sm flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
-      <TextInput<UV> title="Proposal Title" name="title" required />
-      <TextInput<UV>
-        title="proposal description"
-        name="description"
-        wide
-        required
-      />
-      <Label className="text-angel-grey -mb-2">Banner</Label>
+      <TextPrim<UV> label="Proposal title" name="title" required />
+      <TextArea<UV> label="Proposal description" name="description" required />
+      <Label className="-mb-4" required>
+        Banner
+      </Label>
       <ImgEditor<UV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 shadow-inner-white-grey bg-gray-l2 rounded-md"
+        classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
-      <Label className="text-angel-grey -mb-2">SDG#</Label>
+      <Label className="-mb-4" required>
+        Logo
+      </Label>
+      <ImgEditor<UV, "logo">
+        name="logo"
+        accept={VALID_MIME_TYPES}
+        aspect={[1, 1]}
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+      />
+      <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
-      <TextInput<UV>
-        name="name"
-        title="Charity Name"
-        placeholder="The charitable charity"
-      />
-      <TextInput<UV>
-        name="registration_number"
-        title="Registration number"
-        placeholder="AP2022HLO"
-      />
-      <TextInput<UV>
-        name="street_address"
-        title="Street address"
-        placeholder="Manila, Philippines"
-      />
-      <Label className="text-angel-grey -mb-2">Country</Label>
-      <CountrySelector<UV>
-        fieldName="country_of_origin"
-        classes={{
-          container: "bg-light-grey shadow-inner-white-grey rounded-md p-3",
-          input: "bg-transparent",
-        }}
-      />
-      <Label className="text-angel-grey -mb-2">Overview</Label>
-      <RichTextEditor<UV>
-        fieldName="overview"
-        placeHolder="a short overview of your charity"
+      <TextPrim<UV> name="name" label="Charity Name" />
+      <TextPrim<UV> name="registration_number" label="Registration number" />
+      <TextPrim<UV> name="street_address" label="Street address" />
+      <Label className="-mb-4" required>
+        Country
+      </Label>
+      <CountrySelector<UV, "country">
+        placeholder="Select a country"
+        fieldName="country"
         classes={{
           container:
-            "toolbar-icons-dark grid grid-rows-[auto_1fr] rounded-md bg-light-grey shadow-inner-white-grey p-3",
-          error:
-            "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
-          charCounter: "text-angel-grey",
+            "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
+          input:
+            "text-sm py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
+          error: errorStyle,
+        }}
+      />
+      <Label className="-mb-4">Overview</Label>
+      <RichTextEditor<UV>
+        fieldName="overview"
+        placeHolder="A short overview of your charity"
+        classes={{
+          container:
+            "rich-text-toolbar border border-gray-l2 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
+          error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
+          charCounter: "text-gray-d1 dark:text-gray",
         }}
       />
 
-      <Label className="text-angel-grey -mb-2">Organization</Label>
+      <Label className="-mb-4 font-bold">Social Media</Label>
       <GroupContainer>
-        <TextInput<UV>
-          name="number_of_employees"
-          title="Number of employeees"
-          placeholder="50 - 100"
-          plain
-        />
-        <TextInput<UV>
-          name="charity_navigator_rating"
-          title="Navigator rating"
-          placeholder="Platinum"
-          plain
-        />
-      </GroupContainer>
-
-      <Label className="text-angel-grey -mb-2">Social Media</Label>
-      <GroupContainer>
-        <TextInput<UV>
+        <TextSec<UV>
           name="url"
-          title="Website"
+          label="Website"
           placeholder="https://website.org"
-          plain
         />
-        <TextInput<UV>
+        <TextSec<UV>
           name="facebook"
-          title="Facebook"
-          placeholder="https://facebook.com/angelprotocol"
-          plain
+          label="Facebook"
+          placeholder="https://facebook.com/"
         />
-        <TextInput<UV>
+        <TextSec<UV>
           name="twitter"
-          title="Twitter"
-          placeholder="https://twitter.com/angelprotocol"
-          plain
+          label="Twitter"
+          placeholder="https://twitter.com/"
         />
-        <TextInput<UV>
+        <TextSec<UV>
           name="linkedin"
-          title="Linkedin"
-          placeholder="https://linkedin.com/angelprotocol"
-          plain
+          label="Linkedin"
+          placeholder="https://linkedin.com/"
         />
       </GroupContainer>
 
-      <TextInput<UV>
+      <TextPrim<UV>
         name="contact_email"
-        title="Contact email"
-        placeholder="hello@angelprotocol.io"
+        label="Contact email"
+        disabled={true}
       />
 
       <Submitter disabled={isSubmitDisabled} type="submit">

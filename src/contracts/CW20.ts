@@ -1,4 +1,4 @@
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext";
 import { scaleToStr, toBase64 } from "helpers";
 import Contract from "./Contract";
 
@@ -10,21 +10,19 @@ export default class CW20 extends Contract {
     this.address = address;
   }
 
-  createEmbeddedTransferMsg(amount: number, recipient: string) {
+  createEmbeddedTransferMsg(scaledAmount: string, recipient: string) {
     return this.createEmbeddedWasmMsg(this.address, {
       transfer: {
-        //convert to uamount
-        amount: scaleToStr(amount),
+        amount: scaledAmount,
         recipient,
       },
     });
   }
 
-  createTransferMsg(amount: number, recipient: string) {
+  createTransferMsg(scaledAmount: string, recipient: string) {
     return this.createExecuteContractMsg(this.address, {
       transfer: {
-        //convert to uamount
-        amount: scaleToStr(amount),
+        amount: scaledAmount,
         recipient,
       },
     });

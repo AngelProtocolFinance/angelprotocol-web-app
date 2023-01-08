@@ -2,40 +2,47 @@ import { IconType } from "react-icons";
 import {
   AiFillCaretLeft,
   AiFillCheckCircle,
+  AiFillHeart,
   AiFillYoutube,
-  AiOutlineCheck,
-  AiOutlineCopy,
   AiOutlineDislike,
   AiOutlineEdit,
   AiOutlineEye,
   AiOutlineEyeInvisible,
+  AiOutlineHeart,
   AiOutlineInfoCircle,
   AiOutlineLike,
   AiOutlineMedium,
   AiOutlinePlus,
-  AiOutlineTwitter,
+  AiOutlineQuestionCircle,
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
   BiArrowBack,
   BiBold,
+  BiCheck,
+  BiChevronDown,
+  BiChevronUp,
   BiGlobe,
   BiItalic,
   BiSave,
   BiSearchAlt2,
+  BiSun,
 } from "react-icons/bi";
 import {
   BsExclamationCircle,
+  BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
+  BsTwitter,
 } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
   FaCog,
   FaDiscord,
+  FaExclamation,
   FaFacebook,
-  FaFacebookF,
+  FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
   FaListOl,
@@ -48,11 +55,12 @@ import {
   FaUsersCog,
 } from "react-icons/fa";
 import { FcSafe } from "react-icons/fc";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
-import { GoLinkExternal } from "react-icons/go";
-import { HiOutlineChevronDown } from "react-icons/hi";
-import { IoMdSettings } from "react-icons/io";
+import { GoDash, GoLinkExternal } from "react-icons/go";
+import { GrFacebookOption } from "react-icons/gr";
+import { ImFilePicture } from "react-icons/im";
+import { IoMdDownload, IoMdSettings } from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -61,34 +69,44 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdCardGiftcard,
+  MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
+  MdOutlineContentCopy,
+  MdOutlineEmail,
   MdOutlineFileDownload,
+  MdOutlineFilterAlt,
+  MdOutlineUploadFile,
 } from "react-icons/md";
+import { RiMapPin2Line } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "./types";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  AdminPanel: MdOutlineAdminPanelSettings,
   FilterLeft: BsFilterLeft,
+  Filter: MdOutlineFilterAlt,
   FileDownload: MdOutlineFileDownload,
+  FileUpload: MdOutlineUploadFile,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  ChevronDown: HiOutlineChevronDown,
-  Facebook: FaFacebookF,
+  Facebook: GrFacebookOption,
+  Instagram: FaInstagram,
   FacebookCircle: FaFacebook,
   Discord: FaDiscord,
   Plus: AiOutlinePlus,
   Telegram: FaTelegramPlane,
-  Twitter: AiOutlineTwitter,
+  Twitter: BsTwitter,
   Youtube: AiFillYoutube,
   Unsorted: TiArrowUnsorted,
   Medium: AiOutlineMedium,
-  Copy: AiOutlineCopy,
-  Check: AiOutlineCheck,
+  Copy: MdOutlineContentCopy,
+  Check: BiCheck,
   Menu: FiMenu,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
@@ -98,9 +116,12 @@ export const iconList: { [key in IconTypes]: IconType } = {
   CheckCircle: AiFillCheckCircle,
   Parachute: FaParachuteBox,
   StopWatch: FaStopwatch,
+  Exclamation: FaExclamation,
   ExclamationCircle: BsExclamationCircle,
+  ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
   Eye: AiOutlineEye,
+  Email: MdOutlineEmail,
   EyeInvisible: AiOutlineEyeInvisible,
   CaretLeft: AiFillCaretLeft,
   Globe: BiGlobe,
@@ -113,6 +134,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   ArrowBack: BiArrowBack,
+  ArrowDown: BiChevronDown,
+  ArrowUp: BiChevronUp,
   Back: MdOutlineArrowBackIosNew,
   Forward: MdOutlineArrowForwardIos,
   Blockchain: SiHiveBlockchain,
@@ -132,4 +155,14 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Admin: FaUsersCog,
   Crop: IoCrop,
   Save: BiSave,
+  Moon: FiMoon,
+  Sun: BiSun,
+  HeartOutline: AiOutlineHeart,
+  Question: AiOutlineQuestionCircle,
+  HeartFill: AiFillHeart,
+  Picture: ImFilePicture,
+  MapPin: RiMapPin2Line,
+  Dash: GoDash,
+  FatArrowDownload: IoMdDownload,
+  Giftcard: MdCardGiftcard,
 };

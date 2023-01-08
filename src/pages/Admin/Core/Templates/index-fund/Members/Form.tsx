@@ -3,10 +3,11 @@ import Loader from "components/Loader";
 import {
   FormContainer,
   GroupContainer,
-  Label,
   Submitter,
-  TextInput,
+  TextArea,
+  TextPrim,
 } from "components/admin";
+import { Label } from "components/form";
 import FundSelection from "../FundSelection";
 import Adder from "./Adder";
 import Member from "./Member";
@@ -19,25 +20,22 @@ export default function Form() {
   const { updateFund } = useUpdateFund();
   return (
     <FormContainer onSubmit={updateFund}>
-      <TextInput<FV> title="Proposal Title" name="title" required />
-      <TextInput<FV>
-        title="proposal description"
-        name="description"
-        wide
-        required
-      />
-      <Label _required>Select fund to update</Label>
+      <TextPrim<FV> label="Proposal title" name="title" required />
+      <TextArea<FV> label="Proposal description" name="description" required />
+      <Label required className="-mb-4">
+        Select fund to update
+      </Label>
       <FundSelection<FV> fieldName="fundId" />
 
       {isFundSelected && (
         <>
-          <Label className="text-red-400 mt-6 -mb-2">Remove member</Label>
+          <Label className="text-red-l1 mt-6 -mb-2">Remove member</Label>
           <GroupContainer>
             {(isFundMembersLoading && (
               <Loader
                 gapClass="gap-1"
                 widthClass="w-2"
-                bgColorClass="bg-angel-grey"
+                bgColorClass="bg-gray-d2"
               />
             )) ||
               (fundMembersCopy.length > 0 && (
@@ -47,7 +45,7 @@ export default function Form() {
                   ))}
                 </div>
               )) || (
-                <p className="text-angel-grey font-mono text-sm">
+                <p className="text-gray-d2 font-mono text-sm">
                   this fund doesn't have any members yet
                 </p>
               )}
@@ -56,7 +54,7 @@ export default function Form() {
       )}
       {isFundSelected && (
         <>
-          <Label className="text-green-400 mt-6 -mb-2">add member</Label>
+          <Label className="text-green mt-6 -mb-2">add member</Label>
           <Adder />
         </>
       )}

@@ -1,61 +1,21 @@
-import Icon, { IconTypes } from "components/Icon";
+import ExtLink from "components/ExtLink";
+import Icon from "components/Icon";
+import { SOCIAL_MEDIA_LINKS } from "./constants";
 
-export default function Socials(props: { classes?: string }) {
+export default function Socials() {
   return (
-    <div className={`${props.classes || ""} flex justify-center items-center`}>
-      {SOCIAL_MEDIA_LINKS.map(({ id, iconType, link, title }) => {
+    <div className="flex items-center gap-4 md:gap-8">
+      {Object.entries(SOCIAL_MEDIA_LINKS).map(([type, { iconType, link }]) => {
         return (
-          <a
-            key={id}
+          <ExtLink
+            key={type}
             href={link}
-            target="_blank"
-            rel="noreferrer"
-            className={`text-zinc-50 hover:text-sky-400 active:text-sky-500 block mx-2 first:ml-0`}
+            className="hover:text-blue-l1 active:text-blue transition ease-in-out duration-300"
           >
-            <Icon type={iconType} className="w-6 h-6" title={title} />
-          </a>
+            <Icon type={iconType} className="w-6 h-6" title={type} />
+          </ExtLink>
         );
       })}
     </div>
   );
 }
-
-type SocialMediaLink = {
-  id: number;
-  iconType: IconTypes;
-  link: string;
-  title: string;
-};
-
-export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
-  {
-    id: 1,
-    iconType: "Twitter",
-    link: "https://twitter.com/angelprotocol",
-    title: "Twitter",
-  },
-  {
-    id: 2,
-    iconType: "Telegram",
-    link: "https://t.me/angelprotocoI",
-    title: "Telegram",
-  },
-  {
-    id: 3,
-    iconType: "Youtube",
-    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
-    title: "YouTube",
-  },
-  {
-    id: 4,
-    iconType: "Medium",
-    link: "https://angelprotocol.medium.com",
-    title: "Medium",
-  },
-  {
-    id: 5,
-    iconType: "Discord",
-    link: "https://discord.gg/RhqA652ySA",
-    title: "Discord",
-  },
-];

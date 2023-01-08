@@ -40,7 +40,7 @@ export default function ImgCropper({ preview, aspect: [x, y], onSave }: Props) {
       <div className="bg-white flex items-center justify-end gap-2 p-1">
         <button
           type="button"
-          className="text-angel-grey hover:text-angel-blue"
+          className="text-gray-d2 hover:text-blue"
           onClick={handleSave}
         >
           <Icon type="Save" size={24} />

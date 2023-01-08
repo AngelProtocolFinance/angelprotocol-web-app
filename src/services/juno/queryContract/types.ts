@@ -1,3 +1,4 @@
+import { Token } from "types/aws";
 import {
   AdminVoteInfo,
   AllianceMember,
@@ -11,6 +12,7 @@ import {
   EndowmentEntry,
   EndowmentQueryOptions,
   FundDetails,
+  GenericBalance,
   GovConfig,
   GovStaker,
   GovState,
@@ -55,6 +57,12 @@ export interface ContractQueries {
   ifConfig: { args: null; res: Q<IndexFundConfig>; result: IndexFundConfig };
 
   lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
+
+  giftcardBalance: {
+    args: Addr;
+    res: Q<GenericBalance>;
+    result: Token[];
+  };
 
   govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
   govState: { args: null; res: Q<GovState>; result: GovState };

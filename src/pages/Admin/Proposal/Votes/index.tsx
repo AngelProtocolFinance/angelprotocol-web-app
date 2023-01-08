@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { VOTES_PER_PAGE, useVoteList } from "./useVotesList";
 
-export default function Votes(props: { proposalId: number }) {
+export default function Votes(props: { proposalId: number; classes?: string }) {
   const [pageNum, setPageNum] = useState(0);
   const { votes, isVoteListLoading } = useVoteList(props.proposalId, pageNum);
 
@@ -11,10 +11,10 @@ export default function Votes(props: { proposalId: number }) {
   const isLoadMoreShown = votes.length >= VOTES_PER_PAGE;
   return (
     <div>
-      <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
+      <table className={`${props.classes ?? ""} w-full overflow-hidden`}>
         <TableSection
           type="thead"
-          rowClass="sm:visible invisible  sm:flex sm:inline-block mb-2"
+          rowClass="sm:visible invisible sm:flex sm:inline-block mb-2"
         >
           <Cells
             type="th"
@@ -26,7 +26,7 @@ export default function Votes(props: { proposalId: number }) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border border-white/10 divide-x divide-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+          rowClass="border border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray hover:bg-blue hover:bg-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
         >
           {votes.map((vote, i) => (
             <Cells
@@ -37,7 +37,7 @@ export default function Votes(props: { proposalId: number }) {
               <p className="pl-2">{vote.voter}</p>
               <p
                 className={`pl-2 ${
-                  vote.vote === "yes" ? "text-bright-green" : "text-failed-red"
+                  vote.vote === "yes" ? "text-green-l1" : "text-red"
                 }`}
               >
                 {vote.vote}
@@ -49,7 +49,7 @@ export default function Votes(props: { proposalId: number }) {
       {isLoadMoreShown && (
         <button
           disabled={isVoteListLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-blue/80 disabled:bg-gray uppecase font-heading uppercase rounded-sm"
           onClick={loadMoreVotes}
         >
           {isVoteListLoading ? (

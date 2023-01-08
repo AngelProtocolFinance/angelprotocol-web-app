@@ -1,11 +1,12 @@
 import { WithoutInstallers } from "./types";
-import { Chain } from "types/aws";
+import { BaseChain, Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { chainIDs } from "constants/chains";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {
@@ -54,7 +55,7 @@ export const WALLET_METADATA: {
 export const placeholderChain: Chain = {
   block_explorer_url: "https://www.placeholder.io/token/txs/",
   chain_id: "placeholder",
-  chain_name: "Token",
+  chain_name: "placeholder",
   native_currency: {
     type: "placeholder",
     symbol: "NATIVE",
@@ -64,6 +65,7 @@ export const placeholderChain: Chain = {
     approved: true,
     name: "Native",
     token_id: "unative",
+    min_donation_amnt: 0,
   },
   network_type: EXPECTED_NETWORK_TYPE,
   rpc_url: "https://rpc-token.placeholder.com",
@@ -78,7 +80,22 @@ export const placeholderChain: Chain = {
       approved: true,
       name: "Token",
       token_id: "utoken",
+      min_donation_amnt: 0,
     },
   ],
   type: "placeholder",
 };
+
+export const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
+  : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
+
+export const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+    ];

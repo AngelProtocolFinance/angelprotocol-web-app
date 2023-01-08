@@ -3,35 +3,34 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
 } from "react";
-import {
-  Connection,
-  ProviderId,
-  ProviderInfo,
-  ProviderStatuses,
-} from "./types";
-import { Chain, Token } from "types/aws";
+import { Connection, ProviderId, ProviderStatus } from "./types";
+import { BaseChain, Chain, Token } from "types/aws";
 import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError, WrongNetworkError } from "errors/errors";
-import { EXPECTED_NETWORK_TYPE, IS_MOBILE } from "constants/env";
-import { useErrorContext } from "../ErrorContext";
-import { placeholderChain } from "./constants";
+import { WalletDisconnectedError } from "errors/errors";
+import { chainIDs } from "constants/chains";
+import { IS_MOBILE, IS_TEST } from "constants/env";
+import {
+  BNB_WALLET_SUPPORTED_CHAINS,
+  EVM_SUPPORTED_CHAINS,
+  placeholderChain,
+} from "./constants";
+import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useWalletConnect from "./useWalletConnect";
-import useXdefi from "./useXdefi";
+import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 export type WalletState = {
   walletIcon: string;
   displayCoin: Token;
   coins: Token[];
+  giftcardCoins: Token[];
   address: string;
   chain: Chain;
   providerId: ProviderId;
-  getBalance: (token_id: string) => number;
+  supportedChains: BaseChain[];
 };
 
 type State = {
@@ -40,6 +39,7 @@ type State = {
 };
 
 type Setters = {
+  switchChain: (chainId: chainIDs) => Promise<void>;
   disconnect(): void;
   connections: Connection[];
 };
@@ -55,100 +55,134 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     connection: metamaskConnection,
     disconnect: disconnectMetamask,
     providerInfo: metamaskInfo,
-  } = useInjectedProvider("metamask");
+    supportedChains: metamaskSupportedChains,
+    switchChain: switchMetamaskChain,
+  } = useInjectedProvider("metamask", EVM_SUPPORTED_CHAINS);
 
   const {
     isLoading: isBinanceWalletLoading,
     connection: binanceWalletConnection,
     disconnect: disconnectBinanceWallet,
     providerInfo: binanceWalletInfo,
-  } = useInjectedProvider("binance-wallet");
+    supportedChains: binanceSupportedChains,
+    switchChain: switchBinanceChain,
+  } = useInjectedProvider("binance-wallet", BNB_WALLET_SUPPORTED_CHAINS);
 
   const {
     isLoading: isKeplrLoading,
     connection: keplrConnection,
     disconnect: disconnectKeplr,
     providerInfo: keplrWalletInfo,
+    supportedChains: keplrSupportedChains,
+    switchChain: switchKeplrChain,
   } = useKeplr();
 
-  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
-    useTerra();
+  const {
+    isTerraLoading,
+    terraConnections,
+    wcConnection: terraWCConnection,
+    disconnectTerra,
+    terraInfo,
+    supportedChains: terraSupportedChains,
+    switchChain: switchTerraChain,
+  } = useTerra();
 
   const {
-    isxdefiEVMLoading,
-    xdefiConnection,
-    disconnectEVMxdefi,
-    xdefiEVMinfo,
-  } = useXdefi();
+    isLoading: isXdefiLoading, //requesting permission, attaching event listeners
+    connection: xdefiConnection,
+    disconnect: disconnectXdefi,
+    providerInfo: xdefiInfo,
+    supportedChains: xdefiSupportedChains,
+    switchChain: switchXdefiChain,
+  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
 
   const {
-    //terraWC state is already reflected in useTerra
-    EVMWCInfo,
-    isEVMWCLoading,
-    disconnectEVMWC,
+    isLoading: isKeplrWCLoading,
+    connection: keplrWCConnection,
+    disconnect: disconnectKeplrWC,
+    providerInfo: keplrWCInfo,
+  } = useKeplrWC();
 
-    keplrWCInfo,
-    isKeplrWCLoading,
-    disconnectKeplrWC,
+  const {
+    isLoading: isEVMWCLoading,
+    connection: evmWCConnection,
+    disconnect: disconnectEVMWC,
+    providerInfo: evmWCInfo,
+  } = useEVMWC();
 
-    wcConnection,
-  } = useWalletConnect();
-
-  const providerStatuses: ProviderStatuses = [
+  const providerStatuses: ProviderStatus[] = [
     {
       providerInfo: binanceWalletInfo,
       isLoading: isBinanceWalletLoading,
+      supportedChains: binanceSupportedChains,
+      switchChain: switchBinanceChain,
     },
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
+      supportedChains: metamaskSupportedChains,
+      switchChain: switchMetamaskChain,
     },
-    {
-      providerInfo: xdefiEVMinfo,
-      isLoading: isxdefiEVMLoading,
-    },
+
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
+      supportedChains: terraSupportedChains,
+      switchChain: switchTerraChain,
     },
     {
       providerInfo: keplrWalletInfo,
       isLoading: isKeplrLoading,
+      supportedChains: keplrSupportedChains,
+      switchChain: switchKeplrChain,
+    },
+    {
+      providerInfo: xdefiInfo,
+      isLoading: isXdefiLoading,
+      supportedChains: xdefiSupportedChains,
+      switchChain: switchXdefiChain,
     },
     {
       providerInfo: keplrWCInfo,
       isLoading: isKeplrWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc keplr can't switch chain");
+      },
     },
     {
-      providerInfo: EVMWCInfo,
+      providerInfo: evmWCInfo,
       isLoading: isEVMWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc-evm can't switch chain");
+      },
     },
   ];
 
-  const activeProviderInfo = providerStatuses.find(
+  const activeProvider = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
-  )?.providerInfo;
+  );
 
   const disconnect = useCallback(() => {
-    switch (activeProviderInfo?.providerId) {
+    switch (activeProvider?.providerInfo!.providerId) {
       case "metamask":
         disconnectMetamask();
         break;
-
+      case "evm-wc":
+        disconnectEVMWC();
+        break;
       case "binance-wallet":
         disconnectBinanceWallet();
         break;
       case "xdefi-evm":
-        disconnectEVMxdefi();
+        disconnectXdefi();
         break;
       case "keplr":
         disconnectKeplr();
         break;
       case "keplr-wc":
         disconnectKeplrWC();
-        break;
-      case "evm-wc":
-        disconnectEVMWC();
         break;
       case "xdefi-wallet":
       case "station":
@@ -160,67 +194,97 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         throw new WalletDisconnectedError();
     }
   }, [
-    activeProviderInfo?.providerId,
+    activeProvider?.providerInfo,
     disconnectMetamask,
+    disconnectEVMWC,
     disconnectBinanceWallet,
-    disconnectEVMxdefi,
+    disconnectXdefi,
     disconnectKeplr,
     disconnectKeplrWC,
-    disconnectEVMWC,
     disconnectTerra,
   ]);
+
+  const switchChain = useCallback(
+    async (chainId: chainIDs) => {
+      if (!activeProvider) {
+        throw new WalletDisconnectedError();
+      }
+
+      await activeProvider.switchChain(chainId);
+    },
+    [activeProvider]
+  );
 
   const {
     data: chain = placeholderChain,
     isLoading: isChainLoading,
+    isFetching: isChainFetching,
     error,
   } = useChainQuery(
     {
-      providerInfo: activeProviderInfo!,
+      chainId: activeProvider?.providerInfo?.chainId,
+      address: activeProvider?.providerInfo?.address,
     },
-    { skip: !activeProviderInfo }
+    { skip: !activeProvider }
   );
 
-  useVerifyChain(activeProviderInfo, chain, error, disconnect);
+  useVerifyChain(chain, error, disconnect);
+
+  const { data: giftcardCoins, isLoading: isGcLoading } = useGetGiftcardTokens(
+    activeProvider?.providerInfo?.address,
+    chain
+  );
 
   const walletState: WalletState | undefined = useMemo(() => {
-    if (activeProviderInfo) {
-      const { logo, providerId, address } = activeProviderInfo;
-      return {
+    if (activeProvider) {
+      const { logo, providerId, address } = activeProvider.providerInfo!;
+      const walletState: WalletState = {
         walletIcon: logo,
         displayCoin: chain.native_currency,
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
+        giftcardCoins,
         providerId,
-        getBalance: (token_id: string) =>
-          [chain.native_currency, ...chain.tokens].find(
-            (x) => x.token_id === token_id
-          )?.balance || 0,
+        supportedChains: activeProvider.supportedChains,
       };
+
+      return walletState;
     }
-  }, [activeProviderInfo, chain]);
+  }, [activeProvider, giftcardCoins, chain]);
+
+  const wcConnections = [
+    /** keplr wc client doesn't support has suggestChain so testnet info can't be integrated */
+    ...(IS_TEST ? [] : [keplrWCConnection]),
+    evmWCConnection,
+    terraWCConnection,
+  ];
 
   return (
     <getContext.Provider
       value={{
         wallet: walletState,
-        isLoading: providerStatuses.some((x) => x.isLoading) || isChainLoading,
+        isLoading:
+          providerStatuses.some((x) => x.isLoading) ||
+          isChainLoading ||
+          isChainFetching ||
+          isGcLoading,
       }}
     >
       <setContext.Provider
         value={{
           connections: IS_MOBILE
-            ? wcConnection.networks
+            ? wcConnections
             : [
-                wcConnection,
                 keplrConnection,
-                xdefiConnection,
                 metamaskConnection,
-                ...terraConnections,
                 binanceWalletConnection,
+                xdefiConnection,
+                ...terraConnections,
+                ...wcConnections,
               ],
           disconnect,
+          switchChain,
         }}
       >
         {props.children}
@@ -229,48 +293,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
-function useVerifyChain(
-  activeProviderInfo: ProviderInfo | undefined,
-  chain: Chain,
-  chainError: any,
-  disconnect: () => void
-) {
-  const { handleError } = useErrorContext();
-
-  const handle = useCallback(
-    (error: any) => {
-      handleError(error);
-      try {
-        disconnect();
-      } catch (err) {
-        // when wallet is disconnected, the `disconnect` func is recreated,
-        // causing this hook to rerun and throwing the error below.
-        // We ignore this error and rethrow others
-        if (!(err instanceof WalletDisconnectedError)) {
-          handleError(err);
-        }
-      }
-    },
-    [handleError, disconnect]
-  );
-
-  useEffect(() => {
-    // no active provider === no connected wallet so no need to run hook
-    if (!activeProviderInfo) {
-      return;
-    }
-    if (chainError) {
-      handle(chainError);
-    } else if (chain.network_type !== EXPECTED_NETWORK_TYPE) {
-      handle(new WrongNetworkError());
-    }
-  }, [activeProviderInfo, chain, chainError, handle]);
-}
-
 const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
+  switchChain: async (_) => {},
 });
 
 export const useSetWallet = () => useContext(setContext);

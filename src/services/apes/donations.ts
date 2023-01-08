@@ -17,7 +17,7 @@ const donations_api = apes.injectEndpoints({
         const generatedToken = createAuthToken("angelprotocol-web-app");
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
-          url: `v1/donation`,
+          url: `v2/donation`,
           params: { transactionId },
           method: "PUT",
           headers: { authorization: generatedToken },

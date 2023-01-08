@@ -31,8 +31,8 @@ export default function StatusOptions() {
             {({ checked }) => (
               <span
                 className={`${
-                  checked ? "bg-angel-blue/20" : ""
-                } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
+                  checked ? "bg-blue/20" : ""
+                } text-gray-d2 w-36 cursor-pointer rounded-sm border border-gray-d2/40 px-3 py-1 text-center text-sm uppercase`}
               >
                 {text[status]}
               </span>
@@ -44,7 +44,7 @@ export default function StatusOptions() {
         as="p"
         errors={errors}
         name="status"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
+        className="font-mono font-semibold text-right text-red-l1 text-xs m-1"
       />
       {status === "3" && <Beneficiary />}
     </>

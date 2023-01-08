@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "../lists";
 import {
   Asset,
+  CapitalizedEndowmentType,
   Categories,
   EndowmentStatus,
   EndowmentTier,
@@ -54,7 +54,7 @@ type OneOffVaults = Vaults<string[]>;
 export interface EndowmentDetails {
   owner: string;
   status: EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
+  endow_type: CapitalizedEndowmentType;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
@@ -99,16 +99,12 @@ export type EndowmentEntry = {
   id: number; //int
   owner: String;
   status: keyof EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
-  name?: string;
-  logo?: string;
-  image?: string;
-  tier?: EndowmentTier;
+  endow_type: CapitalizedEndowmentType;
+  name: string;
+  logo: string;
+  image: string;
+  tier: EndowmentTier;
   categories: Categories;
-};
-
-export type CategorizedEndowments = {
-  [index in UNSDG_NUMS]: EndowmentEntry[];
 };
 
 export interface ProfileResponse {
@@ -142,10 +138,10 @@ export interface ProfileUpdate {
   facebook?: string;
   twitter?: string;
   linkedin?: string;
-  number_of_employees?: number;
+  // number_of_employees?: number;s
   // average_annual_budget?: string;
   // annual_revenue?: string;
-  charity_navigator_rating?: string;
+  // charity_navigator_rating?: string;
 }
 
 export interface EndowmentSettingsPayload {

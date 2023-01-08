@@ -13,7 +13,7 @@ export default function DiffTable<T extends object>(props: {
         <TableSection type="thead" rowClass="">
           <Cells
             type="th"
-            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-white/20"
+            cellClass="text-right p-2 uppercase text-xs font-heading border-r border-gray-l2 dark:border-bluegray"
             dual
           >
             <></>
@@ -21,14 +21,17 @@ export default function DiffTable<T extends object>(props: {
             <>to</>
           </Cells>
         </TableSection>
-        <TableSection type="tbody" rowClass="border-b border-white/20">
+        <TableSection
+          type="tbody"
+          rowClass="border-b border-gray-l2 dark:border-bluegray"
+        >
           {props.diffSet.map(([key, prev, next]) => (
             <Cells
               type="td"
-              cellClass="text-right p-2 border-r border-white/20 truncate max-w-2xl"
+              cellClass="text-right p-2 border-r border-gray-l2 dark:border-bluegray truncate max-w-2xl"
               dual
               key={key as string} //T is a normal object with string keys
-              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-white/20"
+              verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-gray-l2 dark:border-bluegray"
             >
               <>{(key as string).replace(/_/g, " ")}</>
               {createColumn(prev)}
@@ -42,9 +45,7 @@ export default function DiffTable<T extends object>(props: {
 }
 
 function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
-  // value == null -> value is either null or undefined
-  // https://contribute.jquery.org/style-guide/js/#equality
-  if (value == null) {
+  if (!value) {
     return <>not set</>;
   }
 
@@ -60,15 +61,5 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
     );
   }
 
-  if (typeof value === "object") {
-    return (
-      <div className="grid bg-white/10 shadow-inner rounded-md p-2 text-sm">
-        <code className="font-mono whitespace-pre overflow-x-auto text-left">
-          {JSON.stringify(value, null, 2)}
-        </code>
-      </div>
-    );
-  }
-
-  return <>{JSON.stringify(value)}</>;
+  return <>{value}</>;
 }

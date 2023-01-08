@@ -8,13 +8,13 @@ export default function ProposalCard(props: Proposal) {
   return (
     <Link
       to={`../${adminRoutes.proposal}/${props.id}`}
-      className="bg-white/10 hover:bg-white/20 p-4 rounded-md shadow-inner grid"
+      className="p-4 rounded grid border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d6 hover:bg-orange-l5 hover:dark:bg-blue-d7"
     >
-      <div className="font-mono font-bold flex justify-between items-center text-white-grey/80">
+      <div className="flex justify-between items-center mb-4">
         <p className="text-sm">ID: {props.id}</p>
         <Status status={props.status} />
       </div>
-      <span className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-white/40 line-clamp-2">
+      <span className="pb-2 font-semibold mt-2 border-b-2 border-gray-l2 dark:border-bluegray line-clamp-2">
         {props.title}
       </span>
 
@@ -26,17 +26,17 @@ export default function ProposalCard(props: Proposal) {
 function Expiry(props: Expiration) {
   const isTime = "at_time" in props;
   return (
-    <div className="flex gap-1 items-baseline text-white/80 mt-2 justify-self-end">
+    <div className="flex gap-1 items-baseline mt-2 justify-self-end">
       <span className="inline-block font-heading uppercase text-xs text-right mr-1">
         ends
       </span>
       {isTime ? (
-        <span className="font-mono">
+        <span className="text-sm">
           {new Date(props.at_time / 1e6).toLocaleString()}
         </span>
       ) : (
         <>
-          <span>{props.at_height.toLocaleString()}</span>
+          <span className="text-sm">{props.at_height.toLocaleString()}</span>
           <Icon type="Blockchain" className="relative top-0.5" />
         </>
       )}

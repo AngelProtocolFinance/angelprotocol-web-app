@@ -30,12 +30,13 @@ type TxBase = {
   amount: number;
   chainId: string;
   chainName: string;
-  charityId: number;
   charityName: string;
   denomination: string;
   splitLiq: string; //"50"
   transactionId: string;
   transactionDate: string;
+  endowmentId: number;
+  walletAddress: string;
 };
 
 type CryptoTx = TxBase & {

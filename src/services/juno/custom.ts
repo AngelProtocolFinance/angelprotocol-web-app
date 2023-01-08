@@ -1,4 +1,9 @@
-import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
+import {
+  AdminResources,
+  AdminRoles,
+  EndowmentInfo,
+  ProposalDetails,
+} from "services/types";
 import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
@@ -44,20 +49,24 @@ async function getPropMeta(
   return willExecute
     ? {
         willExecute,
-        successLink: {
-          url: `${appRoutes.admin}/${endowId}`,
-          description: "Go to admin home",
+        successMeta: {
+          message: "Successful transaction",
+          link: {
+            url: `${appRoutes.admin}/${endowId}`,
+            description: "Go to admin home",
+          },
         },
-        successMessage: "Successful transaction",
         tagPayloads,
       }
     : {
         willExecute: undefined,
-        successLink: {
-          url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-          description: "Go to proposals",
+        successMeta: {
+          message: "Proposal successfully created",
+          link: {
+            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
+            description: "Go to proposals",
+          },
         },
-        successMessage: "Proposal successfully created",
         tagPayloads,
       };
 }
@@ -191,6 +200,22 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    endowInfo: builder.query<EndowmentInfo, number>({
+      providesTags: [{ type: junoTags.custom, id: customTags.proposalDetails }],
+      async queryFn(id) {
+        const [profile, details] = await Promise.all([
+          queryContract("accProfile", contracts.accounts, { id }),
+          queryContract("accEndowment", contracts.accounts, { id }),
+        ]);
+        return {
+          data: {
+            ...profile,
+            ...details,
+            id,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -198,4 +223,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useEndowInfoQuery,
 } = customApi;

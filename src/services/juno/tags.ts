@@ -1,5 +1,4 @@
-import { JunoTags } from "services/types";
-import { Tag } from "slices/transaction/types";
+import { JunoTags, Tag } from "services/types";
 
 export const junoTags: { [key in JunoTags]: string } = {
   gov: "gov",
@@ -51,6 +50,8 @@ export enum customTags {
   isMember,
   adminResources,
   proposalDetails,
+  endowmentInfo,
+  giftcard,
 }
 
 export const defaultProposalTags: Tag[] = [

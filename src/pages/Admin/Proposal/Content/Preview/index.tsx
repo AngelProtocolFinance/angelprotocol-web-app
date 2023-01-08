@@ -1,8 +1,8 @@
 import { ProposalMeta } from "pages/Admin/types";
 import AllianceUpdate from "./AllianceUpdate";
 import CWMemberUpdate from "./CWMemberUpdate";
-import CharityApplication from "./CharityApplication";
 import DiffTable from "./DiffTable";
+import EndowmentApplication from "./EndowmentApplication";
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import Fund from "./Fund";
 import FundMemberUpdate from "./FundMemberUpdate";
@@ -32,7 +32,7 @@ export default function Preview(props: ProposalMeta) {
     case "cw3_transfer":
       return <FundTransfer {...props.data} />;
     case "cw3_application":
-      return <CharityApplication {...props.data} />;
+      return <EndowmentApplication {...props.data} />;
 
     /** _cw4 */
     case "cw4_members":

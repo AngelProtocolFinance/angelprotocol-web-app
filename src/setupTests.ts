@@ -31,6 +31,18 @@ Object.defineProperty(window, "IntersectionObserver", {
   value: IntersectionObserver,
 });
 
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: (query: any) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  }),
+});
+
 // required after adding @cosmjs/cosmwasm-stargate
 global.TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder; // `global as any` cast required due to (expected) type incompatibility

@@ -1,18 +1,18 @@
+import { Dialog } from "@headlessui/react";
 import { VoteValues as V } from "./types";
-import Status from "components/Transactors/Status";
-import VoteOption from "components/Transactors/VoteOption";
 import Reason from "./Reason";
+import VoteOption from "./VoteOption";
 import useVote from "./useVote";
 
 export default function Form() {
-  const { vote, isSubmitDisabled } = useVote();
+  const { vote, isSubmitDisabled, isSending } = useVote();
   return (
-    <form
+    <Dialog.Panel
+      as="form"
       onSubmit={vote}
-      className="bg-white-grey grid p-4 rounded-md w-full max-w-lg"
+      className="w-full max-w-md fixed-center z-20 font-work text-gray-d2 dark:text-white bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray -mt-4 grid p-4 pt-4 rounded"
       autoComplete="off"
     >
-      <Status />
       <div className="grid grid-cols-2 gap-4 mb-6 mt-2">
         <VoteOption<V> label="yes" vote="yes" />
         <VoteOption<V> label="no" vote="no" />
@@ -21,11 +21,11 @@ export default function Form() {
 
       <button
         disabled={isSubmitDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="btn btn-orange rounded px-4 py-2"
         type="submit"
       >
-        proceed
+        {isSending ? "Submitting.." : "Proceed"}
       </button>
-    </form>
+    </Dialog.Panel>
   );
 }

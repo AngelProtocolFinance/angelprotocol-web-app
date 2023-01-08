@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  const { wallet, isLoading: isWalletLoading } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { id } = useParams<AdminParams>();
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
@@ -20,9 +20,6 @@ export function Guard(props: {
     },
     { skip: !wallet || !id }
   );
-
-  if (isWalletLoading)
-    return <GuardPrompt message="Connecting wallet" showLoader />;
 
   if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
 
@@ -50,11 +47,11 @@ export const useAdminResources = (): AdminResources => {
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {
   return (
-    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-[15rem] w-full max-w-sm p-4 rounded-md shadow-lg">
+    <div className="place-self-center grid content-center justify-items-center min-h-[15rem] w-full bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray max-w-sm p-4 rounded">
       {props.showLoader ? (
         <Loader
           gapClass="gap-2"
-          bgColorClass="bg-angel-grey"
+          bgColorClass="bg-gray-d2 dark:bg-white"
           widthClass="w-4"
         />
       ) : (

@@ -1,10 +1,24 @@
 import {
+  ConnectType,
   Installation,
   Connection as TerraConnection,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "types/aws";
+import station_icon from "assets/icons/wallets/terra-extension.jpg";
+import {
+  ManualChainSwitchRequiredError,
+  UnsupportedChainError,
+  WalletDisconnectedError,
+} from "errors/errors";
+import { chainIDs } from "constants/chains";
+import { IS_TEST } from "constants/env";
+
+const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
+  : [{ chain_id: chainIDs.terraMain, chain_name: "Terra Mainnet" }];
 
 export default function useTerra() {
   const {
@@ -51,14 +65,43 @@ export default function useTerra() {
       }))
     );
 
+  const wcConnection: Connection = {
+    name: "Terra Station Mobile",
+    logo: station_icon,
+    async connect() {
+      connect(ConnectType.WALLETCONNECT);
+    },
+  };
+
+  const switchChain = async (chainId: chainIDs) => {
+    if (!connection) {
+      throw new WalletDisconnectedError();
+    }
+
+    if (!SUPPORTED_CHAINS.some((x) => x.chain_id === chainId)) {
+      throw new UnsupportedChainError(chainId);
+    }
+
+    throw new ManualChainSwitchRequiredError(chainId);
+  };
+
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
+    wcConnection,
     disconnectTerra: disconnect,
     terraInfo,
+    switchChain,
+    supportedChains: SUPPORTED_CHAINS,
   };
 }
 
-function _filter<T extends TerraConnection | Installation>({ identifier }: T) {
-  return identifier === "leap-wallet" || identifier === "station";
+function _filter<T extends TerraConnection | Installation>(conn: T) {
+  const identifier = conn.identifier as ProviderId;
+
+  return (
+    identifier === "xdefi-wallet" ||
+    identifier === "leap-wallet" ||
+    identifier === "station"
+  );
 }

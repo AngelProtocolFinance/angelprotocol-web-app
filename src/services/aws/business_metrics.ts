@@ -1,10 +1,5 @@
+import { DonationsMetricList } from "types/aws";
 import { aws } from "./aws";
-
-interface DonationsMetricList {
-  donations_daily_count: number;
-  donations_daily_amount: number;
-  donations_total_amount: number;
-}
 
 export const dummyDonationsMetricList: DonationsMetricList = {
   donations_daily_count: 0,

@@ -1,13 +1,17 @@
 enum routes {
-  index = "/",
-  contactDetails = "contact-details",
-  dashboard = "dashboard",
+  index = "",
+  resume = "resume",
+  success = "success",
   confirmEmail = "confirm-email",
   verifyEmail = "verify/:token",
-  wallet = "wallet",
-  charityProfile = "charity-profile",
-  documentation = "documentation",
-  additionalInformation = "additional-information",
+  steps = "steps",
+}
+
+export enum steps {
+  contact = "1",
+  doc = "2",
+  wallet = "3",
+  summary = "4",
 }
 
 export default routes;

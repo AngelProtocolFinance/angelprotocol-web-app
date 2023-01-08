@@ -7,21 +7,19 @@ import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetWallet } from "contexts/WalletContext";
+import { ImgLink } from "components/ImgEditor";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { uploadToIpfs } from "helpers";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import {
   cleanObject,
   genDiffMeta,
   getPayloadDiff,
   getTagPayloads,
 } from "helpers/admin";
+import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { appRoutes } from "constants/routes";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -33,10 +31,10 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<ProfileFormValues>();
+
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
-  const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
+  const sendTx = useCosmosTxSender();
 
   const editProfile = async ({
     title,
@@ -45,26 +43,14 @@ export default function useEditProfile() {
     ...data
   }: ProfileFormValues) => {
     try {
-      //extract [code]
-      if (data.country_of_origin) {
-        data.country_of_origin = data.country_of_origin.split(" ")[0];
-      }
-
-      let imgUrl: string = "";
-      //means new image file is selected
-      if (data.image.file) {
-        showModal(Popup, { message: "Uploading image.." });
-        imgUrl = await uploadToIpfs(data.image.file);
-      } else {
-        imgUrl = data.image.publicUrl;
-      }
-
+      const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
       const flatData: FlatProfileWithSettings = {
         ...data,
-        image: imgUrl,
-        logo: data.logo.preview,
+        country: data.country.name,
+        image: bannerUrl,
+        logo: logoUrl,
       };
 
       const diff = getPayloadDiff(initial, flatData);
@@ -85,11 +71,12 @@ export default function useEditProfile() {
       //TODO: add logo upload
 
       const accountContract = new Account(wallet);
-      const { sdg, name, image, logo, ...profilePayload } = data;
+      const { sdg, name, image, logo, country, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
           ...profilePayload,
+          country_of_origin: country.name,
         })
       );
 
@@ -97,8 +84,8 @@ export default function useEditProfile() {
         cleanObject({
           id: profilePayload.id,
           name,
-          image: imgUrl,
-          logo: data.logo.publicUrl,
+          image: bannerUrl,
+          logo: logoUrl,
           categories: { sdgs: [sdg], general: [] },
         })
       );
@@ -116,15 +103,21 @@ export default function useEditProfile() {
         JSON.stringify(profileUpdateMeta)
       );
 
-      dispatch(
-        sendCosmosTx({
-          wallet,
-          msgs: [proposalMsg],
-          ...propMeta,
-          tagPayloads: getTagPayloads(propMeta.willExecute && "acc_profile"),
-        })
-      );
-      showModal(TransactionPrompt, {});
+      const { successMeta: defaultMeta, willExecute, ...meta } = propMeta;
+      await sendTx({
+        msgs: [proposalMsg],
+        ...meta,
+        successMeta: willExecute
+          ? {
+              message: "Profile has been updated!",
+              link: {
+                url: `${appRoutes.profile}/${endowmentId}`,
+                description: "checkout new changes",
+              },
+            }
+          : defaultMeta,
+        tagPayloads: getTagPayloads(willExecute && "acc_profile"),
+      });
     } catch (err) {
       handleError(err);
     }
@@ -135,4 +128,12 @@ export default function useEditProfile() {
     isSubmitDisabled: isSubmitting || !isDirty,
     id: endowmentId,
   };
+}
+
+async function getImgUrls(imgs: ImgLink[]): Promise<string[]> {
+  const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
+  const cid = await uploadToIpfs(files);
+  return imgs.map((img) =>
+    img.file && cid ? genPublicUrl(cid, img.file.name) : img.publicUrl
+  );
 }

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { ProposalParams } from "pages/Admin/types";
 import { Expiration } from "types/contracts";
 import { useProposalDetailsQuery } from "services/juno/custom";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { DetailLabel, QueryLoader, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
@@ -25,7 +25,7 @@ export default function Proposal() {
   );
 
   return (
-    <div className="grid content-start w-full min-h-screen">
+    <div className="grid content-start w-full min-h-screen font-work">
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -34,13 +34,13 @@ export default function Proposal() {
         }}
       >
         {(proposal) => (
-          <div className="bg-white/10 text-white-grey/80 rounded-md shadow-inner p-4">
-            <div className="flex justify-between font-bold flex-wrap">
-              <p className="font-mono">ID: {proposal.id}</p>
+          <div className="rounded p-4 border border-gray-l2 dark:border-bluegray dark:bg-blue-d6 bg-white">
+            <div className="flex justify-between flex-wrap">
+              <p>ID : {proposal.id}</p>
               <Status status={proposal.status} />
             </div>
-            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-white/20 pb-2">
-              <h4 className="font-bold text-lg text-white">{proposal.title}</h4>
+            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-gray-l2 dark:border-bluegray pb-2">
+              <h4 className="font-bold text-lg">{proposal.title}</h4>
               <PollAction {...proposal} />
             </div>
             <DetailLabel>ends</DetailLabel>
@@ -50,13 +50,17 @@ export default function Proposal() {
                 ? "Reason for rejection"
                 : "Description"}
             </DetailLabel>
-            <p className="mb-6">{proposal.description}</p>
+            <p className="mb-6 text-gray-d1 dark:text-gray">
+              {proposal.description}
+            </p>
             <Content {...proposal} />
-            <h4 className="uppercase font-bold text-lg text-white py-2 border-b-2 border-white/10">
+            <h4 className="mt-6 uppercase font-bold text-lg py-2 border-b-2 border-gray-l2 dark:border-bluegray">
               Votes
             </h4>
             <Stats {...proposal} />
-            {proposal.votes.length > 0 && <Votes proposalId={proposal.id} />}
+            {proposal.votes.length > 0 && (
+              <Votes proposalId={proposal.id} classes="mt-4" />
+            )}
           </div>
         )}
       </QueryLoader>
@@ -67,12 +71,14 @@ export default function Proposal() {
 function Expiry(props: Expiration) {
   const isTime = "at_time" in props;
   return isTime ? (
-    <span className="font-mono text-sm">
+    <span className="text-sm text-gray-d1 dark:text-gray">
       {new Date(props.at_time / 1e6).toLocaleString()}
     </span>
   ) : (
     <div className="flex gap-1">
-      <span className="font-mono">{props.at_height.toLocaleString()}</span>
+      <span className="text-sm text-gray-d1 dark:text-gray">
+        {props.at_height.toLocaleString()}
+      </span>
       <Icon type="Blockchain" className="relative top-1" />
     </div>
   );

@@ -1,31 +1,34 @@
-import { CharityApplication } from "types/aws";
+import { EndowmentProposal } from "types/aws";
 import TableSection, { Cells } from "components/TableSection";
 import AppRow from "./AppRow";
 import Header from "./Header";
 import StatusSelector from "./StatusSelector";
 import useSortedApplications from "./useSortApplications";
 
-export default function Table(props: { applications: CharityApplication[] }) {
+export default function Table(props: { applications: EndowmentProposal[] }) {
   const { sortedApplications, handleHeaderClick, sortDirection, sortKey } =
     useSortedApplications(props.applications);
 
   return (
-    <table className="w-full text-white/80 self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
+    <table className="w-full self-start font-work">
+      <TableSection
+        type="thead"
+        rowClass="border-b-2 border-gray-l2 dark:border-bluegray"
+      >
         <Cells type="th" cellClass="p-2">
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName"}
-            onClick={handleHeaderClick("CharityName")}
+            sortKey={"OrganizationName"}
+            onClick={handleHeaderClick("OrganizationName")}
           >
             name
           </Header>
           <Header
             sortDirection={sortDirection}
             activeSortKey={sortKey}
-            sortKey={"CharityName_ContactEmail"}
-            onClick={handleHeaderClick("CharityName_ContactEmail")}
+            sortKey={"Email"}
+            onClick={handleHeaderClick("Email")}
           >
             email
           </Header>
@@ -43,15 +46,11 @@ export default function Table(props: { applications: CharityApplication[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-zinc-50/10 hover:bg-zinc-50/5"
+        rowClass="border-b border-gray-l2 dark:border-bluegray"
       >
-        {sortedApplications.length <= 0 ? (
-          <Cells type="td" cellClass="px-2 py-3">
-            <>No applications found</>
-          </Cells>
-        ) : (
-          sortedApplications.map((app) => <AppRow key={app.PK} {...app} />)
-        )}
+        {sortedApplications.map((app) => (
+          <AppRow key={app.PK} {...app} />
+        ))}
       </TableSection>
     </table>
   );

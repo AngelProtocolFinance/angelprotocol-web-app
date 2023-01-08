@@ -8,8 +8,8 @@ interface IUser {
   Role: string;
   SK?: string;
   PK?: string;
-  CharityName: string;
-  CharityName_ContactEmail?: string;
+  Name: string;
+  Name_ContactEmail?: string;
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
@@ -33,8 +33,8 @@ const initialState: IUser = {
   Role: "",
   PK: "",
   SK: "",
-  CharityName: "",
-  CharityName_ContactEmail: "",
+  Name: "",
+  Name_ContactEmail: "",
   RegistrationDate: "",
   RegistrationStatus: "",
   EmailVerified: false,

@@ -37,6 +37,6 @@ export const templateRoutes: { [key in Templates | "index"]: string } = {
 };
 
 export const proposalShape: SchemaShape<ProposalBase> = {
-  title: stringByteSchema("title", 4, 64),
-  description: stringByteSchema("description", 4, 1024),
+  title: stringByteSchema(4, 64),
+  description: stringByteSchema(4, 1024),
 };

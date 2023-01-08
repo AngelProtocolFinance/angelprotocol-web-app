@@ -1,22 +1,82 @@
+import {
+  CapitalizedEndowmentType,
+  Categories,
+  EndowmentStatus,
+  EndowmentTier,
+  SocialMedialUrls,
+} from "../../contracts";
+import { NetworkType, UNSDG_NUMS } from "../../lists";
+
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
-export interface Endowment {
-  endowment_id: string;
-  charity_owner: string;
+
+export type Endowment = {
+  //EndowmentEntry
+  id: number; //int
+  owner: string;
+  status: keyof EndowmentStatus;
+  endow_type: CapitalizedEndowmentType;
+  name: string;
+  logo: string;
+  image: string;
+  tier: EndowmentTier;
+  categories: Categories;
+  kyc_donors_only: boolean;
+
+  //profile
+  overview: string;
+  url?: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: SocialMedialUrls;
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+};
+
+export type SortDirection = "asc" | "desc";
+export type EndowmentsSortKey = "name_internal" | "overall";
+export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
+export type SdgGroups = { [idx: number]: UNSDG_NUMS[] };
+
+export type EndowmentsQueryRequest = {
+  query: string; //set to "matchAll" if no search query
+  sort?: Sort;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_types: CapitalizedEndowmentType[];
+  sdgGroups: SdgGroups;
+  tiers: Exclude<EndowmentTier, "Level1">[]; // "Level1" excluded for now
+  kyc_only: boolean[]; // comma separated boolean values
+};
+
+export type EndowmentsQueryParams = {
+  query: string; //set to "matchAll" if no search query
+  sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
+  tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  kyc_only: string | null; // comma separated boolean values
+};
+
+export interface LeaderboardEntry {
+  // chain: NetworkType;
+  charity_logo: string;
   charity_name: string;
+  endowment_id: number;
   total_liq: number;
   total_lock: number;
   overall: number;
-  charity_logo?: string;
-  charity_overview: string;
-  url: string;
-  tier: number;
-  iconLight?: boolean;
+  //tier: EndowmentTier
+  //charity_owner:string
 }
 
 export interface Update {
-  endowments: Endowment[];
+  endowments: LeaderboardEntry[];
   last_update: string;
 }
 
@@ -33,3 +93,22 @@ export type Airdrop = {
   // address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
   // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
 };
+
+export type EndowmentBookmark = {
+  id: number;
+  name: string;
+  logo?: string; // old bookmarks do not have this field saved yet
+};
+
+export type WalletProfile = {
+  wallet: string;
+  network: NetworkType;
+  admin: EndowmentBookmark[];
+  endowments: EndowmentBookmark[];
+};
+
+export interface DonationsMetricList {
+  donations_daily_count: number;
+  donations_daily_amount: number;
+  donations_total_amount: number;
+}

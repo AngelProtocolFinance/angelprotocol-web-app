@@ -9,7 +9,7 @@ export default function Admin() {
     <Guard>
       {(resources) => (
         /**modals in this scope can access AdminGuard context value */
-        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+        <ModalContext>
           {(() => {
             switch (resources.role) {
               case "charity":

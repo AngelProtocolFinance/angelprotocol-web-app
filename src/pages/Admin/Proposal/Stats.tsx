@@ -1,6 +1,6 @@
-import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { ProposalDetails } from "services/types";
+import { roundDownToNum } from "helpers";
 
 export default function Stats({ votes, threshold }: ProposalDetails) {
   const [numYes, numNo] = useMemo(
@@ -38,12 +38,12 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
           title="yes"
           value={numYes}
           pct={pctYes}
-          textColor="text-emerald-400"
+          textColor="text-green-l1"
         />
-        <Stat title="no" value={numNo} pct={pctNo} textColor="text-rose-400" />
+        <Stat title="no" value={numNo} pct={pctNo} textColor="text-red-l1" />
       </div>
       <div
-        className="relative mb-8 mt-10 h-4"
+        className="relative mb-8 mt-10 h-4 border border-gray-l2 dark:border-none"
         style={{
           //prettier-ignore
           background: `linear-gradient(to right, 
@@ -54,7 +54,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
         }}
       >
         <p
-          className="absolute bottom-0 h-8 border-l border-emerald-400/80 align-bottom font-mono text-xs"
+          className="absolute bottom-0 h-8 border-l border-green-l1/80 align-bottom font-mono text-xs"
           style={{ left: `${pctTarget}%` }}
         >
           <span className="absolute -top-1/2 right-0 w-max translate-x-1/2 transform">
@@ -65,7 +65,7 @@ export default function Stats({ votes, threshold }: ProposalDetails) {
       <p className="mt-2 flex items-baseline gap-2">
         <span className="text-sm uppercase">total voted</span>
         <span className="font-bold">{numVoted}</span>
-        <span className="text-sm">{pctVoted}%</span>
+        <span className="text-sm text-gray-d1 dark:text-gray">{pctVoted}%</span>
       </p>
     </div>
   );
@@ -79,19 +79,15 @@ function Stat(props: {
 }) {
   return (
     <p
-      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-zinc-50/30 p-4`}
+      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-4`}
     >
       <span className="">{props.title}</span>
       <span className="my-2 text-2xl">{props.value}</span>
-      <span className="text-sm">{props.pct}%</span>
+      <span className="text-sm text-gray-d1 dark:text-gray">{props.pct}%</span>
     </p>
   );
 }
 
 function getPct(numerator: number, denominator: number) {
-  return roundDown((numerator / denominator) * 100);
-}
-
-export function roundDown(num: number, precision = 2) {
-  return +new Decimal(num).toFixed(precision, Decimal.ROUND_DOWN);
+  return roundDownToNum((numerator / denominator) * 100);
 }

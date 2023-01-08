@@ -10,11 +10,11 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { TxOptions } from "slices/transaction/types";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import { logger, scaleToStr, toBase64 } from "helpers";
+import { TxOptions } from "types/slices";
+import { WalletState } from "contexts/WalletContext";
+import { logger, toBase64 } from "helpers";
 import { getKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
@@ -110,7 +110,7 @@ export default class Contract {
   }
 
   createTransferNativeMsg(
-    amount: number,
+    scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
@@ -122,7 +122,7 @@ export default class Contract {
         amount: [
           {
             denom,
-            amount: scaleToStr(amount),
+            amount: scaledAmount,
           },
         ],
       },

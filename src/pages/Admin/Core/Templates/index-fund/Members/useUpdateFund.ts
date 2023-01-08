@@ -4,13 +4,11 @@ import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetWallet } from "contexts/WalletContext";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
@@ -18,9 +16,8 @@ export default function useUpdateFund() {
   const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { showModal } = useModalContext();
-  const dispatch = useSetter();
   const { handleError } = useErrorContext();
+  const sendTx = useCosmosTxSender();
 
   async function updateFund() {
     try {
@@ -78,15 +75,11 @@ export default function useUpdateFund() {
         JSON.stringify(fundUpdateMembersMeta)
       );
 
-      dispatch(
-        sendCosmosTx({
-          wallet,
-          msgs: [proposalMsg],
-          ...propMeta,
-        })
-      );
+      await sendTx({
+        msgs: [proposalMsg],
+        ...propMeta,
+      });
       setIsLoading(false);
-      showModal(TransactionPromp, {});
       reset();
     } catch (err) {
       setIsLoading(false);

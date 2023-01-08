@@ -15,7 +15,7 @@ export default function Amounts() {
 
   if (fields.length <= 0) {
     return (
-      <div className="flex items-center gap-2 text-rose-400 mb-4">
+      <div className="flex items-center gap-2 text-red-l1 mb-4">
         <Icon type="Info" />
         <p>No tokens found</p>
       </div>
@@ -29,7 +29,7 @@ export default function Amounts() {
 
         return (
           <div
-            className="flex relative mb-6 border-b border-zinc-900/10 pr-2 pb-1 pt-6 items-center"
+            className="flex relative mb-6 border-b border-gray-l2 dark:border-bluegray pr-2 pb-1 pt-6 items-center"
             key={field.id}
           >
             <button
@@ -40,7 +40,7 @@ export default function Amounts() {
                 });
               }}
               type="button"
-              className="absolute top-1 right-2 text-sky-400 uppercase text-xs"
+              className="absolute top-1 right-2 text-blue dark:text-blue-l3 uppercase text-xs"
             >
               bal: {humanize(+field.balance, 4)}
             </button>
@@ -61,13 +61,13 @@ export default function Amounts() {
               type="text"
               autoComplete="off"
               placeholder="0.000000"
-              className="bg-transparent text-right w-full outline-none text-angel-grey font-mono text-xl"
+              className="bg-transparent text-right w-full outline-none text-xl"
             />
             <ErrorMessage
               errors={errors}
               name={fieldName}
               as="span"
-              className="text-right text-rose-400 text-xs absolute -bottom-5 right-2"
+              className="text-right text-red dark:text-red-l2 text-xs absolute -bottom-5 right-2"
             />
           </div>
         );
