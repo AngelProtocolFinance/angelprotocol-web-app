@@ -1,6 +1,6 @@
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentEntry } from "types/contracts";
-import { accountTags, junoTags } from "services/juno/tags";
+import { accountTags } from "services/juno/tags";
 import { contracts } from "constants/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
@@ -11,7 +11,7 @@ export const account_api = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     //fetch endowments by batch to avoid hitting gas limits
     endowments: builder.query<EndowmentEntry[], unknown>({
-      providesTags: [{ type: junoTags.registrar, id: accountTags.endowments }],
+      providesTags: [{ type: "account", id: accountTags.endowments }],
       async queryFn() {
         const endowments = await getEndowments(50, 0, []);
         return {
@@ -25,14 +25,14 @@ export const account_api = junoApi.injectEndpoints({
       },
     }),
     endowmentProfile: builder.query<Result<"accProfile">, Args<"accProfile">>({
-      providesTags: [{ type: junoTags.account, id: accountTags.profile }],
+      providesTags: [{ type: "account", id: accountTags.profile }],
       query: (args) => genQueryPath("accProfile", args, accounts),
       transformResponse: (res: Res<"accProfile">) => {
         return res.data;
       },
     }),
     balance: builder.query<Result<"accBalance">, Args<"accBalance">>({
-      providesTags: [{ type: junoTags.account, id: accountTags.balance }],
+      providesTags: [{ type: "account", id: accountTags.balance }],
       query: (args) => genQueryPath("accBalance", args, accounts),
       transformResponse: (res: Res<"accBalance">) => {
         return res.data;

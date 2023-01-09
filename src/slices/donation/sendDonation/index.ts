@@ -6,7 +6,7 @@ import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
@@ -69,12 +69,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         updateTx({ hash });
 
         //invalidate cache entries
-        dispatch(
-          invalidateApesTags([
-            { type: apesTags.chain }, //user balance
-            { type: apesTags.donations }, //donation logs
-          ])
-        );
+        dispatch(invalidateApesTags(["chain", "donations"]));
       } else {
         updateTx("error");
       }

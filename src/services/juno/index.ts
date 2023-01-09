@@ -4,7 +4,7 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { junoTags } from "./tags";
+import { rootTags } from "./tags";
 
 export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
 
@@ -23,14 +23,7 @@ type BlockLatest = {
 export const junoApi = createApi({
   reducerPath: "junoApi",
   baseQuery: customBaseQuery,
-  tagTypes: [
-    junoTags.gov,
-    junoTags.indexfund,
-    junoTags.registrar,
-    junoTags.admin,
-    junoTags.account,
-    junoTags.custom,
-  ],
+  tagTypes: rootTags,
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",

@@ -1,13 +1,15 @@
-import { JunoTags, Tag } from "services/types";
+import { FullTagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 
-export const junoTags: { [key in JunoTags]: string } = {
-  gov: "gov",
-  admin: "admin",
-  indexfund: "indexfund",
-  account: "account",
-  registrar: "registrar",
-  custom: "custom",
-};
+export const rootTags = [
+  "gov",
+  "admin",
+  "indexfund",
+  "account",
+  "registrar",
+  "custom",
+] as const;
+
+type JunoTag = typeof rootTags[number];
 
 export enum adminTags {
   proposals = "proposals",
@@ -54,8 +56,8 @@ export enum customTags {
   giftcard,
 }
 
-export const defaultProposalTags: Tag[] = [
+export const defaultProposalTags: FullTagDescription<JunoTag>[] = [
   //basic tags to invalidate
-  { type: junoTags.admin, id: adminTags.proposals },
-  { type: junoTags.custom, id: customTags.proposalDetails },
+  { type: "admin", id: adminTags.proposals },
+  { type: "custom", id: customTags.proposalDetails },
 ];
