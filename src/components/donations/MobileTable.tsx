@@ -28,7 +28,6 @@ export default function MobileTable(props: { donations: Donation[] }) {
             hash,
             amount,
             symbol,
-            chainId,
             date,
             chainName,
             charityName,
@@ -37,7 +36,7 @@ export default function MobileTable(props: { donations: Donation[] }) {
           },
           index
         ) => (
-          <Disclosure as="div" className="flex flex-col">
+          <Disclosure key={index} as="div" className="flex flex-col">
             <>
               <Disclosure.Button>
                 {({ open }) => (
