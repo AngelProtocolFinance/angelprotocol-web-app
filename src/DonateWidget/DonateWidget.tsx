@@ -1,14 +1,28 @@
 // import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useEndowInfoQuery } from "services/juno/custom";
 import { QueryLoader } from "components/admin";
-import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+import {
+  idParamToNum,
+  isPrevDark,
+  setToDarkMode,
+  setToLightMode,
+} from "helpers";
 import Content from "./Content";
 
 const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
   // const { apiKey } = useParams<{ apiKey: string }>();
-  // const queryState = useEndowInfoByAPIKeyQuery(apiKey, { skip: !apiKey });
+  // const queryState = checkApiKey(apiKey, { skip: !apiKey });
+  const search = useLocation().search;
+  const id = new URLSearchParams(search).get("id");
+  const endowId = idParamToNum(id);
+  const queryState = useEndowInfoQuery(endowId, {
+    skip: endowId === 0,
+    // || !apiKey
+  });
 
   /**
    * need to set the theme to light, but after widget is closed we need to
@@ -34,11 +48,7 @@ export default function DonateWidget() {
 
   return (
     <QueryLoader
-      queryState={{
-        isError: false,
-        isLoading: false,
-        data: { name: "TestEndow", id: 11, kyc_donors_only: false },
-      }}
+      queryState={queryState}
       messages={{
         loading: "Getting endowment info..",
         error: "Failed to get endowment info",
