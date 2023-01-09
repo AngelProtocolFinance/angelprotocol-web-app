@@ -33,10 +33,10 @@ export default function WidgetConfigurer() {
           <img
             src={widgetSample}
             alt="widget example"
-            className="w-2/3 h-full border border-gray-l2 dark:border-bluegray"
+            className="w-4/5 h-full border border-gray-l2 dark:border-bluegray"
           />
         </section>
-        <section>
+        <section className="flex flex-col gap-3">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
           <WidgetUrlGenerator />
         </section>

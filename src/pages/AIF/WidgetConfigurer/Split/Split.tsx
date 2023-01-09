@@ -5,7 +5,7 @@ type Props = { liquidPercentage: number; onChange(newValue: number): void };
 
 export default function Split({ liquidPercentage, onChange }: Props) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="flex gap-2">
       <Portion
         percentage={100 - liquidPercentage}
         title="Endowment"
@@ -16,7 +16,11 @@ export default function Split({ liquidPercentage, onChange }: Props) {
         title="Current"
         action="Instantly available"
       >
-        <Slider className="my-2.5" onChange={onChange} />
+        <Slider
+          className="my-2.5"
+          onChange={onChange}
+          value={liquidPercentage}
+        />
       </Portion>
     </div>
   );

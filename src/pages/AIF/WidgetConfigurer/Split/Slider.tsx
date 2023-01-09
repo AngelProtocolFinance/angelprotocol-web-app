@@ -1,17 +1,19 @@
 type Props = {
   className?: string;
+  value: number;
   onChange(newValue: number): void;
 };
 
-export default function Slider({ className = "", onChange }: Props) {
+export default function Slider({ value, className = "", onChange }: Props) {
   return (
     <div className={`${className} select-none`}>
       <input
-        type="range"
+        className="slider"
         onChange={(e) => onChange(Number(e.target.value))}
         min={0}
         max={100}
-        className="slider"
+        type="range"
+        value={value}
       />
     </div>
   );
