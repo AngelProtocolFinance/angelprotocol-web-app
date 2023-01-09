@@ -19,11 +19,10 @@ export default function DateInput<T extends FieldValues>({
   return (
     <div>
       <input
-        {...register(name as any)}
+        {...register(name as any, { onChange })}
         type="date"
         className="relative w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
         placeholder={placeholder}
-        onChange={onChange}
       />
       <ErrorMessage
         errors={errors}
