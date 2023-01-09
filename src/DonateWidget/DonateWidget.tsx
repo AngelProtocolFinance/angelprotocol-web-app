@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 import ApiKeyChecker from "./ApiKeyChecker";
-import Content from "./Content";
 import EndowmentLoader from "./EndowmentLoader";
+import InnerComponent from "./InnerComponent";
 
 const isPrevThemeDark = isPrevDark();
 
@@ -34,7 +34,7 @@ export default function DonateWidget() {
     <ApiKeyChecker>
       <EndowmentLoader>
         {(endowment) => (
-          <Content
+          <InnerComponent
             id={endowment.id}
             isKYCRequired={endowment.kyc_donors_only}
             name={endowment.name}
