@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import widgetSample from "assets/images/widget-example.png";
+import WidgetUrlConfigForm from "./WidgetUrlConfigForm";
 
 const TITLE_STYLE = "text-lg sm:text-3xl font-heading font-bold";
 
@@ -35,6 +36,10 @@ export default function WidgetConfigurer() {
             alt="widget example"
             className="w-2/3 h-full border border-gray-l2 dark:border-bluegray"
           />
+        </section>
+        <section>
+          <h2 className={TITLE_STYLE}>Configure your widget</h2>
+          <WidgetUrlConfigForm />
         </section>
       </div>
     </div>
