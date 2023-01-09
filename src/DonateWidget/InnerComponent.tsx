@@ -5,7 +5,7 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 
-export default function Content(props: {
+export default function InnerComponent(props: {
   id: number;
   name: string;
   isKYCRequired: boolean;
