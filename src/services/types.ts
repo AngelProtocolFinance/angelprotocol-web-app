@@ -1,6 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { Token } from "types/aws";
 import {
   AdminVoteInfo,
   CW3Config,
@@ -63,9 +62,6 @@ export type CountryOption = {
   name: string;
   flag: string;
 };
-
-/** multicall */
-export type WithBalance<T = Token> = T & { balance: number };
 
 /** endowment */
 export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };
