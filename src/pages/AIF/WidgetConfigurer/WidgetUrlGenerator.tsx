@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Checkbox } from "components/Checkbox";
+import Selector, { OptionType } from "components/Selector";
 import Split from "./Split";
+import useApprovedTokens from "./useApprovedTokens";
 
 export default function WidgetUrlGenerator() {
   const [hideText, setHideText] = useState(false);
@@ -8,7 +10,10 @@ export default function WidgetUrlGenerator() {
   const [hideAdvancedOptions, setHideAdvancedOptions] = useState(false);
   const [unfoldAdvancedOptions, setUnfoldAdvancedOptions] = useState(false);
   const [liquidPercentage, setLiquidPercentage] = useState(0);
-  const [availableCurrencies, setAvailableCurrencies] = useState<string[]>([]);
+  const [availableCurrencies, setAvailableCurrencies] = useState<
+    OptionType<string>[]
+  >([]);
+  const approvedTokens = useApprovedTokens();
 
   return (
     <div className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body">
@@ -23,6 +28,20 @@ export default function WidgetUrlGenerator() {
         onChange={() => setHideEndowmentGauges((prev) => !prev)}
       />
       <span>Available currencies:</span>
+      <Selector<string, true>
+        options={approvedTokens.map((token) => ({
+          label: token,
+          value: token,
+        }))}
+        classes={{ container: "bg-white dark:bg-blue-d6" }}
+        multiple
+        selectedOptions={availableCurrencies}
+        onChange={(newValues) =>
+          Array.isArray(newValues)
+            ? setAvailableCurrencies(newValues)
+            : setAvailableCurrencies([newValues])
+        }
+      />
 
       <CheckboxField
         checked={hideAdvancedOptions}

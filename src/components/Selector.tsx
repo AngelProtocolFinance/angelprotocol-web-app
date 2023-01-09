@@ -17,7 +17,7 @@ type VarOption<M extends boolean, V extends ValKey> = M extends true
 interface Props<V extends ValKey, M extends boolean> {
   multiple?: M;
   options: OptionType<V>[];
-  selectedOptions: OptionType<V> | OptionType<V>[];
+  selectedOptions?: OptionType<V> | OptionType<V>[];
   disabled?: true;
   classes?: Classes;
   onChange?: (newValues: OptionType<V> | OptionType<V>[]) => void;
@@ -37,7 +37,6 @@ export default function Selector<
 }: PropsWithChildren<Props<ValueType, Multiple>>) {
   const { container = "", button = "" } = classes || {};
   const valueKey: keyof OptionType<ValueType> = "value";
-
   return (
     <Listbox
       disabled={disabled}
@@ -84,7 +83,11 @@ export default function Selector<
   );
 }
 
-function getDisplay(selected: VarOption<any, any>) {
+function getDisplay(selected?: VarOption<any, any>): string {
+  if (!selected) {
+    return "";
+  }
+
   return Array.isArray(selected)
     ? selected.map((s) => s.label).join(" , ")
     : selected.label;
