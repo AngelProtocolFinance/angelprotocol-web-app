@@ -2,6 +2,7 @@ import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { reset, toggle } from "slices/components/marketFilter";
 import KYCFilter from "./KYCFilter";
+import Regions from "./Regions";
 import SDGGroups from "./SDGGroups";
 import Types from "./Types";
 
@@ -38,6 +39,12 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
           <Types />
           <KYCFilter />
           <SDGGroups />
+          <Regions label="Activity country" type="activities" />
+          <Regions
+            label="Headquarter country"
+            type="headquarters"
+            hideBottomBorder
+          />
         </div>
       </div>
     </div>
