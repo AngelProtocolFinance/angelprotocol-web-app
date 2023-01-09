@@ -4,7 +4,7 @@ import { useEndowInfoQuery } from "services/aws/aws";
 import Seo from "components/Seo";
 import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
-import Steps from "./Steps";
+import Content from "./Content";
 
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +36,7 @@ export default function Donate() {
               image={`${endowment.logo}`}
               url={`https://app.angelprotocol.io/donate/${endowment.id}`}
             />
-            <Steps
+            <Content
               name={endowment.name}
               id={numId}
               isKYCRequired={endowment.kyc_donors_only}
