@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
@@ -21,9 +21,7 @@ export default function KadoModal() {
   const handleOnLoad = useCallback(() => {
     // there is a high chance the user bought some new crypto prior to closing this modal
     // reload the page to get new wallet balances
-    setModalOption("onClose", () =>
-      dispatch(invalidateApesTags([apesTags.chain]))
-    );
+    setModalOption("onClose", () => dispatch(invalidateApesTags(["chain"])));
     setLoading(false);
   }, [setModalOption, dispatch]);
 

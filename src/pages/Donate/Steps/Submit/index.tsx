@@ -12,6 +12,7 @@ import useScrollTo from "hooks/useScrollTo";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
+import getBreakdown from "./getBreakdown";
 
 type EstimateStatus = Estimate | "loading" | "error";
 
@@ -44,6 +45,8 @@ export default function Submit(props: WithWallet<SubmitStep>) {
 
   const isNotEstimated = estimate === "error" || estimate === "loading";
 
+  const { fromBal, fromGift } = getBreakdown(token);
+
   return (
     <div>
       <Row title="Currency:">
@@ -59,9 +62,14 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
       <Row title="Amount:">
         <span>
-          {token.symbol} {humanize(token.amount, 4)}
+          {token.symbol} {humanize(fromBal, 4)}
         </span>
       </Row>
+      {fromGift ? (
+        <Row title="Giftcard:">
+          {token.symbol} {humanize(fromGift, 4)}
+        </Row>
+      ) : null}
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
         <BtnSec onClick={goBack} type="button">

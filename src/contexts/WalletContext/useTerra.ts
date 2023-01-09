@@ -7,6 +7,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
+import station_icon from "assets/icons/wallets/terra-extension.jpg";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,
@@ -31,17 +32,19 @@ export default function useTerra() {
     disconnect,
   } = useWallet();
 
-  const terraInfo: ProviderInfo | undefined = connection
-    ? {
-        providerId:
-          //use connect type as Id if no futher connections stems out of the type
-          (connection?.identifier as ProviderId) ||
-          connection.type.toLowerCase(),
-        logo: connection?.icon!,
-        chainId: network.chainID,
-        address: wallets[0].terraAddress,
-      }
-    : undefined;
+  const terraInfo: ProviderInfo | undefined =
+    /** wallets contain wc entry even terraAddress is not resolved */
+    connection && wallets[0].terraAddress
+      ? {
+          providerId:
+            //use connect type as Id if no futher connections stems out of the type
+            (connection?.identifier as ProviderId) ||
+            connection.type.toLowerCase(),
+          logo: connection?.icon!,
+          chainId: network.chainID,
+          address: wallets[0].terraAddress,
+        }
+      : undefined;
 
   const terraConnections: Connection[] = availableConnections
     .filter(_filter)
@@ -62,6 +65,14 @@ export default function useTerra() {
       }))
     );
 
+  const wcConnection: Connection = {
+    name: "Terra Station Mobile",
+    logo: station_icon,
+    async connect() {
+      connect(ConnectType.WALLETCONNECT);
+    },
+  };
+
   const switchChain = async (chainId: chainIDs) => {
     if (!connection) {
       throw new WalletDisconnectedError();
@@ -77,6 +88,7 @@ export default function useTerra() {
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
+    wcConnection,
     disconnectTerra: disconnect,
     terraInfo,
     switchChain,
@@ -90,7 +102,6 @@ function _filter<T extends TerraConnection | Installation>(conn: T) {
   return (
     identifier === "xdefi-wallet" ||
     identifier === "leap-wallet" ||
-    identifier === "station" ||
-    conn.type === ConnectType.WALLETCONNECT
+    identifier === "station"
   );
 }

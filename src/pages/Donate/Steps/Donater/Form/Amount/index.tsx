@@ -16,8 +16,11 @@ export default function Amount() {
 
   return (
     <div className="grid">
-      <div className="flex items-baseline justify-between mb-1">
-        <label htmlFor="amount" className="text-lg font-bold">
+      <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
+        <label
+          htmlFor="amount"
+          className="text-lg font-bold mr-auto max-sm:mb-2"
+        >
           Enter the donation amount:
         </label>
         <Balance />

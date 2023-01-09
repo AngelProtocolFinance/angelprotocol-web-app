@@ -3,11 +3,12 @@ export * from "./createNavLinkStyler";
 export * from "./decimal";
 export * from "./extractFeeData";
 
-export * from "./getProvider";
+export * from "./evm";
 export * from "./getTxUrl";
 export * from "./getAddressUrl";
 export * from "./getWasmAttribute";
 export * from "./idParamToNum";
+export * from "./isEmpty";
 export * from "./logger";
 export * from "./maskAddress";
 export * from "./theme";

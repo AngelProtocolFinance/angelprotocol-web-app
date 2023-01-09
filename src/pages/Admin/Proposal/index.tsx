@@ -6,7 +6,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import { DetailLabel, QueryLoader, Status } from "components/admin";
 import { useAdminResources } from "../Guard";
-import ProposalContent from "./Content";
+import Content from "./Content";
 import PollAction from "./PollAction";
 import Stats from "./Stats";
 import Votes from "./Votes";
@@ -53,7 +53,7 @@ export default function Proposal() {
             <p className="mb-6 text-gray-d1 dark:text-gray">
               {proposal.description}
             </p>
-            <ProposalContent {...proposal} />
+            <Content {...proposal} />
             <h4 className="mt-6 uppercase font-bold text-lg py-2 border-b-2 border-gray-l2 dark:border-bluegray">
               Votes
             </h4>
