@@ -6,22 +6,26 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, Token } from "types/aws";
+import { BaseChain, Chain, TokenWithBalance } from "types/aws";
 import { useChainQuery } from "services/apes";
 import { WalletDisconnectedError } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { IS_TEST } from "constants/env";
-import { placeholderChain } from "./constants";
-import { useGetGiftcardTokens, useVerifyChain } from "./hooks";
+import { IS_MOBILE, IS_TEST } from "constants/env";
+import {
+  BNB_WALLET_SUPPORTED_CHAINS,
+  EVM_SUPPORTED_CHAINS,
+  placeholderChain,
+} from "./constants";
+import { useVerifyChain } from "./hooks";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
+import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 export type WalletState = {
   walletIcon: string;
-  displayCoin: Token;
-  coins: Token[];
-  giftcardCoins: Token[];
+  displayCoin: TokenWithBalance;
+  coins: TokenWithBalance[];
   address: string;
   chain: Chain;
   providerId: ProviderId;
@@ -43,20 +47,6 @@ const initialState: State = {
   wallet: undefined,
   isLoading: true,
 };
-
-const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
-  : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
-
-const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
-  ? [
-      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
-      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
-    ]
-  : [
-      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
-      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
-    ];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
@@ -89,6 +79,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     isTerraLoading,
     terraConnections,
+    wcConnection: terraWCConnection,
     disconnectTerra,
     terraInfo,
     supportedChains: terraSupportedChains,
@@ -103,6 +94,20 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     supportedChains: xdefiSupportedChains,
     switchChain: switchXdefiChain,
   } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
+
+  const {
+    isLoading: isKeplrWCLoading,
+    connection: keplrWCConnection,
+    disconnect: disconnectKeplrWC,
+    providerInfo: keplrWCInfo,
+  } = useKeplrWC();
+
+  const {
+    isLoading: isEVMWCLoading,
+    connection: evmWCConnection,
+    disconnect: disconnectEVMWC,
+    providerInfo: evmWCInfo,
+  } = useEVMWC();
 
   const providerStatuses: ProviderStatus[] = [
     {
@@ -136,6 +141,22 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       supportedChains: xdefiSupportedChains,
       switchChain: switchXdefiChain,
     },
+    {
+      providerInfo: keplrWCInfo,
+      isLoading: isKeplrWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc keplr can't switch chain");
+      },
+    },
+    {
+      providerInfo: evmWCInfo,
+      isLoading: isEVMWCLoading,
+      supportedChains: [],
+      switchChain: () => {
+        throw new Error("wc-evm can't switch chain");
+      },
+    },
   ];
 
   const activeProvider = providerStatuses.find(
@@ -147,6 +168,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "metamask":
         disconnectMetamask();
         break;
+      case "evm-wc":
+        disconnectEVMWC();
+        break;
       case "binance-wallet":
         disconnectBinanceWallet();
         break;
@@ -155,6 +179,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "keplr":
         disconnectKeplr();
+        break;
+      case "keplr-wc":
+        disconnectKeplrWC();
         break;
       case "xdefi-wallet":
       case "station":
@@ -168,9 +195,11 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [
     activeProvider?.providerInfo,
     disconnectMetamask,
+    disconnectEVMWC,
     disconnectBinanceWallet,
     disconnectXdefi,
     disconnectKeplr,
+    disconnectKeplrWC,
     disconnectTerra,
   ]);
 
@@ -200,11 +229,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   useVerifyChain(chain, error, disconnect);
 
-  const { data: giftcardCoins, isLoading: isGcLoading } = useGetGiftcardTokens(
-    activeProvider?.providerInfo?.address,
-    chain
-  );
-
   const walletState: WalletState | undefined = useMemo(() => {
     if (activeProvider) {
       const { logo, providerId, address } = activeProvider.providerInfo!;
@@ -214,14 +238,20 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         coins: [chain.native_currency, ...chain.tokens],
         address,
         chain,
-        giftcardCoins,
         providerId,
         supportedChains: activeProvider.supportedChains,
       };
 
       return walletState;
     }
-  }, [activeProvider, giftcardCoins, chain]);
+  }, [activeProvider, chain]);
+
+  const wcConnections = [
+    /** keplr wc client doesn't support has suggestChain so testnet info can't be integrated */
+    ...(IS_TEST ? [] : [keplrWCConnection]),
+    evmWCConnection,
+    terraWCConnection,
+  ];
 
   return (
     <getContext.Provider
@@ -230,19 +260,21 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading:
           providerStatuses.some((x) => x.isLoading) ||
           isChainLoading ||
-          isChainFetching ||
-          isGcLoading,
+          isChainFetching,
       }}
     >
       <setContext.Provider
         value={{
-          connections: [
-            keplrConnection,
-            metamaskConnection,
-            xdefiConnection,
-            ...terraConnections,
-            binanceWalletConnection,
-          ],
+          connections: IS_MOBILE
+            ? wcConnections
+            : [
+                keplrConnection,
+                metamaskConnection,
+                binanceWalletConnection,
+                xdefiConnection,
+                ...terraConnections,
+                ...wcConnections,
+              ],
           disconnect,
           switchChain,
         }}

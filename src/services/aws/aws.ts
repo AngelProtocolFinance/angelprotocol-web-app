@@ -3,7 +3,6 @@ import {
   Endowment,
   EndowmentBookmark,
   EndowmentsQueryParams,
-  EndowmentsQueryRequest,
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
@@ -34,11 +33,10 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowments: builder.query<
       PaginatedAWSQueryRes<Endowment[]>,
-      EndowmentsQueryRequest
+      EndowmentsQueryParams
     >({
       providesTags: [{ type: "endowments" }],
-      query: (request) => {
-        const params: EndowmentsQueryParams = getParams(request);
+      query: (params) => {
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
@@ -76,23 +74,3 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
-
-function getParams(paramsObj: EndowmentsQueryRequest): EndowmentsQueryParams {
-  const selectedSDGs = Object.entries(paramsObj.sdgGroups).flatMap(
-    ([, members]) => members
-  );
-
-  const params: EndowmentsQueryParams = {
-    query: paramsObj.query || "matchall",
-    sort: paramsObj.sort
-      ? `${paramsObj.sort.key}+${paramsObj.sort.direction}`
-      : "default",
-    endow_types: paramsObj.endow_types.join(",") || null,
-    tiers: paramsObj.tiers.join(",") || null,
-    sdgs: selectedSDGs.join(",") || 0,
-    kyc_only: paramsObj.kyc_only.join(",") || null,
-    start: paramsObj.start || undefined,
-  };
-
-  return params;
-}
