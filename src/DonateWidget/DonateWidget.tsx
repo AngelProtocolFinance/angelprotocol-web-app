@@ -9,20 +9,16 @@ import {
   setToDarkMode,
   setToLightMode,
 } from "helpers";
+import ApiKeyChecker from "./ApiKeyChecker";
 import Content from "./Content";
 
 const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
-  // const { apiKey } = useParams<{ apiKey: string }>();
-  // const queryState = checkApiKey(apiKey, { skip: !apiKey });
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
   const endowId = idParamToNum(id);
-  const queryState = useEndowInfoQuery(endowId, {
-    skip: endowId === 0,
-    // || !apiKey
-  });
+  const queryState = useEndowInfoQuery(endowId, { skip: endowId === 0 });
 
   /**
    * need to set the theme to light, but after widget is closed we need to
@@ -47,21 +43,23 @@ export default function DonateWidget() {
   }, []);
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Getting endowment info..",
-        error: "Failed to get endowment info",
-      }}
-      classes={{ container: "text-center mt-8" }}
-    >
-      {(endowment) => (
-        <Content
-          id={endowment.id}
-          isKYCRequired={endowment.kyc_donors_only}
-          name={endowment.name}
-        />
-      )}
-    </QueryLoader>
+    <ApiKeyChecker>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Getting endowment info..",
+          error: "Failed to get endowment info",
+        }}
+        classes={{ container: "text-center mt-8" }}
+      >
+        {(endowment) => (
+          <Content
+            id={endowment.id}
+            isKYCRequired={endowment.kyc_donors_only}
+            name={endowment.name}
+          />
+        )}
+      </QueryLoader>
+    </ApiKeyChecker>
   );
 }
