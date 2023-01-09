@@ -9,7 +9,10 @@ export default function WidgetConfigurer() {
           <p>
             Just configure your widget below, copy & paste the code on your
             website and you're ready to go!
-            {/** TODO: update the page to display steps to do this */}
+            {/**
+             * TODO: update the page to display steps to do this,
+             * similar to https://docs.kado.money/kado-ramp-widget/integrating-the-kado-ramp-widget/url-redirect
+             */}
           </p>
           <p>
             Your donors will be able to connect their crypto wallets and use

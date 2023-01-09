@@ -1,5 +1,5 @@
-import WidgetConfigurer from "./WidgetConfigurer";
+import Views from "./Views";
 
 export default function AIF() {
-  return <WidgetConfigurer />;
+  return <Views />;
 }
