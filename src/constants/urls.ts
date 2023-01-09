@@ -3,6 +3,7 @@ export const APIs = {
   apes: "https://fctqkloitc.execute-api.us-east-1.amazonaws.com",
   flipside: "https://flipside.leslug.com/angel",
 };
+export const WC_BRIDGE = "https://bridge.walletconnect.org";
 
 export const FEEDBACK =
   "https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37";
