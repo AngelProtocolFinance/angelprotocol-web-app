@@ -1,14 +1,18 @@
-import { PropsWithChildren, useCallback, useContext } from "react";
-import { createContext } from "react";
-import { useModalContext } from "contexts/ModalContext";
-import InstallWalletPopup from "components/InstallWalletPopup";
-import Popup from "components/Popup";
+import {
+  PropsWithChildren,
+  createContext,
+  useCallback,
+  useContext,
+} from "react";
+import Prompt from "components/Prompt";
 import { logger } from "helpers";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "errors/errors";
+import { useModalContext } from "../ModalContext";
+import InstallWallet from "./InstallWalletContent";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -24,14 +28,26 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       logger.error(error);
 
       if (displayMessage) {
-        showModal(Popup, { message: displayMessage });
+        showModal(Prompt, {
+          type: "error",
+          children: displayMessage,
+        });
       } else if (typeof error === "string") {
-        showModal(Popup, { message: error });
+        showModal(Prompt, {
+          type: "error",
+          children: error,
+        });
       } else if (instanceOfAPError(error)) {
         if (error instanceof WalletNotInstalledError) {
-          showModal(InstallWalletPopup, { providerId: error.providerId });
+          showModal(Prompt, {
+            headline: "Install Wallet",
+            children: <InstallWallet providerId={error.providerId} />,
+          });
         } else {
-          showModal(Popup, { message: error.message });
+          showModal(Prompt, {
+            type: "error",
+            children: error.message,
+          });
         }
       } else if (instanceOfAPError(error.data)) {
         handleError(error.data);
@@ -42,8 +58,9 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else if ("error" in error) {
         handleError(error.error);
       } else {
-        showModal(Popup, {
-          message: `Unknown error occurred`,
+        showModal(Prompt, {
+          type: "error",
+          children: "Unknown error children",
         });
       }
     },
