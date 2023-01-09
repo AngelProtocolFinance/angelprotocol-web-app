@@ -8,7 +8,6 @@ import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
-import useScrollTo from "hooks/useScrollTo";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import { estimateDonation } from "./estimateDonation";
@@ -20,7 +19,6 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
   const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
-  useScrollTo("steps");
 
   useEffect(() => {
     (async () => {
