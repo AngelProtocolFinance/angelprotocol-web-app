@@ -33,7 +33,7 @@ interface Props<
 
 const labelKey: keyof OptionType<string> = "label";
 
-export function Selector<
+export function SelectorFormField<
   T extends FieldValues,
   K extends Path<T>,
   ValueType extends ValKey,

@@ -1,7 +1,7 @@
 import { FormValues as FV } from "../types";
 import CheckboxFormField from "components/CheckboxFormField";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
+import { SelectorFormField } from "components/SelectorFormField";
 import { Label } from "components/form";
 import {
   BtnPrim,
@@ -57,7 +57,7 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <Selector<FV, "sdgs", number, true>
+      <SelectorFormField<FV, "sdgs", number, true>
         multiple
         name="sdgs"
         options={sdgOptions}
