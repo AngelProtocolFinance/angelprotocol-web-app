@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom";
 import widgetSample from "assets/images/widget-example.png";
 import WidgetUrlConfigForm from "./WidgetUrlConfigForm";
 
 const TITLE_STYLE = "text-lg sm:text-3xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
 
   return (
     <div className="grid grid-rows-[auto_1fr] gap-10 w-full h-full">
