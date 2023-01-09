@@ -9,7 +9,7 @@ type Classes = {
   error?: string;
 };
 
-export default function Checkbox<T extends FieldValues>({
+export default function CheckboxFormField<T extends FieldValues>({
   name,
   children,
   classes,
