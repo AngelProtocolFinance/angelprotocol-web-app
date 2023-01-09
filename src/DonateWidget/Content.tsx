@@ -4,7 +4,6 @@ import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
-import Balances from "./Balances";
 
 export default function Content(props: {
   id: number;
@@ -38,7 +37,6 @@ export default function Content(props: {
             You will be given the chance to provide your personal details to
             receive an immediate tax receipt.
           </p>
-          <Balances profileId={props.id} />
 
           <Steps className="mt-5 w-3/4" />
         </section>
