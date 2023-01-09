@@ -22,6 +22,8 @@ export default function WidgetUrlGenerator() {
         label="Hide endowment gauges"
         onChange={() => setHideEndowmentGauges((prev) => !prev)}
       />
+      <span>Available currencies:</span>
+
       <CheckboxField
         checked={hideAdvancedOptions}
         label='Hide "advanced options"'
