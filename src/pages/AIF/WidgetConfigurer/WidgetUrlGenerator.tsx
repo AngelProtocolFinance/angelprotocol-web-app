@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function WidgetUrlConfigForm() {
+export default function WidgetUrlGenerator() {
   const [hideText, setHideText] = useState(false);
   const [hideEndowmentGauges, setHideEndowmentGauges] = useState(false);
   const [hideAdvancedOptions, setHideAdvancedOptions] = useState(false);

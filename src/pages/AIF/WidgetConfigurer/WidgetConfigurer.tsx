@@ -1,5 +1,5 @@
 import widgetSample from "assets/images/widget-example.png";
-import WidgetUrlConfigForm from "./WidgetUrlConfigForm";
+import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
 const TITLE_STYLE = "text-lg sm:text-3xl font-heading font-bold";
 
@@ -38,7 +38,7 @@ export default function WidgetConfigurer() {
         </section>
         <section>
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
-          <WidgetUrlConfigForm />
+          <WidgetUrlGenerator />
         </section>
       </div>
     </div>
