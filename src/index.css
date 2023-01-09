@@ -47,7 +47,7 @@
   }
 
   .padded-container {
-    @apply xl:container xl:mx-auto px-5;
+    @apply xl:container mx-auto px-5;
   }
 
   /** set default for input range */
@@ -203,7 +203,7 @@
   }
 
   .border-prim {
-    @apply border-gray-l2 dark:border-bluegray;
+    @apply border-prim;
   }
 
   .divide-prim {
