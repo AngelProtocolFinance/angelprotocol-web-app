@@ -1,11 +1,16 @@
+import { WalletProvider } from "@terra-money/wallet-provider";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ModalContext from "contexts/ModalContext";
+import WalletContext from "contexts/WalletContext";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
+import { widgetRoutes } from "constants/routes";
+import { chainOptions } from "./constants/chainOptions";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -13,6 +18,7 @@ import reportWebVitals from "./reportWebVitals";
 initTheme();
 
 const App = lazy(() => import("./App/App"));
+const DonateWidget = lazy(() => import("./DonateWidget"));
 
 const LoaderComponent = () => (
   <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
@@ -27,7 +33,19 @@ root.render(
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
-            <App />
+            <WalletProvider {...chainOptions}>
+              <WalletContext>
+                <ModalContext>
+                  <Routes>
+                    <Route
+                      path={`${widgetRoutes.donate}/:apiKey`}
+                      element={<DonateWidget />}
+                    />
+                    <Route path="*" element={<App />} />
+                  </Routes>
+                </ModalContext>
+              </WalletContext>
+            </WalletProvider>
           </Suspense>
         </BrowserRouter>
       </Provider>
