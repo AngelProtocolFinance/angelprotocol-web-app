@@ -50,9 +50,7 @@ const Filter = ({
   async function submit(data: FilterFormValues) {
     let filters = transformToDonationsQueryParams(data);
     cleanObject(filters);
-    setFilterValues(() => {
-      return { ...filters };
-    });
+    setFilterValues(filters);
     buttonRef.current?.click();
   }
 
