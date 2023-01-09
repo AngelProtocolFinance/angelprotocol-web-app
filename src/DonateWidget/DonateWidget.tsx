@@ -1,6 +1,6 @@
 // import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEndowInfoQuery } from "services/juno/custom";
 import { QueryLoader } from "components/admin";
 import {
@@ -15,8 +15,7 @@ import Content from "./Content";
 const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
-  const search = useLocation().search;
-  const id = new URLSearchParams(search).get("id");
+  const { id } = useParams<{ id: string }>();
   const endowId = idParamToNum(id);
   const queryState = useEndowInfoQuery(endowId, { skip: endowId === 0 });
 
