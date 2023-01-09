@@ -8,7 +8,7 @@ const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
   /**
-   * need to set the theme to light, but after widget is closed we need to
+   * Need to set the theme to light, but after widget is closed we need to
    * reverse the user selected theme on the main webapp to the previous theme
    */
   useEffect(() => {
@@ -21,6 +21,7 @@ export default function DonateWidget() {
     };
   }, []);
 
+  /** Hide the Intercom chatbot */
   useEffect(() => {
     const w = window as any;
     if ("Intercom" in w) {
