@@ -1,3 +1,5 @@
+import WidgetConfigurer from "./WidgetConfigurer";
+
 export default function AIF() {
-  return <div>AIF</div>;
+  return <WidgetConfigurer />;
 }
