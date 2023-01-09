@@ -10,7 +10,11 @@ import { cleanObject } from "helpers/cleanObject";
 import Form from "./Form";
 import { schema } from "./schema";
 
-const Filter = ({ setFilterValues }: { setFilterValues: Function }) => {
+const Filter = ({
+  setFilterValues,
+}: {
+  setFilterValues: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+}) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const { address } = useParams<{ address: string }>();
 
