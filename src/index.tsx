@@ -38,7 +38,7 @@ root.render(
                 <ModalContext>
                   <Routes>
                     <Route
-                      path={`${widgetRoutes.donate}/:apiKey`}
+                      path={`${widgetRoutes.donate}/:id`}
                       element={<DonateWidget />}
                     />
                     <Route path="*" element={<App />} />
