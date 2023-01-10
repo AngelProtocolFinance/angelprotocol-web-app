@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
-import { BtnLink } from "components/BtnLink";
+import { BtnPrim } from "components/BtnPrim";
 import { Checkbox } from "components/Checkbox";
 import Selector, { OptionType } from "components/Selector";
 import { isEmpty } from "helpers";
@@ -127,12 +127,9 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         liquidPercentage={liquidPercentage}
         onChange={(newValue) => setLiquidPercentage(newValue)}
       />
-      <BtnLink
-        className="btn mt-8 w-40 p-3 bg-gray-l3 hover:bg-gray-l2 dark:bg-blue-d3 hover:dark:bg-blue-d2 border-none rounded transition text-sm md:text-base font-bold font-body uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-gray dark:focus-visible:ring-white focus-visible:ring-opacity-75 active:ring-2 active:ring-gray dark:active:ring-white active:ring-opacity-75"
-        onClick={handleReset}
-      >
+      <BtnPrim className="max-sm:mx-auto mt-8 w-40" onClick={handleReset}>
         Reset Changes
-      </BtnLink>
+      </BtnPrim>
     </div>
   );
 }

@@ -1,5 +1,6 @@
+import { BtnPrim } from "components/BtnPrim";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec } from "components/gift";
+import { BtnSec } from "components/gift";
 import { useSetter } from "store/accessors";
 import { TError, setStep } from "slices/gift";
 import { appRoutes } from "constants/routes";
