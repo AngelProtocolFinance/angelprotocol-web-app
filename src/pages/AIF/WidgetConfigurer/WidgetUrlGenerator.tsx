@@ -33,7 +33,7 @@ export default function WidgetUrlGenerator() {
           label: token,
           value: token,
         }))}
-        classes={{ container: "bg-white dark:bg-blue-d6" }}
+        classes={{ container: "w-3/4 bg-white dark:bg-blue-d6" }}
         multiple
         selectedOptions={availableCurrencies}
         onChange={(newValues) =>

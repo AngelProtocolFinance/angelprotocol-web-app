@@ -33,7 +33,7 @@ export default function WidgetConfigurer() {
           <img
             src={widgetSample}
             alt="widget example"
-            className="w-4/5 h-full border border-gray-l2 dark:border-bluegray"
+            className="w-3/4 h-full border border-gray-l2 dark:border-bluegray"
           />
         </section>
         <section className="flex flex-col gap-3">
