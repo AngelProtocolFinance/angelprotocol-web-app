@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import useCopier from "hooks/useCopier";
+import useCopier from "./useCopier";
 
 type Props = {
   text: string;
