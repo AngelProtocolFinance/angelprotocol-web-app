@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import widgetSample from "assets/images/widget-example.png";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
-const TITLE_STYLE = "text-lg sm:text-3xl font-heading font-bold";
+const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
