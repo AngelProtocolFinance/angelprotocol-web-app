@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { FilterFormValues } from "../types";
+import { FilterFormValues } from "../../../components/donations/types";
 
 export default function DateInput<T extends FieldValues>({
   name,

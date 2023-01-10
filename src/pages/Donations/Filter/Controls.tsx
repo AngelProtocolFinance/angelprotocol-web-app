@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FilterFormValues } from "../types";
+import { FilterFormValues } from "../../../components/donations/types";
 
 export default function Controls({ classes = "" }) {
   const {

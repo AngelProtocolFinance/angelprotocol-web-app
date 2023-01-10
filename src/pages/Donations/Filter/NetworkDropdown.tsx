@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { FilterFormValues } from "../types";
+import { FilterFormValues } from "../../../components/donations/types";
 import { useChainsQuery } from "services/apes";
 
 const NetworkDropdown: FC = () => {

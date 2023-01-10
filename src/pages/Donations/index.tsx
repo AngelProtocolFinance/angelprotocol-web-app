@@ -5,9 +5,9 @@ import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { QueryLoader } from "components/admin";
-import Filter from "components/donations/Filter";
-import MobileTable from "components/donations/MobileTable";
-import Table from "components/donations/Table";
+import Filter from "./Filter";
+import MobileTable from "./MobileTable";
+import Table from "./Table";
 
 export default function Donations() {
   const { address } = useParams<{ address: string }>();
