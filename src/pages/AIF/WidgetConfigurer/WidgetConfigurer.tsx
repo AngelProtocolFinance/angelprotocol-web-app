@@ -18,7 +18,7 @@ export default function WidgetConfigurer() {
         <h1 className={TITLE_STYLE}>
           Accept donations from your website today!
         </h1>
-        <div className="w-3/5 font-body text-base sm:text-lg">
+        <div className="sm:w-3/5 font-body text-base sm:text-lg">
           <p>
             Just configure your widget below, copy & paste the code on your
             website and you're ready to go!
@@ -33,7 +33,7 @@ export default function WidgetConfigurer() {
           </p>
         </div>
       </section>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-10">
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
           <img
