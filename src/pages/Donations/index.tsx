@@ -54,40 +54,10 @@ export default function Donations() {
           empty: "No donations found",
         }}
         filterFn={(val) => {
-          if (val.chainName && val.charityName) {
-            return (
-              val.symbol
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase()) ||
-              val.chainName
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase()) ||
-              val.charityName
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase())
-            );
-          } else if (val.chainName) {
-            return (
-              val.symbol
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase()) ||
-              val.chainName
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase())
-            );
-          } else if (val.charityName) {
-            return (
-              val.symbol
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase()) ||
-              val.charityName
-                .toLocaleLowerCase()
-                .includes(searchTerm.toLocaleLowerCase())
-            );
-          }
-          return val.symbol
+          const isMatch = `${val.symbol}${val.chainName}${val.charityName}`
             .toLocaleLowerCase()
             .includes(searchTerm.toLocaleLowerCase());
+          return isMatch;
         }}
       >
         {(donations) => {
