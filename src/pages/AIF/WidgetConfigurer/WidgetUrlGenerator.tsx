@@ -130,8 +130,10 @@ function CheckboxField({
 }) {
   return (
     <div className="flex items-center gap-2 w-fit cursor-pointer">
-      <Checkbox checked={checked} onChange={onChange} />
-      {label}
+      <Checkbox id={label} checked={checked} onChange={onChange} />
+      <label htmlFor={label} className="cursor-pointer">
+        {label}
+      </label>
     </div>
   );
 }
