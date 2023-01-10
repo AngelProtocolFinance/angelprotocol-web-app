@@ -58,7 +58,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
     );
     const param6 = append(
       "availableCurrencies",
-      availableCurrencies.join(","),
+      availableCurrencies.map((x) => x.value).join(","),
       !isEmpty(availableCurrencies)
     );
     onChange(
