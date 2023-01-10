@@ -14,7 +14,7 @@ export default function WidgetConfigurer() {
 
   return (
     <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
-      <section className="flex flex-col gap-3 w-full">
+      <section className="flex flex-col gap-3 max-sm:items-center w-full">
         <h1 className={TITLE_STYLE}>
           Accept donations from your website today!
         </h1>
@@ -33,8 +33,8 @@ export default function WidgetConfigurer() {
           </p>
         </div>
       </section>
-      <div className="grid grid-cols-2">
-        <section className="flex flex-col gap-3">
+      <div className="grid sm:grid-cols-2">
+        <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
           <img
             src={widgetSample}
@@ -42,7 +42,7 @@ export default function WidgetConfigurer() {
             className="w-2/3 object-contain border border-gray-l2 dark:border-bluegray rounded"
           />
         </section>
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
           <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
 
