@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
+import { BtnLink } from "components/BtnLink";
 import { Checkbox } from "components/Checkbox";
 import Selector, { OptionType } from "components/Selector";
 import { isEmpty } from "helpers";
@@ -30,6 +31,15 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   const approvedTokens = useApprovedTokens();
   const { handleError } = useErrorContext();
 
+  const handleReset = () => {
+    setHideText(false);
+    setHideAdvancedOptions(false);
+    setHideEndowmentGauges(false);
+    setUnfoldAdvancedOptions(false);
+    setLiquidPercentage(0);
+    setAvailableCurrencies([]);
+  };
+
   useEffect(() => {
     if (!endowId) {
       return handleError(new UnexpectedStateError(`Endowment ID is undefined`));
@@ -49,7 +59,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
     const param4 = append(
       "unfoldAdvOpts",
       unfoldAdvancedOptions,
-      unfoldAdvancedOptions
+      !hideAdvancedOptions && unfoldAdvancedOptions
     );
     const param5 = append("liquidPct", liquidPercentage, !!liquidPercentage);
     const param6 = append(
@@ -117,6 +127,12 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         liquidPercentage={liquidPercentage}
         onChange={(newValue) => setLiquidPercentage(newValue)}
       />
+      <BtnLink
+        className="btn mt-8 w-40 p-3 bg-gray-l3 hover:bg-gray-l2 dark:bg-blue-d3 hover:dark:bg-blue-d2 border-none rounded transition text-sm md:text-base font-bold font-body uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-gray dark:focus-visible:ring-white focus-visible:ring-opacity-75 active:ring-2 active:ring-gray dark:active:ring-white active:ring-opacity-75"
+        onClick={handleReset}
+      >
+        Reset Changes
+      </BtnLink>
     </div>
   );
 }
