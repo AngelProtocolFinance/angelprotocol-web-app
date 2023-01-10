@@ -37,32 +37,28 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
 
     const param1 = append("hideText", hideText, hideText);
     const param2 = append(
-      "hideEndowmentGauges",
+      "hideEndowGauges",
       hideEndowmentGauges,
       hideEndowmentGauges
     );
     const param3 = append(
-      "hideAdvancedOptions",
+      "hideAdvOpts",
       hideAdvancedOptions,
       hideAdvancedOptions
     );
     const param4 = append(
-      "unfoldAdvancedOptions",
+      "unfoldAdvOpts",
       unfoldAdvancedOptions,
       unfoldAdvancedOptions
     );
-    const param5 = append(
-      "liquidPercentage",
-      liquidPercentage,
-      !!liquidPercentage
-    );
+    const param5 = append("liquidPct", liquidPercentage, !!liquidPercentage);
     const param6 = append(
-      "availableCurrencies",
+      "availCurrs",
       availableCurrencies.map((x) => x.value).join(","),
       !isEmpty(availableCurrencies)
     );
     onChange(
-      `${APP_URL}/${endowId}?apiKey={API_KEY}${param1}${param2}${param3}${param4}${param5}${param6}`
+      `${APP_URL}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
     );
   }, [
     endowId,
