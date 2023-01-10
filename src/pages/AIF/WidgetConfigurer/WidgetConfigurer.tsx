@@ -1,10 +1,15 @@
+import { useCallback, useState } from "react";
+import { useParams } from "react-router-dom";
 import widgetSample from "assets/images/widget-example.png";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
 const TITLE_STYLE = "text-lg sm:text-3xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
-  // const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
+  const [widgetUrl, setWidgetUrl] = useState("");
+
+  const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
 
   return (
     <div className="grid grid-rows-[auto_1fr] gap-10 w-full h-full">
@@ -38,7 +43,7 @@ export default function WidgetConfigurer() {
         </section>
         <section className="flex flex-col gap-3">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
-          <WidgetUrlGenerator />
+          <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
         </section>
       </div>
     </div>

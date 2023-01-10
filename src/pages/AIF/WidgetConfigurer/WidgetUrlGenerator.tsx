@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useErrorContext } from "contexts/ErrorContext";
 import { Checkbox } from "components/Checkbox";
 import Selector, { OptionType } from "components/Selector";
+import { isEmpty } from "helpers";
+import { UnexpectedStateError } from "errors/errors";
+import { IS_TEST } from "constants/env";
 import Split from "./Split";
 import useApprovedTokens from "./useApprovedTokens";
 
-export default function WidgetUrlGenerator() {
+type Props = { endowId?: string | number; onChange(url: string): void };
+
+const APP_URL = IS_TEST
+  ? "http://localhost:4200"
+  : "https://app.angelprotocol.io";
+
+function append(name: string, value: any, condition: boolean): string {
+  return condition ? `&${name}=${value}` : "";
+}
+
+export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   const [hideText, setHideText] = useState(false);
   const [hideEndowmentGauges, setHideEndowmentGauges] = useState(false);
   const [hideAdvancedOptions, setHideAdvancedOptions] = useState(false);
@@ -14,6 +28,53 @@ export default function WidgetUrlGenerator() {
     OptionType<string>[]
   >([]);
   const approvedTokens = useApprovedTokens();
+  const { handleError } = useErrorContext();
+
+  useEffect(() => {
+    if (!endowId) {
+      return handleError(new UnexpectedStateError(`Endowment ID is undefined`));
+    }
+
+    const param1 = append("hideText", hideText, hideText);
+    const param2 = append(
+      "hideEndowmentGauges",
+      hideEndowmentGauges,
+      hideEndowmentGauges
+    );
+    const param3 = append(
+      "hideAdvancedOptions",
+      hideAdvancedOptions,
+      hideAdvancedOptions
+    );
+    const param4 = append(
+      "unfoldAdvancedOptions",
+      unfoldAdvancedOptions,
+      unfoldAdvancedOptions
+    );
+    const param5 = append(
+      "liquidPercentage",
+      liquidPercentage,
+      !!liquidPercentage
+    );
+    const param6 = append(
+      "availableCurrencies",
+      availableCurrencies.join(","),
+      !isEmpty(availableCurrencies)
+    );
+    onChange(
+      `${APP_URL}/${endowId}?apiKey={API_KEY}${param1}${param2}${param3}${param4}${param5}${param6}`
+    );
+  }, [
+    endowId,
+    hideText,
+    hideEndowmentGauges,
+    hideAdvancedOptions,
+    unfoldAdvancedOptions,
+    liquidPercentage,
+    availableCurrencies,
+    handleError,
+    onChange,
+  ]);
 
   return (
     <div className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body">
