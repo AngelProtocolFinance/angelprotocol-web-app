@@ -94,7 +94,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
           label: token,
           value: token,
         }))}
-        classes={{ container: "w-3/4 bg-white dark:bg-blue-d6" }}
+        classes={{ container: "bg-white dark:bg-blue-d6" }}
         multiple
         selectedOptions={availableCurrencies}
         onChange={(newValues) =>

@@ -12,7 +12,7 @@ export default function WidgetConfigurer() {
   const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
 
   return (
-    <div className="grid grid-rows-[auto_1fr] gap-10 w-full h-full">
+    <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
       <section className="flex flex-col gap-3 w-full">
         <h1 className={TITLE_STYLE}>
           Accept donations from your website today!
@@ -38,7 +38,7 @@ export default function WidgetConfigurer() {
           <img
             src={widgetSample}
             alt="widget example"
-            className="w-3/4 h-full border border-gray-l2 dark:border-bluegray"
+            className="w-2/3 h-full border border-gray-l2 dark:border-bluegray"
           />
         </section>
         <section className="flex flex-col gap-3">
