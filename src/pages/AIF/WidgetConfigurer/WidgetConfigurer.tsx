@@ -38,14 +38,14 @@ export default function WidgetConfigurer() {
           <img
             src={widgetSample}
             alt="widget example"
-            className="w-2/3 h-full border border-gray-l2 dark:border-bluegray rounded"
+            className="w-2/3 object-contain border border-gray-l2 dark:border-bluegray rounded"
           />
         </section>
         <section className="flex flex-col gap-3">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
           <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
 
-          <h2 className={`${TITLE_STYLE} mt-7`}>Copy / paste this URL:</h2>
+          <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
           <code className="flex items-center justify-center h-28 p-4 rounded bg-gray-l3 dark:bg-blue-d4 text-sm sm:text-base font-mono break-all">
             {widgetUrl}
           </code>
