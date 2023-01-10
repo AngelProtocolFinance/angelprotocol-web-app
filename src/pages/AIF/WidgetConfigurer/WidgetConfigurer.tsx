@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import widgetSample from "assets/images/widget-example.png";
-import useCopier from "hooks/useCopier";
+import Copier from "components/Copier";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
 const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
@@ -10,14 +10,7 @@ export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
   const [widgetUrl, setWidgetUrl] = useState("");
 
-  const { handleCopy } = useCopier();
-
   const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
-
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement, Element>) => {
-    event.target.select();
-    handleCopy(widgetUrl);
-  };
 
   return (
     <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
@@ -54,12 +47,12 @@ export default function WidgetConfigurer() {
           <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
 
           <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
-          <input
-            readOnly
-            value={widgetUrl}
-            onFocus={handleFocus}
-            className="text-center h-28 p-4 rounded bg-gray-l3 dark:bg-blue-d4 text-sm sm:text-base font-mono break-all cursor-pointer active:cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-gray focus-visible:dark:ring-white focus-visible:ring-opacity-75"
-          />
+          <div className="flex items-center justify-center gap-4 h-32 px-10 rounded bg-gray-l3 dark:bg-blue-d4">
+            <span className="w-full text-sm sm:text-base font-mono break-all">
+              {widgetUrl}
+            </span>
+            <Copier classes="w-10 h-10 hover:text-orange" text={widgetUrl} />
+          </div>
         </section>
       </div>
     </div>
