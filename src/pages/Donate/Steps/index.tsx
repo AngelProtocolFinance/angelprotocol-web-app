@@ -30,10 +30,8 @@ export default function Steps(props: DonationRecipient) {
   }, [dispatch, props]);
 
   useEffect(() => {
-    if (state.step !== 1) {
-      const element = document.getElementById(CONTAINER_ID);
-      element?.scrollIntoView({ behavior: "smooth" });
-    }
+    const element = document.getElementById(CONTAINER_ID);
+    element?.scrollIntoView({ behavior: "smooth" });
   }, [state.step]);
 
   const handleOpenKado = useCallback(
