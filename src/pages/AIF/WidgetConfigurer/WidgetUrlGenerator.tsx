@@ -105,11 +105,13 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         label='Hide "advanced options"'
         onChange={() => setHideAdvancedOptions((prev) => !prev)}
       />
-      <CheckboxField
-        checked={unfoldAdvancedOptions}
-        label='Unfold "advanced options" by default'
-        onChange={() => setUnfoldAdvancedOptions((prev) => !prev)}
-      />
+      {!hideAdvancedOptions && (
+        <CheckboxField
+          checked={unfoldAdvancedOptions}
+          label='Unfold "advanced options" by default'
+          onChange={() => setUnfoldAdvancedOptions((prev) => !prev)}
+        />
+      )}
       <span>Define split value by default:</span>
       <Split
         liquidPercentage={liquidPercentage}
