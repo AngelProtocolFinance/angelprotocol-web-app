@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const copyWaitTime = 700;
 
-export default function useCopier(text: string) {
+export default function useCopier() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function useCopier(text: string) {
     })();
   }, [copied]);
 
-  async function handleCopy() {
+  async function handleCopy(text: string) {
     //write access is automatically granted on active tab
     if (!text) {
       return;

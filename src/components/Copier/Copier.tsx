@@ -8,9 +8,9 @@ type Props = {
 };
 
 export default function Copier({ text, classes = "", size }: Props) {
-  const { handleCopy, copied } = useCopier(text);
+  const { handleCopy, copied } = useCopier();
   return (
-    <button type="button" onClick={handleCopy}>
+    <button type="button" onClick={() => handleCopy(text)}>
       {(copied && (
         <Icon
           type="Check"
