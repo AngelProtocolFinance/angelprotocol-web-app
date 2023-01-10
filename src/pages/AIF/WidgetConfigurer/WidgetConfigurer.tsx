@@ -58,7 +58,7 @@ export default function WidgetConfigurer() {
             readOnly
             value={widgetUrl}
             onFocus={handleFocus}
-            className="text-center h-28 p-4 rounded bg-gray-l3 dark:bg-blue-d4 text-sm sm:text-base font-mono break-all cursor-pointer active:cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            className="text-center h-28 p-4 rounded bg-gray-l3 dark:bg-blue-d4 text-sm sm:text-base font-mono break-all cursor-pointer active:cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-gray focus-visible:dark:ring-white focus-visible:ring-opacity-75"
           />
         </section>
       </div>
