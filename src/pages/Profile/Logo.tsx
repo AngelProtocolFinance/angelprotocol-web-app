@@ -1,3 +1,4 @@
+import placeholderLogo from "assets/images/angelprotocol-rounded-logo.png";
 import LogoPlaceholder from "components/LogoPlaceholder";
 import { useProfileContext } from "./ProfileContext";
 
@@ -15,9 +16,10 @@ export default function Logo() {
 
 function Image() {
   const { logo } = useProfileContext();
+  console.log("logo", logo);
 
   if (!logo) {
-    return <LogoPlaceholder classes={{ container, icon: "w-9 h-9" }} />;
+    return <img className={logoStyle} alt="logo" src={placeholderLogo} />;
   }
 
   return <img className={logoStyle} alt="logo" src={logo} />;
