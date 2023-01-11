@@ -3,6 +3,6 @@ export type UrlParamValues = {
   hideAdvOpts: boolean;
   hideEndowGauges: boolean;
   unfoldAdvOpts: boolean;
-  liquidPercentage: number;
-  availableCurrencies?: string[];
+  liquidPct: number;
+  availCurrs?: string[];
 };

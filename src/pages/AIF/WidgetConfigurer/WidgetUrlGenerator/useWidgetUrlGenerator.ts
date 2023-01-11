@@ -1,3 +1,4 @@
+import { UrlParamValues } from "DonateWidget";
 import { URL_PARAMS } from "DonateWidget/constants";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -65,6 +66,10 @@ export default function useWidgetUrlGenerator(
   return methods;
 }
 
-function append(condition: boolean, name: string, values = ""): string {
+function append(
+  condition: boolean,
+  name: keyof UrlParamValues,
+  values = ""
+): string {
   return condition ? `&${name}${!values ? "" : `=${values}`}` : "";
 }

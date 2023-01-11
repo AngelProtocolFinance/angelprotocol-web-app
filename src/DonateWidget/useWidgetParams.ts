@@ -16,10 +16,8 @@ export default function useWidgetParams(): UrlParamValues {
     hideAdvOpts: get(URL_PARAMS.hideAdvancedOptions),
     hideEndowGauges: get(URL_PARAMS.hideEndowmentGauges),
     unfoldAdvOpts: get(URL_PARAMS.unfoldAdvancedOptions),
-    liquidPercentage: Number(searchParams.get(URL_PARAMS.liquidPercentage)),
-    availableCurrencies: searchParams
-      .get(URL_PARAMS.availableCurrencies)
-      ?.split(","),
+    liquidPct: Number(searchParams.get(URL_PARAMS.liquidPercentage)),
+    availCurrs: searchParams.get(URL_PARAMS.availableCurrencies)?.split(","),
   };
 
   return result;
