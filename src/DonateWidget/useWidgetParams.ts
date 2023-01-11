@@ -1,14 +1,6 @@
 import { useSearchParams } from "react-router-dom";
+import { UrlParamValues } from "./types";
 import { URL_PARAMS } from "./constants";
-
-export type UrlParamValues = {
-  hideText: boolean;
-  hideAdvOpts: boolean;
-  hideEndowGauges: boolean;
-  unfoldAdvOpts: boolean;
-  liquidPercentage: number;
-  availableCurrencies?: string[];
-};
 
 export default function useWidgetParams(): UrlParamValues {
   const [search] = useSearchParams();
