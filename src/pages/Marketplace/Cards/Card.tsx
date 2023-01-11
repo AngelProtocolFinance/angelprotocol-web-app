@@ -5,6 +5,7 @@ import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
+import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
@@ -14,7 +15,7 @@ export default function Card({
   image,
   id,
   endow_type,
-  categories,
+  categories: { sdgs },
   country_of_origin,
   kyc_donors_only,
 }: Endowment) {
@@ -29,7 +30,7 @@ export default function Card({
       </div>
       <Link
         to={`${appRoutes.profile}/${id}`}
-        className="grid grid-rows-[1fr_auto]"
+        className="grid grid-rows-[auto_1fr] h-full"
       >
         <img
           loading="lazy"
@@ -40,21 +41,33 @@ export default function Card({
             e.currentTarget.classList.add("bg-blue-l3");
           }}
         />
-        <div className="flex flex-col justify-between gap-3 md:h-32 p-3 pb-4">
-          <div>
-            <h3 className="font-bold">{name}</h3>
-            <p className="text-gray-d1 dark:text-gray-l1 text-sm mt-1">
-              <span className="font-semibold">HQ:</span> {country_of_origin}
+        <div className="flex flex-col p-3 pb-4 gap-3">
+          <h3 className="font-bold">{name}</h3>
+          <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
+            <span className="font-semibold">HQ:</span> {country_of_origin}
+          </p>
+          {false && (
+            <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+              penatibus et ma
             </p>
-          </div>
-          {/* will be uncommented when the "active in countries" field is available */}
-          {/* <p className="text-gray-d1 dark:text-gray-l1 text-sm">
-          <span className="font-semibold">Active in:</span> {active_in_countries}
-        </p> */}
-          <div className="flex text-3xs font-bold uppercase gap-1">
-            {categories.sdgs.map((s) => (
-              <SDG num={s} key={s} />
-            ))}
+          )}
+          {/** country and sdg always on bottom */}
+          <div className="mt-auto empty:hidden grid gap-3">
+            {!isEmpty([]) && (
+              <p className="text-gray-d1 dark:text-gray text-sm">
+                <span className="font-semibold">Active in:</span>{" "}
+                {["Philippines", "Korea", "Mongolia"].join(" ,")}
+              </p>
+            )}
+            {!isEmpty(sdgs) && (
+              <div className="flex text-3xs font-bold uppercase gap-1">
+                {sdgs.map((s) => (
+                  <SDG num={s} key={s} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </Link>
@@ -77,7 +90,7 @@ function SDG({ num }: { num: UNSDG_NUMS }) {
   );
 }
 
-function KYCIcon({ className = "" }: { className?: string }) {
+function KYCIcon({ className = "" }) {
   const ref = useRef<HTMLDivElement>(null);
   return (
     <>
