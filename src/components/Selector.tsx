@@ -5,28 +5,30 @@ import { DrawerIcon } from "components/Icon";
 type ValKey = string | number;
 
 export type OptionType<V> = { label: string; value: V };
+
 type Classes = {
   container?: string;
   button?: string;
 };
 
-type VarOption<M extends boolean, V extends ValKey> = M extends true
-  ? OptionType<V>[]
-  : OptionType<V>;
-
-interface Props<V extends ValKey, M extends boolean> {
-  multiple?: M;
+type Props<V extends ValKey> = {
   options: OptionType<V>[];
-  selectedOptions?: VarOption<M, V>;
   disabled?: true;
   classes?: Classes;
-  onChange?: (newValues: VarOption<M, V>) => void;
-}
+} & (
+  | {
+      multiple?: true;
+      selectedOptions?: OptionType<V>[];
+      onChange?: (newValues: OptionType<V>[]) => void;
+    }
+  | {
+      multiple: false;
+      selectedOptions?: OptionType<V>;
+      onChange?: (newValues: OptionType<V>) => void;
+    }
+);
 
-export default function Selector<
-  ValueType extends ValKey,
-  Multiple extends boolean
->({
+export default function Selector<ValueType extends ValKey>({
   disabled,
   options,
   classes,
@@ -34,9 +36,10 @@ export default function Selector<
   selectedOptions,
   onChange,
   children,
-}: PropsWithChildren<Props<ValueType, Multiple>>) {
+}: PropsWithChildren<Props<ValueType>>) {
   const { container = "", button = "" } = classes || {};
   const valueKey: keyof OptionType<ValueType> = "value";
+
   return (
     <Listbox
       disabled={disabled}
@@ -83,7 +86,9 @@ export default function Selector<
   );
 }
 
-function getDisplay(selected?: VarOption<any, any>): string {
+function getDisplay<T extends ValKey>(
+  selected?: OptionType<T> | OptionType<T>[]
+): string {
   if (!selected) {
     return "";
   }

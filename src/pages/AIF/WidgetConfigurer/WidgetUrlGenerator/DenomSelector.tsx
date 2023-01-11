@@ -11,7 +11,7 @@ export default function DenomSelector() {
   }
 
   return (
-    <SelectorFormField<FormValues, "availableCurrencies", string, true>
+    <SelectorFormField<FormValues, "availableCurrencies", string>
       name="availableCurrencies"
       options={approvedTokens.map((token) => ({
         label: token,
