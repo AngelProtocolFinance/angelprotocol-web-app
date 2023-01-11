@@ -14,7 +14,6 @@ export default function useWidgetParams(): UrlParamValues {
   const result: UrlParamValues = {
     hideText: get(URL_PARAMS.hideText),
     hideAdvOpts: get(URL_PARAMS.hideAdvancedOptions),
-    hideEndowGauges: get(URL_PARAMS.hideEndowmentGauges),
     unfoldAdvOpts: get(URL_PARAMS.unfoldAdvancedOptions),
     liquidPct: Number(searchParams.get(URL_PARAMS.liquidPercentage)),
     availCurrs: searchParams.get(URL_PARAMS.availableCurrencies)?.split(","),

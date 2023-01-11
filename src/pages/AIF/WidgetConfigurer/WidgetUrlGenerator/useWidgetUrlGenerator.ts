@@ -23,7 +23,6 @@ export default function useWidgetUrlGenerator(
       availableCurrencies: [],
       hideText: false,
       hideAdvancedOptions: false,
-      hideEndowmentGauges: false,
       unfoldAdvancedOptions: false,
       liquidPercentage: 0,
     },
@@ -38,28 +37,24 @@ export default function useWidgetUrlGenerator(
 
     const param1 = append(formValues.hideText, URL_PARAMS.hideText);
     const param2 = append(
-      formValues.hideEndowmentGauges,
-      URL_PARAMS.hideEndowmentGauges
-    );
-    const param3 = append(
       formValues.hideAdvancedOptions,
       URL_PARAMS.hideAdvancedOptions
     );
-    const param4 = append(
+    const param3 = append(
       !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions,
       URL_PARAMS.unfoldAdvancedOptions
     );
-    const param5 = append(
+    const param4 = append(
       !!formValues.liquidPercentage,
       URL_PARAMS.liquidPercentage
     );
-    const param6 = append(
+    const param5 = append(
       !isEmpty(formValues.availableCurrencies),
       URL_PARAMS.availableCurrencies,
       formValues.availableCurrencies.map((x) => x.value).join(",")
     );
     onChange(
-      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
+      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}`
     );
   }, [endowId, formValues, handleError, onChange]);
 

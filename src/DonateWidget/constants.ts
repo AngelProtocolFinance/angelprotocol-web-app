@@ -2,7 +2,6 @@ import { UrlParamValues } from "./types";
 
 export const URL_PARAMS: { [key: string]: keyof UrlParamValues } = {
   hideText: "hideText",
-  hideEndowmentGauges: "hideEndowGauges",
   hideAdvancedOptions: "hideAdvOpts",
   unfoldAdvancedOptions: "unfoldAdvOpts",
   liquidPercentage: "liquidPct",
