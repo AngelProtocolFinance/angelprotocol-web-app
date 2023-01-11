@@ -15,6 +15,7 @@ export default function useWidgetParams(): UrlParamValues {
     hideText: get(URL_PARAMS.hideText),
     hideAdvOpts: get(URL_PARAMS.hideAdvancedOptions),
     unfoldAdvOpts: get(URL_PARAMS.unfoldAdvancedOptions),
+    // we turn this into a number to ensure it is in fact a valid number
     liquidPct: Number(searchParams.get(URL_PARAMS.liquidPercentage)),
     availCurrs: searchParams.get(URL_PARAMS.availableCurrencies)?.split(","),
   };

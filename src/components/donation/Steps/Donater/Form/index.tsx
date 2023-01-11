@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { DonateValues } from "../types";
-import { BtnPrimary, BtnSec } from "components/donation";
+import { BtnPrimary, BtnSec, ConfigParams } from "components/donation";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -10,7 +10,7 @@ import Amount from "./Amount";
 
 // import AmountOptions from "./AmountOptions";
 
-export default function Form() {
+export default function Form(props: ConfigParams) {
   const {
     reset,
     handleSubmit,
@@ -35,7 +35,9 @@ export default function Form() {
     >
       <Amount />
       {/*<AmountOptions classes="mt-3" />*/}
-      <AdvancedOptions classes="mt-10" />
+      {!props.hideAdvOpts && (
+        <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
+      )}
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
         <BtnSec as="link" to={`${appRoutes.profile}/${endowId}`}>

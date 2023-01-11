@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
 import KYC from "components/KYC";
-import { Tooltip } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
 import { UnexpectedStateError } from "errors/errors";
+import { ConfigParams, Tooltip } from "..";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
 
-export default function CurrentStep() {
+export default function CurrentStep(props: ConfigParams) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
   const { wallet, isLoading } = useGetWallet();
@@ -62,7 +62,7 @@ export default function CurrentStep() {
       );
     }
     case 1: {
-      return <Donater {...state} wallet={wallet} />;
+      return <Donater {...state} config={props} wallet={wallet} />;
     }
     default: {
       return <></>; // <Steps /> sets to step 1 onMount
