@@ -7,10 +7,11 @@ import {
 } from "@terra-money/wallet-provider";
 import { toast } from "react-toastify";
 import { ProviderId, Wallet } from "./types";
+import stationIcon from "assets/icons/wallets/terra-extension.jpg";
 import { isXdefiPrioritized } from "./helpers/assertions";
 
 const XDEFI_ID = "xdefi-wallet";
-export default function useTerra2(): Wallet[] {
+export default function useTerra(): { extensions: Wallet[]; wc: Wallet } {
   const {
     availableConnections,
     availableInstallations,
@@ -58,18 +59,22 @@ export default function useTerra2(): Wallet[] {
     };
   }
 
-  return availableConnections
-    .filter(_filter)
-    .map((c) => toWallet(c))
-    .concat(availableInstallations.filter(_filter).map((i) => toWallet(i)));
+  const terraWC: Connection = {
+    name: "Terra mobile",
+    type: ConnectType.WALLETCONNECT,
+    icon: stationIcon,
+  };
+
+  return {
+    extensions: availableConnections
+      .filter(_filter)
+      .map((c) => toWallet(c))
+      .concat(availableInstallations.filter(_filter).map((i) => toWallet(i))),
+    wc: toWallet(terraWC),
+  };
 }
 
 function _filter<T extends Connection | Installation>(conn: T) {
   const id = conn.identifier;
-  return (
-    id === XDEFI_ID ||
-    id === "leap-wallet" ||
-    id === "station" ||
-    conn.type === ConnectType.WALLETCONNECT
-  );
+  return id === XDEFI_ID || id === "leap-wallet" || id === "station";
 }

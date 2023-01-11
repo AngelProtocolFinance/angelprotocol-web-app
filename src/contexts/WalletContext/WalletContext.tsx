@@ -3,9 +3,11 @@ import { ConnectedWallet, ContextState, DisconnectedWallet } from "./types";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
+import { IS_MOBILE, IS_TEST } from "constants/env";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr/useKeplr";
 import useTerra from "./useTerra";
+import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
 // import { useEVMWC, useKeplrWC } from "./wallet-connect";
 
@@ -31,10 +33,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     installUrl:
       "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en",
   });
-  const terraWallets = useTerra();
+  const { extensions: terraExtensions, wc: terraWC } = useTerra();
   const keplr = useKeplr();
+  const keplrWC = useKeplrWC();
+  const evmWC = useEVMWC();
 
-  const wallets = [keplr, metamask, binance, xdefiEvm, ...terraWallets];
+  const mobiles = [evmWC, terraWC, ...(IS_TEST ? [] : [keplrWC])];
+  const extensions = [keplr, metamask, binance, xdefiEvm, ...terraExtensions];
+  const wallets = [...extensions, ...mobiles];
 
   const connectedWallet = wallets.find((w) => w.status === "connected") as
     | ConnectedWallet
@@ -49,7 +55,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           ? "loading"
           : connectedWallet
           ? connectedWallet
-          : (wallets as DisconnectedWallet[])
+          : ((IS_MOBILE ? mobiles : wallets) as DisconnectedWallet[])
       }
     >
       {props.children}
