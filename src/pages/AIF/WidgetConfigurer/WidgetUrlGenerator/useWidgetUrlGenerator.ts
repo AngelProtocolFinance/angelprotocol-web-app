@@ -1,3 +1,4 @@
+import { URL_PARAMS } from "DonateWidget/constants";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -34,29 +35,33 @@ export default function useWidgetUrlGenerator(
       return handleError(new UnexpectedStateError(`Endowment ID is undefined`));
     }
 
-    const param1 = append("hideText", formValues.hideText, formValues.hideText);
+    const param1 = append(
+      URL_PARAMS.hideText,
+      formValues.hideText,
+      formValues.hideText
+    );
     const param2 = append(
-      "hideEndowGauges",
+      URL_PARAMS.hideEndowmentGauges,
       formValues.hideEndowmentGauges,
       formValues.hideEndowmentGauges
     );
     const param3 = append(
-      "hideAdvOpts",
+      URL_PARAMS.hideAdvancedOptions,
       formValues.hideAdvancedOptions,
       formValues.hideAdvancedOptions
     );
     const param4 = append(
-      "unfoldAdvOpts",
+      URL_PARAMS.unfoldAdvancedOptions,
       formValues.unfoldAdvancedOptions,
       !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions
     );
     const param5 = append(
-      "liquidPct",
+      URL_PARAMS.liquidPercentage,
       formValues.liquidPercentage,
       !!formValues.liquidPercentage
     );
     const param6 = append(
-      "availCurrs",
+      URL_PARAMS.availableCurrencies,
       formValues.availableCurrencies.map((x) => x.value).join(","),
       !isEmpty(formValues.availableCurrencies)
     );
