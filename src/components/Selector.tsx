@@ -17,10 +17,10 @@ type VarOption<M extends boolean, V extends ValKey> = M extends true
 interface Props<V extends ValKey, M extends boolean> {
   multiple?: M;
   options: OptionType<V>[];
-  selectedOptions?: OptionType<V> | OptionType<V>[];
+  selectedOptions?: VarOption<M, V>;
   disabled?: true;
   classes?: Classes;
-  onChange?: (newValues: OptionType<V> | OptionType<V>[]) => void;
+  onChange?: (newValues: VarOption<M, V>) => void;
 }
 
 export default function Selector<
