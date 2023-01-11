@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { URL_PARAMS } from "./constants";
 
-type Result = {
+export type UrlParamValues = {
   hideText: boolean;
   hideAdvOpts: boolean;
   hideEndowGauges: boolean;
@@ -10,16 +10,16 @@ type Result = {
   availableCurrencies?: string[];
 };
 
-export default function useWidgetParams(): Result {
+export default function useWidgetParams(): UrlParamValues {
   const [search] = useSearchParams();
   const searchParams = new URLSearchParams(search);
 
-  function get(key: keyof Result): boolean {
+  function get(key: keyof UrlParamValues): boolean {
     const param = searchParams.get(key);
     return param != null && (param === "" || Boolean(param));
   }
 
-  const result: Result = {
+  const result: UrlParamValues = {
     hideText: get(URL_PARAMS.hideText),
     hideAdvOpts: get(URL_PARAMS.hideAdvancedOptions),
     hideEndowGauges: get(URL_PARAMS.hideEndowmentGauges),
