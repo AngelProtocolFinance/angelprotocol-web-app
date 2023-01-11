@@ -11,16 +11,6 @@ type Classes = {
   button?: string;
 };
 
-type VarOption<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey
-> = T[K] extends OptionType<V>
-  ? OptionType<V>
-  : T[K] extends OptionType<V>[]
-  ? OptionType<V>[]
-  : never;
-
 type Props<T extends FieldValues, K extends Path<T>, V extends ValKey> = {
   placeholder?: string;
   disabled?: true;
@@ -28,12 +18,12 @@ type Props<T extends FieldValues, K extends Path<T>, V extends ValKey> = {
   classes?: Classes;
 } & (
   | {
-      multiple?: true;
+      multiple: true;
       name: T[K] extends OptionType<V>[] ? K : never;
       children?: (selected: OptionType<V>[]) => ReactNode;
     }
   | {
-      multiple: false;
+      multiple?: false;
       name: T[K] extends OptionType<V> ? K : never;
       children?: (selected: OptionType<V>) => ReactNode;
     }
@@ -57,9 +47,9 @@ export function SelectorFormField<
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange: onSelectedChange },
-  } = useController<{ [index: string]: VarOption<T, K, ValueType> }>({
-    name: name as any,
-  });
+  } = useController<{
+    [index: string]: OptionType<ValueType> | OptionType<ValueType>[];
+  }>({ name });
 
   const labelId = `${name}.${labelKey}`;
 
@@ -72,17 +62,16 @@ export function SelectorFormField<
           classes={{ container: container, button: button }}
           multiple
           options={options}
-          selectedOptions={selected}
+          selectedOptions={selected as OptionType<ValueType>[]}
         >
           <ErrorMessage
-            /**single value, could just validate option.label. multiple on the other hand, should validate option[]*/
-            name={(multiple ? name : labelId) as any}
+            name={name}
             errors={errors}
             as="p"
             className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
           />
         </Selector>
-        {children && children(selected as any)}
+        {children && children(selected as OptionType<ValueType>[])}
       </>
     );
   }
@@ -94,17 +83,16 @@ export function SelectorFormField<
         onChange={onSelectedChange}
         classes={{ container: container, button: button }}
         options={options}
-        selectedOptions={selected}
+        selectedOptions={selected as OptionType<ValueType>}
       >
         <ErrorMessage
-          /**single value, could just validate option.label. multiple on the other hand, should validate option[]*/
-          name={(multiple ? name : labelId) as any}
+          name={labelId}
           errors={errors}
           as="p"
           className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
         />
       </Selector>
-      {children && children(selected as any)}
+      {children && children(selected as OptionType<ValueType>)}
     </>
   );
 }

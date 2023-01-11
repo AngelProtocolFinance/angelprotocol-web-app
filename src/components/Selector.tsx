@@ -17,12 +17,12 @@ type Props<V extends ValKey> = {
   classes?: Classes;
 } & (
   | {
-      multiple?: true;
+      multiple: true;
       selectedOptions?: OptionType<V>[];
       onChange?: (newValues: OptionType<V>[]) => void;
     }
   | {
-      multiple: false;
+      multiple?: false;
       selectedOptions?: OptionType<V>;
       onChange?: (newValues: OptionType<V>) => void;
     }

@@ -57,7 +57,7 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <SelectorFormField<FV, "sdgs", number, true>
+      <SelectorFormField<FV, "sdgs", number>
         multiple
         name="sdgs"
         options={sdgOptions}
