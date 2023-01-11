@@ -1,3 +1,4 @@
+import { UrlParamValues } from "DonateWidget";
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import KadoModal from "components/KadoModal";
@@ -6,7 +7,9 @@ import { DonationState } from "slices/donation";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
-export function Steps({ className = "" }: { className?: string }) {
+type Props = { className?: string } & Partial<Omit<UrlParamValues, "hideText">>;
+
+export function Steps({ className = "" }: Props) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 
