@@ -1,11 +1,8 @@
 import { StdTx } from "@cosmjs/amino";
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { Keplr } from "@keplr-wallet/types";
-import { ProviderId } from "contexts/WalletContext/types";
-import { Dwindow } from "types/window";
 import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
@@ -22,18 +19,6 @@ export const connector = new WalletConnect({
 
 export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
-}
-
-export async function getKeplrClient(
-  providerId: ProviderId,
-  chain_id: string,
-  rpcUrl: string
-): Promise<SigningCosmWasmClient> {
-  const signer =
-    providerId === "keplr-wc"
-      ? getKeplrWCClient().getOfflineSignerOnlyAmino(chain_id)
-      : (window as Dwindow).keplr!.getOfflineSigner(chain_id);
-  return await SigningCosmWasmClient.connectWithSigner(rpcUrl, signer);
 }
 
 type Mode = Parameters<Keplr["sendTx"]>[2];
