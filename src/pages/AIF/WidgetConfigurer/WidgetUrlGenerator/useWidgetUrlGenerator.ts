@@ -35,35 +35,27 @@ export default function useWidgetUrlGenerator(
       return handleError(new UnexpectedStateError(`Endowment ID is undefined`));
     }
 
-    const param1 = append(
-      URL_PARAMS.hideText,
-      formValues.hideText,
-      formValues.hideText
-    );
+    const param1 = append(formValues.hideText, URL_PARAMS.hideText);
     const param2 = append(
-      URL_PARAMS.hideEndowmentGauges,
       formValues.hideEndowmentGauges,
-      formValues.hideEndowmentGauges
+      URL_PARAMS.hideEndowmentGauges
     );
     const param3 = append(
-      URL_PARAMS.hideAdvancedOptions,
       formValues.hideAdvancedOptions,
-      formValues.hideAdvancedOptions
+      URL_PARAMS.hideAdvancedOptions
     );
     const param4 = append(
-      URL_PARAMS.unfoldAdvancedOptions,
-      formValues.unfoldAdvancedOptions,
-      !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions
+      !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions,
+      URL_PARAMS.unfoldAdvancedOptions
     );
     const param5 = append(
-      URL_PARAMS.liquidPercentage,
-      formValues.liquidPercentage,
-      !!formValues.liquidPercentage
+      !!formValues.liquidPercentage,
+      URL_PARAMS.liquidPercentage
     );
     const param6 = append(
+      !isEmpty(formValues.availableCurrencies),
       URL_PARAMS.availableCurrencies,
-      formValues.availableCurrencies.map((x) => x.value).join(","),
-      !isEmpty(formValues.availableCurrencies)
+      formValues.availableCurrencies.map((x) => x.value).join(",")
     );
     onChange(
       `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
@@ -73,6 +65,6 @@ export default function useWidgetUrlGenerator(
   return methods;
 }
 
-function append(name: string, value: any, condition: boolean): string {
-  return condition ? `&${name}=${value}` : "";
+function append(condition: boolean, name: string, values = ""): string {
+  return condition ? `&${name}${!values ? "" : `=${values}`}` : "";
 }
