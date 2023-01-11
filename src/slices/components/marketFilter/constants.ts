@@ -43,6 +43,7 @@ export const initialState: FilterState = {
     (prev, curr) => ({ ...prev, [curr.key]: [...curr.options] }),
     {} as SdgGroups
   ),
+  region: { activities: {}, headquarters: {} },
   isOpen: false,
   searchText: "",
   endow_types: ["Charity"],

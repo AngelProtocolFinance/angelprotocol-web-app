@@ -6,9 +6,7 @@ import { unsdgs } from "constants/unsdgs";
 import { GroupProps, MultilevelFilter } from "./common";
 
 export default function SDGGroups() {
-  const { sdgGroups: sdgs } = useGetter(
-    (state) => state.component.marketFilter
-  );
+  const sdgs = useGetter((state) => state.component.marketFilter.sdgGroups);
   const dispatch = useSetter();
 
   const groups: GroupProps<UNSDG_NUMS>[] = useMemo(() => {
@@ -32,7 +30,5 @@ export default function SDGGroups() {
     return result;
   }, [sdgs, dispatch]);
 
-  return (
-    <MultilevelFilter label="SDG Group" groups={groups} hideBottomBorder />
-  );
+  return <MultilevelFilter label="SDG Group" groups={groups} />;
 }
