@@ -69,8 +69,5 @@ export type CosmosBalances = { balances: Coin[] };
 
 export type TokenWithBalance = Token & { balance: number; gift?: number };
 
-/** multicall */
-export type WithBalance<T = Token> = T & { balance: number };
-
 /** endowment */
 export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };

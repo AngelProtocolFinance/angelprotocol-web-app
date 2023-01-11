@@ -1,5 +1,4 @@
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
-//request
 interface RequestArguments {
   readonly method: string;
   readonly params?: readonly unknown[] | object;

@@ -5,7 +5,7 @@ import {
   EndowmentTier,
   SocialMedialUrls,
 } from "../../contracts";
-import { NetworkType, UNSDG_NUMS } from "../../lists";
+import { NetworkType } from "../../lists";
 
 /**
  * put all aws/ap definitions here, if big category exist, separate in a file
@@ -40,18 +40,6 @@ export type Endowment = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
-export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
-export type SdgGroups = { [idx: number]: UNSDG_NUMS[] };
-
-export type EndowmentsQueryRequest = {
-  query: string; //set to "matchAll" if no search query
-  sort?: Sort;
-  start?: number; //to load next page, set start to ItemCutOff + 1
-  endow_types: CapitalizedEndowmentType[];
-  sdgGroups: SdgGroups;
-  tiers: Exclude<EndowmentTier, "Level1">[]; // "Level1" excluded for now
-  kyc_only: boolean[]; // comma separated boolean values
-};
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query

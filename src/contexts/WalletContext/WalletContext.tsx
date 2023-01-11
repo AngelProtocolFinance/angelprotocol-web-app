@@ -7,6 +7,8 @@ import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr/useKeplr";
 import useTerra from "./useTerra";
 
+// import { useEVMWC, useKeplrWC } from "./wallet-connect";
+
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const metamask = useInjectedProvider({
     id: "metamask",

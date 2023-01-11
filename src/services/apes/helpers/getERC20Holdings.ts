@@ -1,41 +1,54 @@
-import { formatUnits } from "@ethersproject/units";
-import {
-  ContractCallContext,
-  ContractCallReturnContext,
-  Multicall,
-} from "ethereum-multicall";
-import { TokenWithBalance } from "services/types";
+import ERC20Abi from "abi/ERC20.json";
+import { Multicall } from "ethereum-multicall";
+import { CallContext } from "ethereum-multicall/dist/esm/models";
+import { formatUnits } from "ethers/lib/utils";
+import { BalMap } from "./types";
 import { Token } from "types/aws";
-import { CallIndexes, buildERC20CallContext } from "./buildERC20CallContext";
 
+enum CALL_IDX {
+  BALANCE,
+  DECIMALS,
+}
 export async function getERC20Holdings(
   //ethers.providers
   nodeUrl: string,
   holderAddress: string,
   tokens: Token[]
-): Promise<TokenWithBalance[]> {
-  if (tokens.length <= 0) return [];
+): Promise<BalMap> {
+  if (tokens.length <= 0) return {};
 
   const multicall = new Multicall({
     nodeUrl,
     tryAggregate: true,
   });
 
-  const ERC20CallContexts: ContractCallContext[] = tokens.map(({ token_id }) =>
-    buildERC20CallContext(token_id, holderAddress, token_id)
+  const res = await multicall.call(
+    tokens.map(({ token_id }) => {
+      const calls: CallContext[] = [];
+      calls[CALL_IDX.BALANCE] = {
+        reference: "balance",
+        methodName: "balanceOf",
+        methodParameters: [holderAddress],
+      };
+      calls[CALL_IDX.DECIMALS] = {
+        reference: "decimals",
+        methodName: "decimals",
+        methodParameters: [],
+      };
+      return {
+        abi: ERC20Abi,
+        calls,
+        reference: token_id,
+        contractAddress: token_id,
+      };
+    })
   );
-  const contractCallResults = await multicall.call(ERC20CallContexts);
-  return Object.entries(contractCallResults.results).map(([_, result], i) => ({
-    ...tokens[i],
-    balance: extractBalance(result),
-  }));
-}
-
-function extractBalance(
-  contractCallReturnContext: ContractCallReturnContext
-): number {
-  const { callsReturnContext } = contractCallReturnContext;
-  const decimals = callsReturnContext[CallIndexes.DECIMALS].returnValues[0];
-  const balance = callsReturnContext[CallIndexes.BALANCE].returnValues[0];
-  return +formatUnits(balance, decimals);
+  return Object.entries(res.results).reduce((map, [_, result]) => {
+    const { callsReturnContext: ctx, originalContractCallContext: callCTX } =
+      result;
+    const decimals = ctx[CALL_IDX.DECIMALS].returnValues[0];
+    const balance = ctx[CALL_IDX.BALANCE].returnValues[0];
+    map[callCTX.contractAddress] = +formatUnits(balance, decimals);
+    return map;
+  }, {} as BalMap);
 }

@@ -1,7 +1,7 @@
 import { PropsWithChildren, useCallback, useContext } from "react";
 import { createContext } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
+import Prompt from "components/Prompt";
 import { logger } from "helpers";
 import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
 
@@ -19,11 +19,17 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       logger.error(error);
 
       if (displayMessage) {
-        showModal(Popup, { message: displayMessage });
+        showModal(Prompt, {
+          type: "error",
+          children: displayMessage,
+        });
       } else if (typeof error === "string") {
-        showModal(Popup, { message: error });
+        showModal(Prompt, {
+          type: "error",
+          children: error,
+        });
       } else if (instanceOfAPError(error)) {
-        showModal(Popup, { message: error.message });
+        showModal(Prompt, { children: error.message });
       } else if (instanceOfAPError(error.data)) {
         handleError(error.data);
       } else if ("message" in error) {
@@ -33,8 +39,9 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else if ("error" in error) {
         handleError(error.error);
       } else {
-        showModal(Popup, {
-          message: `Unknown error occurred`,
+        showModal(Prompt, {
+          type: "error",
+          children: "Unknown error children",
         });
       }
     },

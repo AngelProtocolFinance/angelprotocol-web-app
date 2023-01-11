@@ -90,7 +90,7 @@ const mockApplications: EndowmentProposal[] = [
       name: "proofReg",
       publicUrl: "proofRegUrl",
     },
-    Email: "ttestCharity1@mail.com",
+    Email: "testCharity1@mail.com",
     ProofOfIdentity: {
       name: "proofIdentity",
       publicUrl: "proofIdentityUrl",
@@ -112,7 +112,7 @@ const mockApplications: EndowmentProposal[] = [
         publicUrl: "auditedFinReport3Url",
       },
     ],
-    KycDonorsOnly: false,
+    KycDonorsOnly: true,
     poll_id: 1,
   },
   {
@@ -155,7 +155,7 @@ const mockApplications: EndowmentProposal[] = [
         publicUrl: "auditedFinReport3Url",
       },
     ],
-    KycDonorsOnly: true,
+    KycDonorsOnly: false,
     poll_id: 2,
   },
   {

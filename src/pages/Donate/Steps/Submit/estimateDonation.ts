@@ -1,6 +1,5 @@
-import { fromUtf8 } from "@cosmjs/encoding";
 import { Contract } from "@ethersproject/contracts";
-import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
+import { TransactionRequest } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
@@ -9,7 +8,7 @@ import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { extractFeeAmount, getProvider, logger, scaleToStr } from "helpers";
+import { extractFeeAmount, logger, scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
@@ -51,10 +50,6 @@ export async function estimateDonation({
           )
         );
       }
-
-      const msg: any = msgs[0];
-      console.log(JSON.parse(fromUtf8(msg.value.msg)));
-
       const fee = await contract.estimateFee(msgs);
       const feeAmount = extractFeeAmount(fee, native.token_id);
 
@@ -93,9 +88,9 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = new Web3Provider(getProvider(wallet.id) as any);
+      // const provider = new Web3Provider(getProvider(wallet.id) as any);
       //no network request
-      const signer = provider.getSigner();
+      const signer = wallet.signer;
       const sender = await signer.getAddress();
       const gasPrice = await signer.getGasPrice();
       const scaledAmount = parseUnits(`${token.amount}`, token.decimals);

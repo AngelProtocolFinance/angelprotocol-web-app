@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "types/aws";
 import { invalidateJunoTags } from "services/juno";
-import { govTags, junoTags } from "services/juno/tags";
+import { govTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useConnectedWallet } from "contexts/WalletGuard";
 import { TxPrompt } from "components/Prompt";
@@ -40,8 +40,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
       msgs: claimAirdropMsgs,
       tagPayloads: [
         invalidateJunoTags([
-          { type: junoTags.gov, id: govTags.staker },
-          { type: junoTags.gov, id: govTags.halo_balance },
+          { type: "gov", id: govTags.staker },
+          { type: "gov", id: govTags.halo_balance },
         ]),
       ],
     });
