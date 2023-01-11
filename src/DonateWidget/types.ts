@@ -1,7 +1,4 @@
-export type UrlParamValues = {
-  hideText: boolean;
-  hideAdvOpts: boolean;
-  unfoldAdvOpts: boolean;
-  liquidPct: number;
-  availCurrs?: string[];
-};
+import { ConfigParams } from "components/donation/Steps";
+
+export type UrlParamValues = Required<Omit<ConfigParams, "availCurrs">> &
+  Pick<ConfigParams, "availCurrs"> & { hideText: boolean };
