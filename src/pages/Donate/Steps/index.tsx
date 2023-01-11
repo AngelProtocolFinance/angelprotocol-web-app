@@ -18,8 +18,6 @@ import Progress from "./Progress";
 import Result from "./Result";
 import Submit from "./Submit";
 
-const CONTAINER_ID = "steps";
-
 export default function Steps(props: DonationRecipient) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
@@ -28,11 +26,6 @@ export default function Steps(props: DonationRecipient) {
   useEffect(() => {
     dispatch(setRecipient(props));
   }, [dispatch, props]);
-
-  useEffect(() => {
-    const element = document.getElementById(CONTAINER_ID);
-    element?.scrollIntoView({ behavior: "smooth" });
-  }, [state.step]);
 
   const handleOpenKado = useCallback(
     () => showModal(KadoModal, {}),
@@ -73,9 +66,7 @@ export default function Steps(props: DonationRecipient) {
         </>
       )}
 
-      <div id={CONTAINER_ID}>
-        <CurrStep {...state} />
-      </div>
+      <CurrStep {...state} />
     </div>
   );
 }
