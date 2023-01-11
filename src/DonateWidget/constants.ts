@@ -5,4 +5,4 @@ export const URL_PARAMS = {
   unfoldAdvancedOptions: "unfoldAdvOpts",
   liquidPercentage: "liquidPct",
   availableCurrencies: "availCurrs",
-};
+} as const;
