@@ -1,15 +1,19 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import APLogo from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
+import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
   id: number;
   name: string;
   isKYCRequired: boolean;
 }) {
+  const { hideText, ...rest } = useWidgetParams();
+
   const dispatch = useSetter();
 
   useEffect(() => {
@@ -26,19 +30,23 @@ export default function InnerComponent(props: {
           <WalletSuite />
         </header>
         <section className="flex flex-col items-center gap-5 h-full">
-          <p className="font-body text-sm sm:text-base">
-            Donate today to {getPossessiveForm(props.name)} endowment. Your
-            donation will be protected and compounded in perpetuity to provide{" "}
-            {props.name} with a long-term, sustainable runway. Give once, give
-            forever!
-          </p>
-          <p className="font-body text-sm sm:text-base">
-            Make sure to check out the many crypto and fiat donation options.
-            You will be given the chance to provide your personal details to
-            receive an immediate tax receipt.
-          </p>
+          {!hideText && (
+            <>
+              <p className="font-body text-sm sm:text-base">
+                Donate today to {getPossessiveForm(props.name)} endowment. Your
+                donation will be protected and compounded in perpetuity to
+                provide {props.name} with a long-term, sustainable runway. Give
+                once, give forever!
+              </p>
+              <p className="font-body text-sm sm:text-base">
+                Make sure to check out the many crypto and fiat donation
+                options. You will be given the chance to provide your personal
+                details to receive an immediate tax receipt.
+              </p>
+            </>
+          )}
 
-          <Steps className="mt-5 w-3/4" />
+          <Steps className="mt-5 w-3/4" {...rest} />
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
