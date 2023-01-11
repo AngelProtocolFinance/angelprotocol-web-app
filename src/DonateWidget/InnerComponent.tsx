@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import APLogo from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
