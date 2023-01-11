@@ -6,6 +6,7 @@ import Selector, { OptionType } from "components/Selector";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { IS_TEST } from "constants/env";
+import { appRoutes } from "constants/routes";
 import Split from "./Split";
 import useApprovedTokens from "./useApprovedTokens";
 
@@ -68,7 +69,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
       !isEmpty(availableCurrencies)
     );
     onChange(
-      `${APP_URL}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
+      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
     );
   }, [
     endowId,
