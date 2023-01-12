@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { EndowmentInfo } from "services/types";
 import {
   Endowment,
-  EndowmentBookmark,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
@@ -46,18 +45,18 @@ export const aws = createApi({
     }),
     walletProfile: builder.query<WalletProfile, string>({
       providesTags: [{ type: "walletProfile" }],
-      query: (walletAddr) => `/v1/profile/${network}/user/${walletAddr}`,
+      query: getWalletProfileQuery,
     }),
     toggleBookmark: builder.mutation<
       unknown,
-      { type: "add" | "delete"; wallet: string } & EndowmentBookmark
+      { type: "add" | "delete"; wallet: string; endowId: number }
     >({
-      invalidatesTags: [{ type: "profile" }],
-      query: ({ type, ...payload }) => {
+      invalidatesTags: [{ type: "walletProfile" }],
+      query: ({ endowId, type, wallet }) => {
         return {
-          url: "/v1/bookmarks",
+          url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
-          body: { ...payload, network },
+          body: { id: endowId },
         };
       },
       transformResponse: (response: { data: any }) => response,
@@ -100,3 +99,6 @@ export const {
 
 const getProfileQuery = (endowId: number) =>
   `/v1/profile/${network}/endowment/${endowId}`;
+
+const getWalletProfileQuery = (walletAddr: string) =>
+  `/v1/profile/${network}/user/${walletAddr}`;

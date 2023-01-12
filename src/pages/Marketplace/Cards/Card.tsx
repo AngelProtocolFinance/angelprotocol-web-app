@@ -26,7 +26,7 @@ export default function Card({
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
-        <BookmarkBtn name={name} id={id} logo={logo} />
+        <BookmarkBtn name={name} endowId={id} logo={logo} />
       </div>
       <Link
         to={`${appRoutes.profile}/${id}`}
