@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useBookmarksQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
@@ -20,7 +20,7 @@ export default function Details(props: WalletState) {
     isFetching,
     isError,
     error,
-  } = useProfileQuery(props.address);
+  } = useBookmarksQuery(props.address);
 
   const isMemberResult = useIsMember();
 

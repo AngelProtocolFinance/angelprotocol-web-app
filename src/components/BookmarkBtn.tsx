@@ -1,5 +1,5 @@
 import { PropsWithChildren, useRef, useState } from "react";
-import { useProfileQuery, useToggleBookmarkMutation } from "services/aws/aws";
+import { useBookmarksQuery, useToggleBookmarkMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
@@ -21,7 +21,7 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
     data,
     isLoading: isProfileLoading,
     isFetching,
-  } = useProfileQuery(wallet?.address!, {
+  } = useBookmarksQuery(wallet?.address!, {
     skip: !wallet,
   });
   const { showModal } = useModalContext();
