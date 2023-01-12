@@ -92,7 +92,7 @@ export type WalletProfile = {
   wallet: string;
   network: NetworkType;
   admin: EndowmentBookmark[];
-  endowments: EndowmentBookmark[];
+  bookmarks: EndowmentBookmark[];
 };
 
 export interface DonationsMetricList {

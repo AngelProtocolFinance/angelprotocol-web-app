@@ -49,7 +49,7 @@ export default function Details(props: WalletState) {
 
             <WalletDetails {...props} />
             <MyDonations address={props.address} />
-            <Favourites bookmarks={profile?.endowments} isError={isError} />
+            <Favourites bookmarks={profile?.bookmarks} isError={isError} />
             <DisconnectBtn />
           </>
         );

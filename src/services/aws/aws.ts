@@ -46,7 +46,7 @@ export const aws = createApi({
     }),
     walletProfile: builder.query<WalletProfile, string>({
       providesTags: [{ type: "walletProfile" }],
-      query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
+      query: (walletAddr) => `/v1/profile/${network}/user/${walletAddr}`,
     }),
     toggleBookmark: builder.mutation<
       unknown,
