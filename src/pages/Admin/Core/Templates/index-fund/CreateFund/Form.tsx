@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "pages/Admin/types";
-import Checkbox from "components/Checkbox";
+import CheckboxFormField from "components/CheckboxFormField";
 import { DivContainer, Submitter, TextArea, TextPrim } from "components/admin";
 import { Label } from "components/form";
 import { INIT_SPLIT } from ".";
@@ -26,7 +26,7 @@ export default function Form() {
         name="expiryHeight"
       />
       <Slider />
-      <Checkbox<V>
+      <CheckboxFormField<V>
         name="isFundRotating"
         classes={{
           container:
@@ -34,7 +34,7 @@ export default function Form() {
         }}
       >
         Included on fund rotation
-      </Checkbox>
+      </CheckboxFormField>
       <Label className="text-green-l1 -mb-4">Add members</Label>
       <MemberAdder />
 
