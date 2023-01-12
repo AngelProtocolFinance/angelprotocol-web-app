@@ -63,6 +63,7 @@ export const aws = createApi({
           url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
           body: { id: endowId },
+          headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
