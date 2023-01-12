@@ -1,7 +1,7 @@
 import { FormValues as FV } from "../types";
-import Checkbox from "components/Checkbox";
+import CheckboxFormField from "components/CheckboxFormField";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
+import { SelectorFormField } from "components/SelectorFormField";
 import { Label } from "components/form";
 import {
   BtnPrim,
@@ -57,7 +57,7 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <Selector<FV, "sdgs", number, true>
+      <SelectorFormField<FV, "sdgs", number, true>
         multiple
         name="sdgs"
         options={sdgOptions}
@@ -105,7 +105,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <Checkbox<FV>
+      <CheckboxFormField<FV>
         name="hasAuthority"
         required
         classes={{
@@ -117,8 +117,8 @@ export default function Form() {
         By checking this box, you declare that you have the authority to create
         an endowment in the name of {data.contact.orgName} through Angel
         Protocol
-      </Checkbox>
-      <Checkbox<FV>
+      </CheckboxFormField>
+      <CheckboxFormField<FV>
         name="hasAgreedToTerms"
         required
         classes={{
@@ -132,7 +132,7 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
-      </Checkbox>
+      </CheckboxFormField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <BtnSec
           aria-disabled={isSubmitting}

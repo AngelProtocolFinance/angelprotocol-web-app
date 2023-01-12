@@ -1,7 +1,8 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { GroupProps } from "./types";
-import { Checkbox, Drawer } from ".";
+import { Checkbox } from "components/Checkbox";
+import { Drawer } from ".";
 
 export function FlatFilter<T>(props: GroupProps<T>) {
   const [isOpen, setIsOpen] = useState(true);

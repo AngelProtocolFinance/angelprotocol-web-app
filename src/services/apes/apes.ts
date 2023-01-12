@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseChain, Chain, FetchedChain, WithdrawLog } from "types/aws";
+import { BaseChain, Chain, FetchedChain, Token, WithdrawLog } from "types/aws";
 import { UnsupportedChainError } from "errors/errors";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
@@ -11,7 +11,7 @@ export const apes = createApi({
     baseUrl: APIs.apes,
     mode: "cors",
   }),
-  tagTypes: ["chain", "withdraw_logs", "donations"],
+  tagTypes: ["chain", "withdraw_logs", "donations", "tokens"],
   endpoints: (builder) => ({
     chains: builder.query<BaseChain[], unknown>({
       query: () => `v1/chains${IS_TEST ? "/test" : ""}`,
@@ -49,6 +49,10 @@ export const apes = createApi({
         }
       },
     }),
+    tokens: builder.query<Token[], unknown>({
+      providesTags: [{ type: "tokens" }],
+      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
+    }),
   }),
 });
 
@@ -56,6 +60,7 @@ export const {
   useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
+  useLazyTokensQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
 } = apes;

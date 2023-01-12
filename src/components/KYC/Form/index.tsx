@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
-import Checkbox from "components/Checkbox";
+import CheckboxFormField from "components/CheckboxFormField";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
+import { SelectorFormField } from "components/SelectorFormField";
 import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
@@ -90,7 +90,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "usState", string, false>
+          <SelectorFormField<FV, "usState", string, false>
             name="usState"
             options={states}
             classes={{ container: "bg-white dark:bg-blue-d6" }}
@@ -111,7 +111,7 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <Checkbox<FV>
+      <CheckboxFormField<FV>
         name="hasAgreedToTerms"
         classes={{
           container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
@@ -125,7 +125,7 @@ export default function Form({ classes = "", ...props }: Props) {
           Terms & Conditions
         </ExtLink>
         .
-      </Checkbox>
+      </CheckboxFormField>
       {props.type === "post-donation" ? (
         <BtnPrimary
           className="col-span-full"
