@@ -1,10 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
+import { BtnPrim } from "components/BtnPrim";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
-import { BtnOutline, BtnPrim, BtnSec, TextInput } from "components/gift";
+import { BtnOutline, BtnSec, TextInput } from "components/gift";
 import { createAuthToken } from "helpers";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";

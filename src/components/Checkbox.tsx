@@ -1,65 +1,14 @@
-import { ErrorMessage } from "@hookform/error-message";
-import { PropsWithChildren } from "react";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import React from "react";
 
-type Classes = {
-  container?: string;
-  checkbox?: string;
-  label?: string;
-  error?: string;
-};
-
-export default function Checkbox<T extends FieldValues>({
-  name,
-  children,
-  classes,
-  disabled,
-  required,
-}: PropsWithChildren<{
-  name: Path<T>;
-  classes?: Classes;
-  disabled?: true;
-  required?: boolean;
-}>) {
-  const {
-    register,
-    formState: { errors, isSubmitting },
-  } = useFormContext<T>();
-
-  const id = `__${name}` as Path<T>;
-
+export function Checkbox({
+  className,
+  ...props
+}: Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">) {
   return (
-    <div
-      className={`${
-        classes?.container ?? ""
-      } grid grid-cols-[auto_1fr] gap-x-3 relative items-center`}
-    >
-      <input
-        className={
-          classes?.checkbox + " peer cursor-pointer disabled:cursor-default"
-        }
-        type="checkbox"
-        {...register(name)}
-        id={id}
-        disabled={isSubmitting || disabled}
-      />
-      <label
-        className={`${classes?.label ?? ""} ${
-          required ? "after:ml-1 after:content-['*'] after:text-red" : ""
-        } cursor-pointer peer-disabled:cursor-default`}
-        htmlFor={id}
-      >
-        {children}
-      </label>
-
-      <ErrorMessage
-        errors={errors}
-        name={name as any}
-        as="p"
-        className={`col-span-full text-xs text-red dark:text-red-l2 ${
-          classes?.error ?? ""
-        }`}
-      />
-    </div>
+    <input
+      {...props}
+      type="checkbox"
+      className={`inline-block cursor-pointer disabled:cursor-default relative appearance-none border border-gray-d1 dark:border-gray-l2 rounded-sm w-4 h-4 shrink-0 checked:before:content-['✓'] before:absolute-center before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue ${className}`}
+    />
   );
 }
