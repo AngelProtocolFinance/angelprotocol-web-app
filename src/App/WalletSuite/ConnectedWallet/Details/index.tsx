@@ -11,7 +11,6 @@ import Favourites from "./Favourites";
 import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
-import useIsMember from "./useIsMember";
 
 export default function Details(props: WalletState) {
   const {
@@ -21,8 +20,6 @@ export default function Details(props: WalletState) {
     isError,
     error,
   } = useProfileQuery(props.address);
-
-  const isMemberResult = useIsMember();
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
@@ -44,13 +41,7 @@ export default function Details(props: WalletState) {
         return (
           <>
             <MobileTitle className="sm:hidden" onClose={close} />
-
-            {(isMemberResult.isApMember || isMemberResult.isReviewMember) && (
-              <AdminLinks
-                isApMember={isMemberResult.isApMember}
-                isReviewMember={isMemberResult.isReviewMember}
-              />
-            )}
+            <AdminLinks {...props} />
 
             {!!profile?.admin?.length && (
               <MyEndowments endowments={profile.admin} />
