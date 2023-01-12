@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEndowInfoQuery } from "services/juno/custom";
+import useEndowInfo from "hooks/useEndowInfo";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
@@ -10,7 +10,7 @@ import Skeleton from "./Skeleton";
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowInfoQuery(numId);
+  const { isLoading, isError, data } = useEndowInfo(numId);
 
   if (isLoading) {
     return <Skeleton />;

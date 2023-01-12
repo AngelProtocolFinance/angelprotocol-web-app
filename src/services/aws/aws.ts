@@ -6,6 +6,7 @@ import {
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
+import { ProfileResponse } from "types/contracts";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
@@ -58,6 +59,10 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
+    profile: builder.query<ProfileResponse, number>({
+      providesTags: [{ type: "profile" }],
+      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
+    }),
   }),
 });
 
@@ -65,6 +70,7 @@ export const {
   useBookmarksQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
+  useProfileQuery,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },
