@@ -1,6 +1,6 @@
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { Selector } from "components/Selector";
+import { SelectorFormField } from "components/SelectorFormField";
 import { Label } from "components/form";
 import { BtnPrim, LoadText, TextInput } from "components/registration";
 import { referralOptions, roleOptions } from "../constants";
@@ -55,7 +55,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "role", ContactRoles, false>
+      <SelectorFormField<FV, "role", ContactRoles, false>
         name="role"
         options={roleOptions}
       >
@@ -69,13 +69,13 @@ export default function Form({ classes = "" }: { classes?: string }) {
             />
           )
         }
-      </Selector>
+      </SelectorFormField>
 
       <h3 className="font-bold mt-8 mb-4">Other information</h3>
       <Label required className="mb-2">
         How did you find about us?
       </Label>
-      <Selector<any, any, ReferralMethods, false>
+      <SelectorFormField<any, any, ReferralMethods, false>
         name="referralMethod"
         options={referralOptions}
       >
@@ -89,7 +89,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             />
           )
         }
-      </Selector>
+      </SelectorFormField>
       <TextInput
         name="goals"
         label="Goals"
