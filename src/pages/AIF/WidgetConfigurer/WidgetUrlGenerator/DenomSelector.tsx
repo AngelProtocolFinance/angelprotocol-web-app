@@ -7,7 +7,7 @@ export default function DenomSelector() {
   const { approvedTokens, isLoading } = useApprovedTokens();
 
   if (isLoading) {
-    return <LoaderRing thickness={10} classes="w-32" />;
+    return <LoaderRing thickness={10} classes="w-12" />;
   }
 
   return (

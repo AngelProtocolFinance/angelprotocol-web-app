@@ -16,7 +16,7 @@ export default function useWidgetUrlGenerator(
   onChange: (url: string) => void
 ) {
   const { handleError } = useErrorContext();
-  const { watch, reset } = useForm<FormValues>({
+  const methods = useForm<FormValues>({
     defaultValues: {
       availableCurrencies: [],
       hideText: false,
@@ -27,7 +27,7 @@ export default function useWidgetUrlGenerator(
     },
   });
 
-  const formValues = watch();
+  const formValues = methods.watch();
 
   useEffect(() => {
     if (!endowId) {
@@ -65,10 +65,7 @@ export default function useWidgetUrlGenerator(
     );
   }, [endowId, formValues, handleError, onChange]);
 
-  return {
-    formValues,
-    reset: () => reset(),
-  };
+  return methods;
 }
 
 function append(name: string, value: any, condition: boolean): string {
