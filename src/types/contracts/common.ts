@@ -32,6 +32,18 @@ export type EmbeddedBankMsg = {
   };
 };
 
+/**
+ * ADR-36 requirements aren't fully specified for implementation
+ * https://docs.keplr.app/api/#sign-amino
+ */
+export type EmbeddedSignMsg = {
+  readonly type: "sign/MsgSignData";
+  readonly value: {
+    signer: string; // juno1fh..fdh
+    data: string; // base64
+  };
+};
+
 export type Vote = "yes" | "no";
 
 export type CW4Member = {
