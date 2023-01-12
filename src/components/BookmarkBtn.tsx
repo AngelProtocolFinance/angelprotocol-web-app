@@ -33,21 +33,20 @@ export default function BookmarkBtn({ endowId, name, logo, children }: Props) {
   const isLoading =
     isProfileLoading || isFetching || isToggling || isWalletLoading;
 
-  const bookMark = data?.bookmarks?.find((d) => d.id === endowId);
-  const isBookmarked = bookMark !== undefined;
+  const bookmark = data?.bookmarks?.find((d) => d.id === endowId);
+  const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
     if (!wallet) {
       showModal(Popup, { message: "Connect wallet to edit bookmark" });
       return;
     }
-    const res = bookMark
-      ? await toggle({
-          type: "delete",
-          endowId: bookMark.id,
-          wallet: wallet.address,
-        })
-      : await toggle({ type: "add", endowId: endowId, wallet: wallet.address });
+
+    const res = await toggle({
+      endowId,
+      type: isBookmarked ? "delete" : "add",
+      wallet: wallet.address,
+    });
 
     if ("error" in res) {
       showModal(Popup, { message: "Failed to save bookmark" });
