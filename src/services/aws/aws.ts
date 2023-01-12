@@ -27,7 +27,11 @@ const awsBaseQuery = retry(
     baseUrl: APIs.aws,
     mode: "cors",
     prepareHeaders(headers) {
-      headers.append("authorization", createAuthToken("charity-owner"));
+      // As 'prepareHeaders' is called after builder.query returns the request to be sent,
+      // this check allows for custom 'authorization' headers to be set within the builder.query
+      if (!headers.has("authorization")) {
+        headers.append("authorization", createAuthToken("charity-owner"));
+      }
       return headers;
     },
   }),
