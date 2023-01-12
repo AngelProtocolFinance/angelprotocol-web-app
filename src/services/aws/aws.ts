@@ -16,6 +16,12 @@ import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
+const getProfileQuery = (endowId: number) =>
+  `/v1/profile/${network}/endowment/${endowId}`;
+
+const getWalletProfileQuery = (walletAddr: string) =>
+  `/v1/profile/${network}/user/${walletAddr}`;
+
 const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
@@ -96,9 +102,3 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
-
-const getProfileQuery = (endowId: number) =>
-  `/v1/profile/${network}/endowment/${endowId}`;
-
-const getWalletProfileQuery = (walletAddr: string) =>
-  `/v1/profile/${network}/user/${walletAddr}`;
