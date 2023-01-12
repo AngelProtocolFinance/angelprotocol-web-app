@@ -1,9 +1,4 @@
-import {
-  AdminResources,
-  AdminRoles,
-  EndowmentInfo,
-  ProposalDetails,
-} from "services/types";
+import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
 import { CW3Config, EndowmentDetails } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
@@ -200,20 +195,13 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    endowInfo: builder.query<EndowmentInfo, number>({
+    endowDetails: builder.query<EndowmentDetails, number>({
       providesTags: [{ type: "custom", id: customTags.proposalDetails }],
       async queryFn(id) {
-        const [profile, details] = await Promise.all([
-          queryContract("accProfile", contracts.accounts, { id }),
-          queryContract("accEndowment", contracts.accounts, { id }),
-        ]);
-        return {
-          data: {
-            ...profile,
-            ...details,
-            id,
-          },
-        };
+        const data = await queryContract("accEndowment", contracts.accounts, {
+          id,
+        });
+        return { data };
       },
     }),
   }),
@@ -223,5 +211,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
-  useEndowInfoQuery,
+  useEndowDetailsQuery,
 } = customApi;

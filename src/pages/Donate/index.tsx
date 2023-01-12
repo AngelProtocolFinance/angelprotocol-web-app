@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import banner from "assets/images/hero.png";
-import { useEndowInfoQuery } from "services/juno/custom";
+import { useEndowInfoQuery } from "services/aws/aws";
 import Seo from "components/Seo";
 import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
