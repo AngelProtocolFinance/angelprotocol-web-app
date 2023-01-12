@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ImgLink } from "components/ImgEditor/types";
 import { CountryOption } from "services/types";
-import { EndowmentProposal } from "types/aws";
+import { EndowmentProposal, ProfileUpdate } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -12,7 +12,6 @@ import {
   EndowmentStatusText,
   FundConfig,
   FundDetails,
-  ProfileUpdate,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";

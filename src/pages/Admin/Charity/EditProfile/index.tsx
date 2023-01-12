@@ -5,7 +5,8 @@ import {
   ProfileFormValues,
   ProfileWithSettings,
 } from "pages/Admin/types";
-import { ProfileResponse } from "types/contracts";
+import { ProfileResponse } from "types/aws";
+import "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";

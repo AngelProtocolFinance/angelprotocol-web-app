@@ -1,6 +1,7 @@
 import {
   CapitalizedEndowmentType,
   Categories,
+  EndowmentDetails,
   EndowmentStatus,
   EndowmentTier,
   SocialMedialUrls,
@@ -100,3 +101,42 @@ export interface DonationsMetricList {
   donations_daily_amount: number;
   donations_total_amount: number;
 }
+
+export interface ProfileResponse {
+  name: string; // name of the Charity Endowment
+  overview: string;
+  categories: Categories;
+  tier: number;
+  logo: string;
+  image: string;
+  url?: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  social_media_urls: SocialMedialUrls;
+  number_of_employees?: number;
+  // average_annual_budget?: string;
+  // annual_revenue?: string;
+  charity_navigator_rating?: string;
+}
+
+export interface ProfileUpdate {
+  //separate shape for update
+  id: number;
+  overview: string;
+  url: string;
+  registration_number?: string;
+  country_of_origin?: string;
+  street_address?: string;
+  contact_email?: string;
+  facebook?: string;
+  twitter?: string;
+  linkedin?: string;
+  // number_of_employees?: number;s
+  // average_annual_budget?: string;
+  // annual_revenue?: string;
+  // charity_navigator_rating?: string;
+}
+
+export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };

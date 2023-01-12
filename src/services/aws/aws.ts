@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { EndowmentInfo } from "services/types";
 import {
   Endowment,
+  EndowmentBookmark,
+  EndowmentInfo,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
+  ProfileResponse,
+  ProfileUpdate,
   WalletProfile,
 } from "types/aws";
-import { ProfileResponse } from "types/contracts";
 import { NetworkType } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
@@ -76,6 +78,16 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => getProfileQuery(endowId),
     }),
+    updateProfile: builder.mutation<ProfileResponse, ProfileUpdate>({
+      invalidatesTags: [{ type: "profile" }],
+      query: (profileUpdate) => {
+        return {
+          url: getProfileQuery(profileUpdate.id),
+          method: "POST",
+          body: profileUpdate,
+        };
+      },
+    }),
     endowInfo: builder.query<EndowmentInfo, number>({
       providesTags: [{ type: "endowments" }, { type: "profile" }],
       async queryFn(endowId, _api, _opts, baseQuery) {
@@ -98,6 +110,7 @@ export const {
   useEndowmentsQuery,
   useProfileQuery,
   useEndowInfoQuery,
+  useUpdateProfileMutation,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },

@@ -6,6 +6,7 @@ import {
 import { ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useUpdateProfileMutation } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
@@ -35,6 +36,8 @@ export default function useEditProfile() {
   const { wallet } = useGetWallet();
   const { handleError } = useErrorContext();
   const sendTx = useCosmosTxSender();
+
+  const [update] = useUpdateProfileMutation();
 
   const editProfile = async ({
     title,
@@ -72,7 +75,7 @@ export default function useEditProfile() {
 
       const accountContract = new Account(wallet);
       const { sdg, name, image, logo, country, ...profilePayload } = data;
-      const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
+      const profileUpdateMsg = update(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
           ...profilePayload,

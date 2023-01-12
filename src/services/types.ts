@@ -4,7 +4,6 @@ import {
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
-  ProfileResponse,
   Proposal,
 } from "types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
@@ -68,4 +67,3 @@ export type CountryOption = {
 export type Regions = { [region: string]: string[] };
 
 /** endowment */
-export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };
