@@ -1,21 +1,14 @@
 import { BtnPrim } from "components/BtnPrim";
 import CheckboxFormField from "components/CheckboxFormField";
-import LoaderRing from "components/LoaderRing";
-import { SelectorFormField } from "components/SelectorFormField";
+import DenomSelector from "./DenomSelector";
 import Split from "./Split";
 import { FormValues } from "./schema";
-import useApprovedTokens from "./useApprovedTokens";
 import useWidgetUrlGenerator from "./useWidgetUrlGenerator";
 
 type Props = { endowId?: string; onChange(url: string): void };
 
 export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   const { formValues, reset } = useWidgetUrlGenerator(endowId, onChange);
-  const { approvedTokens, isLoading } = useApprovedTokens();
-
-  if (isLoading) {
-    return <LoaderRing thickness={10} classes="w-32" />;
-  }
 
   return (
     <div className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body">
@@ -28,15 +21,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
       </CheckboxFormField>
 
       <span>Available currencies:</span>
-      <SelectorFormField<FormValues, "availableCurrencies", string, true>
-        name="availableCurrencies"
-        options={approvedTokens.map((token) => ({
-          label: token,
-          value: token,
-        }))}
-        classes={{ container: "bg-white dark:bg-blue-d6" }}
-        multiple
-      />
+      <DenomSelector />
 
       <CheckboxFormField<FormValues> name="hideAdvancedOptions">
         Hide "advanced options"
