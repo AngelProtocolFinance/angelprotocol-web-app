@@ -1,4 +1,4 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
+import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";

@@ -1,4 +1,4 @@
-import { errors } from "ethers";
+import { ErrorCode as errors } from "@ethersproject/logger";
 import { logger } from "helpers";
 
 /** TODO: use this with sendDonation */

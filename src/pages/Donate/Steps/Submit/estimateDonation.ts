@@ -1,8 +1,9 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider";
+import { Contract } from "@ethersproject/contracts";
+import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import ERC20Abi from "abi/ERC20.json";
-import { ethers } from "ethers";
 import { Estimate } from "./types";
 import { WalletState } from "contexts/WalletContext";
 import { SubmitStep } from "slices/donation";
@@ -92,17 +93,12 @@ export async function estimateDonation({
     }
     // evm transactions
     else {
-      const provider = new ethers.providers.Web3Provider(
-        getProvider(wallet.providerId) as any
-      );
+      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
       //no network request
       const signer = provider.getSigner();
       const sender = await signer.getAddress();
       const gasPrice = await signer.getGasPrice();
-      const scaledAmount = ethers.utils.parseUnits(
-        `${token.amount}`,
-        token.decimals
-      );
+      const scaledAmount = parseUnits(`${token.amount}`, token.decimals);
 
       const tx: TransactionRequest = {
         from: sender,
@@ -114,11 +110,9 @@ export async function estimateDonation({
       if (token.type === "evm-native") {
         const gasLimit = await signer.estimateGas(tx);
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       } else {
-        const ER20Contract: any = new ethers.Contract(
+        const ER20Contract: any = new Contract(
           token.token_id,
           ERC20Abi,
           signer
@@ -128,9 +122,7 @@ export async function estimateDonation({
           scaledAmount
         );
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
-        );
+        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
       }
 
       return {
