@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { FilterFormValues } from "../../../components/donations/types";
+import { FilterFormValues } from "./types";
 import { useCurrenciesQuery } from "services/apes";
 
 const CurrencyDropdown: FC = () => {

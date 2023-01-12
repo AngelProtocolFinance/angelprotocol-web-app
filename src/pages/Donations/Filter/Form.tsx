@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
 import { useFormContext } from "react-hook-form";
-import { FilterFormValues as FV } from "../../../components/donations/types";
+import { FilterFormValues as FV } from "./types";
 import Icon from "components/Icon";
 import Controls from "./Controls";
 import CurrencyDropdown from "./CurrencyDropdown";

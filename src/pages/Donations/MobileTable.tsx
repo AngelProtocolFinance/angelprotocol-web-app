@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { Donation } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
-import { useSort } from "hooks/useSort";
+import { useSort } from "hooks/useSort/useSort";
 import { humanize, maskAddress } from "helpers";
 
 export default function MobileTable(props: { donations: Donation[] }) {

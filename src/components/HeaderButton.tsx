@@ -1,4 +1,4 @@
-import { SortDirection, SortKey } from "./donations/types";
+import { SortDirection, SortKey } from "hooks/useSort/types";
 import Icon from "components/Icon";
 
 export function HeaderButton(

@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { FilterFormValues } from "../../../components/donations/types";
+import { FilterFormValues } from "./types";
 import { DonationsQueryParams } from "types/aws";
 import Icon from "components/Icon";
 import { cleanObject } from "helpers/cleanObject";
