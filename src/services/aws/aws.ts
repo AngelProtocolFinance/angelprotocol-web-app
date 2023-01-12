@@ -31,7 +31,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "bookmarks", "profile", "endowments"],
+  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowments"],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -44,8 +44,8 @@ export const aws = createApi({
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
-    bookmarks: builder.query<WalletProfile, string>({
-      providesTags: [{ type: "bookmarks" }],
+    walletProfile: builder.query<WalletProfile, string>({
+      providesTags: [{ type: "walletProfile" }],
       query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
@@ -83,7 +83,7 @@ export const aws = createApi({
 });
 
 export const {
-  useBookmarksQuery,
+  useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
   useProfileQuery,
