@@ -23,14 +23,7 @@ const getWalletProfileQuery = (walletAddr: string) =>
   `/v1/profile/${network}/user/${walletAddr}`;
 
 const awsBaseQuery = retry(
-  fetchBaseQuery({
-    baseUrl: APIs.aws,
-    mode: "cors",
-    prepareHeaders(headers) {
-      headers.append("authorization", createAuthToken("charity-owner"));
-      return headers;
-    },
-  }),
+  fetchBaseQuery({ baseUrl: APIs.aws, mode: "cors" }),
   // current default for all endpoints, change if necessary
   { maxRetries: 1 }
 );
