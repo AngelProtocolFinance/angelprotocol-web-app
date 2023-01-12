@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useLazyTokensQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 
-export default function useApprovedTokens(): string[] {
+type Result = { approvedTokens: string[]; isLoading: boolean };
+
+export default function useApprovedTokens(): Result {
+  const [isLoading, setLoading] = useState(true);
   const [approvedTokens, setApprovedTokens] = useState<string[]>([]);
   const { handleError } = useErrorContext();
 
@@ -18,8 +21,9 @@ export default function useApprovedTokens(): string[] {
         );
         setApprovedTokens(approvedTokenSymbols);
       })
-      .catch((err) => handleError(err));
+      .catch((err) => handleError(err))
+      .finally(() => setLoading(false));
   }, [getTokens, handleError]);
 
-  return approvedTokens;
+  return { approvedTokens, isLoading };
 }
