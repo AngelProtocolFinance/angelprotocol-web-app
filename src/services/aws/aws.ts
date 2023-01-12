@@ -64,13 +64,13 @@ export const aws = createApi({
     }),
     profile: builder.query<ProfileResponse, number>({
       providesTags: [{ type: "profile" }],
-      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
+      query: (endowId) => getProfileQuery(endowId),
     }),
     endowInfo: builder.query<EndowmentInfo, number>({
       providesTags: [{ type: "endowments" }, { type: "profile" }],
       async queryFn(endowId, _api, _opts, baseQuery) {
         const [{ data: profile }, endow] = await Promise.all([
-          baseQuery(`/v1/profile/${network}/endowment/${endowId}`),
+          baseQuery(getProfileQuery(endowId)),
           queryContract("accEndowment", contracts.accounts, { id: endowId }),
         ]);
 
@@ -97,3 +97,6 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
+
+const getProfileQuery = (endowId: number) =>
+  `/v1/profile/${network}/endowment/${endowId}`;
