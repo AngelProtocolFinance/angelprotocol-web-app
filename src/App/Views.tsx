@@ -5,6 +5,7 @@ import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin"));
+const AIF = lazy(() => import("pages/AIF"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
@@ -22,6 +23,7 @@ export default function Views() {
       <Routes>
         <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
         <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+        <Route path={`${appRoutes.aif}/:id/*`} element={<AIF />} />
         <Route
           path={`${appRoutes.donations}/:address`}
           element={<Donations />}

@@ -1,5 +1,5 @@
 import { FormValues as FV } from "./types";
-import Checkbox from "components/Checkbox";
+import CheckboxFormField from "components/CheckboxFormField";
 import ExtLink from "components/ExtLink";
 import {
   BtnPrim,
@@ -29,7 +29,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         placeholder="e.g. johndoe@example.com"
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
       />
-      <Checkbox<FV>
+      <CheckboxFormField<FV>
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
@@ -42,7 +42,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         <ExtLink className="underline text-orange" href={PRIVACY_POLICY}>
           Privacy Policy
         </ExtLink>
-      </Checkbox>
+      </CheckboxFormField>
 
       <BtnPrim
         type="submit"
