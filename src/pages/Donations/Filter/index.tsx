@@ -36,12 +36,8 @@ const Filter = ({
   ): DonationsQueryParams => {
     return {
       id: address,
-      transactionDate:
-        data.startDate && data.endDate
-          ? `${new Date(data.startDate).toISOString()} ${new Date(
-              data.endDate
-            ).toISOString()}`
-          : "",
+      afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
+      beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
       chainName: data.network !== "default" ? data.network : "",
       denomination: data.currency !== "default" ? data.currency : "",
     };
