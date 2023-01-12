@@ -203,7 +203,7 @@
   }
 
   .border-prim {
-    @apply border-prim;
+    @apply border-gray-l2 dark:border-bluegray;
   }
 
   .divide-prim {
