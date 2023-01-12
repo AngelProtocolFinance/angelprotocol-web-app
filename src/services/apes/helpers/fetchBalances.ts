@@ -1,6 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { formatUnits } from "@ethersproject/units";
 import { BalMap } from "./types";
 import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
@@ -75,7 +75,7 @@ export async function fetchBalances(
   } else {
     /**fetch balances for ethereum */
     const native = tokens.natives[0]; //evm chains have only one gas token
-    const jsonProvider = new ethers.providers.JsonRpcProvider(chain.rpc_url);
+    const jsonProvider = new JsonRpcProvider(chain.rpc_url);
     const [nativeBal, erc20s] = await Promise.allSettled([
       jsonProvider.getBalance(address),
       getERC20Holdings(chain.rpc_url, address, tokens.alts),

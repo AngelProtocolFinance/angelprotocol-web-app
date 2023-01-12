@@ -1,3 +1,4 @@
+import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "types/aws";
@@ -18,9 +19,12 @@ import {
 import { chainIDs } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
-import checkXdefiPriority from "./helpers/checkXdefiPriority";
-import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
-import toPrefixedHex from "./helpers/toPrefixedHex";
+import {
+  checkXdefiPriority,
+  retrieveUserAction,
+  saveUserAction,
+  toPrefixedHex,
+} from "./helpers";
 import { useAddEthereumChain } from "./hooks";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
@@ -59,7 +63,7 @@ export default function useInjectedProvider(
 
   /** event handlers */
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
-    setChainId(`${parseInt(hexChainId, 16)}`);
+    setChainId(formatUnits(hexChainId, 0));
   };
 
   //useful when user changes account internally via metamask
@@ -104,7 +108,7 @@ export default function useInjectedProvider(
           method: EIPMethods.eth_chainId,
         });
 
-        const parsedChainId = `${parseInt(hexChainId, 16)}`;
+        const parsedChainId = formatUnits(hexChainId, 0);
         verifyChainSupported(parsedChainId);
         setAddress(accounts[0]);
         setChainId(parsedChainId);
