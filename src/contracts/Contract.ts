@@ -11,7 +11,11 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import {
+  EmbeddedBankMsg,
+  EmbeddedSignMsg,
+  EmbeddedWasmMsg,
+} from "types/contracts";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
@@ -164,6 +168,16 @@ export default class Contract {
           to_address: to,
           amount: funds,
         },
+      },
+    };
+  }
+
+  createSignMsg(data: object): EmbeddedSignMsg {
+    return {
+      type: "sign/MsgSignData",
+      value: {
+        signer: this.walletAddress,
+        data: toBase64(data),
       },
     };
   }
