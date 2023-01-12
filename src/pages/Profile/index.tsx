@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import placeholderBanner from "assets/images/placeholder-banner.png";
 import { useEndowInfoQuery } from "services/aws/aws";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
@@ -38,7 +39,7 @@ function Banner() {
   return (
     <div
       className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
-      style={{ backgroundImage: `url('${image}')` }}
+      style={{ backgroundImage: `url('${image || placeholderBanner}')` }}
     />
   );
 }
