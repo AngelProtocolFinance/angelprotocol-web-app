@@ -1,9 +1,13 @@
+import { useFormContext } from "react-hook-form";
+import { FormValues } from "../schema";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
-type Props = { liquidPercentage: number; onChange(newValue: number): void };
+export default function Split() {
+  const { watch } = useFormContext<FormValues>();
 
-export default function Split({ liquidPercentage, onChange }: Props) {
+  const liquidPercentage = watch("liquidPercentage");
+
   return (
     <div className="flex gap-2">
       <Portion
@@ -16,11 +20,7 @@ export default function Split({ liquidPercentage, onChange }: Props) {
         title="Current"
         action="Instantly available"
       >
-        <Slider
-          className="my-2.5"
-          onChange={onChange}
-          value={liquidPercentage}
-        />
+        <Slider className="my-2.5" />
       </Portion>
     </div>
   );

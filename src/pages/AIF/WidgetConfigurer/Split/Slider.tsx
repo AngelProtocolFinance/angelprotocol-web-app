@@ -1,19 +1,20 @@
+import { useFormContext } from "react-hook-form";
+import { FormValues } from "../schema";
+
 type Props = {
   className?: string;
-  value: number;
-  onChange(newValue: number): void;
 };
 
-export default function Slider({ value, className = "", onChange }: Props) {
+export default function Slider({ className = "" }: Props) {
+  const { register } = useFormContext<FormValues>();
   return (
     <div className={`${className} select-none`}>
       <input
         className="slider"
-        onChange={(e) => onChange(Number(e.target.value))}
+        {...register("liquidPercentage")}
         min={0}
         max={100}
         type="range"
-        value={value}
       />
     </div>
   );
