@@ -4,6 +4,7 @@ import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
+import { Selector } from "components/Selector";
 import {
   FormContainer,
   GroupContainer,
@@ -15,7 +16,8 @@ import {
 } from "components/admin";
 import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
-import SDGSelector from "./SDGSelector";
+import { unsdgs } from "constants/unsdgs";
+// import SDGSelector from "./SDGSelector";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
@@ -54,7 +56,11 @@ export default function Form() {
         classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
       />
       <Label className="-mb-4">SDG#</Label>
-      <SDGSelector />
+      <Selector<UV, "sdgs", number, true>
+        multiple
+        name="sdgs"
+        options={sdgOptions}
+      />
       <TextPrim<UV> name="name" label="Charity Name" />
       <TextPrim<UV> name="registration_number" label="Registration number" />
       <TextPrim<UV> name="street_address" label="Street address" />
@@ -120,3 +126,8 @@ export default function Form() {
     </FormContainer>
   );
 }
+
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({
+  value: +key,
+  label: `${key} - ${title}`,
+}));

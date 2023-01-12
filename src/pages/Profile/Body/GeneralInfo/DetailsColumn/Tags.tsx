@@ -14,9 +14,9 @@ export default function Tags() {
         </Tag>
       )}
       <Tag>Registered Non-Profit</Tag>
-      {profile.categories.sdgs.map((unsdg_num) => (
-        <Tag key={unsdg_num}>
-          SDG #{unsdg_num} : {unsdgs[unsdg_num].title}
+      {profile.categories.sdgs.map((s) => (
+        <Tag key={s.value}>
+          SDG #{s.value} : {s.label}
         </Tag>
       ))}
     </div>

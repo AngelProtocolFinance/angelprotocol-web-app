@@ -4,10 +4,10 @@ import { Endowment } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
+import { OptionType } from "components/Selector";
 import Tooltip from "components/Tooltip";
 import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
 
 export default function Card({
   name,
@@ -64,7 +64,7 @@ export default function Card({
             {!isEmpty(sdgs) && (
               <div className="flex text-3xs font-bold uppercase gap-1">
                 {sdgs.map((s) => (
-                  <SDG num={s} key={s} />
+                  <SDG sdg={s} key={s.value} />
                 ))}
               </div>
             )}
@@ -75,16 +75,16 @@ export default function Card({
   );
 }
 
-function SDG({ num }: { num: UNSDG_NUMS }) {
+function SDG<T extends UNSDG_NUMS>({ sdg }: { sdg: OptionType<T> }) {
   const ref = useRef<HTMLDivElement>(null);
   return (
     <>
-      <Tooltip anchorRef={ref} content={unsdgs[num].title} />
+      <Tooltip anchorRef={ref} content={sdg.label} />
       <div
         ref={ref}
         className="flex items-center bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 h-4 px-1 py-1 border border-gray-l2 dark:border-bluegray rounded-lg"
       >
-        SDG #{num}
+        SDG #{sdg.value}
       </div>
     </>
   );

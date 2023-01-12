@@ -18,6 +18,7 @@ import {
 } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
+import { OptionType } from "components/Selector";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };
@@ -262,7 +263,7 @@ export type ProfileWithSettings = Omit<ProfileUpdate, "country_of_origin"> &
   Pick<EndowmentSettingsPayload, "name"> & {
     //replace categories field with flat sdgNum field
     country: CountryOption;
-    sdg: UNSDG_NUMS;
+    sdgs: OptionType<UNSDG_NUMS>[];
     image: ImgLink;
     logo: ImgLink;
   };

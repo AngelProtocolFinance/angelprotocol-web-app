@@ -71,7 +71,7 @@ export default function useEditProfile() {
       //TODO: add logo upload
 
       const accountContract = new Account(wallet);
-      const { sdg, name, image, logo, country, ...profilePayload } = data;
+      const { sdgs, name, image, logo, country, ...profilePayload } = data;
       const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
         //don't pass just diff here, old value should be included for null will be set if it's not present in payload
         cleanObject({
@@ -86,7 +86,7 @@ export default function useEditProfile() {
           name,
           image: bannerUrl,
           logo: logoUrl,
-          categories: { sdgs: [sdg], general: [] },
+          categories: { sdgs: sdgs, general: [] },
         })
       );
 

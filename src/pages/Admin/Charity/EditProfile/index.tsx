@@ -47,7 +47,7 @@ function FormWithContext(props: ProfileResponse & { id: number }) {
     name: props.name,
     image: props.image || "",
     logo: props.logo || "",
-    sdg: props.categories.sdgs[0] || 0,
+    sdgs: props.categories.sdgs || 0,
   };
 
   const initial: ProfileWithSettings = {
