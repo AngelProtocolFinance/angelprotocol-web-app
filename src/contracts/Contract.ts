@@ -93,6 +93,18 @@ export default class Contract {
     return validateTransactionSuccess(result, this.wallet!.chain);
   }
 
+  async sign({ msgs, fee }: TxOptions) {
+    this.verifyWallet();
+    const { chain_id, rpc_url } = this.wallet!.chain;
+    const client = await getKeplrClient(
+      this.wallet?.providerId!,
+      chain_id,
+      rpc_url
+    );
+    const result = await client.sign(this.walletAddress, msgs, fee, "");
+    return result;
+  }
+
   createExecuteContractMsg(
     to: string,
     msg: object,
