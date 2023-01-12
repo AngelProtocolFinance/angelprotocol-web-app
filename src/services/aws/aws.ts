@@ -18,8 +18,7 @@ import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
-const getProfileQuery = (endowId: number) =>
-  `/v1/profile/${network}/endowment/${endowId}`;
+const PROFILE_QUERY = `/v1/profile/${network}/endowment`;
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/v1/profile/${network}/user/${walletAddr}`;
@@ -76,14 +75,14 @@ export const aws = createApi({
     }),
     profile: builder.query<ProfileResponse, number>({
       providesTags: [{ type: "profile" }],
-      query: (endowId) => getProfileQuery(endowId),
+      query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
     updateProfile: builder.mutation<ProfileResponse, ProfileUpdate>({
       invalidatesTags: [{ type: "profile" }],
       query: (profileUpdate) => {
         return {
-          url: getProfileQuery(profileUpdate.id),
-          method: "POST",
+          url: PROFILE_QUERY,
+          method: "PUT",
           body: profileUpdate,
         };
       },
@@ -92,7 +91,7 @@ export const aws = createApi({
       providesTags: [{ type: "endowments" }, { type: "profile" }],
       async queryFn(endowId, _api, _opts, baseQuery) {
         const [{ data: profile }, endow] = await Promise.all([
-          baseQuery(getProfileQuery(endowId)),
+          baseQuery(`${PROFILE_QUERY}/${endowId}`),
           queryContract("accEndowment", contracts.accounts, { id: endowId }),
         ]);
 
