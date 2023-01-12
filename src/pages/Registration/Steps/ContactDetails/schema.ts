@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "components/Selector";
+import { OptionType } from "components/SelectorFormField";
 import { requiredString } from "schemas/string";
 
 type Key = keyof FormValues;

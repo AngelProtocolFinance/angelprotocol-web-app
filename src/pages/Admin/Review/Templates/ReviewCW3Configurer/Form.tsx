@@ -1,5 +1,5 @@
 import { CW3ConfigValues, FormReviewCW3Config } from "pages/Admin/types";
-import Checkbox from "components/Checkbox";
+import CheckboxFormField from "components/CheckboxFormField";
 import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
 import useCreateProposal from "./useCreateProposal";
 
@@ -17,7 +17,7 @@ export default function Form() {
         name="duration"
         required
       />
-      <Checkbox<CV>
+      <CheckboxFormField<CV>
         name="require_execution"
         classes={{
           container:
@@ -25,7 +25,7 @@ export default function Form() {
         }}
       >
         Execution required
-      </Checkbox>
+      </CheckboxFormField>
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Submit
       </Submitter>
