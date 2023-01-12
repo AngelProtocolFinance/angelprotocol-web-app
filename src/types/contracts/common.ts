@@ -36,7 +36,7 @@ export type EmbeddedBankMsg = {
  * ADR-36 requirements aren't fully specified for implementation
  * https://docs.keplr.app/api/#sign-amino
  */
-export type EmbeddedSignMsg = {
+export type MsgSignData = {
   readonly type: "sign/MsgSignData";
   readonly value: {
     signer: string; // juno1fh..fdh
