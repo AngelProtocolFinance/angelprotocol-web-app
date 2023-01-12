@@ -195,7 +195,7 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    endowInfo: builder.query<EndowmentDetails, number>({
+    endowDetails: builder.query<EndowmentDetails, number>({
       providesTags: [{ type: "custom", id: customTags.proposalDetails }],
       async queryFn(id) {
         const data = await queryContract("accEndowment", contracts.accounts, {
@@ -211,5 +211,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
-  useEndowInfoQuery,
+  useEndowDetailsQuery,
 } = customApi;

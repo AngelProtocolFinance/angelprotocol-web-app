@@ -1,15 +1,15 @@
 import { useParams } from "react-router-dom";
 import banner from "assets/images/hero.png";
+import { useEndowInfoQuery } from "services/aws/aws";
 import Seo from "components/Seo";
 import { QueryLoader } from "components/admin";
-import useEndowInfo from "hooks/useEndowInfo";
 import { idParamToNum } from "helpers";
 import Steps from "./Steps";
 
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowInfo(numId);
+  const queryState = useEndowInfoQuery(numId, { skip: numId === 0 });
 
   return (
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useEndowInfo from "hooks/useEndowInfo";
+import { useEndowInfoQuery } from "services/aws/aws";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
@@ -10,7 +10,9 @@ import Skeleton from "./Skeleton";
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowInfo(numId);
+  const { isLoading, isError, data } = useEndowInfoQuery(numId, {
+    skip: numId === 0,
+  });
 
   if (isLoading) {
     return <Skeleton />;
