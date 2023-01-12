@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { EndowmentInfo } from "services/types";
 import {
   Endowment,
   EndowmentBookmark,
@@ -6,8 +7,11 @@ import {
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
+import { ProfileResponse } from "types/contracts";
 import { NetworkType } from "types/lists";
+import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
+import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
@@ -27,7 +31,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "profile", "endowments"],
+  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowments"],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -40,8 +44,8 @@ export const aws = createApi({
         return { url: `/v2/endowments/${network}`, params };
       },
     }),
-    profile: builder.query<WalletProfile, string>({
-      providesTags: [{ type: "profile" }],
+    walletProfile: builder.query<WalletProfile, string>({
+      providesTags: [{ type: "walletProfile" }],
       query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
     }),
     toggleBookmark: builder.mutation<
@@ -58,13 +62,32 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
+    profile: builder.query<ProfileResponse, number>({
+      providesTags: [{ type: "profile" }],
+      query: (endowId) => getProfileQuery(endowId),
+    }),
+    endowInfo: builder.query<EndowmentInfo, number>({
+      providesTags: [{ type: "endowments" }, { type: "profile" }],
+      async queryFn(endowId, _api, _opts, baseQuery) {
+        const [{ data: profile }, endow] = await Promise.all([
+          baseQuery(getProfileQuery(endowId)),
+          queryContract("accEndowment", contracts.accounts, { id: endowId }),
+        ]);
+
+        return {
+          data: { ...(profile as ProfileResponse), ...endow, id: endowId },
+        };
+      },
+    }),
   }),
 });
 
 export const {
-  useProfileQuery,
+  useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentsQuery,
+  useProfileQuery,
+  useEndowInfoQuery,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },
@@ -74,3 +97,6 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
+
+const getProfileQuery = (endowId: number) =>
+  `/v1/profile/${network}/endowment/${endowId}`;

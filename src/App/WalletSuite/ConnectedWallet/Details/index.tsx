@@ -1,7 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useWalletProfileQuery } from "services/aws/aws";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import LoaderRing from "components/LoaderRing";
 import { logger } from "helpers";
@@ -11,7 +11,6 @@ import Favourites from "./Favourites";
 import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
 import WalletDetails from "./WalletDetails";
-import useIsMember from "./useIsMember";
 
 export default function Details(props: WalletState) {
   const {
@@ -20,9 +19,7 @@ export default function Details(props: WalletState) {
     isFetching,
     isError,
     error,
-  } = useProfileQuery(props.address);
-
-  const isMemberResult = useIsMember();
+  } = useWalletProfileQuery(props.address);
 
   useEffect(() => {
     if (!isLoading && !isFetching && isError) {
@@ -44,13 +41,7 @@ export default function Details(props: WalletState) {
         return (
           <>
             <MobileTitle className="sm:hidden" onClose={close} />
-
-            {(isMemberResult.isApMember || isMemberResult.isReviewMember) && (
-              <AdminLinks
-                isApMember={isMemberResult.isApMember}
-                isReviewMember={isMemberResult.isReviewMember}
-              />
-            )}
+            <AdminLinks {...props} />
 
             {!!profile?.admin?.length && (
               <MyEndowments endowments={profile.admin} />
