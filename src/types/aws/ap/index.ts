@@ -30,7 +30,7 @@ export interface ProfileResponse {
   annual_revenue?: string;
   charity_navigator_rating?: string;
   active_in_countries?: string[];
-  hq?: string;
+  hq_city?: string;
   tagline?: string;
 }
 

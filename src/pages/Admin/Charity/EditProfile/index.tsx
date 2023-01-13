@@ -59,7 +59,7 @@ function FormWithContext(
     active_in_countries: props.active_in_countries || [],
     annual_revenue: props.annual_revenue || "",
     average_annual_budget: props.average_annual_budget || "",
-    hq: props.hq || "",
+    hq_city: props.hq_city || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
     kyc_donors_only: props.endowment.kyc_donors_only,
     number_of_employees: props.number_of_employees || 1,
