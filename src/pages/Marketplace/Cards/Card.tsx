@@ -16,7 +16,7 @@ export default function Card({
   id,
   endow_type,
   categories: { sdgs },
-  hq_country: hq_country,
+  hq_country,
   kyc_donors_only,
 }: Endowment) {
   return (
