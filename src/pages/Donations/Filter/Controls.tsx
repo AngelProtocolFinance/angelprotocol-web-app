@@ -3,18 +3,13 @@ import { FilterFormValues } from "./types";
 
 export default function Controls({ classes = "" }) {
   const {
-    reset,
     formState: { isDirty },
   } = useFormContext<FilterFormValues>();
   return (
     <div
       className={`${classes} flex justify-end items-center gap-4 bg-orange-l6 dark:bg-blue-d7 border-b-[1px] border-gray-l2 dark:border-bluegray py-3 px-5`}
     >
-      <button
-        type="button"
-        className="text-orange underline"
-        onClick={() => reset()}
-      >
+      <button type="reset" className="text-orange underline">
         Reset filters
       </button>
       <button

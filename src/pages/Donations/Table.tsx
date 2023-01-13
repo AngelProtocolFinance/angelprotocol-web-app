@@ -99,7 +99,8 @@ export default function Table(props: { donations: Donation[] }) {
               <>{chainName}</>
               <span className="font-body text-sm">{symbol}</span>
               <>{humanize(amount, 3)}</>
-              <>{`$${humanize(usdValue, 2)}`}</>
+              {/* <>{`$${humanize(usdValue, 2)}`}</>  usd value has error*/}
+              <>--</>
               <ExtLink
                 href={getTxUrl(chainId, hash)}
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"

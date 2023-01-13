@@ -83,7 +83,8 @@ export default function MobileTable(props: { donations: Donation[] }) {
                     {humanize(amount, 3)}
                   </Row>
                   <Row className="bg-white dark:bg-blue-d6" title="USD Value">
-                    {`$${humanize(usdValue, 2)}`}
+                    {/* {`$${humanize(usdValue, 2)}`} usd value has error */}
+                    <>--</>
                   </Row>
                   <Row className="bg-orange-l6 dark:bg-blue-d7" title="TX Hash">
                     {maskAddress(hash)}

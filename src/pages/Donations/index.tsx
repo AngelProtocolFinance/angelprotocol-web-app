@@ -22,30 +22,28 @@ export default function Donations() {
 
   return (
     <div className="relative padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
-      <div className="flex lg:justify-between lg:items-center justify-center mt-10">
-        <h1 className="text-3xl font-bold">My Donations</h1>
-      </div>
-      {!isLoading && (
-        <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
-          <div className="sm:col-span-2 sm:mr-4">
-            <label htmlFor="search" className="relative">
-              <Icon
-                type="Search"
-                size={24}
-                className="absolute top-0 ml-3 text-gray-d1"
-              />
-              <input
-                className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6 rounded-md"
-                type="text"
-                placeholder="Search by recipient name, network or currency..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </label>
-          </div>
-          <Filter setFilterValues={setFilterValues} />
+      <h1 className="text-3xl font-bold">My Donations</h1>
+
+      <div className="grid grid-cols-2">
+        <div className="">
+          <label htmlFor="search" className="relative">
+            <Icon
+              type="Search"
+              size={24}
+              className="absolute top-0 ml-3 text-gray-d1"
+            />
+            <input
+              className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full dark:bg-blue-d6 rounded-md"
+              type="text"
+              placeholder="Search by recipient name, network or currency..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </label>
         </div>
-      )}
+        <Filter setFilterValues={setFilterValues} />
+      </div>
+
       <QueryLoader
         queryState={queryState}
         messages={{
