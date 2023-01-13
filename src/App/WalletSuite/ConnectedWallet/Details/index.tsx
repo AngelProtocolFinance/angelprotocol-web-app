@@ -24,26 +24,20 @@ export default function Details(props: WalletState) {
               <Address value={props.address} />
               <ChainSelector {...props} />
             </div>
-            <MyDonations address={props.address} />
+            <div className="flex items-center p-4 border-b border-gray-l2 dark:border-bluegray">
+              <Link
+                to={`${appRoutes.donations}/${props.address}`}
+                className="font-heading font-bold text-sm uppercase hover:text-orange"
+              >
+                My Donations
+              </Link>
+            </div>
             <Favourites {...props} />
             <DisconnectBtn />
           </>
         );
       }}
     </Popover.Panel>
-  );
-}
-
-function MyDonations({ address }: { address: string }) {
-  return (
-    <div className="flex items-center p-4 border-b border-gray-l2 dark:border-bluegray">
-      <Link
-        to={`${appRoutes.donations}/${address}`}
-        className="font-heading font-bold text-sm uppercase hover:text-orange"
-      >
-        My Donations
-      </Link>
-    </div>
   );
 }
 
