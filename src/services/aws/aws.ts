@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   Endowment,
-  EndowmentBookmark,
   EndowmentInfo,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
