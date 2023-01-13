@@ -271,10 +271,10 @@ export type ProfileUpdate = Omit<
 
 export type ProfileWithSettings = Omit<
   ProfileUpdate,
-  "country_of_origin" | "image" | "logo"
+  "hq_country" | "image" | "logo"
 > &
   Pick<EndowmentSettingsPayload, "name"> & {
-    country_of_origin: CountryOption;
+    hq_country: CountryOption;
     image: ImgLink;
     logo: ImgLink;
   };

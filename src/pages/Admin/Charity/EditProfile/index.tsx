@@ -43,7 +43,7 @@ function FormWithContext(
     url: props.url || "",
     registration_number: props.registration_number || "",
     street_address: props.street_address || "",
-    country_of_origin: props.country_of_origin || "",
+    hq_country: props.hq_country || "",
     contact_email: props.contact_email || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_twitter: props.social_media_urls.twitter || "",
@@ -68,8 +68,8 @@ function FormWithContext(
 
   const initial: ProfileWithSettings = {
     ...flatInitial,
-    country_of_origin: {
-      name: props.country_of_origin ?? "",
+    hq_country: {
+      name: props.hq_country ?? "",
       flag: "" /** let country selector determine flag since not saved in db */,
     },
     image: { name: "", publicUrl: props.image, preview: props.image },

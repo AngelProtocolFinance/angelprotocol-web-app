@@ -33,7 +33,7 @@ export default function useEditProfile() {
       //TODO: refactor to diff nested objects
       const flatData: ProfileUpdate = {
         ...data,
-        country_of_origin: data.country_of_origin.name,
+        hq_country: data.hq_country.name,
         image: bannerUrl,
         logo: logoUrl,
       };

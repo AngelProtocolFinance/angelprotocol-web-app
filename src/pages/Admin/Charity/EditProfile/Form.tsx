@@ -58,9 +58,9 @@ export default function Form() {
       <Label className="-mb-4" required>
         Country
       </Label>
-      <CountrySelector<UV, "country_of_origin">
+      <CountrySelector<UV, "hq_country">
         placeholder="Select a country"
-        fieldName="country_of_origin"
+        fieldName="hq_country"
         classes={{
           container:
             "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",

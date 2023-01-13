@@ -31,7 +31,7 @@ const shape: SchemaShape<ProfileFormValues> = {
   logo: fileObj,
   url: url.required("required"),
   // registration_number: no need to validate,
-  country_of_origin: Yup.object().shape<SchemaShape<CountryOption>>({
+  hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
   contact_email: Yup.string().email("invalid email"),

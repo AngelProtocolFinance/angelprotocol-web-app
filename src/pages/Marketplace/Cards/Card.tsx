@@ -16,7 +16,7 @@ export default function Card({
   id,
   endow_type,
   categories: { sdgs },
-  country_of_origin,
+  hq_country: hq_country,
   kyc_donors_only,
 }: Endowment) {
   return (
@@ -44,7 +44,7 @@ export default function Card({
         <div className="flex flex-col p-3 pb-4 gap-3">
           <h3 className="font-bold">{name}</h3>
           <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-            <span className="font-semibold">HQ:</span> {country_of_origin}
+            <span className="font-semibold">HQ:</span> {hq_country}
           </p>
           {false && (
             <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">

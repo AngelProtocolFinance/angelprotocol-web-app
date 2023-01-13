@@ -21,7 +21,7 @@ export interface ProfileResponse {
   image: string;
   url?: string;
   registration_number?: string;
-  country_of_origin?: string;
+  hq_country?: string;
   street_address?: string;
   contact_email?: string;
   social_media_urls: SocialMedialUrls;
