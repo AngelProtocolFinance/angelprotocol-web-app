@@ -50,12 +50,12 @@ export default function Body() {
               ac, ultricies.
             </p> */}
           </div>
-          {(profile.hq_country || profile.url) && (
+          {(profile.hq.country || profile.url) && (
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-              {profile.hq_country && (
+              {profile.hq.country && (
                 <span className="flex items-center gap-2 uppercase">
                   <Icon type="MapPin" className="h-6 w-6 text-orange" />
-                  {profile.hq_country}
+                  {profile.hq.country}
                 </span>
               )}
               {profile.url && (

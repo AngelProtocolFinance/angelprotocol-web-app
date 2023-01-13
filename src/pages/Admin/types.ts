@@ -260,10 +260,12 @@ export type RegistrarOwnerValues = ProposalBase &
 // needs to be flatted out for use with CloudSearch
 export type ProfileUpdate = Omit<
   Endowment,
-  "endow_type" | "categories" | "tier" | "status" | "social_media_urls"
+  "endow_type" | "categories" | "tier" | "status" | "social_media_urls" | "hq"
 > & {
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
+  hq_country?: string;
+  hq_city?: string;
   social_media_url_facebook?: string;
   social_media_url_linkedin?: string;
   social_media_url_twitter?: string;

@@ -21,7 +21,10 @@ export interface ProfileResponse {
   image: string;
   url?: string;
   registration_number?: string;
-  hq_country?: string;
+  hq: {
+    country?: string;
+    city?: string;
+  };
   street_address?: string;
   contact_email?: string;
   social_media_urls: SocialMedialUrls;
@@ -30,7 +33,6 @@ export interface ProfileResponse {
   annual_revenue?: string;
   charity_navigator_rating?: string;
   active_in_countries?: string[];
-  hq_city?: string;
   tagline?: string;
 }
 

@@ -43,7 +43,8 @@ function FormWithContext(
     url: props.url || "",
     registration_number: props.registration_number || "",
     street_address: props.street_address || "",
-    hq_country: props.hq_country || "",
+    hq_country: props.hq.country || "",
+    hq_city: props.hq.city || "",
     contact_email: props.contact_email || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_twitter: props.social_media_urls.twitter || "",
@@ -59,7 +60,6 @@ function FormWithContext(
     active_in_countries: props.active_in_countries || [],
     annual_revenue: props.annual_revenue || "",
     average_annual_budget: props.average_annual_budget || "",
-    hq_city: props.hq_city || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
     kyc_donors_only: props.endowment.kyc_donors_only,
     number_of_employees: props.number_of_employees || 1,
@@ -69,7 +69,7 @@ function FormWithContext(
   const initial: ProfileWithSettings = {
     ...flatInitial,
     hq_country: {
-      name: props.hq_country ?? "",
+      name: flatInitial.hq_country,
       flag: "" /** let country selector determine flag since not saved in db */,
     },
     image: { name: "", publicUrl: props.image, preview: props.image },
