@@ -1,3 +1,4 @@
+import { PubKey } from "@cosmjs/launchpad";
 import { Coin } from "@cosmjs/proto-signing";
 import { UNSDG_NUMS } from "types/lists";
 
@@ -37,11 +38,23 @@ export type EmbeddedBankMsg = {
  * https://docs.keplr.app/api/#sign-amino
  */
 export type MsgSignData = {
-  readonly type: "sign/MsgSignData";
-  readonly value: {
-    signer: string; // juno1fh..fdh
-    data: string; // base64
-  };
+  msg: [
+    {
+      readonly type: "sign/MsgSignData";
+      readonly value: {
+        signer: string; // wallet address
+        data: string; // base64 string
+      };
+    }
+  ];
+  readonly fee: { gas: "0"; amount: [] };
+  readonly memo: "";
+  signatures: [
+    {
+      pub_key: PubKey;
+      signature: string; // lrunrkF69b...jWFgEA==
+    }
+  ];
 };
 
 export type Vote = "yes" | "no";
@@ -70,7 +83,7 @@ export type EndowmentTierNum = 1 | 2 | 3;
 
 export type Categories = {
   sdgs: UNSDG_NUMS[]; // u8 maps one of the 17 UN SDG
-  general: number[]; //??
+  general: string[]; //??
 };
 
 export type SocialMedialUrls = {

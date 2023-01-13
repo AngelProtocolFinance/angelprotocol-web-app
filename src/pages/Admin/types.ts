@@ -1,7 +1,7 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { ImgLink } from "components/ImgEditor/types";
 import { CountryOption } from "services/types";
-import { EndowmentProposal, ProfileUpdate } from "types/aws";
+import { Endowment, EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
@@ -257,27 +257,31 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type ProfileWithSettings = Omit<ProfileUpdate, "country_of_origin"> &
+// needs to be flatted out for use with CloudSearch
+export type ProfileUpdate = Omit<
+  Endowment,
+  "endow_type" | "categories" | "tier" | "status" | "social_media_urls"
+> & {
+  categories_general: string[];
+  categories_sdgs: UNSDG_NUMS[];
+  social_media_url_facebook?: string;
+  social_media_url_linkedin?: string;
+  social_media_url_twitter?: string;
+};
+
+export type ProfileWithSettings = Omit<
+  ProfileUpdate,
+  "country_of_origin" | "image" | "logo"
+> &
   Pick<EndowmentSettingsPayload, "name"> & {
-    //replace categories field with flat sdgNum field
-    country: CountryOption;
-    sdg: UNSDG_NUMS;
+    country_of_origin: CountryOption;
     image: ImgLink;
     logo: ImgLink;
   };
 
-export type FlatProfileWithSettings = Omit<
-  ProfileWithSettings,
-  "image" | "logo" | "country"
-> & {
-  image: string;
-  logo: string;
-  country: string;
-};
-
 export type ProfileFormValues = ProposalBase &
   ProfileWithSettings & {
-    initial: FlatProfileWithSettings;
+    initial: ProfileUpdate;
   };
 
 export type SortDirection = "asc" | "desc";

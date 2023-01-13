@@ -61,9 +61,9 @@ export default function Form() {
       <Label className="-mb-4" required>
         Country
       </Label>
-      <CountrySelector<UV, "country">
+      <CountrySelector<UV, "country_of_origin">
         placeholder="Select a country"
-        fieldName="country"
+        fieldName="country_of_origin"
         classes={{
           container:
             "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
@@ -92,17 +92,17 @@ export default function Form() {
           placeholder="https://website.org"
         />
         <TextSec<UV>
-          name="facebook"
+          name="social_media_url_facebook"
           label="Facebook"
           placeholder="https://facebook.com/"
         />
         <TextSec<UV>
-          name="twitter"
+          name="social_media_url_twitter"
           label="Twitter"
           placeholder="https://twitter.com/"
         />
         <TextSec<UV>
-          name="linkedin"
+          name="social_media_url_linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/"
         />

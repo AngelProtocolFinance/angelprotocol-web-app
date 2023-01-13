@@ -6,9 +6,9 @@ import {
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   ProfileResponse,
-  ProfileUpdate,
   WalletProfile,
 } from "types/aws";
+import { MsgSignData } from "types/contracts";
 import { NetworkType } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
@@ -77,13 +77,13 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
-    updateProfile: builder.mutation<ProfileResponse, ProfileUpdate>({
+    updateProfile: builder.mutation<ProfileResponse, MsgSignData>({
       invalidatesTags: [{ type: "profile" }],
-      query: (profileUpdate) => {
+      query: (msgSignData) => {
         return {
           url: PROFILE_QUERY,
           method: "PUT",
-          body: profileUpdate,
+          body: msgSignData,
         };
       },
     }),

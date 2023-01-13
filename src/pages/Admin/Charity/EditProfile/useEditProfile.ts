@@ -1,33 +1,21 @@
 import { useFormContext } from "react-hook-form";
-import {
-  EndowmentProfileUpdateMeta,
-  FlatProfileWithSettings,
-} from "pages/Admin/types";
-import { ProfileFormValues } from "pages/Admin/types";
+import { ProfileFormValues, ProfileUpdate } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateProfileMutation } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import {
-  cleanObject,
-  genDiffMeta,
-  getPayloadDiff,
-  getTagPayloads,
-} from "helpers/admin";
+import Contract from "contracts/Contract";
+import { cleanObject, getPayloadDiff } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
-import { appRoutes } from "constants/routes";
 
 // import optimizeImage from "./optimizeImage";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 
 export default function useEditProfile() {
-  const { endowmentId, cw3, propMeta } = useAdminResources();
+  const { endowmentId } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -35,7 +23,6 @@ export default function useEditProfile() {
 
   const { wallet } = useGetWallet();
   const { handleError } = useErrorContext();
-  const sendTx = useCosmosTxSender();
 
   const [update] = useUpdateProfileMutation();
 
@@ -49,9 +36,9 @@ export default function useEditProfile() {
       const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
-      const flatData: FlatProfileWithSettings = {
+      const flatData: ProfileUpdate = {
         ...data,
-        country: data.country.name,
+        country_of_origin: data.country_of_origin.name,
         image: bannerUrl,
         logo: logoUrl,
       };
@@ -64,63 +51,25 @@ export default function useEditProfile() {
         diff.overview = PLACEHOLDER_OVERVIEW;
       }
 
-      const diffEntries = Object.entries(
-        diff
-      ) as ObjectEntries<FlatProfileWithSettings>;
+      const diffEntries = Object.entries(diff) as ObjectEntries<ProfileUpdate>;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }
 
       //TODO: add logo upload
 
-      const accountContract = new Account(wallet);
-      const { sdg, name, image, logo, country, ...profilePayload } = data;
-      const profileUpdateMsg = update(
-        //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-        cleanObject({
-          ...profilePayload,
-          country_of_origin: country.name,
-        })
+      const contract = new Contract(wallet);
+      //don't pass just diff here, old value should be included for null will be set if it's not present in payload
+
+      const msgSignData = await contract.createMsgSignData(
+        cleanObject({ ...data })
       );
 
-      const settingsUpdateMsg = accountContract.createEmbeddedUpdateSettingsMsg(
-        cleanObject({
-          id: profilePayload.id,
-          name,
-          image: bannerUrl,
-          logo: logoUrl,
-          categories: { sdgs: [sdg], general: [] },
-        })
-      );
+      const res = await update(msgSignData);
 
-      const profileUpdateMeta: EndowmentProfileUpdateMeta = {
-        type: "acc_profile",
-        data: genDiffMeta(diffEntries, initial),
-      };
-
-      const adminContract = new CW3(wallet, cw3);
-      const proposalMsg = adminContract.createProposalMsg(
-        title,
-        description,
-        [profileUpdateMsg, settingsUpdateMsg],
-        JSON.stringify(profileUpdateMeta)
-      );
-
-      const { successMeta: defaultMeta, willExecute, ...meta } = propMeta;
-      await sendTx({
-        msgs: [proposalMsg],
-        ...meta,
-        successMeta: willExecute
-          ? {
-              message: "Profile has been updated!",
-              link: {
-                url: `${appRoutes.profile}/${endowmentId}`,
-                description: "checkout new changes",
-              },
-            }
-          : defaultMeta,
-        tagPayloads: getTagPayloads(willExecute && "acc_profile"),
-      });
+      if ("error" in res) {
+        throw new Error("Failed to update profile");
+      }
     } catch (err) {
       handleError(err);
     }

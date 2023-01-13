@@ -12,6 +12,7 @@ import {
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg, MsgSignData } from "types/contracts";
+import { Dwindow } from "types/ethereum";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
@@ -93,16 +94,36 @@ export default class Contract {
     return validateTransactionSuccess(result, this.wallet!.chain);
   }
 
-  async sign({ msgs, fee }: TxOptions) {
+  async signArbitrary(data: object) {
     this.verifyWallet();
-    const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
-      this.wallet?.providerId!,
-      chain_id,
-      rpc_url
+    const client = (window as Dwindow).keplr!;
+
+    const base64Data = toBase64(data);
+    const signature = await client.signArbitrary(
+      "",
+      this.walletAddress,
+      base64Data
     );
-    const result = await client.sign(this.walletAddress, msgs, fee, "");
-    return result;
+
+    return { ...signature, data: base64Data };
+  }
+
+  async createMsgSignData(arbData: object): Promise<MsgSignData> {
+    const { data, pub_key, signature } = await this.signArbitrary(arbData);
+    return {
+      msg: [
+        {
+          type: "sign/MsgSignData",
+          value: {
+            signer: this.walletAddress,
+            data,
+          },
+        },
+      ],
+      fee: { gas: "0", amount: [] },
+      memo: "",
+      signatures: [{ pub_key, signature }],
+    };
   }
 
   createExecuteContractMsg(
@@ -164,16 +185,6 @@ export default class Contract {
           to_address: to,
           amount: funds,
         },
-      },
-    };
-  }
-
-  createSignMsg(data: object): MsgSignData {
-    return {
-      type: "sign/MsgSignData",
-      value: {
-        signer: this.walletAddress,
-        data: toBase64(data),
       },
     };
   }

@@ -6,7 +6,6 @@ import {
   EndowmentStatus,
   EndowmentTier,
   EndowmentType,
-  SocialMedialUrls,
 } from "./common";
 import { CW20 } from "./cw20";
 
