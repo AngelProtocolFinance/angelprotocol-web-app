@@ -1,20 +1,11 @@
-import { useEffect } from "react";
 import { useGetter } from "store/accessors";
-
-const CONTAINER_ID = "steps";
 
 export default function Progress({ classes = "" }: { classes?: string }) {
   const step = useGetter((state) => state.donation.step);
 
-  useEffect(() => {
-    const element = document.getElementById(CONTAINER_ID);
-    element?.scrollIntoView({ behavior: "smooth" });
-  }, [step]);
-
   return (
     <div
       className={`${classes} text-sm mb-10 grid grid-cols-3 justify-items-center gap-2`}
-      id={CONTAINER_ID}
     >
       <p className="text-center">Donation method</p>
       <p className="text-center">Donor details</p>
