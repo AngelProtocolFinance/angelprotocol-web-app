@@ -1,14 +1,14 @@
 import { CW3ConfigValues, FormCW3Config } from "../../../types";
 import Checkbox from "components/Checkbox";
 import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
-import usePropose from "./usePropose";
+import useCreateProposal from "./useCreateProposal";
 
 type CV = CW3ConfigValues<FormCW3Config>;
 
 export default function Form() {
-  const { configureCW3, isSubmitDisabled, isTime } = usePropose();
+  const { createProposal, isSubmitDisabled, isTime } = useCreateProposal();
   return (
-    <FormContainer onSubmit={configureCW3}>
+    <FormContainer onSubmit={createProposal}>
       <TextPrim<CV> label="Proposal title" name="title" required />
       <TextArea<CV> label="Proposal description" name="description" required />
       <TextPrim<CV> label="Pass threshold ( % )" name="threshold" required />

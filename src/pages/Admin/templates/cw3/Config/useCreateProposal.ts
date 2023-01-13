@@ -26,7 +26,7 @@ export default function usePropose() {
   const { showModal } = useModalContext();
   const sendTx = useCosmosTxSender();
 
-  async function configureCW3({
+  async function createProposal({
     title,
     description,
     initial,
@@ -77,7 +77,7 @@ export default function usePropose() {
 
   return {
     isTime: getValues("isTime"),
-    configureCW3: handleSubmit(configureCW3),
+    createProposal: handleSubmit(createProposal),
     isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }

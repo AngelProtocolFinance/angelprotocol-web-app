@@ -1,11 +1,12 @@
 import { WithoutInstallers } from "./types";
-import { Chain } from "types/aws";
+import { BaseChain, Chain } from "types/aws";
 import tokenLogo from "assets/icons/currencies/token.svg";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
 import keplrIcon from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { chainIDs } from "constants/chains";
+import { EXPECTED_NETWORK_TYPE, IS_TEST } from "constants/env";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {
@@ -24,6 +25,11 @@ export const WALLET_METADATA: {
     installUrl: "https://metamask.io/",
     name: "Metamask",
   },
+  "evm-wc": {
+    logo: metamaskIcon,
+    installUrl: "https://metamask.io/",
+    name: "Metamask",
+  },
   "xdefi-wallet": {
     logo: xdefiIcon,
     installUrl: "https://www.xdefi.io/",
@@ -35,6 +41,11 @@ export const WALLET_METADATA: {
     name: "XDEFI",
   },
   keplr: {
+    logo: keplrIcon,
+    installUrl: "https://www.keplr.app/",
+    name: "Keplr",
+  },
+  "keplr-wc": {
     logo: keplrIcon,
     installUrl: "https://www.keplr.app/",
     name: "Keplr",
@@ -74,3 +85,17 @@ export const placeholderChain: Chain = {
   ],
   type: "placeholder",
 };
+
+export const BNB_WALLET_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [{ chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" }]
+  : [{ chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet" }];
+
+export const EVM_SUPPORTED_CHAINS: BaseChain[] = IS_TEST
+  ? [
+      { chain_id: chainIDs.ethTest, chain_name: "Ethereum Testnet" },
+      { chain_id: chainIDs.binanceTest, chain_name: "BNB Smart Chain Testnet" },
+    ]
+  : [
+      { chain_id: chainIDs.ethMain, chain_name: "Ethereum Mainnet" },
+      // {chain_id: chainIDs.binanceMain, chain_name: "BNB Smart Chain Mainnet"},
+    ];

@@ -5,7 +5,7 @@ import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
-import { useSort } from "hooks/useSort/useSort";
+import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 
