@@ -78,7 +78,7 @@ export const aws = createApi({
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
     updateProfile: builder.mutation<Profile, MsgSignData>({
-      invalidatesTags: [{ type: "profile" }],
+      invalidatesTags: [{ type: "profile" }, { type: "endowments" }],
       query: (msgSignData) => {
         return {
           url: PROFILE_QUERY,
