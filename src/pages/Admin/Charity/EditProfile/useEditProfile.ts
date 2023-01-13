@@ -26,12 +26,7 @@ export default function useEditProfile() {
 
   const [update] = useUpdateProfileMutation();
 
-  const editProfile = async ({
-    title,
-    description,
-    initial,
-    ...data
-  }: ProfileFormValues) => {
+  const editProfile = async ({ initial, ...data }: ProfileFormValues) => {
     try {
       const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing

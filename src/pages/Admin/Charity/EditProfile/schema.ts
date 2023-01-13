@@ -5,7 +5,6 @@ import { CountryOption } from "services/types";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
 import { requiredString, stringByteSchema, url } from "schemas/string";
-import { proposalShape } from "../../constants";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",
@@ -23,7 +22,6 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
 
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<ProfileFormValues> = {
-  ...proposalShape,
   name: stringByteSchema(4, 64),
   overview: stringByteSchema(4, 1024),
   //sdgNum: no need to validate, selected from dropdown with default value

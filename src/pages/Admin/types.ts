@@ -279,10 +279,9 @@ export type ProfileWithSettings = Omit<
     logo: ImgLink;
   };
 
-export type ProfileFormValues = ProposalBase &
-  ProfileWithSettings & {
-    initial: ProfileUpdate;
-  };
+export type ProfileFormValues = ProfileWithSettings & {
+  initial: ProfileUpdate;
+};
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

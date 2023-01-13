@@ -8,7 +8,6 @@ import {
   FormContainer,
   GroupContainer,
   Submitter,
-  TextArea,
   TextPrim,
   TextSec,
   errorStyle,
@@ -33,8 +32,6 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
-      <TextPrim<UV> label="Proposal title" name="title" required />
-      <TextArea<UV> label="Proposal description" name="description" required />
       <Label className="-mb-4" required>
         Banner
       </Label>
