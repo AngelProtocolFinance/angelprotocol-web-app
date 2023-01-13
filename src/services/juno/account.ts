@@ -24,13 +24,6 @@ export const account_api = junoApi.injectEndpoints({
         };
       },
     }),
-    endowmentProfile: builder.query<Result<"accProfile">, Args<"accProfile">>({
-      providesTags: [{ type: "account", id: accountTags.profile }],
-      query: (args) => genQueryPath("accProfile", args, accounts),
-      transformResponse: (res: Res<"accProfile">) => {
-        return res.data;
-      },
-    }),
     balance: builder.query<Result<"accBalance">, Args<"accBalance">>({
       providesTags: [{ type: "account", id: accountTags.balance }],
       query: (args) => genQueryPath("accBalance", args, accounts),
@@ -41,8 +34,7 @@ export const account_api = junoApi.injectEndpoints({
   }),
 });
 
-export const { useEndowmentProfileQuery, useBalanceQuery, useEndowmentsQuery } =
-  account_api;
+export const { useBalanceQuery, useEndowmentsQuery } = account_api;
 
 async function getEndowments(
   limit: 50,

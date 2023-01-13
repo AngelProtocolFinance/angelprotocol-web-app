@@ -1,4 +1,4 @@
-import { useProfileQuery } from "services/aws/aws";
+import { useWalletProfileQuery } from "services/aws/aws";
 import { useConnectedWallet } from "contexts/WalletGuard";
 import { QueryLoader } from "components/admin";
 import Favourite from "./Favourite";
@@ -7,7 +7,7 @@ const MAX_ELEMENTS_TO_DISPLAY = 7;
 
 export default function Favourites() {
   const wallet = useConnectedWallet();
-  const queryState = useProfileQuery(wallet.address);
+  const queryState = useWalletProfileQuery(wallet.address);
 
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">

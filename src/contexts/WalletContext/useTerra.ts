@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { ProviderId, Wallet } from "./types";
 import stationIcon from "assets/icons/wallets/terra-extension.jpg";
-import { isXdefiPrioritized } from "./helpers/assertions";
+import { isXdefiPrioritized } from "./helpers";
 
 const XDEFI_ID = "xdefi-wallet";
 export default function useTerra(): { extensions: Wallet[]; wc: Wallet } {

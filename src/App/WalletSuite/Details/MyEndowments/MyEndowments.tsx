@@ -1,13 +1,12 @@
 import { PropsWithChildren } from "react";
-import { useProfileQuery } from "services/aws/aws";
-import { useEndowmentProfileQuery } from "services/juno/account";
+import { useProfileQuery, useWalletProfileQuery } from "services/aws/aws";
 import { useConnectedWallet } from "contexts/WalletGuard";
 import Logo from "../Logo";
 import Links from "./Links";
 
 export default function MyEndowments() {
   const wallet = useConnectedWallet();
-  const { data, isLoading, isFetching, isError } = useProfileQuery(
+  const { data, isLoading, isFetching, isError } = useWalletProfileQuery(
     wallet.address
   );
 
@@ -46,7 +45,7 @@ const Name = ({ value }: { value: string }) => (
 );
 
 function Portal({ id }: { id: number }) {
-  const { data: profile } = useEndowmentProfileQuery({ id });
+  const { data: profile } = useProfileQuery(id);
   return (
     <div className="grid grid-cols-[auto_1fr] gap-3">
       <Logo src={profile?.logo || ""} className="w-10 h-10" />

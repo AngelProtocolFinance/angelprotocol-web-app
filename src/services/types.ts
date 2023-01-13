@@ -60,6 +60,8 @@ export type Country = {
   };
 };
 
+export type CountryInRegion = Pick<Country, "name"> & { region: string };
+
 export type CountryOption = {
   name: string;
   flag: string;
@@ -68,6 +70,7 @@ export type CountryOption = {
 export type CosmosBalances = { balances: Coin[] };
 
 export type TokenWithBalance = Token & { balance: number; gift?: number };
+export type Regions = { [region: string]: string[] };
 
 /** endowment */
 export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };

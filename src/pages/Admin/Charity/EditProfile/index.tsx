@@ -7,7 +7,7 @@ import {
 } from "pages/Admin/types";
 import { ProfileResponse } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useEndowmentProfileQuery } from "services/juno/account";
+import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -19,7 +19,7 @@ export default function EditProfile() {
     isLoading,
     isFetching,
     isError,
-  } = useEndowmentProfileQuery({ id: endowmentId });
+  } = useProfileQuery(endowmentId);
 
   if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;

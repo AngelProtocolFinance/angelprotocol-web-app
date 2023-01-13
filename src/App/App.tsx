@@ -5,7 +5,7 @@ import WalletContext from "contexts/WalletContext";
 import Seo from "components/Seo";
 import Footer from "./Footer";
 import Header from "./Header";
-import ToastMounter from "./ToastMounter";
+import ToastPortal from "./ToastPortal";
 import Views from "./Views";
 import { chainOptions } from "./chainOptions";
 
@@ -14,7 +14,7 @@ export default function App() {
     <WalletProvider {...chainOptions}>
       <WalletContext>
         <ModalContext>
-          <ToastMounter />
+          <ToastPortal />
           <div className="grid grid-rows-[auto_1fr_auto] bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
             <Seo /> {/* Load all defaults for SEO meta tags */}
             <Header classes="sticky top-0 z-20" />

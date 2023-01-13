@@ -1,6 +1,6 @@
 import { Coin } from "@cosmjs/proto-signing";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { formatUnits } from "ethers/lib/utils";
+import { formatUnits } from "@ethersproject/units";
 import { BalMap } from "./types";
 import { TokenWithBalance } from "services/types";
 import { FetchedChain, Token } from "types/aws";

@@ -1,16 +1,19 @@
 import { Web3Provider } from "@ethersproject/providers";
+import { formatUnits } from "@ethersproject/units";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Wallet, WalletMeta, WalletState } from "./types";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import { useLazyChainQuery } from "services/apes";
-import toPrefixedHex from "contexts/WalletContext/helpers/toPrefixedHex";
 import { getProvider, logger } from "helpers";
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
-import { isXdefiPrioritized } from "./helpers/assertions";
-import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
-import { isEVM } from "./helpers/walletType";
+import { isEVM, toPrefixedHex } from "./helpers";
+import {
+  isXdefiPrioritized,
+  retrieveUserAction,
+  saveUserAction,
+} from "./helpers";
 
 export default function useInjectedWallet(
   meta: WalletMeta & { installUrl: string }
@@ -45,7 +48,7 @@ export default function useInjectedWallet(
       if (prev.status === "connected") {
         return {
           ...prev,
-          chainId: `${parseInt(hexChainId, 16)}`,
+          chainId: formatUnits(hexChainId, 0),
         };
       }
       return prev;

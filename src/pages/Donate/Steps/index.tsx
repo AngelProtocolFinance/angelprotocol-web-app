@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
@@ -32,8 +32,23 @@ export default function Steps(props: DonationRecipient) {
     [showModal]
   );
 
+  const CONTAINER_ID = "__container_id";
+  const prevStep = useRef(state.step);
+  useEffect(() => {
+    /** at first visit, equal so no scrolling happens
+     * on next or back, would be different
+     */
+    if (state.step === prevStep.current) return;
+    const element = document.getElementById(CONTAINER_ID);
+    element?.scrollIntoView();
+    prevStep.current = state.step;
+  }, [state.step]);
+
   return (
-    <div className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20">
+    <div
+      className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20 scroll-mt-6"
+      id={CONTAINER_ID}
+    >
       <Breadcrumbs
         className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
         items={[

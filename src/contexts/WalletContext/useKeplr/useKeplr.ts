@@ -7,7 +7,7 @@ import { Dwindow } from "types/window";
 import icon from "assets/icons/wallets/keplr.png";
 import { chainIds, chains } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import { retrieveUserAction, saveUserAction } from "../helpers/prefActions";
+import { retrieveUserAction, saveUserAction } from "../helpers";
 import { junoTestnet } from "./chain-infos";
 
 const actionKey = `keplr__pref`;

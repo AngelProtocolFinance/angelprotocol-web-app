@@ -5596,7 +5596,6 @@ __metadata:
     "@cosmjs/encoding": ^0.29.0
     "@cosmjs/proto-signing": ^0.29.0
     "@cosmjs/stargate": ^0.29.0
-    "@ethersproject/bignumber": ^5.7.0
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/logger": ^5.7.0
     "@ethersproject/providers": ^5.7.2
@@ -5667,7 +5666,6 @@ __metadata:
     stream-http: ^3.2.0
     typescript: <4.8.0
     url: ^0.11.0
-    util: ^0.12.4
     web-vitals: ^3.0.2
     web3.storage: ^4.3.0
     yup: ^0.32.9
@@ -18751,7 +18749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.0, util@npm:^0.12.4":
+"util@npm:^0.12.0":
   version: 0.12.5
   resolution: "util@npm:0.12.5"
   dependencies:

@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
-import { useEndowInfoQuery } from "services/juno/custom";
+import placeholderBanner from "assets/images/placeholder-banner.png";
+import { useEndowInfoQuery } from "services/aws/aws";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
@@ -10,7 +11,9 @@ import Skeleton from "./Skeleton";
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowInfoQuery(numId);
+  const { isLoading, isError, data } = useEndowInfoQuery(numId, {
+    skip: numId === 0,
+  });
 
   if (isLoading) {
     return <Skeleton />;
@@ -36,7 +39,7 @@ function Banner() {
   return (
     <div
       className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
-      style={{ backgroundImage: `url('${image}')` }}
+      style={{ backgroundImage: `url('${image || placeholderBanner}')` }}
     />
   );
 }

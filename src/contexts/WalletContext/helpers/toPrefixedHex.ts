@@ -1,4 +1,4 @@
-export default function toPrefixedHex(value: number | string) {
+export function toPrefixedHex(value: number | string) {
   const num = Number(value);
   if (isNaN(num)) {
     throw new Error(`${value} is not a number`);

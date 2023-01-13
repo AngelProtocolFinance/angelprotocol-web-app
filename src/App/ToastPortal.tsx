@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { Flip, ToastContainer, TypeOptions } from "react-toastify";
 import Icon from "components/Icon";
 
-export default function ToastMounter() {
+export default function ToastPortal() {
   return createPortal(
     <ToastContainer
       closeButton={() => (
