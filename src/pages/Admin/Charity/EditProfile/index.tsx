@@ -74,6 +74,7 @@ function FormWithContext(
     },
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    categories_sdg: flatInitial.categories_sdgs[0],
   };
 
   const methods = useForm<ProfileFormValues>({

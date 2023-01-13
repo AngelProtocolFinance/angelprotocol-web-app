@@ -12,8 +12,8 @@ const sdgs = Object.entries(unsdgs).map(([key, val]) => ({
 }));
 
 export default function SDGSelector() {
-  const { field } = useController<Pick<ProfileFormValues, "categories_sdgs">>({
-    name: "categories_sdgs",
+  const { field } = useController<Pick<ProfileFormValues, "categories_sdg">>({
+    name: "categories_sdg",
   });
 
   return (

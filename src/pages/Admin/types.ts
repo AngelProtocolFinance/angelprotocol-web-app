@@ -273,9 +273,10 @@ export type ProfileUpdate = Omit<
 
 export type ProfileWithSettings = Omit<
   ProfileUpdate,
-  "hq_country" | "image" | "logo"
+  "hq_country" | "image" | "logo" | "categories_sdgs"
 > &
   Pick<EndowmentSettingsPayload, "name"> & {
+    categories_sdg: UNSDG_NUMS;
     hq_country: CountryOption;
     image: ImgLink;
     logo: ImgLink;

@@ -26,13 +26,18 @@ export default function useEditProfile() {
 
   const [update] = useUpdateProfileMutation();
 
-  const editProfile = async ({ initial, ...data }: ProfileFormValues) => {
+  const editProfile = async ({
+    initial,
+    categories_sdg,
+    ...data
+  }: ProfileFormValues) => {
     try {
       const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
       const flatData: ProfileUpdate = {
         ...data,
+        categories_sdgs: [categories_sdg],
         hq_country: data.hq_country.name,
         image: bannerUrl,
         logo: logoUrl,
