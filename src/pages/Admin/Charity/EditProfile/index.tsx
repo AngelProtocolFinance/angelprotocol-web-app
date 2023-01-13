@@ -5,7 +5,7 @@ import {
   ProfileUpdate,
   ProfileWithSettings,
 } from "pages/Admin/types";
-import { ProfileResponse } from "types/aws";
+import { Profile } from "types/aws";
 import "types/contracts";
 import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
@@ -34,7 +34,7 @@ export default function EditProfile() {
 }
 
 function FormWithContext(
-  props: ProfileResponse & { id: number; endowment: EndowmentDetails }
+  props: Profile & { id: number; endowment: EndowmentDetails }
 ) {
   //initialize falsy values
   const flatInitial: Required<ProfileUpdate> = {

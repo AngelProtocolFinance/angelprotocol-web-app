@@ -5,7 +5,7 @@ import {
   EndowmentInfo,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
-  ProfileResponse,
+  Profile,
   WalletProfile,
 } from "types/aws";
 import { MsgSignData } from "types/contracts";
@@ -73,11 +73,11 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<ProfileResponse, number>({
+    profile: builder.query<Profile, number>({
       providesTags: [{ type: "profile" }],
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
-    updateProfile: builder.mutation<ProfileResponse, MsgSignData>({
+    updateProfile: builder.mutation<Profile, MsgSignData>({
       invalidatesTags: [{ type: "profile" }],
       query: (msgSignData) => {
         return {
@@ -96,7 +96,7 @@ export const aws = createApi({
         ]);
 
         return {
-          data: { ...(profile as ProfileResponse), ...endow, id: endowId },
+          data: { ...(profile as Profile), ...endow, id: endowId },
         };
       },
     }),

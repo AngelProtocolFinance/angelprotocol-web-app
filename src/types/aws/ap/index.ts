@@ -12,7 +12,7 @@ import { NetworkType } from "../../lists";
  * put all aws/ap definitions here, if big category exist, separate in a file
  */
 
-export interface ProfileResponse {
+export interface Profile {
   name: string; // name of the Charity Endowment
   overview: string;
   categories: Categories;
@@ -36,7 +36,7 @@ export interface ProfileResponse {
   tagline?: string;
 }
 
-export interface Endowment extends Omit<ProfileResponse, "tier"> {
+export interface Endowment extends Omit<Profile, "tier"> {
   //EndowmentEntry
   id: number; //int
   owner: string;
@@ -109,4 +109,4 @@ export interface DonationsMetricList {
   donations_total_amount: number;
 }
 
-export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };
+export type EndowmentInfo = Profile & EndowmentDetails & { id: number };
