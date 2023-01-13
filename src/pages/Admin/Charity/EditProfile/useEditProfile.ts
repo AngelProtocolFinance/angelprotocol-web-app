@@ -41,7 +41,7 @@ export default function useEditProfile() {
       const diff = getPayloadDiff(initial, flatData);
 
       //if overview has changed, and is set to something
-      if ("overview" in diff && data.overview) {
+      if ("overview" in diff && flatData.overview) {
         //truncate to reduce proposalMsg size
         diff.overview = PLACEHOLDER_OVERVIEW;
       }
@@ -57,7 +57,7 @@ export default function useEditProfile() {
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
 
       const msgSignData = await contract.createMsgSignData(
-        cleanObject({ ...data })
+        cleanObject({ ...flatData })
       );
 
       const res = await update(msgSignData);

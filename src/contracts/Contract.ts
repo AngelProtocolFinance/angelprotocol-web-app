@@ -12,11 +12,10 @@ import {
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg, MsgSignData } from "types/contracts";
-import { Dwindow } from "types/ethereum";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
+import { getKeplrClient, getSigningKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -49,7 +48,7 @@ export default class Contract {
   async query<T>(to: string, message: Record<string, unknown>) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
+    const client = await getSigningKeplrClient(
       this.wallet?.providerId!,
       chain_id,
       rpc_url
@@ -62,7 +61,7 @@ export default class Contract {
     try {
       this.verifyWallet();
       const { chain_id, rpc_url } = this.wallet!.chain;
-      const client = await getKeplrClient(
+      const client = await getSigningKeplrClient(
         this.wallet?.providerId!,
         chain_id,
         rpc_url
@@ -85,7 +84,7 @@ export default class Contract {
   async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
+    const client = await getSigningKeplrClient(
       this.wallet?.providerId!,
       chain_id,
       rpc_url
@@ -96,33 +95,50 @@ export default class Contract {
 
   async signArbitrary(data: object) {
     this.verifyWallet();
-    const client = (window as Dwindow).keplr!;
+    const keplr = getKeplrClient(this.wallet?.providerId!);
 
-    const base64Data = toBase64(data);
-    const signature = await client.signArbitrary(
-      "",
+    const signature = await keplr.signAmino(
+      this.wallet!.chain.chain_id,
       this.walletAddress,
-      base64Data
+      {
+        chain_id: "",
+        account_number: "0",
+        sequence: "0",
+        fee: {
+          gas: "0",
+          amount: [],
+        },
+        msgs: [
+          {
+            type: "sign/MsgSignData",
+            value: {
+              signer: this.walletAddress,
+              data: toBase64(data),
+            },
+          },
+        ],
+        memo: "",
+      }
     );
 
-    return { ...signature, data: base64Data };
+    return signature;
   }
 
   async createMsgSignData(arbData: object): Promise<MsgSignData> {
-    const { data, pub_key, signature } = await this.signArbitrary(arbData);
+    const {
+      signed: { msgs },
+      signature,
+    } = await this.signArbitrary(arbData);
     return {
       msg: [
         {
           type: "sign/MsgSignData",
-          value: {
-            signer: this.walletAddress,
-            data,
-          },
+          value: msgs[0].value,
         },
       ],
       fee: { gas: "0", amount: [] },
       memo: "",
-      signatures: [{ pub_key, signature }],
+      signatures: [signature],
     };
   }
 

@@ -38,7 +38,7 @@ export type EmbeddedBankMsg = {
  * https://docs.keplr.app/api/#sign-amino
  */
 export type MsgSignData = {
-  msg: [
+  readonly msg: readonly [
     {
       readonly type: "sign/MsgSignData";
       readonly value: {

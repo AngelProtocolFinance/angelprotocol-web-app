@@ -62,7 +62,7 @@ function FormWithContext(
     hq: props.hq || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
     kyc_donors_only: props.endowment.kyc_donors_only,
-    number_of_employees: props.number_of_employees || 0,
+    number_of_employees: props.number_of_employees || 1,
     tagline: props.tagline || "",
   };
 
