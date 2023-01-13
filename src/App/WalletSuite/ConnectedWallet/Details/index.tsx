@@ -2,11 +2,13 @@ import { Popover } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import { appRoutes } from "constants/routes";
+import Address from "./Address";
 import AdminLinks from "./AdminLinks";
+import Balances from "./Balances";
+import ChainSelector from "./ChainSelector";
 import Favourites from "./Favourites";
 import MobileTitle from "./MobileTitle";
 import MyEndowments from "./MyEndowments";
-import WalletDetails from "./WalletDetails";
 
 export default function Details(props: WalletState) {
   return (
@@ -17,7 +19,11 @@ export default function Details(props: WalletState) {
             <MobileTitle className="sm:hidden" onClose={close} />
             <AdminLinks {...props} />
             <MyEndowments {...props} />
-            <WalletDetails {...props} />
+            <div className="grid gap-3 p-4 border-b border-gray-l2 dark:border-bluegray">
+              <Balances {...props} />
+              <Address value={props.address} />
+              <ChainSelector {...props} />
+            </div>
             <MyDonations address={props.address} />
             <Favourites {...props} />
             <DisconnectBtn />
