@@ -1,5 +1,5 @@
 export type NetworkType = "mainnet" | "testnet";
-export type UserTypes = "charity-owner" | "angelprotocol-web-app";
+export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
 export type Chains = "terra" | "juno" | "ethereum" | "binance";
 export type UNSDG_NUMS =
   | 1

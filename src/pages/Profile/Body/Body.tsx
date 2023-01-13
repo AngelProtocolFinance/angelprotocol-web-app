@@ -38,7 +38,7 @@ export default function Body() {
               </h3>
               <BookmarkBtn
                 name={profile.name}
-                id={profile.id}
+                endowId={profile.id}
                 logo={profile.logo}
               />
             </div>

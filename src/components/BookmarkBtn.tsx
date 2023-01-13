@@ -10,12 +10,12 @@ import Popup from "components/Popup";
 import Tooltip from "components/Tooltip";
 
 type Props = PropsWithChildren<{
-  id: number;
+  endowId: number;
   name: string;
   logo: string;
 }>;
 
-export default function BookmarkBtn({ id, name, logo, children }: Props) {
+export default function BookmarkBtn({ endowId, name, logo, children }: Props) {
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -33,17 +33,20 @@ export default function BookmarkBtn({ id, name, logo, children }: Props) {
   const isLoading =
     isProfileLoading || isFetching || isToggling || isWalletLoading;
 
-  const bookMark = data?.endowments?.find((d) => d.id === id);
-  const isBookmarked = bookMark !== undefined;
+  const bookmark = data?.bookmarks?.find((d) => d.id === endowId);
+  const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
     if (!wallet) {
       showModal(Popup, { message: "Connect wallet to edit bookmark" });
       return;
     }
-    const res = bookMark
-      ? await toggle({ type: "delete", ...bookMark, wallet: wallet.address })
-      : await toggle({ type: "add", name, id, logo, wallet: wallet.address });
+
+    const res = await toggle({
+      endowId,
+      type: isBookmarked ? "delete" : "add",
+      wallet: wallet.address,
+    });
 
     if ("error" in res) {
       showModal(Popup, { message: "Failed to save bookmark" });

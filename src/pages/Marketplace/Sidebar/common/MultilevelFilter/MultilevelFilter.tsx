@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Drawer, GroupProps } from "..";
+import { GroupProps } from "../types";
+import { Drawer } from "../Drawer";
 import Group from "./Group";
 
 export type MultiLevelFilterProps<T> = {
