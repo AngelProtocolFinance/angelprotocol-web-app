@@ -5632,6 +5632,7 @@ __metadata:
     assert: ^2.0.0
     buffer: ^6.0.3
     compress.js: ^1.2.2
+    cosmjs-types: ^0.6.1
     cropperjs: ^1.5.12
     crypto-browserify: ^3.12.0
     decimal.js: ^10.3.1
@@ -7552,6 +7553,16 @@ __metadata:
     long: ^4.0.0
     protobufjs: ~6.11.2
   checksum: 418622ea552ddac1334f99ab2151609c70b54992b380cd4dcbd768c32b3070ea97ae3152b23d4b66993fa41051cfe274817773916a076e0d6a3732830b525372
+  languageName: node
+  linkType: hard
+
+"cosmjs-types@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "cosmjs-types@npm:0.6.1"
+  dependencies:
+    long: ^4.0.0
+    protobufjs: ~6.11.2
+  checksum: 479ca1b307db35c612a420b6b5d556e58c463478bf733a8328d83455e25dadfe0bc41623bb057040aabc532c4f0afb5475328179e9315419dd77439cb4431588
   languageName: node
   linkType: hard
 
