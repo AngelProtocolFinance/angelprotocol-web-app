@@ -1,4 +1,3 @@
-import { createProtobufRpcClient } from "@cosmjs/stargate";
 import Long from "long";
 import {
   JSONAccount,
@@ -8,6 +7,7 @@ import {
   typeURLs,
 } from "./types";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
 import { SimulateRequest } from "cosmjs-types/cosmos/tx/v1beta1/service";
 import {
@@ -15,6 +15,7 @@ import {
   SignerInfo,
   Tx,
   TxBody,
+  TxRaw,
 } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import "cosmjs-types/tendermint/abci/types";
 import { Dwindow } from "types/window";
@@ -31,12 +32,14 @@ export async function simulate() {
     JUNO_LCD + `/cosmos/auth/v1beta1/accounts/${address}`
   ).then<{ account: JSONAccount }>((res) => res.json());
 
+  const pub = PubKey.fromJSON({ key: account.pub_key.key });
+
   const signer: SignerInfo = {
     publicKey: {
       typeUrl: account.pub_key["@type"],
-      value: bytesFromBase64(account.pub_key.key),
+      value: PubKey.encode(pub).finish(),
     },
-    modeInfo: { single: { mode: SignMode.SIGN_MODE_DIRECT } },
+    modeInfo: { single: { mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON } },
     sequence: Long.fromString(account.sequence),
   };
 
@@ -47,7 +50,7 @@ export async function simulate() {
         value: MsgSend.encode({
           fromAddress: address,
           toAddress: ap_wallets.juno_deposit,
-          amount: [{ amount: "1000", denom: "uluna" }],
+          amount: [{ amount: "1000", denom: "ujunox" }],
         }).finish(),
       },
     ],
@@ -67,16 +70,16 @@ export async function simulate() {
     },
   };
 
-  const tx: Tx = {
-    body: txBody,
-    authInfo,
+  const txRaw: TxRaw = {
+    bodyBytes: TxBody.encode(txBody).finish(),
+    authInfoBytes: AuthInfo.encode(authInfo).finish(),
     signatures: [bytesFromBase64("")],
   };
 
   const result = await fetch(JUNO_LCD + "/cosmos/tx/v1beta1/simulate", {
     method: "POST",
     body: JSON.stringify({
-      tx_bytes: base64FromBytes(Tx.encode(tx).finish()),
+      tx_bytes: base64FromBytes(TxRaw.encode(txRaw).finish()),
     }),
   }).then((res) => res.json());
 

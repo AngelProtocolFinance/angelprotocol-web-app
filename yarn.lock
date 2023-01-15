@@ -3288,6 +3288,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@keplr-wallet/proto-types@npm:^0.11.32":
+  version: 0.11.32
+  resolution: "@keplr-wallet/proto-types@npm:0.11.32"
+  dependencies:
+    long: ^4.0.0
+    protobufjs: ^6.11.2
+  checksum: 2f69233368915ae732fc44808a21e755840b1babecf525a228537489a0bc92464926a04655e3418a130778f5bbc0be863ae39c5c80640dd9949838b401bd1897
+  languageName: node
+  linkType: hard
+
 "@keplr-wallet/provider@npm:0.11.31":
   version: 0.11.31
   resolution: "@keplr-wallet/provider@npm:0.11.31"
@@ -5603,6 +5613,7 @@ __metadata:
     "@headlessui/react": ^1.7.4
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": ^2.9.8
+    "@keplr-wallet/proto-types": ^0.11.32
     "@keplr-wallet/types": ^0.11.3
     "@keplr-wallet/wc-client": ^0.11.31
     "@keplr-wallet/wc-qrcode-modal": ^0.11.31

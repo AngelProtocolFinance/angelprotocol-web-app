@@ -52,6 +52,7 @@
     "@headlessui/react": "^1.7.4",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.9.8",
+    "@keplr-wallet/proto-types": "^0.11.32",
     "@keplr-wallet/types": "^0.11.3",
     "@keplr-wallet/wc-client": "^0.11.31",
     "@keplr-wallet/wc-qrcode-modal": "^0.11.31",

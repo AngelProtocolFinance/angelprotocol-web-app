@@ -18,7 +18,7 @@ const testnets = {
     type: "cosmos",
     brand: "juno",
     name: "Juno Testnet",
-    lcd: "https://juno-testnet-api.polkachu.com",
+    lcd: "https://api.uni.junonetwork.io",
     rpc: "https://rpc.uni.junonetwork.io",
     txExplorer: "https://testnet.ping.pub/juno/tx/",
   },

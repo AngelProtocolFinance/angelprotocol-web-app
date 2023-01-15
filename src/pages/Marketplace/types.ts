@@ -12,12 +12,19 @@ export const typeURLs = {
 
 export const JUNO_LCD = chains[chainIds.juno].lcd;
 
+export type SimulateRes = {
+  gas_info: {
+    gas_wanted: string;
+    gas_used: string;
+  };
+};
+
 type JSONAny<T> = {
   "@type": string;
 } & T;
 
 export type JSONAccount = JSONAny<{
-  // account_number:string
+  account_number: string;
   //address:string
   pub_key: JSONAny<{ key: string }>;
   sequence: string;
