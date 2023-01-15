@@ -62,7 +62,9 @@ export default function useCosmosTxSender<T extends boolean = false>(
         chainID: wallet.chainId,
       };
 
-      if (!response.code) {
+      if (!!response.code) {
+        showModal(TxPrompt, { error: "Transaction failed", tx: txRes });
+      } else {
         //always invalidate cached chain data to reflect balance changes from fee deduction
         dispatch(invalidateApesTags(["balances"]));
 
@@ -83,8 +85,6 @@ export default function useCosmosTxSender<T extends boolean = false>(
             tx: txRes,
           });
         }
-      } else {
-        showModal(TxPrompt, { error: "Transaction failed", tx: txRes });
       }
     } catch (err) {
       handleTxError(err, ({ error, tx }) => showModal(TxPrompt, { error, tx }));

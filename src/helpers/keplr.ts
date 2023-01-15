@@ -1,9 +1,10 @@
-import { StdTx } from "@cosmjs/amino";
 import { fromHex } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { Keplr } from "@keplr-wallet/types";
+import { BroadcastResponse } from "types/cosmos";
+import { chains } from "constants/chains";
 import { WC_BRIDGE } from "constants/urls";
+import { base64FromU8a } from "./encoding";
 
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,
@@ -21,38 +22,29 @@ export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
 }
 
-type Mode = Parameters<Keplr["sendTx"]>[2];
-/** matching sender for amino signed tx */
-export async function sendTx(
-  chainId: string,
-  /** keplr-wc can only process amino
-   * | Uint8Array, so can be assignable to constructor
-   */
-  tx: StdTx | Uint8Array,
-  mode: Mode
-): Promise<Uint8Array> {
-  const _tx = tx as StdTx;
-
-  const result = await fetch(
-    /**TODO: if keplr needs to be used on other cosmos chains as well, LCD_url should be
-     * determined via chainId
-     */
-
-    /** endpoint definition: https://docs.figment.io/api-reference/node-api/cosmos-lcd/#/txs */
-    (process.env.REACT_APP_JUNO_LCD_NODE || "") + "/txs",
+type CustomSendTx = KeplrWalletConnectV1["sendTx"];
+const sendTx: CustomSendTx = async (chainId, tx, mode) => {
+  const chain = chains[chainId];
+  const { tx_response: res } = await fetch(
+    chain.lcd + "/cosmos/tx/v1beta1/txs",
     {
       method: "POST",
-      body: JSON.stringify({ tx: _tx, mode: getModePayload(mode) }),
+      body: JSON.stringify({
+        tx_bytes: base64FromU8a(tx),
+        mode: getModePayload(mode),
+      }),
     }
-  ).then((res) => res.json());
+  ).then<BroadcastResponse>((res) => res.json());
 
-  const txRes = result.data;
-
-  if (txRes.code != null && txRes.code !== 0) {
-    throw new Error(txRes["raw_log"]);
+  if (!!res.code) {
+    throw new Error(res["raw_log"]);
   }
-  return fromHex(txRes.txhash);
-}
+
+  return fromHex(res.txhash);
+};
+
+type Mode = Parameters<CustomSendTx>[2];
+/** matching sender for amino signed tx */
 
 function getModePayload(mode: Mode): string {
   switch (mode) {

@@ -1,4 +1,3 @@
-import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,
   Timeout,
@@ -45,7 +44,7 @@ export default function handleTxError(
     prompt({
       error: error.message,
     });
-  } else if (error instanceof Timeout || error instanceof TimeoutError) {
+  } else if (error instanceof Timeout /** TODO: timeout for sendTx */) {
     prompt({ error: error.message });
   } else if (error instanceof TxUnspecifiedError) {
     prompt({ error: "Unspecified error occured" });

@@ -1,4 +1,3 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { Token } from "types/aws";
@@ -9,6 +8,7 @@ import {
   ProfileResponse,
   Proposal,
 } from "types/contracts";
+import { Coin } from "types/cosmos";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
 export type Tag = TagDescription<string>;

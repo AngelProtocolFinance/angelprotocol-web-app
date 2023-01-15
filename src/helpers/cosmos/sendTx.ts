@@ -1,7 +1,7 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { BroadcastResponse, SignDoc, TxResponse } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
-import { base64FromU8a, u8aFromBase64 } from "helpers/toBase64";
+import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
 import { chainIds, chains } from "constants/chains";
 
 export async function sendTx(

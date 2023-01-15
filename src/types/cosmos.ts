@@ -19,7 +19,13 @@ export interface Log {
   readonly log: string;
   readonly events: readonly Event[];
 }
-export type TxResponse = { txhash: string; code: 0; logs: Log[] };
+export type TxResponse = {
+  txhash: string;
+  code: number;
+  logs: Log[];
+  raw_log: string;
+};
+
 export type BroadcastResponse = {
   tx_response: TxResponse;
 };

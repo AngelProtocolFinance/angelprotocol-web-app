@@ -10,10 +10,10 @@ import type { SignerInfo } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx"
 import { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { JSONAccount, Msg, SignDoc, SimulateRes } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
+import { base64FromU8a } from "helpers/encoding";
 import { chains } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { junoDenom } from "constants/tokens";
-import { base64FromU8a } from "../toBase64";
 
 const GAS_ADJUSTMENT = 1.3;
 const GAS_PRICE = IS_TEST ? "0.025" : "0.0025";

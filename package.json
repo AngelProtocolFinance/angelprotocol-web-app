@@ -41,10 +41,7 @@
     "node": "16.18.0"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-stargate": "^0.29.0",
-    "@cosmjs/encoding": "^0.29.0",
-    "@cosmjs/proto-signing": "^0.29.0",
-    "@cosmjs/stargate": "^0.29.0",
+    "@cosmjs/encoding": "^0.29.5",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -64,7 +61,6 @@
     "@walletconnect/qrcode-modal": "^1.8.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "compress.js": "^1.2.2",
-    "cosmjs-types": "^0.6.1",
     "cropperjs": "^1.5.12",
     "decimal.js": "^10.3.1",
     "ethereum-multicall": "^2.15.0",

@@ -1,4 +1,3 @@
-import { Coin } from "@cosmjs/proto-signing";
 import { ImgLink } from "components/ImgEditor/types";
 import { CountryOption } from "services/types";
 import { EndowmentProposal } from "types/aws";
@@ -16,6 +15,7 @@ import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
+import { Coin } from "types/cosmos";
 import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
