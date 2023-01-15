@@ -48,7 +48,7 @@ export async function simulateKeplr() {
         typeUrl: typeURLs.sendNative,
         value: MsgSend.encode({
           fromAddress: address,
-          toAddress: ap_wallets.terra,
+          toAddress: ap_wallets.juno_deposit,
           amount: [{ amount: "100", denom: "ujunox" }],
         }).finish(),
       },
@@ -95,12 +95,10 @@ export async function simulateKeplr() {
     },
   };
 
-  const result = await keplr.signDirect(chainIds.juno, address, {
+  const signRes = await keplr.signDirect(chainIds.juno, address, {
     bodyBytes,
     authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
     chainId: chainIds.juno,
     accountNumber: Long.fromString(account.account_number),
   });
-
-  console.log(result);
 }

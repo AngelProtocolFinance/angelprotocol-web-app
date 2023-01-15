@@ -10,7 +10,7 @@ export default function Marketplace() {
     <div className="pt-24 grid gap-4 justify-start">
       <button
         type="button"
-        onClick={simulate}
+        onClick={simulateKeplr}
         className="btn btn-orange p-4 rounded font-work"
       >
         simulate keplr
