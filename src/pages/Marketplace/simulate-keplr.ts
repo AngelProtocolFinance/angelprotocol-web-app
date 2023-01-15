@@ -1,11 +1,5 @@
 import Long from "long";
-import {
-  JSONAccount,
-  JUNO_LCD,
-  SimulateRes,
-  base64FromBytes,
-  typeURLs,
-} from "./types";
+import { JSONAccount, JUNO_LCD, SimulateRes, typeURLs } from "./types";
 import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
 import { PubKey } from "@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "@keplr-wallet/proto-types/cosmos/tx/signing/v1beta1/signing";
@@ -16,6 +10,7 @@ import {
   TxRaw,
 } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { Dwindow } from "types/window";
+import { base64FromU8a, u8aFromBase64 } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chains";
 
@@ -81,7 +76,7 @@ export async function simulateKeplr() {
   const simulRes = await fetch(JUNO_LCD + "/cosmos/tx/v1beta1/simulate", {
     method: "POST",
     body: JSON.stringify({
-      tx_bytes: base64FromBytes(txRaw),
+      tx_bytes: base64FromU8a(txRaw),
     }),
   }).then<SimulateRes>((res) => res.json());
 
@@ -95,10 +90,28 @@ export async function simulateKeplr() {
     },
   };
 
-  const signRes = await keplr.signDirect(chainIds.juno, address, {
+  const authInfoBytesWithFee = AuthInfo.encode(authInfoWithFee).finish();
+
+  const { signature, signed } = await keplr.signDirect(chainIds.juno, address, {
     bodyBytes,
-    authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+    authInfoBytes: authInfoBytesWithFee,
     chainId: chainIds.juno,
     accountNumber: Long.fromString(account.account_number),
   });
+
+  const tx: TxRaw = {
+    authInfoBytes: signed.authInfoBytes,
+    bodyBytes: signed.bodyBytes,
+    signatures: [u8aFromBase64(signature.signature)],
+  };
+
+  const result = await fetch(JUNO_LCD + "/cosmos/tx/v1beta1/txs", {
+    method: "POST",
+    body: JSON.stringify({
+      tx_bytes: base64FromU8a(TxRaw.encode(tx).finish()),
+      mode: "BROADCAST_MODE_BLOCK",
+    }),
+  }).then<SimulateRes>((res) => res.json());
+
+  console.log(result);
 }
