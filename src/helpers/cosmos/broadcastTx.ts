@@ -1,5 +1,5 @@
 import Long from "long";
-import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { Dwindow } from "types/window";
 import { CosmosWallet } from "contexts/WalletContext";
 import { base64FromU8a, u8aFromBase64 } from "helpers/toBase64";
@@ -35,4 +35,6 @@ export async function broadcastTx(
       mode: "BROADCAST_MODE_BLOCK",
     }),
   }).then<any>((res) => res.json());
+
+  console.log(result);
 }

@@ -20,7 +20,7 @@ const GAS_PRICE = IS_TEST ? "0.025" : "0.0025";
 export async function estimateGas(
   msgs: readonly Msg<any>[],
   wallet: CosmosWallet
-): Promise<{ gas: string; txWithFee: TxRaw; accountNumber: string }> {
+): Promise<{ feeAmount: number; txWithFee: TxRaw; accountNumber: string }> {
   const { address: sender, chainId } = wallet;
   const chain = chains[chainId];
   const { account } = await fetch(
@@ -77,12 +77,14 @@ export async function estimateGas(
   }).then<SimulateRes>((res) => res.json());
 
   const gas = res.gas_info.gas_used;
+  const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
+  const feeAmount = adjusted * +GAS_PRICE;
 
   const authInfoWithFee: AuthInfo = {
     ...authInfo,
     fee: {
       amount: [{ amount: GAS_PRICE, denom: junoDenom }],
-      gasLimit: `${Math.floor(+gas * GAS_ADJUSTMENT)}`,
+      gasLimit: `${adjusted}`,
       granter: "",
       payer: sender,
     },
@@ -92,5 +94,5 @@ export async function estimateGas(
     authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
   };
   //add fee to estimated Tx
-  return { gas, txWithFee, accountNumber: account.account_number };
+  return { feeAmount, txWithFee, accountNumber: account.account_number };
 }
