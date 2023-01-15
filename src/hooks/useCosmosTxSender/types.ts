@@ -1,5 +1,6 @@
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { TagPayload } from "services/types";
-import { Msg, TxResponse } from "types/cosmos";
+import { TxResponse } from "types/cosmos";
 
 export type Tx = { hash: string; chainID: string };
 
@@ -22,6 +23,6 @@ export type TxOnSuccess = (res: TxResponse, chainId: string) => void;
 export type TxArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
-  msgs: Msg<any>[];
+  msgs: Any[];
   onSuccess?: TxOnSuccess;
 };

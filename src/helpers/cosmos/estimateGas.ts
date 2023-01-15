@@ -7,9 +7,10 @@ import {
   TxRaw,
 } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import type { SignerInfo } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
-import { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import { JSONAccount, Msg, SignDoc, SimulateRes } from "types/cosmos";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
+import { JSONAccount, SignDoc, SimulateRes } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
+import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import { chains } from "constants/chains";
 import { IS_TEST } from "constants/env";
@@ -19,10 +20,12 @@ const GAS_ADJUSTMENT = 1.3;
 const GAS_PRICE = IS_TEST ? "0.025" : "0.0025";
 
 export async function estimateGas(
-  msgs: readonly Msg<any>[],
+  msgs: Any[],
   wallet: CosmosWallet
 ): Promise<{ feeAmount: number; doc: SignDoc }> {
   const { address: sender, chainId } = wallet;
+
+  console.log(sender);
   const chain = chains[chainId];
   const { account } = await fetch(
     chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
@@ -52,10 +55,7 @@ export async function estimateGas(
   };
 
   const txBody: TxBody = {
-    messages: msgs.map((msg) => ({
-      typeUrl: msg.typeUrl,
-      value: Any.encode(msg.value).finish(),
-    })),
+    messages: msgs,
     memo: "",
     extensionOptions: [],
     nonCriticalExtensionOptions: [],
@@ -79,7 +79,7 @@ export async function estimateGas(
 
   const gas = res.gas_info.gas_used;
   const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
-  const feeAmount = adjusted * +GAS_PRICE;
+  const feeAmount = condenseToNum(adjusted * +GAS_PRICE);
 
   const authInfoWithFee: AuthInfo = {
     ...authInfo,

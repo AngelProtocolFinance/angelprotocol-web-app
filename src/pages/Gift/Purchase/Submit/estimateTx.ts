@@ -1,11 +1,10 @@
 import { Estimate } from "./types";
-import type { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
-import { Msg } from "types/cosmos";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { WithCosmosWallet } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { extractFeeAmount, logger, scaleToStr } from "helpers";
+import { logger, scaleToStr } from "helpers";
 import { estimateGas } from "helpers/cosmos/estimateGas";
 import { contracts } from "constants/contracts";
 
@@ -16,7 +15,7 @@ export async function estimateTx({
   const native = tokens[0];
   try {
     const gcContract = new GiftCard(wallet);
-    let msg: Msg<MsgExecuteContract>;
+    let msg: Any;
     if (token.type === "juno-native" || token.type === "ibc") {
       msg = gcContract.createDepositMsg(recipient, [
         { amount: scaleToStr(token.amount), denom: token.token_id },

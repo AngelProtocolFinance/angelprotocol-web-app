@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
-import { Msg } from "types/cosmos";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, customTags } from "services/juno/tags";
@@ -17,7 +17,7 @@ export default function useVote() {
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
-    let voteMsg: Msg<any>;
+    let voteMsg: Any;
     if (type === "application") {
       const contract = new CW3Review(wallet);
       voteMsg = contract.createVoteApplicationMsg({

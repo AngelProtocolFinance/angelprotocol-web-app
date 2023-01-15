@@ -1,7 +1,8 @@
-import type { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
-import type { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
+import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { Coin, Msg } from "types/cosmos";
+import { Coin } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
 import { toBase64, toU8a } from "helpers";
 import { Chain, chains } from "constants/chains";
@@ -17,19 +18,15 @@ export default class Contract {
     this.chain = chains[wallet.chainId];
   }
 
-  createExecuteContractMsg(
-    to: string,
-    msg: object,
-    funds: Coin[] = []
-  ): Msg<MsgExecuteContract> {
+  createExecuteContractMsg(to: string, msg: object, funds: Coin[] = []): Any {
     return {
       typeUrl: typeURLs.executeContract,
-      value: {
+      value: MsgExecuteContract.encode({
         contract: to,
         sender: this.wallet.address,
         msg: toU8a(JSON.stringify(msg)),
         funds,
-      },
+      }).finish(),
     };
   }
 
@@ -37,10 +34,10 @@ export default class Contract {
     scaledAmount: string,
     recipient: string,
     denom = junoDenom as string
-  ): Msg<MsgSend> {
+  ): Any {
     return {
       typeUrl: typeURLs.sendNative,
-      value: {
+      value: MsgSend.encode({
         fromAddress: this.wallet.address,
         toAddress: recipient,
         amount: [
@@ -49,7 +46,7 @@ export default class Contract {
             amount: scaledAmount,
           },
         ],
-      },
+      }).finish(),
     };
   }
 
