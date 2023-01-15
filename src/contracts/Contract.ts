@@ -4,19 +4,17 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { Coin, Msg } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
 import { toBase64, toU8a } from "helpers";
+import { Chain, chains } from "constants/chains";
 import { typeURLs } from "constants/cosmos";
 import { junoDenom } from "constants/tokens";
 
 export default class Contract {
   wallet: CosmosWallet;
+  chain: Chain;
 
   constructor(wallet: CosmosWallet) {
     this.wallet = wallet;
-  }
-  //for on-demand query, use RTK where possible
-  async query<T>(to: string, message: Record<string, unknown>) {
-    const jsonObject = await this.wallet.client.queryContractSmart(to, message);
-    return JSON.parse(jsonObject) as T;
+    this.chain = chains[wallet.chainId];
   }
 
   createExecuteContractMsg(

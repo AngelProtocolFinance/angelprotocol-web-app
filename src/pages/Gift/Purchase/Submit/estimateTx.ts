@@ -1,10 +1,12 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { Estimate } from "./types";
+import type { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
+import { Msg } from "types/cosmos";
 import { WithCosmosWallet } from "contexts/WalletContext";
 import { SubmitStep } from "slices/gift";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, logger, scaleToStr } from "helpers";
+import { estimateGas } from "helpers/cosmos/estimateGas";
 import { contracts } from "constants/contracts";
 
 export async function estimateTx({
@@ -14,7 +16,7 @@ export async function estimateTx({
   const native = tokens[0];
   try {
     const gcContract = new GiftCard(wallet);
-    let msg: MsgExecuteContractEncodeObject;
+    let msg: Msg<MsgExecuteContract>;
     if (token.type === "juno-native" || token.type === "ibc") {
       msg = gcContract.createDepositMsg(recipient, [
         { amount: scaleToStr(token.amount), denom: token.token_id },
@@ -28,12 +30,12 @@ export async function estimateTx({
         gcContract.createDepositObject(recipient)
       );
     }
-    const fee = await gcContract.estimateFee([msg]);
-    const feeAmount = extractFeeAmount(fee, native.token_id);
+
+    const { feeAmount, doc } = await estimateGas([msg], wallet);
 
     return {
       fee: { amount: feeAmount, symbol: native.symbol },
-      tx: { fee, msgs: [msg] },
+      doc,
     };
   } catch (err) {
     logger.error(err);

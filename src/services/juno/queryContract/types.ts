@@ -43,6 +43,11 @@ export interface ContractQueries {
   };
   regConfig: { args: null; res: Q<RegistrarConfig>; result: RegistrarConfig };
 
+  ifFund: {
+    args: { fund_id: number };
+    res: Q<FundDetails>;
+    result: FundDetails;
+  };
   ifFunds: {
     args: null;
     res: Q<{ funds: FundDetails[] }>;

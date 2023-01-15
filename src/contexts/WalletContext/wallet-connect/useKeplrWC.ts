@@ -1,11 +1,10 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";
 import { Connected, Cosmos, Wallet, WalletState } from "../types";
 import icon from "assets/icons/wallets/keplr.png";
 import { useErrorContext } from "contexts/ErrorContext";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
-import { chainIds, chains } from "constants/chains";
+import { chainIds } from "constants/chains";
 import { WC_EVENT } from "./constants";
 
 const QRModal = new KeplrQRCodeModalV1();
@@ -85,16 +84,12 @@ async function getWalletInfo(): Promise<
 > {
   const id = chainIds.juno;
   const keplr = getKeplrWCClient();
-  const signer = keplr.getOfflineSignerOnlyAmino(id);
 
   await keplr.enable(id);
   const key = await keplr.getKey(id);
   return {
     chainId: id,
     address: key.bech32Address,
-    client: await SigningCosmWasmClient.connectWithSigner(
-      chains[id].rpc,
-      signer
-    ),
+    client: getKeplrWCClient(),
   };
 }

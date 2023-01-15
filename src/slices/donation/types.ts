@@ -1,7 +1,8 @@
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { CountryOption } from "services/types";
-import { TokenWithAmount, TxOptions } from "types/slices";
+import { SignDoc } from "types/cosmos";
+import { TokenWithAmount } from "types/slices";
 import {
   CosmosWallet,
   EVMWCWallet,
@@ -70,11 +71,25 @@ export type TxStep = {
 
 export type Fee = { amount: number; symbol: string };
 
-//prettier-ignore
 export type Estimate =
-  | { type: CosmosWallet["type"]; fee: Fee; tx: TxOptions; wallet: CosmosWallet }
-  | { type: TerraWallet["type"]; fee: Fee; tx: CreateTxOptions; wallet: TerraWallet }
-  | { type: EVMWallet["type"] | EVMWCWallet["type"]; fee: Fee; tx: TransactionRequest; wallet: EVMWallet | EVMWCWallet }
+  | {
+      type: CosmosWallet["type"];
+      fee: Fee;
+      doc: SignDoc;
+      wallet: CosmosWallet;
+    }
+  | {
+      type: TerraWallet["type"];
+      fee: Fee;
+      tx: CreateTxOptions;
+      wallet: TerraWallet;
+    }
+  | {
+      type: EVMWallet["type"] | EVMWCWallet["type"];
+      fee: Fee;
+      tx: TransactionRequest;
+      wallet: EVMWallet | EVMWCWallet;
+    };
 
 export type DonateArgs = {
   estimate: Estimate;

@@ -1,6 +1,6 @@
-import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
+import { Msg } from "types/cosmos";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
 import { adminTags, customTags } from "services/juno/tags";
@@ -17,7 +17,7 @@ export default function useVote() {
   const { sendTx, isSending } = useCosmosTxSender(true);
 
   async function vote({ type, proposalId, vote, reason }: VV) {
-    let voteMsg: MsgExecuteContractEncodeObject;
+    let voteMsg: Msg<any>;
     if (type === "application") {
       const contract = new CW3Review(wallet);
       voteMsg = contract.createVoteApplicationMsg({

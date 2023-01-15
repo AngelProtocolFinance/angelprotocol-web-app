@@ -1,42 +1,39 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TxOptions } from "types/slices";
+import { SignDoc } from "types/cosmos";
 import { invalidateApesTags } from "services/apes";
 import { CosmosWallet } from "contexts/WalletContext";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
+import { sendTx } from "helpers/cosmos/sendTx";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
   wallet: CosmosWallet;
-  tx: TxOptions;
+  doc: SignDoc;
   details: GiftDetails;
 };
 
 export const purchase = createAsyncThunk<void, Args>(
   `${gift.name}/purchase`,
-  async ({ wallet, tx, details }, { dispatch }) => {
+  async ({ wallet, doc, details }, { dispatch }) => {
     const updateTx = (status: TxStatus) => {
       dispatch(setTxStatus(status));
     };
-
     try {
       updateTx({ msg: "Payment is being processed..." });
-      const response = await wallet.client.signAndBroadcast(
-        wallet.address,
-        tx.msgs,
-        tx.fee
-      );
+      const txRes = await sendTx(wallet, doc);
 
       invalidateApesTags(["balances"]);
-      if (!response.code) {
+
+      if (!txRes.code) {
         /** recipient is specified, show tx link to purchaser */
         if (details.recipient) {
-          return updateTx({ hash: response.transactionHash });
+          return updateTx({ hash: txRes.txhash });
         }
 
         /**if no recipient is provided */
         /** extract deposit id */
-        const id = getWasmAttribute("deposit_id", response.rawLog);
+        const id = getWasmAttribute("deposit_id", txRes.logs);
         /** generate secret */
         let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
         let preImage = `${randNums[0]}${randNums[1]}`;
@@ -57,7 +54,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
         if (!res.ok) {
           return updateTx({
-            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${response.transactionHash}`,
+            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${txRes.txhash}`,
           });
         }
         /** no problems, show gift card code to user */

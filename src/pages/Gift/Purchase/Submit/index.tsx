@@ -29,8 +29,8 @@ export default function Submit(props: WithCosmosWallet<SubmitStep>) {
     dispatch(setStep(props.step - 1));
   }
 
-  function submit({ tx }: Estimate) {
-    dispatch(purchase({ wallet: props.wallet, tx, details: props.details }));
+  function submit({ doc }: Estimate) {
+    dispatch(purchase({ wallet: props.wallet, doc, details: props.details }));
   }
 
   const { token } = props.details;

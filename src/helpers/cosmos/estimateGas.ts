@@ -1,13 +1,14 @@
+import Long from "long";
 import { PubKey } from "@keplr-wallet/proto-types/cosmos/crypto/secp256k1/keys";
 import { SignMode } from "@keplr-wallet/proto-types/cosmos/tx/signing/v1beta1/signing";
 import {
   AuthInfo,
-  SignerInfo,
   TxBody,
   TxRaw,
 } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import type { SignerInfo } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import { JSONAccount, Msg, SimulateRes } from "types/cosmos";
+import { JSONAccount, Msg, SignDoc, SimulateRes } from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
 import { chains } from "constants/chains";
 import { IS_TEST } from "constants/env";
@@ -20,7 +21,7 @@ const GAS_PRICE = IS_TEST ? "0.025" : "0.0025";
 export async function estimateGas(
   msgs: readonly Msg<any>[],
   wallet: CosmosWallet
-): Promise<{ feeAmount: number; txWithFee: TxRaw; accountNumber: string }> {
+): Promise<{ feeAmount: number; doc: SignDoc }> {
   const { address: sender, chainId } = wallet;
   const chain = chains[chainId];
   const { account } = await fetch(
@@ -89,10 +90,15 @@ export async function estimateGas(
       payer: sender,
     },
   };
-  const txWithFee: TxRaw = {
-    ...simTx,
-    authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
-  };
+
   //add fee to estimated Tx
-  return { feeAmount, txWithFee, accountNumber: account.account_number };
+  return {
+    feeAmount,
+    doc: {
+      authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+      bodyBytes,
+      accountNumber: Long.fromString(account.account_number),
+      chainId,
+    },
+  };
 }

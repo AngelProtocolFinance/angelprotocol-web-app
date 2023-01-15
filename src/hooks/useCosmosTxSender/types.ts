@@ -1,6 +1,5 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
-import { DeliverTxResponse } from "@cosmjs/stargate";
 import { TagPayload } from "services/types";
+import { Msg, TxResponse } from "types/cosmos";
 
 export type Tx = { hash: string; chainID: string };
 
@@ -18,11 +17,11 @@ export type TxSuccess = {
 
 export type TxState = TxLoading | TxError | TxSuccess;
 
-export type TxOnSuccess = (res: DeliverTxResponse, chainId: string) => void;
+export type TxOnSuccess = (res: TxResponse, chainId: string) => void;
 
 export type TxArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
-  msgs: EncodeObject[];
+  msgs: Msg<any>[];
   onSuccess?: TxOnSuccess;
 };

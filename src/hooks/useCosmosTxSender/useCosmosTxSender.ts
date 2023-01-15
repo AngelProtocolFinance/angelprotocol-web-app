@@ -1,4 +1,3 @@
-import { isDeliverTxSuccess } from "@cosmjs/stargate";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
 import { invalidateApesTags } from "services/apes";
@@ -6,6 +5,8 @@ import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
+import { estimateGas } from "helpers/cosmos/estimateGas";
+import { sendTx as signAndBroadcast } from "helpers/cosmos/sendTx";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;
@@ -53,18 +54,15 @@ export default function useCosmosTxSender<T extends boolean = false>(
         );
       }
 
-      const response = await wallet.client.signAndBroadcast(
-        wallet.address,
-        msgs,
-        "auto"
-      );
+      const { doc } = await estimateGas(msgs, wallet);
+      const response = await signAndBroadcast(wallet, doc);
 
       const txRes: Tx = {
-        hash: response.transactionHash,
+        hash: response.txhash,
         chainID: wallet.chainId,
       };
 
-      if (isDeliverTxSuccess(response)) {
+      if (!response.code) {
         //always invalidate cached chain data to reflect balance changes from fee deduction
         dispatch(invalidateApesTags(["balances"]));
 

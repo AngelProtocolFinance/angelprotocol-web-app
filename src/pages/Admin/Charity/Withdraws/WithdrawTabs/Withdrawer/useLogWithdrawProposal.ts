@@ -35,7 +35,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
         { isDismissible: false }
       );
 
-      const parsedId = getWasmAttribute("proposal_id", res.rawLog);
+      const parsedId = getWasmAttribute("proposal_id", res.logs);
       const numId = idParamToNum(parsedId);
 
       if (numId === 0) throw new Error("Failed to get proposal id");
@@ -55,7 +55,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
       showModal(TxPrompt, {
         success: successMeta || { message: "Withdraw proposal submitted" },
-        tx: { hash: res.transactionHash, chainID },
+        tx: { hash: res.txhash, chainID },
       });
 
       dispatch(invalidateApesTags(["withdraw_logs"]));

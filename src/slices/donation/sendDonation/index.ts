@@ -8,6 +8,7 @@ import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
 import { invalidateApesTags } from "services/apes";
 import { getProvider, logger } from "helpers";
+import { sendTx } from "helpers/cosmos/sendTx";
 import { chains } from "constants/chains";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";
@@ -79,24 +80,23 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 );
 
 async function sendTransaction(
-  { wallet, type, tx }: Estimate,
+  estimate: Estimate,
   token: TokenWithAmount
 ): Promise<{ hash: string; isSuccess: boolean }> {
-  switch (type) {
+  switch (estimate.type) {
     case "cosmos": {
-      const response = await wallet.client.signAndBroadcast(
-        wallet.address,
-        tx.msgs,
-        tx.fee
-      );
-      return { hash: response.transactionHash, isSuccess: !response.code };
+      const { doc, wallet } = estimate;
+      const res = await sendTx(wallet, doc);
+      return { hash: res.txhash, isSuccess: !res.code };
     }
     case "terra": {
+      const { wallet, tx } = estimate;
       const response = await wallet.post(tx);
       return { hash: response.result.txhash, isSuccess: response.success };
     }
     //evm donations
     default: {
+      const { wallet, tx } = estimate;
       const provider = new Web3Provider(getProvider(wallet.id) as any);
       const signer = provider.getSigner();
       let response: TransactionResponse;

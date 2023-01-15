@@ -1,4 +1,3 @@
-import { Simulation } from "types/contracts";
 import { scaleToStr } from "helpers";
 import { contracts } from "constants/contracts";
 import { junoDenom } from "constants/tokens";
@@ -7,31 +6,6 @@ import Contract from "./Contract";
 
 export default class LP extends Contract {
   private static address = contracts.loop_haloust_pair;
-  //simul on demand
-  async pairSimul(offer_amount: number, from_native: boolean) {
-    const offer_asset = from_native
-      ? {
-          native_token: {
-            denom: junoDenom,
-          },
-        }
-      : {
-          token: {
-            contract_addr: contracts.halo_token,
-          },
-        };
-
-    const result = await this.query<Simulation>(LP.address, {
-      simulation: {
-        offer_asset: {
-          info: offer_asset,
-          amount: scaleToStr(offer_amount),
-        },
-        block_time: Math.round(new Date().getTime() / 1000 + 10),
-      },
-    });
-    return result;
-  }
 
   createBuyMsg(
     juno_amount: number,

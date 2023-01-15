@@ -1,11 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
+import { queryContract } from "services/juno/queryContract";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
+import { contracts } from "constants/contracts";
 
 export default function useDestroyFund() {
   const {
@@ -27,7 +29,9 @@ export default function useDestroyFund() {
     );
 
     //get fund details for proposal preview
-    const fundDetails = await indexFundContract.getFundDetails(+data.fundId);
+    const fundDetails = await queryContract("ifFund", contracts.index_fund, {
+      fund_id: +data.fundId,
+    });
     const removeFundMeta: RemoveFundMeta = {
       type: "if_remove",
       data: fundDetails,

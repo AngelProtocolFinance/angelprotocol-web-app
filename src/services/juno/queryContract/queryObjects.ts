@@ -12,7 +12,22 @@ export const queryObject: {
     return { vault_list: options };
   },
 
+  /**
+   *  async getFundDetails(fundId: number) {
+    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
+      IndexFund.address,
+      {
+        fund_details: { fund_id: fundId },
+      }
+    );
+    return fundDetailsRes.fund;
+  }
+   */
+
   /** index fund */
+  ifFund(args) {
+    return { fund_details: args };
+  },
   ifFunds: { funds_list: {} },
   ifAlliance: { alliance_members: {} },
   ifConfig: { config: {} },

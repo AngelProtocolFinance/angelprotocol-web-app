@@ -9,6 +9,7 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
 import { extractFeeAmount, logger, scaleToStr } from "helpers";
+import { estimateGas } from "helpers/cosmos/estimateGas";
 import { ap_wallets } from "constants/ap_wallets";
 import estimateTerraFee from "./estimateTerraFee";
 import getBreakdown from "./getBreakdown";
@@ -50,14 +51,13 @@ export async function estimateDonation({
           )
         );
       }
-      const fee = await contract.estimateFee(msgs);
-      const feeAmount = extractFeeAmount(fee, native.token_id);
+      const { feeAmount, doc } = await estimateGas(msgs, wallet);
 
       return {
         type: wallet.type,
         wallet,
         fee: { amount: feeAmount, symbol: native.symbol },
-        tx: { fee, msgs },
+        doc,
       };
     }
     // terra native transaction, send or contract interaction

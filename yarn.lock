@@ -5655,6 +5655,7 @@ __metadata:
     is-mobile: ^3.1.1
     jsonwebtoken: ^8.5.1
     jwt-decode: ^3.1.2
+    long: ^5.2.1
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     prettier: ^2.8.0
@@ -13212,6 +13213,13 @@ __metadata:
   version: 4.0.0
   resolution: "long@npm:4.0.0"
   checksum: 16afbe8f749c7c849db1f4de4e2e6a31ac6e617cead3bdc4f9605cb703cd20e1e9fc1a7baba674ffcca57d660a6e5b53a9e236d7b25a295d3855cca79cc06744
+  languageName: node
+  linkType: hard
+
+"long@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "long@npm:5.2.1"
+  checksum: 9264da12d1b7df67e5aa6da4498144293caf1ad12e7f092efe4e9a2d32c53f0bbf7334f7cef997080a2a3af061142558ab366efa71698d98b1cdb883477445a7
   languageName: node
   linkType: hard
 

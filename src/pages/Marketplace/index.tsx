@@ -1,5 +1,4 @@
 import { isConnected, useWalletContext } from "contexts/WalletContext";
-import { simulate } from "./simulate";
 import { simulateKeplr } from "./simulate-keplr";
 
 export default function Marketplace() {

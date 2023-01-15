@@ -3,11 +3,13 @@ import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
+import { queryContract } from "services/juno/queryContract";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
+import { contracts } from "constants/contracts";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
@@ -55,7 +57,9 @@ export default function useUpdateFund() {
           toRemove
         );
 
-      const fundDetails = await indexFundContract.getFundDetails(+fundId);
+      const fundDetails = await queryContract("ifFund", contracts.index_fund, {
+        fund_id: +fundId,
+      });
 
       const fundUpdateMembersMeta: FundMemberUpdateMeta = {
         type: "if_members",

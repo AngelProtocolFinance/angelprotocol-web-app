@@ -1,6 +1,7 @@
-import type { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import type { JsonRpcSigner } from "@ethersproject/providers";
+import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
+import { Keplr } from "@keplr-wallet/types";
 
 export type ProviderId =
   | "binance-wallet"
@@ -24,7 +25,7 @@ export type Connected = {
 type Terra = { type: "terra"; post: TerraConnectedWallet["post"] };
 export type Cosmos = {
   type: "cosmos";
-  client: SigningCosmWasmClient;
+  client: Keplr | KeplrWalletConnectV1;
 };
 type EVM = {
   type: "evm";
