@@ -22,3 +22,20 @@ export type JSONAccount = JSONAny<{
   pub_key: JSONAny<{ key: string }>;
   sequence: string;
 }>;
+
+export function base64FromBytes(arr: Uint8Array): string {
+  const bin: string[] = [];
+  arr.forEach((byte) => {
+    bin.push(String.fromCharCode(byte));
+  });
+  return window.btoa(bin.join(""));
+}
+
+export function bytesFromBase64(b64: string): Uint8Array {
+  const bin = window.atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; ++i) {
+    arr[i] = bin.charCodeAt(i);
+  }
+  return arr;
+}
