@@ -27,7 +27,7 @@ const Filter = ({
     },
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   async function submit(data: FilterFormValues) {
     setFilterValues((prev) => ({
@@ -41,6 +41,11 @@ const Filter = ({
     }));
     buttonRef.current?.click();
   }
+
+  const handleReset = () => {
+    reset();
+    submit({} as FilterFormValues);
+  };
 
   return (
     <Popover className="sm:block sm:relative sm:py-3 sm:px-4 mt-6 sm:mt-0 sm:max-h-[3.1rem] border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:bg-blue-d6">
@@ -56,7 +61,7 @@ const Filter = ({
       </Popover.Button>
 
       <FormProvider {...methods}>
-        <Form submit={handleSubmit(submit)} />
+        <Form submit={handleSubmit(submit)} handleReset={handleReset} />
       </FormProvider>
     </Popover>
   );

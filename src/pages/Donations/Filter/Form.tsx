@@ -7,13 +7,15 @@ import CurrencyDropdown from "./CurrencyDropdown";
 import DateInput from "./DateInput";
 import NetworkDropdown from "./NetworkDropdown";
 
-const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
-  submit,
-}) => {
+const Form: FC<{
+  submit: FormEventHandler<HTMLFormElement>;
+  handleReset: FormEventHandler<HTMLFormElement>;
+}> = ({ submit, handleReset }) => {
   return (
     <Popover.Panel
       as="form"
       onSubmit={submit}
+      onReset={handleReset}
       method="get"
       className="flex flex-col fixed min-w-[100vw] min-h-[100vh] top-0 left-0 right-0 bottom-0 sm:top-auto sm:left-auto sm:bottom-auto sm:absolute sm:min-w-full sm:min-h-fit sm:right-[.05rem] z-50 border border-gray-l2 dark:border-bluegray sm:mt-4 sm:rounded-md sm:border-collapse sm:overflow-hidden bg-white"
     >
@@ -23,7 +25,7 @@ const Form: FC<{ submit: FormEventHandler<HTMLFormElement> }> = ({
           <Icon type="Close" size={24} className="text-gray-d2" />
         </Popover.Button>
       </div>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 text-sm">
         <div className="order-2 sm:order-1 flex flex-col w-full p-6 gap-6 bg-white dark:bg-blue-d5">
           <div className="grid gap-2 grid-cols-2">
             <label className="col-span-full">Date</label>
