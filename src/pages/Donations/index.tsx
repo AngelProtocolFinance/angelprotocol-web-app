@@ -22,9 +22,9 @@ export default function Donations() {
 
   return (
     <div className="relative padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
-      <div className="flex lg:justify-between lg:items-center justify-center mt-10">
-        <h1 className="text-3xl font-bold">My Donations</h1>
-      </div>
+      <h1 className="text-3xl font-bold mt-10 max-lg:text-center">
+        My Donations
+      </h1>
       {!isLoading && (
         <div className="grid grid-rows-1 sm:grid-cols-3 my-8">
           <div className="sm:col-span-2 sm:mr-4">
