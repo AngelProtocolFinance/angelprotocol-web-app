@@ -46,7 +46,8 @@ export default function useWidgetUrlGenerator(
     );
     const param4 = append(
       !!formValues.liquidPercentage,
-      URL_PARAMS.liquidPercentage
+      URL_PARAMS.liquidPercentage,
+      formValues.liquidPercentage
     );
     const param5 = append(
       !isEmpty(formValues.availableCurrencies),
@@ -64,7 +65,7 @@ export default function useWidgetUrlGenerator(
 function append(
   condition: boolean,
   name: keyof UrlParamValues,
-  values = ""
+  values?: string | number
 ): string {
   return condition ? `&${name}${!values ? "" : `=${values}`}` : "";
 }
