@@ -31,7 +31,6 @@ function FormWithContext(props: EndowmentProfile) {
     name: props.name,
     tagline: props.tagline || "",
     active_in_countries: props.active_in_countries,
-    categories_general: props.categories.general.map((g) => `${g}`),
     sdg: props.categories.sdgs[0],
     contact_email: props.contact_email,
     hq_city: props.hq.city || "",

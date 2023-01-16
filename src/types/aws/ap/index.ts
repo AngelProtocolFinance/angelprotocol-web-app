@@ -1,9 +1,9 @@
-import { CapitalizedEndowmentType, Categories } from "../../contracts";
-import { NetworkType } from "../../lists";
+import { CapitalizedEndowmentType } from "../../contracts";
+import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   active_in_countries: string[];
-  categories: Categories;
+  categories: { sdgs: UNSDG_NUMS[] };
   id: number;
   image: string;
   kyc_donors_only: boolean;
