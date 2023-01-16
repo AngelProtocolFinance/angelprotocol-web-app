@@ -257,6 +257,17 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
+export type ProfileWithSettings = Omit<
+  FlatProfileWithSettings,
+  "hq_country" | "image" | "logo" | "categories_sdgs"
+> &
+  Pick<EndowmentSettingsPayload, "name"> & {
+    categories_sdg: UNSDG_NUMS;
+    hq_country: CountryOption;
+    image: ImgLink;
+    logo: ImgLink;
+  };
+
 // needs to be flatted out for use with CloudSearch
 export type FlatProfileWithSettings = Omit<
   Endowment,
@@ -270,17 +281,6 @@ export type FlatProfileWithSettings = Omit<
   social_media_url_linkedin?: string;
   social_media_url_twitter?: string;
 };
-
-export type ProfileWithSettings = Omit<
-  FlatProfileWithSettings,
-  "hq_country" | "image" | "logo" | "categories_sdgs"
-> &
-  Pick<EndowmentSettingsPayload, "name"> & {
-    categories_sdg: UNSDG_NUMS;
-    hq_country: CountryOption;
-    image: ImgLink;
-    logo: ImgLink;
-  };
 
 export type ProfileFormValues = ProfileWithSettings & {
   initial: FlatProfileWithSettings;
