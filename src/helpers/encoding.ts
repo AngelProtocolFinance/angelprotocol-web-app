@@ -1,6 +1,9 @@
 import { toBase64 as base64FromU8a, toUtf8 as toU8a } from "@cosmjs/encoding";
 
-export { fromBase64 as u8aFromBase64 } from "@cosmjs/encoding";
+export {
+  fromBase64 as u8aFromBase64,
+  fromHex as u8aFromHex,
+} from "@cosmjs/encoding";
 export { base64FromU8a, toU8a };
 /**
  *

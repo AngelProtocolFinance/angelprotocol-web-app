@@ -1,10 +1,9 @@
-import { fromHex } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { BroadcastResponse } from "types/cosmos";
 import { chains } from "constants/chains";
 import { WC_BRIDGE } from "constants/urls";
-import { base64FromU8a } from "./encoding";
+import { base64FromU8a, u8aFromHex } from "./encoding";
 
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,
@@ -40,7 +39,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
     throw new Error(res["raw_log"]);
   }
 
-  return fromHex(res.txhash);
+  return u8aFromHex(res.txhash);
 };
 
 type Mode = Parameters<CustomSendTx>[2];
