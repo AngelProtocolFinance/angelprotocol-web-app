@@ -1,4 +1,4 @@
-import { PubKey } from "@cosmjs/launchpad";
+import type { PubKey } from "@cosmjs/launchpad";
 import { Coin } from "@cosmjs/proto-signing";
 import { UNSDG_NUMS } from "types/lists";
 
