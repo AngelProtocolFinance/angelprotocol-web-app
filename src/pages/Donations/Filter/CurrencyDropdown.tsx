@@ -15,7 +15,7 @@ const CurrencyDropdown: FC = () => {
           "inline-flex w-full justify-between items-center border border-gray-l2 dark:border-bluegray rounded-md border-collapse p-3 dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
         }
       >
-        <option value="default">
+        <option value="">
           {isLoading ? "Loading..." : "Select a currency..."}
         </option>
         {currencies?.map((currency) => (

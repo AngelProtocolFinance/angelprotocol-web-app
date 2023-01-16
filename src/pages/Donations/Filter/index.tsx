@@ -24,8 +24,8 @@ const Filter = ({
     defaultValues: {
       startDate: "",
       endDate: "",
-      network: "default",
-      currency: "default",
+      network: "",
+      currency: "",
     },
   });
 
@@ -38,8 +38,8 @@ const Filter = ({
       id: address,
       afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
       beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-      chainName: data.network !== "default" ? data.network : "",
-      denomination: data.currency !== "default" ? data.currency : "",
+      chainName: data.network ? data.network : "",
+      denomination: data.currency ? data.currency : "",
     };
   };
 
