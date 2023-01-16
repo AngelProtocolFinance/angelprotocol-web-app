@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import {
+  FlatProfileWithSettings,
   ProfileFormValues,
-  ProfileUpdate,
   ProfileWithSettings,
 } from "pages/Admin/types";
 import { EndowmentInfo } from "types/aws";
@@ -32,7 +32,7 @@ export default function EditProfile() {
 
 function FormWithContext(props: EndowmentInfo) {
   //initialize falsy values
-  const flatInitial: Required<ProfileUpdate> = {
+  const flatInitial: Required<FlatProfileWithSettings> = {
     id: props.id,
     overview: props.overview,
     url: props.url || "",

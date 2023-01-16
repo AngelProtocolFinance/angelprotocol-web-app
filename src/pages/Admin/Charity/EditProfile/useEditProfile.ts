@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProfileFormValues, ProfileUpdate } from "pages/Admin/types";
+import { FlatProfileWithSettings, ProfileFormValues } from "pages/Admin/types";
 import { ObjectEntries } from "types/utils";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateProfileMutation } from "services/aws/aws";
@@ -35,7 +35,7 @@ export default function useEditProfile() {
       const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
-      const flatData: ProfileUpdate = {
+      const flatData: FlatProfileWithSettings = {
         ...data,
         categories_sdgs: [categories_sdg],
         hq_country: data.hq_country.name,
@@ -51,7 +51,9 @@ export default function useEditProfile() {
         diff.overview = PLACEHOLDER_OVERVIEW;
       }
 
-      const diffEntries = Object.entries(diff) as ObjectEntries<ProfileUpdate>;
+      const diffEntries = Object.entries(
+        diff
+      ) as ObjectEntries<FlatProfileWithSettings>;
       if (diffEntries.length <= 0) {
         throw new Error("no changes detected");
       }

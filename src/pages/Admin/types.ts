@@ -258,7 +258,7 @@ export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
 // needs to be flatted out for use with CloudSearch
-export type ProfileUpdate = Omit<
+export type FlatProfileWithSettings = Omit<
   Endowment,
   "endow_type" | "categories" | "tier" | "status" | "social_media_urls" | "hq"
 > & {
@@ -272,7 +272,7 @@ export type ProfileUpdate = Omit<
 };
 
 export type ProfileWithSettings = Omit<
-  ProfileUpdate,
+  FlatProfileWithSettings,
   "hq_country" | "image" | "logo" | "categories_sdgs"
 > &
   Pick<EndowmentSettingsPayload, "name"> & {
@@ -283,7 +283,7 @@ export type ProfileWithSettings = Omit<
   };
 
 export type ProfileFormValues = ProfileWithSettings & {
-  initial: ProfileUpdate;
+  initial: FlatProfileWithSettings;
 };
 
 export type SortDirection = "asc" | "desc";
