@@ -57,7 +57,6 @@ function FormWithContext(props: EndowmentInfo) {
     average_annual_budget: props.average_annual_budget || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
     kyc_donors_only: props.kyc_donors_only,
-    number_of_employees: props.number_of_employees || 1,
     tagline: props.tagline || "",
   };
 

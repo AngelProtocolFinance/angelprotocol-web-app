@@ -29,16 +29,19 @@ export default function useEditProfile() {
   const editProfile = async ({
     initial,
     categories_sdg,
+    hq_country,
+    image,
+    logo,
     ...data
   }: ProfileFormValues) => {
     try {
-      const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
+      const [bannerUrl, logoUrl] = await getImgUrls([image, logo]);
       //flatten profile values for diffing
       //TODO: refactor to diff nested objects
       const flatData: FlatProfileWithSettings = {
         ...data,
         categories_sdgs: [categories_sdg],
-        hq_country: data.hq_country.name,
+        hq_country: hq_country.name,
         image: bannerUrl,
         logo: logoUrl,
       };
