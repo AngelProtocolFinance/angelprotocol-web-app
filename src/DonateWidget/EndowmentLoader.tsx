@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { EndowmentInfo } from "services/types";
-import { useEndowInfoQuery } from "services/juno/custom";
+import { useEndowInfoQuery } from "services/aws/aws";
 import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
 
