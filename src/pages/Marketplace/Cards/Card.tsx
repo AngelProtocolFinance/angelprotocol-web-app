@@ -10,6 +10,7 @@ import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
 export default function Card({
+  active_in_countries,
   name,
   logo,
   image,
@@ -48,17 +49,17 @@ export default function Card({
           <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
             <span className="font-semibold">HQ:</span> {hq_country}, ${hq_city}
           </p>
-          {tagline ? (
+          {tagline && tagline !== " " ? (
             <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
               {tagline}
             </p>
           ) : null}
           {/** country and sdg always on bottom */}
           <div className="mt-auto empty:hidden grid gap-3">
-            {!isEmpty([]) && (
+            {!isEmpty(active_in_countries) && (
               <p className="text-gray-d1 dark:text-gray text-sm">
                 <span className="font-semibold">Active in:</span>{" "}
-                {["Philippines", "Korea", "Mongolia"].join(" ,")}
+                {active_in_countries.join(" ,")}
               </p>
             )}
             {!isEmpty(sdgs) && (
