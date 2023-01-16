@@ -22,7 +22,7 @@ export default function InnerComponent(props: {
   return (
     <div className="grid grid-rows-[1fr_auto] gap-10">
       <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
-        <header className="flex justify-between items-center w-full h-24 z-20">
+        <header className="flex justify-center items-center gap-10 w-full h-24 z-20">
           <h1 className="text-xl sm:text-3xl font-heading font-bold">
             {getPossessiveForm(props.name)} endowment
           </h1>
