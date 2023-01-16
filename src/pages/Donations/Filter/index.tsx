@@ -2,7 +2,6 @@ import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { FilterFormValues } from "./types";
 import { DonationsQueryParams } from "types/aws";
 import Icon from "components/Icon";
@@ -16,7 +15,6 @@ const Filter = ({
   setFilterValues: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
 }) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const { address } = useParams<{ address: string }>();
 
   const methods = useForm<FilterFormValues>({
     resolver: yupResolver(schema),
@@ -31,22 +29,16 @@ const Filter = ({
 
   const { handleSubmit } = methods;
 
-  const transformToDonationsQueryParams = (
-    data: FilterFormValues
-  ): DonationsQueryParams => {
-    return {
-      id: address,
-      afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-      beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-      chainName: data.network ? data.network : "",
-      denomination: data.currency ? data.currency : "",
-    };
-  };
-
   async function submit(data: FilterFormValues) {
-    let filters = transformToDonationsQueryParams(data);
-    cleanObject(filters);
-    setFilterValues(filters);
+    setFilterValues((prev) => ({
+      id: prev.id,
+      ...cleanObject({
+        afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
+        beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        chainName: data.network,
+        denomination: data.currency,
+      }),
+    }));
     buttonRef.current?.click();
   }
 
