@@ -1,17 +1,13 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { EndowmentInfo } from "services/types";
 import {
-  Endowment,
+  EndowmentCard,
   EndowmentProfile,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
-import { ProfileResponse } from "types/contracts";
 import { NetworkType } from "types/lists";
-import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
-import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
@@ -46,7 +42,7 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowments: builder.query<
-      PaginatedAWSQueryRes<Endowment[]>,
+      PaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
     >({
       providesTags: [{ type: "endowments" }],
@@ -77,19 +73,6 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => getProfileQuery(endowId),
     }),
-    endowInfo: builder.query<EndowmentInfo, number>({
-      providesTags: [{ type: "endowments" }, { type: "profile" }],
-      async queryFn(endowId, _api, _opts, baseQuery) {
-        const [{ data: profile }, endow] = await Promise.all([
-          baseQuery(getProfileQuery(endowId)),
-          queryContract("accEndowment", contracts.accounts, { id: endowId }),
-        ]);
-
-        return {
-          data: { ...(profile as ProfileResponse), ...endow, id: endowId },
-        };
-      },
-    }),
   }),
 });
 
@@ -98,7 +81,6 @@ export const {
   useToggleBookmarkMutation,
   useEndowmentsQuery,
   useProfileQuery,
-  useEndowInfoQuery,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },
