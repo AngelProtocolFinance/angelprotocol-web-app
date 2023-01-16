@@ -95,7 +95,7 @@ export const aws = createApi({
         ]);
 
         return {
-          data: { ...(profile as Profile), ...endow, id: endowId },
+          data: { ...(profile as Profile), ...endow },
         };
       },
     }),

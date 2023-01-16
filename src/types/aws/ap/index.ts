@@ -13,6 +13,7 @@ import { NetworkType } from "../../lists";
  */
 
 export interface Profile {
+  id: number;
   name: string; // name of the Charity Endowment
   overview: string;
   categories: Categories;
@@ -38,7 +39,6 @@ export interface Profile {
 
 export interface Endowment extends Omit<Profile, "tier"> {
   //EndowmentEntry
-  id: number; //int
   owner: string;
   status: keyof EndowmentStatus;
   endow_type: CapitalizedEndowmentType;
@@ -109,4 +109,4 @@ export interface DonationsMetricList {
   donations_total_amount: number;
 }
 
-export type EndowmentInfo = Profile & EndowmentDetails & { id: number };
+export type EndowmentInfo = Profile & EndowmentDetails;

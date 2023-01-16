@@ -5,9 +5,8 @@ import {
   ProfileUpdate,
   ProfileWithSettings,
 } from "pages/Admin/types";
-import { Profile } from "types/aws";
+import { EndowmentInfo } from "types/aws";
 import "types/contracts";
-import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
@@ -28,14 +27,10 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return (
-    <FormWithContext {...profile} id={endowmentId} endowment={endowment} />
-  );
+  return <FormWithContext {...profile} {...endowment} id={endowmentId} />;
 }
 
-function FormWithContext(
-  props: Profile & { id: number; endowment: EndowmentDetails }
-) {
+function FormWithContext(props: EndowmentInfo) {
   //initialize falsy values
   const flatInitial: Required<ProfileUpdate> = {
     id: props.id,
@@ -56,12 +51,12 @@ function FormWithContext(
     logo: props.logo || "",
     categories_sdgs: props.categories.sdgs,
     categories_general: props.categories.general,
-    owner: props.endowment.owner,
+    owner: props.owner,
     active_in_countries: props.active_in_countries || [],
     annual_revenue: props.annual_revenue || "",
     average_annual_budget: props.average_annual_budget || "",
     charity_navigator_rating: props.charity_navigator_rating || "",
-    kyc_donors_only: props.endowment.kyc_donors_only,
+    kyc_donors_only: props.kyc_donors_only,
     number_of_employees: props.number_of_employees || 1,
     tagline: props.tagline || "",
   };
