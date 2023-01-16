@@ -8,11 +8,13 @@ import {
 import { NetworkType } from "../../lists";
 
 export type EndowmentProfileUpdate = {
+  //required
   id: number;
   owner: string;
 
-  // optional
-  active_in_countries: string;
+  /** optional, though set as required in this type
+  to force setting of default values - "", [], etc ..*/
+  active_in_countries: string[];
   categories_general: string[];
   categories_sdgs: number[];
   contact_email: string;
@@ -30,25 +32,27 @@ export type EndowmentProfileUpdate = {
   street_address: string;
   tagline: string;
   tier: number /** 1 - 3  */;
-  url: string;
+  url: string | null;
 };
 
 export type EndowmentProfile = {
   id: number;
   name: "Anna's Pals";
-  registration_number: "47-5204938";
-  street_address: "Boston, MA";
+  registration_number?: string;
+  street_address?: string;
   categories: {
     sdgs: [3];
     general: [];
   };
-  hq: { country: string; city: string };
-  kyc_donors_only?: boolean;
+  hq: { country?: string; city?: string };
+
+  active_in_countries: string[];
+  kyc_donors_only: boolean;
 
   //content
   image: string;
   logo: string;
-  tagline: string;
+  tagline?: string;
   overview: string;
 
   //contacts
@@ -58,7 +62,7 @@ export type EndowmentProfile = {
     linkedin?: string;
   };
   contact_email: "no-reply@angelprotocol.io";
-  url: null | string;
+  url?: string;
 
   //balances
   total_lock: number;

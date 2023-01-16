@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
-import { ProfileUpdate } from "types/contracts";
+import { FormValues } from "./types";
+import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
@@ -22,67 +22,36 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return <FormWithContext {...profile} id={endowmentId} />;
+  return <FormWithContext {...profile} />;
 }
 
-function FormWithContext(props: EndowmentProfile & { id: number }) {
-  //initialize falsy values
-  const flatInitial: EndowmentProfileUpdate = {
-    id: props.id,
+function FormWithContext(props: EndowmentProfile) {
+  // could just add to useForm.defaultValue - but not Partial here
+  const initial: FormValues = {
+    name: props.name,
+    tagline: props.tagline || "",
+    active_in_countries: props.active_in_countries,
+    categories_general: props.categories.general,
+    categories_sdgs: props.categories.sdgs,
+    contact_email: props.contact_email,
+    hq_city: props.hq.city || "",
+    hq_country: props.hq.country || "",
+    image: { name: "", publicUrl: props.image, preview: props.image },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    kyc_donors_only: props.kyc_donors_only,
     overview: props.overview,
     url: props.url || "",
     registration_number: props.registration_number || "",
-    street_address: props.street_address || "",
-    contact_email: props.contact_email || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
     social_media_url_twitter: props.social_media_urls.linkedin || "",
-
-    /*
-    
-    id: number;
-  owner: string;
-
-  // optional
-  active_in_countries: string;
-  categories_general: string[];
-  categories_sdgs: number[];
-  contact_email: string;
-  hq_city: string;
-  hq_country: string;
-  image: string;
-  kyc_donors_only: boolean;
-  logo: string;
-  name: string;
-  overview: string;
-  registration_number: string;
-  social_media_url_facebook: string;
-  social_media_url_linkedin: string;
-  social_media_url_twitter: string;
-  street_address: string;
-  tagline: string;
-  tier: number /** 1 - 3  */;
-  url: string;
-    */
+    street_address: props.street_address || "",
   };
 
-  const initial: ProfileWithSettings = {
-    ...flatInitial,
-    country: {
-      name: props.country_of_origin ?? "",
-      flag: "" /** let country selector determine flag since not saved in db */,
-    },
-    image: { name: "", publicUrl: props.image, preview: props.image },
-    logo: { name: "", publicUrl: props.logo, preview: props.logo },
-  };
-
-  const methods = useForm<ProfileFormValues>({
+  const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
-      ...initial,
-      initial: flatInitial,
-    },
+    defaultValues: initial,
     resolver: yupResolver(schema),
   });
   return (
