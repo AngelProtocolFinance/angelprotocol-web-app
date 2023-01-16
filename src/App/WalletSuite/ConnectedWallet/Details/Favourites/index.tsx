@@ -1,12 +1,11 @@
 import { useWalletProfileQuery } from "services/aws/aws";
-import { WalletState } from "contexts/WalletContext";
 import { QueryLoader } from "components/admin";
 import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
-export default function Favourites(props: WalletState) {
-  const queryState = useWalletProfileQuery(props.address);
+export default function Favourites({ address }: { address: string }) {
+  const queryState = useWalletProfileQuery(address);
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="flex justify-between gap-2 font-heading">

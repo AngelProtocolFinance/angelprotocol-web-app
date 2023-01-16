@@ -32,7 +32,7 @@ export default function Details(props: WalletState) {
                 My Donations
               </Link>
             </div>
-            <Favourites {...props} />
+            <Favourites address={props.address} />
             <DisconnectBtn />
           </>
         );
