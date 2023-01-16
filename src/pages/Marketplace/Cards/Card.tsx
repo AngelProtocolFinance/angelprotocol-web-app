@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Endowment } from "types/aws";
+import { EndowmentCard } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
@@ -9,78 +9,6 @@ import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
-/** 
- 
-{
-    "active_in_countries": [
-        "United States"
-    ],
-    "annual_revenue": "Under $100k",
-    "average_annual_budget": "$25k",
-    "chain": "testnet",
-    "charity_navigator_rating": "Bronze",
-    "contact_email": "no-reply@angelprotocol.io",
-    "country_of_origin": "US",
-    "endow_type": "Charity",
-    "id": 22,
-    "hq_city": "City",
-    "hq_country": "United States",
-    "image": "https://charity-profile-images.s3.amazonaws.com/charity_image/4d50726f-8dd7-4626-8ae5-e80469ddb05a.png",
-    "kyc_donors_only": false,
-    "logo": "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/charity-profile-images/logo/Annas+Pals+JPG+Logo.png",
-    "name": "Anna's Pals",
-    "number_of_employees": 0,
-    "overall": 2.9000000000000004,
-    "overview": "{\"ops\":[{\"insert\":\"Anna’s Pals is a registered 501c3 charity that was established six years ago with the mission of enriching the lives of hospitalized children and their families in and around the Boston area, while also providing funding for research associated with childhood cancers.\"}]}",
-    "owner": "juno1sh6uwdp9n8sp2u6c50edlskf7jx6hpqlxlezt9r29m6r34ns3ursprhu2m",
-    "proposal_link": 34,
-    "registration_number": "47-5204938",
-    "status": "Approved",
-    "street_address": "Boston, MA",
-    "tagline": " ",
-    "tier": "Level3",
-    "total_liq": 0.16,
-    "total_lock": 2.74,
-    "categories": {
-        "sdgs": [
-            3
-        ]
-    },
-    "social_media_urls": {
-        "facebook": "https://facebook.com/annaspals",
-        "linkedin": "https://www.linkedin.com/company/anna-s-pals/",
-        "twitter": "https://twitter.com/annaspals"
-    }
-}
-
-
-  //EndowmentEntry
-  id: number; //
-  owner: string;
-  status: keyof EndowmentStatus;
-  endow_type: CapitalizedEndowmentType; //
-  name: string; //
-  logo: string; //
-  image: string; //
-  tier: EndowmentTier;
-  categories: Categories; //
-  kyc_donors_only: boolean; //
-
-  //profile
-  overview: string;
-  url?: string;
-  registration_number?: string;
-  country_of_origin?: string; //
-  street_address?: string;
-  contact_email?: string;
-  social_media_urls: SocialMedialUrls;
-  number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
-  charity_navigator_rating?: string;
-
-*/
-
 export default function Card({
   name,
   logo,
@@ -88,9 +16,11 @@ export default function Card({
   id,
   endow_type,
   categories: { sdgs },
-  country_of_origin,
+  tagline,
+  hq_country,
+  hq_city,
   kyc_donors_only,
-}: Endowment) {
+}: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
@@ -116,15 +46,13 @@ export default function Card({
         <div className="flex flex-col p-3 pb-4 gap-3">
           <h3 className="font-bold">{name}</h3>
           <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-            <span className="font-semibold">HQ:</span> {country_of_origin}
+            <span className="font-semibold">HQ:</span> {hq_country}, ${hq_city}
           </p>
-          {false && (
+          {tagline ? (
             <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et ma
+              {tagline}
             </p>
-          )}
+          ) : null}
           {/** country and sdg always on bottom */}
           <div className="mt-auto empty:hidden grid gap-3">
             {!isEmpty([]) && (

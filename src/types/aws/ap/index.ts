@@ -1,11 +1,41 @@
-import {
-  CapitalizedEndowmentType,
-  Categories,
-  EndowmentStatus,
-  EndowmentTier,
-  SocialMedialUrls,
-} from "../../contracts";
+import { CapitalizedEndowmentType, Categories } from "../../contracts";
 import { NetworkType } from "../../lists";
+
+type EndowmentBase = {
+  active_in_countries: string[];
+  categories: Categories;
+  id: number;
+  image: string;
+  kyc_donors_only: boolean;
+  logo: string;
+  name: string;
+  tagline?: string;
+};
+
+export type EndowmentProfile = EndowmentBase & {
+  contact_email: string;
+  hq: { country?: string; city?: string };
+  overview: string;
+  registration_number?: string;
+  social_media_urls: {
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+  };
+  street_address?: string;
+
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+
+  url?: string;
+};
+
+export type EndowmentCard = EndowmentBase & {
+  endow_type: CapitalizedEndowmentType;
+  hq_city?: string;
+  hq_country?: string;
+};
 
 export type EndowmentProfileUpdate = {
   //required
@@ -33,68 +63,6 @@ export type EndowmentProfileUpdate = {
   tagline: string;
   tier: number /** 1 - 3  */;
   url: string | null;
-};
-
-export type EndowmentProfile = {
-  id: number;
-  name: "Anna's Pals";
-  registration_number?: string;
-  street_address?: string;
-  categories: {
-    sdgs: [3];
-    general: [];
-  };
-  hq: { country?: string; city?: string };
-
-  active_in_countries: string[];
-  kyc_donors_only: boolean;
-
-  //content
-  image: string;
-  logo: string;
-  tagline?: string;
-  overview: string;
-
-  //contacts
-  social_media_urls: {
-    twitter?: string;
-    facebook?: string;
-    linkedin?: string;
-  };
-  contact_email: "no-reply@angelprotocol.io";
-  url?: string;
-
-  //balances
-  total_lock: number;
-  total_liq: number;
-  overall: number;
-};
-
-export type Endowment = {
-  //EndowmentEntry
-  id: number; //int
-  owner: string;
-  status: keyof EndowmentStatus;
-  endow_type: CapitalizedEndowmentType;
-  name: string;
-  logo: string;
-  image: string;
-  tier: EndowmentTier;
-  categories: Categories;
-  kyc_donors_only: boolean;
-
-  //profile
-  overview: string;
-  url?: string;
-  registration_number?: string;
-  country_of_origin?: string;
-  street_address?: string;
-  contact_email?: string;
-  social_media_urls: SocialMedialUrls;
-  number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
-  charity_navigator_rating?: string;
 };
 
 export type SortDirection = "asc" | "desc";
