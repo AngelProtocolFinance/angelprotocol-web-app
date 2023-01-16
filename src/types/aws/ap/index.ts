@@ -44,25 +44,25 @@ export type EndowmentProfileUpdate = {
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/
-  active_in_countries: string[];
-  categories_general: string[];
-  categories_sdgs: number[];
-  contact_email: string;
-  hq_city: string;
-  hq_country: string;
-  image: string;
-  kyc_donors_only: boolean;
-  logo: string;
-  name: string;
-  overview: string;
-  registration_number: string;
-  social_media_url_facebook: string;
-  social_media_url_linkedin: string;
-  social_media_url_twitter: string;
-  street_address: string;
-  tagline: string;
-  tier: number /** 1 - 3  */;
-  url: string | null;
+  active_in_countries?: string[];
+  categories_general?: string[];
+  categories_sdgs?: number[];
+  contact_email?: string;
+  hq_city?: string;
+  hq_country?: string;
+  image?: string;
+  kyc_donors_only?: boolean;
+  logo?: string;
+  name?: string;
+  overview?: string;
+  registration_number?: string;
+  social_media_url_facebook?: string;
+  social_media_url_linkedin?: string;
+  social_media_url_twitter?: string;
+  street_address?: string;
+  tagline?: string;
+  tier?: number /** 1 - 3  */;
+  url?: string | null;
 };
 
 export type SortDirection = "asc" | "desc";

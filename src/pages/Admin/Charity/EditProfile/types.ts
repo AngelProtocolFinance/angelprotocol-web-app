@@ -2,7 +2,7 @@ import { CountryOption } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { ImgLink } from "components/ImgEditor";
 
-type K = keyof EndowmentProfileUpdate;
+type K = keyof Required<EndowmentProfileUpdate>;
 const _logo: K = "logo";
 const _img: K = "image";
 const _country: K = "hq_country";
@@ -13,7 +13,8 @@ const _tier: K = "tier";
 const _owner: K = "owner";
 
 export type FormValues = Omit<
-  EndowmentProfileUpdate,
+  //force to put default values e.g. .. "", []
+  Required<EndowmentProfileUpdate>,
   | typeof _logo
   | typeof _img
   | typeof _country

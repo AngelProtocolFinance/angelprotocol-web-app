@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { Keplr } from "@keplr-wallet/types";
 import {
   EndowmentCard,
   EndowmentProfile,
@@ -11,6 +12,7 @@ import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
+type StdSignature = Awaited<ReturnType<Keplr["signArbitrary"]>>;
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
 const getProfileQuery = (endowId: number) =>
@@ -73,6 +75,35 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => getProfileQuery(endowId),
     }),
+    updateProfile: builder.mutation<
+      EndowmentProfile,
+      { data: string; signature: StdSignature; signer: string }
+    >({
+      invalidatesTags: ["profile", "endowments"],
+      query: ({ data, signature, signer }) => ({
+        url: `v1/profile/${network}/endowment`,
+        method: "PUT",
+        body: {
+          msg: [
+            {
+              type: "sign/MsgSignData",
+              value: { signer, data },
+            },
+          ],
+          fee: { gas: "0", amount: [] },
+          memo: "",
+          signatures: [
+            {
+              pub_key: {
+                type: signature.pub_key.type,
+                value: signature.pub_key.value,
+              },
+              signature: signature.signature,
+            },
+          ],
+        },
+      }),
+    }),
   }),
 });
 
@@ -81,6 +112,7 @@ export const {
   useToggleBookmarkMutation,
   useEndowmentsQuery,
   useProfileQuery,
+  useUpdateProfileMutation,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },
