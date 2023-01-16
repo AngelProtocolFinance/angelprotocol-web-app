@@ -94,8 +94,13 @@ export const aws = createApi({
           queryContract("accEndowment", contracts.accounts, { id: endowId }),
         ]);
 
+        // TODO: remove once profile-related ops fully migrated to AWS DB
+        // EXPLANATION: need to exclude these fields as they are no longer updated in SC
+        // only in AWS DB
+        const { name, tier, categories, image, logo, ...restEndow } = endow;
+
         return {
-          data: { ...(profile as Profile), ...endow },
+          data: { ...(profile as Profile), ...restEndow },
         };
       },
     }),

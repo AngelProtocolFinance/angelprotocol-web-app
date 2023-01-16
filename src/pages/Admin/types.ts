@@ -6,7 +6,6 @@ import {
   AllianceMember,
   Asset,
   CW4Member,
-  EndowmentSettingsPayload,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,

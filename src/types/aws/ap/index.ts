@@ -109,4 +109,5 @@ export interface DonationsMetricList {
   donations_total_amount: number;
 }
 
-export type EndowmentInfo = Profile & EndowmentDetails;
+export type EndowmentInfo = Profile &
+  Omit<EndowmentDetails, "image" | "logo" | "name" | "tier" | "categories">;

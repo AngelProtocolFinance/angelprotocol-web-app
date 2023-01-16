@@ -5,7 +5,7 @@ import {
   ProfileFormValues,
   ProfileWithSettings,
 } from "pages/Admin/types";
-import { EndowmentInfo } from "types/aws";
+import { Profile } from "types/aws";
 import "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
@@ -27,10 +27,18 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return <FormWithContext {...profile} {...endowment} id={endowmentId} />;
+  return (
+    <FormWithContext
+      {...profile}
+      kyc_donors_only={endowment.kyc_donors_only}
+      owner={endowment.owner}
+    />
+  );
 }
 
-function FormWithContext(props: EndowmentInfo) {
+function FormWithContext(
+  props: Profile & { kyc_donors_only: boolean; owner: string }
+) {
   //initialize falsy values
   const flatInitial: Required<FlatProfileWithSettings> = {
     id: props.id,
