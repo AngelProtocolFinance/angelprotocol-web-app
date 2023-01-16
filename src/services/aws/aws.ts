@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { EndowmentInfo } from "services/types";
 import {
   Endowment,
-  EndowmentBookmark,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
@@ -17,12 +16,22 @@ import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
+const getProfileQuery = (endowId: number) =>
+  `/v1/profile/${network}/endowment/${endowId}`;
+
+const getWalletProfileQuery = (walletAddr: string) =>
+  `/v1/profile/${network}/user/${walletAddr}`;
+
 const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
     prepareHeaders(headers) {
-      headers.append("authorization", createAuthToken("charity-owner"));
+      // As 'prepareHeaders' is called after builder.query returns the request to be sent,
+      // this check allows for custom 'authorization' headers to be set within the builder.query
+      if (!headers.has("authorization")) {
+        headers.append("authorization", createAuthToken("charity-owner"));
+      }
       return headers;
     },
   }),
@@ -46,18 +55,19 @@ export const aws = createApi({
     }),
     walletProfile: builder.query<WalletProfile, string>({
       providesTags: [{ type: "walletProfile" }],
-      query: (walletAddr) => `/v1/bookmarks/${walletAddr}/${network}`,
+      query: getWalletProfileQuery,
     }),
     toggleBookmark: builder.mutation<
       unknown,
-      { type: "add" | "delete"; wallet: string } & EndowmentBookmark
+      { type: "add" | "delete"; wallet: string; endowId: number }
     >({
-      invalidatesTags: [{ type: "profile" }],
-      query: ({ type, ...payload }) => {
+      invalidatesTags: [{ type: "walletProfile" }],
+      query: ({ endowId, type, wallet }) => {
         return {
-          url: "/v1/bookmarks",
+          url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
-          body: { ...payload, network },
+          body: { id: endowId },
+          headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
@@ -97,6 +107,3 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
-
-const getProfileQuery = (endowId: number) =>
-  `/v1/profile/${network}/endowment/${endowId}`;

@@ -1,19 +1,38 @@
-import { isConnected, useWalletContext } from "contexts/WalletContext";
-import { simulateKeplr } from "./simulate-keplr";
+import banner from "assets/images/hands-blue.jpg";
+import { useGetter } from "store/accessors";
+import Cards from "./Cards";
+import Hero from "./Hero";
+import Sidebar from "./Sidebar";
+import Toolbar from "./Toolbar";
 
 export default function Marketplace() {
-  const wallet = useWalletContext();
-
-  if (!isConnected(wallet)) return <>connect wallet</>;
+  const isFilterOpen = useGetter(
+    (state) => state.component.marketFilter.isOpen
+  );
   return (
-    <div className="pt-24 grid gap-4 justify-start">
-      <button
-        type="button"
-        onClick={simulateKeplr}
-        className="btn btn-orange p-4 rounded font-work"
+    <div className="w-full grid content-start pb-16">
+      <div
+        style={{ backgroundImage: `url('${banner}')` }}
+        className="relative overlay bg-cover bg-center"
       >
-        simulate keplr
-      </button>
+        <Hero classes="grid isolate mt-28 mb-16" />
+      </div>
+
+      <div className="grid grid-cols-[auto_1fr] gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen">
+        <Toolbar classes="my-10 col-span-2" />
+        <Sidebar
+          classes={`${
+            isFilterOpen
+              ? "fixed z-20 inset-0 md:grid md:relative md:z-0"
+              : "hidden"
+          }`}
+        />
+        <Cards
+          classes={`${
+            isFilterOpen ? "col-span-2 md:col-span-1" : "col-span-2"
+          }`}
+        />
+      </div>
     </div>
   );
 }

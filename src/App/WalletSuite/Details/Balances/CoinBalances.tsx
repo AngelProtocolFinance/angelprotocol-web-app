@@ -5,7 +5,11 @@ import { humanize } from "helpers";
 import KadoOpener from "./KadoOpener";
 
 const MIN_AMOUNT = 0.001;
-export default function CoinBalances({ isSmallAmountsShown = true }) {
+export default function CoinBalances({
+  isSmallAmountsHidden,
+}: {
+  isSmallAmountsHidden: boolean;
+}) {
   const { address, chainId } = useConnectedWallet();
 
   const {
@@ -24,7 +28,7 @@ export default function CoinBalances({ isSmallAmountsShown = true }) {
           data: data.filter(
             (token) =>
               //show atleast native
-              (token.balance > 0 && !isSmallAmountsShown) ||
+              (token.balance > 0 && !isSmallAmountsHidden) ||
               token.balance > MIN_AMOUNT ||
               (token.gift || 0) > 0
           ),

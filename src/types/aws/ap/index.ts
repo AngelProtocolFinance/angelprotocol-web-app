@@ -91,8 +91,8 @@ export type EndowmentBookmark = {
 export type WalletProfile = {
   wallet: string;
   network: NetworkType;
-  admin?: number[];
-  endowments?: EndowmentBookmark[];
+  admin: EndowmentBookmark[];
+  bookmarks: EndowmentBookmark[];
 };
 
 export interface DonationsMetricList {
