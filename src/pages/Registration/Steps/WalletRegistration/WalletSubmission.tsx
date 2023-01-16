@@ -16,7 +16,7 @@ export default function WalletSubmission({
   const { isSubmitting, registerWallet } = useRegisterWallet();
   const { data } = useRegState<3>();
 
-  if (providerId !== "keplr") {
+  if (!(providerId === "keplr" || providerId === "keplr-wc")) {
     return (
       <div className="text-center md:text-left">
         <h3 className="text-lg font-bold mb-4 flex items-center justify-center md:justify-start gap-3">
