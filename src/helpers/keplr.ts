@@ -1,9 +1,7 @@
-import { StdTx } from "@cosmjs/amino";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { fromHex } from "@cosmjs/encoding";
+import { fromHex, toBase64 } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { Keplr } from "@keplr-wallet/types";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
 import { WC_BRIDGE } from "constants/urls";
@@ -41,39 +39,31 @@ export async function getKeplrClient(
   );
 }
 
-type Mode = Parameters<Keplr["sendTx"]>[2];
-/** matching sender for amino signed tx */
-export async function sendTx(
-  chainId: string,
-  /** keplr-wc can only process amino
-   * | Uint8Array, so can be assignable to constructor
-   */
-  tx: StdTx | Uint8Array,
-  mode: Mode
-): Promise<Uint8Array> {
-  const _tx = tx as StdTx;
-
-  const result = await fetch(
+type CustomSendTx = KeplrWalletConnectV1["sendTx"];
+const sendTx: CustomSendTx = async (chainId, tx, mode) => {
+  const { tx_response: res } = await fetch(
     /**TODO: if keplr needs to be used on other cosmos chains as well, LCD_url should be
      * determined via chainId
      */
-
-    /** endpoint definition: https://docs.figment.io/api-reference/node-api/cosmos-lcd/#/txs */
-    (process.env.REACT_APP_JUNO_LCD_NODE || "") + "/txs",
+    process.env.REACT_APP_JUNO_LCD_NODE! + "/cosmos/tx/v1beta1/txs", //from lcd swagger definition
     {
       method: "POST",
-      body: JSON.stringify({ tx: _tx, mode: getModePayload(mode) }),
+      body: JSON.stringify({
+        tx_bytes: toBase64(tx),
+        mode: getModePayload(mode),
+      }),
     }
   ).then((res) => res.json());
 
-  const txRes = result.data;
-
-  if (txRes.code != null && txRes.code !== 0) {
-    throw new Error(txRes["raw_log"]);
+  if (!!res.code) {
+    throw new Error(res["raw_log"]);
   }
-  return fromHex(txRes.txhash);
-}
 
+  return fromHex(res.txhash);
+};
+
+type Mode = Parameters<CustomSendTx>[2];
+/** matching sender for amino signed tx */
 function getModePayload(mode: Mode): string {
   switch (mode) {
     case "async":

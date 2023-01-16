@@ -1,11 +1,13 @@
+import { toBase64, toUtf8 } from "@cosmjs/encoding";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useUpdateProfileMutation } from "services/aws/aws";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import { toBase64 } from "helpers";
+import Prompt from "components/Prompt";
 import { cleanObject } from "helpers/admin";
 import { getKeplr } from "helpers/keplr";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
@@ -19,39 +21,60 @@ export default function useEditProfile() {
     formState: { isSubmitting, isDirty },
   } = useFormContext<FV>();
 
+  const { showModal } = useModalContext();
   const { wallet } = useGetWallet();
   const [submit] = useUpdateProfileMutation();
 
-  const editProfile = async (data: FV) => {
-    const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
+  const editProfile = async ({ image, logo, hq_country, sdg, ...rest }: FV) => {
+    const [bannerUrl, logoUrl] = await getImgUrls([image, logo]);
 
-    const payload: EndowmentProfileUpdate = {
-      ...data,
+    const updates: EndowmentProfileUpdate = {
+      ...rest,
       id: endowmentId,
       owner: endowment.owner,
-      categories_sdgs: [data.sdg],
+      categories_sdgs: [sdg],
       logo: logoUrl,
       image: bannerUrl,
-      hq_country: data.hq_country.name,
+      hq_country: hq_country.name,
     };
 
-    const signedPayload = toBase64(cleanObject(payload));
     const { providerId, chain, address } =
       wallet!; /** asserted by admin guard */
+
+    const toSign = toUtf8(JSON.stringify(cleanObject(updates)));
     const keplr = getKeplr(providerId);
+
+    showModal(Prompt, {
+      headline: "EDIT PROFILE",
+      type: "loading",
+      children: "Submitting changes..",
+    });
+
     const signature = await keplr.signArbitrary(
       chain.chain_id,
       address,
-      signedPayload
+      toSign
     );
 
     const result = await submit({
       signature,
-      data: signedPayload,
       signer: address,
+      data: toBase64(toSign),
     });
 
-    console.log(result);
+    if ("error" in result) {
+      return showModal(Prompt, {
+        headline: "EDIT PROFILE",
+        type: "error",
+        children: "Failed to update profile",
+      });
+    }
+
+    showModal(Prompt, {
+      headline: "EDIT PROFILE",
+      type: "success",
+      children: "Profile has been updated!",
+    });
   };
 
   return {

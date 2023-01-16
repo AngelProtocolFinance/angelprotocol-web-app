@@ -77,10 +77,10 @@ export const aws = createApi({
     }),
     updateProfile: builder.mutation<
       EndowmentProfile,
-      { data: string; signature: StdSignature; signer: string }
+      { signature: StdSignature; signer: string; data: string }
     >({
       invalidatesTags: ["profile", "endowments"],
-      query: ({ data, signature, signer }) => ({
+      query: ({ signer, data, signature }) => ({
         url: `v1/profile/${network}/endowment`,
         method: "PUT",
         body: {
@@ -92,15 +92,7 @@ export const aws = createApi({
           ],
           fee: { gas: "0", amount: [] },
           memo: "",
-          signatures: [
-            {
-              pub_key: {
-                type: signature.pub_key.type,
-                value: signature.pub_key.value,
-              },
-              signature: signature.signature,
-            },
-          ],
+          signatures: [signature],
         },
       }),
     }),
