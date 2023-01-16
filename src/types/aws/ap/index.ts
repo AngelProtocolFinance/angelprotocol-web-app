@@ -7,9 +7,64 @@ import {
 } from "../../contracts";
 import { NetworkType } from "../../lists";
 
-/**
- * put all aws/ap definitions here, if big category exist, separate in a file
- */
+export type EndowmentProfileUpdate = {
+  id: number;
+  owner: string;
+
+  // optional
+  active_in_countries: string;
+  categories_general: string[];
+  categories_sdgs: number[];
+  contact_email: string;
+  hq_city: string;
+  hq_country: string;
+  image: string;
+  kyc_donors_only: boolean;
+  logo: string;
+  name: string;
+  overview: string;
+  registration_number: string;
+  social_media_url_facebook: string;
+  social_media_url_linkedin: string;
+  social_media_url_twitter: string;
+  street_address: string;
+  tagline: string;
+  tier: number /** 1 - 3  */;
+  url: string;
+};
+
+export type EndowmentProfile = {
+  id: number;
+  name: "Anna's Pals";
+  registration_number: "47-5204938";
+  street_address: "Boston, MA";
+  categories: {
+    sdgs: [3];
+    general: [];
+  };
+  hq: { country: string; city: string };
+  kyc_donors_only?: boolean;
+
+  //content
+  image: string;
+  logo: string;
+  tagline: string;
+  overview: string;
+
+  //contacts
+  social_media_urls: {
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+  };
+  contact_email: "no-reply@angelprotocol.io";
+  url: null | string;
+
+  //balances
+  total_lock: number;
+  total_liq: number;
+  overall: number;
+};
 
 export type Endowment = {
   //EndowmentEntry

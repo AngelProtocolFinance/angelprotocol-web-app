@@ -126,24 +126,6 @@ export interface ProfileResponse {
   charity_navigator_rating?: string;
 }
 
-export interface ProfileUpdate {
-  //separate shape for update
-  id: number;
-  overview: string;
-  url: string;
-  registration_number?: string;
-  country_of_origin?: string;
-  street_address?: string;
-  contact_email?: string;
-  facebook?: string;
-  twitter?: string;
-  linkedin?: string;
-  // number_of_employees?: number;s
-  // average_annual_budget?: string;
-  // annual_revenue?: string;
-  // charity_navigator_rating?: string;
-}
-
 export interface EndowmentSettingsPayload {
   id: number;
   owner?: string;

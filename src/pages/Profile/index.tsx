@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import placeholderBanner from "assets/images/placeholder-banner.png";
-import { useEndowInfoQuery } from "services/aws/aws";
+import { useProfileQuery } from "services/aws/aws";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
@@ -11,7 +11,7 @@ import Skeleton from "./Skeleton";
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowInfoQuery(numId, {
+  const { isLoading, isError, data } = useProfileQuery(numId, {
     skip: numId === 0,
   });
 

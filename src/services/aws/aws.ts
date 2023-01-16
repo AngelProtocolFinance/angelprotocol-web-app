@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { EndowmentInfo } from "services/types";
 import {
   Endowment,
+  EndowmentProfile,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
@@ -72,7 +73,7 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<ProfileResponse, number>({
+    profile: builder.query<EndowmentProfile, number>({
       providesTags: [{ type: "profile" }],
       query: (endowId) => getProfileQuery(endowId),
     }),
