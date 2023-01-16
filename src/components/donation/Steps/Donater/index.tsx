@@ -4,13 +4,19 @@ import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/donation";
+import { isEmpty } from "helpers";
 import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Donater({
   wallet,
-  config,
+  config: {
+    availCurrs = [],
+    hideAdvOpts = false,
+    liquidPct = 0,
+    unfoldAdvOpts = false,
+  },
   ...state
 }: WithWallet<FormStep> & { config: ConfigParams }) {
   const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
@@ -23,15 +29,14 @@ export default function Donater({
     reValidateMode: "onChange",
     defaultValues: state.details || {
       token: _tokens[0],
-      pctLiquidSplit: `${config.liquidPct}`,
+      pctLiquidSplit: `${liquidPct}`,
 
       //meta
       // if availCurrs array was not set, include all
       // otherwise, include only tokens in the array
-      tokens: _tokens.filter(
-        (token) =>
-          !config.availCurrs?.length || config.availCurrs.includes(token.symbol)
-      ),
+      tokens: isEmpty(availCurrs)
+        ? _tokens
+        : _tokens.filter((token) => availCurrs.includes(token.symbol)),
       chainName: wallet.chain.chain_name,
       chainId: wallet.chain.chain_id,
     },
@@ -39,7 +44,7 @@ export default function Donater({
   });
   return (
     <FormProvider {...methods}>
-      <Form {...config} />
+      <Form hideAdvOpts={hideAdvOpts} unfoldAdvOpts={unfoldAdvOpts} />
     </FormProvider>
   );
 }

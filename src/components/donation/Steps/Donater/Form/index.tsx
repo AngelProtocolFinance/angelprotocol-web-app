@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { DonateValues } from "../types";
-import { BtnPrimary, BtnSec, ConfigParams } from "components/donation";
+import { BtnPrimary, BtnSec } from "components/donation";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -10,7 +10,10 @@ import Amount from "./Amount";
 
 // import AmountOptions from "./AmountOptions";
 
-export default function Form(props: ConfigParams) {
+export default function Form(props: {
+  hideAdvOpts: boolean;
+  unfoldAdvOpts: boolean;
+}) {
   const {
     reset,
     handleSubmit,

@@ -17,7 +17,8 @@ export default function useWidgetParams(): UrlParamValues {
     unfoldAdvOpts: get(URL_PARAMS.unfoldAdvancedOptions),
     // we turn this into a number to ensure it is in fact a valid number
     liquidPct: Number(searchParams.get(URL_PARAMS.liquidPercentage)),
-    availCurrs: searchParams.get(URL_PARAMS.availableCurrencies)?.split(","),
+    availCurrs:
+      searchParams.get(URL_PARAMS.availableCurrencies)?.split(",") || [],
   };
 
   return result;
