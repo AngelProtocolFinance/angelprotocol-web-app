@@ -1,15 +1,11 @@
-import { toBase64, toUtf8 } from "@cosmjs/encoding";
-import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import { SubmitHandler, useFormContext } from "react-hook-form";
+import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useUpdateProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import Prompt from "components/Prompt";
-import { cleanObject } from "helpers/admin";
-import { getKeplr } from "helpers/keplr";
+import { getPayloadDiff } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 
 // import optimizeImage from "./optimizeImage";
@@ -22,59 +18,47 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const { wallet } = useGetWallet();
-  const [submit] = useUpdateProfileMutation();
 
-  const editProfile = async ({ image, logo, hq_country, sdg, ...rest }: FV) => {
+  const editProfile: SubmitHandler<FV> = async ({
+    initial,
+    image,
+    logo,
+    hq_country,
+    sdg,
+    ...newData
+  }) => {
     const [bannerUrl, logoUrl] = await getImgUrls([image, logo]);
 
-    const updates: EndowmentProfileUpdate = {
-      ...rest,
-      id: endowmentId,
-      owner: endowment.owner,
-      categories_sdgs: [sdg],
-      logo: logoUrl,
+    const changes: FlatFormValues = {
       image: bannerUrl,
+      logo: logoUrl,
       hq_country: hq_country.name,
+      sdg,
+      ...newData,
     };
+    const diff = getPayloadDiff(initial, changes);
 
-    const { providerId, chain, address } =
-      wallet!; /** asserted by admin guard */
-
-    const toSign = toUtf8(JSON.stringify(cleanObject(updates)));
-    const keplr = getKeplr(providerId);
-
-    showModal(Prompt, {
-      headline: "EDIT PROFILE",
-      type: "loading",
-      children: "Submitting changes..",
-    });
-
-    const signature = await keplr.signArbitrary(
-      chain.chain_id,
-      address,
-      toSign
-    );
-
-    const result = await submit({
-      signature,
-      signer: address,
-      data: toBase64(toSign),
-    });
-
-    if ("error" in result) {
+    if (Object.entries(diff).length <= 0) {
       return showModal(Prompt, {
-        headline: "EDIT PROFILE",
+        headline: "Edit profile",
         type: "error",
-        children: "Failed to update profile",
+        children: "No changes detected.",
       });
     }
 
-    showModal(Prompt, {
-      headline: "EDIT PROFILE",
-      type: "success",
-      children: "Profile has been updated!",
-    });
+    const sdgKey: keyof FlatFormValues = "sdg";
+
+    /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
+     like ""; unlike contracts where if fields is not present, val is set to null.
+    */
+    const updates: Partial<EndowmentProfileUpdate> = {
+      ...diff,
+      ...(sdgKey in diff ? { categories_sdgs: [sdg] } : {}),
+      id: endowmentId,
+      owner: endowment.owner,
+    };
+
+    console.log(updates);
   };
 
   return {

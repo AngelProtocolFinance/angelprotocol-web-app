@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
+import { FlatFormValues, FormValues } from "./types";
 import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
@@ -27,16 +27,15 @@ export default function EditProfile() {
 
 function FormWithContext(props: EndowmentProfile) {
   // could just add to useForm.defaultValue - but not Partial here
-  const initial: FormValues = {
+  const flatInitial: FlatFormValues = {
     name: props.name,
     tagline: props.tagline || "",
-    active_in_countries: props.active_in_countries,
     sdg: props.categories.sdgs[0],
     contact_email: props.contact_email,
     hq_city: props.hq.city || "",
-    hq_country: { flag: "", name: props.hq.country || "" },
-    image: { name: "", publicUrl: props.image, preview: props.image },
-    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    hq_country: props.hq.country || "",
+    image: props.image || "",
+    logo: props.logo || "",
     kyc_donors_only: props.kyc_donors_only,
     overview: props.overview,
     url: props.url || "",
@@ -47,10 +46,18 @@ function FormWithContext(props: EndowmentProfile) {
     street_address: props.street_address || "",
   };
 
+  const defaults: FormValues = {
+    ...flatInitial,
+    image: { name: "", publicUrl: props.image, preview: props.image },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    hq_country: { flag: "", name: props.hq.country || "" },
+    initial: flatInitial,
+  };
+
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: initial,
+    defaultValues: defaults,
     resolver: yupResolver(schema),
   });
   return (
