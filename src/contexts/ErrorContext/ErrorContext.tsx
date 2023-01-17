@@ -14,7 +14,12 @@ import {
 import { useModalContext } from "../ModalContext";
 import InstallWallet from "./InstallWalletContent";
 
-type State = { handleError: (error: any, displayMessage?: string) => void };
+type HandleError = (
+  error: any,
+  displayMessage?: string,
+  headline?: string
+) => void;
+type State = { handleError: HandleError };
 
 const Context = createContext<State>({
   handleError: (_: any, __?: string) => {},
@@ -23,17 +28,19 @@ const Context = createContext<State>({
 export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
-  const handleError = useCallback(
-    (error: any, displayMessage?: string) => {
+  const handleError: HandleError = useCallback(
+    (error, displayMessage, headline) => {
       logger.error(error);
 
       if (displayMessage) {
         showModal(Prompt, {
+          headline,
           type: "error",
           children: displayMessage,
         });
       } else if (typeof error === "string") {
         showModal(Prompt, {
+          headline,
           type: "error",
           children: error,
         });
@@ -45,6 +52,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
           });
         } else {
           showModal(Prompt, {
+            headline,
             type: "error",
             children: error.message,
           });
@@ -59,6 +67,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         handleError(error.error);
       } else {
         showModal(Prompt, {
+          headline,
           type: "error",
           children: "Unknown error children",
         });
