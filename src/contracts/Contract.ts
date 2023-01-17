@@ -11,11 +11,15 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import {
+  ADR36SignDoc,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+} from "types/contracts";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
-import { getSigningKeplrClient } from "helpers/keplr";
+import { getKeplrClient, getSigningKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -91,6 +95,55 @@ export default class Contract {
     );
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, this.wallet!.chain);
+  }
+
+  async signArbitrary(data: object) {
+    this.verifyWallet();
+    const keplr = getKeplrClient(this.wallet?.providerId!);
+
+    const signature = await keplr.signAmino(
+      this.wallet!.chain.chain_id,
+      this.walletAddress,
+      {
+        chain_id: "",
+        account_number: "0",
+        sequence: "0",
+        fee: {
+          gas: "0",
+          amount: [],
+        },
+        msgs: [
+          {
+            type: "sign/MsgSignData",
+            value: {
+              signer: this.walletAddress,
+              data: toBase64(data),
+            },
+          },
+        ],
+        memo: "",
+      }
+    );
+
+    return signature;
+  }
+
+  async createADR36SignDoc(arbData: object): Promise<ADR36SignDoc> {
+    const {
+      signed: { msgs },
+      signature,
+    } = await this.signArbitrary(arbData);
+    return {
+      msg: [
+        {
+          type: "sign/MsgSignData",
+          value: msgs[0].value,
+        },
+      ],
+      fee: { gas: "0", amount: [] },
+      memo: "",
+      signatures: [signature],
+    };
   }
 
   createExecuteContractMsg(
