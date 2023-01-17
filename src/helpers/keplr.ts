@@ -46,6 +46,14 @@ export async function getSigningKeplrClient(
   );
 }
 
+export function getKeplrClient(
+  providerId: ProviderId
+): KeplrWalletConnectV1 | Keplr {
+  const wallet =
+    providerId === "keplr-wc" ? getKeplrWCClient() : (window as Dwindow).keplr!;
+  return wallet;
+}
+
 type Mode = Parameters<Keplr["sendTx"]>[2];
 /** matching sender for amino signed tx */
 export async function sendTx(
