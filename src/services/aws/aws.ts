@@ -7,7 +7,7 @@ import {
   Profile,
   WalletProfile,
 } from "types/aws";
-import { MsgSignData } from "types/contracts";
+import { ADR36SignDoc } from "types/contracts";
 import { NetworkType } from "types/lists";
 import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
@@ -76,7 +76,7 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
-    updateProfile: builder.mutation<Profile, MsgSignData>({
+    updateProfile: builder.mutation<Profile, ADR36SignDoc>({
       invalidatesTags: [{ type: "profile" }, { type: "endowments" }],
       query: (msgSignData) => {
         return {
