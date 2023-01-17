@@ -45,7 +45,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
     /**TODO: if keplr needs to be used on other cosmos chains as well, LCD_url should be
      * determined via chainId
      */
-    process.env.REACT_APP_JUNO_LCD_NODE! + "/cosmos/tx/v1beta1/txs", //from lcd swagger definition
+    process.env.REACT_APP_JUNO_LCD_NODE + "/cosmos/tx/v1beta1/txs", //from lcd swagger definition
     {
       method: "POST",
       body: JSON.stringify({
