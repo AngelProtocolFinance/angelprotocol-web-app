@@ -1,4 +1,4 @@
-import type { PubKey } from "@cosmjs/launchpad";
+import type { Pubkey } from "@cosmjs/amino";
 import { Coin } from "@cosmjs/proto-signing";
 import { UNSDG_NUMS } from "types/lists";
 
@@ -85,7 +85,7 @@ export type ADR36SignDoc = {
   readonly memo: "";
   signatures: [
     {
-      pub_key: PubKey;
+      pub_key: Pubkey;
       signature: string; // lrunrkF69b...jWFgEA==
     }
   ];
