@@ -40,7 +40,7 @@ export default function Donations() {
   });
 
   return (
-    <div className="grid grid-cols-[1fr_auto] gap-8 relative padded-container pt-20 pb-8">
+    <div className="grid grid-cols-[1fr_auto] gap-y-8 gap-x-3 relative padded-container pt-20 pb-8">
       <h1 className="text-3xl font-bold">My Donations</h1>
       <CsvExporter
         aria-disabled={isLoading || isError || isDebouncing}

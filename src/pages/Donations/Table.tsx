@@ -18,12 +18,15 @@ export default function Table({ donations, classes = "" }: TableProps) {
 
   return (
     <table
-      className={`${classes} w-full text-sm text-gray-d2 dark:text-white font-body border border-gray-l2 border-b-0 rounded-md dark:border-bluegray border-separate border-spacing-0 overflow-hidden`}
+      className={`${classes} w-full text-sm rounded outline outline-gray-l2 dark:outline-bluegray`}
     >
-      <TableSection type="thead" rowClass="">
+      <TableSection
+        type="thead"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-gray-l2 dark:divide-bluegray border-gray-l2 dark:border-bluegray"
+      >
         <Cells
           type="th"
-          cellClass="px-3 py-4 bg-orange-l6 dark:bg-blue-d7 uppercase font-semibold text-left text-xs font-body border border-gray-l2 dark:border-bluegray border-t-0 border-l-0 last:border-r-0"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -72,7 +75,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="hover:bg-blue hover:bg-blue/10 even:bg-orange-l6 dark:bg-blue-d6 dark:even:bg-blue-d"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-gray-l2 dark:divide-bluegray border-b last:border-b-0 border-gray-l2 dark:border-bluegray"
       >
         {sorted.map(
           ({
@@ -86,24 +89,19 @@ export default function Table({ donations, classes = "" }: TableProps) {
             usdValue,
             id: charityId,
           }) => (
-            <Cells
-              key={hash}
-              type="td"
-              cellClass="p-3 border border-gray-l2 dark:border-bluegray border-t-0 border-l-0 last:border-r-0"
-            >
+            <Cells key={hash} type="td" cellClass="p-3">
               <Link
                 to={`${appRoutes.profile}/${charityId}`}
-                className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
+                className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
-                <span className="truncate">{charityName}</span>
+                <span className="truncate max-w-[12rem]">{charityName}</span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(date).toLocaleDateString()}</>
               <>{chainName}</>
               <span className="font-body text-sm">{symbol}</span>
               <>{humanize(amount, 3)}</>
-              {/* <>{`$${humanize(usdValue, 2)}`}</>  usd value has error*/}
-              <>--</>
+              <>{`$${humanize(usdValue, 2)}`}</>
               <ExtLink
                 href={getTxUrl(chainId, hash)}
                 className="text-center text-angel-blue cursor-pointer uppercase text-sm"
