@@ -7,8 +7,6 @@ export default function Slider({ classes = "" }: { classes?: string }) {
     formState: { isValid },
   } = useFormContext<DonateValues>();
 
-  console.log("isValid", isValid);
-
   return (
     <div className={`${classes} select-none`}>
       <input
