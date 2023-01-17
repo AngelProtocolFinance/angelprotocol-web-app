@@ -7,6 +7,7 @@ import {
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
+import { ADR36SignDoc } from "types/contracts";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
@@ -77,7 +78,7 @@ export const aws = createApi({
       invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/v1/profile/${network}/endowment`,
+          url: PROFILE_QUERY,
           method: "PUT",
           body: payload,
         };
