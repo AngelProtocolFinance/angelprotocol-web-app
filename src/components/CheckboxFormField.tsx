@@ -18,7 +18,7 @@ export default function CheckboxFormField<T extends FieldValues>({
 }: PropsWithChildren<{
   name: Path<T>;
   classes?: Classes;
-  disabled?: true;
+  disabled?: boolean;
   required?: boolean;
 }>) {
   const {

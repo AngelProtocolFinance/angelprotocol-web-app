@@ -31,11 +31,13 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
           Hide "advanced options"
         </CheckboxFormField>
 
-        {!hideAdvancedOptions && (
-          <CheckboxFormField<FormValues> name="unfoldAdvancedOptions">
-            Unfold "advanced options" by default
-          </CheckboxFormField>
-        )}
+        <CheckboxFormField<FormValues>
+          name="unfoldAdvancedOptions"
+          disabled={hideAdvancedOptions}
+          classes={{ label: "peer-disabled:text-gray" }}
+        >
+          Unfold "advanced options" by default
+        </CheckboxFormField>
 
         <span>Define split value by default:</span>
         <Split />
