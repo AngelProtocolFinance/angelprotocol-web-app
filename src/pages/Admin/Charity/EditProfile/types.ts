@@ -12,6 +12,7 @@ const _id: K = "id";
 const _tier: K = "tier";
 const _owner: K = "owner";
 const _active_countries: K = "active_in_countries";
+const _tagline: K = "tagline";
 
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
@@ -20,6 +21,7 @@ export type FlatFormValues = Omit<
   /** don't include for now */
   | typeof _general
   | typeof _active_countries
+  | typeof _tagline
   /** not editable fields*/
   | typeof _id
   | typeof _tier

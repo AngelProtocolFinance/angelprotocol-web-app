@@ -29,7 +29,6 @@ function FormWithContext(props: EndowmentProfile) {
   // could just add to useForm.defaultValue - but not Partial here
   const flatInitial: FlatFormValues = {
     name: props.name,
-    tagline: props.tagline || "",
     sdg: props.categories.sdgs[0],
     contact_email: props.contact_email,
     hq_city: props.hq.city || "",
