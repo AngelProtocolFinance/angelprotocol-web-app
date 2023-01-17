@@ -51,21 +51,15 @@ export default function Donations() {
       >
         Export to CSV
       </CsvExporter>
-      <div className="">
-        <label htmlFor="search" className="relative">
-          <Icon
-            type="Search"
-            size={24}
-            className="absolute top-0 ml-3 text-gray-d1"
-          />
-          <input
-            className="py-3 pl-11 pr-4 text-gray-d1 border border-gray-l2 dark:border-bluegray w-full bg-white dark:bg-blue-d6 rounded-md"
-            type="text"
-            placeholder="Search donations..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </label>
+      <div className="flex p-[0.94rem] gap-x-3 items-center border border-gray-l2 dark:border-bluegray w-full bg-white dark:bg-blue-d6 rounded">
+        <Icon type="Search" size={24} className="text-gray-d2 dark:text-gray" />
+        <input
+          className="placeholder:text-gray-d2 dark:placeholder:text-gray bg-transparent w-full outline-none"
+          type="text"
+          placeholder="Search donations..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </div>
       <Filter setParams={setParams} donorAddress={address || ""} />
       <Table donations={donations} classes="hidden lg:table col-span-full" />

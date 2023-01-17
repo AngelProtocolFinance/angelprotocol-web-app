@@ -32,7 +32,7 @@ interface Props<
 }
 
 export const selectorButtonStyle =
-  "flex justify-between items-center text-sm rounded border px-4 py-3.5 border-gray-l2 dark:border-bluegray";
+  "flex items-center text-sm rounded border border-gray-l2 dark:border-bluegray";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -72,7 +72,7 @@ export function Selector<
         multiple={multiple}
       >
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+          className={`${button} ${selectorButtonStyle} px-4 py-3.5 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
         >
           {({ open }) => (
             <>

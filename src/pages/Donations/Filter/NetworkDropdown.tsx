@@ -7,19 +7,22 @@ export default function NetworkDropdown({ classes = "" }) {
   const queryState = useChainsQuery("");
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Fetching network options...",
-        error: "Failed to get network options",
-        empty: "No network to choose from",
-      }}
-      //filterFn: TODO show only network related to donor address
-      classes={{ container: selectorButtonStyle + " mx-6" }}
-    >
-      {(networks) => (
-        <div className={classes + " grid gap-2"}>
-          <label className="text-sm">Network</label>
+    <div className={classes + " grid gap-2"}>
+      <label className="text-sm">Network</label>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: "Fetching network options...",
+          error: "Failed to get network options",
+          empty: "No network to choose from",
+        }}
+        //filterFn: TODO show only network related to donor address
+        classes={{
+          container:
+            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
+        }}
+      >
+        {(networks) => (
           <Selector<FV, "network", string, false>
             name="network"
             classes={{ button: "dark:bg-blue-d6" }}
@@ -28,8 +31,8 @@ export default function NetworkDropdown({ classes = "" }) {
               value: n.chain_name,
             }))}
           />
-        </div>
-      )}
-    </QueryLoader>
+        )}
+      </QueryLoader>
+    </div>
   );
 }
