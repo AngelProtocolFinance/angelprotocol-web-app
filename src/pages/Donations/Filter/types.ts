@@ -1,8 +1,11 @@
 import { OptionType } from "components/Selector";
 
-export type FilterFormValues = {
-  startDate: string;
-  endDate: string;
+export type FormValues = {
+  startDate: Date;
+  endDate: Date;
   network: OptionType<string>;
   currency: OptionType<string>;
+
+  //meta
+  donorAddress: string;
 };

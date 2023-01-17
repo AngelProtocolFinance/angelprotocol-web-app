@@ -7,6 +7,10 @@
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }
 
+  .date-input::-webkit-calendar-picker-indicator {
+    @apply hidden;
+  }
+
   .slider {
     @apply appearance-none bg-transparent w-full;
   }
@@ -196,18 +200,4 @@
 
 #react-select-3-listbox {
   color: black !important;
-}
-
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  background: transparent;
-  bottom: 0;
-  color: transparent;
-  cursor: pointer;
-  height: auto;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: auto;
 }

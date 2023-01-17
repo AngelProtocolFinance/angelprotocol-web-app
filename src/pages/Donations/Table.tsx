@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { TableProps } from "./types";
 import { Donation } from "types/aws";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
@@ -9,14 +10,16 @@ import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 
-export default function Table(props: { donations: Donation[] }) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    props.donations
-  );
+export default function Table({ donations, classes = "" }: TableProps) {
+  const { handleHeaderClick, sorted, sortDirection, sortKey } =
+    useSort(donations);
+
   const showKYCForm = useKYC();
 
   return (
-    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white font-body border border-gray-l2 border-b-0 rounded-md dark:border-bluegray border-separate border-spacing-0 overflow-hidden">
+    <table
+      className={`${classes} w-full text-sm text-gray-d2 dark:text-white font-body border border-gray-l2 border-b-0 rounded-md dark:border-bluegray border-separate border-spacing-0 overflow-hidden`}
+    >
       <TableSection type="thead" rowClass="">
         <Cells
           type="th"

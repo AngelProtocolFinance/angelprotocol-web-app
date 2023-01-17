@@ -1,25 +1,22 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { FilterFormValues } from "./types";
+import { FormValues } from "./types";
 
 export default function DateInput<T extends FieldValues>({
   name,
-  placeholder,
 }: {
   name: Path<T>;
-  placeholder: string;
 }) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<FilterFormValues>();
+  } = useFormContext<FormValues>();
   return (
     <div>
       <input
-        {...register(name as any)}
+        {...register(name as any, { valueAsDate: true })}
         type="date"
-        className="relative w-full py-3 pl-3 border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
-        placeholder={placeholder}
+        className="date-input uppercase text-sm relative w-full px-4 py-3 border border-gray-l2 dark:border-bluegray rounded-md border-collapse dark:text-gray dark:bg-blue-d6 dark:placeholder:text-gray"
       />
       <ErrorMessage
         errors={errors}
