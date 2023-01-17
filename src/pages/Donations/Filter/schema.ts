@@ -1,15 +1,31 @@
-import * as Yup from "yup";
+import { DateSchema, date, lazy, object, ref, string } from "yup";
 import { FormValues } from "./types";
+import { SchemaShape } from "schemas/types";
 
 const now = new Date();
 const endKey: keyof FormValues = "endDate";
-export const schema = Yup.object().shape({
-  startDate: Yup.date()
-    .typeError("invalid date")
-    .when(endKey, (end, schema: Yup.DateSchema) =>
-      Yup.date().isValidSync(end)
-        ? schema.max(end, "later than end date")
-        : schema.max(now, "later than present")
-    ),
-  endDate: Yup.date().typeError("invalid date").max(now, "later than present"),
+const startKey: keyof FormValues = "startDate";
+export const schema = object().shape<SchemaShape<FormValues>>({
+  startDate: lazy((val) =>
+    val
+      ? date()
+          .max(now, "can't be later than today")
+          .when(endKey, (end, schema: DateSchema) =>
+            date().isValidSync(end)
+              ? schema.max(end, "can't be later than end date")
+              : schema
+          )
+      : string().required("invalid")
+  ),
+  endDate: lazy((val) =>
+    val
+      ? date()
+          .max(now, "can't be later than today")
+          .when(startKey, (start, schema: DateSchema) =>
+            date().isValidSync(start)
+              ? schema.min(ref(startKey), "can't be earlier than start date")
+              : schema
+          )
+      : string().required("invalid")
+  ),
 });

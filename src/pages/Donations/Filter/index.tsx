@@ -19,12 +19,13 @@ const Filter = ({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
-    resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",
+    resolver: yupResolver(schema),
     defaultValues: {
-      startDate: getYearAgo(),
-      endDate: new Date(),
+      //set default value so empty can be tagged as invalid
+      startDate: format(getYearAgo()),
+      endDate: format(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
       donorAddress: donorAddress,
@@ -37,6 +38,8 @@ const Filter = ({
     watch,
     formState: { errors },
   } = methods;
+
+  console.log(watch(), errors);
 
   async function submit(data: FV) {
     setParams((prev) => ({
@@ -88,4 +91,13 @@ function getYearAgo() {
   const currYear = date.getFullYear();
   date.setFullYear(currYear - 1);
   return date;
+}
+
+function format(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month < 10 ? `0${month}` : month}-${
+    day < 10 ? `0${day}` : day
+  }`;
 }

@@ -1,8 +1,8 @@
 import { OptionType } from "components/Selector";
 
 export type FormValues = {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   network: OptionType<string>;
   currency: OptionType<string>;
 
