@@ -13,9 +13,6 @@ import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 
-const getProfileQuery = (endowId: number) =>
-  `/v1/profile/${network}/endowment/${endowId}`;
-
 const getWalletProfileQuery = (walletAddr: string) =>
   `/v1/profile/${network}/user/${walletAddr}`;
 
@@ -71,7 +68,7 @@ export const aws = createApi({
     }),
     profile: builder.query<EndowmentProfile, number>({
       providesTags: [{ type: "profile" }],
-      query: (endowId) => getProfileQuery(endowId),
+      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
     }),
   }),
 });
