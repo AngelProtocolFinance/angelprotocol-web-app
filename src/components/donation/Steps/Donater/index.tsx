@@ -28,15 +28,19 @@ export default function Donater({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: state.details || {
-      token: _tokens[0],
+      token: wallet.displayCoin,
       pctLiquidSplit: `${liquidPct}`,
 
       //meta
       // if availCurrs array was not set, include all
-      // otherwise, include only tokens in the array
+      // otherwise, include only tokens in the availCurrs array + the fee-paying coin
       tokens: isEmpty(availCurrs)
         ? _tokens
-        : _tokens.filter((token) => availCurrs.includes(token.symbol)),
+        : _tokens.filter(
+            (token) =>
+              availCurrs.includes(token.symbol) ||
+              wallet.displayCoin.symbol === token.symbol
+          ),
       chainName: wallet.chain.chain_name,
       chainId: wallet.chain.chain_id,
     },
