@@ -2,22 +2,19 @@ import { Keplr } from "@keplr-wallet/types";
 import { CapitalizedEndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
-type EndowmentBase = {
-  hq: { country?: string; city?: string };
+export type EndowmentBase = {
   active_in_countries: string[];
   categories: { sdgs: UNSDG_NUMS[] };
+  contact_email: string;
+  endow_type: CapitalizedEndowmentType;
+  hq: { country?: string; city?: string };
   id: number;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-  owner: string;
-  tagline?: string;
-};
-
-export type EndowmentProfile = EndowmentBase & {
-  contact_email: string;
   overview: string;
+  owner: string;
   registration_number?: string;
   social_media_urls: {
     twitter?: string;
@@ -25,17 +22,14 @@ export type EndowmentProfile = EndowmentBase & {
     linkedin?: string;
   };
   street_address?: string;
+  tagline?: string;
 
   total_liq: number;
   total_lock: number;
   overall: number;
-
-  url?: string;
 };
 
-export type EndowmentCard = EndowmentBase & {
-  endow_type: CapitalizedEndowmentType;
-};
+export type EndowmentProfile = EndowmentBase & { url?: string };
 
 export type EndowmentProfileUpdate = {
   //required

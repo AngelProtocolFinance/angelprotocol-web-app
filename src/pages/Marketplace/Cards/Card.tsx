@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
+import { EndowmentBase } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
@@ -20,9 +20,9 @@ export default function Card({
   endow_type,
   categories: { sdgs },
   tagline,
-  hq,
+  hq: { country = "", city = "" },
   kyc_donors_only,
-}: EndowmentCard) {
+}: EndowmentBase) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
@@ -47,10 +47,10 @@ export default function Card({
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           <h3 className="font-bold">{name}</h3>
-          {hq.country && (
+          {country && (
             <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-              <span className="font-semibold">HQ:</span> {hq.country}
-              {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
+              <span className="font-semibold">HQ:</span> {country}
+              {city && city !== PLACEHOLDER_CITY ? `, ${city}` : ""}
             </p>
           )}
 

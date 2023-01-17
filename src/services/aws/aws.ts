@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
-  EndowmentCard,
+  EndowmentBase,
   EndowmentProfile,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
@@ -40,7 +40,7 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowments: builder.query<
-      PaginatedAWSQueryRes<EndowmentCard[]>,
+      PaginatedAWSQueryRes<EndowmentBase[]>,
       EndowmentsQueryParams
     >({
       providesTags: [{ type: "endowments" }],
