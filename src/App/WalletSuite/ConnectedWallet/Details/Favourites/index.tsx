@@ -31,13 +31,11 @@ export default function Favourites({ address }: { address: string }) {
         }}
         classes={{ container: "text-xs gap-1" }}
       >
-        {(walletProfile) => (
+        {({ bookmarks }) => (
           <ul className="grid gap-1">
-            {walletProfile.bookmarks
-              .slice(0, MAX_ELEMENTS_TO_DISPLAY)
-              .map((b) => (
-                <Favourite key={b.id} {...b} />
-              ))}
+            {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
+              <Favourite key={b.endowId} {...b} />
+            ))}
           </ul>
         )}
       </QueryLoader>
