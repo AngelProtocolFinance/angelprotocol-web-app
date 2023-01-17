@@ -17,6 +17,8 @@ const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 const getWalletProfileQuery = (walletAddr: string) =>
   `/v1/profile/${network}/user/${walletAddr}`;
 
+const PROFILE_QUERY = `/v1/profile/${network}/endowment`;
+
 const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
@@ -69,7 +71,7 @@ export const aws = createApi({
     }),
     profile: builder.query<EndowmentProfile, number>({
       providesTags: [{ type: "profile" }],
-      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
+      query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
     editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
       invalidatesTags: ["endowments", "profile", "walletProfile"],
