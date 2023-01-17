@@ -30,7 +30,7 @@ export function getKeplr(providerId: ProviderId) {
     : (window as Dwindow).keplr!;
 }
 
-export async function getKeplrClient(
+export async function getSigningKeplrClient(
   providerId: ProviderId,
   chain_id: string,
   rpcUrl: string

@@ -15,7 +15,7 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
+import { getSigningKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -48,7 +48,7 @@ export default class Contract {
   async query<T>(to: string, message: Record<string, unknown>) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
+    const client = await getSigningKeplrClient(
       this.wallet?.providerId!,
       chain_id,
       rpc_url
@@ -61,7 +61,7 @@ export default class Contract {
     try {
       this.verifyWallet();
       const { chain_id, rpc_url } = this.wallet!.chain;
-      const client = await getKeplrClient(
+      const client = await getSigningKeplrClient(
         this.wallet?.providerId!,
         chain_id,
         rpc_url
@@ -84,7 +84,7 @@ export default class Contract {
   async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(
+    const client = await getSigningKeplrClient(
       this.wallet?.providerId!,
       chain_id,
       rpc_url
