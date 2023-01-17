@@ -11,6 +11,7 @@ type EndowmentBase = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  owner: string;
   tagline?: string;
 };
 
