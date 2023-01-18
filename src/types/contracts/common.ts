@@ -61,12 +61,6 @@ export type Categories = {
   general: number[]; //??
 };
 
-export type SocialMedialUrls = {
-  facebook?: string;
-  linkedin?: string;
-  twitter?: string;
-};
-
 export type Asset = {
   info: { native: string } | { cw20: string };
   amount: string;
