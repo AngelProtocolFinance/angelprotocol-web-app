@@ -9,15 +9,19 @@ import { cleanObject } from "helpers/cleanObject";
 import Form from "./Form";
 import { schema } from "./schema";
 
+type Props = {
+  classes?: string;
+  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  isDisabled: boolean;
+  donorAddress: string;
+};
+
 const Filter = ({
   setParams,
   donorAddress,
-}: {
-  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
-  donorAddress: string;
-}) => {
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-
+  classes = "",
+  isDisabled,
+}: Props) => {
   const methods = useForm<FV>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -51,29 +55,29 @@ const Filter = ({
         denomination: data.currency.value,
       }),
     }));
-    buttonRef.current?.click();
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     //event.type = "reset"
     reset();
     setParams((prev) => ({ id: prev.id }));
-    buttonRef.current?.click();
   };
 
   return (
-    <Popover className="flex items-center relative w-[22.31rem] border border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d6">
+    <Popover
+      className={`${classes} flex items-center relative w-[22.31rem] border border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d6`}
+    >
       <Popover.Button
-        ref={buttonRef}
-        className={
-          "w-full flex justify-center sm:justify-between items-center text-white bg-orange sm:bg-white p-3 rounded dark:bg-blue-d6 sm:text-gray-d2 dark:text-white"
-        }
+        disabled={isDisabled}
+        className="w-full flex justify-center items-center p-3 rounded bg-orange text-white lg:text-gray-d1 lg:dark:text-gray lg:bg-white dark:lg:bg-blue-d6 lg:justify-between disabled:bg-gray lg:dark:disabled:bg-bluegray-d1"
       >
         {({ open }) => (
           <>
-            <Icon className="sm:hidden" type="Filter" size={20} />
-            <div className="uppercase font-semibold">Filter</div>
-            <DrawerIcon isOpen={open} className="hidden sm:inline" size={21} />
+            <Icon className="lg:hidden" type="Filter" size={20} />
+            <div className="uppercase font-semibold text-[0.9375rem] ">
+              Filter
+            </div>
+            <DrawerIcon isOpen={open} className="hidden lg:inline" size={21} />
           </>
         )}
       </Popover.Button>
