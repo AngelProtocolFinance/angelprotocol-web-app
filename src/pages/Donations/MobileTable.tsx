@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
@@ -20,10 +20,14 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
         <div className="col-span-3 p-4">Date</div>
       </div>
 
-      <div className="grid grid-cols-8 text-sm">
+      <div className="col-span-full text-sm">
         {sorted.map((row, index) => (
-          <Disclosure key={index} as={React.Fragment}>
-            <Disclosure.Button className="col-span-full grid grid-cols-8 border-b last:border-0 border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray even:bg-orange-l6 dark:even:bg-blue-d7">
+          <Disclosure
+            key={index}
+            as="div"
+            className="even:bg-orange-l6 dark:even:bg-blue-d7 w-full border-b border-gray-l2 dark:border-bluegray"
+          >
+            <Disclosure.Button className="w-full grid grid-cols-8 border-b last:border-0 border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray ">
               {({ open }) => (
                 <>
                   <DrawerIcon
@@ -31,7 +35,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                     className={`${open ? "text-orange" : ""} place-self-center`}
                     isOpen={open}
                   />
-                  <p className="text-sm col-span-4 p-4 text-left">
+                  <p className="text-sm col-span-4 p-4 text-left h-full">
                     {row.charityName}
                   </p>
                   <div className="col-span-3 p-4 text-left text-sm">
@@ -40,7 +44,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                 </>
               )}
             </Disclosure.Button>
-            <Disclosure.Panel className="col-span-full font-work group">
+            <Disclosure.Panel className="w-full font-work">
               <Row title="Network">{row.chainName}</Row>
               <Row title="Currency">{row.symbol}</Row>
               <Row title="Amount">{humanize(row.amount, 3)}</Row>
@@ -68,16 +72,9 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
   );
 }
 
-interface RowProps {
-  title: string;
-  classes?: string;
-}
-
-function Row({ title, children, classes }: PropsWithChildren<RowProps>) {
+function Row({ title, children }: PropsWithChildren<{ title: string }>) {
   return (
-    <div
-      className={`flex col-span-full justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${classes} group-even:odd:bg-orange-l6 dark:group-even:odd:bg-blue-d7 group-odd:even:bg-orange-l6 dark:group-odd:even:bg-blue-d7`}
-    >
+    <div className="flex justify-between p-4">
       <span className="font-bold uppercase">{title}</span>
       {children}
     </div>
