@@ -1,6 +1,6 @@
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { DonationsQueryParams } from "types/aws";
@@ -16,12 +16,14 @@ type Props = {
   donorAddress: string;
 };
 
-const Filter = ({
+export default function Filter({
   setParams,
   donorAddress,
   classes = "",
   isDisabled,
-}: Props) => {
+}: Props) {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
   const methods = useForm<FV>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -58,16 +60,17 @@ const Filter = ({
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
-    //event.type = "reset"
     reset();
     setParams((prev) => ({ id: prev.id }));
+    buttonRef.current?.click();
   };
 
   return (
     <Popover
-      className={`${classes} flex items-center relative w-[22.31rem] border border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d6`}
+      className={`${classes} flex relative items-center w-[22.31rem] border border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d6`}
     >
       <Popover.Button
+        ref={buttonRef}
         disabled={isDisabled}
         className="w-full flex justify-center items-center p-3 rounded bg-orange text-white lg:text-gray-d1 lg:dark:text-gray lg:bg-white dark:lg:bg-blue-d6 lg:justify-between disabled:bg-gray lg:dark:disabled:bg-bluegray-d1"
       >
@@ -83,12 +86,15 @@ const Filter = ({
       </Popover.Button>
 
       <FormProvider {...methods}>
-        <Form submit={handleSubmit(submit)} onReset={onReset} />
+        <Form
+          submit={handleSubmit(submit)}
+          onReset={onReset}
+          classes="max-lg:fixed max-lg:inset-x-0 max-lg:top-0 lg:mt-1 absolute top-full z-20"
+        />
       </FormProvider>
     </Popover>
   );
-};
-export default Filter;
+}
 
 function getYearAgo() {
   const date = new Date();

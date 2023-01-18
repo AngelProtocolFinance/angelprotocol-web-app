@@ -1,6 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
 import { FormValues as FV } from "./types";
+import Icon from "components/Icon";
 import CurrencyDropdown from "./CurrencyDropdown";
 import DateInput from "./DateInput";
 import NetworkDropdown from "./NetworkDropdown";
@@ -17,23 +18,26 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} absolute top-full mt-1 grid gap-4  w-full z-10 rounded border border-gray-l2 dark:border-bluegray bg-white dark:bg-blue-d5`}
+      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l2 dark:border-bluegray bg-white dark:bg-blue-d5`}
     >
-      {/* <h2 className="text-xl text-orange font-bold p-5 uppercase">Filters</h2> */}
-      {/* <Popover.Button className="absolute top-5 right-5">
-        <Icon type="Close" size={24} className="text-gray-d2" />
-      </Popover.Button> */}
+      <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4  font-bold uppercase">
+        <span className="text-orange">Filters</span>
+        <Popover.Button className="absolute top-1/2 -translate-y-1/2 right-2">
+          <Icon type="Close" size={33} />
+        </Popover.Button>
+      </div>
 
-      <div className="grid gap-x-[1.125rem] grid-cols-2 px-6 pt-6">
+      <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 lg:px-6 lg:pt-6">
         <label className="col-span-full text-sm mb-2">Date</label>
         <DateInput<FV> name="startDate" />
         <DateInput<FV> name="endDate" />
       </div>
 
-      <NetworkDropdown classes="px-6" />
-      <CurrencyDropdown classes="px-6" />
+      <NetworkDropdown classes="px-4 lg:px-6" />
+      <CurrencyDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 
-      <div className="p-6 mt-2 bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l2 dark:border-bluegray">
+      <div className="max-lg:row-start-2 flex items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l2 dark:border-bluegray">
+        <h3 className="font-bold uppercase lg:hidden">Filter by</h3>
         <button type="reset" className="text-orange underline text-sm">
           Reset filters
         </button>
