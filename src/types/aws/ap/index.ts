@@ -13,6 +13,7 @@ export type EndowmentBase = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  overall: number;
   overview: string;
   owner: string;
   registration_number?: string;
@@ -23,13 +24,10 @@ export type EndowmentBase = {
   };
   street_address?: string;
   tagline?: string;
-
   total_liq: number;
   total_lock: number;
-  overall: number;
+  url?: string;
 };
-
-export type EndowmentProfile = EndowmentBase & { url?: string };
 
 export type EndowmentProfileUpdate = {
   //required

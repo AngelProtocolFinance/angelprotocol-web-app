@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
-import { EndowmentProfile } from "types/aws";
+import { EndowmentBase } from "types/aws";
 
-const ProfileContext = createContext<EndowmentProfile>({} as EndowmentProfile);
+const ProfileContext = createContext<EndowmentBase>({} as EndowmentBase);
 
-export const useProfileContext = (): EndowmentProfile => {
+export const useProfileContext = (): EndowmentBase => {
   const val = useContext(ProfileContext);
 
   if (Object.entries(val).length <= 0) {
