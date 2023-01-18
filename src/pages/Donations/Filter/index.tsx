@@ -38,14 +38,7 @@ export default function Filter({
     },
   });
 
-  const {
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = methods;
-
-  console.log(watch(), errors);
+  const { handleSubmit, reset } = methods;
 
   async function submit(data: FV) {
     setParams((prev) => ({
@@ -57,6 +50,7 @@ export default function Filter({
         denomination: data.currency.value,
       }),
     }));
+    buttonRef.current?.click();
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {

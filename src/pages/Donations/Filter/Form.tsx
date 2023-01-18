@@ -36,10 +36,19 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       <NetworkDropdown classes="px-4 lg:px-6" />
       <CurrencyDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 
-      <div className="max-lg:row-start-2 flex items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l2 dark:border-bluegray">
+      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l2 dark:border-bluegray">
         <h3 className="font-bold uppercase lg:hidden">Filter by</h3>
-        <button type="reset" className="text-orange underline text-sm">
+        <button
+          type="reset"
+          className="text-orange underline text-sm max-lg:ml-auto"
+        >
           Reset filters
+        </button>
+        <button
+          type="submit"
+          className="btn btn-orange px-6 py-2 rounded-sm text-xs font-work font-bold uppercase"
+        >
+          Submit
         </button>
       </div>
     </Popover.Panel>
