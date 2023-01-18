@@ -41,7 +41,9 @@ export default function WidgetConfigurer() {
       </section>
       <div className="grid sm:grid-cols-2 gap-10">
         <section className="flex flex-col gap-3 max-sm:items-center">
-          <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
+          <h2 className={TITLE_STYLE}>
+            That's what your widget would look like:
+          </h2>
           <img
             src={widgetSample}
             alt="widget example"
