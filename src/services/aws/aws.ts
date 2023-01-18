@@ -44,7 +44,7 @@ export const aws = createApi({
     >({
       providesTags: [{ type: "endowments" }],
       query: (params) => {
-        return { url: `/v2/endowments/${network}`, params };
+        return { url: `/v3/endowments/${network}`, params };
       },
     }),
     walletProfile: builder.query<WalletProfile, string>({
