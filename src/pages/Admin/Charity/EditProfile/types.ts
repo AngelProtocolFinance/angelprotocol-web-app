@@ -15,6 +15,8 @@ const _owner: K = "owner";
 const _active_countries: K = "active_in_countries";
 const _tagline: K = "tagline";
 
+JUCE ERROR "sdg" is not allowed'
+
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
   /** to flatten */
