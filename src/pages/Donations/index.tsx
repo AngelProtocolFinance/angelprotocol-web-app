@@ -37,15 +37,13 @@ export default function Donations() {
 
   const { isLoading, isError, data } = queryState;
 
-  const isDisabled = isLoading || isError || isDebouncing || isEmpty(data);
-
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-3xl font-bold max-lg:text-center max-lg:col-span-full max-lg:mb-4">
         My Donations
       </h1>
       <CsvExporter
-        aria-disabled={isDisabled}
+        aria-disabled={isLoading || isError || isDebouncing || isEmpty(data)}
         classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn btn-orange px-8 py-3 rounded  aria-disabled:pointer-events-none aria-disabled:bg-gray-l2 dark:aria-disabled:bg-gray"
         headers={csvHeaders}
         data={data}
@@ -69,7 +67,7 @@ export default function Donations() {
         />
       </div>
       <Filter
-        isDisabled={isDisabled}
+        isDisabled={isLoading || isError || isDebouncing}
         setParams={setParams}
         donorAddress={address || ""}
         classes="max-lg:col-span-full max-lg:w-full"
