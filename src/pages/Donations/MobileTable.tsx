@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import type { FC } from "react";
+import React, { PropsWithChildren } from "react";
 import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
@@ -11,33 +11,24 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
   const showKYCForm = useKYC();
 
   return (
-    <div className={classes}>
-      <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
-        <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
-          <Icon type="ArrowDown" size={24} className="invisible" />
-        </div>
-        <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 uppercase">
-          Recipient
-        </div>
-        <div className="col-span-3 p-4 uppercase">Date</div>
+    <div
+      className={`${classes} border border-gray-l2 dark:border-bluegray rounded`}
+    >
+      <div className="grid items-center grid-cols-8 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray rounded">
+        <div />
+        <div className="col-start-2 col-span-4 p-4">Recipient</div>
+        <div className="col-span-3 p-4">Date</div>
       </div>
 
-      {sorted.map(
-        (
-          { hash, amount, symbol, date, chainName, charityName, usdValue },
-          index
-        ) => (
-          <Disclosure key={index} as="div" className="flex flex-col">
-            <Disclosure.Button>
+      <div className="grid grid-cols-8 text-sm">
+        {sorted.map((row, index) => (
+          <Disclosure key={index} as={React.Fragment}>
+            <Disclosure.Button className="col-span-full grid w-fulljy grid-cols-8">
               {({ open }) => (
                 <div
-                  className={`grid grid-cols-8 lg:hidden ${
-                    index % 2 === 0
-                      ? "bg-white dark:bg-blue-d6"
-                      : "bg-orange-l6 dark:bg-blue-d7"
-                  }  ${
+                  className={`${
                     open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                  }  border-b border-x border-gray-l2 dark:border-bluegray`}
+                  } border-b border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray`}
                 >
                   <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
                     <DrawerIcon
@@ -47,73 +38,56 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                     />
                   </div>
                   <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 text-left">
-                    <p className="text-sm">{charityName}</p>
+                    <p className="text-sm">{row.charityName}</p>
                   </div>
                   <div className="col-span-3 p-4 text-left text-sm">
-                    {new Date(date).toLocaleDateString()}
+                    {new Date(row.date).toLocaleDateString()}
                   </div>
                 </div>
               )}
             </Disclosure.Button>
             <Disclosure.Panel>
-              <div className="flex flex-col border-x border-gray-l2 dark:border-bluegray">
-                <Row
-                  className="bg-white dark:bg-blue-d6 font-work"
-                  title="Network"
+              <Row classes="font-work" title="Network">
+                {row.chainName}
+              </Row>
+              <Row title="Currency">{row.symbol}</Row>
+              <Row title="Amount">{humanize(row.amount, 3)}</Row>
+              <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
+              <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+              <Row title="Receipt">
+                <button
+                  className="block"
+                  onClick={() =>
+                    showKYCForm({
+                      type: "post-donation",
+                      txHash: row.hash,
+                      classes: "grid gap-5",
+                    })
+                  }
                 >
-                  {chainName}
-                </Row>
-                <Row
-                  className="bg-orange-l6 dark:bg-blue-d7 font-body"
-                  title="Currency"
-                >
-                  {symbol}
-                </Row>
-                <Row className="bg-white dark:bg-blue-d6" title="Amount">
-                  {humanize(amount, 3)}
-                </Row>
-                <Row className="bg-white dark:bg-blue-d6" title="USD Value">
-                  {`$${humanize(usdValue, 2)}`}
-                </Row>
-                <Row className="bg-orange-l6 dark:bg-blue-d7" title="TX Hash">
-                  {maskAddress(hash)}
-                </Row>
-                <Row className="bg-orange-l6 dark:bg-blue-d7" title="Receipt">
-                  <button
-                    className="block"
-                    onClick={() =>
-                      showKYCForm({
-                        type: "post-donation",
-                        txHash: hash,
-                        classes: "grid gap-5",
-                      })
-                    }
-                  >
-                    <Icon type="FatArrowDownload" className=" text-2xl" />
-                  </button>
-                </Row>
-              </div>
+                  <Icon type="FatArrowDownload" className=" text-2xl" />
+                </button>
+              </Row>
             </Disclosure.Panel>
           </Disclosure>
-        )
-      )}
+        ))}
+      </div>
     </div>
   );
 }
 
-interface MobileTableProps {
+interface RowProps {
   title: string;
-  children: string | JSX.Element;
-  className: string;
+  classes?: string;
 }
 
-const Row: FC<MobileTableProps> = ({ title, children, className }) => {
+function Row({ title, children, classes }: PropsWithChildren<RowProps>) {
   return (
     <div
-      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
+      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${classes}`}
     >
       <span className="font-bold uppercase">{title}</span>
       {children}
     </div>
   );
-};
+}
