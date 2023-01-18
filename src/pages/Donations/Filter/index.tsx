@@ -64,15 +64,12 @@ export default function Filter({
     setParams((prev) => ({ id: prev.id }));
     buttonRef.current?.click();
   };
-
   return (
-    <Popover
-      className={`${classes} flex relative items-center w-[22.31rem] border border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d6`}
-    >
+    <Popover className={`${classes} flex relative items-center`}>
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full flex justify-center items-center p-3 rounded bg-orange text-white lg:text-gray-d1 lg:dark:text-gray lg:bg-white dark:lg:bg-blue-d6 lg:justify-between disabled:bg-gray lg:dark:disabled:bg-bluegray-d1"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l2 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-gray-l2 lg:dark:border-bluegray"
       >
         {({ open }) => (
           <>
