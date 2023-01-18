@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import { Donation } from "types/aws";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
