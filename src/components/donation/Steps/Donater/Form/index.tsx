@@ -10,7 +10,10 @@ import Amount from "./Amount";
 
 // import AmountOptions from "./AmountOptions";
 
-export default function Form() {
+export default function Form(props: {
+  hideAdvOpts: boolean;
+  unfoldAdvOpts: boolean;
+}) {
   const {
     reset,
     handleSubmit,
@@ -35,7 +38,9 @@ export default function Form() {
     >
       <Amount />
       {/*<AmountOptions classes="mt-3" />*/}
-      <AdvancedOptions classes="mt-10" />
+      {!props.hideAdvOpts && (
+        <AdvancedOptions classes="mt-10" unfold={props.unfoldAdvOpts} />
+      )}
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
         <BtnSec as="link" to={`${appRoutes.profile}/${endowId}`}>

@@ -1,3 +1,5 @@
+import { UrlParamValues } from "DonateWidget";
+import { URL_PARAMS } from "DonateWidget/constants";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -21,7 +23,6 @@ export default function useWidgetUrlGenerator(
       availableCurrencies: [],
       hideText: false,
       hideAdvancedOptions: false,
-      hideEndowmentGauges: false,
       unfoldAdvancedOptions: false,
       liquidPercentage: 0,
     },
@@ -34,40 +35,37 @@ export default function useWidgetUrlGenerator(
       return handleError(new UnexpectedStateError(`Endowment ID is undefined`));
     }
 
-    const param1 = append("hideText", formValues.hideText, formValues.hideText);
+    const param1 = append(formValues.hideText, URL_PARAMS.hideText);
     const param2 = append(
-      "hideEndowGauges",
-      formValues.hideEndowmentGauges,
-      formValues.hideEndowmentGauges
+      formValues.hideAdvancedOptions,
+      URL_PARAMS.hideAdvancedOptions
     );
     const param3 = append(
-      "hideAdvOpts",
-      formValues.hideAdvancedOptions,
-      formValues.hideAdvancedOptions
+      !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions,
+      URL_PARAMS.unfoldAdvancedOptions
     );
     const param4 = append(
-      "unfoldAdvOpts",
-      formValues.unfoldAdvancedOptions,
-      !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions
+      !!formValues.liquidPercentage,
+      URL_PARAMS.liquidPercentage,
+      formValues.liquidPercentage
     );
     const param5 = append(
-      "liquidPct",
-      formValues.liquidPercentage,
-      !!formValues.liquidPercentage
-    );
-    const param6 = append(
-      "availCurrs",
-      formValues.availableCurrencies.map((x) => x.value).join(","),
-      !isEmpty(formValues.availableCurrencies)
+      !isEmpty(formValues.availableCurrencies),
+      URL_PARAMS.availableCurrencies,
+      formValues.availableCurrencies.map((x) => x.value).join(",")
     );
     onChange(
-      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}${param6}`
+      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}`
     );
   }, [endowId, formValues, handleError, onChange]);
 
   return methods;
 }
 
-function append(name: string, value: any, condition: boolean): string {
-  return condition ? `&${name}=${value}` : "";
+function append(
+  condition: boolean,
+  name: keyof UrlParamValues,
+  values?: string | number
+): string {
+  return condition ? `&${name}${!values ? "" : `=${values}`}` : "";
 }

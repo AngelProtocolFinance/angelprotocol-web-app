@@ -20,10 +20,6 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
           Hide text
         </CheckboxFormField>
 
-        <CheckboxFormField<FormValues> name="hideEndowmentGauges">
-          Hide endowment gauges
-        </CheckboxFormField>
-
         <span>Available currencies:</span>
         <DenomSelector />
 
