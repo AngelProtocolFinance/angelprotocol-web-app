@@ -1,5 +1,5 @@
 import { IconBaseProps } from "react-icons";
-import Icon from ".";
+import Icon from "./Icon";
 
 export function DrawerIcon({
   isOpen,
