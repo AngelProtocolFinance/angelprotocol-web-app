@@ -13,9 +13,9 @@ export type QueryState<T> = Pick<
 type Props<T> = {
   queryState: QueryState<T>;
   messages: {
-    loading?: string;
-    error?: string;
-    empty?: T extends any[] ? string : never;
+    loading?: string | ReactElement;
+    error?: string | ReactElement;
+    empty?: T extends any[] ? string | ReactElement : never;
   };
   classes?: { container?: string };
   filterFn?: T extends (infer Item)[]
@@ -35,36 +35,36 @@ export function QueryLoader<T>({
   const { isLoading, isError, data } = queryState;
 
   if (isLoading) {
-    return (
-      <div className={container}>
-        <LoadingStatus>{messages.loading || "Loading.."}</LoadingStatus>
-      </div>
+    return renderMessage(
+      (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
+      messages.loading,
+      container
     );
   }
   if (isError || !data) {
-    return (
-      <div className={container}>
-        <ErrorStatus>{messages.error || "Failed to get data"}</ErrorStatus>
-      </div>
+    return renderMessage(
+      (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
+      messages.error,
+      container
     );
   }
 
   if (Array.isArray(data)) {
     if (isEmpty(data)) {
-      return (
-        <div className={container}>
-          <Status icon="Info">{messages.empty || "No data"}</Status>
-        </div>
+      return renderMessage(
+        (msg) => <Status icon="Info">{msg || "No data"}</Status>,
+        messages.empty,
+        container
       );
     }
 
     if (filterFn) {
       const filtered = data.filter(filterFn);
       if (isEmpty(data)) {
-        return (
-          <div className={container}>
-            <Status icon="Info">{messages.empty || "No data"}</Status>
-          </div>
+        return renderMessage(
+          (msg) => <Status icon="Info">{msg || "No data"}</Status>,
+          messages.empty,
+          container
         );
       }
 
@@ -73,4 +73,15 @@ export function QueryLoader<T>({
   }
 
   return children(data as NonNullable<T>);
+}
+
+function renderMessage(
+  fallback: (message?: string) => ReactElement,
+  message?: string | ReactElement,
+  classes?: string
+) {
+  if (message == null || typeof message === "string") {
+    return <div className={classes}>{fallback(message)}</div>;
+  }
+  return message;
 }
