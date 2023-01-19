@@ -17,8 +17,6 @@ export default function Regions({ type, ...filterProps }: Props) {
   const queryState = useRegionsQuery({});
   const dispatch = useSetter();
 
-  queryState.isLoading = true;
-
   return (
     <QueryLoader
       queryState={queryState}

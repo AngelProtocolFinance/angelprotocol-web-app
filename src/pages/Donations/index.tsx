@@ -4,6 +4,7 @@ import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import QueryLoader from "components/QueryLoader";
 import MobileTable from "./MobileTable";
+import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
@@ -17,6 +18,8 @@ export default function Donations() {
     }
   );
 
+  queryState.data = [];
+
   return (
     <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <QueryLoader
@@ -24,7 +27,7 @@ export default function Donations() {
         messages={{
           loading: "Fetching donations..",
           error: "Failed to get donations",
-          empty: "No donations found",
+          empty: <NoDonations classes="mt-8 place-self-center" />,
         }}
       >
         {(donations) => {
