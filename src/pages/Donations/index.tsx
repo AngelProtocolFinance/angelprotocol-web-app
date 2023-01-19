@@ -18,8 +18,6 @@ export default function Donations() {
     }
   );
 
-  queryState.data = [];
-
   return (
     <div className="grid grid-rows-[auto_1fr] padded-container pb-8 pt-4 bg-white dark:bg-blue-d5 text-gray-d2 dark:text-white">
       <QueryLoader
