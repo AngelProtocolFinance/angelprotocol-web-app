@@ -3,10 +3,13 @@ import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";
+import useWidgetParams from "./useWidgetParams";
 
 const isPrevThemeDark = isPrevDark();
 
 export default function DonateWidget() {
+  const params = useWidgetParams();
+
   /**
    * Need to set the theme to light, but after widget is closed we need to
    * reverse the user selected theme on the main webapp to the previous theme
@@ -38,6 +41,7 @@ export default function DonateWidget() {
             id={endowment.id}
             isKYCRequired={endowment.kyc_donors_only}
             name={endowment.name}
+            params={params}
           />
         )}
       </EndowmentLoader>

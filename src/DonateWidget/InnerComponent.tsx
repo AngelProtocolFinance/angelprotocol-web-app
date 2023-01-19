@@ -1,17 +1,18 @@
 import { useEffect } from "react";
+import { UrlParamValues } from "./types";
 import APLogo from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
-import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
   id: number;
   name: string;
   isKYCRequired: boolean;
+  params: UrlParamValues;
 }) {
-  const { hideText, ...rest } = useWidgetParams();
+  const { hideText, ...rest } = props.params;
 
   const dispatch = useSetter();
 
