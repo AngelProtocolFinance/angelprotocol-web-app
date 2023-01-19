@@ -6,7 +6,16 @@ import { DonationState } from "slices/donation";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
-export function Steps({ className = "" }: { className?: string }) {
+export type ConfigParams = {
+  hideAdvOpts?: boolean;
+  unfoldAdvOpts?: boolean;
+  liquidPct?: number;
+  availCurrs?: string[];
+};
+
+type Props = { className?: string } & ConfigParams;
+
+export function Steps({ className = "", ...params }: Props) {
   const { showModal } = useModalContext();
   const state = useGetter((state) => state.donation);
 
@@ -32,7 +41,7 @@ export function Steps({ className = "" }: { className?: string }) {
         </>
       )}
 
-      <CurrentStep />
+      <CurrentStep {...params} />
     </div>
   );
 }
