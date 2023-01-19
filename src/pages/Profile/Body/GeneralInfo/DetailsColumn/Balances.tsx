@@ -1,6 +1,6 @@
 import { BalanceInfo, EndowmentBalance } from "types/contracts";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader, QueryState } from "components/admin";
+import QueryLoader, { QueryState } from "components/QueryLoader";
 import { condense, humanize } from "helpers";
 import { axlUSDCDenom } from "constants/tokens";
 import { useProfileContext } from "../../../ProfileContext";

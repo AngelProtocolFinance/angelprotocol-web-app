@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Donation } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import MobileTable from "./MobileTable";
 import Table from "./Table";
 

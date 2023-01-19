@@ -4,7 +4,8 @@ import { WithdrawValues as WV } from "./types";
 import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
-import { QueryLoader, TextPrim } from "components/admin";
+import QueryLoader from "components/QueryLoader";
+import { TextPrim } from "components/admin";
 import Warning from "./Warning";
 
 export default function Submit() {

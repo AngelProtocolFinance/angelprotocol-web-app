@@ -24,7 +24,7 @@ type Props<T> = {
   children(data: NonNullable<T>): ReactElement;
 };
 
-export function QueryLoader<T>({
+export default function QueryLoader<T>({
   queryState,
   classes = {},
   messages,

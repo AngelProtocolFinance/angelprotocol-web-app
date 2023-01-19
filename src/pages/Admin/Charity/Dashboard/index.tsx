@@ -1,6 +1,6 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/cw3";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Balance from "./Balance";
 import Donations from "./Donations";
 import Table from "./Table";
