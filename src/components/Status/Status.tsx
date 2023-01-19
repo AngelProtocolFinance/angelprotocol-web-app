@@ -1,21 +1,26 @@
-import { PropsWithChildren } from "react";
 import { StatusProps } from "./types";
-import Icon, { IconTypes } from "../Icon";
+import { IconType } from "../Icon";
+import Icon, { icons } from "../Icon";
 
-export function Status({
+export default function Status<T extends IconType | JSX.Element>({
   icon,
+  iconOptions,
   classes = "",
   gap = "gap-2",
   children,
-}: StatusProps) {
+}: StatusProps<T>) {
   return (
     <div className={`${classes} ${gap} flex items-center`}>
-      {isIconType(Icon) ? <Icon type={icon as IconTypes} /> : icon}
+      {isIconProps(icon) ? (
+        <Icon type={icon} {...(iconOptions as any)} />
+      ) : (
+        (icon as JSX.Element)
+      )}
       <span>{children}</span>
     </div>
   );
 }
 
-function isIconType(val: any): val is IconTypes {
-  return typeof val === "string"; // && val in icons;
+function isIconProps(val: any): val is IconType {
+  return typeof val === "string" && val in icons;
 }

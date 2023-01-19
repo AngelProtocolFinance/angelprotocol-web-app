@@ -3,7 +3,8 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
-import { BtnPrimary, BtnSec, Tooltip } from "components/donation";
+import { ErrorStatus, LoadingStatus } from "components/Status";
+import { BtnPrimary, BtnSec } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
@@ -46,7 +47,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   const { fromBal, fromGift } = getBreakdown(token);
 
   return (
-    <div>
+    <div className="grid content-start">
       <Row title="Currency:">
         <img
           alt=""
@@ -117,11 +118,9 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
-          <Tooltip
-            type="Info"
-            message="This transaction is likely to fail"
-            classes="my-3 text-red dark:text-red-l2"
-          />
+          <ErrorStatus classes="my-3 justify-self-center">
+            This transaction is likely to fail
+          </ErrorStatus>
         </>
       );
     case "loading":
@@ -135,11 +134,9 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
-          <Tooltip
-            type="Loading"
-            message="Estimating transaction cost.."
-            classes="my-6"
-          />
+          <LoadingStatus classes="justify-self-center my-6">
+            Estimating transaction cost..
+          </LoadingStatus>
         </>
       );
     default:
