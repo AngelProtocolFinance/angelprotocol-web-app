@@ -1,7 +1,7 @@
 import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
 import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ReactElement } from "react";
-import Icon from "components/Icon";
+import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty } from "helpers";
 
 type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
@@ -37,24 +37,14 @@ export function QueryLoader<T>({
   if (isLoading) {
     return (
       <div className={container}>
-        <Icon
-          type="Loading"
-          className="animate-spin inline relative mr-1 bottom-[1px]"
-        />
-        <span>{messages.loading || "Loading.."}</span>
+        <LoadingStatus>{messages.loading || "Loading.."}</LoadingStatus>
       </div>
     );
   }
   if (isError || !data) {
     return (
       <div className={container}>
-        <Icon
-          type="Info"
-          className="inline relative mr-1 bottom-[1px] text-red dark:text-red-l2"
-        />
-        <span className="text-red dark:text-red-l2">
-          {messages.error || "Failed to get data"}
-        </span>
+        <ErrorStatus>{messages.error || "Failed to get data"}</ErrorStatus>
       </div>
     );
   }
@@ -63,8 +53,7 @@ export function QueryLoader<T>({
     if (isEmpty(data)) {
       return (
         <div className={container}>
-          <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
-          <span>{messages.empty || "No data"}</span>
+          <Status icon="Info">{messages.empty || "No data"}</Status>
         </div>
       );
     }
@@ -74,8 +63,7 @@ export function QueryLoader<T>({
       if (isEmpty(data)) {
         return (
           <div className={container}>
-            <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
-            <span>{messages.empty || "No data"}</span>
+            <Status icon="Info">{messages.empty || "No data"}</Status>
           </div>
         );
       }

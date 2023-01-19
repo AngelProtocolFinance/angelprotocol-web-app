@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useWalletProfileQuery } from "services/aws/aws";
+import { ErrorStatus } from "components/Status";
 import Logo from "../Logo";
 import Links from "./Links";
 
@@ -9,9 +10,7 @@ export default function MyEndowments({ address }: { address: string }) {
   if (isError) {
     return (
       <Container>
-        <span className="text-sm text-red dark:text-red-l2">
-          Failed to load endowments
-        </span>
+        <ErrorStatus>Failed to load endowments</ErrorStatus>
       </Container>
     );
   }
