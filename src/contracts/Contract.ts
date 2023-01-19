@@ -11,11 +11,8 @@ import {
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
 import { Chain } from "types/aws";
-import {
-  ADR36SignDoc,
-  EmbeddedBankMsg,
-  EmbeddedWasmMsg,
-} from "types/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import { ADR36SignDoc } from "types/cosmos";
 import { TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
 import { logger, toBase64 } from "helpers";
