@@ -2,7 +2,7 @@ import { Keplr } from "@keplr-wallet/types";
 import { CapitalizedEndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
-export type EndowmentBase = {
+export type EndowmentProfile = {
   active_in_countries: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   contact_email: string;

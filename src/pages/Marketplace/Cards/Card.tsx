@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentBase } from "types/aws";
+import { EndowmentProfile } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
@@ -11,6 +11,7 @@ import { unsdgs } from "constants/unsdgs";
 
 const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";
+
 export default function Card({
   active_in_countries,
   name,
@@ -22,7 +23,7 @@ export default function Card({
   tagline,
   hq: { country = "", city = "" },
   kyc_donors_only,
-}: EndowmentBase) {
+}: EndowmentProfile) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">

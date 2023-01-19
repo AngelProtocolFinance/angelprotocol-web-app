@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
-  EndowmentBase,
+  EndowmentProfile,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
@@ -41,7 +41,7 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowments: builder.query<
-      PaginatedAWSQueryRes<EndowmentBase[]>,
+      PaginatedAWSQueryRes<EndowmentProfile[]>,
       EndowmentsQueryParams
     >({
       providesTags: [{ type: "endowments" }],
@@ -68,11 +68,11 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<EndowmentBase, number>({
+    profile: builder.query<EndowmentProfile, number>({
       providesTags: [{ type: "profile" }],
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
-    editProfile: builder.mutation<EndowmentBase, ADR36Payload>({
+    editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
       invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
