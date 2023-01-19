@@ -2,12 +2,10 @@ import { useState } from "react";
 import Icon from "components/Icon";
 import Split from "./Split";
 
-type Props = {
-  classes?: string;
-};
+type Props = { classes?: string; unfold?: boolean };
 
-export default function AdvancedOptions({ classes = "" }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function AdvancedOptions({ classes = "", unfold }: Props) {
+  const [isOpen, setIsOpen] = useState(unfold);
 
   function toggle() {
     setIsOpen((prev) => !prev);
