@@ -1,8 +1,17 @@
+import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
+import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ReactElement } from "react";
 import Icon from "components/Icon";
+import { isEmpty } from "helpers";
+
+type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
+export type QueryState<T> = Pick<
+  TypedUseQueryHookResult<T, any, Base>,
+  "isLoading" | "isError" | "data"
+>;
 
 type Props<T> = {
-  queryState: { data?: T; isLoading: boolean; isError: boolean };
+  queryState: QueryState<T>;
   messages: {
     loading?: string;
     error?: string;
@@ -17,16 +26,17 @@ type Props<T> = {
 
 export function QueryLoader<T>({
   queryState,
-  classes,
+  classes = {},
   messages,
   children,
   filterFn,
 }: Props<T>) {
+  const { container = "" } = classes;
   const { isLoading, isError, data } = queryState;
 
   if (isLoading) {
     return (
-      <div className={classes?.container || ""}>
+      <div className={container}>
         <Icon
           type="Loading"
           className="animate-spin inline relative mr-1 bottom-[1px]"
@@ -37,17 +47,22 @@ export function QueryLoader<T>({
   }
   if (isError || !data) {
     return (
-      <div className={`text-red dark:text-red-l2 ${classes?.container || ""}`}>
-        <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
-        <span>{messages.error || "Failed to get data"}</span>
+      <div className={container}>
+        <Icon
+          type="Info"
+          className="inline relative mr-1 bottom-[1px] text-red dark:text-red-l2"
+        />
+        <span className="text-red dark:text-red-l2">
+          {messages.error || "Failed to get data"}
+        </span>
       </div>
     );
   }
 
   if (Array.isArray(data)) {
-    if (data.length <= 0) {
+    if (isEmpty(data)) {
       return (
-        <div className={`${classes?.container || ""}`}>
+        <div className={container}>
           <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
           <span>{messages.empty || "No data"}</span>
         </div>
@@ -56,9 +71,9 @@ export function QueryLoader<T>({
 
     if (filterFn) {
       const filtered = data.filter(filterFn);
-      if (filtered.length <= 0) {
+      if (isEmpty(data)) {
         return (
-          <div className={`${classes?.container || ""}`}>
+          <div className={container}>
             <Icon type="Info" className="inline relative mr-1 bottom-[1px]" />
             <span>{messages.empty || "No data"}</span>
           </div>

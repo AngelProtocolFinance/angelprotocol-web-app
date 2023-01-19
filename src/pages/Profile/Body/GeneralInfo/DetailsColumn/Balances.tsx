@@ -1,6 +1,6 @@
 import { BalanceInfo, EndowmentBalance } from "types/contracts";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import { QueryLoader, QueryState } from "components/admin";
 import { condense, humanize } from "helpers";
 import { axlUSDCDenom } from "constants/tokens";
 import { useProfileContext } from "../../../ProfileContext";
@@ -34,7 +34,7 @@ export default function Balances() {
 }
 
 function Balance(props: {
-  queryState: { data?: EndowmentBalance; isLoading: boolean; isError: boolean };
+  queryState: QueryState<EndowmentBalance>;
   title: string;
   getAmount: (balance: BalanceInfo) => number;
 }) {
