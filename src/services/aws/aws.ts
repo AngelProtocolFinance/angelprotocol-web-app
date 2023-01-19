@@ -36,7 +36,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowments"],
+  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "profiles"],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
@@ -44,7 +44,7 @@ export const aws = createApi({
       PaginatedAWSQueryRes<EndowmentProfile[]>,
       EndowmentsQueryParams
     >({
-      providesTags: [{ type: "endowments" }],
+      providesTags: [{ type: "profiles" }],
       query: (params) => {
         return { url: `/v3/endowments/${network}`, params };
       },
@@ -73,7 +73,7 @@ export const aws = createApi({
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
     editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
-      invalidatesTags: ["endowments", "profile", "walletProfile"],
+      invalidatesTags: ["profiles", "profile", "walletProfile"],
       query: (payload) => {
         return {
           url: PROFILE_QUERY,
