@@ -1,4 +1,4 @@
-import { IconTypes } from "components/Icon";
+import { IconType } from "components/Icon";
 import { LITEPAPER } from "constants/urls";
 
 type SocialMedia =
@@ -12,7 +12,7 @@ type SocialMedia =
   | "Instagram";
 
 type SocialMediaLinks = {
-  [index in SocialMedia]: { iconType: IconTypes; link: string };
+  [index in SocialMedia]: { iconType: IconType; link: string };
 };
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
