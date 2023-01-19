@@ -2,8 +2,17 @@ import { useSearchParams } from "react-router-dom";
 import { UrlParamValues } from "./types";
 import { URL_PARAMS } from "./constants";
 
-export default function useWidgetParams(): UrlParamValues {
+export default function useWidgetParams({
+  skip,
+}: {
+  skip: boolean;
+}): UrlParamValues | undefined {
   const [search] = useSearchParams();
+
+  if (skip) {
+    return undefined;
+  }
+
   const searchParams = new URLSearchParams(search);
 
   function get(key: keyof UrlParamValues): boolean {

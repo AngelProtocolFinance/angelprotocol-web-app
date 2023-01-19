@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { UrlParamValues } from "./types";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";
@@ -7,8 +8,12 @@ import useWidgetParams from "./useWidgetParams";
 
 const isPrevThemeDark = isPrevDark();
 
-export default function DonateWidget() {
-  const params = useWidgetParams();
+type Props = { params?: UrlParamValues };
+
+export default function DonateWidget(props: Props) {
+  const urlParams = useWidgetParams({ skip: !!props.params });
+
+  const params: UrlParamValues = !!props.params ? props.params : urlParams!;
 
   /**
    * Need to set the theme to light, but after widget is closed we need to
