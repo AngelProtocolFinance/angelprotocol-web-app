@@ -9,7 +9,7 @@ type Props = { defaultInit?: string; className?: string };
 
 const isPrevThemeDark = isPrevDark();
 
-export default function DonateWidget({ className = "", defaultInit }: Props) {
+export default function DonateWidget({ className, defaultInit }: Props) {
   const params = useWidgetParams(defaultInit);
 
   /**
@@ -44,6 +44,7 @@ export default function DonateWidget({ className = "", defaultInit }: Props) {
             isKYCRequired={endowment.kyc_donors_only}
             name={endowment.name}
             params={params}
+            className={className}
           />
         )}
       </EndowmentLoader>
