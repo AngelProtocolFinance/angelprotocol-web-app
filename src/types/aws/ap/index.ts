@@ -1,7 +1,7 @@
 import { CapitalizedEndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
-export type EndowmentProfile = {
+export type Endowment = {
   active_in_countries: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   contact_email: string;
@@ -29,7 +29,7 @@ export type EndowmentProfile = {
 };
 
 export type EndowmentCard = Pick<
-  EndowmentProfile,
+  Endowment,
   | "active_in_countries"
   | "name"
   | "logo"
