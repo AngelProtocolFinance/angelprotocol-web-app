@@ -10,12 +10,29 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers } =
+  const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers, region } =
     useGetter((state) => state.component.marketFilter);
 
   const selectedSDGs = useMemo(
     () => Object.entries(sdgGroups).flatMap(([, members]) => members),
     [sdgGroups]
+  );
+
+  const { activities, headquarters } = region;
+  const hqCountries = useMemo(
+    () =>
+      Object.entries(headquarters)
+        .flatMap(([, countries]) => (countries ? countries : []))
+        .join(","),
+    [headquarters]
+  );
+
+  const activityCountries = useMemo(
+    () =>
+      Object.entries(activities)
+        .flatMap(([, countries]) => (countries ? countries : []))
+        .join(","),
+    [activities]
   );
 
   const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
@@ -25,6 +42,8 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     tiers: tiers.join(",") || null,
     sdgs: selectedSDGs.join(",") || 0,
     kyc_only: kyc_only.join(",") || null,
+    ...(hqCountries ? { hq_country: hqCountries } : {}),
+    ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
   });
 
