@@ -26,7 +26,7 @@ export default function SDGSelector() {
       <Listbox.Button className="w-full p-3 text-left uppercase flex justify-between items-center">
         {({ open }) => (
           <>
-            {value} - {unsdgs[value as UNSDG_NUMS].title}
+            {value} - {unsdgs[value].title}
             <DrawerIcon isOpen={open} size={24} />
           </>
         )}

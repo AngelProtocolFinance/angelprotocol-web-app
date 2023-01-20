@@ -45,7 +45,7 @@ export type EndowmentProfileUpdate = {
   to force setting of default values - "", [], etc ..*/
   active_in_countries: string[];
   categories_general: string[];
-  categories_sdgs: number[];
+  categories_sdgs: UNSDG_NUMS[];
   contact_email: string;
   hq_city: string;
   hq_country: string;
