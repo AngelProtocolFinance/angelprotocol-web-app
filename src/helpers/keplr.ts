@@ -24,6 +24,14 @@ export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
 }
 
+export function getKeplrClient(
+  providerId: ProviderId
+): KeplrWalletConnectV1 | Keplr {
+  return providerId === "keplr-wc"
+    ? getKeplrWCClient()
+    : (window as Dwindow).keplr!;
+}
+
 export async function getSigningKeplrClient(
   providerId: ProviderId,
   chain_id: string,
@@ -38,14 +46,6 @@ export async function getSigningKeplrClient(
         : "getOfflineSigner"
     ](chain_id)
   );
-}
-
-export function getKeplrClient(
-  providerId: ProviderId
-): KeplrWalletConnectV1 | Keplr {
-  return providerId === "keplr-wc"
-    ? getKeplrWCClient()
-    : (window as Dwindow).keplr!;
 }
 
 type Mode = Parameters<Keplr["sendTx"]>[2];
