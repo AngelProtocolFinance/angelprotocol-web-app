@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
+  ADR36Payload,
   EndowmentCard,
   EndowmentProfile,
   EndowmentsQueryParams,
@@ -70,6 +71,16 @@ export const aws = createApi({
       providesTags: [{ type: "profile" }],
       query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
     }),
+    editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
+      invalidatesTags: ["endowments", "profile"],
+      query: (payload) => {
+        return {
+          url: `/v1/profile/${network}/endowment`,
+          method: "PUT",
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
@@ -78,6 +89,7 @@ export const {
   useToggleBookmarkMutation,
   useEndowmentsQuery,
   useProfileQuery,
+  useEditProfileMutation,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },

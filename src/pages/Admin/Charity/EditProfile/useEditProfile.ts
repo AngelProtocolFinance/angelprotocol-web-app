@@ -2,11 +2,15 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
+import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import Prompt from "components/Prompt";
+import { TxPrompt } from "components/Prompt";
 import { getPayloadDiff } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { appRoutes } from "constants/routes";
+import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";
 
@@ -18,6 +22,8 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
+  const { wallet } = useGetWallet();
+  const [submit] = useEditProfileMutation();
 
   const editProfile: SubmitHandler<FV> = async ({
     initial,
@@ -39,11 +45,7 @@ export default function useEditProfile() {
     const diff = getPayloadDiff(initial, changes);
 
     if (Object.entries(diff).length <= 0) {
-      return showModal(Prompt, {
-        headline: "Edit profile",
-        type: "error",
-        children: "No changes detected.",
-      });
+      return showModal(TxPrompt, { error: "No changes detected" });
     }
 
     const sdgKey: keyof FlatFormValues = "sdg";
@@ -57,8 +59,20 @@ export default function useEditProfile() {
       id: endowmentId,
       owner: endowment.owner,
     };
+    const result = await submit(await createADR36Payload(updates, wallet!)); //wallet is asserted in admin guard
+    if ("error" in result) {
+      return showModal(TxPrompt, { error: "Failed to update profile" });
+    }
 
-    console.log(updates);
+    return showModal(TxPrompt, {
+      success: {
+        message: "Profile successfully updated",
+        link: {
+          description: "View changes",
+          url: `${appRoutes.profile}/${endowmentId}`,
+        },
+      },
+    });
   };
 
   return {

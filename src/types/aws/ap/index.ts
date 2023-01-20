@@ -1,3 +1,4 @@
+import { Keplr } from "@keplr-wallet/types";
 import { CapitalizedEndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
@@ -125,3 +126,11 @@ export interface DonationsMetricList {
   donations_daily_amount: number;
   donations_total_amount: number;
 }
+
+type AminoSignRes = Awaited<ReturnType<Keplr["signAmino"]>>;
+type Signed = AminoSignRes["signed"];
+type Signature = AminoSignRes["signature"];
+export type ADR36Payload = Pick<Signed, "chain_id" | "fee" | "memo"> & {
+  msg: Signed["msgs"];
+  signatures: Signature[];
+};
