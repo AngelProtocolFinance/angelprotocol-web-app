@@ -102,7 +102,7 @@ export type Airdrop = {
 };
 
 export type EndowmentBookmark = {
-  endowId: number;
+  id: number; // Endowment ID
   name: string;
   logo?: string; // old bookmarks do not have this field saved yet
 };

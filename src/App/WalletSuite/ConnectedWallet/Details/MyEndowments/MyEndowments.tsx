@@ -20,7 +20,7 @@ export default function MyEndowments({ address }: { address: string }) {
 
   return (
     <Container>
-      {data.admin.map(({ endowId, logo, name }) => (
+      {data.admin.map(({ id: endowId, logo, name }) => (
         <div
           key={`my-endow-${endowId}`}
           className="grid grid-cols-[auto_1fr] gap-3"

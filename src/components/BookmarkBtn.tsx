@@ -33,7 +33,7 @@ export default function BookmarkBtn({ endowId, name, logo, children }: Props) {
   const isLoading =
     isProfileLoading || isFetching || isToggling || isWalletLoading;
 
-  const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
+  const bookmark = data?.bookmarks?.find((d) => d.id === endowId);
   const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
