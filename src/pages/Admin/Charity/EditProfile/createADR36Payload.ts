@@ -32,6 +32,6 @@ export async function createADR36Payload(
       memo: "",
     }
   );
-  const { msgs, ...rest } = signed;
-  return { ...rest, msg: msgs, signatures: [signature] };
+  const { msgs, fee, memo } = signed;
+  return { fee, memo, msg: msgs, signatures: [signature] };
 }
