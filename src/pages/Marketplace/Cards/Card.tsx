@@ -9,6 +9,8 @@ import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
+const PLACEHOLDER_CITY = "City";
+const PLACEHOLDER_TAGLINE = " ";
 export default function Card({
   active_in_countries,
   name,
@@ -45,11 +47,14 @@ export default function Card({
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           <h3 className="font-bold">{name}</h3>
-          <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-            <span className="font-semibold">HQ:</span> {hq.country}, $
-            {hq.city || ""}
-          </p>
-          {tagline && tagline !== " " ? (
+          {hq.country && (
+            <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
+              <span className="font-semibold">HQ:</span> {hq.country}
+              {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
+            </p>
+          )}
+
+          {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
             <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
               {tagline}
             </p>

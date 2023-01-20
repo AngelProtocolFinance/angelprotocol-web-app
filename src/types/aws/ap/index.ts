@@ -3,7 +3,7 @@ import { CapitalizedEndowmentType } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
-  hq: { country: string; city?: string };
+  hq: { country?: string; city?: string };
   active_in_countries: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
