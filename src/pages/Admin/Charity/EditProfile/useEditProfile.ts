@@ -32,7 +32,7 @@ export default function useEditProfile() {
     hq_country,
     ...newData
   }) => {
-    const [bannerUrl, logoUrl] = await getImgUrls([image, logo]);
+    const [bannerUrl, logoUrl] = await uploadImgs([image, logo]);
 
     const changes: FlatFormValues = {
       image: bannerUrl,
@@ -79,7 +79,7 @@ export default function useEditProfile() {
   };
 }
 
-async function getImgUrls(imgs: ImgLink[]): Promise<string[]> {
+async function uploadImgs(imgs: ImgLink[]): Promise<string[]> {
   const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
   const cid = await uploadToIpfs(files);
   return imgs.map((img) =>
