@@ -79,19 +79,6 @@
     @apply bg-gray cursor-auto;
   }
 
-  .btn-outline-blue {
-    @apply border-2 border-blue text-blue uppercase cursor-pointer font-bold transition;
-  }
-  .btn-outline-blue:hover {
-    @apply bg-blue-d2 text-white;
-  }
-  .btn-outline-blue:active {
-    @apply bg-blue-d1 text-white;
-  }
-  .btn-outline-blue:disabled {
-    @apply border-gray text-gray cursor-auto;
-  }
-
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
   }
