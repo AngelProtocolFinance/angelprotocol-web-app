@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import {
   updateAWSQueryData,
-  useEndowmentsQuery,
-  useLazyEndowmentsQuery,
+  useLazyProfilesQuery,
+  useProfilesQuery,
 } from "services/aws/aws";
 import { QueryLoader } from "components/admin";
 import { useGetter, useSetter } from "store/accessors";
@@ -18,7 +18,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     [sdgGroups]
   );
 
-  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
+  const { isLoading, data, isError, originalArgs } = useProfilesQuery({
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || null,
@@ -28,7 +28,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     start: 0,
   });
 
-  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
+  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyProfilesQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -44,7 +44,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
+          updateAWSQueryData("profiles", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
           })

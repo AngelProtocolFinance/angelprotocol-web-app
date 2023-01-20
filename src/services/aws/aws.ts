@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
   EndowmentProfile,
-  EndowmentsQueryParams,
   PaginatedAWSQueryRes,
+  ProfilesQueryParams,
   WalletProfile,
 } from "types/aws";
 import { NetworkType } from "types/lists";
@@ -40,9 +40,9 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowments: builder.query<
+    profiles: builder.query<
       PaginatedAWSQueryRes<EndowmentProfile[]>,
-      EndowmentsQueryParams
+      ProfilesQueryParams
     >({
       providesTags: [{ type: "profiles" }],
       query: (params) => {
@@ -88,12 +88,12 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useEndowmentsQuery,
+  useProfilesQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
-    endowments: { useLazyQuery: useLazyEndowmentsQuery },
+    profiles: { useLazyQuery: useLazyProfilesQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
