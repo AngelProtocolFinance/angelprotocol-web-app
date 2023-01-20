@@ -24,18 +24,12 @@ export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
 }
 
-export function getKeplr(providerId: ProviderId) {
-  return providerId === "keplr-wc"
-    ? getKeplrWCClient()
-    : (window as Dwindow).keplr!;
-}
-
 export async function getSigningKeplrClient(
   providerId: ProviderId,
   chain_id: string,
   rpcUrl: string
 ): Promise<SigningCosmWasmClient> {
-  const keplr = getKeplr(providerId);
+  const keplr = getKeplrClient(providerId);
   return await SigningCosmWasmClient.connectWithSigner(
     rpcUrl,
     keplr[
@@ -49,9 +43,9 @@ export async function getSigningKeplrClient(
 export function getKeplrClient(
   providerId: ProviderId
 ): KeplrWalletConnectV1 | Keplr {
-  const wallet =
-    providerId === "keplr-wc" ? getKeplrWCClient() : (window as Dwindow).keplr!;
-  return wallet;
+  return providerId === "keplr-wc"
+    ? getKeplrWCClient()
+    : (window as Dwindow).keplr!;
 }
 
 type Mode = Parameters<Keplr["sendTx"]>[2];
