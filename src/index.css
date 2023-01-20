@@ -59,19 +59,6 @@
     @apply bg-gray cursor-auto;
   }
 
-  .btn-outline-orange {
-    @apply border-2 border-orange text-orange uppercase cursor-pointer font-bold transition;
-  }
-  .btn-outline-orange:hover {
-    @apply bg-orange-d2 text-white;
-  }
-  .btn-outline-orange:active {
-    @apply bg-orange-d1 text-white;
-  }
-  .btn-outline-orange:disabled {
-    @apply border-gray text-gray cursor-auto;
-  }
-
   .btn-blue {
     @apply bg-blue text-white uppercase cursor-pointer font-bold hover:bg-blue-l1 active:bg-blue-d1 transition;
   }
