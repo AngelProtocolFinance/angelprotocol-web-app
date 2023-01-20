@@ -1,4 +1,4 @@
-import { cleanObject } from "./cleanObject";
+import { cleanObject } from "../cleanObject";
 
 //NOTE: intended for shallow form objects only atm
 describe("cleanObject", () => {

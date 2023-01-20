@@ -11,7 +11,8 @@ import Popup from "components/Popup";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

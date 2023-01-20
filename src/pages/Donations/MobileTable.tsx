@@ -1,130 +1,82 @@
 import { Disclosure } from "@headlessui/react";
-import type { FC } from "react";
-import { Donation } from "types/aws";
+import { PropsWithChildren } from "react";
+import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
 import useKYC from "components/KYC/useKYC";
-import { useSort } from "components/donations";
+import useSort from "hooks/useSort";
 import { humanize, maskAddress } from "helpers";
 
-export default function MobileTable(props: { donations: Donation[] }) {
-  const { sorted } = useSort(props.donations);
+export default function MobileTable({ donations, classes = "" }: TableProps) {
+  const { sorted } = useSort(donations);
   const showKYCForm = useKYC();
 
   return (
-    <div className="lg:hidden mt-6">
-      <div className="grid items-center grid-cols-8 text-xs font-bold bg-orange-l6 dark:bg-blue-d7  border border-gray-l2 dark:border-bluegray">
-        <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
-          <Icon type="ArrowDown" size={24} className="invisible" />
-        </div>
-        <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 uppercase">
-          Recipient
-        </div>
-        <div className="col-span-3 p-4 uppercase">Date</div>
+    <div
+      className={`${classes} border border-gray-l2 dark:border-bluegray rounded`}
+    >
+      <div className="grid items-center grid-cols-8 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray rounded">
+        <div />
+        <div className="col-start-2 col-span-4 p-4">Recipient</div>
+        <div className="col-span-3 p-4">Date</div>
       </div>
 
-      {sorted.map(
-        (
-          {
-            hash,
-            amount,
-            symbol,
-            chainId,
-            date,
-            chainName,
-            charityName,
-            id: charityId,
-          },
-          index
-        ) => (
-          <Disclosure as="div" className="flex flex-col">
-            <>
-              <Disclosure.Button>
-                {({ open }) => (
-                  <div
-                    className={`grid grid-cols-8 lg:hidden ${
-                      index % 2 === 0
-                        ? "bg-white dark:bg-blue-d6"
-                        : "bg-orange-l6 dark:bg-blue-d7"
-                    }  ${
-                      open ? "bg-orange-l5 dark:bg-blue-d4" : ""
-                    }  border-b border-x border-gray-l2 dark:border-bluegray`}
-                  >
-                    <div className="col-span-1 w-full flex justify-center border-r border-gray-l2 dark:border-bluegray p-4">
-                      <DrawerIcon
-                        size={24}
-                        className={`${open ? "text-orange" : ""}`}
-                        isOpen={open}
-                      />
-                    </div>
-                    <div className="col-span-4 border-r border-gray-l2 dark:border-bluegray p-4 text-left">
-                      <span className="truncate text-sm">{charityName}</span>
-                    </div>
-                    <div className="col-span-3 p-4 text-left text-sm">
-                      {new Date(date).toLocaleDateString()}
-                    </div>
+      <div className="col-span-full text-sm">
+        {sorted.map((row, index) => (
+          <Disclosure
+            key={index}
+            as="div"
+            className="even:bg-orange-l6 dark:even:bg-blue-d7 w-full border-b border-gray-l2 dark:border-bluegray"
+          >
+            <Disclosure.Button className="w-full grid grid-cols-8 border-b last:border-0 border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray ">
+              {({ open }) => (
+                <>
+                  <DrawerIcon
+                    size={25.5}
+                    className={`${open ? "text-orange" : ""} place-self-center`}
+                    isOpen={open}
+                  />
+                  <p className="text-sm col-span-4 p-4 text-left h-full">
+                    {row.charityName}
+                  </p>
+                  <div className="col-span-3 p-4 text-left text-sm">
+                    {new Date(row.date).toLocaleDateString()}
                   </div>
-                )}
-              </Disclosure.Button>
-              <Disclosure.Panel>
-                <div className="flex flex-col border-x border-gray-l2 dark:border-bluegray">
-                  <Row
-                    className="bg-white dark:bg-blue-d6 font-work"
-                    title="Network"
-                  >
-                    {chainName}
-                  </Row>
-                  <Row
-                    className="bg-orange-l6 dark:bg-blue-d7 font-body"
-                    title="Currency"
-                  >
-                    {symbol}
-                  </Row>
-                  <Row className="bg-white dark:bg-blue-d6" title="Amount">
-                    {humanize(amount, 3)}
-                  </Row>
-                  <Row className="bg-orange-l6 dark:bg-blue-d7" title="TX Hash">
-                    {maskAddress(hash)}
-                  </Row>
-                  <Row className="bg-white dark:bg-blue-d6" title="Status">
-                    Received
-                  </Row>
-                  <Row className="bg-orange-l6 dark:bg-blue-d7" title="Receipt">
-                    <button
-                      className="block"
-                      onClick={() =>
-                        showKYCForm({
-                          type: "post-donation",
-                          txHash: hash,
-                          classes: "grid gap-5",
-                        })
-                      }
-                    >
-                      <Icon type="FatArrowDownload" className=" text-2xl" />
-                    </button>
-                  </Row>
-                </div>
-              </Disclosure.Panel>
-            </>
+                </>
+              )}
+            </Disclosure.Button>
+            <Disclosure.Panel className="w-full font-work">
+              <Row title="Network">{row.chainName}</Row>
+              <Row title="Currency">{row.symbol}</Row>
+              <Row title="Amount">{humanize(row.amount, 3)}</Row>
+              <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
+              <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+              <Row title="Receipt">
+                <button
+                  className="block"
+                  onClick={() =>
+                    showKYCForm({
+                      type: "post-donation",
+                      txHash: row.hash,
+                      classes: "grid gap-5",
+                    })
+                  }
+                >
+                  <Icon type="FatArrowDownload" className=" text-2xl" />
+                </button>
+              </Row>
+            </Disclosure.Panel>
           </Disclosure>
-        )
-      )}
+        ))}
+      </div>
     </div>
   );
 }
 
-interface MobileTableProps {
-  title: string;
-  children: string | JSX.Element;
-  className: string;
-}
-
-const Row: FC<MobileTableProps> = ({ title, children, className }) => {
+function Row({ title, children }: PropsWithChildren<{ title: string }>) {
   return (
-    <div
-      className={`flex justify-between p-4 border-b border-gray-l2 dark:border-bluegray ${className}`}
-    >
+    <div className="flex justify-between p-4">
       <span className="font-bold uppercase">{title}</span>
       {children}
     </div>
   );
-};
+}
