@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import banner from "assets/images/hero.png";
 import { useProfileQuery } from "services/aws/aws";
+import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { QueryLoader } from "components/admin";
 import { idParamToNum } from "helpers";
 import Steps from "./Steps";
 

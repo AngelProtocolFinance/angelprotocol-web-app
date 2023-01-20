@@ -4,7 +4,7 @@ import {
   useEndowmentsQuery,
   useLazyEndowmentsQuery,
 } from "services/aws/aws";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import { useGetter, useSetter } from "store/accessors";
 import Card from "./Card";
 

@@ -4,7 +4,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Breadcrumbs from "components/Breadcrumbs";
 import KYC from "components/KYC";
 import KadoModal from "components/KadoModal";
-import { Tooltip } from "components/donation";
+import Status, { LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
@@ -97,15 +97,18 @@ function CurrStep(props: DonationState) {
 
   if (props.step <= 3) {
     if (isLoading) {
-      return <Tooltip type="Loading" message="Loading wallet" />;
+      return (
+        <LoadingStatus classes="justify-self-center">
+          Loading wallet
+        </LoadingStatus>
+      );
     }
 
     if (!wallet) {
       return (
-        <Tooltip
-          type="Info"
-          message="You need to connect your wallet to make a donation"
-        />
+        <Status icon="Info" classes="justify-self-center">
+          You need to connect your wallet to make a donation
+        </Status>
       );
     }
     switch (props.step) {

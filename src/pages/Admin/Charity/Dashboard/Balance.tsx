@@ -1,7 +1,7 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Holdings from "../Holdings";
 import { accountTypeDisplayValue } from "../constants";
 

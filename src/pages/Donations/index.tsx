@@ -2,8 +2,9 @@ import { useParams } from "react-router-dom";
 import { Donation } from "types/aws";
 import { useDonationsQuery } from "services/apes";
 import CsvExporter from "components/CsvExporter";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import MobileTable from "./MobileTable";
+import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
@@ -24,7 +25,7 @@ export default function Donations() {
         messages={{
           loading: "Fetching donations..",
           error: "Failed to get donations",
-          empty: "No donations found",
+          empty: <NoDonations classes="mt-8 place-self-center" />,
         }}
       >
         {(donations) => {

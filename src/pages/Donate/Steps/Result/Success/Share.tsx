@@ -1,12 +1,12 @@
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import Icon, { IconTypes } from "components/Icon";
+import Icon, { IconType } from "components/Icon";
 import { BtnPrimary } from "components/donation";
 import { DonationRecipient } from "slices/donation";
 
 export type SocialMedia = Extract<
-  IconTypes,
+  IconType,
   "Facebook" | "Twitter" | "Telegram" | "Linkedin"
 >;
 
