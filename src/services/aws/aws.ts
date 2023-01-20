@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  ADR36Payload,
   EndowmentProfile,
   PaginatedAWSQueryRes,
   ProfilesQueryParams,
   WalletProfile,
 } from "types/aws";
+import { ADR36Payload } from "types/cosmos";
 import { NetworkType } from "types/lists";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
