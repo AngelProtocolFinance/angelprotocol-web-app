@@ -76,6 +76,10 @@ export const SECTIONS_DATA: Section[] = [
         text: "For CSR Partners",
         href: "https://angelprotocol.io/csr-partners/",
       },
+      {
+        text: "For Giftcards",
+        href: "https://app.angelprotocol.io/gift/purchase",
+      },
     ],
   },
   {
