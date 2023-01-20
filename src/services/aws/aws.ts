@@ -72,7 +72,7 @@ export const aws = createApi({
       query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
     }),
     editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
-      invalidatesTags: ["endowments", "profile"],
+      invalidatesTags: ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
           url: `/v1/profile/${network}/endowment`,
