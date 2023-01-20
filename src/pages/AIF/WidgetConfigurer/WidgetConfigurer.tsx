@@ -1,6 +1,6 @@
+import DonateWidget from "DonateWidget";
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import widgetSample from "assets/images/widget-example.png";
 import Copier from "components/Copier";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -48,10 +48,14 @@ export default function WidgetConfigurer() {
           <h2 className={TITLE_STYLE}>
             That's what your widget would look like:
           </h2>
-          <img
+          {/* <img
             src={widgetSample}
             alt="widget example"
             className="w-2/3 object-contain border border-gray-l2 dark:border-bluegray rounded"
+          /> */}
+          <DonateWidget
+            defaultInit={params}
+            className="border border-gray-l2 dark:border-bluegray rounded"
           />
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
