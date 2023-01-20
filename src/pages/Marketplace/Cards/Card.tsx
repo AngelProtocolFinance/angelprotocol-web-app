@@ -55,11 +55,11 @@ export default function Card({
             </p>
           )}
 
-          {tagline && tagline !== PLACEHOLDER_TAGLINE && (
+          {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
             <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
               {tagline}
             </p>
-          )}
+          ) : null}
           {/** country and sdg always on bottom */}
           <div className="mt-auto empty:hidden grid gap-3">
             {!isEmpty(active_in_countries) && (
