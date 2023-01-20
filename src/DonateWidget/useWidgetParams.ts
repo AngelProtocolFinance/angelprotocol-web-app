@@ -2,10 +2,10 @@ import { useSearchParams } from "react-router-dom";
 import { UrlParamValues } from "./types";
 import { URL_PARAMS } from "./constants";
 
-export default function useWidgetParams(defaultInit?: string): UrlParamValues {
-  const [search] = useSearchParams(defaultInit);
+export default function useWidgetParams(params?: string): UrlParamValues {
+  const [search] = useSearchParams(params);
 
-  const searchParams = new URLSearchParams(search);
+  const searchParams = new URLSearchParams(params ?? search);
 
   function get(key: keyof UrlParamValues): boolean {
     const param = searchParams.get(key);

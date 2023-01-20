@@ -49,7 +49,7 @@ export default function WidgetConfigurer() {
             That's what your widget would look like:
           </h2>
           <DonateWidget
-            defaultInit={params}
+            params={params}
             className="border border-gray-l2 dark:border-bluegray rounded"
           />
         </section>
