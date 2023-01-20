@@ -2,7 +2,6 @@ import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { FormValues } from "./types";
-import { UNSDG_NUMS } from "types/lists";
 import { DrawerIcon } from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 
