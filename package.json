@@ -41,7 +41,6 @@
     "node": "16.18.0"
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.29.5",
     "@cosmjs/cosmwasm-stargate": "^0.29.0",
     "@cosmjs/encoding": "^0.29.0",
     "@cosmjs/proto-signing": "^0.29.0",
