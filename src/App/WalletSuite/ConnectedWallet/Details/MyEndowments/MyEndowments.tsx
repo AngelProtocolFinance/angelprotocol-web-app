@@ -22,14 +22,14 @@ export default function MyEndowments({ address }: { address: string }) {
     <Container>
       {data.admin.map((endowment) => (
         <div
-          key={`my-endow-${endowment.id}`}
+          key={`my-endow-${endowment.endowId}`}
           className="grid grid-cols-[auto_1fr] gap-3"
         >
           <Logo src={endowment.logo} className="w-10 h-10" />
 
           <div className="grid items-center">
             <Name value={endowment.name} />
-            <Links endowmentId={endowment.id} />
+            <Links endowmentId={endowment.endowId} />
           </div>
         </div>
       ))}
