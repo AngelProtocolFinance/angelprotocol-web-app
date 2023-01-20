@@ -8,9 +8,15 @@ const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
-  const [widgetUrl, setWidgetUrl] = useState("");
+  const [widgetSnippet, setWidgetSnippet] = useState("");
 
-  const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
+  const handleOnUrlChange = useCallback(
+    (url: string) =>
+      setWidgetSnippet(
+        `<iframe src="${url}" width="700" height="900" style="border: 0px;"></iframe>`
+      ),
+    []
+  );
 
   return (
     <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
@@ -49,9 +55,12 @@ export default function WidgetConfigurer() {
           <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
           <div className="flex items-center justify-center gap-4 h-32 px-10 rounded bg-gray-l3 dark:bg-blue-d4">
             <span className="w-full text-sm sm:text-base font-mono break-all">
-              {widgetUrl}
+              {widgetSnippet}
             </span>
-            <Copier classes="w-10 h-10 hover:text-orange" text={widgetUrl} />
+            <Copier
+              classes="w-10 h-10 hover:text-orange"
+              text={widgetSnippet}
+            />
           </div>
         </section>
       </div>
