@@ -30,7 +30,6 @@ export default function useEditProfile() {
     image,
     logo,
     hq_country,
-    sdg,
     ...newData
   }) => {
     const [bannerUrl, logoUrl] = await getImgUrls([image, logo]);
@@ -39,7 +38,6 @@ export default function useEditProfile() {
       image: bannerUrl,
       logo: logoUrl,
       hq_country: hq_country.name,
-      sdg,
       ...newData,
     };
     const diff = getPayloadDiff(initial, changes);
@@ -48,14 +46,13 @@ export default function useEditProfile() {
       return showModal(TxPrompt, { error: "No changes detected" });
     }
 
-    const sdgKey: keyof FlatFormValues = "sdg";
-
     /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
      like ""; unlike contracts where if fields is not present, val is set to null.
     */
+    const { sdg, ...restDiff } = diff;
     const updates: Partial<EndowmentProfileUpdate> = {
-      ...diff,
-      ...(sdgKey in diff ? { categories_sdgs: [sdg] } : {}),
+      ...restDiff,
+      ...(sdg != null ? { categories_sdgs: [sdg] } : {}),
       id: endowmentId,
       owner: endowment.owner,
     };
