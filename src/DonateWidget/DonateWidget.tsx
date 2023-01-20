@@ -5,10 +5,12 @@ import EndowmentLoader from "./EndowmentLoader";
 import InnerComponent from "./InnerComponent";
 import useWidgetParams from "./useWidgetParams";
 
+type Props = { defaultInit?: string; className?: string };
+
 const isPrevThemeDark = isPrevDark();
 
-export default function DonateWidget(props: { defaultInit?: string }) {
-  const params = useWidgetParams(props.defaultInit);
+export default function DonateWidget({ className = "", defaultInit }: Props) {
+  const params = useWidgetParams(defaultInit);
 
   /**
    * Need to set the theme to light, but after widget is closed we need to

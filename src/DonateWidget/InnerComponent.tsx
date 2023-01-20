@@ -6,12 +6,15 @@ import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 
-export default function InnerComponent(props: {
+type Props = {
+  className?: string;
   id: number;
   name: string;
   isKYCRequired: boolean;
   params: UrlParamValues;
-}) {
+};
+
+export default function InnerComponent(props: Props) {
   const { hideText, ...rest } = props.params;
 
   const dispatch = useSetter();
@@ -21,7 +24,9 @@ export default function InnerComponent(props: {
   }, [dispatch, props]);
 
   return (
-    <div className="grid grid-rows-[1fr_auto] gap-10">
+    <div
+      className={`${props.className || ""} grid grid-rows-[1fr_auto] gap-10`}
+    >
       <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
         <header className="flex justify-center items-center gap-10 w-full h-24 z-20">
           <h1 className="text-xl sm:text-3xl font-heading font-bold">
