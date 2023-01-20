@@ -73,7 +73,7 @@ export type EndowmentProfileUpdate = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type EndowmentCardsQueryParams = {
+export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
