@@ -35,7 +35,7 @@ export default function Favourites({ bookmarks, isError }: Props) {
         {(bookmarks) => (
           <ul className="grid gap-1">
             {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
-              <Favourite key={b.id} {...b} />
+              <Favourite key={`favourite-${b.endowId}`} {...b} />
             ))}
           </ul>
         )}
