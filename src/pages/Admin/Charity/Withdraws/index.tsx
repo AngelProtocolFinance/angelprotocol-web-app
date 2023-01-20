@@ -1,6 +1,6 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 

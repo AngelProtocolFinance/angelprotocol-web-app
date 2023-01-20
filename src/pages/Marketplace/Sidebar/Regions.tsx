@@ -1,14 +1,9 @@
 import { useRegionsQuery } from "services/countries";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import { useGetter, useSetter } from "store/accessors";
 import { setRegions } from "slices/components/marketFilter";
 import { RegionType } from "slices/components/marketFilter";
-import {
-  CONTAINER_CLASS,
-  GroupProps,
-  MultiLevelFilterProps,
-  MultilevelFilter,
-} from "./common";
+import { GroupProps, MultiLevelFilterProps, MultilevelFilter } from "./common";
 
 type Props = Pick<
   MultiLevelFilterProps<string>,
@@ -30,7 +25,7 @@ export default function Regions({ type, ...filterProps }: Props) {
         error: "Failed to get regions",
       }}
       classes={{
-        container: CONTAINER_CLASS + " items-center grid-cols-[auto_1fr]",
+        container: "px-2 py-4",
       }}
     >
       {(regions) => {

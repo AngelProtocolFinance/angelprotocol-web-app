@@ -1,6 +1,6 @@
 import { useWalletProfileQuery } from "services/aws/aws";
 import { useConnectedWallet } from "contexts/WalletGuard";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;

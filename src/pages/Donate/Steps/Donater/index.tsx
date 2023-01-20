@@ -4,7 +4,7 @@ import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { useBalancesQuery } from "services/apes";
 import { WithWallet } from "contexts/WalletContext";
-import { Tooltip } from "components/donation";
+import { LoadingStatus } from "components/Status";
 import { FormStep } from "slices/donation";
 import { Chain, chains } from "constants/chains";
 import Form from "./Form";
@@ -19,7 +19,11 @@ export default function Donater({ wallet, ...state }: WithWallet<FormStep>) {
   });
 
   if (isLoading) {
-    return <Tooltip type="Loading" message="Fetching balances.." />;
+    return (
+      <LoadingStatus classes="justify-self-center">
+        Fetching balances..
+      </LoadingStatus>
+    );
   }
 
   return (

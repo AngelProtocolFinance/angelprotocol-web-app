@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { Tooltip } from "components/gift";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
+import { IS_TEST } from "constants/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";
@@ -41,24 +42,26 @@ function CurrStep(props: GiftState) {
 
   if (props.step === 2 || props.step === 1) {
     if (wallet === "loading") {
-      return <Tooltip type="Loading" message="Loading wallet" />;
+      return (
+        <LoadingStatus classes="justify-self-center">
+          Loading wallet
+        </LoadingStatus>
+      );
     }
 
     if (isDisconnected(wallet)) {
       return (
-        <Tooltip
-          type="Info"
-          message="You need to connect your wallet to make a donation"
-        />
+        <ErrorStatus classes="justify-self-center">
+          You need to connect your wallet to make a donation
+        </ErrorStatus>
       );
     }
 
     if (wallet.type !== "cosmos") {
       return (
-        <Tooltip
-          type="Info"
-          message="Connected wallet doesn't support this transaction."
-        />
+        <ErrorStatus classes="justify-self-center">
+          Kindly switch to Juno {IS_TEST ? "Testnet" : "Mainnet"}
+        </ErrorStatus>
       );
     }
 
