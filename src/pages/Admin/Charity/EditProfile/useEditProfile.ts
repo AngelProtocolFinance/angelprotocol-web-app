@@ -16,13 +16,13 @@ import { createADR36Payload } from "./createADR36Payload";
 
 export default function useEditProfile() {
   const { endowmentId, endowment } = useAdminResources();
-  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
+  const { wallet } = useGetWallet();
   const [submit] = useEditProfileMutation();
 
   const editProfile: SubmitHandler<FV> = async ({
