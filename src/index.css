@@ -133,14 +133,6 @@
   .scroll-hidden::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
   }
-
-  .shadow-inner-white {
-    box-shadow: inset -2px 2px 2px #c1c1c6, inset 2px -2px 2px #fff;
-  }
-
-  .shadow-outer-white {
-    box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
-  }
 }
 
 @layer base {
@@ -156,44 +148,4 @@
   body {
     @apply font-body;
   }
-}
-
-.slippage-input::-webkit-outer-spin-button,
-.slippage-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.slippage-input[type="number"] {
-  width: 20px;
-  max-width: 30px;
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.currency-input::-webkit-outer-spin-button,
-.currency-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.currency-input[type="number"] {
-  /* width: 20px;
-  max-width: 30px; */
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.css-qc6sy-singleValue {
-  color: hsl(0, 0%, 0%) !important;
-}
-
-.css-1pahdxg-control {
-  box-shadow: none !important;
-  border-color: rgba(153, 153, 153, var(--tw-border-opacity)) !important;
-  --tw-border-opacity: 0.6;
-}
-
-#react-select-3-listbox {
-  color: black !important;
 }
