@@ -75,6 +75,8 @@ export type EndowmentsQueryParams = {
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
   tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only: string | null; // comma separated boolean values
+  hq_country?: string; //comma separated values
+  active_in_countries?: string; //comma separated values
 };
 
 export interface LeaderboardEntry {
