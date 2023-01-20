@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import { Tooltip } from "components/gift";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
 import { chainIds } from "constants/chainIds";
@@ -43,24 +43,26 @@ function CurrStep(props: GiftState) {
 
   if (props.step === 2 || props.step === 1) {
     if (isLoading) {
-      return <Tooltip type="Loading" message="Loading wallet" />;
+      return (
+        <LoadingStatus classes="justify-self-center">
+          Loading wallet
+        </LoadingStatus>
+      );
     }
 
     if (!wallet) {
       return (
-        <Tooltip
-          type="Info"
-          message="You need to connect your wallet to make a donation"
-        />
+        <ErrorStatus classes="justify-self-center">
+          You need to connect your wallet to make a donation
+        </ErrorStatus>
       );
     }
 
     if (wallet.chain.chain_id !== chainIds.juno) {
       return (
-        <Tooltip
-          type="Info"
-          message={`Kindly switch to Juno ${IS_TEST ? "Testnet" : "Mainnet"}`}
-        />
+        <ErrorStatus classes="justify-self-center">
+          Kindly switch to Juno {IS_TEST ? "Testnet" : "Mainnet"}
+        </ErrorStatus>
       );
     }
 

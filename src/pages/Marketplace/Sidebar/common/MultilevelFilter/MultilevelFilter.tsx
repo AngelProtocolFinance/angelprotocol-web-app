@@ -9,8 +9,6 @@ export type MultiLevelFilterProps<T> = {
   hideBottomBorder?: boolean;
 };
 
-export const CONTAINER_CLASS = "grid gap-6 px-2 py-4";
-
 export function MultilevelFilter<T>(props: MultiLevelFilterProps<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -20,7 +18,7 @@ export function MultilevelFilter<T>(props: MultiLevelFilterProps<T>) {
 
   return (
     <div
-      className={`${CONTAINER_CLASS} ${
+      className={`grid gap-6 px-2 py-4 ${
         props.hideBottomBorder
           ? ""
           : "border-b border-gray-l2 dark:border-bluegray"

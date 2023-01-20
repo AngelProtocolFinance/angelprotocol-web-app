@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
@@ -22,14 +23,18 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   /** should use cache data since "resume" already lazy queried it */
   if (isLoading) {
-    return <p className="place-self-center">Fetching registration data...</p>;
+    return (
+      <LoadingStatus classes="place-self-center">
+        Fetching registration data...
+      </LoadingStatus>
+    );
   }
 
   if (isError) {
     return (
-      <p className="place-self-center">
+      <ErrorStatus classes="place-self-center">
         Failed to get registration data. Please try again later.
-      </p>
+      </ErrorStatus>
     );
   }
 
