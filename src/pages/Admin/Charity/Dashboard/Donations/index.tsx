@@ -7,7 +7,7 @@ import Table from "./Table";
 
 export default function Donations({ classes = "" }: { classes?: string }) {
   const { endowmentId } = useAdminResources();
-  const queryState = useDonationsQuery({ id: endowmentId });
+  const queryState = useDonationsQuery({ id: endowmentId.toString() });
 
   return (
     <div className={`grid grid-rows-[auto_1fr] ${classes}`}>

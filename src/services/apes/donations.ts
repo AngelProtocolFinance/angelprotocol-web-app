@@ -1,4 +1,9 @@
-import { Donation, ReceiptPayload } from "types/aws";
+import {
+  Donation,
+  DonationsQueryParams,
+  ReceiptPayload,
+  Token,
+} from "types/aws";
 import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { apes } from "./apes";
@@ -25,20 +30,26 @@ const donations_api = apes.injectEndpoints({
         };
       },
     }),
-    donations: builder.query<
-      Donation[],
-      { id: string | number /** TODO: use key when bug is removed in AWS */ }
-    >({
+    donations: builder.query<Donation[], DonationsQueryParams>({
       providesTags: [{ type: apesTags.donations }],
-      query: ({ id }) => ({
-        url: `v2/donation/${id}${IS_TEST ? "/testnet" : ""}`,
-        // headers: { key },
-      }),
+      query: ({ id, ...rest }) => {
+        return {
+          url: `v3/donation/${id}${IS_TEST ? "/testnet" : ""}`,
+          params: rest,
+        };
+      },
       transformResponse(res: DonationResult) {
         return res.Items;
       },
     }),
+    currencies: builder.query<Token[], void>({
+      query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
+    }),
   }),
 });
 
-export const { useRequestReceiptMutation, useDonationsQuery } = donations_api;
+export const {
+  useRequestReceiptMutation,
+  useDonationsQuery,
+  useCurrenciesQuery,
+} = donations_api;
