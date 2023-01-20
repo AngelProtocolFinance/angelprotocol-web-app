@@ -1,25 +1,16 @@
-import { PropsWithChildren } from "react";
-import { useWalletProfileQuery } from "services/aws/aws";
-import { ErrorStatus } from "components/Status";
+import { EndowmentBookmark } from "types/aws";
 import Logo from "../Logo";
 import Links from "./Links";
 
-export default function MyEndowments({ address }: { address: string }) {
-  const { data, isError } = useWalletProfileQuery(address);
+type Props = { endowments: EndowmentBookmark[] };
 
-  if (isError) {
-    return (
-      <Container>
-        <ErrorStatus>Failed to load endowments</ErrorStatus>
-      </Container>
-    );
-  }
-
-  if (!data?.admin?.length) return null;
-
+export default function MyEndowments({ endowments }: Props) {
   return (
-    <Container>
-      {data.admin.map((endowment) => (
+    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
+      <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
+        My Endowments
+      </h3>
+      {endowments.map((endowment) => (
         <div key={endowment.id} className="grid grid-cols-[auto_1fr] gap-3">
           <Logo src={endowment.logo} className="w-10 h-10" />
 
@@ -29,21 +20,10 @@ export default function MyEndowments({ address }: { address: string }) {
           </div>
         </div>
       ))}
-    </Container>
+    </div>
   );
 }
 
 const Name = ({ value }: { value: string }) => (
   <span className="font-heading font-semibold text-sm">{value}</span>
 );
-
-function Container({ children }: PropsWithChildren) {
-  return (
-    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
-      <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
-        My Endowments
-      </h3>
-      {children}
-    </div>
-  );
-}

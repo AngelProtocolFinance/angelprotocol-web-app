@@ -1,11 +1,12 @@
-import { useWalletProfileQuery } from "services/aws/aws";
+import { EndowmentBookmark } from "types/aws";
 import QueryLoader from "components/QueryLoader";
 import Favourite from "./Favourite";
 
 const MAX_ELEMENTS_TO_DISPLAY = 7;
 
-export default function Favourites({ address }: { address: string }) {
-  const queryState = useWalletProfileQuery(address);
+type Props = { bookmarks: EndowmentBookmark[] | undefined; isError: boolean };
+
+export default function Favourites({ bookmarks, isError }: Props) {
   return (
     <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
       <h3 className="flex justify-between gap-2 font-heading">
@@ -24,20 +25,18 @@ export default function Favourites({ address }: { address: string }) {
         </Link> */}
       </h3>
       <QueryLoader
-        queryState={queryState}
+        queryState={{ data: bookmarks, isError: isError, isLoading: false }}
         messages={{
-          loading: "Fetching favorites..",
+          empty: "No favourites",
           error: "Failed to get favorite organisations.",
         }}
         classes={{ container: "text-xs gap-1" }}
       >
-        {(walletProfile) => (
+        {(bookmarks) => (
           <ul className="grid gap-1">
-            {walletProfile.bookmarks
-              .slice(0, MAX_ELEMENTS_TO_DISPLAY)
-              .map((b) => (
-                <Favourite key={b.id} {...b} />
-              ))}
+            {bookmarks.slice(0, MAX_ELEMENTS_TO_DISPLAY).map((b) => (
+              <Favourite key={b.id} {...b} />
+            ))}
           </ul>
         )}
       </QueryLoader>
