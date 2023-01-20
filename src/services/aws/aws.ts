@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
+  EndowmentCard,
+  EndowmentCardsQueryParams,
   EndowmentProfile,
   PaginatedAWSQueryRes,
-  ProfilesQueryParams,
   WalletProfile,
 } from "types/aws";
 import { ADR36Payload } from "types/cosmos";
@@ -36,15 +37,15 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "profiles"],
+  tagTypes: ["airdrop", "admin", "walletProfile", "profile", "endowmentCards"],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    profiles: builder.query<
-      PaginatedAWSQueryRes<EndowmentProfile[]>,
-      ProfilesQueryParams
+    endowmentCards: builder.query<
+      PaginatedAWSQueryRes<EndowmentCard[]>,
+      EndowmentCardsQueryParams
     >({
-      providesTags: [{ type: "profiles" }],
+      providesTags: [{ type: "endowmentCards" }],
       query: (params) => {
         return { url: `/v3/endowments/${network}`, params };
       },
@@ -73,7 +74,7 @@ export const aws = createApi({
       query: (endowId) => `${PROFILE_QUERY}/${endowId}`,
     }),
     editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
-      invalidatesTags: ["profiles", "profile", "walletProfile"],
+      invalidatesTags: ["endowmentCards", "profile", "walletProfile"],
       query: (payload) => {
         return {
           url: PROFILE_QUERY,
@@ -88,12 +89,12 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useProfilesQuery,
+  useEndowmentCardsQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
-    profiles: { useLazyQuery: useLazyProfilesQuery },
+    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,

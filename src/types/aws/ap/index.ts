@@ -28,6 +28,20 @@ export type EndowmentProfile = {
   url?: string;
 };
 
+export type EndowmentCard = Pick<
+  EndowmentProfile,
+  | "active_in_countries"
+  | "name"
+  | "logo"
+  | "image"
+  | "id"
+  | "endow_type"
+  | "categories"
+  | "tagline"
+  | "hq"
+  | "kyc_donors_only"
+>;
+
 export type EndowmentProfileUpdate = {
   //required
   id: number;
@@ -59,7 +73,7 @@ export type EndowmentProfileUpdate = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-export type ProfilesQueryParams = {
+export type EndowmentCardsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
   start?: number; //to load next page, set start to ItemCutOff + 1
