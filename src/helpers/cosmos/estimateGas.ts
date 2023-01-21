@@ -25,7 +25,6 @@ export async function estimateGas(
 ): Promise<{ feeAmount: number; doc: SignDoc }> {
   const { address: sender, chainId } = wallet;
 
-  console.log(sender);
   const chain = chains[chainId];
   const { account } = await fetch(
     chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`

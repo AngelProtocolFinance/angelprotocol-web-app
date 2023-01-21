@@ -10,17 +10,22 @@ import {
 import type { SignerInfo } from "@terra-money/terra.proto/cosmos/tx/v1beta1/tx";
 import type { Any } from "@terra-money/terra.proto/google/protobuf/any";
 import Long from "long";
-import { JSONAccount, SimulateRes } from "types/cosmos";
+import { JSONAccount, JSONAny, SimulateRes } from "types/cosmos";
 import { TerraWallet } from "contexts/WalletContext";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import { chains } from "constants/chains";
-import { IS_TEST } from "constants/env";
+
+type TerraVestingAccount = JSONAny<{
+  base_vesting_account: {
+    base_account: JSONAccount;
+  };
+}>;
 
 const GAS_ADJUSTMENT = 1.6; //use gas units 60% greater than estimate
 // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-const GAS_PRICE: string = IS_TEST ? "0.15" : "28.325";
-const GAS_DENOM = "uluna";
+const GAS_PRICE: string = "0.025";
+// const GAS_DENOM = "uluna";
 
 //same as cosmos estimation in general but with the use of terra definitions
 export async function estimateTerraGas(
@@ -30,9 +35,13 @@ export async function estimateTerraGas(
   const { address: sender, chainId } = wallet;
 
   const chain = chains[chainId];
-  const { account } = await fetch(
-    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
-  ).then<{ account: JSONAccount }>((res) => res.json());
+  const {
+    account: {
+      base_vesting_account: { base_account: account },
+    },
+  } = await fetch(chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`).then<{
+    account: TerraVestingAccount;
+  }>((res) => res.json());
 
   const pub = PubKey.fromJSON({ key: account.pub_key.key });
   const signer: SignerInfo = {
@@ -98,3 +107,5 @@ export async function estimateTerraGas(
     tx: txOptions,
   };
 }
+
+/**0.001639  */

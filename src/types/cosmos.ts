@@ -36,7 +36,7 @@ export type SimulateRes = {
   };
 };
 
-type JSONAny<T> = {
+export type JSONAny<T> = {
   "@type": string;
 } & T;
 
