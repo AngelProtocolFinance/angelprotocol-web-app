@@ -1,5 +1,5 @@
 import { TransactionRequest } from "@ethersproject/providers";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import type { CreateTxOptions } from "@terra-money/terra.js";
 import { CountryOption } from "services/types";
 import { SignDoc } from "types/cosmos";
 import { TokenWithAmount } from "types/slices";

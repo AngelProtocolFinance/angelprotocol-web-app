@@ -1,17 +1,20 @@
 import { Contract } from "@ethersproject/contracts";
 import { TransactionRequest } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";
-import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
+import { MsgSend as TerraMsgSend } from "@terra-money/terra.proto/cosmos/bank/v1beta1/tx";
+import { MsgExecuteContract as TerraMsgExecuteContract } from "@terra-money/terra.proto/cosmwasm/wasm/v1/tx";
 import ERC20Abi from "abi/ERC20.json";
+import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import GiftCard from "contracts/GiftCard";
-import { extractFeeAmount, logger, scaleToStr } from "helpers";
+import { logger, scaleToStr, toU8a } from "helpers";
 import { estimateGas } from "helpers/cosmos/estimateGas";
+import { estimateTerraGas } from "helpers/cosmos/estimateTerraGas";
 import { ap_wallets } from "constants/ap_wallets";
-import estimateTerraFee from "./estimateTerraFee";
+import { typeURLs } from "constants/cosmos";
 import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
@@ -52,7 +55,6 @@ export async function estimateDonation({
         );
       }
 
-      console.log(msgs);
       const { feeAmount, doc } = await estimateGas(msgs, wallet);
 
       return {
@@ -66,26 +68,39 @@ export async function estimateDonation({
     else if (wallet.type === "terra") {
       const scaledAmount = scaleToStr(token.amount, token.decimals);
 
-      const msg =
+      const msg: Any =
         token.type === "terra-native" || token.type === "ibc"
-          ? new MsgSend(wallet.address, ap_wallets.terra, [
-              new Coin(token.token_id, scaledAmount),
-            ])
-          : new MsgExecuteContract(wallet.address, token.token_id, {
-              transfer: {
-                amount: scaledAmount,
-                recipient: ap_wallets.terra,
-              },
-            });
+          ? {
+              typeUrl: typeURLs.sendNative,
+              value: TerraMsgSend.encode({
+                fromAddress: wallet.address,
+                toAddress: ap_wallets.terra,
+                amount: [{ amount: scaledAmount, denom: token.token_id }],
+              }).finish(),
+            }
+          : {
+              typeUrl: typeURLs.executeContract,
+              value: TerraMsgExecuteContract.encode({
+                contract: token.token_id,
+                sender: wallet.address,
+                msg: toU8a(
+                  JSON.stringify({
+                    transfer: {
+                      amount: scaledAmount,
+                      recipient: ap_wallets.terra,
+                    },
+                  })
+                ),
+                funds: [],
+              }).finish(),
+            };
 
-      const fee = await estimateTerraFee(wallet, [msg]);
-      const feeAmount = extractFeeAmount(fee, native.token_id);
-
+      const { feeAmount, tx } = await estimateTerraGas([msg], wallet);
       return {
         type: wallet.type,
         wallet,
         fee: { amount: feeAmount, symbol: native.symbol },
-        tx: { fee, msgs: [msg] },
+        tx,
       };
     }
     // evm transactions
