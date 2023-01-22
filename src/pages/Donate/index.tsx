@@ -1,19 +1,19 @@
 import { useParams } from "react-router-dom";
-import banner from "assets/images/hero.png";
-import { useEndowInfoQuery } from "services/aws/aws";
-import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
+// import banner from "assets/images/hero.png";
+// import { useEndowInfoQuery } from "services/aws/aws";
+// import QueryLoader from "components/QueryLoader";
+// import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
 import Steps from "./Steps";
 
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowInfoQuery(numId, { skip: numId === 0 });
+  // const queryState = useEndowInfoQuery(numId, { skip: numId === 0 });
 
   return (
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
-      <div
+      {/* <div
         style={{
           backgroundImage: `url('${queryState.data?.image || banner}')`,
         }}
@@ -36,14 +36,11 @@ export default function Donate() {
               image={`${endowment.logo}`}
               url={`https://app.angelprotocol.io/donate/${endowment.id}`}
             />
-            <Steps
-              name={endowment.name}
-              id={numId}
-              isKYCRequired={endowment.kyc_donors_only}
-            />
+            <Steps name={""} id={1} isKYCRequired={false} />
           </>
         )}
-      </QueryLoader>
+      </QueryLoader> */}
+      <Steps name={""} id={numId} isKYCRequired={false} />
     </section>
   );
 }
