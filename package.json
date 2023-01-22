@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@cosmjs/encoding": "^0.29.5",
+    "@ethersproject/abi": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/logger": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -64,7 +65,6 @@
     "compress.js": "^1.2.2",
     "cropperjs": "^1.5.12",
     "decimal.js": "^10.3.1",
-    "ethereum-multicall": "^2.15.0",
     "is-mobile": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",

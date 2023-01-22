@@ -13,10 +13,11 @@ export default function Purchaser({
   wallet,
   ...state
 }: WithCosmosWallet<FormStep> & { classes?: string }) {
-  const { chainId, address } = wallet;
+  const { chainId, address, id } = wallet;
   const { data: tokens = [], isLoading } = useBalancesQuery({
     address,
     chainId,
+    providerId: id,
   });
 
   if (isLoading) {

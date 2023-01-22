@@ -11,11 +11,12 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Donater({ wallet, ...state }: WithWallet<FormStep>) {
-  const { chainId, address } = wallet;
+  const { chainId, address, id } = wallet;
   const chain = chains[chainId];
   const { data: tokens = [], isLoading } = useBalancesQuery({
     address,
     chainId,
+    providerId: id,
   });
 
   if (isLoading) {

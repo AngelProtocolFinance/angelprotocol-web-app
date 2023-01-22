@@ -10,7 +10,7 @@ export default function CoinBalances({
 }: {
   isSmallAmountsHidden: boolean;
 }) {
-  const { address, chainId } = useConnectedWallet();
+  const { address, chainId, id } = useConnectedWallet();
 
   const {
     data: tokens,
@@ -20,6 +20,7 @@ export default function CoinBalances({
     {
       address,
       chainId,
+      providerId: id,
     },
     {
       selectFromResult({ data = [], ...rest }) {

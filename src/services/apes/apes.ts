@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TokenWithBalance } from "services/types";
 import { FetchedChain, WithdrawLog } from "types/aws";
+import { ProviderId } from "contexts/WalletContext";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { fetchBalances } from "./helpers/fetchBalances";
@@ -25,13 +26,13 @@ export const apes = createApi({
     }),
     balances: builder.query<
       TokenWithBalance[],
-      { address: string; chainId: string }
+      { address: string; chainId: string; providerId: ProviderId }
     >({
       providesTags: ["balances"],
-      async queryFn({ address, chainId }, api, options, baseQuery) {
+      async queryFn({ address, chainId, providerId }, api, options, baseQuery) {
         const { data } = await baseQuery(`v1/chain/${chainId}`);
         const _chain = data as FetchedChain;
-        return { data: await fetchBalances(_chain, address) };
+        return { data: await fetchBalances(_chain, address, providerId) };
       },
     }),
   }),

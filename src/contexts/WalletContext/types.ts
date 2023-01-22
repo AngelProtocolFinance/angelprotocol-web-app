@@ -1,7 +1,7 @@
 import type { JsonRpcSigner } from "@ethersproject/providers";
-import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
-import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import { Keplr } from "@keplr-wallet/types";
+import type { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
+import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
+import type { Keplr } from "@keplr-wallet/types";
 
 export type ProviderId =
   | "binance-wallet"
