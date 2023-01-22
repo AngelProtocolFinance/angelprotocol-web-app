@@ -139,12 +139,7 @@ export async function estimateDonation({
           method: "eth_gasPrice",
         }),
       ]);
-
-      const feeAmount = condenseToNum(
-        new Decimal(gas).mul(gasPrice),
-        //native
-        native.decimals
-      );
+      const feeAmount = condense(gasPrice, native.decimals).mul(gas).toNumber();
 
       return {
         type: wallet.type,

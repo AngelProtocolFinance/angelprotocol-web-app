@@ -14,13 +14,13 @@ export function useEVMWC(): Wallet {
 
   /** persistent connection */
   useEffect(() => {
-    if (ctor.connected) connect(false /** re-enable connection again */);
+    if (ctor.connected) connect(false);
     //eslint-disable-next-line
   }, []);
 
   /** new connection */
   async function connect(isNew = true) {
-    try {
+    if (isNew) {
       setState({ status: "loading" });
       await ctor.createSession();
 
@@ -38,15 +38,15 @@ export function useEVMWC(): Wallet {
       ctor.on(WC_EVENT.connect, async (error, payload) => {
         try {
           if (error) {
-            toast.error("Error connecting wallet");
+            return toast.error("Failed to connect to wallet");
           }
           const { accounts, chainId } = payload.params[0];
           setState({
             type: "evm-wc",
             status: "connected",
             address: accounts[0],
-            chainId: chainId,
-            provider: getProvider(chainId) as any,
+            chainId: `${chainId}`,
+            provider: {} as any,
             disconnect,
           });
         } catch (err) {
@@ -56,32 +56,37 @@ export function useEVMWC(): Wallet {
           QRCodeModal.close();
         }
       });
-
-      ctor.on("session_update", (error, payload) => {
-        if (error) {
-          throw error;
-        }
-
-        // Get updated accounts and chainId
-        const { accounts, chainId } = payload.params[0];
-        setState((prev) =>
-          prev.status === "connected"
-            ? { ...prev, address: accounts[0], chainId: `${chainId}` }
-            : prev
-        );
+    } else {
+      const { chainId, accounts } = ctor.session;
+      setState({
+        type: "evm-wc",
+        status: "connected",
+        address: accounts[0],
+        chainId: `${chainId}`,
+        provider: {} as any,
+        disconnect,
       });
-
-      ctor.on("disconnect", (error, payload) => {
-        if (error) {
-          throw error;
-        }
-        setState({ status: "disconnected", connect });
-      });
-    } catch (err) {
-      setState({ status: "disconnected", connect });
-    } finally {
-      QRCodeModal.close();
     }
+
+    ctor.on("session_update", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+      // Get updated accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+      setState((prev) =>
+        prev.status === "connected"
+          ? { ...prev, address: accounts[0], chainId: `${chainId}` }
+          : prev
+      );
+    });
+
+    ctor.on("disconnect", (error, payload) => {
+      if (error) {
+        throw error;
+      }
+      setState({ status: "disconnected", connect });
+    });
   }
 
   function disconnect() {

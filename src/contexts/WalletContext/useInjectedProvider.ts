@@ -1,4 +1,4 @@
-import { formatUnits } from "@ethersproject/units";
+import Decimal from "decimal.js";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Wallet, WalletMeta, WalletState } from "./types";
@@ -47,7 +47,7 @@ export default function useInjectedWallet(
       if (prev.status === "connected") {
         return {
           ...prev,
-          chainId: formatUnits(hexChainId, 0),
+          chainId: new Decimal(hexChainId).toString(),
         };
       }
       return prev;

@@ -19,3 +19,5 @@ export type InjectedProvider = {
   removeListener?(ev: "accountsChanged", listener: AccountChangeHandler): any;
   removeAllListeners?: any;
 };
+
+export type WCProvider = Pick<InjectedProvider, "request">;

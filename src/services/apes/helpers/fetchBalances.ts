@@ -1,4 +1,4 @@
-import { formatUnits } from "@ethersproject/units";
+import type { BigNumber } from "@ethersproject/bignumber";
 import { BalMap } from "./types";
 import { TokenWithBalance } from "services/types";
 import { FetchedChain, Token } from "types/aws";
@@ -99,6 +99,8 @@ export async function fetchBalances(
       ),
     ]);
 
+    console.log(erc20s);
+
     const erc20map = toMap(
       erc20s.map<Coin>((result) =>
         result.status === "fulfilled" ? result.value : { amount: "", denom: "" }
@@ -108,7 +110,7 @@ export async function fetchBalances(
     return [
       {
         ...native,
-        balance: +formatUnits(
+        balance: condenseToNum(
           nativeBal.status === "fulfilled" ? nativeBal.value : "0",
           native.decimals
         ),
