@@ -1,13 +1,10 @@
-import { Contract } from "@ethersproject/contracts";
-import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import ERC20Abi from "abi/ERC20.json";
 import { Estimate, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
 import { invalidateApesTags } from "services/apes";
-import { getProvider, logger } from "helpers";
+import { logger } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
 import { chains } from "constants/chains";
 import donation, { setTxStatus } from "../donation";
@@ -97,21 +94,12 @@ async function sendTransaction(
     //evm donations
     default: {
       const { wallet, tx } = estimate;
-      const provider = new Web3Provider(getProvider(wallet.id) as any);
-      const signer = provider.getSigner();
-      let response: TransactionResponse;
-      if (token.type === "evm-native") {
-        response = await signer.sendTransaction(tx);
-      } else {
-        const ER20Contract: any = new Contract(
-          token.token_id,
-          ERC20Abi,
-          signer
-        );
-        response = await ER20Contract.transfer(tx.to, tx.value);
-      }
+      const hash = await wallet.provider.request<string>({
+        method: "eth_sendTransaction",
+        params: [tx],
+      });
       return {
-        hash: response.hash,
+        hash: hash,
         isSuccess: true /** just set to true, let top catch handle eth error */,
       };
     }

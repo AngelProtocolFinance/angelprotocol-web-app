@@ -1,5 +1,6 @@
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Connected, Cosmos, Wallet, WalletState } from "../types";
 import icon from "assets/icons/wallets/keplr.png";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -48,7 +49,7 @@ export function useKeplrWC(): Wallet {
           });
         } catch (err) {
           disconnect();
-          handleError(err);
+          toast.error("Error connecting to wallet");
         } finally {
           QRModal.close();
         }

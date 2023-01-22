@@ -1,8 +1,8 @@
-import { TransactionRequest } from "@ethersproject/providers";
 import type { CreateTxOptions } from "@terra-money/terra.js";
 import { CountryOption } from "services/types";
 import { SignDoc } from "types/cosmos";
 import { TokenWithAmount } from "types/slices";
+import { EVMTx } from "services/apes/helpers/test";
 import {
   CosmosWallet,
   EVMWCWallet,
@@ -87,7 +87,7 @@ export type Estimate =
   | {
       type: EVMWallet["type"] | EVMWCWallet["type"];
       fee: Fee;
-      tx: TransactionRequest;
+      tx: EVMTx;
       wallet: EVMWallet | EVMWCWallet;
     };
 

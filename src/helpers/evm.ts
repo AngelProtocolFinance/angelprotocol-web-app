@@ -1,13 +1,20 @@
-import WalletConnectProvider from "@walletconnect/web3-provider";
+import WalletConnect from "@walletconnect/client";
 import { ProviderId } from "contexts/WalletContext/types";
-import { InjectedProvider } from "types/evm";
+import { InjectedProvider, RequestArguments } from "types/evm";
 import { Dwindow } from "types/window";
+import { WC_BRIDGE } from "constants/urls";
 
-export const WCProvider = new WalletConnectProvider({
-  infuraId: process.env.REACT_APP_INFURA_ID,
-  qrcodeModalOptions: { mobileLinks: ["metamask"], desktopLinks: [] },
+export const connector = new WalletConnect({
+  bridge: WC_BRIDGE,
   storageId: "wc_evm",
+  qrcodeModalOptions: { mobileLinks: ["metamask"], desktopLinks: [] },
 });
+
+const wcProvider: Partial<InjectedProvider> = {
+  async request<T>({ method, params }: RequestArguments): Promise<T> {
+    return connector.sendCustomRequest({ method, params: params as any });
+  },
+};
 
 export function getProvider(
   providerId: ProviderId
@@ -20,7 +27,7 @@ export function getProvider(
       return dwindow.ethereum;
     /** only used in sendTx */
     case "evm-wc":
-      return WCProvider as unknown as InjectedProvider;
+      return wcProvider as InjectedProvider;
     case "xdefi-evm":
       return dwindow.xfi?.ethereum as InjectedProvider;
     default:

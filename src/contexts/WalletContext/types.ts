@@ -1,7 +1,7 @@
-import type { JsonRpcSigner } from "@ethersproject/providers";
 import type { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Keplr } from "@keplr-wallet/types";
+import { InjectedProvider } from "types/evm";
 
 export type ProviderId =
   | "binance-wallet"
@@ -29,16 +29,16 @@ export type Cosmos = {
 };
 type EVM = {
   type: "evm";
-  signer: JsonRpcSigner;
   switchChain(chainId: string): Promise<void>;
   isSwitching: boolean;
+  provider: InjectedProvider;
 };
 
 type EVMWC = {
   type: "evm-wc";
-  signer: JsonRpcSigner;
   switchChain?: never;
   isSwitching?: never;
+  provider: Pick<InjectedProvider, "request">;
 };
 
 export type ConnectedToChainType = Connected & (Terra | EVM | EVMWC | Cosmos);

@@ -1,4 +1,3 @@
-import { Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -154,7 +153,7 @@ export default function useInjectedWallet(
         disconnect,
         switchChain,
         isSwitching: false,
-        signer: new Web3Provider(provider).getSigner(),
+        provider: provider,
       });
 
       saveUserAction(actionKey, "connect");
