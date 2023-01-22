@@ -46,7 +46,7 @@ export function useEVMWC(): Wallet {
             status: "connected",
             address: accounts[0],
             chainId: `${chainId}`,
-            provider: {} as any,
+            provider: getProvider("evm-wc") as any,
             disconnect,
           });
         } catch (err) {
@@ -63,7 +63,7 @@ export function useEVMWC(): Wallet {
         status: "connected",
         address: accounts[0],
         chainId: `${chainId}`,
-        provider: {} as any,
+        provider: getProvider("evm-wc") as any,
         disconnect,
       });
     }
