@@ -7,7 +7,7 @@ import {
 import { EndowmentTierNum } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { Optional } from "types/utils";
-import { OptionType } from "components/SelectorFormField";
+import { OptionType } from "components/Selector";
 import { Asset } from "components/registration";
 
 //REF_ID is global to registration

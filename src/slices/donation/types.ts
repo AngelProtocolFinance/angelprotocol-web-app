@@ -4,7 +4,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CountryOption } from "services/types";
 import { TokenWithAmount, TxOptions } from "types/slices";
 import { WalletState } from "contexts/WalletContext";
-import { OptionType } from "components/SelectorFormField";
+import { OptionType } from "components/Selector";
 
 export type DonationRecipient = {
   id: number;
