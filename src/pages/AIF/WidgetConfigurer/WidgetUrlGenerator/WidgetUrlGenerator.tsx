@@ -1,6 +1,6 @@
 import { FormProvider } from "react-hook-form";
-import { BtnPrim } from "components/BtnPrim";
 import Checkbox from "components/Checkbox";
+import { BtnPrimary } from "components/donation";
 import DenomSelector from "./DenomSelector";
 import Split from "./Split";
 import { FormValues } from "./schema";
@@ -36,12 +36,12 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         <span>Define split value by default:</span>
         <Split />
 
-        <BtnPrim
+        <BtnPrimary
           className="max-sm:mx-auto mt-8 w-40"
           onClick={() => methods.reset()}
         >
           Reset Changes
-        </BtnPrim>
+        </BtnPrimary>
       </div>
     </FormProvider>
   );
