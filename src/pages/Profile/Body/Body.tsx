@@ -36,11 +36,7 @@ export default function Body() {
               <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
                 {profile.name}
               </h3>
-              <BookmarkBtn
-                name={profile.name}
-                endowId={profile.id}
-                logo={profile.logo}
-              />
+              <BookmarkBtn endowId={profile.id} />
             </div>
             {/* 
             This will be added back once charities have a `tagLine` field
