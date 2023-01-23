@@ -21,7 +21,7 @@ export default function EndowmentLoader({ children }: Props) {
       }}
       classes={{ container: "text-center mt-8" }}
     >
-      {(endowment) => children(endowment)}
+      {(profile) => children(profile)}
     </QueryLoader>
   );
 }
