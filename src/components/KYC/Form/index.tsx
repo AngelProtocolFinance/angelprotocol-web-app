@@ -78,7 +78,7 @@ export default function Form({ classes = "", ...props }: Props) {
           onReset={() => resetField("usState")}
           classes={{
             container:
-              "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-gray-l5 dark:bg-blue-d6",
+              "px-4 border border-prim rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 bg-gray-l5 dark:bg-blue-d6",
             input:
               "py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
             error: errorStyle,

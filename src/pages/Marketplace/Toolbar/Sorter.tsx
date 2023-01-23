@@ -45,7 +45,7 @@ export default function Sorter() {
       as="div"
       className="relative min-w-[10rem]"
     >
-      <div className="w-full h-full flex items-center justify-between text-[0.9375rem] py-2 pl-3 dark:text-gray-l2 border border-gray-l2 dark:border-bluegray rounded-lg font-bold">
+      <div className="w-full h-full flex items-center justify-between text-[0.9375rem] py-2 pl-3 dark:text-gray-l2 border border-prim rounded-lg font-bold">
         <Listbox.Button className="upppercase flex items-center justify-between w-full">
           {({ open }) => (
             <>

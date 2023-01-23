@@ -11,7 +11,7 @@ export default function StatusSelector() {
   }
 
   return (
-    <div className="flex gap-2 items-center border p-2 border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d4">
+    <div className="flex gap-2 items-center border p-2 border-prim rounded dark:bg-blue-d4">
       <label htmlFor="status_selector" className="uppercase text-sm font-bold">
         status :
       </label>

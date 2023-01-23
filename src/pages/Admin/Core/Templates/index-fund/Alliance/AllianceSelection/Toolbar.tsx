@@ -6,7 +6,7 @@ export default function Toolbar(props: {
 }) {
   return (
     <div className="flex justify-end bg-orange-l5 dark:bg-blue-d5 p-3 sticky top-0">
-      <div className="flex px-3 py-1.5 rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray">
+      <div className="flex px-3 py-1.5 rounded bg-orange-l6 dark:bg-blue-d7 border border-prim">
         <input
           id="__allianceSearch"
           placeholder="name or address"

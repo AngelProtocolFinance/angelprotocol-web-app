@@ -83,6 +83,14 @@
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 
+  .border-prim {
+    @apply border-gray-l2 dark:border-bluegray;
+  }
+
+  .divide-prim {
+    @apply divide-gray-l2 dark:divide-bluegray;
+  }
+
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;

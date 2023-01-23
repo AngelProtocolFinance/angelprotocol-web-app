@@ -17,12 +17,12 @@ export default function RegisteredWallet(props: {
         time.
       </p>
 
-      <div className="grid mt-8 border border-gray-l2 dark:border-bluegray p-8 rounded">
+      <div className="grid mt-8 border border-prim p-8 rounded">
         {/** TODO: only address:string is saved in DB, can't determine what wallet corresponds to that address
          *  should also save: { name, logo }
          */}
         <p className="text-sm mb-2">Your Wallet address:</p>
-        <p className="relative px-4 py-3 border border-gray-l2 dark:border-bluegray rounded flex items-center text-sm truncate">
+        <p className="relative px-4 py-3 border border-prim rounded flex items-center text-sm truncate">
           <span className="truncate pr-6">{props.address}</span>
           <Copier
             text={props.address}

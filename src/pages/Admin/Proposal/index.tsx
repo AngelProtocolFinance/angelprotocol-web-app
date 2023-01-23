@@ -35,12 +35,12 @@ export default function Proposal() {
         }}
       >
         {(proposal) => (
-          <div className="rounded p-4 border border-gray-l2 dark:border-bluegray dark:bg-blue-d6 bg-white">
+          <div className="rounded p-4 border border-prim dark:bg-blue-d6 bg-white">
             <div className="flex justify-between flex-wrap">
               <p>ID : {proposal.id}</p>
               <Status status={proposal.status} />
             </div>
-            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-gray-l2 dark:border-bluegray pb-2">
+            <div className="mt-8 mb-6 flex justify-between items-center border-b-2 border-prim pb-2">
               <h4 className="font-bold text-lg">{proposal.title}</h4>
               <PollAction {...proposal} />
             </div>
@@ -55,7 +55,7 @@ export default function Proposal() {
               {proposal.description}
             </p>
             <Content {...proposal} />
-            <h4 className="mt-6 uppercase font-bold text-lg py-2 border-b-2 border-gray-l2 dark:border-bluegray">
+            <h4 className="mt-6 uppercase font-bold text-lg py-2 border-b-2 border-prim">
               Votes
             </h4>
             <Stats {...proposal} />

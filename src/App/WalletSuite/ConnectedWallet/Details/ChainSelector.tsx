@@ -29,7 +29,7 @@ export default function ChainSelector(props: WalletState) {
       className="relative"
     >
       <Listbox.Button
-        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray rounded`}
+        className={`${SELECTOR_STYLE} border border-prim rounded`}
       >
         {({ open }) => (
           <>
@@ -42,7 +42,7 @@ export default function ChainSelector(props: WalletState) {
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         {props.supportedChains.map((suppChain) => (
           <Option key={suppChain.chain_id} {...suppChain} />
         ))}

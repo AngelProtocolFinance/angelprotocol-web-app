@@ -62,8 +62,8 @@ export default function Form({ classes = "" }) {
       <h3 className="text-center text-3xl font-bold leading-snug">
         Redeem Angel Protocol Giftcard
       </h3>
-      <div className="relative grid w-full border border-gray-l2 dark:border-bluegray rounded-lg overflow-clip">
-        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-gray-l2 dark:border-bluegray">
+      <div className="relative grid w-full border border-prim rounded-lg overflow-clip">
+        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">
           Type your giftcard code here:
         </p>
         <textarea

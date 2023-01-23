@@ -47,7 +47,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
                 type="Giftcard"
                 className="text-green w-4 h-4 inline-block mr-0.5 relative bottom-px"
               />
-              <span className="font-normal text-xs border-r border-gray-l2 dark:border-bluegray pr-1">
+              <span className="font-normal text-xs border-r border-prim pr-1">
                 {humanize(t.gift, 3, true)}
               </span>
             </>
@@ -55,9 +55,7 @@ export default function CoinBalances({ smallAmountsHidden, tokens }: Props) {
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}
-      {!isEmpty(filtered) && (
-        <div className="border-t border-gray-l2 dark:border-bluegray" />
-      )}
+      {!isEmpty(filtered) && <div className="border-t border-prim" />}
     </>
   );
 }

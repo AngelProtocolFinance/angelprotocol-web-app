@@ -46,7 +46,7 @@ function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
     : JSON.stringify(props, null, 2);
 
   return (
-    <div className="grid rounded text-gray-d1 dark:text-gray border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
+    <div className="grid rounded text-gray-d1 dark:text-gray border border-prim bg-orange-l6 dark:bg-blue-d7 p-3 mb-6 text-sm">
       <code className="font-mono whitespace-pre overflow-x-auto">
         {isWASM && <span>to contract: {props.wasm.execute.contract_addr}</span>}
         <br />

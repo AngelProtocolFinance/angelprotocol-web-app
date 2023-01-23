@@ -52,7 +52,7 @@ export default function Donations() {
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-gray-l2 dark:border-bluegray w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d6 rounded">
         <Icon
           type="Search"
           size={24}
