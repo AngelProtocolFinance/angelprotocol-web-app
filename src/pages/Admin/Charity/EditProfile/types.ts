@@ -1,5 +1,6 @@
 import { CountryOption } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 
 type K = keyof EndowmentProfileUpdate;
@@ -26,7 +27,7 @@ export type FlatFormValues = Omit<
   | typeof _id
   | typeof _tier
   | typeof _owner
-> & { sdg: number };
+> & { sdg: UNSDG_NUMS };
 
 export type FormValues = Omit<
   FlatFormValues,

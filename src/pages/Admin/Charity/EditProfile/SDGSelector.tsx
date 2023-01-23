@@ -2,7 +2,6 @@ import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { FormValues } from "./types";
-import { UNSDG_NUMS } from "types/lists";
 import { DrawerIcon } from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 
@@ -26,7 +25,7 @@ export default function SDGSelector() {
       <Listbox.Button className="w-full p-3 text-left uppercase flex justify-between items-center">
         {({ open }) => (
           <>
-            {value} - {unsdgs[value as UNSDG_NUMS].title}
+            {value} - {unsdgs[value].title}
             <DrawerIcon isOpen={open} size={24} />
           </>
         )}
