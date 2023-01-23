@@ -14,8 +14,8 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   }
 
   /**
-   * if prev is falsy (excluding 0 and false),
-   * include next value if it's truthy (including 0, and false)
+   * if prev is falsy (excluding 0, [] and false),
+   * include next value if it's truthy (including 0, [], and false)
    */
   for (const key in next) {
     const n = next[key];
@@ -30,16 +30,18 @@ export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
 }
 
 function areDiff(val1: any, val2: any): boolean {
-  return (
-    val1 !== val2 ||
-    (isNonEmptyArr(val1) &&
-      isNonEmptyArr(val2) &&
-      !isEmpty(val2.filter((x) => !val1.includes(x))))
-  );
+  if (Array.isArray(val1) && Array.isArray(val2)) {
+    return val1.length !== val2.length || areArrsDiff(val1, val2);
+  }
+
+  return val1 !== val2;
 }
 
-function isNonEmptyArr(val: any): val is Array<any> {
-  return Array.isArray(val) && !isEmpty(val);
+function areArrsDiff(arr1: any[], arr2: any[]): boolean {
+  return (
+    !isEmpty(arr1.filter((x) => !arr2.includes(x))) ||
+    !isEmpty(arr2.filter((x) => !arr1.includes(x)))
+  );
 }
 
 const isZero = (val: any) => val === 0;
