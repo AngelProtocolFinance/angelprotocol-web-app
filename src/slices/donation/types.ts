@@ -14,7 +14,7 @@ export type DonationRecipient = {
 
 export type DonationDetails = {
   token: TokenWithAmount;
-  pctLiquidSplit: string;
+  pctLiquidSplit: number;
 
   //meta
   chainId: string;

@@ -3,7 +3,7 @@ import { UrlParamValues } from "./types";
 import { URL_PARAMS } from "./constants";
 
 export default function useWidgetParams(params?: string): UrlParamValues {
-  const [search] = useSearchParams(params);
+  const [search] = useSearchParams();
 
   const searchParams = new URLSearchParams(params ?? search);
 

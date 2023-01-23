@@ -29,7 +29,7 @@ export default function Donater({
     reValidateMode: "onChange",
     defaultValues: state.details || {
       token: wallet.displayCoin,
-      pctLiquidSplit: `${liquidPct}`,
+      pctLiquidSplit: liquidPct,
 
       //meta
       // if availCurrs array was not set, include all
