@@ -5,6 +5,7 @@ import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
+import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -29,7 +30,7 @@ function FormWithContext(props: EndowmentProfile) {
   // could just add to useForm.defaultValue - but not Partial here
   const flatInitial: FlatFormValues = {
     name: props.name,
-    sdg: props.categories.sdgs[0],
+    categories_sdgs: props.categories.sdgs,
     contact_email: props.contact_email,
     hq_city: props.hq.city || "",
     hq_country: props.hq.country || "",
@@ -50,6 +51,10 @@ function FormWithContext(props: EndowmentProfile) {
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
     hq_country: { flag: "", name: props.hq.country || "" },
+    categories_sdgs: flatInitial.categories_sdgs.map((x) => ({
+      label: unsdgs[x].title,
+      value: x,
+    })),
     initial: flatInitial,
   };
 
