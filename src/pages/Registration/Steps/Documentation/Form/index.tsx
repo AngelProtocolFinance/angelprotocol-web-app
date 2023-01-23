@@ -1,5 +1,5 @@
 import { FormValues as FV } from "../types";
-import CheckboxFormField from "components/CheckboxFormField";
+import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { Label } from "components/form";
@@ -105,7 +105,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <CheckboxFormField<FV>
+      <Checkbox<FV>
         name="hasAuthority"
         required
         classes={{
@@ -117,8 +117,8 @@ export default function Form() {
         By checking this box, you declare that you have the authority to create
         an endowment in the name of {data.contact.orgName} through Angel
         Protocol
-      </CheckboxFormField>
-      <CheckboxFormField<FV>
+      </Checkbox>
+      <Checkbox<FV>
         name="hasAgreedToTerms"
         required
         classes={{
@@ -132,7 +132,7 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
-      </CheckboxFormField>
+      </Checkbox>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <BtnSec
           aria-disabled={isSubmitting}
