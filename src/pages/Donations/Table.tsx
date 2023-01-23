@@ -1,25 +1,31 @@
 import { Link } from "react-router-dom";
-import { Donation } from "types/aws";
+import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
+import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
-import { HeaderButton, useSort } from "components/donations";
+import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import { appRoutes } from "constants/routes";
 
-export default function Table(props: { donations: Donation[] }) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    props.donations
-  );
+export default function Table({ donations, classes = "" }: TableProps) {
+  const { handleHeaderClick, sorted, sortDirection, sortKey } =
+    useSort(donations);
+
   const showKYCForm = useKYC();
 
   return (
-    <table className="hidden lg:table w-full text-sm text-gray-d2 dark:text-white font-body">
-      <TableSection type="thead" rowClass="">
+    <table
+      className={`${classes} w-full text-sm rounded outline outline-gray-l2 dark:outline-bluegray`}
+    >
+      <TableSection
+        type="thead"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-gray-l2 dark:divide-bluegray border-gray-l2 dark:border-bluegray"
+      >
         <Cells
           type="th"
-          cellClass="bg-orange-l6 dark:bg-blue-d7 uppercase font-semibold text-left text-xs font-body border border-gray-l2 dark:border-bluegray p-3"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left"
         >
           <HeaderButton
             onClick={handleHeaderClick("charityName")}
@@ -54,66 +60,56 @@ export default function Table(props: { donations: Donation[] }) {
           >
             Amount
           </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("usdValue")}
+            _activeSortKey={sortKey}
+            _sortKey="usdValue"
+            _sortDirection={sortDirection}
+          >
+            USD Value
+          </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="hover:bg-blue hover:bg-blue/10 border border-gray-l2 dark:border-bluegray even:bg-orange-l6 dark:bg-blue-d6 dark:even:bg-blue-d7"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-gray-l2 dark:divide-bluegray border-b last:border-b-0 border-gray-l2 dark:border-bluegray"
       >
-        {sorted.map(
-          ({
-            hash,
-            amount,
-            symbol,
-            chainId,
-            date,
-            chainName,
-            charityName,
-            id: charityId,
-          }) => (
-            <Cells
-              key={hash}
-              type="td"
-              cellClass="p-3 border border-gray-l2 dark:border-bluegray"
+        {sorted.map((row) => (
+          <Cells key={row.hash} type="td" cellClass="p-3">
+            <Link
+              to={`${appRoutes.profile}/${row.id}`}
+              className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
             >
-              <Link
-                to={`${appRoutes.profile}/${charityId}`}
-                className="flex items-center gap-1 w-40 cursor-pointer text-sm hover:underline"
-              >
-                <span className="truncate">{charityName}</span>
-                <Icon type="ExternalLink" className="w-5 h-5" />
-              </Link>
-              <>{new Date(date).toLocaleDateString()}</>
-              <>{chainName}</>
-              <span className="font-body text-sm">{symbol}</span>
-              <>{humanize(amount, 3)}</>
-              <ExtLink
-                href={getTxUrl(chainId, hash)}
-                className="text-center text-angel-blue cursor-pointer uppercase text-sm"
-              >
-                {maskAddress(hash)}
-              </ExtLink>
-              <button className="block mx-auto bg-green text-white p-1 rounded uppercase text-xs">
-                Received
-              </button>
-              <button
-                className="w-full flex justify-center"
-                onClick={() =>
-                  showKYCForm({
-                    type: "post-donation",
-                    txHash: hash,
-                    classes: "grid gap-5",
-                  })
-                }
-              >
-                <Icon type="FatArrowDownload" className="text-2xl" />
-              </button>
-            </Cells>
-          )
-        )}
+              <span className="truncate max-w-[12rem]">{row.charityName}</span>
+              <Icon type="ExternalLink" className="w-5 h-5" />
+            </Link>
+            <>{new Date(row.date).toLocaleDateString()}</>
+            <>{row.chainName}</>
+            <span className="font-body text-sm">{row.symbol}</span>
+            <>{humanize(row.amount, 3)}</>
+            <>{`$${humanize(row.usdValue, 2)}`}</>
+            <ExtLink
+              href={getTxUrl(row.chainId, row.hash)}
+              className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+            >
+              {maskAddress(row.hash)}
+            </ExtLink>
+            <button
+              className="w-full flex justify-center"
+              onClick={() =>
+                showKYCForm({
+                  type: "post-donation",
+                  txHash: row.hash,
+                  classes: "grid gap-5",
+                })
+              }
+            >
+              <Icon type="FatArrowDownload" className="text-2xl" />
+            </button>
+          </Cells>
+        ))}
       </TableSection>
     </table>
   );

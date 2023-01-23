@@ -9,7 +9,7 @@ import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { condense, roundDown } from "helpers";
-import { cleanObject } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
