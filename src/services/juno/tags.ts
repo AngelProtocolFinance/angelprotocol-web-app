@@ -52,7 +52,6 @@ export enum customTags {
   isMember,
   adminResources,
   proposalDetails,
-  endowmentInfo,
   giftcard,
 }
 

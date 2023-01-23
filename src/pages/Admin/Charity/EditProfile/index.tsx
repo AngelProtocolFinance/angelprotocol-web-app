@@ -1,11 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import {
-  FlatProfileWithSettings,
-  ProfileFormValues,
-  ProfileWithSettings,
-} from "pages/Admin/types";
-import { ProfileResponse } from "types/contracts";
+import { FlatFormValues, FormValues } from "./types";
+import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
@@ -26,47 +22,41 @@ export default function EditProfile() {
   if (isError || !profile)
     return <FormError errorMessage="Failed to load profile" />;
 
-  return <FormWithContext {...profile} id={endowmentId} />;
+  return <FormWithContext {...profile} />;
 }
 
-function FormWithContext(props: ProfileResponse & { id: number }) {
-  //initialize falsy values
-  const flatInitial: Required<FlatProfileWithSettings> = {
-    id: props.id,
+function FormWithContext(props: EndowmentProfile) {
+  // could just add to useForm.defaultValue - but not Partial here
+  const flatInitial: FlatFormValues = {
+    name: props.name,
+    sdg: props.categories.sdgs[0],
+    contact_email: props.contact_email,
+    hq_city: props.hq.city || "",
+    hq_country: props.hq.country || "",
+    image: props.image || "",
+    logo: props.logo || "",
+    kyc_donors_only: props.kyc_donors_only,
     overview: props.overview,
     url: props.url || "",
     registration_number: props.registration_number || "",
+    social_media_url_facebook: props.social_media_urls.facebook || "",
+    social_media_url_linkedin: props.social_media_urls.linkedin || "",
+    social_media_url_twitter: props.social_media_urls.linkedin || "",
     street_address: props.street_address || "",
-    country: props.country_of_origin || "",
-    contact_email: props.contact_email || "",
-    facebook: props.social_media_urls.facebook || "",
-    twitter: props.social_media_urls.twitter || "",
-    linkedin: props.social_media_urls.linkedin || "",
-
-    //endowment settings
-    name: props.name,
-    image: props.image || "",
-    logo: props.logo || "",
-    sdg: props.categories.sdgs[0] || 0,
   };
 
-  const initial: ProfileWithSettings = {
+  const defaults: FormValues = {
     ...flatInitial,
-    country: {
-      name: props.country_of_origin ?? "",
-      flag: "" /** let country selector determine flag since not saved in db */,
-    },
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    hq_country: { flag: "", name: props.hq.country || "" },
+    initial: flatInitial,
   };
 
-  const methods = useForm<ProfileFormValues>({
+  const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
-      ...initial,
-      initial: flatInitial,
-    },
+    defaultValues: defaults,
     resolver: yupResolver(schema),
   });
   return (

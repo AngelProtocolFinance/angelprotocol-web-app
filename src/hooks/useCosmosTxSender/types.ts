@@ -14,7 +14,7 @@ export type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: Tx };
 export type TxSuccess = {
   success: TxSuccessMeta;
-  tx: Tx & { rawLog?: string };
+  tx?: Tx & { rawLog?: string };
 };
 
 export type TxState = TxLoading | TxError | TxSuccess;
