@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
-import CheckboxFormField from "components/CheckboxFormField";
+import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
@@ -111,7 +111,7 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
       />
-      <CheckboxFormField<FV>
+      <Checkbox<FV>
         name="hasAgreedToTerms"
         classes={{
           container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
@@ -125,7 +125,7 @@ export default function Form({ classes = "", ...props }: Props) {
           Terms & Conditions
         </ExtLink>
         .
-      </CheckboxFormField>
+      </Checkbox>
       {props.type === "post-donation" ? (
         <BtnPrimary
           className="col-span-full"
