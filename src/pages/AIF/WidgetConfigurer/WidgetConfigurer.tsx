@@ -1,22 +1,26 @@
+import DonateWidget from "DonateWidget";
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import widgetSample from "assets/images/widget-example.png";
 import Copier from "components/Copier";
+import { IS_TEST } from "constants/env";
+import { appRoutes } from "constants/routes";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
 const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
+const ROOT_URL = IS_TEST
+  ? `http://localhost:4200${appRoutes.donate_widget}`
+  : `https://app.angelprotocol.io${appRoutes.donate_widget}`;
+
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
-  const [widgetSnippet, setWidgetSnippet] = useState("");
+  const [params, setParams] = useState("");
 
-  const handleOnUrlChange = useCallback(
-    (url: string) =>
-      setWidgetSnippet(
-        `<iframe src="${url}" width="700" height="900" style="border: 0px;"></iframe>`
-      ),
-    []
-  );
+  const handleOnChange = useCallback((url: string) => setParams(url), []);
+
+  const url = `${ROOT_URL}/${id}?apiKey=API_KEY${params ? `&${params}` : ""}`;
+
+  const widgetSnippet = `<iframe src="${url}" width="700" height="900" style="border: 0px;"></iframe>`;
 
   return (
     <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
@@ -41,16 +45,17 @@ export default function WidgetConfigurer() {
       </section>
       <div className="grid sm:grid-cols-2 gap-10">
         <section className="flex flex-col gap-3 max-sm:items-center">
-          <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-          <img
-            src={widgetSample}
-            alt="widget example"
-            className="w-2/3 object-contain border border-gray-l2 dark:border-bluegray rounded"
+          <h2 className={TITLE_STYLE}>
+            That's what your widget would look like:
+          </h2>
+          <DonateWidget
+            params={params}
+            className="xl:w-11/12 border border-gray-l2 dark:border-bluegray rounded"
           />
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
-          <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
+          <WidgetUrlGenerator endowId={id} onChange={handleOnChange} />
 
           <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
           <div className="flex items-center justify-center gap-4 h-32 px-10 rounded bg-gray-l3 dark:bg-blue-d4">
