@@ -9,7 +9,7 @@ import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { widgetRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { chainOptions } from "./constants/chainOptions";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -38,7 +38,7 @@ root.render(
                 <ModalContext>
                   <Routes>
                     <Route
-                      path={`${widgetRoutes.donate}/:id`}
+                      path={`${appRoutes.donate}/:id`}
                       element={<DonateWidget />}
                     />
                     <Route path="*" element={<App />} />
