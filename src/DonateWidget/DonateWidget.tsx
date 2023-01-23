@@ -14,16 +14,22 @@ export default function DonateWidget({ className, params }: Props) {
 
   /**
    * Need to set the theme to light, but after widget is closed we need to
-   * reverse the user selected theme on the main webapp to the previous theme
+   * reverse the user selected theme on the main webapp to the previous theme.
+   *
+   * If params are passed from parent, we can assume the widget is not being loaded directly inside an iframe.
+   * In this case, we must use the already existing theme.
    */
   useEffect(() => {
-    if (isPrevThemeDark) {
+    const shouldSwitch = isPrevThemeDark && !params;
+
+    if (shouldSwitch) {
       setToLightMode();
     }
 
     return () => {
-      isPrevThemeDark && setToDarkMode();
+      shouldSwitch && setToDarkMode();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Hide the Intercom chatbot */
