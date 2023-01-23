@@ -1,8 +1,8 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { GroupProps } from "../types";
-import { Checkbox } from "components/Checkbox";
 import { Drawer } from "..";
+import { Checkbox } from "../Checkbox";
 
 export default function Group<T>(props: GroupProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
