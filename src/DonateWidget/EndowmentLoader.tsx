@@ -1,16 +1,16 @@
 import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { EndowmentInfo } from "services/types";
-import { useEndowInfoQuery } from "services/aws/aws";
-import { QueryLoader } from "components/admin";
+import { EndowmentProfile } from "types/aws";
+import { useProfileQuery } from "services/aws/aws";
+import QueryLoader from "components/QueryLoader";
 import { idParamToNum } from "helpers";
 
-type Props = { children(data: EndowmentInfo): ReactElement };
+type Props = { children(data: EndowmentProfile): ReactElement };
 
 export default function EndowmentLoader({ children }: Props) {
   const { id } = useParams<{ id: string }>();
   const endowId = idParamToNum(id);
-  const queryState = useEndowInfoQuery(endowId, { skip: endowId === 0 });
+  const queryState = useProfileQuery(endowId, { skip: endowId === 0 });
 
   return (
     <QueryLoader
@@ -21,7 +21,7 @@ export default function EndowmentLoader({ children }: Props) {
       }}
       classes={{ container: "text-center mt-8" }}
     >
-      {(endowment) => children(endowment)}
+      {(profile) => children(profile)}
     </QueryLoader>
   );
 }
