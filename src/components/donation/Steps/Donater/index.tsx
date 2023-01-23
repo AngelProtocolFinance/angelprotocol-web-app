@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
 import { TokenWithAmount } from "types/slices";
@@ -46,6 +47,13 @@ export default function Donater({
     },
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (liquidPct !== methods.watch("pctLiquidSplit")) {
+      methods.setValue("pctLiquidSplit", liquidPct);
+    }
+  }, [liquidPct, methods]);
+
   return (
     <FormProvider {...methods}>
       <Form hideAdvOpts={hideAdvOpts} unfoldAdvOpts={unfoldAdvOpts} />
