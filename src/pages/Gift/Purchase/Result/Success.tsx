@@ -1,6 +1,5 @@
-import { BtnPrim } from "components/BtnPrim";
 import Icon from "components/Icon";
-import { BtnSec } from "components/gift";
+import { BtnPrim, BtnSec } from "components/gift";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
 import { chainIds } from "constants/chainIds";
