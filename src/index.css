@@ -7,6 +7,10 @@
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }
 
+  .date-input::-webkit-calendar-picker-indicator {
+    @apply hidden;
+  }
+
   .slider {
     @apply appearance-none bg-transparent w-full;
   }
