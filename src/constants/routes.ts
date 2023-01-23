@@ -44,7 +44,3 @@ export enum adminRoutes {
   withdraws = "withdraws",
   investments = "investments",
 }
-
-export enum widgetRoutes {
-  donate = "donate-widget",
-}
