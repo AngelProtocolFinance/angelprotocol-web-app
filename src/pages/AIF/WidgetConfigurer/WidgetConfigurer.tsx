@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import widgetSample from "assets/images/widget-example.png";
 import Copier from "components/Copier";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
@@ -42,11 +41,11 @@ export default function WidgetConfigurer() {
       <div className="grid sm:grid-cols-2 gap-10">
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-          <img
-            src={widgetSample}
-            alt="widget example"
-            className="w-2/3 object-contain border border-gray-l2 dark:border-bluegray rounded"
-          />
+          <iframe
+            src="http://localhost:4200/donate-widget/11?apiKey=API_KEY"
+            title="widget"
+            className="w-11/12 h-[900px] border border-prim rounded"
+          ></iframe>
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
