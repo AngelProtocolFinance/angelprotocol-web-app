@@ -39,11 +39,6 @@ interface Props<
 export const selectorButtonStyle =
   "grid grid-cols-[auto_1fr] items-center text-sm rounded border border-prim";
 
-export const SELECT_ALL_OPTION: OptionType<ValKey> = {
-  label: "select all",
-  value: "*",
-};
-
 const labelKey: keyof OptionType<string> = "label";
 
 export function Selector<
@@ -80,7 +75,6 @@ export function Selector<
       <Listbox
         disabled={isSubmitting || disabled}
         value={selected}
-        defaultValue={SELECT_ALL_OPTION}
         by={valueKey}
         onChange={onChange}
         as="div"
