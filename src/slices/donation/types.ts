@@ -1,8 +1,8 @@
 import type { CreateTxOptions } from "@terra-money/terra.js";
 import { CountryOption } from "services/types";
 import { SignDoc } from "types/cosmos";
+import { EVMTx } from "types/evm";
 import { TokenWithAmount } from "types/slices";
-import { EVMTx } from "services/apes/helpers/test";
 import {
   CosmosWallet,
   EVMWCWallet,

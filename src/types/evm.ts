@@ -1,3 +1,20 @@
+/** gas and gasPrice set by provider when presenting to user */
+
+export type EVMTx = {
+  //all prefixed-hex
+  from: string;
+  to: string;
+  nonce: string;
+};
+
+export type SendNativeTx = EVMTx & {
+  value: string; // funds
+};
+export type ContractTx = EVMTx & { data: string };
+
+export type SimulSendNativeTx = Pick<SendNativeTx, "from" | "to" | "value">;
+export type SimulContractTx = Pick<ContractTx, "from" | "to" | "data">;
+
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 export interface RequestArguments {
   readonly method: string;

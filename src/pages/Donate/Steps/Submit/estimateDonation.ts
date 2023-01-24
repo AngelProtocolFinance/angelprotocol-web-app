@@ -1,15 +1,12 @@
 import { MsgSend as TerraMsgSend } from "@terra-money/terra.proto/cosmos/bank/v1beta1/tx";
 import { MsgExecuteContract as TerraMsgExecuteContract } from "@terra-money/terra.proto/cosmwasm/wasm/v1/tx";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import {
-  SimulContractTx,
-  SimulSendNativeTx,
-  transfer,
-} from "services/apes/helpers/test";
+import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
+import { transfer } from "contracts/ERC20";
 import GiftCard from "contracts/GiftCard";
 import { condense, logger, scale, scaleToStr, toU8a } from "helpers";
 import { estimateGas } from "helpers/cosmos/estimateGas";

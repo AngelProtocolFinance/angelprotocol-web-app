@@ -1,14 +1,14 @@
-import { BalMap } from "./types";
 import { TokenWithBalance } from "services/types";
 import { FetchedChain, Token } from "types/aws";
 import { Coin } from "types/cosmos";
 import { queryContract } from "services/juno/queryContract";
 import { ProviderId } from "contexts/WalletContext";
+import { balanceOf } from "contracts/ERC20";
 import { condenseToNum, getProvider } from "helpers";
 import { chains } from "constants/chains";
 import { contracts } from "constants/contracts";
-import { balanceOf } from "./test";
 
+type BalMap = { [index: string]: string | undefined | number };
 type CosmosBalances = { balances: Coin[] };
 type TokenType = "natives" | "alts";
 
