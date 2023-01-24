@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { ReactNode } from "react";
+import { ReactNode, useCallback, useMemo } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
 
@@ -34,6 +34,11 @@ interface Props<
 export const selectorButtonStyle =
   "flex items-center text-sm rounded border border-prim";
 
+export const SELECT_ALL_OPTION: OptionType<ValKey> = {
+  label: "select all",
+  value: "*",
+};
+
 const labelKey: keyof OptionType<string> = "label";
 
 export function Selector<
@@ -52,7 +57,7 @@ export function Selector<
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange: onSelectedChange },
+    field: { value: selected, onChange },
   } = useController<{ [index: string]: VarOption<Multiple, ValueType> }>({
     name: name as any,
   });
@@ -60,13 +65,28 @@ export function Selector<
   const labelId = `${name}.${labelKey}`;
   const valueKey: keyof OptionType<ValueType> = "value";
 
+  const availOpts = useMemo(() => [SELECT_ALL_OPTION, ...options], [options]);
+
+  const handleChange = useCallback(
+    (...event: any[]) => {
+      // if (event.find((x) => x.value === SELECT_ALL_OPTION.value)) {
+      //   onChange(availOpts);
+      // }
+      console.log(event);
+    },
+    [
+      // availOpts, onChange
+    ]
+  );
+
   return (
     <>
       <Listbox
         disabled={isSubmitting || disabled}
         value={selected}
+        defaultValue={SELECT_ALL_OPTION}
         by={valueKey}
-        onChange={onSelectedChange}
+        onChange={handleChange}
         as="div"
         className={`relative ${container}`}
         multiple={multiple}
@@ -84,7 +104,7 @@ export function Selector<
           )}
         </Listbox.Button>
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
-          {options.map((o) => (
+          {availOpts.map((o) => (
             <Listbox.Option
               key={o.value}
               value={o}
