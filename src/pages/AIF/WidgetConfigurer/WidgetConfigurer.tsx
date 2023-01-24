@@ -20,7 +20,7 @@ export default function WidgetConfigurer() {
         <h1 className={TITLE_STYLE}>
           Accept donations from your website today!
         </h1>
-        <div className="sm:w-3/5 font-body text-base sm:text-lg">
+        <div className="sm:w-3/5 font-body text-sm sm:text-base">
           <p>
             Just configure your widget below, copy & paste the code on your
             website and you're ready to go!
