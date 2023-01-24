@@ -1,21 +1,29 @@
 import Icon from "components/Icon";
 import useCopier from "./useCopier";
 
-export default function Copier(props: { text: string; colorClass: string }) {
-  const { handleCopy, copied } = useCopier(props.text);
+type Props = {
+  text: string;
+  classes?: string;
+  size?: { copy?: number; check?: number };
+};
+
+export default function Copier({ text, classes = "", size }: Props) {
+  const { handleCopy, copied } = useCopier(text);
   return (
-    <button onClick={handleCopy}>
+    <button type="button" onClick={handleCopy}>
       {(copied && (
         <Icon
           type="Check"
-          className={`${props.colorClass} hover:text-orange cursor-default`}
+          className={`${classes} cursor-default hover:text-current`}
           title="Copied!"
+          size={size?.check}
         />
       )) || (
         <Icon
           type="Copy"
-          className={`${props.colorClass} hover:text-orange`}
+          className={`${classes} cursor-pointer`}
           title="Copy Address"
+          size={size?.copy}
         />
       )}
     </button>

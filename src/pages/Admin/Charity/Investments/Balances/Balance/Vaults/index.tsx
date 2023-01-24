@@ -2,7 +2,7 @@ import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
 import Icon from "components/Icon";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
 type Props = {

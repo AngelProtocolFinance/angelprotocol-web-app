@@ -1,11 +1,15 @@
-import { SuccessLink } from "slices/transaction/types";
-import { Token } from "types/aws";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
   Proposal,
 } from "types/contracts";
+import { TxArgs } from "hooks/useCosmosTxSender";
+
+export type Tag = TagDescription<string>;
+export type TagPayload = PayloadAction<Tag[], string>;
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -28,8 +32,10 @@ export type AdminResources = {
   endowmentId: number;
   endowment: EndowmentDetails;
   cw3config: CW3Config;
-  proposalLink: SuccessLink;
   role: AdminRoles;
+  propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
+    willExecute?: true;
+  };
 };
 
 export type ProposalDetails = Proposal & {
@@ -51,10 +57,11 @@ export type Country = {
   };
 };
 
+export type CountryInRegion = Pick<Country, "name"> & { region: string };
+
 export type CountryOption = {
   name: string;
   flag: string;
 };
 
-/** multicall */
-export type WithBalance<T = Token> = T & { balance: number };
+export type Regions = { [region: string]: string[] };

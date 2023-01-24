@@ -1,19 +1,17 @@
-import { EndowmentApplication, Registration } from "types/aws";
+import { Coin } from "@cosmjs/proto-signing";
+import { EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
   CW4Member,
-  EndowmentSettingsPayload,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
   FundConfig,
   FundDetails,
-  ProfileUpdate,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
-import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
@@ -32,6 +30,7 @@ export type Templates =
   | "cw3_config"
   | "cw3_transfer"
   | "cw3_application"
+  | "review_cw3_config"
 
   //cw4
   | "cw4_members"
@@ -99,11 +98,18 @@ export type CW4MemberUpdateMeta = MetaConstructor<
 >;
 
 /** _cw3 */
-export type ApplicationMeta = MetaConstructor<"cw3_application", Registration>;
-
+export type ApplicationMeta = MetaConstructor<
+  "cw3_application",
+  EndowmentProposal
+>;
 export type CW3ConfigUpdateMeta = MetaConstructor<
   "cw3_config",
   DiffSet<FormCW3Config>
+>;
+
+export type ReviewCW3ConfigUpdateMeta = MetaConstructor<
+  "review_cw3_config",
+  DiffSet<FormReviewCW3Config>
 >;
 
 export type FundSendMeta = MetaConstructor<
@@ -118,11 +124,6 @@ export type WithdrawMeta = MetaConstructor<
     beneficiary: string;
     assets: Asset[];
   }
->;
-
-export type EndowmentProfileUpdateMeta = MetaConstructor<
-  "acc_profile",
-  DiffSet<ProfileWithSettings>
 >;
 
 export type EndowmentStatusMeta = MetaConstructor<
@@ -156,11 +157,12 @@ export type ProposalMeta =
   //cw3
   | ApplicationMeta
   | CW3ConfigUpdateMeta
+  | ReviewCW3ConfigUpdateMeta
   | FundSendMeta
   //endowment
   | EndowmentStatusMeta
   | WithdrawMeta
-  | EndowmentProfileUpdateMeta
+
   //registrar
   | RegistrarConfigUpdateMeta;
 
@@ -172,12 +174,18 @@ export type ProposalBase = {
 export type FundIdContext = { fundId: string };
 export type AllianceEditValues = ProposalBase & Required<AllianceMember>;
 
-export type FormCW3Config = {
+export interface FormCW3Config {
   threshold: number;
   duration: number;
-};
-export type CW3ConfigValues = ProposalBase &
-  FormCW3Config & { initial: FormCW3Config; isTime: boolean };
+  require_execution: boolean;
+}
+export interface FormReviewCW3Config extends FormCW3Config {
+  seed_asset?: Asset;
+  seed_split_to_liquid: string; //"0.5,0.9",
+  new_endow_gas_money?: Coin;
+}
+export type CW3ConfigValues<T extends FormCW3Config> = ProposalBase &
+  T & { initial: T; isTime: boolean };
 
 export type EndowmentUpdateValues = ProposalBase & {
   id: number;
@@ -243,26 +251,8 @@ export type RegistrarConfigValues = ProposalBase &
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
 
-export type ProfileWithSettings = ProfileUpdate &
-  Omit<
-    //only include settings fields related to profile form
-    Pick<EndowmentSettingsPayload, "categories" | "image" | "logo" | "name">,
-    //replace categories field with flat sdgNum field
-    "categories"
-  > & {
-    sdgNum: UNSDG_NUMS;
-  };
-
-export type ProfileFormValues = ProposalBase &
-  ProfileWithSettings & {
-    initial: ProfileWithSettings;
-  };
-
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<
-  EndowmentApplication,
-  | "OrganizationName"
-  | "RegistrationDate"
-  | "RegistrationStatus"
-  | "OrganizationName_ContactEmail"
+  EndowmentProposal,
+  "OrganizationName" | "RegistrationDate" | "RegistrationStatus" | "Email"
 >;

@@ -1,4 +1,4 @@
-import { ProviderId } from "contexts/WalletContext/types";
+import { WithoutInstallers } from "contexts/WalletContext/types";
 import { Chain } from "types/aws";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
@@ -86,14 +86,24 @@ export class WrongNetworkError extends APError {
   }
 }
 
-export class UnsupportedNetworkError extends APError {
+export class UnsupportedChainError extends APError {
   constructor(unsupportedChainId: string) {
     super(
-      "UnsupportedNetworkError",
-      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Ethereum and Binance and reload the page`
+      "UnsupportedChainError",
+      `Chain ID ${unsupportedChainId} not supported. The only supported networks are on: Juno, Terra, Binance and Ethereum. Please switch to one of those and reload the page`
     );
   }
 }
+
+export class ManualChainSwitchRequiredError extends APError {
+  constructor(chainId: string) {
+    super(
+      "ManualChainSwitchRequiredError",
+      `Please use your wallet to switch to ${chainId} chain and reload the page`
+    );
+  }
+}
+
 export class CosmosTxSimulationFail extends APError {
   constructor(
     message = "Submission aborted. This transaction is likely to fail"
@@ -115,8 +125,8 @@ export class TxResultFail extends Error {
 }
 
 export class WalletNotInstalledError extends APError {
-  providerId: ProviderId;
-  constructor(providerId: ProviderId) {
+  providerId: WithoutInstallers;
+  constructor(providerId: WithoutInstallers) {
     super(
       "WalletNotInstalledError",
       `Wallet ${WALLET_METADATA[providerId].name} not installed`

@@ -1,24 +1,19 @@
 import { FormValues, Investment } from "./types";
 import { AccountType, EmbeddedWasmMsg, InvestPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
+import { junoDenom } from "constants/tokens";
 
 export default function useInvest() {
-  const { cw3, endowmentId, proposalLink } = useAdminResources();
+  const { cw3, endowmentId, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
-  const { showModal } = useModalContext();
+  const sendTx = useCosmosTxSender();
 
-  function invest(data: FormValues) {
+  async function invest(data: FormValues) {
     const account = new Account(wallet);
 
     let msgs: EmbeddedWasmMsg[] = [];
@@ -60,21 +55,10 @@ export default function useInvest() {
       msgs
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposal],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        //Juno withdrawal
-        successLink: proposalLink,
-        successMessage: "Investment proposal created!",
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposal],
+      ...propMeta,
+    });
   }
 
   return {
@@ -91,6 +75,6 @@ function getInvestmentsWithType(
     .map((inv) => [
       inv.vault,
       //NOTE: assumed native, since asset type is not indicated in EndowmentBalance
-      { info: { native: "ujunox" }, amount: scaleToStr(inv.amount) },
+      { info: { native: junoDenom }, amount: scaleToStr(inv.amount) },
     ]);
 }

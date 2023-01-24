@@ -2,18 +2,16 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
+import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIds } from "constants/chainIds";
-import { logWithdrawProposal } from "./logWithdrawProposal";
+import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {
   const {
@@ -22,18 +20,21 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, proposalLink, endowment } = useAdminResources();
+  const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
 
+  const sendTx = useCosmosTxSender();
+  const logProposal = useLogWithdrawProposal(propMeta.successMeta);
   const type = getValues("type");
 
   //NOTE: submit is disabled on Normal endowments with unmatured accounts
-  function withdraw(data: WithdrawValues) {
-    const assets: Asset[] = data.amounts.map(({ value, tokenId, type }) => ({
-      info: type === "cw20" ? { cw20: tokenId } : { native: tokenId },
-      amount: scaleToStr(value /** empty "" */ || "0"),
-    }));
+  async function withdraw(data: WithdrawValues) {
+    const assets: Asset[] = data.amounts.map(
+      ({ value, tokenId, type: tokenType }) => ({
+        info: tokenType === "cw20" ? { cw20: tokenId } : { native: tokenId },
+        amount: scaleToStr(value /** empty "" */ || "0"),
+      })
+    );
 
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
@@ -62,7 +63,7 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${type} assets from endowment id: ${endowmentId}`,
+          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${endowmentId}`,
           [
             account.createEmbeddedWithdrawMsg({
               id: endowmentId,
@@ -74,36 +75,25 @@ export default function useWithdraw() {
           JSON.stringify(meta)
         );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposal],
-        tagPayloads: [
-          invalidateJunoTags([
-            //no need to invalidate balance, since this is just proposal
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        //Juno withdrawal
-        successLink: proposalLink,
-        successMessage: "Withdraw proposal successfully created!",
-
-        onSuccess: isJuno
-          ? undefined //no need to POST to AWS if destination is juno
-          : (response) =>
-              logWithdrawProposal({
-                res: response,
-                proposalLink,
-                wallet: wallet!, //wallet is defined at this point
-
+    await sendTx({
+      msgs: [proposal],
+      //Juno withdrawal
+      ...propMeta,
+      onSuccess: isJuno
+        ? undefined //no need to POST to AWS if destination is juno
+        : async (response, chain) =>
+            await logProposal(
+              {
                 endowment_multisig: cw3,
                 proposal_chain_id: chainIds.juno,
                 target_chain: data.network,
                 target_wallet: data.beneficiary,
                 type: data.type,
-              }),
-      })
-    );
+              },
+              response,
+              chain
+            ),
+    });
   }
 
   return {

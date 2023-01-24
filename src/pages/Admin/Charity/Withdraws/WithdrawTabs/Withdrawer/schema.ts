@@ -3,6 +3,7 @@ import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { tokenConstraint } from "schemas/number";
 import { requiredWalletAddr } from "schemas/string";
+import { chainIds } from "constants/chainIds";
 
 type TVal = Amount["value"];
 type TBal = Amount["balance"];
@@ -13,20 +14,32 @@ const netKey: keyof WV = "network";
 const amountsKey: keyof WV = "amounts";
 const heightKey: keyof WV = "height";
 
-const amount: SchemaShape<Amount> = {
+const amount: (arg: TNetwork) => SchemaShape<Amount> = (network) => ({
   value: Yup.lazy((val: TVal) =>
     val === ""
       ? Yup.string() //required collected on _amount
       : tokenConstraint.when(balKey, (balance: TBal, schema) =>
-          schema.test("balance test", "not enough balance", () => {
-            return +balance >= +val; //if false test fails
-          })
+          schema
+            .test("enough balance", "not enough balance", () => {
+              return +balance >= +val;
+            })
+            .test(
+              "min $20 when destination is not JUNO",
+              /**
+               * NOTE: this is on the assumption that endow TOH would just be USDC
+               * for other tokens, must first get dollar amount
+               */
+              "minimum 20 USDC",
+              () => (network === chainIds.juno ? true : +val >= 20)
+            )
         )
   ),
-};
+});
 
 const shape: SchemaShape<WV> = {
-  amounts: Yup.array(Yup.object().shape(amount)),
+  amounts: Yup.array().when(netKey, (network: TNetwork, schema) =>
+    schema.of(Yup.object().shape(amount(network)))
+  ),
   //test if at least one amount is filled
   _amounts: Yup.string().when(amountsKey, (amounts: Amount[], schema) =>
     schema.test("at least one is filled", "", () =>

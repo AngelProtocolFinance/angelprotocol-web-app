@@ -3,7 +3,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { Label, TextInput } from "components/admin";
+import { TextPrim } from "components/admin";
+import { Label } from "components/form";
 
 const types: V["beneficiaryType"][] = ["wallet", "index fund", "endowment"];
 
@@ -15,14 +16,14 @@ export default function Beneficiary() {
 
   return (
     <div className="mt-6">
-      <Label _required className="mb-2 text-angel-grey">
+      <Label required className="mb-2 text-gray-d2">
         Beneficiary
       </Label>
       <ErrorMessage
         as="p"
         errors={errors}
         name="beneficiaryType"
-        className="font-mono font-semibold text-left text-red-400 text-xs mb-2"
+        className="font-mono font-semibold text-left text-red-l1 text-xs mb-2"
       />
       <RadioGroup
         value={type}
@@ -35,8 +36,8 @@ export default function Beneficiary() {
             {({ checked }) => (
               <span
                 className={`${
-                  checked ? "bg-angel-blue/20" : ""
-                } text-angel-grey w-36 cursor-pointer rounded-sm border border-angel-grey/40 px-3 py-1 text-center text-sm uppercase`}
+                  checked ? "bg-blue/20" : ""
+                } text-gray-d2 w-36 cursor-pointer rounded-sm border border-gray-d2/40 px-3 py-1 text-center text-sm uppercase`}
               >
                 {type}
               </span>
@@ -45,30 +46,27 @@ export default function Beneficiary() {
         ))}
       </RadioGroup>
       {type === "wallet" && (
-        <TextInput<V>
-          title="Wallet address"
+        <TextPrim<V>
+          label="Wallet address"
           name="wallet"
           placeholder="juno123abc..."
           required
-          mono
         />
       )}
       {type === "endowment" && (
-        <TextInput<V>
-          title="Endowment id"
+        <TextPrim<V>
+          label="Endowment id"
           name="endowmentId"
           placeholder="1"
           required
-          mono
         />
       )}
       {type === "index fund" && (
-        <TextInput<V>
-          title="Fund id"
+        <TextPrim<V>
+          label="Fund id"
           name="indexFund"
           placeholder="1"
           required
-          mono
         />
       )}
     </div>

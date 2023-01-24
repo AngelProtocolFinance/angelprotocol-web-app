@@ -9,8 +9,8 @@ import { proposalShape } from "../../../../constants";
 const shape: SchemaShape<FundCreatorValues> = {
   ...proposalShape,
   newFundAddr: requiredContractAddr,
-  fundName: stringByteSchema("fund name", 4, 64),
-  fundDescription: stringByteSchema("fund description", 4, 1064),
+  fundName: stringByteSchema(4, 64),
+  fundDescription: stringByteSchema(4, 1064),
   expiryTime: futureDate,
   expiryHeight: requiredPositiveNumber,
 };

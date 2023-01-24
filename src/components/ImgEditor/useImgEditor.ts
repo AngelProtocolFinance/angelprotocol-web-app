@@ -1,169 +1,78 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { FieldValues, useFormContext } from "react-hook-form";
-import { Props } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
+import { DropzoneOptions } from "react-dropzone";
+import { FieldValues, useController, useFormContext } from "react-hook-form";
+import { ImgLink, Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import { FileWrapper } from "components/FileDropzone";
+import Popup from "components/Popup";
 import ImgCropper from "./ImgCropper";
 
-type OnChangeFunc = (...event: any[]) => void;
+type Key = keyof ImgLink;
+const fileKey: Key = "file";
+const previewKey: Key = "preview";
 
-export default function useImgEditor<T extends FieldValues>(props: Props<T>) {
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+export default function useImgEditor<T extends FieldValues, K extends keyof T>({
+  name,
+  aspect,
+  accept,
+}: Props<T, K>) {
+  const filePath: any = `${String(name)}.${fileKey}`;
+  const previewPath: any = `${String(name)}.${previewKey}`;
+
+  const { setValue, watch } = useFormContext<T>();
+  const { showModal, closeModal } = useModalContext();
   const {
-    watch,
-    setValue,
-    control,
-    formState: { isSubmitting, errors },
-  } = useFormContext();
+    field: { value: currFile, onChange: onFileChange },
+  } = useController<T>({ name: filePath });
 
-  const imageFile: FileWrapper | undefined = watch(props.name);
-  const [prevImageFile, setPrevImageFile] = useState<FileWrapper>();
+  const { publicUrl, preview }: ImgLink = watch(name as any);
+  const isInitial = preview === publicUrl;
 
-  const initialImageRef = useRef<FileWrapper | undefined>(imageFile); //use to reset input internal state
-  const inputRef = useRef<HTMLInputElement | null>(); // necessary to enable manual open of file input window
-
-  const [isLoading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [uncroppedImgUrl, setUncroppedImgUrl] = useState(""); // to use uncropped img version when cropping
-
-  const openCropModalImpl = useCallback(
-    (onChange: OnChangeFunc, src = uncroppedImgUrl) => {
-      showModal(ImgCropper, {
-        src,
-        aspectRatio: props.aspectRatioX / props.aspectRatioY,
-        onSave: (croppedBlob) => {
-          // banner!.name !== undefined, because banner has to be set for it to be croppable
-          const croppedValue: FileWrapper = {
-            file: new File([croppedBlob], imageFile!.name, {
-              type: croppedBlob.type,
-            }),
-            name: imageFile!.name,
-          };
-          onChange(croppedValue);
-        },
-        onClose: () => {
-          onChange(prevImageFile);
-        },
-      });
-    },
-    [
-      showModal,
-      prevImageFile,
-      uncroppedImgUrl,
-      props.aspectRatioX,
-      props.aspectRatioY,
-      imageFile,
-    ]
-  );
-
-  const fileReader = useMemo(() => {
-    const fr = new FileReader();
-
-    fr.onload = (e) => {
-      const newImgUrl = e.target?.result?.toString() ?? "";
-      setImageUrl(newImgUrl);
-      if (!uncroppedImgUrl) {
-        setUncroppedImgUrl(newImgUrl);
-        // if it's loading the already submitted image (contains `publicUrl`)
-        if (imageFile?.file) {
-          // necessary to manually pass the `newImgUrl` value because `uncroppedImgUrl` state might not get updated on time
-          openCropModalImpl(
-            (croppedValue) => setValue(props.name, croppedValue as any),
-            newImgUrl
-          );
-        }
+  const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
+    const newFile = files[0];
+    if (newFile) {
+      //preview & crop valid format only
+      if (accept.includes(newFile.type)) {
+        const preview = URL.createObjectURL(newFile);
+        showModal(ImgCropper, {
+          preview,
+          aspect,
+          onSave(blob) {
+            handleCropResult(blob, newFile);
+          },
+        });
       }
-      setLoading(false);
-    };
-
-    fr.onerror = (e) => {
-      handleError(e.target?.error, "failed to load image");
-      setLoading(false);
-    };
-
-    return fr;
-  }, [
-    imageFile?.file,
-    props.name,
-    uncroppedImgUrl,
-    handleError,
-    openCropModalImpl,
-    setValue,
-  ]);
-
-  useEffect(() => {
-    (async function () {
-      if (!imageFile) {
-        return;
-      }
-
-      // when first uploading an image on creation
-      if (!initialImageRef.current) {
-        initialImageRef.current = imageFile;
-      }
-
-      setLoading(true);
-
-      const blob: Blob =
-        imageFile.file ??
-        (await fetch(imageFile.publicUrl).then((x) => x.blob()));
-
-      fileReader.readAsDataURL(blob);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageFile]);
-
-  const upload = useCallback(() => inputRef.current?.click(), []);
-
-  const undo = useCallback(
-    (onChange: OnChangeFunc) => () => {
-      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-      onChange(initialImageRef.current);
-    },
-    []
-  );
-
-  const openCropModal = useCallback(
-    (onChange: OnChangeFunc) => () => openCropModalImpl(onChange),
-    [openCropModalImpl]
-  );
-
-  const onInputChange = useCallback(
-    (onChange: OnChangeFunc) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      let fileWrapper: FileWrapper | undefined;
-      if (e.target.files && e.target.files.length > 0) {
-        fileWrapper = {
-          file: e.target.files[0],
-          name: e.target.files[0].name,
-        };
-      }
-
-      setPrevImageFile(imageFile);
-      onChange(fileWrapper);
-      setUncroppedImgUrl(""); // will be read once the file is read in FileReader
-    },
-    [imageFile]
-  );
-
-  return {
-    control,
-    errors,
-    inputRef,
-    imageUrl,
-    isInitial: initialImageRef.current === imageFile,
-    isLoading,
-    isSubmitting,
-    upload,
-    undo,
-    openCropModal,
-    onInputChange,
+      onFileChange(newFile);
+    }
   };
+
+  function handleOpenCropper() {
+    showModal(ImgCropper, {
+      preview,
+      aspect,
+      onSave(blob) {
+        handleCropResult(blob, currFile);
+      },
+    });
+  }
+
+  function handleCropResult(blob: Blob | null, originalFile: File) {
+    if (!blob) {
+      showModal(Popup, { message: "Failed to crop image" });
+      return;
+    }
+    const cropped = URL.createObjectURL(blob);
+    setValue(previewPath, cropped as any);
+    onFileChange(
+      new File([blob], originalFile.name, {
+        type: originalFile.type,
+      })
+    );
+    closeModal();
+  }
+
+  function handleReset() {
+    setValue(previewPath, publicUrl as any, { shouldValidate: false });
+    setValue(filePath, undefined as any, { shouldValidate: false });
+  }
+
+  return { onDrop, handleOpenCropper, isInitial, handleReset, preview };
 }

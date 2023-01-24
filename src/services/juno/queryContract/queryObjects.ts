@@ -31,6 +31,11 @@ export const queryObject: {
     return { balance: { address: addr } };
   },
 
+  /** giftcard */
+  giftcardBalance({ addr }) {
+    return { Balance: { address: addr } };
+  },
+
   /** cw4 member */
   cw4Members: { list_members: {} },
   cw4Member({ addr }) {
@@ -41,8 +46,10 @@ export const queryObject: {
   cw3Voter({ addr }) {
     return { voter: { address: addr } };
   },
+  cw3ListVoters: { list_voters: {} },
   cw3Config: { config: {} },
-  cw3Propsosals(options) {
+  reviewCw3Config: { config: {} },
+  cw3Proposals(options) {
     return { reverse_proposals: options };
   },
   cw3Proposal({ id }) {
@@ -76,17 +83,11 @@ export const queryObject: {
   accEndowList(options) {
     return { endowment_list: options };
   },
-  accCategorizedEndows(options) {
-    return { endowment_list: options };
-  },
 
   accEndowment({ id }) {
     return { endowment: { id } };
   },
   accBalance({ id }) {
     return { balance: { id } };
-  },
-  accProfile({ id }) {
-    return { get_profile: { id } };
   },
 };

@@ -3,12 +3,11 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { adminTags, customTags, junoTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { adminTags, customTags } from "services/juno/tags";
+import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useVote() {
   const {
@@ -17,8 +16,9 @@ export default function useVote() {
   } = useFormContext<VV>();
   const { wallet } = useGetWallet();
   const { cw3 } = useAdminResources();
-  const dispatch = useSetter();
-  function vote({ type, proposalId, vote, reason }: VV) {
+  const { sendTx, isSending } = useCosmosTxSender(true);
+
+  async function vote({ type, proposalId, vote, reason }: VV) {
     let voteMsg: MsgExecuteContractEncodeObject;
     if (type === "application") {
       const contract = new CW3Review(wallet);
@@ -33,19 +33,20 @@ export default function useVote() {
       voteMsg = contract.createVoteMsg(proposalId, vote);
     }
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [voteMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.custom, id: customTags.proposalDetails },
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-      })
-    );
+    await sendTx({
+      msgs: [voteMsg],
+      tagPayloads: [
+        invalidateJunoTags([
+          { type: "custom", id: customTags.proposalDetails },
+          { type: "admin", id: adminTags.proposals },
+        ]),
+      ],
+    });
   }
 
-  return { vote: handleSubmit(vote), isSubmitDisabled: !isValid };
+  return {
+    vote: handleSubmit(vote),
+    isSubmitDisabled: !isValid || isSending,
+    isSending,
+  };
 }

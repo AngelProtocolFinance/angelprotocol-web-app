@@ -1,22 +1,99 @@
-/**
- * put all aws/ap definitions here, if big category exist, separate in a file
- */
-export interface Endowment {
-  endowment_id: string;
-  owner: string;
+import { Keplr } from "@keplr-wallet/types";
+import { CapitalizedEndowmentType } from "../../contracts";
+import { NetworkType, UNSDG_NUMS } from "../../lists";
+
+type EndowmentBase = {
+  hq: { country?: string; city?: string };
+  active_in_countries: string[];
+  categories: { sdgs: UNSDG_NUMS[] };
+  id: number;
+  image: string;
+  kyc_donors_only: boolean;
+
   name: string;
+  tagline?: string;
+};
+
+export type EndowmentProfile = EndowmentBase & {
+  contact_email: string;
+  logo: string;
+  overview: string;
+  registration_number?: string;
+  social_media_urls: {
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+  };
+  street_address?: string;
+
   total_liq: number;
   total_lock: number;
   overall: number;
-  logo?: string;
+
+  url?: string;
+};
+
+export type EndowmentCard = EndowmentBase & {
+  endow_type: CapitalizedEndowmentType;
+};
+
+export type EndowmentProfileUpdate = {
+  //required
+  id: number;
+  owner: string;
+
+  /** optional, though set as required in this type
+  to force setting of default values - "", [], etc ..*/
+  active_in_countries: string[];
+  categories_general: string[];
+  categories_sdgs: UNSDG_NUMS[];
+  contact_email: string;
+  hq_city: string;
+  hq_country: string;
+  image: string;
+  kyc_donors_only: boolean;
+  logo: string;
+  name: string;
   overview: string;
-  url: string;
-  tier: number;
-  iconLight?: boolean;
+  registration_number: string;
+  social_media_url_facebook: string;
+  social_media_url_linkedin: string;
+  social_media_url_twitter: string;
+  street_address: string;
+  tagline: string;
+  tier: number /** 1 - 3  */;
+  url: string | null;
+};
+
+export type SortDirection = "asc" | "desc";
+export type EndowmentsSortKey = "name_internal" | "overall";
+
+export type EndowmentsQueryParams = {
+  query: string; //set to "matchAll" if no search query
+  sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_types: string | null; // comma separated CapitalizedEndowmentType values
+  sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
+  tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  kyc_only: string | null; // comma separated boolean values
+  hq_country?: string; //comma separated values
+  active_in_countries?: string; //comma separated values
+};
+
+export interface LeaderboardEntry {
+  // chain: NetworkType;
+  charity_logo: string;
+  charity_name: string;
+  endowment_id: number;
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+  //tier: EndowmentTier
+  //charity_owner:string
 }
 
 export interface Update {
-  endowments: Endowment[];
+  endowments: LeaderboardEntry[];
   last_update: string;
 }
 
@@ -32,4 +109,31 @@ export type Airdrop = {
   // claimable: true;
   // address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
   // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
+};
+
+export type EndowmentBookmark = {
+  endowId: number;
+  name: string;
+  logo?: string; // old bookmarks do not have this field saved yet
+};
+
+export type WalletProfile = {
+  wallet: string;
+  network: NetworkType;
+  admin: EndowmentBookmark[];
+  bookmarks: EndowmentBookmark[];
+};
+
+export interface DonationsMetricList {
+  donations_daily_count: number;
+  donations_daily_amount: number;
+  donations_total_amount: number;
+}
+
+type AminoSignRes = Awaited<ReturnType<Keplr["signAmino"]>>;
+type Signed = AminoSignRes["signed"];
+type Signature = AminoSignRes["signature"];
+export type ADR36Payload = Pick<Signed, "chain_id" | "fee" | "memo"> & {
+  msg: Signed["msgs"];
+  signatures: Signature[];
 };

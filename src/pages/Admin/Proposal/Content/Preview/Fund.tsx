@@ -17,7 +17,7 @@ export default function Fund(props: FundPreview) {
       <KeyValue _key="rotating fund?">
         <span
           className={`${
-            true ? "text-angel-blue" : "text-red-400"
+            true ? "text-blue" : "text-red-l1"
           } font-bold uppercase`}
         >
           {props.rotating_fund ? "yes" : "no"}
@@ -29,7 +29,7 @@ export default function Fund(props: FundPreview) {
         </KeyValue>
       )}
       <KeyValue _key="expiry">
-        <span className="font-mono text-sm">
+        <span className="text-sm">
           {getExpiry(props.expiry_time, props.expiry_height)}
         </span>
       </KeyValue>

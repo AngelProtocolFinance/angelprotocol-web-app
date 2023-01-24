@@ -1,80 +1,112 @@
-import { Donation } from "types/aws";
-import CsvExporter from "components/CsvExporter";
+import { Link } from "react-router-dom";
+import { TableProps } from "./types";
+import ExtLink from "components/ExtLink";
+import { HeaderButton } from "components/HeaderButton";
+import Icon from "components/Icon";
 import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
-import { HeaderButton, useSort } from "components/donations";
+import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
+import { appRoutes } from "constants/routes";
 
-export default function Table(props: { donations: Donation[] }) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    props.donations
-  );
+export default function Table({ donations, classes = "" }: TableProps) {
+  const { handleHeaderClick, sorted, sortDirection, sortKey } =
+    useSort(donations);
+
   const showKYCForm = useKYC();
 
   return (
-    <table className="w-full text-white/80 border-collapse self-start">
-      <TableSection type="thead" rowClass="border-b-2 border-zinc-50/30">
+    <table
+      className={`${classes} w-full text-sm rounded outline outline-gray-l2 dark:outline-bluegray`}
+    >
+      <TableSection
+        type="thead"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-gray-l2 dark:divide-bluegray border-gray-l2 dark:border-bluegray"
+      >
         <Cells
           type="th"
-          cellClass="text-left uppercase font-heading font-semibold text-sm text-white p-2 first:pl-0 last:pr-0"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left"
         >
           <HeaderButton
-            onClick={handleHeaderClick("amount")}
+            onClick={handleHeaderClick("charityName")}
             _activeSortKey={sortKey}
-            _sortKey={"amount"}
+            _sortKey="charityName"
             _sortDirection={sortDirection}
           >
-            Amount
+            Recipient
           </HeaderButton>
-          <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
-            _sortKey={"date"}
+            _sortKey="date"
             _sortDirection={sortDirection}
           >
             Date
           </HeaderButton>
-          <>Hash</>
-          <CsvExporter
-            classes="hover:text-angel-blue"
-            headers={csvHeaders}
-            data={props.donations}
-            filename="donations.csv"
-          />
+          <HeaderButton
+            onClick={handleHeaderClick("chainName")}
+            _activeSortKey={sortKey}
+            _sortKey="chainName"
+            _sortDirection={sortDirection}
+          >
+            Network
+          </HeaderButton>
+          <>Currency</>
+          <HeaderButton
+            onClick={handleHeaderClick("amount")}
+            _activeSortKey={sortKey}
+            _sortKey="amount"
+            _sortDirection={sortDirection}
+          >
+            Amount
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("usdValue")}
+            _activeSortKey={sortKey}
+            _sortKey="usdValue"
+            _sortDirection={sortDirection}
+          >
+            USD Value
+          </HeaderButton>
+          <>TX Hash</>
+          <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-gray-l2 dark:divide-bluegray border-b last:border-b-0 border-gray-l2 dark:border-bluegray"
       >
-        {sorted.map(({ hash, amount, symbol, chainId, date }) => (
-          <Cells
-            key={hash}
-            type="td"
-            cellClass="p-2 first:pl-0 last:pr-0 text-left"
-          >
-            <>{humanize(amount, 3)}</>
-            <span className="font-mono text-sm">{symbol}</span>
-            <>{new Date(date).toLocaleDateString()}</>
-            <a
-              href={getTxUrl(chainId, hash)}
-              target="_blank"
-              rel="noreferrer noopener"
+        {sorted.map((row) => (
+          <Cells key={row.hash} type="td" cellClass="p-3">
+            <Link
+              to={`${appRoutes.profile}/${row.id}`}
+              className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
+            >
+              <span className="truncate max-w-[12rem]">{row.charityName}</span>
+              <Icon type="ExternalLink" className="w-5 h-5" />
+            </Link>
+            <>{new Date(row.date).toLocaleDateString()}</>
+            <>{row.chainName}</>
+            <span className="font-body text-sm">{row.symbol}</span>
+            <>{humanize(row.amount, 3)}</>
+            <>{`$${humanize(row.usdValue, 2)}`}</>
+            <ExtLink
+              href={getTxUrl(row.chainId, row.hash)}
               className="text-center text-angel-blue cursor-pointer uppercase text-sm"
             >
-              {maskAddress(hash)}
-            </a>
+              {maskAddress(row.hash)}
+            </ExtLink>
             <button
-              className="font-heading text-sm text-white-grey hover:text-bright-blue disabled:text-gray-400 disabled:cursor-default uppercase"
+              className="w-full flex justify-center"
               onClick={() =>
                 showKYCForm({
                   type: "post-donation",
-                  txHash: hash,
+                  txHash: row.hash,
+                  classes: "grid gap-5",
                 })
               }
             >
-              get receipt
+              <Icon type="FatArrowDownload" className="text-2xl" />
             </button>
           </Cells>
         ))}
@@ -82,9 +114,3 @@ export default function Table(props: { donations: Donation[] }) {
     </table>
   );
 }
-const csvHeaders: { key: keyof Donation; label: string }[] = [
-  { key: "amount", label: "Amount" },
-  { key: "symbol", label: "Currency" },
-  { key: "date", label: "Date" },
-  { key: "hash", label: "Transaction Hash" },
-];

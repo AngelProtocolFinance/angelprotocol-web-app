@@ -1,16 +1,18 @@
+import { Token } from "types/aws";
 import {
   AdminVoteInfo,
   AllianceMember,
   CW3Config,
+  CW3ListVoters,
   CW4Member,
   CW20Balance,
   CW20Info,
-  CategorizedEndowments,
   EndowmentBalance,
   EndowmentDetails,
   EndowmentEntry,
   EndowmentQueryOptions,
   FundDetails,
+  GenericBalance,
   GovConfig,
   GovStaker,
   GovState,
@@ -18,10 +20,10 @@ import {
   InquiredMember,
   PageOptions,
   Polls,
-  ProfileResponse,
   Proposal,
   QueryRes as Q,
   RegistrarConfig,
+  ReviewCW3Config,
   Simulation,
   VaultListOptions,
   VaultListRes,
@@ -55,6 +57,12 @@ export interface ContractQueries {
 
   lpSimul: { args: null; res: Q<Simulation>; result: Simulation };
 
+  giftcardBalance: {
+    args: Addr;
+    res: Q<GenericBalance>;
+    result: Token[];
+  };
+
   govStaker: { args: Addr; res: Q<GovStaker>; result: GovStaker };
   govState: { args: null; res: Q<GovState>; result: GovState };
   govConfig: { args: null; res: Q<GovConfig>; result: GovConfig };
@@ -71,8 +79,14 @@ export interface ContractQueries {
   cw4Member: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
 
   cw3Voter: { args: Addr; res: Q<InquiredMember>; result: InquiredMember };
+  cw3ListVoters: { args: null; res: Q<CW3ListVoters>; result: CW3ListVoters };
   cw3Config: { args: null; res: Q<CW3Config>; result: CW3Config };
-  cw3Propsosals: {
+  reviewCw3Config: {
+    args: null;
+    res: Q<ReviewCW3Config>;
+    result: ReviewCW3Config;
+  };
+  cw3Proposals: {
     args: PageOptions;
     res: Q<{ proposals: Proposal[] }>;
     result: Proposal[];
@@ -95,11 +109,6 @@ export interface ContractQueries {
     res: Q<EndowmentListRes>;
     result: EndowmentEntry[];
   };
-  accCategorizedEndows: {
-    args: EndowmentQueryOptions;
-    res: Q<EndowmentListRes>;
-    result: CategorizedEndowments;
-  };
   accEndowment: {
     args: { id: number };
     res: Q<EndowmentDetails>;
@@ -109,11 +118,6 @@ export interface ContractQueries {
     args: { id: number };
     res: Q<EndowmentBalance>;
     result: EndowmentBalance;
-  };
-  accProfile: {
-    args: { id: number };
-    res: Q<ProfileResponse>;
-    result: ProfileResponse;
   };
 }
 

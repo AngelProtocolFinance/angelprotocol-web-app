@@ -6,8 +6,8 @@ import Views from "./Views";
 export default function Charity() {
   const { endowmentId } = useAdminResources();
   return (
-    <div className="padded-container grid grid-rows-[auto_1fr] pb-4 gap-2">
-      <Nav classes="hidden lg:flex" />
+    <div className="padded-container grid grid-rows-[auto_1fr] gap-2 pt-4 pb-8 font-work">
+      <Nav />
       <div className="block md:hidden">
         <AdminMobileNavPortal id={endowmentId} />
       </div>

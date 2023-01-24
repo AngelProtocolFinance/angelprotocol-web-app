@@ -11,25 +11,22 @@ export default function GroupSelector() {
   }
 
   return (
-    <div className="flex gap-2 items-center">
-      <label
-        htmlFor="group_selector"
-        className="uppercase text-white text-sm font-heading font-bold"
-      >
-        group
+    <div className="flex gap-2 items-center border p-2 border-gray-l2 dark:border-bluegray rounded dark:bg-blue-d4">
+      <label htmlFor="group_selector" className="uppercase text-sm font-bold">
+        group :
       </label>
       <select
         value={activeGroup}
         onChange={handleGroupChange}
         id="group_selector"
-        className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
+        className="bg-transparent text-sm rounded focus:outline-none uppercase "
       >
         {Object.entries(groupOptions).map(
           ([optionValue, optionDescription]) => (
             <option
               key={optionValue}
               value={optionValue}
-              className="text-sm text-angel-grey uppercase p-1"
+              className="text-sm text-gray-d2 uppercase p-1"
             >
               {optionDescription}
             </option>

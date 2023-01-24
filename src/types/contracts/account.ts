@@ -1,14 +1,11 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { UNSDG_NUMS } from "../lists";
 import {
   Asset,
+  CapitalizedEndowmentType,
   Categories,
   EndowmentStatus,
-  EndowmentStatusStrNum,
-  EndowmentStatusText,
   EndowmentTier,
   EndowmentType,
-  SocialMedialUrls,
 } from "./common";
 import { CW20 } from "./cw20";
 
@@ -59,8 +56,8 @@ type OneOffVaults = Vaults<string[]>;
 
 export interface EndowmentDetails {
   owner: string;
-  status: EndowmentStatusText;
-  endow_type: Capitalize<EndowmentType>;
+  status: EndowmentStatus;
+  endow_type: CapitalizedEndowmentType;
   withdraw_before_maturity: boolean;
   maturity_time?: number;
   maturity_height?: number;
@@ -96,66 +93,22 @@ export interface Source {
 }
 
 export type EndowmentQueryOptions = {
-  name?: string;
-  owner?: string;
-  status?: EndowmentStatusStrNum;
-  tier?: EndowmentTier;
-  endow_type?: EndowmentType;
   proposal_link?: number;
+  start_after?: number;
+  limit?: number;
 };
 
 export type EndowmentEntry = {
   id: number; //int
   owner: String;
   status: keyof EndowmentStatus;
-  endow_type: Capitalize<EndowmentType>;
-  name?: string;
-  logo?: string;
-  image?: string;
-  tier?: EndowmentTier;
-  categories: Categories;
-};
-
-export type CategorizedEndowments = {
-  [index in UNSDG_NUMS]: EndowmentEntry[];
-};
-
-export interface ProfileResponse {
-  name: string; // name of the Charity Endowment
-  overview: string;
-  categories: Categories;
-  tier: number;
+  endow_type: CapitalizedEndowmentType;
+  name: string;
   logo: string;
   image: string;
-  url?: string;
-  registration_number?: string;
-  country_of_origin?: string;
-  street_address?: string;
-  contact_email?: string;
-  social_media_urls: SocialMedialUrls;
-  number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
-  charity_navigator_rating?: string;
-}
-
-export interface ProfileUpdate {
-  //separate shape for update
-  id: number;
-  overview: string;
-  url: string;
-  registration_number?: string;
-  country_of_origin?: string;
-  street_address?: string;
-  contact_email?: string;
-  facebook?: string;
-  twitter?: string;
-  linkedin?: string;
-  number_of_employees?: number;
-  average_annual_budget?: string;
-  annual_revenue?: string;
-  charity_navigator_rating?: string;
-}
+  tier: EndowmentTier;
+  categories: Categories;
+};
 
 export interface EndowmentSettingsPayload {
   id: number;

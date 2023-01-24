@@ -1,31 +1,31 @@
 import { PropsWithChildren } from "react";
 
 const containerClass =
-  "w-full p-6 rounded-md grid content-start rounded-md bg-white-grey gap-4";
+  "w-full p-6 rounded-md grid content-start gap-6 rounded bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray";
 
-export function DivContainer(props: PropsWithChildren<{ classes?: string }>) {
-  return (
-    <div className={containerClass + " " + props.classes}>{props.children}</div>
-  );
+export function DivContainer({
+  children,
+  classes = "",
+}: PropsWithChildren<{ classes?: string }>) {
+  return <div className={containerClass + " " + classes}>{children}</div>;
 }
 
 export function FormContainer({
-  className,
+  className = "",
   ...props
 }: React.FormHTMLAttributes<HTMLFormElement>) {
   return <form {...props} className={containerClass + " " + className} />;
 }
 
-export function GroupContainer(
-  props: PropsWithChildren<{ className?: string }>
-) {
+export function GroupContainer({
+  children,
+  className = "",
+}: PropsWithChildren<{ className?: string }>) {
   return (
     <div
-      className={`p-3 rounded-md bg-light-grey shadow-inner-white-grey ${
-        props.className || ""
-      }`}
+      className={`p-3 pb-6 grid gap-6 rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray ${className}`}
     >
-      {props.children}
+      {children}
     </div>
   );
 }

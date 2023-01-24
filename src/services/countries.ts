@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Country, CountryOption } from "./types";
+import { Country, CountryInRegion, CountryOption, Regions } from "./types";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",
@@ -8,22 +8,55 @@ export const countriesApi = createApi({
   }),
   tagTypes: ["countries"],
   endpoints: (builder) => ({
-    countries: builder.query<CountryOption[], string>({
-      providesTags: (result, error, arg) =>
-        result ? [{ type: "countries", id: arg }] : ["countries"],
-      query: (arg) => ({
-        url: `name/${arg}`,
+    countries: builder.query<CountryOption[], unknown>({
+      query: () => ({
+        url: "all",
         params: { fields: "name,flags" },
       }),
 
       transformResponse(res: Country[]) {
-        return res.slice(0, 10 /**return first 5 only */).map((country) => ({
-          name: country.name.common,
-          flag: country.flags.svg || country.flags.png || "",
-        }));
+        return res
+          .map((country) => ({
+            name: country.name.common,
+            flag: country.flags.svg || country.flags.png || "",
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+      },
+    }),
+    regions: builder.query<Regions, unknown>({
+      query: () => ({
+        url: "all",
+        params: { fields: "name,region" },
+      }),
+      transformResponse(res: CountryInRegion[]) {
+        const result = res.reduce((result, curr) => {
+          result[curr.region] ||= [];
+          result[curr.region].push(curr.name.common);
+          return result;
+        }, {} as Regions);
+
+        //sort countries
+        for (const region in result) {
+          result[region].sort();
+        }
+
+        return result;
+      },
+    }),
+    countryFlag: builder.query<string, string>({
+      query: (
+        countryName /**should come from previously selected country*/
+      ) => ({
+        url: `name/${countryName}`,
+        params: { fields: "flags" },
+      }),
+      transformResponse(res: Country[]) {
+        const flags = res[0].flags;
+        return flags.svg || flags.png || "";
       },
     }),
   }),
 });
 
-export const { useCountriesQuery } = countriesApi;
+export const { useCountriesQuery, useLazyCountryFlagQuery, useRegionsQuery } =
+  countriesApi;

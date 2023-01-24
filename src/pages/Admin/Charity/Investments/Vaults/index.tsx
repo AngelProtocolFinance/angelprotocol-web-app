@@ -3,7 +3,7 @@ import { useState } from "react";
 import { VaultsProps } from "./types";
 import { useVaultListQuery } from "services/juno/registrar";
 import { useModalContext } from "contexts/ModalContext";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Vault from "./Vault";
 
 export default function Vaults({ type, preSelected, onSelect }: VaultsProps) {

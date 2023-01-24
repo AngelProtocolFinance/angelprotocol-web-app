@@ -1,16 +1,16 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";
 
-export default function Donations() {
+export default function Donations({ classes = "" }: { classes?: string }) {
   const { endowmentId } = useAdminResources();
-  const queryState = useDonationsQuery({ id: endowmentId });
+  const queryState = useDonationsQuery({ id: endowmentId.toString() });
 
   return (
-    <div className="grid grid-rows-[auto_1fr] mt-10 text-white/80">
+    <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
       <h1 className="text-2xl font-extrabold uppercase mb-2">
         Received donations
       </h1>

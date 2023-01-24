@@ -31,8 +31,8 @@ export default function Proposals() {
     activeGroup === "all";
 
   return (
-    <div className="p-3 grid content-start bg-white/10 shadow-inner rounded-md">
-      <Toolbar classes="mb-3" />
+    <div className="p-3 grid content-start rounded font-work">
+      <Toolbar classes="mb-6" />
 
       {(filteredProposals.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
@@ -41,7 +41,7 @@ export default function Proposals() {
           ))}
         </div>
       )) || (
-        <p className="font-mono text-white place-self-start">
+        <p className="place-self-start">
           {isFilteredProposalsLoading
             ? "loading proposals.."
             : "no proposals found"}
@@ -50,7 +50,7 @@ export default function Proposals() {
       {isLoadMoreShown && (
         <button
           disabled={isFilteredProposalsLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          className="mt-3 px-3 py-1 justify-self-center text-xs bg-blue disabled:bg-gray uppecase font-heading uppercase rounded-sm"
           onClick={loadMoreProposals}
         >
           {isFilteredProposalsLoading ? (

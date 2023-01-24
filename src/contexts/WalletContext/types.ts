@@ -1,24 +1,32 @@
+import { BaseChain } from "types/aws";
+import { chainIDs } from "constants/chains";
+import { WalletState } from "./WalletContext";
+
+export type WithWallet<T> = T & { wallet: WalletState };
+
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
+  | "evm-wc"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
   | "leap-wallet"
-  | "falcon-wallet"
-  | "bitkeep-wallet"
   | "station"
   | "walletconnect"
+  | "keplr-wc"
   | "keplr";
 
-type Base = {
+export type WithoutInstallers = Exclude<
+  ProviderId,
+  "station" | "walletconnect" | "leap-wallet"
+>;
+
+export type Connection = {
   logo: string;
   installUrl?: string;
   name: string;
-  network?: true;
+  connect(args?: any): Promise<void>;
 };
-type Single = { connect(args?: string): Promise<void>; networks?: never };
-type Multi = { connect?: never; networks: Connection[] };
-export type Connection = Base & (Single | Multi);
 
 export type ProviderInfo = {
   providerId: ProviderId;
@@ -27,5 +35,9 @@ export type ProviderInfo = {
   address: string;
 };
 
-type ProviderStatus = { providerInfo?: ProviderInfo; isLoading: boolean };
-export type ProviderStatuses = ProviderStatus[];
+export type ProviderStatus = {
+  providerInfo?: ProviderInfo;
+  isLoading: boolean;
+  supportedChains: BaseChain[];
+  switchChain: (chainId: chainIDs) => Promise<void>;
+};

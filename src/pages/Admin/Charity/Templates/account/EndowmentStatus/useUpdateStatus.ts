@@ -7,26 +7,23 @@ import {
   StatusChangePayload,
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import { cleanObject } from "helpers/admin/cleanObject";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { getTagPayloads } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const dispatch = useSetter();
-  const { cw3, proposalLink, role } = useAdminResources();
+  const { cw3, role, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
+  const sendTx = useCosmosTxSender();
   const { showModal } = useModalContext();
 
-  function updateStatus(data: EndowmentUpdateValues) {
+  async function updateStatus(data: EndowmentUpdateValues) {
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
@@ -96,20 +93,11 @@ export default function useUpdateStatus() {
       JSON.stringify(statusUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink: proposalLink,
-        successMessage: "Endowment status update proposal submitted",
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_endow_status"),
+    });
   }
 
   return { updateStatus: handleSubmit(updateStatus) };

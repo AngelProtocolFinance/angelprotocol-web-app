@@ -1,16 +1,28 @@
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
+import { requiredString } from "schemas/string";
 
 const shape: SchemaShape<FormValues> = {
-  email: Yup.string().email("email is invalid").required("email is required"),
-  fullName: Yup.string().required("full name is required."),
-  streetAddress: Yup.string().required("street address is required"),
-  city: Yup.string().required("city is required"),
-  zipCode: Yup.string().required("zipCode is required"),
-  country: Yup.string().required("country is required"),
-  consent_marketing: Yup.boolean().oneOf([true]),
-  consent_tax: Yup.boolean().oneOf([true]),
+  name: Yup.object().shape({
+    first: requiredString,
+    last: requiredString,
+  }),
+  address: Yup.object().shape({
+    street: requiredString,
+    //complement: optional
+  }),
+  city: requiredString,
+  postalCode: requiredString,
+  country: Yup.object().shape<SchemaShape<FormValues["country"]>>({
+    name: requiredString,
+  }),
+  //  usState: no need to validate, optional and preselected
+  email: Yup.string().email("invalid").required("required"),
+  hasAgreedToTerms: Yup.boolean().oneOf(
+    [true],
+    "donors must agree to donation terms"
+  ),
 };
 
 export const schema = Yup.object().shape(shape);

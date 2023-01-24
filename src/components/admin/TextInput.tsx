@@ -1,55 +1,43 @@
-import { ErrorMessage } from "@hookform/error-message";
-import React from "react";
-import { FieldValues, useFormContext } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
+import { TextInput as BaseInput, TextInputProps } from "components/form";
 
-export function TextInput<T extends FieldValues>(props: {
-  title: string;
-  placeholder?: string;
-  name: keyof T;
+export const errorStyle =
+  "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2";
+export const textPrimStyle =
+  "w-full text-sm rounded placeholder:text-gray-d1 dark:placeholder:text-gray border px-4 py-3.5 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1";
 
-  disabled?: boolean;
-  required?: true;
-  mono?: true;
-  wide?: true;
-  plain?: true;
-  number?: true;
-}) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-  const id = "__" + String(props.name);
+export function TextPrim<T extends FieldValues>({
+  classes,
+  ...props
+}: TextInputProps<T>) {
+  const { container = "", label = "", input = "", error = "" } = classes || {};
   return (
-    <div className="flex flex-col mb-6">
-      <label
-        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey"
-        htmlFor={id}
-      >
-        {props.title}
-        {props.required && <span className="text-red-400 ml-1">*</span>}
-      </label>
+    <BaseInput
+      {...props}
+      classes={{
+        container: `relative ${container}`,
+        label: `mb-2 ${label}`,
+        input: `${textPrimStyle} ${input}`,
+        error: `${errorStyle} ${error}`,
+      }}
+    />
+  );
+}
 
-      {React.createElement(props.wide ? "textarea" : "input", {
-        ...register(props.name as string, { valueAsNumber: props.number }),
-        id: id,
-        className: `${
-          props.mono ? "font-mono text-sm" : ""
-        } text-black disabled:text-grey-accent focus:outline-none ${
-          props.plain
-            ? "bg-light-grey border-b-2 border-angel-grey/25 rounded-none pb-1"
-            : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
-        }`,
-        disabled: props.disabled,
-        placeholder: props.placeholder,
-        autoComplete: "off",
-      })}
-
-      <ErrorMessage
-        errors={errors}
-        name={props.name as string}
-        as="span"
-        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
-      />
-    </div>
+export function TextSec<T extends FieldValues>({
+  classes,
+  ...props
+}: TextInputProps<T>) {
+  const { container = "", label = "", input = "", error = "" } = classes || {};
+  return (
+    <BaseInput
+      {...props}
+      classes={{
+        container: `relative ${container}`,
+        label: `mb-2 ${label}`,
+        input: `w-full text-sm placeholder:text-gray-d1 dark:placeholder:text-gray border-b pb-2 border-gray-l2 focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 dark:border-bluegray bg-transparent disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 ${input}`,
+        error: `${errorStyle} ${error}`,
+      }}
+    />
   );
 }

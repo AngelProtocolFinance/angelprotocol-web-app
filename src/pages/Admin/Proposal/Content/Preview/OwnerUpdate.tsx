@@ -6,10 +6,10 @@ export default function OwnerUpdate(props: OwnerUpdateMeta["data"]) {
   return (
     <PreviewContainer>
       <KeyValue _key="current owner">
-        <span className="font-mono">{props.owner}</span>
+        <span className="text-sm">{props.owner}</span>
       </KeyValue>
       <KeyValue _key="new owner">
-        <span className="font-mono">{props.newOwner}</span>
+        <span className="text-sm">{props.newOwner}</span>
       </KeyValue>
     </PreviewContainer>
   );

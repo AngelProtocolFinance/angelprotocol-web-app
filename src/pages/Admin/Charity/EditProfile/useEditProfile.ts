@@ -1,149 +1,75 @@
-import { useFormContext } from "react-hook-form";
-import {
-  EndowmentProfileUpdateMeta,
-  ProfileWithSettings,
-} from "pages/Admin/types";
-import { ProfileFormValues } from "pages/Admin/types";
-import { ObjectEntries } from "types/utils";
+import { SubmitHandler, useFormContext } from "react-hook-form";
+import { FormValues as FV, FlatFormValues } from "./types";
+import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import { uploadToIpfs } from "helpers";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { useGetWallet } from "contexts/WalletContext";
+import { ImgLink } from "components/ImgEditor";
+import { TxPrompt } from "components/Prompt";
+import { getPayloadDiff } from "helpers/admin";
+import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { appRoutes } from "constants/routes";
+import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";
 
-const PLACEHOLDER_OVERVIEW = "[text]";
-const PLACEHOLDER_IMAGE = "[img]";
-
 export default function useEditProfile() {
-  const { endowmentId, cw3, proposalLink } = useAdminResources();
+  const { endowmentId, endowment } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
-  } = useFormContext<ProfileFormValues>();
-  const { wallet } = useGetWallet();
-  const dispatch = useSetter();
+  } = useFormContext<FV>();
+
   const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const { wallet } = useGetWallet();
+  const [submit] = useEditProfileMutation();
 
-  const editProfile = async ({
-    title,
-    description,
+  const editProfile: SubmitHandler<FV> = async ({
     initial,
-    ...data
-  }: ProfileFormValues) => {
-    try {
-      //extract [code]
-      if (data.country_of_origin) {
-        data.country_of_origin = data.country_of_origin.split(" ")[0];
-      }
-      const diff = getPayloadDiff(initial, data);
+    image,
+    logo,
+    hq_country,
+    ...newData
+  }) => {
+    const [bannerUrl, logoUrl] = await uploadImgs([image, logo]);
 
-      //if overview has changed, and is set to something
-      if ("overview" in diff && data.overview) {
-        //truncate to reduce proposalMsg size
-        diff.overview = PLACEHOLDER_OVERVIEW;
-        if (initial.image) {
-          initial.overview = PLACEHOLDER_OVERVIEW;
-        }
-      }
+    const changes: FlatFormValues = {
+      image: bannerUrl,
+      logo: logoUrl,
+      hq_country: hq_country.name,
+      ...newData,
+    };
+    const diff = getPayloadDiff(initial, changes);
 
-      //if image has changed, and is set to something
-      if ("image" in diff && data.image) {
-        //truncate to reduce proposalMsg size
-        diff.image = PLACEHOLDER_IMAGE;
-        if (initial.image) {
-          initial.image = PLACEHOLDER_IMAGE;
-        }
-      }
-
-      const diffEntries = Object.entries(
-        diff
-      ) as ObjectEntries<ProfileWithSettings>;
-      if (diffEntries.length <= 0) {
-        throw new Error("no changes detected");
-      }
-
-      //run form change check first
-      //upload if image is changed and is set to something
-      if ("image" in diff && data.image) {
-        //convert dataURL to file
-        showModal(Popup, { message: "Uploading image.." });
-        const imageRes = await fetch(data.image);
-        const imageBlob = await imageRes.blob();
-        const imageFile = new File([imageBlob], "banner"); //use endow address as unique imageName
-
-        //TODO: investigate optimizeImage file.name = undefined
-        // const file = await optimizeImage(imageFile);
-        const url = await uploadToIpfs(imageFile);
-
-        if (url) {
-          data.image = url;
-        } else {
-          throw new Error("Error uploading image");
-        }
-      }
-
-      const accountContract = new Account(wallet);
-      const { sdgNum, name, logo, image, ...profilePayload } = data;
-      const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
-        //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-        cleanObject({
-          ...profilePayload,
-        })
-      );
-
-      const settingsUpdateMsg =
-        accountContract.createEmbeddedUpdateSetttingsMsg(
-          cleanObject({
-            id: profilePayload.id,
-            name,
-            image,
-            logo,
-            categories: { sdgs: [sdgNum], general: [] },
-          })
-        );
-
-      const profileUpdateMeta: EndowmentProfileUpdateMeta = {
-        type: "acc_profile",
-        data: genDiffMeta(diffEntries, initial),
-      };
-
-      const adminContract = new CW3(wallet, cw3);
-      const proposalMsg = adminContract.createProposalMsg(
-        title,
-        description,
-        [profileUpdateMsg, settingsUpdateMsg],
-        JSON.stringify(profileUpdateMeta)
-      );
-
-      dispatch(
-        sendCosmosTx({
-          wallet,
-          msgs: [proposalMsg],
-          tagPayloads: [
-            invalidateJunoTags([
-              { type: junoTags.admin, id: adminTags.proposals },
-            ]),
-          ],
-          successLink: proposalLink,
-          successMessage: "Profile update proposal submitted",
-        })
-      );
-      showModal(TransactionPrompt, {});
-    } catch (err) {
-      handleError(err);
+    if (Object.entries(diff).length <= 0) {
+      return showModal(TxPrompt, { error: "No changes detected" });
     }
+
+    /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
+     like ""; unlike contracts where if fields is not present, val is set to null.
+    */
+    const { sdg, ...restDiff } = diff;
+    const updates: Partial<EndowmentProfileUpdate> = {
+      ...restDiff,
+      ...(sdg != null ? { categories_sdgs: [sdg] } : {}),
+      id: endowmentId,
+      owner: endowment.owner,
+    };
+    const result = await submit(await createADR36Payload(updates, wallet!)); //wallet is asserted in admin guard
+    if ("error" in result) {
+      return showModal(TxPrompt, { error: "Failed to update profile" });
+    }
+
+    return showModal(TxPrompt, {
+      success: {
+        message: "Profile successfully updated",
+        link: {
+          description: "View changes",
+          url: `${appRoutes.profile}/${endowmentId}`,
+        },
+      },
+    });
   };
 
   return {
@@ -151,4 +77,12 @@ export default function useEditProfile() {
     isSubmitDisabled: isSubmitting || !isDirty,
     id: endowmentId,
   };
+}
+
+async function uploadImgs(imgs: ImgLink[]): Promise<string[]> {
+  const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
+  const cid = await uploadToIpfs(files);
+  return imgs.map((img) =>
+    img.file && cid ? genPublicUrl(cid, img.file.name) : img.publicUrl
+  );
 }

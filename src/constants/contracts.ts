@@ -9,6 +9,7 @@ type SC =
   | "cw3ReviewTeam"
   | "cw4GrpReviewTeam"
   | "halo_token"
+  | "gift_cards"
   | "gov"
   | "airdrop"
   | "loop_haloust_pair";
@@ -22,26 +23,28 @@ export const contracts: Contracts = IS_TEST
       //TESTNET CONTRACTS
       //core
       index_fund:
-        "juno1xqv6xn0jzccdfe8rd7ma9jepqmfmwq95ul4vm3x3dwewwyxlvx8sk6hsgw",
+        "juno1cp4ddyn4wg0lh3gugacng5wk8kjsahxpgpd5m5jhqjfssfqasxzsjqtr8y",
       registrar:
-        "juno1kcz4zrkv3pn6q8gguzdvaqwlu2wqfflekmwr66ackdqrc3d44mxq6u0u23",
+        "juno1nsttv2lpv3kl4zteze99fs72mevmxcfutqvfza90e9243wy0a40qk87j0l",
       accounts:
-        "juno1wfp7cxyrql4yn2usjl9rhchnhwtd0z84z9zrdz8ltgsxyv6gypmqgkpc6a",
+        "juno1xc6sahdstwyc3a9rrupvjj87xps8d396seutnh40578mdpygpenqjg04rd",
 
       // Admin
       cw3ApTeam:
-        "juno1h7xxnfqtxhduj3gk86pjxk5qchmdtmg44r822u0s2d427ndm699qsg5tpu",
+        "juno17shnd06l8guaqw3ekq56x5u3z0n65qu2qfms6nvzh3mwxr2cr53smmj4yq",
       cw4GrpApTeam:
-        "juno1npdhl2fqcn73f7ps6e3az3zlrnkrqmjm95zm8g7h4vfef74snkwqc45jxa",
+        "juno1l6dstn6kyys6cg0fqn2k9dyxzetcxffkuwspe6t8qqqrjy9vs8usxu50ed",
       cw3ReviewTeam:
-        "juno14l0pph9fcqn2muvwxhh6dwh59umvc4c0egv0nv6z78wl0aj53rrs4hftwr",
+        "juno16p5mnk2r73yze7emyqw8w6p6cnf7qjlmqwc3lx6c36t9lj5fgmjst3cjnx",
       cw4GrpReviewTeam:
-        "juno1gc8d69t05azccdrwx5jkvln2tvhafn5l6p828jjm30flndk6h56q53e3r2",
+        "juno168v32h347du4wc8y5gf6sljkhvktqvn85r2vywekzfwaq4e3sdlqscd5sd",
 
-      //terraswap
-      halo_token: "",
+      // accessory
+      gift_cards:
+        "juno1q5q8fgw83fusujz7x339yq352tlxdk2f0q2a6qz72dl0r9lk5y7qwf6w3u",
 
       //halo
+      halo_token: "",
       gov: "",
       airdrop: "",
 
@@ -68,9 +71,12 @@ export const contracts: Contracts = IS_TEST
       cw4GrpReviewTeam:
         "juno1a22f8dxevu3er7vs4lkrca9n8rgf8uvgjd8s2p5eq787vmczq59syuplqx",
 
-      //terraswap
-      halo_token: "",
+      // accessory
+      gift_cards:
+        "juno17pghl3qreyqnjlq6hun5ymshl0dkfeelcy738dkgk602lzmgcvaq2e4xav",
 
+      //halo
+      halo_token: "",
       gov: "",
       airdrop: "",
 

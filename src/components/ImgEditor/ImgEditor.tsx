@@ -1,110 +1,74 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
-import { Controller, FieldValues } from "react-hook-form";
-import { Props } from "./types";
+import { useDropzone } from "react-dropzone";
+import { FieldValues, useFormContext } from "react-hook-form";
+import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
-import Loader from "components/Loader";
 import useImgEditor from "./useImgEditor";
 
-export default function ImgEditor<T extends FieldValues>(props: Props<T>) {
-  const {
-    control,
-    errors,
-    inputRef,
-    imageUrl,
-    isInitial,
-    isLoading,
-    isSubmitting,
-    upload,
-    undo,
-    openCropModal,
-    onInputChange,
-  } = useImgEditor(props);
+type Key = keyof ImgLink;
+const fileKey: Key = "file";
 
-  const isDisabled = isSubmitting || isLoading;
+export default function ImgEditor<T extends FieldValues, K extends keyof T>(
+  props: Props<T, K>
+) {
+  const { name, classes } = props;
+  const filePath: any = `${String(name)}.${fileKey}`;
+
+  const {
+    formState: { errors, isSubmitting },
+  } = useFormContext<T>();
+
+  const { onDrop, handleOpenCropper, isInitial, handleReset, preview } =
+    useImgEditor(props);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    disabled: isSubmitting,
+    multiple: false,
+    onDrop,
+  });
+
+  const overlay = `rgba(254,254,254,${isSubmitting ? 0.6 : 0})`;
 
   return (
-    <div className="flex flex-col">
-      <div
-        className={`grid place-items-center group p-1 rounded-md mb-4 bg-light-grey shadow-inner ${
-          errors[props.name] ? "shadow-red-500" : "shadow-white-grey"
-        } ${props.className ?? ""}`}
-        style={{
-          background: `no-repeat center/cover url(${imageUrl}) ${
-            isDisabled ? "rgba(0, 0, 0, 0.5)" : ""
-          }`,
-          backgroundBlendMode: "darken",
-        }}
-      >
-        {isLoading ? (
-          <LoadingOverlay />
-        ) : (
-          <Controller
-            name={props.name}
-            control={control}
-            render={({ field: { onChange, ref } }) =>
-              !isSubmitting ? (
-                <div className="hidden group-hover:flex">
-                  <IconButton onClick={upload} disabled={isDisabled}>
-                    <Icon type="Upload" />
-                  </IconButton>
-                  {!isInitial && (
-                    <IconButton onClick={undo(onChange)} disabled={isDisabled}>
-                      <Icon type="Undo" />
-                    </IconButton>
-                  )}
-                  {!!imageUrl && (
-                    <IconButton
-                      onClick={openCropModal(onChange)}
-                      disabled={isDisabled}
-                    >
-                      <Icon type="Crop" />
-                    </IconButton>
-                  )}
-                  <input
-                    ref={(e) => {
-                      ref(e);
-                      inputRef.current = e;
-                    }}
-                    disabled={isDisabled}
-                    id={props.name}
-                    type="file"
-                    onChange={onInputChange(onChange)}
-                    accept={props.accept.join(", ")}
-                    className="w-0 h-0 appearance-none"
-                  />
-                </div>
-              ) : (
-                <></>
-              )
-            }
-          />
+    <div
+      className={`relative grid place-items-center group ${classes}`}
+      style={{
+        background: `linear-gradient(${overlay},${overlay}), url(${preview}) center/cover no-repeat `,
+      }}
+    >
+      <div className="absolute hidden group-hover:flex">
+        <div {...getRootProps({ className: buttonStyle })}>
+          <input {...getInputProps()} />
+          <Icon type="Upload" />
+        </div>
+        {!isInitial && (
+          <IconButton disabled={isSubmitting} onClick={handleReset}>
+            <Icon type="Undo" />
+          </IconButton>
         )}
+        {
+          //allow crop only on new uploaded image
+          !isInitial && (
+            <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
+              <Icon type="Crop" />
+            </IconButton>
+          )
+        }
       </div>
+
       <ErrorMessage
         errors={errors}
         as="p"
-        name={props.name}
-        className="w-full text-xs text-failed-red text-center"
+        name={filePath as any}
+        className="w-full text-xs text-red-l1 text-right absolute -bottom-5 right-0"
       />
     </div>
   );
 }
 
+const buttonStyle =
+  "cursor-pointer text-white text-lg bg-blue hover:bg-blue-l1 disabled:bg-gray-l1 p-2 m-1 rounded-md shadow-lg";
 function IconButton(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      type="button"
-      className="cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg"
-    />
-  );
-}
-
-function LoadingOverlay() {
-  return (
-    <div className="absolute z-10">
-      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-angel-grey" />
-    </div>
-  );
+  return <button {...props} type="button" className={buttonStyle} />;
 }

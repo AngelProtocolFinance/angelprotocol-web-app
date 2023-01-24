@@ -9,50 +9,87 @@ import {
 } from "react";
 import { FC } from "react";
 
-type Handler = () => void;
-type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
-type Handlers = {
+type ModalOptions = { isDismissible: boolean; onClose(): void };
+type ModalState = {
+  Modal: ReactNode;
+} & ModalOptions;
+
+type Opener = <T extends {}>(
+  Modal: FC<T>,
+  props: T,
+  options?: Partial<ModalOptions>
+) => void;
+
+type ContextState = {
+  //state
+  isDismissible: boolean;
+  isModalOpen: boolean;
+
+  //setter
   showModal: Opener;
-  closeModal: Handler;
+  closeModal(): void;
+  setModalOption<T extends keyof ModalOptions>(
+    option: T,
+    val: ModalOptions[T]
+  ): void;
 };
 
 export default function ModalContext(
-  props: PropsWithChildren<{ backdropClasses: string; id?: string }>
+  props: PropsWithChildren<{ id?: string }>
 ) {
-  const [Modal, setModal] = useState<ReactNode>();
+  const [state, setState] = useState<ModalState>();
 
-  const showModal: Opener = useCallback((Modal, props) => {
-    setModal(<Modal {...props} />);
-    // track last active element
+  const showModal: Opener = useCallback((Modal, props, options) => {
+    const { isDismissible = true, onClose = () => {} } = options || {};
+    setState({
+      Modal: <Modal {...props} />,
+      isDismissible,
+      onClose,
+    });
   }, []);
 
   const closeModal = useCallback(() => {
-    setModal(undefined);
-  }, []);
+    if (!state) throw new Error("there's no modal to close");
+    if (!state.isDismissible) return;
+    state.onClose();
+    setState(undefined);
+  }, [state]);
+
+  const setModalOption = useCallback(
+    <T extends keyof ModalOptions>(option: T, val: ModalOptions[T]) => {
+      setState((prev) => {
+        if (!prev) throw new Error("there's no modal to update");
+        return { ...prev, [option]: val };
+      });
+    },
+    []
+  );
 
   return (
-    <setContext.Provider
+    <Context.Provider
       value={{
+        isDismissible: !!state?.isDismissible,
+        isModalOpen: !!state,
+
+        setModalOption,
         showModal,
         closeModal,
       }}
     >
-      <Dialog
-        open={Modal !== undefined}
-        onClose={() => setModal(undefined)}
-        className="relative z-50"
-      >
-        <div className={props.backdropClasses} aria-hidden="true" />
-        {Modal /** should always be wrapped with Dialog.Panel */}
+      <Dialog open={!!state} onClose={closeModal} className="relative z-50">
+        <div className="z-10 fixed inset-0 bg-black/50" aria-hidden="true" />
+        {state?.Modal /** should always be wrapped with Dialog.Panel */}
       </Dialog>
 
       {props.children}
-    </setContext.Provider>
+    </Context.Provider>
   );
 }
-const setContext = createContext<Handlers>({} as Handlers);
+
+const Context = createContext<ContextState>({} as ContextState);
+
 export const useModalContext = () => {
-  const val = useContext(setContext);
+  const val = useContext(Context);
   if (Object.entries(val).length <= 0) {
     throw new Error("This hook can only be used inside Modalcontext");
   }

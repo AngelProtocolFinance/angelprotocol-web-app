@@ -1,24 +1,18 @@
 import { FormValues, Redeem } from "./types";
 import { AccountType, EmbeddedWasmMsg, RedeemPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 
 export default function useRedeem() {
-  const { cw3, endowmentId, proposalLink } = useAdminResources();
+  const { cw3, endowmentId, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const dispatch = useSetter();
-  const { showModal } = useModalContext();
+  const sendTx = useCosmosTxSender();
 
-  function redeem(data: FormValues) {
+  async function redeem(data: FormValues) {
     const account = new Account(wallet);
 
     let msgs: EmbeddedWasmMsg[] = [];
@@ -55,21 +49,7 @@ export default function useRedeem() {
       msgs
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposal],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        //Juno withdrawal
-        successLink: proposalLink,
-        successMessage: "Redeem proposal created!",
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({ msgs: [proposal], ...propMeta });
   }
 
   return {

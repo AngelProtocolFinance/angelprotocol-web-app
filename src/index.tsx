@@ -4,14 +4,18 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import Loader from "components/Loader";
 import { store } from "store/store";
+import { initTheme } from "helpers";
 import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
+//set theme immediately, so even suspense loaders and can use it
+initTheme();
+
 const App = lazy(() => import("./App/App"));
 
 const LoaderComponent = () => (
-  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
 const container = document.getElementById("root");

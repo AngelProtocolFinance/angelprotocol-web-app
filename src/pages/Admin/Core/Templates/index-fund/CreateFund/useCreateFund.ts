@@ -1,26 +1,21 @@
-import Decimal from "decimal.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
 import { FundDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetWallet } from "contexts/WalletContext";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
-import { cleanObject } from "helpers/admin/cleanObject";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { condense, roundDown } from "helpers";
+import { cleanObject } from "helpers/cleanObject";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
-  const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);
 
@@ -60,7 +55,7 @@ export default function useCreateFund() {
       split_to_liquid:
         splitToLiquid === INIT_SPLIT
           ? undefined
-          : new Decimal(splitToLiquid).div(100).toFixed(2, Decimal.ROUND_DOWN),
+          : roundDown(condense(splitToLiquid)),
       expiry_time:
         expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
       expiry_height: expiryHeight === "" ? undefined : +expiryHeight,
@@ -87,20 +82,10 @@ export default function useCreateFund() {
       JSON.stringify(createFundMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink: proposalLink,
-        successMessage: "Create fund proposal submitted",
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
 
     setSubmitting(false);
   }

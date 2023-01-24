@@ -49,6 +49,7 @@ export type EndowmentStatus = {
   Closed: 3;
 };
 export type EndowmentType = "charity" | "normal";
+export type CapitalizedEndowmentType = Capitalize<EndowmentType>;
 export type EndowmentStatusText = keyof EndowmentStatus;
 export type EndowmentStatusNum = EndowmentStatus[EndowmentStatusText];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
@@ -58,12 +59,6 @@ export type EndowmentTierNum = 1 | 2 | 3;
 export type Categories = {
   sdgs: UNSDG_NUMS[]; // u8 maps one of the 17 UN SDG
   general: number[]; //??
-};
-
-export type SocialMedialUrls = {
-  facebook?: string;
-  linkedin?: string;
-  twitter?: string;
 };
 
 export type Asset = {

@@ -22,6 +22,7 @@ export const templateRoutes: {
   //cw3
   cw3_config: "cw3_config",
   cw3_transfer: "cw3_transfer",
+  review_cw3_config: "review_cw3_config",
 
   //cw4
   cw4_members: "cw4_members",
@@ -38,6 +39,6 @@ export const templateRoutes: {
 };
 
 export const proposalShape: SchemaShape<ProposalBase> = {
-  title: stringByteSchema("title", 4, 64),
-  description: stringByteSchema("description", 4, 1024),
+  title: stringByteSchema(4, 64),
+  description: stringByteSchema(4, 1024),
 };

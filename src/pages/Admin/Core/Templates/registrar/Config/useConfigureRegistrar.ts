@@ -5,29 +5,26 @@ import {
 } from "pages/Admin/types";
 import { RegistrarConfigPayload } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
-import { useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
 import CW3 from "contracts/CW3";
 import Registrar from "contracts/Registrar";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { cw3, proposalLink } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = useFormContext<RegistrarConfigValues>();
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function configureRegistrar({
     title,
@@ -69,20 +66,10 @@ export default function useConfigureRegistrar() {
       JSON.stringify(configUpdateMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink: proposalLink,
-        successMessage: "Config update proposal submitted",
-      })
-    );
-    showModal(TransactionPrompt, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
   }
 
   return {

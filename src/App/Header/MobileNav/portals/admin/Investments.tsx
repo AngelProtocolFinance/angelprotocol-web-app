@@ -6,10 +6,10 @@ import { styler } from "../../helpers";
 
 export const ADMIN_INVESTMENTS_PORTAL_ID = "admin_investments_portal";
 export function Investments({ id }: { id: number }) {
-  const { isMobileNavOpen } = useGetter((state) => state.component.mobileNav);
+  const { isRendered } = useGetter((state) => state.component.mobileNav);
   const baseLink = `${appRoutes.admin}/${id}/${adminRoutes.investments}`;
   return (
-    (isMobileNavOpen &&
+    (isRendered &&
       createPortal(
         <>
           <h4 className="uppercase text-sm font-bold text-angel-grey mb-2">

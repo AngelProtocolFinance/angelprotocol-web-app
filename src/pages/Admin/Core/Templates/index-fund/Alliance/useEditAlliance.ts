@@ -2,26 +2,23 @@ import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { invalidateJunoTags } from "services/juno";
-import { adminTags, junoTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
-import TransactionPromp from "components/Transactor/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
-import { sendCosmosTx } from "slices/transaction/transactors";
+import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
+import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { proposalLink, cw3 } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
   const { showModal } = useModalContext();
-  const dispatch = useSetter();
+  const sendTx = useCosmosTxSender();
 
   async function editAlliance() {
     const isValid = await trigger(["description", "title"], {
@@ -86,20 +83,10 @@ export default function useEditAlliance() {
       JSON.stringify(editAllianceMeta)
     );
 
-    dispatch(
-      sendCosmosTx({
-        wallet,
-        msgs: [proposalMsg],
-        tagPayloads: [
-          invalidateJunoTags([
-            { type: junoTags.admin, id: adminTags.proposals },
-          ]),
-        ],
-        successLink: proposalLink,
-        successMessage: "Alliance member update proposal submitted",
-      })
-    );
-    showModal(TransactionPromp, {});
+    await sendTx({
+      msgs: [proposalMsg],
+      ...propMeta,
+    });
     reset();
   }
 

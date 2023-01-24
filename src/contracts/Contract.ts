@@ -1,7 +1,4 @@
-import {
-  MsgExecuteContractEncodeObject,
-  SigningCosmWasmClient,
-} from "@cosmjs/cosmwasm-stargate";
+import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
 import {
@@ -13,12 +10,12 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { TxOptions } from "slices/transaction/types";
 import { Chain } from "types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { Dwindow } from "types/ethereum";
-import { WalletState } from "contexts/WalletContext/WalletContext";
-import { logger, scaleToStr, toBase64 } from "helpers";
+import { TxOptions } from "types/slices";
+import { WalletState } from "contexts/WalletContext";
+import { logger, toBase64 } from "helpers";
+import { getKeplrClient } from "helpers/keplr";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -51,7 +48,11 @@ export default class Contract {
   async query<T>(to: string, message: Record<string, unknown>) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(chain_id, rpc_url);
+    const client = await getKeplrClient(
+      this.wallet?.providerId!,
+      chain_id,
+      rpc_url
+    );
     const jsonObject = await client.queryContractSmart(to, message);
     return JSON.parse(jsonObject) as T;
   }
@@ -60,7 +61,11 @@ export default class Contract {
     try {
       this.verifyWallet();
       const { chain_id, rpc_url } = this.wallet!.chain;
-      const client = await getKeplrClient(chain_id, rpc_url);
+      const client = await getKeplrClient(
+        this.wallet?.providerId!,
+        chain_id,
+        rpc_url
+      );
       const gasEstimation = await client.simulate(
         this.walletAddress,
         msgs,
@@ -79,7 +84,11 @@ export default class Contract {
   async signAndBroadcast({ msgs, fee }: TxOptions) {
     this.verifyWallet();
     const { chain_id, rpc_url } = this.wallet!.chain;
-    const client = await getKeplrClient(chain_id, rpc_url);
+    const client = await getKeplrClient(
+      this.wallet?.providerId!,
+      chain_id,
+      rpc_url
+    );
     const result = await client.signAndBroadcast(this.walletAddress, msgs, fee);
     return validateTransactionSuccess(result, this.wallet!.chain);
   }
@@ -101,7 +110,7 @@ export default class Contract {
   }
 
   createTransferNativeMsg(
-    amount: number,
+    scaledAmount: string,
     recipient: string,
     denom = this.wallet!.chain.native_currency.token_id
   ): MsgSendEncodeObject {
@@ -113,7 +122,7 @@ export default class Contract {
         amount: [
           {
             denom,
-            amount: scaleToStr(amount),
+            amount: scaledAmount,
           },
         ],
       },
@@ -171,13 +180,4 @@ function validateTransactionSuccess(
   }
 
   return result;
-}
-
-async function getKeplrClient(
-  chain_id: string,
-  rpc_url: string
-): Promise<SigningCosmWasmClient> {
-  const signer = (window as Dwindow).keplr!.getOfflineSigner(chain_id);
-  const client = await SigningCosmWasmClient.connectWithSigner(rpc_url, signer);
-  return client;
 }

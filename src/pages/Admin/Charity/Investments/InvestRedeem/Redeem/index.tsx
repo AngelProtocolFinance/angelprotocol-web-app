@@ -8,7 +8,7 @@ import {
 } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import { condenseToNum } from "helpers";
 import Form from "./Form";
 import { schema } from "./schema";

@@ -1,8 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { Label } from "components/admin";
+import { useGetWallet } from "contexts/WalletContext";
+import { textPrimStyle } from "components/admin";
+import { Label } from "components/form";
 import { denoms, symbols } from "constants/tokens";
 import Balance from "./Balance";
 import Denom from "./Denom";
@@ -23,9 +24,11 @@ export default function Amount() {
       : symbols[denoms.halo];
 
   return (
-    <div className="grid mb-4">
+    <div className="grid">
       <div className="flex items-baseline justify-between">
-        <Label _required>Transfer amount</Label>
+        <Label required className="mb-2">
+          Transfer amount
+        </Label>
         <Balance />
       </div>
       <input
@@ -34,10 +37,10 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={denomText}
-        className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
+        className={textPrimStyle}
       />
       <div className="flex items-start justify-between mt-1">
-        <div className="flex mb-2">
+        <div className="flex">
           <Denom denom={native_currency.token_id} />
           <Denom denom={denoms.halo} />
         </div>
@@ -45,7 +48,7 @@ export default function Amount() {
           errors={errors}
           name="amount"
           as="span"
-          className="font-mono font-semibold text-red-400 text-xs mb-1 mt-0.5 text-right"
+          className="text-red dark:text-red-l2 text-xs mb-1 mt-0.5 text-right"
         />
       </div>
     </div>

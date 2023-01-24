@@ -16,19 +16,19 @@ export default function Network() {
 
   return (
     <div>
-      <p className="uppercase font-bold text-angel-grey font-heading mb-2 text-sm">
+      <p className="uppercase font-bold font-heading mb-2 text-sm">
         Select network
       </p>
       <div className="flex items-center gap-4">
-        <Option reg={register("network")} label="juno" value={chainIds.juno} />
+        <Option reg={register("network")} label="Juno" value={chainIds.juno} />
         <Option
           reg={register("network")}
-          label="ethereum"
+          label="Ethereum"
           value={chainIds.ethereum}
         />
         <Option
           reg={register("network")}
-          label="binance"
+          label="Binance"
           value={chainIds.binance}
         />
       </div>
@@ -44,10 +44,7 @@ function Option(props: {
   return (
     <div className="flex items-center gap-1">
       <input {...props.reg} type="radio" value={props.value} id={props.value} />
-      <label
-        className="font-heading uppercase text-sm text-angel-grey"
-        htmlFor={props.value}
-      >
+      <label className="text-sm" htmlFor={props.value}>
         {props.label}
       </label>
     </div>
