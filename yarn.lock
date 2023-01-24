@@ -3476,18 +3476,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/terra.proto@npm:^2.2.0-beta.1":
-  version: 2.2.0-beta.3
-  resolution: "@terra-money/terra.proto@npm:2.2.0-beta.3"
-  dependencies:
-    "@improbable-eng/grpc-web": ^0.14.1
-    google-protobuf: ^3.17.3
-    long: ^4.0.0
-    protobufjs: ~6.11.2
-  checksum: 204e5ffb15ee6aafe9f61a2e3c93c4fb9c8a89c40b74428810fcc9458a4b8d4d78859f0fa747c5bae90d8af3365b45e1b96435cb6272e965e3d989d2ca75baec
-  languageName: node
-  linkType: hard
-
 "@terra-money/use-wallet@npm:^3.11.1":
   version: 3.11.1
   resolution: "@terra-money/use-wallet@npm:3.11.1"
@@ -5118,7 +5106,6 @@ __metadata:
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
     "@terra-money/terra.js": ^3.1.7
-    "@terra-money/terra.proto": ^2.2.0-beta.1
     "@terra-money/wallet-provider": ^3.11.1
     "@testing-library/dom": ^8.19.0
     "@testing-library/jest-dom": ^5.14.1

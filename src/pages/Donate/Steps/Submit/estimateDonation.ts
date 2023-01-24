@@ -1,6 +1,4 @@
-import { MsgSend as TerraMsgSend } from "@terra-money/terra.proto/cosmos/bank/v1beta1/tx";
-import { MsgExecuteContract as TerraMsgExecuteContract } from "@terra-money/terra.proto/cosmwasm/wasm/v1/tx";
-import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
+import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { WithWallet } from "contexts/WalletContext";
 import { Estimate, SubmitStep } from "slices/donation";
@@ -8,12 +6,11 @@ import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import { transfer } from "contracts/ERC20";
 import GiftCard from "contracts/GiftCard";
-import { condense, logger, scale, scaleToStr, toU8a } from "helpers";
+import { condense, logger, scale, scaleToStr } from "helpers";
 import { estimateGas } from "helpers/cosmos/estimateGas";
-import { estimateTerraGas } from "helpers/cosmos/estimateTerraGas";
 import { ap_wallets } from "constants/ap_wallets";
-import { typeURLs } from "constants/cosmos";
 import { EIPMethods } from "constants/ethereum";
+import { estimateTerraGas } from "./estimateTerraGas";
 import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
@@ -67,32 +64,17 @@ export async function estimateDonation({
     else if (wallet.type === "terra") {
       const scaledAmount = scaleToStr(token.amount, token.decimals);
 
-      const msg: Any =
+      const msg =
         token.type === "terra-native" || token.type === "ibc"
-          ? {
-              typeUrl: typeURLs.sendNative,
-              value: TerraMsgSend.encode({
-                fromAddress: wallet.address,
-                toAddress: ap_wallets.terra,
-                amount: [{ amount: scaledAmount, denom: token.token_id }],
-              }).finish(),
-            }
-          : {
-              typeUrl: typeURLs.executeContract,
-              value: TerraMsgExecuteContract.encode({
-                contract: token.token_id,
-                sender: wallet.address,
-                msg: toU8a(
-                  JSON.stringify({
-                    transfer: {
-                      amount: scaledAmount,
-                      recipient: ap_wallets.terra,
-                    },
-                  })
-                ),
-                funds: [],
-              }).finish(),
-            };
+          ? new MsgSend(wallet.address, ap_wallets.terra, [
+              new Coin(token.token_id, scaledAmount),
+            ])
+          : new MsgExecuteContract(wallet.address, token.token_id, {
+              transfer: {
+                amount: scaledAmount,
+                recipient: ap_wallets.terra,
+              },
+            });
 
       const { feeAmount, tx } = await estimateTerraGas([msg], wallet);
       return {

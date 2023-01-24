@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Estimate, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
-import { TokenWithAmount } from "types/slices";
 import { invalidateApesTags } from "services/apes";
 import { logger } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
@@ -24,7 +23,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { token, pctLiquidSplit } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
 
-      const { isSuccess, hash } = await sendTransaction(estimate, token);
+      const { isSuccess, hash } = await sendTransaction(estimate);
 
       if (isSuccess) {
         const kycData: KYCData | undefined =
@@ -78,8 +77,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 );
 
 async function sendTransaction(
-  estimate: Estimate,
-  token: TokenWithAmount
+  estimate: Estimate
 ): Promise<{ hash: string; isSuccess: boolean }> {
   switch (estimate.type) {
     case "cosmos": {
