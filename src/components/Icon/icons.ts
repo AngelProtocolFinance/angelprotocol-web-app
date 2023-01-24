@@ -168,26 +168,3 @@ export const icons = {
 } as const;
 
 export type IconType = keyof typeof icons;
-
-/**
- * FilterLeft: BsFilterLeft,
-  FileDownload: MdOutlineFileDownload,
-  ExchangeAlt: CgArrowsExchangeAltV,
-  Undo: CgUndo,
-  Loading: VscLoading,
-  Down: VscTriangleDown,
-  ChevronDown: HiOutlineChevronDown,
-  Facebook: FaFacebookF,
-  FacebookCircle: FaFacebook,
-  Discord: FaDiscord,
-  Plus: AiOutlinePlus,
-  Telegram: FaTelegramPlane,
-  Twitter: AiOutlineTwitter,
-  Youtube: AiFillYoutube,
-  Unsorted: TiArrowUnsorted,
-  Medium: AiOutlineMedium,
-  Minus: AiOutlineMinus,
-  Copy: AiOutlineCopy,
-  Check: AiOutlineCheck,
-  Menu: FiMenu,
- */
