@@ -59,8 +59,8 @@ function EmailCode({ secret }: { secret: string }) {
       <p className="text-center font-heading mt-4 mb-8">
         Send the code below to your chosen recipient.
       </p>
-      <div className="grid border border-gray-l2 dark:border-bluegray rounded-lg overflow-clip">
-        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-gray-l2 dark:border-bluegray">
+      <div className="grid border border-prim rounded-lg overflow-clip">
+        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">
           Your giftcard code:
         </p>
         <p className="bg-orange-l6 dark:bg-blue-d7 p-4 font-bold text-center text-3xl leading-relaxed break-all">

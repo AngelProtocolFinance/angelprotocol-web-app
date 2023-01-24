@@ -28,7 +28,7 @@ export default function AdminLinks(props: WalletState) {
   if (isLoading || !isApMember || !isReviewMember) return null;
 
   return (
-    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
+    <div className="grid p-4 gap-3 border-b border-prim">
       <h3 className="font-heading font-bold text-sm text-gray-d1 dark:text-gray">
         Platform Administration
       </h3>
@@ -44,7 +44,7 @@ export default function AdminLinks(props: WalletState) {
         {isReviewMember && (
           <Link
             to={`${appRoutes.admin}/${REVIEWER_ID}`}
-            className="pl-2 border-l border-gray-l2 dark:border-bluegray text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
+            className="pl-2 border-l border-prim text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
           >
             applications
           </Link>

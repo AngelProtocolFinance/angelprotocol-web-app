@@ -21,7 +21,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-gray-l2 dark:divide-bluegray border-gray-l2 dark:border-bluegray"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-prim border-prim"
       >
         <Cells
           type="th"
@@ -74,7 +74,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-gray-l2 dark:divide-bluegray border-b last:border-b-0 border-gray-l2 dark:border-bluegray"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim border-b last:border-b-0 border-prim"
       >
         {sorted.map((row) => (
           <Cells key={row.hash} type="td" cellClass="p-3">
