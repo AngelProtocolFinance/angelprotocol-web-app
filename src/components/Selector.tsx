@@ -38,11 +38,6 @@ interface Props<
 
 export const selectorButtonStyle = "flex items-center field-input";
 
-export const SELECT_ALL_OPTION: OptionType<ValKey> = {
-  label: "select all",
-  value: "*",
-};
-
 const labelKey: keyof OptionType<string> = "label";
 
 export function Selector<
@@ -80,7 +75,6 @@ export function Selector<
       <Listbox
         disabled={isDisabled}
         value={selected}
-        defaultValue={SELECT_ALL_OPTION}
         by={valueKey}
         onChange={onChange}
         as="div"
