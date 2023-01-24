@@ -1,10 +1,9 @@
 import { Dialog } from "@headlessui/react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
@@ -13,18 +12,18 @@ import IFrame from "./IFrame";
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
 export default function KadoModal() {
-  const [isLoading, setLoading] = useState(true);
   const dispatch = useSetter();
   const { closeModal, setModalOption } = useModalContext();
 
   const { wallet } = useGetWallet();
 
-  const handleOnLoad = useCallback(() => {
-    // there is a high chance the user bought some new crypto prior to closing this modal
-    // reload the page to get new wallet balances
-    setModalOption("onClose", () => dispatch(invalidateApesTags(["chain"])));
-    setLoading(false);
-  }, [setModalOption, dispatch]);
+  const handleOnLoad = useCallback(
+    () =>
+      // there is a high chance the user bought some new crypto prior to closing this modal
+      // reload the page to get new wallet balances
+      setModalOption("onClose", () => dispatch(invalidateApesTags(["chain"]))),
+    [setModalOption, dispatch]
+  );
 
   const onToAddress = !wallet ? "" : `&onToAddress=${wallet.address}`;
   const network = !wallet
@@ -45,13 +44,6 @@ export default function KadoModal() {
           <Icon type="Close" className="w-8 sm:w-7 h-8 sm:h-7" />
         </button>
       </Dialog.Title>
-      {isLoading && (
-        <Loader
-          bgColorClass="bg-blue dark:bg-white"
-          gapClass="gap-2"
-          widthClass="w-4"
-        />
-      )}
       <IFrame
         src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
         className="w-full h-full border-none rounded-b"
