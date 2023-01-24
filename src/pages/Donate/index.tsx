@@ -44,7 +44,6 @@ export default function Donate() {
           </>
         )}
       </QueryLoader>
-      <Steps name={""} id={numId} isKYCRequired={false} />
     </section>
   );
 }

@@ -13,7 +13,7 @@ export const EIPMethods = {
   eth_getBalance: "eth_getBalance",
   eth_estimateGas: "eth_estimateGas",
   eth_sendTransaction: "eth_sendTransaction",
-  eth_getTransactionCount: "eht_getTransactionCount",
+  eth_getTransactionCount: "eth_getTransactionCount",
   eth_gasPrice: "eth_gasPrice",
   eth_call: "eth_call",
   //others
