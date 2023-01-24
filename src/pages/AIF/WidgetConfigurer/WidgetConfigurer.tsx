@@ -50,7 +50,7 @@ export default function WidgetConfigurer() {
           </h2>
           <DonateWidget
             params={params}
-            className="xl:w-11/12 border border-gray-l2 dark:border-bluegray rounded"
+            className="xl:w-11/12 border border-prim rounded"
           />
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
