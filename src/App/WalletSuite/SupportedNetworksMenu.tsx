@@ -12,7 +12,7 @@ export default function SupportedNetworksMenu(wallet: ConnectedWallet) {
         <span>Unsupported network</span>
       </Popover.Button>
 
-      <Popover.Panel className="absolute z-10 w-full bg-white dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray mt-2 rounded-md px-3 py-2">
+      <Popover.Panel className="absolute z-10 w-full bg-white dark:bg-blue-d7 border border-prim mt-2 rounded-md px-3 py-2">
         <p className="text-sm font-bold text-blue uppercase mb-4">
           Supported networks
         </p>

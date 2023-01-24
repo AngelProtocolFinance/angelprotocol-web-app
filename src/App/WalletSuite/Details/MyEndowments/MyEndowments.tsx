@@ -46,11 +46,7 @@ const Name = ({ value }: { value: string }) => (
 );
 
 function Container({ children }: PropsWithChildren) {
-  return (
-    <div className="grid p-4 gap-3 border-b border-gray-l2 dark:border-bluegray">
-      {children}
-    </div>
-  );
+  return <div className="grid p-4 gap-3 border-b border-prim">{children}</div>;
 }
 
 function Heading() {

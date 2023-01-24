@@ -14,17 +14,17 @@ import MyEndowments from "./MyEndowments";
 export default function Details(props: ConnectedWallet) {
   const currChain = chains[props.chainId].name;
   return (
-    <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-gray-l2 dark:border-bluegray shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
+    <Popover.Panel className="fixed sm:absolute inset-0 sm:inset-auto sm:origin-top-right sm:mt-2 sm:right-0 flex flex-col w-full sm:w-80 bg-white dark:bg-blue-d6 sm:rounded-lg border border-prim shadow-[0_0_16px_rgba(15,46,67,0.25)] text-gray-d2 dark:text-white overflow-y-auto">
       {({ close }) => (
         <>
           <MobileTitle className="sm:hidden" onClose={close} />
           <AdminLinks {...props} />
           <MyEndowments />
-          <div className="grid gap-3 p-4 border-b border-gray-l2 dark:border-bluegray">
+          <div className="grid gap-3 p-4 border-b border-prim">
             <Balances />
             <Address value={props.address} />
             {(props.type === "evm" && <ChainSelector {...props} />) || (
-              <p className="w-full p-4 pl-3 text-sm border border-gray-l2 dark:border-bluegray rounded">
+              <p className="w-full p-4 pl-3 text-sm border border-prim rounded">
                 {currChain}
               </p>
             )}
@@ -46,7 +46,7 @@ export default function Details(props: ConnectedWallet) {
 
 function MyDonations({ address }: { address: string }) {
   return (
-    <div className="flex items-center p-4 border-b border-gray-l2 dark:border-bluegray">
+    <div className="flex items-center p-4 border-b border-prim">
       <Link
         to={`${appRoutes.donations}/${address}`}
         className="font-heading font-bold text-sm uppercase hover:text-orange"

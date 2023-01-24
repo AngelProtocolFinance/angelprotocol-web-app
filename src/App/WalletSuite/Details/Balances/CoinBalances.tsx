@@ -76,9 +76,7 @@ export default function CoinBalances({
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}
-      {!isEmpty(tokens) && (
-        <div className="border-t border-gray-l2 dark:border-bluegray" />
-      )}
+      {!isEmpty(tokens) && <div className="border-t border-prim" />}
     </>
   );
 }
