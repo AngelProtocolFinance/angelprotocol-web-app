@@ -39,7 +39,7 @@ export default function Form() {
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
+        classes="w-full aspect-[4/1] mb-4 rounded border border-prim"
       />
       <Label className="-mb-4" required>
         Logo
@@ -48,7 +48,7 @@ export default function Form() {
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
       />
       <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
@@ -63,7 +63,7 @@ export default function Form() {
         fieldName="hq_country"
         classes={{
           container:
-            "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
+            "px-4 border border-prim rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 bg-orange-l6 dark:bg-blue-d7",
           input:
             "text-sm py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
           error: errorStyle,
@@ -75,7 +75,7 @@ export default function Form() {
         placeHolder="A short overview of your charity"
         classes={{
           container:
-            "rich-text-toolbar border border-gray-l2 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
+            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
           error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
           charCounter: "text-gray-d1 dark:text-gray",
         }}

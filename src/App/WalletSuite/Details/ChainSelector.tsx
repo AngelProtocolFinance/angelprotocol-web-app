@@ -24,7 +24,7 @@ export default function ChainSelector(props: EVMWallet) {
       className="relative"
     >
       <Listbox.Button
-        className={`${SELECTOR_STYLE} border border-gray-l2 dark:border-bluegray disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1 rounded`}
+        className={`${SELECTOR_STYLE} border border-prim disabled:bg-gray-l2 dark:disabled:bg-bluegray-d1 rounded`}
       >
         {({ open }) => (
           <>
@@ -37,7 +37,7 @@ export default function ChainSelector(props: EVMWallet) {
           </>
         )}
       </Listbox.Button>
-      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-gray-l2 dark:border-bluegray rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-y-auto flex flex-col border border-prim rounded bg-white dark:bg-blue-d6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         {options.map((o) => (
           <Option key={o.id} {...o} />
         ))}

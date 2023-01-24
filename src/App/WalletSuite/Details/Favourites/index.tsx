@@ -10,7 +10,7 @@ export default function Favourites() {
   const queryState = useWalletProfileQuery(wallet.address);
 
   return (
-    <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-gray-l2 dark:border-bluegray">
+    <div className="flex flex-col gap-3 max-h-[244px] flex-1 p-4 border-b border-prim">
       <h3 className="flex justify-between gap-2 font-heading">
         <span className="font-bold text-sm text-gray-d1 dark:text-gray">
           Favourites

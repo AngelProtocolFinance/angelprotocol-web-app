@@ -30,7 +30,7 @@ export default function Form() {
         name="isFundRotating"
         classes={{
           container:
-            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-gray-l2 dark:border-bluegray",
+            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-prim",
         }}
       >
         Included on fund rotation
@@ -64,7 +64,7 @@ function Slider() {
           reset
         </button>
       </Label>
-      <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-gray-l2 dark:border-bluegray">
+      <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
         <input
           {...register("splitToLiquid")}
           className="w-full slider"

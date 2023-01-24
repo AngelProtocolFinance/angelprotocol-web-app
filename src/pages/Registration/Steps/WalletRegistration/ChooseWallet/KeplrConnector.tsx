@@ -10,7 +10,7 @@ export default function KeplrConnector() {
   return (
     <button
       onClick={() => keplr?.connect()}
-      className="flex items-center border border-gray-l2 dark:border-bluegray w-full p-4 rounded"
+      className="flex items-center border border-prim w-full p-4 rounded"
     >
       <img
         src={keplrWalletLogo}

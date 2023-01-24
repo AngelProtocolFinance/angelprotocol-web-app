@@ -39,7 +39,7 @@ export default function Success({
         <span>View transaction</span>
       </BtnSec>
 
-      <div className="p-5 flex flex-col sm:flex-row items-center my-12 dark:bg-blue-d7 rounded border border-gray-l2 dark:border-bluegray w-full gap-2">
+      <div className="p-5 flex flex-col sm:flex-row items-center my-12 dark:bg-blue-d7 rounded border border-prim w-full gap-2">
         <span className="uppercase font-bold mb-6 mt-1 sm:my-0 sm:mr-auto">
           Share on social media
         </span>

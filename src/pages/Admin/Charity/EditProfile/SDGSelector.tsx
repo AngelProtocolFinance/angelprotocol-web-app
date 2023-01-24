@@ -20,7 +20,7 @@ export default function SDGSelector() {
       value={value}
       onChange={onChange}
       as="div"
-      className="w-full focus:outline-none rounded text-sm uppercase relative bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray"
+      className="w-full focus:outline-none rounded text-sm uppercase relative bg-orange-l6 dark:bg-blue-d7 border border-prim"
     >
       <Listbox.Button className="w-full p-3 text-left uppercase flex justify-between items-center">
         {({ open }) => (

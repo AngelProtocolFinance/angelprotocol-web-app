@@ -40,7 +40,7 @@ export default function WalletSubmission({
       <h3 className="text-center md:text-left text-lg font-bold">
         You are already connected to a Wallet:
       </h3>
-      <div className="grid grid-cols-[auto_1fr] items-center border border-gray-l2 dark:border-bluegray p-4 rounded mt-8">
+      <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
         <img
           src={logo}
           alt=""

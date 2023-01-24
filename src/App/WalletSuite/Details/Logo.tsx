@@ -21,7 +21,7 @@ export default function Logo({ src, className }: Props) {
       {!!src && (
         <img
           src={src}
-          className={`${className} object-contain border border-gray-l2 dark:border-bluegray rounded-full ${
+          className={`${className} object-contain border border-prim rounded-full ${
             isLoading ? "hidden" : ""
           }`}
           alt=""

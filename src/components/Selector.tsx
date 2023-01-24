@@ -32,7 +32,7 @@ interface Props<
 }
 
 export const selectorButtonStyle =
-  "flex items-center text-sm rounded border border-gray-l2 dark:border-bluegray";
+  "flex items-center text-sm rounded border border-prim";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -83,7 +83,7 @@ export function Selector<
             </>
           )}
         </Listbox.Button>
-        <Listbox.Options className="rounded-sm text-sm border border-gray-l2 dark:border-bluegray absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+        <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {options.map((o) => (
             <Listbox.Option
               key={o.value}

@@ -1,7 +1,7 @@
 import { useBalancesQuery } from "services/apes";
 import { useConnectedWallet } from "contexts/WalletGuard";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
+import { humanize, isEmpty } from "helpers";
 import KadoOpener from "./KadoOpener";
 
 const MIN_AMOUNT = 0.001;
@@ -44,7 +44,7 @@ export default function CoinBalances({
     );
   }
 
-  if (tokens.length <= 0) {
+  if (isEmpty(tokens)) {
     return (
       <span className="text-sm">
         Your wallet is empty. <KadoOpener />
@@ -68,7 +68,7 @@ export default function CoinBalances({
                 type="Giftcard"
                 className="text-green w-4 h-4 inline-block mr-0.5 relative bottom-px"
               />
-              <span className="font-normal text-xs border-r border-gray-l2 dark:border-bluegray pr-1">
+              <span className="font-normal text-xs border-r border-prim pr-1">
                 {humanize(t.gift, 3, true)}
               </span>
             </>
@@ -76,7 +76,7 @@ export default function CoinBalances({
           <span className="ml-1">{humanize(t.balance, 3, true)}</span>
         </div>
       ))}
-      {tokens.length && (
+      {!isEmpty(tokens) && (
         <div className="border-t border-gray-l2 dark:border-bluegray" />
       )}
     </>

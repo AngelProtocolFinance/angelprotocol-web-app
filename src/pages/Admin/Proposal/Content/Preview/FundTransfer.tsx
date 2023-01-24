@@ -12,10 +12,7 @@ export default function FundTransfer(props: FundSendMeta["data"]) {
           admin group contract
         </span>
       </KeyValue>
-      <KeyValue
-        _key="total amount"
-        _classes="border-t border-gray-l2 dark:border-bluegray mt-2"
-      >
+      <KeyValue _key="total amount" _classes="border-t border-prim mt-2">
         <span>
           {humanize(props.amount, 3)} {symbols[props.denom]}
         </span>
