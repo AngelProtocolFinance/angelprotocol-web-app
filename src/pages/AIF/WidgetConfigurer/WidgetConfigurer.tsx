@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import Copier from "components/Copier";
+import IFrame from "components/IFrame";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";
 
 const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
@@ -8,7 +9,6 @@ const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
   const [widgetUrl, setWidgetUrl] = useState("");
-  const [isLoading, setLoading] = useState(true);
 
   const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
 
@@ -38,14 +38,11 @@ export default function WidgetConfigurer() {
       <div className="grid sm:grid-cols-2 gap-10">
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-          <iframe
+          <IFrame
             src={widgetUrl}
             title="widget"
-            className={`${
-              isLoading ? "hidden" : ""
-            } w-11/12 h-[900px] border border-prim rounded`}
-            onLoad={() => setLoading(false)}
-          ></iframe>
+            className="w-11/12 h-[900px] border border-prim rounded"
+          ></IFrame>
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>

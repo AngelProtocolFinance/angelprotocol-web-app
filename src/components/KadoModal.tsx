@@ -8,6 +8,7 @@ import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
 import { chainIDs } from "constants/chains";
+import IFrame from "./IFrame";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
@@ -51,14 +52,12 @@ export default function KadoModal() {
           widthClass="w-4"
         />
       )}
-      <iframe
+      <IFrame
         src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
-        className={`${
-          isLoading ? "hidden" : ""
-        } w-full h-full border-none rounded-b`}
+        className="w-full h-full border-none rounded-b"
         title="Buy with Kado"
         onLoad={handleOnLoad}
-      ></iframe>
+      ></IFrame>
     </Dialog.Panel>
   );
 }
