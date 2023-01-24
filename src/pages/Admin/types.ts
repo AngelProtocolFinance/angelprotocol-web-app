@@ -1,22 +1,17 @@
-import { ImgLink } from "components/ImgEditor/types";
-import { CountryOption } from "services/types";
 import { EndowmentProposal } from "types/aws";
 import {
   AllianceMember,
   Asset,
   CW4Member,
-  EndowmentSettingsPayload,
   EndowmentStatus,
   EndowmentStatusStrNum,
   EndowmentStatusText,
   FundConfig,
   FundDetails,
-  ProfileUpdate,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
 } from "types/contracts";
 import { Coin } from "types/cosmos";
-import { UNSDG_NUMS } from "types/lists";
 import { DiffSet } from "types/utils";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
@@ -128,11 +123,6 @@ export type WithdrawMeta = MetaConstructor<
   }
 >;
 
-export type EndowmentProfileUpdateMeta = MetaConstructor<
-  "acc_profile",
-  DiffSet<ProfileWithSettings>
->;
-
 export type EndowmentStatusMeta = MetaConstructor<
   "acc_endow_status",
   {
@@ -169,7 +159,7 @@ export type ProposalMeta =
   //endowment
   | EndowmentStatusMeta
   | WithdrawMeta
-  | EndowmentProfileUpdateMeta
+
   //registrar
   | RegistrarConfigUpdateMeta;
 
@@ -257,29 +247,6 @@ export type RegistrarConfigValues = ProposalBase &
 
 export type RegistrarOwnerValues = ProposalBase &
   RegistrarOwnerPayload & { initialOwner: string };
-
-export type ProfileWithSettings = Omit<ProfileUpdate, "country_of_origin"> &
-  Pick<EndowmentSettingsPayload, "name"> & {
-    //replace categories field with flat sdgNum field
-    country: CountryOption;
-    sdg: UNSDG_NUMS;
-    image: ImgLink;
-    logo: ImgLink;
-  };
-
-export type FlatProfileWithSettings = Omit<
-  ProfileWithSettings,
-  "image" | "logo" | "country"
-> & {
-  image: string;
-  logo: string;
-  country: string;
-};
-
-export type ProfileFormValues = ProposalBase &
-  ProfileWithSettings & {
-    initial: FlatProfileWithSettings;
-  };
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Pick<

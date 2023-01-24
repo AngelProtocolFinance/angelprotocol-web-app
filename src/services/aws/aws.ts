@@ -1,23 +1,19 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { EndowmentInfo } from "services/types";
 import {
-  Endowment,
+  ADR36Payload,
+  EndowmentCard,
+  EndowmentProfile,
+  EndowmentProfileUpdate,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
 } from "types/aws";
-import { ProfileResponse } from "types/contracts";
 import { NetworkType } from "types/lists";
-import { queryContract } from "services/juno/queryContract";
 import { createAuthToken } from "helpers";
-import { contracts } from "constants/contracts";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
-
-const getProfileQuery = (endowId: number) =>
-  `/v1/profile/${network}/endowment/${endowId}`;
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/v1/profile/${network}/user/${walletAddr}`;
@@ -45,47 +41,47 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowments: builder.query<
-      PaginatedAWSQueryRes<Endowment[]>,
+      PaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
     >({
-      providesTags: [{ type: "endowments" }],
+      providesTags: ["endowments"],
       query: (params) => {
-        return { url: `/v2/endowments/${network}`, params };
+        return {
+          url: `/v3/endowments/${network}`,
+          params: { ...params, return: endowCardFields },
+        };
       },
     }),
     walletProfile: builder.query<WalletProfile, string>({
-      providesTags: [{ type: "walletProfile" }],
+      providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
     }),
     toggleBookmark: builder.mutation<
       unknown,
       { type: "add" | "delete"; wallet: string; endowId: number }
     >({
-      invalidatesTags: [{ type: "walletProfile" }],
+      invalidatesTags: ["walletProfile"],
       query: ({ endowId, type, wallet }) => {
         return {
           url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
-          body: { id: endowId },
+          body: { endowId },
           headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<ProfileResponse, number>({
-      providesTags: [{ type: "profile" }],
-      query: (endowId) => getProfileQuery(endowId),
+    profile: builder.query<EndowmentProfile, number>({
+      providesTags: ["profile"],
+      query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
     }),
-    endowInfo: builder.query<EndowmentInfo, number>({
-      providesTags: [{ type: "endowments" }, { type: "profile" }],
-      async queryFn(endowId, _api, _opts, baseQuery) {
-        const [{ data: profile }, endow] = await Promise.all([
-          baseQuery(getProfileQuery(endowId)),
-          queryContract("accEndowment", contracts.accounts, { id: endowId }),
-        ]);
-
+    editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
+      invalidatesTags: ["endowments", "profile", "walletProfile"],
+      query: (payload) => {
         return {
-          data: { ...(profile as ProfileResponse), ...endow, id: endowId },
+          url: `/v1/profile/${network}/endowment`,
+          method: "PUT",
+          body: payload,
         };
       },
     }),
@@ -97,7 +93,7 @@ export const {
   useToggleBookmarkMutation,
   useEndowmentsQuery,
   useProfileQuery,
-  useEndowInfoQuery,
+  useEditProfileMutation,
 
   endpoints: {
     endowments: { useLazyQuery: useLazyEndowmentsQuery },
@@ -107,3 +103,24 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
+
+type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
+  /** replace with cloudsearch specific field format */
+  Pick<EndowmentProfileUpdate, "hq_city" | "hq_country" | "categories_sdgs">);
+
+//object format first to avoid duplicates
+const endowCardObj: {
+  [key in EndowCardFields]: any; //we care only for keys
+} = {
+  hq_city: "",
+  hq_country: "",
+  active_in_countries: "",
+  categories_sdgs: "",
+  id: "",
+  image: "",
+  kyc_donors_only: "",
+  name: "",
+  tagline: "",
+  endow_type: "",
+};
+const endowCardFields = Object.keys(endowCardObj).join(",");

@@ -58,13 +58,6 @@ export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
       });
       break;
 
-    case "acc_profile":
-      _tags.push({
-        type: "account",
-        id: accountTags.profile,
-      });
-      break;
-
     case "acc_endow_status":
       _tags.push({
         type: "account",

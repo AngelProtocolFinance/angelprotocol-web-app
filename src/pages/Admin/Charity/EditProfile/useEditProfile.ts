@@ -1,124 +1,73 @@
-import { useFormContext } from "react-hook-form";
-import {
-  EndowmentProfileUpdateMeta,
-  FlatProfileWithSettings,
-} from "pages/Admin/types";
-import { ProfileFormValues } from "pages/Admin/types";
-import { ObjectEntries } from "types/utils";
+import { SubmitHandler, useFormContext } from "react-hook-form";
+import { FormValues as FV, FlatFormValues } from "./types";
+import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useEditProfileMutation } from "services/aws/aws";
+import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import {
-  cleanObject,
-  genDiffMeta,
-  getPayloadDiff,
-  getTagPayloads,
-} from "helpers/admin";
+import { TxPrompt } from "components/Prompt";
+import { getPayloadDiff } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 import { appRoutes } from "constants/routes";
+import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";
 
-const PLACEHOLDER_OVERVIEW = "[text]";
-
 export default function useEditProfile() {
-  const { endowmentId, cw3, propMeta, wallet } = useAdminResources();
+  const { endowmentId, endowment, wallet } = useAdminResources();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
-  } = useFormContext<ProfileFormValues>();
+  } = useFormContext<FV>();
 
-  const { handleError } = useErrorContext();
-  const sendTx = useCosmosTxSender();
+  const { showModal } = useModalContext();
+  const [submit] = useEditProfileMutation();
 
-  const editProfile = async ({
-    title,
-    description,
+  const editProfile: SubmitHandler<FV> = async ({
     initial,
-    ...data
-  }: ProfileFormValues) => {
-    try {
-      const [bannerUrl, logoUrl] = await getImgUrls([data.image, data.logo]);
-      //flatten profile values for diffing
-      //TODO: refactor to diff nested objects
-      const flatData: FlatProfileWithSettings = {
-        ...data,
-        country: data.country.name,
-        image: bannerUrl,
-        logo: logoUrl,
-      };
+    image,
+    logo,
+    hq_country,
+    ...newData
+  }) => {
+    const [bannerUrl, logoUrl] = await uploadImgs([image, logo]);
 
-      const diff = getPayloadDiff(initial, flatData);
+    const changes: FlatFormValues = {
+      image: bannerUrl,
+      logo: logoUrl,
+      hq_country: hq_country.name,
+      ...newData,
+    };
+    const diff = getPayloadDiff(initial, changes);
 
-      //if overview has changed, and is set to something
-      if ("overview" in diff && data.overview) {
-        //truncate to reduce proposalMsg size
-        diff.overview = PLACEHOLDER_OVERVIEW;
-      }
-
-      const diffEntries = Object.entries(
-        diff
-      ) as ObjectEntries<FlatProfileWithSettings>;
-      if (diffEntries.length <= 0) {
-        throw new Error("no changes detected");
-      }
-
-      //TODO: add logo upload
-
-      const accountContract = new Account(wallet);
-      const { sdg, name, image, logo, country, ...profilePayload } = data;
-      const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
-        //don't pass just diff here, old value should be included for null will be set if it's not present in payload
-        cleanObject({
-          ...profilePayload,
-          country_of_origin: country.name,
-        })
-      );
-
-      const settingsUpdateMsg = accountContract.createEmbeddedUpdateSettingsMsg(
-        cleanObject({
-          id: profilePayload.id,
-          name,
-          image: bannerUrl,
-          logo: logoUrl,
-          categories: { sdgs: [sdg], general: [] },
-        })
-      );
-
-      const profileUpdateMeta: EndowmentProfileUpdateMeta = {
-        type: "acc_profile",
-        data: genDiffMeta(diffEntries, initial),
-      };
-
-      const adminContract = new CW3(wallet, cw3);
-      const proposalMsg = adminContract.createProposalMsg(
-        title,
-        description,
-        [profileUpdateMsg, settingsUpdateMsg],
-        JSON.stringify(profileUpdateMeta)
-      );
-
-      const { successMeta: defaultMeta, willExecute, ...meta } = propMeta;
-      await sendTx({
-        msgs: [proposalMsg],
-        ...meta,
-        successMeta: willExecute
-          ? {
-              message: "Profile has been updated!",
-              link: {
-                url: `${appRoutes.profile}/${endowmentId}`,
-                description: "checkout new changes",
-              },
-            }
-          : defaultMeta,
-        tagPayloads: getTagPayloads(willExecute && "acc_profile"),
-      });
-    } catch (err) {
-      handleError(err);
+    if (Object.entries(diff).length <= 0) {
+      return showModal(TxPrompt, { error: "No changes detected" });
     }
+
+    /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
+     like ""; unlike contracts where if fields is not present, val is set to null.
+    */
+    const { sdg, ...restDiff } = diff;
+    const updates: Partial<EndowmentProfileUpdate> = {
+      ...restDiff,
+      ...(sdg != null ? { categories_sdgs: [sdg] } : {}),
+      id: endowmentId,
+      owner: endowment.owner,
+    };
+    const result = await submit(await createADR36Payload(updates, wallet!)); //wallet is asserted in admin guard
+    if ("error" in result) {
+      return showModal(TxPrompt, { error: "Failed to update profile" });
+    }
+
+    return showModal(TxPrompt, {
+      success: {
+        message: "Profile successfully updated",
+        link: {
+          description: "View changes",
+          url: `${appRoutes.profile}/${endowmentId}`,
+        },
+      },
+    });
   };
 
   return {
@@ -128,7 +77,7 @@ export default function useEditProfile() {
   };
 }
 
-async function getImgUrls(imgs: ImgLink[]): Promise<string[]> {
+async function uploadImgs(imgs: ImgLink[]): Promise<string[]> {
   const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
   const cid = await uploadToIpfs(files);
   return imgs.map((img) =>
