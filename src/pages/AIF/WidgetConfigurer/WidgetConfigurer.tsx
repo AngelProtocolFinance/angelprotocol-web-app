@@ -7,15 +7,12 @@ const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
-  const [widgetSnippet, setWidgetSnippet] = useState("");
+  const [widgetUrl, setWidgetUrl] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
-  const handleOnUrlChange = useCallback(
-    (url: string) =>
-      setWidgetSnippet(
-        `<iframe src="${url}" width="700" height="900" style="border: 0px;"></iframe>`
-      ),
-    []
-  );
+  const handleOnUrlChange = useCallback((url: string) => setWidgetUrl(url), []);
+
+  const widgetSnippet = `<iframe src="${widgetUrl}" width="700" height="900" style="border: 0px;"></iframe>`;
 
   return (
     <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
@@ -42,9 +39,12 @@ export default function WidgetConfigurer() {
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
           <iframe
-            src="http://localhost:4200/donate-widget/11?apiKey=API_KEY"
+            src={widgetUrl}
             title="widget"
-            className="w-11/12 h-[900px] border border-prim rounded"
+            className={`${
+              isLoading ? "hidden" : ""
+            } w-11/12 h-[900px] border border-prim rounded`}
+            onLoad={() => setLoading(false)}
           ></iframe>
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">

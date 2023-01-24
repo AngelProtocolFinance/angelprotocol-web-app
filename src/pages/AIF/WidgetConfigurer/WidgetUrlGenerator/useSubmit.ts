@@ -1,6 +1,6 @@
 import { UrlParamValues } from "DonateWidget";
 import { URL_PARAMS } from "DonateWidget/constants";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
@@ -14,6 +14,7 @@ const APP_URL = IS_TEST
 
 export default function useSubmit(
   endowId: string | undefined,
+  defaultValues: FormValues,
   onChange: (url: string) => void
 ) {
   const { handleError } = useErrorContext();
@@ -50,6 +51,12 @@ export default function useSubmit(
       );
     },
     [endowId, handleError, onChange]
+  );
+
+  useEffect(
+    () => submit(defaultValues),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   return submit;

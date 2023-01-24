@@ -8,18 +8,18 @@ import useSubmit from "./useSubmit";
 
 type Props = { endowId?: string; onChange(url: string): void };
 
-export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      availableCurrencies: [],
-      hideText: false,
-      hideAdvancedOptions: false,
-      unfoldAdvancedOptions: false,
-      liquidPercentage: 0,
-    },
-  });
+const DEFAULT_VALUES: FormValues = {
+  availableCurrencies: [],
+  hideText: false,
+  hideAdvancedOptions: false,
+  unfoldAdvancedOptions: false,
+  liquidPercentage: 0,
+};
 
-  const submit = useSubmit(endowId, onChange);
+export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
+  const methods = useForm<FormValues>({ defaultValues: DEFAULT_VALUES });
+
+  const submit = useSubmit(endowId, DEFAULT_VALUES, onChange);
 
   const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
 
