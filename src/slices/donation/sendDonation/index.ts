@@ -7,6 +7,7 @@ import { invalidateApesTags } from "services/apes";
 import { logger } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
 import { chains } from "constants/chains";
+import { EIPMethods } from "constants/ethereum";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";
 
@@ -95,7 +96,7 @@ async function sendTransaction(
     default: {
       const { wallet, tx } = estimate;
       const hash = await wallet.provider.request<string>({
-        method: "eth_sendTransaction",
+        method: EIPMethods.eth_sendTransaction,
         params: [tx],
       });
       return {

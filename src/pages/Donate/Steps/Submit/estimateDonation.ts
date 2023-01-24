@@ -16,6 +16,7 @@ import { estimateGas } from "helpers/cosmos/estimateGas";
 import { estimateTerraGas } from "helpers/cosmos/estimateTerraGas";
 import { ap_wallets } from "constants/ap_wallets";
 import { typeURLs } from "constants/cosmos";
+import { EIPMethods } from "constants/ethereum";
 import getBreakdown from "./getBreakdown";
 
 export async function estimateDonation({
@@ -121,14 +122,17 @@ export async function estimateDonation({
 
       const [nonce, gas, gasPrice] = await Promise.all([
         provider.request<string>({
-          method: "eth_getTransactionCount",
+          method: EIPMethods.eth_getTransactionCount,
           params: [wallet.address, "latest"],
         }),
 
         //for display in summary only but not
-        provider.request<string>({ method: "eth_estimateGas", params: [tx] }),
         provider.request<string>({
-          method: "eth_gasPrice",
+          method: EIPMethods.eth_estimateGas,
+          params: [tx],
+        }),
+        provider.request<string>({
+          method: EIPMethods.eth_gasPrice,
         }),
       ]);
       const feeAmount = condense(gasPrice, native.decimals).mul(gas).toNumber();
