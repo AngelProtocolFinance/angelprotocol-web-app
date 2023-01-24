@@ -5,7 +5,6 @@ import {
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
-  ProfileResponse,
   Proposal,
 } from "types/contracts";
 import { Coin } from "types/cosmos";
@@ -71,6 +70,3 @@ export type CosmosBalances = { balances: Coin[] };
 
 export type TokenWithBalance = Token & { balance: number; gift?: number };
 export type Regions = { [region: string]: string[] };
-
-/** endowment */
-export type EndowmentInfo = ProfileResponse & EndowmentDetails & { id: number };

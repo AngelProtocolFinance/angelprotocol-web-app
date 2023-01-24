@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
 import { useController } from "react-hook-form";
-import { ProfileFormValues } from "pages/Admin/types";
+import { FormValues } from "./types";
 import { DrawerIcon } from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 
@@ -13,7 +13,7 @@ const sdgs = Object.entries(unsdgs).map(([key, val]) => ({
 export default function SDGSelector() {
   const {
     field: { onChange, value },
-  } = useController<Pick<ProfileFormValues, "sdg">>({ name: "sdg" });
+  } = useController<Pick<FormValues, "sdg">>({ name: "sdg" });
 
   return (
     <Listbox

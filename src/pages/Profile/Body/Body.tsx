@@ -36,11 +36,7 @@ export default function Body() {
               <h3 className="font-header font-bold text-3xl w-full max-w-2xl truncate">
                 {profile.name}
               </h3>
-              <BookmarkBtn
-                name={profile.name}
-                endowId={profile.id}
-                logo={profile.logo}
-              />
+              <BookmarkBtn endowId={profile.id} />
             </div>
             {/* 
             This will be added back once charities have a `tagLine` field
@@ -50,12 +46,12 @@ export default function Body() {
               ac, ultricies.
             </p> */}
           </div>
-          {(profile.country_of_origin || profile.url) && (
+          {(profile.hq.country || profile.url) && (
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-              {profile.country_of_origin && (
+              {profile.hq.country && (
                 <span className="flex items-center gap-2 uppercase">
                   <Icon type="MapPin" className="h-6 w-6 text-orange" />
-                  {profile.country_of_origin}
+                  {profile.hq.country}
                 </span>
               )}
               {profile.url && (

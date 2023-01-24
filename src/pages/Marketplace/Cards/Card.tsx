@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Endowment } from "types/aws";
+import { EndowmentCard } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
@@ -9,16 +9,19 @@ import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
+const PLACEHOLDER_CITY = "City";
+const PLACEHOLDER_TAGLINE = " ";
 export default function Card({
+  active_in_countries,
   name,
-  logo,
   image,
   id,
   endow_type,
   categories: { sdgs },
-  country_of_origin,
+  tagline,
+  hq,
   kyc_donors_only,
-}: Endowment) {
+}: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l2 dark:border-bluegray hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
@@ -26,7 +29,7 @@ export default function Card({
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
-        <BookmarkBtn name={name} endowId={id} logo={logo} />
+        <BookmarkBtn endowId={id} />
       </div>
       <Link
         to={`${appRoutes.profile}/${id}`}
@@ -43,22 +46,24 @@ export default function Card({
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           <h3 className="font-bold">{name}</h3>
-          <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-            <span className="font-semibold">HQ:</span> {country_of_origin}
-          </p>
-          {false && (
-            <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et ma
+          {hq.country && (
+            <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
+              <span className="font-semibold">HQ:</span> {hq.country}
+              {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
             </p>
           )}
+
+          {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
+            <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
+              {tagline}
+            </p>
+          ) : null}
           {/** country and sdg always on bottom */}
           <div className="mt-auto empty:hidden grid gap-3">
-            {!isEmpty([]) && (
+            {!isEmpty(active_in_countries) && (
               <p className="text-gray-d1 dark:text-gray text-sm">
                 <span className="font-semibold">Active in:</span>{" "}
-                {["Philippines", "Korea", "Mongolia"].join(" ,")}
+                {active_in_countries.join(" ,")}
               </p>
             )}
             {!isEmpty(sdgs) && (

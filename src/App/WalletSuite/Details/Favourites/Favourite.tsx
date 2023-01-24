@@ -3,11 +3,11 @@ import { EndowmentBookmark } from "types/aws";
 import { appRoutes } from "constants/routes";
 import Logo from "../Logo";
 
-export default function Favourite({ name, id, logo }: EndowmentBookmark) {
+export default function Favourite({ name, endowId, logo }: EndowmentBookmark) {
   return (
     <li>
       <Link
-        to={appRoutes.profile + "/" + id}
+        to={appRoutes.profile + "/" + endowId}
         className="flex items-center gap-2 py-1 font-heading font-semibold text-sm hover:bg-orange-l5 dark:hover:bg-blue-d3 rounded"
       >
         <Logo src={logo} className="w-4 h-4" />

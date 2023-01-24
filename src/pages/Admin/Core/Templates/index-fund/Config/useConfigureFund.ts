@@ -8,7 +8,8 @@ import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
 import { scaleToStr } from "helpers";
-import { cleanObject, genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { genDiffMeta, getPayloadDiff } from "helpers/admin";
+import { cleanObject } from "helpers/cleanObject";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

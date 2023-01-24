@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ProfileFormValues as UV } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
@@ -8,7 +8,6 @@ import {
   FormContainer,
   GroupContainer,
   Submitter,
-  TextArea,
   TextPrim,
   TextSec,
   errorStyle,
@@ -33,12 +32,10 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
-      <TextPrim<UV> label="Proposal title" name="title" required />
-      <TextArea<UV> label="Proposal description" name="description" required />
       <Label className="-mb-4" required>
         Banner
       </Label>
-      <ImgEditor<UV, "image">
+      <ImgEditor<FV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
@@ -47,7 +44,7 @@ export default function Form() {
       <Label className="-mb-4" required>
         Logo
       </Label>
-      <ImgEditor<UV, "logo">
+      <ImgEditor<FV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
@@ -55,15 +52,15 @@ export default function Form() {
       />
       <Label className="-mb-4">SDG#</Label>
       <SDGSelector />
-      <TextPrim<UV> name="name" label="Charity Name" />
-      <TextPrim<UV> name="registration_number" label="Registration number" />
-      <TextPrim<UV> name="street_address" label="Street address" />
+      <TextPrim<FV> name="name" label="Charity Name" />
+      <TextPrim<FV> name="registration_number" label="Registration number" />
+      <TextPrim<FV> name="street_address" label="Street address" />
       <Label className="-mb-4" required>
         Country
       </Label>
-      <CountrySelector<UV, "country">
+      <CountrySelector<FV, "hq_country">
         placeholder="Select a country"
-        fieldName="country"
+        fieldName="hq_country"
         classes={{
           container:
             "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
@@ -73,7 +70,7 @@ export default function Form() {
         }}
       />
       <Label className="-mb-4">Overview</Label>
-      <RichTextEditor<UV>
+      <RichTextEditor<FV>
         fieldName="overview"
         placeHolder="A short overview of your charity"
         classes={{
@@ -86,29 +83,29 @@ export default function Form() {
 
       <Label className="-mb-4 font-bold">Social Media</Label>
       <GroupContainer>
-        <TextSec<UV>
+        <TextSec<FV>
           name="url"
           label="Website"
           placeholder="https://website.org"
         />
-        <TextSec<UV>
-          name="facebook"
+        <TextSec<FV>
+          name="social_media_url_facebook"
           label="Facebook"
           placeholder="https://facebook.com/"
         />
-        <TextSec<UV>
-          name="twitter"
+        <TextSec<FV>
+          name="social_media_url_twitter"
           label="Twitter"
           placeholder="https://twitter.com/"
         />
-        <TextSec<UV>
-          name="linkedin"
+        <TextSec<FV>
+          name="social_media_url_linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/"
         />
       </GroupContainer>
 
-      <TextPrim<UV>
+      <TextPrim<FV>
         name="contact_email"
         label="Contact email"
         disabled={true}

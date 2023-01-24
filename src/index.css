@@ -7,6 +7,10 @@
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }
 
+  .date-input::-webkit-calendar-picker-indicator {
+    @apply hidden;
+  }
+
   .slider {
     @apply appearance-none bg-transparent w-full;
   }
@@ -59,37 +63,11 @@
     @apply bg-gray cursor-auto;
   }
 
-  .btn-outline-orange {
-    @apply border-2 border-orange text-orange uppercase cursor-pointer font-bold transition;
-  }
-  .btn-outline-orange:hover {
-    @apply bg-orange-d2 text-white;
-  }
-  .btn-outline-orange:active {
-    @apply bg-orange-d1 text-white;
-  }
-  .btn-outline-orange:disabled {
-    @apply border-gray text-gray cursor-auto;
-  }
-
   .btn-blue {
     @apply bg-blue text-white uppercase cursor-pointer font-bold hover:bg-blue-l1 active:bg-blue-d1 transition;
   }
   .btn-blue:disabled {
     @apply bg-gray cursor-auto;
-  }
-
-  .btn-outline-blue {
-    @apply border-2 border-blue text-blue uppercase cursor-pointer font-bold transition;
-  }
-  .btn-outline-blue:hover {
-    @apply bg-blue-d2 text-white;
-  }
-  .btn-outline-blue:active {
-    @apply bg-blue-d1 text-white;
-  }
-  .btn-outline-blue:disabled {
-    @apply border-gray text-gray cursor-auto;
   }
 
   .overlay {
@@ -118,29 +96,6 @@
   .box-delay-2 {
     animation-delay: 600ms;
   }
-
-  .img-no-drag {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-  }
-
-  .scroll-hidden {
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none;
-  }
-  .scroll-hidden::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, and Opera */
-  }
-
-  .shadow-inner-white {
-    box-shadow: inset -2px 2px 2px #c1c1c6, inset 2px -2px 2px #fff;
-  }
-
-  .shadow-outer-white {
-    box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
-  }
 }
 
 @layer base {
@@ -156,44 +111,4 @@
   body {
     @apply font-body;
   }
-}
-
-.slippage-input::-webkit-outer-spin-button,
-.slippage-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.slippage-input[type="number"] {
-  width: 20px;
-  max-width: 30px;
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.currency-input::-webkit-outer-spin-button,
-.currency-input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
-  -webkit-appearance: none;
-  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-
-.currency-input[type="number"] {
-  /* width: 20px;
-  max-width: 30px; */
-  -moz-appearance: textfield; /* Firefox */
-}
-
-.css-qc6sy-singleValue {
-  color: hsl(0, 0%, 0%) !important;
-}
-
-.css-1pahdxg-control {
-  box-shadow: none !important;
-  border-color: rgba(153, 153, 153, var(--tw-border-opacity)) !important;
-  --tw-border-opacity: 0.6;
-}
-
-#react-select-3-listbox {
-  color: black !important;
 }

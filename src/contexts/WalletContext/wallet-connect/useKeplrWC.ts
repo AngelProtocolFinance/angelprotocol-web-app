@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Connected, Cosmos, Wallet, WalletState } from "../types";
 import icon from "assets/icons/wallets/keplr.png";
-import { useErrorContext } from "contexts/ErrorContext";
 import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
 import { chainIds } from "constants/chains";
 import { WC_EVENT } from "./constants";
@@ -12,8 +11,6 @@ const QRModal = new KeplrQRCodeModalV1();
 
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC(): Wallet {
-  const { handleError } = useErrorContext();
-
   const [state, setState] = useState<WalletState>({
     status: "disconnected",
     connect,
@@ -37,22 +34,17 @@ export function useKeplrWC(): Wallet {
         }
       });
       ctor.on(WC_EVENT.connect, async (error) => {
-        try {
-          if (error) {
-            throw Error(error.message);
-          }
-          setState({
-            type: "cosmos",
-            status: "connected",
-            ...(await getWalletInfo()),
-            disconnect,
-          });
-        } catch (err) {
+        if (error) {
           disconnect();
-          toast.error("Error connecting to wallet");
-        } finally {
-          QRModal.close();
+          return toast.error("Failed to connect to wallet");
         }
+        setState({
+          type: "cosmos",
+          status: "connected",
+          ...(await getWalletInfo()),
+          disconnect,
+        });
+        QRModal.close();
       });
     } else {
       setState({

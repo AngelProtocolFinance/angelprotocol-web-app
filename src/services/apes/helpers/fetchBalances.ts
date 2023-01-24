@@ -1,4 +1,3 @@
-import type { BigNumber } from "@ethersproject/bignumber";
 import { BalMap } from "./types";
 import { TokenWithBalance } from "services/types";
 import { FetchedChain, Token } from "types/aws";
