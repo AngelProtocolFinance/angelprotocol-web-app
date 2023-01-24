@@ -48,17 +48,10 @@ export default function WidgetConfigurer() {
           <h2 className={TITLE_STYLE}>
             That's what your widget would look like:
           </h2>
-          {/* <DonateWidget
+          <DonateWidget
             params={params}
             className="xl:w-11/12 border border-prim rounded"
-          /> */}
-          <iframe
-            src="http://localhost:4200/donate-widget/11?apiKey=API_KEY"
-            width="700"
-            height="900"
-            title="widget"
-            style={{ border: "0px" }}
-          ></iframe>
+          />
         </section>
         <section className="flex flex-col gap-3 max-sm:items-center">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
