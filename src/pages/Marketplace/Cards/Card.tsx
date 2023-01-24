@@ -14,7 +14,6 @@ const PLACEHOLDER_TAGLINE = " ";
 export default function Card({
   active_in_countries,
   name,
-  logo,
   image,
   id,
   endow_type,
@@ -30,7 +29,7 @@ export default function Card({
           {endow_type === "Charity" ? "Non-profit" : "For-profit"}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
-        <BookmarkBtn name={name} endowId={id} logo={logo} />
+        <BookmarkBtn endowId={id} />
       </div>
       <Link
         to={`${appRoutes.profile}/${id}`}

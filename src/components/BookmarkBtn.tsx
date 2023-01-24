@@ -1,4 +1,5 @@
 import { PropsWithChildren, useRef, useState } from "react";
+import { EndowmentBookmark } from "types/aws";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
@@ -9,13 +10,9 @@ import Icon from "components/Icon";
 import Popup from "components/Popup";
 import Tooltip from "components/Tooltip";
 
-type Props = PropsWithChildren<{
-  endowId: number;
-  name: string;
-  logo: string;
-}>;
+type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 
-export default function BookmarkBtn({ endowId, name, logo, children }: Props) {
+export default function BookmarkBtn({ endowId, children }: Props) {
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 

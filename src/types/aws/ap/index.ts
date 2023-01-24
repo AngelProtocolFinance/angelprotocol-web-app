@@ -9,13 +9,14 @@ type EndowmentBase = {
   id: number;
   image: string;
   kyc_donors_only: boolean;
-  logo: string;
+
   name: string;
   tagline?: string;
 };
 
 export type EndowmentProfile = EndowmentBase & {
   contact_email: string;
+  logo: string;
   overview: string;
   registration_number?: string;
   social_media_urls: {
