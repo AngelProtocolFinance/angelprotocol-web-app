@@ -5,7 +5,13 @@ import { useForm } from "react-hook-form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
+import { IS_TEST } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { FormValues } from "./schema";
+
+const APP_URL = IS_TEST
+  ? "http://localhost:4200"
+  : "https://app.angelprotocol.io";
 
 export default function useWidgetUrlGenerator(
   endowId: string | undefined,
@@ -48,9 +54,8 @@ export default function useWidgetUrlGenerator(
       URL_PARAMS.availableCurrencies,
       formValues.availableCurrencies.map((x) => x.value).join(",")
     );
-
     onChange(
-      [param1, param2, param3, param4, param5].filter((val) => !!val).join("&")
+      `${APP_URL}${appRoutes.donate_widget}/${endowId}?apiKey=API_KEY${param1}${param2}${param3}${param4}${param5}`
     );
   }, [endowId, formValues, handleError, onChange]);
 
@@ -62,5 +67,5 @@ function append(
   name: keyof UrlParamValues,
   values?: string | number
 ): string {
-  return condition ? `${name}${!values ? "" : `=${values}`}` : "";
+  return condition ? `&${name}${!values ? "" : `=${values}`}` : "";
 }

@@ -1,21 +1,17 @@
 import { useEffect } from "react";
-import { UrlParamValues } from "./types";
 import APLogo from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
+import useWidgetParams from "./useWidgetParams";
 
-type Props = {
-  className?: string;
+export default function InnerComponent(props: {
   id: number;
   name: string;
   isKYCRequired: boolean;
-  params: UrlParamValues;
-};
-
-export default function InnerComponent(props: Props) {
-  const { hideText, ...rest } = props.params;
+}) {
+  const { hideText, ...rest } = useWidgetParams();
 
   const dispatch = useSetter();
 
@@ -24,11 +20,9 @@ export default function InnerComponent(props: Props) {
   }, [dispatch, props]);
 
   return (
-    <div
-      className={`${props.className || ""} grid grid-rows-[1fr_auto] gap-10`}
-    >
+    <div className="grid grid-rows-[1fr_auto] gap-10">
       <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
-        <header className="flex justify-center items-center gap-10 w-full h-24 z-10">
+        <header className="flex justify-center items-center gap-10 w-full h-24 z-20">
           <h1 className="text-xl sm:text-3xl font-heading font-bold">
             {getPossessiveForm(props.name)} endowment
           </h1>
