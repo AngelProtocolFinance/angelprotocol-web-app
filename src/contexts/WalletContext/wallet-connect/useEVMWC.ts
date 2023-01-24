@@ -36,25 +36,20 @@ export function useEVMWC(): Wallet {
       );
 
       ctor.on(WC_EVENT.connect, async (error, payload) => {
-        try {
-          if (error) {
-            return toast.error("Failed to connect to wallet");
-          }
-          const { accounts, chainId } = payload.params[0];
-          setState({
-            type: "evm-wc",
-            status: "connected",
-            address: accounts[0],
-            chainId: `${chainId}`,
-            provider: getProvider("evm-wc") as any,
-            disconnect,
-          });
-        } catch (err) {
+        if (error) {
           disconnect();
-          toast.error("Error connecting wallet");
-        } finally {
-          QRCodeModal.close();
+          return toast.error("Failed to connect to wallet");
         }
+        const { accounts, chainId } = payload.params[0];
+        setState({
+          type: "evm-wc",
+          status: "connected",
+          address: accounts[0],
+          chainId: `${chainId}`,
+          provider: getProvider("evm-wc") as any,
+          disconnect,
+        });
+        QRCodeModal.close();
       });
     } else {
       const { chainId, accounts } = ctor.session;
@@ -68,10 +63,8 @@ export function useEVMWC(): Wallet {
       });
     }
 
-    ctor.on("session_update", (error, payload) => {
-      if (error) {
-        throw error;
-      }
+    ctor.on(WC_EVENT.update, (error, payload) => {
+      if (error) return;
       // Get updated accounts and chainId
       const { accounts, chainId } = payload.params[0];
       setState((prev) =>
@@ -81,12 +74,7 @@ export function useEVMWC(): Wallet {
       );
     });
 
-    ctor.on("disconnect", (error, payload) => {
-      if (error) {
-        throw error;
-      }
-      setState({ status: "disconnected", connect });
-    });
+    ctor.on(WC_EVENT.disconnect, disconnect);
   }
 
   function disconnect() {
