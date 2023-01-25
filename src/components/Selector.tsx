@@ -52,7 +52,7 @@ export function Selector<
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange: onSelectedChange },
+    field: { value: selected, onChange },
   } = useController<{ [index: string]: VarOption<Multiple, ValueType> }>({
     name: name as any,
   });
@@ -66,7 +66,7 @@ export function Selector<
         disabled={isSubmitting || disabled}
         value={selected}
         by={valueKey}
-        onChange={onSelectedChange}
+        onChange={onChange}
         as="div"
         className={`relative ${container}`}
         multiple={multiple}
