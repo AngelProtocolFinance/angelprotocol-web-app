@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired --max_old_space_size=4096 build",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "build": "react-app-rewired --max_old_space_size=4096 build -- --stats",
+    "analyze": "webpack-bundle-analyzer 'build/bundle-stats.json'",
+    "graph-deps": "depcruise src --include-only '^src/(contexts|components|hooks)/*' --config --output-type dot | dot -T svg > dependency-graph.svg",
     "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
@@ -109,6 +110,7 @@
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
+    "dependency-cruiser": "^12.6.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -120,11 +122,12 @@
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
     "react-test-renderer": "^18.2.0",
-    "source-map-explorer": "^2.5.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "typescript": "<4.8.0",
     "url": "^0.11.0",
-    "web-vitals": "^3.1.1"
+    "util": "^0.12.4",
+    "web-vitals": "^3.1.1",
+    "webpack-bundle-analyzer": "^4.7.0"
   }
 }
