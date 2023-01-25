@@ -1,6 +1,6 @@
-import { UrlParamValues } from "DonateWidget";
-import { URL_PARAMS } from "DonateWidget/constants";
 import { useCallback, useEffect } from "react";
+import { UrlParamValues } from "pages/DonateWidget";
+import { URL_PARAMS } from "pages/DonateWidget/constants";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
