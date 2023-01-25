@@ -11,13 +11,36 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { endowmentId } = useAdminResources();
-  const {
-    data: profile,
-    isLoading,
-    isFetching,
-    isError,
-  } = useProfileQuery(endowmentId);
+  // const { endowmentId } = useAdminResources();
+  // const {
+  //   data: profile,
+  //   isLoading,
+  //   isFetching,
+  //   isError,
+  // } = useProfileQuery(endowmentId);
+  const profile: EndowmentProfile = {
+    active_in_countries: ["Temp"],
+    categories: { sdgs: [1, 2, 3] },
+    contact_email: "sdfa@fads.com",
+    hq: { country: "Iceland" },
+    id: 11,
+    image: "",
+    kyc_donors_only: false,
+    logo: "",
+    name: "Test",
+    overall: 1,
+    overview: "",
+    social_media_urls: {},
+    total_liq: 0,
+    total_lock: 0,
+    registration_number: "1",
+    street_address: "some street",
+    url: "https://www.example.com",
+  };
+
+  const isLoading = false;
+  const isFetching = false;
+  const isError = false;
 
   if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;

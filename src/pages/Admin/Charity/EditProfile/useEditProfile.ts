@@ -33,6 +33,8 @@ export default function useEditProfile() {
     categories_sdgs,
     ...newData
   }) => {
+    return console.log(categories_sdgs);
+
     const [bannerUrl, logoUrl] = await uploadImgs([image, logo]);
 
     const changes: FlatFormValues = {
