@@ -140,7 +140,7 @@ export class WalletError extends APError {
   //based on EIP1193 error spec
   code: number;
   data?: unknown;
-  constructor(message: string | undefined, code = 0, data?: unknown) {
+  constructor(message: string | undefined, code: number, data?: unknown) {
     super("WalletError", message);
     this.code = code;
     this.data = data;

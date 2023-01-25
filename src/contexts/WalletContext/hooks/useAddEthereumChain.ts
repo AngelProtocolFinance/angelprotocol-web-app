@@ -34,7 +34,7 @@ export function useAddEthereumChain() {
           ],
         });
       } catch (addError: any) {
-        throw new WalletError(addError?.message, addError?.code);
+        throw new WalletError(addError?.message, addError?.code || 0);
       }
     },
     [getChain]
