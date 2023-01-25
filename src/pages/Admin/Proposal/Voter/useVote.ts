@@ -7,7 +7,7 @@ import { adminTags, customTags } from "services/juno/tags";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useVote() {
   const {

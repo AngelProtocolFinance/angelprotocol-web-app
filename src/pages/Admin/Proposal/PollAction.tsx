@@ -6,7 +6,7 @@ import { defaultProposalTags } from "services/juno/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";

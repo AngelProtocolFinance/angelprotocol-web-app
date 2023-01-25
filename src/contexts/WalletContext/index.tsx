@@ -16,7 +16,7 @@ import {
   EVM_SUPPORTED_CHAINS,
   placeholderChain,
 } from "./constants";
-import { useVerifyChain } from "./hooks";
+import { useVerifyChain } from "./hooks/useVerifyChain";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";

@@ -1,9 +1,9 @@
+import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender/types";
 import { AccountType } from "types/contracts";
 import { invalidateApesTags } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { TxPrompt } from "components/Prompt";
+import { TxPrompt } from "components/Prompt/TxPrompt";
 import { useSetter } from "store/accessors";
-import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
 import {
   createAuthToken,
   getWasmAttribute,

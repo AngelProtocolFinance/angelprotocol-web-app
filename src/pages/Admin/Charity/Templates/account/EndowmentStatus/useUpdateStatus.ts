@@ -12,7 +12,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import Popup from "components/Popup";
 import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { getTagPayloads } from "helpers/admin";
 import { cleanObject } from "helpers/cleanObject";
 

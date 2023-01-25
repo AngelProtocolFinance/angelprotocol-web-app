@@ -25,7 +25,7 @@ import {
   saveUserAction,
   toPrefixedHex,
 } from "./helpers";
-import { useAddEthereumChain } from "./hooks";
+import { useAddEthereumChain } from "./hooks/useAddEthereumChain";
 
 const CHAIN_NOT_ADDED_CODE = 4902;
 

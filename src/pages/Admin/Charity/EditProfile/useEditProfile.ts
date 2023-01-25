@@ -6,7 +6,7 @@ import { useEditProfileMutation } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
-import { TxPrompt } from "components/Prompt";
+import { TxPrompt } from "components/Prompt/TxPrompt";
 import { getPayloadDiff } from "helpers/admin";
 import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
 import { appRoutes } from "constants/routes";
