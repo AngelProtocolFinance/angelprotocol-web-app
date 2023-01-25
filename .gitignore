@@ -22,7 +22,6 @@ codecov-report.json
 .env
 .env.local
 .env.test
-dependency-graph.svg
 
 
 package-lock.json 
