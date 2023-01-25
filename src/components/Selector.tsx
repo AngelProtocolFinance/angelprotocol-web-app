@@ -34,7 +34,7 @@ interface Props<
 export const selectorButtonStyle =
   "flex items-center text-sm rounded border border-prim";
 
-const SELECT_ALL: OptionType<string> = { label: "Select All", value: "*" };
+const SELECT_ALL = "*";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -69,10 +69,7 @@ export function Selector<
   const handleChange = (changed: any) => {
     // If 'e' is array, that means 'multiple' is 'true'.
     // We check 'Array.isArray(e)' only to help TS compiler narrow the type of 'e'
-    if (
-      !Array.isArray(changed) ||
-      !changed.find((x) => x.value === SELECT_ALL.value)
-    ) {
+    if (!Array.isArray(changed) || !changed.find((x) => x === SELECT_ALL)) {
       return onChange(changed);
     }
 
@@ -111,21 +108,15 @@ export function Selector<
         </Listbox.Button>
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
-            <Listbox.Option
-              key={SELECT_ALL.value}
-              value={SELECT_ALL}
-              className={({ active }) => {
-                return `px-4 py-2 cursor-pointer border-b border-prim${
-                  isAllSelected
-                    ? "bg-blue-l2  dark:bg-blue-d1"
-                    : active
-                    ? "cursor-pointer bg-blue-l3 dark:bg-blue-d2"
-                    : ""
-                }`;
-              }}
-            >
-              {SELECT_ALL.label}
-            </Listbox.Option>
+            <div className="p-4">
+              <Listbox.Option
+                key={SELECT_ALL}
+                value={SELECT_ALL}
+                className="cursor-pointer underline text-blue hover:text-orange"
+              >
+                {isAllSelected ? "Deselect All" : "Select All"}
+              </Listbox.Option>
+            </div>
           )}
           {options.map((o) => (
             <Listbox.Option
