@@ -7,6 +7,7 @@ import { useProfileQuery } from "services/aws/aws";
 import { FormError, FormSkeleton } from "components/admin";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
+import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
 export default function EditProfile() {
@@ -51,10 +52,9 @@ function FormWithContext(props: EndowmentProfile) {
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
     hq_country: { flag: "", name: props.hq.country || "" },
-    categories_sdgs: flatInitial.categories_sdgs.map((x) => ({
-      label: unsdgs[x].title,
-      value: x,
-    })),
+    categories_sdgs: flatInitial.categories_sdgs.map((x) =>
+      getSDGLabelValuePair(x, unsdgs[x].title)
+    ),
     initial: flatInitial,
   };
 
