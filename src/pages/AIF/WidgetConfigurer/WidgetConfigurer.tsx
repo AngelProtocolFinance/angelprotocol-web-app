@@ -36,7 +36,7 @@ export default function WidgetConfigurer() {
         </div>
       </section>
       <div className="grid xl:grid-cols-2 max-xl:justify-center gap-10">
-        <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start w-full sm:max-xl:max-w-lg">
+        <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start w-full max-xl:max-w-lg">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
           <WidgetUrlGenerator endowId={id} onChange={handleOnUrlChange} />
 
