@@ -26,7 +26,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col gap-2 max-w-lg xl:w-4/5 text-sm font-normal font-body"
+        className="flex flex-col gap-2 w-full xl:w-4/5 text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(submit)}
       >
         <Checkbox<FormValues> name="hideText">Hide text</Checkbox>
