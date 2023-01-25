@@ -119,12 +119,12 @@ export function Selector<
               <Listbox.Option
                 key={SELECT_ALL}
                 value={SELECT_ALL}
-                className="cursor-pointer underline text-blue hover:text-orange"
+                className="cursor-pointer text-blue hover:text-orange hover:underline"
               >
                 {isAllSelected ? "Deselect All" : "Select All"}
               </Listbox.Option>
               <button
-                className="cursor-pointer underline text-blue hover:text-orange"
+                className="cursor-pointer text-blue hover:text-orange hover:underline"
                 onClick={() => resetField(name)}
               >
                 Reset
