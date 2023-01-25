@@ -122,10 +122,7 @@ export default function useInjectedProvider(
       }
       if (isNewConnection) {
         //if connection is made via "connect-button"
-        throw new WalletError(
-          err.message || GENERIC_ERROR_MESSAGE,
-          err.code || 0
-        );
+        throw new WalletError(err.message, err.code || 0);
       }
     }
   };
@@ -166,10 +163,7 @@ export default function useInjectedProvider(
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(
-        err?.message || GENERIC_ERROR_MESSAGE,
-        err?.code || 0
-      );
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
@@ -198,10 +192,7 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
-        throw new WalletError(
-          switchError?.message || GENERIC_ERROR_MESSAGE,
-          switchError?.code || 0
-        );
+        throw new WalletError(switchError?.message, switchError?.code || 0);
       }
 
       const accounts = await injectedProvider.request<string[]>({
