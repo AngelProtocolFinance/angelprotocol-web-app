@@ -85,10 +85,7 @@ export default function useKeplr() {
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(
-        err?.message || GENERIC_ERROR_MESSAGE,
-        err?.code || 0
-      );
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
@@ -109,10 +106,7 @@ export default function useKeplr() {
       await requestAccess(chainId, true);
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(
-        err?.message || GENERIC_ERROR_MESSAGE,
-        err?.code || 0
-      );
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
