@@ -1,8 +1,8 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
+import { WithWallet } from "contexts/WalletContext/types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { BtnPrimary, BtnSec } from "components/donation";
 import { BtnOutline } from "components/donation/BtnOutline";

@@ -1,6 +1,6 @@
+import { WithoutInstallers } from "../WalletContext/types";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { WithoutInstallers } from "../WalletContext";
 import { WALLET_METADATA } from "../WalletContext/constants";
 
 export default function InstallWallet(props: {

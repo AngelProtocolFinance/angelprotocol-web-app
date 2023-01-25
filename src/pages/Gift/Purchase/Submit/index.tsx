@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Estimate } from "./types";
+import { WithWallet } from "contexts/WalletContext/types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { BtnOutline, BtnPrim, BtnSec } from "components/gift";
 import { useSetter } from "store/accessors";

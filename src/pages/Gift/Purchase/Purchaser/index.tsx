@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
+import { WithWallet } from "contexts/WalletContext/types";
 import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";

@@ -4,7 +4,7 @@ import { WithdrawMeta } from "pages/Admin/types";
 import { Asset } from "types/contracts";
 import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext";
 import Account from "contracts/Account";
 import CW3Endowment from "contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
