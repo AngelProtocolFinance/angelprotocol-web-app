@@ -74,8 +74,8 @@ export function Selector<
     : false;
 
   const handleChange = (changed: any) => {
-    // If 'e' is array, that means 'multiple' is 'true'.
-    // We check 'Array.isArray(e)' only to help TS compiler narrow the type of 'e'
+    // If 'changed' is array, that means 'multiple' is 'true'.
+    // We check 'Array.isArray(changed)' only to help TS compiler narrow its type
     if (!Array.isArray(changed) || !changed.find((x) => x === SELECT_ALL)) {
       return onChange(changed);
     }
