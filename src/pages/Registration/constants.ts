@@ -1,2 +1,2 @@
 export const GENERIC_ERROR_MESSAGE =
-  "An error occured. Please try again later. If the error persists, please contact support@angelprotocol.io";
+  "An error occurred. Please get in touch with support@angelprotocol.io if the problem persists.";
