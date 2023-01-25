@@ -109,7 +109,7 @@ export function Selector<
             </>
           )}
         </Listbox.Button>
-        <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+        <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
             <Listbox.Option
               key={SELECT_ALL.value}
