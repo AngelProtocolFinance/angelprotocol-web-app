@@ -7,6 +7,6 @@ export function checkXdefiPriority() {
     throw new WalletNotInstalledError("xdefi-wallet");
   }
   if (!dwindow?.xfi?.ethereum?.isMetaMask) {
-    throw new WalletError("Kindly prioritize Xdefi and reload the page", 0);
+    throw new WalletError("Kindly prioritize Xdefi and reload the page");
   }
 }
