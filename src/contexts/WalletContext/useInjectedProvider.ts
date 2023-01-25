@@ -16,7 +16,6 @@ import {
   WalletNotInstalledError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import checkXdefiPriority from "./helpers/checkXdefiPriority";
@@ -122,7 +121,7 @@ export default function useInjectedProvider(
       }
       if (isNewConnection) {
         //if connection is made via "connect-button"
-        throw new WalletError(err.message, err.code || 0);
+        throw new WalletError(err.message, err.code);
       }
     }
   };
@@ -152,8 +151,7 @@ export default function useInjectedProvider(
       } else {
         if (dwindow?.xfi?.ethereum?.isMetaMask) {
           throw new WalletError(
-            "Kindly remove priority to xdefi and reload the page",
-            0
+            "Kindly remove priority to xdefi and reload the page"
           );
         }
       }
@@ -163,7 +161,7 @@ export default function useInjectedProvider(
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(err?.message, err?.code || 0);
+      throw new WalletError(err?.message, err?.code);
     }
   };
 
@@ -192,7 +190,7 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
-        throw new WalletError(switchError?.message, switchError?.code || 0);
+        throw new WalletError(switchError?.message, switchError?.code);
       }
 
       const accounts = await injectedProvider.request<string[]>({

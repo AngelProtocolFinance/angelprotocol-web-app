@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { InjectedProvider } from "types/ethereum";
 import { useLazyChainQuery } from "services/apes";
 import { WalletError } from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EIPMethods } from "constants/ethereum";
 import toPrefixedHex from "../helpers/toPrefixedHex";
 
@@ -35,7 +34,7 @@ export function useAddEthereumChain() {
           ],
         });
       } catch (addError: any) {
-        throw new WalletError(addError?.message, addError?.code || 0);
+        throw new WalletError(addError?.message, addError?.code);
       }
     },
     [getChain]
