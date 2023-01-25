@@ -89,7 +89,7 @@ function Step({
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-orange" : "border-prim"
+            isDone ? "bg-orange" : "border border-prim"
           } rounded-full transform -translate-x-1/2`}
         />
         <span
