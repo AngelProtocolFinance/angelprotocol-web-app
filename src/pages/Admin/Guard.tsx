@@ -2,7 +2,6 @@ import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
 import { AdminResources } from "services/types";
-import { CW3Config, EndowmentDetails } from "types/contracts";
 import { useAdminResourcesQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
@@ -11,34 +10,25 @@ import Loader from "components/Loader";
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
-  // const { wallet } = useGetWallet();
-  // const { id } = useParams<AdminParams>();
+  const { wallet } = useGetWallet();
+  const { id } = useParams<AdminParams>();
 
-  // const { data, isLoading, isError } = useAdminResourcesQuery(
-  //   {
-  //     user: wallet?.address!,
-  //     endowmentId: id!,
-  //   },
-  //   { skip: !wallet || !id }
-  // );
+  const { data, isLoading, isError } = useAdminResourcesQuery(
+    {
+      user: wallet?.address!,
+      endowmentId: id!,
+    },
+    { skip: !wallet || !id }
+  );
 
-  // if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
+  if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
 
-  // if (isLoading)
-  //   return <GuardPrompt message="Checking wallet credentials" showLoader />;
+  if (isLoading)
+    return <GuardPrompt message="Checking wallet credentials" showLoader />;
 
-  // if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
+  if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
 
-  // if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
-  const data: AdminResources = {
-    cw3: "",
-    cw3config: {} as CW3Config,
-    cw4: "",
-    endowment: {} as EndowmentDetails,
-    endowmentId: 11,
-    propMeta: { successMeta: { message: "" }, tagPayloads: [] },
-    role: "charity",
-  };
+  if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
 
   return (
     <context.Provider value={data}>{props.children(data)}</context.Provider>
