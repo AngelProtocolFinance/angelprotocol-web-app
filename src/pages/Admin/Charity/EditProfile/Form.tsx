@@ -17,13 +17,13 @@ import {
 import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
-const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({
-  value: +key as UNSDG_NUMS,
-  label: `${key} - ${title}`,
-}));
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
+  getSDGLabelValuePair(key, title)
+);
 
 export default function Form() {
   const { editProfile, isSubmitDisabled, id } = useEditProfile();
