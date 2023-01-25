@@ -125,7 +125,7 @@ export default function useInjectedProvider(
       }
       if (isNewConnection) {
         //if connection is made via "connect-button"
-        throw new WalletError(err.message, err.code);
+        throw new WalletError(err.message, err.code || 0);
       }
     }
   };
@@ -155,7 +155,8 @@ export default function useInjectedProvider(
       } else {
         if (dwindow?.xfi?.ethereum?.isMetaMask) {
           throw new WalletError(
-            "Kindly remove priority to xdefi and reload the page"
+            "Kindly remove priority to xdefi and reload the page",
+            0
           );
         }
       }
@@ -165,7 +166,7 @@ export default function useInjectedProvider(
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(err?.message, err?.code);
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
@@ -194,7 +195,7 @@ export default function useInjectedProvider(
       });
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
-        throw new WalletError(switchError?.message, switchError?.code);
+        throw new WalletError(switchError?.message, switchError?.code || 0);
       }
 
       const accounts = await injectedProvider.request<string[]>({

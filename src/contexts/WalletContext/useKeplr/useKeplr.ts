@@ -64,7 +64,7 @@ export default function useKeplr() {
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
         if (/key/.test(err?.message)) {
-          throw new WalletError("Your Keplr account is not logged in");
+          throw new WalletError("Your Keplr account is not logged in", 0);
         }
         //if connection is made via "connect-button"
         throw err;
@@ -84,7 +84,7 @@ export default function useKeplr() {
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(err?.message, err?.code);
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
@@ -105,7 +105,7 @@ export default function useKeplr() {
       await requestAccess(chainId, true);
     } catch (err: any) {
       setIsLoading(false);
-      throw new WalletError(err?.message, err?.code);
+      throw new WalletError(err?.message, err?.code || 0);
     }
   };
 
