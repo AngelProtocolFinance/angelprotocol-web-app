@@ -1,7 +1,6 @@
 import { WithoutInstallers } from "contexts/WalletContext/types";
 import { Chain } from "types/aws";
 import { WALLET_METADATA } from "contexts/WalletContext/constants";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EXPECTED_NETWORK_TYPE } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
@@ -12,7 +11,7 @@ interface IAPError extends Error {
 
 export abstract class APError extends Error implements IAPError {
   discriminator: string;
-  constructor(name: string, message = GENERIC_ERROR_MESSAGE) {
+  constructor(name: string, message: string) {
     super(message);
     this.name = name;
     this.discriminator = AP_ERROR_DISCRIMINATOR;
@@ -140,7 +139,7 @@ export class WalletError extends APError {
   //based on EIP1193 error spec
   code: number;
   data?: unknown;
-  constructor(message: string | undefined, code: number, data?: unknown) {
+  constructor(message: string, code: number, data?: unknown) {
     super("WalletError", message);
     this.code = code;
     this.data = data;
