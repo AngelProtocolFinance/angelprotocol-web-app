@@ -62,7 +62,29 @@ export function Selector<
   const labelId = `${name}.${labelKey}`;
   const valueKey: keyof OptionType<ValueType> = "value";
 
-  const allOptions = multiple ? [SELECT_ALL, ...options] : options;
+  const isAllSelected = multiple
+    ? (selected as OptionType<ValueType>[]).length === options.length
+    : false;
+
+  const handleChange = (changed: any) => {
+    // If 'e' is array, that means 'multiple' is 'true'.
+    // We check 'Array.isArray(e)' only to help TS compiler narrow the type of 'e'
+    if (
+      !Array.isArray(changed) ||
+      !changed.find((x) => x.value === SELECT_ALL.value)
+    ) {
+      return onChange(changed);
+    }
+
+    const wasPrevAllSelected =
+      (selected as OptionType<ValueType>[]).length === options.length;
+
+    if (wasPrevAllSelected) {
+      onChange([]);
+    } else {
+      onChange(options);
+    }
+  };
 
   return (
     <>
@@ -70,10 +92,7 @@ export function Selector<
         disabled={isSubmitting || disabled}
         value={selected}
         by={valueKey}
-        onChange={(e) => {
-          console.log(e);
-          onChange(e);
-        }}
+        onChange={handleChange}
         as="div"
         className={`relative ${container}`}
         multiple={multiple}
@@ -91,7 +110,24 @@ export function Selector<
           )}
         </Listbox.Button>
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
-          {allOptions.map((o) => (
+          {multiple && (
+            <Listbox.Option
+              key={SELECT_ALL.value}
+              value={SELECT_ALL}
+              className={({ active }) => {
+                return `px-4 py-2 cursor-pointer border-b border-prim${
+                  isAllSelected
+                    ? "bg-blue-l2  dark:bg-blue-d1"
+                    : active
+                    ? "cursor-pointer bg-blue-l3 dark:bg-blue-d2"
+                    : ""
+                }`;
+              }}
+            >
+              {SELECT_ALL.label}
+            </Listbox.Option>
+          )}
+          {options.map((o) => (
             <Listbox.Option
               key={o.value}
               value={o}
