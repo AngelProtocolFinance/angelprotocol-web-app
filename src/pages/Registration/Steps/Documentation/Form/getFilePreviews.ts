@@ -8,6 +8,7 @@ export async function getFilePreviews<T extends { [index: string]: Asset }>(
   const files = Object.entries(fields).flatMap<File>(
     ([, asset]) => asset.files
   );
+
   const cid = await uploadToIpfs(files);
   const result: any = {};
 
