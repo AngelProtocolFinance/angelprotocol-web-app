@@ -1,7 +1,12 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { ReactNode } from "react";
-import { FieldValues, Path, useController } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
 
 type ValKey = string | number;
@@ -59,6 +64,8 @@ export function Selector<
     name: name as any,
   });
 
+  const { resetField } = useFormContext<T>();
+
   const labelId = `${name}.${labelKey}`;
   const valueKey: keyof OptionType<ValueType> = "value";
 
@@ -108,7 +115,7 @@ export function Selector<
         </Listbox.Button>
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
-            <div className="p-4">
+            <div className="flex justify-between p-4">
               <Listbox.Option
                 key={SELECT_ALL}
                 value={SELECT_ALL}
@@ -116,6 +123,12 @@ export function Selector<
               >
                 {isAllSelected ? "Deselect All" : "Select All"}
               </Listbox.Option>
+              <button
+                className="cursor-pointer underline text-blue hover:text-orange"
+                onClick={() => resetField(name)}
+              >
+                Reset
+              </button>
             </div>
           )}
           {options.map((o) => (
