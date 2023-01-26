@@ -17,6 +17,7 @@ import {
   WalletNotInstalledError,
 } from "errors/errors";
 import { chainIDs } from "constants/chains";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EIPMethods } from "constants/ethereum";
 import { WALLET_METADATA } from "./constants";
 import {
@@ -126,7 +127,7 @@ export default function useInjectedProvider(
       if (isNewConnection) {
         //if connection is made via "connect-button"
         throw new WalletError(
-          err.message || "Unknown error occured",
+          err.message || GENERIC_ERROR_MESSAGE,
           err.code || 0
         );
       }
@@ -170,7 +171,7 @@ export default function useInjectedProvider(
     } catch (err: any) {
       setIsLoading(false);
       throw new WalletError(
-        err?.message || "Unknown error occured",
+        err?.message || GENERIC_ERROR_MESSAGE,
         err?.code || 0
       );
     }
@@ -202,7 +203,7 @@ export default function useInjectedProvider(
     } catch (switchError: any) {
       if (switchError?.code !== CHAIN_NOT_ADDED_CODE) {
         throw new WalletError(
-          switchError?.message || "Unknown error occured",
+          switchError?.message || GENERIC_ERROR_MESSAGE,
           switchError?.code || 0
         );
       }

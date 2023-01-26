@@ -53,8 +53,8 @@ export default function App() {
               <Route index element={<Marketplace />} />
             </Route>
             <Route
-              path="/:url*(/+)"
-              element={<Navigate replace to={location.pathname.slice(0, -1)} />}
+              path="*"
+              element={<Navigate replace to={appRoutes.index} />}
             />
           </Routes>
         </ModalContext>
