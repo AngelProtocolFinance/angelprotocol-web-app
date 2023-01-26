@@ -13,10 +13,10 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: 2, c: 3, d:[1], e: [1, 2] },
-        { a: 4, b: 5, c: 6, d: [1, 2], e: [1] }
+        { a: 1, b: 2, c: 3, d:[1], e: [1, 2], f: [1, 2] },
+        { a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] }
       )
-    ).toStrictEqual({ a: 4, b: 5, c: 6, d: [1, 2], e: [1] });
+    ).toStrictEqual({ a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] });
   });
 
   test("if prev !== next, include next if it's truthy (including 0, '', [] and false)", () => {
