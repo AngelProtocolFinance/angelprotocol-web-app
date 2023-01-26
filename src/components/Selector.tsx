@@ -39,8 +39,6 @@ interface Props<
 export const selectorButtonStyle =
   "flex items-center text-sm rounded border border-prim";
 
-const SELECT_ALL = "*";
-
 const labelKey: keyof OptionType<string> = "label";
 
 export function Selector<
@@ -73,17 +71,13 @@ export function Selector<
     ? (selected as OptionType<ValueType>[]).length === options.length
     : false;
 
-  const handleChange = (changed: any) => {
-    // If 'changed' is array, that means 'multiple' is 'true'.
-    // We check 'Array.isArray(changed)' only to help TS compiler narrow its type
-    if (!Array.isArray(changed) || !changed.find((x) => x === SELECT_ALL)) {
-      return onChange(changed);
-    }
-
-    const wasPrevAllSelected =
+  const handleSelectAll = () => {
+    // this func is called only in component that appears when 'multiple === true'
+    // so we can assume that 'selected' is an array
+    const previouslyAllSelected =
       (selected as OptionType<ValueType>[]).length === options.length;
 
-    if (wasPrevAllSelected) {
+    if (previouslyAllSelected) {
       onChange([]);
     } else {
       onChange(options);
@@ -96,7 +90,7 @@ export function Selector<
         disabled={isSubmitting || disabled}
         value={selected}
         by={valueKey}
-        onChange={handleChange}
+        onChange={onChange}
         as="div"
         className={`relative ${container}`}
         multiple={multiple}
@@ -116,13 +110,12 @@ export function Selector<
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
             <div className="flex justify-between p-4">
-              <Listbox.Option
-                key={SELECT_ALL}
-                value={SELECT_ALL}
+              <button
                 className="cursor-pointer text-blue hover:text-orange hover:underline"
+                onClick={handleSelectAll}
               >
                 {isAllSelected ? "Deselect All" : "Select All"}
-              </Listbox.Option>
+              </button>
               <button
                 className="cursor-pointer text-blue hover:text-orange hover:underline"
                 onClick={() => resetField(name)}
