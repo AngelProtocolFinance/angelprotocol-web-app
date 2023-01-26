@@ -23,7 +23,7 @@ export default function InnerComponent(props: {
     <div className="grid grid-rows-[1fr_auto] gap-10 bg-white">
       <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
         <header className="flex justify-center items-center gap-10 w-full h-24 z-20">
-          <h1 className="text-xl sm:text-3xl font-heading font-bold">
+          <h1 className="text-lg sm:text-3xl font-heading font-bold">
             {getPossessiveForm(props.name)} endowment
           </h1>
           <WalletSuite />
@@ -31,13 +31,13 @@ export default function InnerComponent(props: {
         <section className="flex flex-col items-center gap-5 h-full">
           {!hideText && (
             <>
-              <p className="font-body text-sm sm:text-base">
+              <p className="font-body text-xs sm:text-base">
                 Donate today to {getPossessiveForm(props.name)} endowment. Your
                 donation will be protected and compounded in perpetuity to
                 provide {props.name} with a long-term, sustainable runway. Give
                 once, give forever!
               </p>
-              <p className="font-body text-sm sm:text-base">
+              <p className="font-body text-xs sm:text-base">
                 Make sure to check out the many crypto and fiat donation
                 options. You will be given the chance to provide your personal
                 details to receive an immediate tax receipt.
