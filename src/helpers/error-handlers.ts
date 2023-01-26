@@ -25,7 +25,7 @@ function isEIP1193Error(error: unknown): error is EIPError {
   return typeof error === "object" && error !== null && "code" in error;
 }
 
-export const handleEIPError: ErrorHandler = (error, callback, next) => {
+export const eipHandler: ErrorHandler = (error, callback, next) => {
   if (!isEIP1193Error(error)) {
     next?.(error, callback);
     return;
@@ -66,7 +66,7 @@ export const handleEIPError: ErrorHandler = (error, callback, next) => {
   }
 };
 
-export const handleTerraError: ErrorHandler = (err, callback, next) => {
+export const terraHandler: ErrorHandler = (err, callback, next) => {
   if (err instanceof UserDenied) {
     callback("User rejected request");
   } else if (err instanceof Timeout) {
@@ -92,13 +92,5 @@ export const handleTerraError: ErrorHandler = (err, callback, next) => {
   }
 };
 
-export function handleError(...handlers: ErrorHandler[]): ErrorHandler {
-  return (error, callback, next) => {
-    const [handler, ...rest] = handlers;
-    if (handler) {
-      handler(error, callback, handleError(...rest));
-    } else {
-      next?.(error, callback);
-    }
-  };
-}
+export const handleError = (...handlers: ErrorHandler[]) =>
+  handlers.reduce((prev, curr) => (err, cb) => prev(err, cb, curr));
