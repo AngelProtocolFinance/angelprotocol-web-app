@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Icon from "components/Icon";
 import Split from "./Split";
 
@@ -6,13 +6,6 @@ type Props = { classes?: string; unfold?: boolean };
 
 export default function AdvancedOptions({ classes = "", unfold }: Props) {
   const [isOpen, setIsOpen] = useState(unfold);
-
-  useEffect(() => {
-    if (isOpen !== unfold) {
-      setIsOpen(unfold);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unfold]);
 
   function toggle() {
     setIsOpen((prev) => !prev);
