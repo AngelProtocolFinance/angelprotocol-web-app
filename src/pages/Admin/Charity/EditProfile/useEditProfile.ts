@@ -30,6 +30,7 @@ export default function useEditProfile() {
     image,
     logo,
     hq_country,
+    categories_sdgs,
     ...newData
   }) => {
     const [bannerUrl, logoUrl] = await uploadImgs([image, logo]);
@@ -38,6 +39,7 @@ export default function useEditProfile() {
       image: bannerUrl,
       logo: logoUrl,
       hq_country: hq_country.name,
+      categories_sdgs: categories_sdgs.map((opt) => opt.value),
       ...newData,
     };
     const diff = getPayloadDiff(initial, changes);
@@ -49,10 +51,8 @@ export default function useEditProfile() {
     /** already clean - no need to futher clean "": to unset values { field: val }, field must have a value 
      like ""; unlike contracts where if fields is not present, val is set to null.
     */
-    const { sdg, ...restDiff } = diff;
     const updates: Partial<EndowmentProfileUpdate> = {
-      ...restDiff,
-      ...(sdg != null ? { categories_sdgs: [sdg] } : {}),
+      ...diff,
       id: endowmentId,
       owner: endowment.owner,
     };
