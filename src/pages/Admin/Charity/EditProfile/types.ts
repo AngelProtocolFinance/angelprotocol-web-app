@@ -2,6 +2,7 @@ import { CountryOption } from "services/types";
 import { EndowmentProfileUpdate } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
+import { OptionType } from "components/Selector";
 
 type K = keyof EndowmentProfileUpdate;
 const _logo: K = "logo";
@@ -18,7 +19,6 @@ const _tagline: K = "tagline";
 export type FlatFormValues = Omit<
   EndowmentProfileUpdate,
   /** to flatten */
-  | typeof _sdgs
   /** don't include for now */
   | typeof _general
   | typeof _active_countries
@@ -27,14 +27,15 @@ export type FlatFormValues = Omit<
   | typeof _id
   | typeof _tier
   | typeof _owner
-> & { sdg: UNSDG_NUMS };
+>;
 
 export type FormValues = Omit<
   FlatFormValues,
-  typeof _logo | typeof _img | typeof _country
+  typeof _logo | typeof _img | typeof _country | typeof _sdgs
 > & {
   [_logo]: ImgLink;
   [_img]: ImgLink;
   [_country]: CountryOption;
+  [_sdgs]: OptionType<UNSDG_NUMS>[];
   initial: FlatFormValues;
 };

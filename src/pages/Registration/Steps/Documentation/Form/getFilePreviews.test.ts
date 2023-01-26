@@ -1,6 +1,5 @@
-import { cid } from "setupTests";
 import { FileObject } from "types/aws";
-import { IPFS_GATEWAY } from "helpers";
+import { Bucket, bucketURL } from "helpers/uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";
 
 const file1 = new File([], "file1");
@@ -11,18 +10,24 @@ const preview1: FileObject = { name: "preview1", publicUrl: "preview1Url" };
 const preview2: FileObject = { name: "preview2", publicUrl: "preview2Url" };
 const preview3: FileObject = { name: "preview3", publicUrl: "preview3Url" };
 
+const timeStamp = 123456789;
+const bucket: Bucket = "endow-reg";
+const baseURL: string = `https://${bucket}.${bucketURL}/${timeStamp}`;
+
 const result1: FileObject = {
   name: file1.name,
-  publicUrl: `${IPFS_GATEWAY}/${cid}/${file1.name}`,
+  publicUrl: `${baseURL}-${file1.name}`,
 };
 const result2: FileObject = {
   name: file2.name,
-  publicUrl: `${IPFS_GATEWAY}/${cid}/${file2.name}`,
+  publicUrl: `${baseURL}-${file2.name}`,
 };
 const result3: FileObject = {
   name: file3.name,
-  publicUrl: `${IPFS_GATEWAY}/${cid}/${file3.name}`,
+  publicUrl: `${baseURL}-${file3.name}`,
 };
+
+const uploadFiles = jest.fn();
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {
@@ -31,6 +36,8 @@ describe("get documentation file previews", () => {
       b: { files: [file1, file3], previews: [] },
       c: { files: [file2, file1, file3], previews: [] },
     };
+    Date.now = jest.fn(() => timeStamp);
+    uploadFiles.mockResolvedValue(baseURL);
     const previews = await getFilePreviews(documentationVals);
     expect(previews).toStrictEqual({
       a: [result1],
@@ -39,6 +46,8 @@ describe("get documentation file previews", () => {
     });
   });
   test("previous upload is used when no new files", async () => {
+    Date.now = jest.fn(() => timeStamp);
+    uploadFiles.mockResolvedValue(baseURL);
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [file1], previews: [preview1, preview2] },
       b: { files: [], previews: [preview3, preview2] },
@@ -52,6 +61,7 @@ describe("get documentation file previews", () => {
     });
   });
   test("return empty arrays when no new files and previews are empty", async () => {
+    uploadFiles.mockResolvedValue(null);
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [], previews: [preview1] },
       b: { files: [], previews: [] },
