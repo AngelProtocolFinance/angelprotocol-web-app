@@ -1,5 +1,3 @@
-import { isEmpty } from "helpers/isEmpty";
-
 //NOTE: intended for shallow form objects only atm
 export function getPayloadDiff<T extends object>(prev: T, next: T): Partial<T> {
   const diff: any = {};
