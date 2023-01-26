@@ -1,9 +1,10 @@
 import { APIs } from "constants/urls";
 import { createAuthToken } from "./createAuthToken";
 
+const SPACES = /\s+/g;
 export async function uploadFiles(
   files: File[],
-  bucket: "endow-profiles | endow_reg"
+  bucket: "endow-profiles" | "endow_reg"
 ): Promise<string | null> {
   if (files.length <= 0) return null;
 
@@ -19,7 +20,7 @@ export async function uploadFiles(
         body: JSON.stringify({
           bucket,
           dataUri: dataURLs[idx],
-          fileName: getUploadedName(f.name, timeStamp),
+          fileName: `${timeStamp}-$_${f.name.replace(SPACES, "_")}`,
         }),
         headers: { authorization },
       })
@@ -30,13 +31,8 @@ export async function uploadFiles(
   return `https://${bucket}.s3.amazonaws.com/${timeStamp}`;
 }
 
-function getUploadedName(name: string, timeStamp: number) {
-  return `${timeStamp}-$_${name.replace(/\s+/g, "_")}`;
-}
-
-//https://docs.ipfs.tech/concepts/ipfs-gateway/#gateway-providers
-export function genPublicUrl(baseURL: string, fileName: string) {
-  return `${baseURL}-${fileName.replace(/\s+/g, "_")}`;
+export function getFullURL(baseURL: string, fileName: string) {
+  return `${baseURL}-${fileName.replace(SPACES, "_")}`;
 }
 
 function toDataURL(file: File): Promise<string> {

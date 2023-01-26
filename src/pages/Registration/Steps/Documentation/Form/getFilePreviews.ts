@@ -1,6 +1,6 @@
 import { FileObject } from "types/aws";
 import { Asset } from "components/registration";
-import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 
 export async function getFilePreviews<T extends { [index: string]: Asset }>(
   fields: T
@@ -9,15 +9,15 @@ export async function getFilePreviews<T extends { [index: string]: Asset }>(
     ([, asset]) => asset.files
   );
 
-  const cid = await uploadToIpfs(files);
+  const baseURL = await uploadFiles(files, "endow_reg");
   const result: any = {};
 
   for (const key in fields) {
     const asset = fields[key];
-    if (asset.files.length > 0 && cid) {
+    if (asset.files.length > 0 && baseURL) {
       result[key] = asset.files.map<FileObject>((f) => ({
         name: f.name,
-        publicUrl: genPublicUrl(cid, f.name),
+        publicUrl: getFullURL(baseURL, f.name),
       }));
     } else {
       result[key] = asset.previews;

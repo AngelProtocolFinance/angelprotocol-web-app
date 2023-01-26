@@ -8,7 +8,7 @@ import { useGetWallet } from "contexts/WalletContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { getPayloadDiff } from "helpers/admin";
-import { genPublicUrl, uploadToIpfs } from "helpers/uploadToIpfs";
+import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { appRoutes } from "constants/routes";
 import { createADR36Payload } from "./createADR36Payload";
 
@@ -81,8 +81,8 @@ export default function useEditProfile() {
 
 async function uploadImgs(imgs: ImgLink[]): Promise<string[]> {
   const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
-  const cid = await uploadToIpfs(files);
+  const baseURL = await uploadFiles(files, "endow-profiles");
   return imgs.map((img) =>
-    img.file && cid ? genPublicUrl(cid, img.file.name) : img.publicUrl
+    img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
   );
 }

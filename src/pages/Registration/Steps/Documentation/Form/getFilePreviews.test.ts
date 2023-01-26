@@ -1,6 +1,4 @@
-import { cid } from "setupTests";
 import { FileObject } from "types/aws";
-import { IPFS_GATEWAY } from "helpers";
 import { getFilePreviews } from "./getFilePreviews";
 
 const file1 = new File([], "file1");
