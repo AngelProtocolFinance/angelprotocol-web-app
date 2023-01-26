@@ -1,21 +1,34 @@
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import Checkbox from "components/Checkbox";
-import { BtnPrimary } from "components/donation";
+import { BtnPrimary, BtnSec } from "components/donation";
 import DenomSelector from "./DenomSelector";
 import Split from "./Split";
 import { FormValues } from "./schema";
-import useWidgetUrlGenerator from "./useWidgetUrlGenerator";
+import useSubmit from "./useSubmit";
 
 type Props = { endowId?: string; onChange(url: string): void };
 
+const DEFAULT_VALUES: FormValues = {
+  availableCurrencies: [],
+  hideText: false,
+  hideAdvancedOptions: false,
+  unfoldAdvancedOptions: false,
+  liquidPercentage: 0,
+};
+
 export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
-  const methods = useWidgetUrlGenerator(endowId, onChange);
+  const methods = useForm<FormValues>({ defaultValues: DEFAULT_VALUES });
+
+  const submit = useSubmit(endowId, DEFAULT_VALUES, onChange);
 
   const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
 
   return (
     <FormProvider {...methods}>
-      <div className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body">
+      <form
+        className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body"
+        onSubmit={methods.handleSubmit(submit)}
+      >
         <Checkbox<FormValues> name="hideText">Hide text</Checkbox>
 
         <span>Available currencies:</span>
@@ -36,13 +49,18 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         <span>Define split value by default:</span>
         <Split />
 
-        <BtnPrimary
-          className="max-sm:mx-auto mt-8 w-40"
-          onClick={() => methods.reset()}
-        >
-          Reset Changes
-        </BtnPrimary>
-      </div>
+        <div className="flex gap-3">
+          <BtnSec
+            className="max-sm:mx-auto mt-8 w-40"
+            onClick={() => methods.reset()}
+          >
+            Reset Changes
+          </BtnSec>
+          <BtnPrimary type="submit" className="max-sm:mx-auto mt-8 w-40">
+            Update Snippet
+          </BtnPrimary>
+        </div>
+      </form>
     </FormProvider>
   );
 }

@@ -16,8 +16,6 @@ export default function usePortion(type: string) {
     5
   )}`;
 
-  console.log("pctLiqSplit", pctLiqSplit);
-
   return {
     disp_amount,
     disp_split: isLocked ? pctLockedSplit : pctLiqSplit,
