@@ -11,6 +11,7 @@ import {
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "errors/errors";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useModalContext } from "../ModalContext";
 import InstallWallet from "./InstallWalletContent";
 
@@ -60,7 +61,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else {
         showModal(Prompt, {
           type: "error",
-          children: "Unknown error children",
+          children: GENERIC_ERROR_MESSAGE,
         });
       }
     },
