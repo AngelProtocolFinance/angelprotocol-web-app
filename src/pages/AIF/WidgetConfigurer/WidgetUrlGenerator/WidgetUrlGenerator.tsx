@@ -25,7 +25,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col gap-2 w-4/5 sm:text-lg font-normal font-body"
+        className="flex flex-col gap-2 xl:w-4/5 text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(submit)}
       >
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
@@ -48,7 +48,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         <span>Define split value by default:</span>
         <Split />
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full max-xl:justify-center mt-8">
           <button
             type="reset"
             className="btn-outline-filled btn-donate max-sm:mx-auto mt-8 w-40"
