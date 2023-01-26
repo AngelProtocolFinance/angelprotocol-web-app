@@ -9,7 +9,7 @@ export async function getFilePreviews<T extends { [index: string]: Asset }>(
     ([, asset]) => asset.files
   );
 
-  const baseURL = await uploadFiles(files, "endow_reg");
+  const baseURL = await uploadFiles(files, "endow-reg");
   const result: any = {};
 
   for (const key in fields) {

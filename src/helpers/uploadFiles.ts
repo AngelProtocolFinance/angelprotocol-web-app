@@ -1,10 +1,13 @@
 import { APIs } from "constants/urls";
 import { createAuthToken } from "./createAuthToken";
 
+export type Bucket = "endow-profiles" | "endow-reg";
+export const bucketURL = "s3.amazonaws.com";
+
 const SPACES = /\s+/g;
 export async function uploadFiles(
   files: File[],
-  bucket: "endow-profiles" | "endow_reg"
+  bucket: Bucket
 ): Promise<string | null> {
   if (files.length <= 0) return null;
 
@@ -20,7 +23,7 @@ export async function uploadFiles(
         body: JSON.stringify({
           bucket,
           dataUri: dataURLs[idx],
-          fileName: `${timeStamp}-$_${f.name.replace(SPACES, "_")}`,
+          fileName: `${timeStamp}-${f.name.replace(SPACES, "_")}`,
         }),
         headers: { authorization },
       })
@@ -28,7 +31,7 @@ export async function uploadFiles(
   );
 
   //return baseURL and let consumer build file path
-  return `https://${bucket}.s3.amazonaws.com/${timeStamp}`;
+  return `https://${bucket}.${bucketURL}/${timeStamp}`;
 }
 
 export function getFullURL(baseURL: string, fileName: string) {
