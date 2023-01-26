@@ -4,6 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { logger } from "helpers";
 import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };
 
@@ -41,7 +42,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
       } else {
         showModal(Prompt, {
           type: "error",
-          children: "Unknown error children",
+          children: GENERIC_ERROR_MESSAGE,
         });
       }
     },

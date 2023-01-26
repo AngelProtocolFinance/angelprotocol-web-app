@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import { UNSDG_NUMS } from "types/lists";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
+import { Selector } from "components/Selector";
 import {
   FormContainer,
   GroupContainer,
@@ -14,9 +16,14 @@ import {
 } from "components/admin";
 import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
-import SDGSelector from "./SDGSelector";
+import { unsdgs } from "constants/unsdgs";
+import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
+
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
+  getSDGLabelValuePair(key, title)
+);
 
 export default function Form() {
   const { editProfile, isSubmitDisabled, id } = useEditProfile();
@@ -51,7 +58,11 @@ export default function Form() {
         classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
       />
       <Label className="-mb-4">SDG#</Label>
-      <SDGSelector />
+      <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+        multiple
+        name="categories_sdgs"
+        options={sdgOptions}
+      />
       <TextPrim<FV> name="name" label="Charity Name" />
       <TextPrim<FV> name="registration_number" label="Registration number" />
       <TextPrim<FV> name="street_address" label="Street address" />

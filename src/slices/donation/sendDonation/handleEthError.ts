@@ -1,4 +1,5 @@
 import { logger } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 /** TODO: use this with sendDonation */
 export default function handleEthError(error: any, handler: any) {
@@ -17,7 +18,7 @@ export default function handleEthError(error: any, handler: any) {
     case 32603:
       handler({
         step: "error",
-        message: "Unknown error occured.",
+        message: GENERIC_ERROR_MESSAGE,
       });
   }
 }

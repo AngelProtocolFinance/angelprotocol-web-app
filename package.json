@@ -2,6 +2,7 @@
   "name": "angelprotocol-web-app",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "scripts": {
     "build": "react-app-rewired --max_old_space_size=4096 build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
@@ -76,18 +77,20 @@
     "react-router-dom": "^6.2.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
-    "web3.storage": "^4.3.0",
+    "util": "^0.12.5",
     "yup": "^0.32.9"
   },
   "resolutions": {
-    "tailwindcss": "3.2.4"
+    "tailwindcss": "3.2.4",
+    "loader-utils@^2.0.0": "^2.0.4",
+    "loader-utils@^3.2.0": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-syntax-flow": "^7.18.6",
-    "@babel/plugin-transform-react-jsx": "^7.19.0",
+    "@babel/plugin-transform-react-jsx": "^7.20.13",
     "@peculiar/webcrypto": "^1.4.0",
-    "@testing-library/dom": "^8.19.0",
+    "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.2.1",
