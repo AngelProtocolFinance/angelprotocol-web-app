@@ -1,6 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { ReactNode } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import {
   FieldValues,
   Path,
@@ -110,18 +110,10 @@ export function Selector<
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
             <div className="flex justify-between p-4">
-              <button
-                className="cursor-pointer text-blue hover:text-orange hover:underline"
-                onClick={handleSelectAll}
-              >
+              <Action onClick={handleSelectAll}>
                 {isAllSelected ? "Deselect All" : "Select All"}
-              </button>
-              <button
-                className="cursor-pointer text-blue hover:text-orange hover:underline"
-                onClick={() => resetField(name)}
-              >
-                Reset
-              </button>
+              </Action>
+              <Action onClick={() => resetField(name)}>Reset</Action>
             </div>
           )}
           {options.map((o) => (
@@ -159,4 +151,15 @@ function getDisplay(selected: VarOption<any, any>) {
   return Array.isArray(selected)
     ? selected.map((s) => s.label).join(" , ")
     : selected.label;
+}
+
+function Action(props: PropsWithChildren<{ onClick: () => void }>) {
+  return (
+    <button
+      className="cursor-pointer text-blue hover:text-orange hover:underline"
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
 }
