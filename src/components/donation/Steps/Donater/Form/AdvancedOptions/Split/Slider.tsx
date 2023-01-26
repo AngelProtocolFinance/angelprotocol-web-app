@@ -4,9 +4,8 @@ import { DonateValues } from "../../../types";
 export default function Slider({ classes = "" }: { classes?: string }) {
   const {
     register,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useFormContext<DonateValues>();
-  console.log("errors", errors);
 
   return (
     <div className={`${classes} select-none`}>
