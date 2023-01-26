@@ -41,7 +41,7 @@ describe("uploadFiles tests", () => {
     });
   });
 
-  test("returns empty array if files input is empty", async () => {
+  test("returns null if files input is empty", async () => {
     const result = await uploadFiles([], bucket);
     expect(result).toBeNull();
   });
