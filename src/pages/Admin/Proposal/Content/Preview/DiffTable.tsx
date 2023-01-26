@@ -1,7 +1,7 @@
 import { DiffSet } from "types/utils";
 import ImageWrapper from "components/ImageWrapper";
 import TableSection, { Cells } from "components/TableSection";
-import { IPFS_GATEWAY } from "helpers";
+import { bucketURL } from "helpers/uploadFiles";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function DiffTable<T extends object>(props: {
@@ -48,7 +48,7 @@ function createColumn<T extends object>(value: T[keyof T]): JSX.Element {
 
   // if the string value starts with the IPFS gateway URL value, this is surely a file
   // the user has uploaded and a preview should be displayed
-  if (typeof value === "string" && value.startsWith(IPFS_GATEWAY)) {
+  if (typeof value === "string" && value.startsWith(bucketURL)) {
     return (
       <ImageWrapper
         src={value}
