@@ -3512,7 +3512,7 @@ __metadata:
     error-stack-parser: ^2.0.6
     find-up: ^5.0.0
     html-entities: ^2.1.0
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
     schema-utils: ^3.0.0
     source-map: ^0.7.3
   peerDependencies:
@@ -3862,7 +3862,7 @@ __metadata:
     "@svgr/core": ^5.5.0
     "@svgr/plugin-jsx": ^5.5.0
     "@svgr/plugin-svgo": ^5.5.0
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
   checksum: 540391bd63791625d26d6b5e0dd3c716ef51176bfba53bf0979a1ac4781afd2672f4bef2d76cf3d9cdc8e9ee61bda6863ed405a237b10406633ede4cd524f1cc
   languageName: node
   linkType: hard
@@ -5499,7 +5499,7 @@ __metadata:
   version: 4.0.0
   resolution: "adjust-sourcemap-loader@npm:4.0.0"
   dependencies:
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
     regex-parser: ^2.2.11
   checksum: d524ae23582f41e2275af5d88faab7a9dc09770ed588244e0a76d3196d0d6a90bf02760c71bc6213dbfef3aef4a86232ac9521bfd629752c32b7af37bc74c660
   languageName: node
@@ -6157,7 +6157,7 @@ __metadata:
   resolution: "babel-loader@npm:8.2.5"
   dependencies:
     find-cache-dir: ^3.3.1
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
     make-dir: ^3.1.0
     schema-utils: ^2.6.5
   peerDependencies:
@@ -6429,13 +6429,6 @@ __metadata:
     hoopy: ^0.1.4
     tryer: ^1.0.1
   checksum: 0ca673234170eb3dcf00fb1d867ba274729ab05779dd19b35628c49da7adc32472b5f0bca0554ffdca15b094f9b36f16f2a8992ba8884ebd1d351d7f27abee7b
-  languageName: node
-  linkType: hard
-
-"big.js@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "big.js@npm:5.2.2"
-  checksum: b89b6e8419b097a8fb4ed2399a1931a68c612bce3cfd5ca8c214b2d017531191070f990598de2fc6f3f993d91c0f08aa82697717f6b3b8732c9731866d233c9e
   languageName: node
   linkType: hard
 
@@ -8582,13 +8575,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emojis-list@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "emojis-list@npm:3.0.0"
-  checksum: ddaaa02542e1e9436c03970eeed445f4ed29a5337dfba0fe0c38dfdd2af5da2429c2a0821304e8a8d1cadf27fdd5b22ff793571fa803ae16852a6975c65e8e70
-  languageName: node
-  linkType: hard
-
 "encode-utf8@npm:^1.0.3":
   version: 1.0.3
   resolution: "encode-utf8@npm:1.0.3"
@@ -9806,7 +9792,7 @@ __metadata:
   version: 6.2.0
   resolution: "file-loader@npm:6.2.0"
   dependencies:
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
     schema-utils: ^3.0.0
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
@@ -13042,21 +13028,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loader-utils@npm:^2.0.0":
-  version: 2.0.2
-  resolution: "loader-utils@npm:2.0.2"
-  dependencies:
-    big.js: ^5.2.2
-    emojis-list: ^3.0.0
-    json5: ^2.1.2
-  checksum: 9078d1ed47cadc57f4c6ddbdb2add324ee7da544cea41de3b7f1128e8108fcd41cd3443a85b7ee8d7d8ac439148aa221922774efe4cf87506d4fb054d5889303
-  languageName: node
-  linkType: hard
-
-"loader-utils@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "loader-utils@npm:3.2.0"
-  checksum: c7b9a8dc4b3bc19e9ef563c48e3a18ea9f8bb2da1ad38a12e4b88358cfba5f148a7baf12d78fe78ffcb718ce1e062ab31fcf5c148459f1247a672a4213471e80
+"loader-utils@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "loader-utils@npm:3.2.1"
+  checksum: 4e3ea054cdc8be1ab1f1238f49f42fdf0483039eff920fb1d442039f3f0ad4ebd11fb8e584ccdf2cb7e3c56b3d40c1832416e6408a55651b843da288960cc792
   languageName: node
   linkType: hard
 
@@ -16084,7 +16059,7 @@ __metadata:
     gzip-size: ^6.0.0
     immer: ^9.0.7
     is-root: ^2.1.0
-    loader-utils: ^3.2.0
+    loader-utils: ^3.2.1
     open: ^8.4.0
     pkg-up: ^3.1.0
     prompts: ^2.4.2
@@ -16748,7 +16723,7 @@ __metadata:
   dependencies:
     adjust-sourcemap-loader: ^4.0.0
     convert-source-map: ^1.7.0
-    loader-utils: ^2.0.0
+    loader-utils: ^3.2.1
     postcss: ^7.0.35
     source-map: 0.6.1
   peerDependencies:
