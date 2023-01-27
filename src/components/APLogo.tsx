@@ -1,6 +1,6 @@
 import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
 
-export default function APLogo({ className }: { className?: string }) {
+export default function APLogo({ className = "" }) {
   return (
     <a
       href="https://angelprotocol.io/"
