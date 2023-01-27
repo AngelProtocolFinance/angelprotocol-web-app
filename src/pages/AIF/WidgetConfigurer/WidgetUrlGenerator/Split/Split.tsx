@@ -1,26 +1,31 @@
-import { useFormContext } from "react-hook-form";
-import { FormValues } from "../schema";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
-export default function Split() {
-  const { watch } = useFormContext<FormValues>();
+type Props<T extends FieldValues, K extends Path<T>> = {
+  name: T[K] extends number ? K : never;
+};
 
-  const liquidPercentage = watch("liquidPercentage");
+export default function Split<T extends FieldValues, K extends Path<T>>(
+  props: Props<T, K>
+) {
+  const { watch } = useFormContext<T>();
+
+  const liquidPercentage = watch(props.name);
 
   return (
     <div className="flex gap-2">
       <Portion
-        percentage={100 - liquidPercentage}
+        percentage={100 - Number(liquidPercentage)}
         title="Endowment"
         action="Compounded forever"
       />
       <Portion
-        percentage={liquidPercentage}
+        percentage={Number(liquidPercentage)}
         title="Current"
         action="Instantly available"
       >
-        <Slider className="my-2.5" />
+        <Slider<T> className="my-2.5" name={props.name} />
       </Portion>
     </div>
   );
