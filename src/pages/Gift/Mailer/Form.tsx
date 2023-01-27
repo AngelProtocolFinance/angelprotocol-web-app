@@ -1,10 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
-import { BtnOutline, BtnPrim, BtnSec, TextInput } from "components/gift";
+import { TextInput } from "components/gift";
 import { createAuthToken } from "helpers";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -64,21 +65,24 @@ export default function Form({ classes = "" }) {
         charLimit={500}
       />
       <div className="grid grid-cols-2 gap-5 font-body mt-3">
-        <BtnSec
+        <button
+          type="button"
+          className="btn btn-outline btn-gift-sec"
           onClick={() => {
             reset();
           }}
         >
           Reset
-        </BtnSec>
-        <BtnPrim type="submit">Submit</BtnPrim>
-        <BtnOutline
-          as="link"
+        </button>
+        <button className="btn btn-orange btn-gift" type="submit">
+          Submit
+        </button>
+        <Link
           to={appRoutes.marketplace}
-          className="col-span-full sm:justify-self-center sm:mt-10 px-11 py-3"
+          className="btn btn-outline btn-gift col-span-full sm:justify-self-center sm:mt-10 px-11 py-3"
         >
           Back to the platform
-        </BtnOutline>
+        </Link>
       </div>
     </form>
   );

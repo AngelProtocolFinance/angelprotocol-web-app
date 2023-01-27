@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec } from "components/gift";
 import { useSetter } from "store/accessors";
 import { TError, setStep } from "slices/gift";
 import { appRoutes } from "constants/routes";
@@ -22,12 +22,19 @@ export default function Err({ error }: TError) {
       </h3>
       <p className="text-center">{error}</p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
-        <BtnSec as="link" to={appRoutes.marketplace} className="w-full">
+        <Link
+          className="w-full btn btn-outline btn-gift-sec"
+          to={appRoutes.marketplace}
+        >
           Back to the platform
-        </BtnSec>
-        <BtnPrim onClick={goToForm} className="w-full">
+        </Link>
+        <button
+          type="button"
+          onClick={goToForm}
+          className="w-full btn btn-orange btn-gift"
+        >
           Change payment details
-        </BtnPrim>
+        </button>
       </div>
     </div>
   );

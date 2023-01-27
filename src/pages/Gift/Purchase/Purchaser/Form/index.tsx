@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import { BtnPrim, BtnSec } from "components/gift";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
@@ -35,17 +35,21 @@ export default function Form({ classes = "" }) {
       <Recipient classes="mt-8" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <BtnSec as="link" to={`${appRoutes.profile}/1`}>
+        <Link
+          className="btn btn-outline btn-gift-sec"
+          to={`${appRoutes.profile}/1`}
+        >
           Cancel
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
+          className="btn btn-orange btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
           type="submit"
         >
           Continue
-        </BtnPrim>
+        </button>
       </div>
     </form>
   );
