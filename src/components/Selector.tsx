@@ -67,22 +67,8 @@ export function Selector<
   const labelId = `${name}.${labelKey}`;
   const valueKey: keyof OptionType<ValueType> = "value";
 
-  const isAllSelected = multiple
-    ? (selected as OptionType<ValueType>[]).length === options.length
-    : false;
-
-  const handleSelectAll = () => {
-    // this func is called only in component that appears when 'multiple === true'
-    // so we can assume that 'selected' is an array
-    const previouslyAllSelected =
-      (selected as OptionType<ValueType>[]).length === options.length;
-
-    if (previouslyAllSelected) {
-      onChange([]);
-    } else {
-      onChange(options);
-    }
-  };
+  const isAllSelected =
+    multiple && (selected as OptionType<ValueType>[]).length === options.length;
 
   return (
     <>
@@ -110,12 +96,16 @@ export function Selector<
         <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
           {multiple && (
             <div className="flex justify-between p-4">
-              <Action onClick={handleSelectAll}>
-                {isAllSelected ? "Deselect All" : "Select All"}
-              </Action>
+              {isAllSelected ? (
+                <Action onClick={() => onChange([])}>Deselect All</Action>
+              ) : (
+                <Action onClick={() => onChange(options)}>Select All</Action>
+              )}
+
               <Action onClick={() => resetField(name)}>Reset</Action>
             </div>
           )}
+
           {options.map((o) => (
             <Listbox.Option
               key={o.value}
