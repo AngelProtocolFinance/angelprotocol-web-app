@@ -1,7 +1,12 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { ReactNode } from "react";
-import { FieldValues, Path, useController } from "react-hook-form";
+import { PropsWithChildren, ReactNode } from "react";
+import {
+  FieldValues,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import { DrawerIcon } from "components/Icon";
 
 type ValKey = string | number;
@@ -32,7 +37,7 @@ interface Props<
 }
 
 export const selectorButtonStyle =
-  "flex items-center text-sm rounded border border-gray-l2 dark:border-bluegray";
+  "flex items-center text-sm rounded border border-prim";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -52,13 +57,32 @@ export function Selector<
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange: onSelectedChange },
+    field: { value: selected, onChange },
   } = useController<{ [index: string]: VarOption<Multiple, ValueType> }>({
     name: name as any,
   });
 
+  const { resetField } = useFormContext<T>();
+
   const labelId = `${name}.${labelKey}`;
   const valueKey: keyof OptionType<ValueType> = "value";
+
+  const isAllSelected = multiple
+    ? (selected as OptionType<ValueType>[]).length === options.length
+    : false;
+
+  const handleSelectAll = () => {
+    // this func is called only in component that appears when 'multiple === true'
+    // so we can assume that 'selected' is an array
+    const previouslyAllSelected =
+      (selected as OptionType<ValueType>[]).length === options.length;
+
+    if (previouslyAllSelected) {
+      onChange([]);
+    } else {
+      onChange(options);
+    }
+  };
 
   return (
     <>
@@ -66,7 +90,7 @@ export function Selector<
         disabled={isSubmitting || disabled}
         value={selected}
         by={valueKey}
-        onChange={onSelectedChange}
+        onChange={onChange}
         as="div"
         className={`relative ${container}`}
         multiple={multiple}
@@ -83,7 +107,15 @@ export function Selector<
             </>
           )}
         </Listbox.Button>
-        <Listbox.Options className="rounded-sm text-sm border border-gray-l2 dark:border-bluegray absolute top-full mt-2 z-20 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+        <Listbox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l5 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+          {multiple && (
+            <div className="flex justify-between p-4">
+              <Action onClick={handleSelectAll}>
+                {isAllSelected ? "Deselect All" : "Select All"}
+              </Action>
+              <Action onClick={() => resetField(name)}>Reset</Action>
+            </div>
+          )}
           {options.map((o) => (
             <Listbox.Option
               key={o.value}
@@ -119,4 +151,15 @@ function getDisplay(selected: VarOption<any, any>) {
   return Array.isArray(selected)
     ? selected.map((s) => s.label).join(" , ")
     : selected.label;
+}
+
+function Action(props: PropsWithChildren<{ onClick: () => void }>) {
+  return (
+    <button
+      className="cursor-pointer text-blue hover:text-orange hover:underline"
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
 }

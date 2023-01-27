@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
+import { UNSDG_NUMS } from "types/lists";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
+import { Selector } from "components/Selector";
 import {
   FormContainer,
   GroupContainer,
@@ -14,9 +16,14 @@ import {
 } from "components/admin";
 import { Label } from "components/form";
 import { appRoutes } from "constants/routes";
-import SDGSelector from "./SDGSelector";
+import { unsdgs } from "constants/unsdgs";
+import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
+
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
+  getSDGLabelValuePair(key, title)
+);
 
 export default function Form() {
   const { editProfile, isSubmitDisabled, id } = useEditProfile();
@@ -39,7 +46,7 @@ export default function Form() {
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
+        classes="w-full aspect-[4/1] mb-4 rounded border border-prim"
       />
       <Label className="-mb-4" required>
         Logo
@@ -48,10 +55,14 @@ export default function Form() {
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
+        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
       />
       <Label className="-mb-4">SDG#</Label>
-      <SDGSelector />
+      <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+        multiple
+        name="categories_sdgs"
+        options={sdgOptions}
+      />
       <TextPrim<FV> name="name" label="Charity Name" />
       <TextPrim<FV> name="registration_number" label="Registration number" />
       <TextPrim<FV> name="street_address" label="Street address" />
@@ -63,7 +74,7 @@ export default function Form() {
         fieldName="hq_country"
         classes={{
           container:
-            "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
+            "px-4 border border-prim rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 bg-orange-l6 dark:bg-blue-d7",
           input:
             "text-sm py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
           error: errorStyle,
@@ -75,7 +86,7 @@ export default function Form() {
         placeHolder="A short overview of your charity"
         classes={{
           container:
-            "rich-text-toolbar border border-gray-l2 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
+            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
           error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
           charCounter: "text-gray-d1 dark:text-gray",
         }}

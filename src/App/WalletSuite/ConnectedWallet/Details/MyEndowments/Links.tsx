@@ -12,7 +12,7 @@ export default function Links({ endowmentId }: { endowmentId: number }) {
       </Link>
       <Link
         to={`${appRoutes.admin}/${endowmentId}`}
-        className="px-2 border-l border-gray-l2 dark:border-bluegray text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
+        className="px-2 border-l border-prim text-orange hover:text-orange-l2 decoration-1 hover:decoration-2"
       >
         admin
       </Link>

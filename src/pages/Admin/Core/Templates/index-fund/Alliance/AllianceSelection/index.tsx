@@ -9,7 +9,7 @@ export default function AllianceSelection() {
     useAllianceSelection();
 
   return (
-    <div className="h-96 overflow-auto rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray relative">
+    <div className="h-96 overflow-auto rounded bg-orange-l6 dark:bg-blue-d7 border border-prim relative">
       <Toolbar
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}
@@ -41,7 +41,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-gray-l2 dark:border-bluegray hover:bg-blue hover:bg-blue/10"
+        rowClass="border-b border-prim hover:bg-blue hover:bg-blue/10"
       >
         {props.members.map((member) => (
           <Member key={member.wallet} {...member} />

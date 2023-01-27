@@ -11,10 +11,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
   );
   return (
     <table className="table-auto rounded text-left bg-orange-l6 dark:bg-blue-d7">
-      <TableSection
-        type="thead"
-        rowClass="border-b border-gray-l2 dark:border-bluegray"
-      >
+      <TableSection type="thead" rowClass="border-b border-prim">
         <Cells type="th" cellClass="px-4 py-2 uppercase">
           <>fund id</>
           <>fund name</>

@@ -3,7 +3,7 @@ import { useProfileContext } from "./ProfileContext";
 
 const container = "h-48 w-48";
 
-const logoStyle = `${container} border border-gray-l2 rounded-full object-cover dark:border-bluegray bg-white`;
+const logoStyle = `${container} border border-prim rounded-full object-cover bg-white`;
 
 export default function Logo() {
   return (

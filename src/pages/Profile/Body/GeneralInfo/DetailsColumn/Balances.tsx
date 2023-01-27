@@ -15,7 +15,7 @@ export default function Balances() {
 
 function Balance(props: { title: string; amount: number }) {
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded border border-gray-l2 dark:bg-blue-d6 dark:border-bluegray md:items-start md:h-28 md:px-6 md:py-04">
+    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded border border-prim dark:bg-blue-d6 md:items-start md:h-28 md:px-6 md:py-04">
       <h6 className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </h6>

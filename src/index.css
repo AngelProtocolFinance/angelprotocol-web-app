@@ -96,6 +96,14 @@
     margin: 0;
   }
 
+  .border-prim {
+    @apply border-gray-l2 dark:border-bluegray;
+  }
+
+  .divide-prim {
+    @apply divide-gray-l2 dark:divide-bluegray;
+  }
+
   .line-clamp-2 {
     overflow: hidden;
     display: -webkit-box;
