@@ -18,7 +18,7 @@ import reportWebVitals from "./reportWebVitals";
 initTheme();
 
 const App = lazy(() => import("./App/App"));
-const DonateWidget = lazy(() => import("./DonateWidget"));
+const DonateWidget = lazy(() => import("./pages/DonateWidget"));
 
 const LoaderComponent = () => (
   <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
