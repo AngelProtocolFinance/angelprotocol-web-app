@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues, OnDonation } from "../types";
-import { BtnPrimary, BtnSec } from "components/donation";
-import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -48,27 +47,38 @@ export default function Controls({
 
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
-      <BtnSec onClick={goBack} type="button">
+      <button
+        className="btn btn-outline btn-donate-sec"
+        onClick={goBack}
+        type="button"
+      >
         Back
-      </BtnSec>
+      </button>
       {/** KYC may not be required, and user may skip KYC,
        * but if user want to submit KYC - it should be validated */}
       {isKYCRequired || wantsKYC ? (
-        <BtnPrimary disabled={isSubmitting} type="submit">
+        <button
+          className="btn btn-orange btn-donate"
+          disabled={isSubmitting}
+          type="submit"
+        >
           Continue
-        </BtnPrimary>
+        </button>
       ) : (
-        <BtnPrimary type="button" onClick={skip}>
+        <button
+          className="btn btn-orange btn-donate"
+          type="button"
+          onClick={skip}
+        >
           Continue
-        </BtnPrimary>
+        </button>
       )}
-      <BtnOutline
-        as="link"
+      <Link
         to={appRoutes.profile + `/${endowId}`}
-        className="col-span-full"
+        className="col-span-full btn btn-outline btn-donate"
       >
         Cancel
-      </BtnOutline>
+      </Link>
     </div>
   );
 }

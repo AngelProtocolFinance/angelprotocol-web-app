@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import { BtnPrimary, BtnSec } from "components/donation";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -38,17 +38,21 @@ export default function Form() {
       <AdvancedOptions classes="mt-10" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <BtnSec as="link" to={`${appRoutes.profile}/${endowId}`}>
+        <Link
+          className="btn btn-outline btn-donate-sec"
+          to={`${appRoutes.profile}/${endowId}`}
+        >
           Cancel
-        </BtnSec>
-        <BtnPrimary
+        </Link>
+        <button
+          className="btn btn-orange btn-donate"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }
           type="submit"
         >
           Continue
-        </BtnPrimary>
+        </button>
       </div>
     </form>
   );

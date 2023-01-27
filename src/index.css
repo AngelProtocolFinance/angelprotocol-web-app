@@ -104,6 +104,16 @@
   }
 }
 
+/** pages/donate components */
+@layer components {
+  .btn-donate {
+    @apply text-sm md:text-base;
+  }
+  .btn-donate-sec {
+    @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
+}
+
 @layer utilities {
   .fixed-center {
     @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;

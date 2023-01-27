@@ -4,7 +4,6 @@ import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { BtnPrimary } from "components/donation";
 import { Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
@@ -127,13 +126,13 @@ export default function Form({ classes = "", ...props }: Props) {
         .
       </Checkbox>
       {props.type === "post-donation" ? (
-        <BtnPrimary
-          className="col-span-full"
+        <button
+          className="col-span-full btn btn-orange btn-donate"
           disabled={isSubmitting}
           type="submit"
         >
           {isSubmitting ? "Processing..." : "Submit"}
-        </BtnPrimary>
+        </button>
       ) : (
         <Controls {...props} classes="col-span-full" />
       )}

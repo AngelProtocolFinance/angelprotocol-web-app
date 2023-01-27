@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import Icon from "components/Icon";
-import { BtnPrimary, BtnSec } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
@@ -31,16 +31,19 @@ export default function Err({
         or change your payment method and try again.
       </p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
-        <BtnSec
-          as="link"
+        <Link
           to={appRoutes.profile + `/${endowId}`}
-          className="w-full"
+          className="btn btn-outline btn-donate-sec w-full"
         >
           Back to the platform
-        </BtnSec>
-        <BtnPrimary onClick={goToForm} className="w-full">
+        </Link>
+        <button
+          type="button"
+          onClick={goToForm}
+          className="w-full btn btn-orange btn-donate"
+        >
           Change payment details
-        </BtnPrimary>
+        </button>
       </div>
     </div>
   );
