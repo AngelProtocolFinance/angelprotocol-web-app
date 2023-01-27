@@ -53,7 +53,7 @@ export const apes = createApi({
       },
     }),
     tokens: builder.query<Token[], unknown>({
-      providesTags: [{ type: "tokens" }],
+      providesTags: ["tokens"],
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
     }),
   }),
