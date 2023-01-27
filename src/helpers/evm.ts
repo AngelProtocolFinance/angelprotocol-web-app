@@ -1,9 +1,10 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow, InjectedProvider } from "types/ethereum";
+import { INFURA_ID } from "constants/env";
 
 export const WCProvider = new WalletConnectProvider({
-  infuraId: process.env.REACT_APP_INFURA_ID,
+  infuraId: INFURA_ID,
   qrcodeModalOptions: { mobileLinks: ["metamask"], desktopLinks: [] },
   storageId: "wc_evm",
 });

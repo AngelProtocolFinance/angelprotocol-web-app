@@ -6,6 +6,7 @@ import { FetchedChain, Token, TokenWithBalance } from "types/aws";
 import { queryContract } from "services/juno/queryContract";
 import { condenseToNum } from "helpers";
 import { contracts } from "constants/contracts";
+import { JUNO_LCD_OVERRIDE } from "constants/env";
 import { getERC20Holdings } from "./getERC20Holdings";
 
 type CosmosBalances = { balances: Coin[] };
@@ -18,7 +19,10 @@ export async function fetchBalances(
   const tokens = segragate([chain.native_currency, ...chain.tokens]); //n,s
   if (chain.type === "juno-native" || chain.type === "terra-native") {
     const [natives, gifts, ...cw20s] = await Promise.allSettled([
-      fetch(chain.lcd_url + `/cosmos/bank/v1beta1/balances/${address}`)
+      fetch(
+        (JUNO_LCD_OVERRIDE || chain.lcd_url) +
+          `/cosmos/bank/v1beta1/balances/${address}`
+      )
         .then<CosmosBalances>((res) => {
           if (!res.ok) throw new Error("failed to get native balances");
           return res.json();

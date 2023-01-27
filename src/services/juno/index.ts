@@ -4,13 +4,12 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import { JUNO_LCD } from "constants/env";
 import { rootTags } from "./tags";
-
-export const baseUrl = process.env.REACT_APP_JUNO_LCD_NODE;
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
-    return fetchBaseQuery({ baseUrl })(args, api, extraOptions);
+    return fetchBaseQuery({ baseUrl: JUNO_LCD })(args, api, extraOptions);
   },
   { maxRetries: 1 }
 );
