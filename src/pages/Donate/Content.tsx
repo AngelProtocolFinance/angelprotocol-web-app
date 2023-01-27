@@ -9,7 +9,7 @@ import {
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
 
-export default function Page(props: DonationRecipient) {
+export default function Content(props: DonationRecipient) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
 
