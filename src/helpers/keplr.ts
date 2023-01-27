@@ -4,6 +4,7 @@ import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
+import { JUNO_LCD, JUNO_RPC_OVERRIDE } from "constants/env";
 import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
@@ -35,7 +36,7 @@ export async function getKeplrClient(
 ): Promise<SigningCosmWasmClient> {
   const keplr = getKeplr(providerId);
   return await SigningCosmWasmClient.connectWithSigner(
-    rpcUrl,
+    JUNO_RPC_OVERRIDE || rpcUrl,
     keplr[
       keplr instanceof KeplrWalletConnectV1
         ? "getOfflineSignerOnlyAmino" // TODO: change sendTx to signDirect
@@ -58,7 +59,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
 
   const { tx_response: res } = await fetch(
     /** see swagger definition by visiting lcd endpoint */
-    process.env.REACT_APP_JUNO_LCD_NODE + "/cosmos/tx/v1beta1/txs",
+    JUNO_LCD + "/cosmos/tx/v1beta1/txs",
     {
       method: "POST",
       body: JSON.stringify({
