@@ -1,17 +1,20 @@
-import { useFormContext } from "react-hook-form";
-import { FormValues } from "../schema";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 
-type Props = {
+type Props<T extends FieldValues> = {
+  name: Path<T>;
   className?: string;
 };
 
-export default function Slider({ className = "" }: Props) {
-  const { register } = useFormContext<FormValues>();
+export default function Slider<T extends FieldValues>({
+  className = "",
+  name,
+}: Props<T>) {
+  const { register } = useFormContext<T>();
   return (
     <div className={`${className} select-none`}>
       <input
         className="slider"
-        {...register("liquidPercentage")}
+        {...register(name)}
         min={0}
         max={100}
         type="range"
