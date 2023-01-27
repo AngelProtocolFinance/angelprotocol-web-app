@@ -66,7 +66,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           Back
         </button>
         <button
-          className="btn btn-orange btn-gift-prim"
+          className="btn btn-orange btn-gift"
           onClick={
             isNotEstimated
               ? undefined

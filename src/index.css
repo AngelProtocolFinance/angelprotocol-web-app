@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 @layer base {
   h1,
@@ -21,7 +22,7 @@
   }
 
   button {
-    @apply disabled:cursor-pointer;
+    @apply disabled:cursor-default;
   }
 }
 
@@ -37,9 +38,20 @@
   .slider {
     @apply appearance-none bg-transparent w-full focus:outline-none;
   }
+  /** convert .slider to plain css without @apply*/
+  .slider {
+    -webkit-appearance: none;
+    background: transparent;
+    width: 100%;
+  }
+  .slider:focus {
+    outline: none;
+  }
+
   .slider::-webkit-slider-thumb {
     @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange disabled:bg-gray-l1 cursor-pointer -mt-[5px];
   }
+
   .slider::-moz-range-thumb {
     @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange disabled:bg-gray-l1 cursor-pointer;
   }
@@ -82,7 +94,8 @@
   }
 }
 
-@layer page {
+/** pages/gift components */
+@layer components {
   .btn-gift {
     @apply text-sm;
   }
