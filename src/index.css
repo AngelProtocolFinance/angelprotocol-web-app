@@ -47,7 +47,7 @@
   }
 
   .padded-container {
-    @apply xl:container mx-auto px-5;
+    @apply xl:container xl:mx-auto px-5;
   }
 
   /** set default for input range */
