@@ -156,6 +156,7 @@ function getDisplay(selected: VarOption<any, any>) {
 function Action(props: PropsWithChildren<{ onClick: () => void }>) {
   return (
     <button
+      type="button"
       className="cursor-pointer text-blue hover:text-orange hover:underline"
       onClick={props.onClick}
     >
