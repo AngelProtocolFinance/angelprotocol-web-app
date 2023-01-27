@@ -1,12 +1,8 @@
-import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
-import ModalContext from "contexts/ModalContext";
-import WalletContext from "contexts/WalletContext";
 import { store } from "store/store";
-import { chainOptions } from "constants/chainOptions";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -39,8 +35,6 @@ const regLink = /register/i;
 const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
 
-const TESTNET_WALLETCONNECT_ID = 0;
-
 describe("App.tsx tests", () => {
   // const governanceLinkText = /governance/i;
 
@@ -50,17 +44,7 @@ describe("App.tsx tests", () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <StaticWalletProvider
-            defaultNetwork={
-              chainOptions.walletConnectChainIds[TESTNET_WALLETCONNECT_ID]
-            }
-          >
-            <WalletContext>
-              <ModalContext>
-                <App />
-              </ModalContext>
-            </WalletContext>
-          </StaticWalletProvider>
+          <App />
         </Provider>
       </MemoryRouter>
     );
