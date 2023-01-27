@@ -50,7 +50,7 @@ export default function KadoModal() {
         className="w-full h-full border-none rounded-b"
         title="Buy with Kado"
         onLoad={handleOnLoad}
-      ></IFrame>
+      />
     </Dialog.Panel>
   );
 }
