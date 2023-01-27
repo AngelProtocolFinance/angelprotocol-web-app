@@ -34,18 +34,24 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
   );
 };
 
-// if the regex match validation is not applied conditionally, it wouldn't allow for empty strings/nulls to pass through
-// to other matchers (like `required()`) as it would always be a required field
 export const url = Yup.string()
+  .nullable()
   .when({
-    is: (value: string) => !!value,
-    then: (schema) =>
-      schema.matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "invalid url"
-      ),
-  })
-  .nullable();
+    is: (value: string) => !!value && !/https?:\/\//.test(value),
+    then: Yup.string().test({
+      name: "URL without the HTTP(S) schema",
+      message: "invalid url",
+      test: (value) => {
+        try {
+          new URL(`http://${value}`);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      },
+    }),
+    otherwise: Yup.string().url("invalid url"),
+  });
 
 export const stringByteSchema = (minBytes: number, maxBytes: number) =>
   Yup.string()
