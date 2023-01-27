@@ -4,7 +4,7 @@ import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
-import { JUNO_LCD, JUNO_RPC_OVERRIDE } from "constants/env";
+import { JUNO_LCD } from "constants/env";
 import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
@@ -36,7 +36,7 @@ export async function getKeplrClient(
 ): Promise<SigningCosmWasmClient> {
   const keplr = getKeplr(providerId);
   return await SigningCosmWasmClient.connectWithSigner(
-    JUNO_RPC_OVERRIDE || rpcUrl,
+    rpcUrl,
     keplr[
       keplr instanceof KeplrWalletConnectV1
         ? "getOfflineSignerOnlyAmino" // TODO: change sendTx to signDirect
