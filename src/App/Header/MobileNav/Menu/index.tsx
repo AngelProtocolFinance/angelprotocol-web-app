@@ -2,7 +2,6 @@ import { Dialog } from "@headlessui/react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Logo from "../../Logo";
-import { adminMobileNavId } from "../constants";
 import Links from "./Links";
 
 export default function Menu() {
@@ -23,10 +22,6 @@ export default function Menu() {
       </div>
       <div className="flex flex-col sm:flex-row gap-3 padded-container">
         <Links />
-        <div
-          className="empty:hidden w-full border-t pt-4 sm:pt-0 sm:border-l sm:border-t-0 sm:pl-4 border-white/20"
-          id={adminMobileNavId}
-        />
       </div>
     </Dialog.Panel>
   );

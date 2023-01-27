@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes } from "constants/routes";
 
-export default function Nav({ classes = "" }: { classes?: string }) {
+export default function Nav() {
   return (
-    <div className={`${classes} justify-end`}>
+    <div className="grid content-start border-r border-prim">
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
       </NavLink>
@@ -25,6 +25,6 @@ export default function Nav({ classes = "" }: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "px-2 uppercase text-sm text-center font-semibold font-heading",
+  "p-2 uppercase text-sm font-semibold font-heading",
   "text-orange-l1"
 );

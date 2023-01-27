@@ -1,17 +1,30 @@
-import { Main as AdminMobileNavPortal } from "App/Header/MobileNav/portals/admin";
-import { useAdminResources } from "../Guard";
+import { Route, Routes } from "react-router-dom";
+import { adminRoutes } from "constants/routes";
+import Proposal from "../Proposal";
+import Proposals from "../Proposals";
+import Dashboard from "./Dashboard";
+import EditProfile from "./EditProfile";
+import Investments from "./Investments";
 import Nav from "./Nav";
-import Views from "./Views";
+import Templates from "./Templates";
+import Withdraws from "./Withdraws";
 
 export default function Charity() {
-  const { endowmentId } = useAdminResources();
   return (
-    <div className="padded-container grid grid-rows-[auto_1fr] gap-2 pt-4 pb-8 font-work">
+    <div className="grid grid-cols-[auto_1fr] gap-2">
       <Nav />
-      <div className="block md:hidden">
-        <AdminMobileNavPortal id={endowmentId} />
-      </div>
-      <Views />
+      <Routes>
+        <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
+        <Route path={adminRoutes.proposals} element={<Proposals />} />
+        <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
+        <Route path={adminRoutes.withdraws} element={<Withdraws />} />
+        <Route
+          path={`${adminRoutes.investments}/*`}
+          element={<Investments />}
+        />
+        <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
+        <Route index element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }
