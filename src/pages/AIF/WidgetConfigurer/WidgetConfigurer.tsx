@@ -58,7 +58,7 @@ export default function WidgetConfigurer() {
             src={widgetUrl}
             title="widget"
             className="w-full xl:w-11/12 h-[900px] border border-prim rounded"
-          ></IFrame>
+          />
         </section>
       </div>
     </div>
