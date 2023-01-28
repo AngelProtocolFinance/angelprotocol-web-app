@@ -35,14 +35,11 @@ export default function Form({ classes = "" }) {
       <Recipient classes="mt-8" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
-        <Link
-          className="btn btn-outline btn-gift-sec"
-          to={`${appRoutes.profile}/1`}
-        >
+        <Link className="btn-outline btn-gift" to={`${appRoutes.profile}/1`}>
           Cancel
         </Link>
         <button
-          className="btn btn-orange btn-gift"
+          className="btn-orange btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }

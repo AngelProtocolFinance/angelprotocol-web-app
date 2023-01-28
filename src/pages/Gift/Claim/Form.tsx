@@ -83,7 +83,7 @@ export default function Form({ classes = "" }) {
       </div>
       <button
         type="submit"
-        className="sm:mx-32 btn btn-outline btn-gift-sec"
+        className="sm:mx-32 btn-outline-filled btn-gift"
         disabled={
           isSubmitting || !wallet || wallet.chain.chain_id !== chainIds.juno
         }
@@ -99,7 +99,7 @@ export default function Form({ classes = "" }) {
       <Link
         aria-disabled={isSubmitting}
         to={appRoutes.marketplace}
-        className="sm:mx-32 btn btn-gift btn-orange -mt-3 sm:mt-4"
+        className="sm:mx-32 btn-orange btn-gift -mt-3 sm:mt-4"
       >
         Back to the platform
       </Link>

@@ -23,7 +23,7 @@ export default function Err({ error }: TError) {
       <p className="text-center">{error}</p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <Link
-          className="w-full btn btn-outline btn-gift-sec"
+          className="w-full btn-gift btn-outline-filled"
           to={appRoutes.marketplace}
         >
           Back to the platform
@@ -31,7 +31,7 @@ export default function Err({ error }: TError) {
         <button
           type="button"
           onClick={goToForm}
-          className="w-full btn btn-orange btn-gift"
+          className="w-full btn-gift btn-orange"
         >
           Change payment details
         </button>

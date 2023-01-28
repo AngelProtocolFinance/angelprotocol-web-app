@@ -18,11 +18,11 @@
   }
 
   a {
-    @apply aria-disabled:pointer-events-none;
+    @apply cursor-pointer aria-disabled:pointer-events-none aria-disabled:cursor-default;
   }
 
   button {
-    @apply disabled:cursor-default;
+    @apply cursor-pointer disabled:cursor-default;
   }
 }
 
@@ -77,18 +77,21 @@
   }
 
   .btn {
-    @apply flex items-center justify-center uppercase font-body font-bold transition p-3 rounded focus:outline-none focus-visible:ring-2 cursor-pointer;
+    @apply flex items-center justify-center uppercase font-body font-bold transition p-3 rounded focus:outline-none focus-visible:ring-2;
   }
+}
+
+@layer components {
   .btn-orange {
-    @apply bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
+    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
   .btn-outline {
-    @apply disabled:bg-gray-l2 aria-disabled:bg-gray-l2 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l2 dark:border-bluegray  hover:border-gray-l1 hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l2 aria-disabled:bg-gray-l2 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l2 dark:border-bluegray  hover:border-gray-l1 hover:dark:border-blue-d2;
+  }
+  .btn-blue {
+    @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
   }
 
-  .btn-blue {
-    @apply bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
-  }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
   }
@@ -96,16 +99,17 @@
 
 /** page components */
 @layer components {
+  .btn-outline-filled {
+    @apply bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
   .btn-gift {
     @apply text-sm;
-  }
-  .btn-gift-sec {
-    @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }
 
   .btn-donate {
     @apply text-sm md:text-base;
   }
+
   .btn-donate-sec {
     @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }

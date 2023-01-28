@@ -28,7 +28,7 @@ export default function Success(props: Props) {
 
       <Link
         to={appRoutes.marketplace}
-        className="w-full sm:w-auto min-w-[15.6rem] btn btn-orange btn-gift"
+        className="w-full sm:w-auto min-w-[15.6rem] btn-orange btn-gift"
       >
         Back to the platform
       </Link>
@@ -44,7 +44,7 @@ function Result(props: { hash: string }) {
       </p>
       <ExtLink
         href={getTxUrl(chainIds.juno, props.hash)}
-        className="btn btn-outline btn-gift-sec gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
+        className="btn-gift btn-outline-filled gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
       >
         <Icon type="ExternalLink" size={22} />
         <span>View transaction</span>
@@ -69,7 +69,7 @@ function EmailCode({ secret }: { secret: string }) {
       <Link
         to={`../${routes.mail}`}
         state={{ secret }}
-        className="btn btn-outline btn-gift-sec gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
+        className="btn-outline-filled text-sm  gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
       >
         <Icon type="Email" size={24} />
         <span>Send gift card via email</span>

@@ -67,19 +67,19 @@ export default function Form({ classes = "" }) {
       <div className="grid grid-cols-2 gap-5 font-body mt-3">
         <button
           type="button"
-          className="btn btn-outline btn-gift-sec"
+          className="btn-outline-filled btn-gift"
           onClick={() => {
             reset();
           }}
         >
           Reset
         </button>
-        <button className="btn btn-orange btn-gift" type="submit">
+        <button className="btn-orange btn-gift" type="submit">
           Submit
         </button>
         <Link
           to={appRoutes.marketplace}
-          className="btn btn-outline btn-gift col-span-full sm:justify-self-center sm:mt-10 px-11 py-3"
+          className="btn-outline-filled btn-gift col-span-full sm:justify-self-center sm:mt-10 px-11"
         >
           Back to the platform
         </Link>

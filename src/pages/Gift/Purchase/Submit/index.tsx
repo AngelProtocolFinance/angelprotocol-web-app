@@ -59,14 +59,14 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-12 grid grid-cols-2 gap-5">
         <button
-          className="btn btn-outline btn-gift-sec"
+          className="btn-outline-filled btn-gift"
           onClick={goBack}
           type="button"
         >
           Back
         </button>
         <button
-          className="btn btn-orange btn-gift"
+          className="btn-orange btn-gift"
           onClick={
             isNotEstimated
               ? undefined
@@ -81,7 +81,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         </button>
         <Link
           to={appRoutes.marketplace}
-          className="btn btn-gift btn-outline col-span-full"
+          className="btn-gift btn-outline-filled col-span-full"
         >
           Cancel
         </Link>
