@@ -15,7 +15,6 @@ export default function Slider({ classes = "" }: { classes?: string }) {
         {...register("pctLiquidSplit")}
         min={0}
         max={100}
-        className="slider"
       />
     </div>
   );

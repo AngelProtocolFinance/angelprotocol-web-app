@@ -67,7 +67,6 @@ function Slider() {
       <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
         <input
           {...register("splitToLiquid")}
-          className="w-full slider"
           type="range"
           min="0"
           max="100"
