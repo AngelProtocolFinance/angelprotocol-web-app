@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import Copier from "components/Copier";
-import { BtnPrim, BtnSec } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 export default function RegisteredWallet(props: {
@@ -30,28 +30,30 @@ export default function RegisteredWallet(props: {
             size={{ copy: 26, check: 20 }}
           />
         </p>
-        <BtnSec onClick={props.onChange} className="mt-6">
+        <button
+          type="button"
+          onClick={props.onChange}
+          className="mt-6 btn btn-outline btn-reg-sec"
+        >
           change wallet
-        </BtnSec>
+        </button>
       </div>
 
       <div className="grid grid-cols-2 md:flex gap-3 items-center mt-8">
-        <BtnSec
-          as="link"
+        <Link
           to={`../${steps.doc}`}
           state={data.init}
-          className="min-w-[8rem] text-center"
+          className="min-w-[8rem] btn btn-outline btn-reg-sec"
         >
           Back
-        </BtnSec>
-        <BtnPrim
-          as="link"
+        </Link>
+        <Link
           to={`../${steps.summary}`}
           state={data.init}
-          className="min-w-[8rem] text-center"
+          className="min-w-[8rem] btn btn-orange btn-reg"
         >
           Continue
-        </BtnPrim>
+        </Link>
       </div>
     </div>
   );

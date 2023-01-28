@@ -1,11 +1,10 @@
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { Label } from "components/form";
 import {
-  BtnPrim,
-  BtnSec,
   FileDropzone,
   LoadText,
   TextInput,
@@ -134,22 +133,21 @@ export default function Form() {
         </ExtLink>
       </Checkbox>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <BtnSec
+        <Link
           aria-disabled={isSubmitting}
-          as="link"
           to={`../${steps.contact}`}
           state={data.init}
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] text-center btn btn-outline btn-reg-sec"
         >
           Back
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] text-center btn btn-orange btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
-        </BtnPrim>
+        </button>
       </div>
     </form>
   );

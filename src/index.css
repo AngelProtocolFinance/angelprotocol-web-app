@@ -94,7 +94,7 @@
   }
 }
 
-/** pages/gift components */
+/** page components */
 @layer components {
   .btn-gift {
     @apply text-sm;
@@ -102,14 +102,19 @@
   .btn-gift-sec {
     @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }
-}
 
-/** pages/donate components */
-@layer components {
   .btn-donate {
     @apply text-sm md:text-base;
   }
   .btn-donate-sec {
+    @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
+
+  .btn-reg {
+    @apply text-sm;
+  }
+
+  .btn-reg-sec {
     @apply text-sm bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }
 }

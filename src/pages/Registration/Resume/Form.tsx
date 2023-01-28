@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { FormValues } from "./types";
-import { BtnPrim, BtnSec, Separator, TextInput } from "components/registration";
+import { Separator, TextInput } from "components/registration";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
@@ -21,24 +22,23 @@ export default function Form({ classes = "" }: { classes?: string }) {
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
       />
 
-      <BtnPrim
+      <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24"
+        className="mt-8 mx-0 sm:mx-24 btn btn-orange btn-reg"
         disabled={isSubmitting}
       >
         Resume
-      </BtnPrim>
+      </button>
       <Separator classes="my-11 mx-0 sm:mx-24 before:mr-2 after:ml-2">
         OR
       </Separator>
-      <BtnSec
-        as="link"
-        className="mx-0 sm:mx-24"
+      <Link
+        className="mx-0 sm:mx-24 btn btn-outline btn-reg-sec"
         to=".."
         aria-disabled={isSubmitting}
       >
         Register new account
-      </BtnSec>
+      </Link>
     </form>
   );
 }

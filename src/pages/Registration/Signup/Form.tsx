@@ -1,13 +1,8 @@
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
-import {
-  BtnPrim,
-  BtnSec,
-  Separator,
-  TextInput,
-  checkBoxStyle,
-} from "components/registration";
+import { Separator, TextInput, checkBoxStyle } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
@@ -44,25 +39,24 @@ export default function Form({ classes = "" }: { classes?: string }) {
         </ExtLink>
       </Checkbox>
 
-      <BtnPrim
+      <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24"
+        className="mt-8 mx-0 sm:mx-24 btn btn-orange btn-reg"
         disabled={isSubmitting}
       >
         Register
-      </BtnPrim>
+      </button>
       <Separator classes="my-11 mx-0 sm:mx-24 before:mr-2 after:ml-2">
         OR
       </Separator>
 
-      <BtnSec
-        as="link"
-        className="mx-0 sm:mx-24"
+      <Link
+        className="mx-0 sm:mx-24 btn btn-outline btn-reg-sec"
         to={routes.resume}
         aria-disabled={isSubmitting}
       >
         Resume your registration
-      </BtnSec>
+      </Link>
     </form>
   );
 }

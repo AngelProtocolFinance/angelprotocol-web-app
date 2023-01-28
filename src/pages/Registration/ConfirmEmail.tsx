@@ -4,7 +4,6 @@ import { useRequestEmailMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { BtnPrim } from "components/registration";
 import { handleMutationResult } from "helpers";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
@@ -36,8 +35,8 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         We sent an email to <span className="font-semibold">{email}</span>.
         Please confirm your email by clicking on the link in the message.
       </p>
-      <BtnPrim
-        className="w-full max-w-[26.25rem] mb-4"
+      <button
+        className="w-full max-w-[26.25rem] mb-4 btn btn-orange btn-donate"
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),
@@ -50,7 +49,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         disabled={isLoading}
       >
         Resend verification email
-      </BtnPrim>
+      </button>
 
       <h3 className="font-bold mb-2 text-center">
         Having trouble receiving our confirmation emails?

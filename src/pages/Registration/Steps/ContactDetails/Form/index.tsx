@@ -2,7 +2,7 @@ import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { Selector } from "components/Selector";
 import { Label } from "components/form";
-import { BtnPrim, LoadText, TextInput } from "components/registration";
+import { LoadText, TextInput } from "components/registration";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 
@@ -97,13 +97,13 @@ export default function Form({ classes = "" }: { classes?: string }) {
         classes={{ container: "mt-4" }}
         required
       />
-      <BtnPrim
+      <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-orange btn-reg"
         disabled={isSubmitting}
       >
         <LoadText isLoading={isSubmitting}>Continue</LoadText>
-      </BtnPrim>
+      </button>
     </form>
   );
 }
