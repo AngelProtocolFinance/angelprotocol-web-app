@@ -1,14 +1,14 @@
 import { FundUpdateValues as T } from "pages/Admin/types";
 import { GroupContainer } from "components/admin";
-import { TextInput } from "components/form";
+import { Field } from "components/form";
 import useAddMember from "./useAddMember";
 
 export default function Adder() {
   const { addMember } = useAddMember();
   return (
     <GroupContainer className="mb-2 grid">
-      <TextInput<T>
-        classes="field-group-admin-sec"
+      <Field<T>
+        classes="field-admin-sec"
         label="Endowment Address"
         name="newMemberAddr"
         placeholder="juno123abc..."

@@ -23,7 +23,7 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 bg-white dark:bg-blue-d6 nested-field">
+      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 bg-white dark:bg-blue-d6 field-container">
         <input
           {...register("token.amount")}
           autoComplete="off"

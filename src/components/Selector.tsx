@@ -36,7 +36,7 @@ interface Props<
   children?: (selected: VarOption<M, V>) => ReactNode;
 }
 
-export const selectorButtonStyle = "flex items-center input-field";
+export const selectorButtonStyle = "flex items-center field-input";
 
 const labelKey: keyof OptionType<string> = "label";
 

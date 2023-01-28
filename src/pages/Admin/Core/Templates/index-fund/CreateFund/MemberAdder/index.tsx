@@ -1,6 +1,6 @@
 import { FundCreatorValues as V } from "pages/Admin/types";
 import { GroupContainer } from "components/admin";
-import { TextInput } from "components/form";
+import { Field } from "components/form";
 import Member from "./Member";
 import useAddMember from "./useAddMember";
 
@@ -16,8 +16,8 @@ export default function MemberAdder() {
           ))}
         </div>
       )}
-      <TextInput<V>
-        classes="field-group-admin-sec"
+      <Field<V>
+        classes="field-admin-sec"
         label="Endowment address"
         name="newFundAddr"
         placeholder="juno123abc..."

@@ -36,7 +36,7 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={denomText}
-        className="input-field bg-orange-l6 dark:bg-blue-d7"
+        className="field-input bg-orange-l6 dark:bg-blue-d7"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex">

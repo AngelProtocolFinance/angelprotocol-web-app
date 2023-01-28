@@ -7,7 +7,7 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
 import { FormContainer, GroupContainer, Submitter } from "components/admin";
-import { Label, TextInput } from "components/form";
+import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -55,20 +55,16 @@ export default function Form() {
         multiple
         name="categories_sdgs"
         options={sdgOptions}
-        classes={{ button: "input-field-admin" }}
+        classes={{ button: "field-input-admin" }}
       />
-      <TextInput<FV>
-        classes="field-group-admin"
-        name="name"
-        label="Charity Name"
-      />
-      <TextInput<FV>
-        classes="field-group-admin"
+      <Field<FV> classes="field-admin" name="name" label="Charity Name" />
+      <Field<FV>
+        classes="field-admin"
         name="registration_number"
         label="Registration number"
       />
-      <TextInput<FV>
-        classes="field-group-admin"
+      <Field<FV>
+        classes="field-admin"
         name="street_address"
         label="Street address"
       />
@@ -98,34 +94,34 @@ export default function Form() {
 
       <Label className="-mb-4 font-bold">Social Media</Label>
       <GroupContainer>
-        <TextInput<FV>
-          classes="field-group-admin-sec"
+        <Field<FV>
+          classes="field-admin-sec"
           name="url"
           label="Website"
           placeholder="https://website.org"
         />
-        <TextInput<FV>
-          classes="field-group-admin-sec"
+        <Field<FV>
+          classes="field-admin-sec"
           name="social_media_url_facebook"
           label="Facebook"
           placeholder="https://facebook.com/"
         />
-        <TextInput<FV>
-          classes="field-group-admin-sec"
+        <Field<FV>
+          classes="field-admin-sec"
           name="social_media_url_twitter"
           label="Twitter"
           placeholder="https://twitter.com/"
         />
-        <TextInput<FV>
-          classes="field-group-admin-sec"
+        <Field<FV>
+          classes="field-admin-sec"
           name="social_media_url_linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/"
         />
       </GroupContainer>
 
-      <TextInput<FV>
-        classes="field-group-admin"
+      <Field<FV>
+        classes="field-admin"
         name="contact_email"
         label="Contact email"
         disabled={true}

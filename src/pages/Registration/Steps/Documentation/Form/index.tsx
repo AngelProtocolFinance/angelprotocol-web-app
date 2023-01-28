@@ -3,7 +3,7 @@ import { FormValues as FV } from "../types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Label, TextInput } from "components/form";
+import { Field, Label } from "components/form";
 import { FileDropzone, LoadText, checkBoxStyle } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
@@ -33,7 +33,7 @@ export default function Form() {
         name="proofOfIdentity"
         tooltip={fileTooltip}
       />
-      <TextInput<FV>
+      <Field<FV>
         name="website"
         label="Website of your organization"
         required

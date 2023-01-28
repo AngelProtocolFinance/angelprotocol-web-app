@@ -1,6 +1,6 @@
 import { AllianceEditValues as AV } from "pages/Admin/types";
 import { DivContainer, Submitter, TextArea } from "components/admin";
-import { Label, TextInput } from "components/form";
+import { Field, Label } from "components/form";
 import AllianceSelection from "./AllianceSelection";
 import MemberEditor from "./MemberEditor";
 import useEditAlliance from "./useEditAlliance";
@@ -9,7 +9,7 @@ export default function Form() {
   const { editAlliance, isEditingMember } = useEditAlliance();
   return (
     <DivContainer>
-      <TextInput<AV> label="Proposal title" name="title" required />
+      <Field<AV> label="Proposal title" name="title" required />
       <TextArea<AV> label="Proposal description" name="description" required />
       <Label className="-mb-4">
         <span className="text-red-l1">Remove</span> |{" "}

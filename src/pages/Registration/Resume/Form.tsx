@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FormValues } from "./types";
-import { TextInput } from "components/form";
+import { Field } from "components/form";
 import { Separator } from "components/registration";
 import useSubmit from "./useSubmit";
 
@@ -16,7 +16,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Enter your registration reference to resume where you left off
       </p>
 
-      <TextInput<FormValues>
+      <Field<FormValues>
         name="reference"
         label="Registration reference"
         placeholder="e.g. 00000000-0000-0000-0000-000000000000"

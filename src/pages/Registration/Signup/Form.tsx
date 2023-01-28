@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
-import { TextInput } from "components/form";
+import { Field } from "components/form";
 import { Separator, checkBoxStyle } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
@@ -19,7 +19,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Register to Angel Protocol
       </h3>
 
-      <TextInput<FV>
+      <Field<FV>
         name="email"
         label="E-mail"
         placeholder="e.g. johndoe@example.com"

@@ -6,7 +6,7 @@ import {
   Submitter,
   TextArea,
 } from "components/admin";
-import { Label, TextInput } from "components/form";
+import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
 import Adder from "./Adder";
 import Member from "./Member";
@@ -19,8 +19,8 @@ export default function Form() {
   const { updateFund } = useUpdateFund();
   return (
     <FormContainer onSubmit={updateFund}>
-      <TextInput<FV>
-        classes="field-group-admin"
+      <Field<FV>
+        classes="field-admin"
         label="Proposal title"
         name="title"
         required

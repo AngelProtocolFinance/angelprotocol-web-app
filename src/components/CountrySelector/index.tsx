@@ -21,7 +21,7 @@ export const placeHolderCountryOption: CountryOption = {
 };
 
 const containerStyle =
-  "relative items-center grid grid-cols-[auto_auto_1fr] w-full nested-field";
+  "relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container";
 
 const nameKey: keyof CountryOption = "name";
 

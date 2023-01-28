@@ -5,7 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
-import { TextInput } from "components/form";
+import { Field } from "components/form";
 import { createAuthToken } from "helpers";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -50,20 +50,16 @@ export default function Form({ classes = "" }) {
       <h3 className="text-center text-3xl font-bold leading-snug">
         Send Your Angel Protocol Giftcard via Email
       </h3>
-      <TextInput<FV>
-        name="purchaser"
-        label="Your name"
-        classes="field-group-gift"
-      />
-      <TextInput<FV>
+      <Field<FV> name="purchaser" label="Your name" classes="field-gift" />
+      <Field<FV>
         name="recipient.name"
         label="Recipient name"
-        classes="field-group-gift"
+        classes="field-gift"
       />
-      <TextInput<FV>
+      <Field<FV>
         name="recipient.email"
         label="Recipient email address"
-        classes="field-group-gift"
+        classes="field-gift"
       />
       <Label className="-mb-3">Add personalized note</Label>
       <RichTextEditor<FV>

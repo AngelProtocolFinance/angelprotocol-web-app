@@ -4,10 +4,9 @@ import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Label } from "components/form";
+import { Field, Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
-import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 import useSubmit from "./useSubmit";
@@ -39,33 +38,21 @@ export default function Form({ classes = "", ...props }: Props) {
         {...props}
         classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
       />
-      <TextInput<FV>
-        name="name.first"
-        label="First name"
-        placeholder="e.g. John"
-      />
-      <TextInput<FV>
-        name="name.last"
-        label="Last name"
-        placeholder="e.g. Doe"
-      />
-      <TextInput<FV>
+      <Field<FV> name="name.first" label="First name" placeholder="e.g. John" />
+      <Field<FV> name="name.last" label="Last name" placeholder="e.g. Doe" />
+      <Field<FV>
         name="address.street"
         label="Address"
         placeholder="e.g. Street Rd 9920"
       />
-      <TextInput<FV>
+      <Field<FV>
         name="address.complement"
         label="Address complement"
         placeholder="e.g. Street Rd 9920"
         required={false}
       />
-      <TextInput<FV> name="city" label="City" placeholder="e.g. London" />
-      <TextInput<FV>
-        name="postalCode"
-        label="Zip code"
-        placeholder="e.g. 1080"
-      />
+      <Field<FV> name="city" label="City" placeholder="e.g. London" />
+      <Field<FV> name="postalCode" label="Zip code" placeholder="e.g. 1080" />
       <div className="grid relative">
         <Label htmlFor="country" className="mb-2">
           Country
@@ -78,7 +65,7 @@ export default function Form({ classes = "", ...props }: Props) {
           classes={{
             container: "px-4 bg-gray-l5 dark:bg-blue-d6",
             input: "py-3.5 placeholder:text-sm",
-            error: errorStyle,
+            error: "field-error",
           }}
         />
       </div>
@@ -94,7 +81,7 @@ export default function Form({ classes = "", ...props }: Props) {
           />
         </div>
       ) : (
-        <TextInput<FV>
+        <Field<FV>
           name="state"
           label="State"
           required={false}
@@ -102,7 +89,7 @@ export default function Form({ classes = "", ...props }: Props) {
         />
       )}
 
-      <TextInput<FV>
+      <Field<FV>
         name="email"
         label="Email address"
         placeholder="e.g. johndoe@mail.com"

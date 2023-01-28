@@ -81,7 +81,7 @@
   .field-error {
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
-  .input-field {
+  .field-input {
     @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
   }
 }
@@ -101,23 +101,23 @@
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
   }
 
-  .nested-field {
+  .field-container {
     @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
   }
-  .nested-field > input {
+  .field-container > input {
     @apply bg-transparent focus:outline-none;
   }
 
-  .field-group {
+  .field {
     @apply relative;
   }
-  .field-group > input {
-    @apply input-field;
+  .field > input {
+    @apply field-input;
   }
-  .field-group > label {
+  .field > label {
     @apply mb-2;
   }
-  .field-group > [data-error] {
+  .field > [data-error] {
     @apply field-error;
   }
 }
@@ -138,18 +138,22 @@
     @apply text-sm;
   }
 
-  .field-group-gift > input {
+  .field-gift > input {
     @apply bg-white dark:bg-blue-d6;
   }
 
-  .input-field-admin {
+  .field-input-admin {
     @apply bg-orange-l6 dark:bg-blue-d7;
   }
-  .field-group-admin > input {
+  .field-input-kyc {
+    @apply bg-gray-l5 dark:bg-blue-d6;
+  }
+
+  .field-admin > input {
     @apply bg-orange-l6 dark:bg-blue-d7;
   }
 
-  .field-group-admin-sec > input {
+  .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }

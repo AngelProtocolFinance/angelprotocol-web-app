@@ -2,9 +2,9 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
-import { Label } from "./";
+import { Label } from ".";
 
-export type TextInputProps<T extends FieldValues> = Omit<
+export type FieldProps<T extends FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "autoComplete" | "className" | "name" | "id" | "spellCheck"
 > & {
@@ -13,7 +13,7 @@ export type TextInputProps<T extends FieldValues> = Omit<
   label: string;
 };
 
-export function TextInput<T extends FieldValues>({
+export function Field<T extends FieldValues>({
   type = "text",
   label,
   name,
@@ -21,17 +21,17 @@ export function TextInput<T extends FieldValues>({
   required,
   disabled,
   ...props
-}: TextInputProps<T>) {
+}: FieldProps<T>) {
   const {
     register,
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const { container, input, lbl, error } = format(classes);
+  const { container, input, lbl, error } = unpack(classes);
 
   const id = "__" + String(name);
   return (
-    <div className={container + " field-group"}>
+    <div className={container + " field"}>
       <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
@@ -55,7 +55,7 @@ export function TextInput<T extends FieldValues>({
   );
 }
 
-function format(classes: TextInputProps<any>["classes"]) {
+function unpack(classes: FieldProps<any>["classes"]) {
   const {
     container = "",
     input = "",
