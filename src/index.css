@@ -76,6 +76,12 @@
   .btn {
     @apply flex items-center justify-center uppercase font-body font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
   }
+  .field-container {
+    @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+  }
+  .field-container > input {
+    @apply bg-transparent focus:outline-none;
+  }
 }
 
 /** Layer 2 components */
