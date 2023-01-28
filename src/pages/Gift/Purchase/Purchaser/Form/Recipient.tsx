@@ -25,13 +25,7 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
         placeholder="e.g. juno123abc8910xyz.."
         autoComplete="off"
       />
-      <ErrorMessage
-        data-error
-        as="p"
-        errors={errors}
-        name={fieldName}
-        className="text-red dark:text-red-l2"
-      />
+      <ErrorMessage data-error as="p" errors={errors} name={fieldName} />
     </div>
   );
 }

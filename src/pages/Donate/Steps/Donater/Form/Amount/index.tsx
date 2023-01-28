@@ -47,7 +47,7 @@ export default function Amount() {
           errors={errors}
           name="token.amount"
           as="p"
-          className="text-red dark:text-red-l2 text-xs text-left my-1"
+          className="static field-error text-left my-1"
         />
       </div>
       <p className="text-xs">

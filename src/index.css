@@ -117,7 +117,7 @@
   .field > label {
     @apply mb-2;
   }
-  .field > [data-error] {
+  .field [data-error] {
     @apply field-error;
   }
 }
