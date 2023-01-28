@@ -1,17 +1,24 @@
 import { MemberUpdatorValues as T } from "pages/Admin/types";
-import { GroupContainer, TextSec } from "components/admin";
+import { GroupContainer } from "components/admin";
+import { TextInput } from "components/form";
 import useAddMember from "./useAddMember";
 
 export default function Adder() {
   const { addMember } = useAddMember();
   return (
     <GroupContainer className="grid">
-      <TextSec<T>
+      <TextInput<T>
+        classes="field-group-admin-sec"
         label="Wallet address"
         name="addr"
         placeholder="juno123abc..."
       />
-      <TextSec<T> label="Weight" placeholder="juno123abc..." name="weight" />
+      <TextInput<T>
+        classes="field-group-admin-sec"
+        label="Weight"
+        placeholder="juno123abc..."
+        name="weight"
+      />
       <button
         onClick={addMember}
         type="button"

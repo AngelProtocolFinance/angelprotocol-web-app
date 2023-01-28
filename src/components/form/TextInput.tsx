@@ -9,7 +9,7 @@ export type TextInputProps<T extends FieldValues> = Omit<
   "autoComplete" | "className" | "name" | "id" | "spellCheck"
 > & {
   name: Path<T>;
-  classes?: Classes;
+  classes?: Classes | string;
   label: string;
 };
 
@@ -27,10 +27,12 @@ export function TextInput<T extends FieldValues>({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
+  const { container, input, lbl, error } = format(classes);
+
   const id = "__" + String(name);
   return (
-    <div className={classes?.container}>
-      <Label className={classes?.label} required={required} htmlFor={id}>
+    <div className={container + " field-group"}>
+      <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
       <input
@@ -38,16 +40,30 @@ export function TextInput<T extends FieldValues>({
         {...register(name, { valueAsNumber: type === "number" })}
         disabled={isSubmitting || disabled}
         type={type}
-        className={classes?.input}
+        className={input}
         autoComplete="off"
         spellCheck={false}
       />
       <ErrorMessage
+        data-error
         errors={errors}
         name={name}
         as="span"
-        className={classes?.error}
+        className={error + "text-red dark:text-red-l2"}
       />
     </div>
   );
+}
+
+function format(classes: TextInputProps<any>["classes"]) {
+  const {
+    container = "",
+    input = "",
+    error = "",
+    label: lbl = "",
+  }: Classes = typeof classes === "string"
+    ? { container: classes }
+    : classes || {};
+
+  return { container, input, error, lbl };
 }

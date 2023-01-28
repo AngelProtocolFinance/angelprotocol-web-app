@@ -36,8 +36,7 @@ interface Props<
   children?: (selected: VarOption<M, V>) => ReactNode;
 }
 
-export const selectorButtonStyle =
-  "flex items-center text-sm rounded border border-prim";
+export const selectorButtonStyle = "flex items-center input-field";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -96,7 +95,7 @@ export function Selector<
         multiple={multiple}
       >
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} px-4 py-3.5 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+          className={`${button} ${selectorButtonStyle} justify-between`}
         >
           {({ open }) => (
             <>

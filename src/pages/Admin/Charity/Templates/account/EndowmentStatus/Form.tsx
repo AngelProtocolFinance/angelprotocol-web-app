@@ -1,6 +1,6 @@
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
-import { Label } from "components/form";
+import { FormContainer, Submitter, TextArea } from "components/admin";
+import { Label, TextInput } from "components/form";
 import StatusOptions from "./StatusOptions";
 import StatusPreview from "./StatusPreview";
 import useUpdateStatus from "./useUpdateStatus";
@@ -9,9 +9,15 @@ export default function Form() {
   const { updateStatus } = useUpdateStatus();
   return (
     <FormContainer onSubmit={updateStatus}>
-      <TextPrim label="Proposal title" name="title" required />
+      <TextInput<V>
+        classes="field-group-admin"
+        label="Proposal title"
+        name="title"
+        required
+      />
       <TextArea<V> label="Proposal description" name="description" required />
-      <TextPrim<V>
+      <TextInput<V>
+        classes="field-group-admin"
         label="Endowment id"
         name="id"
         placeholder="0"

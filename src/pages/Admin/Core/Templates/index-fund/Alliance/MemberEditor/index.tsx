@@ -1,6 +1,7 @@
 import React from "react";
 import { AllianceEditValues as AV } from "pages/Admin/types";
-import { GroupContainer, TextSec } from "components/admin";
+import { GroupContainer } from "components/admin";
+import { TextInput } from "components/form";
 import useEditMember from "./useEditMember";
 
 export default function MemberEditor() {
@@ -8,21 +9,29 @@ export default function MemberEditor() {
 
   return (
     <GroupContainer>
-      <TextSec<AV>
+      <TextInput<AV>
+        classes="field-group-admin-sec"
         label="Wallet address"
         name="wallet"
         placeholder="juno123abc..."
         disabled={isEditingMember}
         required
       />
-      <TextSec<AV> label="Member name" name="name" required />
-      <TextSec<AV>
+      <TextInput<AV>
+        classes="field-group-admin-sec"
+        label="Member name"
+        name="name"
+        required
+      />
+      <TextInput<AV>
+        classes="field-group-admin-sec"
         label="Logo url"
         name="logo"
         placeholder="https://mysite/logo.jpg"
         required
       />
-      <TextSec<AV>
+      <TextInput<AV>
+        classes="field-group-admin-sec"
         label="Website"
         name="website"
         placeholder="https://mysite.com"

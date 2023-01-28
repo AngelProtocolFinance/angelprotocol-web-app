@@ -6,7 +6,12 @@ export function TextInput<T extends FieldValues>({
   classes,
   ...props
 }: TextInputProps<T>) {
-  const { container = "", label = "", input = "", error = "" } = classes || {};
+  const {
+    container = "",
+    label = "",
+    input = "",
+    error = "",
+  } = (classes as any) || {};
   return (
     <BaseInput
       {...props}

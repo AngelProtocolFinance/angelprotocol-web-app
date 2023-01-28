@@ -1,6 +1,7 @@
 import { CW3ConfigValues, FormCW3Config } from "../../../types";
 import Checkbox from "components/Checkbox";
-import { FormContainer, Submitter, TextArea, TextPrim } from "components/admin";
+import { FormContainer, Submitter, TextArea } from "components/admin";
+import { TextInput } from "components/form";
 import useCreateProposal from "./useCreateProposal";
 
 type CV = CW3ConfigValues<FormCW3Config>;
@@ -9,10 +10,21 @@ export default function Form() {
   const { createProposal, isSubmitDisabled, isTime } = useCreateProposal();
   return (
     <FormContainer onSubmit={createProposal}>
-      <TextPrim<CV> label="Proposal title" name="title" required />
+      <TextInput<CV>
+        classes="field-group-admin"
+        label="Proposal title"
+        name="title"
+        required
+      />
       <TextArea<CV> label="Proposal description" name="description" required />
-      <TextPrim<CV> label="Pass threshold ( % )" name="threshold" required />
-      <TextPrim<CV>
+      <TextInput<CV>
+        classes="field-group-admin"
+        label="Pass threshold ( % )"
+        name="threshold"
+        required
+      />
+      <TextInput<CV>
+        classes="field-group-admin"
         label={`Voting period (${isTime ? "seconds" : "blocks"})`}
         name="duration"
         required

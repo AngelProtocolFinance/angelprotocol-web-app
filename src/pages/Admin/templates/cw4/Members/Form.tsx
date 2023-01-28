@@ -1,6 +1,6 @@
 import { MemberUpdatorValues as T } from "pages/Admin/types";
-import { DivContainer, Submitter, TextArea, TextPrim } from "components/admin";
-import { Label } from "components/form";
+import { DivContainer, Submitter, TextArea } from "components/admin";
+import { Label, TextInput } from "components/form";
 import Adder from "./Adder";
 import Member from "./Member";
 import useUpdateMembers from "./useUpdateMembers";
@@ -9,7 +9,12 @@ export default function Form() {
   const { updateMembers, apCW4Members } = useUpdateMembers();
   return (
     <DivContainer>
-      <TextPrim<T> label="Proposal title" name="title" required />
+      <TextInput<T>
+        classes="field-group-admin"
+        label="Proposal title"
+        name="title"
+        required
+      />
       <TextArea<T> label="Proposal description" name="description" required />
 
       <Label className="text-red dark:text-red-l2 -mb-3">Remove member</Label>

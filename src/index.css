@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply font-body;
+    @apply font-body bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white;
   }
 
   a {
@@ -73,26 +73,16 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
+  /** applicable to button and <a/> */
   .btn {
     @apply flex items-center justify-center uppercase font-body font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
   }
-  .nested-field {
-    @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+
+  .field-error {
+    @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
-  .nested-field > input {
-    @apply bg-transparent focus:outline-none;
-  }
-  .field-group {
-    @apply relative;
-  }
-  .field-group > input {
+  .input-field {
     @apply w-full rounded text-sm px-4 py-3.5 placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
-  }
-  .field-group > label {
-    @apply mb-2;
-  }
-  .field-group > [data-error] {
-    @apply absolute -bottom-5 right-0 text-right text-xs;
   }
 }
 
@@ -109,6 +99,26 @@
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
+  }
+
+  .nested-field {
+    @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+  }
+  .nested-field > input {
+    @apply bg-transparent focus:outline-none;
+  }
+
+  .field-group {
+    @apply relative;
+  }
+  .field-group > input {
+    @apply input-field;
+  }
+  .field-group > label {
+    @apply mb-2;
+  }
+  .field-group > [data-error] {
+    @apply field-error;
   }
 }
 
@@ -127,8 +137,20 @@
   .btn-reg {
     @apply text-sm;
   }
+
   .field-group-gift > input {
     @apply bg-white dark:bg-blue-d6;
+  }
+
+  .input-field-admin {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+  .field-group-admin > input {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+
+  .field-group-admin-sec > input {
+    @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }
 

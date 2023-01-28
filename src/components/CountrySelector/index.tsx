@@ -21,7 +21,7 @@ export const placeHolderCountryOption: CountryOption = {
 };
 
 const containerStyle =
-  "relative items-center grid grid-cols-[auto_auto_1fr] w-full";
+  "relative items-center grid grid-cols-[auto_auto_1fr] w-full nested-field";
 
 const nameKey: keyof CountryOption = "name";
 
@@ -39,7 +39,7 @@ export default function CountrySelector<
   };
 }) {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<BaseFormShape>();
 
   const {
@@ -67,6 +67,7 @@ export default function CountrySelector<
 
   return (
     <Combobox
+      aria-disabled={isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
@@ -89,7 +90,7 @@ export default function CountrySelector<
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
         displayValue={(country: CountryOption) => country.name}
-        className={`focus:outline-none w-full ${props.classes?.input || ""}`}
+        className={props.classes?.input}
       />
 
       {country.name /** not placeholder */ && (

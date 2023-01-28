@@ -75,7 +75,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         How did you find about us?
       </Label>
-      <Selector<any, any, ReferralMethods, false>
+      <Selector<FV, "referralMethod", ReferralMethods, false>
         name="referralMethod"
         options={referralOptions}
       >

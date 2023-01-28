@@ -5,9 +5,8 @@ import {
   GroupContainer,
   Submitter,
   TextArea,
-  TextPrim,
 } from "components/admin";
-import { Label } from "components/form";
+import { Label, TextInput } from "components/form";
 import FundSelection from "../FundSelection";
 import Adder from "./Adder";
 import Member from "./Member";
@@ -20,7 +19,12 @@ export default function Form() {
   const { updateFund } = useUpdateFund();
   return (
     <FormContainer onSubmit={updateFund}>
-      <TextPrim<FV> label="Proposal title" name="title" required />
+      <TextInput<FV>
+        classes="field-group-admin"
+        label="Proposal title"
+        name="title"
+        required
+      />
       <TextArea<FV> label="Proposal description" name="description" required />
       <Label required className="-mb-4">
         Select fund to update

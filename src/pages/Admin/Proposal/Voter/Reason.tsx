@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
 import Icon from "components/Icon";
-import { TextPrim } from "components/admin";
+import { TextInput } from "components/form";
 
 export default function Reason() {
   const { watch, getValues } = useFormContext<VV>();
@@ -21,11 +21,11 @@ export default function Reason() {
           <span>Note: this will update prior reason for rejection</span>
         </p>
       )}
-      <TextPrim<VV>
+      <TextInput<VV>
         name="reason"
         label="Reason"
         required
-        classes={{ container: "mb-8" }}
+        classes={{ container: "mb-8 field-group-admin" }}
       />
     </div>
   );

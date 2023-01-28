@@ -5,7 +5,7 @@ import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
-import { TextPrim } from "components/admin";
+import { TextInput } from "components/form";
 import Warning from "./Warning";
 
 export default function Submit() {
@@ -74,10 +74,10 @@ function SubmitWithReason({
           Withdrawing from endowment funds requires Angel Protocol team
           approval.
         </Warning>
-        <TextPrim<WV>
+        <TextInput<WV>
           name="reason"
           label="Reason"
-          classes={{ container: "mb-8" }}
+          classes={{ container: "field-group-admin mb-8" }}
         />
         <button
           type="submit"

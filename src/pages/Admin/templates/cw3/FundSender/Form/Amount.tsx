@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "pages/Admin/types";
 import { useGetWallet } from "contexts/WalletContext";
-import { textPrimStyle } from "components/admin";
 import { Label } from "components/form";
 import { denoms, symbols } from "constants/tokens";
 import Balance from "./Balance";
@@ -37,7 +36,7 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={denomText}
-        className={textPrimStyle}
+        className="input-field bg-orange-l6 dark:bg-blue-d7"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex">
@@ -48,7 +47,7 @@ export default function Amount() {
           errors={errors}
           name="amount"
           as="span"
-          className="text-red dark:text-red-l2 text-xs mb-1 mt-0.5 text-right"
+          className="static field-error mb-1 mt-0.5"
         />
       </div>
     </div>

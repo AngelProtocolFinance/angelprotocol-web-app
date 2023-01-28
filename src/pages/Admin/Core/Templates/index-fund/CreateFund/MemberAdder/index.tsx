@@ -1,5 +1,6 @@
 import { FundCreatorValues as V } from "pages/Admin/types";
-import { GroupContainer, TextSec } from "components/admin";
+import { GroupContainer } from "components/admin";
+import { TextInput } from "components/form";
 import Member from "./Member";
 import useAddMember from "./useAddMember";
 
@@ -15,7 +16,8 @@ export default function MemberAdder() {
           ))}
         </div>
       )}
-      <TextSec<V>
+      <TextInput<V>
+        classes="field-group-admin-sec"
         label="Endowment address"
         name="newFundAddr"
         placeholder="juno123abc..."

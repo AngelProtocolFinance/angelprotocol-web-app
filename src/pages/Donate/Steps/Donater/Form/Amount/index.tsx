@@ -26,14 +26,14 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container">
+      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 nested-field">
         <input
           {...register("token.amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="0.0000"
-          className="w-full text-sm py-3 dark:text-gray dark:placeholder:text-gray-d1"
+          className="w-full text-sm py-3 dark:text-gray"
         />
         <TokensSelector<DV, "token">
           tokens={getValues("tokens")}
@@ -43,6 +43,7 @@ export default function Amount() {
       </div>
       <div className="empty:mb-2">
         <ErrorMessage
+          data-error
           errors={errors}
           name="token.amount"
           as="p"

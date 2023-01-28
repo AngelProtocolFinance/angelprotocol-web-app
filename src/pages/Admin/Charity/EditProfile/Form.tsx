@@ -6,15 +6,8 @@ import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Selector } from "components/Selector";
-import {
-  FormContainer,
-  GroupContainer,
-  Submitter,
-  TextPrim,
-  TextSec,
-  errorStyle,
-} from "components/admin";
-import { Label } from "components/form";
+import { FormContainer, GroupContainer, Submitter } from "components/admin";
+import { Label, TextInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -62,10 +55,23 @@ export default function Form() {
         multiple
         name="categories_sdgs"
         options={sdgOptions}
+        classes={{ button: "input-field-admin" }}
       />
-      <TextPrim<FV> name="name" label="Charity Name" />
-      <TextPrim<FV> name="registration_number" label="Registration number" />
-      <TextPrim<FV> name="street_address" label="Street address" />
+      <TextInput<FV>
+        classes="field-group-admin"
+        name="name"
+        label="Charity Name"
+      />
+      <TextInput<FV>
+        classes="field-group-admin"
+        name="registration_number"
+        label="Registration number"
+      />
+      <TextInput<FV>
+        classes="field-group-admin"
+        name="street_address"
+        label="Street address"
+      />
       <Label className="-mb-4" required>
         Country
       </Label>
@@ -73,11 +79,9 @@ export default function Form() {
         placeholder="Select a country"
         fieldName="hq_country"
         classes={{
-          container:
-            "px-4 border border-prim rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 bg-orange-l6 dark:bg-blue-d7",
-          input:
-            "text-sm py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
-          error: errorStyle,
+          container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+          input: "text-sm py-3.5",
+          error: "field-error",
         }}
       />
       <Label className="-mb-4">Overview</Label>
@@ -87,36 +91,41 @@ export default function Form() {
         classes={{
           container:
             "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
-          error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
+          error: "static field-error -mt-4",
           charCounter: "text-gray-d1 dark:text-gray",
         }}
       />
 
       <Label className="-mb-4 font-bold">Social Media</Label>
       <GroupContainer>
-        <TextSec<FV>
+        <TextInput<FV>
+          classes="field-group-admin-sec"
           name="url"
           label="Website"
           placeholder="https://website.org"
         />
-        <TextSec<FV>
+        <TextInput<FV>
+          classes="field-group-admin-sec"
           name="social_media_url_facebook"
           label="Facebook"
           placeholder="https://facebook.com/"
         />
-        <TextSec<FV>
+        <TextInput<FV>
+          classes="field-group-admin-sec"
           name="social_media_url_twitter"
           label="Twitter"
           placeholder="https://twitter.com/"
         />
-        <TextSec<FV>
+        <TextInput<FV>
+          classes="field-group-admin-sec"
           name="social_media_url_linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/"
         />
       </GroupContainer>
 
-      <TextPrim<FV>
+      <TextInput<FV>
+        classes="field-group-admin"
         name="contact_email"
         label="Contact email"
         disabled={true}
