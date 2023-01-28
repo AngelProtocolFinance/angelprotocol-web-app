@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../../types";
 import TokensSelector from "components/TokenSelector";
-import { errorStyle } from "components/gift";
 import Balance from "./Balance";
 
 export default function Amount() {
@@ -24,14 +23,14 @@ export default function Amount() {
         <Balance />
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 bg-white dark:bg-blue-d6 border border-prim rounded">
+      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 bg-white dark:bg-blue-d6 nested-field">
         <input
           {...register("token.amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="0.0000"
-          className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
+          className="w-full text-sm dark:text-gray"
         />
         <TokensSelector<FV, "token">
           tokens={getValues("tokens")}
@@ -42,10 +41,9 @@ export default function Amount() {
           errors={errors}
           name="token.amount"
           as="p"
-          className={errorStyle}
+          className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
         />
       </div>
-
       <p className="text-xs mt-2">
         Minimal amount: {symbol} {min_donation_amnt}
       </p>
