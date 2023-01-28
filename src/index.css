@@ -82,7 +82,7 @@
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .input-field {
-    @apply w-full rounded text-sm px-4 py-3.5 placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
+    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
   }
 }
 

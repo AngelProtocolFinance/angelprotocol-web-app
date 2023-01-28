@@ -3,13 +3,8 @@ import { FormValues as FV } from "../types";
 import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Label } from "components/form";
-import {
-  FileDropzone,
-  LoadText,
-  TextInput,
-  checkBoxStyle,
-} from "components/registration";
+import { Label, TextInput } from "components/form";
+import { FileDropzone, LoadText, checkBoxStyle } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
