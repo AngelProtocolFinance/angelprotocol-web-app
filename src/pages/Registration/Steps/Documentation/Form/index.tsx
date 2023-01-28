@@ -137,14 +137,14 @@ export default function Form() {
           aria-disabled={isSubmitting}
           to={`../${steps.contact}`}
           state={data.init}
-          className="py-3 min-w-[8rem] text-center btn btn-outline btn-reg-sec"
+          className="py-3 min-w-[8rem] text-center btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] text-center btn btn-orange btn-reg"
+          className="py-3 min-w-[8rem] text-center btn-orange btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

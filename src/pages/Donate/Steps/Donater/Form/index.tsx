@@ -39,13 +39,13 @@ export default function Form() {
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
         <Link
-          className="btn btn-outline btn-donate-sec"
+          className="btn-outline-filled btn-donate"
           to={`${appRoutes.profile}/${endowId}`}
         >
           Cancel
         </Link>
         <button
-          className="btn btn-orange btn-donate"
+          className="btn-orange btn-donate"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }

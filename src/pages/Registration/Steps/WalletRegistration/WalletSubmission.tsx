@@ -32,7 +32,7 @@ export default function WalletSubmission({
 
         <button
           type="button"
-          className="mt-8 btn btn-outline btn-reg-sec"
+          className="mt-8 btn-outline-filled btn-reg"
           disabled={isSubmitting}
           onClick={disconnect}
         >
@@ -61,7 +61,7 @@ export default function WalletSubmission({
 
       <button
         type="button"
-        className="my-2 btn btn-outline btn-reg-sec"
+        className="my-2 btn-outline-filled btn-reg"
         disabled={isSubmitting}
         onClick={disconnect}
       >
@@ -74,14 +74,14 @@ export default function WalletSubmission({
           to={`../${steps.doc}`}
           state={data.init}
           aria-disabled={isSubmitting}
-          className="min-w-[8rem] btn btn-outline btn-reg-sec"
+          className="min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <button
           type="button"
           disabled={isSubmitting}
-          className="min-w-[8rem] btn btn-orange btn-reg"
+          className="min-w-[8rem] btn-orange btn-reg"
           onClick={() => {
             registerWallet(address);
           }}

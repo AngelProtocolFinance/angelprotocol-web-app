@@ -48,7 +48,7 @@ export default function Controls({
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
       <button
-        className="btn btn-outline btn-donate-sec"
+        className="btn-donate btn-outline-filled"
         onClick={goBack}
         type="button"
       >
@@ -58,24 +58,20 @@ export default function Controls({
        * but if user want to submit KYC - it should be validated */}
       {isKYCRequired || wantsKYC ? (
         <button
-          className="btn btn-orange btn-donate"
+          className="btn-orange btn-donate"
           disabled={isSubmitting}
           type="submit"
         >
           Continue
         </button>
       ) : (
-        <button
-          className="btn btn-orange btn-donate"
-          type="button"
-          onClick={skip}
-        >
+        <button className="btn-orange btn-donate" type="button" onClick={skip}>
           Continue
         </button>
       )}
       <Link
         to={appRoutes.profile + `/${endowId}`}
-        className="col-span-full btn btn-outline btn-donate"
+        className="col-span-full btn-outline btn-donate"
       >
         Cancel
       </Link>

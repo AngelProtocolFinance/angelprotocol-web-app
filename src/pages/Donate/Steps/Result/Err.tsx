@@ -33,14 +33,14 @@ export default function Err({
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <Link
           to={appRoutes.profile + `/${endowId}`}
-          className="btn btn-outline btn-donate-sec w-full"
+          className="btn-outline-filled btn-donate w-full"
         >
           Back to the platform
         </Link>
         <button
           type="button"
           onClick={goToForm}
-          className="w-full btn btn-orange btn-donate"
+          className="w-full btn-orange btn-donate"
         >
           Change payment details
         </button>

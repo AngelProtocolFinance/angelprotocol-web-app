@@ -33,7 +33,7 @@ export default function Success({
 
       <ExtLink
         href={getTxUrl(chainId, hash)}
-        className="gap-3.5 w-full sm:w-auto btn btn-outline btn-donate-sec"
+        className="gap-3.5 w-full sm:w-auto btn-outline-filled btn-donate"
       >
         <Icon type="ExternalLink" size={22} />
         <span>View transaction</span>
@@ -57,7 +57,7 @@ export default function Success({
 
       <Link
         to={appRoutes.profile + `/${id}`}
-        className="w-full sm:w-auto btn btn-orange btn-donate"
+        className="w-full sm:w-auto btn-orange btn-donate"
       >
         Back to the platform
       </Link>

@@ -15,7 +15,7 @@ export default function ChooseWallet() {
       <Link
         to={`../${steps.doc}`}
         state={data.init}
-        className="mt-8 max-w-[8rem] btn btn-outline btn-reg-sec"
+        className="mt-8 max-w-[8rem] btn btn-outline-filled btn-reg"
       >
         Back
       </Link>

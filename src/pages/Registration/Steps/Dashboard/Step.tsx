@@ -30,7 +30,7 @@ export default function Step({
 
       <Link
         to={`../${num}`}
-        className="min-w-[8rem] ml-6 max-sm:row-span-2 btn btn-outline btn-reg-sec"
+        className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
         aria-disabled={disabled}
         state={init}
       >

@@ -41,7 +41,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24 btn btn-orange btn-reg"
+        className="mt-8 mx-0 sm:mx-24 btn-orange btn-reg"
         disabled={isSubmitting}
       >
         Register
@@ -51,7 +51,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </Separator>
 
       <Link
-        className="mx-0 sm:mx-24 btn btn-outline btn-reg-sec"
+        className="mx-0 sm:mx-24 btn-outline-filled btn-reg"
         to={routes.resume}
         aria-disabled={isSubmitting}
       >

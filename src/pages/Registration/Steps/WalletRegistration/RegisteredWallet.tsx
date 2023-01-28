@@ -33,7 +33,7 @@ export default function RegisteredWallet(props: {
         <button
           type="button"
           onClick={props.onChange}
-          className="mt-6 btn btn-outline btn-reg-sec"
+          className="mt-6 btn-outline-filled btn-reg"
         >
           change wallet
         </button>
@@ -43,14 +43,14 @@ export default function RegisteredWallet(props: {
         <Link
           to={`../${steps.doc}`}
           state={data.init}
-          className="min-w-[8rem] btn btn-outline btn-reg-sec"
+          className="min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <Link
           to={`../${steps.summary}`}
           state={data.init}
-          className="min-w-[8rem] btn btn-orange btn-reg"
+          className="min-w-[8rem] btn-orange btn-reg"
         >
           Continue
         </Link>
