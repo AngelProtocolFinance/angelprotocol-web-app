@@ -36,7 +36,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Please confirm your email by clicking on the link in the message.
       </p>
       <button
-        className="w-full max-w-[26.25rem] mb-4 btn btn-orange btn-donate"
+        className="w-full max-w-[26.25rem] mb-4 btn-orange btn-donate"
         onClick={async () => {
           handleMutationResult(
             await requestEmail({ uuid: reference, email }),

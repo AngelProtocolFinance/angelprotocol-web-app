@@ -30,7 +30,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
         and attract donors!
       </p>
       <Link
-        className="w-full max-w-[26.25rem] btn btn-orange btn-reg"
+        className="w-full max-w-[26.25rem] btn-orange btn-reg"
         to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
         edit profile

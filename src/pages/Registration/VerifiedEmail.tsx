@@ -46,7 +46,7 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
           email.
         </Text>
         <button
-          className="btn btn-orange btn-reg w-64 h-12 "
+          className="btn-orange btn-reg w-64 h-12 "
           onClick={async () => {
             handleMutationResult(
               await requestEmail({ uuid: c.PK, email: c.Email }),
@@ -82,7 +82,7 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         few steps away.
       </Text>
       <Link
-        className="w-full max-w-[26.25rem] btn btn-orange btn-reg"
+        className="w-full max-w-[26.25rem] btn-orange btn-reg"
         to={`${appRoutes.register}/${routes.steps}/${steps.contact}`}
         state={state}
       >

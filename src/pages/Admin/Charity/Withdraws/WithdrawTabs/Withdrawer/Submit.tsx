@@ -23,7 +23,7 @@ export default function Submit() {
       <button
         type="submit"
         disabled={isSubmitDisabled}
-        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+        className="mt-2 btn-orange px-4 py-2 text-sm"
       >
         Create withdraw proposal
       </button>
@@ -82,7 +82,7 @@ function SubmitWithReason({
         <button
           type="submit"
           disabled={isSubmitDisabled}
-          className="btn btn-orange rounded px-4 py-2 text-sm"
+          className="btn-orange px-4 py-2 text-sm"
         >
           Create withdraw proposal
         </button>
@@ -102,7 +102,7 @@ function SubmitWithReason({
       <button
         type="submit"
         disabled={!isMatured}
-        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+        className="mt-2 btn-orange px-4 py-2 text-sm"
       >
         Create withdraw proposal
       </button>
