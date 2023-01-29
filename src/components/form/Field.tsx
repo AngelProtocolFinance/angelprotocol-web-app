@@ -49,7 +49,7 @@ export function Field<T extends FieldValues>({
         errors={errors}
         name={name}
         as="span"
-        className={error + "text-red dark:text-red-l2"}
+        className={error}
       />
     </div>
   );
