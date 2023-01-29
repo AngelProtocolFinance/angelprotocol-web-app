@@ -1,10 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
-import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Field, Label } from "components/form";
+import { Checkbox, Field, Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
@@ -38,21 +37,43 @@ export default function Form({ classes = "", ...props }: Props) {
         {...props}
         classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
       />
-      <Field<FV> name="name.first" label="First name" placeholder="e.g. John" />
-      <Field<FV> name="name.last" label="Last name" placeholder="e.g. Doe" />
       <Field<FV>
+        classes="field-kyc"
+        name="name.first"
+        label="First name"
+        placeholder="e.g. John"
+      />
+      <Field<FV>
+        classes="field-kyc"
+        name="name.last"
+        label="Last name"
+        placeholder="e.g. Doe"
+      />
+      <Field<FV>
+        classes="field-kyc"
         name="address.street"
         label="Address"
         placeholder="e.g. Street Rd 9920"
       />
       <Field<FV>
+        classes="field-kyc"
         name="address.complement"
         label="Address complement"
         placeholder="e.g. Street Rd 9920"
         required={false}
       />
-      <Field<FV> name="city" label="City" placeholder="e.g. London" />
-      <Field<FV> name="postalCode" label="Zip code" placeholder="e.g. 1080" />
+      <Field<FV>
+        classes="field-kyc"
+        name="city"
+        label="City"
+        placeholder="e.g. London"
+      />
+      <Field<FV>
+        classes="field-kyc"
+        name="postalCode"
+        label="Zip code"
+        placeholder="e.g. 1080"
+      />
       <div className="grid relative">
         <Label htmlFor="country" className="mb-2">
           Country
@@ -82,6 +103,7 @@ export default function Form({ classes = "", ...props }: Props) {
         </div>
       ) : (
         <Field<FV>
+          classes="field-kyc"
           name="state"
           label="State"
           required={false}
@@ -93,14 +115,14 @@ export default function Form({ classes = "", ...props }: Props) {
         name="email"
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
-        classes={{ container: "col-span-full" }}
+        classes={{ container: "col-span-full field-kyc" }}
       />
       <Checkbox<FV>
         name="hasAgreedToTerms"
         classes={{
-          container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
-          checkbox:
-            "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+          container: `check-field-kyc ${
+            isPostKyc ? "my-2" : "my-12"
+          } col-span-full`,
           error: "mt-2",
         }}
       >

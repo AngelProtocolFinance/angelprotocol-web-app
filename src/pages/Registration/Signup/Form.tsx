@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
-import { Field } from "components/form";
-import { Separator, checkBoxStyle } from "components/registration";
+import { Checkbox, Field } from "components/form";
+import { Separator } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
@@ -29,8 +28,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
-          container: "justify-self-center mt-6 mb-8 text-xs",
-          checkbox: checkBoxStyle,
+          container: "check-field-reg justify-self-center mt-6 mb-8 text-xs",
           error: "mt-2",
         }}
       >

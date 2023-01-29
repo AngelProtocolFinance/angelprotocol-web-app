@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Field, Label } from "components/form";
-import { FileDropzone, LoadText, checkBoxStyle } from "components/registration";
+import { Checkbox, Field, Label } from "components/form";
+import { FileDropzone, LoadText } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -103,8 +102,8 @@ export default function Form() {
         name="hasAuthority"
         required
         classes={{
-          container: "text-sm mb-3",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg text-sm mb-3",
+          input: "checkbox-reg self-start sm:self-center",
           error: "mt-1",
         }}
       >
@@ -116,8 +115,8 @@ export default function Form() {
         name="hasAgreedToTerms"
         required
         classes={{
-          container: "text-sm",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg",
+          input: "self-start sm:self-center",
           error: "mt-1",
         }}
       >

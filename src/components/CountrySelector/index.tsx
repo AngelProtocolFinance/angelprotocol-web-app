@@ -20,9 +20,6 @@ export const placeHolderCountryOption: CountryOption = {
   flag: "",
 };
 
-const containerStyle =
-  "relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container";
-
 const nameKey: keyof CountryOption = "name";
 
 export default function CountrySelector<
@@ -71,7 +68,9 @@ export default function CountrySelector<
       value={country}
       onChange={onCountryChange}
       as="div"
-      className={`${containerStyle} ${props.classes?.container || ""}`}
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
+        props.classes?.container || ""
+      }`}
     >
       <img
         src={country.flag}

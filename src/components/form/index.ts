@@ -1,3 +1,3 @@
 export * from "./Label";
 export * from "./Field";
-export * from "./TextArea";
+export { Checkbox } from "./Checkbox";

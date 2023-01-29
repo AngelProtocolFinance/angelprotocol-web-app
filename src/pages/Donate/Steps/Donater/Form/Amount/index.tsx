@@ -33,7 +33,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0.0000"
-          className="w-full text-sm py-3 dark:text-gray"
+          className="text-sm py-3 dark:text-gray"
         />
         <TokensSelector<DV, "token">
           tokens={getValues("tokens")}

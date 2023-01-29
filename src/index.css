@@ -24,29 +24,6 @@
   button {
     @apply cursor-pointer disabled:cursor-default;
   }
-
-  /** set default for input range */
-  input[type="range"] {
-    @apply focus:outline-none appearance-none bg-transparent w-full;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
-  }
-  input[type="range"]:disabled::-webkit-slider-thumb {
-    @apply bg-gray-l1;
-  }
-  input[type="range"]::-moz-range-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
-  }
-  input[type="range"]:disabled::-moz-range-thumb {
-    @apply bg-gray-l1;
-  }
-  input[type="range"]::-ms-track {
-    @apply w-full cursor-pointer bg-transparent border-transparent;
-  }
-  input[type="range"]::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
-  }
 }
 
 /** Layer 1 components */
@@ -73,6 +50,29 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
+  /** set default for input range */
+  .range {
+    @apply focus:outline-none appearance-none bg-transparent w-full;
+  }
+  .range::-webkit-slider-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
+  }
+  .range:disabled::-webkit-slider-thumb {
+    @apply bg-gray-l1;
+  }
+  .range::-moz-range-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
+  }
+  .range:disabled::-moz-range-thumb {
+    @apply bg-gray-l1;
+  }
+  .range::-ms-track {
+    @apply w-full cursor-pointer bg-transparent border-transparent;
+  }
+  .range::-webkit-slider-runnable-track {
+    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
+  }
+
   /** applicable to button and <a/> */
   .btn {
     @apply flex items-center justify-center uppercase font-body font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
@@ -83,6 +83,19 @@
   }
   .field-input {
     @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
+  }
+  .field-label {
+    @apply block text-sm after:ml-1 data-[required]:after:content-['*'] data:[required]:text-red;
+  }
+
+  .checkbox {
+    @apply appearance-none relative w-4 h-4 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l4 disabled:dark:bg-bluegray;
+  }
+  .checkbox:checked::before {
+    content: "✓";
+  }
+  .checkbox::before {
+    @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
 }
 
@@ -105,7 +118,7 @@
     @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
   }
   .field-container > input {
-    @apply bg-transparent focus:outline-none;
+    @apply bg-transparent focus:outline-none w-full;
   }
 
   .field {
@@ -120,6 +133,19 @@
   }
   .field [data-error] {
     @apply field-error;
+  }
+
+  .check-field {
+    @apply grid grid-cols-[auto_1fr] gap-x-3 items-center;
+  }
+  .check-field > label {
+    @apply cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
+  }
+  .check-field > input {
+    @apply checkbox;
+  }
+  .check-field > [data-error] {
+    @apply col-span-full text-xs text-red dark:text-red-l2;
   }
 }
 
@@ -138,6 +164,16 @@
   .btn-reg {
     @apply text-sm;
   }
+  .check-field-reg > input {
+    @apply checked:bg-orange before:hidden;
+  }
+  .check-field-kyc > input {
+    @apply w-6 h-6 before:text-lg;
+  }
+
+  .checkbox-marketplace {
+    @apply inline-block border-gray-d1 dark:border-gray-l2 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
+  }
 
   .field-gift > input {
     @apply bg-white dark:bg-blue-d6;
@@ -147,6 +183,9 @@
     @apply bg-orange-l6 dark:bg-blue-d7;
   }
   .field-input-kyc {
+    @apply bg-gray-l5 dark:bg-blue-d6;
+  }
+  .field-kyc > input {
     @apply bg-gray-l5 dark:bg-blue-d6;
   }
 

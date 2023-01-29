@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
 import { Label } from ".";
+import { unpack } from "./helpers";
 
 const textarea = "textarea" as const;
 type TextArea = typeof textarea;
@@ -63,17 +64,4 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
       />
     </div>
   );
-}
-
-function unpack(classes: FieldProps<any, any>["classes"]) {
-  const {
-    container = "",
-    input = "",
-    error = "",
-    label: lbl = "",
-  }: Classes = typeof classes === "string"
-    ? { container: classes }
-    : classes || {};
-
-  return { container, input, error, lbl };
 }

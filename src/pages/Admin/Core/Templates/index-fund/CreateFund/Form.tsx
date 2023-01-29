@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "pages/Admin/types";
-import Checkbox from "components/Checkbox";
 import { DivContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
+import { Checkbox, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
@@ -52,10 +51,7 @@ export default function Form() {
       <Slider />
       <Checkbox<V>
         name="isFundRotating"
-        classes={{
-          container:
-            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-prim",
-        }}
+        classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Included on fund rotation
       </Checkbox>
@@ -92,6 +88,7 @@ function Slider() {
         <input
           {...register("splitToLiquid")}
           type="range"
+          className="range"
           min="0"
           max="100"
           step="1"

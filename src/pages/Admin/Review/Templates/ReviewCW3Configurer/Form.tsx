@@ -1,7 +1,6 @@
 import { CW3ConfigValues, FormReviewCW3Config } from "pages/Admin/types";
-import Checkbox from "components/Checkbox";
 import { FormContainer, Submitter } from "components/admin";
-import { Field } from "components/form";
+import { Checkbox, Field } from "components/form";
 import useCreateProposal from "./useCreateProposal";
 
 type CV = CW3ConfigValues<FormReviewCW3Config>;
@@ -37,10 +36,7 @@ export default function Form() {
       />
       <Checkbox<CV>
         name="require_execution"
-        classes={{
-          container:
-            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-prim",
-        }}
+        classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Execution required
       </Checkbox>

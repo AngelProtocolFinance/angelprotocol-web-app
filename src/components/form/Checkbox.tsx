@@ -1,15 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { Classes } from "./types";
+import { unpack } from "./helpers";
 
-type Classes = {
-  container?: string;
-  checkbox?: string;
-  label?: string;
-  error?: string;
-};
-
-export default function Checkbox<T extends FieldValues>({
+export function Checkbox<T extends FieldValues>({
   name,
   children,
   classes,
@@ -27,28 +22,18 @@ export default function Checkbox<T extends FieldValues>({
   } = useFormContext<T>();
 
   const id = `__${name}` as Path<T>;
+  const { container, input: int, lbl, error } = unpack(classes);
 
   return (
-    <div
-      className={`${
-        classes?.container ?? ""
-      } grid grid-cols-[auto_1fr] gap-x-3 relative items-center`}
-    >
+    <div className={`check-field ${container}`}>
       <input
-        className={
-          classes?.checkbox + " peer cursor-pointer disabled:cursor-default"
-        }
+        className={int + " peer"}
         type="checkbox"
         {...register(name)}
         id={id}
         disabled={isSubmitting || disabled}
       />
-      <label
-        className={`${classes?.label ?? ""} ${
-          required ? "after:ml-1 after:content-['*'] after:text-red" : ""
-        } cursor-pointer peer-disabled:cursor-default`}
-        htmlFor={id}
-      >
+      <label data-required={required} className={lbl} htmlFor={id}>
         {children}
       </label>
 
@@ -56,9 +41,7 @@ export default function Checkbox<T extends FieldValues>({
         errors={errors}
         name={name as any}
         as="p"
-        className={`col-span-full text-xs text-red dark:text-red-l2 ${
-          classes?.error ?? ""
-        }`}
+        className={error}
       />
     </div>
   );

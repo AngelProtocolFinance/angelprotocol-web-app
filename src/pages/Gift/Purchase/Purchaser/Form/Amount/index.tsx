@@ -30,7 +30,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0.0000"
-          className="w-full text-sm dark:text-gray"
+          className="text-sm dark:text-gray"
         />
         <TokensSelector<FV, "token">
           tokens={getValues("tokens")}
