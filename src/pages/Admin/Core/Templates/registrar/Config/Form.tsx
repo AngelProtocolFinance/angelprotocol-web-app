@@ -1,10 +1,5 @@
 import { RegistrarConfigValues as RV } from "pages/Admin/types";
-import {
-  FormContainer,
-  GroupContainer,
-  Submitter,
-  TextArea,
-} from "components/admin";
+import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
@@ -19,7 +14,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<RV> label="Proposal description" name="description" required />
+      <Field<RV, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Label className="-mb-4 font-bold">Latest accounts wasm code</Label>
       <GroupContainer>
         <Field<RV>

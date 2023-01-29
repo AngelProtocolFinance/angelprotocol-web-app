@@ -111,6 +111,7 @@
   .field {
     @apply relative;
   }
+  .field > textarea,
   .field > input {
     @apply field-input;
   }
@@ -149,6 +150,7 @@
     @apply bg-gray-l5 dark:bg-blue-d6;
   }
 
+  .field-admin > textarea,
   .field-admin > input {
     @apply bg-orange-l6 dark:bg-blue-d7;
   }

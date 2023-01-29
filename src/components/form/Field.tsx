@@ -1,27 +1,35 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { createElement } from "react";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
 import { Label } from ".";
 
-export type FieldProps<T extends FieldValues> = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "autoComplete" | "className" | "name" | "id" | "spellCheck"
+const textarea = "textarea" as const;
+type TextArea = typeof textarea;
+type InputType = HTMLInputElement["type"] | TextArea;
+
+export type FieldProps<T extends FieldValues, K extends InputType> = Omit<
+  K extends TextArea
+    ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
+    : React.InputHTMLAttributes<HTMLInputElement>,
+  "autoComplete" | "className" | "name" | "id" | "spellCheck" | "type"
 > & {
   name: Path<T>;
   classes?: Classes | string;
   label: string;
+  type?: K;
 };
 
-export function Field<T extends FieldValues>({
-  type = "text",
+export function Field<T extends FieldValues, K extends InputType = "text">({
+  type = "text" as K,
   label,
   name,
   classes,
   required,
   disabled,
   ...props
-}: FieldProps<T>) {
+}: FieldProps<T, K>) {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -35,15 +43,17 @@ export function Field<T extends FieldValues>({
       <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
-      <input
-        {...props}
-        {...register(name, { valueAsNumber: type === "number" })}
-        disabled={isSubmitting || disabled}
-        type={type}
-        className={input}
-        autoComplete="off"
-        spellCheck={false}
-      />
+
+      {createElement(type === textarea ? textarea : "input", {
+        ...props,
+        ...register(name, { valueAsNumber: type === "number" }),
+        ...(type === textarea ? {} : { type }),
+        disabled: isSubmitting || disabled,
+        className: input,
+        autoComplete: "off",
+        spellCheck: false,
+      })}
+
       <ErrorMessage
         data-error
         errors={errors}
@@ -55,7 +65,7 @@ export function Field<T extends FieldValues>({
   );
 }
 
-function unpack(classes: FieldProps<any>["classes"]) {
+function unpack(classes: FieldProps<any, any>["classes"]) {
   const {
     container = "",
     input = "",

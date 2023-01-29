@@ -1,5 +1,5 @@
 import { MemberUpdatorValues as T } from "pages/Admin/types";
-import { DivContainer, Submitter, TextArea } from "components/admin";
+import { DivContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import Adder from "./Adder";
 import Member from "./Member";
@@ -15,7 +15,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<T> label="Proposal description" name="description" required />
+      <Field<T, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
 
       <Label className="text-red dark:text-red-l2 -mb-3">Remove member</Label>
       <div className="p-3 rounded border border-prim bg-orange-l6 dark:bg-blue-d7">

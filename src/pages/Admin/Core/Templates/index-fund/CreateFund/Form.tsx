@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "pages/Admin/types";
 import Checkbox from "components/Checkbox";
-import { DivContainer, Submitter, TextArea } from "components/admin";
+import { DivContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
@@ -17,21 +17,33 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea label="Proposal description" name="description" required />
+      <Field<V, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Field<V>
         classes="field-admin"
         label="Fund name"
         name="fundName"
         required
       />
-      <TextArea<V> label="Fund description" name="fundDescription" required />
+      <Field<V, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Fund description"
+        name="fundDescription"
+        required
+      />
       <Field<V>
         classes="field-admin"
         label="Expiry height"
         name="expiryHeight"
         placeholder="700992312"
       />
-      <Field<V>
+      <Field<V, "datetime-local">
         classes="field-admin"
         type="datetime-local"
         label="Expiry time"

@@ -1,5 +1,5 @@
 import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { FormContainer, Submitter, TextArea } from "components/admin";
+import { FormContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import StatusOptions from "./StatusOptions";
 import StatusPreview from "./StatusPreview";
@@ -15,8 +15,14 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<V> label="Proposal description" name="description" required />
-      <Field<V>
+      <Field<V, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
+      <Field<V, "number">
         classes="field-admin"
         label="Endowment id"
         name="id"

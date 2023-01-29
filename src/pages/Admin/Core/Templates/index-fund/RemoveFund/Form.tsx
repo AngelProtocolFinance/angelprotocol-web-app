@@ -1,5 +1,5 @@
 import { FundDestroyValues as FD } from "pages/Admin/types";
-import { FormContainer, Submitter, TextArea } from "components/admin";
+import { FormContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
 import useDestroyFund from "./useDestroyFund";
@@ -14,7 +14,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<FD> label="Proposal description" name="description" required />
+      <Field<FD, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Label required className="-mb-4">
         Fund to remove
       </Label>

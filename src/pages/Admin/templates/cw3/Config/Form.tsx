@@ -1,6 +1,6 @@
 import { CW3ConfigValues, FormCW3Config } from "../../../types";
 import Checkbox from "components/Checkbox";
-import { FormContainer, Submitter, TextArea } from "components/admin";
+import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import useCreateProposal from "./useCreateProposal";
 
@@ -16,7 +16,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<CV> label="Proposal description" name="description" required />
+      <Field<CV, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Field<CV>
         classes="field-admin"
         label="Pass threshold ( % )"

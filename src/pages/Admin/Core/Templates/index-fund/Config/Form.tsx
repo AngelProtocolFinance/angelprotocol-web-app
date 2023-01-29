@@ -1,5 +1,5 @@
 import { FundConfigValues as FV } from "pages/Admin/types";
-import { FormContainer, Submitter, TextArea } from "components/admin";
+import { FormContainer, Submitter } from "components/admin";
 import { Field } from "components/form";
 import useConfigureFund from "./useConfigureFund";
 
@@ -13,7 +13,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<FV> label="Proposal description" name="description" required />
+      <Field<FV, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Field<FV>
         classes="field-admin"
         label="Funding goal ($)"

@@ -1,11 +1,6 @@
 import { FundUpdateValues as FV } from "pages/Admin/types";
 import Loader from "components/Loader";
-import {
-  FormContainer,
-  GroupContainer,
-  Submitter,
-  TextArea,
-} from "components/admin";
+import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import FundSelection from "../FundSelection";
 import Adder from "./Adder";
@@ -25,7 +20,13 @@ export default function Form() {
         name="title"
         required
       />
-      <TextArea<FV> label="Proposal description" name="description" required />
+      <Field<FV, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
       <Label required className="-mb-4">
         Select fund to update
       </Label>
