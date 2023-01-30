@@ -17,6 +17,7 @@ export default function Split(props: Props) {
         percentage={100 - props.liquidPercentage}
         title="Endowment"
         action="Compounded forever"
+        token={props.token}
       />
       <Portion
         percentage={props.liquidPercentage}
