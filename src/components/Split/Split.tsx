@@ -3,6 +3,7 @@ import Portion from "./Portion";
 import Slider from "./Slider";
 
 type Props = {
+  disabled?: boolean;
   liquidPercentage: number;
   token?: TokenWithAmount;
   onChange(value: number): void;
@@ -24,6 +25,7 @@ export default function Split(props: Props) {
       >
         <Slider
           className="my-2.5"
+          disabled={props.disabled}
           value={props.liquidPercentage}
           onChange={props.onChange}
         />

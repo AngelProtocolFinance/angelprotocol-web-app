@@ -1,11 +1,17 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { DonateValues } from "../../types";
 import Icon from "components/Icon";
-import Split from "./Split";
+import Split from "components/Split";
 
 type Props = { classes?: string; unfold?: boolean };
 
 export default function AdvancedOptions({ classes = "", unfold }: Props) {
   const [isOpen, setIsOpen] = useState(unfold);
+
+  const { watch, setValue, formState } = useFormContext<DonateValues>();
+  const pctLiquidSplit = watch("pctLiquidSplit");
+  const token = watch("token");
 
   function toggle() {
     setIsOpen((prev) => !prev);
@@ -27,7 +33,16 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
           <Icon type={isOpen ? "Dash" : "Plus"} size={15} />
         </button>
       </div>
-      {isOpen && <Split />}
+      {isOpen && (
+        <Split
+          disabled={
+            !formState.isValid || formState.isSubmitting || formState.isLoading
+          }
+          liquidPercentage={pctLiquidSplit}
+          token={token}
+          onChange={(value) => setValue("pctLiquidSplit", value)}
+        />
+      )}
     </div>
   );
 }
