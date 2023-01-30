@@ -1,23 +1,22 @@
-type Props = {
+import { FieldValues, Path, useFormContext } from "react-hook-form";
+
+type Props<T extends FieldValues> = {
   className?: string;
-  disabled?: boolean;
-  value: number;
-  onChange(value: number): void;
+  liqPctField: Path<T>;
 };
 
-export default function Slider({
-  className = "",
-  disabled,
-  value,
-  onChange,
-}: Props) {
+export default function Slider<T extends FieldValues>(props: Props<T>) {
+  const {
+    register,
+    formState: { isValid },
+  } = useFormContext<T>();
+
   return (
-    <div className={`${className} select-none`}>
+    <div className={`${props.className || ""} select-none`}>
       <input
         className="slider"
-        value={value}
-        onChange={(e) => onChange(e.target.valueAsNumber)}
-        disabled={disabled}
+        disabled={!isValid}
+        {...register(props.liqPctField)}
         type="range"
       />
     </div>

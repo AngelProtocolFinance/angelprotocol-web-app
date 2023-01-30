@@ -1,36 +1,33 @@
-import { TokenWithAmount } from "types/slices";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
-type Props = {
+type Props<T extends FieldValues> = {
   className?: string;
-  disabled?: boolean;
-  liquidPercentage: number;
-  token?: TokenWithAmount;
-  onChange(value: number): void;
+  liqPctField: Path<T>;
+  tokenField?: Path<T>;
 };
 
-export default function Split(props: Props) {
+export default function Split<T extends FieldValues>(props: Props<T>) {
+  const { watch } = useFormContext<T>();
+
+  const liquidPercentage = watch(props.liqPctField);
+
   return (
     <div className={`flex gap-2 ${props.className || ""}`}>
       <Portion
-        percentage={100 - props.liquidPercentage}
+        percentage={100 - liquidPercentage}
         title="Endowment"
         action="Compounded forever"
-        token={props.token}
+        tokenField={props.tokenField}
       />
       <Portion
-        percentage={props.liquidPercentage}
+        percentage={liquidPercentage}
         title="Current"
         action="Instantly available"
-        token={props.token}
+        tokenField={props.tokenField}
       >
-        <Slider
-          className="my-2.5"
-          disabled={props.disabled}
-          value={props.liquidPercentage}
-          onChange={props.onChange}
-        />
+        <Slider className="my-2.5" liqPctField={props.liqPctField} />
       </Portion>
     </div>
   );
