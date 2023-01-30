@@ -12,7 +12,7 @@ type Props = {
 
 export default function Split(props: Props) {
   return (
-    <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
+    <div className={`flex gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - props.liquidPercentage}
         title="Endowment"

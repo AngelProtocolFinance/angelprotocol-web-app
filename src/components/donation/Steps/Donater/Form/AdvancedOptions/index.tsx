@@ -34,14 +34,27 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
         </button>
       </div>
       {isOpen && (
-        <Split
-          disabled={
-            !formState.isValid || formState.isSubmitting || formState.isLoading
-          }
-          liquidPercentage={pctLiquidSplit}
-          token={token}
-          onChange={(value) => setValue("pctLiquidSplit", value)}
-        />
+        <div className="grid p-6 pt-4 font-heading border-t border-prim">
+          <p className="text-xs uppercase font-bold mb-2">Split</p>
+          <Split
+            className="mb-6"
+            disabled={
+              !formState.isValid ||
+              formState.isSubmitting ||
+              formState.isLoading
+            }
+            liquidPercentage={pctLiquidSplit}
+            token={token}
+            onChange={(value) => setValue("pctLiquidSplit", value)}
+          />
+          <div className="flex items-center gap-4 px-4 py-3 text-center dark:bg-blue-d6 border border-prim rounded">
+            <Icon type="Info" size={44} />
+            <p className="text-sm leading-normal text-left">
+              Donations into the Endowment provide sustainable financial runaway
+              and allow your gift to give forever
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
