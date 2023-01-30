@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { BaseTextArea, TextAreaProps } from "components/form";
+import { TextArea as BaseInput, TextAreaProps } from "components/form";
 
 export function TextArea<T extends FieldValues>({
   classes,
@@ -7,7 +7,7 @@ export function TextArea<T extends FieldValues>({
 }: TextAreaProps<T>) {
   const { container = "", label = "", input = "", error = "" } = classes || {};
   return (
-    <BaseTextArea
+    <BaseInput
       {...props}
       classes={{
         container: `relative ${container}`,

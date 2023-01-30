@@ -13,7 +13,7 @@ export type TextAreaProps<T extends FieldValues> = Omit<
   label: string;
 };
 
-export function BaseTextArea<T extends FieldValues>({
+export function TextArea<T extends FieldValues>({
   label,
   name,
   classes,
