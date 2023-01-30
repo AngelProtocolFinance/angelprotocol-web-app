@@ -38,11 +38,7 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
           <p className="text-xs uppercase font-bold mb-2">Split</p>
           <Split
             className="mb-6"
-            disabled={
-              !formState.isValid ||
-              formState.isSubmitting ||
-              formState.isLoading
-            }
+            disabled={!formState.isValid || formState.isSubmitting}
             liquidPercentage={pctLiquidSplit}
             token={token}
             onChange={(value) => setValue("pctLiquidSplit", value)}
