@@ -1,3 +1,3 @@
 export * from "./Label";
-export * from "./TextInput";
+export * from "./BaseInput";
 export * from "./TextArea";

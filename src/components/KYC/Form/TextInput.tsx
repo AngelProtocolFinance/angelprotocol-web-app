@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { TextInput as BaseInput, TextInputProps } from "components/form";
+import { BaseInput, TextInputProps } from "components/form";
 
 export const errorStyle =
   "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2";
