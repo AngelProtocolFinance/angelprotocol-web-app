@@ -16,7 +16,7 @@ export default function Slider({
       <input
         className="range"
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) => onChange(e.target.valueAsNumber)}
         disabled={disabled}
         type="range"
       />
