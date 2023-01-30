@@ -47,7 +47,10 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         </Checkbox>
 
         <span>Define split value by default:</span>
-        <Split<FormValues> liqPctField="liquidPercentage" />
+        <Split<FormValues, "liquidPercentage", never>
+          className="mb-6"
+          liqPctField="liquidPercentage"
+        />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">
           <BtnSec className="w-40" onClick={() => methods.reset()}>

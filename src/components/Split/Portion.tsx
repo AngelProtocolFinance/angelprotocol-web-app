@@ -3,20 +3,22 @@ import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { TokenWithAmount } from "types/slices";
 import { humanize } from "helpers";
 
-type Props<T extends FieldValues> = PropsWithChildren<{
+type Props<FV extends FieldValues, T extends Path<FV>> = PropsWithChildren<{
   action: string;
   title: string;
   percentage: number;
-  tokenField?: Path<T>;
+  tokenField?: FV[T] extends TokenWithAmount ? T : never;
 }>;
 
-export default function Portion<T extends FieldValues>(props: Props<T>) {
-  const { watch } = useFormContext<T>();
+export default function Portion<FV extends FieldValues, T extends Path<FV>>(
+  props: Props<FV, T>
+) {
+  const { watch } = useFormContext<FV>();
 
   let disp_amount: string | null = null;
 
   if (props.tokenField) {
-    const token = watch(props.tokenField) as TokenWithAmount;
+    const token = watch(props.tokenField);
     if (token) {
       disp_amount = `${token.symbol} ${humanize(
         (props.percentage / 100) *

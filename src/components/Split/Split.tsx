@@ -1,15 +1,20 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { TokenWithAmount } from "types/slices";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
-type Props<T extends FieldValues> = {
+type Props<FV extends FieldValues, P extends Path<FV>, T extends Path<FV>> = {
   className?: string;
-  liqPctField: Path<T>;
-  tokenField?: Path<T>;
+  liqPctField: FV[P] extends number ? P : never;
+  tokenField?: FV[T] extends TokenWithAmount ? T : never;
 };
 
-export default function Split<T extends FieldValues>(props: Props<T>) {
-  const { watch } = useFormContext<T>();
+export default function Split<
+  FV extends FieldValues,
+  P extends Path<FV>,
+  T extends Path<FV>
+>(props: Props<FV, P, T>) {
+  const { watch } = useFormContext<FV>();
 
   const liquidPercentage = watch(props.liqPctField);
 
