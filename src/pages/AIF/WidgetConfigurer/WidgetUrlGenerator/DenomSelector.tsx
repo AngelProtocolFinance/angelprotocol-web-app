@@ -1,24 +1,32 @@
-import LoaderRing from "components/LoaderRing";
+import { useTokensQuery } from "services/apes";
+import QueryLoader from "components/QueryLoader";
 import { Selector } from "components/Selector";
 import { FormValues } from "./schema";
-import useApprovedTokens from "./useApprovedTokens";
 
 export default function DenomSelector() {
-  const { approvedTokens, isLoading } = useApprovedTokens();
-
-  if (isLoading) {
-    return <LoaderRing thickness={10} classes="w-12" />;
-  }
+  const queryState = useTokensQuery({});
 
   return (
-    <Selector<FormValues, "availableCurrencies", string, true>
-      name="availableCurrencies"
-      options={approvedTokens.map((token) => ({
-        label: token,
-        value: token,
-      }))}
-      classes={{ container: "bg-white dark:bg-blue-d6" }}
-      multiple
-    />
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Getting tokens...",
+        error: "Failed to get tokens",
+      }}
+      classes={{ container: "my-2" }}
+      filterFn={(token) => token.approved}
+    >
+      {(tokens) => (
+        <Selector<FormValues, "availableCurrencies", string, true>
+          name="availableCurrencies"
+          options={tokens.map((token) => ({
+            label: token.symbol,
+            value: token.symbol,
+          }))}
+          classes={{ container: "bg-white dark:bg-blue-d6" }}
+          multiple
+        />
+      )}
+    </QueryLoader>
   );
 }

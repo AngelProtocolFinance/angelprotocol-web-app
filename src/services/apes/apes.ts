@@ -74,7 +74,7 @@ export const {
   useChainsQuery,
   useChainQuery,
   useLazyChainQuery,
-  useLazyTokensQuery,
+  useTokensQuery,
   useWithdrawLogsQuery,
   util: { invalidateTags: invalidateApesTags },
 } = apes;
