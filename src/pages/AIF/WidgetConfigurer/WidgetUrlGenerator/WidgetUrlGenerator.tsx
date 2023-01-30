@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
 import Checkbox from "components/Checkbox";
 import { BtnPrimary, BtnSec } from "components/donation";
+import Split from "../../../../components/Split";
 import DenomSelector from "./DenomSelector";
-import Split from "./Split";
 import { FormValues } from "./schema";
 import useSubmit from "./useSubmit";
 
@@ -22,6 +22,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   const submit = useSubmit(endowId, DEFAULT_VALUES, onChange);
 
   const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
+  const liquidPercentage = methods.watch("liquidPercentage");
 
   return (
     <FormProvider {...methods}>
@@ -47,7 +48,10 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         </Checkbox>
 
         <span>Define split value by default:</span>
-        <Split<FormValues, "liquidPercentage"> liqPctField="liquidPercentage" />
+        <Split
+          liquidPercentage={liquidPercentage}
+          onChange={(value) => methods.setValue("liquidPercentage", value)}
+        />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">
           <BtnSec className="w-40" onClick={() => methods.reset()}>
