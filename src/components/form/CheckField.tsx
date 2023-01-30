@@ -38,6 +38,7 @@ export function CheckField<T extends FieldValues>({
       </label>
 
       <ErrorMessage
+        data-error
         errors={errors}
         name={name as any}
         as="p"

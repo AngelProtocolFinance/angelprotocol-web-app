@@ -84,12 +84,9 @@
   .field-input {
     @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1;
   }
-  .field-label {
-    @apply block text-sm after:ml-1 data-[required]:after:content-['*'] data:[required]:text-red;
-  }
 
   .checkbox {
-    @apply appearance-none relative w-4 h-4 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l4 disabled:dark:bg-bluegray;
+    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l4 disabled:dark:bg-bluegray;
   }
   .checkbox:checked::before {
     content: "✓";
