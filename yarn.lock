@@ -4366,13 +4366,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.2.0":
-  version: 29.2.0
-  resolution: "@types/jest@npm:29.2.0"
+"@types/jest@npm:^29.4.0":
+  version: 29.4.0
+  resolution: "@types/jest@npm:29.4.0"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 6779e63d8d7507b116a61b2935a200e48531849fc1ac74090212759fe17716777ca6d2c3a8d927a563e9cfa474ae91d40b1688376ae80e3a08974b3c9e9691e1
+  checksum: 23760282362a252e6690314584d83a47512d4cd61663e957ed3398ecf98195fe931c45606ee2f9def12f8ed7d8aa102d492ec42d26facdaf8b78094a31e6568e
   languageName: node
   linkType: hard
 
@@ -5656,7 +5656,7 @@ __metadata:
     "@testing-library/user-event": ^13.2.1
     "@trivago/prettier-plugin-sort-imports": ^3.4.0
     "@types/compress.js": ^1.1.1
-    "@types/jest": ^29.2.0
+    "@types/jest": ^29.4.0
     "@types/jsonwebtoken": ^8.5.5
     "@types/node": ^16.18.3
     "@types/quill": ^2.0.9
