@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { BaseInput, TextInputProps } from "components/form";
+import { TextInput as BaseInput, TextInputProps } from "components/form";
 import { errorStyle } from "./constants";
 
 export function TextInput<T extends FieldValues>({

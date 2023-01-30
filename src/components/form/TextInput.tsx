@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FieldValues, Path } from "react-hook-form";
 import { Classes } from "./types";
-import { Label } from ".";
+import { Label } from "./";
 
 export type TextInputProps<T extends FieldValues> = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -13,7 +13,7 @@ export type TextInputProps<T extends FieldValues> = Omit<
   label: string;
 };
 
-export function BaseInput<T extends FieldValues>({
+export function TextInput<T extends FieldValues>({
   type = "text",
   label,
   name,
@@ -28,7 +28,6 @@ export function BaseInput<T extends FieldValues>({
   } = useFormContext();
 
   const id = "__" + String(name);
-
   return (
     <div className={classes?.container}>
       <Label className={classes?.label} required={required} htmlFor={id}>
