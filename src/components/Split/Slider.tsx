@@ -1,15 +1,17 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 
-type Props<T extends FieldValues> = {
+type Props<FV extends FieldValues, P extends Path<FV>> = {
   className?: string;
-  liqPctField: Path<T>;
+  liqPctField: FV[P] extends number ? P : never;
 };
 
-export default function Slider<T extends FieldValues>(props: Props<T>) {
+export default function Slider<FV extends FieldValues, P extends Path<FV>>(
+  props: Props<FV, P>
+) {
   const {
     register,
     formState: { isValid },
-  } = useFormContext<T>();
+  } = useFormContext<FV>();
 
   return (
     <div className={`${props.className || ""} select-none`}>

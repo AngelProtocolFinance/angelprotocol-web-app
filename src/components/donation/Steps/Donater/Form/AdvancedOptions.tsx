@@ -31,7 +31,7 @@ export default function AdvancedOptions({ classes = "", unfold }: Props) {
       {isOpen && (
         <div className="grid p-6 pt-4 font-heading border-t border-prim">
           <p className="text-xs uppercase font-bold mb-2">Split</p>
-          <Split<DonateValues>
+          <Split<DonateValues, "pctLiquidSplit", "token">
             className="mb-6"
             liqPctField="pctLiquidSplit"
             tokenField="token"
