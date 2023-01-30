@@ -3,7 +3,7 @@ import Portion from "./Portion";
 import Slider from "./Slider";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
-  name: T[K] extends number ? K : never;
+  liqPctField: T[K] extends number ? K : never;
 };
 
 export default function Split<T extends FieldValues, K extends Path<T>>(
@@ -11,7 +11,7 @@ export default function Split<T extends FieldValues, K extends Path<T>>(
 ) {
   const { watch } = useFormContext<T>();
 
-  const liquidPercentage = watch(props.name);
+  const liquidPercentage = watch(props.liqPctField);
 
   return (
     <div className="flex gap-2">
@@ -25,7 +25,7 @@ export default function Split<T extends FieldValues, K extends Path<T>>(
         title="Current"
         action="Instantly available"
       >
-        <Slider<T> className="my-2.5" name={props.name} />
+        <Slider<T> className="my-2.5" name={props.liqPctField} />
       </Portion>
     </div>
   );
