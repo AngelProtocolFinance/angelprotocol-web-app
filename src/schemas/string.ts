@@ -34,24 +34,29 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
   );
 };
 
-export const url = Yup.string()
-  .nullable()
-  .when({
-    is: (value: string) => !!value && !/https?:\/\//.test(value),
-    then: Yup.string().test({
-      name: "URL without the HTTP(S) schema",
-      message: "invalid url",
-      test: (value) => {
-        try {
-          new URL(`http://${value}`);
-          return true;
-        } catch (_) {
-          return false;
-        }
-      },
-    }),
-    otherwise: Yup.string().url("invalid url"),
-  });
+export const url = Yup.string().nullable().test({
+  name: "URL without the HTTP(S) schema",
+  message: "invalid url",
+  test: isValidUrl,
+});
+
+function isValidUrl(str: string | null | undefined) {
+  if (!str) {
+    return false;
+  }
+
+  // https://www.freecodecamp.org/news/how-to-validate-urls-in-javascript/
+  const pattern = new RegExp(
+    "^([a-zA-Z]+:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$", // fragment locator
+    "i"
+  );
+  return pattern.test(str);
+}
 
 export const stringByteSchema = (minBytes: number, maxBytes: number) =>
   Yup.string()
