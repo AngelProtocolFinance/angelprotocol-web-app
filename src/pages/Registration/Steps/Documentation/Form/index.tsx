@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Checkbox, Field, Label } from "components/form";
+import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
@@ -98,7 +98,7 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <Checkbox<FV>
+      <CheckField<FV>
         name="hasAuthority"
         required
         classes={{
@@ -110,8 +110,8 @@ export default function Form() {
         By checking this box, you declare that you have the authority to create
         an endowment in the name of {data.contact.orgName} through Angel
         Protocol
-      </Checkbox>
-      <Checkbox<FV>
+      </CheckField>
+      <CheckField<FV>
         name="hasAgreedToTerms"
         required
         classes={{
@@ -125,7 +125,7 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
-      </Checkbox>
+      </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting}

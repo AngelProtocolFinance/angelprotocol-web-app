@@ -1,3 +1,3 @@
 export * from "./Label";
 export * from "./Field";
-export { Checkbox } from "./Checkbox";
+export { CheckField } from "./CheckField";

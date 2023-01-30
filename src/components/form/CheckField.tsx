@@ -4,7 +4,7 @@ import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
 import { unpack } from "./helpers";
 
-export function Checkbox<T extends FieldValues>({
+export function CheckField<T extends FieldValues>({
   name,
   children,
   classes,

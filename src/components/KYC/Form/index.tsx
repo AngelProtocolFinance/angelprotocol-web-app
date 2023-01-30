@@ -3,7 +3,7 @@ import { FormValues as FV, Props } from "../types";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Checkbox, Field, Label } from "components/form";
+import { CheckField, Field, Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
@@ -117,7 +117,7 @@ export default function Form({ classes = "", ...props }: Props) {
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}
       />
-      <Checkbox<FV>
+      <CheckField<FV>
         name="hasAgreedToTerms"
         classes={{
           container: `check-field-kyc ${
@@ -131,7 +131,7 @@ export default function Form({ classes = "", ...props }: Props) {
           Terms & Conditions
         </ExtLink>
         .
-      </Checkbox>
+      </CheckField>
       {props.type === "post-donation" ? (
         <button
           className="col-span-full btn-orange text-sm"

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import ExtLink from "components/ExtLink";
-import { Checkbox, Field } from "components/form";
+import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
@@ -24,7 +24,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         placeholder="e.g. johndoe@example.com"
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
       />
-      <Checkbox<FV>
+      <CheckField<FV>
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
@@ -36,7 +36,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         <ExtLink className="underline text-orange" href={PRIVACY_POLICY}>
           Privacy Policy
         </ExtLink>
-      </Checkbox>
+      </CheckField>
 
       <button
         type="submit"
