@@ -3,6 +3,7 @@ import Portion from "./Portion";
 import Slider from "./Slider";
 
 type Props = {
+  className?: string;
   disabled?: boolean;
   liquidPercentage: number;
   token?: TokenWithAmount;
@@ -11,7 +12,7 @@ type Props = {
 
 export default function Split(props: Props) {
   return (
-    <div className="flex gap-2">
+    <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - props.liquidPercentage}
         title="Endowment"
