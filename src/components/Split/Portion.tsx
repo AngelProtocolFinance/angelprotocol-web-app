@@ -1,32 +1,30 @@
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { TokenWithAmount } from "types/slices";
-import { humanize, logger } from "helpers";
+import { humanize } from "helpers";
 
-type Props = PropsWithChildren<{
+type Props<T extends FieldValues> = PropsWithChildren<{
   action: string;
   title: string;
   percentage: number;
-  token?: TokenWithAmount;
+  tokenField?: Path<T>;
 }>;
 
-export default function Portion(props: Props) {
-  useEffect(() => {
-    if (!props.token) {
-      return;
-    }
+export default function Portion<T extends FieldValues>(props: Props<T>) {
+  const { watch } = useFormContext<T>();
 
-    if (isNaN(Number(props.token.amount))) {
-      logger.error(`${props.token.amount} is NaN`);
-    }
-  }, [props.token, props.token?.amount]);
+  let disp_amount: string | null = null;
 
-  const disp_amount = props.token
-    ? `${props.token.symbol} ${humanize(
+  if (props.tokenField) {
+    const token = watch(props.tokenField) as TokenWithAmount;
+    if (token) {
+      disp_amount = `${token.symbol} ${humanize(
         (props.percentage / 100) *
-          (isNaN(Number(props.token.amount)) ? 0 : Number(props.token.amount)),
+          (isNaN(Number(token.amount)) ? 0 : Number(token.amount)),
         5
-      )}`
-    : null;
+      )}`;
+    }
+  }
 
   return (
     <div className="flex flex-col items-center w-1/2 xl:w-48 aspect-square p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">

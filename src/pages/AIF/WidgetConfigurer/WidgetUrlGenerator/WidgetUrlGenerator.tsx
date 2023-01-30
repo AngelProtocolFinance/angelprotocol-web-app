@@ -21,7 +21,6 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
   const submit = useSubmit(endowId, DEFAULT_VALUES, onChange);
 
   const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
-  const liquidPercentage = methods.watch("liquidPercentage");
 
   return (
     <FormProvider {...methods}>
@@ -47,10 +46,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
         </CheckField>
 
         <span>Define split value by default:</span>
-        <Split
-          liquidPercentage={liquidPercentage}
-          onChange={(value) => methods.setValue("liquidPercentage", value)}
-        />
+        <Split<FormValues> liqPctField="liquidPercentage" />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">
           <button
