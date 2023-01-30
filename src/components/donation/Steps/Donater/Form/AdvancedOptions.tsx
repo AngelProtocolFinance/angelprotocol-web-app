@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../../types";
+import { DonateValues } from "../types";
 import Icon from "components/Icon";
 import Split from "components/Split";
 
