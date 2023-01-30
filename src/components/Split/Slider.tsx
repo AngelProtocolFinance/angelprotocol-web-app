@@ -18,8 +18,6 @@ export default function Slider({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         disabled={disabled}
-        min={0}
-        max={100}
         type="range"
       />
     </div>
