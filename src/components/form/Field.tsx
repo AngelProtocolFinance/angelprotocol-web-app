@@ -49,6 +49,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         ...props,
         ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
+        id,
         disabled: isSubmitting || disabled,
         className: input,
         autoComplete: "off",

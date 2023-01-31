@@ -21,7 +21,7 @@ export function CheckField<T extends FieldValues>({
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
 
-  const id = `__${name}` as Path<T>;
+  const id = `__${name}`;
   const { container, input: int, lbl, error } = unpack(classes);
 
   return (
