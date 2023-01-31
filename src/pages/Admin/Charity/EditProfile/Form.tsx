@@ -64,6 +64,11 @@ export default function Form() {
         options={sdgOptions}
       />
       <TextPrim<FV> name="name" label="Charity Name" />
+      <TextPrim<FV>
+        name="tagline"
+        label="Tagline of your organization"
+        required
+      />
       <TextPrim<FV> name="registration_number" label="Registration number" />
       <TextPrim<FV> name="street_address" label="Street address" />
       <Label className="-mb-4" required>
@@ -80,6 +85,7 @@ export default function Form() {
           error: errorStyle,
         }}
       />
+      <TextPrim<FV> name="hq_city" label="City" required />
       <Label className="-mb-4">Overview</Label>
       <RichTextEditor<FV>
         fieldName="overview"
