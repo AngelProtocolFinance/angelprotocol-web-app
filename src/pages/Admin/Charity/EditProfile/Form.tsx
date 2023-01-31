@@ -40,22 +40,25 @@ export default function Form() {
         <span>Back to profile</span>
       </Link>
       <Label className="-mb-4" required>
-        Banner
+        Banner image of your organization
       </Label>
       <ImgEditor<FV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-prim"
+        classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
       />
       <Label className="-mb-4" required>
-        Logo
+        Logo of your organization
       </Label>
       <ImgEditor<FV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
+        classes={{
+          container: "mb-4",
+          dropzone: "w-28 sm:w-48 aspect-square",
+        }}
       />
       <Label className="-mb-4">SDG#</Label>
       <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
