@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
@@ -20,11 +21,12 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
   const { setValue, watch } = useFormContext<T>();
   const { showModal, closeModal } = useModalContext();
   const {
-    field: { value: currFile, onChange: onFileChange },
+    field: { value: currFile, onChange: onFileChange, ref },
   } = useController<T>({ name: filePath });
 
   const { publicUrl, preview }: ImgLink = watch(name as any);
   const isInitial = preview === publicUrl;
+  const noneUploaded = !publicUrl && !preview;
 
   const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
     const newFile = files[0];
@@ -44,7 +46,9 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     }
   };
 
-  function handleOpenCropper() {
+  const handleOpenCropper: MouseEventHandler<HTMLButtonElement> = (e) => {
+    //prevent container dropzone from catching click event
+    e.stopPropagation();
     showModal(ImgCropper, {
       preview,
       aspect,
@@ -52,7 +56,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
         handleCropResult(blob, currFile);
       },
     });
-  }
+  };
 
   function handleCropResult(blob: Blob | null, originalFile: File) {
     if (!blob) {
@@ -69,10 +73,20 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
     closeModal();
   }
 
-  function handleReset() {
+  const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
+    //prevent container dropzone from catching click event
+    e.stopPropagation();
     setValue(previewPath, publicUrl as any, { shouldValidate: false });
     setValue(filePath, undefined as any, { shouldValidate: false });
-  }
+  };
 
-  return { onDrop, handleOpenCropper, isInitial, handleReset, preview };
+  return {
+    onDrop,
+    handleOpenCropper,
+    isInitial,
+    noneUploaded,
+    handleReset,
+    preview,
+    ref,
+  };
 }
