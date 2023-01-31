@@ -35,6 +35,7 @@ export function TextInput<T extends FieldValues>({
         {label}
       </Label>
       <input
+        id={id}
         {...props}
         {...register(name, { valueAsNumber: type === "number" })}
         disabled={isSubmitting || disabled}
