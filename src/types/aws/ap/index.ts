@@ -11,7 +11,7 @@ type EndowmentBase = {
   kyc_donors_only: boolean;
 
   name: string;
-  tagline?: string;
+  tagline: string;
 };
 
 export type EndowmentProfile = EndowmentBase & {

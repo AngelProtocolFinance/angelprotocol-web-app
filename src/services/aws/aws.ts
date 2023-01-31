@@ -74,6 +74,14 @@ export const aws = createApi({
     profile: builder.query<EndowmentProfile, number>({
       providesTags: ["profile"],
       query: (endowId) => `/v1/profile/${network}/endowment/${endowId}`,
+      transformResponse({ tagline, hq, ...rest }: EndowmentProfile) {
+        //transform cloudsearch placeholders
+        return {
+          tagline: tagline === " " ? "" : tagline,
+          hq: { ...hq, city: hq.city === "City" ? "" : hq.city },
+          ...rest,
+        };
+      },
     }),
     editProfile: builder.mutation<EndowmentProfile, ADR36Payload>({
       invalidatesTags: ["endowments", "profile", "walletProfile"],

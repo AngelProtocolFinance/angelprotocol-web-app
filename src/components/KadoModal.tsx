@@ -8,6 +8,7 @@ import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { logger } from "helpers";
 import { ChainIDs } from "constants/chains";
+import { KADO_API_KEY } from "constants/env";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
@@ -54,7 +55,7 @@ export default function KadoModal() {
         />
       )}
       <iframe
-        src={`https://app.kado.money?apiKey=${process.env.REACT_APP_KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
+        src={`https://app.kado.money?apiKey=${KADO_API_KEY}&onPayCurrency=USD&onRevCurrency=USDC&onPayAmount=100${onToAddress}&cryptoList=USDC${network}&product=BUY&networkList=ethereum,juno,terra`}
         className={`${
           isLoading ? "hidden" : ""
         } w-full h-full border-none rounded-b`}
