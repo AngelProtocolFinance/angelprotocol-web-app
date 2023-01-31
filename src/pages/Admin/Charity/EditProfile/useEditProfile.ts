@@ -87,7 +87,7 @@ export default function useEditProfile() {
 
   return {
     editProfile: handleSubmit(editProfile),
-    isSubmitDisabled: isSubmitting,
+    isSubmitting,
     id: endowmentId,
   };
 }
