@@ -98,7 +98,7 @@ export function Selector<
               <span
                 className={`flex gap-2 h-full ${multiple ? "truncate" : ""}`}
               >
-                {getDisplay(selected, (opts: OptionType<ValueType>[]) =>
+                {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
                   onChange(opts)
                 )}
               </span>
@@ -150,7 +150,7 @@ export function Selector<
   );
 }
 
-function getDisplay<ValueType extends ValKey, Multiple extends boolean>(
+function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
   selected: VarOption<Multiple, ValueType>,
   onChange: (opts: OptionType<ValueType>[]) => void
 ) {
