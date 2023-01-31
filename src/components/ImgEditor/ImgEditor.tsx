@@ -38,7 +38,7 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
   const overlay = `before:content-[''] before:absolute before:inset-0 ${
     isDragActive
       ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
-      : true
+      : isSubmitting
       ? "before:bg-gray-l4/95 before:dark:bg-bluegray-d1/95"
       : ""
   }`;
