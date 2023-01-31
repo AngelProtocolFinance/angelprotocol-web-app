@@ -98,7 +98,9 @@ export function Selector<
               <span
                 className={`flex gap-2 h-full ${multiple ? "truncate" : ""}`}
               >
-                {getDisplay(selected)}
+                {getDisplay(selected, (opts: OptionType<ValueType>[]) =>
+                  onChange(opts)
+                )}
               </span>
               <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
             </>
@@ -148,15 +150,27 @@ export function Selector<
   );
 }
 
-function getDisplay(selected: VarOption<any, any>) {
+function getDisplay<ValueType extends ValKey, Multiple extends boolean>(
+  selected: VarOption<Multiple, ValueType>,
+  onChange: (opts: OptionType<ValueType>[]) => void
+) {
   if (!Array.isArray(selected)) {
     return selected.label;
   }
 
+  const handleRemove = (value: ValueType) =>
+    onChange(selected.filter((x) => x.value !== value));
+
   return selected.map((opt) => (
     <div className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase">
       {opt.label}
-      <button type="button">
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          handleRemove(opt.value);
+        }}
+      >
         <Icon type="Close" size={20} />
       </button>
     </div>
