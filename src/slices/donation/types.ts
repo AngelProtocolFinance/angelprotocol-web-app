@@ -64,6 +64,7 @@ export type SubmitStep = {
 export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+
 export type TxStep = {
   step: 4;
   status: TxStatus;
