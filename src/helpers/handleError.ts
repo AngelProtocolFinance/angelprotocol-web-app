@@ -5,6 +5,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { logger } from "./logger";
 
 interface EIPError extends Error {
   //applicable to both EIP1193 & EIP1474
@@ -19,13 +20,11 @@ function isEIP1193Error(error: unknown): error is EIPError {
   return typeof error === "object" && error !== null && "code" in error;
 }
 
-// export const handleError = (...handlers: ErrorHandler[]) =>
-//   handlers.reduce((prev, curr) => (err, cb) => prev(err, cb, curr));
-
 export function handleError(
   error: unknown,
   callback: (message: string | { message: string; hash: string }) => void
 ) {
+  logger.error(error);
   //handle EIP errors
   if (isEIP1193Error(error)) {
     switch (error.code) {

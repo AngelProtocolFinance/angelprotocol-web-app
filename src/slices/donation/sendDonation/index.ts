@@ -48,6 +48,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
               : "Saving donation details",
         });
 
+        /** TODO: include receipt failure in result tab
+         *  show link of succesful tx
+         */
         await logDonation({
           ...kycData /** receipt is sent to user if kyc is provider upfront */,
           amount: +token.amount,

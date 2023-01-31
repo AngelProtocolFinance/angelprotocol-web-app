@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignDoc } from "types/cosmos";
 import { invalidateApesTags } from "services/apes";
 import { CosmosWallet } from "contexts/WalletContext";
-import { createAuthToken, getWasmAttribute, logger } from "helpers";
+import { createAuthToken, getWasmAttribute, handleError } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
@@ -66,8 +66,9 @@ export const purchase = createAsyncThunk<void, Args>(
         });
       }
     } catch (err) {
-      logger.error(err);
-      updateTx({ error: "Unexpected error occured. Please try again later." });
+      handleError(err, (msg) =>
+        updateTx({ error: typeof msg === "string" ? msg : msg.message })
+      );
     } finally {
       /** invalidate user balance */
       dispatch(invalidateApesTags(["balances"]));
