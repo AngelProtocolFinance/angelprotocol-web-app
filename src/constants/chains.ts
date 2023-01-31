@@ -1,5 +1,5 @@
 import { ConnectedToChainType } from "contexts/WalletContext";
-import { IS_TEST } from "./env";
+import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "./env";
 
 export type Chain = {
   type: ConnectedToChainType["type"]; //to determine which type tx to perform
@@ -18,8 +18,8 @@ const testnets = {
     type: "cosmos",
     brand: "juno",
     name: "Juno Testnet",
-    lcd: "https://api.uni.junonetwork.io",
-    rpc: "https://rpc.uni.junonetwork.io",
+    lcd: JUNO_LCD_OVERRIDE || "https://api.uni.junonetwork.io",
+    rpc: JUNO_RPC_OVERRIDE || "https://rpc.uni.junonetwork.io",
     txExplorer: "https://testnet.ping.pub/juno/tx/",
   },
   "pisco-1": {

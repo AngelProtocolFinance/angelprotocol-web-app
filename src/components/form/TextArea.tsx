@@ -27,12 +27,14 @@ export function TextArea<T extends FieldValues>({
   } = useFormContext();
 
   const id = "__" + String(name);
+
   return (
     <div className={classes?.container}>
       <Label className={classes?.label} required={required} htmlFor={id}>
         {label}
       </Label>
       <textarea
+        id={id}
         {...props}
         {...register(name)}
         disabled={isSubmitting || disabled}
