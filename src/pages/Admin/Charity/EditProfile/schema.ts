@@ -16,7 +16,7 @@ export const VALID_MIME_TYPES = [
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
   file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
     is: (value: string) => !value,
-    then: (schema) => schema.required(),
+    then: (schema) => schema.required("required"),
   }),
 });
 
