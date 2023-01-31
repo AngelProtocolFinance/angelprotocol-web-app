@@ -89,11 +89,15 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} px-4 py-3.5 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+          className={`${button} ${selectorButtonStyle} ${
+            multiple ? "p-1 pr-3" : "px-4"
+          } h-12 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
         >
           {({ open }) => (
             <>
-              <span className={`flex gap-2 ${multiple ? "truncate" : ""}`}>
+              <span
+                className={`flex gap-2 h-full ${multiple ? "truncate" : ""}`}
+              >
                 {getDisplay(selected)}
               </span>
               <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
@@ -153,7 +157,7 @@ function getDisplay(selected: VarOption<any, any>) {
     <div className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase">
       {opt.label}
       <button type="button">
-        <Icon type="Close" />
+        <Icon type="Close" size={20} />
       </button>
     </div>
   ));
