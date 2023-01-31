@@ -19,7 +19,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditProfile();
+  const { editProfile, isSubmitting, id } = useEditProfile();
   return (
     <FormContainer
       onSubmit={editProfile}
@@ -68,6 +68,13 @@ export default function Form() {
         name="street_address"
         label="Street address"
       />
+      <Field<FV> classes="field-admin" name="name" label="Charity Name" />
+      <Field<FV>
+        classes="field-admin"
+        name="tagline"
+        label="Tagline of your organization"
+        required
+      />
       <Label className="-mb-4" required>
         Country
       </Label>
@@ -80,6 +87,7 @@ export default function Form() {
           error: "field-error",
         }}
       />
+      <Field<FV> classes="field-admin" name="hq_city" label="City" required />
       <Label className="-mb-4">Overview</Label>
       <RichTextEditor<FV>
         fieldName="overview"
@@ -127,7 +135,7 @@ export default function Form() {
         disabled={true}
       />
 
-      <Submitter disabled={isSubmitDisabled} type="submit">
+      <Submitter disabled={isSubmitting} type="submit">
         Submit
       </Submitter>
     </FormContainer>

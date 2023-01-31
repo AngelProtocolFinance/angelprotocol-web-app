@@ -40,7 +40,7 @@ export default function CountrySelector<
   } = useFormContext<BaseFormShape>();
 
   const {
-    field: { value: country, onChange: onCountryChange },
+    field: { value: country, onChange: onCountryChange, ref },
   } = useController<BaseFormShape>({
     name: props.fieldName,
   });
@@ -86,6 +86,7 @@ export default function CountrySelector<
       </Combobox.Button>
 
       <Combobox.Input
+        ref={ref}
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
         displayValue={(country: CountryOption) => country.name}
