@@ -45,6 +45,7 @@ function FormWithContext(props: EndowmentProfile) {
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
     social_media_url_twitter: props.social_media_urls.linkedin || "",
     street_address: props.street_address || "",
+    tagline: props.tagline,
   };
 
   const defaults: FormValues = {
@@ -59,8 +60,6 @@ function FormWithContext(props: EndowmentProfile) {
   };
 
   const methods = useForm<FormValues>({
-    mode: "onChange",
-    reValidateMode: "onChange",
     defaultValues: defaults,
     resolver: yupResolver(schema),
   });
