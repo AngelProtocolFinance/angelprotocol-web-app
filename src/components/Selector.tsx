@@ -7,7 +7,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { DrawerIcon } from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 
 type ValKey = string | number;
 
@@ -93,7 +93,7 @@ export function Selector<
         >
           {({ open }) => (
             <>
-              <span className={multiple ? "truncate" : ""}>
+              <span className={`flex gap-2 ${multiple ? "truncate" : ""}`}>
                 {getDisplay(selected)}
               </span>
               <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
@@ -145,9 +145,18 @@ export function Selector<
 }
 
 function getDisplay(selected: VarOption<any, any>) {
-  return Array.isArray(selected)
-    ? selected.map((s) => s.label).join(" , ")
-    : selected.label;
+  if (!Array.isArray(selected)) {
+    return selected.label;
+  }
+
+  return selected.map((opt) => (
+    <div className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase">
+      {opt.label}
+      <button type="button">
+        <Icon type="Close" />
+      </button>
+    </div>
+  ));
 }
 
 function Action(props: PropsWithChildren<{ onClick: () => void }>) {
