@@ -91,8 +91,8 @@ export function Selector<
         <Listbox.Button
           as="div"
           className={`${button} ${selectorButtonStyle} ${
-            multiple ? "p-1 pr-3" : "px-4 py-3.5"
-          } cursor-pointer disabled:cursor-default justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray dark:bg-blue-d5 disabled:dark:bg-bluegray-d1`}
+            multiple ? "pr-3" : "px-4"
+          } min-h-[3rem] cursor-pointer disabled:cursor-default justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray dark:bg-blue-d5 disabled:dark:bg-bluegray-d1`}
         >
           {({ open }) => (
             <>
