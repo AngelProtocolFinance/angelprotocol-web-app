@@ -16,11 +16,11 @@ export default function Table({
   invested_liquid,
   invested_locked,
 }: Props) {
-  const { endowment } = useAdminResources();
+  const { details } = useAdminResources<"charity">();
 
   const balances = type === "liquid" ? invested_liquid : invested_locked;
-  const strats = endowment.strategies[type];
-  const oneOffs = endowment.oneoff_vaults[type];
+  const strats = details[type].strats;
+  const oneOffs = details[type].one_offs;
 
   return (
     <table className={`w-full border border-zinc-50/30 ${classes} table-fixed`}>

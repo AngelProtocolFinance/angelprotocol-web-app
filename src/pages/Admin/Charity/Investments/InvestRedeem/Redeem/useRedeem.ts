@@ -8,7 +8,7 @@ import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
 
 export default function useRedeem() {
-  const { cw3, endowmentId, propMeta } = useAdminResources();
+  const { cw3, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
 
@@ -24,7 +24,7 @@ export default function useRedeem() {
     if (liquidVaults.length > 0) {
       msgs.push(
         account.createEmbeddedRedeemMsg({
-          id: endowmentId,
+          id,
           acct_type: "liquid",
           vaults: liquidVaults,
         })
@@ -34,7 +34,7 @@ export default function useRedeem() {
     if (lockedVaults.length > 0) {
       msgs.push(
         account.createEmbeddedRedeemMsg({
-          id: endowmentId,
+          id,
           acct_type: "locked",
           vaults: lockedVaults,
         })
@@ -45,7 +45,7 @@ export default function useRedeem() {
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "Redeem",
-      `redeem funds for endowment: ${endowmentId}`,
+      `redeem funds for endowment: ${id}`,
       msgs
     );
 

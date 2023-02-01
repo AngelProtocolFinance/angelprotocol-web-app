@@ -8,6 +8,7 @@ export default function Nav() {
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
       </NavLink>
+
       <NavLink end to={adminRoutes.withdraws} className={styler}>
         Withdraws
       </NavLink>

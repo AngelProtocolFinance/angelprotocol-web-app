@@ -41,6 +41,9 @@ export enum adminRoutes {
   edit_profile = "edit-profile",
   withdraws = "withdraws",
   investments = "investments",
+
+  liquid_account = "liquid-account",
+  locked_account = "locked-account",
 }
 
 export enum investmentRoutes {

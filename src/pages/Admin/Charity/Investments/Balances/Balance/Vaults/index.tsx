@@ -11,11 +11,11 @@ type Props = {
 };
 
 export default function Vaults({ classes = "", type }: Props) {
-  const { endowmentId, endowment } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id, details } = useAdminResources<"charity">();
+  const queryState = useBalanceQuery({ id });
 
-  const strats = endowment.strategies[type];
-  const oneOffs = endowment.oneoff_vaults[type];
+  const strats = details[type].strats;
+  const oneOffs = details[type].one_offs;
   const haveNoInvestments = strats.length <= 0 && oneOffs.length <= 0;
 
   return (

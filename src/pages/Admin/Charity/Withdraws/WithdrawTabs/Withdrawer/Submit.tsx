@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
-import { EndowmentDetails } from "types/contracts";
+import { EndowDetails } from "services/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
@@ -9,7 +9,7 @@ import { TextPrim } from "components/admin";
 import Warning from "./Warning";
 
 export default function Submit() {
-  const { endowment } = useAdminResources();
+  const { details } = useAdminResources<"charity">();
   const {
     getValues,
     formState: { isDirty, isValid, isSubmitting },
@@ -40,7 +40,7 @@ export default function Submit() {
     >
       {(height) => (
         <SubmitWithReason
-          endowment={endowment}
+          endowment={details}
           height={+height}
           isSubmitDisabled={isSubmitDisabled}
         />
@@ -51,7 +51,7 @@ export default function Submit() {
 
 type SubmitWithReasonProps = {
   isSubmitDisabled: boolean;
-  endowment: EndowmentDetails;
+  endowment: EndowDetails;
   height: number;
 };
 

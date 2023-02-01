@@ -1,70 +1,11 @@
-import { AdminResources, AdminRoles, ProposalDetails } from "services/types";
-import { CW3Config, EndowmentDetails } from "types/contracts";
+import { Account, EndowmentResource, ProposalDetails } from "services/types";
+import { CW3Config } from "types/contracts";
 import { idParamToNum } from "helpers";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { customTags, defaultProposalTags } from "./tags";
-
-export const AP_ID = 0;
-export const REVIEWER_ID = 0.5;
-
-function getCWs(id: number) {
-  //TODO: atm, only two admin types, refactor this once > 2
-  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
-  const cw3Addr = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  const cw4Addr =
-    id === AP_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
-  const role: AdminRoles = id === AP_ID ? "ap" : "reviewer";
-  return { cw3Addr, cw4Addr, role };
-}
-
-function isAp(id: number) {
-  return id === AP_ID || id === REVIEWER_ID;
-}
-
-async function getPropMeta(
-  endowId: number,
-  cw3: string,
-  config: CW3Config
-): Promise<AdminResources["propMeta"]> {
-  const votersRes = await queryContract("cw3ListVoters", cw3, null);
-  const numVoters = votersRes.voters.length;
-
-  const willExecute =
-    /** single member */
-    numVoters === 1 ||
-    /** multiple members but threshold is lte 1/members given that execution is not required */
-    (!config.require_execution &&
-      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
-
-  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-
-  return willExecute
-    ? {
-        willExecute,
-        successMeta: {
-          message: "Successful transaction",
-          link: {
-            url: `${appRoutes.admin}/${endowId}`,
-            description: "Go to admin home",
-          },
-        },
-        tagPayloads,
-      }
-    : {
-        willExecute: undefined,
-        successMeta: {
-          message: "Proposal successfully created",
-          link: {
-            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-            description: "Go to proposals",
-          },
-        },
-        tagPayloads,
-      };
-}
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -74,9 +15,9 @@ export const customApi = junoApi.injectEndpoints({
         const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
         if (isAp(numId)) {
-          const { cw3Addr } = getCWs(numId);
+          const { cw3 } = getCWs(numId);
           //skip endowment query, query hardcoded cw3 straight
-          const voter = await queryContract("cw3Voter", cw3Addr, {
+          const voter = await queryContract("cw3Voter", cw3, {
             addr: args.user,
           });
           return {
@@ -100,72 +41,79 @@ export const customApi = junoApi.injectEndpoints({
       },
     }),
     adminResources: builder.query<
-      AdminResources | undefined,
-      { user: string; endowmentId?: string }
+      EndowmentResource,
+      { user?: string; endowmentId?: string }
     >({
       providesTags: [{ type: "custom", id: customTags.adminResources }],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
-
+        /** special case for ap admin usage */
         if (isAp(numId)) {
-          const { cw3Addr, cw4Addr, role } = getCWs(numId);
+          const { cw3, cw4, type } = getCWs(numId);
           //skip endowment query, query hardcoded cw3 straight
-          const voter = await queryContract("cw3Voter", cw3Addr, {
-            addr: args.user,
-          });
+          const [voter, config] = await Promise.all([
+            args.user
+              ? queryContract("cw3Voter", cw3, {
+                  addr: args.user,
+                })
+              : Promise.resolve({ weight: 0 }),
+            queryContract("cw3Config", cw3, null),
+          ]);
 
-          if (!!voter.weight) {
-            const cw3config = await queryContract("cw3Config", cw3Addr, null);
-
-            return {
-              data: {
-                cw3: cw3Addr,
-                cw4: cw4Addr,
-                endowmentId: numId,
-                endowment: {} as EndowmentDetails, //admin templates shoudn't access this
-                cw3config,
-                role,
-                propMeta: await getPropMeta(numId, cw3Addr, cw3config),
-              },
-            };
-          } else {
-            return { data: undefined };
-          }
-        }
-
-        //get endowment details
-        const endowment = await queryContract(
-          "accEndowment",
-          contracts.accounts,
-          { id: numId }
-        );
-
-        const voter = await queryContract("cw3Voter", endowment.owner, {
-          addr: args.user,
-        });
-
-        if (!!voter.weight) {
-          const cw3config = await queryContract(
-            "cw3Config",
-            endowment.owner,
-            null
-          );
           return {
             data: {
-              cw3: endowment.owner,
-              cw4: cw3config.group_addr,
-              endowmentId: numId,
-              endowment,
-              cw3config,
-              role: "charity",
-              propMeta: await getPropMeta(numId, endowment.owner, cw3config),
+              type: type as any,
+              id: numId,
+              cw3,
+              cw4,
+              isUserMember: !!voter.weight,
+              propMeta: await getPropMeta(numId, cw3, config),
+              config,
             },
           };
         }
-        //if wallet is now owner, don't return anything
-        return { data: undefined };
 
-        //query is member
+        const [endowment, balances] = await Promise.all([
+          queryContract("accEndowment", contracts.accounts, { id: numId }),
+          queryContract("accBalance", contracts.accounts, { id: numId }),
+        ]);
+
+        const [voter, config] = await Promise.all([
+          args.user
+            ? queryContract("cw3Voter", endowment.owner, {
+                addr: args.user,
+              })
+            : Promise.resolve({ weight: 0 }),
+          queryContract("cw3Config", endowment.owner, null),
+        ]);
+
+        //format balances and endowment to type CharityResource["details"]
+        const liquid: Account = {
+          strats: endowment.strategies.liquid,
+          one_offs: endowment.oneoff_vaults.liquid,
+          balance: balances.tokens_on_hand.liquid,
+          investments: balances.invested_liquid,
+        };
+
+        const locked: Account = {
+          strats: endowment.strategies.locked,
+          one_offs: endowment.oneoff_vaults.locked,
+          balance: balances.tokens_on_hand.locked,
+          investments: balances.invested_locked,
+        };
+
+        return {
+          data: {
+            type: "charity",
+            id: numId,
+            cw3: endowment.owner,
+            cw4: config.group_addr,
+            isUserMember: !!voter.weight,
+            details: { ...endowment, liquid, locked },
+            config,
+            propMeta: await getPropMeta(numId, endowment.owner, config),
+          },
+        };
       },
     }),
     proposalDetails: builder.query<
@@ -203,3 +151,62 @@ export const {
   useAdminResourcesQuery,
   useProposalDetailsQuery,
 } = customApi;
+
+export const AP_ID = 0;
+export const REVIEWER_ID = 0.5;
+
+function getCWs(id: number) {
+  //TODO: atm, only two admin types, refactor this once > 2
+  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
+  const cw3 = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
+  const cw4 =
+    id === AP_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
+  const type: EndowmentResource["type"] = id === AP_ID ? "ap" : "review";
+  return { cw3, cw4, type };
+}
+
+function isAp(id: number) {
+  return id === AP_ID || id === REVIEWER_ID;
+}
+
+async function getPropMeta(
+  endowId: number,
+  cw3: string,
+  config: CW3Config
+): Promise<EndowmentResource["propMeta"]> {
+  const votersRes = await queryContract("cw3ListVoters", cw3, null);
+  const numVoters = votersRes.voters.length;
+
+  const willExecute =
+    /** single member */
+    numVoters === 1 ||
+    /** multiple members but threshold is lte 1/members given that execution is not required */
+    (!config.require_execution &&
+      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
+
+  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
+
+  return willExecute
+    ? {
+        willExecute,
+        successMeta: {
+          message: "Successful transaction",
+          link: {
+            url: `${appRoutes.admin}/${endowId}`,
+            description: "Go to admin home",
+          },
+        },
+        tagPayloads,
+      }
+    : {
+        willExecute: undefined,
+        successMeta: {
+          message: "Proposal successfully created",
+          link: {
+            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
+            description: "Go to proposals",
+          },
+        },
+        tagPayloads,
+      };
+}

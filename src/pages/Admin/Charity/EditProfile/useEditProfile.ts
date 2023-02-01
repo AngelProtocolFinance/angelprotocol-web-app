@@ -16,7 +16,7 @@ import { createADR36Payload } from "./createADR36Payload";
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditProfile() {
-  const { endowmentId, endowment } = useAdminResources();
+  const { id, cw3 } = useAdminResources<"charity">();
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -57,8 +57,8 @@ export default function useEditProfile() {
     */
       const updates: Partial<EndowmentProfileUpdate> = {
         ...diff,
-        id: endowmentId,
-        owner: endowment.owner,
+        id,
+        owner: cw3,
       };
 
       showModal(TxPrompt, { loading: "Signing changes" });
@@ -74,7 +74,7 @@ export default function useEditProfile() {
           message: "Profile successfully updated",
           link: {
             description: "View changes",
-            url: `${appRoutes.profile}/${endowmentId}`,
+            url: `${appRoutes.profile}/${id}`,
           },
         },
       });
@@ -88,7 +88,7 @@ export default function useEditProfile() {
   return {
     editProfile: handleSubmit(editProfile),
     isSubmitting,
-    id: endowmentId,
+    id,
   };
 }
 

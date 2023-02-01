@@ -1,10 +1,15 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
+  AccountType,
   AdminVoteInfo,
   CW3Config,
   EndowmentDetails,
+  GenericBalance,
   Proposal,
+  ReviewCW3Config,
+  Strategy,
+  VaultWithBalance,
 } from "types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
@@ -25,18 +30,53 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
-export type AdminRoles = "ap" | "reviewer" | "charity";
-export type AdminResources = {
+const strats: keyof EndowmentDetails = "strategies";
+const one_offs: keyof EndowmentDetails = "oneoff_vaults";
+const _locked: AccountType = "locked";
+const _liquid: AccountType = "liquid";
+
+export type Account = {
+  strats: Strategy[];
+  one_offs: string[];
+  balance: GenericBalance;
+  investments: VaultWithBalance[];
+};
+
+export type EndowDetails = Omit<
+  EndowmentDetails,
+  typeof strats | typeof one_offs
+> & {
+  [_locked]: Account;
+  [_liquid]: Account;
+};
+
+type Base = {
   cw3: string;
   cw4: string;
-  endowmentId: number;
-  endowment: EndowmentDetails;
-  cw3config: CW3Config;
-  role: AdminRoles;
+  id: number;
+  isUserMember: boolean;
   propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
     willExecute?: true;
   };
 };
+
+export type APResource = Base & {
+  type: "ap";
+  config: CW3Config;
+  details?: never;
+};
+export type ReviewResource = Base & {
+  type: "review";
+  config: ReviewCW3Config;
+  details?: never;
+};
+export type CharityResource = Base & {
+  type: "charity";
+  config: CW3Config;
+  details: EndowDetails;
+};
+
+export type EndowmentResource = APResource | ReviewResource | CharityResource;
 
 export type ProposalDetails = Proposal & {
   votes: AdminVoteInfo[];

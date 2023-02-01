@@ -6,8 +6,8 @@ import Holdings from "./Holdings";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
-  const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id } = useAdminResources();
+  const queryState = useBalanceQuery({ id });
 
   return (
     <div className="shadow-inner bg-zinc-50/5 rounded-md p-3">

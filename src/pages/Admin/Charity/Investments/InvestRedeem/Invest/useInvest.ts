@@ -9,7 +9,7 @@ import { scaleToStr } from "helpers";
 import { junoDenom } from "constants/tokens";
 
 export default function useInvest() {
-  const { cw3, endowmentId, propMeta } = useAdminResources();
+  const { cw3, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
 
@@ -30,7 +30,7 @@ export default function useInvest() {
     if (liquidInvestments.length > 0) {
       msgs.push(
         account.createEmbeddedInvestMsg({
-          id: endowmentId,
+          id,
           acct_type: "liquid",
           vaults: getInvestmentsWithType(data.investments, "liquid"),
         })
@@ -40,7 +40,7 @@ export default function useInvest() {
     if (lockedInvestments.length > 0) {
       msgs.push(
         account.createEmbeddedInvestMsg({
-          id: endowmentId,
+          id,
           acct_type: "locked",
           vaults: getInvestmentsWithType(data.investments, "locked"),
         })
@@ -51,7 +51,7 @@ export default function useInvest() {
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "Invest",
-      `Redeem funds for endowment: ${endowmentId}`,
+      `Redeem funds for endowment: ${id}`,
       msgs
     );
 

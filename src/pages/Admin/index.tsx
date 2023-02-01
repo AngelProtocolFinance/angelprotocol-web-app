@@ -7,14 +7,14 @@ import Review from "./Review";
 export default function Admin() {
   return (
     <Guard>
-      {(resources) => (
+      {(resource) => (
         /**modals in this scope can access AdminGuard context value */
         <ModalContext>
           {(() => {
-            switch (resources.role) {
+            switch (resource.type) {
               case "charity":
                 return <Charity />;
-              case "reviewer":
+              case "review":
                 return <Review />;
               default:
                 return <Core />;

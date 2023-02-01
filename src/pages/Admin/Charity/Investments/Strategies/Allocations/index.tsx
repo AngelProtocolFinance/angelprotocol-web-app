@@ -7,12 +7,14 @@ import { schema } from "./schema";
 
 export default function Allocations(props: AllocationsProps) {
   const { type } = props;
-  const { endowment } = useAdminResources();
+  const resource = useAdminResources<"charity">();
 
-  const allocations: Allocation[] = endowment.strategies[type].map((strat) => ({
-    ...strat,
-    percentage: +strat.percentage * 100,
-  }));
+  const allocations: Allocation[] = resource.details[type].strats.map(
+    (strat) => ({
+      ...strat,
+      percentage: +strat.percentage * 100,
+    })
+  );
 
   const methods = useForm<StrategyFormValues>({
     resolver: yupResolver(schema),

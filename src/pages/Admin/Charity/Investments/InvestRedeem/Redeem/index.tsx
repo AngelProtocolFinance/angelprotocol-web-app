@@ -14,8 +14,8 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Redeem() {
-  const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id } = useAdminResources();
+  const queryState = useBalanceQuery({ id });
   return (
     <QueryLoader
       queryState={queryState}

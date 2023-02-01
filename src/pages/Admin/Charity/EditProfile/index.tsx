@@ -11,13 +11,8 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
 
 export default function EditProfile() {
-  const { endowmentId } = useAdminResources();
-  const {
-    data: profile,
-    isLoading,
-    isFetching,
-    isError,
-  } = useProfileQuery(endowmentId);
+  const { id } = useAdminResources();
+  const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   if (isLoading || isFetching)
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;

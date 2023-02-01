@@ -1,14 +1,14 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources } from "services/types";
+import { EndowmentResource } from "services/types";
 import { useAdminResourcesQuery } from "services/juno/custom";
 import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 
 export function Guard(props: {
-  children(resources: AdminResources): ReactNode;
+  children(resources: EndowmentResource): ReactNode;
 }) {
   const { wallet } = useGetWallet();
   const { id } = useParams<AdminParams>();
@@ -35,14 +35,16 @@ export function Guard(props: {
   );
 }
 
-const context = createContext({} as AdminResources);
-export const useAdminResources = (): AdminResources => {
+const context = createContext({} as EndowmentResource);
+export const useAdminResources = <
+  T extends EndowmentResource["type"] = any
+>(): Extract<EndowmentResource, { type: T }> => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {
     throw new Error("useAdminResources should only be used inside AdminGuard");
   }
-  return val;
+  return val as any;
 };
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {

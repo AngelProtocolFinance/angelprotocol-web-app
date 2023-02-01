@@ -7,13 +7,13 @@ import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 
 export default function useUpdateStrategy(type: AccountType) {
-  const { cw3, endowmentId, propMeta } = useAdminResources();
+  const { cw3, id, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
   async function proposeStrategyUpdate(data: StrategyFormValues) {
     const account = new Account(wallet);
     const msg = account.createEmbeddedStrategyUpdateMsg({
-      id: endowmentId,
+      id,
       acct_type: type,
       strategies: data.allocations.map((alloc) => ({
         percentage: `${alloc.percentage / 100}`,
@@ -24,7 +24,7 @@ export default function useUpdateStrategy(type: AccountType) {
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
       "Update strategy",
-      `update stratey of endowment: ${endowmentId}`,
+      `update stratey of endowment: ${id}`,
       [msg]
     );
 
