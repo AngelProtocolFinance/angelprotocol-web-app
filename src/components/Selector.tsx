@@ -37,7 +37,7 @@ interface Props<
 }
 
 export const selectorButtonStyle =
-  "flex items-center text-sm rounded border border-prim";
+  "grid grid-cols-[auto_1fr] items-center text-sm rounded border border-prim";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -169,7 +169,7 @@ function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
       key={opt.value}
       className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
     >
-      {opt.label}
+      <span className="max-w-[200px] truncate">{opt.label}</span>
       <button
         type="button"
         onClick={(e) => {
