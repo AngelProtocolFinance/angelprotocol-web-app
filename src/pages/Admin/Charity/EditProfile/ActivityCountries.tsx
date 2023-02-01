@@ -14,8 +14,8 @@ export default function ActivityCountries() {
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: "Loading currencies..",
-          error: "Failed to get currency options",
+          loading: "Loading countries..",
+          error: "Failed to get country options",
         }}
         classes={{
           container:
