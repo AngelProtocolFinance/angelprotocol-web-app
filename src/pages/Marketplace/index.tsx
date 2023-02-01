@@ -1,4 +1,4 @@
-import banner from "assets/images/hands-blue.jpg";
+import banner from "assets/images/bhm-banner.jpg";
 import { useGetter } from "store/accessors";
 import Cards from "./Cards";
 import Hero from "./Hero";
@@ -13,7 +13,7 @@ export default function Marketplace() {
     <div className="w-full grid content-start pb-16">
       <div
         style={{ backgroundImage: `url('${banner}')` }}
-        className="relative overlay bg-cover bg-center"
+        className="relative overlay bg-cover bg-left-top"
       >
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>
