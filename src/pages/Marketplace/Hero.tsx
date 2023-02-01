@@ -1,4 +1,4 @@
-import heroImage from "assets/images/bhm-hero.jpg";
+import heroImage from "assets/images/bhm-hero.png";
 import ExtLink from "components/ExtLink";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
