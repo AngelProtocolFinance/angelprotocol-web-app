@@ -35,6 +35,7 @@ function FormWithContext(props: EndowmentProfile) {
     contact_email: props.contact_email,
     hq_city: props.hq.city || "",
     hq_country: props.hq.country || "",
+    active_in_countries: props.active_in_countries,
     image: props.image || "",
     logo: props.logo || "",
     kyc_donors_only: props.kyc_donors_only,
@@ -53,9 +54,13 @@ function FormWithContext(props: EndowmentProfile) {
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
     hq_country: { flag: "", name: props.hq.country || "" },
-    categories_sdgs: flatInitial.categories_sdgs.map((x) =>
+    categories_sdgs: props.categories.sdgs.map((x) =>
       getSDGLabelValuePair(x, unsdgs[x].title)
     ),
+    active_in_countries: props.active_in_countries.map((x) => ({
+      label: x,
+      value: x,
+    })),
     initial: flatInitial,
   };
 

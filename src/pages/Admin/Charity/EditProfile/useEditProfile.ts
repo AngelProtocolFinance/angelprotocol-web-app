@@ -32,6 +32,7 @@ export default function useEditProfile() {
     logo,
     hq_country,
     categories_sdgs,
+    active_in_countries,
     ...newData
   }) => {
     try {
@@ -44,8 +45,10 @@ export default function useEditProfile() {
         logo: logoUrl,
         hq_country: hq_country.name,
         categories_sdgs: categories_sdgs.map((opt) => opt.value),
+        active_in_countries: active_in_countries.map((opt) => opt.value),
         ...newData,
       };
+
       const diff = getPayloadDiff(initial, changes);
 
       if (Object.entries(diff).length <= 0) {
