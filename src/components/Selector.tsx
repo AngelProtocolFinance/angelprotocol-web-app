@@ -105,7 +105,11 @@ export function Selector<
                   onChange(opts)
                 )}
               </span>
-              <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
+              <DrawerIcon
+                isOpen={open}
+                size={25}
+                className="justify-self-end dark:text-gray"
+              />
             </>
           )}
         </Listbox.Button>
