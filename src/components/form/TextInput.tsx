@@ -28,12 +28,14 @@ export function TextInput<T extends FieldValues>({
   } = useFormContext();
 
   const id = "__" + String(name);
+
   return (
     <div className={classes?.container}>
       <Label className={classes?.label} required={required} htmlFor={id}>
         {label}
       </Label>
       <input
+        id={id}
         {...props}
         {...register(name, { valueAsNumber: type === "number" })}
         disabled={isSubmitting || disabled}

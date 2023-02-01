@@ -26,7 +26,7 @@ const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
 );
 
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditProfile();
+  const { editProfile, isSubmitting, id } = useEditProfile();
   return (
     <FormContainer
       onSubmit={editProfile}
@@ -40,22 +40,25 @@ export default function Form() {
         <span>Back to profile</span>
       </Link>
       <Label className="-mb-4" required>
-        Banner
+        Banner image of your organization
       </Label>
       <ImgEditor<FV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-prim"
+        classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
       />
       <Label className="-mb-4" required>
-        Logo
+        Logo of your organization
       </Label>
       <ImgEditor<FV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
+        classes={{
+          container: "mb-4",
+          dropzone: "w-28 sm:w-48 aspect-square",
+        }}
       />
       <Label className="-mb-4">SDG#</Label>
       <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
@@ -64,6 +67,11 @@ export default function Form() {
         options={sdgOptions}
       />
       <TextPrim<FV> name="name" label="Charity Name" />
+      <TextPrim<FV>
+        name="tagline"
+        label="Tagline of your organization"
+        required
+      />
       <TextPrim<FV> name="registration_number" label="Registration number" />
       <TextPrim<FV> name="street_address" label="Street address" />
       <Label className="-mb-4" required>
@@ -80,6 +88,7 @@ export default function Form() {
           error: errorStyle,
         }}
       />
+      <TextPrim<FV> name="hq_city" label="City" required />
       <Label className="-mb-4">Overview</Label>
       <RichTextEditor<FV>
         fieldName="overview"
@@ -122,7 +131,7 @@ export default function Form() {
         disabled={true}
       />
 
-      <Submitter disabled={isSubmitDisabled} type="submit">
+      <Submitter disabled={isSubmitting} type="submit">
         Submit
       </Submitter>
     </FormContainer>

@@ -16,7 +16,7 @@ export const VALID_MIME_TYPES = [
 const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
   file: genFileSchema(1e6, VALID_MIME_TYPES).when("publicUrl", {
     is: (value: string) => !value,
-    then: (schema) => schema.required(),
+    then: (schema) => schema.required("required"),
   }),
 });
 
@@ -25,6 +25,7 @@ const shape: SchemaShape<FormValues> = {
   //sdgNum: no need to validate, selected from dropdown with default value
   //tier: TODO: this field is not touched here for endowment owner, will be added on distinction of config owner
   //logo: no need to validate, url is auto generated
+  tagline: requiredString,
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
@@ -33,6 +34,7 @@ const shape: SchemaShape<FormValues> = {
   hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
+  hq_city: requiredString,
   contact_email: Yup.string().email("invalid email"),
   social_media_url_facebook: url,
   social_media_url_twitter: url,

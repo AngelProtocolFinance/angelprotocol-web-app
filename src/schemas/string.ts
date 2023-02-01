@@ -34,18 +34,29 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
   );
 };
 
-// if the regex match validation is not applied conditionally, it wouldn't allow for empty strings/nulls to pass through
-// to other matchers (like `required()`) as it would always be a required field
-export const url = Yup.string()
-  .when({
-    is: (value: string) => !!value,
-    then: (schema) =>
-      schema.matches(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        "invalid url"
-      ),
-  })
-  .nullable();
+export const url = Yup.string().nullable().test({
+  name: "URL without the HTTP(S) schema",
+  message: "invalid url",
+  test: isValidUrl,
+});
+
+function isValidUrl(str: string | null | undefined) {
+  if (!str) {
+    return false;
+  }
+
+  // https://www.freecodecamp.org/news/how-to-validate-urls-in-javascript/
+  const pattern = new RegExp(
+    "^([a-zA-Z]+:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$", // fragment locator
+    "i"
+  );
+  return pattern.test(str);
+}
 
 export const stringByteSchema = (minBytes: number, maxBytes: number) =>
   Yup.string()
