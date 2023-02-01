@@ -38,13 +38,7 @@ export default function Body() {
               </h3>
               <BookmarkBtn endowId={profile.id} />
             </div>
-            {/* 
-            This will be added back once charities have a `tagLine` field
-            <p className="w-full font-normal text-lg">
-              This is 140 character tag line. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Integer viverra tortor vitae, ornare
-              ac, ultricies.
-            </p> */}
+            <p className="w-full font-normal text-lg">{profile.tagline}</p>
           </div>
           {(profile.hq.country || profile.url) && (
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
