@@ -12,6 +12,7 @@ export type FilterState = {
   isOpen: boolean;
   searchText: string;
   endow_types: CapitalizedEndowmentType[];
+  endow_designation: "Non-Profit" | "Religious Non-Profit";
   sort?: Sort;
   sdgGroups: SdgGroups;
   region: { activities: Regions; headquarters: Regions };

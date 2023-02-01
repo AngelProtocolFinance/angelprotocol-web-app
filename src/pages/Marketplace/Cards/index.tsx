@@ -10,8 +10,16 @@ import Card from "./Card";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
-  const { sdgGroups, endow_types, sort, searchText, kyc_only, tiers, region } =
-    useGetter((state) => state.component.marketFilter);
+  const {
+    sdgGroups,
+    endow_types,
+    endow_designation,
+    sort,
+    searchText,
+    kyc_only,
+    tiers,
+    region,
+  } = useGetter((state) => state.component.marketFilter);
 
   const selectedSDGs = useMemo(
     () => Object.entries(sdgGroups).flatMap(([, members]) => members),
@@ -39,6 +47,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || null,
+    endow_designation,
     tiers: tiers.join(",") || null,
     sdgs: selectedSDGs.join(",") || 0,
     kyc_only: kyc_only.join(",") || null,
