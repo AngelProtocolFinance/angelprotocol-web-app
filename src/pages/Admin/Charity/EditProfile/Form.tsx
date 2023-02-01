@@ -10,6 +10,7 @@ import { FormContainer, GroupContainer, Submitter } from "components/admin";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import ActivityCountries from "./ActivityCountries";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -33,24 +34,29 @@ export default function Form() {
         <span>Back to profile</span>
       </Link>
       <Label className="-mb-4" required>
-        Banner
+        Banner image of your organization
       </Label>
       <ImgEditor<FV, "image">
         name="image"
         accept={VALID_MIME_TYPES}
         aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-prim"
+        classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
       />
       <Label className="-mb-4" required>
-        Logo
+        Logo of your organization
       </Label>
       <ImgEditor<FV, "logo">
         name="logo"
         accept={VALID_MIME_TYPES}
         aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
+        classes={{
+          container: "mb-4",
+          dropzone: "w-28 sm:w-48 aspect-square",
+        }}
       />
-      <Label className="-mb-4">SDG#</Label>
+      <Label className="-mb-4" required>
+        SDG#
+      </Label>
       <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
         multiple
         name="categories_sdgs"
@@ -78,6 +84,7 @@ export default function Form() {
       <Label className="-mb-4" required>
         Country
       </Label>
+
       <CountrySelector<FV, "hq_country">
         placeholder="Select a country"
         fieldName="hq_country"
@@ -87,6 +94,7 @@ export default function Form() {
           error: "field-error",
         }}
       />
+      <ActivityCountries />
       <Field<FV> classes="field-admin" name="hq_city" label="City" required />
       <Label className="-mb-4">Overview</Label>
       <RichTextEditor<FV>

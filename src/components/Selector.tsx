@@ -56,7 +56,7 @@ export function Selector<
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange },
+    field: { value: selected, onChange, ref },
   } = useController<{ [index: string]: VarOption<Multiple, ValueType> }>({
     name: name as any,
   });
@@ -80,8 +80,15 @@ export function Selector<
         className={`relative ${container}`}
         multiple={multiple}
       >
+        {/** add this so hook-form can focus on this field if didn't pass validation */}
+        <input
+          ref={ref}
+          aria-hidden
+          className="peer h-0 w-0 focus:outline-none absolute"
+          tabIndex={-1}
+        />
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} justify-between`}
+          className={`${button} ${selectorButtonStyle} justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>
