@@ -96,11 +96,7 @@ export function Selector<
         >
           {({ open }) => (
             <>
-              <span
-                className={`flex flex-wrap gap-2 h-full ${
-                  multiple ? "truncate" : ""
-                }`}
-              >
+              <span className="flex flex-wrap gap-2 h-full">
                 {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
                   onChange(opts)
                 )}
