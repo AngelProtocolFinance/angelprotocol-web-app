@@ -91,13 +91,15 @@ export function Selector<
         <Listbox.Button
           as="div"
           className={`${button} ${selectorButtonStyle} ${
-            multiple ? "p-1 pr-3" : "px-4"
-          } cursor-pointer disabled:cursor-default h-12 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+            multiple ? "p-1 pr-3" : "px-4 py-3.5"
+          } cursor-pointer disabled:cursor-default justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
         >
           {({ open }) => (
             <>
               <span
-                className={`flex gap-2 h-full ${multiple ? "truncate" : ""}`}
+                className={`flex flex-wrap gap-2 h-full ${
+                  multiple ? "truncate" : ""
+                }`}
               >
                 {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
                   onChange(opts)
@@ -165,7 +167,7 @@ function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
   return selected.map((opt) => (
     <div
       key={opt.value}
-      className="flex items-center px-3 gap-2 h-full bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
+      className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
     >
       {opt.label}
       <button
