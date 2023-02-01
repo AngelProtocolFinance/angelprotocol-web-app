@@ -51,7 +51,9 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
               <Row title="Status">
                 <div
                   className={`${
-                    row.donationFinalized === true ? "bg-green" : "bg-orange"
+                    row.donationFinalized === true
+                      ? "bg-green"
+                      : "even:bg-gray-d1 dark:even:bg-gray"
                   } text-white px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized === true ? "RECEIVED" : "PENDING"}
