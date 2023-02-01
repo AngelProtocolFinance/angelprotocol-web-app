@@ -4,6 +4,7 @@ export type Donation = {
   chainName: string;
   charityName: string;
   date: string;
+  donationFinalized: boolean;
   hash: string;
   id: string; // charity ID
   symbol: string;
