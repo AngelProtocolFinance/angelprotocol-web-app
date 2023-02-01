@@ -89,9 +89,10 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
+          as="div"
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1 pr-3" : "px-4"
-          } h-12 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+          } cursor-pointer disabled:cursor-default h-12 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
         >
           {({ open }) => (
             <>
