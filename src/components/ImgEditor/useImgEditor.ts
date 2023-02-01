@@ -18,7 +18,7 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
   const previewPath: any = `${String(name)}.${previewKey}`;
 
   const { setValue, watch } = useFormContext<T>();
-  const { showModal, closeModal } = useModalContext();
+  const { showModal } = useModalContext();
   const {
     field: { value: currFile, onChange: onFileChange },
   } = useController<T>({ name: filePath });
@@ -66,7 +66,6 @@ export default function useImgEditor<T extends FieldValues, K extends keyof T>({
         type: originalFile.type,
       })
     );
-    closeModal();
   }
 
   function handleReset() {
