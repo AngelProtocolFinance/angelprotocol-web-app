@@ -163,7 +163,10 @@ function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
     onChange(selected.filter((x) => x.value !== value));
 
   return selected.map((opt) => (
-    <div className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase">
+    <div
+      key={opt.value}
+      className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase"
+    >
       {opt.label}
       <button
         type="button"
