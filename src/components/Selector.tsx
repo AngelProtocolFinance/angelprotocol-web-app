@@ -165,7 +165,7 @@ function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
   return selected.map((opt) => (
     <div
       key={opt.value}
-      className="flex items-center px-3 gap-2 h-full bg-blue-l4 border border-prim rounded font-semibold text-gray-d1 uppercase"
+      className="flex items-center px-3 gap-2 h-full bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
     >
       {opt.label}
       <button
