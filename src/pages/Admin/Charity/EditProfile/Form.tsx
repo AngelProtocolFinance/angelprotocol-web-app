@@ -58,7 +58,9 @@ export default function Form() {
         aspect={[1, 1]}
         classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-prim"
       />
-      <Label className="-mb-4">SDG#</Label>
+      <Label className="-mb-4" required>
+        SDG#
+      </Label>
       <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
         multiple
         name="categories_sdgs"
