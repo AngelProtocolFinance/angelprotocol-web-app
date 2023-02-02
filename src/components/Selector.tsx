@@ -7,7 +7,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { DrawerIcon } from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 
 type ValKey = string | number;
 
@@ -88,14 +88,23 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
+          as={multiple ? "div" : "button"}
+          className={`${button} ${selectorButtonStyle} ${
+            multiple ? "p-1" : ""
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>
-              <span className={multiple ? "truncate" : ""}>
-                {getDisplay(selected)}
+              <span className="flex flex-wrap gap-2 h-full">
+                {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
+                  onChange(opts)
+                )}
               </span>
-              <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
+              <DrawerIcon
+                isOpen={open}
+                size={25}
+                className="justify-self-end dark:text-gray"
+              />
             </>
           )}
         </Listbox.Button>
@@ -143,10 +152,34 @@ export function Selector<
   );
 }
 
-function getDisplay(selected: VarOption<any, any>) {
-  return Array.isArray(selected)
-    ? selected.map((s) => s.label).join(" , ")
-    : selected.label;
+function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
+  selected: VarOption<Multiple, ValueType>,
+  onChange: (opts: OptionType<ValueType>[]) => void
+) {
+  if (!Array.isArray(selected)) {
+    return selected.label;
+  }
+
+  const handleRemove = (value: ValueType) =>
+    onChange(selected.filter((x) => x.value !== value));
+
+  return selected.map((opt) => (
+    <div
+      key={opt.value}
+      className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
+    >
+      <span className="max-w-[200px] truncate">{opt.label}</span>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          handleRemove(opt.value);
+        }}
+      >
+        <Icon type="Close" size={20} />
+      </button>
+    </div>
+  ));
 }
 
 function Action(props: PropsWithChildren<{ onClick: () => void }>) {
