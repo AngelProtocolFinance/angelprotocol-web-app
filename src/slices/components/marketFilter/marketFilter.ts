@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RegionType, Sort } from "./types";
+import { EndowDesignation } from "types/aws";
 import { CapitalizedEndowmentType } from "types/contracts";
 import { UNSDG_NUMS } from "types/lists";
 import { initialState } from "./constants";
@@ -46,6 +47,12 @@ const marketFilter = createSlice({
     ) => {
       state.endow_types = payload;
     },
+    setDesignations: (
+      state,
+      { payload }: PayloadAction<EndowDesignation[]>
+    ) => {
+      state.endow_designation = payload;
+    },
     toggle(state) {
       state.isOpen = !state.isOpen;
     },
@@ -58,6 +65,7 @@ export const {
   reset,
   toggle,
   setTypes,
+  setDesignations,
   setSort,
   setKYCOnly,
   setSearchText,

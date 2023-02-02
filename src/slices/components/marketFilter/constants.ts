@@ -47,6 +47,7 @@ export const initialState: FilterState = {
   isOpen: false,
   searchText: "",
   endow_types: ["Charity"],
+  endow_designation: ["Religious Non-Profit", "Non-Profit"],
   kyc_only: [true, false],
-  tiers: ["Level3"],
+  tiers: ["Level2", "Level3"],
 };
