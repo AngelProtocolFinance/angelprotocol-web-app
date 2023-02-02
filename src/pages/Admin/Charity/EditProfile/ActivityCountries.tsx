@@ -26,7 +26,7 @@ export default function ActivityCountries() {
           <Selector<FormValues, "active_in_countries", string, true>
             name="active_in_countries"
             multiple
-            classes={{ button: "dark:bg-blue-d6" }}
+            classes={{ button: "field-input-admin" }}
             options={countries.map((c) => ({
               label: c.name,
               value: c.name,

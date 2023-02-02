@@ -1,4 +1,4 @@
-import { BtnLink } from "components/BtnLink";
+import { Link } from "react-router-dom";
 import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 
@@ -10,12 +10,11 @@ export default function DonateButton({
   const profile = useProfileContext();
 
   return (
-    <BtnLink
-      as="link"
+    <Link
       to={appRoutes.donate + `/${profile.id}`}
-      className={`${className} btn btn-orange h-12 px-6 rounded text-base lg:text-sm`}
+      className={`${className} btn-orange h-12 px-6 text-base lg:text-sm`}
     >
       Donate now
-    </BtnLink>
+    </Link>
   );
 }

@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Path, useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
-import { errorStyle, textFieldStyle } from "components/gift";
 
 export default function Recipient({ classes = "" }: { classes?: string }) {
   const {
@@ -10,7 +9,7 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
   } = useFormContext<FormValues>();
   const fieldName: Path<FormValues> = "recipient";
   return (
-    <div className={`grid relative ${classes}`}>
+    <div className={`grid field field-gift ${classes}`}>
       <label htmlFor={fieldName} className="font-bold font-heading mb-3">
         Enter recipient address:{" "}
         <p className="text-sm font-normal text-gray-d1 dark:text-gray font-work w-[90%] mt-1">
@@ -22,16 +21,11 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
         {...register(fieldName)}
         id={fieldName}
         type="text"
-        className={textFieldStyle + " font-work"}
+        className="font-work"
         placeholder="e.g. juno123abc8910xyz.."
         autoComplete="off"
       />
-      <ErrorMessage
-        as="p"
-        errors={errors}
-        name={fieldName}
-        className={errorStyle}
-      />
+      <ErrorMessage data-error as="p" errors={errors} name={fieldName} />
     </div>
   );
 }

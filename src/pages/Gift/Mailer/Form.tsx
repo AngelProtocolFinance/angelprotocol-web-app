@@ -1,10 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
-import { BtnOutline, BtnPrim, BtnSec, TextInput } from "components/gift";
+import { Field } from "components/form";
 import { createAuthToken } from "helpers";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -49,9 +50,17 @@ export default function Form({ classes = "" }) {
       <h3 className="text-center text-3xl font-bold leading-snug">
         Send Your Angel Protocol Giftcard via Email
       </h3>
-      <TextInput<FV> name="purchaser" label="Your name" />
-      <TextInput<FV> name="recipient.name" label="Recipient name" />
-      <TextInput<FV> name="recipient.email" label="Recipient email address" />
+      <Field<FV> name="purchaser" label="Your name" classes="field-gift" />
+      <Field<FV>
+        name="recipient.name"
+        label="Recipient name"
+        classes="field-gift"
+      />
+      <Field<FV>
+        name="recipient.email"
+        label="Recipient email address"
+        classes="field-gift"
+      />
       <Label className="-mb-3">Add personalized note</Label>
       <RichTextEditor<FV>
         fieldName="message"
@@ -64,21 +73,24 @@ export default function Form({ classes = "" }) {
         charLimit={500}
       />
       <div className="grid grid-cols-2 gap-5 font-body mt-3">
-        <BtnSec
+        <button
+          type="button"
+          className="btn-outline-filled btn-gift"
           onClick={() => {
             reset();
           }}
         >
           Reset
-        </BtnSec>
-        <BtnPrim type="submit">Submit</BtnPrim>
-        <BtnOutline
-          as="link"
+        </button>
+        <button className="btn-orange btn-gift" type="submit">
+          Submit
+        </button>
+        <Link
           to={appRoutes.marketplace}
-          className="col-span-full sm:justify-self-center sm:mt-10 px-11 py-3"
+          className="btn-outline-filled btn-gift col-span-full sm:justify-self-center sm:mt-10 px-11"
         >
           Back to the platform
-        </BtnOutline>
+        </Link>
       </div>
     </form>
   );
