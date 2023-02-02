@@ -45,27 +45,31 @@ export default function Card({
           }}
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
-          <h3 className="font-bold">{name}</h3>
-          {hq.country && (
-            <p className="text-gray-d1 dark:text-gray text-sm -mt-2">
-              <span className="font-semibold">HQ:</span> {hq.country}
-              {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
-            </p>
-          )}
-
+          {/* ENDOWMENT NAME */}
+          <h3 className="font-bold text-ellipsis line-clamp-2">{name}</h3>
+          {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
-            <p className="peer text-gray-d1 dark:text-gray text-sm last:mb-0">
+            <p className="peer text-gray-d1 dark:text-gray text-sm -mt-2">
               {tagline}
             </p>
           ) : null}
-          {/** country and sdg always on bottom */}
-          <div className="mt-auto empty:hidden grid gap-3">
+          {/* HQ & ACTIVE-IN COUNTRIES */}
+          <span className="text-gray-d1 dark:text-gray text-sm last:mb-0">
+            {hq.country && (
+              <p>
+                <span className="font-semibold">HQ:</span> {hq.country}
+                {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
+              </p>
+            )}
             {!isEmpty(active_in_countries) && (
-              <p className="text-gray-d1 dark:text-gray text-sm">
+              <p>
                 <span className="font-semibold">Active in:</span>{" "}
                 {active_in_countries.join(" ,")}
               </p>
             )}
+          </span>
+          {/** UN SDGs - always on bottom */}
+          <div className="mt-auto empty:hidden grid gap-3">
             {!isEmpty(sdgs) && (
               <div className="flex text-3xs font-bold uppercase gap-1">
                 {sdgs.map((s) => (
