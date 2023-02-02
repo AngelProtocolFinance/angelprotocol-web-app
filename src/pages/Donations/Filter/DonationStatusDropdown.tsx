@@ -1,10 +1,6 @@
 import { FormValues as FV } from "./types";
 import { Selector } from "components/Selector";
-
-const statuses = [
-  { label: "RECEIVED", value: "RECEIVED" },
-  { label: "PENDING", value: "PENDING" },
-];
+import { statuses } from "./constants";
 
 export default function DonationStatusDropdown({ classes = "" }) {
   return (

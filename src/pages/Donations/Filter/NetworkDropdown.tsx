@@ -18,8 +18,7 @@ export default function NetworkDropdown({ classes = "" }) {
         }}
         //filterFn: TODO show only network related to donor address
         classes={{
-          container:
-            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
+          container: selectorButtonStyle + " bg-white dark:bg-blue-d6",
         }}
       >
         {(networks) => (
