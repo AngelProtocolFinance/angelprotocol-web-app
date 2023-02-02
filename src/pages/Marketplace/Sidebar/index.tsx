@@ -1,6 +1,6 @@
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
-import { reset, toggle } from "slices/components/marketFilter";
+import { clear, reset, toggle } from "slices/components/marketFilter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
@@ -28,6 +28,15 @@ export default function Sidebar({ classes = "" }: { classes?: string }) {
         <h3 className="uppercase font-bold">Filter by</h3>
         <button
           type="button"
+          title="Remove all filter selections."
+          onClick={() => dispatch(clear())}
+          className="text-gray-d1 dark:text-gray-l2 text-sm"
+        >
+          Clear Filters
+        </button>
+        <button
+          type="button"
+          title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
           className="text-gray-d1 dark:text-gray-l2 text-sm"
         >
