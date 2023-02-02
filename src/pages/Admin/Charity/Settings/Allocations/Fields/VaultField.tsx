@@ -42,12 +42,12 @@ export default function VaultField({
               <Icon
                 size={16}
                 type="Close"
-                className="hover:text-rose-600 text-zinc-600  active:text-zinc-700"
+                className="hover:text-red active:text-red-d1"
               />
             </button>
           )}
         </div>
-        <span className="font-mono">{name}</span>
+        <span>{name}</span>
       </div>
 
       {(staticVal && <p className="text-zinc-400">{staticVal}</p>) || (
@@ -71,7 +71,7 @@ export default function VaultField({
           <ErrorMessage
             name={`allocations.${idx}.percentage`}
             as="span"
-            className="absolute right-0 bottom-0 text-xs text-rose-300"
+            className="absolute right-0 bottom-0 text-xs text-red dark:text-red-l2"
           />
         </div>
       )}

@@ -68,18 +68,18 @@ export default function Pie({ series, max, classes }: Props) {
 
 type PieColor = { bg: string; fill: string };
 export const pieColors: PieColor[] = [
-  { bg: "bg-sky-200", fill: "fill-sky-200" },
-  { bg: "bg-sky-400", fill: "fill-sky-400" },
-  { bg: "bg-sky-500", fill: "fill-sky-600" },
-  { bg: "bg-amber-200", fill: "fill-amber-200" },
-  { bg: "bg-amber-400", fill: "fill-amber-400" },
-  { bg: "bg-amber-600", fill: "fill-amber-600" },
-  { bg: "bg-fuchsia-200", fill: "fill-fuchsia-200" },
-  { bg: "bg-fuchsia-400", fill: "fill-fuchsia-400" },
-  { bg: "bg-fuchsia-600", fill: "fill-fuchsia-600" },
+  { bg: "bg-blue-l2", fill: "fill-blue-l2" },
+  { bg: "bg-blue", fill: "fill-blue" },
+  { bg: "bg-blue-d2", fill: "fill-blue-d2" },
+  { bg: "bg-orange-l2", fill: "fill-orange-l2" },
+  { bg: "bg-orange", fill: "fill-orange" },
+  { bg: "bg-orange-d2", fill: "fill-orange-d2" },
+  { bg: "bg-red-l2", fill: "fill-red-l2" },
+  { bg: "bg-red", fill: "fill-red" },
+  { bg: "bg-red-d2", fill: "fill-red-d2" },
 ];
 
 export const UNALLOCATED_COLOR: PieColor = {
-  bg: "bg-emerald-400",
-  fill: "fill-emerald-400",
+  bg: "bg-green",
+  fill: "fill-green",
 };

@@ -3,14 +3,12 @@ import { investmentRoutes } from "constants/routes";
 import Balances from "./Balances";
 import InvestRedeem from "./InvestRedeem";
 import Nav from "./Nav";
-import Strategies from "./Strategies";
 
 export default function Investments() {
   return (
     <div className="grid grid-rows-[auto_1fr] mt-4">
       <Nav classes="grid mb-4" />
       <Routes>
-        <Route path={investmentRoutes.strategies} element={<Strategies />} />
         <Route
           path={investmentRoutes.invest_redeem}
           element={<InvestRedeem />}

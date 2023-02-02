@@ -1,11 +1,11 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { OnVaultSelect } from "../../../Vaults/types";
+import { OnVaultSelect } from "../../../Investments/Vaults/types";
 import { StrategyFormValues as SF } from "../types";
 import { AccountType } from "types/contracts";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { maskAddress } from "helpers";
-import useVaultSelection from "../../../Vaults/useVaultSelection";
+import useVaultSelection from "../../../Investments/Vaults/useVaultSelection";
 import { UNALLOCATED_COLOR, pieColors } from "../../Pie";
 import VaultField from "./VaultField";
 
@@ -60,10 +60,10 @@ export default function Fields({ classes = "", type }: Props) {
 
   return (
     <>
-      <table className={`border border-zinc-50/30 ${classes}`}>
+      <table className={`${classes}`}>
         <TableSection
           type="thead"
-          rowClass="border-b border-zinc-50/30 divide-x divide-zinc-50/30"
+          rowClass="border-y border-prim divide-x divide-prim"
         >
           <Cells type="th" cellClass="uppercase font-semibold p-2">
             <>Vault</>
@@ -72,7 +72,7 @@ export default function Fields({ classes = "", type }: Props) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-zinc-50/30 divide-x divide-zinc-50/30"
+          rowClass="border-b border-prim divide-x divide-prim"
         >
           {renderFields()}
         </TableSection>
@@ -81,7 +81,7 @@ export default function Fields({ classes = "", type }: Props) {
         <button
           onClick={showVaults}
           type="button"
-          className="uppercase text-angel-blue justify-self-start mt-2 text-sm"
+          className="uppercase text-blue justify-self-start mt-2 text-sm"
         >
           <Icon type="Plus" className="relative bottom-0.5 inline mr-1" />
           add vault

@@ -9,15 +9,15 @@ export default function Vault({
   address,
 }: VaultProps) {
   return (
-    <div className="flex flex-col gap-2 p-2 pt-8 items-center relative text-zinc-700 rounded-md font-heading border border-zinc-600/30">
+    <div className="flex flex-col gap-2 p-2 pt-8 items-center relative rounded font-heading border border-prim">
       <p className="uppercase">Vault</p>
-      <span className="font-mono text-sm">{maskAddress(address)}</span>
+      <span className="font-work text-sm">{maskAddress(address)}</span>
 
       <button
         disabled={isSelected || isPreselected}
         type="button"
         className={`absolute top-2 left-2 bg-sky-400 p-0.5 rounded-full ${
-          isPreselected ? "disabled:bg-zinc-400" : "disabled:bg-emerald-400"
+          isPreselected ? "disabled:bg-gray-l4" : "disabled:bg-green"
         }`}
         onClick={handleVaultSelect}
       >

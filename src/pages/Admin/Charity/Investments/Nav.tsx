@@ -13,9 +13,6 @@ export default function Nav({ classes = "" }: { classes?: string }) {
       <NavLink end to={investmentRoutes.invest_redeem} className={styler}>
         Invest/redeem
       </NavLink>
-      <NavLink end to={investmentRoutes.strategies} className={styler}>
-        Auto-investment strategies
-      </NavLink>
     </div>
   );
 }

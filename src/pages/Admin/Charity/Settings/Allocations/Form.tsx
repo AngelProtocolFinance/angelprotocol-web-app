@@ -23,7 +23,7 @@ export default function Form({ type, classes = "" }: FormProps) {
 
   return (
     <form
-      className={`mt-6 ${classes} content-start text-zinc-50/80 p-3 bg-zinc-50/5 shadow-inner`}
+      className={`mt-6 ${classes} content-start p-3 border bg-white dark:bg-blue-d7 border-prim rounded`}
       onSubmit={handleSubmit(proposeStrategyUpdate)}
     >
       <h3 className="text-center mb-4 uppercase font-bold">
@@ -42,7 +42,7 @@ export default function Form({ type, classes = "" }: FormProps) {
         <button
           disabled={!isDirty || !isValid || total > 100}
           type="submit"
-          className="font-heading justify-self-end text-xs font-bold px-4 py-2 bg-sky-500 disabled:bg-zinc-300 hover:bg-sky-400 uppercase rounded-md text-zinc-50"
+          className="font-heading justify-self-end text-xs font-bold px-4 py-2 btn-blue rounded-sm"
         >
           update strategy
         </button>
