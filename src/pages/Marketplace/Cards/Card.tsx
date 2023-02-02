@@ -57,7 +57,7 @@ export default function Card({
           ) : null}
           <div className="mt-auto empty:hidden grid gap-3">
             {/* HQ & ACTIVE-IN COUNTRIES */}
-            <span className="text-gray-d1 dark:text-gray text-sm last:mb-0">
+            <span className="text-gray-d1 dark:text-gray text-sm">
               {hq.country && (
                 <p>
                   <span className="font-semibold">HQ:</span> {hq.country}
