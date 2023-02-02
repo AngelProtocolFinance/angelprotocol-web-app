@@ -9,8 +9,20 @@ export default function Nav() {
         Dashboard
       </NavLink>
 
-      <NavLink end to={adminRoutes.withdraws} className={styler}>
-        Withdraws
+      <NavLink end to={adminRoutes.withdraw} className={styler}>
+        Withdraw
+      </NavLink>
+      <NavLink end to={adminRoutes.contributions} className={styler}>
+        Contributions
+      </NavLink>
+      <NavLink end to={adminRoutes.contributions} className={styler}>
+        Invest dashboard
+      </NavLink>
+      <NavLink end to={adminRoutes.contributions} className={styler}>
+        Liquid Account
+      </NavLink>
+      <NavLink end to={adminRoutes.contributions} className={styler}>
+        Locked Account
       </NavLink>
       <NavLink end to={adminRoutes.investments} className={styler}>
         Investments

@@ -39,11 +39,14 @@ export enum adminRoutes {
 
   //charity
   edit_profile = "edit-profile",
-  withdraws = "withdraws",
+  withdraw = "withdraw",
+  contributions = "contributions",
   investments = "investments",
 
+  invest_dashboard = "invest_dashboard",
   liquid_account = "liquid-account",
   locked_account = "locked-account",
+  settings = "settings",
 }
 
 export enum investmentRoutes {

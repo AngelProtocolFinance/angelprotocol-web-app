@@ -3,9 +3,7 @@ import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-// import DonationsTable from "./DonationsTable";
-
-export default function Donations({ classes = "" }: { classes?: string }) {
+export default function Contributions({ classes = "" }: { classes?: string }) {
   const { id } = useAdminResources();
   const queryState = useDonationsQuery({ id: id.toString() });
 

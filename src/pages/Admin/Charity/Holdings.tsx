@@ -35,7 +35,7 @@ export default function Holdings({ cw20, native, type }: Props) {
 function WithdrawLink(props: { classes?: string; type: AccountType }) {
   return (
     <Link
-      to={adminRoutes.withdraws}
+      to={adminRoutes.withdraw}
       state={props.type}
       className={`flex justify-end items-center gap-2 uppercase text-sm text-gray-d1 dark:text-gray hover:text-orange hover:dark:text-orange ${props.classes}`}
     >
