@@ -84,12 +84,7 @@ function Text(props: { children: ReactNode }) {
 }
 
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return (
-    <button
-      {...props}
-      className="text-sm px-6 py-1.5 rounded uppercase btn-orange"
-    />
-  );
+  return <button {...props} className="text-sm px-6 py-1.5 btn-orange" />;
 }
 
 function extractTagFromMeta(

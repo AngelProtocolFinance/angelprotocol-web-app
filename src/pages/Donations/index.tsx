@@ -45,7 +45,7 @@ export default function Donations() {
       </h1>
       <CsvExporter
         aria-disabled={isLoading || isError || isDebouncing || isEmpty(data)}
-        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn btn-orange px-8 py-3 rounded  aria-disabled:pointer-events-none aria-disabled:bg-gray-l2 dark:aria-disabled:bg-gray"
+        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
         headers={csvHeaders}
         data={data}
         filename="donations.csv"

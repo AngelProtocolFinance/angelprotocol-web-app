@@ -5,7 +5,7 @@ import { EndowmentDetails } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useLatestBlockQuery } from "services/juno";
 import QueryLoader from "components/QueryLoader";
-import { TextPrim } from "components/admin";
+import { Field } from "components/form";
 import Warning from "./Warning";
 
 export default function Submit() {
@@ -23,7 +23,7 @@ export default function Submit() {
       <button
         type="submit"
         disabled={isSubmitDisabled}
-        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+        className="mt-2 btn-orange px-4 py-2 text-sm"
       >
         Create withdraw proposal
       </button>
@@ -74,15 +74,15 @@ function SubmitWithReason({
           Withdrawing from endowment funds requires Angel Protocol team
           approval.
         </Warning>
-        <TextPrim<WV>
+        <Field<WV>
           name="reason"
           label="Reason"
-          classes={{ container: "mb-8" }}
+          classes={{ container: "field-admin mb-8" }}
         />
         <button
           type="submit"
           disabled={isSubmitDisabled}
-          className="btn btn-orange rounded px-4 py-2 text-sm"
+          className="btn-orange px-4 py-2 text-sm"
         >
           Create withdraw proposal
         </button>
@@ -102,7 +102,7 @@ function SubmitWithReason({
       <button
         type="submit"
         disabled={!isMatured}
-        className="mt-2 btn btn-orange rounded px-4 py-2 text-sm"
+        className="mt-2 btn-orange px-4 py-2 text-sm"
       >
         Create withdraw proposal
       </button>
