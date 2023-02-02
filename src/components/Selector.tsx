@@ -36,8 +36,7 @@ interface Props<
   children?: (selected: VarOption<M, V>) => ReactNode;
 }
 
-export const selectorButtonStyle =
-  "grid grid-cols-[auto_1fr] items-center text-sm rounded border border-prim";
+export const selectorButtonStyle = "flex items-center field-input";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -89,10 +88,10 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
-          as="div"
+          as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
-            multiple ? "pr-3" : "px-4"
-          } min-h-[3rem] cursor-pointer disabled:cursor-default justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray dark:bg-blue-d5 disabled:dark:bg-bluegray-d1`}
+            multiple ? "p-1" : ""
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>

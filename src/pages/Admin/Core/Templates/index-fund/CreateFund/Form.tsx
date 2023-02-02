@@ -1,8 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "pages/Admin/types";
-import Checkbox from "components/Checkbox";
-import { DivContainer, Submitter, TextArea, TextPrim } from "components/admin";
-import { Label } from "components/form";
+import { DivContainer, Submitter } from "components/admin";
+import { CheckField, Field, Label } from "components/form";
 import { INIT_SPLIT } from ".";
 import MemberAdder from "./MemberAdder";
 import useCreateFund from "./useCreateFund";
@@ -11,30 +10,51 @@ export default function Form() {
   const { createFund } = useCreateFund();
   return (
     <DivContainer>
-      <TextPrim label="Proposal title" name="title" required />
-      <TextArea label="Proposal description" name="description" required />
-      <TextPrim<V> label="Fund name" name="fundName" required />
-      <TextArea<V> label="Fund description" name="fundDescription" required />
-      <TextPrim<V>
+      <Field<V>
+        classes="field-admin"
+        label="Proposal title"
+        name="title"
+        required
+      />
+      <Field<V, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Proposal description"
+        name="description"
+        required
+      />
+      <Field<V>
+        classes="field-admin"
+        label="Fund name"
+        name="fundName"
+        required
+      />
+      <Field<V, "textarea">
+        type="textarea"
+        classes="field-admin"
+        label="Fund description"
+        name="fundDescription"
+        required
+      />
+      <Field<V>
+        classes="field-admin"
         label="Expiry height"
         name="expiryHeight"
         placeholder="700992312"
       />
-      <TextPrim<V>
+      <Field<V, "datetime-local">
+        classes="field-admin"
         type="datetime-local"
         label="Expiry time"
         name="expiryHeight"
       />
       <Slider />
-      <Checkbox<V>
+      <CheckField<V>
         name="isFundRotating"
-        classes={{
-          container:
-            "p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 grid items-center border border-prim",
-        }}
+        classes="p-3 text-sm rounded bg-orange-l6 dark:bg-blue-d7 border border-prim"
       >
         Included on fund rotation
-      </Checkbox>
+      </CheckField>
       <Label className="text-green-l1 -mb-4">Add members</Label>
       <MemberAdder />
 
@@ -67,8 +87,8 @@ function Slider() {
       <div className="rounded bg-orange-l6 dark:bg-blue-d7 grid items-center px-4 py-6 border border-prim">
         <input
           {...register("splitToLiquid")}
-          className="w-full slider"
           type="range"
+          className="range"
           min="0"
           max="100"
           step="1"

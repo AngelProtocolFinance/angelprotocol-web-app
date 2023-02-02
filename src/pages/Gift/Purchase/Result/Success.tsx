@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec } from "components/gift";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
 import { chainIds } from "constants/chainIds";
@@ -25,13 +26,12 @@ export default function Success(props: Props) {
         <EmailCode secret={props.secret} />
       )}
 
-      <BtnPrim
-        as="link"
+      <Link
         to={appRoutes.marketplace}
-        className="w-full text-center sm:w-auto min-w-[15.6rem]"
+        className="w-full sm:w-auto min-w-[15.6rem] btn-orange btn-gift"
       >
         Back to the platform
-      </BtnPrim>
+      </Link>
     </div>
   );
 }
@@ -42,14 +42,13 @@ function Result(props: { hash: string }) {
       <p className="text-center mt-4 mb-8">
         Giftcard balance is credited to the recipient's wallet.
       </p>
-      <BtnSec
-        as="a"
+      <ExtLink
         href={getTxUrl(chainIds.juno, props.hash)}
-        className="flex items-center justify-center gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
+        className="btn-gift btn-outline-filled gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
       >
         <Icon type="ExternalLink" size={22} />
         <span>View transaction</span>
-      </BtnSec>
+      </ExtLink>
     </>
   );
 }
@@ -67,15 +66,14 @@ function EmailCode({ secret }: { secret: string }) {
           {secret}
         </p>
       </div>
-      <BtnSec
-        as="link"
+      <Link
         to={`../${routes.mail}`}
         state={{ secret }}
-        className="flex items-center justify-center gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
+        className="btn-outline-filled text-sm  gap-3.5 w-full sm:w-auto mb-3 mt-8 sm:mb-12 sm:mt-8 "
       >
         <Icon type="Email" size={24} />
         <span>Send gift card via email</span>
-      </BtnSec>
+      </Link>
     </>
   );
 }

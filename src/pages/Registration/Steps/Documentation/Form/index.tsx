@@ -1,16 +1,9 @@
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { Label } from "components/form";
-import {
-  BtnPrim,
-  BtnSec,
-  FileDropzone,
-  LoadText,
-  TextInput,
-  checkBoxStyle,
-} from "components/registration";
+import { CheckField, Field, Label } from "components/form";
+import { FileDropzone, LoadText } from "components/registration";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -39,7 +32,7 @@ export default function Form() {
         name="proofOfIdentity"
         tooltip={fileTooltip}
       />
-      <TextInput<FV>
+      <Field<FV>
         name="website"
         label="Website of your organization"
         required
@@ -105,25 +98,25 @@ export default function Form() {
         <Radio value="No" />
       </div>
       <Separator classes="my-8" />
-      <Checkbox<FV>
+      <CheckField<FV>
         name="hasAuthority"
         required
         classes={{
-          container: "text-sm mb-3",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg text-sm mb-3",
+          input: "checkbox-reg self-start sm:self-center",
           error: "mt-1",
         }}
       >
         By checking this box, you declare that you have the authority to create
         an endowment in the name of {data.contact.orgName} through Angel
         Protocol
-      </Checkbox>
-      <Checkbox<FV>
+      </CheckField>
+      <CheckField<FV>
         name="hasAgreedToTerms"
         required
         classes={{
-          container: "text-sm",
-          checkbox: checkBoxStyle + " self-start sm:self-center",
+          container: "check-field-reg",
+          input: "self-start sm:self-center",
           error: "mt-1",
         }}
       >
@@ -132,24 +125,23 @@ export default function Form() {
         <ExtLink className="underline text-orange" href={TERMS_OF_USE}>
           Terms & Conditions
         </ExtLink>
-      </Checkbox>
+      </CheckField>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <BtnSec
+        <Link
           aria-disabled={isSubmitting}
-          as="link"
           to={`../${steps.contact}`}
           state={data.init}
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] text-center"
+          className="py-3 min-w-[8rem] btn-orange btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
-        </BtnPrim>
+        </button>
       </div>
     </form>
   );

@@ -1,11 +1,10 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { BtnPrimary, BtnSec } from "components/donation";
-import { BtnOutline } from "components/donation/BtnOutline";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
@@ -71,10 +70,15 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       ) : null}
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-14 grid grid-cols-2 gap-5">
-        <BtnSec onClick={goBack} type="button">
+        <button
+          className="btn-outline-filled btn-donate"
+          onClick={goBack}
+          type="button"
+        >
           Back
-        </BtnSec>
-        <BtnPrimary
+        </button>
+        <button
+          className="btn-orange btn-donate"
           onClick={
             isNotEstimated
               ? undefined
@@ -86,14 +90,13 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           type="submit"
         >
           Complete
-        </BtnPrimary>
-        <BtnOutline
-          as="link"
+        </button>
+        <Link
           to={appRoutes.profile + `/${endowId}`}
-          className="col-span-full"
+          className="col-span-full btn-outline btn-donate"
         >
           Cancel
-        </BtnOutline>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
@@ -8,7 +9,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
-import { BtnPrim } from "components/registration";
 import { handleMutationResult, logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
@@ -45,8 +45,8 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
           Your verification link has expired. Please resend the verification
           email.
         </Text>
-        <BtnPrim
-          className="btn-orange w-64 h-12 text-sm"
+        <button
+          className="btn-orange btn-reg w-64 h-12 "
           onClick={async () => {
             handleMutationResult(
               await requestEmail({ uuid: c.PK, email: c.Email }),
@@ -59,7 +59,7 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
           disabled={isLoading}
         >
           Resend verification email
-        </BtnPrim>
+        </button>
       </Container>
     );
   }
@@ -81,14 +81,13 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         Thank you for your interest in Angel Protocol! Your endowment is just a
         few steps away.
       </Text>
-      <BtnPrim
-        className="w-full max-w-[26.25rem] text-center"
-        as="link"
+      <Link
+        className="w-full max-w-[26.25rem] btn-orange btn-reg"
         to={`${appRoutes.register}/${routes.steps}/${steps.contact}`}
         state={state}
       >
         Continue Registration
-      </BtnPrim>
+      </Link>
     </Container>
   );
 }
