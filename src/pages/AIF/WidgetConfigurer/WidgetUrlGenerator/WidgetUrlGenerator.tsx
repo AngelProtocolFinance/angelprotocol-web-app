@@ -7,15 +7,17 @@ import { FormValues } from "./schema";
 
 type Props = { onChange(formValues: FormValues): void };
 
+const DEFAULT_VALUES: FormValues = {
+  availCurrOpts: [],
+  hideText: false,
+  hideAdvOpts: false,
+  unfoldAdvOpts: false,
+  liquidPct: 0,
+};
+
 export default function WidgetUrlGenerator({ onChange }: Props) {
   const methods = useForm<FormValues>({
-    defaultValues: {
-      availCurrOpts: [],
-      hideText: false,
-      hideAdvOpts: false,
-      unfoldAdvOpts: false,
-      liquidPct: 0,
-    },
+    defaultValues: DEFAULT_VALUES,
   });
 
   const hideAdvOpts = methods.watch("hideAdvOpts");
@@ -50,7 +52,13 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
         />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">
-          <BtnSec className="w-40" onClick={() => methods.reset()}>
+          <BtnSec
+            className="w-40"
+            onClick={() => {
+              methods.reset();
+              onChange(DEFAULT_VALUES);
+            }}
+          >
             Reset Changes
           </BtnSec>
           <BtnPrimary type="submit" className="w-40">
