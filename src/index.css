@@ -179,9 +179,7 @@
   .field-input-admin {
     @apply bg-orange-l6 dark:bg-blue-d7;
   }
-  .field-input-kyc {
-    @apply bg-gray-l5 dark:bg-blue-d6;
-  }
+
   .field-kyc > input {
     @apply bg-gray-l5 dark:bg-blue-d6;
   }
