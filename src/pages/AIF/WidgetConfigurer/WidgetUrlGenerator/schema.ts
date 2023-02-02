@@ -1,9 +1,6 @@
+import { UrlParamValues } from "pages/DonateWidget";
 import { OptionType } from "components/Selector";
 
-export type FormValues = {
-  hideText: boolean;
-  hideAdvancedOptions: boolean;
-  unfoldAdvancedOptions: boolean;
-  liquidPercentage: number;
-  availableCurrencies: OptionType<string>[];
+export type FormValues = Required<Omit<UrlParamValues, "availCurrs">> & {
+  availCurrOpts: OptionType<string>[];
 };

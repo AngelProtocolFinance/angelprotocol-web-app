@@ -25,22 +25,23 @@ export default function useCreateWidgerUrl() {
 
       const param1 = append(formValues.hideText, URL_PARAMS.hideText);
       const param2 = append(
-        formValues.hideAdvancedOptions,
+        formValues.hideAdvOpts,
         URL_PARAMS.hideAdvancedOptions
       );
       const param3 = append(
-        !formValues.hideAdvancedOptions && formValues.unfoldAdvancedOptions,
+        !formValues.hideAdvOpts && formValues.unfoldAdvOpts,
         URL_PARAMS.unfoldAdvancedOptions
       );
       const param4 = append(
-        !!formValues.liquidPercentage,
+        !!formValues.liquidPct,
         URL_PARAMS.liquidPercentage,
-        formValues.liquidPercentage
+        formValues.liquidPct
       );
+      const availCurrs = formValues.availCurrOpts || [];
       const param5 = append(
-        !isEmpty(formValues.availableCurrencies),
+        !isEmpty(availCurrs),
         URL_PARAMS.availableCurrencies,
-        formValues.availableCurrencies.map((x) => x.value).join(",")
+        availCurrs.map((x) => x.value).join(",")
       );
       return `${rootUrl}${param1}${param2}${param3}${param4}${param5}`;
     },
@@ -51,7 +52,7 @@ export default function useCreateWidgerUrl() {
 }
 
 function append(
-  condition: boolean,
+  condition = false,
   name: keyof UrlParamValues,
   values?: string | number
 ): string {

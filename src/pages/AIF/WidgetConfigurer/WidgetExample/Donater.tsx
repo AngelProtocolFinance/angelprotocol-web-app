@@ -3,14 +3,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Props } from "./types";
 import { DonateValues } from "components/donation/Steps/Donater/types";
 import { placeholderChain } from "contexts/WalletContext/constants";
+import TokenSelector from "components/TokenSelector";
 import { BtnPrimary } from "components/donation";
 import { humanize } from "helpers";
 import AdvancedOptions from "./AdvancedOptions";
 
 export default function Donater({
-  hideAdvancedOptions,
-  liquidPercentage,
-  unfoldAdvancedOptions,
+  hideAdvOpts,
+  liquidPct,
+  unfoldAdvOpts,
   valuesTrigger: setValueTrigger,
 }: Props) {
   const token = placeholderChain.tokens[0];
@@ -20,16 +21,19 @@ export default function Donater({
     reValidateMode: "onChange",
     defaultValues: {
       token: { ...token, amount: "1" },
-      pctLiquidSplit: liquidPercentage,
-      tokens: [{ ...token, amount: "1" }],
+      pctLiquidSplit: liquidPct,
+      tokens: [
+        { ...token, amount: "1" },
+        { ...placeholderChain.native_currency, amount: "0" },
+      ],
       chainName: placeholderChain.chain_name,
       chainId: placeholderChain.chain_id,
     },
   });
 
   useEffect(
-    () => methods.setValue("pctLiquidSplit", liquidPercentage),
-    [liquidPercentage, setValueTrigger, methods]
+    () => methods.setValue("pctLiquidSplit", liquidPct),
+    [liquidPct, setValueTrigger, methods]
   );
 
   return (
@@ -61,18 +65,18 @@ export default function Donater({
               placeholder="0.0000"
               className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
             />
-            <div className="flex items-center gap-1 w-full dark:text-gray">
-              <span className="text-sm">{token.symbol}</span>
-            </div>
+            <TokenSelector<DonateValues, "token">
+              tokens={methods.getValues("tokens")}
+              fieldName="token"
+              classes={{ options: "absolute right-0 top-2 z-10" }}
+            />
           </div>
           <p className="text-xs">
             Minimal amount: {token.symbol} {token.min_donation_amnt}
           </p>
         </div>
 
-        {!hideAdvancedOptions && (
-          <AdvancedOptions unfold={unfoldAdvancedOptions} />
-        )}
+        {!hideAdvOpts && <AdvancedOptions unfold={unfoldAdvOpts} />}
 
         <BtnPrimary className="justify-self-center w-44 font-body mt-8 md:mt-12">
           Continue

@@ -17,8 +17,8 @@ export default function DenomSelector() {
       filterFn={(token) => token.approved}
     >
       {(tokens) => (
-        <Selector<FormValues, "availableCurrencies", string, true>
-          name="availableCurrencies"
+        <Selector<FormValues, "availCurrOpts", string, true>
+          name="availCurrOpts"
           options={tokens.map((token) => ({
             label: token.symbol,
             value: token.symbol,

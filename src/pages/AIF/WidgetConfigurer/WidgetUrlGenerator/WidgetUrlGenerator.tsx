@@ -10,15 +10,15 @@ type Props = { onChange(formValues: FormValues): void };
 export default function WidgetUrlGenerator({ onChange }: Props) {
   const methods = useForm<FormValues>({
     defaultValues: {
-      availableCurrencies: [],
+      availCurrOpts: [],
       hideText: false,
-      hideAdvancedOptions: false,
-      unfoldAdvancedOptions: false,
-      liquidPercentage: 0,
+      hideAdvOpts: false,
+      unfoldAdvOpts: false,
+      liquidPct: 0,
     },
   });
 
-  const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
+  const hideAdvOpts = methods.watch("hideAdvOpts");
 
   return (
     <FormProvider {...methods}>
@@ -31,22 +31,22 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
         <span>Available currencies:</span>
         <DenomSelector />
 
-        <Checkbox<FormValues> name="hideAdvancedOptions">
+        <Checkbox<FormValues> name="hideAdvOpts">
           Hide "advanced options"
         </Checkbox>
 
         <Checkbox<FormValues>
-          name="unfoldAdvancedOptions"
-          disabled={hideAdvancedOptions}
+          name="unfoldAdvOpts"
+          disabled={hideAdvOpts}
           classes={{ label: "peer-disabled:text-gray" }}
         >
           Unfold "advanced options" by default
         </Checkbox>
 
         <span>Define split value by default:</span>
-        <Split<FormValues, "liquidPercentage", never>
+        <Split<FormValues, "liquidPct", never>
           className="mb-6"
-          liqPctField="liquidPercentage"
+          liqPctField="liquidPct"
         />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">

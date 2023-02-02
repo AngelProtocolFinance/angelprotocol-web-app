@@ -13,10 +13,10 @@ export default function WidgetConfigurer() {
   const [valuesTrigger, setValuesTrigger] = useState(false);
   const [widgetValues, setWidgetValues] = useState<FormValues>({
     hideText: false,
-    availableCurrencies: [],
-    hideAdvancedOptions: false,
-    liquidPercentage: 0,
-    unfoldAdvancedOptions: false,
+    availCurrOpts: [],
+    hideAdvOpts: false,
+    liquidPct: 0,
+    unfoldAdvOpts: false,
   });
 
   const handleUrlChange = useCallback(
