@@ -4,7 +4,7 @@ import { adminRoutes } from "constants/routes";
 
 export default function Nav() {
   return (
-    <div className="flex justify-end">
+    <div className="grid content-start gap-3 p-3">
       <NavLink end to={adminRoutes.proposals} className={styler}>
         proposals
       </NavLink>
@@ -13,6 +13,6 @@ export default function Nav() {
 }
 
 const styler = createNavLinkStyler(
-  "px-2 uppercase text-sm text-center font-semibold font-heading text-white",
+  "px-2 uppercase text-sm font-semibold font-heading text-white",
   "text-orange"
 );

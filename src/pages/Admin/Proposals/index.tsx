@@ -31,7 +31,7 @@ export default function Proposals() {
     activeGroup === "all";
 
   return (
-    <div className="p-3 grid content-start rounded font-work">
+    <div className="grid content-start rounded font-work">
       <Toolbar classes="mb-6" />
 
       {(filteredProposals.length > 0 && (
