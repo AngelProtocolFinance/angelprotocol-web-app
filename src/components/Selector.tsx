@@ -89,7 +89,7 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
-          aria-disabled={true}
+          aria-disabled={isDisabled}
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1" : ""
