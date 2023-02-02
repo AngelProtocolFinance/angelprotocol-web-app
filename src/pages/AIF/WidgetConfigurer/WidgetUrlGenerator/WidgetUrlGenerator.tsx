@@ -3,22 +3,19 @@ import Split from "components/Split";
 import { CheckField } from "components/form/CheckField";
 import DenomSelector from "./DenomSelector";
 import { FormValues } from "./schema";
-import useSubmit from "./useSubmit";
 
-type Props = { endowId?: string; onChange(url: string): void };
+type Props = { onChange(formValues: FormValues): void };
 
-const DEFAULT_VALUES: FormValues = {
-  availableCurrencies: [],
-  hideText: false,
-  hideAdvancedOptions: false,
-  unfoldAdvancedOptions: false,
-  liquidPercentage: 0,
-};
-
-export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
-  const methods = useForm<FormValues>({ defaultValues: DEFAULT_VALUES });
-
-  const submit = useSubmit(endowId, DEFAULT_VALUES, onChange);
+export default function WidgetUrlGenerator({ onChange }: Props) {
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      availableCurrencies: [],
+      hideText: false,
+      hideAdvancedOptions: false,
+      unfoldAdvancedOptions: false,
+      liquidPercentage: 0,
+    },
+  });
 
   const hideAdvancedOptions = methods.watch("hideAdvancedOptions");
 
@@ -26,7 +23,7 @@ export default function WidgetUrlGenerator({ endowId, onChange }: Props) {
     <FormProvider {...methods}>
       <form
         className="flex flex-col gap-2 xl:w-4/5 text-sm font-normal font-body"
-        onSubmit={methods.handleSubmit(submit)}
+        onSubmit={methods.handleSubmit(onChange)}
       >
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
 
