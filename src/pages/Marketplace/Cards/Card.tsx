@@ -67,7 +67,7 @@ export default function Card({
                 </p>
               )}
               {!isEmpty(active_in_countries) && (
-                <p className="h-max-[40px] line-clamp-2">
+                <p className="line-clamp-2">
                   <span className="font-semibold">Active in:</span>{" "}
                   {active_in_countries.join(" ,")}
                 </p>
