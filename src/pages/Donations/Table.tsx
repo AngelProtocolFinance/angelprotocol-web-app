@@ -69,6 +69,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
             USD Value
           </HeaderButton>
           <>TX Hash</>
+          <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
@@ -96,6 +97,15 @@ export default function Table({ donations, classes = "" }: TableProps) {
             >
               {maskAddress(row.hash)}
             </ExtLink>
+            <div className="text-center">
+              <span
+                className={`${
+                  row.donationFinalized === true ? "bg-green" : "bg-orange"
+                } text-white px-2 py-0.5 rounded`}
+              >
+                {row.donationFinalized === true ? "RECEIVED" : "PENDING"}
+              </span>
+            </div>
             <button
               className="w-full flex justify-center"
               onClick={() =>
