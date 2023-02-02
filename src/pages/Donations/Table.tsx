@@ -97,11 +97,13 @@ export default function Table({ donations, classes = "" }: TableProps) {
             >
               {maskAddress(row.hash)}
             </ExtLink>
-            <div className="text-center">
+            <div className="text-center text-white">
               <span
                 className={`${
-                  row.donationFinalized === true ? "bg-green" : "bg-orange"
-                } text-white px-2 py-0.5 rounded`}
+                  row.donationFinalized === true
+                    ? "bg-green"
+                    : "bg-gray-d1 dark:bg-gray"
+                } px-2 py-0.5 rounded`}
               >
                 {row.donationFinalized === true ? "RECEIVED" : "PENDING"}
               </span>
