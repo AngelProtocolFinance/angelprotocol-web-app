@@ -87,19 +87,22 @@ export const customApi = junoApi.injectEndpoints({
           queryContract("cw3Config", endowment.owner, null),
         ]);
 
+        const { strategies, oneoff_vaults, ...rest } = endowment;
+        const { invested_liquid, invested_locked, tokens_on_hand } = balances;
+
         //format balances and endowment to type CharityResource["details"]
         const liquid: Account = {
-          strats: endowment.strategies.liquid,
-          one_offs: endowment.oneoff_vaults.liquid,
-          balance: balances.tokens_on_hand.liquid,
-          investments: balances.invested_liquid,
+          strats: strategies.liquid,
+          one_offs: oneoff_vaults.liquid,
+          balance: tokens_on_hand.liquid,
+          investments: invested_liquid,
         };
 
         const locked: Account = {
-          strats: endowment.strategies.locked,
-          one_offs: endowment.oneoff_vaults.locked,
-          balance: balances.tokens_on_hand.locked,
-          investments: balances.invested_locked,
+          strats: strategies.locked,
+          one_offs: oneoff_vaults.locked,
+          balance: tokens_on_hand.locked,
+          investments: invested_locked,
         };
 
         return {
@@ -109,7 +112,7 @@ export const customApi = junoApi.injectEndpoints({
             cw3: endowment.owner,
             cw4: config.group_addr,
             isUserMember: !!voter.weight,
-            details: { ...endowment, liquid, locked },
+            details: { ...rest, liquid, locked },
             config,
             propMeta: await getPropMeta(numId, endowment.owner, config),
           },
