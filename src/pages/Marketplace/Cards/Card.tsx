@@ -57,7 +57,7 @@ export default function Card({
           ) : null}
           <div className="mt-auto empty:hidden grid gap-3">
             {/* HQ & ACTIVE-IN COUNTRIES */}
-            <span className="text-gray-d1 dark:text-gray text-sm">
+            <div className="text-gray-d1 dark:text-gray text-sm">
               {hq.country && (
                 <p>
                   <span className="font-semibold">HQ:</span> {hq.country}
@@ -72,7 +72,7 @@ export default function Card({
                   {active_in_countries.join(" ,")}
                 </p>
               )}
-            </span>
+            </div>
             {/** UN SDGs - always on bottom */}
             {!isEmpty(sdgs) && (
               <div className="flex text-3xs font-bold uppercase gap-1 h-max-[40px]">
