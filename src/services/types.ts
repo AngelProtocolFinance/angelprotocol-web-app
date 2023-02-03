@@ -40,12 +40,10 @@ type Base = {
 export type APResources = Base & {
   type: "ap";
   config: CW3Config;
-  endowment?: never;
 };
 export type ReviewResources = Base & {
   type: "review";
   config: ReviewCW3Config;
-  endowment?: never;
 };
 export type CharityResources = Base & {
   type: "charity";
