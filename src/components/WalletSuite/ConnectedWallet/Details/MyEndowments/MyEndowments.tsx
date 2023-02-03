@@ -1,5 +1,5 @@
 import { EndowmentBookmark } from "types/aws";
-import Logo from "../Logo";
+import Logo from "components/Logo";
 import Links from "./Links";
 
 type Props = { endowments: EndowmentBookmark[] };
