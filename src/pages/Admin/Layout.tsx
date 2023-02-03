@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom";
 
 export default function Layout({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-2 font-work divide-x divide-prim">
+    <div className="grid grid-cols-[auto_1fr] gap-2 divide-x divide-prim">
       {/** sidebar */}
-      <div className="p-3">{children}</div>
+      <div className="px-5 py-6">{children}</div>
       {/** views */}
-      <div className="p-3">
+      <div className="p-10">
         <Outlet />
       </div>
     </div>
