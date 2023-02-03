@@ -50,6 +50,26 @@ export default function createLinkGroups(id: string | undefined): LinkGroup[] {
         },
       ],
     },
+    {
+      title: "Profile",
+      links: [
+        {
+          icon: "User",
+          title: "Edit Profile",
+          to: `${rootPath}${routes.edit_profile}`,
+        },
+        {
+          icon: "ListBox",
+          title: "Programs",
+          to: `${rootPath}${routes.programs}`,
+        },
+        {
+          icon: "Image",
+          title: "Media",
+          to: `${rootPath}${routes.media}`,
+        },
+      ],
+    },
   ];
 
   return linkGroups;
