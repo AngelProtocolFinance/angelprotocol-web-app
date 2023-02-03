@@ -39,6 +39,11 @@ export default function useEditProfile() {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useCosmosTxSender
        */
+      if (!wallet) {
+        return showModal(TxPrompt, {
+          error: "You need to connect your wallet to make this transaction.",
+        });
+      }
       if (!propMeta.isAuthorized) {
         return showModal(TxPrompt, {
           error: "You are not authorized to make this transaction.",
