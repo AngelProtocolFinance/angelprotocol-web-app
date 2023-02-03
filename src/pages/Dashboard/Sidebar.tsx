@@ -1,13 +1,15 @@
+import { NavLink } from "react-router-dom";
 import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
+import { createNavLinkStyler } from "helpers";
 
 type Props = { linkGroups: LinkGroup[] };
 
-export default function Sidebar(props: Props) {
+export default function Sidebar({ linkGroups }: Props) {
   return (
-    <div className="grid w-64 max-h-[1383px] bg-white border-r border-prim overflow-y-auto scroller">
-      <div className="flex flex-col gap-3 w-full py-6 px-5">
+    <div className="flex flex-col w-64 max-h-[1383px] bg-white border-r border-prim overflow-y-auto scroller">
+      <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
           <Logo className="w-14 h-14" />
           <button
@@ -20,12 +22,35 @@ export default function Sidebar(props: Props) {
         </div>
 
         <div className="grid gap-1">
-          <h6 className="text-sm font-bold truncate">Endowment Name</h6>
+          <h5 className="text-sm font-bold truncate">Endowment Name</h5>
           <span className="text-xs truncate">
             juno1rhaasmvq6t3a607ua90ufrr8srkr08lxauqnpz
           </span>
         </div>
       </div>
+
+      <div className="flex flex-col py-3">
+        {linkGroups.map((group) => (
+          <>
+            {group.title && (
+              <h6 className="pt-4 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
+                {group.title}
+              </h6>
+            )}
+            {group.links.map((link) => (
+              <NavLink to={link.href} className={linkClassName}>
+                <Icon type={link.icon} size={24} />
+                {link.title}
+              </NavLink>
+            ))}
+          </>
+        ))}
+      </div>
     </div>
   );
 }
+
+const linkClassName = createNavLinkStyler(
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300",
+  "pointer-events-none text-orange"
+);
