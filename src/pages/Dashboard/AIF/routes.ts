@@ -1,0 +1,17 @@
+export enum routes {
+  index = "/",
+  withdraw = "/withdraw",
+  contributions = "/contributions",
+  invest = "/invest",
+  liquid_account = "/liquid-account",
+  locked_account = "/locked-account",
+  settings = "/settings",
+  edit_profile = "/edit-profile",
+  programs = "/programs",
+  media = "/media",
+  decision_center = "/decision-center",
+  whitelists = "/whitelists",
+  admin_wallet = "/admin-wallet",
+  donor_verification = "/donor-verification",
+  permissions = "/permissions",
+}
