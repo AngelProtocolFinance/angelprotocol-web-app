@@ -7,6 +7,7 @@ import { DonationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { cleanObject } from "helpers/cleanObject";
 import Form from "./Form";
+import { statuses } from "./constants";
 import { schema } from "./schema";
 
 type Props = {
@@ -35,6 +36,7 @@ export default function Filter({
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
       donorAddress: donorAddress,
+      status: statuses[0],
     },
   });
 
