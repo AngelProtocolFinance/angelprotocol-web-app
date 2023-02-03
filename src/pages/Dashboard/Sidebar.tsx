@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { LinkGroup } from "./types";
 import Icon from "components/Icon";
@@ -31,19 +32,23 @@ export default function Sidebar({ linkGroups }: Props) {
 
       <div className="flex flex-col py-3">
         {linkGroups.map((group) => (
-          <>
+          <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
               <h6 className="pt-4 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
                 {group.title}
               </h6>
             )}
             {group.links.map((link) => (
-              <NavLink to={link.href} className={linkClassName}>
+              <NavLink
+                key={`nav_link-${link.href}`}
+                to={link.href}
+                className={linkClassName}
+              >
                 <Icon type={link.icon} size={24} />
                 {link.title}
               </NavLink>
             ))}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>
