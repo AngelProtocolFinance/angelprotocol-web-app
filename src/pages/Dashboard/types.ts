@@ -4,7 +4,7 @@ export type LinkGroup = {
   title?: string;
   links: {
     title: string;
-    href: string;
+    to: string;
     icon: IconType;
   }[];
 };
