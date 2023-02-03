@@ -1,6 +1,8 @@
 export enum chainIDs {
   junoMain = "juno-1",
   junoTest = "uni-5",
+  polygonMain = "137",
+  polygonTest = "80001",
   binanceMain = "56",
   binanceTest = "97",
   ethMain = "1",
@@ -17,6 +19,8 @@ const explorers: { [key in chainIDs]: string } = {
   5: "https://goerli.etherscan.io",
   97: "https://testnet.bscscan.com",
   56: "https://bscscan.com",
+  137: "https://polygonscan.com",
+  80001: "https://mumbai.polygonscan.com",
   "juno-1": "https://www.mintscan.io/juno",
   "uni-5": "https://testnet.mintscan.io/juno-testnet",
   "phoenix-1": "https://finder.terra.money/mainnet",
@@ -39,6 +43,14 @@ const _chains: { [key in chainIDs]: Info } = {
   [chainIDs.binanceTest]: {
     txExplorer: `${explorers[chainIDs.binanceTest]}/tx`,
     addressExplorer: `${explorers[chainIDs.binanceTest]}/address`,
+  },
+  [chainIDs.polygonMain]: {
+    txExplorer: `${explorers[chainIDs.polygonMain]}/tx`,
+    addressExplorer: `${explorers[chainIDs.polygonMain]}/address`,
+  },
+  [chainIDs.polygonTest]: {
+    txExplorer: `${explorers[chainIDs.polygonTest]}/tx`,
+    addressExplorer: `${explorers[chainIDs.polygonTest]}/address`,
   },
   [chainIDs.junoMain]: {
     txExplorer: `${explorers[chainIDs.junoMain]}/txs`,
