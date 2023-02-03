@@ -8,7 +8,7 @@ import Sidebar from "./Sidebar";
 
 type Props = PropsWithChildren<{}>;
 
-export default function Dashboard(props: Props) {
+export default function Dashboard({ children, ...rest }: Props) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
   const queryState = useProfileQuery(numId, {
@@ -26,8 +26,8 @@ export default function Dashboard(props: Props) {
       {(endowmentProfile) => (
         <ProfileContext.Provider value={endowmentProfile}>
           <div className="grid grid-cols-[auto_1fr] w-full h-full">
-            <Sidebar />
-            <div className="p-10 h-full">{props.children}</div>
+            <Sidebar {...rest} />
+            <div className="p-10 h-full">{children}</div>
           </div>
         </ProfileContext.Provider>
       )}
