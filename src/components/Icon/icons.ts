@@ -69,6 +69,7 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdAnalytics,
   MdCardGiftcard,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
@@ -78,7 +79,9 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineUploadFile,
+  MdPermDataSetting,
   MdSpaceDashboard,
+  MdWaterDrop,
 } from "react-icons/md";
 import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -88,6 +91,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 export const icons = {
   Admin: FaUsersCog,
   AdminPanel: MdOutlineAdminPanelSettings,
+  Analytics: MdAnalytics,
   ArrowBack: BiArrowBack,
   ArrowDown: BiChevronDown,
   ArrowUp: BiChevronUp,
@@ -149,6 +153,7 @@ export const icons = {
   MoneyBill: FaMoneyBillWave,
   Moon: FiMoon,
   Parachute: FaParachuteBox,
+  PermDataSettings: MdPermDataSetting,
   Picture: ImFilePicture,
   PieChart: GiPieChart,
   Plus: AiOutlinePlus,
@@ -170,6 +175,7 @@ export const icons = {
   User: FaUserCircle,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
+  WaterDrop: MdWaterDrop,
   Youtube: AiFillYoutube,
 } as const;
 
