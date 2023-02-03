@@ -6,7 +6,7 @@ type Props = {};
 export default function Sidebar(props: Props) {
   return (
     <div className="grid w-64 max-h-[1383px] bg-white border-r border-prim overflow-y-auto scroller">
-      <div className="grid gap-3 w-full py-6 px-5">
+      <div className="flex flex-col gap-3 w-full py-6 px-5">
         <div className="flex justify-between">
           <Logo className="w-14 h-14" />
           <button
@@ -16,6 +16,13 @@ export default function Sidebar(props: Props) {
             <Icon type="Sync" />
             Switch
           </button>
+        </div>
+
+        <div className="grid gap-1">
+          <h6 className="text-sm font-bold truncate">Endowment Name</h6>
+          <span className="text-xs truncate">
+            juno1rhaasmvq6t3a607ua90ufrr8srkr08lxauqnpz
+          </span>
         </div>
       </div>
     </div>
