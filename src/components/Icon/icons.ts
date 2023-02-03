@@ -60,7 +60,12 @@ import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdLock, IoMdSettings } from "react-icons/io";
+import {
+  IoMdDownload,
+  IoMdListBox,
+  IoMdLock,
+  IoMdSettings,
+} from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -71,6 +76,7 @@ import {
 import {
   MdAnalytics,
   MdCardGiftcard,
+  MdImage,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -136,6 +142,7 @@ export const icons = {
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
   HourglassSplit: BsHourglassSplit,
+  Image: MdImage,
   Info: AiOutlineInfoCircle,
   Instagram: FaInstagram,
   Italic: BiItalic,
@@ -143,6 +150,7 @@ export const icons = {
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
   Liquid: ImDroplet,
+  ListBox: IoMdListBox,
   ListOl: FaListOl,
   ListUl: FaListUl,
   Loading: VscLoading,
