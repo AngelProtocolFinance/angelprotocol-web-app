@@ -8,7 +8,7 @@ export default function Logo({ src, className }: Props) {
   const [isLoading, setLoading] = useState(true);
 
   return !src ? (
-    <LogoPlaceholder classes={{ container: className, icon: "w-1/2 h-1/2" }} />
+    <LogoPlaceholder className={className} />
   ) : (
     <>
       {isLoading && <ContentLoader className={`${className} rounded-full`} />}
