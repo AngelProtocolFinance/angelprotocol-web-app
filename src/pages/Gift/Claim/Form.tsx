@@ -1,5 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import {
@@ -9,7 +10,6 @@ import {
 } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
-import { BtnPrim, BtnSec } from "components/gift";
 import { createAuthToken } from "helpers";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -85,9 +85,9 @@ export default function Form({ classes = "" }) {
           className="text-xs text-red dark:text-red-l2 absolute bottom-2 right-2"
         />
       </div>
-      <BtnSec
+      <button
         type="submit"
-        className="sm:mx-32 text-center"
+        className="sm:mx-32 btn-outline-filled btn-gift"
         disabled={
           isSubmitting ||
           !isConnected(wallet) ||
@@ -101,15 +101,14 @@ export default function Form({ classes = "" }) {
           : wallet.type !== "cosmos"
           ? "Kindly connect Keplr wallet"
           : "Redeem your giftcard"}
-      </BtnSec>
-      <BtnPrim
+      </button>
+      <Link
         aria-disabled={isSubmitting}
-        as="link"
         to={appRoutes.marketplace}
-        className="sm:mx-32 text-center -mt-3 sm:mt-4"
+        className="sm:mx-32 btn-orange btn-gift -mt-3 sm:mt-4"
       >
         Back to the platform
-      </BtnPrim>
+      </Link>
     </form>
   );
 }

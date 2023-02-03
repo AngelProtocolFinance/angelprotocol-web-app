@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
+import { isEmpty } from "helpers";
 
 // import { chainIds } from "constants/chainIds";
 // import Copier from "components/Copier";
@@ -17,6 +18,11 @@ export default function Details() {
       )}
       {!!profile.street_address && (
         <Detail title="address">{profile.street_address}</Detail>
+      )}
+      {!isEmpty(profile.active_in_countries) && (
+        <Detail title="active in">
+          {profile.active_in_countries.join(", ")}
+        </Detail>
       )}
       {/* <Detail title="endowment address">
         <span className="flex items-center gap-4 w-full">

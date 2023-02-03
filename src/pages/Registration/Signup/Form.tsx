@@ -1,13 +1,8 @@
+import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import Checkbox from "components/Checkbox";
 import ExtLink from "components/ExtLink";
-import {
-  BtnPrim,
-  BtnSec,
-  Separator,
-  TextInput,
-  checkBoxStyle,
-} from "components/registration";
+import { CheckField, Field } from "components/form";
+import { Separator } from "components/registration";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
@@ -23,18 +18,17 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Register to Angel Protocol
       </h3>
 
-      <TextInput<FV>
+      <Field<FV>
         name="email"
         label="E-mail"
         placeholder="e.g. johndoe@example.com"
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
       />
-      <Checkbox<FV>
+      <CheckField<FV>
         required
         name="hasAgreedToPrivacyPolicy"
         classes={{
-          container: "justify-self-center mt-6 mb-8 text-xs",
-          checkbox: checkBoxStyle,
+          container: "check-field-reg justify-self-center mt-6 mb-8 text-xs",
           error: "mt-2",
         }}
       >
@@ -42,27 +36,26 @@ export default function Form({ classes = "" }: { classes?: string }) {
         <ExtLink className="underline text-orange" href={PRIVACY_POLICY}>
           Privacy Policy
         </ExtLink>
-      </Checkbox>
+      </CheckField>
 
-      <BtnPrim
+      <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24"
+        className="mt-8 mx-0 sm:mx-24 btn-orange btn-reg"
         disabled={isSubmitting}
       >
         Register
-      </BtnPrim>
+      </button>
       <Separator classes="my-11 mx-0 sm:mx-24 before:mr-2 after:ml-2">
         OR
       </Separator>
 
-      <BtnSec
-        as="link"
-        className="mx-0 sm:mx-24"
+      <Link
+        className="mx-0 sm:mx-24 btn-outline-filled btn-reg"
         to={routes.resume}
         aria-disabled={isSubmitting}
       >
         Resume your registration
-      </BtnSec>
+      </Link>
     </form>
   );
 }

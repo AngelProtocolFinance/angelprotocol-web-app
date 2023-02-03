@@ -1,9 +1,9 @@
 import { PropsWithChildren, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithCosmosWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { BtnOutline, BtnPrim, BtnSec } from "components/gift";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
@@ -59,10 +59,15 @@ export default function Submit(props: WithCosmosWallet<SubmitStep>) {
       </Row>
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-12 grid grid-cols-2 gap-5">
-        <BtnSec onClick={goBack} type="button">
+        <button
+          className="btn-outline-filled btn-gift"
+          onClick={goBack}
+          type="button"
+        >
           Back
-        </BtnSec>
-        <BtnPrim
+        </button>
+        <button
+          className="btn-orange btn-gift"
           onClick={
             isNotEstimated
               ? undefined
@@ -74,14 +79,13 @@ export default function Submit(props: WithCosmosWallet<SubmitStep>) {
           type="submit"
         >
           Complete
-        </BtnPrim>
-        <BtnOutline
-          as="link"
+        </button>
+        <Link
           to={appRoutes.marketplace}
-          className="col-span-full"
+          className="btn-gift btn-outline-filled col-span-full"
         >
           Cancel
-        </BtnOutline>
+        </Link>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function App() {
       <WalletContext>
         <ModalContext>
           <ToastPortal />
-          <div className="grid grid-rows-[auto_1fr_auto] bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white">
+          <div className="grid grid-rows-[auto_1fr_auto]">
             <Seo /> {/* Load all defaults for SEO meta tags */}
             <Header classes="sticky top-0 z-20" />
             <Views />

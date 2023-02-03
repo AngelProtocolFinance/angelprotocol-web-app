@@ -12,10 +12,10 @@ export default function Slider({ classes = "" }: { classes?: string }) {
       <input
         disabled={!isValid}
         type="range"
+        className="range"
         {...register("pctLiquidSplit")}
         min={0}
         max={100}
-        className="slider"
       />
     </div>
   );

@@ -20,9 +20,6 @@ export const placeHolderCountryOption: CountryOption = {
   flag: "",
 };
 
-const containerStyle =
-  "relative items-center grid grid-cols-[auto_auto_1fr] w-full";
-
 const nameKey: keyof CountryOption = "name";
 
 export default function CountrySelector<
@@ -39,7 +36,7 @@ export default function CountrySelector<
   };
 }) {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<BaseFormShape>();
 
   const {
@@ -67,10 +64,13 @@ export default function CountrySelector<
 
   return (
     <Combobox
+      aria-disabled={isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
-      className={`${containerStyle} ${props.classes?.container || ""}`}
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
+        props.classes?.container || ""
+      }`}
     >
       <img
         src={country.flag}
@@ -90,7 +90,7 @@ export default function CountrySelector<
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
         displayValue={(country: CountryOption) => country.name}
-        className={`focus:outline-none w-full ${props.classes?.input || ""}`}
+        className={props.classes?.input}
       />
 
       {country.name /** not placeholder */ && (

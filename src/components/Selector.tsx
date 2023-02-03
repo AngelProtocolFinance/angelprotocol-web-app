@@ -7,7 +7,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { DrawerIcon } from "components/Icon";
+import Icon, { DrawerIcon } from "components/Icon";
 
 type ValKey = string | number;
 
@@ -36,8 +36,7 @@ interface Props<
   children?: (selected: VarOption<M, V>) => ReactNode;
 }
 
-export const selectorButtonStyle =
-  "flex items-center text-sm rounded border border-prim";
+export const selectorButtonStyle = "flex items-center field-input";
 
 const labelKey: keyof OptionType<string> = "label";
 
@@ -57,7 +56,7 @@ export function Selector<
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
-    field: { value: selected, onChange },
+    field: { value: selected, onChange, ref },
   } = useController<{ [index: string]: VarOption<Multiple, ValueType> }>({
     name: name as any,
   });
@@ -70,10 +69,11 @@ export function Selector<
   const isAllSelected =
     multiple && (selected as OptionType<ValueType>[]).length === options.length;
 
+  const isDisabled = isSubmitting || disabled;
   return (
     <>
       <Listbox
-        disabled={isSubmitting || disabled}
+        disabled={isDisabled}
         value={selected}
         by={valueKey}
         onChange={onChange}
@@ -81,15 +81,32 @@ export function Selector<
         className={`relative ${container}`}
         multiple={multiple}
       >
+        {/** add this so hook-form can focus on this field if didn't pass validation */}
+        <input
+          ref={ref}
+          aria-hidden
+          className="peer h-0 w-0 focus:outline-none absolute"
+          tabIndex={-1}
+        />
         <Listbox.Button
-          className={`${button} ${selectorButtonStyle} px-4 py-3.5 justify-between w-full focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1`}
+          aria-disabled={isDisabled}
+          as={multiple ? "div" : "button"}
+          className={`${button} ${selectorButtonStyle} ${
+            multiple ? "p-1" : ""
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
         >
           {({ open }) => (
             <>
-              <span className={multiple ? "truncate" : ""}>
-                {getDisplay(selected)}
+              <span className="flex flex-wrap gap-2 h-full">
+                {getSelectedValues(selected, (opts: OptionType<ValueType>[]) =>
+                  onChange(opts)
+                )}
               </span>
-              <DrawerIcon isOpen={open} size={25} className="dark:text-gray" />
+              <DrawerIcon
+                isOpen={open}
+                size={25}
+                className="justify-self-end dark:text-gray shrink-0"
+              />
             </>
           )}
         </Listbox.Button>
@@ -137,10 +154,34 @@ export function Selector<
   );
 }
 
-function getDisplay(selected: VarOption<any, any>) {
-  return Array.isArray(selected)
-    ? selected.map((s) => s.label).join(" , ")
-    : selected.label;
+function getSelectedValues<ValueType extends ValKey, Multiple extends boolean>(
+  selected: VarOption<Multiple, ValueType>,
+  onChange: (opts: OptionType<ValueType>[]) => void
+) {
+  if (!Array.isArray(selected)) {
+    return selected.label;
+  }
+
+  const handleRemove = (value: ValueType) =>
+    onChange(selected.filter((x) => x.value !== value));
+
+  return selected.map((opt) => (
+    <div
+      key={opt.value}
+      className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase"
+    >
+      <span className="max-w-[200px] truncate">{opt.label}</span>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          handleRemove(opt.value);
+        }}
+      >
+        <Icon type="Close" size={20} />
+      </button>
+    </div>
+  ));
 }
 
 function Action(props: PropsWithChildren<{ onClick: () => void }>) {
