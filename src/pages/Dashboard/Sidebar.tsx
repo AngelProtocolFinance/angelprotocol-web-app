@@ -8,7 +8,7 @@ export default function Sidebar(props: Props) {
     <div className="grid w-64 max-h-[1383px] bg-white border-r border-prim overflow-y-auto scroller">
       <div className="grid gap-3 w-full py-6 px-5">
         <div className="flex justify-between">
-          <Logo />
+          <Logo className="w-14 h-14" />
           <button
             type="button"
             className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
