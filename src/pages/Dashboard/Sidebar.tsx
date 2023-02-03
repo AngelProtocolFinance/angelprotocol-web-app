@@ -1,7 +1,8 @@
+import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
 
-type Props = {};
+type Props = { linkGroups: LinkGroup[] };
 
 export default function Sidebar(props: Props) {
   return (
