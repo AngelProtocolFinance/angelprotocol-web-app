@@ -1,6 +1,6 @@
 export type NetworkType = "mainnet" | "testnet";
 export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
-export type Chains = "terra" | "juno" | "ethereum" | "binance";
+export type Chains = "terra" | "juno" | "ethereum" | "binance" | "polygon";
 export type UNSDG_NUMS =
   | 1
   | 2
