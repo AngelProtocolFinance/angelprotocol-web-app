@@ -1,30 +1,38 @@
 import { Tab } from "@headlessui/react";
 import React, { ReactElement } from "react";
+import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
 
 export default function Settings() {
   return (
     <div>
-      <h2 className="text-[2rem] font-bold">Settings</h2>
-      <div>
-        <h3>Auto-invest</h3>
+      <h2 className="text-[2rem] font-bold mb-8">Settings</h2>
+      <div className="rounded border border-prim p-6">
+        <h3 className="font-bold text-2xl mb-10">Auto-invest</h3>
         {/** future: create plan */}
+        <AccountTabs
+          classes={{
+            tabs: "rounded-full border border-prim grid grid-cols-2 p-1 gap-2 mb-9",
+            tab: "font-bold uppercase text-center aria-selected:btn-outline-filled aria-selected:rounded-full aria-selected:py-1 focus:ring-transparent",
+          }}
+        >
+          <Strategy type="liquid" />
+          <Strategy type="locked" />
+        </AccountTabs>
       </div>
-      <AccountTabs
-        classes={{
-          tabs: "rounded-full border border-prim grid grid-cols-2 p-1",
-          tab: "uppercase text-center aria-selected:btn-outline-filled aria-selected:rounded-full aria-selected:py-1",
-        }}
-      >
-        <Account type="liquid" />
-        <Account type="locked" />
-      </AccountTabs>
     </div>
   );
 }
 
-function Account(props: { type: AccountType; hello?: string }) {
-  return <>{props.type}</>;
+function Strategy(props: { type: AccountType; hello?: string }) {
+  return (
+    <div className="flex py-7 px-6 items-center border border-prim rounded justify-between">
+      <h4 className="text-xl font-bold">Default plan</h4>
+      <Link to="/" className="btn-outline-filled px-8 py-2">
+        Edit
+      </Link>
+    </div>
+  );
 }
 
 const types: AccountType[] = ["liquid", "locked"];
@@ -50,7 +58,7 @@ function AccountTabs(props: {
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels>
+      <Tab.Panels className={props.classes?.panels}>
         {React.Children.map(props.children, (child) => {
           return (
             <Tab.Panel key={child.props.type} as={React.Fragment}>
