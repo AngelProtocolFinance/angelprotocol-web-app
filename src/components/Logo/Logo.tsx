@@ -15,9 +15,11 @@ type Props = {
 export default function Logo({ logo, className }: Props) {
   const [isLoading, setLoading] = useState(!!logo?.src);
 
-  return !logo?.src ? (
-    <LogoPlaceholder className={className} />
-  ) : (
+  if (!logo?.src) {
+    return <LogoPlaceholder className={className} />;
+  }
+
+  return (
     <>
       {isLoading && <ContentLoader className={className} />}
       <WithLink className={className} href={logo.href} title={logo.title}>
