@@ -53,7 +53,7 @@ export default function Steps(props: DonationRecipient) {
         {[
           `Marketplace_${appRoutes.marketplace}`,
           `${props.name}_${appRoutes.profile}/${props.id}`,
-          `Donate_${appRoutes.donate}/${props.id}`,
+          "Donate_.",
         ]}
       </Breadcrumbs>
       {isHeadingShown(state) && (

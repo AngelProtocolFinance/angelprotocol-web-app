@@ -14,6 +14,7 @@ export default function Breadcrumbs({ children, className = "" }: Props) {
         return (
           <Fragment key={i}>
             <NavLink
+              end={i === 0}
               to={to}
               className={({ isActive }) =>
                 `max-w-xs truncate ${

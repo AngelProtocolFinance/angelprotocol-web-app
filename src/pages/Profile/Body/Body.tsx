@@ -22,10 +22,7 @@ export default function Body() {
       />
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs className="font-body font-normal text-xs sm:text-sm lg:ml-52">
-          {[
-            `Marketplace_${appRoutes.marketplace}`,
-            `${profile.name}_${appRoutes.profile}/${profile.id}`,
-          ]}
+          {[`Marketplace_${appRoutes.marketplace}`, `${profile.name}_.`]}
         </Breadcrumbs>
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 
