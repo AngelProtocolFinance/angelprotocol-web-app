@@ -2,6 +2,7 @@ import { Tab } from "@headlessui/react";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
+import { routes } from "./routes";
 
 export default function Settings() {
   return (
@@ -24,11 +25,14 @@ export default function Settings() {
   );
 }
 
-function Strategy(props: { type: AccountType; hello?: string }) {
+function Strategy({ type }: { type: AccountType }) {
   return (
     <div className="flex py-7 px-6 items-center border border-prim rounded justify-between">
       <h4 className="text-xl font-bold">Default plan</h4>
-      <Link to="/" className="btn-outline-filled px-8 py-2">
+      <Link
+        to={`${routes.edit}/${type}`}
+        className="btn-outline-filled px-8 py-2"
+      >
         Edit
       </Link>
     </div>
@@ -60,11 +64,7 @@ function AccountTabs(props: {
       </Tab.List>
       <Tab.Panels className={props.classes?.panels}>
         {React.Children.map(props.children, (child) => {
-          return (
-            <Tab.Panel key={child.props.type} as={React.Fragment}>
-              {child}
-            </Tab.Panel>
-          );
+          return <Tab.Panel key={child.props.type}>{child}</Tab.Panel>;
         })}
       </Tab.Panels>
     </Tab.Group>
