@@ -1,12 +1,11 @@
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { LinkGroup } from "../types";
 import { useProfileQuery } from "services/aws/aws";
 import ProfileContext from "contexts/ProfileContext";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum } from "helpers";
-import { appRoutes } from "constants/routes";
 import Dashboard from "../Dashboard";
-import { routes } from "./routes";
+import createLinkGroups from "./createLinkGroups";
 
 export default function AIF() {
   const { id } = useParams<{ id: string }>();
@@ -15,54 +14,7 @@ export default function AIF() {
     skip: numId === 0,
   });
 
-  const rootPath = `${appRoutes.aif}/${id}`;
-
-  const LINK_GROUPS: LinkGroup[] = [
-    {
-      links: [
-        {
-          title: "Dashboard",
-          to: `${rootPath}${routes.index}`,
-          icon: "Dashboard",
-        },
-        {
-          title: "Withdraw",
-          to: `${rootPath}${routes.withdraw}`,
-          icon: "MoneyBill",
-        },
-        {
-          title: "Contributions",
-          to: `${rootPath}${routes.contributions}`,
-          icon: "DollarCircle",
-        },
-      ],
-    },
-    {
-      title: "Invest",
-      links: [
-        {
-          icon: "Analytics",
-          title: "Invest Dashboard",
-          to: `${rootPath}${routes.invest_dashboard}`,
-        },
-        {
-          icon: "WaterDrop",
-          title: "Liquid Account",
-          to: `${rootPath}${routes.liquid_account}`,
-        },
-        {
-          icon: "Lock",
-          title: "Locked Account",
-          to: `${rootPath}${routes.locked_account}`,
-        },
-        {
-          icon: "PermDataSettings",
-          title: "Settings",
-          to: `${rootPath}${routes.settings}`,
-        },
-      ],
-    },
-  ];
+  const linkGroups = useMemo(() => createLinkGroups(id), [id]);
 
   return (
     <QueryLoader
@@ -74,7 +26,7 @@ export default function AIF() {
     >
       {(endowmentProfile) => (
         <ProfileContext.Provider value={endowmentProfile}>
-          <Dashboard linkGroups={LINK_GROUPS}>
+          <Dashboard linkGroups={linkGroups}>
             <div>AIF</div>
           </Dashboard>
         </ProfileContext.Provider>
