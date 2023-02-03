@@ -65,6 +65,7 @@ import {
   IoClose,
   IoCloseCircle,
   IoCrop,
+  IoSync,
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
@@ -156,6 +157,7 @@ export const icons = {
   Settings: IoMdSettings,
   StopWatch: FaStopwatch,
   Sun: BiSun,
+  Sync: IoSync,
   Telegram: FaTelegramPlane,
   Tiktok: FaTiktok,
   Twitter: BsTwitter,
