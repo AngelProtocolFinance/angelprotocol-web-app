@@ -1,34 +1,34 @@
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 
 type Props = {
   className?: string;
-  items: {
-    title: string;
-    to: string;
-  }[];
+  children: string[];
 };
 
-export default function Breadcrumbs({ items, className = "" }: Props) {
+export default function Breadcrumbs({ children, className = "" }: Props) {
   return (
     <div className={`flex justify-center items-center gap-1 ${className}`}>
-      {items.map((item, i) => (
-        <Fragment key={i}>
-          <NavLink
-            to={item.to}
-            className={({ isActive }) =>
-              `max-w-xs truncate ${
-                isActive
-                  ? "font-bold cursor-default pointer-events-none"
-                  : "underline hover:text-orange transition ease-in-out duration-300"
-              }`
-            }
-          >
-            {item.title}
-          </NavLink>
-          {i < items.length - 1 && ">"}
-        </Fragment>
-      ))}
+      {React.Children.map(children, (child, i) => {
+        const [title, to] = child.split("_");
+        return (
+          <Fragment key={i}>
+            <NavLink
+              to={to}
+              className={({ isActive }) =>
+                `max-w-xs truncate ${
+                  isActive
+                    ? "font-bold cursor-default pointer-events-none"
+                    : "underline hover:text-orange transition ease-in-out duration-300"
+                }`
+              }
+            >
+              {title}
+            </NavLink>
+            {i < children.length - 1 && ">"}
+          </Fragment>
+        );
+      })}
     </div>
   );
 }

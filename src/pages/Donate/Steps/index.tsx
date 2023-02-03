@@ -49,20 +49,13 @@ export default function Steps(props: DonationRecipient) {
       className="justify-self-center grid padded-container max-w-[35rem] py-8 sm:py-20 scroll-mt-6"
       id={CONTAINER_ID}
     >
-      <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
-        items={[
-          { title: "Marketplace", to: appRoutes.marketplace },
-          {
-            title: props.name,
-            to: `${appRoutes.profile}/${props.id}`,
-          },
-          {
-            title: "Donate",
-            to: `${appRoutes.donate}/${props.id}`,
-          },
+      <Breadcrumbs className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12">
+        {[
+          `Marketplace_${appRoutes.marketplace}`,
+          `${props.name}_${appRoutes.profile}/${props.id}`,
+          `Donate_${appRoutes.donate}/${props.id}`,
         ]}
-      />
+      </Breadcrumbs>
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug mb-4">

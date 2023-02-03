@@ -21,13 +21,12 @@ export default function Body() {
         url={`https://app.angelprotocol.io/profile/${profile.id}`}
       />
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
-        <Breadcrumbs
-          className="font-body font-normal text-xs sm:text-sm lg:ml-52"
-          items={[
-            { title: "Marketplace", to: appRoutes.marketplace },
-            { title: profile.name, to: `${appRoutes.profile}/${profile.id}` },
+        <Breadcrumbs className="font-body font-normal text-xs sm:text-sm lg:ml-52">
+          {[
+            `Marketplace_${appRoutes.marketplace}`,
+            `${profile.name}_${appRoutes.profile}/${profile.id}`,
           ]}
-        />
+        </Breadcrumbs>
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
