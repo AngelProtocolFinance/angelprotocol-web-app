@@ -20,7 +20,7 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { cw3, endowmentId, endowment, propMeta } = useAdminResources();
+  const { cw3, id, endow_type, propMeta } = useAdminResources<"charity">();
   const { wallet } = useGetWallet();
 
   const sendTx = useCosmosTxSender();
@@ -39,8 +39,7 @@ export default function useWithdraw() {
     const isJuno = data.network === chainIds.juno;
     //if not juno, send to ap wallet (juno)
     const beneficiary = isJuno ? data.beneficiary : ap_wallets.juno_withdraw;
-    const isSendToApCW3 =
-      endowment.endow_type === "Charity" && type === "locked";
+    const isSendToApCW3 = endow_type === "Charity" && type === "locked";
 
     const meta: WithdrawMeta = {
       type: "acc_withdraw",
@@ -55,7 +54,7 @@ export default function useWithdraw() {
 
     const proposal = isSendToApCW3
       ? endowCW3.createWithdrawProposalMsg({
-          endowment_id: endowmentId,
+          endowment_id: id,
           assets,
           beneficiary,
           description: data.reason,
@@ -63,10 +62,10 @@ export default function useWithdraw() {
       : //normal proposal when withdraw doesn't need to go thru AP
         endowCW3.createProposalMsg(
           "withdraw proposal",
-          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${endowmentId}`,
+          `withdraw ${accountTypeDisplayValue[type]} assets from endowment id: ${id}`,
           [
             account.createEmbeddedWithdrawMsg({
-              id: endowmentId,
+              id,
               beneficiary,
               acct_type: data.type,
               assets,

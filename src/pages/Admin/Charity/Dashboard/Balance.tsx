@@ -7,8 +7,8 @@ import { accountTypeDisplayValue } from "../constants";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
-  const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id } = useAdminResources();
+  const queryState = useBalanceQuery({ id });
 
   return (
     <div className="rounded p-3 border border-prim bg-orange-l6 dark:bg-blue-d6">

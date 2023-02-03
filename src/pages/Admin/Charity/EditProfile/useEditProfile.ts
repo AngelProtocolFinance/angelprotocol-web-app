@@ -16,7 +16,7 @@ import { createADR36Payload } from "./createADR36Payload";
 // import optimizeImage from "./optimizeImage";
 
 export default function useEditProfile() {
-  const { endowmentId, endowment } = useAdminResources();
+  const { id, owner, propMeta } = useAdminResources<"charity">();
   const {
     handleSubmit,
     formState: { isSubmitting },
@@ -36,6 +36,15 @@ export default function useEditProfile() {
     ...newData
   }) => {
     try {
+      /** special case for edit profile: since upload happens prior
+       * to tx submission. Other users of useCosmosTxSender
+       */
+      if (!propMeta.isAuthorized) {
+        return showModal(TxPrompt, {
+          error: "You are not authorized to make this transaction.",
+        });
+      }
+
       const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
         showModal(TxPrompt, { loading: "Uploading images.." });
       });
@@ -60,8 +69,8 @@ export default function useEditProfile() {
     */
       const updates: Partial<EndowmentProfileUpdate> = {
         ...diff,
-        id: endowmentId,
-        owner: endowment.owner,
+        id,
+        owner,
       };
 
       showModal(TxPrompt, { loading: "Signing changes" });
@@ -77,7 +86,7 @@ export default function useEditProfile() {
           message: "Profile successfully updated",
           link: {
             description: "View changes",
-            url: `${appRoutes.profile}/${endowmentId}`,
+            url: `${appRoutes.profile}/${id}`,
           },
         },
       });
@@ -91,7 +100,7 @@ export default function useEditProfile() {
   return {
     editProfile: handleSubmit(editProfile),
     isSubmitting,
-    id: endowmentId,
+    id,
   };
 }
 
