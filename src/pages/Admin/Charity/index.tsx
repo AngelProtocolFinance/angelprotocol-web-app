@@ -6,6 +6,7 @@ import Proposals from "../Proposals";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Nav from "./Nav";
+import Settings from "./Settings";
 import Templates from "./Templates";
 import Withdraws from "./Withdraws";
 
@@ -23,6 +24,7 @@ export default function Charity() {
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
         <Route path={adminRoutes.withdraws} element={<Withdraws />} />
+        <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route index element={<Dashboard />} />
       </Route>
