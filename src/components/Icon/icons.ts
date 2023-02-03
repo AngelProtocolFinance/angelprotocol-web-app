@@ -57,7 +57,7 @@ import {
 import { FcSafe } from "react-icons/fc";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
-import { GoDash, GoLinkExternal } from "react-icons/go";
+import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImDroplet, ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdLock, IoMdSettings } from "react-icons/io";
@@ -65,7 +65,6 @@ import {
   IoClose,
   IoCloseCircle,
   IoCrop,
-  IoSync,
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
@@ -157,7 +156,7 @@ export const icons = {
   Settings: IoMdSettings,
   StopWatch: FaStopwatch,
   Sun: BiSun,
-  Sync: IoSync,
+  Sync: GoSync,
   Telegram: FaTelegramPlane,
   Tiktok: FaTiktok,
   Twitter: BsTwitter,
