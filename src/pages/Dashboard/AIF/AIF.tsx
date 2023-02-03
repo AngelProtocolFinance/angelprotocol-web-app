@@ -22,17 +22,17 @@ export default function AIF() {
       links: [
         {
           title: "Dashboard",
-          href: `${rootPath}${routes.index}`,
+          to: `${rootPath}${routes.index}`,
           icon: "Dashboard",
         },
         {
           title: "Withdraw",
-          href: `${rootPath}${routes.withdraw}`,
+          to: `${rootPath}${routes.withdraw}`,
           icon: "MoneyBill",
         },
         {
           title: "Contributions",
-          href: `${rootPath}${routes.contributions}`,
+          to: `${rootPath}${routes.contributions}`,
           icon: "DollarCircle",
         },
       ],

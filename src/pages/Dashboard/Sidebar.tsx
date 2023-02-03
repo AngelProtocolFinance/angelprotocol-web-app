@@ -40,8 +40,8 @@ export default function Sidebar({ linkGroups }: Props) {
             )}
             {group.links.map((link) => (
               <NavLink
-                key={`nav_link-${link.href}`}
-                to={link.href}
+                key={`nav_link-${link.to}`}
+                to={link.to}
                 className={linkClassName}
               >
                 <Icon type={link.icon} size={24} />
