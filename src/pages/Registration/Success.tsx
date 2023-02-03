@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CompleteRegistration } from "./types";
 import Icon from "components/Icon";
-import { BtnPrim } from "components/registration";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Success({ classes = "" }: { classes?: string }) {
@@ -29,13 +29,12 @@ export default function Success({ classes = "" }: { classes?: string }) {
         Use the button below to start filling out {contact.orgName}’s profile
         and attract donors!
       </p>
-      <BtnPrim
-        className="w-full max-w-[26.25rem] text-center"
-        as="link"
+      <Link
+        className="w-full max-w-[26.25rem] btn-orange btn-reg"
         to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
         edit profile
-      </BtnPrim>
+      </Link>
     </div>
   );
 }

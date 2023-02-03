@@ -1,8 +1,8 @@
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 import { useModalContext } from "contexts/ModalContext";
+import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
-import { BtnPrimary } from "components/donation";
 import { DonationRecipient } from "slices/donation";
 
 export type SocialMedia = Extract<
@@ -63,16 +63,15 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         invested to provide sustainable funding for non-profits: Give once, give
         forever. Help join the cause: https://app.angelprotocol.io
       </p>
-      <BtnPrimary
-        as="a"
+      <ExtLink
         href={generateShareLink(shareText, type)}
-        className="flex items-center justify-center gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
+        className="btn-orange btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center border border-white rounded">
           <Icon type={type} className="absolute-center" size={iconSize} />
         </div>
         <span>Share now</span>
-      </BtnPrimary>
+      </ExtLink>
     </Dialog.Panel>
   );
 }

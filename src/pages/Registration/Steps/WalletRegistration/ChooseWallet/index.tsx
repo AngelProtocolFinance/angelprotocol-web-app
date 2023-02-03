@@ -1,4 +1,4 @@
-import { BtnSec } from "components/registration";
+import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import KeplrConnector from "./KeplrConnector";
@@ -12,14 +12,13 @@ export default function ChooseWallet() {
         We recommend using a new wallet.
       </p>
       <KeplrConnector />
-      <BtnSec
-        as="link"
+      <Link
         to={`../${steps.doc}`}
         state={data.init}
-        className="mt-8 max-w-[8rem]"
+        className="mt-8 max-w-[8rem] btn btn-outline-filled btn-reg"
       >
         Back
-      </BtnSec>
+      </Link>
     </div>
   );
 }

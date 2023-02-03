@@ -1,14 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
-import Checkbox from "components/Checkbox";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
-import { BtnPrimary } from "components/donation";
-import { Label } from "components/form";
+import { CheckField, Field, Label } from "components/form";
 import { TERMS_OF_USE } from "constants/urls";
 import Controls from "./Controls";
-import TextInput, { errorStyle } from "./TextInput";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 import useSubmit from "./useSubmit";
@@ -40,29 +37,39 @@ export default function Form({ classes = "", ...props }: Props) {
         {...props}
         classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
       />
-      <TextInput<FV>
+      <Field<FV>
+        classes="field-kyc"
         name="name.first"
         label="First name"
         placeholder="e.g. John"
       />
-      <TextInput<FV>
+      <Field<FV>
+        classes="field-kyc"
         name="name.last"
         label="Last name"
         placeholder="e.g. Doe"
       />
-      <TextInput<FV>
+      <Field<FV>
+        classes="field-kyc"
         name="address.street"
         label="Address"
         placeholder="e.g. Street Rd 9920"
       />
-      <TextInput<FV>
+      <Field<FV>
+        classes="field-kyc"
         name="address.complement"
         label="Address complement"
         placeholder="e.g. Street Rd 9920"
         required={false}
       />
-      <TextInput<FV> name="city" label="City" placeholder="e.g. London" />
-      <TextInput<FV>
+      <Field<FV>
+        classes="field-kyc"
+        name="city"
+        label="City"
+        placeholder="e.g. London"
+      />
+      <Field<FV>
+        classes="field-kyc"
         name="postalCode"
         label="Zip code"
         placeholder="e.g. 1080"
@@ -77,11 +84,9 @@ export default function Form({ classes = "", ...props }: Props) {
           fieldName="country"
           onReset={() => resetField("usState")}
           classes={{
-            container:
-              "px-4 border border-prim rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 bg-gray-l5 dark:bg-blue-d6",
-            input:
-              "py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
-            error: errorStyle,
+            container: "px-4 bg-gray-l5 dark:bg-blue-d6",
+            input: "py-3.5 placeholder:text-sm",
+            error: "field-error",
           }}
         />
       </div>
@@ -97,7 +102,8 @@ export default function Form({ classes = "", ...props }: Props) {
           />
         </div>
       ) : (
-        <TextInput<FV>
+        <Field<FV>
+          classes="field-kyc"
           name="state"
           label="State"
           required={false}
@@ -105,18 +111,18 @@ export default function Form({ classes = "", ...props }: Props) {
         />
       )}
 
-      <TextInput<FV>
+      <Field<FV>
         name="email"
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
-        classes={{ container: "col-span-full" }}
+        classes={{ container: "col-span-full field-kyc" }}
       />
-      <Checkbox<FV>
+      <CheckField<FV>
         name="hasAgreedToTerms"
         classes={{
-          container: `${isPostKyc ? "my-2" : "my-12"} col-span-full`,
-          checkbox:
-            "appearance-none border relative border-gray-d2 dark:border-white rounded w-6 h-6 checked:before:content-['✓'] before:absolute-center before:text-xl focus:outline-none focus:ring-2 focus:ring-orange",
+          container: `check-field-kyc ${
+            isPostKyc ? "my-2" : "my-12"
+          } col-span-full`,
           error: "mt-2",
         }}
       >
@@ -125,15 +131,15 @@ export default function Form({ classes = "", ...props }: Props) {
           Terms & Conditions
         </ExtLink>
         .
-      </Checkbox>
+      </CheckField>
       {props.type === "post-donation" ? (
-        <BtnPrimary
-          className="col-span-full"
+        <button
+          className="col-span-full btn-orange text-sm"
           disabled={isSubmitting}
           type="submit"
         >
           {isSubmitting ? "Processing..." : "Submit"}
-        </BtnPrimary>
+        </button>
       ) : (
         <Controls {...props} classes="col-span-full" />
       )}

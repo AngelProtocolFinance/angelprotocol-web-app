@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { BtnPrimary, BtnSec } from "components/donation";
 import { TxStep } from "slices/donation";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
@@ -30,14 +31,13 @@ export default function Success({
         provided.
       </p>
 
-      <BtnSec
-        as="a"
+      <ExtLink
         href={`${chain.txExplorer}${hash}`}
-        className="flex items-center justify-center gap-3.5 w-full sm:w-auto"
+        className="gap-3.5 w-full sm:w-auto btn-outline-filled btn-donate"
       >
         <Icon type="ExternalLink" size={22} />
         <span>View transaction</span>
-      </BtnSec>
+      </ExtLink>
 
       <div className="p-5 flex flex-col sm:flex-row items-center my-12 dark:bg-blue-d7 rounded border border-prim w-full gap-2">
         <span className="uppercase font-bold mb-6 mt-1 sm:my-0 sm:mr-auto">
@@ -55,13 +55,12 @@ export default function Success({
         </div>
       </div>
 
-      <BtnPrimary
-        as="link"
+      <Link
         to={appRoutes.profile + `/${id}`}
-        className="w-full text-center sm:w-auto"
+        className="w-full sm:w-auto btn-orange btn-donate"
       >
         Back to the platform
-      </BtnPrimary>
+      </Link>
     </div>
   );
 }

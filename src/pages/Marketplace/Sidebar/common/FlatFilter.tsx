@@ -1,7 +1,6 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { GroupProps } from "./types";
-import { Checkbox } from "./Checkbox";
 import { Drawer } from "./Drawer";
 
 export function FlatFilter<T>(props: GroupProps<T>) {
@@ -31,12 +30,17 @@ export function FlatFilter<T>(props: GroupProps<T>) {
             <Listbox.Option
               value={option.value}
               key={option.key}
-              className="flex items-center gap-4 w-fit h-8 p-1 text-sm font-normal font-body cursor-pointer capitalize"
+              className="flex items-center gap-4 w-fit h-8 p-1 font-normal font-body cursor-pointer capitalize"
             >
               {({ selected }) => (
                 <>
-                  <Checkbox checked={selected} readOnly />
-                  {option.displayText}
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-marketplace"
+                    checked={selected}
+                    readOnly
+                  />
+                  <span className="text-sm">{option.displayText}</span>
                 </>
               )}
             </Listbox.Option>

@@ -1,7 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  body {
+    @apply font-body bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white;
+  }
+
+  a {
+    @apply cursor-pointer aria-disabled:pointer-events-none aria-disabled:cursor-default;
+  }
+
+  button {
+    @apply cursor-pointer disabled:cursor-default;
+  }
+}
+
+/** Layer 1 components */
 @layer components {
   .rich-text-toolbar .ql-toolbar .ql-stroke {
     @apply fill-none stroke-gray-d2 dark:stroke-white;
@@ -11,39 +36,12 @@
     @apply hidden;
   }
 
-  .slider {
-    @apply appearance-none bg-transparent w-full;
-  }
-  .slider::-webkit-slider-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
-  }
-  .slider::-moz-range-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
-  }
-  .slider:disabled::-webkit-slider-thumb {
-    @apply bg-gray-l1;
-  }
-  .slider:disabled::-moz-range-thumb {
-    @apply bg-gray-l1;
-  }
-  .slider:focus {
-    @apply outline-none;
-  }
-  .slider::-ms-track {
-    @apply w-full cursor-pointer bg-transparent border-transparent;
-  }
-  .slider::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
-  }
-
   .scroller::-webkit-scrollbar {
     @apply w-1;
   }
-
   .scroller::-webkit-scrollbar-thumb {
     @apply bg-orange;
   }
-
   .scroller::-webkit-scrollbar-track {
     @apply bg-gray-l2 dark:bg-bluegray;
   }
@@ -52,26 +50,147 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
+  /** set default for input range */
+  .range {
+    @apply focus:outline-none appearance-none bg-transparent w-full;
+  }
+  .range::-webkit-slider-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
+  }
+  .range:disabled::-webkit-slider-thumb {
+    @apply bg-gray-l1;
+  }
+  .range::-moz-range-thumb {
+    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
+  }
+  .range:disabled::-moz-range-thumb {
+    @apply bg-gray-l1;
+  }
+  .range::-ms-track {
+    @apply w-full cursor-pointer bg-transparent border-transparent;
+  }
+  .range::-webkit-slider-runnable-track {
+    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
+  }
+
+  /** applicable to button and <a/> */
   .btn {
-    @apply flex items-center justify-center font-body;
+    @apply flex items-center justify-center uppercase font-body font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
   }
 
+  .field-error {
+    @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
+  }
+  .field-input {
+    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 aria-disabled:bg-gray-l4 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none;
+  }
+
+  .checkbox {
+    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l4 disabled:dark:bg-bluegray;
+  }
+  .checkbox:checked::before {
+    content: "✓";
+  }
+  .checkbox::before {
+    @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  }
+}
+
+/** Layer 2 components */
+@layer components {
   .btn-orange {
-    @apply bg-orange text-white uppercase cursor-pointer font-bold hover:bg-orange-l1 active:bg-orange-d1 transition;
+    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
-  .btn-orange:disabled {
-    @apply bg-gray cursor-auto;
+  .btn-outline {
+    @apply btn disabled:bg-gray-l2 aria-disabled:bg-gray-l2 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l2 dark:border-bluegray  hover:border-gray-l1 hover:dark:border-blue-d2;
   }
-
   .btn-blue {
-    @apply bg-blue text-white uppercase cursor-pointer font-bold hover:bg-blue-l1 active:bg-blue-d1 transition;
+    @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
   }
-  .btn-blue:disabled {
-    @apply bg-gray cursor-auto;
-  }
-
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
+  }
+
+  .field-container {
+    @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+  }
+  .field-container > input {
+    @apply bg-transparent focus:outline-none w-full;
+  }
+
+  .field {
+    @apply relative;
+  }
+  .field > textarea,
+  .field > input {
+    @apply field-input;
+  }
+  .field > label {
+    @apply mb-2;
+  }
+  .field [data-error] {
+    @apply field-error;
+  }
+
+  .check-field {
+    @apply grid grid-cols-[auto_1fr] gap-x-3 items-center;
+  }
+  .check-field > label {
+    @apply cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
+  }
+  .check-field > input {
+    @apply checkbox;
+  }
+  .check-field > [data-error] {
+    @apply col-span-full text-xs text-red dark:text-red-l2;
+  }
+}
+
+/** page components */
+@layer components {
+  .btn-outline-filled {
+    @apply btn-outline bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
+  }
+  .btn-gift {
+    @apply text-sm;
+  }
+  .btn-donate {
+    @apply text-sm md:text-base;
+  }
+
+  .btn-reg {
+    @apply text-sm;
+  }
+  .check-field-reg > input {
+    @apply checked:bg-orange before:hidden;
+  }
+  .check-field-kyc > input {
+    @apply w-6 h-6 before:text-lg;
+  }
+
+  .checkbox-marketplace {
+    @apply inline-block border-gray-d1 dark:border-gray-l2 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
+  }
+
+  .field-gift > input {
+    @apply bg-white dark:bg-blue-d6;
+  }
+
+  .field-input-admin {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+
+  .field-kyc > input {
+    @apply bg-gray-l5 dark:bg-blue-d6;
+  }
+
+  .field-admin > textarea,
+  .field-admin > input {
+    @apply bg-orange-l6 dark:bg-blue-d7;
+  }
+
+  .field-admin-sec > input {
+    @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }
 
@@ -103,20 +222,5 @@
   }
   .box-delay-2 {
     animation-delay: 600ms;
-  }
-}
-
-@layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-heading;
-  }
-
-  body {
-    @apply font-body;
   }
 }

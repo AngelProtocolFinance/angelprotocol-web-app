@@ -36,11 +36,11 @@ export default function Prompt({
       <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
         {children}
       </div>
-      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-end bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
+      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
         {isDismissible && (
           <button
             type="button"
-            className="rounded btn-orange font-body px-8 py-2 max-sm:w-full"
+            className="inline-block btn-orange px-8 py-2 max-sm:w-full"
             onClick={closeModal}
           >
             {type === "success" ? "Done" : "Ok"}

@@ -21,7 +21,7 @@ export default function Form() {
 
       <button
         disabled={isSubmitDisabled}
-        className="btn btn-orange rounded px-4 py-2"
+        className="btn-orange px-4 py-2"
         type="submit"
       >
         {isSending ? "Submitting.." : "Proceed"}

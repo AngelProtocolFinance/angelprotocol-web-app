@@ -47,6 +47,21 @@ export const initialState: FilterState = {
   isOpen: false,
   searchText: "",
   endow_types: ["Charity"],
+  endow_designation: ["Religious Non-Profit", "Non-Profit"],
   kyc_only: [true, false],
-  tiers: ["Level3"],
+  tiers: ["Level2", "Level3"],
+};
+
+export const clearedState: FilterState = {
+  sdgGroups: SDG_GROUPS.reduce(
+    (prev, curr) => ({ ...prev, [curr.key]: [] }),
+    {} as SdgGroups
+  ),
+  region: { activities: {}, headquarters: {} },
+  isOpen: false,
+  searchText: "",
+  endow_types: ["Charity"],
+  endow_designation: [],
+  kyc_only: [],
+  tiers: ["Level2", "Level3"],
 };

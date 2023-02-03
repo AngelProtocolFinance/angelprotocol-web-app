@@ -1,8 +1,9 @@
 import { MouseEventHandler } from "react";
+import { Link } from "react-router-dom";
 import { RegistrationStatus } from "types/aws";
 import { steps } from "pages/Registration/routes";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec, LoadText } from "components/registration";
+import { LoadText } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 type Props = {
@@ -35,13 +36,14 @@ export default function EndowmentStatus({
               Your endowment application has been rejected.
             </span>
           </p>
-          <BtnPrim
+          <button
+            type="button"
             onClick={onSubmit}
             disabled={isSubmitting}
-            className="min-w-[8rem]"
+            className="min-w-[8rem] btn-orange btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
-          </BtnPrim>
+          </button>
         </div>
       );
 
@@ -63,22 +65,22 @@ export default function EndowmentStatus({
     default:
       return (
         <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
-          <BtnSec
+          <Link
             aria-disabled={isSubmitting}
-            as="link"
             to={`../${steps.wallet}`}
             state={data.init}
-            className="py-3 min-w-[8rem] text-center"
+            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
-          </BtnSec>
-          <BtnPrim
+          </Link>
+          <button
+            type="button"
             disabled={isSubmitting}
             onClick={onSubmit}
-            className="py-3 min-w-[8rem] text-center"
+            className="py-3 min-w-[8rem] btn-orange btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
-          </BtnPrim>
+          </button>
         </div>
       );
   }
