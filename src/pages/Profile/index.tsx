@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import placeholderBanner from "assets/images/placeholder-banner.png";
 import { useProfileQuery } from "services/aws/aws";
+import ProfileContext, { useProfileContext } from "contexts/ProfileContext";
 import { idParamToNum } from "helpers";
 import Body from "./Body";
 import Logo from "./Logo";
 import PageError from "./PageError";
-import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 export default function Profile() {
