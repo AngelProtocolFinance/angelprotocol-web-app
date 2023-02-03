@@ -15,26 +15,21 @@ type Props = {
 export default function Logo({ logo, className }: Props) {
   const [isLoading, setLoading] = useState(!!logo.src);
 
-  return (
+  return !logo.src ? (
+    <LogoPlaceholder classes={{ container: className, icon: "w-1/2 h-1/2" }} />
+  ) : (
     <>
       {isLoading && <ContentLoader className={className} />}
-      {!logo.src && (
-        <LogoPlaceholder
-          classes={{ container: className, icon: "w-1/2 h-1/2" }}
+      <WithLink className={className} href={logo.href} title={logo.title}>
+        <img
+          src={logo.src}
+          className={`object-contain w-full h-full ${
+            isLoading ? "hidden" : ""
+          }`}
+          alt=""
+          onLoad={() => setLoading(false)}
         />
-      )}
-      {!!logo.src && (
-        <WithLink className={className} href={logo.href} title={logo.title}>
-          <img
-            src={logo.src}
-            className={`object-contain w-full h-full ${
-              isLoading ? "hidden" : ""
-            }`}
-            alt=""
-            onLoad={() => setLoading(false)}
-          />
-        </WithLink>
-      )}
+      </WithLink>
     </>
   );
 }
@@ -44,18 +39,11 @@ function WithLink({
   href,
   title,
   children,
-}: PropsWithChildren<
-  | {
-      className?: string;
-      href: never;
-      title: never;
-    }
-  | {
-      className?: string;
-      href?: string;
-      title?: string;
-    }
->) {
+}: PropsWithChildren<{
+  className?: string;
+  href?: string;
+  title?: string;
+}>) {
   return href ? (
     <ExtLink href={href} title={title} className={className}>
       {children}
