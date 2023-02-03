@@ -1,3 +1,9 @@
+import Dashboard from "../Dashboard";
+
 export default function AIF() {
-  return <div>AIF</div>;
+  return (
+    <Dashboard>
+      <div>AIF</div>
+    </Dashboard>
+  );
 }
