@@ -2,7 +2,7 @@ export enum routes {
   index = "/",
   withdraw = "/withdraw",
   contributions = "/contributions",
-  invest = "/invest",
+  invest_dashboard = "/invest-dashboard",
   liquid_account = "/liquid-account",
   locked_account = "/locked-account",
   settings = "/settings",
