@@ -1,5 +1,5 @@
 import placeholderLogo from "assets/images/angelprotocol-rounded-logo.png";
-import { useProfileContext } from "./ProfileContext";
+import { useProfileContext } from "contexts/ProfileContext";
 
 const container = "h-48 w-48";
 
