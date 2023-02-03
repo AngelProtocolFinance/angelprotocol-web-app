@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState } from "react";
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
-import LogoPlaceholder from "components/LogoPlaceholder";
+import LogoPlaceholder from "./LogoPlaceholder";
 
 export type LogoProps = {
   src?: string;
