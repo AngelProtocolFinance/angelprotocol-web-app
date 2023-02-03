@@ -37,6 +37,31 @@ export default function AIF() {
         },
       ],
     },
+    {
+      title: "Invest",
+      links: [
+        {
+          icon: "Analytics",
+          title: "Invest Dashboard",
+          to: `${rootPath}${routes.invest_dashboard}`,
+        },
+        {
+          icon: "WaterDrop",
+          title: "Liquid Account",
+          to: `${rootPath}${routes.liquid_account}`,
+        },
+        {
+          icon: "Lock",
+          title: "Locked Account",
+          to: `${rootPath}${routes.locked_account}`,
+        },
+        {
+          icon: "PermDataSettings",
+          title: "Settings",
+          to: `${rootPath}${routes.settings}`,
+        },
+      ],
+    },
   ];
 
   return (
