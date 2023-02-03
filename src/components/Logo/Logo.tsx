@@ -8,14 +8,14 @@ export type LogoProps = {
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 type Props = {
-  logo: LogoProps;
+  logo?: LogoProps;
   className?: string;
 };
 
 export default function Logo({ logo, className }: Props) {
-  const [isLoading, setLoading] = useState(!!logo.src);
+  const [isLoading, setLoading] = useState(!!logo?.src);
 
-  return !logo.src ? (
+  return !logo?.src ? (
     <LogoPlaceholder className={className} />
   ) : (
     <>
