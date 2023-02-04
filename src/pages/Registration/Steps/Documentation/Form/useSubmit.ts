@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useErrorHandler } from "hooks/useErrorHandler";
 import { handleMutationResult } from "helpers";
 import { useRegState } from "../../StepGuard";
 import { getFilePreviews } from "./getFilePreviews";
@@ -18,7 +18,7 @@ export default function useSubmit() {
   } = useRegState<2>();
 
   const [updateReg] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler();
   const navigate = useNavigate();
 
   const submit = async ({
@@ -50,7 +50,7 @@ export default function useSubmit() {
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
       }),
-      handleError
+      { onError: handleError }
     );
   };
   return { submit: handleSubmit(submit), isSubmitting };

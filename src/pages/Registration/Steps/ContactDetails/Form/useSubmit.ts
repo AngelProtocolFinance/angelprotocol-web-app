@@ -2,7 +2,7 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useErrorHandler } from "hooks/useErrorHandler";
 import { handleMutationResult } from "helpers";
 import { useRegState } from "../../StepGuard";
 
@@ -16,8 +16,8 @@ export default function useSubmit() {
     data: { init, contact },
   } = useRegState<1>();
 
+  const { handleError } = useErrorHandler();
   const [updateReg] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
@@ -44,7 +44,7 @@ export default function useSubmit() {
           OrganizationName: fv.orgName,
         },
       }),
-      handleError
+      { onError: handleError }
     );
   };
 

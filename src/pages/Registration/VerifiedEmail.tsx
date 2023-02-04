@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
+import { useErrorHandler } from "hooks/useErrorHandler";
 import { handleMutationResult, logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
@@ -22,7 +22,7 @@ type JwtData = InitApplication & {
 
 export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
   const location = useLocation();
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler();
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { showModal } = useModalContext();
 
@@ -50,9 +50,11 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
           onClick={async () => {
             handleMutationResult(
               await requestEmail({ uuid: c.PK, email: c.Email }),
-              handleError,
-              () => {
-                showModal(Popup, { message: "Email verification sent!" });
+              {
+                onError: handleError,
+                onSuccess() {
+                  showModal(Popup, { message: "Email verification sent!" });
+                },
               }
             );
           }}

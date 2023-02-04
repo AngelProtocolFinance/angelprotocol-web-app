@@ -5,7 +5,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
-import { Opener } from "contexts/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Prompt, { TxPrompt } from "components/Prompt";
 import { logger } from "helpers";
 import { chainIds } from "constants/chains";
@@ -23,7 +23,9 @@ function isEIP1193Error(error: unknown): error is EIPError {
   return typeof error === "object" && error !== null && "code" in error;
 }
 
-export function useErrorHandler(showModal: Opener) {
+export function useErrorHandler() {
+  const { showModal } = useModalContext();
+
   function handleError(error: unknown | string) {
     logger.error(error);
 
@@ -84,6 +86,7 @@ export function useErrorHandler(showModal: Opener) {
       return showModal(TxPrompt, { error: APP_TX_FAIL });
     }
 
+    /** keplr errors are generic Error */
     if (error instanceof Error) {
       return showModal(Prompt, { children: error.message, type: "error" });
     }
@@ -91,5 +94,5 @@ export function useErrorHandler(showModal: Opener) {
     showModal(Prompt, { children: "Unknown error occured", type: "error" });
   }
 
-  return handleError;
+  return { handleError, showModal };
 }

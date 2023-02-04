@@ -2,9 +2,8 @@ import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "pages/Registration/types";
 import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
+import { useErrorHandler } from "hooks/useErrorHandler";
 import { handleMutationResult } from "helpers";
 import { chainIds } from "constants/chains";
 import { useRegState, withStepGuard } from "../StepGuard";
@@ -15,8 +14,7 @@ function Dashboard() {
   const { data } = useRegState<4>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const { handleError, showModal } = useErrorHandler();
 
   const submit = async ({ init }: CompleteRegistration) => {
     handleMutationResult(
@@ -24,14 +22,16 @@ function Dashboard() {
         ref: init.reference,
         chain_id: chainIds.juno,
       }),
-      handleError,
-      () => {
-        showModal(Prompt, {
-          type: "success",
-          headline: "Submission",
-          title: "Submitted for review",
-          children: <>Your application has been submitted</>,
-        });
+      {
+        onError: handleError,
+        onSuccess() {
+          showModal(Prompt, {
+            type: "success",
+            headline: "Submission",
+            title: "Submitted for review",
+            children: <>Your application has been submitted</>,
+          });
+        },
       }
     );
   };
