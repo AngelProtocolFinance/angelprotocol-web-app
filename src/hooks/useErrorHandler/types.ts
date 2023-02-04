@@ -1,4 +1,4 @@
-type TxError = {
+export type TxError = {
   type: "tx";
   message: string;
   tx?: {
@@ -7,7 +7,7 @@ type TxError = {
   };
 };
 
-type AWSError = {
+export type AWSError = {
   type: "aws";
   message: string;
   tx?: never;

@@ -25,17 +25,6 @@ export abstract class APError extends Error implements IAPError {
   }
 }
 
-export class LogApplicationUpdateError extends Error {
-  chainId: string;
-  pollId: string;
-  constructor(chainId: string, pollId: string) {
-    super("Failed to log the Poll ID of your proposal");
-    this.chainId = chainId;
-    this.pollId = pollId;
-    this.name = "ApplicationReviewPollUpdateError";
-  }
-}
-
 export class LogDonationFail extends Error {
   chainId: string;
   txHash: string;

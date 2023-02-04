@@ -63,7 +63,12 @@ export type SubmitStep = {
 
 export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
 
-export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+type Tx = { hash: string; chainId: string };
+export type TLoading = { loading: string };
+export type TError = { error: string; tx?: Tx };
+export type TSuccess = { tx: Tx };
+
+export type TxStatus = TLoading | TError | TSuccess;
 
 export type TxStep = {
   step: 4;
@@ -96,3 +101,13 @@ export type DonateArgs = {
   estimate: Estimate;
   donation: SubmitStep;
 };
+
+export function isError(status: TxStatus): status is TError {
+  return "error" in status;
+}
+export function isSuccess(status: TxStatus): status is TSuccess {
+  return "tx" in status && !("error" in status);
+}
+export function isLoading(status: TxStatus): status is TLoading {
+  return "loading" in status;
+}

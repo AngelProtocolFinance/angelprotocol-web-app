@@ -3,7 +3,7 @@ import Prompt, { TxPrompt } from "components/Prompt";
 import { processError } from "./processError";
 
 export default function useErrorHandler() {
-  const { showModal } = useModalContext();
+  const { showModal, setModalOption } = useModalContext();
 
   function handleError(error: unknown) {
     const err = processError(error);
@@ -21,5 +21,5 @@ export default function useErrorHandler() {
     return showModal(Prompt, { children: err.message, type: "error" });
   }
 
-  return { handleError, showModal };
+  return { handleError, showModal, setModalOption };
 }

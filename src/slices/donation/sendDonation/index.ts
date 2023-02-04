@@ -3,7 +3,7 @@ import { Estimate, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
 import { invalidateApesTags } from "services/apes";
-import { logger } from "helpers";
+import { processError } from "hooks/useErrorHandler";
 import { sendTx } from "helpers/cosmos/sendTx";
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
@@ -21,7 +21,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { wallet } = estimate;
       const chain = chains[wallet.chainId];
       const { token, pctLiquidSplit } = details;
-      updateTx({ loadingMsg: "Payment is being processed..." });
+      updateTx({ loading: "Payment is being processed..." });
 
       const { isSuccess, hash } = await sendTransaction(estimate);
 
@@ -42,7 +42,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
               };
 
         updateTx({
-          loadingMsg:
+          loading:
             kyc !== "skipped"
               ? "Requesting receipt.."
               : "Saving donation details",
@@ -51,7 +51,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         /** TODO: include receipt failure in result tab
          *  show link of succesful tx
          */
-        await logDonation({
+        const logError = await logDonation({
           ...kycData /** receipt is sent to user if kyc is provider upfront */,
           amount: +token.amount,
           chainId: wallet.chainId,
@@ -65,16 +65,25 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           endowmentId: recipient.id,
         });
 
-        updateTx({ hash });
+        if (logError !== null) {
+          return updateTx({
+            error: logError,
+            tx: { hash, chainId: wallet.chainId },
+          });
+        }
 
+        updateTx({ tx: { hash, chainId: wallet.chainId } });
         //invalidate cache entries
         dispatch(invalidateApesTags(["balances", "donations"]));
       } else {
-        updateTx("error");
+        updateTx({
+          error: "Transaction was submitted but failed.",
+          tx: { hash, chainId: wallet.chainId },
+        });
       }
     } catch (err) {
-      logger.error(err);
-      updateTx("error");
+      const error = processError(err);
+      updateTx({ error: typeof error === "string" ? error : error.message });
     }
   }
 );
