@@ -9,7 +9,12 @@ import {
 import { APError } from "./types";
 import { logger } from "helpers";
 import { chainIds } from "constants/chains";
-import { APP_FETCH_FAIL, APP_TX_FAIL, AWS_FETCH_FAIL } from "./constants";
+import {
+  APP_FETCH_FAIL,
+  APP_TX_FAIL,
+  AWS_FETCH_FAIL,
+  GENERIC_ERROR,
+} from "./constants";
 
 export function processError(error: unknown): APError {
   logger.error(error);
@@ -66,11 +71,6 @@ export function processError(error: unknown): APError {
     return { type: "tx", message: APP_TX_FAIL };
   }
 
-  /** keplr errors are generic Error */
-  if (error instanceof Error) {
-    return { type: "aws", message: error.message };
-  }
-
   /** handle RTK fetch errors */
   if (isFetchBaseQueryError(error)) {
     switch (error.status) {
@@ -101,7 +101,13 @@ export function processError(error: unknown): APError {
       }
     }
   }
-  return { type: "aws", message: "Unknown error occured" };
+
+  /** keplr errors are generic Error */
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return GENERIC_ERROR;
 }
 
 export interface EIPError extends Error {

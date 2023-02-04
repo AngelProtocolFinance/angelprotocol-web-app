@@ -6,3 +6,6 @@ export const AWS_FETCH_FAIL =
 
 export const APP_FETCH_FAIL =
   "App encountered an unexpected error while processing request. Please get in touch with support@angelprotocol.io.";
+
+export const GENERIC_ERROR =
+  "An unexpected error occurred. Please get in touch with support@angelprotocol.io.";

@@ -6,6 +6,7 @@ import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
+import Fallback from "./Fallback";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -23,7 +24,7 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
-    <ErrorBoundary fallback={<h1>Something wen't wrong!</h1>}>
+    <ErrorBoundary fallback={<Fallback />}>
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
