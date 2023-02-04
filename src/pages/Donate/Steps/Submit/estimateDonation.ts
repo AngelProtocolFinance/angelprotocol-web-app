@@ -129,7 +129,7 @@ export async function estimateDonation({
         );
         const minFee = gasLimit.mul(gasPrice);
         feeAmount = parseFloat(
-          ethers.utils.formatUnits(minFee, token.decimals)
+          ethers.utils.formatUnits(minFee, native_currency.decimals)
         );
       }
 
