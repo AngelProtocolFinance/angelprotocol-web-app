@@ -67,7 +67,7 @@ export function useKeplrWC(): Wallet {
   return {
     ...state,
     logo: icon,
-    id: "evm-wc",
+    id: "keplr-wc",
     name: "Keplr mobile",
   };
 }
