@@ -2,10 +2,10 @@ import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import { initTheme } from "helpers";
-import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
@@ -23,7 +23,7 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary fallback={<h1>Something wen't wrong!</h1>}>
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
