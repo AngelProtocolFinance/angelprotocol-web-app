@@ -98,8 +98,6 @@ export async function fetchBalances(
       ),
     ]);
 
-    console.log(erc20s);
-
     const erc20map = toMap(
       erc20s.map<Coin>((result) =>
         result.status === "fulfilled" ? result.value : { amount: "", denom: "" }
