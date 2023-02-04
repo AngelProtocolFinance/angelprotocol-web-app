@@ -31,7 +31,7 @@ export default function Err({ classes = "", endowId, error, tx }: Props) {
       {tx && (
         <ExtLink
           href={chains[tx.chainId].txExplorer + tx.hash}
-          className="text-blue text-xs"
+          className="text-blue dark:text-blue-l2 hover:text-orange hover:dark:text-orange text-sm mt-3"
         >
           Transaction details
         </ExtLink>
