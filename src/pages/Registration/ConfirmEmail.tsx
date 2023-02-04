@@ -2,8 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
 import Popup from "components/Popup";
-import { useErrorHandler } from "hooks/useErrorHandler";
-import { handleMutationResult } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   /** going to this page should only be thru Signup or Resume
@@ -36,11 +35,11 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
       <button
         className="w-full max-w-[26.25rem] mb-4 btn-orange btn-donate"
         onClick={async () => {
-          handleMutationResult(await requestEmail({ uuid: reference, email }), {
-            onSuccess: () =>
-              showModal(Popup, { message: "Email verification sent!" }),
-            onError: handleError,
-          });
+          requestEmail({ uuid: reference, email })
+            .then(() =>
+              showModal(Popup, { message: "Email verification sent!" })
+            )
+            .catch(handleError);
         }}
         disabled={isLoading}
       >

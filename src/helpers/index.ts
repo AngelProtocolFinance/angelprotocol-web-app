@@ -5,7 +5,6 @@ export * from "./decimal";
 export * from "./evm";
 export * from "./getTxUrl";
 export * from "./getWasmAttribute";
-export * from "./handleError";
 export * from "./idParamToNum";
 export * from "./isEmpty";
 export * from "./logger";

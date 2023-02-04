@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignDoc } from "types/cosmos";
 import { invalidateApesTags } from "services/apes";
 import { CosmosWallet } from "contexts/WalletContext";
-import { createAuthToken, getWasmAttribute, handleError } from "helpers";
+import { processError } from "hooks/useErrorHandler";
+import { createAuthToken, getWasmAttribute } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
@@ -66,9 +67,8 @@ export const purchase = createAsyncThunk<void, Args>(
         });
       }
     } catch (err) {
-      handleError(err, (msg) =>
-        updateTx({ error: typeof msg === "string" ? msg : msg.message })
-      );
+      const error = processError(err);
+      updateTx({ error: typeof error === "string" ? error : error.message });
     } finally {
       /** invalidate user balance */
       dispatch(invalidateApesTags(["balances"]));

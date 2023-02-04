@@ -8,8 +8,8 @@ import { useRequestEmailMutation } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
-import { useErrorHandler } from "hooks/useErrorHandler";
-import { handleMutationResult, logger } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
+import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
 
@@ -48,15 +48,12 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         <button
           className="btn-orange btn-reg w-64 h-12 "
           onClick={async () => {
-            handleMutationResult(
-              await requestEmail({ uuid: c.PK, email: c.Email }),
-              {
-                onError: handleError,
-                onSuccess() {
-                  showModal(Popup, { message: "Email verification sent!" });
-                },
-              }
-            );
+            await requestEmail({ uuid: c.PK, email: c.Email })
+              .unwrap()
+              .then(() =>
+                showModal(Popup, { message: "Email verification sent!" })
+              )
+              .catch(handleError);
           }}
           disabled={isLoading}
         >

@@ -3,8 +3,7 @@ import { CompleteRegistration } from "pages/Registration/types";
 import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import Prompt from "components/Prompt";
-import { useErrorHandler } from "hooks/useErrorHandler";
-import { handleMutationResult } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
 import { chainIds } from "constants/chains";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
@@ -17,23 +16,20 @@ function Dashboard() {
   const { handleError, showModal } = useErrorHandler();
 
   const submit = async ({ init }: CompleteRegistration) => {
-    handleMutationResult(
-      await submitApplication({
-        ref: init.reference,
-        chain_id: chainIds.juno,
-      }),
-      {
-        onError: handleError,
-        onSuccess() {
-          showModal(Prompt, {
-            type: "success",
-            headline: "Submission",
-            title: "Submitted for review",
-            children: <>Your application has been submitted</>,
-          });
-        },
-      }
-    );
+    await submitApplication({
+      ref: init.reference,
+      chain_id: chainIds.juno,
+    })
+      .unwrap()
+      .then(() => {
+        showModal(Prompt, {
+          type: "success",
+          headline: "Submission",
+          title: "Submitted for review",
+          children: <>Your application has been submitted</>,
+        });
+      })
+      .catch(handleError);
   };
 
   const { documentation, status } = data;
