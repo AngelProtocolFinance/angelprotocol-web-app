@@ -1,3 +1,4 @@
+import ToastPortal from "App/ToastPortal";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -23,6 +24,7 @@ const root = createRoot(container as Element);
 
 root.render(
   <StrictMode>
+    <ToastPortal />
     <ErrorBoundary classes="place-self-center">
       <Provider store={store}>
         <BrowserRouter>
