@@ -7,7 +7,7 @@ import useErrorHandler from "hooks/useErrorHandler";
 import { FormValues, schema } from "./schema";
 
 export default function SubscriptionForm() {
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("subscription form");
   const [subscribe, { isSuccess }] = useNewsletterSubscribeMutation();
 
   const {

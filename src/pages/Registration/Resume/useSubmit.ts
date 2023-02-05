@@ -14,7 +14,7 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
 
   const navigate = useNavigate();
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Resume registration");
   const [checkPrevRegistration] = useLazyRegQuery();
 
   const onSubmit = async ({ reference }: FormValues) => {

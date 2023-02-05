@@ -1,8 +1,7 @@
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { TagPayload } from "services/types";
 import { TxResponse } from "types/cosmos";
-
-export type Tx = { hash: string; chainID: string };
+import { Tx } from "types/utils";
 
 export type TxSuccessMeta = {
   message: string;
@@ -10,10 +9,10 @@ export type TxSuccessMeta = {
 };
 
 export type TxLoading = { loading: string };
-export type TxError = { error: string; tx?: Tx };
+export type TxError = { error: string; tx?: Tx; report?: string };
 export type TxSuccess = {
   success: TxSuccessMeta;
-  tx?: Tx & { rawLog?: string };
+  tx?: Tx;
 };
 
 export type TxState = TxLoading | TxError | TxSuccess;

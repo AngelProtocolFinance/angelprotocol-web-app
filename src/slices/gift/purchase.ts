@@ -67,8 +67,8 @@ export const purchase = createAsyncThunk<void, Args>(
         });
       }
     } catch (err) {
-      const error = processError(err);
-      updateTx({ error: typeof error === "string" ? error : error.message });
+      const error = processError(err, "purchase giftcard");
+      updateTx({ error: error.message });
     } finally {
       /** invalidate user balance */
       dispatch(invalidateApesTags(["balances"]));

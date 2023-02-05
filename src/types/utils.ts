@@ -3,3 +3,5 @@ export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 export type ObjectEntries<T> = [keyof T, T[keyof T]][];
 export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type WithBalance<T extends object> = T & { balance: number };
+
+export type Tx = { hash: string; chainId: string };

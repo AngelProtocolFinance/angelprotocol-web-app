@@ -1,16 +1,14 @@
-export type TxError = {
+type Base = { message: string; report?: string };
+type Tx = { hash: string; chainId: string };
+
+export type TxError = Base & {
   type: "tx";
-  message: string;
-  tx?: {
-    hash: string;
-    chainId: string;
-  };
+  tx?: Tx;
 };
 
-export type AWSError = {
-  type: "aws";
-  message: string;
+export type GenericError = Base & {
+  type: "generic";
   tx?: never;
 };
 
-export type APError = TxError | AWSError | string;
+export type APError = TxError | GenericError;

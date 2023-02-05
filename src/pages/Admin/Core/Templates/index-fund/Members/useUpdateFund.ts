@@ -16,7 +16,7 @@ export default function useUpdateFund() {
   const { cw3, propMeta, wallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("useUpdateFund");
   const sendTx = useCosmosTxSender();
 
   async function updateFund() {

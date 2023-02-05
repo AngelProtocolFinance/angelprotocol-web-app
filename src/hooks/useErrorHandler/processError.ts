@@ -16,12 +16,8 @@ import {
   GENERIC_ERROR,
 } from "./constants";
 
-export function processError(error: unknown): APError {
+export function processError(error: unknown, source: string): APError {
   logger.error(error);
-
-  if (typeof error === "string") {
-    return error;
-  }
 
   //handle EIP errors
   if (isEIP1193Error(error)) {
@@ -36,15 +32,29 @@ export function processError(error: unknown): APError {
       case -32600: //EIP 1474 prior to submission
       case -32601:
       case -32602:
-        return { type: "tx", message: APP_TX_FAIL };
+        return {
+          type: "tx",
+          message: APP_TX_FAIL,
+          report: `EIP ERROR CODE: ${error.code} SOURCE: ${source}`,
+        };
 
       case -32603:
         return {
           type: "tx",
           message:
             "Server can't process your transaction. Please try again later.",
+          report: `EIP ERROR CODE: ${error.code} SOURCE: ${source}`,
         };
     }
+  }
+
+  /** handle binance extension error */
+  if (isBinanceError(error)) {
+    if (/rejected by user/i.test(error.error)) {
+      return { type: "tx", message: "User rejected request" };
+    }
+
+    return { type: "tx", message: APP_TX_FAIL, report: error.error };
   }
 
   /** handle terra error */
@@ -61,53 +71,86 @@ export function processError(error: unknown): APError {
     return {
       type: "tx",
       message: "Transaction submitted but failed",
+      report: error.toString(),
       tx: error.txhash
-        ? { hash: error.txhash, chainId: chainIds.terra }
+        ? {
+            hash: error.txhash,
+            chainId: chainIds.terra,
+          }
         : undefined,
     };
   }
 
   if (error instanceof TxUnspecifiedError || error instanceof CreateTxFailed) {
-    return { type: "tx", message: APP_TX_FAIL };
+    return { type: "tx", message: APP_TX_FAIL, report: error.toString() };
   }
 
   /** handle RTK fetch errors */
   if (isFetchBaseQueryError(error)) {
     switch (error.status) {
       case "FETCH_ERROR":
-        return { type: "aws", message: APP_FETCH_FAIL };
+        return {
+          type: "generic",
+          message: APP_FETCH_FAIL,
+          report: error.error,
+        };
       case "PARSING_ERROR":
-        return { type: "aws", message: AWS_FETCH_FAIL };
+        return {
+          type: "generic",
+          message: AWS_FETCH_FAIL,
+          report: error.error,
+        };
       case "TIMEOUT_ERROR":
-        return { type: "aws", message: "Timeout: Please try again later." };
+        return {
+          type: "generic",
+          message: "Timeout: Please try again later.",
+          report: error.error,
+        };
       //show custom errors from queryFn
       case "CUSTOM_ERROR":
-        return { type: "aws", message: error.error };
+        return { type: "generic", message: error.error };
 
       //typeof status === number
       default: {
         if (typeof error.data === "string") {
-          return { type: "aws", message: error.data };
+          return { type: "generic", message: error.data };
         }
         if (hasMessage(error.data)) {
-          return { type: "aws", message: error.data.message };
+          return { type: "generic", message: error.data.message };
         }
         /**
          * doesn't matter what status:
          * if AWS doesn't give any details about it,
          * just show general error.
          */
-        return { type: "aws", message: AWS_FETCH_FAIL };
+
+        return {
+          type: "generic",
+          message: AWS_FETCH_FAIL,
+          report: `STATUS: ${error.status} SOURCE: ${source}}`,
+        };
       }
     }
   }
 
   /** keplr errors are generic Error */
   if (error instanceof Error) {
-    return error.message;
+    if (/request rejected/i.test(error.message)) {
+      return { type: "tx", message: "User rejected request" };
+    }
+
+    return {
+      type: "generic",
+      message: error.message,
+      report: error.stack /** report only if with stack */,
+    };
   }
 
-  return GENERIC_ERROR;
+  return {
+    type: "generic",
+    message: GENERIC_ERROR,
+    report: `STATUS:unknown SOURCE:${source}`,
+  };
 }
 
 export interface EIPError extends Error {
@@ -115,6 +158,11 @@ export interface EIPError extends Error {
   code: number;
   data?: unknown;
 }
+
+type BinanceError = {
+  error: string;
+  method: string;
+};
 
 export function isFetchBaseQueryError(
   error: unknown
@@ -128,4 +176,8 @@ export function hasMessage(data?: unknown): data is { message: string } {
 
 export function isEIP1193Error(error: unknown): error is EIPError {
   return typeof error === "object" && error !== null && "code" in error;
+}
+
+export function isBinanceError(error: unknown): error is BinanceError {
+  return typeof error === "object" && error !== null && "error" in error;
 }

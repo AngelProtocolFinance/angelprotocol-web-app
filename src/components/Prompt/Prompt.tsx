@@ -1,16 +1,14 @@
 import { Dialog } from "@headlessui/react";
 import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
+import { openMailer } from "components/ErrorBoundary/Mailer";
 import Icon from "../Icon";
 import LoaderRing from "../LoaderRing";
 
-export default function Prompt({
-  type,
-  headline = "",
-  title,
-  children,
-}: Props) {
+export default function Prompt(props: Props) {
   const { closeModal, isDismissible } = useModalContext();
+
+  const { type, headline = "", title, children } = props;
 
   return (
     <Dialog.Panel className="fixed-center z-10 grid text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
@@ -36,11 +34,20 @@ export default function Prompt({
       <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
         {children}
       </div>
-      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
+      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full flex gap-4 sm:justify-end bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
+        {props.type === "error" && props.report && (
+          <button
+            type="button"
+            className="btn-outline-filled px-8 py-2 max-sm:w-full min-w-[8rem]"
+            onClick={() => openMailer(props.report ?? "")}
+          >
+            Report
+          </button>
+        )}
         {isDismissible && (
           <button
             type="button"
-            className="inline-block btn-orange px-8 py-2 max-sm:w-full"
+            className="btn-orange px-8 py-2 max-sm:w-full min-w-[8rem]"
             onClick={closeModal}
           >
             {type === "success" ? "Done" : "Ok"}

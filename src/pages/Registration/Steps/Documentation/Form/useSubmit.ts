@@ -17,7 +17,7 @@ export default function useSubmit() {
   } = useRegState<2>();
 
   const [updateReg] = useUpdateRegMutation();
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Registration documentation");
   const navigate = useNavigate();
 
   const submit = async ({

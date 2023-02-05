@@ -82,8 +82,8 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         });
       }
     } catch (err) {
-      const error = processError(err);
-      updateTx({ error: typeof error === "string" ? error : error.message });
+      const error = processError(err, "sendDonation.ts");
+      updateTx({ error: error.message });
     }
   }
 );

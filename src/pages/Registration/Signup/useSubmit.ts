@@ -8,7 +8,7 @@ import routes from "../routes";
 
 export default function useSubmit() {
   const [register] = useNewApplicationMutation();
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Registration signup");
   const {
     handleSubmit,
     formState: { isSubmitting },

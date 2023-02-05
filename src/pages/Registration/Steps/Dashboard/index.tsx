@@ -13,7 +13,9 @@ function Dashboard() {
   const { data } = useRegState<4>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
-  const { handleError, showModal } = useErrorHandler();
+  const { handleError, showModal } = useErrorHandler(
+    "Registration submit application"
+  );
 
   const submit = async ({ init }: CompleteRegistration) => {
     await submitApplication({

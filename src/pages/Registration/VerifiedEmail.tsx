@@ -22,7 +22,7 @@ type JwtData = InitApplication & {
 
 export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
   const location = useLocation();
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Registration email verification");
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { showModal } = useModalContext();
 

@@ -15,7 +15,7 @@ export default function useSubmit() {
     data: { init, contact },
   } = useRegState<1>();
 
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Registration contact details");
   const [updateReg] = useUpdateRegMutation();
   const navigate = useNavigate();
 

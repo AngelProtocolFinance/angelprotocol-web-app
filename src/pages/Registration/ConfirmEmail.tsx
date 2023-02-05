@@ -12,7 +12,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   const initReg = state as InitReg | undefined; //from non "/steps" navigations
 
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
-  const { handleError, showModal } = useErrorHandler();
+  const { handleError, showModal } = useErrorHandler("ConfirmEmail.tsx");
 
   if (!initReg) {
     return <Navigate to={".."} />;

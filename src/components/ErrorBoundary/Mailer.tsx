@@ -8,11 +8,11 @@ export default function Mailer({
   data,
   closeToast,
 }: ToastContentProps<string>) {
-  const error = data!;
+  const report = data!;
   return (
     <div className="grid text-gray-d2 dark:text-white gap-2">
       {mailers.map((type) => (
-        <MailLink key={type} type={type} error={error} />
+        <MailLink key={type} type={type} report={report} />
       ))}
 
       <button
@@ -26,7 +26,7 @@ export default function Mailer({
   );
 }
 
-function MailLink(props: { type: MailerType; error: string }) {
+function MailLink(props: { type: MailerType; report: string }) {
   const to = "support@angelprotocol.io";
   const subject = "Angel Protocol Error";
   const url = ((type): URL => {
@@ -37,7 +37,7 @@ function MailLink(props: { type: MailerType; error: string }) {
         url.searchParams.append("fs", "1");
         url.searchParams.append("to", to);
         url.searchParams.append("su", subject);
-        url.searchParams.append("body", props.error);
+        url.searchParams.append("body", props.report);
         return url;
       }
       case "outlook browser": {
@@ -45,14 +45,14 @@ function MailLink(props: { type: MailerType; error: string }) {
         url.searchParams.append("path", "/mail/action/compose");
         url.searchParams.append("to", to);
         url.searchParams.append("subject", subject);
-        url.searchParams.append("body", props.error);
+        url.searchParams.append("body", props.report);
         return url;
       }
 
       default: {
         const url = new URL(`mailto:${to}`);
         url.searchParams.append("subject", subject);
-        url.searchParams.append("body", props.error);
+        url.searchParams.append("body", props.report);
         return url;
       }
     }
@@ -67,10 +67,10 @@ function MailLink(props: { type: MailerType; error: string }) {
   );
 }
 
-export function openMailer(details: string) {
+export function openMailer(report: string) {
   return toast.info(Mailer, {
     icon: false,
-    data: details,
+    data: report,
     className: "",
     autoClose: false,
     closeButton: false,

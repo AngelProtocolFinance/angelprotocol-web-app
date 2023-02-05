@@ -3,7 +3,7 @@ import useErrorHandler from "hooks/useErrorHandler";
 import { useRegState } from "../StepGuard";
 
 export default function useRegisterWallet() {
-  const { handleError } = useErrorHandler();
+  const { handleError } = useErrorHandler("Registration wallet");
   const { data: state } = useRegState<3>();
   const [updateReg, { isSuccess, isLoading }] = useUpdateRegMutation();
 

@@ -1,7 +1,8 @@
 import { PropsWithChildren } from "react";
 
-export type Props = PropsWithChildren<{
-  type?: "success" | "error" | "loading";
-  headline?: string;
-  title?: string;
-}>;
+type Base = { headline?: string; title?: string };
+
+type ErrorProps = Base & { type: "error"; report?: string };
+type DefaultProps = Base & { type?: "success" | "loading" };
+
+export type Props = PropsWithChildren<ErrorProps | DefaultProps>;
