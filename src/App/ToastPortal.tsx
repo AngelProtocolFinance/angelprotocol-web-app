@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { Flip, ToastContainer, TypeOptions } from "react-toastify";
+import { Bounce, ToastContainer, TypeOptions } from "react-toastify";
 import Icon from "components/Icon";
 
 export default function ToastPortal() {
@@ -8,7 +8,7 @@ export default function ToastPortal() {
       closeButton={() => (
         <Icon
           type="Close"
-          className="text-gray-d2 dark:text-white hover:text-orange hover:dark:text-orange pr-1 self-start"
+          className="text-gray-d2 dark:text-white hover:text-orange hover:dark:text-orange pr-1 self-start shrink-0"
           size={22}
         />
       )}
@@ -17,7 +17,7 @@ export default function ToastPortal() {
           options?.type
         )} p-2 rounded`
       }
-      transition={Flip}
+      transition={Bounce}
       position="top-right"
       autoClose={2000}
       hideProgressBar

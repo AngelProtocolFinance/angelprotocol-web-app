@@ -52,6 +52,11 @@ export type WalletMeta = {
   id: ProviderId;
   name: string;
 };
+
+export type InstallLink = Pick<WalletMeta, "name" | "logo"> & {
+  url: string;
+};
+
 export type Wallet = WalletMeta & WalletState;
 
 export type ConnectedWallet = WalletMeta & ConnectedToChainType;
