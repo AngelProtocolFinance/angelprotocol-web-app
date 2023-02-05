@@ -1,7 +1,13 @@
-import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
+import { Component, ErrorInfo, FC, PropsWithChildren } from "react";
 import { logger } from "helpers";
+import Fallback from "./Fallback";
 
-type Props = PropsWithChildren<{ fallback: ReactNode }>;
+export type TFallback = FC<{ error: Error; classes?: string }>;
+
+export type Props = PropsWithChildren<{
+  classes?: string;
+  fallback?: TFallback;
+}>;
 
 type State = { error: Error | undefined };
 
@@ -23,7 +29,10 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.error) {
-      return this.props.fallback;
+      const { fallback: CustomFallBack = Fallback } = this.props;
+      return (
+        <CustomFallBack error={this.state.error} classes={this.props.classes} />
+      );
     }
 
     return this.props.children;
