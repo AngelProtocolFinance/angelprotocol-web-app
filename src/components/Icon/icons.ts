@@ -2,6 +2,7 @@ import {
   AiFillCaretLeft,
   AiFillCheckCircle,
   AiFillHeart,
+  AiFillSecurityScan,
   AiFillYoutube,
   AiOutlineDislike,
   AiOutlineEdit,
@@ -75,6 +76,7 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
+  MdAccountBalanceWallet,
   MdAnalytics,
   MdCardGiftcard,
   MdFactCheck,
@@ -97,6 +99,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
+  AccountBalanceWallet: MdAccountBalanceWallet,
   Admin: FaUsersCog,
   AdminPanel: MdOutlineAdminPanelSettings,
   Analytics: MdAnalytics,
@@ -173,6 +176,7 @@ export const icons = {
   Safe: FcSafe,
   Save: BiSave,
   Search: BiSearchAlt2,
+  SecurityScan: AiFillSecurityScan,
   Settings: IoMdSettings,
   StopWatch: FaStopwatch,
   Sun: BiSun,
