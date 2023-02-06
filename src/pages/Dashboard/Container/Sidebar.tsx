@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LinkGroup } from "./types";
+import { LinkGroup } from "../types";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
 import { createNavLinkStyler } from "helpers";
