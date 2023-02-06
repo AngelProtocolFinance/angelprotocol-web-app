@@ -10,7 +10,7 @@ type Props = { className?: string; linkGroups: LinkGroup[] };
 export default function Sidebar({ className = "", linkGroups }: Props) {
   return (
     <div
-      className={`flex flex-col w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
+      className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
     >
       <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
