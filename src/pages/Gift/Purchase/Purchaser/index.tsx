@@ -4,6 +4,7 @@ import { FormValues } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { useBalancesQuery } from "services/apes";
 import { WithCosmosWallet } from "contexts/WalletContext";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { FormStep } from "slices/gift";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -14,14 +15,30 @@ export default function Purchaser({
   ...state
 }: WithCosmosWallet<FormStep> & { classes?: string }) {
   const { chainId, address, id } = wallet;
-  const { data: tokens = [], isLoading } = useBalancesQuery({
+  const {
+    data: tokens = [],
+    isLoading,
+    isError,
+  } = useBalancesQuery({
     address,
     chainId,
     providerId: id,
   });
 
   if (isLoading) {
-    return <p>Fetching balances..</p>;
+    return (
+      <LoadingStatus classes="justify-self-center">
+        Fetching balances...
+      </LoadingStatus>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ErrorStatus classes="justify-self-center">
+        Failed to fetch balances
+      </ErrorStatus>
+    );
   }
 
   return (
