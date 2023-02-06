@@ -11,6 +11,7 @@ import { unsdgs } from "constants/unsdgs";
 
 const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";
+
 export default function Card({
   active_in_countries,
   name,

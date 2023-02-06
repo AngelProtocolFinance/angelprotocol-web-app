@@ -18,6 +18,7 @@ import { createADR36Payload } from "./createADR36Payload";
 export default function useEditProfile() {
   const { id, owner, propMeta } = useAdminResources<"charity">();
   const {
+    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<FV>();
@@ -103,6 +104,7 @@ export default function useEditProfile() {
   };
 
   return {
+    reset,
     editProfile: handleSubmit(editProfile),
     isSubmitting,
     id,
