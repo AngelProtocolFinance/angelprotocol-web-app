@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { EndowmentProfile } from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
@@ -29,7 +28,7 @@ export default function AIF() {
 }
 
 function InnerComponent({ profile }: { profile: EndowmentProfile }) {
-  const linkGroups = useMemo(() => createLinkGroups(profile.id), [profile.id]);
+  const linkGroups = createLinkGroups(profile.id);
 
   return (
     <ProfileContext.Provider value={profile}>
