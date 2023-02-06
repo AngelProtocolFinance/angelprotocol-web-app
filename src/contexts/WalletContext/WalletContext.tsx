@@ -93,7 +93,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: xdefiInfo,
     supportedChains: xdefiSupportedChains,
     switchChain: switchXdefiChain,
-  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "Xdefi EVM");
+  } = useInjectedProvider("xdefi-evm", EVM_SUPPORTED_CHAINS, "XDEFI EVM");
 
   const {
     isLoading: isKeplrWCLoading,

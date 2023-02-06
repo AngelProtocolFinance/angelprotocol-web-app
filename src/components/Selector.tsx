@@ -69,10 +69,11 @@ export function Selector<
   const isAllSelected =
     multiple && (selected as OptionType<ValueType>[]).length === options.length;
 
+  const isDisabled = isSubmitting || disabled;
   return (
     <>
       <Listbox
-        disabled={isSubmitting || disabled}
+        disabled={isDisabled}
         value={selected}
         by={valueKey}
         onChange={onChange}
@@ -88,6 +89,7 @@ export function Selector<
           tabIndex={-1}
         />
         <Listbox.Button
+          aria-disabled={isDisabled}
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1" : ""
@@ -103,7 +105,7 @@ export function Selector<
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className="justify-self-end dark:text-gray"
+                className="justify-self-end dark:text-gray shrink-0"
               />
             </>
           )}
