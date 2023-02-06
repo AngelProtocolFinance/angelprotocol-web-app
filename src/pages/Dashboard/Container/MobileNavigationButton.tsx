@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 type Props = { className?: string; linkGroups: LinkGroup[] };
 
-export default function NavigationButton({
+export default function MobileNavigationButton({
   className = "",
   linkGroups,
 }: Props) {
