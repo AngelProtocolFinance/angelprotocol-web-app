@@ -91,7 +91,7 @@ export default function Form({ classes = "" }) {
         disabled={
           isSubmitting ||
           !isConnected(wallet) ||
-          !(isConnected(wallet) && wallet.type !== "cosmos")
+          (isConnected(wallet) && wallet.type !== "cosmos")
         }
       >
         {isSubmitting
