@@ -1,13 +1,16 @@
 import { Dialog } from "@headlessui/react";
 import { Link, LinkGroup } from "../../types";
+import { EndowmentProfile } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Sidebar from "../Sidebar";
 
 export default function MobileSidebar({
   linkGroups,
+  profile,
   onChange,
 }: {
   linkGroups: LinkGroup[];
+  profile: EndowmentProfile;
   onChange: (link: Link) => void;
 }) {
   const { closeModal } = useModalContext();
@@ -22,6 +25,7 @@ export default function MobileSidebar({
       <Sidebar
         className="max-h-screen overflow-y-auto scroller"
         linkGroups={linkGroups}
+        profile={profile}
         onChange={handleChange}
       />
     </Dialog.Panel>
