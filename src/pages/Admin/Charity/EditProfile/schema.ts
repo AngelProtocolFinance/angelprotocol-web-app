@@ -31,6 +31,8 @@ const shape: SchemaShape<FormValues> = {
   hq_country: Yup.object().shape<SchemaShape<CountryOption>>({
     name: requiredString,
   }),
+  name: requiredString,
+  overview: requiredString,
   hq_city: requiredString,
   active_in_countries: Yup.array().min(1, "required"),
   contact_email: Yup.string().email("invalid email"),

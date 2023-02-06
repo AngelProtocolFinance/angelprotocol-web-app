@@ -28,7 +28,7 @@ jest.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const heroText = /support longer/i;
+const heroText = /Reflecting on the past/i;
 const leadText = /leaderboard/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
