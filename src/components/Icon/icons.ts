@@ -36,6 +36,7 @@ import {
 } from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
+  FaClipboardCheck,
   FaClock,
   FaCog,
   FaDiscord,
@@ -76,6 +77,7 @@ import {
 import {
   MdAnalytics,
   MdCardGiftcard,
+  MdFactCheck,
   MdImage,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
@@ -107,6 +109,7 @@ export const icons = {
   CaretLeft: AiFillCaretLeft,
   Check: BiCheck,
   CheckCircle: AiFillCheckCircle,
+  ClipboardCheck: FaClipboardCheck,
   Clock: FaClock,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
@@ -131,6 +134,7 @@ export const icons = {
   EyeInvisible: AiOutlineEyeInvisible,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
+  FactCheck: MdFactCheck,
   FatArrowDownload: IoMdDownload,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
