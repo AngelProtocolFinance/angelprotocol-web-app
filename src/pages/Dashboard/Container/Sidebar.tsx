@@ -32,9 +32,9 @@ export default function Sidebar(props: Props) {
 
         <div className="grid gap-1">
           <h5 className="text-sm font-bold truncate">{props.profile.name}</h5>
-          <span className="text-xs truncate">
+          {/* <span className="text-xs truncate">
             juno1rhaasmvq6t3a607ua90ufrr8srkr08lxauqnpz
-          </span>
+          </span> */}
         </div>
       </div>
 
