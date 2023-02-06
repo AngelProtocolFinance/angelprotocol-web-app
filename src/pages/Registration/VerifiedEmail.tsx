@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { InitReg } from "./types";
 import { InitApplication } from "types/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Popup from "components/Popup";
-import { handleMutationResult, logger } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
+import { logger } from "helpers";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
 
@@ -22,7 +22,7 @@ type JwtData = InitApplication & {
 
 export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
   const location = useLocation();
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler("Registration email verification");
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
   const { showModal } = useModalContext();
 
@@ -48,13 +48,12 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         <button
           className="btn-orange btn-reg w-64 h-12 "
           onClick={async () => {
-            handleMutationResult(
-              await requestEmail({ uuid: c.PK, email: c.Email }),
-              handleError,
-              () => {
-                showModal(Popup, { message: "Email verification sent!" });
-              }
-            );
+            await requestEmail({ uuid: c.PK, email: c.Email })
+              .unwrap()
+              .then(() =>
+                showModal(Popup, { message: "Email verification sent!" })
+              )
+              .catch(handleError);
           }}
           disabled={isLoading}
         >

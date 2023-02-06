@@ -14,7 +14,7 @@ type ModalState = {
   Modal: ReactNode;
 } & ModalOptions;
 
-type Opener = <T extends {}>(
+export type Opener = <T extends {}>(
   Modal: FC<T>,
   props: T,
   options?: Partial<ModalOptions>

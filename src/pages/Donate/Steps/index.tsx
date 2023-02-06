@@ -9,6 +9,8 @@ import { useGetter, useSetter } from "store/accessors";
 import {
   DonationRecipient,
   DonationState,
+  isError,
+  isSuccess,
   resetDetails,
   setRecipient,
 } from "slices/donation";
@@ -141,8 +143,8 @@ function CurrStep(props: DonationState) {
 function isHeadingShown(state: DonationState) {
   switch (state.step) {
     case 4:
-      if (state.status === "error") return false;
-      if ("hash" in state.status) return false;
+      if (isError(state.status)) return false;
+      if (isSuccess(state.status)) return false;
       //only show progress on loading
       return true;
     default:

@@ -2,10 +2,8 @@ import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "pages/Registration/types";
 import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
-import { handleMutationResult } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
 import { chainIds } from "constants/chains";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
@@ -15,25 +13,25 @@ function Dashboard() {
   const { data } = useRegState<4>();
 
   const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const { handleError, showModal } = useErrorHandler(
+    "Registration submit application"
+  );
 
   const submit = async ({ init }: CompleteRegistration) => {
-    handleMutationResult(
-      await submitApplication({
-        ref: init.reference,
-        chain_id: chainIds.juno,
-      }),
-      handleError,
-      () => {
+    await submitApplication({
+      ref: init.reference,
+      chain_id: chainIds.juno,
+    })
+      .unwrap()
+      .then(() => {
         showModal(Prompt, {
           type: "success",
           headline: "Submission",
           title: "Submitted for review",
           children: <>Your application has been submitted</>,
         });
-      }
-    );
+      })
+      .catch(handleError);
   };
 
   const { documentation, status } = data;

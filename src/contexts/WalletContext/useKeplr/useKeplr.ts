@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Wallet, WalletState } from "../types";
+import { Wallet, WalletMeta, WalletState } from "../types";
 import { Dwindow } from "types/window";
 import icon from "assets/icons/wallets/keplr.png";
 import { chainIds } from "constants/chains";
 import { IS_TEST } from "constants/env";
+import { openInstaller } from "../Installer";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 import { junoTestnet } from "./chain-infos";
 
@@ -12,6 +13,7 @@ const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
 
 const INSTALL_URL = "https://www.keplr.app/download";
+const meta: WalletMeta = { logo: icon, id: "keplr", name: "Keplr" };
 
 export default function useKeplr(): Wallet {
   const [state, setState] = useState<WalletState>({
@@ -28,7 +30,7 @@ export default function useKeplr(): Wallet {
     try {
       if (!dwindow.keplr) {
         if (!isNew) return; /** dont redirect persistent connection */
-        return window.open(INSTALL_URL, "_blank", "noopener noreferrer");
+        return openInstaller({ ...meta, url: INSTALL_URL });
       }
 
       setState({ status: "loading" });
@@ -61,5 +63,5 @@ export default function useKeplr(): Wallet {
     saveUserAction(actionKey, "disconnect");
   }
 
-  return { ...state, logo: icon, id: "keplr", name: "Keplr" };
+  return { ...state, ...meta };
 }

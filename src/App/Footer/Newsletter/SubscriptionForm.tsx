@@ -2,12 +2,12 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
+import useErrorHandler from "hooks/useErrorHandler";
 import { FormValues, schema } from "./schema";
 
 export default function SubscriptionForm() {
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler("subscription form");
   const [subscribe, { isSuccess }] = useNewsletterSubscribeMutation();
 
   const {
@@ -21,17 +21,10 @@ export default function SubscriptionForm() {
   });
 
   async function submit(data: FormValues) {
-    try {
-      const response = await subscribe(data.email);
-
-      if ("error" in response) {
-        throw response.error;
-      }
-
-      reset();
-    } catch (error) {
-      handleError(error);
-    }
+    await subscribe(data.email)
+      .unwrap()
+      .then(() => reset())
+      .catch(handleError);
   }
 
   return (

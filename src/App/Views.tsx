@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import ErrorBoundary from "components/ErrorBoundary";
 import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constants/routes";
@@ -20,22 +21,33 @@ export default function Views() {
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
-        <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
-        <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
         <Route
-          path={`${appRoutes.donations}/:address`}
-          element={<Donations />}
-        />
-        <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
-        <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
-        <Route path={`${appRoutes.register}/*`} element={<Registration />} />
-        <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-        <Route index element={<Marketplace />} />
-        <Route
-          path="/:url*(/+)"
-          element={<Navigate replace to={location.pathname.slice(0, -1)} />}
-        />
-        <Route path="*" element={<Navigate replace to={appRoutes.index} />} />
+          element={
+            <ErrorBoundary
+              key={location.key}
+              classes="place-self-center py-32 h-full bg-blue-l4 dark:bg-transparent w-full"
+            >
+              <Outlet />
+            </ErrorBoundary>
+          }
+        >
+          <Route path={`${appRoutes.profile}/:id/*`} element={<Profile />} />
+          <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+          <Route
+            path={`${appRoutes.donations}/:address`}
+            element={<Donations />}
+          />
+          <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
+          <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
+          <Route path={`${appRoutes.register}/*`} element={<Registration />} />
+          <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
+          <Route index element={<Marketplace />} />
+          <Route
+            path="/:url*(/+)"
+            element={<Navigate replace to={location.pathname.slice(0, -1)} />}
+          />
+          <Route path="*" element={<Navigate replace to={appRoutes.index} />} />
+        </Route>
       </Routes>
     </Suspense>
   );

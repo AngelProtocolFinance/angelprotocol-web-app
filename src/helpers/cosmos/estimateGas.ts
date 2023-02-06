@@ -25,79 +25,87 @@ export async function estimateGas(
 ): Promise<{ feeAmount: number; doc: SignDoc }> {
   const { address: sender, chainId } = wallet;
 
-  const chain = chains[chainId];
-  const { account } = await fetch(
-    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
-  ).then<{ account: JSONAccount }>((res) => res.json());
+  try {
+    const chain = chains[chainId];
+    const { account } = await fetch(
+      chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
+    ).then<{ account: JSONAccount }>((res) => res.json());
 
-  const pub = PubKey.fromJSON({ key: account.pub_key.key });
-  const signer: SignerInfo = {
-    publicKey: {
-      typeUrl: account.pub_key["@type"],
-      value: PubKey.encode(pub).finish(),
-    },
-    modeInfo: {
-      single: { mode: SignMode.SIGN_MODE_DIRECT },
-      multi: undefined,
-    },
-    sequence: account.sequence,
-  };
+    const pub = PubKey.fromJSON({ key: account.pub_key.key });
+    const signer: SignerInfo = {
+      publicKey: {
+        typeUrl: account.pub_key["@type"],
+        value: PubKey.encode(pub).finish(),
+      },
+      modeInfo: {
+        single: { mode: SignMode.SIGN_MODE_DIRECT },
+        multi: undefined,
+      },
+      sequence: account.sequence,
+    };
 
-  const authInfo: AuthInfo = {
-    signerInfos: [signer],
-    fee: {
-      amount: [],
-      gasLimit: "0",
-      granter: "",
-      payer: sender,
-    },
-  };
+    const authInfo: AuthInfo = {
+      signerInfos: [signer],
+      fee: {
+        amount: [],
+        gasLimit: "0",
+        granter: "",
+        payer: sender,
+      },
+    };
 
-  const txBody: TxBody = {
-    messages: msgs,
-    memo: "",
-    extensionOptions: [],
-    nonCriticalExtensionOptions: [],
-    timeoutHeight: "0",
-  };
+    const txBody: TxBody = {
+      messages: msgs,
+      memo: "",
+      extensionOptions: [],
+      nonCriticalExtensionOptions: [],
+      timeoutHeight: "0",
+    };
 
-  const bodyBytes = TxBody.encode(txBody).finish();
-  const simTx: TxRaw = {
-    bodyBytes,
-    authInfoBytes: AuthInfo.encode(authInfo).finish(),
-    //num of signature must match num of signers
-    signatures: [new Uint8Array(0)],
-  };
-
-  const res = await fetch(chain.lcd + "/cosmos/tx/v1beta1/simulate", {
-    method: "POST",
-    body: JSON.stringify({
-      tx_bytes: base64FromU8a(TxRaw.encode(simTx).finish()),
-    }),
-  }).then<SimulateRes>((res) => res.json());
-
-  const gas = res.gas_info.gas_used;
-  const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
-  const feeAmount = condenseToNum(adjusted * +GAS_PRICE);
-
-  const authInfoWithFee: AuthInfo = {
-    ...authInfo,
-    fee: {
-      amount: [{ amount: GAS_PRICE, denom: junoDenom }],
-      gasLimit: `${adjusted}`,
-      granter: "",
-      payer: sender,
-    },
-  };
-
-  //add fee to estimated Tx
-  return {
-    feeAmount,
-    doc: {
-      authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+    const bodyBytes = TxBody.encode(txBody).finish();
+    const simTx: TxRaw = {
       bodyBytes,
-      accountNumber: Long.fromString(account.account_number),
-      chainId,
-    },
-  };
+      authInfoBytes: AuthInfo.encode(authInfo).finish(),
+      //num of signature must match num of signers
+      signatures: [new Uint8Array(0)],
+    };
+
+    const res = await fetch(chain.lcd + "/cosmos/tx/v1beta1/simulate", {
+      method: "POST",
+      body: JSON.stringify({
+        tx_bytes: base64FromU8a(TxRaw.encode(simTx).finish()),
+      }),
+    }).then<SimulateRes>((res) => {
+      //TODO: create fetch wrapper than handle response error by default
+      if (!res.ok) throw new Error();
+      return res.json();
+    });
+
+    const gas = res.gas_info.gas_used;
+    const adjusted = Math.ceil(+gas * GAS_ADJUSTMENT);
+    const feeAmount = condenseToNum(adjusted * +GAS_PRICE);
+
+    const authInfoWithFee: AuthInfo = {
+      ...authInfo,
+      fee: {
+        amount: [{ amount: GAS_PRICE, denom: junoDenom }],
+        gasLimit: `${adjusted}`,
+        granter: "",
+        payer: sender,
+      },
+    };
+
+    //add fee to estimated Tx
+    return {
+      feeAmount,
+      doc: {
+        authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+        bodyBytes,
+        accountNumber: Long.fromString(account.account_number),
+        chainId,
+      },
+    };
+  } catch (err) {
+    throw new Error("Simulation failed. Transacton may fail if submitted. ");
+  }
 }

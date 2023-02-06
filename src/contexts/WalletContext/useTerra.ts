@@ -45,14 +45,18 @@ export default function useTerra(): { extensions: Wallet[]; wc: Wallet } {
             connect: () => {
               /** if installation */
               if ("url" in c) {
-                window.open(c.url, "_blank", "noopener noreferrer");
-              } else {
-                if (c.identifier !== XDEFI_ID && isXdefiPrioritized()) {
-                  return toast.warning(
-                    "Kindly remove priority to Xdefi and reload the page"
-                  );
-                }
+                return window.open(c.url, "_blank", "noopener noreferrer");
+              }
+
+              if (c.identifier !== XDEFI_ID && isXdefiPrioritized()) {
+                return toast.warning(
+                  "Kindly remove priority to Xdefi and reload the page"
+                );
+              }
+              try {
                 connect(c.type, c.identifier);
+              } catch (err) {
+                toast.error("Failed to cnnect to wallet");
               }
             },
           }),

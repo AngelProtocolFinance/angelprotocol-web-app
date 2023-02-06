@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Tx, TxArgs } from "./types";
+import { TxArgs } from "./types";
+import { Tx } from "types/utils";
 import { invalidateApesTags } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { TxPrompt } from "components/Prompt";
 import { useSetter } from "store/accessors";
+import useErrorHandler from "hooks/useErrorHandler";
 import { estimateGas } from "helpers/cosmos/estimateGas";
 import { sendTx as signAndBroadcast } from "helpers/cosmos/sendTx";
-import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;
 
@@ -17,7 +17,8 @@ export default function useCosmosTxSender<T extends boolean = false>(
   const wallet = useWalletContext();
   /** use this state to show loading to modal forms */
   const [isSending, setIsSending] = useState(false);
-  const { showModal, setModalOption } = useModalContext();
+  const { handleError, showModal, setModalOption } =
+    useErrorHandler("cosmos tx sender");
   const dispatch = useSetter();
 
   const sendTx: Sender = async ({
@@ -59,11 +60,15 @@ export default function useCosmosTxSender<T extends boolean = false>(
 
       const txRes: Tx = {
         hash: response.txhash,
-        chainID: wallet.chainId,
+        chainId: wallet.chainId,
       };
 
       if (!!response.code) {
-        showModal(TxPrompt, { error: "Transaction failed", tx: txRes });
+        showModal(TxPrompt, {
+          error: "Transaction failed",
+          tx: txRes,
+          report: response.raw_log,
+        });
       } else {
         //always invalidate cached chain data to reflect balance changes from fee deduction
         dispatch(invalidateApesTags(["balances"]));
@@ -87,7 +92,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
         }
       }
     } catch (err) {
-      handleTxError(err, ({ error, tx }) => showModal(TxPrompt, { error, tx }));
+      handleError(err);
     } finally {
       isSenderInModal && setIsSending(false);
     }

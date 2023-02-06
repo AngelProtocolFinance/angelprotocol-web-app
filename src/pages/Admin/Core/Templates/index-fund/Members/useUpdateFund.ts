@@ -4,11 +4,11 @@ import { FundMemberUpdateMeta } from "pages/Admin/types";
 import { FundUpdateValues } from "pages/Admin/types";
 import { useAdminResources } from "pages/Admin/Guard";
 import { queryContract } from "services/juno/queryContract";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useGetter } from "store/accessors";
 import CW3 from "contracts/CW3";
 import IndexFund from "contracts/IndexFund";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
+import useErrorHandler from "hooks/useErrorHandler";
 import { contracts } from "constants/contracts";
 
 export default function useUpdateFund() {
@@ -16,7 +16,7 @@ export default function useUpdateFund() {
   const { cw3, propMeta, wallet } = useAdminResources();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler("useUpdateFund");
   const sendTx = useCosmosTxSender();
 
   async function updateFund() {
@@ -29,7 +29,7 @@ export default function useUpdateFund() {
 
       const fundId = getValues("fundId");
       if (fundId === "") {
-        throw new Error("No fund selected");
+        return handleError("No fund selected");
       }
       //check if there are changes
       type Diffs = [string[], string[]];
@@ -47,7 +47,7 @@ export default function useUpdateFund() {
       );
 
       if (toRemove.length <= 0 && toAdd.length <= 0) {
-        throw new Error("No fund member changes");
+        return handleError("No fund member changes");
       }
       const indexFundContract = new IndexFund(wallet);
       const embeddedExecuteMsg =

@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "./types";
 import { useLazyRegQuery } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
+import useErrorHandler from "hooks/useErrorHandler";
 import { storeRegistrationReference } from "helpers";
 import { getRegistrationState } from "../Steps/getRegistrationState";
 import routes from "../routes";
@@ -14,18 +14,18 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
 
   const navigate = useNavigate();
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler("Resume registration");
   const [checkPrevRegistration] = useLazyRegQuery();
 
   const onSubmit = async ({ reference }: FormValues) => {
-    const { isError, error, data } = await checkPrevRegistration(reference);
-    if (isError || !data) {
-      handleError(
-        error,
+    const { error, data } = await checkPrevRegistration(reference);
+    if (error) return handleError(error);
+    if (!data) {
+      return handleError(
         "No active application found with this registration reference"
       );
-      return;
     }
+
     storeRegistrationReference(reference);
 
     const state = getRegistrationState(data);

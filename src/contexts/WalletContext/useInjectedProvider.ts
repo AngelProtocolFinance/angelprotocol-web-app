@@ -7,6 +7,7 @@ import { useLazyChainQuery } from "services/apes";
 import { getProvider, logger } from "helpers";
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/ethereum";
+import { openInstaller } from "./Installer";
 import { isEVM, toPrefixedHex } from "./helpers";
 import {
   isXdefiPrioritized,
@@ -117,7 +118,7 @@ export default function useInjectedWallet(
       const provider = getProvider(id);
       if (!provider) {
         if (!isNew) return; /** dont alert on persistent connection */
-        return window.open(meta.installUrl, "_blank", "noopener noreferrer");
+        return openInstaller({ ...meta, url: meta.installUrl });
       }
       /** isMobile check not needed, just hide this wallet on mobile */
 

@@ -1,27 +1,20 @@
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import useErrorHandler from "hooks/useErrorHandler";
 import { useRegState } from "../StepGuard";
 
 export default function useRegisterWallet() {
-  const { handleError } = useErrorContext();
+  const { handleError } = useErrorHandler("Registration wallet");
   const { data: state } = useRegState<3>();
   const [updateReg, { isSuccess, isLoading }] = useUpdateRegMutation();
 
   const registerWallet = async (address: string) => {
-    try {
-      const result = await updateReg({
-        type: "wallet",
-        reference: state.init.reference,
-        JunoWallet: address,
-      });
-
-      if ("error" in result) {
-        handleError(result.error, "Error updating wallet ❌");
-      }
-    } catch (err) {
-      handleError(err, GENERIC_ERROR_MESSAGE);
-    }
+    await updateReg({
+      type: "wallet",
+      reference: state.init.reference,
+      JunoWallet: address,
+    })
+      .unwrap()
+      .catch(handleError);
   };
 
   return { registerWallet, isSuccess, isSubmitting: isLoading };

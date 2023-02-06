@@ -8,7 +8,6 @@ export async function sendTx(
   wallet: CosmosWallet,
   doc: SignDoc
 ): Promise<TxResponse> {
-  //replace with wallet
   const { chainId, address, client } = wallet;
 
   const chain = chains[chainIds.juno];
@@ -27,6 +26,9 @@ export async function sendTx(
       mode: "BROADCAST_MODE_BLOCK",
     }),
   })
-    .then<BroadcastResponse>((res) => res.json())
+    .then<BroadcastResponse>((res) => {
+      if (!res.ok) throw new Error("Failed to broadcast transaction.");
+      return res.json();
+    })
     .then((res) => res.tx_response);
 }

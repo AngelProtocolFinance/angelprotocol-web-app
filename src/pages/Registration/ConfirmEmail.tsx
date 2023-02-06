@@ -1,10 +1,8 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { handleMutationResult } from "helpers";
+import useErrorHandler from "hooks/useErrorHandler";
 
 export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   /** going to this page should only be thru Signup or Resume
@@ -14,8 +12,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
   const initReg = state as InitReg | undefined; //from non "/steps" navigations
 
   const [requestEmail, { isLoading }] = useRequestEmailMutation();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
+  const { handleError, showModal } = useErrorHandler("ConfirmEmail.tsx");
 
   if (!initReg) {
     return <Navigate to={".."} />;
@@ -38,13 +35,11 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
       <button
         className="w-full max-w-[26.25rem] mb-4 btn-orange btn-donate"
         onClick={async () => {
-          handleMutationResult(
-            await requestEmail({ uuid: reference, email }),
-            handleError,
-            () => {
-              showModal(Popup, { message: "Email verification sent!" });
-            }
-          );
+          requestEmail({ uuid: reference, email })
+            .then(() =>
+              showModal(Popup, { message: "Email verification sent!" })
+            )
+            .catch(handleError);
         }}
         disabled={isLoading}
       >
