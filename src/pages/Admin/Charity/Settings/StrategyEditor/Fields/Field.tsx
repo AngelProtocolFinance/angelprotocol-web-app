@@ -19,7 +19,7 @@ const inputStyle = "field-input bg-transparent text-center w-16 py-2";
 export default function Field({ name, idx, remove, staticVal, type }: Props) {
   const { register } = useFormContext<FormValues>();
   return (
-    <div className="px-6 py-7 grid grid-cols-[1fr_repeat(4,auto)] gap-3 items-center border border-prim rounded font-work">
+    <div className="px-6 py-7 grid grid-cols-[1fr_repeat(4,auto)] gap-3 items-center border border-prim rounded font-work bg-orange-l6 dark:bg-blue-d7">
       <p className="text-gray-d1 dark:text-gray mr-auto">{name}</p>
 
       <Icon type={type === "liquid" ? "Liquid" : "Lock"} />

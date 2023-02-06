@@ -1,7 +1,6 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { AccountType } from "types/contracts";
-import Icon from "components/Icon";
 import { maskAddress } from "helpers";
 import Field from "./Field";
 
@@ -44,20 +43,5 @@ export default function Fields({ classes = "", type }: Props) {
     return _fields;
   }
 
-  return (
-    <div className="grid gap-4">
-      {renderFields()}
-
-      <button
-        onClick={() => {
-          alert("todo: add vault");
-        }}
-        type="button"
-        className="uppercase text-blue justify-self-start mt-2 text-sm"
-      >
-        <Icon type="Plus" className="relative bottom-0.5 inline mr-1" />
-        add vault
-      </button>
-    </div>
-  );
+  return <div className="grid gap-4">{renderFields()}</div>;
 }
