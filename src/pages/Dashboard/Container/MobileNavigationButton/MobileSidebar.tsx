@@ -4,19 +4,17 @@ import { EndowmentProfile } from "types/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Sidebar from "../Sidebar";
 
-export default function MobileSidebar({
-  linkGroups,
-  profile,
-  onChange,
-}: {
+type Props = {
   linkGroups: LinkGroup[];
   profile: EndowmentProfile;
   onChange: (link: Link) => void;
-}) {
+};
+
+export default function MobileSidebar(props: Props) {
   const { closeModal } = useModalContext();
 
   const handleChange = (link: Link) => {
-    onChange(link);
+    props.onChange(link);
     closeModal();
   };
 
@@ -24,8 +22,8 @@ export default function MobileSidebar({
     <Dialog.Panel className="fixed top-0 left-0 z-20">
       <Sidebar
         className="max-h-screen overflow-y-auto scroller"
-        linkGroups={linkGroups}
-        profile={profile}
+        linkGroups={props.linkGroups}
+        profile={props.profile}
         onChange={handleChange}
       />
     </Dialog.Panel>
