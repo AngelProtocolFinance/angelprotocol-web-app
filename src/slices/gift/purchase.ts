@@ -58,7 +58,9 @@ export const purchase = createAsyncThunk<void, Args>(
             error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${txRes.txhash}`,
           });
         }
-        /** no problems, show gift card code to user */
+        /** no problems, save giftcard code on user's computer */
+        saveCode(secret);
+        /** show gift card code to user */
         updateTx({ secret });
       } else {
         updateTx({
@@ -75,3 +77,15 @@ export const purchase = createAsyncThunk<void, Args>(
     }
   }
 );
+
+function saveCode(code: string) {
+  const a = document.createElement("a");
+  a.setAttribute("download", "giftcard-code.txt");
+  const content = new Blob([code], { type: "text/plain" });
+  const url = URL.createObjectURL(content);
+  a.href = url;
+
+  a.click();
+  //cleanup
+  URL.revokeObjectURL(a.href);
+}
