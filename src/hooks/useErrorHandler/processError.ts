@@ -142,7 +142,7 @@ export function processError(error: unknown, source: string): APError {
     return {
       type: "generic",
       message: error.message,
-      report: error.stack /** report only if with stack */,
+      report: error.cause?.message || error.stack,
     };
   }
 

@@ -1,5 +1,10 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
-import { BroadcastResponse, SignDoc, TxResponse } from "types/cosmos";
+import {
+  BroadcastError,
+  BroadcastResponse,
+  SignDoc,
+  TxResponse,
+} from "types/cosmos";
 import { CosmosWallet } from "contexts/WalletContext";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
 import { chainIds, chains } from "constants/chains";
@@ -26,9 +31,12 @@ export async function sendTx(
       mode: "BROADCAST_MODE_BLOCK",
     }),
   })
-    .then<BroadcastResponse>((res) => {
-      if (!res.ok) throw new Error("Failed to broadcast transaction.");
-      return res.json();
-    })
-    .then((res) => res.tx_response);
+    .then<BroadcastResponse>((res) =>
+      res.ok ? res.json() : Promise.reject(res.json())
+    )
+    .then((res) => res.tx_response)
+    .catch((err: BroadcastError) => {
+      new Error(err.message);
+      throw new Error(err.message, { cause: new Error(err.error) });
+    });
 }

@@ -24,10 +24,13 @@ export type TxResponse = {
   logs: Log[];
   raw_log: string;
 };
-
-export type BroadcastResponse = {
-  tx_response: TxResponse;
+export type BroadcastError = {
+  error: string;
+  code: number;
+  message: string;
+  details: unknown[];
 };
+export type BroadcastResponse = { tx_response: TxResponse };
 
 export type SimulateRes = {
   gas_info: {
