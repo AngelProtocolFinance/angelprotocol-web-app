@@ -122,7 +122,7 @@ export async function estimateDonation({
           scaledAmount
         );
         const minFee = gasLimit.mul(gasPrice);
-        feeAmount = parseFloat(formatUnits(minFee, token.decimals));
+        feeAmount = parseFloat(formatUnits(minFee, native_currency.decimals));
       }
 
       return {
