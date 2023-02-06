@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 type Props = PropsWithChildren<{ linkGroups: LinkGroup[] }>;
 
-export default function Dashboard({ children, linkGroups }: Props) {
+export default function Container({ children, linkGroups }: Props) {
   return (
     <div className="grid grid-cols-[auto_1fr] w-full h-full">
       <Sidebar linkGroups={linkGroups} />

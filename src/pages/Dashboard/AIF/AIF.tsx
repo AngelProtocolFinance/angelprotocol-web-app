@@ -4,7 +4,7 @@ import { useProfileQuery } from "services/aws/aws";
 import ProfileContext from "contexts/ProfileContext";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum } from "helpers";
-import Dashboard from "../Dashboard";
+import Container from "../Container";
 import createLinkGroups from "./createLinkGroups";
 
 export default function AIF() {
@@ -26,9 +26,9 @@ export default function AIF() {
     >
       {(endowmentProfile) => (
         <ProfileContext.Provider value={endowmentProfile}>
-          <Dashboard linkGroups={linkGroups}>
+          <Container linkGroups={linkGroups}>
             <div>AIF</div>
-          </Dashboard>
+          </Container>
         </ProfileContext.Provider>
       )}
     </QueryLoader>
