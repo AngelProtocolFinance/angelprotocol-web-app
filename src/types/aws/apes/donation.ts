@@ -61,6 +61,7 @@ export type DonationsQueryParams = {
   beforeDate?: string;
   chainName?: string;
   denomination?: string;
+  status?: string;
 };
 
 type TxDetails = FiatTx | CryptoTx;
