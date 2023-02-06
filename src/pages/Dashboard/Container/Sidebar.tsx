@@ -1,16 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LinkGroup } from "../types";
+import { Link, LinkGroup } from "../types";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
 import { createNavLinkStyler } from "helpers";
 
-type Props = { className?: string; linkGroups: LinkGroup[] };
+type Props = {
+  className?: string;
+  linkGroups: LinkGroup[];
+  onChange?: (link: Link) => void;
+};
 
-export default function Sidebar({ className = "", linkGroups }: Props) {
+export default function Sidebar(props: Props) {
   return (
     <div
-      className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
+      className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
       <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
@@ -33,7 +37,7 @@ export default function Sidebar({ className = "", linkGroups }: Props) {
       </div>
 
       <div className="flex flex-col py-3">
-        {linkGroups.map((group) => (
+        {props.linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
               <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
@@ -45,6 +49,7 @@ export default function Sidebar({ className = "", linkGroups }: Props) {
                 key={`nav_link-${link.to}`}
                 to={link.to}
                 className={linkClassName}
+                onClick={() => props.onChange && props.onChange(link)}
               >
                 <Icon type={link.icon} size={24} />
                 {link.title}
