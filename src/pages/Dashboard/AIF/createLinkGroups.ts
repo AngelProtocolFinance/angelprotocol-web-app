@@ -10,7 +10,7 @@ export default function createLinkGroups(id: string | undefined): LinkGroup[] {
       links: [
         {
           title: "Dashboard",
-          to: `${rootPath}${routes.index}`,
+          to: rootPath,
           icon: "Dashboard",
         },
         {
