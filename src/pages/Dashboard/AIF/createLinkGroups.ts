@@ -70,6 +70,21 @@ export default function createLinkGroups(id: string | undefined): LinkGroup[] {
         },
       ],
     },
+    {
+      title: "Manage",
+      links: [
+        {
+          icon: "ClipboardCheck",
+          title: "Decision Center",
+          to: `${rootPath}${routes.decision_center}`,
+        },
+        {
+          icon: "FactCheck",
+          title: "Whitelists",
+          to: `${rootPath}${routes.whitelists}`,
+        },
+      ],
+    },
   ];
 
   return linkGroups;
