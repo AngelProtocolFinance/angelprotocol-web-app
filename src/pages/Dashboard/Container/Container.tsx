@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { LinkGroup } from "./types";
+import { LinkGroup } from "../types";
 import NavigationButton from "./NavigationButton";
 import Sidebar from "./Sidebar";
 
