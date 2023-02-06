@@ -25,7 +25,7 @@ export default function Donate() {
           loading: "Getting endowment info..",
           error: "Failed to get endowment info",
         }}
-        classes={{ container: "text-center mt-8" }}
+        classes={{ container: "justify-self-center text-center mt-8" }}
       >
         {(profile) => (
           <>
