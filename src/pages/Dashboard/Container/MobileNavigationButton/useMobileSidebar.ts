@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
+import { useProfileContext } from "contexts/ProfileContext";
 import { UnexpectedStateError } from "errors/errors";
 import MobileSidebar from "./MobileSidebar";
 
@@ -22,10 +23,12 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
   });
 
   const { showModal } = useModalContext();
+  const profile = useProfileContext();
 
   const open = () =>
     showModal(MobileSidebar, {
       linkGroups,
+      profile,
       onChange: (link) => setActiveLink(link),
     });
 

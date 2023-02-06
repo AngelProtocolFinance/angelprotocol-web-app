@@ -2,7 +2,7 @@ import { LinkGroup } from "../types";
 import { appRoutes } from "constants/routes";
 import { routes } from "./routes";
 
-export default function createLinkGroups(id: string | undefined): LinkGroup[] {
+export default function createLinkGroups(id: number): LinkGroup[] {
   const rootPath = `${appRoutes.aif}/${id}`;
 
   const linkGroups: LinkGroup[] = [

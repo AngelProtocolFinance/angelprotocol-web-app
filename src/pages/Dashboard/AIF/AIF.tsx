@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { EndowmentProfile } from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
 import ProfileContext from "contexts/ProfileContext";
 import QueryLoader from "components/QueryLoader";
@@ -14,8 +15,6 @@ export default function AIF() {
     skip: numId === 0,
   });
 
-  const linkGroups = useMemo(() => createLinkGroups(id), [id]);
-
   return (
     <QueryLoader
       queryState={queryState}
@@ -24,13 +23,19 @@ export default function AIF() {
         loading: "Loading profile",
       }}
     >
-      {(endowmentProfile) => (
-        <ProfileContext.Provider value={endowmentProfile}>
-          <Container linkGroups={linkGroups}>
-            <div className="min-h-[50vh]">AIF</div>
-          </Container>
-        </ProfileContext.Provider>
-      )}
+      {(endowmentProfile) => <InnerComponent profile={endowmentProfile} />}
     </QueryLoader>
+  );
+}
+
+function InnerComponent({ profile }: { profile: EndowmentProfile }) {
+  const linkGroups = useMemo(() => createLinkGroups(profile.id), [profile.id]);
+
+  return (
+    <ProfileContext.Provider value={profile}>
+      <Container linkGroups={linkGroups}>
+        <div className="min-h-[50vh]">AIF</div>
+      </Container>
+    </ProfileContext.Provider>
   );
 }
