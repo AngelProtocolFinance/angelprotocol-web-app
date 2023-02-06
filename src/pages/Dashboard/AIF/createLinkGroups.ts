@@ -85,6 +85,26 @@ export default function createLinkGroups(id: string | undefined): LinkGroup[] {
         },
       ],
     },
+    {
+      title: "Settings",
+      links: [
+        {
+          icon: "AccountBalanceWallet",
+          title: "Admin Wallet",
+          to: `${rootPath}${routes.admin_wallet}`,
+        },
+        {
+          icon: "SecurityScan",
+          title: "Donor Verification",
+          to: `${rootPath}${routes.donor_verification}`,
+        },
+        {
+          icon: "PermDataSettings",
+          title: "Permissions",
+          to: `${rootPath}${routes.permissions}`,
+        },
+      ],
+    },
   ];
 
   return linkGroups;
