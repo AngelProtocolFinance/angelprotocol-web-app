@@ -115,7 +115,7 @@ export default function Form() {
         name="hasAgreedToTerms"
         required
         classes={{
-          container: "check-field-reg",
+          container: "check-field-reg text-sm",
           input: "self-start sm:self-center",
           error: "mt-1",
         }}
