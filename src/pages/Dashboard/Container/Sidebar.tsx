@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Sidebar(props: Props) {
-  const { logo } = useProfileContext();
+  const { name, logo } = useProfileContext();
 
   return (
     <div
@@ -32,7 +32,7 @@ export default function Sidebar(props: Props) {
         </div>
 
         <div className="grid gap-1">
-          <h5 className="text-sm font-bold truncate">Endowment Name</h5>
+          <h5 className="text-sm font-bold truncate">{name}</h5>
           <span className="text-xs truncate">
             juno1rhaasmvq6t3a607ua90ufrr8srkr08lxauqnpz
           </span>
