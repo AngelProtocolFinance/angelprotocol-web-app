@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Link, LinkGroup } from "../types";
+import { useProfileContext } from "contexts/ProfileContext";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
 import { createNavLinkStyler } from "helpers";
@@ -12,13 +13,15 @@ type Props = {
 };
 
 export default function Sidebar(props: Props) {
+  const { logo } = useProfileContext();
+
   return (
     <div
       className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
       <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
-          <Logo className="w-14 h-14" />
+          <Logo className="w-14 h-14" src={logo} />
           <button
             type="button"
             className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
