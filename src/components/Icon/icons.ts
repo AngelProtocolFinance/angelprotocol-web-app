@@ -17,7 +17,6 @@ import {
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
-  BiArrowBack,
   BiBold,
   BiCheck,
   BiChevronDown,
