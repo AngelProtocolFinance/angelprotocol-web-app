@@ -27,7 +27,7 @@ export default function AIF() {
       {(endowmentProfile) => (
         <ProfileContext.Provider value={endowmentProfile}>
           <Container linkGroups={linkGroups}>
-            <div>AIF</div>
+            <div className="min-h-[50vh]">AIF</div>
           </Container>
         </ProfileContext.Provider>
       )}
