@@ -9,7 +9,7 @@ type Props = { linkGroups: LinkGroup[] };
 
 export default function Sidebar({ linkGroups }: Props) {
   return (
-    <div className="flex flex-col w-64 h-full bg-white border-r border-prim">
+    <div className="flex flex-col w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim">
       <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
           <Logo className="w-14 h-14" />
