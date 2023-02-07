@@ -35,6 +35,7 @@ export default function Filter({
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
       donorAddress: donorAddress,
+      status: { label: "Select status...", value: "" },
     },
   });
 
@@ -48,6 +49,7 @@ export default function Filter({
         beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
         chainName: data.network.value,
         denomination: data.currency.value,
+        status: data.status.value,
       }),
     }));
     buttonRef.current?.click();
