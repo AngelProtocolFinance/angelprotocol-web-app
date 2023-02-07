@@ -26,4 +26,4 @@ function Footer() {
 
 export default memo(Footer);
 
-const Separator = () => <div className="w-[97vw] h-px bg-gray-l2" />;
+const Separator = () => <div className="w-[97vw] h-px bg-gray-l3" />;

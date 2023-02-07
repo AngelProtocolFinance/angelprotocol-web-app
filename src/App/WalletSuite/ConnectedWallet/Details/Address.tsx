@@ -2,7 +2,7 @@ import Copier from "components/Copier";
 
 export default function Address({ value }: { value: string }) {
   return (
-    <div className="flex items-center justify-between w-full gap-2 p-4 pl-3 bg-gray-l4 dark:bg-bluegray-d1 border border-prim rounded">
+    <div className="flex items-center justify-between w-full gap-2 p-4 pl-3 bg-gray-l5 dark:bg-bluegray-d1 border border-prim rounded">
       <span className="max-w-[70vw] sm:w-56 font-body font-normal text-sm truncate hover:cursor-default">
         {value}
       </span>
