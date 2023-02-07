@@ -75,7 +75,7 @@ module.exports = {
         d2: "#44413C",
         d1: "#6C6760",
         DEFAULT: "#A2A3A3",
-        ll: "B2AFA9",
+        l1: "#B2AFA9",
         l2: "#C4C0BB",
         l3: "#D6D6D6",
         l4: "#ECEDED",
@@ -119,5 +119,5 @@ module.exports = {
         "3/4": "75%",
       },
     },
-  }
+  },
 };
