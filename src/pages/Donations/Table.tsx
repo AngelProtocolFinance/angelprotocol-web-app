@@ -100,12 +100,10 @@ export default function Table({ donations, classes = "" }: TableProps) {
             <div className="text-center text-white">
               <span
                 className={`${
-                  row.donationFinalized === true
-                    ? "bg-green"
-                    : "bg-gray-d1 dark:bg-gray"
+                  row.donationFinalized ? "bg-green" : "bg-gray-d1 dark:bg-gray"
                 } px-2 py-0.5 rounded`}
               >
-                {row.donationFinalized === true ? "RECEIVED" : "PENDING"}
+                {row.donationFinalized ? "RECEIVED" : "PENDING"}
               </span>
             </div>
             <button
