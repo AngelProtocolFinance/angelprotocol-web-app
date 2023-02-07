@@ -5,7 +5,6 @@ import { placeholderChain } from "contexts/WalletContext/constants";
 import APLogo from "components/APLogo";
 import Icon from "components/Icon";
 import Split from "components/Split";
-import { BtnPrimary } from "components/donation";
 import Progress from "components/donation/Steps/Progress";
 import { humanize } from "helpers";
 import { FormValues } from "./WidgetUrlGenerator/schema";
@@ -130,9 +129,12 @@ function Donater({
           <AdvancedOptions unfold={unfoldAdvancedOptions} />
         )}
 
-        <BtnPrimary className="justify-self-center w-44 font-body mt-8 md:mt-12">
+        <button
+          type="button"
+          className="btn-orange justify-self-center w-44 font-body mt-8 md:mt-12"
+        >
           Continue
-        </BtnPrimary>
+        </button>
       </div>
     </FormProvider>
   );
