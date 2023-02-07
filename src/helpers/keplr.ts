@@ -1,6 +1,6 @@
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { TxResponse } from "types/cosmos";
+import { BroadcastSuccess } from "types/cosmos";
 import { chains } from "constants/chains";
 import { WC_BRIDGE } from "constants/urls";
 import { base64FromU8a, u8aFromHex } from "./encoding";
@@ -33,7 +33,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
         mode: getModePayload(mode),
       }),
     }
-  ).then<{ tx_response: TxResponse }>((res) => res.json());
+  ).then<BroadcastSuccess>((res) => res.json());
 
   if (!!res.code) {
     throw new Error(res["raw_log"]);

@@ -29,7 +29,9 @@ type BroadcastError = {
   message: string;
   details: unknown[];
 };
-export type BroadcastRes = { tx_response: TxResponse } | BroadcastError;
+export type BroadcastSuccess = { tx_response: TxResponse };
+
+export type BroadcastRes = BroadcastSuccess | BroadcastError;
 
 export type SimulateRes = {
   gas_info: {

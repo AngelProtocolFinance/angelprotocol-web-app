@@ -19,7 +19,7 @@ export class LogDonationFail extends Error implements TxError {
 export class BroadcastFail extends Error {
   reason: string;
   constructor(reason: string) {
-    super("Failed to broadcast transaction");
+    super("Transaction was not submitted");
     this.name = "CustomBroadcastFail";
     this.reason = reason;
   }
@@ -33,6 +33,19 @@ export class TxFail extends Error implements TxError {
     super("Transaction was submitted but failed");
     this.name = "CustomTxFail";
     this.reason = reason;
+    this.chainId = chainId;
+    this.txHash = txHash;
+  }
+}
+
+export class TxTimeout extends Error implements TxError {
+  chainId: string;
+  txHash: string;
+  constructor(chainId: string, txHash: string) {
+    super(
+      "Timeout: kindly check transaction status manually and get in touch with support@angelprotocol.io"
+    );
+    this.name = "CustomTxTimeout";
     this.chainId = chainId;
     this.txHash = txHash;
   }
