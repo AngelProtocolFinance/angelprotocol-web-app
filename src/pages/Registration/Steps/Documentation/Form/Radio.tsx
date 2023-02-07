@@ -14,7 +14,7 @@ export function Radio({ value }: { value: FV["isKYCRequired"] }) {
         type="radio"
         disabled={isSubmitting}
         {...register("isKYCRequired")}
-        className="cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l4 disabled:checked:before:dark:bg-bluegray"
+        className="cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute-center before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l5 disabled:checked:before:dark:bg-bluegray"
         value={value}
       />
       <label htmlFor={id} className="text-xs cursor-pointer">

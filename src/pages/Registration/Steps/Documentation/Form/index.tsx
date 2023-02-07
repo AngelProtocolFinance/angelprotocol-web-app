@@ -148,7 +148,7 @@ export default function Form() {
 }
 
 const Separator = ({ classes = "" }: { classes?: string }) => (
-  <div className={`${classes} h-px w-full bg-gray-l2 dark:bg-bluegray`} />
+  <div className={`${classes} h-px w-full bg-gray-l3 dark:bg-bluegray`} />
 );
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({

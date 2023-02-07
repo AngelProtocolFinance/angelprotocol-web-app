@@ -17,7 +17,7 @@ export default function Balances(props: WalletState) {
           checked={smallAmountsHidden}
           onChange={(val: boolean) => setIsSmallAmountsHidden(val)}
           className={`${
-            smallAmountsHidden ? "bg-orange" : "bg-gray-l1"
+            smallAmountsHidden ? "bg-orange" : "bg-gray-l2"
           } relative flex h-4 w-8 items-center rounded-full cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-l2`}
         >
           <span className="sr-only">Hide small amounts</span>

@@ -14,7 +14,7 @@
   }
 
   body {
-    @apply font-body bg-gray-l5 dark:bg-blue-d5 text-gray-d2 dark:text-white;
+    @apply font-body bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white;
   }
 
   a {
@@ -43,7 +43,7 @@
     @apply bg-orange;
   }
   .scroller::-webkit-scrollbar-track {
-    @apply bg-gray-l2 dark:bg-bluegray;
+    @apply bg-gray-l3 dark:bg-bluegray;
   }
 
   .padded-container {
@@ -58,19 +58,19 @@
     @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
   }
   .range:disabled::-webkit-slider-thumb {
-    @apply bg-gray-l1;
+    @apply bg-gray-l2;
   }
   .range::-moz-range-thumb {
     @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
   }
   .range:disabled::-moz-range-thumb {
-    @apply bg-gray-l1;
+    @apply bg-gray-l2;
   }
   .range::-ms-track {
     @apply w-full cursor-pointer bg-transparent border-transparent;
   }
   .range::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l2 dark:bg-bluegray rounded-full;
+    @apply w-full h-1 cursor-pointer bg-gray-l3 dark:bg-bluegray rounded-full;
   }
 
   /** applicable to button and <a/> */
@@ -82,11 +82,11 @@
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .field-input {
-    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l2 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l4 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 aria-disabled:bg-gray-l4 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none;
+    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 aria-disabled:bg-gray-l5 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none;
   }
 
   .checkbox {
-    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l4 disabled:dark:bg-bluegray;
+    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l5 disabled:dark:bg-bluegray;
   }
   .checkbox:checked::before {
     content: "✓";
@@ -102,7 +102,7 @@
     @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
   .btn-outline {
-    @apply btn disabled:bg-gray-l2 aria-disabled:bg-gray-l2 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l2 dark:border-bluegray  hover:border-gray-l1 hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l3 dark:border-bluegray  hover:border-gray-l2 hover:dark:border-blue-d2;
   }
   .btn-blue {
     @apply btn bg-blue disabled:bg-gray hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
@@ -112,7 +112,7 @@
   }
 
   .field-container {
-    @apply rounded border border-gray-l2 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l4 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+    @apply rounded border border-gray-l3 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
   }
   .field-container > input {
     @apply bg-transparent focus:outline-none w-full;
@@ -169,7 +169,7 @@
   }
 
   .checkbox-marketplace {
-    @apply inline-block border-gray-d1 dark:border-gray-l2 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
+    @apply inline-block border-gray-d1 dark:border-gray-l3 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
   }
 
   .field-gift > input {
@@ -181,7 +181,7 @@
   }
 
   .field-kyc > input {
-    @apply bg-gray-l5 dark:bg-blue-d6;
+    @apply bg-gray-l6 dark:bg-blue-d6;
   }
 
   .field-admin > textarea,
@@ -203,11 +203,11 @@
   }
 
   .border-prim {
-    @apply border-gray-l2 dark:border-bluegray;
+    @apply border-gray-l3 dark:border-bluegray;
   }
 
   .divide-prim {
-    @apply divide-gray-l2 dark:divide-bluegray;
+    @apply divide-gray-l3 dark:divide-bluegray;
   }
 
   .line-clamp-2 {

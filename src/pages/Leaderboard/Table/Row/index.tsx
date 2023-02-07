@@ -21,7 +21,7 @@ export default function Row({
         onError={(e) => e.currentTarget.setAttribute("src", defaultIcon)}
         loading="lazy"
         alt=""
-        className={`h-16 aspect-video rounded object-contain border border-gray-l2  dark:border-none dark:bg-white p-2`}
+        className={`h-16 aspect-video rounded object-contain border border-gray-l3  dark:border-none dark:bg-white p-2`}
       />
       <Link
         to={`../${appRoutes.profile}/${endowment_id}`}
