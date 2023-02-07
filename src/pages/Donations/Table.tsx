@@ -101,7 +101,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
               <span
                 className={`${
                   row.donationFinalized ? "bg-green" : "bg-gray-d1 dark:bg-gray"
-                } px-2 py-0.5 rounded`}
+                } font-body px-2 py-0.5 rounded`}
               >
                 {row.donationFinalized ? "RECEIVED" : "PENDING"}
               </span>

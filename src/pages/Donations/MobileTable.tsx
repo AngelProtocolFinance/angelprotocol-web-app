@@ -54,7 +54,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                     row.donationFinalized
                       ? "bg-green"
                       : "bg-gray-d1 dark:bg-gray"
-                  } text-white px-2 py-0.5 rounded`}
+                  } font-body text-white px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized ? "RECEIVED" : "PENDING"}
                 </div>
