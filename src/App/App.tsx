@@ -9,7 +9,6 @@ import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
-const AIF = lazy(() => import("pages/AIF"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
@@ -17,6 +16,7 @@ const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
 const Gift = lazy(() => import("pages/Gift"));
+const Widget = lazy(() => import("pages/Widget"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 
 export default function App() {
@@ -38,7 +38,6 @@ export default function App() {
                 element={<Profile />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-              <Route path={`${appRoutes.aif}/:id/*`} element={<AIF />} />
               <Route
                 path={`${appRoutes.donations}/:address`}
                 element={<Donations />}
@@ -49,6 +48,7 @@ export default function App() {
                 path={`${appRoutes.register}/*`}
                 element={<Registration />}
               />
+              <Route path={`${appRoutes.widget}/:id/*`} element={<Widget />} />
               <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
               <Route index element={<Marketplace />} />
             </Route>

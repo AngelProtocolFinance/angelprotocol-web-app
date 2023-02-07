@@ -1,6 +1,6 @@
 import Views from "./Views";
 
-export default function AIF() {
+export default function Widget() {
   return (
     <div className="p-5">
       <Views />
