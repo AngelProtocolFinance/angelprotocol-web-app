@@ -36,7 +36,7 @@ export default function WidgetConfigurer() {
         <h1 className={TITLE_STYLE}>
           Accept donations from your website today!
         </h1>
-        <div className="sm:w-3/5 font-body text-sm sm:text-base">
+        <div className="font-body text-sm sm:text-base">
           <p>
             Just configure your widget below, copy & paste the code on your
             website and you're ready to go!
@@ -52,12 +52,12 @@ export default function WidgetConfigurer() {
         </div>
       </section>
       <div className="grid xl:grid-cols-2 max-xl:justify-center gap-10">
-        <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start w-full max-xl:max-w-lg">
+        <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start justify-self-stretch">
           <h2 className={TITLE_STYLE}>Configure your widget</h2>
           <WidgetUrlGenerator onChange={handleUrlChange} />
 
           <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
-          <div className="flex items-center justify-center gap-4 h-32 px-10 rounded bg-gray-l3 dark:bg-blue-d4">
+          <div className="flex items-center justify-center gap-4 h-32 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
             <span className="w-full text-sm sm:text-base font-mono break-all">
               {widgetSnippet}
             </span>
@@ -68,7 +68,7 @@ export default function WidgetConfigurer() {
           </div>
         </section>
 
-        <section className="flex flex-col gap-3 max-sm:items-center">
+        <section className="flex flex-col gap-3 max-xl:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
           <WidgetExample {...widgetValues} valuesTrigger={valuesTrigger} />
         </section>

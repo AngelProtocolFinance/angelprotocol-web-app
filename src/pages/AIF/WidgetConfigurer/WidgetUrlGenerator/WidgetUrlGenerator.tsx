@@ -44,19 +44,19 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
 
         <span>Define split value by default:</span>
         <Split<FormValues, "liquidPercentage", never>
-          className="mb-6"
+          className="mb-6 xl:w-96"
           liqPctField="liquidPercentage"
         />
 
         <div className="flex gap-3 w-full max-xl:justify-center mt-8">
           <button
             type="reset"
-            className="btn-outline-filled btn-donate max-sm:mx-auto mt-8 w-40"
+            className="btn-outline-filled btn-donate max-sm:mx-auto w-40"
             onClick={() => methods.reset()}
           >
             Reset Changes
           </button>
-          <button className="btn-orange btn-donate max-sm:mx-auto mt-8 w-40">
+          <button className="btn-orange btn-donate max-sm:mx-auto w-40">
             Update Snippet
           </button>
         </div>
