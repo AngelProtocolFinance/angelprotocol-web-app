@@ -1,6 +1,5 @@
 import { ChainInfo } from "@keplr-wallet/types";
 import { JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
-import { APIs } from "constants/urls";
 
 // is used only when running on Juno Testnet
 export const juno_test_chain_info: ChainInfo = {
@@ -8,8 +7,12 @@ export const juno_test_chain_info: ChainInfo = {
   // modified denoms
   chainId: "uni-6",
   chainName: "Juno Testnet",
-  rpc: JUNO_RPC_OVERRIDE || `${APIs.aws}/juno/uni-6/rpc`,
-  rest: JUNO_LCD_OVERRIDE || `${APIs.aws}/juno/uni-6/lcd`,
+  rpc:
+    JUNO_RPC_OVERRIDE ||
+    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/rpc",
+  rest:
+    JUNO_LCD_OVERRIDE ||
+    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/lcd",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",
