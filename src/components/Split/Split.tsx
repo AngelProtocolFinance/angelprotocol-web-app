@@ -19,7 +19,7 @@ export default function Split<
   const liquidPercentage = watch(props.liqPctField);
 
   return (
-    <div className={`flex gap-2 ${props.className || ""}`}>
+    <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - liquidPercentage}
         title="Endowment"
