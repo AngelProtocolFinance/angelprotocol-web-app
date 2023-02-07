@@ -5,10 +5,10 @@ import { JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "constants/env";
 export const juno_test_chain_info: ChainInfo = {
   //FROM: https://github.com/CosmosContracts/junoswap-asset-list/blob/main/chain_info.json
   // modified denoms
-  chainId: "uni-5",
+  chainId: "uni-6",
   chainName: "Juno Testnet",
-  rpc: JUNO_RPC_OVERRIDE || "https://rpc.uni.junonetwork.io",
-  rest: JUNO_LCD_OVERRIDE || "https://api.uni.junonetwork.io",
+  rpc: JUNO_RPC_OVERRIDE || "https://uni-rpc.reece.sh",
+  rest: JUNO_LCD_OVERRIDE || "https://uni-lcd.reece.sh",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",
