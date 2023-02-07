@@ -8,6 +8,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { APError } from "./types";
 import { logger } from "helpers";
+import { BroadcastFail, LogDonationFail, TxFail } from "errors/errors";
 import { chainIds } from "constants/chains";
 import {
   APP_FETCH_FAIL,
@@ -131,6 +132,32 @@ export function processError(error: unknown, source: string): APError {
         };
       }
     }
+  }
+
+  if (error instanceof LogDonationFail) {
+    return {
+      type: "tx",
+      message: error.message,
+      report: error.message,
+      tx: { chainId: error.chainId, hash: error.txHash },
+    };
+  }
+
+  if (error instanceof BroadcastFail) {
+    return {
+      type: "tx",
+      message: error.message,
+      report: error.reason,
+    };
+  }
+
+  if (error instanceof TxFail) {
+    return {
+      type: "tx",
+      message: error.message,
+      report: error.reason,
+      tx: { chainId: error.chainId, hash: error.txHash },
+    };
   }
 
   /** keplr errors are generic Error */

@@ -63,33 +63,25 @@ export default function useCosmosTxSender<T extends boolean = false>(
         chainId: wallet.chainId,
       };
 
-      if (!!response.code) {
-        showModal(TxPrompt, {
-          error: "Transaction failed",
-          tx: txRes,
-          report: response.raw_log,
-        });
-      } else {
-        //always invalidate cached chain data to reflect balance changes from fee deduction
-        dispatch(invalidateApesTags(["balances"]));
+      //always invalidate cached chain data to reflect balance changes from fee deduction
+      dispatch(invalidateApesTags(["balances"]));
 
-        /** invalidate custom cache entries, after some delay so that query result
+      /** invalidate custom cache entries, after some delay so that query result
               would reflect the changes made */
-        await new Promise((r) => {
-          setTimeout(r, 3000);
-        });
-        for (const tagPayload of tagPayloads || []) {
-          dispatch(tagPayload);
-        }
+      await new Promise((r) => {
+        setTimeout(r, 3000);
+      });
+      for (const tagPayload of tagPayloads || []) {
+        dispatch(tagPayload);
+      }
 
-        if (onSuccess) {
-          onSuccess(response, wallet.chainId);
-        } else {
-          showModal(TxPrompt, {
-            success: successMeta || { message: "Transaction successful!" },
-            tx: txRes,
-          });
-        }
+      if (onSuccess) {
+        onSuccess(response, wallet.chainId);
+      } else {
+        showModal(TxPrompt, {
+          success: successMeta || { message: "Transaction successful!" },
+          tx: txRes,
+        });
       }
     } catch (err) {
       handleError(err);

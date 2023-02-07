@@ -23,64 +23,50 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const { token, pctLiquidSplit } = details;
       updateTx({ loading: "Payment is being processed..." });
 
-      const { isSuccess, hash } = await sendTransaction(estimate);
+      const hash = await sendTransaction(estimate);
 
-      if (isSuccess) {
-        const kycData: KYCData | undefined =
-          kyc === "skipped"
-            ? undefined
-            : {
-                fullName: `${kyc.name.first} ${kyc.name.last}`,
-                email: kyc.email,
-                streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-                city: kyc.city,
-                state: kyc.usState.value || kyc.state,
-                zipCode: kyc.postalCode,
-                country: kyc.country.name,
-                consent_tax: true,
-                consent_marketing: true,
-              };
+      const kycData: KYCData | undefined =
+        kyc === "skipped"
+          ? undefined
+          : {
+              fullName: `${kyc.name.first} ${kyc.name.last}`,
+              email: kyc.email,
+              streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
+              city: kyc.city,
+              state: kyc.usState.value || kyc.state,
+              zipCode: kyc.postalCode,
+              country: kyc.country.name,
+              consent_tax: true,
+              consent_marketing: true,
+            };
 
-        updateTx({
-          loading:
-            kyc !== "skipped"
-              ? "Requesting receipt.."
-              : "Saving donation details",
-        });
+      updateTx({
+        loading:
+          kyc !== "skipped"
+            ? "Requesting receipt.."
+            : "Saving donation details",
+      });
 
-        /** TODO: include receipt failure in result tab
-         *  show link of succesful tx
-         */
-        const logError = await logDonation({
-          ...kycData /** receipt is sent to user if kyc is provider upfront */,
-          amount: +token.amount,
-          chainId: wallet.chainId,
-          chainName: chain.name,
-          charityName: recipient.name,
-          denomination: token.symbol,
-          splitLiq: pctLiquidSplit,
-          transactionId: hash,
-          transactionDate: new Date().toISOString(),
-          walletAddress: wallet.address,
-          endowmentId: recipient.id,
-        });
+      /** TODO: include receipt failure in result tab
+       *  show link of succesful tx
+       */
+      await logDonation({
+        ...kycData /** receipt is sent to user if kyc is provider upfront */,
+        amount: +token.amount,
+        chainId: wallet.chainId,
+        chainName: chain.name,
+        charityName: recipient.name,
+        denomination: token.symbol,
+        splitLiq: pctLiquidSplit,
+        transactionId: hash,
+        transactionDate: new Date().toISOString(),
+        walletAddress: wallet.address,
+        endowmentId: recipient.id,
+      });
 
-        if (logError !== null) {
-          return updateTx({
-            error: logError,
-            tx: { hash, chainId: wallet.chainId },
-          });
-        }
-
-        updateTx({ tx: { hash, chainId: wallet.chainId } });
-        //invalidate cache entries
-        dispatch(invalidateApesTags(["balances", "donations"]));
-      } else {
-        updateTx({
-          error: "Transaction was submitted but failed.",
-          tx: { hash, chainId: wallet.chainId },
-        });
-      }
+      updateTx({ tx: { hash, chainId: wallet.chainId } });
+      //invalidate cache entries
+      dispatch(invalidateApesTags(["balances", "donations"]));
     } catch (err) {
       const error = processError(err, "sendDonation.ts");
       updateTx({ error: error.message });
@@ -88,19 +74,17 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
   }
 );
 
-async function sendTransaction(
-  estimate: Estimate
-): Promise<{ hash: string; isSuccess: boolean }> {
+async function sendTransaction(estimate: Estimate): Promise<string> {
   switch (estimate.type) {
     case "cosmos": {
       const { doc, wallet } = estimate;
       const res = await sendTx(wallet, doc);
-      return { hash: res.txhash, isSuccess: !res.code };
+      return res.txhash;
     }
     case "terra": {
       const { wallet, tx } = estimate;
       const response = await wallet.post(tx);
-      return { hash: response.result.txhash, isSuccess: response.success };
+      return response.result.txhash;
     }
     //evm donations
     default: {
@@ -109,10 +93,7 @@ async function sendTransaction(
         method: EIPMethods.eth_sendTransaction,
         params: [tx],
       });
-      return {
-        hash: hash,
-        isSuccess: true /** just set to true, let top catch handle eth error */,
-      };
+      return hash;
     }
   }
 }

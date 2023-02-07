@@ -24,13 +24,12 @@ export type TxResponse = {
   logs: Log[];
   raw_log: string;
 };
-export type BroadcastError = {
-  error: string;
+type BroadcastError = {
   code: number;
   message: string;
   details: unknown[];
 };
-export type BroadcastResponse = { tx_response: TxResponse };
+export type BroadcastRes = { tx_response: TxResponse } | BroadcastError;
 
 export type SimulateRes = {
   gas_info: {
@@ -49,3 +48,7 @@ export type JSONAccount = JSONAny<{
   pub_key: JSONAny<{ key: string }>;
   sequence: string;
 }>;
+
+export function isBroadcastError(res: BroadcastRes): res is BroadcastError {
+  return !!(res as BroadcastError).code;
+}
