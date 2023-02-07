@@ -53,7 +53,7 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
                   className={`${
                     row.donationFinalized
                       ? "bg-green"
-                      : "even:bg-gray-d1 dark:even:bg-gray"
+                      : "bg-gray-d1 dark:bg-gray"
                   } text-white px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized ? "RECEIVED" : "PENDING"}
