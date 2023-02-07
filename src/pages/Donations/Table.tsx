@@ -17,7 +17,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded outline outline-gray-l2 dark:outline-bluegray`}
+      className={`${classes} w-full text-sm rounded outline outline-gray-l3 dark:outline-bluegray`}
     >
       <TableSection
         type="thead"

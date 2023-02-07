@@ -78,7 +78,7 @@ export const SECTIONS_DATA: Section[] = [
       },
       {
         text: "For Giftcards",
-        href: "https://app.angelprotocol.io/gift/purchase",
+        href: "https://app.angelprotocol.io/gift",
       },
     ],
   },

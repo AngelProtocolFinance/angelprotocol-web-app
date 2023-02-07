@@ -58,7 +58,7 @@ export default function TokenSelector<
       <Combobox.Options
         className={`${
           props.classes?.options ?? ""
-        } border border-prim p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none`}
+        } border border-prim p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l6 dark:bg-blue-d7 shadow-lg focus:outline-none`}
       >
         <div className="flex p-2 gap-2 border border-prim rounded mb-1">
           <Icon type="Search" size={20} />
