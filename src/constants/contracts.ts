@@ -21,15 +21,15 @@ type Contracts = typeof mainnet;
 
 //prettier-ignore
 const testnet:Contracts = {
-  registrar:       "juno1nsttv2lpv3kl4zteze99fs72mevmxcfutqvfza90e9243wy0a40qk87j0l",
-  index_fund:      "juno1cp4ddyn4wg0lh3gugacng5wk8kjsahxpgpd5m5jhqjfssfqasxzsjqtr8y",
-  cw4GrpApTeam:    "juno1l6dstn6kyys6cg0fqn2k9dyxzetcxffkuwspe6t8qqqrjy9vs8usxu50ed",
-  cw3ApTeam:       "juno17shnd06l8guaqw3ekq56x5u3z0n65qu2qfms6nvzh3mwxr2cr53smmj4yq",
-  accounts:        "juno1xc6sahdstwyc3a9rrupvjj87xps8d396seutnh40578mdpygpenqjg04rd",
-  cw4GrpReviewTeam:"juno168v32h347du4wc8y5gf6sljkhvktqvn85r2vywekzfwaq4e3sdlqscd5sd",
-  cw3ReviewTeam:   "juno1vp2q50smgzw64xm2j2ksntej34pnnedaz4qkwdh8zah9kjcaas6s8g92t8",
+  registrar:       "juno1c676xpc64x9lxjfsvpn7ajw2agutthe75553ws45k3ld46vy8pts45ans6",
+  index_fund:      "juno1d26dmz9zld4n8pzjpqae5m95adnfalvz47vldpwfzsplw4umcjmqhkle94",
+  cw4GrpApTeam:    "juno1qkphn8h2rnyqjjtfh8j8dtuqgh5cac57nq2286tsljducqp4lwfqac44jm",
+  cw3ApTeam:       "juno1ukpw6g9dqfw3fk2mqchplgcz4jaukttf6tpyrht7sw00t7mn7dpsjwpfhs",
+  accounts:        "juno1cyd63pk2wuvjkqmhlvp9884z4h89rqtn8w8xgz9m28hjd2kzj2cqf070uz",
+  cw4GrpReviewTeam:"juno12lgc6d44c0y0tnef8fwjq8d9arrw5jgvrg8ydju5kz7nek9px72qvu8aw0",
+  cw3ReviewTeam:   "juno1lstuws59hjswletwmskefdajhq76pz9tlfq84perndemrzztda0q6jc3nr",
   halo_token: "",
-  gift_cards:      "juno1q5q8fgw83fusujz7x339yq352tlxdk2f0q2a6qz72dl0r9lk5y7qwf6w3u",
+  gift_cards:      "juno16frj05cr02nkwgdc45pawjvuqql8vs6dzz0x92y6ag0spt4sfd5sju5k67",
   gov: "",
   airdrop: "",
   loop_haloust_pair: "",
