@@ -14,12 +14,16 @@ type ChainRegistry = { [key: string]: Chain };
 const infuraId = process.env.REACT_APP_INFURA_ID;
 
 const testnets = {
-  "uni-5": {
+  "uni-6": {
     type: "cosmos",
     brand: "juno",
     name: "Juno Testnet",
-    lcd: JUNO_LCD_OVERRIDE || "https://uni-api.reece.sh",
-    rpc: JUNO_RPC_OVERRIDE || "https://uni-rpc.reece.sh",
+    lcd:
+      JUNO_LCD_OVERRIDE ||
+      "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/lcd",
+    rpc:
+      JUNO_RPC_OVERRIDE ||
+      "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/rpc",
     txExplorer: "https://testnet.ping.pub/juno/tx/",
   },
   "pisco-1": {

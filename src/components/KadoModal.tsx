@@ -75,7 +75,7 @@ function getKadoNetworkValue(chainId: ChainIDs): KADO_NETWORK_VALUES {
     case "5":
       return "ethereum";
     case "juno-1":
-    case "uni-5":
+    case "uni-6":
       return "juno";
     case "phoenix-1":
     case "pisco-1":
