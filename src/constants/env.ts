@@ -21,5 +21,3 @@ export const ANGEL_SECRECT = process.env.REACT_APP_ANGEL_AUTH_SECRET_KEY;
 
 export const JUNO_LCD_OVERRIDE = process.env.REACT_APP_JUNO_LCD_OVERRIDE;
 export const JUNO_RPC_OVERRIDE = process.env.REACT_APP_JUNO_RPC_OVERRIDE;
-export const JUNO_LCD =
-  JUNO_LCD_OVERRIDE || process.env.REACT_APP_JUNO_LCD_NODE;

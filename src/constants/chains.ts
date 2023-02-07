@@ -18,8 +18,8 @@ const testnets = {
     type: "cosmos",
     brand: "juno",
     name: "Juno Testnet",
-    lcd: JUNO_LCD_OVERRIDE || "https://api.uni.junonetwork.io",
-    rpc: JUNO_RPC_OVERRIDE || "https://rpc.uni.junonetwork.io",
+    lcd: JUNO_LCD_OVERRIDE || "https://uni-api.reece.sh",
+    rpc: JUNO_RPC_OVERRIDE || "https://uni-rpc.reece.sh",
     txExplorer: "https://testnet.ping.pub/juno/tx/",
   },
   "pisco-1": {
