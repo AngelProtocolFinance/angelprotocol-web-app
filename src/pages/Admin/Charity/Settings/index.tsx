@@ -2,7 +2,7 @@ import { Tab } from "@headlessui/react";
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
-import { routes } from "./routes";
+import { settings } from "../routes";
 
 export default function Settings() {
   return (
@@ -30,7 +30,7 @@ function Strategy({ type }: { type: AccountType }) {
     <div className="flex py-7 px-6 items-center border border-prim rounded justify-between">
       <h4 className="text-xl font-bold">Default plan</h4>
       <Link
-        to={`${routes.edit}/${type}`}
+        to={`${settings.edit}/${type}`}
         className="btn-outline-filled px-8 py-2"
       >
         Edit

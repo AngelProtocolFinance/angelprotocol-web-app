@@ -1,4 +1,4 @@
-export const routes = {
+export const settings = {
   index: ".",
   edit: "edit",
 };

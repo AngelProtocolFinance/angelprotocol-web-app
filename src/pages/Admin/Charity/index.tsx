@@ -10,20 +10,31 @@ import Settings from "./Settings";
 import StrategyEditor from "./Settings/StrategyEditor";
 import Templates from "./Templates";
 import Withdraws from "./Withdraws";
+import { settings } from "./routes";
 
-//prettier-ignore
 export default function Charity() {
   return (
     <Routes>
-      <Route element={<Layout><Nav /></Layout>}>
+      <Route
+        element={
+          <Layout>
+            <Nav />
+          </Layout>
+        }
+      >
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
         <Route path={adminRoutes.withdraws} element={<Withdraws />} />
-        {/** prettier-ignore */}
         <Route path={adminRoutes.settings}>
-          <Route path={"edit/liquid"} element={<StrategyEditor type="liquid"/>} />
-          <Route path={"edit/locked"} element={<StrategyEditor type="locked"/>} />
+          <Route
+            path={`${settings.edit}/liquid`}
+            element={<StrategyEditor type="liquid" />}
+          />
+          <Route
+            path={`${settings.edit}/locked`}
+            element={<StrategyEditor type="locked" />}
+          />
           <Route index element={<Settings />} />
           <Route path="*" element={<Navigate to="." />} />
         </Route>
