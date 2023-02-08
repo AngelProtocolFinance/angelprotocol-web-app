@@ -1,10 +1,10 @@
-import { LinkGroup } from "../../types";
+import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import useMobileSidebar from "./useMobileSidebar";
 
 type Props = { className?: string; endowId: number; linkGroups: LinkGroup[] };
 
-export default function SidebarToggleButton({
+export function SidebarToggleButton({
   className = "",
   endowId,
   linkGroups,

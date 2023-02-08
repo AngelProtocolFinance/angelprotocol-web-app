@@ -1,7 +1,7 @@
 import { Dialog } from "@headlessui/react";
-import { Link, LinkGroup } from "../../types";
+import { Link, LinkGroup } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Sidebar from "../Sidebar";
+import Sidebar from "./Sidebar";
 
 type Props = {
   linkGroups: LinkGroup[];

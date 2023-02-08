@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Link, LinkGroup } from "../../types";
+import { Link, LinkGroup } from "./types";
 import { useModalContext } from "contexts/ModalContext";
 import { UnexpectedStateError } from "errors/errors";
 import MobileSidebar from "./MobileSidebar";
