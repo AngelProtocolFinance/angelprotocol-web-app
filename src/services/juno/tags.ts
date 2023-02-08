@@ -53,5 +53,5 @@ export enum accountTags {
 export const defaultProposalTags: FullTagDescription<JunoTag>[] = [
   //basic tags to invalidate
   { type: "admin", id: adminTags.proposals },
-  { type: "admin", id: adminTags.votes },
+  { type: "admin", id: adminTags.proposal },
 ];
