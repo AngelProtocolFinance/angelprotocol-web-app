@@ -1,6 +1,7 @@
-import { AdminResources, ProposalDetails } from "services/types";
+import { Args } from "./queryContract/types";
+import { AdminResources, ProposalDetails, Vault } from "services/types";
 import { CW3Config } from "types/contracts";
-import { idParamToNum } from "helpers";
+import { condenseToNum, idParamToNum } from "helpers";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
@@ -129,6 +130,36 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    vaults: builder.query<Vault[], Args<"regVaultList"> & { endowId: number }>({
+      providesTags: [
+        { type: "registrar", id: registrarTags.vault_list },
+        { type: "account", id: accountTags.balance },
+      ],
+      async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
+        const [vaultsRes, balances] = await Promise.all([
+          queryContract("regVaultList", contracts.registrar, args),
+          queryContract("accBalance", contracts.accounts, { id: endowId }),
+        ]);
+
+        const { invested_liquid, invested_locked } = balances;
+        const balMap: { [index: string]: number | undefined } = invested_liquid
+          .concat(invested_locked)
+          .reduce(
+            (result, [vault, balance]) => ({
+              ...result,
+              [vault]: condenseToNum(balance),
+            }),
+            {}
+          );
+
+        return {
+          data: vaultsRes.vaults.map((v) => ({
+            ...v,
+            balance: balMap[v.address] || 0,
+          })),
+        };
+      },
+    }),
   }),
 });
 
@@ -136,6 +167,7 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useVaultsQuery,
 } = customApi;
 
 export const AP_ID = 0;
