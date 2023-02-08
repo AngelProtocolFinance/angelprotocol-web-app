@@ -1,4 +1,4 @@
-import { useProfileContext } from "contexts/ProfileContext";
+import { useProfileContext } from "pages/Profile/ProfileContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 

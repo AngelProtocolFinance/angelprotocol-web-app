@@ -1,5 +1,5 @@
-import { useProfileContext } from "contexts/ProfileContext";
 import { humanize } from "helpers";
+import { useProfileContext } from "../../../ProfileContext";
 
 export default function Balances() {
   const { total_liq, total_lock, overall } = useProfileContext();

@@ -2,13 +2,14 @@ import { LinkGroup } from "../../types";
 import Icon from "components/Icon";
 import useMobileSidebar from "./useMobileSidebar";
 
-type Props = { className?: string; linkGroups: LinkGroup[] };
+type Props = { className?: string; endowId: number; linkGroups: LinkGroup[] };
 
 export default function MobileNavigationButton({
   className = "",
+  endowId,
   linkGroups,
 }: Props) {
-  const { open, activeLink } = useMobileSidebar(linkGroups);
+  const { open, activeLink } = useMobileSidebar(endowId, linkGroups);
 
   return (
     <button

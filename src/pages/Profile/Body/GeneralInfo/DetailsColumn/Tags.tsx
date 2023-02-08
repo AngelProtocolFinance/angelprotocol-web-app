@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "contexts/ProfileContext";
+import { useProfileContext } from "pages/Profile/ProfileContext";
 import Icon from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
 
