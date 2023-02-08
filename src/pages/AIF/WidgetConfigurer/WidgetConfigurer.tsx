@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import Copier from "components/Copier";
 import WidgetExample from "./WidgetExample";
@@ -10,7 +10,6 @@ const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
-  const [valuesTrigger, setValuesTrigger] = useState(false);
   const [widgetValues, setWidgetValues] = useState<FormValues>({
     hideText: false,
     availableCurrencies: [],
@@ -23,8 +22,6 @@ export default function WidgetConfigurer() {
     (formValues: FormValues) => setWidgetValues(formValues),
     []
   );
-
-  useEffect(() => setValuesTrigger((prev) => !prev), [widgetValues]);
 
   const widgetUrl = useCreateWidgerUrl()(id, widgetValues);
 
@@ -70,7 +67,7 @@ export default function WidgetConfigurer() {
 
         <section className="flex flex-col gap-3 max-xl:items-center">
           <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-          <WidgetExample {...widgetValues} valuesTrigger={valuesTrigger} />
+          <WidgetExample {...widgetValues} />
         </section>
       </div>
     </div>
