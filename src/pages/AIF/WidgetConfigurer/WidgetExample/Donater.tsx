@@ -29,14 +29,14 @@ export default function Donater({
           </div>
         </div>
 
-        <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 dark:bg-blue-d6 border border-prim rounded">
+        <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 py-3 px-4 border border-gray-l2 rounded">
           <input
             disabled
             type="text"
             placeholder="0.0000"
-            className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
+            className="w-full text-sm bg-transparent focus:outline-none"
           />
-          <div className="flex items-center gap-1 w-full dark:text-gray">
+          <div className="flex items-center gap-1 w-full">
             <span className="text-sm">{TOKEN.symbol}</span>
           </div>
         </div>

@@ -1,5 +1,4 @@
 import APLogo from "components/APLogo";
-import Progress from "components/donation/Steps/Progress";
 import { FormValues } from "../WidgetUrlGenerator/schema";
 import Donater from "./Donater";
 
@@ -7,8 +6,8 @@ type Props = FormValues;
 
 export default function WidgetExample(props: Props) {
   return (
-    <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-prim rounded">
-      <div className="grid grid-rows-[1fr_auto] gap-10 bg-white h-full">
+    <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-gray-l2 rounded text-gray-d2 bg-white">
+      <div className="grid grid-rows-[1fr_auto] gap-10 h-full">
         <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
           <header className="flex justify-center items-center gap-10 w-full h-24 z-10">
             <h1 className="text-xl font-heading font-bold">
@@ -44,12 +43,17 @@ export default function WidgetExample(props: Props) {
                   Buy some to make your donation
                 </button>
               </span>
-              <Progress classes="my-12" />
+              <div className="my-12 text-sm mb-10 grid grid-cols-3 justify-items-center gap-2">
+                <p className="text-center">Donation method</p>
+                <p className="text-center">Donor details</p>
+                <p className="text-center">Finalize payment</p>
+                <div className="mt-3 h-2 w-full col-span-full bg-gray-l2 rounded-full overflow-hidden" />
+              </div>
               <Donater {...props} />
             </div>
           </section>
         </div>
-        <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
+        <footer className="flex justify-center items-center h-20 w-full bg-blue">
           <APLogo className="w-20" />
         </footer>
       </div>
