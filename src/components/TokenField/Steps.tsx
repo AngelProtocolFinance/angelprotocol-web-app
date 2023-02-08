@@ -32,29 +32,3 @@ export default function Steps({
     </div>
   );
 }
-
-/**
- * 
- * {steps.map((m) => {
-        const precision = new Decimal(min).decimalPlaces();
-        return (
-          <button
-            type="button"
-            key={m}
-            onClick={() => {
-              setValue("token.amount", humanize(m, precision), {
-                shouldValidate: true,
-                shouldDirty: true,
-              });
-            }}
-            className={`${
-              m === Number(amount)
-                ? "bg-blue-l3 border-blue-l3 dark:bg-blue-d2 dark:border-blue-d2"
-                : "bg-blue-l4 dark:bg-blue-d4 border-prim"
-            }  rounded-full py-1.5 border`}
-          >
-            {humanize(m, precision)}
-          </button>
-        );
-      })}
- */
