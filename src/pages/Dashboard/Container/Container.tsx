@@ -15,7 +15,7 @@ export default function Container({ children, adminResources }: Props) {
       <Sidebar
         linkGroups={linkGroups}
         className="max-sm:hidden"
-        adminResources={adminResources}
+        endowId={adminResources.id}
       />
       <div className="max-sm:py-8 max-sm:px-6 sm:p-10 h-full">{children}</div>
     </div>
