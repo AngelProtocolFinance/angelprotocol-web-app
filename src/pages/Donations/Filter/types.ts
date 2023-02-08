@@ -5,6 +5,7 @@ export type FormValues = {
   endDate: string;
   network: OptionType<string>;
   currency: OptionType<string>;
+  status: OptionType<string>;
 
   //meta
   donorAddress: string;

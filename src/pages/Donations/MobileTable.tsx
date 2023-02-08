@@ -48,6 +48,17 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
               <Row title="Amount">{humanize(row.amount, 3)}</Row>
               <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
               <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+              <Row title="Status">
+                <div
+                  className={`${
+                    row.donationFinalized
+                      ? "bg-green"
+                      : "bg-gray-d1 dark:bg-gray"
+                  } font-body text-white px-2 py-0.5 rounded`}
+                >
+                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
+                </div>
+              </Row>
               <Row title="Receipt">
                 <button
                   className="block"

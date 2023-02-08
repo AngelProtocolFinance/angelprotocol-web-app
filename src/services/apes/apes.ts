@@ -60,7 +60,7 @@ function overrideURLs(chain: FetchedChain): FetchedChain {
     return {
       ...chain,
       lcd_url: JUNO_LCD_OVERRIDE || chain.lcd_url,
-      rpc_url: JUNO_RPC_OVERRIDE || chain.lcd_url,
+      rpc_url: JUNO_RPC_OVERRIDE || chain.rpc_url,
     };
   }
   return chain;
