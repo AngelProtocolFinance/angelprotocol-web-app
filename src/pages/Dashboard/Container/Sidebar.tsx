@@ -1,13 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Link, LinkGroup } from "../types";
-import { AdminResources } from "services/types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
 
 type Props = {
-  adminResources: AdminResources;
+  endowId: number;
   className?: string;
   linkGroups: LinkGroup[];
   onChange?: (link: Link) => void;
@@ -18,7 +17,7 @@ export default function Sidebar(props: Props) {
     <div
       className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
-      <Header endowId={props.adminResources.id} />
+      <Header endowId={props.endowId} />
 
       <div className="flex flex-col py-3">
         {props.linkGroups.map((group) => (
