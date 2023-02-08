@@ -181,7 +181,7 @@ export const customApi = junoApi.injectEndpoints({
       { id?: string; cw3: string; voter: string }
     >({
       providesTags: [
-        { type: "admin", id: adminTags.proposals },
+        { type: "admin", id: adminTags.proposal },
         { type: "admin", id: adminTags.votes },
       ],
       async queryFn(args) {
