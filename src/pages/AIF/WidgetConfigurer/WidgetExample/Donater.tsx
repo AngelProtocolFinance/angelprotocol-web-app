@@ -3,6 +3,8 @@ import { humanize } from "helpers";
 import { FormValues } from "../WidgetUrlGenerator/schema";
 import AdvancedOptions from "./AdvancedOptions";
 
+const TOKEN = placeholderChain.tokens[0];
+
 type Props = FormValues;
 
 export default function Donater({
@@ -10,8 +12,6 @@ export default function Donater({
   liquidPercentage,
   unfoldAdvancedOptions,
 }: Props) {
-  const token = placeholderChain.tokens[0];
-
   return (
     <div className="grid rounded-md w-full">
       <div className="grid">
@@ -23,11 +23,8 @@ export default function Donater({
             Enter the donation amount:
           </label>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              className="text-right hover:text-blue text-xs flex"
-            >
-              BAL: {humanize(+token.balance, 3)} {token.symbol}
+            <button type="button" className="text-right text-xs flex">
+              BAL: {humanize(+TOKEN.balance, 3)} {TOKEN.symbol}
             </button>
           </div>
         </div>
@@ -40,11 +37,11 @@ export default function Donater({
             className="w-full text-sm bg-transparent focus:outline-none dark:text-gray dark:placeholder:text-gray-d1"
           />
           <div className="flex items-center gap-1 w-full dark:text-gray">
-            <span className="text-sm">{token.symbol}</span>
+            <span className="text-sm">{TOKEN.symbol}</span>
           </div>
         </div>
         <p className="text-xs">
-          Minimal amount: {token.symbol} {token.min_donation_amnt}
+          Minimal amount: {TOKEN.symbol} {TOKEN.min_donation_amnt}
         </p>
       </div>
       {!hideAdvancedOptions && (

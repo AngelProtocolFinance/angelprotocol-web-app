@@ -38,8 +38,8 @@ export default function WidgetExample(props: Props) {
               <span className="text-center font-normal text-xs">
                 Don't have crypto in your wallet?{" "}
                 <button
+                  type="button"
                   className="font-bold underline hover:text-orange transition ease-in-out duration-300"
-                  disabled
                 >
                   Buy some to make your donation
                 </button>
