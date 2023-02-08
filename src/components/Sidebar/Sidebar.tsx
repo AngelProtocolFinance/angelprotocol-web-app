@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Link, LinkGroup } from "../types";
+import { Link, LinkGroup } from "./types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
