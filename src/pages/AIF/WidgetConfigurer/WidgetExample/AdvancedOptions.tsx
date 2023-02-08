@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
+import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
+import { humanize } from "helpers";
+
+const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0)}`;
 
 export default function AdvancedOptions({
   unfold,
@@ -45,6 +49,9 @@ export default function AdvancedOptions({
               <p className="uppercase text-xs sm:text-sm text-center font-body">
                 Compounded forever
               </p>
+              <p className="mt-auto font-bold md:text-lg text-center">
+                {SPLIT_AMOUNT}
+              </p>
             </div>
 
             <div className="flex flex-col items-center p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">
@@ -58,8 +65,16 @@ export default function AdvancedOptions({
                 Instantly available
               </p>
               <div className="my-2.5 select-none">
-                <input className="range" type="range" />
+                <input
+                  className="range"
+                  disabled
+                  type="range"
+                  value={liquidPercentage}
+                />
               </div>
+              <p className="mt-auto font-bold md:text-lg text-center">
+                {SPLIT_AMOUNT}
+              </p>
             </div>
           </div>
 
