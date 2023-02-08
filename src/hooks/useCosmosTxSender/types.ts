@@ -24,6 +24,7 @@ export type TxOnSuccess = (res: DeliverTxResponse, chain: Chain) => void;
 export type TxArgs = {
   tagPayloads?: TagPayload[];
   successMeta?: TxSuccessMeta;
+  isAuthorized?: boolean;
   msgs: EncodeObject[];
   onSuccess?(res: DeliverTxResponse, chain: Chain): void;
 };

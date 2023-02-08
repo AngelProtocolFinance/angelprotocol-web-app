@@ -15,20 +15,17 @@ export function Guard(props: {
 
   const { data, isLoading, isError } = useAdminResourcesQuery(
     {
-      user: wallet?.address!,
+      user: wallet?.address,
       endowmentId: id!,
     },
-    { skip: !wallet || !id }
+    { skip: !id }
   );
 
-  if (!wallet) return <GuardPrompt message="Your wallet is not connected" />;
-
   if (isLoading)
-    return <GuardPrompt message="Checking wallet credentials" showLoader />;
+    return <GuardPrompt message="Getting admin resources" showLoader />;
 
-  if (isError) return <GuardPrompt message="Error getting wallet resoures" />;
-
-  if (!data) return <GuardPrompt message="Unauthorized to view this page" />;
+  if (isError || !data)
+    return <GuardPrompt message="Error getting admin resources" />;
 
   return (
     <context.Provider value={data}>{props.children(data)}</context.Provider>
@@ -36,13 +33,15 @@ export function Guard(props: {
 }
 
 const context = createContext({} as AdminResources);
-export const useAdminResources = (): AdminResources => {
+export const useAdminResources = <
+  T extends AdminResources["type"] = any
+>(): Extract<AdminResources, { type: T }> => {
   const val = useContext(context);
 
   if (Object.entries(val).length <= 0) {
     throw new Error("useAdminResources should only be used inside AdminGuard");
   }
-  return val;
+  return val as any;
 };
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {

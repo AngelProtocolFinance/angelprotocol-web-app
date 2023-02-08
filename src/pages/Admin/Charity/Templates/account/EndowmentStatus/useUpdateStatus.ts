@@ -18,7 +18,7 @@ import { cleanObject } from "helpers/cleanObject";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const { cw3, role, propMeta } = useAdminResources();
+  const { cw3, propMeta } = useAdminResources();
   const { wallet } = useGetWallet();
   const sendTx = useCosmosTxSender();
   const { showModal } = useModalContext();
@@ -30,11 +30,7 @@ export default function useUpdateStatus() {
     } else if (data.prevStatus === "Closed") {
       showModal(Popup, { message: "Endowment is closed and can't be changed" });
       //only review team can change status from "Inactive"
-    } else if (data.prevStatus === "Inactive" && role === "ap") {
-      showModal(Popup, {
-        message: "This group is not authorized to change Inactive endowments",
-      });
-      return;
+      //NOTE: if this template will be used other than Charity: further check authority
     } else {
       const prevStatusNum = endowmentStatus[data.prevStatus];
       if (+data.status === prevStatusNum) {

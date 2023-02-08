@@ -5,6 +5,7 @@ import {
   CW3Config,
   EndowmentDetails,
   Proposal,
+  ReviewCW3Config,
 } from "types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
@@ -25,18 +26,31 @@ export type EncodedQueryMember = {
   data: string; //base64 encoded msg
 };
 
-export type AdminRoles = "ap" | "reviewer" | "charity";
-export type AdminResources = {
+type Base = {
   cw3: string;
   cw4: string;
-  endowmentId: number;
-  endowment: EndowmentDetails;
-  cw3config: CW3Config;
-  role: AdminRoles;
-  propMeta: Required<Pick<TxArgs, "successMeta" | "tagPayloads">> & {
+  id: number;
+  propMeta: Required<
+    Pick<TxArgs, "successMeta" | "tagPayloads" | "isAuthorized">
+  > & {
     willExecute?: true;
   };
 };
+
+export type APResources = Base & {
+  type: "ap";
+  config: CW3Config;
+};
+export type ReviewResources = Base & {
+  type: "review";
+  config: ReviewCW3Config;
+};
+export type CharityResources = Base & {
+  type: "charity";
+  config: CW3Config;
+} & EndowmentDetails;
+
+export type AdminResources = APResources | ReviewResources | CharityResources;
 
 export type ProposalDetails = Proposal & {
   votes: AdminVoteInfo[];

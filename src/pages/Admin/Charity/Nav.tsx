@@ -4,7 +4,7 @@ import { adminRoutes } from "constants/routes";
 
 export default function Nav() {
   return (
-    <div className="hidden lg:flex justify-end">
+    <div className="grid gap-3 content-start">
       <NavLink end to={adminRoutes.index} className={styler}>
         Dashboard
       </NavLink>
@@ -22,6 +22,6 @@ export default function Nav() {
 }
 
 const styler = createNavLinkStyler(
-  "px-2 uppercase text-sm text-center font-semibold font-heading",
+  "px-2 uppercase text-sm font-semibold font-heading",
   "text-orange-l1"
 );
