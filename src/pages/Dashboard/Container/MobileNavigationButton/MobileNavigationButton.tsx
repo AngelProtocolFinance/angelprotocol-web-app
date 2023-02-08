@@ -16,7 +16,7 @@ export default function MobileNavigationButton({
       onClick={open}
       className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-prim font-bold text-sm text-orange ${className}`}
     >
-      <Icon type={activeLink.icon} size={24} />
+      <Icon {...activeLink.icon} />
       {activeLink.title}
       <Icon type="ArrowRight" size={24} className="ml-auto" />
     </button>
