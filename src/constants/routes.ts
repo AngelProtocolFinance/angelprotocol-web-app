@@ -1,6 +1,5 @@
 export enum appRoutes {
   index = "/",
-  aif = "/aif",
   dashboard = "/dashboard",
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
