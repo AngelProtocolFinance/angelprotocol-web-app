@@ -5,6 +5,7 @@ import LogoPlaceholder from "./LogoPlaceholder";
 
 export type LogoProps = {
   src?: string;
+  isSrcLoading?: boolean;
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 type Props = {
@@ -22,16 +23,18 @@ export default function Logo({ logo, className }: Props) {
   return (
     <>
       {isLoading && <ContentLoader className={className} />}
-      <WithLink className={className} href={logo.href} title={logo.title}>
-        <img
-          src={logo.src}
-          className={`object-contain w-full h-full ${
-            isLoading ? "hidden" : ""
-          }`}
-          alt=""
-          onLoad={() => setLoading(false)}
-        />
-      </WithLink>
+      {!logo.isSrcLoading && (
+        <WithLink className={className} href={logo.href} title={logo.title}>
+          <img
+            src={logo.src}
+            className={`object-contain w-full h-full ${
+              isLoading ? "hidden" : ""
+            }`}
+            alt=""
+            onLoad={() => setLoading(false)}
+          />
+        </WithLink>
+      )}
     </>
   );
 }

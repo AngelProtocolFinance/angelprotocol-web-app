@@ -20,7 +20,7 @@ export default function Sidebar(props: Props) {
     >
       <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">
         <div className="flex justify-between">
-          <Logo className="w-14 h-14" src={props.profile.logo} />
+          <Logo className="w-14 h-14" logo={{ src: props.profile.logo }} />
           <button
             type="button"
             className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
