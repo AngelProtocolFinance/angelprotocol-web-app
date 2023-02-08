@@ -7,11 +7,11 @@ type Props = FormValues;
 
 export default function WidgetExample(props: Props) {
   return (
-    <div className="h-full overflow-y-auto scroller w-full xl:w-11/12 h-[900px] border border-prim rounded">
+    <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-prim rounded">
       <div className="grid grid-rows-[1fr_auto] gap-10 bg-white h-full">
         <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
           <header className="flex justify-center items-center gap-10 w-full h-24 z-10">
-            <h1 className="text-lg sm:text-3xl font-heading font-bold">
+            <h1 className="text-xl font-heading font-bold">
               ENDOWMENT_NAME's endowment
             </h1>
             <button className="btn btn-orange px-3 h-10 rounded-lg text-xs normal-case">
@@ -21,13 +21,13 @@ export default function WidgetExample(props: Props) {
           <section className="flex flex-col items-center gap-5 h-full">
             {!props.hideText && (
               <>
-                <p className="font-body text-xs sm:text-base">
+                <p className="font-body text-xs">
                   Donate today to ENDOWMENT_NAME's endowment. Your donation will
                   be protected and compounded in perpetuity to provide
                   ENDOWMENT_NAME with a long-term, sustainable runway. Give
                   once, give forever!
                 </p>
-                <p className="font-body text-xs sm:text-base">
+                <p className="font-body text-xs">
                   Make sure to check out the many crypto and fiat donation
                   options. You will be given the chance to provide your personal
                   details to receive an immediate tax receipt.
@@ -35,7 +35,7 @@ export default function WidgetExample(props: Props) {
               </>
             )}
             <div className="justify-self-center grid mt-5 w-3/4">
-              <span className="text-center font-normal text-xs sm:text-sm">
+              <span className="text-center font-normal text-xs">
                 Don't have crypto in your wallet?{" "}
                 <button
                   className="font-bold underline hover:text-orange transition ease-in-out duration-300"

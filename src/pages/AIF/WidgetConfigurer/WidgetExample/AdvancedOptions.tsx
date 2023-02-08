@@ -5,13 +5,9 @@ import { humanize } from "helpers";
 
 const SPLIT_AMOUNT = `${placeholderChain.tokens[0].symbol} ${humanize(0)}`;
 
-export default function AdvancedOptions({
-  unfold,
-  liquidPercentage,
-}: {
-  liquidPercentage: number;
-  unfold: boolean;
-}) {
+type Props = { liquidPercentage: number; unfold: boolean };
+
+export default function AdvancedOptions({ unfold, liquidPercentage }: Props) {
   const [isOpen, setIsOpen] = useState(unfold);
 
   function toggle() {
@@ -21,7 +17,7 @@ export default function AdvancedOptions({
   useEffect(() => setIsOpen(unfold), [unfold]);
 
   return (
-    <div className={`grid mt-10 border border-prim  rounded overflow-clip`}>
+    <div className="grid mt-10 border border-prim rounded overflow-clip">
       <div className="flex items-center justify-between px-4 py-2 bg-orange-l6 dark:bg-blue-d7">
         <span className="font-bold py-2">
           {isOpen && "Hide"} Advanced Options
@@ -40,28 +36,20 @@ export default function AdvancedOptions({
 
           <div className="grid grid-cols-2 gap-2 mb-6">
             <div className="flex flex-col items-center p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">
-              <p className="uppercase font-bold text-sm sm:text-base">
-                Endowment
-              </p>
-              <p className="text-xs sm:text-sm mb-2 font-bold">
+              <p className="uppercase font-bold text-sm">Endowment</p>
+              <p className="text-xs mb-2 font-bold">
                 {100 - liquidPercentage}%
               </p>
-              <p className="uppercase text-xs sm:text-sm text-center font-body">
+              <p className="uppercase text-xs text-center font-body">
                 Compounded forever
               </p>
-              <p className="mt-auto font-bold md:text-lg text-center">
-                {SPLIT_AMOUNT}
-              </p>
+              <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
             </div>
 
             <div className="flex flex-col items-center p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">
-              <p className="uppercase font-bold text-sm sm:text-base">
-                Current
-              </p>
-              <p className="text-xs sm:text-sm mb-2 font-bold">
-                {liquidPercentage}%
-              </p>
-              <p className="uppercase text-xs sm:text-sm text-center font-body">
+              <p className="uppercase font-bold text-sm">Current</p>
+              <p className="text-xs mb-2 font-bold">{liquidPercentage}%</p>
+              <p className="uppercase text-xs text-center font-body">
                 Instantly available
               </p>
               <div className="my-2.5 select-none">
@@ -72,9 +60,7 @@ export default function AdvancedOptions({
                   value={liquidPercentage}
                 />
               </div>
-              <p className="mt-auto font-bold md:text-lg text-center">
-                {SPLIT_AMOUNT}
-              </p>
+              <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
             </div>
           </div>
 

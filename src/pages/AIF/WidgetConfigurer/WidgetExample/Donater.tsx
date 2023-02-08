@@ -56,7 +56,7 @@ export default function Donater({
 
       <button
         type="button"
-        className="btn-orange justify-self-center w-44 font-body mt-8 md:mt-12"
+        className="btn-orange justify-self-center w-44 font-body mt-8"
       >
         Continue
       </button>
