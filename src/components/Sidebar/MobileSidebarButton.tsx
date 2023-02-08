@@ -4,7 +4,7 @@ import useMobileSidebar from "./useMobileSidebar";
 
 type Props = { className?: string; endowId: number; linkGroups: LinkGroup[] };
 
-export function SidebarToggleButton({
+export function MobileSidebarButton({
   className = "",
   endowId,
   linkGroups,
