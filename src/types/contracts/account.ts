@@ -23,10 +23,8 @@ type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
 
 export interface EndowmentBalance {
   tokens_on_hand: BalanceInfo;
-  oneoff_locked: VaultWithBalance[];
-  oneoff_liquid: VaultWithBalance[];
-  strategies_locked: VaultWithBalance[];
-  strategies_liquid: VaultWithBalance[];
+  invested_liquid: VaultWithBalance[];
+  invested_locked: VaultWithBalance[];
 }
 
 interface RebalanceDetails {
