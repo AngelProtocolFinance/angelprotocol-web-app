@@ -15,20 +15,23 @@ export default function Header({ endowId }: { endowId: number }) {
           isSrcLoading={isLoading}
         />
 
-        <button
-          type="button"
-          disabled={isLoading}
-          className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
-        >
-          <Icon type="Sync" />
-          Switch
-        </button>
+        {isLoading ? (
+          <ContentLoader className="h-10 w-24" />
+        ) : (
+          <button
+            type="button"
+            className="btn-outline gap-2 normal-case h-10 pr-4 pl-3"
+          >
+            <Icon type="Sync" />
+            Switch
+          </button>
+        )}
       </div>
 
       <div className="grid gap-1">
         <h5 className="text-sm font-bold truncate">
           {isLoading ? (
-            <ContentLoader className="w-full" />
+            <ContentLoader className="h-5 w-full" />
           ) : isError || !profile ? (
             "Error loading endowment name"
           ) : (
