@@ -1,8 +1,27 @@
-import { LinkGroup } from "../types";
+import { LinkGroup } from "./types";
 import { appRoutes } from "constants/routes";
-import { routes } from "./routes";
 
-export default function createLinkGroups(id: number): LinkGroup[] {
+enum routes {
+  index = "/",
+  withdraw = "/withdraw",
+  contributions = "/contributions",
+  invest_dashboard = "/invest-dashboard",
+  liquid_account = "/liquid-account",
+  locked_account = "/locked-account",
+  settings = "/settings",
+  edit_profile = "/edit-profile",
+  programs = "/programs",
+  media = "/media",
+  decision_center = "/decision-center",
+  whitelists = "/whitelists",
+  admin_wallet = "/admin-wallet",
+  donor_verification = "/donor-verification",
+  permissions = "/permissions",
+}
+
+// TODO: REMOVE ONCE AIF OR NPO PAGE IS IMPLEMENTED.
+// THIS IS JUST A HELPER FOR TESTING
+export default function createLinkGroupsPlaceholder(id: number): LinkGroup[] {
   const rootPath = `${appRoutes.aif}/${id}`;
 
   const linkGroups: LinkGroup[] = [

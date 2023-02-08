@@ -8,7 +8,6 @@ import { chainOptions } from "constants/chainOptions";
 import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
-const AIF = lazy(() => import("pages/Dashboard/AIF"));
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
@@ -38,7 +37,6 @@ export default function App() {
                 element={<Profile />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-              <Route path={`${appRoutes.aif}/:id/*`} element={<AIF />} />
 
               <Route
                 path={`${appRoutes.donations}/:address`}
