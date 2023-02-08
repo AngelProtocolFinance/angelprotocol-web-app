@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { DonateValues } from "../types";
-import TokenField from "components/TokenField/TokenField";
+import TokenField from "components/TokenField";
 import { useGetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { appRoutes } from "constants/routes";
