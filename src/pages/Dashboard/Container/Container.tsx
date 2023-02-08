@@ -11,7 +11,11 @@ export default function Container({ children, adminResources }: Props) {
 
   return (
     <div className="grid sm:grid-cols-[auto_1fr] w-full h-full">
-      <MobileNavigationButton className="sm:hidden" linkGroups={linkGroups} />
+      <MobileNavigationButton
+        className="sm:hidden"
+        endowId={adminResources.id}
+        linkGroups={linkGroups}
+      />
       <Sidebar
         linkGroups={linkGroups}
         className="max-sm:hidden"

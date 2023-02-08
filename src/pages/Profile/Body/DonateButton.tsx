@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useProfileContext } from "contexts/ProfileContext";
 import { appRoutes } from "constants/routes";
+import { useProfileContext } from "../ProfileContext";
 
 export default function DonateButton({
   className = "",

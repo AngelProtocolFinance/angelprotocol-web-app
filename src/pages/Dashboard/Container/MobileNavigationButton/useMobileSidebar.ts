@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
-import { useProfileContext } from "contexts/ProfileContext";
 import { UnexpectedStateError } from "errors/errors";
 import MobileSidebar from "./MobileSidebar";
 
-export default function useMobileSidebar(linkGroups: LinkGroup[]) {
+export default function useMobileSidebar(
+  endowId: number,
+  linkGroups: LinkGroup[]
+) {
   const location = useLocation();
 
   const [activeLink, setActiveLink] = useState<Link>(() => {
@@ -23,12 +25,11 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
   });
 
   const { showModal } = useModalContext();
-  const profile = useProfileContext();
 
   const open = () =>
     showModal(MobileSidebar, {
       linkGroups,
-      adminResources: profile,
+      endowId,
       onChange: (link) => setActiveLink(link),
     });
 
