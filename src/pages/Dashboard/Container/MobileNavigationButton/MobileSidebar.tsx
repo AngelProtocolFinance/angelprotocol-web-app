@@ -1,12 +1,12 @@
 import { Dialog } from "@headlessui/react";
 import { Link, LinkGroup } from "../../types";
-import { EndowmentProfile } from "types/aws";
+import { AdminResources } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
 import Sidebar from "../Sidebar";
 
 type Props = {
   linkGroups: LinkGroup[];
-  profile: EndowmentProfile;
+  adminResources: AdminResources;
   onChange: (link: Link) => void;
 };
 
@@ -23,7 +23,7 @@ export default function MobileSidebar(props: Props) {
       <Sidebar
         className="max-h-screen overflow-y-auto scroller"
         linkGroups={props.linkGroups}
-        profile={props.profile}
+        adminResources={props.adminResources}
         onChange={handleChange}
       />
     </Dialog.Panel>

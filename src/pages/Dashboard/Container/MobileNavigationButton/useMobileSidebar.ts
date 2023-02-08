@@ -28,7 +28,7 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
   const open = () =>
     showModal(MobileSidebar, {
       linkGroups,
-      profile,
+      adminResources: profile,
       onChange: (link) => setActiveLink(link),
     });
 
