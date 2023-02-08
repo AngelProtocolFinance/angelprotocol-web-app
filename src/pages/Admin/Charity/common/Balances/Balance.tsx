@@ -1,14 +1,14 @@
 import { PropsWithChildren } from "react";
-import { AccountType, EndowmentBalance } from "types/contracts";
+import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useBalanceQuery } from "services/juno/account";
+import { useAssetsQuery } from "services/juno/account";
 import QueryLoader from "components/QueryLoader";
-import { condenseToNum, humanize } from "helpers";
+import { humanize } from "helpers";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { id } = useAdminResources();
-  const queryState = useBalanceQuery({ id });
+  const queryState = useAssetsQuery({ id, type });
 
   return (
     <div className="rounded border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -27,8 +27,7 @@ export default function Balance({ type }: Props) {
           error: "Failed to get balances",
         }}
       >
-        {(balance) => {
-          const { free, total, invested } = getBreakdown(balance, type);
+        {({ total, free, invested }) => {
           return (
             <div className="flex gap-8 px-4">
               <Amount title="Total value" classes="mr-auto">
@@ -59,29 +58,4 @@ function Amount({
       <span className="font-bold text-xl font-heading">$ {props.children}</span>
     </div>
   );
-}
-
-function getBreakdown(
-  { tokens_on_hand, invested_liquid, invested_locked }: EndowmentBalance,
-  type: AccountType
-) {
-  const coin = tokens_on_hand[type]
-    .native[0] /** could just be ujunox (testnet) or uusdc (mainnet) */ || {
-    amount: "0",
-    denom: "",
-  };
-  const investments = type === "liquid" ? invested_liquid : invested_locked;
-
-  const free = condenseToNum(coin.amount);
-  const invested = condenseToNum(
-    investments.reduce((sum, [_, balance]) => +balance + sum, 0)
-  );
-
-  const total = free + invested;
-
-  return {
-    free,
-    invested,
-    total,
-  };
 }

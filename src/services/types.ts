@@ -79,3 +79,9 @@ export type CountryOption = {
 };
 
 export type Regions = { [region: string]: string[] };
+
+export type EndowmentAssets = {
+  free: number;
+  invested: number;
+  total: number;
+};
