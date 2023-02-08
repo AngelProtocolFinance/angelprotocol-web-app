@@ -6,12 +6,20 @@ import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
-import { customTags, defaultProposalTags } from "./tags";
+import {
+  accountTags,
+  adminTags,
+  defaultProposalTags,
+  registrarTags,
+} from "./tags";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
     isMember: builder.query<boolean, { user: string; endowmentId?: string }>({
-      providesTags: [{ type: "custom", id: customTags.isMember }],
+      providesTags: [
+        { type: "admin", id: adminTags.voter },
+        { type: "account", id: accountTags.endowment },
+      ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
@@ -45,7 +53,12 @@ export const customApi = junoApi.injectEndpoints({
       AdminResources,
       { user?: string; endowmentId?: string }
     >({
-      providesTags: [{ type: "custom", id: customTags.adminResources }],
+      providesTags: [
+        { type: "admin", id: adminTags.voter },
+        { type: "admin", id: adminTags.voters },
+        { type: "admin", id: adminTags.config },
+        { type: "account", id: accountTags.endowment },
+      ],
       async queryFn(args) {
         const numId = idParamToNum(args.endowmentId);
         /** special case for ap admin usage */
@@ -90,7 +103,10 @@ export const customApi = junoApi.injectEndpoints({
       ProposalDetails,
       { id?: string; cw3: string; voter: string }
     >({
-      providesTags: [{ type: "custom", id: customTags.proposalDetails }],
+      providesTags: [
+        { type: "admin", id: adminTags.proposals },
+        { type: "admin", id: adminTags.votes },
+      ],
       async queryFn(args) {
         const id = Number(args.id);
 
