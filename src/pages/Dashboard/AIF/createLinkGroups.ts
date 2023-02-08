@@ -11,17 +11,26 @@ export default function createLinkGroups(id: number): LinkGroup[] {
         {
           title: "Dashboard",
           to: rootPath,
-          icon: "Dashboard",
+          icon: {
+            type: "Dashboard",
+            size: 24,
+          },
         },
         {
           title: "Withdraw",
           to: `${rootPath}${routes.withdraw}`,
-          icon: "MoneyBill",
+          icon: {
+            type: "MoneyBill",
+            size: 24,
+          },
         },
         {
           title: "Contributions",
           to: `${rootPath}${routes.contributions}`,
-          icon: "DollarCircle",
+          icon: {
+            type: "DollarCircle",
+            size: 24,
+          },
         },
       ],
     },
@@ -29,22 +38,34 @@ export default function createLinkGroups(id: number): LinkGroup[] {
       title: "Invest",
       links: [
         {
-          icon: "Analytics",
+          icon: {
+            type: "Analytics",
+            size: 24,
+          },
           title: "Invest Dashboard",
           to: `${rootPath}${routes.invest_dashboard}`,
         },
         {
-          icon: "WaterDrop",
+          icon: {
+            type: "WaterDrop",
+            size: 24,
+          },
           title: "Liquid Account",
           to: `${rootPath}${routes.liquid_account}`,
         },
         {
-          icon: "Lock",
+          icon: {
+            type: "Lock",
+            size: 24,
+          },
           title: "Locked Account",
           to: `${rootPath}${routes.locked_account}`,
         },
         {
-          icon: "PermDataSettings",
+          icon: {
+            type: "PermDataSettings",
+            size: 24,
+          },
           title: "Settings",
           to: `${rootPath}${routes.settings}`,
         },
@@ -54,17 +75,26 @@ export default function createLinkGroups(id: number): LinkGroup[] {
       title: "Profile",
       links: [
         {
-          icon: "User",
+          icon: {
+            type: "User",
+            size: 24,
+          },
           title: "Edit Profile",
           to: `${rootPath}${routes.edit_profile}`,
         },
         {
-          icon: "ListBox",
+          icon: {
+            type: "ListBox",
+            size: 24,
+          },
           title: "Programs",
           to: `${rootPath}${routes.programs}`,
         },
         {
-          icon: "Image",
+          icon: {
+            type: "Image",
+            size: 24,
+          },
           title: "Media",
           to: `${rootPath}${routes.media}`,
         },
@@ -74,12 +104,18 @@ export default function createLinkGroups(id: number): LinkGroup[] {
       title: "Manage",
       links: [
         {
-          icon: "ClipboardCheck",
+          icon: {
+            type: "ClipboardCheck",
+            size: 24,
+          },
           title: "Decision Center",
           to: `${rootPath}${routes.decision_center}`,
         },
         {
-          icon: "FactCheck",
+          icon: {
+            type: "FactCheck",
+            size: 24,
+          },
           title: "Whitelists",
           to: `${rootPath}${routes.whitelists}`,
         },
@@ -89,17 +125,26 @@ export default function createLinkGroups(id: number): LinkGroup[] {
       title: "Settings",
       links: [
         {
-          icon: "AccountBalanceWallet",
+          icon: {
+            type: "AccountBalanceWallet",
+            size: 24,
+          },
           title: "Admin Wallet",
           to: `${rootPath}${routes.admin_wallet}`,
         },
         {
-          icon: "SecurityScan",
+          icon: {
+            type: "SecurityScan",
+            size: 24,
+          },
           title: "Donor Verification",
           to: `${rootPath}${routes.donor_verification}`,
         },
         {
-          icon: "PermDataSettings",
+          icon: {
+            type: "PermDataSettings",
+            size: 24,
+          },
           title: "Permissions",
           to: `${rootPath}${routes.permissions}`,
         },

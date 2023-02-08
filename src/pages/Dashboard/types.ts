@@ -3,7 +3,10 @@ import { IconType } from "components/Icon";
 export type Link = {
   title: string;
   to: string;
-  icon: IconType;
+  icon: {
+    type: IconType;
+    size: number;
+  };
 };
 
 export type LinkGroup = {

@@ -53,7 +53,7 @@ export default function Sidebar(props: Props) {
                 className={linkClassName}
                 onClick={() => props.onChange && props.onChange(link)}
               >
-                <Icon type={link.icon} size={24} />
+                <Icon {...link.icon} />
                 {link.title}
               </NavLink>
             ))}
