@@ -5,12 +5,7 @@ import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
-import {
-  accountTags,
-  adminTags,
-  defaultProposalTags,
-  registrarTags,
-} from "./tags";
+import { accountTags, adminTags, defaultProposalTags } from "./tags";
 
 export const AP_ID = 0;
 export const REVIEWER_ID = 0.5;
