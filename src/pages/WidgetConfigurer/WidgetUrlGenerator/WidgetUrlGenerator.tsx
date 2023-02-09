@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
-import Search from "components/Search";
 import Split from "components/Split";
 import { CheckField } from "components/form/CheckField";
 import DenomSelector from "./DenomSelector";
+import EndowmentSearch from "./EndowmentSearch";
 import { FormValues } from "./schema";
 
 type Props = { onChange(formValues: FormValues): void };
@@ -26,11 +26,7 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
         className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(onChange)}
       >
-        <Search
-          classes="my-2 h-12"
-          placeholder="Search organizations..."
-          onChange={(query) => console.log(query)}
-        />
+        <EndowmentSearch />
 
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
 
