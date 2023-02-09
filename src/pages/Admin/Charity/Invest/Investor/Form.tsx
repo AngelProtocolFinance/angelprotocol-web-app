@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
 import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
+import Icon from "components/Icon";
 import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
 import useSubmit from "./useSubmit";
@@ -15,8 +16,18 @@ export default function Form({ acct_type = "liquid", address }: Vault) {
     <Dialog.Panel
       onSubmit={handleSubmit(submit)}
       as="form"
-      className="max-w-[37.5rem] w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
+      className="max-w-[37.5rem] w-[95vw] sm:w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
     >
+      <div className="relative border-b border-prim py-5 text-center">
+        <span className="font-bold font-heading text-lg">Invest</span>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute right-4 top-1/2 -translate-y-1/2 border border-prim rounded p-2"
+        >
+          <Icon type="Close" size={26.5} />
+        </button>
+      </div>
       <TokenField<FV, "token">
         name="token"
         tokens={getValues("tokens")}

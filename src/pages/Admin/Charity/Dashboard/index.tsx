@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   return (
     <div className="grid content-start mt-6">
-      <h3 className="uppercase font-extrabold text-2xl mb-1">Balances</h3>
+      <h3 className="uppercase font-extrabold text-2xl mb-4">Balances</h3>
       <Balances />
       <h3 className="mt-10 mb-4 uppercase font-extrabold text-2xl">
         New Proposals
