@@ -102,7 +102,7 @@ describe("App.tsx tests", () => {
     //registration is finally loaded
     expect(
       await screen.findByRole("heading", {
-        name: /register to angel protocol/i,
+        name: /register to angel giving/i,
       })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
