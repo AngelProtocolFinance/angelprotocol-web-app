@@ -21,7 +21,7 @@ export default function Form() {
       <Level num={1} />
       <p className="mt-2 text-sm">
         Your organization is eligible to create its endowment. Donors can donate
-        funds through your organization’s landing page on Angel Protocol’s
+        funds through your organization’s landing page on Angel Giving’s
         interface. Your organization is not displayed on the marketplace and
         cannot be found through the search bar.
       </p>
@@ -108,8 +108,7 @@ export default function Form() {
         }}
       >
         By checking this box, you declare that you have the authority to create
-        an endowment in the name of {data.contact.orgName} through Angel
-        Protocol
+        an endowment in the name of {data.contact.orgName} through Angel Giving
       </CheckField>
       <CheckField<FV>
         name="hasAgreedToTerms"
