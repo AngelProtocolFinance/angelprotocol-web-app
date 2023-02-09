@@ -12,9 +12,7 @@ export function Opener({ classes = "" }: { classes?: string }) {
         closeModal();
       }
     },
-    50,
-    {},
-    { shouldAttachListener: isModalOpen }
+    { shouldAttachListener: isModalOpen, debounceTime: 50 }
   );
 
   return (
