@@ -143,7 +143,7 @@ const registration_api = aws.injectEndpoints({
       transformErrorResponse(err, meta, arg) {
         return {
           status: err.status,
-          data: "Registration submission failed. Contact support@angelprotocol.io",
+          data: "Registration submission failed. Contact support@angel.giving",
         };
       },
     }),
