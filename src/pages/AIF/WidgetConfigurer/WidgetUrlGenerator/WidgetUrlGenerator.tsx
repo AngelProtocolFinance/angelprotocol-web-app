@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
+import Search from "components/Search";
 import Split from "components/Split";
 import { CheckField } from "components/form/CheckField";
 import DenomSelector from "./DenomSelector";
@@ -25,6 +26,12 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
         className="flex flex-col gap-2 xl:w-4/5 text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(onChange)}
       >
+        <Search
+          classes="my-2 h-12"
+          placeholder="Search organizations..."
+          onChange={(query) => console.log(query)}
+        />
+
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
 
         <span>Available currencies:</span>
