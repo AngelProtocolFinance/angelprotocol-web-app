@@ -2,6 +2,7 @@ import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
   EndowmentSettingsPayload,
+  InvestPayload,
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
@@ -29,6 +30,12 @@ export default class Account extends Contract {
   createEmbeddedStrategyUpdateMsg(payload: UpdateStategyPayload) {
     return this.createEmbeddedWasmMsg(Account.address, {
       update_strategies: payload,
+    });
+  }
+
+  createEmbeddedInvestMsg(payload: InvestPayload) {
+    return this.createEmbeddedWasmMsg(Account.address, {
+      vaults_invest: payload,
     });
   }
 

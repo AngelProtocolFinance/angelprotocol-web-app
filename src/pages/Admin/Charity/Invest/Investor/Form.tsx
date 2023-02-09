@@ -1,14 +1,19 @@
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
+import { Vault } from "services/types";
 import { useModalContext } from "contexts/ModalContext";
+import { LoadingStatus } from "components/Status";
 import TokenField from "components/TokenField";
+import useSubmit from "./useSubmit";
 
-export default function Form() {
-  const { getValues } = useFormContext<FV>();
+export default function Form({ acct_type = "liquid", address }: Vault) {
+  const { getValues, handleSubmit } = useFormContext<FV>();
+  const { submit, isSending } = useSubmit(address, acct_type);
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
+      onSubmit={handleSubmit(submit)}
       as="form"
       className="max-w-[37.5rem] w-full fixed-center z-20 bg-white dark:bg-blue-d6 border border-prim rounded"
     >
@@ -21,14 +26,23 @@ export default function Form() {
       />
       <div className="mt-8 px-8 py-4 gap-x-3 border-t border-prim flex justify-end">
         <button
+          disabled={isSending}
           onClick={closeModal}
           type="button"
-          className="w-32 py-2 btn-outline-filled"
+          className="min-w-[8rem] py-2 btn-outline-filled"
         >
           Cancel
         </button>
-        <button type="submit" className="w-32 py-2 btn-orange">
-          Continue
+        <button
+          disabled={isSending}
+          type="submit"
+          className="min-w-[8rem] py-2 btn-orange"
+        >
+          {isSending ? (
+            <LoadingStatus>Processing...</LoadingStatus>
+          ) : (
+            "Continue"
+          )}
         </button>
       </div>
     </Dialog.Panel>

@@ -27,7 +27,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     register,
     setValue,
     resetField,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<T>();
   const {
     field: { onChange, value: token },
@@ -64,7 +64,10 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         />
       </div>
 
-      <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container">
+      <div
+        aria-disabled={isSubmitting}
+        className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container"
+      >
         <input
           {...register(amountField)}
           autoComplete="off"

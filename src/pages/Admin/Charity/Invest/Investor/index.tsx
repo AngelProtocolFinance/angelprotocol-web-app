@@ -32,7 +32,7 @@ export default function Investor(v: Vault) {
   });
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form {...v} />
     </FormProvider>
   );
 }
