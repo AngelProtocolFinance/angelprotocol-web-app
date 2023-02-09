@@ -4,15 +4,15 @@ import useDebouncer from "hooks/useDebouncer";
 
 type Props = {
   classes?: string;
-  isSearching: boolean;
+  isSearching?: boolean;
   placeholder?: string;
   onChange(query: string): void;
 };
 
 export default function Search({
   classes = "",
-  isSearching,
-  placeholder,
+  isSearching = false,
+  placeholder = "",
   onChange,
 }: Props) {
   const [query, setQuery] = useState("");
