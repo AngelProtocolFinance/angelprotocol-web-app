@@ -4,6 +4,7 @@ import { FlatFormValues, FormValues } from "./types";
 import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
+import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
@@ -74,6 +75,13 @@ function FormWithContext(props: EndowmentProfile) {
   });
   return (
     <FormProvider {...methods}>
+      <Seo
+        title={`${props.name} profile update - Angel Giving`}
+        description={`${props.overview.slice(0, 140)}`}
+        name={`${props.name}`}
+        image={`${props.logo}`}
+        url={`https://app.angel.giving/profile/${props.id}`}
+      />
       <Form />
     </FormProvider>
   );
