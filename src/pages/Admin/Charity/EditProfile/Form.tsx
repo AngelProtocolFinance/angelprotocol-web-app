@@ -99,12 +99,6 @@ export default function Form() {
           label="Website of your organization"
           placeholder="https://website.org"
         />
-        <Field<FV>
-          classes="field-admin"
-          name="contact_email"
-          label="Contact e-mail address"
-          required
-        />
       </Group>
 
       <Group title="Organization">
