@@ -88,4 +88,8 @@ export type EndowmentAsset = {
   total: number;
 };
 
-export type Vault = YieldVault & { balance: number; symbol: string };
+export type Vault = YieldVault & {
+  balance: number;
+  invested: number;
+  symbol: string;
+};

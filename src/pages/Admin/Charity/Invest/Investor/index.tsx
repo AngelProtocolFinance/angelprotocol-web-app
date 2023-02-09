@@ -1,26 +1,31 @@
-import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { EndowmentAsset } from "services/types";
+import { Vault } from "services/types";
 import { TokenWithAmount } from "types/slices";
-import { WalletState } from "contexts/WalletContext";
+import Form from "./Form";
+import { schema } from "./schema";
 
-type Props = {
-  wallet: WalletState;
-  asset: EndowmentAsset;
-};
-export default function Investor({ wallet }: Props) {
-  const token: TokenWithAmount[] = wallet.coins.map((t) => ({
-    ...t,
+export default function Investor(v: Vault) {
+  const token: TokenWithAmount = {
+    approved: true,
+    decimals: 6,
+    logo: "", //not used
+    min_donation_amnt: 0.01,
+    name: "", //not used
+    symbol: v.symbol,
+    token_id: v.input_denom,
+    type: "juno-native",
     amount: "0",
-  }));
+    balance: v.balance,
+  };
 
   const methods = useForm<FormValues>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: state.details || {
-      token: _tokens[0],
-      pctLiquidSplit: "0",
-
+    defaultValues: {
+      token,
+      tokens: [token],
       //meta
     },
     resolver: yupResolver(schema),

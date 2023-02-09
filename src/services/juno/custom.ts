@@ -142,21 +142,26 @@ export const customApi = junoApi.injectEndpoints({
           queryContract("accBalance", contracts.accounts, { id: endowId }),
         ]);
 
-        const { invested_liquid, invested_locked } = balances;
-        const balMap: { [index: string]: number | undefined } = invested_liquid
-          .concat(invested_locked)
-          .reduce(
-            (result, [vault, balance]) => ({
-              ...result,
-              [vault]: condenseToNum(balance),
-            }),
-            {}
-          );
+        const { invested_liquid, invested_locked, tokens_on_hand } = balances;
+        const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
+        const balMap: { [index: string]: number | undefined } = [
+          ...invested_liquid,
+          ...invested_locked,
+          ...native.map((n) => [n.denom, n.amount]),
+          ...cw20.map((c) => [c.address, c.amount]),
+        ].reduce(
+          (result, [vault, balance]) => ({
+            ...result,
+            [vault]: condenseToNum(balance),
+          }),
+          {}
+        );
 
         return {
           data: vaultsRes.vaults.map((v) => ({
             ...v,
-            balance: balMap[v.address] || 0,
+            invested: balMap[v.address] || 0,
+            balance: balMap[v.input_denom] || 0,
             symbol: symbols[v.input_denom],
           })),
         };

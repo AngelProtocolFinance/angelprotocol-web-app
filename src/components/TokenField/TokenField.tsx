@@ -21,6 +21,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   name,
   withGiftcard,
   scale,
+  classes,
 }: Props<T, K>) {
   const {
     register,
@@ -48,7 +49,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     });
 
   return (
-    <div className="grid">
+    <div className={`grid ${classes?.container ?? ""}`}>
       <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
         <label
           htmlFor="amount"
