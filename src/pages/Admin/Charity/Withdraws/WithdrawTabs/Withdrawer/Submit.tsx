@@ -71,8 +71,7 @@ function SubmitWithReason({
     return (
       <>
         <Warning classes="mb-4">
-          Withdrawing from endowment funds requires Angel Giving team
-          approval.
+          Withdrawing from endowment funds requires Angel Giving team approval.
         </Warning>
         <Field<WV>
           name="reason"
