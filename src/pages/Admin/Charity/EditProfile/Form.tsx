@@ -124,7 +124,6 @@ export default function Form() {
           }}
         />
         <ActivityCountries />
-        <Field<FV> classes="field-admin" name="hq_city" label="City" required />
         <Field<FV>
           classes="field-admin"
           name="street_address"

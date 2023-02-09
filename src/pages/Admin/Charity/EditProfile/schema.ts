@@ -33,7 +33,7 @@ const shape: SchemaShape<FormValues> = {
   }),
   name: requiredString,
   overview: requiredString,
-  hq_city: requiredString,
+  // hq_city: requiredString,
   active_in_countries: Yup.array().min(1, "required"),
   // contact_email: Yup.string().email("invalid email"),
   social_media_url_facebook: url,
