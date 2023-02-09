@@ -18,6 +18,8 @@ export enum adminTags {
   member = "member",
   config = "config",
   votes = "votes",
+  voter = "voter",
+  voters = "voters",
   applications = "applications",
 }
 
@@ -48,15 +50,8 @@ export enum accountTags {
   balance = "balance",
 }
 
-export enum customTags {
-  isMember,
-  adminResources,
-  proposalDetails,
-  giftcard,
-}
-
 export const defaultProposalTags: FullTagDescription<JunoTag>[] = [
   //basic tags to invalidate
   { type: "admin", id: adminTags.proposals },
-  { type: "custom", id: customTags.proposalDetails },
+  { type: "admin", id: adminTags.proposal },
 ];

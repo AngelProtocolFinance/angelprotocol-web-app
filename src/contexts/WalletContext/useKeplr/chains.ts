@@ -7,12 +7,8 @@ export const juno_test_chain_info: ChainInfo = {
   // modified denoms
   chainId: "uni-6",
   chainName: "Juno Testnet",
-  rpc:
-    JUNO_RPC_OVERRIDE ||
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/rpc",
-  rest:
-    JUNO_LCD_OVERRIDE ||
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/juno/uni-6/lcd",
+  rpc: JUNO_RPC_OVERRIDE || "https://rpc.uni.junonetwork.io",
+  rest: JUNO_LCD_OVERRIDE || "https://api.uni.junonetwork.io",
   stakeCurrency: {
     coinDenom: "JUNOX",
     coinMinimalDenom: "ujunox",

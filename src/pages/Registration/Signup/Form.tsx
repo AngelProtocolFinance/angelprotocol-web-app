@@ -15,7 +15,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       className={`${classes} padded-container w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl font-bold text-center">
-        Register to Angel Protocol
+        Register to Angel Giving
       </h3>
 
       <Field<FV>

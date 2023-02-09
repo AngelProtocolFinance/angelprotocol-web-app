@@ -23,7 +23,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
         {contact.orgName}’s endowment has been created!
       </h1>
       <p className="mt-6 text-center">
-        Thank you for your interest in Angel Protocol!
+        Thank you for your interest in Angel Giving!
       </p>
       <p className="mb-8 mt-4 text-gray-d1 dark:text-white/75 text-center">
         Use the button below to start filling out {contact.orgName}’s profile
