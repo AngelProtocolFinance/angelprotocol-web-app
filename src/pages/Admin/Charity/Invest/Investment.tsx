@@ -1,7 +1,8 @@
 import { Vault } from "services/types";
 import { humanize, maskAddress } from "helpers";
 
-export default function Investment({ address, balance }: Vault) {
+export default function Investment({ address, balance, symbol }: Vault) {
+  console.log(symbol);
   return (
     <div className="border border-prim rounded bg-orange-l6 dark:bg-blue-d6">
       <p className="p-6 font-work">{maskAddress(address)}</p>
@@ -11,7 +12,7 @@ export default function Investment({ address, balance }: Vault) {
             Current balance
           </p>
           <p className="font-bold font-heading text-sm">
-            {humanize(balance)} USD
+            {humanize(balance)} {symbol}
           </p>
         </div>
         <button className="btn-outline-filled px-8 py-2">invest</button>

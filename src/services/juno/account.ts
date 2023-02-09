@@ -1,9 +1,11 @@
 import { Args, Res, Result } from "./queryContract/types";
-import { EndowmentAssets } from "services/types";
+import { EndowmentAsset } from "services/types";
 import { AccountType, EndowmentEntry } from "types/contracts";
 import { accountTags } from "services/juno/tags";
 import { condenseToNum } from "helpers";
 import { contracts } from "constants/contracts";
+import { IS_TEST } from "constants/env";
+import { denoms, symbols } from "constants/tokens";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";
@@ -33,8 +35,8 @@ export const account_api = junoApi.injectEndpoints({
         return res.data;
       },
     }),
-    assets: builder.query<
-      EndowmentAssets,
+    asset: builder.query<
+      EndowmentAsset,
       Args<"accBalance"> & { type: AccountType }
     >({
       providesTags: [{ type: "account", id: accountTags.balance }],
@@ -42,11 +44,10 @@ export const account_api = junoApi.injectEndpoints({
       transformResponse: (res: Res<"accBalance">, meta, { type }) => {
         const { tokens_on_hand, invested_liquid, invested_locked } = res.data;
 
-        //coin is ujunox (testnet) || uusdc (mainnet)
-        const coin = tokens_on_hand[type].native[0] || {
-          amount: "0",
-          denom: "",
-        };
+        const denom = IS_TEST ? denoms.ujunox : denoms.axlusdc;
+        const coin = tokens_on_hand[type].native.find(
+          (t) => t.denom === denom
+        ) || { denom, amount: "0" };
 
         const investments =
           type === "liquid" ? invested_liquid : invested_locked;
@@ -57,13 +58,13 @@ export const account_api = junoApi.injectEndpoints({
         const free = condenseToNum(coin.amount);
         const total = free + invested;
 
-        return { free, invested, total };
+        return { free, invested, total, symbol: symbols[denom] };
       },
     }),
   }),
 });
 
-export const { useBalanceQuery, useEndowmentsQuery, useAssetsQuery } =
+export const { useBalanceQuery, useEndowmentsQuery, useAssetQuery } =
   account_api;
 
 async function getEndowments(

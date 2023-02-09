@@ -5,6 +5,7 @@ import { condenseToNum, idParamToNum } from "helpers";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { symbols } from "constants/tokens";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import {
@@ -156,6 +157,7 @@ export const customApi = junoApi.injectEndpoints({
           data: vaultsRes.vaults.map((v) => ({
             ...v,
             balance: balMap[v.address] || 0,
+            symbol: symbols[v.input_denom],
           })),
         };
       },
