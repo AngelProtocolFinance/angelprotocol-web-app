@@ -41,6 +41,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
         classes="order-first col-span-2 md:order-none md:col-span-1"
         isSearching={queryStatus === QueryStatus.pending}
         onChange={handleSearch}
+        placeholder="Search organizations..."
       />
       {/* <Sorter /> */}
     </div>
