@@ -2,10 +2,9 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import TokenField from "components/TokenField";
 import { setDetails } from "slices/gift";
 import { appRoutes } from "constants/routes";
-import Amount from "./Amount";
-import AmountOptions from "./AmountOptions";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {
@@ -30,8 +29,13 @@ export default function Form({ classes = "" }) {
       className={`grid rounded-md w-full ${classes}`}
       autoComplete="off"
     >
-      <Amount />
-      <AmountOptions classes="mt-3" />
+      <TokenField<FV, "token">
+        name="token"
+        tokens={getValues("tokens")}
+        label="Enter the donation amount:"
+        scale={[10, 20, 50, 100, 250]}
+      />
+
       <Recipient classes="mt-8" />
 
       <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
