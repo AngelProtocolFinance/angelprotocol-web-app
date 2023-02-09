@@ -136,7 +136,7 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
-        url: `v2/registration/${ref}/submit`,
+        url: `v3/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),
