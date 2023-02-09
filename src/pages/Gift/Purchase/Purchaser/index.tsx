@@ -6,6 +6,8 @@ import { useBalancesQuery } from "services/apes";
 import { WithCosmosWallet } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { FormStep } from "slices/gift";
+import { IS_TEST } from "constants/env";
+import { denoms } from "constants/tokens";
 import Form from "./Form";
 import { schema } from "./schema";
 
@@ -45,7 +47,9 @@ export default function Purchaser({
     <Context
       chainId={wallet.chainId}
       state={state}
-      tokens={tokens.map((t) => ({ ...t, amount: "0" }))}
+      tokens={tokens
+        .filter((t) => IS_TEST || t.token_id === denoms.axlusdc)
+        .map((t) => ({ ...t, amount: "0" }))}
     />
   );
 }

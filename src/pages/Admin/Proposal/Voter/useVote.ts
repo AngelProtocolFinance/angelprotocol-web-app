@@ -3,7 +3,7 @@ import { VoteValues as VV } from "./types";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { useAdminResources } from "pages/Admin/Guard";
 import { invalidateJunoTags } from "services/juno";
-import { adminTags, customTags } from "services/juno/tags";
+import { adminTags } from "services/juno/tags";
 import CW3 from "contracts/CW3";
 import CW3Review from "contracts/CW3/CW3Review";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
@@ -34,10 +34,7 @@ export default function useVote() {
     await sendTx({
       msgs: [voteMsg],
       tagPayloads: [
-        invalidateJunoTags([
-          { type: "custom", id: customTags.proposalDetails },
-          { type: "admin", id: adminTags.proposals },
-        ]),
+        invalidateJunoTags([{ type: "admin", id: adminTags.proposals }]),
       ],
     });
   }

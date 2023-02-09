@@ -1,31 +1,25 @@
-import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../../types";
+import { BalanceProps } from "./types";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
 
-export default function Balance() {
-  const { watch, setValue } = useFormContext<DonateValues>();
-  const token = watch("token");
-  function setMaxVal(amount: number) {
-    setValue("token.amount", humanize(amount, 4), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  }
-
+export default function Balance({
+  token,
+  onSetAmount,
+  isGiftEnabled,
+}: BalanceProps) {
   return (
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={() => setMaxVal(token.balance)}
+        onClick={() => onSetAmount(token.balance)}
         className="text-right hover:text-blue text-xs flex"
       >
         BAL: {humanize(+token.balance, 3)} {token.symbol}
       </button>
-      {token.gift ? (
+      {token.gift && isGiftEnabled ? (
         <button
           type="button"
-          onClick={() => setMaxVal(token.gift || 0)}
+          onClick={() => onSetAmount(token.gift || 0)}
           className="text-right hover:text-blue text-xs flex"
         >
           <Icon type="Giftcard" className="w-4 h-4 text-green mr-0.5" />

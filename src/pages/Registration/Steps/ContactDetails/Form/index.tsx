@@ -83,7 +83,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           value === "other" && (
             <Field<FV>
               name="otherReferralMethod"
-              label="Other referral method"
+              label="Please provide additional information"
               required
               classes={{ container: "mt-4" }}
             />
@@ -93,7 +93,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Field
         name="goals"
         label="Goals"
-        placeholder="What is your goal working with Angel Protocol?"
+        placeholder="What is your goal working with Angel Giving?"
         classes={{ container: "mt-4" }}
         required
       />

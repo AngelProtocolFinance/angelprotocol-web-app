@@ -1,70 +1,43 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import {
-  FieldValues,
-  Path,
-  useController,
-  useFormContext,
-} from "react-hook-form";
-import { TokenWithAmount } from "types/slices";
-import Icon, { DrawerIcon } from "./Icon";
+import { SelectorProps } from "./types";
+import Icon, { DrawerIcon } from "../Icon";
 
-type BaseFormValue = { [index: string]: TokenWithAmount };
-
-export default function TokenSelector<
-  T extends FieldValues,
-  K extends Path<T>
->(props: {
-  tokens: TokenWithAmount[];
-  fieldName: T[K] extends TokenWithAmount ? K : never;
-  classes?: { container?: string; options?: string };
-}) {
-  const { setValue } = useFormContext<BaseFormValue>();
-  const {
-    field: { onChange: onTokenChange, value: token = initialToken },
-  } = useController<BaseFormValue>({
-    name: props.fieldName,
-  });
-
+export default function TokenSelector({
+  token,
+  onChange,
+  tokens,
+}: SelectorProps) {
   const [symbol, setSymbol] = useState("");
 
   const filtered =
     symbol === ""
-      ? props.tokens
-      : props.tokens.filter((t) => {
+      ? tokens
+      : tokens.filter((t) => {
           return t.symbol.includes(symbol.toLowerCase());
         });
 
   return (
     <Combobox
       value={token}
-      onChange={(token: TokenWithAmount) => {
-        onTokenChange(token);
-        setValue("token.amount", token.amount);
-      }}
+      onChange={onChange}
       as="div"
-      className={`${
-        props.classes?.container ?? ""
-      } flex items-center gap-1 w-full dark:text-gray`}
+      className="flex items-center gap-1 w-full dark:text-gray"
     >
       <span className="text-sm">{token.symbol}</span>
 
-      {props.tokens.length > 1 && (
+      {tokens.length > 1 && (
         <Combobox.Button className="">
           {({ open }) => <DrawerIcon isOpen={open} size={20} />}
         </Combobox.Button>
       )}
 
-      <Combobox.Options
-        className={`${
-          props.classes?.options ?? ""
-        } border border-prim p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none`}
-      >
+      <Combobox.Options className="absolute right-0 top-2 z-10 border border-prim p-1 mt-10 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none">
         <div className="flex p-2 gap-2 border border-prim rounded mb-1">
           <Icon type="Search" size={20} />
           <Combobox.Input
             placeholder="Search..."
-            disabled={props.tokens.length <= 1}
+            disabled={tokens.length <= 1}
             className="text-left text-sm focus:outline-none bg-transparent w-20"
             onChange={(event) => setSymbol(event.target.value)}
           />
@@ -91,16 +64,3 @@ export default function TokenSelector<
     </Combobox>
   );
 }
-
-const initialToken: TokenWithAmount = {
-  amount: "0",
-  approved: true,
-  balance: 0,
-  decimals: 6,
-  logo: "",
-  min_donation_amnt: 0,
-  name: "",
-  symbol: "",
-  token_id: "",
-  type: "evm-native",
-};
