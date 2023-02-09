@@ -1,29 +1,27 @@
-import { QueryStatus } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { setSearchText } from "slices/components/marketFilter";
 import useDebouncer from "hooks/useDebouncer";
 
-export default function Search({ classes = "" }: { classes?: string }) {
-  const dispatch = useSetter();
-  const [query, setQuery] = useState("");
+type Props = {
+  classes?: string;
+  isSearching: boolean;
+  onChange(query: string): void;
+};
 
-  const queryStatus = useGetter(
-    (state) => state.aws.queries.endowments?.status
-  );
+export default function Search({ classes = "", isSearching, onChange }: Props) {
+  const [query, setQuery] = useState("");
 
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
   useEffect(() => {
-    dispatch(setSearchText(debouncedQuery));
-  }, [debouncedQuery, dispatch]);
+    onChange(debouncedQuery);
+  }, [debouncedQuery, onChange]);
 
-  const isLoading = queryStatus === QueryStatus.pending || isDebouncing;
+  const isLoading = isSearching || isDebouncing;
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center  dark:text-gray-l2 border border-prim rounded-lg overflow-clip`}
+      className={`${classes} flex gap-2 items-center dark:text-gray-l2 border border-prim rounded-lg overflow-clip`}
     >
       <Icon
         type={isLoading ? "Loading" : "Search"}
