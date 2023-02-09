@@ -1,8 +1,7 @@
 import { Listbox } from "@headlessui/react";
-import { EndowmentsSortKey } from "types/aws";
+import { EndowmentsSortKey, Sort } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
-import { Sort } from "slices/components/marketFilter";
 import { setSort } from "slices/components/marketFilter";
 
 type Option = { name: string; key: EndowmentsSortKey };
