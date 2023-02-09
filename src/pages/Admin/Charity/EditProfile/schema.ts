@@ -40,6 +40,10 @@ const shape: SchemaShape<FormValues> = {
   social_media_url_facebook: url,
   social_media_url_twitter: url,
   social_media_url_linkedin: url,
+  social_media_url_discord: url,
+  social_media_url_instagram: url,
+  social_media_url_youtube: url,
+  social_media_url_tiktok: url,
 };
 
 export const schema = Yup.object().shape(shape);

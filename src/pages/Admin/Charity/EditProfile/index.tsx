@@ -44,7 +44,11 @@ function FormWithContext(props: EndowmentProfile) {
     registration_number: props.registration_number || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
-    social_media_url_twitter: props.social_media_urls.linkedin || "",
+    social_media_url_twitter: props.social_media_urls.twitter || "",
+    social_media_url_discord: props.social_media_urls.discord || "",
+    social_media_url_instagram: props.social_media_urls.instagram || "",
+    social_media_url_youtube: props.social_media_urls.youtube || "",
+    social_media_url_tiktok: props.social_media_urls.tiktok || "",
     street_address: props.street_address || "",
     tagline: props.tagline,
   };

@@ -157,6 +157,30 @@ export default function Form() {
           label="Twitter"
           placeholder="https://twitter.com/"
         />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_discord"
+          label="Discord"
+          placeholder="https://discord.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_instagram"
+          label="Instagram"
+          placeholder="https://instagram.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_youtube"
+          label="YouTube"
+          placeholder="https://youtube.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_tiktok"
+          label="Tiktok"
+          placeholder="https://tiktok.com/"
+        />
       </Group>
 
       <div className="flex gap-3">

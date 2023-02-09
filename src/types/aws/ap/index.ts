@@ -23,6 +23,10 @@ export type EndowmentProfile = EndowmentBase & {
     twitter?: string;
     facebook?: string;
     linkedin?: string;
+    instagram?: string;
+    discord?: string;
+    youtube?: string;
+    tiktok?: string;
   };
   street_address?: string;
 
@@ -59,6 +63,10 @@ export type EndowmentProfileUpdate = {
   social_media_url_facebook: string;
   social_media_url_linkedin: string;
   social_media_url_twitter: string;
+  social_media_url_discord: string;
+  social_media_url_instagram: string;
+  social_media_url_youtube: string;
+  social_media_url_tiktok: string;
   street_address: string;
   tagline: string;
   tier: number /** 1 - 3  */;
