@@ -78,7 +78,7 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         Your email address is confirmed!
       </h1>
       <Text classes="mb-8 mt-2">
-        Thank you for your interest in Angel Protocol! Your endowment is just a
+        Thank you for your interest in Angel Giving! Your endowment is just a
         few steps away.
       </Text>
       <Link
