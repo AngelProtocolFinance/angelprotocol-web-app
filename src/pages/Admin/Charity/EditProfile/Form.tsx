@@ -39,7 +39,7 @@ export default function Form() {
       </Link>
       <Group
         title="Public profile information"
-        description="Your logo and description will be used to populate your public
+        description="The following information will be used to populate your public
           profile."
       >
         <Field<FV>
