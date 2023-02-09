@@ -1,9 +1,9 @@
 import { QueryStatus } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import Icon from "components/Icon";
+import Search from "components/Search";
 import { useGetter, useSetter } from "store/accessors";
 import { setSearchText, toggle } from "slices/components/marketFilter";
-import Search from "./Search";
 
 // import Sorter from "./Sorter";
 
