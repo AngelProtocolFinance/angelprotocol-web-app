@@ -56,6 +56,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
       <button
         ref={ref}
         type="button"
+        aria-label="Add to favorites button"
         onClick={toogleBookmark}
         disabled={isLoading}
         className={`flex items-center gap-1 ${

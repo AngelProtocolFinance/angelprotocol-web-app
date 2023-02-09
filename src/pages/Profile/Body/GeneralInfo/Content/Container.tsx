@@ -35,7 +35,8 @@ function Header(props: {
       <span className="font-heading font-bold text-xl">{props.title}</span>
       <button
         onClick={props.onClick}
-        className="flex items-center justify-center p-px w-10 h-10 border border-prim rounded "
+        className="flex items-center justify-center p-px w-10 h-10 border border-prim rounded"
+        aria-label="toggle section content's visibility"
       >
         <Icon type={props.isOpen ? "Dash" : "Plus"} />
       </button>
