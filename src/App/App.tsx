@@ -38,10 +38,12 @@ export default function App() {
                 element={<Profile />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-              <Route
-                path={`${appRoutes.widget_config}/:id/*`}
-                element={<WidgetConfigurer />}
-              />
+
+              <Route path={appRoutes.widget_config}>
+                <Route index element={<WidgetConfigurer />} />
+                <Route path=":id" element={<WidgetConfigurer />} />
+              </Route>
+
               <Route
                 path={`${appRoutes.donations}/:address`}
                 element={<Donations />}
