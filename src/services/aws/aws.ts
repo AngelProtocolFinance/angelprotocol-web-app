@@ -1,9 +1,15 @@
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import {
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+  retry,
+} from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
   EndowmentCard,
   EndowmentProfile,
   EndowmentProfileUpdate,
+  EndowmentsQueryData,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
@@ -40,17 +46,19 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowments: builder.query<
+    endowmentCards: builder.query<
       PaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
+      EndowmentsQueryData
     >({
       providesTags: ["endowments"],
-      query: (params) => {
-        return {
-          url: `/v3/endowments/${network}`,
-          params: { ...params, return: endowCardFields },
-        };
-      },
+      query: (params) => createEndowmentsQuery(params, endowCardFields),
+    }),
+    endowmentIdNames: builder.query<
+      PaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
+      EndowmentsQueryData
+    >({
+      providesTags: ["endowments"],
+      query: (params) => createEndowmentsQuery(params, ENDOW_ID_NAME_FIELDS),
     }),
     walletProfile: builder.query<WalletProfile, string>({
       providesTags: ["walletProfile"],
@@ -99,12 +107,14 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useEndowmentsQuery,
+  useEndowmentCardsQuery,
+  useEndowmentIdNamesQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
-    endowments: { useLazyQuery: useLazyEndowmentsQuery },
+    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
+    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
@@ -112,10 +122,48 @@ export const {
   },
 } = aws;
 
+function createEndowmentsQuery(
+  params: EndowmentsQueryData,
+  returnFields: string | null
+): string | FetchArgs {
+  const urlParams = createEndowQueryParams(params, returnFields);
+
+  return {
+    url: `/v3/endowments/${network}`,
+    params: { ...urlParams },
+  };
+}
+
+function createEndowQueryParams(
+  params: EndowmentsQueryData,
+  returnFields: string | null
+): EndowmentsQueryParams {
+  return {
+    query: params.query || "matchall",
+    sort: params.sort
+      ? `${params.sort.key}+${params.sort.direction}`
+      : "default",
+    endow_types: (params.endow_types || []).join(",") || null,
+    tiers: (params.tiers || []).join(",") || null,
+    sdgs: (params.sdgs || []).join(",") || 0,
+    kyc_only: (params.kyc_only || []).join(",") || null,
+    ...(params.endow_designations
+      ? { endow_designation: params.endow_designations.join(",") }
+      : {}),
+    ...(params.hq_countries
+      ? { hq_country: params.hq_countries.join(",") }
+      : {}),
+    ...(params.active_in_countries
+      ? { active_in_countries: params.active_in_countries.join(",") }
+      : {}),
+    start: params.start || 0,
+    return: returnFields,
+  };
+}
+
 type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
   /** replace with cloudsearch specific field format */
   Pick<EndowmentProfileUpdate, "hq_city" | "hq_country" | "categories_sdgs">);
-
 //object format first to avoid duplicates
 const endowCardObj: {
   [key in EndowCardFields]: any; //we care only for keys
@@ -132,3 +180,11 @@ const endowCardObj: {
   endow_type: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
+
+const ENDOW_ID_NAME_OBJ: {
+  [key in Extract<EndowCardFields, "id" | "name">]: any;
+} = {
+  id: "",
+  name: "",
+};
+const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");

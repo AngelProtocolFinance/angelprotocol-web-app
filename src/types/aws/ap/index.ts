@@ -1,5 +1,5 @@
 import { Keplr } from "@keplr-wallet/types";
-import { CapitalizedEndowmentType } from "../../contracts";
+import { CapitalizedEndowmentType, EndowmentTier } from "../../contracts";
 import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
@@ -67,13 +67,14 @@ export type EndowmentProfileUpdate = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
+export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 
 export type EndowDesignation = "Non-Profit" | "Religious Non-Profit";
 
 export type EndowmentsQueryParams = {
   query: string; //set to "matchAll" if no search query
   sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
-  start?: number; //to load next page, set start to ItemCutOff + 1
+  start: number; //to load next page, set start to ItemCutOff + 1
   endow_types: string | null; // comma separated CapitalizedEndowmentType values
   endow_designation?: string;
   sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
@@ -81,6 +82,20 @@ export type EndowmentsQueryParams = {
   kyc_only: string | null; // comma separated boolean values
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
+  return: string | null;
+};
+
+export type EndowmentsQueryData = {
+  query?: string; //set to "matchAll" if no search query
+  sort?: Sort;
+  start?: number; //to load next page, set start to ItemCutOff + 1
+  endow_types?: CapitalizedEndowmentType[]; // comma separated CapitalizedEndowmentType values
+  endow_designations?: EndowDesignation[];
+  sdgs?: UNSDG_NUMS[]; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
+  tiers?: Exclude<EndowmentTier, "Level1">[]; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
+  kyc_only?: boolean[]; // comma separated boolean values
+  hq_countries?: string[]; //comma separated values
+  active_in_countries?: string[]; //comma separated values
 };
 
 export interface LeaderboardEntry {

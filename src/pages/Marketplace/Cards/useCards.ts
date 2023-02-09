@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import {
   updateAWSQueryData,
-  useEndowmentsQuery,
-  useLazyEndowmentsQuery,
+  useEndowmentCardsQuery,
+  useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
 
@@ -27,35 +27,35 @@ export default function useCards() {
   const { activities, headquarters } = region;
   const hqCountries = useMemo(
     () =>
-      Object.entries(headquarters)
-        .flatMap(([, countries]) => (countries ? countries : []))
-        .join(","),
+      Object.entries(headquarters).flatMap(([, countries]) =>
+        countries ? countries : []
+      ),
     [headquarters]
   );
 
   const activityCountries = useMemo(
     () =>
-      Object.entries(activities)
-        .flatMap(([, countries]) => (countries ? countries : []))
-        .join(","),
+      Object.entries(activities).flatMap(([, countries]) =>
+        countries ? countries : []
+      ),
     [activities]
   );
-  const designations = endow_designation.join(",");
 
-  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
-    query: searchText || "matchall",
-    sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_types: endow_types.join(",") || null,
-    tiers: tiers.join(",") || null,
-    sdgs: selectedSDGs.join(",") || 0,
-    kyc_only: kyc_only.join(",") || null,
-    ...(designations ? { endow_designation: designations } : {}),
-    ...(hqCountries ? { hq_country: hqCountries } : {}),
-    ...(activityCountries ? { active_in_countries: activityCountries } : {}),
+  const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
+    query: searchText,
+    sort,
+    endow_types,
+    tiers,
+    sdgs: selectedSDGs,
+    kyc_only,
+    endow_designations: endow_designation,
+    hq_countries: hqCountries,
+    active_in_countries: activityCountries,
     start: 0,
   });
 
-  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
+  const [loadMore, { isLoading: isLoadingNextPage }] =
+    useLazyEndowmentCardsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -71,7 +71,7 @@ export default function useCards() {
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
+          updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
           })
