@@ -23,7 +23,7 @@ export default function WidgetUrlGenerator({ onChange }: Props) {
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col gap-2 xl:w-4/5 text-sm font-normal font-body"
+        className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(onChange)}
       >
         <Search
