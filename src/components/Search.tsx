@@ -7,6 +7,7 @@ type Props = {
   isSearching?: boolean;
   placeholder?: string;
   onChange(query: string): void;
+  onFocus?(event: React.FocusEvent<HTMLInputElement, Element>): void;
 };
 
 export default function Search({
@@ -14,6 +15,7 @@ export default function Search({
   isSearching = false,
   placeholder = "",
   onChange,
+  onFocus,
 }: Props) {
   const [query, setQuery] = useState("");
 
@@ -39,6 +41,7 @@ export default function Search({
         onChange={({ target: { value } }) => setQuery(value)}
         className="focus:outline-none w-full py-2 pr-3 bg-transparent dark:placeholder:text-gray-l2"
         placeholder={placeholder}
+        onFocus={onFocus}
       />
     </div>
   );
