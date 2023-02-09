@@ -31,10 +31,10 @@ export default function Balance({ type }: Props) {
           return (
             <div className="flex gap-8 px-4">
               <Amount title="Total value" classes="mr-auto">
-                {humanize(total, 0)}
+                {humanize(total, 2)}
               </Amount>
-              <Amount title="Free balance">{humanize(free, 0)}</Amount>
-              <Amount title="Invested balance">{humanize(invested, 0)}</Amount>
+              <Amount title="Free balance">{humanize(free, 2)}</Amount>
+              <Amount title="Invested balance">{humanize(invested, 2)}</Amount>
             </div>
           );
         }}
@@ -55,7 +55,9 @@ function Amount({
       <p className="text-xs text-gray-d1 dark:text-gray mb-1 uppercase">
         {props.title}
       </p>
-      <span className="font-bold text-xl font-heading">$ {props.children}</span>
+      <span className="font-bold text-xl font-heading">
+        {props.children} <span className="text-xs font-normal">USD</span>
+      </span>
     </div>
   );
 }
