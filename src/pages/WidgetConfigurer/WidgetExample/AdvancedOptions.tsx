@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -35,31 +35,24 @@ export default function AdvancedOptions({ unfold, liquidPercentage }: Props) {
           <p className="text-xs uppercase font-bold mb-2">Split</p>
 
           <div className="grid grid-cols-2 gap-2 mb-6">
-            <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">
-              <p className="uppercase font-bold text-sm">Endowment</p>
-              <p className="text-xs mb-2 font-bold">
-                {100 - liquidPercentage}%
-              </p>
-              <p className="uppercase text-xs text-center font-body">
-                Compounded forever
-              </p>
-              <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
-            </div>
+            <Portion
+              title="Endowment"
+              percentage={100 - liquidPercentage}
+              action="Compounded forever"
+            />
 
-            <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">
-              <p className="uppercase font-bold text-sm">Current</p>
-              <p className="text-xs mb-2 font-bold">{liquidPercentage}%</p>
-              <p className="uppercase text-xs text-center font-body">
-                Instantly available
-              </p>
+            <Portion
+              title="Current"
+              percentage={liquidPercentage}
+              action="Instantly available"
+            >
               <div className="mt-5 mb-2.5 relative h-1 w-full bg-gray-l2 rounded-full overflow-visible">
                 <div
                   className="absolute-center h-3.5 w-3.5 bg-gray-l1 rounded-full"
                   style={{ left: `${liquidPercentage}%` }}
                 />
               </div>
-              <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
-            </div>
+            </Portion>
           </div>
 
           <div className="flex items-center gap-4 px-4 py-3 text-center border border-gray-l2 rounded">
@@ -71,6 +64,24 @@ export default function AdvancedOptions({ unfold, liquidPercentage }: Props) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function Portion(
+  props: PropsWithChildren<{
+    action: string;
+    title: string;
+    percentage: number;
+  }>
+) {
+  return (
+    <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">
+      <p className="uppercase font-bold text-sm">{props.title}</p>
+      <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
+      <p className="uppercase text-xs text-center font-body">{props.action}</p>
+      {props.children}
+      <p className="mt-auto font-bold text-center">{SPLIT_AMOUNT}</p>
     </div>
   );
 }
