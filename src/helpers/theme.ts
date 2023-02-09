@@ -9,9 +9,11 @@ const THEME_KEY = "__ap_theme";
 
 export function isPrevDark() {
   const userTheme = localStorage.getItem(THEME_KEY) as Theme | null;
-
-  // ignore system theme setting
-  return userTheme !== LIGHT;
+  const isSystemThemeDark = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
+  // user might not have previously selected a theme, so check system theme
+  return userTheme !== LIGHT || isSystemThemeDark;
 }
 
 const htmlNode = document.documentElement;
