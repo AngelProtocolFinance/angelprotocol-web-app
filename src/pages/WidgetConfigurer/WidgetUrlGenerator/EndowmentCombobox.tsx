@@ -8,6 +8,7 @@ import { FormValues } from "./schema";
 export default function EndowmentCombobox() {
   const {
     formState: { defaultValues },
+    watch,
   } = useFormContext<FormValues>();
 
   const [query, setQuery] = useState(defaultValues!.endowIdName!.name);
@@ -27,7 +28,7 @@ export default function EndowmentCombobox() {
   if (defaultValues!.endowIdName!.id !== 0) {
     return (
       <span className="text-base font-bold mb-3">
-        {defaultValues!.endowIdName!.name}
+        {watch("endowIdName.name")}
       </span>
     );
   }

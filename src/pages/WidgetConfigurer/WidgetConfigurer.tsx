@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -14,16 +15,23 @@ const NO_ID_MESSAGE = "Please select an organization";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
+  const endowId = idParamToNum(id);
   const { handleError } = useErrorContext();
 
   const [formValues, setFormValues] = useState<FormValues>({
     availableCurrencies: [],
-    endowIdName: { id: idParamToNum(id), name: "" },
+    endowIdName: { id: endowId, name: "" },
     hideText: false,
     hideAdvancedOptions: false,
     unfoldAdvancedOptions: false,
     liquidPercentage: 0,
   });
+
+  const methods = useForm<FormValues>({ defaultValues: formValues });
+
+  const [widgetSnippet, setWidgetSnippet] = useState(
+    getWidgetSnippet(methods.getValues())
+  );
 
   const [queryProfile] = useLazyProfileQuery();
 
@@ -33,23 +41,22 @@ export default function WidgetConfigurer() {
    */
   useEffect(() => {
     (async () => {
-      if (formValues.endowIdName.id === 0) {
+      if (endowId === 0) {
         return;
       }
 
       try {
-        const { data, isError, error } = await queryProfile(
-          formValues.endowIdName.id
-        );
+        const { data, isError, error } = await queryProfile(endowId);
 
         if (isError) {
           return handleError(error);
         }
 
         if (data) {
+          methods.setValue("endowIdName.name", data.name);
           setFormValues((prev) => ({
             ...prev,
-            endowIdName: { id: data.id, name: data.name },
+            endowIdName: { id: prev.endowIdName.id, name: data.name },
           }));
         }
       } catch (e) {
@@ -59,58 +66,53 @@ export default function WidgetConfigurer() {
     // eslint-disable-next-line
   }, []);
 
-  const [widgetSnippet, setWidgetSnippet] = useState(
-    getWidgetSnippet(formValues)
-  );
-
-  const handleUrlChange = useCallback((formValues: FormValues) => {
-    setFormValues(formValues);
-    setWidgetSnippet(getWidgetSnippet(formValues));
+  const handleUrlChange = useCallback((updatedValues: FormValues) => {
+    setFormValues(updatedValues);
+    setWidgetSnippet(getWidgetSnippet(updatedValues));
   }, []);
 
   return (
-    <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
-      <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
-        <h1 className={TITLE_STYLE}>
-          Accept donations from your website today!
-        </h1>
-        <div className="font-body text-sm sm:text-base">
-          <p>
-            Just configure your widget below, copy & paste the code on your
-            website and you're ready to go!
-          </p>
-          <p>
-            Your donors will be able to connect their crypto wallets and use
-            them to donate directly.
-          </p>
-        </div>
-      </section>
-      <div className="grid xl:grid-cols-2 max-xl:justify-center gap-10">
-        <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start justify-self-stretch">
-          <h2 className={TITLE_STYLE}>Configure your widget</h2>
-          <WidgetUrlGenerator
-            onChange={handleUrlChange}
-            defaultValues={formValues}
-          />
-
-          <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
-          <div className="flex items-center justify-center gap-4 h-32 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
-            <span className="w-full text-sm sm:text-base font-mono break-all">
-              {widgetSnippet}
-            </span>
-            <Copier
-              classes="w-10 h-10 hover:text-orange"
-              text={widgetSnippet}
-            />
+    <FormProvider {...methods}>
+      <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
+        <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
+          <h1 className={TITLE_STYLE}>
+            Accept donations from your website today!
+          </h1>
+          <div className="font-body text-sm sm:text-base">
+            <p>
+              Just configure your widget below, copy & paste the code on your
+              website and you're ready to go!
+            </p>
+            <p>
+              Your donors will be able to connect their crypto wallets and use
+              them to donate directly.
+            </p>
           </div>
         </section>
+        <div className="grid xl:grid-cols-2 max-xl:justify-center gap-10">
+          <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start justify-self-stretch">
+            <h2 className={TITLE_STYLE}>Configure your widget</h2>
+            <WidgetUrlGenerator onChange={handleUrlChange} />
 
-        <section className="flex flex-col gap-3 max-xl:items-center">
-          <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-          <WidgetExample {...formValues} />
-        </section>
+            <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
+            <div className="flex items-center justify-center gap-4 h-32 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
+              <span className="w-full text-sm sm:text-base font-mono break-all">
+                {widgetSnippet}
+              </span>
+              <Copier
+                classes="w-10 h-10 hover:text-orange"
+                text={widgetSnippet}
+              />
+            </div>
+          </section>
+
+          <section className="flex flex-col gap-3 max-xl:items-center">
+            <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
+            <WidgetExample {...formValues} />
+          </section>
+        </div>
       </div>
-    </div>
+    </FormProvider>
   );
 }
 
