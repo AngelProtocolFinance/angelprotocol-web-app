@@ -129,12 +129,13 @@ export const {
 
 type EndowCardFields = keyof (Omit<EndowmentCard, "hq" | "categories"> &
   /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country" | "categories_sdgs">);
+  Pick<EndowmentProfileUpdate, "hq_city" | "hq_country" | "categories_sdgs">);
 
 //object format first to avoid duplicates
 const endowCardObj: {
   [key in EndowCardFields]: any; //we care only for keys
 } = {
+  hq_city: "",
   hq_country: "",
   active_in_countries: "",
   categories_sdgs: "",
