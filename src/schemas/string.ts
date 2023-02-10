@@ -42,7 +42,7 @@ export const url = Yup.string().nullable().test({
 
 function isValidUrl(str: string | null | undefined) {
   if (!str) {
-    return false;
+    return true;
   }
 
   // https://www.freecodecamp.org/news/how-to-validate-urls-in-javascript/

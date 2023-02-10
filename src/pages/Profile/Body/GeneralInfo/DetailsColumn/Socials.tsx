@@ -25,6 +25,30 @@ export default function Socials() {
           iconType="Twitter"
         />
       )}
+      {profile.social_media_urls.discord && (
+        <SocialsIcon
+          href={profile.social_media_urls.discord}
+          iconType="Discord"
+        />
+      )}
+      {profile.social_media_urls.instagram && (
+        <SocialsIcon
+          href={profile.social_media_urls.instagram}
+          iconType="Instagram"
+        />
+      )}
+      {profile.social_media_urls.youtube && (
+        <SocialsIcon
+          href={profile.social_media_urls.youtube}
+          iconType="Youtube"
+        />
+      )}
+      {profile.social_media_urls.tiktok && (
+        <SocialsIcon
+          href={profile.social_media_urls.tiktok}
+          iconType="Tiktok"
+        />
+      )}
     </div>
   );
 }

@@ -33,13 +33,14 @@ const shape: SchemaShape<FormValues> = {
   }),
   name: requiredString,
   overview: requiredString,
-  hq_city: requiredString,
   active_in_countries: Yup.array().min(1, "required"),
-  contact_email: Yup.string().email("invalid email"),
-
   social_media_url_facebook: url,
   social_media_url_twitter: url,
   social_media_url_linkedin: url,
+  social_media_url_discord: url,
+  social_media_url_instagram: url,
+  social_media_url_youtube: url,
+  social_media_url_tiktok: url,
 };
 
 export const schema = Yup.object().shape(shape);

@@ -4,6 +4,7 @@ import { FlatFormValues, FormValues } from "./types";
 import { EndowmentProfile } from "types/aws";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
+import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
@@ -32,8 +33,6 @@ function FormWithContext(props: EndowmentProfile) {
   const flatInitial: FlatFormValues = {
     name: props.name,
     categories_sdgs: props.categories.sdgs,
-    contact_email: props.contact_email,
-    hq_city: props.hq.city || "",
     hq_country: props.hq.country || "",
     active_in_countries: props.active_in_countries,
     image: props.image || "",
@@ -44,7 +43,11 @@ function FormWithContext(props: EndowmentProfile) {
     registration_number: props.registration_number || "",
     social_media_url_facebook: props.social_media_urls.facebook || "",
     social_media_url_linkedin: props.social_media_urls.linkedin || "",
-    social_media_url_twitter: props.social_media_urls.linkedin || "",
+    social_media_url_twitter: props.social_media_urls.twitter || "",
+    social_media_url_discord: props.social_media_urls.discord || "",
+    social_media_url_instagram: props.social_media_urls.instagram || "",
+    social_media_url_youtube: props.social_media_urls.youtube || "",
+    social_media_url_tiktok: props.social_media_urls.tiktok || "",
     street_address: props.street_address || "",
     tagline: props.tagline,
   };
@@ -70,6 +73,13 @@ function FormWithContext(props: EndowmentProfile) {
   });
   return (
     <FormProvider {...methods}>
+      <Seo
+        title={`${props.name} profile update - Angel Giving`}
+        description={`${props.overview.slice(0, 140)}`}
+        name={`${props.name}`}
+        image={`${props.logo}`}
+        url={`https://app.angel.giving/profile/${props.id}`}
+      />
       <Form />
     </FormProvider>
   );
