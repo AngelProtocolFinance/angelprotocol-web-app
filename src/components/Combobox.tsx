@@ -1,22 +1,19 @@
 import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FieldValues,
   Path,
   useController,
   useFormContext,
 } from "react-hook-form";
-import { EndowmentIdName } from "types/aws";
-import { useEndowmentIdNamesQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
-import QueryLoader from "components/QueryLoader";
+import QueryLoader, { QueryState } from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
-import { unsdgs } from "constants/unsdgs";
 
-type BaseFormShape = { [index: string]: EndowmentIdName };
-
-const nameKey: keyof EndowmentIdName = "name";
+type BaseFormShape<T extends FieldValues, K extends Path<T>> = {
+  [index: string]: T[K];
+};
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
@@ -25,8 +22,11 @@ export default function Combobox<
   T extends FieldValues,
   K extends Path<T>
 >(props: {
-  fieldName: T[K] extends EndowmentIdName ? K : never;
+  fieldName: K;
+  optionsQueryState: QueryState<T[K][]>;
+  displayValue(value: T[K]): string;
   onReset?(): void;
+  onQueryChange(query: string): void;
   placeholder?: string;
   classes?: {
     container?: string;
@@ -36,27 +36,19 @@ export default function Combobox<
 }) {
   const {
     formState: { errors, isSubmitting },
-  } = useFormContext<BaseFormShape>();
+  } = useFormContext<BaseFormShape<T, K>>();
 
   const {
     field: { value, onChange, ref },
-  } = useController<BaseFormShape>({
-    name: props.fieldName,
+  } = useController<BaseFormShape<T, K>>({
+    name: props.fieldName as any,
   });
 
   const [query, setQuery] = useState(value.name);
 
   const [debouncedQuery] = useDebouncer(query, 500);
 
-  const { data, isLoading, isError } = useEndowmentIdNamesQuery({
-    query: debouncedQuery || "matchall",
-    sort: "default",
-    endow_types: "Charity",
-    tiers: "Level2,Level3",
-    sdgs: Object.keys(unsdgs).join(","),
-    kyc_only: "true,false",
-    start: 0,
-  });
+  useEffect(() => props.onQueryChange(debouncedQuery), [props, debouncedQuery]);
 
   return (
     <HuiCombobox
@@ -72,7 +64,7 @@ export default function Combobox<
         ref={ref}
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value)}
-        displayValue={(country: EndowmentIdName) => country.name}
+        displayValue={props.displayValue}
         className={`pl-4 ${props.classes?.input}`}
       />
 
@@ -81,11 +73,7 @@ export default function Combobox<
       </HuiCombobox.Button>
 
       <QueryLoader
-        queryState={{
-          data: data?.Items,
-          isLoading,
-          isError,
-        }}
+        queryState={props.optionsQueryState}
         messages={{
           loading: "loading options..",
           error: "failed to get country options",
@@ -126,7 +114,7 @@ export default function Combobox<
 
       <ErrorMessage
         errors={errors}
-        name={`${props.fieldName}.${nameKey}`}
+        name={props.fieldName as any}
         as="span"
         className={props.classes?.error}
       />
