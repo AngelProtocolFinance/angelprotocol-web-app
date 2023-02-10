@@ -40,20 +40,16 @@ export default function Form({ acct_type = "liquid", address }: Vault) {
           disabled={isSending}
           onClick={closeModal}
           type="button"
-          className="min-w-[8rem] py-2 btn-outline-filled"
+          className="text-sm min-w-[8rem] py-2 btn-outline-filled"
         >
           Cancel
         </button>
         <button
           disabled={isSending}
           type="submit"
-          className="min-w-[8rem] py-2 btn-orange"
+          className="text-sm min-w-[8rem] py-2 btn-orange"
         >
-          {isSending ? (
-            <LoadingStatus>Processing...</LoadingStatus>
-          ) : (
-            "Continue"
-          )}
+          {isSending ? <LoadingStatus>Processing...</LoadingStatus> : "Invest"}
         </button>
       </div>
     </Dialog.Panel>
