@@ -119,6 +119,7 @@ export const {
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
