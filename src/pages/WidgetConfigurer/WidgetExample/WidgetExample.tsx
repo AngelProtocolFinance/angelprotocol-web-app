@@ -1,17 +1,20 @@
 import APLogo from "components/APLogo";
+import { getPossessiveForm } from "helpers";
 import { FormValues } from "../WidgetUrlGenerator/schema";
 import Donater from "./Donater";
 
 type Props = FormValues;
 
 export default function WidgetExample(props: Props) {
+  const endowName = props.endowIdName.name || "ENDOWMENT_NAME";
+
   return (
     <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-gray-l2 rounded text-gray-d2 bg-white">
       <div className="grid grid-rows-[1fr_auto] gap-10 h-full">
         <div className="flex flex-col gap-3 max-w-3xl h-full mx-auto px-5">
           <header className="flex justify-center items-center gap-10 w-full h-24 z-10">
             <h1 className="text-xl font-heading font-bold">
-              ENDOWMENT_NAME's endowment
+              {getPossessiveForm(endowName)} endowment
             </h1>
             <button className="btn btn-orange px-3 h-10 rounded-lg text-xs normal-case">
               juno1k...pqc6y5
@@ -21,9 +24,9 @@ export default function WidgetExample(props: Props) {
             {!props.hideText && (
               <>
                 <p className="font-body text-xs">
-                  Donate today to ENDOWMENT_NAME's endowment. Your donation will
-                  be protected and compounded in perpetuity to provide
-                  ENDOWMENT_NAME with a long-term, sustainable runway. Give
+                  Donate today to {getPossessiveForm(endowName)} endowment. Your
+                  donation will be protected and compounded in perpetuity to
+                  provide {endowName} with a long-term, sustainable runway. Give
                   once, give forever!
                 </p>
                 <p className="font-body text-xs">
