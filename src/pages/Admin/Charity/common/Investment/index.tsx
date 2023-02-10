@@ -3,7 +3,9 @@ import { useModalContext } from "contexts/ModalContext";
 import { humanize, maskAddress } from "helpers";
 import Investor from "./Investor";
 
-export default function Investment(props: Vault) {
+type Action = "invest" | "redeem";
+
+export default function Investment(props: Vault & { action: Action }) {
   const { address, invested, symbol } = props;
   const { showModal } = useModalContext();
 
