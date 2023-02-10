@@ -40,5 +40,7 @@ export enum adminRoutes {
   //charity
   edit_profile = "edit-profile",
   withdraws = "withdraws",
-  investments = "investments",
+  settings = "settings",
+  invest = "invest-dashboard",
+  account = "account",
 }
