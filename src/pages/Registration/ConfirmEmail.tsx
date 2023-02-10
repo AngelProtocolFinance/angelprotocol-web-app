@@ -28,7 +28,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Confirm your email address
       </h1>
 
-      <p className="text-center text-white/75 mb-8 w-full text-lg">
+      <p className="text-center text-gray-d1 dark:text-gray-l2 mb-8 w-full text-lg">
         We sent an email to <span className="font-semibold">{email}</span>.
         Please confirm your email by clicking on the link in the message.
       </p>
@@ -46,11 +46,11 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Resend verification email
       </button>
 
-      <h3 className="font-bold mb-2 text-center">
+      <h3 className="font-bold text-gray-d1 dark:text-gray-l2 mb-2 text-center">
         Having trouble receiving our confirmation emails?
       </h3>
-      <p className="text-center text-white/75 mb-8 w-full text-lg">
-        Contact us at: support@angelprotocol.io
+      <p className="text-center text-gray-d1 dark:text-gray-l2 mb-8 w-full text-lg">
+        Contact us at: support@angel.giving
       </p>
     </div>
   );

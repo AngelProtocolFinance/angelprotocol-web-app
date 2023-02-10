@@ -30,11 +30,11 @@ export default function Donate() {
         {(profile) => (
           <>
             <Seo
-              title={`Donate to ${profile.name} - Angel Protocol`}
+              title={`Donate to ${profile.name} - Angel Giving`}
               description={`${profile.overview.slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
-              url={`https://app.angelprotocol.io/donate/${profile.id}`}
+              url={`https://app.angel.giving/donate/${profile.id}`}
             />
             <Steps
               name={profile.name}

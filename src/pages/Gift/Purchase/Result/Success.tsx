@@ -17,7 +17,7 @@ export default function Success(props: Props) {
     <div className={`grid justify-items-center ${props.classes ?? ""}`}>
       <Icon type="CheckCircle" size={109.8} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl font-bold text-center">
-        Thank you for purchasing Angel Protocol Giftcard
+        Thank you for purchasing Angel Giving Giftcard
       </h3>
 
       {hasRecipient ? (

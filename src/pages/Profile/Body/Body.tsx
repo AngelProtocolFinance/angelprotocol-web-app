@@ -14,11 +14,11 @@ export default function Body() {
   return (
     <div className="flex justify-center items-center w-full h-full">
       <Seo
-        title={`Donate to ${profile.name} - Angel Protocol`}
+        title={`${profile.name} - Angel Giving`}
         description={`${profile.overview.slice(0, 140)}`}
         name={`${profile.name}`}
         image={`${profile.logo}`}
-        url={`https://app.angelprotocol.io/profile/${profile.id}`}
+        url={`https://app.angel.giving/profile/${profile.id}`}
       />
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs

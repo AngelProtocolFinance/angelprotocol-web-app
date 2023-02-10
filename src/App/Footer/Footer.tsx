@@ -16,7 +16,7 @@ function Footer() {
       <section className="padded-container flex flex-col items-center gap-2 w-full pt-6 pb-12">
         <Socials />
         <p className="font-body font-normal text-white text-center text-2xs uppercase">
-          Copyright {new Date().getFullYear()} Angel Protocol. All rights
+          Copyright {new Date().getFullYear()} Angel Giving. All rights
           reserved.
         </p>
       </section>
