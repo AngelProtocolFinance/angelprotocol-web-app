@@ -58,8 +58,8 @@ import { FiMenu, FiMoon } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoDash, GoLinkExternal } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
-import { ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdSettings } from "react-icons/io";
+import { ImDroplet, ImFilePicture } from "react-icons/im";
+import { IoMdDownload, IoMdLock, IoMdSettings } from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -134,9 +134,11 @@ export const icons = {
   Like: AiOutlineLike,
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
+  Liquid: ImDroplet,
   ListOl: FaListOl,
   ListUl: FaListUl,
   Loading: VscLoading,
+  Lock: IoMdLock,
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,

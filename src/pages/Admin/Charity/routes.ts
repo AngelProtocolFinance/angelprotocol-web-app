@@ -1,3 +1,4 @@
-export const routes = {
-  invest: "invest",
-} as const;
+export const settings = {
+  index: ".",
+  edit: "edit",
+};
