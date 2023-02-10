@@ -25,7 +25,11 @@ export default function EndowmentCombobox() {
   });
 
   if (defaultValues!.endowIdName!.id !== 0) {
-    return null;
+    return (
+      <span className="text-base font-bold mb-3">
+        {defaultValues!.endowIdName!.name}
+      </span>
+    );
   }
 
   /* ID from defaultValues is the URL param endow ID*/

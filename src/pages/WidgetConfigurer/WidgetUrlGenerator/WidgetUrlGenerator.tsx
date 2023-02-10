@@ -21,6 +21,7 @@ export default function WidgetUrlGenerator({ defaultValues, onChange }: Props) {
         className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(onChange)}
       >
+        <label>Endowment name:</label>
         <EndowmentCombobox />
 
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
