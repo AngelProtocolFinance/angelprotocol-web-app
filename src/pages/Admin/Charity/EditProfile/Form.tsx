@@ -86,6 +86,7 @@ export default function Form() {
         <RichTextEditor<FV>
           fieldName="overview"
           placeHolder="A short overview of your charity"
+          charLimit={4000}
           classes={{
             container:
               "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3 min-h-[15rem]",
