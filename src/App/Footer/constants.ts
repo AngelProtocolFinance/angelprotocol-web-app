@@ -64,35 +64,35 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "For Non-profit orgs.",
-        href: "https://angelprotocol.io/non-profit-organizations/",
+        href: "https://angel.giving/non-profit-organizations/",
       },
-      { text: "For Donors", href: "https://angelprotocol.io/donors/" },
+      { text: "For Donors", href: "https://angel.giving/donors/" },
       {
         text: "For Changemakers",
-        href: "https://angelprotocol.io/changemakers/",
+        href: "https://angel.giving/changemakers/",
       },
       { text: "For Investors", href: "https://angelprotocol.io/investors/" },
       {
         text: "For CSR Partners",
-        href: "https://angelprotocol.io/csr-partners/",
+        href: "https://angel.giving/csr-partners/",
       },
       {
         text: "For Giftcards",
-        href: "https://app.angelprotocol.io/gift",
+        href: "https://app.angel.giving/gift",
       },
     ],
   },
   {
     title: "About",
     links: [
-      { text: "About us", href: "https://angelprotocol.io/about/" },
+      { text: "About us", href: "https://angel.giving/about/" },
       {
         text: "Meet the team",
-        href: "https://angelprotocol.io/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY",
+        href: "https://angel.giving/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY",
       },
-      { text: "News", href: "https://angelprotocol.io/news/" },
-      { text: "Stories", href: "https://angelprotocol.io/stories/" },
-      { text: "Careers", href: "https://angelprotocol.io/careers/" },
+      { text: "News", href: "https://angel.giving/news/" },
+      { text: "Stories", href: "https://angel.giving/stories/" },
+      { text: "Careers", href: "https://angel.giving/careers/" },
     ],
   },
   {
@@ -108,11 +108,11 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "Privacy policy",
-        href: "https://angelprotocol.io/privacy-policy/",
+        href: "https://angel.giving/privacy-policy/",
       },
       {
         text: "Terms of Use",
-        href: "https://angelprotocol.io/terms-of-use/",
+        href: "https://angel.giving/terms-of-use/",
       },
     ],
   },
