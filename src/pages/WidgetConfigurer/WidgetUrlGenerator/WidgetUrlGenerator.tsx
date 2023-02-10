@@ -26,7 +26,7 @@ export default function WidgetUrlGenerator({ defaultValues, onChange }: Props) {
 
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
 
-        <span>Available currencies:</span>
+        <label>Available currencies:</label>
         <DenomSelector />
 
         <CheckField<FormValues> name="hideAdvancedOptions">
