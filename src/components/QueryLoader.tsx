@@ -60,7 +60,7 @@ export default function QueryLoader<T>({
 
     if (filterFn) {
       const filtered = data.filter(filterFn);
-      if (isEmpty(data)) {
+      if (isEmpty(filtered)) {
         return renderMessage(
           (msg) => <Status icon="Info">{msg || "No data"}</Status>,
           messages.empty,
