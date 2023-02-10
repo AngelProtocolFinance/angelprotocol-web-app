@@ -94,8 +94,10 @@ export default function WidgetConfigurer() {
             <h2 className={TITLE_STYLE}>Configure your widget</h2>
             <WidgetUrlGenerator onChange={handleUrlChange} />
 
-            <h2 className={`${TITLE_STYLE} mt-10`}>Copy / paste this URL:</h2>
-            <div className="flex items-center justify-center gap-4 h-32 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
+            <h2 className={`${TITLE_STYLE} mt-10`}>
+              Copy / paste this code snippet:
+            </h2>
+            <div className="flex items-center justify-center gap-4 h-32 w-full max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
               <span className="w-full text-sm sm:text-base font-mono break-all">
                 {widgetSnippet}
               </span>
