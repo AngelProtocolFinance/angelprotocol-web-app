@@ -51,8 +51,6 @@ export type EndowmentProfileUpdate = {
   active_in_countries: string[];
   categories_general: string[];
   categories_sdgs: UNSDG_NUMS[];
-  contact_email: string;
-  hq_city: string;
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;

@@ -33,8 +33,6 @@ function FormWithContext(props: EndowmentProfile) {
   const flatInitial: FlatFormValues = {
     name: props.name,
     categories_sdgs: props.categories.sdgs,
-    contact_email: props.contact_email,
-    hq_city: props.hq.city || "",
     hq_country: props.hq.country || "",
     active_in_countries: props.active_in_countries,
     image: props.image || "",
