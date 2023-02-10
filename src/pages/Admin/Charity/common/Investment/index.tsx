@@ -5,8 +5,12 @@ import Investor from "./Investor";
 
 type Action = "invest" | "redeem";
 
-export default function Investment(props: Vault & { action: Action }) {
+export default function Investment({
+  action,
+  ...props
+}: Vault & { action: Action }) {
   const { address, invested, symbol } = props;
+
   const { showModal } = useModalContext();
 
   return (

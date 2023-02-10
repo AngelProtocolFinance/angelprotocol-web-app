@@ -19,7 +19,7 @@ export default function Positions({ type }: Props) {
     <div className="grid gap-3">
       <QueryLoader
         queryState={queryState}
-        filterFn={(inv) => inv.invested > 0}
+        // filterFn={(inv) => inv.invested > 0}
         messages={{
           loading: "Fetching investments..",
           error: "Failed to fetch investments",
