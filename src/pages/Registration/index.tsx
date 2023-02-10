@@ -17,7 +17,7 @@ export default function Registration() {
     >
       <Seo
         title="Registration Portal - Angel Giving"
-        url="https://app.angelprotocol.io/register"
+        url="https://app.angel.giving/register"
       />
       <Routes>
         <Route
