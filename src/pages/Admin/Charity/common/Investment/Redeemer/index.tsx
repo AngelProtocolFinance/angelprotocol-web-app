@@ -16,8 +16,8 @@ export default function Redeemer(v: Vault) {
     symbol: v.symbol,
     token_id: v.input_denom,
     type: "juno-native",
-    amount: "0",
-    balance: v.balance,
+    amount: `${v.invested}`,
+    balance: v.invested,
   };
 
   const methods = useForm<FormValues>({
