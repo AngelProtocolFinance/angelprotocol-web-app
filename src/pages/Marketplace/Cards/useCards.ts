@@ -27,30 +27,31 @@ export default function useCards() {
   const { activities, headquarters } = region;
   const hqCountries = useMemo(
     () =>
-      Object.entries(headquarters).flatMap(([, countries]) =>
-        countries ? countries : []
-      ),
+      Object.entries(headquarters)
+        .flatMap(([, countries]) => (countries ? countries : []))
+        .join(","),
     [headquarters]
   );
 
   const activityCountries = useMemo(
     () =>
-      Object.entries(activities).flatMap(([, countries]) =>
-        countries ? countries : []
-      ),
+      Object.entries(activities)
+        .flatMap(([, countries]) => (countries ? countries : []))
+        .join(","),
     [activities]
   );
+  const designations = endow_designation.join(",");
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
-    query: searchText,
-    sort,
-    endow_types,
-    tiers,
-    sdgs: selectedSDGs,
-    kyc_only,
-    endow_designations: endow_designation,
-    hq_countries: hqCountries,
-    active_in_countries: activityCountries,
+    query: searchText || "matchall",
+    sort: sort ? `${sort.key}+${sort.direction}` : "default",
+    endow_types: endow_types.join(",") || null,
+    tiers: tiers.join(",") || null,
+    sdgs: selectedSDGs.join(",") || 0,
+    kyc_only: kyc_only.join(",") || null,
+    ...(designations ? { endow_designation: designations } : {}),
+    ...(hqCountries ? { hq_country: hqCountries } : {}),
+    ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
   });
 
