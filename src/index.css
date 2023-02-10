@@ -223,4 +223,18 @@
   .box-delay-2 {
     animation-delay: 600ms;
   }
+
+  /** remove arrows from input type=number*/
+  .text-field {
+    -moz-appearance: textfield;
+  }
+  .text-field:hover,
+  .text-field:focus {
+    -moz-appearance: number-input;
+  }
+  .text-field::-webkit-inner-spin-button,
+  .text-field::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }

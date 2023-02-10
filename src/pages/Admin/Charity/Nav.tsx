@@ -11,6 +11,9 @@ export default function Nav() {
       <NavLink end to={adminRoutes.withdraws} className={styler}>
         Withdraws
       </NavLink>
+      <NavLink end to={adminRoutes.settings} className={styler}>
+        Settings
+      </NavLink>
       <NavLink end to={adminRoutes.edit_profile} className={styler}>
         Edit Profile
       </NavLink>
