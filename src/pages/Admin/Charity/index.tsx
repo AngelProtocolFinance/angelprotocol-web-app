@@ -3,6 +3,7 @@ import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
+import Account from "./Account";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
@@ -26,6 +27,10 @@ export default function Charity() {
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
         <Route path={adminRoutes.withdraws} element={<Withdraws />} />
         <Route path={routes.invest} element={<Invest />} />
+        <Route path={routes.account}>
+          <Route path="liquid" element={<Account type="liquid" />} />
+          <Route path="locked" element={<Account type="locked" />} />
+        </Route>
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route index element={<Dashboard />} />
       </Route>

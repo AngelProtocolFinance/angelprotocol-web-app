@@ -18,6 +18,12 @@ export default function Nav() {
       <NavLink to={routes.invest} className={styler}>
         Invest dashboard
       </NavLink>
+      <NavLink to={routes.account + "/liquid"} className={styler}>
+        Liquid Account
+      </NavLink>
+      <NavLink to={routes.account + "/locked"} className={styler}>
+        Locked Account
+      </NavLink>
       <NavLink to={adminRoutes.proposals} className={styler}>
         Proposals
       </NavLink>
