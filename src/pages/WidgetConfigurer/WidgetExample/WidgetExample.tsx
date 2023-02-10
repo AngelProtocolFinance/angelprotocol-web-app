@@ -1,11 +1,10 @@
-import { useFormContext } from "react-hook-form";
 import APLogo from "components/APLogo";
 import { FormValues } from "../WidgetUrlGenerator/schema";
 import Donater from "./Donater";
 
-export default function WidgetExample() {
-  const { watch, getValues } = useFormContext<FormValues>();
+type Props = FormValues;
 
+export default function WidgetExample(props: Props) {
   return (
     <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-gray-l2 rounded text-gray-d2 bg-white">
       <div className="grid grid-rows-[1fr_auto] gap-10 h-full">
@@ -19,7 +18,7 @@ export default function WidgetExample() {
             </button>
           </header>
           <section className="flex flex-col items-center gap-5 h-full">
-            {!watch("hideText") && (
+            {!props.hideText && (
               <>
                 <p className="font-body text-xs">
                   Donate today to ENDOWMENT_NAME's endowment. Your donation will
@@ -50,7 +49,7 @@ export default function WidgetExample() {
                 <p className="text-center">Finalize payment</p>
                 <div className="mt-3 h-2 w-full col-span-full bg-gray-l2 rounded-full overflow-hidden" />
               </div>
-              <Donater {...getValues()} />
+              <Donater {...props} />
             </div>
           </section>
         </div>
