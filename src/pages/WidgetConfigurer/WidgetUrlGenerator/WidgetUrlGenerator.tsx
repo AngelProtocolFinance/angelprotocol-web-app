@@ -21,10 +21,12 @@ export default function WidgetUrlGenerator({ defaultValues, onChange }: Props) {
         className="flex flex-col gap-2 xl:w-full xl:max-w-md text-sm font-normal font-body"
         onSubmit={methods.handleSubmit(onChange)}
       >
-        <Combobox<FormValues, "endowIdName">
-          fieldName="endowIdName"
-          classes={{ container: "min-h-[3rem]" }}
-        />
+        {defaultValues.endowIdName.id === 0 && (
+          <Combobox<FormValues, "endowIdName">
+            fieldName="endowIdName"
+            classes={{ container: "min-h-[3rem]" }}
+          />
+        )}
 
         <CheckField<FormValues> name="hideText">Hide text</CheckField>
 

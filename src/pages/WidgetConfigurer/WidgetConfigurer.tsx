@@ -1,5 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useLazyProfileQuery } from "services/aws/aws";
+import { useErrorContext } from "contexts/ErrorContext";
 import Copier from "components/Copier";
 import { idParamToNum } from "helpers";
 import WidgetExample from "./WidgetExample";
@@ -12,6 +14,7 @@ const NO_ID_MESSAGE = "Please select an organization";
 
 export default function WidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
+  const { handleError } = useErrorContext();
 
   const [formValues, setFormValues] = useState<FormValues>({
     availableCurrencies: [],
@@ -21,6 +24,40 @@ export default function WidgetConfigurer() {
     unfoldAdvancedOptions: false,
     liquidPercentage: 0,
   });
+
+  const [queryProfile] = useLazyProfileQuery();
+
+  /**
+   * some consumers can only store countryName:string
+   * in this case, get flag for them when this component loads
+   */
+  useEffect(() => {
+    (async () => {
+      if (formValues.endowIdName.id === 0) {
+        return;
+      }
+
+      try {
+        const { data, isError, error } = await queryProfile(
+          formValues.endowIdName.id
+        );
+
+        if (isError) {
+          return handleError(error);
+        }
+
+        if (data) {
+          setFormValues((prev) => ({
+            ...prev,
+            endowIdName: { id: data.id, name: data.name },
+          }));
+        }
+      } catch (e) {
+        handleError(e);
+      }
+    })();
+    // eslint-disable-next-line
+  }, []);
 
   const [widgetSnippet, setWidgetSnippet] = useState(
     getWidgetSnippet(formValues)
