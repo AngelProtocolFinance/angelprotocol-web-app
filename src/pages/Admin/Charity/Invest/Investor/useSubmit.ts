@@ -6,7 +6,6 @@ import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
-import { junoDenom } from "constants/tokens";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();
@@ -23,7 +22,7 @@ export default function useSubmit(vault: string, type: AccountType) {
         [
           vault,
           {
-            info: { native: junoDenom },
+            info: { native: token.token_id },
             amount: scaleToStr(token.amount),
           },
         ],
