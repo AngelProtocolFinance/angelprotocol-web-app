@@ -39,9 +39,9 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
       {/** sidebar */}
       <div
         aria-hidden={!isOpen}
-        className="max-md:fixed max-md:z-20 max-md:inset-0 max-md:bg-white max-md:bg-black/60 aria-hidden:hidden grid grid-cols-[auto_1fr]"
+        className="max-md:fixed max-md:z-20 max-md:inset-0 max-md:bg-black/60 aria-hidden:hidden grid grid-cols-[auto_1fr]"
       >
-        <div className="bg-white">{children}</div>
+        <div className="bg-white dark:bg-blue-d6">{children}</div>
         <div
           onClick={(e) => {
             e.stopPropagation();
