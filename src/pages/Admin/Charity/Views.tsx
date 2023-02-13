@@ -19,7 +19,7 @@ export default function Views() {
       <Route index element={<Dashboard />} />
       <Route path={adminRoutes.widget_config}>
         <Route index element={<WidgetConfigurer />} />
-        <Route path=":id" element={<WidgetConfigurer />} />
+        <Route path=":endowId" element={<WidgetConfigurer />} />
       </Route>
     </Routes>
   );
