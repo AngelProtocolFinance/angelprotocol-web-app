@@ -8,6 +8,7 @@ export default function EndowmentCombobox() {
     watch,
   } = useFormContext<FormValues>();
 
+  /* ID from defaultValues is the URL param endow ID*/
   if (defaultValues!.endowIdName!.id !== 0) {
     return (
       <span className="text-base font-bold mb-3">
@@ -16,6 +17,5 @@ export default function EndowmentCombobox() {
     );
   }
 
-  /* ID from defaultValues is the URL param endow ID*/
   return <Combobox />;
 }
