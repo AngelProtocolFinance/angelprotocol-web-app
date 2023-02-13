@@ -67,7 +67,7 @@ export default function Combobox() {
             }}
             messages={{
               loading: "loading options..",
-              error: "failed to get country options",
+              error: "failed to get endowments",
               empty: debouncedQuery
                 ? `${debouncedQuery} not found`
                 : "no options found",
