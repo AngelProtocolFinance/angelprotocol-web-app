@@ -7,7 +7,7 @@ import useWidgetConfigurer from "./useWidgetConfigurer";
 const TITLE_STYLE = "text-lg sm:text-2xl font-heading font-bold";
 
 export default function WidgetConfigurer() {
-  const { formValues, widgetSnippet, methods, handleUrlChange } =
+  const { updateTriggered, widgetSnippet, methods, handleUpdateSnippet } =
     useWidgetConfigurer();
 
   return (
@@ -31,7 +31,7 @@ export default function WidgetConfigurer() {
         <div className="grid xl:grid-cols-2 max-xl:justify-center gap-10">
           <section className="xl:order-2 flex flex-col gap-3 items-center xl:items-start justify-self-stretch">
             <h2 className={TITLE_STYLE}>Configure your widget</h2>
-            <WidgetUrlGenerator onChange={handleUrlChange} />
+            <WidgetUrlGenerator onChange={handleUpdateSnippet} />
 
             <h2 className={`${TITLE_STYLE} mt-10`}>
               Copy / paste this code snippet:
@@ -49,7 +49,7 @@ export default function WidgetConfigurer() {
 
           <section className="flex flex-col gap-3 max-xl:items-center">
             <h2 className={TITLE_STYLE}>That's what our widget looks like:</h2>
-            <WidgetExample {...formValues} />
+            <WidgetExample trigger={updateTriggered} />
           </section>
         </div>
       </div>

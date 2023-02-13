@@ -1,12 +1,18 @@
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import APLogo from "components/APLogo";
 import { getPossessiveForm } from "helpers";
 import { FormValues } from "../WidgetUrlGenerator/schema";
 import Donater from "./Donater";
 
-type Props = FormValues;
+export default function WidgetExample({ trigger }: { trigger: boolean }) {
+  const { getValues } = useFormContext<FormValues>();
 
-export default function WidgetExample(props: Props) {
-  const endowName = props.endowIdName.name || "ENDOWMENT_NAME";
+  const [formValues, setFormValues] = useState<FormValues>(getValues());
+
+  useEffect(() => setFormValues(getValues()), [trigger, getValues]);
+
+  const endowName = formValues.endowIdName.name || "ENDOWMENT_NAME";
 
   return (
     <div className="h-full overflow-y-auto scroller w-full xl:w-5/6 max-h-[900px] border border-gray-l2 rounded text-gray-d2 bg-white">
@@ -21,7 +27,7 @@ export default function WidgetExample(props: Props) {
             </button>
           </header>
           <section className="flex flex-col items-center gap-5 h-full">
-            {!props.hideText && (
+            {!formValues.hideText && (
               <>
                 <p className="font-body text-xs">
                   Donate today to {getPossessiveForm(endowName)} endowment. Your
@@ -52,7 +58,7 @@ export default function WidgetExample(props: Props) {
                 <p className="text-center">Finalize payment</p>
                 <div className="mt-3 h-2 w-full col-span-full bg-gray-l2 rounded-full overflow-hidden" />
               </div>
-              <Donater {...props} />
+              <Donater {...formValues} />
             </div>
           </section>
         </div>

@@ -13,19 +13,21 @@ export default function useWidgetConfigurer() {
   const { id } = useParams<{ id: string }>();
   const endowId = idParamToNum(id);
 
-  const [formValues, setFormValues] = useState<FormValues>({
-    availableCurrencies: [],
-    endowIdName: { id: endowId, name: "" },
-    hideText: false,
-    hideAdvancedOptions: false,
-    unfoldAdvancedOptions: false,
-    liquidPercentage: 0,
+  const [updateTriggered, setUpdateTriggered] = useState(false);
+
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      availableCurrencies: [],
+      endowIdName: { id: endowId, name: "" },
+      hideText: false,
+      hideAdvancedOptions: false,
+      unfoldAdvancedOptions: false,
+      liquidPercentage: 0,
+    },
   });
 
-  const methods = useForm<FormValues>({ defaultValues: formValues });
-
   const [widgetSnippet, setWidgetSnippet] = useState(
-    getWidgetSnippet(formValues)
+    getWidgetSnippet(methods.getValues())
   );
 
   const { handleError } = useErrorContext();
@@ -51,10 +53,6 @@ export default function useWidgetConfigurer() {
 
         if (data) {
           methods.setValue("endowIdName.name", data.name);
-          setFormValues((prev) => ({
-            ...prev,
-            endowIdName: { id: prev.endowIdName.id, name: data.name },
-          }));
         }
       } catch (e) {
         handleError(e);
@@ -63,19 +61,16 @@ export default function useWidgetConfigurer() {
     // eslint-disable-next-line
   }, []);
 
-  const handleUrlChange = useCallback(
-    (updatedValues: FormValues) => {
-      setFormValues(updatedValues);
-      setWidgetSnippet(getWidgetSnippet(updatedValues));
-    },
-    [setFormValues]
-  );
+  const handleUpdateSnippet = useCallback((updatedValues: FormValues) => {
+    setWidgetSnippet(getWidgetSnippet(updatedValues));
+    setUpdateTriggered((prev) => !prev);
+  }, []);
 
   return {
-    formValues,
+    updateTriggered,
     methods,
     widgetSnippet,
-    handleUrlChange,
+    handleUpdateSnippet,
   };
 }
 
