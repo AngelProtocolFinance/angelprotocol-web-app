@@ -6,6 +6,7 @@ import {
   EndowmentDetails,
   Proposal,
   ReviewCW3Config,
+  YieldVault,
 } from "types/contracts";
 import { TxArgs } from "hooks/useCosmosTxSender";
 
@@ -79,3 +80,16 @@ export type CountryOption = {
 };
 
 export type Regions = { [region: string]: string[] };
+
+export type EndowmentAsset = {
+  symbol: string;
+  free: number;
+  invested: number;
+  total: number;
+};
+
+export type Vault = YieldVault & {
+  balance: number;
+  invested: number;
+  symbol: string;
+};

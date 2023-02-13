@@ -136,14 +136,14 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
-        url: `v2/registration/${ref}/submit`,
+        url: `v3/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),
       transformErrorResponse(err, meta, arg) {
         return {
           status: err.status,
-          data: "Registration submission failed. Contact support@angelprotocol.io",
+          data: "Registration submission failed. Contact support@angel.giving",
         };
       },
     }),

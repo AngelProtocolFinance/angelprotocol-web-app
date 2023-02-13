@@ -10,12 +10,17 @@ export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
   */
 type Scale = [number, number, number, number, number];
 
+type Classes = {
+  container?: string;
+};
+
 export type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends TokenWithAmount ? K : never;
   label: string;
   tokens: TokenWithAmount[];
   withGiftcard?: true;
   scale?: Scale;
+  classes?: Classes;
 };
 
 export type SelectorProps = {
