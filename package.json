@@ -78,7 +78,7 @@
     "react-router-dom": "^6.2.0",
     "react-scripts": "5.0.1",
     "web3.storage": "^4.3.0",
-    "yup": "^0.32.9"
+    "yup": "^1.0.0"
   },
   "resolutions": {
     "tailwindcss": "3.2.4",
