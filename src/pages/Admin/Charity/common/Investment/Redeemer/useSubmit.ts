@@ -15,25 +15,17 @@ export default function useSubmit(vault: string, type: AccountType) {
   async function submit({ token }: FormValues) {
     const account = new Account(wallet);
 
-    const msg = account.createEmbeddedInvestMsg({
+    const msg = account.createEmbeddedRedeemMsg({
       id,
       acct_type: type,
-      vaults: [
-        [
-          vault,
-          {
-            info: { native: token.token_id },
-            amount: scaleToStr(token.amount),
-          },
-        ],
-      ],
+      vaults: [[vault, scaleToStr(token.amount)]],
     });
 
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
     const proposal = cw3contract.createProposalMsg(
-      "Invest",
-      `Invest funds to: ${vault}`,
+      "Redeem",
+      `redeem funds from: ${vault}`,
       [msg]
     );
 
