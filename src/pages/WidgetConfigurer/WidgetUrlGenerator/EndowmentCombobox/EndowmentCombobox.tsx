@@ -8,7 +8,7 @@ import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
-import { FormValues } from "./schema";
+import { FormValues } from "../schema";
 
 type BaseFormShape = { [index: string]: EndowmentIdName };
 
