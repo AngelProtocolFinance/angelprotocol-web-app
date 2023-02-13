@@ -12,7 +12,7 @@ export default function WidgetConfigurer() {
 
   return (
     <FormProvider {...methods}>
-      <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full">
+      <div className="padded-container grid grid-rows-[auto_1fr] gap-10 w-full h-full py-5">
         <section className="flex flex-col gap-3 items-center text-center xl:items-start xl:text-left w-full">
           <h1 className={TITLE_STYLE}>
             Accept donations from your website today!
