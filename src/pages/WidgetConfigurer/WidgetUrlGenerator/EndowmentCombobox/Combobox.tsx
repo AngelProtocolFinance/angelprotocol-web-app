@@ -1,7 +1,7 @@
 import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
-import { useController, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { EndowmentIdName } from "types/aws";
 import { useEndowmentIdNamesQuery } from "services/aws/aws";
 import { DrawerIcon } from "components/Icon";
@@ -10,23 +10,16 @@ import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
 import { FormValues } from "../schema";
 
-type BaseFormShape = { [index: string]: EndowmentIdName };
-
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
 
 export default function Combobox() {
   const {
-    formState: { errors, isSubmitting },
+    control,
+    formState: { errors, isSubmitting, defaultValues },
   } = useFormContext<FormValues>();
 
-  const {
-    field: { value, onChange, ref },
-  } = useController<BaseFormShape>({
-    name: "endowIdName",
-  });
-
-  const [query, setQuery] = useState(value.name);
+  const [query, setQuery] = useState(defaultValues!.endowIdName!.name);
 
   const [debouncedQuery] = useDebouncer(query, 500);
 
@@ -41,70 +34,78 @@ export default function Combobox() {
   });
 
   return (
-    <HuiCombobox
-      aria-disabled={isSubmitting}
-      value={value}
-      onChange={onChange}
-      as="div"
-      className="relative items-center grid grid-cols-[1fr_auto] w-full field-container min-h-[3rem]"
-    >
-      <HuiCombobox.Input
-        ref={ref}
-        placeholder="Select an endowment..."
-        onChange={(event) => setQuery(event.target.value)}
-        displayValue={(value: EndowmentIdName) => value.name}
-        className="pl-4"
-      />
+    <Controller
+      control={control}
+      name="endowIdName"
+      render={({ field: { value, onChange, ref } }) => (
+        <HuiCombobox
+          aria-disabled={isSubmitting}
+          value={value}
+          onChange={onChange}
+          as="div"
+          className="relative items-center grid grid-cols-[1fr_auto] w-full field-container min-h-[3rem]"
+        >
+          <HuiCombobox.Input
+            ref={ref}
+            placeholder="Select an endowment..."
+            onChange={(event) => setQuery(event.target.value)}
+            displayValue={(value: EndowmentIdName) => value.name}
+            className="pl-4"
+          />
 
-      <HuiCombobox.Button>
-        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mx-1" />}
-      </HuiCombobox.Button>
-
-      <QueryLoader
-        queryState={{
-          data: data?.Items,
-          isLoading,
-          isError,
-        }}
-        messages={{
-          loading: "loading options..",
-          error: "failed to get country options",
-          empty: debouncedQuery
-            ? `${debouncedQuery} not found`
-            : "no options found",
-        }}
-        classes={{ container: containerStyle + " p-2" }}
-      >
-        {(endowIdNames) => (
-          <HuiCombobox.Options
-            className={containerStyle}
-            style={{ height: endowIdNames.length <= 10 ? "auto" : "10rem" }}
-          >
-            {(endowIdNames.length > 0 &&
-              endowIdNames.map((endowIdName) => (
-                <HuiCombobox.Option
-                  as={React.Fragment}
-                  key={endowIdName.name}
-                  value={endowIdName}
-                >
-                  {({ active }) => (
-                    <li
-                      className={`${
-                        active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                      } cursor-pointer flex gap-2 p-2 text-sm`}
-                    >
-                      <span>{endowIdName.name}</span>
-                    </li>
-                  )}
-                </HuiCombobox.Option>
-              ))) || (
-              <div className="p-2 text-sm">{debouncedQuery} not found</div>
+          <HuiCombobox.Button>
+            {({ open }) => (
+              <DrawerIcon isOpen={open} size={25} className="mx-1" />
             )}
-          </HuiCombobox.Options>
-        )}
-      </QueryLoader>
+          </HuiCombobox.Button>
 
-      <ErrorMessage errors={errors} name="endowIdName.name" as="span" />
-    </HuiCombobox>
+          <QueryLoader
+            queryState={{
+              data: data?.Items,
+              isLoading,
+              isError,
+            }}
+            messages={{
+              loading: "loading options..",
+              error: "failed to get country options",
+              empty: debouncedQuery
+                ? `${debouncedQuery} not found`
+                : "no options found",
+            }}
+            classes={{ container: containerStyle + " p-2" }}
+          >
+            {(endowIdNames) => (
+              <HuiCombobox.Options
+                className={containerStyle}
+                style={{ height: endowIdNames.length <= 10 ? "auto" : "10rem" }}
+              >
+                {(endowIdNames.length > 0 &&
+                  endowIdNames.map((endowIdName) => (
+                    <HuiCombobox.Option
+                      as={React.Fragment}
+                      key={endowIdName.name}
+                      value={endowIdName}
+                    >
+                      {({ active }) => (
+                        <li
+                          className={`${
+                            active ? "bg-blue-l2 dark:bg-blue-d1" : ""
+                          } cursor-pointer flex gap-2 p-2 text-sm`}
+                        >
+                          <span>{endowIdName.name}</span>
+                        </li>
+                      )}
+                    </HuiCombobox.Option>
+                  ))) || (
+                  <div className="p-2 text-sm">{debouncedQuery} not found</div>
+                )}
+              </HuiCombobox.Options>
+            )}
+          </QueryLoader>
+
+          <ErrorMessage errors={errors} name="endowIdName.name" as="span" />
+        </HuiCombobox>
+      )}
+    />
   );
 }
