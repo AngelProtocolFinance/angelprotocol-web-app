@@ -1,11 +1,11 @@
+import { State } from "../types";
 import { placeholderChain } from "contexts/WalletContext/constants";
 import { humanize } from "helpers";
-import { FormValues } from "../WidgetUrlGenerator/schema";
 import AdvancedOptions from "./AdvancedOptions";
 
 const TOKEN = placeholderChain.tokens[0];
 
-type Props = FormValues;
+type Props = State;
 
 export default function Donater({
   hideAdvancedOptions,

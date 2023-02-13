@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { State } from "./types";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { useErrorContext } from "contexts/ErrorContext";
 import { idParamToNum } from "helpers";
-import { FormValues } from "./WidgetUrlGenerator/schema";
 import createWidgerUrl from "./createWidgerUrl";
 
 const NO_ID_MESSAGE = "Please select an organization";
@@ -15,7 +15,7 @@ export default function useWidgetConfigurer() {
 
   const [updateTriggered, setUpdateTriggered] = useState(false);
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<State>({
     defaultValues: {
       availableCurrencies: [],
       endowIdName: { id: endowId, name: "" },
@@ -61,7 +61,7 @@ export default function useWidgetConfigurer() {
     // eslint-disable-next-line
   }, []);
 
-  const handleUpdateSnippet = useCallback((updatedValues: FormValues) => {
+  const handleUpdateSnippet = useCallback((updatedValues: State) => {
     setWidgetSnippet(getWidgetSnippet(updatedValues));
     setUpdateTriggered((prev) => !prev);
   }, []);
@@ -74,7 +74,7 @@ export default function useWidgetConfigurer() {
   };
 }
 
-function getWidgetSnippet(formValues: FormValues) {
+function getWidgetSnippet(formValues: State) {
   if (!formValues.endowIdName.id) {
     return NO_ID_MESSAGE;
   } else {
