@@ -62,7 +62,7 @@
     "cropperjs": "^1.5.12",
     "decimal.js": "^10.3.1",
     "ethereum-multicall": "^2.15.0",
-    "ethers": "^5.7.1",
+    "ethers": "^6.0.3",
     "is-mobile": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
