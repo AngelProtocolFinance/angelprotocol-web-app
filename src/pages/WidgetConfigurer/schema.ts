@@ -1,7 +1,7 @@
 import { EndowmentIdName } from "types/aws";
 import { OptionType } from "components/Selector";
 
-export type State = {
+export type FormValues = {
   endowIdName: EndowmentIdName;
   hideText: boolean;
   hideAdvancedOptions: boolean;

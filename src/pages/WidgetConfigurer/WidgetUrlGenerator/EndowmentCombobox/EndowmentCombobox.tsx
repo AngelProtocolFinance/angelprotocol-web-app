@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "../schema";
+import { FormValues } from "../../schema";
 import Combobox from "./Combobox";
 
 export default function EndowmentCombobox() {

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { State } from "../types";
 import APLogo from "components/APLogo";
 import { getPossessiveForm } from "helpers";
+import { FormValues } from "../schema";
 import Donater from "./Donater";
 
 export default function WidgetExample({ trigger }: { trigger: boolean }) {
-  const { getValues } = useFormContext<State>();
+  const { getValues } = useFormContext<FormValues>();
 
-  const [formValues, setFormValues] = useState<State>(getValues());
+  const [formValues, setFormValues] = useState<FormValues>(getValues());
 
   useEffect(() => setFormValues(getValues()), [trigger, getValues]);
 

@@ -8,7 +8,7 @@ import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import useDebouncer from "hooks/useDebouncer";
 import { unsdgs } from "constants/unsdgs";
-import { FormValues } from "../schema";
+import { FormValues } from "../../schema";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";

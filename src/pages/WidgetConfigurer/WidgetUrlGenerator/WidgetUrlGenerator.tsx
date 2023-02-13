@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import Split from "components/Split";
 import { CheckField } from "components/form/CheckField";
+import { FormValues } from "../schema";
 import DenomSelector from "./DenomSelector";
 import EndowmentCombobox from "./EndowmentCombobox";
-import { FormValues } from "./schema";
 
 type Props = {
   onChange(formValues: FormValues): void;
