@@ -1,12 +1,19 @@
-import { AdminResources, ProposalDetails } from "services/types";
+import { Args } from "./queryContract/types";
+import { AdminResources, ProposalDetails, Vault } from "services/types";
 import { CW3Config } from "types/contracts";
-import { idParamToNum } from "helpers";
+import { condenseToNum, idParamToNum } from "helpers";
 import { isJunoAddress } from "schemas/tests";
 import { contracts } from "constants/contracts";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { symbols } from "constants/tokens";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
-import { accountTags, adminTags, defaultProposalTags } from "./tags";
+import {
+  accountTags,
+  adminTags,
+  defaultProposalTags,
+  registrarTags,
+} from "./tags";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -124,6 +131,42 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
+    vaults: builder.query<Vault[], Args<"regVaultList"> & { endowId: number }>({
+      providesTags: [
+        { type: "registrar", id: registrarTags.vault_list },
+        { type: "account", id: accountTags.balance },
+      ],
+      async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
+        const [vaultsRes, balances] = await Promise.all([
+          queryContract("regVaultList", contracts.registrar, args),
+          queryContract("accBalance", contracts.accounts, { id: endowId }),
+        ]);
+
+        const { invested_liquid, invested_locked, tokens_on_hand } = balances;
+        const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
+        const balMap: { [index: string]: number | undefined } = [
+          ...invested_liquid,
+          ...invested_locked,
+          ...native.map((n) => [n.denom, n.amount]),
+          ...cw20.map((c) => [c.address, c.amount]),
+        ].reduce(
+          (result, [vault, balance]) => ({
+            ...result,
+            [vault]: condenseToNum(balance),
+          }),
+          {}
+        );
+
+        return {
+          data: vaultsRes.vaults.map((v) => ({
+            ...v,
+            invested: balMap[v.address] || 0,
+            balance: balMap[v.input_denom] || 0,
+            symbol: symbols[v.input_denom],
+          })),
+        };
+      },
+    }),
   }),
 });
 
@@ -131,6 +174,7 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
+  useVaultsQuery,
 } = customApi;
 
 export const AP_ID = 0;

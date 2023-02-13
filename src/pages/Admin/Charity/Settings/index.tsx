@@ -1,7 +1,6 @@
-import { Tab } from "@headlessui/react";
-import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
+import AccountTabs from "../common/AccountTabs";
 import { settings } from "../routes";
 
 export default function Settings() {
@@ -36,37 +35,5 @@ function Strategy({ type }: { type: AccountType }) {
         Edit
       </Link>
     </div>
-  );
-}
-
-const types: AccountType[] = ["liquid", "locked"];
-function AccountTabs(props: {
-  classes?: {
-    container?: string;
-    tabs?: string;
-    tab?: string;
-    panels?: string;
-  };
-  children: [
-    //limit to only 2 childs
-    ReactElement<{ type: AccountType }>,
-    ReactElement<{ type: AccountType }>
-  ];
-}) {
-  return (
-    <Tab.Group as="div" className={props.classes?.container}>
-      <Tab.List className={props.classes?.tabs}>
-        {types.map((t) => (
-          <Tab key={t} className={props.classes?.tab}>
-            {t}
-          </Tab>
-        ))}
-      </Tab.List>
-      <Tab.Panels className={props.classes?.panels}>
-        {React.Children.map(props.children, (child) => {
-          return <Tab.Panel key={child.props.type}>{child}</Tab.Panel>;
-        })}
-      </Tab.Panels>
-    </Tab.Group>
   );
 }

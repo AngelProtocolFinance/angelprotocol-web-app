@@ -41,4 +41,5 @@ export enum adminRoutes {
   edit_profile = "edit-profile",
   withdraws = "withdraws",
   settings = "settings",
+  invest = "invest-dashboard",
 }
