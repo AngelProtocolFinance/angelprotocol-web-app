@@ -9,7 +9,6 @@ import { appRoutes } from "constants/routes";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
-const WidgetConfigurer = lazy(() => import("pages/WidgetConfigurer"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
@@ -38,11 +37,6 @@ export default function App() {
                 element={<Profile />}
               />
               <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-
-              <Route path={appRoutes.widget_config}>
-                <Route index element={<WidgetConfigurer />} />
-                <Route path=":id" element={<WidgetConfigurer />} />
-              </Route>
 
               <Route
                 path={`${appRoutes.donations}/:address`}

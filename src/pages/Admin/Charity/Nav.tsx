@@ -17,6 +17,9 @@ export default function Nav() {
       <NavLink end to={adminRoutes.proposals} className={styler}>
         Proposals
       </NavLink>
+      <NavLink end to={adminRoutes.widget_config} className={styler}>
+        Embed Widget
+      </NavLink>
     </div>
   );
 }
