@@ -60,9 +60,9 @@ export default function Form() {
       <Label className="-mb-4" required>
         Select the country your organization is headquartered in
       </Label>
-      <CountrySelector<FV, "hq_country">
+      <CountrySelector<FV, "hqCountry">
+        fieldName="hqCountry"
         placeholder="Select a country"
-        fieldName="hq_country"
         classes={{
           container: "px-4 bg-orange-l6 dark:bg-blue-d7",
           input: "text-sm py-3.5",

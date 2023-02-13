@@ -28,6 +28,8 @@ export default function useSubmit() {
     sdgs,
     isKYCRequired,
     level,
+    hqCountry,
+    activeInCountries,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -41,6 +43,8 @@ export default function useSubmit() {
         reference: init.reference,
         //payload
         Website: website,
+        HqCountry: hqCountry,
+        ActiveInCountries: activeInCountries,
         UN_SDG: sdgs.map(
           (sdg) => sdg.value
         ) /**TODO: AWS update to accept number[] */,

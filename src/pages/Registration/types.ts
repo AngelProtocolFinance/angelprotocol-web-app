@@ -38,16 +38,18 @@ export type ContactPerson = {
 
 //STEP 2
 export type Documentation = {
-  //level1
+  //level 1
   proofOfIdentity: Asset;
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
+  hqCountry: string;
+  activeInCountries: string[];
 
   //level 2
   financialStatements: Asset;
 
-  //level3
+  //level 3
   auditedFinancialReports: Asset;
   isKYCRequired: "Yes" | "No";
 

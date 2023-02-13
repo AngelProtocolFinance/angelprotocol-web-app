@@ -1,10 +1,9 @@
-import { FormValues } from "./types";
 import { useCountriesQuery } from "services/countries";
 import QueryLoader from "components/QueryLoader";
 import { Selector, selectorButtonStyle } from "components/Selector";
 import { Label } from "components/form";
 
-export default function ActivityCountries() {
+export default function ActivityCountries(FormValues: any) {
   const queryState = useCountriesQuery({});
   return (
     <>
@@ -21,7 +20,7 @@ export default function ActivityCountries() {
         }}
       >
         {(countries) => (
-          <Selector<FormValues, "active_in_countries", string, true>
+          <Selector<typeof FormValues, "active_in_countries", string, true>
             name="active_in_countries"
             multiple
             classes={{ button: "field-input-admin" }}

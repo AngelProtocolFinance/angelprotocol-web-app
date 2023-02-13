@@ -64,7 +64,7 @@ export default function Card({
             )}
             <p className="line-clamp-2">
               <span className="font-semibold">Active in:</span>{" "}
-              {isEmpty(profile.active_in_countries)
+              {isEmpty(active_in_countries)
                 ? hq.country
                 : active_in_countries.join(" ,")}
             </p>

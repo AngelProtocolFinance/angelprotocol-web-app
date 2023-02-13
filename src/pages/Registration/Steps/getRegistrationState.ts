@@ -99,6 +99,8 @@ function formatDocumentation({
   Website,
   UN_SDG,
   KycDonorsOnly,
+  HqCountry,
+  ActiveInCountries,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
@@ -109,6 +111,8 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
+    hqCountry: HqCountry,
+    activeInCountries: ActiveInCountries,
 
     //level 2
     financialStatements: genFileAsset(fs || []),
