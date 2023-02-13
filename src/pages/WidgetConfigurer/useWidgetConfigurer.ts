@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useLazyProfileQuery } from "services/aws/aws";
-import { useErrorContext } from "contexts/ErrorContext";
 import { idParamToNum } from "helpers";
 import createWidgerUrl from "./createWidgerUrl";
 import { FormValues } from "./schema";
+import useLoadDefaultEndowmentName from "./useLoadDefaultEndowmentName";
 
 const NO_ID_MESSAGE = "Please select an organization";
 
@@ -30,36 +29,9 @@ export default function useWidgetConfigurer() {
     getWidgetSnippet(methods.getValues())
   );
 
-  const { handleError } = useErrorContext();
-
-  const [queryProfile] = useLazyProfileQuery();
-
-  /**
-   * some consumers can only store countryName:string
-   * in this case, get flag for them when this component loads
-   */
-  useEffect(() => {
-    (async () => {
-      if (endowId === 0) {
-        return;
-      }
-
-      try {
-        const { data, isError, error } = await queryProfile(endowId);
-
-        if (isError) {
-          return handleError(error);
-        }
-
-        if (data) {
-          methods.setValue("endowIdName.name", data.name);
-        }
-      } catch (e) {
-        handleError(e);
-      }
-    })();
-    // eslint-disable-next-line
-  }, []);
+  useLoadDefaultEndowmentName(endowId, (name) =>
+    methods.setValue("endowIdName.name", name)
+  );
 
   const handleUpdateSnippet = useCallback((updatedValues: FormValues) => {
     setWidgetSnippet(getWidgetSnippet(updatedValues));
