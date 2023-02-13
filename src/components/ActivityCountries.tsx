@@ -8,9 +8,7 @@ export default function ActivityCountries() {
   const queryState = useCountriesQuery({});
   return (
     <>
-      <Label className="-mb-4" required>
-        Active countries
-      </Label>
+      <Label className="-mb-4">Active countries</Label>
       <QueryLoader
         queryState={queryState}
         messages={{
