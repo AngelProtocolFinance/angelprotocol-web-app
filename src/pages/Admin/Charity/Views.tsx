@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
 import Proposal from "../Proposal";
@@ -6,9 +5,8 @@ import Proposals from "../Proposals";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Templates from "./Templates";
+import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
-
-const WidgetConfigurer = lazy(() => import("pages/WidgetConfigurer"));
 
 export default function Views() {
   return (
