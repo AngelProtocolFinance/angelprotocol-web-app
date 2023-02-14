@@ -69,7 +69,11 @@ export default function useEditProfile() {
         owner: endowment.owner,
       };
 
-      showModal(TxPrompt, { loading: "Signing changes" });
+      showModal(
+        TxPrompt,
+        { loading: "Signing changes" },
+        { isDismissible: false }
+      );
       const payload = await createADR36Payload(updates, wallet!);
 
       const result = await submit(payload); //wallet is asserted in admin guard
