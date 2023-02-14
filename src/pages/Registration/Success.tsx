@@ -16,7 +16,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} grid padded-container max-w-xl justify-items-center`}
+      className={`${classes} grid padded-container max-w-lg justify-items-center`}
     >
       <Icon type="CheckCircle" className="text-green" size={92} />
       <h1 className="text-[2rem] font-bold mt-10 text-center">
