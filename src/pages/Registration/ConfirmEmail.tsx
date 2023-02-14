@@ -21,6 +21,8 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
     return <Navigate to={".."} />;
   }
 
+  const openIntercom = () => (window as any).Intercom("show");
+
   const { email, reference } = initReg;
 
   return (
@@ -51,9 +53,13 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
         Resend verification email
       </button>
 
-      <h3 className="font-bold text-gray-d1 dark:text-gray-l2 mb-2 text-center">
-        Having trouble receiving our confirmation emails?
-      </h3>
+      <button
+        type="button"
+        className="text-orange hover:text-orange-l2 underline decoration-1"
+        onClick={openIntercom}
+      >
+        Having trouble receiving our emails?
+      </button>
     </div>
   );
 }
