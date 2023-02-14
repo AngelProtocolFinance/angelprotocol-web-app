@@ -99,7 +99,7 @@
 /** Layer 2 components */
 @layer components {
   .btn-orange {
-    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
+    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-gray-d3 hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
   .btn-outline {
     @apply btn disabled:bg-gray-l2 aria-disabled:bg-gray-l2 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l2 dark:border-bluegray  hover:border-gray-l1 hover:dark:border-blue-d2;

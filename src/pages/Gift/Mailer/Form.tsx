@@ -48,7 +48,7 @@ export default function Form({ classes = "" }) {
       autoComplete="off"
     >
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Send Your Angel Protocol Giftcard via Email
+        Send Your Angel Giving Giftcard via Email
       </h3>
       <Field<FV> name="purchaser" label="Your name" classes="field-gift" />
       <Field<FV>
