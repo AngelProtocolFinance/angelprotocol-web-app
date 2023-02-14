@@ -4,6 +4,7 @@ import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
+import { getPossessiveForm } from "helpers";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
@@ -53,12 +54,4 @@ export default function InnerComponent(props: {
       </footer>
     </div>
   );
-}
-
-function getPossessiveForm(name: string) {
-  let result = `${name}'`;
-  if (!name.endsWith("s")) {
-    result += "s";
-  }
-  return result;
 }

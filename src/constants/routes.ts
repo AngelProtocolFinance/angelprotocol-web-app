@@ -1,6 +1,5 @@
 export enum appRoutes {
   index = "/",
-  aif = "/aif",
   dashboard = "/dashboard",
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
@@ -38,6 +37,7 @@ export enum adminRoutes {
   proposal = "proposal",
   proposals = "proposals",
   templates = "templates",
+  widget_config = "widget-config",
 
   //charity
   edit_profile = "edit-profile",

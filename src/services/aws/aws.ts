@@ -40,7 +40,7 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowments: builder.query<
+    endowmentCards: builder.query<
       PaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
     >({
@@ -49,6 +49,18 @@ export const aws = createApi({
         return {
           url: `/v3/endowments/${network}`,
           params: { ...params, return: endowCardFields },
+        };
+      },
+    }),
+    endowmentIdNames: builder.query<
+      PaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
+      EndowmentsQueryParams
+    >({
+      providesTags: ["endowments"],
+      query: (params) => {
+        return {
+          url: `/v3/endowments/${network}`,
+          params: { ...params, return: ENDOW_ID_NAME_FIELDS },
         };
       },
     }),
@@ -99,12 +111,15 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useEndowmentsQuery,
+  useEndowmentCardsQuery,
+  useEndowmentIdNamesQuery,
   useProfileQuery,
   useEditProfileMutation,
 
   endpoints: {
-    endowments: { useLazyQuery: useLazyEndowmentsQuery },
+    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
+    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    profile: { useLazyQuery: useLazyProfileQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
@@ -132,3 +147,11 @@ const endowCardObj: {
   endow_type: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
+
+const ENDOW_ID_NAME_OBJ: {
+  [key in Extract<EndowCardFields, "id" | "name">]: any;
+} = {
+  id: "",
+  name: "",
+};
+const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");

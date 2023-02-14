@@ -37,6 +37,8 @@ export type EndowmentCard = EndowmentBase & {
   endow_type: CapitalizedEndowmentType;
 };
 
+export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
+
 export type EndowmentProfileUpdate = {
   //required
   id: number;
