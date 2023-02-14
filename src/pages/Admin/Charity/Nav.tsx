@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes } from "constants/routes";
+import { useAdminResources } from "../Guard";
 
 export default function Nav() {
+  const { endowmentId } = useAdminResources();
+
   return (
     <div className="hidden lg:flex justify-end">
       <NavLink end to={adminRoutes.index} className={styler}>
@@ -16,6 +19,13 @@ export default function Nav() {
       </NavLink>
       <NavLink end to={adminRoutes.proposals} className={styler}>
         Proposals
+      </NavLink>
+      <NavLink
+        end
+        to={`${adminRoutes.widget_config}/${endowmentId}`}
+        className={styler}
+      >
+        Embed Widget
       </NavLink>
     </div>
   );

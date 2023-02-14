@@ -4,7 +4,7 @@ import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
-import Steps from "./Steps";
+import Content from "./Content";
 
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
@@ -36,7 +36,7 @@ export default function Donate() {
               image={`${profile.logo}`}
               url={`https://app.angel.giving/donate/${profile.id}`}
             />
-            <Steps
+            <Content
               name={profile.name}
               id={numId}
               isKYCRequired={profile.kyc_donors_only}

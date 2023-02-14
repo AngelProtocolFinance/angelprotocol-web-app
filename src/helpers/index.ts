@@ -2,7 +2,7 @@ export * from "./createAuthToken";
 export * from "./createNavLinkStyler";
 export * from "./decimal";
 export * from "./extractFeeData";
-
+export * from "./getPossessiveForm";
 export * from "./evm";
 export * from "./getTxUrl";
 export * from "./getAddressUrl";
