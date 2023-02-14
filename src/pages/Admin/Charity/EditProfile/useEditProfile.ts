@@ -38,7 +38,11 @@ export default function useEditProfile() {
   }) => {
     try {
       const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
-        showModal(TxPrompt, { loading: "Uploading images.." });
+        showModal(
+          TxPrompt,
+          { loading: "Uploading images.." },
+          { isDismissible: false }
+        );
       });
 
       const changes: FlatFormValues = {
