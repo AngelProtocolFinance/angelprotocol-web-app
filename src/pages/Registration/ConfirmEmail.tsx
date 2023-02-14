@@ -54,9 +54,6 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
       <h3 className="font-bold text-gray-d1 dark:text-gray-l2 mb-2 text-center">
         Having trouble receiving our confirmation emails?
       </h3>
-      <p className="text-center text-gray-d1 dark:text-gray-l2 mb-8 w-full text-lg">
-        Contact us at: support@angel.giving
-      </p>
     </div>
   );
 }
