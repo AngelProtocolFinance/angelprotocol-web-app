@@ -2,10 +2,10 @@ import { Dialog } from "@headlessui/react";
 import ThemeToggle from "App/Header/ThemeToggle";
 import { NavLink } from "react-router-dom";
 import { useModalContext } from "contexts/ModalContext";
+import APLogo from "components/APLogo";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import { appRoutes } from "constants/routes";
-import Logo from "../Logo";
 
 export default function Menu() {
   const { closeModal } = useModalContext();
@@ -15,7 +15,7 @@ export default function Menu() {
       className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d5 shadow-lg pb-8"
     >
       <div className="flex justify-between items-center w-full py-4 padded-container border-b border-gray-l2">
-        <Logo />
+        <APLogo className="w-32" />
         <button
           onClick={closeModal}
           className="flex items-center text-white justify-center"

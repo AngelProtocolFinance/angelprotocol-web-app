@@ -52,7 +52,11 @@ export default function useEditProfile() {
       }
 
       const [bannerUrl, logoUrl] = await uploadImgs([image, logo], () => {
-        showModal(TxPrompt, { loading: "Uploading images.." });
+        showModal(
+          TxPrompt,
+          { loading: "Uploading images.." },
+          { isDismissible: false }
+        );
       });
 
       const changes: FlatFormValues = {
@@ -79,7 +83,11 @@ export default function useEditProfile() {
         owner,
       };
 
-      showModal(TxPrompt, { loading: "Signing changes" });
+      showModal(
+        TxPrompt,
+        { loading: "Signing changes" },
+        { isDismissible: false }
+      );
       const payload = await createADR36Payload(updates, wallet!);
 
       const result = await submit(payload); //wallet is asserted in admin guard

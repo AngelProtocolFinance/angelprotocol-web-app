@@ -10,6 +10,7 @@ import Nav from "./Nav";
 import Settings from "./Settings";
 import StrategyEditor from "./Settings/StrategyEditor";
 import Templates from "./Templates";
+import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
 import { settings } from "./routes";
 
@@ -41,6 +42,10 @@ export default function Charity() {
           <Route path="*" element={<Navigate to="." />} />
         </Route>
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
+        <Route path={adminRoutes.widget_config}>
+          <Route index element={<WidgetConfigurer />} />
+          <Route path=":endowId" element={<WidgetConfigurer />} />
+        </Route>
         <Route index element={<Dashboard />} />
       </Route>
     </Routes>

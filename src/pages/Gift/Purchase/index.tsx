@@ -21,7 +21,7 @@ export default function Purchase({ classes = "" }) {
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug">
-            Purchase Angel Protocol Giftcard
+            Purchase Angel Giving Giftcard
           </h3>
           <Progress classes="my-12" />
         </>
