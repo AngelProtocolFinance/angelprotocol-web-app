@@ -8,11 +8,11 @@ export default function Success({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
   const reg = state as CompleteRegistration | undefined;
 
-  // if (!reg || !reg.endowId) {
-  //   return <Navigate to={".."} />;
-  // }
+  if (!reg || !reg.endowId) {
+    return <Navigate to={".."} />;
+  }
 
-  // const { contact } = reg;
+  const { contact } = reg;
 
   return (
     <div
@@ -20,13 +20,13 @@ export default function Success({ classes = "" }: { classes?: string }) {
     >
       <Icon type="CheckCircle" className="text-green" size={92} />
       <h1 className="text-[2rem] font-bold mt-10 text-center">
-        {"contact.orgName"}’s endowment has been created!
+        {contact.orgName}’s endowment has been created!
       </h1>
       <Link
-        className="mt-6 text-orange hover:text-orange-l2 underline decoration-1 hover:decoration-2 text-center text-lg"
-        to={`${appRoutes.admin}/${1}/${adminRoutes.edit_profile}`}
+        className="mt-6 text-orange hover:text-orange-l2 underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
+        to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
-        Start filling out {"contact.orgName"}’s profile and attract donors!
+        Start filling out {contact.orgName}’s profile and attract donors!
       </Link>
     </div>
   );
