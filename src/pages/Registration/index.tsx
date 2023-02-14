@@ -46,7 +46,12 @@ export default function Registration() {
             <Success classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
           }
         />
-        <Route index element={<Signup classes="justify-self-center my-20" />} />
+        <Route
+          index
+          element={
+            <Success classes="justify-self-center mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
+          }
+        />
         <Route path="*" element={<Navigate to={routes.index} />} />
       </Routes>
     </Suspense>
