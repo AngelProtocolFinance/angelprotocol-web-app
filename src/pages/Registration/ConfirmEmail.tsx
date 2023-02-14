@@ -55,7 +55,7 @@ export default function ConfirmEmail({ classes = "" }: { classes?: string }) {
 
       <button
         type="button"
-        className="text-orange hover:text-orange-l2 underline decoration-1"
+        className="text-sm text-orange hover:text-orange-l2 underline decoration-1"
         onClick={openIntercom}
       >
         Having trouble receiving our emails?
