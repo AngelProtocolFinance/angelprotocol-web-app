@@ -10,8 +10,8 @@ export default function Leaderboard() {
   return (
     <section className="padded-container grid content-start mt-8 pb-16 font-work">
       <Seo
-        title="Leaderboad - Angel Protocol"
-        url="https://app.angelprotocol.io/leaderboard"
+        title="Leaderboad - Angel Giving"
+        url="https://app.angel.giving/leaderboard"
       />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl font-bold">Leaderboard</h3>

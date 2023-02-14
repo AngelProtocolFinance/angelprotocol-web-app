@@ -39,7 +39,7 @@ export default function Form() {
       </Link>
       <Group
         title="Public profile information"
-        description="Your logo and description will be used to populate your public
+        description="The following information will be used to populate your public
           profile."
       >
         <Field<FV>
@@ -86,6 +86,7 @@ export default function Form() {
         <RichTextEditor<FV>
           fieldName="overview"
           placeHolder="A short overview of your charity"
+          charLimit={4000}
           classes={{
             container:
               "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3 min-h-[15rem]",
@@ -98,12 +99,6 @@ export default function Form() {
           name="url"
           label="Website of your organization"
           placeholder="https://website.org"
-        />
-        <Field<FV>
-          classes="field-admin"
-          name="contact_email"
-          label="Contact e-mail address"
-          required
         />
       </Group>
 
@@ -130,7 +125,6 @@ export default function Form() {
           }}
         />
         <ActivityCountries />
-        <Field<FV> classes="field-admin" name="hq_city" label="City" required />
         <Field<FV>
           classes="field-admin"
           name="street_address"
@@ -156,6 +150,30 @@ export default function Form() {
           name="social_media_url_twitter"
           label="Twitter"
           placeholder="https://twitter.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_discord"
+          label="Discord"
+          placeholder="https://discord.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_instagram"
+          label="Instagram"
+          placeholder="https://instagram.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_youtube"
+          label="YouTube"
+          placeholder="https://youtube.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_tiktok"
+          label="Tiktok"
+          placeholder="https://tiktok.com/"
         />
       </Group>
 

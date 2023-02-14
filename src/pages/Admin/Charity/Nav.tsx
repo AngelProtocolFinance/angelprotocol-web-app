@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes } from "constants/routes";
+import { useAdminResources } from "../Guard";
 
 export default function Nav() {
+  const { id } = useAdminResources();
+
   return (
     <div className="grid gap-3 content-start">
       <NavLink end to={adminRoutes.index} className={styler}>
@@ -28,6 +31,9 @@ export default function Nav() {
       </NavLink>
       <NavLink to={adminRoutes.proposals} className={styler}>
         Proposals
+      </NavLink>
+      <NavLink end to={`${adminRoutes.widget_config}/${id}`} className={styler}>
+        Embed Widget
       </NavLink>
     </div>
   );
