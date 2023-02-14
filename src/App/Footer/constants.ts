@@ -76,10 +76,10 @@ export const SECTIONS_DATA: Section[] = [
         text: "For CSR Partners",
         href: "https://angel.giving/csr-partners/",
       },
-      {
-        text: "For Giftcards",
-        href: "https://app.angel.giving/gift",
-      },
+      // {
+      //   text: "For Giftcards",
+      //   href: "https://app.angel.giving/gift",
+      // },
     ],
   },
   {
