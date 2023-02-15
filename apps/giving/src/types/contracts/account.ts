@@ -94,7 +94,7 @@ export type EndowmentQueryOptions = {
 
 export type EndowmentEntry = {
   id: number; //int
-  owner: String;
+  owner: string;
   status: keyof EndowmentStatus;
   endow_type: CapitalizedEndowmentType;
   name: string;

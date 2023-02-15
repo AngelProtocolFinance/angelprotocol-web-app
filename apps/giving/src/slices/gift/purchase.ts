@@ -34,9 +34,9 @@ export const purchase = createAsyncThunk<void, Args>(
         /** extract deposit id */
         const id = getWasmAttribute("deposit_id", response.rawLog);
         /** generate secret */
-        let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
-        let preImage = `${randNums[0]}${randNums[1]}`;
-        let secret = `ap-${details.chainId}-${preImage}`;
+        const randNums = window.crypto.getRandomValues(new BigUint64Array(62));
+        const preImage = `${randNums[0]}${randNums[1]}`;
+        const secret = `ap-${details.chainId}-${preImage}`;
 
         updateTx({ msg: "Processing giftcard code..." });
         const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
