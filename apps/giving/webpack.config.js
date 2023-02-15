@@ -7,15 +7,7 @@ module.exports = composePlugins(withNx(), withReact(), (config, context) => {
   // Update the webpack config as needed here.
   // e.g. `config.plugins.push(new MyPlugin())`
 
-  config.module.rules = [
-    ...config.module.rules,
-    {
-      test: /\.m?js/,
-      resolve: {
-        fullySpecified: false,
-      },
-    },
-  ];
+  config.stats = "errors-only";
 
   config.resolve.fallback = {
     crypto: require.resolve("crypto-browserify"),
