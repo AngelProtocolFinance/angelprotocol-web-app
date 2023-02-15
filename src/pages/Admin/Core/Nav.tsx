@@ -5,7 +5,7 @@ import { adminRoutes } from "constants/routes";
 export default function Nav() {
   return (
     <div className="grid content-start gap-3">
-      <NavLink end to={adminRoutes.proposals} className={styler}>
+      <NavLink end to={adminRoutes.proposals.url} className={styler}>
         proposals
       </NavLink>
     </div>

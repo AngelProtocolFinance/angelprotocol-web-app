@@ -1,9 +1,10 @@
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { LayoutProps } from "./types";
 import Icon from "components/Icon";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 
-export default function Layout({ children }: PropsWithChildren<{}>) {
+export default function Layout({ nav: Nav }: LayoutProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useHandleScreenResize(
@@ -37,18 +38,7 @@ export default function Layout({ children }: PropsWithChildren<{}>) {
         <Icon type="Forward" />
       </button>
       {/** sidebar */}
-      <div
-        aria-hidden={!isOpen}
-        className="max-md:fixed max-md:z-20 max-md:inset-0 max-md:bg-black/60 aria-hidden:hidden grid grid-cols-[auto_1fr]"
-      >
-        <div className="bg-white dark:bg-blue-d6">{children}</div>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen(false);
-          }}
-        />
-      </div>
+      <Nav />
 
       {/** views */}
       <div className="p-10">

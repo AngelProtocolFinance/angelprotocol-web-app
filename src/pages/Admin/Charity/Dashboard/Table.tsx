@@ -25,7 +25,7 @@ export default function Table({ proposals }: Props) {
             <span className="uppercase text-sm">{status}</span>
             <Expiry {...expires} />
             <Link
-              to={`${adminRoutes.proposal}/${id}`}
+              to={`${adminRoutes.proposal.url}/${id}`}
               className="flex items-center uppercase text-sm hover:bg-blue-l4 hover:dark:bg-blue-d4"
             >
               <span>Details</span>

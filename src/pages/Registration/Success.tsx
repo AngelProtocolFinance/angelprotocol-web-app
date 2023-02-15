@@ -31,7 +31,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
       </p>
       <Link
         className="w-full max-w-[26.25rem] btn-orange btn-reg"
-        to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
+        to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile.url}`}
       >
         edit profile
       </Link>

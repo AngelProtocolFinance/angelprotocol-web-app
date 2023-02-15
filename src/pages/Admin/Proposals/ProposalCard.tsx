@@ -7,7 +7,7 @@ import { adminRoutes } from "constants/routes";
 export default function ProposalCard(props: Proposal) {
   return (
     <Link
-      to={`../${adminRoutes.proposal}/${props.id}`}
+      to={`../${adminRoutes.proposal.url}/${props.id}`}
       className="p-4 rounded grid border border-prim bg-orange-l6 dark:bg-blue-d6 hover:bg-orange-l5 hover:dark:bg-blue-d7"
     >
       <div className="flex justify-between items-center mb-4">

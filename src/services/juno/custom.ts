@@ -239,7 +239,7 @@ async function getMeta(
         successMeta: {
           message: "Proposal successfully created",
           link: {
-            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
+            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals.url}`,
             description: "Go to proposals",
           },
         },

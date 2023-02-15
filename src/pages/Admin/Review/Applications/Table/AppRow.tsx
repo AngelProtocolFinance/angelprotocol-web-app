@@ -20,7 +20,7 @@ export default function AppRow(props: EndowmentProposal) {
       </span>
 
       <Link
-        to={`${adminRoutes.proposal}/${props.poll_id}`}
+        to={`${adminRoutes.proposal.url}/${props.poll_id}`}
         className="uppercase text-sm hover:text-blue active:text-orange flex gap-1 items-center"
       >
         <span>Review</span>

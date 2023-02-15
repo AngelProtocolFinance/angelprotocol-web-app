@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export enum appRoutes {
   index = "/",
   dashboard = "/dashboard",
@@ -31,17 +33,14 @@ export enum profileRoutes {
   governance = "governance",
 }
 
-export enum adminRoutes {
-  //base routes
-  index = "",
-  proposal = "proposal",
-  proposals = "proposals",
-  templates = "templates",
-  widget_config = "widget-config",
-
-  //charity
-  edit_profile = "edit-profile",
-  withdraws = "withdraws",
-  settings = "settings",
-  invest = "invest-dashboard",
-}
+export const adminRoutes = {
+  index: { url: "" },
+  proposal: { url: "proposal" },
+  proposals: { url: "proposals" },
+  templates: { url: "templates" },
+  widget_config: { url: "widget-config" },
+  edit_profile: { url: "edit-profile" },
+  withdraws: { url: "withdraws" },
+  settings: { url: "settings" },
+  invest: { url: "invest-dashboard" },
+} as const;

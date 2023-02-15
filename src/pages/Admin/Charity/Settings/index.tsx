@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { AccountType } from "types/contracts";
 import AccountTabs from "../common/AccountTabs";
-import { settings } from "../routes";
 
 export default function Settings() {
   return (
@@ -28,10 +27,7 @@ function Strategy({ type }: { type: AccountType }) {
   return (
     <div className="flex py-7 px-6 items-center border border-prim rounded justify-between">
       <h4 className="text-xl font-bold">Default {type} strategy</h4>
-      <Link
-        to={`${settings.edit}/${type}`}
-        className="btn-outline-filled px-8 py-2"
-      >
+      <Link to={`edit/${type}`} className="btn-outline-filled px-8 py-2">
         Edit
       </Link>
     </div>
