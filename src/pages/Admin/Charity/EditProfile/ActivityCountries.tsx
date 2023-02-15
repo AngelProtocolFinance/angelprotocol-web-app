@@ -2,7 +2,6 @@ import { FieldValues, Path } from "react-hook-form";
 import { useCountriesQuery } from "services/countries";
 import QueryLoader from "components/QueryLoader";
 import { OptionType, Selector, selectorButtonStyle } from "components/Selector";
-import { Label } from "components/form";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: T[K] extends OptionType<string>[] ? K : never;
@@ -18,32 +17,27 @@ export default function ActivityCountries<
 >({ name, classes }: Props<T, K>) {
   const queryState = useCountriesQuery({});
   return (
-    <>
-      <Label className="-mb-4" required>
-        Active countries
-      </Label>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: "Loading countries..",
-          error: "Failed to get country options",
-        }}
-        classes={{
-          container: `${selectorButtonStyle} ${classes?.container || ""}`,
-        }}
-      >
-        {(countries) => (
-          <Selector<T, K, string, true>
-            name={name}
-            multiple
-            classes={{ button: classes?.button || "" }}
-            options={countries.map((c) => ({
-              label: c.name,
-              value: c.name,
-            }))}
-          />
-        )}
-      </QueryLoader>
-    </>
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Loading countries..",
+        error: "Failed to get country options",
+      }}
+      classes={{
+        container: `${selectorButtonStyle} ${classes?.container || ""}`,
+      }}
+    >
+      {(countries) => (
+        <Selector<T, K, string, true>
+          name={name}
+          multiple
+          classes={{ button: classes?.button || "" }}
+          options={countries.map((c) => ({
+            label: c.name,
+            value: c.name,
+          }))}
+        />
+      )}
+    </QueryLoader>
   );
 }

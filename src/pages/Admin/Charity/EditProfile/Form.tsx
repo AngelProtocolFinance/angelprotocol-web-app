@@ -124,6 +124,9 @@ export default function Form() {
             error: "field-error",
           }}
         />
+        <Label className="-mb-4" required>
+          Active countries
+        </Label>
         <ActivityCountries<FV, "active_in_countries">
           name="active_in_countries"
           classes={{
