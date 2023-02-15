@@ -57,7 +57,7 @@ export default function Form() {
         name="sdgs"
         options={sdgOptions}
       />
-      <Label className="mb-2" required>
+      <Label className="mt-6 mb-2" required>
         Select the country your organization is headquartered in
       </Label>
       <CountrySelector<FV, "hqCountry">
