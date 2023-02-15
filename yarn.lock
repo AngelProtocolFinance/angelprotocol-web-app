@@ -4008,6 +4008,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/react@npm:^15.7.0":
+  version: 15.7.0
+  resolution: "@nrwl/react@npm:15.7.0"
+  dependencies:
+    "@nrwl/devkit": 15.7.0
+    "@nrwl/linter": 15.7.0
+    "@nrwl/workspace": 15.7.0
+    "@phenomnomnominal/tsquery": 4.1.1
+    chalk: ^4.1.0
+    minimatch: 3.0.5
+  checksum: 68da4e215169b5b59a95e82cb2c04b8ea46d64a855cb324918fde687bb3e7378ccfbf8f4bb41a52d7410ddeb0df6e1022f95b5cc00b7b9e1861a5c25e0411c7e
+  languageName: node
+  linkType: hard
+
 "@nrwl/tao@npm:15.7.0":
   version: 15.7.0
   resolution: "@nrwl/tao@npm:15.7.0"
@@ -6143,6 +6157,7 @@ __metadata:
     "@keplr-wallet/wc-client": ^0.11.31
     "@keplr-wallet/wc-qrcode-modal": ^0.11.31
     "@nrwl/js": ^15.7.0
+    "@nrwl/react": ^15.7.0
     "@nrwl/workspace": ^15.7.0
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
