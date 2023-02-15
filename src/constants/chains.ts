@@ -76,8 +76,8 @@ export const chains: { [index: string]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {
-        txExplorer: `${DAPP_DOMAIN}`,
-        addressExplorer: `${DAPP_DOMAIN}`,
+        txExplorer: DAPP_DOMAIN,
+        addressExplorer: DAPP_DOMAIN,
       }
     ); //TODO: what's good fallback link
   },

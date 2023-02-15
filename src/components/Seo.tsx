@@ -13,9 +13,9 @@ type Props = {
 export default function Seo({
   title = `Support an impact organization - ${APP_NAME}`,
   description = `${APP_NAME} provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.`,
-  name = `${APP_NAME}`,
-  image = `${SEO_IMAGE}`,
-  url = `${DAPP_DOMAIN}`,
+  name = APP_NAME,
+  image = SEO_IMAGE,
+  url = DAPP_DOMAIN,
 }: Props) {
   return (
     <Helmet>

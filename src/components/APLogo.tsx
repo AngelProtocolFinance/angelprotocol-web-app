@@ -5,7 +5,7 @@ import { BASE_DOMAIN } from "constants/common";
 export default function APLogo({ className = "" }) {
   return (
     <ExtLink
-      href={`${BASE_DOMAIN}/`}
+      href={BASE_DOMAIN}
       title="Go to Marketing page"
       className={className}
     >
