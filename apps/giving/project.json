@@ -25,7 +25,7 @@
         "development": {
           "extractLicenses": false,
           "optimization": false,
-          "sourceMap": true,
+          "sourceMap": false,
           "vendorChunk": true
         },
         "production": {
