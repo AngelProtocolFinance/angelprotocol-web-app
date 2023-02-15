@@ -36,6 +36,7 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
+          
         }
       }
     },

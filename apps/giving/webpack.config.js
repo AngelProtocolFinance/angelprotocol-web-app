@@ -1,3 +1,4 @@
+const TerserPlugin = require("terser-webpack-plugin");
 const { ProvidePlugin } = require("webpack");
 const { composePlugins, withNx } = require("@nrwl/webpack");
 const { withReact } = require("@nrwl/react");
@@ -6,8 +7,11 @@ const { withReact } = require("@nrwl/react");
 module.exports = composePlugins(withNx(), withReact(), (config, context) => {
   // Update the webpack config as needed here.
   // e.g. `config.plugins.push(new MyPlugin())`
+  const isProd = context.configuration === "production";
 
-  config.stats = "errors-only";
+  if (!isProd) {
+    config.stats = "errors-warnings";
+  }
 
   config.resolve.fallback = {
     crypto: require.resolve("crypto-browserify"),
@@ -25,6 +29,10 @@ module.exports = composePlugins(withNx(), withReact(), (config, context) => {
       process: "process/browser",
     })
   );
+
+  if (isProd) {
+    config.optimization.minimizer.push(new TerserPlugin());
+  }
 
   return config;
 });
