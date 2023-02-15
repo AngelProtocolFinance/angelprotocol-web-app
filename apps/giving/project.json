@@ -10,13 +10,13 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "swc",
-        "outputPath": "dist/apps/giving",
+        "outputPath": "build/apps/giving",
         "index": "apps/giving/src/index.html",
         "baseHref": "/",
-        "main": "apps/giving/src/main.tsx",
+        "main": "apps/giving/src/index.tsx",
         "tsConfig": "apps/giving/tsconfig.app.json",
         "assets": ["apps/giving/src/favicon.ico", "apps/giving/src/assets"],
-        "styles": ["apps/giving/src/styles.css"],
+        "styles": ["apps/giving/src/index.css"],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "apps/giving/webpack.config.js"
@@ -29,12 +29,6 @@
           "vendorChunk": true
         },
         "production": {
-          "fileReplacements": [
-            {
-              "replace": "apps/giving/src/environments/environment.ts",
-              "with": "apps/giving/src/environments/environment.prod.ts"
-            }
-          ],
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
