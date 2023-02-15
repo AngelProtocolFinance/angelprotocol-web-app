@@ -39,11 +39,15 @@ function Documentation() {
 
 export default withStepGuard(Documentation);
 
-function convertToFormValues({ level, activeInCountries, ...doc }: DocType) {
+function convertToFormValues({
+  level,
+  activeInCountries,
+  ...doc
+}: DocType): FormValues {
   const options = activeInCountries.map((countryName) => ({
     label: countryName,
     value: countryName,
   }));
 
-  return { ...doc, activeInCountries: options };
+  return { ...doc, activeInCountriesOpts: options };
 }
