@@ -1,10 +1,13 @@
+const { ProvidePlugin } = require("webpack");
 const { composePlugins, withNx } = require("@nrwl/webpack");
 const { withReact } = require("@nrwl/react");
 
 // Nx plugins for webpack.
-module.exports = composePlugins(withNx(), withReact(), (config) => {
+module.exports = composePlugins(withNx(), withReact(), (config, context) => {
   // Update the webpack config as needed here.
   // e.g. `config.plugins.push(new MyPlugin())`
+
+  // const isProd = context.configuration === "production";
 
   config.module.rules = [
     ...config.module.rules,

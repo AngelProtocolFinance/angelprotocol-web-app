@@ -15,7 +15,7 @@
         "baseHref": "/",
         "main": "apps/giving/src/index.tsx",
         "tsConfig": "apps/giving/tsconfig.app.json",
-        "assets": ["apps/giving/src/favicon.ico", "apps/giving/src/assets"],
+        "assets": ["apps/giving/src/favicon.png", "apps/giving/src/assets"],
         "styles": ["apps/giving/src/index.css"],
         "scripts": [],
         "isolatedConfig": true,
