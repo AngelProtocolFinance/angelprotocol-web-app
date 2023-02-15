@@ -4,6 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
 import App from "../App";
+import { APP_NAME } from "constants/common";
 
 const mockMetrics: DonationsMetricList = {
   donations_daily_count: 0,
@@ -102,7 +103,7 @@ describe("App.tsx tests", () => {
     //registration is finally loaded
     expect(
       await screen.findByRole("heading", {
-        name: `/register to ${APP_NAME}/i`,
+        name: `Register to ${APP_NAME}`,
       })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
