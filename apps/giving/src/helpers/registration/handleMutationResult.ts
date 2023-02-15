@@ -1,7 +1,7 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
-export function handleMutationResult<T extends any>(
+export function handleMutationResult<T>(
   result:
     | {
         data: T;

@@ -21,7 +21,7 @@ const Context = createContext<State>({
   handleError: (_: any, __?: string) => {},
 });
 
-export default function ErrorContext(props: PropsWithChildren<{}>) {
+export default function ErrorContext(props: PropsWithChildren) {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(

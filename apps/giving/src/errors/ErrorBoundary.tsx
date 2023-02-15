@@ -4,7 +4,7 @@ import { logger } from "helpers";
 import ErrorContext from "../contexts/ErrorContext";
 import ErrorHandler from "./ErrorHandler";
 
-type Props = PropsWithChildren<{}>;
+type Props = PropsWithChildren;
 
 type State = { error: Error | undefined };
 

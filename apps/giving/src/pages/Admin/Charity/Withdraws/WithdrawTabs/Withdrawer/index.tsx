@@ -31,7 +31,7 @@ export default function Withdrawer({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      beneficiary: wallet?.address || "",
+      beneficiary: wallet?.address!,
       network: chainIds.juno,
       //transform to form format
       amounts: [...natives, ...cw20s],

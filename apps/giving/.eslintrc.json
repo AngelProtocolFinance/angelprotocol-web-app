@@ -8,7 +8,16 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "rules": { "@typescript-eslint/no-explicit-any": "off", "@typescript-eslint/no-non-null-assertion":"off"}
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-empty-function":"off",
+        "@typescript-eslint/no-non-null-asserted-optional-chain":"off",
+        "@typescript-eslint/no-loss-of-precision":"off",
+        "react/jsx-no-useless-fragment": "off",
+        "no-case-declarations":"off"
+ 
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

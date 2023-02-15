@@ -4,7 +4,7 @@ import { ReactElement } from "react";
 import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty } from "helpers";
 
-type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
+type Base = BaseQueryFn<any, unknown, unknown, any, any>;
 export type QueryState<T> = Pick<
   TypedUseQueryHookResult<T, any, Base>,
   "isLoading" | "isError" | "data"

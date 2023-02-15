@@ -11,7 +11,7 @@ export const SCREEN_LG = 1024;
 
 export default function useHandleScreenResize<T extends object>(
   onResize: (screenSize: number, ref: T) => void,
-  debounceTime: number = 150,
+  debounceTime = 150,
   ref: T,
   options?: {
     shouldCallOnResizeOnLoad?: boolean;
@@ -47,7 +47,7 @@ function debounceCallback(callback: Fn, msDelay: number): Fn {
       window.clearTimeout(timeout);
     }
     timeout = window.setTimeout(() => {
-      callback.apply(null, args);
+      callback(...args);
     }, msDelay);
   };
 

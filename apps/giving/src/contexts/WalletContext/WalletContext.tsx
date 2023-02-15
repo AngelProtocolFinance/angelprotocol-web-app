@@ -48,7 +48,7 @@ const initialState: State = {
   isLoading: true,
 };
 
-export default function WalletContext(props: PropsWithChildren<{}>) {
+export default function WalletContext(props: PropsWithChildren) {
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
     connection: metamaskConnection,

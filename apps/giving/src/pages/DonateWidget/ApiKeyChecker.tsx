@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import QueryLoader from "components/QueryLoader";
 
-export default function ApiKeyChecker(props: PropsWithChildren<{}>) {
+export default function ApiKeyChecker(props: PropsWithChildren) {
   // const search = useLocation().search;
   // const apiKey = new URLSearchParams(search).get("apiKey");
   // const apiKeyQueryState = useCheckApiKey(apiKey, { skip: !apiKey });

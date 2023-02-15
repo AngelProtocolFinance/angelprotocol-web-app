@@ -6,7 +6,7 @@ export function useGovStaker() {
   const { wallet } = useGetWallet();
   const { data = staker } = useGovStakerQuery(
     {
-      addr: wallet?.address || "",
+      addr: wallet?.address!,
     },
     { skip: !wallet }
   );
@@ -17,7 +17,7 @@ export function useCachedGovStaker() {
   const { wallet } = useGetWallet();
   const { data = staker } = useGovStakerState(
     {
-      addr: wallet?.address || "",
+      addr: wallet?.address!,
     },
     { skip: !wallet }
   );

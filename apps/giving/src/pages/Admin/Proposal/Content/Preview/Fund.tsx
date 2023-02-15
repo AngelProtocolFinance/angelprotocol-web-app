@@ -17,7 +17,7 @@ export default function Fund(props: FundPreview) {
       <KeyValue _key="rotating fund?">
         <span
           className={`${
-            true ? "text-blue" : "text-red-l1"
+            props.rotating_fund ? "text-blue" : "text-red-l1"
           } font-bold uppercase`}
         >
           {props.rotating_fund ? "yes" : "no"}
@@ -50,7 +50,7 @@ function getExpiry(
   time: FundPreview["expiry_time"],
   height: FundPreview["expiry_height"]
 ) {
-  let expiry: string = "no expiry";
+  let expiry = "no expiry";
 
   if (time && height) {
     expiry = `at block ${humanize(height, 0)} or ${new Date(
