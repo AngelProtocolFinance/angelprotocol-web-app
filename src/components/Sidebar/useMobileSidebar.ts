@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import { UnexpectedStateError } from "errors/errors";
 import MobileSidebar from "./MobileSidebar";
 
 export default function useMobileSidebar(
@@ -19,9 +18,8 @@ export default function useMobileSidebar(
         }
       }
     }
-    throw new UnexpectedStateError(
-      `No link matches current path ${location.pathname}`
-    );
+
+    return { title: "Open Menu", icon: { type: "Menu", size: 24 }, to: "" };
   });
 
   const { showModal } = useModalContext();
