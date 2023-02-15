@@ -23,7 +23,7 @@ export default function Tags() {
   );
 }
 
-const Tag = (props: PropsWithChildren<{}>) => (
+const Tag = (props: PropsWithChildren<object>) => (
   <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-full font-body font-semibold text-sm dark:bg-blue-d4">
     {props.children}
   </div>

@@ -15,7 +15,7 @@ const VALID_MIME_TYPES = [
 
 const previewsKey: keyof Asset = "previews";
 
-function genAssetShape(isRequired: boolean = false): SchemaShape<Asset> {
+function genAssetShape(isRequired = false): SchemaShape<Asset> {
   return {
     files: Yup.array(genFileSchema(MB_LIMIT * 1e6, VALID_MIME_TYPES)).when(
       previewsKey,
