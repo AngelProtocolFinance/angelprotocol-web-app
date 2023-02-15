@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { AdminRoutes } from "constants/routes";
 
 export type LayoutProps = {
-  nav: FC<{ classes?: string }>;
+  linkGroups: LinkGroup[];
 };
+
+export type LinkGroup = { title?: string; links: AdminRoutes[] };

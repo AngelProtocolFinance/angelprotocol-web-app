@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { LinkGroup } from "../Layout/types";
 import { adminRoutes } from "constants/routes";
 import Layout from "../Layout/Layout";
 import Proposal from "../Proposal";
@@ -6,7 +7,6 @@ import Proposals from "../Proposals";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
-import Nav from "./Nav";
 import Settings from "./Settings";
 import StrategyEditor from "./Settings/StrategyEditor";
 import Templates from "./Templates";
@@ -26,7 +26,7 @@ export default function Charity() {
   } = adminRoutes;
   return (
     <Routes>
-      <Route element={<Layout nav={Nav} />}>
+      <Route element={<Layout linkGroups={linkGroups} />}>
         <Route path={`${proposal.url}/:id`} element={<Proposal />} />
         <Route path={proposals.url} element={<Proposals />} />
         <Route path={`${templates.url}/*`} element={<Templates />} />
@@ -54,3 +54,17 @@ export default function Charity() {
     </Routes>
   );
 }
+
+const linkGroups: LinkGroup[] = [
+  {
+    links: [
+      "index",
+      "withdraws",
+      "invest",
+      "settings",
+      "edit_profile",
+      "proposals",
+      "widget_config",
+    ],
+  },
+];

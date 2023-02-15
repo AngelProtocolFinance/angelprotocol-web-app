@@ -3,8 +3,9 @@ import { Outlet } from "react-router-dom";
 import { LayoutProps } from "./types";
 import Icon from "components/Icon";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import Sidebar from "./Sidebar";
 
-export default function Layout({ nav: Nav }: LayoutProps) {
+export default function Layout({ linkGroups }: LayoutProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useHandleScreenResize(
@@ -38,7 +39,7 @@ export default function Layout({ nav: Nav }: LayoutProps) {
         <Icon type="Forward" />
       </button>
       {/** sidebar */}
-      <Nav />
+      <Sidebar linkGroups={linkGroups} />
 
       {/** views */}
       <div className="p-10">

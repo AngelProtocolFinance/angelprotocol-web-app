@@ -1,0 +1,49 @@
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { LayoutProps } from "./types";
+import Icon from "components/Icon";
+import { createNavLinkStyler } from "helpers";
+import { adminRoutes } from "constants/routes";
+
+export default function Sidebar({
+  linkGroups,
+  classes = "",
+}: LayoutProps & { classes?: string }) {
+  return (
+    <div
+      className={`grid content-start w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${classes}`}
+    >
+      <div>Header</div>
+
+      <div className="flex flex-col py-3">
+        {linkGroups.map((group) => (
+          <React.Fragment key={`link_group-${group.title}`}>
+            {group.title && (
+              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
+                {group.title}
+              </h6>
+            )}
+            {group.links.map((link) => {
+              const { url } = adminRoutes[link];
+              return (
+                <NavLink
+                  key={`nav_link-${link}`}
+                  to={url}
+                  className={linkClassName}
+                >
+                  <Icon type="Admin" />
+                  {link}
+                </NavLink>
+              );
+            })}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const linkClassName = createNavLinkStyler(
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300",
+  "pointer-events-none text-orange"
+);
