@@ -76,6 +76,8 @@ export type TDocumentation = {
   FinancialStatements?: FileObject[];
   AuditedFinancialReports?: FileObject[];
   KycDonorsOnly: boolean;
+  // general
+  ActiveInCountries: string[];
 };
 
 //INIT STEP

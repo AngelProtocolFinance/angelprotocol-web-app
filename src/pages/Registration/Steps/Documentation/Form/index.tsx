@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import ActivityCountries from "components/ActivityCountries";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
@@ -56,6 +57,11 @@ export default function Form() {
         name="sdgs"
         options={sdgOptions}
       />
+      <Label className="mt-6 mb-2">Active countries</Label>
+      <ActivityCountries<
+        FV,
+        "activeInCountriesOpts"
+      > name="activeInCountriesOpts" />
 
       <Separator classes="my-8" />
 
