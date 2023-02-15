@@ -5,30 +5,30 @@ const TIME_STAMP = 123456789;
 const AUTH_TOKEN = "test";
 const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
-global.fetch = jest.fn();
 
 jest.mock("./createAuthToken", () => ({ createAuthToken: () => AUTH_TOKEN }));
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {
     Date.now = jest.fn(() => TIME_STAMP);
+    global.fetch = jest.fn();
 
     const files = [new File([], "file1"), new File([], "file2")];
 
     const result = await uploadFiles(files, bucket);
-    expect(global.fetch).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenCalledTimes(2);
     expect(result).toStrictEqual(baseURL);
   });
 
   test("check generated call parameters", async () => {
     Date.now = jest.fn(() => TIME_STAMP);
-
+    global.fetch = jest.fn();
     const file = new File([], " test file name");
 
     await uploadFiles([file], bucket);
     expect(global.fetch).toHaveBeenCalledTimes(1);
 
-    expect(global.fetch).toHaveBeenCalledWith(APIs.aws + "/v1/file-upload", {
+    expect(fetch).toHaveBeenCalledWith(APIs.aws + "/v1/file-upload", {
       method: "POST",
       body: JSON.stringify({
         bucket: bucket,
