@@ -1,6 +1,7 @@
 import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
 
@@ -10,8 +11,8 @@ export default function Leaderboard() {
   return (
     <section className="padded-container grid content-start mt-8 pb-16 font-work">
       <Seo
-        title="Leaderboad - Angel Giving"
-        url="https://app.angel.giving/leaderboard"
+        title={`Leaderboad - ${APP_NAME}`}
+        url={`${DAPP_DOMAIN}/leaderboard`}
       />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl font-bold">Leaderboard</h3>
