@@ -1,3 +1,5 @@
+import { DAPP_DOMAIN } from "constants/common";
+
 export enum chainIDs {
   junoMain = "juno-1",
   junoTest = "uni-6",
@@ -74,8 +76,8 @@ export const chains: { [index: string]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {
-        txExplorer: "https://app.angelprotocol.io",
-        addressExplorer: "https://app.angelprotocol.io",
+        txExplorer: `${DAPP_DOMAIN}`,
+        addressExplorer: `${DAPP_DOMAIN}`,
       }
     ); //TODO: what's good fallback link
   },

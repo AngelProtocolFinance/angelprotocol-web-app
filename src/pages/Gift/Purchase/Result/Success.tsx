@@ -4,6 +4,7 @@ import Icon from "components/Icon";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
 import { chainIds } from "constants/chainIds";
+import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";
@@ -17,7 +18,7 @@ export default function Success(props: Props) {
     <div className={`grid justify-items-center ${props.classes ?? ""}`}>
       <Icon type="CheckCircle" size={109.8} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl font-bold text-center">
-        Thank you for purchasing Angel Giving Giftcard
+        {`Thank you for purchasing ${APP_NAME} Giftcard`}
       </h3>
 
       {hasRecipient ? (

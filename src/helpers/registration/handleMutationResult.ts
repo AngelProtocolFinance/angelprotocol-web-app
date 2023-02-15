@@ -1,5 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { EMAIL_SUPPORT } from "constants/common";
 
 export function handleMutationResult<T extends any>(
   result:
@@ -30,7 +31,7 @@ export function handleMutationResult<T extends any>(
       }
     } else {
       onError(
-        "An error occured. Please try again later. If the error persists, please contact support@angelprotocol.io"
+        `An error occured. Please try again later. If the error persists, please contact ${EMAIL_SUPPORT}`
       );
     }
   } else {

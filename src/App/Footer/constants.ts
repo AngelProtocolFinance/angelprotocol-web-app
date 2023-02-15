@@ -1,4 +1,5 @@
 import { IconType } from "components/Icon";
+import { BASE_DOMAIN } from "constants/common";
 import { LITEPAPER } from "constants/urls";
 
 type SocialMedia =
@@ -64,17 +65,17 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "For Non-profit orgs.",
-        href: "https://angel.giving/non-profit-organizations/",
+        href: `${BASE_DOMAIN}/non-profit-organizations/`,
       },
-      { text: "For Donors", href: "https://angel.giving/donors/" },
+      { text: "For Donors", href: `${BASE_DOMAIN}/donors/` },
       {
         text: "For Changemakers",
-        href: "https://angel.giving/changemakers/",
+        href: `${BASE_DOMAIN}/changemakers/`,
       },
-      { text: "For Investors", href: "https://angelprotocol.io/investors/" },
+      { text: "For Investors", href: `${BASE_DOMAIN}/investors/` },
       {
         text: "For CSR Partners",
-        href: "https://angel.giving/csr-partners/",
+        href: `${BASE_DOMAIN}/csr-partners/`,
       },
       // {
       //   text: "For Giftcards",
@@ -85,14 +86,14 @@ export const SECTIONS_DATA: Section[] = [
   {
     title: "About",
     links: [
-      { text: "About us", href: "https://angel.giving/about/" },
+      { text: "About us", href: `${BASE_DOMAIN}/about/` },
       {
         text: "Meet the team",
-        href: "https://angel.giving/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY",
+        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY`,
       },
-      { text: "News", href: "https://angel.giving/news/" },
-      { text: "Stories", href: "https://angel.giving/stories/" },
-      { text: "Careers", href: "https://angel.giving/careers/" },
+      { text: "News", href: `${BASE_DOMAIN}/news/` },
+      { text: "Stories", href: `${BASE_DOMAIN}/stories/` },
+      { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
     ],
   },
   {
@@ -108,11 +109,11 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "Privacy policy",
-        href: "https://angel.giving/privacy-policy/",
+        href: `${BASE_DOMAIN}/privacy-policy/`,
       },
       {
         text: "Terms of Use",
-        href: "https://angel.giving/terms-of-use/",
+        href: `${BASE_DOMAIN}/terms-of-use/`,
       },
     ],
   },

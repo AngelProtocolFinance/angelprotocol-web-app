@@ -12,6 +12,7 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
+import { EMAIL_SUPPORT } from "constants/common";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
@@ -143,7 +144,7 @@ const registration_api = aws.injectEndpoints({
       transformErrorResponse(err, meta, arg) {
         return {
           status: err.status,
-          data: "Registration submission failed. Contact support@angel.giving",
+          data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,
         };
       },
     }),

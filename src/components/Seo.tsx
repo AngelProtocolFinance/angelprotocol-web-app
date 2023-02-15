@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import { APP_NAME, DAPP_DOMAIN, SEO_IMAGE } from "constants/common";
 
 type Props = {
   title?: string;
@@ -10,11 +11,11 @@ type Props = {
 };
 
 export default function Seo({
-  title = "Support an impact organization - Angel Giving",
-  description = "Angel Giving provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.",
-  name = "Angel Giving",
-  image = "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png",
-  url = "https://app.angel.giving/",
+  title = `Support an impact organization - ${APP_NAME}`,
+  description = `${APP_NAME} provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.`,
+  name = `${APP_NAME}`,
+  image = `${SEO_IMAGE}`,
+  url = `${DAPP_DOMAIN}`,
 }: Props) {
   return (
     <Helmet>
