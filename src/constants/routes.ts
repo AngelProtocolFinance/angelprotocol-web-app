@@ -72,7 +72,7 @@ export const adminRoutes: { [key in AdminRoutes]: AdminRoute } = {
   //npo
   widget_config: { url: "widget-config", title: "Widget Config" },
   withdraws: { url: "withdraws", title: "Withdraws" },
-  settings: { url: "settings", title: "Settings" },
+  settings: { url: "settings/*", title: "Settings" },
   invest: { url: "invest-dashboard", title: "Invest" },
 
   //ap

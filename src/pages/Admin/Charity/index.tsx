@@ -34,11 +34,11 @@ export default function Charity() {
         <Route path={invest.url} element={<Invest />} />
         <Route path={settings.url}>
           <Route
-            path={`${settings.url}/edit/liquid`}
+            path="edit/liquid"
             element={<StrategyEditor type="liquid" />}
           />
           <Route
-            path={`${settings.url}/edit/locked`}
+            path="edit/locked"
             element={<StrategyEditor type="locked" />}
           />
           <Route index element={<Settings />} />

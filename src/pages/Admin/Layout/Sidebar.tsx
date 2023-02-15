@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import React, { createElement } from "react";
 import { NavLink } from "react-router-dom";
 import { LayoutProps } from "./types";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import { adminRoutes } from "constants/routes";
@@ -16,6 +17,8 @@ export default function Sidebar({
   classes = "",
   inModal = false,
 }: Props) {
+  const { closeModal } = useModalContext();
+
   return createElement(inModal ? Dialog.Panel : "div", {
     className: `w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${classes}`,
     children: (
@@ -36,6 +39,7 @@ export default function Sidebar({
                     key={`nav_link-${link}`}
                     to={url}
                     className={linkClassName}
+                    onClick={inModal ? closeModal : undefined}
                     end={url === "" /** when route is index */}
                   >
                     <Icon type="Admin" />
