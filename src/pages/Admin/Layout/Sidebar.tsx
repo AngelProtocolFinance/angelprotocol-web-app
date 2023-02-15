@@ -24,15 +24,16 @@ export default function Sidebar({
               </h6>
             )}
             {group.links.map((link) => {
-              const { url } = adminRoutes[link];
+              const { url, title } = adminRoutes[link];
               return (
                 <NavLink
                   key={`nav_link-${link}`}
                   to={url}
                   className={linkClassName}
+                  end={url === ""}
                 >
                   <Icon type="Admin" />
-                  {link}
+                  {title}
                 </NavLink>
               );
             })}
@@ -44,6 +45,6 @@ export default function Sidebar({
 }
 
 const linkClassName = createNavLinkStyler(
-  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300",
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange",
   "pointer-events-none text-orange"
 );

@@ -57,14 +57,12 @@ export default function Charity() {
 
 const linkGroups: LinkGroup[] = [
   {
-    links: [
-      "index",
-      "withdraws",
-      "invest",
-      "settings",
-      "edit_profile",
-      "proposals",
-      "widget_config",
-    ],
+    links: ["index", "withdraws"],
   },
+  {
+    title: "Invest",
+    links: ["invest", "settings"],
+  },
+  { title: "Profile", links: ["edit_profile"] },
+  { title: "Manage", links: ["proposals"] },
 ];

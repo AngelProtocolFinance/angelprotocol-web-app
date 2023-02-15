@@ -21,4 +21,4 @@ export default function Review() {
   );
 }
 
-const linkGroups: LinkGroup[] = [{ links: ["index", "proposals"] }];
+const linkGroups: LinkGroup[] = [{ links: ["index_review", "proposals"] }];

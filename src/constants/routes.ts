@@ -1,4 +1,4 @@
-import { IconType } from "components/Icon";
+// import { IconType } from "components/Icon";
 
 export enum appRoutes {
   index = "/",
@@ -34,36 +34,47 @@ export enum profileRoutes {
 }
 
 const _routes = [
+  //all
   "index",
   "proposal",
   "proposals",
   "templates",
+
+  //npo | aif
   "edit_profile",
+
+  //npo
   "widget_config",
   "withdraws",
   "settings",
   "invest",
+
+  //ap
+  "index_review",
 ] as const;
 
 export type AdminRoutes = typeof _routes[number];
 type AdminRoute = {
   url: string;
-  // title: string;
+  title: string;
   // icon: { type: IconType; size: number };
 };
 export const adminRoutes: { [key in AdminRoutes]: AdminRoute } = {
   //all
-  index: { url: "" },
-  proposal: { url: "proposal" },
-  proposals: { url: "proposals" },
-  templates: { url: "templates" },
+  index: { url: "", title: "Dashboard" },
+  proposal: { url: "proposal", title: "Proposal" },
+  proposals: { url: "proposals", title: "Proposals" },
+  templates: { url: "templates", title: "Templates" },
 
   //npo | aif
-  edit_profile: { url: "edit-profile" },
+  edit_profile: { url: "edit-profile", title: "Edit Profile" },
 
   //npo
-  widget_config: { url: "widget-config" },
-  withdraws: { url: "withdraws" },
-  settings: { url: "settings" },
-  invest: { url: "invest-dashboard" },
+  widget_config: { url: "widget-config", title: "Widget Config" },
+  withdraws: { url: "withdraws", title: "Withdraws" },
+  settings: { url: "settings", title: "Settings" },
+  invest: { url: "invest-dashboard", title: "Invest" },
+
+  //ap
+  index_review: { url: "", title: "Applications" },
 };

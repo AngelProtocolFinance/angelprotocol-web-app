@@ -22,6 +22,6 @@ export default function Core() {
 
 const linkGroups: LinkGroup[] = [
   {
-    links: ["index", "proposals"],
+    links: ["proposals"],
   },
 ];
