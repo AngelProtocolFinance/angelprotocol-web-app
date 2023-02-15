@@ -27,7 +27,6 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
-    level,
     activeInCountriesOpts,
     ...documents
   }: FormValues) => {
