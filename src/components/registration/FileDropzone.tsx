@@ -35,7 +35,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
   } = useFormContext<T>();
 
   const {
-    field: { value: files, onChange: onFilesChange },
+    field: { value: files, onChange: onFilesChange, ref },
   } = useController<T>({ name: filesId });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -59,6 +59,7 @@ export function FileDropzone<T extends FieldValues, K extends Path<T>>(props: {
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
               : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
           } ${props.className ?? ""}`,
+          ref,
         })}
       >
         <input {...getInputProps({ id: filesId })} />

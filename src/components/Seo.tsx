@@ -10,11 +10,11 @@ type Props = {
 };
 
 export default function Seo({
-  title = "Support an impact organization - Angel Protocol",
-  description = "Angel Protocol provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.",
-  name = "Angel Protocol",
+  title = "Support an impact organization - Angel Giving",
+  description = "Angel Giving provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.",
+  name = "Angel Giving",
   image = "https://charity-profile-images.s3.amazonaws.com/logo/angelprotocol-wings-bl.png",
-  url = "https://app.angelprotocol.io/",
+  url = "https://app.angel.giving/",
 }: Props) {
   return (
     <Helmet>

@@ -14,6 +14,7 @@ export enum appRoutes {
   endowment_admin = "/endowment-admin",
   donations = "/donations",
   donate = "/donate",
+  donate_widget = "/donate-widget",
   gift = "/gift",
 }
 
@@ -36,6 +37,7 @@ export enum adminRoutes {
   proposal = "proposal",
   proposals = "proposals",
   templates = "templates",
+  widget_config = "widget-config",
 
   //charity
   edit_profile = "edit-profile",

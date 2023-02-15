@@ -50,6 +50,7 @@ import {
   FaParachuteBox,
   FaStopwatch,
   FaTelegramPlane,
+  FaTiktok,
   FaUserCircle,
   FaUsersCog,
 } from "react-icons/fa";
@@ -156,6 +157,7 @@ export const icons = {
   StopWatch: FaStopwatch,
   Sun: BiSun,
   Telegram: FaTelegramPlane,
+  Tiktok: FaTiktok,
   Twitter: BsTwitter,
   Undo: CgUndo,
   Unsorted: TiArrowUnsorted,

@@ -60,7 +60,7 @@ export default function Form({ classes = "" }) {
         size={96}
       />
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Redeem Angel Protocol Giftcard
+        Redeem Angel Giving Giftcard
       </h3>
       <div className="relative grid w-full border border-prim rounded-lg overflow-clip">
         <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">

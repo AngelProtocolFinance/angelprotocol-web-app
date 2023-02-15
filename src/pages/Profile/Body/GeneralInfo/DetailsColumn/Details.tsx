@@ -48,9 +48,9 @@ export default function Details() {
 function Detail(props: PropsWithChildren<{ title: string }>) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
-      <h6 className="font-header font-bold text-xs tracking-wider uppercase">
+      <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
-      </h6>
+      </p>
       <span className="font-body font-normal text-base text-gray-d1 dark:text-gray">
         {props.children || "-"}
       </span>
