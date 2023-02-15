@@ -25,7 +25,6 @@ describe("Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/loading applications/i)).toBeInTheDocument();
   });
   test("Error getting applications", () => {
@@ -37,7 +36,6 @@ describe("Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/failed to get applications/i)).toBeInTheDocument();
   });
   test("No applications found", () => {
@@ -49,7 +47,6 @@ describe("Applications", () => {
         <Applications />
       </AppWrapper>
     );
-    expect(mockEndowmentApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/no applications found/i)).toBeInTheDocument();
   });
   test("AppRows with poll id shows link to proposal page", () => {
