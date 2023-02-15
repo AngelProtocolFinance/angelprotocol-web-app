@@ -36,7 +36,7 @@ export default function Sidebar({
                     key={`nav_link-${link}`}
                     to={url}
                     className={linkClassName}
-                    end={url === ""}
+                    end={url === "" /** when route is index */}
                   >
                     <Icon type="Admin" />
                     {title}

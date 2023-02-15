@@ -23,6 +23,7 @@ export default function SidebarOpener({ classes = "", linkGroups }: Props) {
     }
   );
 
+  //close sidebar when route changes
   const currPathRef = useRef<string>(location.pathname);
   useEffect(() => {
     if (currPathRef.current !== location.pathname) {
