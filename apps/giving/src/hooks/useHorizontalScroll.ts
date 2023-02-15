@@ -86,7 +86,7 @@ export default function useHorizontalScroll(props?: Props) {
     ) => number
   ) {
     if (!sliderRef.current) return;
-    var delta = end - start;
+    const delta = end - start;
 
     let startTime: number;
     if (window.performance && !!window.performance.now) {
@@ -96,10 +96,10 @@ export default function useHorizontalScroll(props?: Props) {
     } else {
       startTime = new Date().getTime();
     }
-    let tweenLoop = function (time?: number) {
+    const tweenLoop = function (time?: number) {
       if (!sliderRef.current) return;
-      let t = !time ? 0 : time - startTime;
-      let factor = easing(null, t, 0, 1, duration);
+      const t = !time ? 0 : time - startTime;
+      const factor = easing(null, t, 0, 1, duration);
       sliderRef.current.scrollLeft = start + delta * factor;
       if (t < duration && sliderRef.current.scrollLeft !== end)
         return window.requestAnimationFrame(tweenLoop);

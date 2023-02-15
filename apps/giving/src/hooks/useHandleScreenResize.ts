@@ -20,7 +20,7 @@ export default function useHandleScreenResize<T extends object>(
 ) {
   useEffect(() => {
     /** track state */
-    let _ref = ref;
+    const _ref = ref;
     /** on first visit */
     if (options?.shouldCallOnResizeOnLoad) {
       onResize(window.innerWidth, _ref);
