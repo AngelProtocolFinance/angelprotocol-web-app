@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
-import App from "../App";
 import { APP_NAME } from "constants/common";
+import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
   donations_daily_count: 0,
