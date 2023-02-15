@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "npmScope": "myorg",
+    "npmScope": "ap",
     "tasksRunnerOptions": {
       "default": {
         "runner": "nx/tasks-runners/default",
@@ -21,8 +21,8 @@
       "sharedGlobals": []
     },
     "workspaceLayout": {
-      "appsDir": "packages",
-      "libsDir": "packages"
+      "appsDir": "apps",
+      "libsDir": "libs"
     }
   }
   
