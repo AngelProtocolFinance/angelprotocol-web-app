@@ -26,11 +26,11 @@ export default function SidebarOpener({ classes = "", linkGroups }: Props) {
   //close sidebar when route changes
   const currPathRef = useRef<string>(location.pathname);
   useEffect(() => {
-    if (currPathRef.current !== location.pathname) {
+    if (currPathRef.current !== location.pathname && isModalOpen) {
       closeModal();
       currPathRef.current = location.pathname;
     }
-  }, [location.pathname, closeModal]);
+  }, [location.pathname, closeModal, isModalOpen]);
 
   const link = linkGroups
     .flatMap((g) => g.links)
