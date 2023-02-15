@@ -22,7 +22,7 @@ enum routes {
 // TODO: REMOVE ONCE AIF OR NPO PAGE IS IMPLEMENTED.
 // THIS IS JUST A HELPER FOR TESTING
 export function createLinkGroupsPlaceholder(id: number): LinkGroup[] {
-  const rootPath = `${appRoutes.aif}/${id}`;
+  const rootPath = `${appRoutes.admin}/${id}`;
 
   const linkGroups: LinkGroup[] = [
     {
