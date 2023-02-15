@@ -1,5 +1,7 @@
+import type { Config } from "jest";
+
 /* eslint-disable */
-export default {
+const config: Config = {
   displayName: "giving",
   preset: "../../jest.preset.js",
   transform: {
@@ -11,4 +13,7 @@ export default {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   coverageDirectory: "../../coverage/apps/giving",
+  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
 };
+
+export default config;
