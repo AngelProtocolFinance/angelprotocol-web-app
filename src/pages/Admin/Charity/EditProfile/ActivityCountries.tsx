@@ -1,10 +1,21 @@
-import { FormValues } from "./types";
+import { FieldValues, Path } from "react-hook-form";
 import { useCountriesQuery } from "services/countries";
 import QueryLoader from "components/QueryLoader";
-import { Selector, selectorButtonStyle } from "components/Selector";
+import { OptionType, Selector, selectorButtonStyle } from "components/Selector";
 import { Label } from "components/form";
 
-export default function ActivityCountries() {
+type Props<T extends FieldValues, K extends Path<T>> = {
+  name: T[K] extends OptionType<string>[] ? K : never;
+  classes?: {
+    container?: string;
+    button?: string;
+  };
+};
+
+export default function ActivityCountries<
+  T extends FieldValues,
+  K extends Path<T>
+>({ name, classes }: Props<T, K>) {
   const queryState = useCountriesQuery({});
   return (
     <>
@@ -18,15 +29,14 @@ export default function ActivityCountries() {
           error: "Failed to get country options",
         }}
         classes={{
-          container:
-            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
+          container: `${selectorButtonStyle} ${classes?.container || ""}`,
         }}
       >
         {(countries) => (
-          <Selector<FormValues, "active_in_countries", string, true>
-            name="active_in_countries"
+          <Selector<T, K, string, true>
+            name={name}
             multiple
-            classes={{ button: "field-input-admin" }}
+            classes={{ button: classes?.button || "" }}
             options={countries.map((c) => ({
               label: c.name,
               value: c.name,

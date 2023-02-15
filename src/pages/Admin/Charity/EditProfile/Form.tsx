@@ -124,7 +124,13 @@ export default function Form() {
             error: "field-error",
           }}
         />
-        <ActivityCountries />
+        <ActivityCountries<FV, "active_in_countries">
+          name="active_in_countries"
+          classes={{
+            container: "bg-white dark:bg-blue-d6 px-4 py-3",
+            button: "field-input-admin",
+          }}
+        />
         <Field<FV>
           classes="field-admin"
           name="street_address"
