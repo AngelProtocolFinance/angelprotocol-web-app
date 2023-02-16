@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
-import Logo, { LogoProps } from "components/Logo";
+import Logo from "components/Logo";
 import { getPossessiveForm } from "helpers";
+import { LOGO } from "constants/common";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
-
-const LOGO: LogoProps = {
-  href: "https://angelprotocol.io/",
-  src: angelProtocolLogo,
-  title: "Go to Marketing page",
-};
 
 export default function WidgetExample({ trigger }: { trigger: boolean }) {
   const { getValues } = useFormContext<FormValues>();

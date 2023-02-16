@@ -1,15 +1,13 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "./types";
-import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
 import Loader from "components/Loader";
-import { LogoProps } from "components/Logo";
 import Seo from "components/Seo";
+import { LOGO } from "constants/common";
 import { appRoutes } from "constants/routes";
 import Footer from "./Footer";
 import Header from "./Header";
-import { GROUPS_DATA } from "./constants";
-import { SOCIAL_MEDIA_LINKS } from "./constants";
+import { GROUPS_DATA, SOCIAL_MEDIA_LINKS } from "./constants";
 
 const HEADER_LINKS: Link[] = [
   { title: "Marketplace", href: appRoutes.index },
@@ -18,12 +16,6 @@ const HEADER_LINKS: Link[] = [
   // NOTE: governance will be reenabled when we relaunch the $HALO token
   // { title: "Governance", href: appRoutes.govern },
 ];
-
-const LOGO: LogoProps = {
-  href: "https://angelprotocol.io/",
-  src: angelProtocolLogo,
-  title: "Go to Marketing page",
-};
 
 export default function Layout() {
   return (

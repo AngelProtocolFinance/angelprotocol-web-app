@@ -1,18 +1,12 @@
 import { useEffect } from "react";
-import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
-import Logo, { LogoProps } from "components/Logo";
+import Logo from "components/Logo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
+import { LOGO } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
-
-const LOGO: LogoProps = {
-  href: "https://angelprotocol.io/",
-  src: angelProtocolLogo,
-  title: "Go to Marketing page",
-};
 
 export default function InnerComponent(props: {
   id: number;
