@@ -2,7 +2,10 @@ import { IconType } from "components/Icon";
 
 export type Link = {
   title: string;
-  iconType?: IconType;
+  icon?: {
+    type: IconType;
+    size: number;
+  };
   href: string;
 };
 

@@ -4,42 +4,66 @@ import { LITEPAPER } from "constants/urls";
 export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   {
     title: "Twitter",
-    iconType: "Twitter",
+    icon: {
+      type: "Twitter",
+      size: 24,
+    },
     href: "https://twitter.com/angelprotocol",
   },
   {
     title: "Telegram",
-    iconType: "Telegram",
+    icon: {
+      type: "Telegram",
+      size: 24,
+    },
     href: "https://t.me/angelprotocoI",
   },
   {
     title: "Discord",
-    iconType: "Discord",
+    icon: {
+      type: "Discord",
+      size: 24,
+    },
     href: "https://discord.gg/RhqA652ySA",
   },
   {
     title: "YouTube",
-    iconType: "Youtube",
+    icon: {
+      type: "Youtube",
+      size: 24,
+    },
     href: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
   },
   {
     title: "Medium",
-    iconType: "Medium",
+    icon: {
+      type: "Medium",
+      size: 24,
+    },
     href: "https://angelprotocol.medium.com",
   },
   {
     title: "Facebook",
-    iconType: "FacebookCircle",
+    icon: {
+      type: "FacebookCircle",
+      size: 24,
+    },
     href: "https://www.facebook.com/AngelProtocolFB/",
   },
   {
     title: "Linkedin",
-    iconType: "Linkedin",
+    icon: {
+      type: "Linkedin",
+      size: 24,
+    },
     href: "https://www.linkedin.com/company/angel-protocol/",
   },
   {
     title: "Instagram",
-    iconType: "Instagram",
+    icon: {
+      type: "Instagram",
+      size: 24,
+    },
     href: "https://www.instagram.com/angelprotocol/",
   },
 ];
