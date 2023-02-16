@@ -89,6 +89,7 @@ export type EndowmentsQueryParams = {
   kyc_only: string | null; // comma separated boolean values
   hq_country?: string; //comma separated values
   active_in_countries?: string; //comma separated values
+  limit?: number; // Number of items to be returned per request. If not provided, API defaults to return all
 };
 
 export interface LeaderboardEntry {
