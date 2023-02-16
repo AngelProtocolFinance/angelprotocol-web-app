@@ -159,6 +159,9 @@ export type ProposalMeta =
   //endowment
   | EndowmentStatusMeta
   | WithdrawMeta
+  //TODO: add preview data
+  | { type: "acc_strategy" }
+  | { type: "acc_invest" }
 
   //registrar
   | RegistrarConfigUpdateMeta;

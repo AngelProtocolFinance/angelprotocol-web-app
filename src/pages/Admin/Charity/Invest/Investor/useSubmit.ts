@@ -1,4 +1,5 @@
 import { FormValues } from "./types";
+import { ProposalMeta } from "pages/Admin/types";
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
@@ -6,6 +7,7 @@ import Account from "contracts/Account";
 import CW3 from "contracts/CW3";
 import useCosmosTxSender from "hooks/useCosmosTxSender";
 import { scaleToStr } from "helpers";
+import { getTagPayloads } from "helpers/admin";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();
@@ -31,15 +33,18 @@ export default function useSubmit(vault: string, type: AccountType) {
 
     const cw3contract = new CW3(wallet, cw3);
     //proposal meta for preview
+    const meta: ProposalMeta = { type: "acc_invest" };
     const proposal = cw3contract.createProposalMsg(
       "Invest",
       `Invest funds to: ${vault}`,
-      [msg]
+      [msg],
+      JSON.stringify(meta)
     );
 
     await sendTx({
       msgs: [proposal],
       ...propMeta,
+      tagPayloads: getTagPayloads(propMeta.willExecute && "acc_invest"),
     });
   }
 
