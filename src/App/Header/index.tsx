@@ -1,6 +1,7 @@
 import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
+import { Link } from "../types";
 import APLogo from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
@@ -8,7 +9,9 @@ import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-export default function Header({ classes = "" }: { classes?: string }) {
+type Props = { classes: string; links: Link[] };
+
+export default function Header({ classes, links }: Props) {
   const location = useLocation();
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,7 +42,7 @@ export default function Header({ classes = "" }: { classes?: string }) {
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto] h-full">
         <APLogo className="w-32" />
-        <DesktopNav classes="hidden lg:flex" />
+        <DesktopNav classes="hidden lg:flex" links={links} />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />
