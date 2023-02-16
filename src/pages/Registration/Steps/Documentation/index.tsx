@@ -15,12 +15,7 @@ function Documentation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: doc
-      ? {
-          ...(({ level, hqCountry, ...doc }) => ({
-            ...doc,
-            hqCountry: { name: hqCountry, flag: "" },
-          }))(doc),
-        }
+      ? convertToFormValues(doc)
       : {
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
@@ -46,8 +41,9 @@ function Documentation() {
 export default withStepGuard(Documentation);
 
 function convertToFormValues({
-  level,
   activeInCountries,
+  hqCountry,
+  level,
   ...doc
 }: DocType): FormValues {
   const options = activeInCountries.map((countryName) => ({
@@ -55,5 +51,16 @@ function convertToFormValues({
     value: countryName,
   }));
 
-  return { ...doc, activeInCountriesOpts: options };
+  return {
+    ...doc,
+    hqCountry: { name: hqCountry, flag: "" },
+    activeInCountriesOpts: options,
+  };
 }
+
+// {
+//   ...(({ level, hqCountry, ...doc }) => ({
+//     ...doc,
+//     hqCountry: { name: hqCountry, flag: "" },
+//   }))(doc),
+// }
