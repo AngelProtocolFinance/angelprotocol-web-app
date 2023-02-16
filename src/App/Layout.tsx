@@ -4,6 +4,8 @@ import Loader from "components/Loader";
 import Seo from "components/Seo";
 import Footer from "./Footer";
 import Header from "./Header";
+import { GROUPS_DATA } from "./constants";
+import { SOCIAL_MEDIA_LINKS } from "./constants";
 
 export default function Layout() {
   return (
@@ -13,7 +15,7 @@ export default function Layout() {
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
-      <Footer />
+      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
     </div>
   );
 }

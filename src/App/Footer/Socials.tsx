@@ -1,4 +1,4 @@
-import { SocialMediaLink } from "./types";
+import { SocialMediaLink } from "../types";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 
