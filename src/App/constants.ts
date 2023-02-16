@@ -5,42 +5,42 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
   {
     title: "Twitter",
     iconType: "Twitter",
-    link: "https://twitter.com/angelprotocol",
+    href: "https://twitter.com/angelprotocol",
   },
   {
     title: "Telegram",
     iconType: "Telegram",
-    link: "https://t.me/angelprotocoI",
+    href: "https://t.me/angelprotocoI",
   },
   {
     title: "Discord",
     iconType: "Discord",
-    link: "https://discord.gg/RhqA652ySA",
+    href: "https://discord.gg/RhqA652ySA",
   },
   {
     title: "YouTube",
     iconType: "Youtube",
-    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+    href: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
   },
   {
     title: "Medium",
     iconType: "Medium",
-    link: "https://angelprotocol.medium.com",
+    href: "https://angelprotocol.medium.com",
   },
   {
     title: "Facebook",
     iconType: "FacebookCircle",
-    link: "https://www.facebook.com/AngelProtocolFB/",
+    href: "https://www.facebook.com/AngelProtocolFB/",
   },
   {
     title: "Linkedin",
     iconType: "Linkedin",
-    link: "https://www.linkedin.com/company/angel-protocol/",
+    href: "https://www.linkedin.com/company/angel-protocol/",
   },
   {
     title: "Instagram",
     iconType: "Instagram",
-    link: "https://www.instagram.com/angelprotocol/",
+    href: "https://www.instagram.com/angelprotocol/",
   },
 ];
 

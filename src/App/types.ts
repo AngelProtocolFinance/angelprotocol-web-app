@@ -12,8 +12,8 @@ type SocialMedia =
 
 export type SocialMediaLink = {
   title: SocialMedia;
-  iconType: IconType;
-  link: string;
+  iconType?: IconType;
+  href: string;
 };
 
 export type LinkGroup = {

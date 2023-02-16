@@ -5,7 +5,7 @@ import Icon from "components/Icon";
 export default function Socials({ links }: { links: SocialMediaLink[] }) {
   return (
     <div className="flex items-center gap-4 md:gap-8">
-      {links.map(({ title, iconType, link }) => {
+      {links.map(({ title, iconType, href: link }) => {
         return (
           <ExtLink
             key={`social-link-${iconType}`}
