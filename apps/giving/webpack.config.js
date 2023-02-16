@@ -1,4 +1,3 @@
-const TerserPlugin = require("terser-webpack-plugin");
 const { ProvidePlugin } = require("webpack");
 const { composePlugins, withNx } = require("@nrwl/webpack");
 const { withReact } = require("@nrwl/react");
@@ -29,10 +28,6 @@ module.exports = composePlugins(withNx(), withReact(), (config, context) => {
       process: "process/browser",
     })
   );
-
-  if (isProd) {
-    config.optimization.minimizer.push(new TerserPlugin());
-  }
 
   return config;
 });
