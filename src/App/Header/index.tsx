@@ -2,16 +2,16 @@ import Airdrop from "App/Header/Airdrop";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
-import APLogo from "components/APLogo";
+import APLogo, { LogoProps } from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 
-type Props = { classes: string; links: Link[] };
+type Props = { classes: string; links: Link[]; logo: LogoProps };
 
-export default function Header({ classes, links }: Props) {
+export default function Header({ classes, links, logo }: Props) {
   const location = useLocation();
   const isScrolledRef = useRef<boolean>(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,14 +41,18 @@ export default function Header({ classes, links }: Props) {
       transition-shadow ease-in-out duration-300 w-full h-[90px]`}
     >
       <div className="grid items-center gap-4 padded-container grid-cols-[auto_1fr_auto] h-full">
-        <APLogo className="w-32" />
+        <APLogo className="w-32" logo={logo} />
         <DesktopNav classes="hidden lg:flex" links={links} />
         <div className="flex gap-4 justify-self-end">
           <ThemeToggle classes="hidden lg:flex" />
           <WalletSuite />
           <Airdrop />
         </div>
-        <MobileNavOpener classes="flex ml-2 lg:hidden" links={links} />
+        <MobileNavOpener
+          classes="flex ml-2 lg:hidden"
+          links={links}
+          logo={logo}
+        />
       </div>
     </header>
   );

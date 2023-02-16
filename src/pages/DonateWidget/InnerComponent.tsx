@@ -1,11 +1,18 @@
 import { useEffect } from "react";
-import APLogo from "components/APLogo";
+import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
+import APLogo, { LogoProps } from "components/APLogo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
 import useWidgetParams from "./useWidgetParams";
+
+const LOGO: LogoProps = {
+  href: "https://angelprotocol.io/",
+  src: angelProtocolLogo,
+  title: "Go to Marketing page",
+};
 
 export default function InnerComponent(props: {
   id: number;
@@ -50,7 +57,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <APLogo className="w-20" />
+        <APLogo className="w-20" logo={LOGO} />
       </footer>
     </div>
   );

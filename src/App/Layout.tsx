@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "./types";
+import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
+import { LogoProps } from "components/APLogo";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
@@ -17,11 +19,17 @@ const HEADER_LINKS: Link[] = [
   // { title: "Governance", href: appRoutes.govern },
 ];
 
+const LOGO: LogoProps = {
+  href: "https://angelprotocol.io/",
+  src: angelProtocolLogo,
+  title: "Go to Marketing page",
+};
+
 export default function Layout() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} />
+      <Header classes="sticky top-0 z-20" links={HEADER_LINKS} logo={LOGO} />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import APLogo from "components/APLogo";
+import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
+import APLogo, { LogoProps } from "components/APLogo";
 import { getPossessiveForm } from "helpers";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
+
+const LOGO: LogoProps = {
+  href: "https://angelprotocol.io/",
+  src: angelProtocolLogo,
+  title: "Go to Marketing page",
+};
 
 export default function WidgetExample({ trigger }: { trigger: boolean }) {
   const { getValues } = useFormContext<FormValues>();
@@ -63,7 +70,7 @@ export default function WidgetExample({ trigger }: { trigger: boolean }) {
           </section>
         </div>
         <footer className="flex justify-center items-center h-20 w-full bg-blue">
-          <APLogo className="w-20" />
+          <APLogo className="w-20" logo={LOGO} />
         </footer>
       </div>
     </div>
