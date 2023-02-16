@@ -7,6 +7,7 @@ import { RichTextEditor } from "components/RichText";
 import { Label } from "components/form";
 import { Field } from "components/form";
 import { createAuthToken } from "helpers";
+import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
@@ -48,7 +49,7 @@ export default function Form({ classes = "" }) {
       autoComplete="off"
     >
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Send Your Angel Giving Giftcard via Email
+        {`Send Your ${APP_NAME} Giftcard via Email`}
       </h3>
       <Field<FV> name="purchaser" label="Your name" classes="field-gift" />
       <Field<FV>

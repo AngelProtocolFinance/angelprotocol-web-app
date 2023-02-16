@@ -1,3 +1,4 @@
+import { BASE_DOMAIN } from "constants/common";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter() {
@@ -11,7 +12,7 @@ export default function Newsletter() {
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <a
-            href="https://angelprotocol.io/privacy-policy/"
+            href={`${BASE_DOMAIN}/privacy-policy/`}
             className="font-bold cursor-pointer underline hover:text-orange-l1 active:text-orange transition ease-in-out duration-300"
           >
             Privacy Policy

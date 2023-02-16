@@ -4,6 +4,7 @@ import { useProfileQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import Content from "./Content";
 
 export default function Donate() {
@@ -30,11 +31,11 @@ export default function Donate() {
         {(profile) => (
           <>
             <Seo
-              title={`Donate to ${profile.name} - Angel Giving`}
+              title={`Donate to ${profile.name} - ${APP_NAME}`}
               description={`${profile.overview.slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
-              url={`https://app.angel.giving/donate/${profile.id}`}
+              url={`${DAPP_DOMAIN}/donate/${profile.id}`}
             />
             <Content
               name={profile.name}

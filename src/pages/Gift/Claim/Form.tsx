@@ -8,6 +8,7 @@ import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { createAuthToken } from "helpers";
 import { chainIds } from "constants/chainIds";
+import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 
@@ -60,7 +61,7 @@ export default function Form({ classes = "" }) {
         size={96}
       />
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Redeem Angel Giving Giftcard
+        {`Redeem ${APP_NAME} Giftcard`}
       </h3>
       <div className="relative grid w-full border border-prim rounded-lg overflow-clip">
         <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">

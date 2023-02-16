@@ -4,6 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import { DonationRecipient } from "slices/donation";
+import { DAPP_DOMAIN } from "constants/common";
 
 export type SocialMedia = Extract<
   IconType,
@@ -59,9 +60,10 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-prim rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
-        <span className="font-bold">@AngelProtocol</span>! Every gift is
+        <span className="font-bold">@AngelProtocol</span>!{" "}
+        {`Every gift is
         invested to provide sustainable funding for non-profits: Give once, give
-        forever. Help join the cause: https://app.angelprotocol.io
+        forever. Help join the cause: ${DAPP_DOMAIN}`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
@@ -76,10 +78,9 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   );
 }
 
-const APP_URL = "https://app.angelprotocol.io";
 function generateShareLink(rawText: string, type: SocialMedia) {
   const encodedText = encodeURIComponent(rawText);
-  const encodedURL = encodeURIComponent(APP_URL);
+  const encodedURL = encodeURIComponent(DAPP_DOMAIN);
   switch (type) {
     case "Twitter":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
@@ -91,7 +92,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
      */
     case "Facebook":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        APP_URL
+        DAPP_DOMAIN
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

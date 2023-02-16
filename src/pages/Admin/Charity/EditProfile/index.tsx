@@ -6,6 +6,7 @@ import { useAdminResources } from "pages/Admin/Guard";
 import { useProfileQuery } from "services/aws/aws";
 import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
+import { APP_NAME, DAPP_DOMAIN } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -69,11 +70,11 @@ function FormWithContext(props: EndowmentProfile) {
   return (
     <FormProvider {...methods}>
       <Seo
-        title={`${props.name} profile update - Angel Giving`}
+        title={`${props.name} profile update - ${APP_NAME}`}
         description={`${props.overview.slice(0, 140)}`}
         name={`${props.name}`}
         image={`${props.logo}`}
-        url={`https://app.angel.giving/profile/${props.id}`}
+        url={`${DAPP_DOMAIN}/profile/${props.id}`}
       />
       <Form />
     </FormProvider>

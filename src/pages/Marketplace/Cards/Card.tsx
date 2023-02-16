@@ -62,12 +62,12 @@ export default function Card({
                 {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
               </p>
             )}
-            {!isEmpty(active_in_countries) && (
-              <p className="line-clamp-2">
-                <span className="font-semibold">Active in:</span>{" "}
-                {active_in_countries.join(" ,")}
-              </p>
-            )}
+            <p className="line-clamp-2">
+              <span className="font-semibold">Active in:</span>{" "}
+              {isEmpty(active_in_countries)
+                ? hq.country
+                : active_in_countries.join(" ,")}
+            </p>
           </div>
           <div className="mt-auto empty:hidden grid gap-3">
             {/** UN SDGs - always on bottom */}

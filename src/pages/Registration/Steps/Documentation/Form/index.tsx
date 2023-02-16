@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
+import ActivityCountries from "components/ActivityCountries";
+import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
 import { FileDropzone, LoadText } from "components/registration";
+import { APP_NAME } from "constants/common";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE } from "constants/urls";
 import { steps } from "../../../routes";
@@ -20,10 +23,10 @@ export default function Form() {
     <form className="w-full" onSubmit={submit}>
       <Level num={1} />
       <p className="mt-2 text-sm">
-        Your organization is eligible to create its endowment. Donors can donate
-        funds through your organization’s landing page on Angel Giving’s
+        {`Your organization is eligible to create its endowment. Donors can donate
+        funds through your organization’s landing page on ${APP_NAME}’s
         interface. Your organization is not displayed on the marketplace and
-        cannot be found through the search bar.
+        cannot be found through the search bar.`}
       </p>
       <Label className="mt-8 mb-2" required>
         Your proof of identity
@@ -55,6 +58,23 @@ export default function Form() {
         name="sdgs"
         options={sdgOptions}
       />
+      <Label className="mt-6 mb-2" required>
+        Select the country your organization is headquartered in
+      </Label>
+      <CountrySelector<FV, "hqCountry">
+        fieldName="hqCountry"
+        placeholder="Select a country"
+        classes={{
+          container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+          input: "text-sm py-3.5",
+          error: "field-error",
+        }}
+      />
+      <Label className="mt-6 mb-2">Active countries</Label>
+      <ActivityCountries<
+        FV,
+        "activeInCountriesOpts"
+      > name="activeInCountriesOpts" />
 
       <Separator classes="my-8" />
 
@@ -107,8 +127,8 @@ export default function Form() {
           error: "mt-1",
         }}
       >
-        By checking this box, you declare that you have the authority to create
-        an endowment in the name of {data.contact.orgName} through Angel Giving
+        {`By checking this box, you declare that you have the authority to create
+        an endowment in the name of {data.contact.orgName} through ${APP_NAME}`}
       </CheckField>
       <CheckField<FV>
         name="hasAgreedToTerms"

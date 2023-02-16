@@ -55,6 +55,10 @@ export type Documentation = {
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   level: EndowmentTierNum;
+
+  hqCountry: string;
+  // general info
+  activeInCountries: string[];
 };
 
 //STEP 3
