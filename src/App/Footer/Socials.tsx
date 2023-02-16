@@ -5,14 +5,14 @@ import { SOCIAL_MEDIA_LINKS } from "./constants";
 export default function Socials() {
   return (
     <div className="flex items-center gap-4 md:gap-8">
-      {Object.entries(SOCIAL_MEDIA_LINKS).map(([type, { iconType, link }]) => {
+      {SOCIAL_MEDIA_LINKS.map(({ title, iconType, link }) => {
         return (
           <ExtLink
-            key={type}
+            key={`social-link-${iconType}`}
             href={link}
             className="hover:text-blue-l1 active:text-blue transition ease-in-out duration-300"
           >
-            <Icon type={iconType} className="w-6 h-6" title={type} />
+            <Icon type={iconType} className="w-6 h-6" title={title} />
           </ExtLink>
         );
       })}

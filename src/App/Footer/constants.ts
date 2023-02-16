@@ -1,40 +1,48 @@
-import { LinkGroup, SocialMediaLinks } from "./types";
+import { LinkGroup, SocialMediaLink } from "./types";
 import { LITEPAPER } from "constants/urls";
 
-export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
-  Twitter: {
+export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
+  {
+    title: "Twitter",
     iconType: "Twitter",
     link: "https://twitter.com/angelprotocol",
   },
-  Telegram: {
+  {
+    title: "Telegram",
     iconType: "Telegram",
     link: "https://t.me/angelprotocoI",
   },
-  Discord: {
+  {
+    title: "Discord",
     iconType: "Discord",
     link: "https://discord.gg/RhqA652ySA",
   },
-  YouTube: {
+  {
+    title: "YouTube",
     iconType: "Youtube",
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
   },
-  Medium: {
+  {
+    title: "Medium",
     iconType: "Medium",
     link: "https://angelprotocol.medium.com",
   },
-  Facebook: {
+  {
+    title: "Facebook",
     iconType: "FacebookCircle",
     link: "https://www.facebook.com/AngelProtocolFB/",
   },
-  Linkedin: {
+  {
+    title: "Linkedin",
     iconType: "Linkedin",
     link: "https://www.linkedin.com/company/angel-protocol/",
   },
-  Instagram: {
+  {
+    title: "Instagram",
     iconType: "Instagram",
     link: "https://www.instagram.com/angelprotocol/",
   },
-};
+];
 
 export const GROUPS_DATA: LinkGroup[] = [
   {

@@ -10,8 +10,10 @@ type SocialMedia =
   | "Linkedin"
   | "Instagram";
 
-export type SocialMediaLinks = {
-  [index in SocialMedia]?: { iconType: IconType; link: string };
+export type SocialMediaLink = {
+  title: SocialMedia;
+  iconType: IconType;
+  link: string;
 };
 
 export type LinkGroup = {
