@@ -1,19 +1,16 @@
-import { Args } from "./queryContract/types";
-import { AdminResources, ProposalDetails, Vault } from "services/types";
-import { CW3Config } from "types/contracts";
-import { condenseToNum, idParamToNum } from "helpers";
-import { isJunoAddress } from "schemas/tests";
-import { contracts } from "constants/contracts";
-import { adminRoutes, appRoutes } from "constants/routes";
-import { symbols } from "constants/tokens";
-import { junoApi } from ".";
-import { queryContract } from "./queryContract";
+import { Args } from "../queryContract/types";
 import {
-  accountTags,
-  adminTags,
-  defaultProposalTags,
-  registrarTags,
-} from "./tags";
+  AdminResources,
+  EndowmentAssets,
+  ProposalDetails,
+} from "services/types";
+import { condenseToNum, idParamToNum } from "helpers";
+import { contracts } from "constants/contracts";
+import { junoApi } from "..";
+import { queryContract } from "../queryContract";
+import { accountTags, adminTags, registrarTags } from "../tags";
+import { getCWs, getMeta, isAp } from "./helpers/admin-resource";
+import summarizer, { BalMap } from "./helpers/endow-assets";
 
 export const customApi = junoApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -131,20 +128,23 @@ export const customApi = junoApi.injectEndpoints({
         };
       },
     }),
-    vaults: builder.query<Vault[], Args<"regVaultList"> & { endowId: number }>({
+    assets: builder.query<
+      EndowmentAssets,
+      Args<"regVaultList"> & { endowId: number }
+    >({
       providesTags: [
         "vault",
         { type: "registrar", id: registrarTags.vault_list },
         { type: "account", id: accountTags.balance },
       ],
       async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
-        const [vaultsRes, accBalance] = await Promise.all([
+        const [{ vaults }, accBalance] = await Promise.all([
           queryContract("regVaultList", contracts.registrar, args),
           queryContract("accBalance", contracts.accounts, { id: endowId }),
         ]);
 
         const vaultBals = await Promise.allSettled(
-          vaultsRes.vaults.map((v) =>
+          vaults.map((v) =>
             queryContract("vaultBalance", v.address, {
               endowment_id: endowId,
             }).then((res) => ({ address: v.address, balance: res }))
@@ -153,7 +153,7 @@ export const customApi = junoApi.injectEndpoints({
 
         const { tokens_on_hand } = accBalance;
         const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
-        const balMap: { [index: string]: number | undefined } = [
+        const balMap: BalMap = [
           ...vaultBals.map((v) =>
             v.status === "fulfilled"
               ? [v.value.address, v.value.balance]
@@ -169,13 +169,12 @@ export const customApi = junoApi.injectEndpoints({
           {}
         );
 
+        const summarize = summarizer(vaults, balMap, tokens_on_hand);
         return {
-          data: vaultsRes.vaults.map((v) => ({
-            ...v,
-            invested: balMap[v.address] || 0,
-            balance: balMap[v.input_denom] || 0,
-            symbol: symbols[v.input_denom],
-          })),
+          data: {
+            liquid: summarize("liquid"),
+            locked: summarize("locked"),
+          },
         };
       },
     }),
@@ -186,78 +185,5 @@ export const {
   useIsMemberQuery,
   useAdminResourcesQuery,
   useProposalDetailsQuery,
-  useVaultsQuery,
+  useAssetsQuery,
 } = customApi;
-
-export const AP_ID = 0;
-export const REVIEWER_ID = 0.5;
-
-function getCWs(id: number) {
-  //TODO: atm, only two admin types, refactor this once > 2
-  //charities doesn't have hardcoded cws, so only test for AP_ID && REVIEWER_ID
-  const cw3 = id === AP_ID ? contracts.cw3ApTeam : contracts.cw3ReviewTeam;
-  const cw4 =
-    id === AP_ID ? contracts.cw4GrpApTeam : contracts.cw4GrpReviewTeam;
-  const type: AdminResources["type"] = id === AP_ID ? "ap" : "review";
-  return { cw3, cw4, type };
-}
-
-function isAp(id: number) {
-  return id === AP_ID || id === REVIEWER_ID;
-}
-
-async function getMeta(
-  endowId: number,
-  cw3: string,
-  user?: string
-): Promise<[AdminResources["propMeta"], CW3Config]> {
-  const [votersRes, config, voter] = await Promise.all([
-    queryContract("cw3ListVoters", cw3, null),
-    queryContract("cw3Config", cw3, null),
-    /** just set credential to none, if disconnected or non-juno wallet */
-    user && isJunoAddress(user)
-      ? queryContract("cw3Voter", cw3, {
-          addr: user,
-        })
-      : Promise.resolve({ weight: 0 }),
-  ]);
-
-  const numVoters = votersRes.voters.length;
-
-  const willExecute =
-    /** single member */
-    numVoters === 1 ||
-    /** multiple members but threshold is lte 1/members given that execution is not required */
-    (!config.require_execution &&
-      Number(config.threshold.absolute_percentage.percentage) <= 1 / numVoters);
-
-  const tagPayloads = [customApi.util.invalidateTags(defaultProposalTags)];
-
-  const meta = willExecute
-    ? {
-        willExecute,
-        successMeta: {
-          message: "Successful transaction",
-          link: {
-            url: `${appRoutes.admin}/${endowId}`,
-            description: "Go to admin home",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      }
-    : {
-        willExecute: undefined,
-        successMeta: {
-          message: "Proposal successfully created",
-          link: {
-            url: `${appRoutes.admin}/${endowId}/${adminRoutes.proposals}`,
-            description: "Go to proposals",
-          },
-        },
-        tagPayloads,
-        isAuthorized: !!voter.weight,
-      };
-
-  return [meta, config];
-}
