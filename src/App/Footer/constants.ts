@@ -1,4 +1,4 @@
-import { Section, SocialMediaLinks } from "./types";
+import { LinkGroup, SocialMediaLinks } from "./types";
 import { LITEPAPER } from "constants/urls";
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
@@ -36,7 +36,7 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   },
 };
 
-export const SECTIONS_DATA: Section[] = [
+export const GROUPS_DATA: LinkGroup[] = [
   {
     title: "Products",
     links: [

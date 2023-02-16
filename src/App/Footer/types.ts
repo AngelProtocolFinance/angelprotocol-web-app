@@ -14,7 +14,7 @@ export type SocialMediaLinks = {
   [index in SocialMedia]: { iconType: IconType; link: string };
 };
 
-export type Section = {
+export type LinkGroup = {
   title: string;
   links: {
     text: string;
