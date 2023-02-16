@@ -3,6 +3,7 @@ import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
 import { GROUPS_DATA } from "./constants";
+import { SOCIAL_MEDIA_LINKS } from "./constants";
 
 function Footer() {
   return (
@@ -15,7 +16,7 @@ function Footer() {
       <Separator />
 
       <section className="padded-container flex flex-col items-center gap-2 w-full pt-6 pb-12">
-        <Socials />
+        <Socials links={SOCIAL_MEDIA_LINKS} />
         <p className="font-body font-normal text-white text-center text-2xs uppercase">
           Copyright {new Date().getFullYear()} Angel Giving. All rights
           reserved.
