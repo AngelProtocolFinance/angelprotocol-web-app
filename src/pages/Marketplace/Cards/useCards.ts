@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import {
   updateAWSQueryData,
-  useEndowmentsQuery,
-  useLazyEndowmentsQuery,
+  useEndowmentCardsQuery,
+  useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
 
@@ -42,7 +42,7 @@ export default function useCards() {
   );
   const designations = endow_designation.join(",");
 
-  const { isLoading, data, isError, originalArgs } = useEndowmentsQuery({
+  const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
     query: searchText || "matchall",
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || null,
@@ -55,7 +55,8 @@ export default function useCards() {
     start: 0,
   });
 
-  const [loadMore, { isLoading: isLoadingNextPage }] = useLazyEndowmentsQuery();
+  const [loadMore, { isLoading: isLoadingNextPage }] =
+    useLazyEndowmentCardsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -71,7 +72,7 @@ export default function useCards() {
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateAWSQueryData("endowments", originalArgs, (prevResult) => {
+          updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
           })

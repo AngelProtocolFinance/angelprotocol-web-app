@@ -13,7 +13,7 @@ export function CheckField<T extends FieldValues>({
 }: PropsWithChildren<{
   name: Path<T>;
   classes?: Classes;
-  disabled?: true;
+  disabled?: boolean;
   required?: boolean;
 }>) {
   const {

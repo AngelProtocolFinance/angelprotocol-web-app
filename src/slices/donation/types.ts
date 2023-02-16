@@ -20,7 +20,7 @@ export type DonationRecipient = {
 
 export type DonationDetails = {
   token: TokenWithAmount;
-  pctLiquidSplit: string;
+  pctLiquidSplit: number; // <input range value transformed to number via onChange
 
   //meta
   chain: Chain;

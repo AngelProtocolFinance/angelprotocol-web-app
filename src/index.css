@@ -149,7 +149,7 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-orange-l5 dark:bg-blue-d4  hover:bg-orange-l4 dark:hover:bg-blue-d3;
+    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 hover:bg-orange-l4 dark:hover:bg-blue-d3;
   }
   .btn-gift {
     @apply text-sm;

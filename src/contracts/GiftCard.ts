@@ -30,7 +30,7 @@ export default class GiftCard extends Contract {
     endowId: number,
     amount: number,
     token: TokenWithAmount,
-    pctLiqSplit: string
+    pctLiqSplit: number
   ) {
     const asset: Asset = {
       amount: scaleToStr(amount, token.decimals),
@@ -39,8 +39,8 @@ export default class GiftCard extends Contract {
           ? { cw20: token.token_id }
           : { native: token.token_id },
     };
-    const liqPct = roundDown(+pctLiqSplit / 100);
-    const lockPct = roundDown(1 - +pctLiqSplit / 100);
+    const liqPct = roundDown(pctLiqSplit / 100);
+    const lockPct = roundDown(1 - pctLiqSplit / 100);
 
     return this.createExecuteContractMsg(GiftCard.address, {
       spend: {

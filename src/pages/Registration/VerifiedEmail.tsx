@@ -10,6 +10,7 @@ import Icon from "components/Icon";
 import Popup from "components/Popup";
 import useErrorHandler from "hooks/useErrorHandler";
 import { logger } from "helpers";
+import { APP_NAME } from "constants/common";
 import { appRoutes } from "constants/routes";
 import routes, { steps } from "./routes";
 
@@ -77,8 +78,8 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         Your email address is confirmed!
       </h1>
       <Text classes="mb-8 mt-2">
-        Thank you for your interest in Angel Giving! Your endowment is just a
-        few steps away.
+        {`Thank you for your interest in ${APP_NAME}! Your endowment is just a
+        few steps away.`}
       </Text>
       <Link
         className="w-full max-w-[26.25rem] btn-orange btn-reg"

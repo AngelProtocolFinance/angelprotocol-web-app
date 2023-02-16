@@ -3,6 +3,7 @@ import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useGetter, useSetter } from "store/accessors";
 import { GiftState, resetDetails } from "slices/gift";
+import { APP_NAME } from "constants/common";
 import { IS_TEST } from "constants/env";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
@@ -20,7 +21,7 @@ export default function Purchase({ classes = "" }) {
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug">
-            Purchase Angel Giving Giftcard
+            {`Purchase ${APP_NAME} Giftcard`}
           </h3>
           <Progress classes="my-12" />
         </>

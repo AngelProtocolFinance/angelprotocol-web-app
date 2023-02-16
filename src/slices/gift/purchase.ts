@@ -5,6 +5,7 @@ import { CosmosWallet } from "contexts/WalletContext";
 import { processError } from "hooks/useErrorHandler";
 import { createAuthToken, getWasmAttribute } from "helpers";
 import { sendTx } from "helpers/cosmos/sendTx";
+import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
@@ -55,7 +56,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
         if (!res.ok) {
           return updateTx({
-            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${txRes.txhash}`,
+            error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}. Transaction: ${txRes.txhash}`,
           });
         }
         /** no problems, save giftcard code on user's computer */

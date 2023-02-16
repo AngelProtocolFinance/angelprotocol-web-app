@@ -57,7 +57,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         chainName: chain.name,
         charityName: recipient.name,
         denomination: token.symbol,
-        splitLiq: pctLiquidSplit,
+        splitLiq: `${pctLiquidSplit}`,
         transactionId: hash,
         transactionDate: new Date().toISOString(),
         walletAddress: wallet.address,

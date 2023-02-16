@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
+import { APP_NAME } from "constants/common";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -102,7 +103,7 @@ describe("App.tsx tests", () => {
     //registration is finally loaded
     expect(
       await screen.findByRole("heading", {
-        name: /register to angel giving/i,
+        name: `Register to ${APP_NAME}`,
       })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();

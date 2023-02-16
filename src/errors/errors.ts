@@ -1,3 +1,5 @@
+import { EMAIL_SUPPORT } from "constants/common";
+
 interface TxError extends Error {
   chainId: string;
   txHash: string;
@@ -8,7 +10,7 @@ export class LogDonationFail extends Error implements TxError {
   txHash: string;
   constructor(chainId: string, txHash: string) {
     super(
-      "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io"
+      `Failed to log your donation for receipt purposes. Kindly send an email to ${EMAIL_SUPPORT}`
     );
     this.chainId = chainId;
     this.txHash = txHash;
@@ -43,7 +45,7 @@ export class TxTimeout extends Error implements TxError {
   txHash: string;
   constructor(chainId: string, txHash: string) {
     super(
-      "Timeout: kindly check transaction status manually and get in touch with support@angelprotocol.io"
+      `Timeout: kindly check transaction status manually and get in touch with ${EMAIL_SUPPORT}`
     );
     this.name = "CustomTxTimeout";
     this.chainId = chainId;

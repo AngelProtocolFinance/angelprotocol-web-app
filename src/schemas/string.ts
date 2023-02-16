@@ -35,7 +35,7 @@ export const requiredWalletAddr = (network: string = chainIds.juno) => {
 };
 
 export const url = Yup.string().nullable().test({
-  name: "URL without the HTTP(S) schema",
+  name: "URL with(out) the HTTP(S) schema",
   message: "invalid url",
   test: isValidUrl,
 });

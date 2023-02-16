@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const copyWaitTime = 700;
+
 export default function useCopier(text: string) {
   const [copied, setCopied] = useState(false);
 
