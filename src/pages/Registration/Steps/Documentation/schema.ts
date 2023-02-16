@@ -47,4 +47,5 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   hasAgreedToTerms: Yup.bool().isTrue(
     "Please confirm that you agree to our Terms and Conditions"
   ),
+  activeInCountriesOpts: Yup.array(),
 });

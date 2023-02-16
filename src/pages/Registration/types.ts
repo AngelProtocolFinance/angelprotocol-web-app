@@ -57,6 +57,8 @@ export type Documentation = {
   level: EndowmentTierNum;
 
   hqCountry: string;
+  // general info
+  activeInCountries: string[];
 };
 
 //STEP 3

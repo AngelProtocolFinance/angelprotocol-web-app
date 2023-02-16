@@ -78,6 +78,8 @@ export type TDocumentation = {
   KycDonorsOnly: boolean;
 
   HqCountry: string;
+  // general
+  ActiveInCountries: string[];
 };
 
 //INIT STEP

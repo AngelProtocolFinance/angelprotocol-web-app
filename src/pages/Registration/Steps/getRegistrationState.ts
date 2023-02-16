@@ -100,6 +100,7 @@ function formatDocumentation({
   UN_SDG,
   KycDonorsOnly,
   HqCountry,
+  ActiveInCountries,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
@@ -119,6 +120,9 @@ function formatDocumentation({
     auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
     isKYCRequired: KycDonorsOnly ? "Yes" : "No",
+
+    //general
+    activeInCountries: ActiveInCountries,
 
     //meta
     level: Tier,
