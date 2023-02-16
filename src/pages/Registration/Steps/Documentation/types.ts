@@ -1,9 +1,8 @@
 import { Documentation } from "pages/Registration/types";
-import { CountryOption } from "services/types";
-import { OptionType } from "components/Selector";
 
-export type FormValues = Omit<Documentation, "level" | "hqCountry"> & {
-  level: never;
-  hqCountry: CountryOption;
-  activeInCountriesOpts: OptionType<string>[];
+type Key = keyof Documentation;
+const _level: Key = "level";
+
+export type FormValues = Omit<Documentation, typeof _level> & {
+  [_level]: never;
 };

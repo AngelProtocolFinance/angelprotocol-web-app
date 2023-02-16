@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { Documentation as DocType } from "pages/Registration/types";
 import { useRegState, withStepGuard } from "../StepGuard";
 import { genFileAsset } from "../getRegistrationState";
 import Form from "./Form";
@@ -16,10 +15,7 @@ function Documentation() {
     resolver: yupResolver(schema),
     defaultValues: doc
       ? {
-          ...(({ level, hqCountry, ...doc }) => ({
-            ...doc,
-            hqCountry: { name: hqCountry, flag: "" },
-          }))(doc),
+          ...(({ level, ...doc }) => doc)(doc),
         }
       : {
           proofOfIdentity: genFileAsset([]),
@@ -32,7 +28,7 @@ function Documentation() {
           isKYCRequired: "No",
           sdgs: [],
           hqCountry: { name: "", flag: "" },
-          activeInCountriesOpts: [],
+          activeInCountries: [],
         },
   });
 
@@ -44,16 +40,3 @@ function Documentation() {
 }
 
 export default withStepGuard(Documentation);
-
-function convertToFormValues({
-  level,
-  activeInCountries,
-  ...doc
-}: DocType): FormValues {
-  const options = activeInCountries.map((countryName) => ({
-    label: countryName,
-    value: countryName,
-  }));
-
-  return { ...doc, activeInCountriesOpts: options };
-}
