@@ -27,7 +27,7 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
-    level,
+    activeInCountriesOpts,
     ...documents
   }: FormValues) => {
     if (documentation && !isDirty) {
@@ -49,6 +49,7 @@ export default function useSubmit() {
         FinancialStatements: previews.financialStatements,
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
+        ActiveInCountries: activeInCountriesOpts.map((opt) => opt.value),
       }),
       handleError
     );

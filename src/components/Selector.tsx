@@ -93,7 +93,7 @@ export function Selector<
           as={multiple ? "div" : "button"}
           className={`${button} ${selectorButtonStyle} ${
             multiple ? "p-1" : ""
-          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2`}
+          } min-h-[3rem] justify-between peer-focus:border-gray-d1 peer-focus:dark:border-blue-l2 cursor-pointer`}
         >
           {({ open }) => (
             <>
