@@ -81,6 +81,11 @@ export type CountryOption = {
 
 export type Regions = { [region: string]: string[] };
 
+export type EndowmentAssets = {
+  liquid: EndowmentAsset;
+  locked: EndowmentAsset;
+};
+
 export type EndowmentAsset = {
   symbol: string;
   free: number;

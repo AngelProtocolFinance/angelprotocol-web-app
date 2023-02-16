@@ -133,20 +133,32 @@ export const customApi = junoApi.injectEndpoints({
     }),
     vaults: builder.query<Vault[], Args<"regVaultList"> & { endowId: number }>({
       providesTags: [
+        "vault",
         { type: "registrar", id: registrarTags.vault_list },
         { type: "account", id: accountTags.balance },
       ],
       async queryFn({ endowId, ...args }, api, extraOptions, baseQuery) {
-        const [vaultsRes, balances] = await Promise.all([
+        const [vaultsRes, accBalance] = await Promise.all([
           queryContract("regVaultList", contracts.registrar, args),
           queryContract("accBalance", contracts.accounts, { id: endowId }),
         ]);
 
-        const { invested_liquid, invested_locked, tokens_on_hand } = balances;
+        const vaultBals = await Promise.allSettled(
+          vaultsRes.vaults.map((v) =>
+            queryContract("vaultBalance", v.address, {
+              endowment_id: endowId,
+            }).then((res) => ({ address: v.address, balance: res }))
+          )
+        );
+
+        const { tokens_on_hand } = accBalance;
         const { native, cw20 } = tokens_on_hand[args.acct_type || "liquid"];
         const balMap: { [index: string]: number | undefined } = [
-          ...invested_liquid,
-          ...invested_locked,
+          ...vaultBals.map((v) =>
+            v.status === "fulfilled"
+              ? [v.value.address, v.value.balance]
+              : ["", ""]
+          ),
           ...native.map((n) => [n.denom, n.amount]),
           ...cw20.map((c) => [c.address, c.amount]),
         ].reduce(
