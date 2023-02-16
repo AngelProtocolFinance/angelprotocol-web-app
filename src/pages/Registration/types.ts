@@ -43,6 +43,8 @@ export type Documentation = {
   proofOfRegistration: Asset;
   website: string;
   sdgs: OptionType<UNSDG_NUMS>[];
+  activeInCountries: string[];
+  hqCountry: string;
 
   //level 2
   financialStatements: Asset;
@@ -55,10 +57,6 @@ export type Documentation = {
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   level: EndowmentTierNum;
-
-  hqCountry: string;
-  // general info
-  activeInCountries: string[];
 };
 
 //STEP 3

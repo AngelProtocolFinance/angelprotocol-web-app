@@ -112,6 +112,7 @@ function formatDocumentation({
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
     hqCountry: HqCountry,
+    activeInCountries: ActiveInCountries,
 
     //level 2
     financialStatements: genFileAsset(fs || []),
@@ -120,9 +121,6 @@ function formatDocumentation({
     auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
     isKYCRequired: KycDonorsOnly ? "Yes" : "No",
-
-    //general
-    activeInCountries: ActiveInCountries,
 
     //meta
     level: Tier,

@@ -72,14 +72,12 @@ export type TDocumentation = {
   ProofOfRegistration: FileObject;
   Website: string;
   Tier: EndowmentTierNum;
+  HqCountry: string;
+  ActiveInCountries: string[];
   //based on tier
   FinancialStatements?: FileObject[];
   AuditedFinancialReports?: FileObject[];
   KycDonorsOnly: boolean;
-
-  HqCountry: string;
-  // general
-  ActiveInCountries: string[];
 };
 
 //INIT STEP
