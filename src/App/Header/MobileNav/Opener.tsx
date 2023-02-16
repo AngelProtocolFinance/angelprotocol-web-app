@@ -1,7 +1,7 @@
 import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
-import { LogoProps } from "components/APLogo";
 import Icon from "components/Icon";
+import { LogoProps } from "components/Logo";
 import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import Menu from "./Menu";
 

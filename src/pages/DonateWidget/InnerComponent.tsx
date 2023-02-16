@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import angelProtocolLogo from "assets/images/angelprotocol-beta-horiz-wht.svg";
-import APLogo, { LogoProps } from "components/APLogo";
+import Logo, { LogoProps } from "components/Logo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
@@ -57,7 +57,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <APLogo className="w-20" logo={LOGO} />
+        <Logo className="w-20" logo={LOGO} />
       </footer>
     </div>
   );
