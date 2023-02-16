@@ -1,5 +1,11 @@
 import { IconType } from "components/Icon";
 
+export type Link = {
+  title: string;
+  iconType?: IconType;
+  href: string;
+};
+
 type SocialMedia =
   | "Twitter"
   | "Telegram"
@@ -10,11 +16,7 @@ type SocialMedia =
   | "Linkedin"
   | "Instagram";
 
-export type SocialMediaLink = {
-  title: SocialMedia;
-  iconType?: IconType;
-  href: string;
-};
+export type SocialMediaLink = Required<Link> & { title: SocialMedia };
 
 export type LinkGroup = {
   title: string;
