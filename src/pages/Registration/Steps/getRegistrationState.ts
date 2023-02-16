@@ -111,7 +111,7 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
-    hqCountry: HqCountry,
+    hqCountry: { name: HqCountry, flag: "" },
 
     //level 2
     financialStatements: genFileAsset(fs || []),
@@ -122,7 +122,7 @@ function formatDocumentation({
     isKYCRequired: KycDonorsOnly ? "Yes" : "No",
 
     //general
-    activeInCountries: ActiveInCountries,
+    activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
 
     //meta
     level: Tier,

@@ -15,14 +15,7 @@ function Documentation() {
     resolver: yupResolver(schema),
     defaultValues: doc
       ? {
-          ...(({ level, activeInCountries, hqCountry, ...doc }) => ({
-            ...doc,
-            hqCountry: { name: hqCountry, flag: "" },
-            activeInCountriesOpts: activeInCountries.map((countryName) => ({
-              label: countryName,
-              value: countryName,
-            })),
-          }))(doc),
+          ...(({ level, ...doc }) => doc)(doc),
         }
       : {
           proofOfIdentity: genFileAsset([]),
@@ -35,7 +28,7 @@ function Documentation() {
           isKYCRequired: "No",
           sdgs: [],
           hqCountry: { name: "", flag: "" },
-          activeInCountriesOpts: [],
+          activeInCountries: [],
         },
   });
 

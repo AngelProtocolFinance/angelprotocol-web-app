@@ -71,10 +71,7 @@ export default function Form() {
         }}
       />
       <Label className="mt-6 mb-2">Active countries</Label>
-      <ActivityCountries<
-        FV,
-        "activeInCountriesOpts"
-      > name="activeInCountriesOpts" />
+      <ActivityCountries<FV, "activeInCountries"> name="activeInCountries" />
 
       <Separator classes="my-8" />
 
