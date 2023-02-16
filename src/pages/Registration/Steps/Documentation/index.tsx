@@ -57,10 +57,3 @@ function convertToFormValues({
     activeInCountriesOpts: options,
   };
 }
-
-// {
-//   ...(({ level, hqCountry, ...doc }) => ({
-//     ...doc,
-//     hqCountry: { name: hqCountry, flag: "" },
-//   }))(doc),
-// }
