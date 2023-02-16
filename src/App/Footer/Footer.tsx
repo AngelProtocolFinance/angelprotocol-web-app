@@ -2,12 +2,13 @@ import { memo } from "react";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
+import { GROUPS_DATA } from "./constants";
 
 function Footer() {
   return (
     <footer className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3">
       <section className="padded-container flex flex-col gap-8 items-center justify-center w-full pt-8 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:pb-16">
-        <Links />
+        <Links groups={GROUPS_DATA} />
         <Newsletter />
       </section>
 
