@@ -33,7 +33,7 @@
   }
 
   .date-input::-webkit-calendar-picker-indicator {
-    @apply hidden;
+    @apply absolute w-full opacity-0 cursor-pointer;
   }
 
   .scroller::-webkit-scrollbar {
