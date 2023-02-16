@@ -11,7 +11,7 @@ type SocialMedia =
   | "Instagram";
 
 export type SocialMediaLinks = {
-  [index in SocialMedia]: { iconType: IconType; link: string };
+  [index in SocialMedia]?: { iconType: IconType; link: string };
 };
 
 export type LinkGroup = {
