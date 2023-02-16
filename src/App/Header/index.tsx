@@ -48,7 +48,7 @@ export default function Header({ classes, links }: Props) {
           <WalletSuite />
           <Airdrop />
         </div>
-        <MobileNavOpener classes="flex ml-2 lg:hidden" />
+        <MobileNavOpener classes="flex ml-2 lg:hidden" links={links} />
       </div>
     </header>
   );

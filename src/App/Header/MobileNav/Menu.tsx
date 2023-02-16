@@ -1,13 +1,13 @@
 import { Dialog } from "@headlessui/react";
 import ThemeToggle from "App/Header/ThemeToggle";
 import { NavLink } from "react-router-dom";
+import { Link } from "../../types";
 import { useModalContext } from "contexts/ModalContext";
 import APLogo from "components/APLogo";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
-import { appRoutes } from "constants/routes";
 
-export default function Menu() {
+export default function Menu({ links }: { links: Link[] }) {
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
@@ -24,15 +24,15 @@ export default function Menu() {
         </button>
       </div>
       <nav className="mt-8 grid gap-y-4 w-full px-6 font-extrabold font-heading text-white text-3xl">
-        <NavLink to={appRoutes.index} className={navLinkStyle} end>
-          Marketplace
-        </NavLink>
-        <NavLink to={appRoutes.leaderboard} className={navLinkStyle}>
-          Leaderboard
-        </NavLink>
-        <NavLink to={appRoutes.register} className={navLinkStyle}>
-          Register
-        </NavLink>
+        {links.map((link) => (
+          <NavLink
+            key={`header-link-${link.title}`}
+            className={navLinkStyle}
+            to={link.href}
+          >
+            {link.title}
+          </NavLink>
+        ))}
         <span className="flex justify-between items-center mt-4">
           <span>Theme</span>
           <ThemeToggle classes="flex" />
