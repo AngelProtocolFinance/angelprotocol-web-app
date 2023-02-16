@@ -23,15 +23,7 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array().min(1, "required"),
-  tagline: requiredString.max(140, "max length is 140 chars")
-    "len",
-    "Maximum length of 140 characters. Required field.",
-    (val) => {
-      return val !== undefined && val.length > 0 && val.length <= 140
-        ? true
-        : false;
-    }
-  ),
+  tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
