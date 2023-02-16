@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
-import CountrySelector from "components/CountrySelector";
 import ActivityCountries from "components/ActivityCountries";
+import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
