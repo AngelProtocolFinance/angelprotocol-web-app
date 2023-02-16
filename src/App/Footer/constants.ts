@@ -1,19 +1,5 @@
-import { IconType } from "components/Icon";
+import { Section, SocialMediaLinks } from "./types";
 import { LITEPAPER } from "constants/urls";
-
-type SocialMedia =
-  | "Twitter"
-  | "Telegram"
-  | "Discord"
-  | "YouTube"
-  | "Medium"
-  | "Facebook"
-  | "Linkedin"
-  | "Instagram";
-
-type SocialMediaLinks = {
-  [index in SocialMedia]: { iconType: IconType; link: string };
-};
 
 export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
   Twitter: {
@@ -48,14 +34,6 @@ export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
     iconType: "Instagram",
     link: "https://www.instagram.com/angelprotocol/",
   },
-};
-
-type Section = {
-  title: string;
-  links: {
-    text: string;
-    href?: string;
-  }[];
 };
 
 export const SECTIONS_DATA: Section[] = [
