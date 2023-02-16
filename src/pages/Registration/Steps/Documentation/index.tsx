@@ -15,7 +15,12 @@ function Documentation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: doc
-      ? convertToFormValues(doc)
+      ? {
+          ...(({ level, hqCountry, ...doc }) => ({
+            ...doc,
+            hqCountry: { name: hqCountry, flag: "" },
+          }))(doc),
+        }
       : {
           proofOfIdentity: genFileAsset([]),
           proofOfRegistration: genFileAsset([]),
@@ -26,6 +31,7 @@ function Documentation() {
           hasAgreedToTerms: false,
           isKYCRequired: "No",
           sdgs: [],
+          hqCountry: { name: "", flag: "" },
           activeInCountriesOpts: [],
         },
   });

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "../types";
 import ActivityCountries from "components/ActivityCountries";
+import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { CheckField, Field, Label } from "components/form";
@@ -56,6 +57,18 @@ export default function Form() {
         multiple
         name="sdgs"
         options={sdgOptions}
+      />
+      <Label className="mt-6 mb-2" required>
+        Select the country your organization is headquartered in
+      </Label>
+      <CountrySelector<FV, "hqCountry">
+        fieldName="hqCountry"
+        placeholder="Select a country"
+        classes={{
+          container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+          input: "text-sm py-3.5",
+          error: "field-error",
+        }}
       />
       <Label className="mt-6 mb-2">Active countries</Label>
       <ActivityCountries<

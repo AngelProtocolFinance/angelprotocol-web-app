@@ -27,6 +27,8 @@ export default function useSubmit() {
     hasAgreedToTerms,
     sdgs,
     isKYCRequired,
+    level,
+    hqCountry,
     activeInCountriesOpts,
     ...documents
   }: FormValues) => {
@@ -49,6 +51,7 @@ export default function useSubmit() {
         FinancialStatements: previews.financialStatements,
         AuditedFinancialReports: previews.auditedFinancialReports,
         KycDonorsOnly: isKYCRequired === "Yes",
+        HqCountry: hqCountry.name,
         ActiveInCountries: activeInCountriesOpts.map((opt) => opt.value),
       }),
       handleError
