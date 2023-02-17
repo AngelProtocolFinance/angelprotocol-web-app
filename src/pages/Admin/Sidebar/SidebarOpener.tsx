@@ -4,11 +4,7 @@ import useMobileSidebar from "./useMobileSidebar";
 
 type Props = { className?: string; endowId: number; linkGroups: LinkGroup[] };
 
-export function MobileSidebarButton({
-  className = "",
-  endowId,
-  linkGroups,
-}: Props) {
+export function SidebarOpener({ className = "", endowId, linkGroups }: Props) {
   const { open, activeLink } = useMobileSidebar(endowId, linkGroups);
 
   return (
