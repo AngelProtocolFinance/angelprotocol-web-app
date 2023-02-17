@@ -21,7 +21,8 @@ export type Token = {
     | "erc20"
     | "cw20"
     | "ibc"
-    | "placeholder";
+    | "placeholder"
+    | "fiat";
 };
 
 export type TokenWithBalance = WithBalance<Token> & { gift?: number };
