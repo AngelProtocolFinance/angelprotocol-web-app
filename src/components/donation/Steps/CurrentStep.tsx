@@ -6,6 +6,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { resetDetails } from "slices/donation";
 import { ConfigParams } from "..";
 import Donater from "./Donater";
+import FiatSubmit from "./FiatSubmit";
 import Result from "./Result";
 import Submit from "./Submit";
 
@@ -38,7 +39,11 @@ export default function CurrentStep(props: ConfigParams) {
 
     switch (state.step) {
       case 3: {
-        return <Submit {...state} wallet={wallet} />;
+        return state.details.token.type === "fiat" ? (
+          <FiatSubmit {...state} wallet={wallet} />
+        ) : (
+          <Submit {...state} wallet={wallet} />
+        );
       }
       case 2: {
         return (
