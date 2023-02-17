@@ -1,6 +1,6 @@
-import { FundSendMeta } from "pages/Admin/types";
-import { humanize } from "helpers";
-import { symbols } from "constants/tokens";
+import { symbols } from "@/constants/tokens";
+import { humanize } from "@/helpers";
+import { FundSendMeta } from "@/pages/Admin/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";
 

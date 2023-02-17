@@ -1,7 +1,7 @@
+import Icon from "@/components/Icon";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useSetWallet } from "@/contexts/WalletContext";
 import { Dialog } from "@headlessui/react";
-import { useModalContext } from "contexts/ModalContext";
-import { useSetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
 import Connector from "./Connector";
 
 export default function WalletModal() {

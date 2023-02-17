@@ -1,11 +1,11 @@
+import { IS_TEST } from "@/constants/env";
+import { createAuthToken } from "@/helpers";
 import {
   Donation,
   DonationsQueryParams,
   ReceiptPayload,
   Token,
-} from "types/aws";
-import { createAuthToken } from "helpers";
-import { IS_TEST } from "constants/env";
+} from "@/types/aws";
 import { apes } from "./apes";
 
 type DonationResult = {

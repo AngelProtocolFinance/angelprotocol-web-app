@@ -1,16 +1,16 @@
+import { ap_wallets } from "@/constants/ap_wallets";
+import { chainIds } from "@/constants/chainIds";
+import { useGetWallet } from "@/contexts/WalletContext/WalletContext";
+import Account from "@/contracts/Account";
+import CW3Endowment from "@/contracts/CW3/CW3Endowment";
+import { scaleToStr } from "@/helpers";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { accountTypeDisplayValue } from "@/pages/Admin/Charity/constants";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { WithdrawMeta } from "pages/Admin/types";
-import { Asset } from "types/contracts";
-import { accountTypeDisplayValue } from "pages/Admin/Charity/constants";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
-import CW3Endowment from "contracts/CW3/CW3Endowment";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
-import { ap_wallets } from "constants/ap_wallets";
-import { chainIds } from "constants/chainIds";
+import { WithdrawMeta } from "@/pages/Admin/types";
+import { Asset } from "@/types/contracts";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

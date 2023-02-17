@@ -1,7 +1,7 @@
+import ExtLink from "@/components/ExtLink";
+import { maskAddress } from "@/helpers";
 import { PropsWithChildren } from "react";
-import { WithdrawLog } from "types/aws";
-import ExtLink from "components/ExtLink";
-import { maskAddress } from "helpers";
+import { WithdrawLog } from "@/types/aws";
 import Amount from "../Amount";
 import Status from "../Status";
 import { explorerUrls } from "../constants";

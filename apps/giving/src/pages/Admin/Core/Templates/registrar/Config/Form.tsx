@@ -1,6 +1,6 @@
-import { RegistrarConfigValues as RV } from "pages/Admin/types";
-import { FormContainer, GroupContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
+import { FormContainer, GroupContainer, Submitter } from "@/components/admin";
+import { Field, Label } from "@/components/form";
+import { RegistrarConfigValues as RV } from "@/pages/Admin/types";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 
 export default function Form() {

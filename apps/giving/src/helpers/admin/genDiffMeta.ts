@@ -1,4 +1,4 @@
-import { DiffSet } from "types/utils";
+import { DiffSet } from "@/types/utils";
 
 export function genDiffMeta<T extends object>(
   diffEntries: [keyof T, T[keyof T]][],

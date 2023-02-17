@@ -1,7 +1,7 @@
-import { AccountType } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useVaultsQuery } from "services/juno/custom";
-import QueryLoader from "components/QueryLoader";
+import QueryLoader from "@/components/QueryLoader";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useVaultsQuery } from "@/services/juno/custom";
+import { AccountType } from "@/types/contracts";
 import Investment from "./Investment";
 
 type Props = {

@@ -1,5 +1,5 @@
-import { useModalContext } from "contexts/ModalContext";
-import KadoModal from "components/KadoModal";
+import KadoModal from "@/components/KadoModal";
+import { useModalContext } from "@/contexts/ModalContext";
 
 export default function KadoOpener() {
   const { showModal } = useModalContext();

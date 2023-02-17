@@ -1,7 +1,7 @@
-import { ADR36Payload } from "types/aws";
-import { WalletState } from "contexts/WalletContext";
-import { toBase64 } from "helpers";
-import { getKeplr } from "helpers/keplr";
+import { WalletState } from "@/contexts/WalletContext";
+import { toBase64 } from "@/helpers";
+import { getKeplr } from "@/helpers/keplr";
+import { ADR36Payload } from "@/types/aws";
 
 export async function createADR36Payload(
   data: object,

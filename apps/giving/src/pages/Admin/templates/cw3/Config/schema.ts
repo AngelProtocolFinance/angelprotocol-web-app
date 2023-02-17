@@ -1,7 +1,7 @@
+import { requiredPositiveNumber } from "@/schemas/number";
 import * as Yup from "yup";
-import { CW3ConfigValues, FormCW3Config } from "pages/Admin/types";
-import { SchemaShape } from "schemas/types";
-import { requiredPositiveNumber } from "schemas/number";
+import { CW3ConfigValues, FormCW3Config } from "@/pages/Admin/types";
+import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../constants";
 
 const shape: SchemaShape<CW3ConfigValues<FormCW3Config>> = {

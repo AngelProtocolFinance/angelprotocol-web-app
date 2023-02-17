@@ -1,5 +1,5 @@
-import { EndowmentIdName } from "types/aws";
-import { OptionType } from "components/Selector";
+import { OptionType } from "@/components/Selector";
+import { EndowmentIdName } from "@/types/aws";
 
 export type FormValues = {
   endowIdName: EndowmentIdName;

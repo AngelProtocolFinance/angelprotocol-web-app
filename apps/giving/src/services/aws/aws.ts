@@ -1,3 +1,6 @@
+import { IS_TEST } from "@/constants/env";
+import { APIs } from "@/constants/urls";
+import { createAuthToken } from "@/helpers";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,
@@ -7,11 +10,8 @@ import {
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
   WalletProfile,
-} from "types/aws";
-import { NetworkType } from "types/lists";
-import { createAuthToken } from "helpers";
-import { IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
+} from "@/types/aws";
+import { NetworkType } from "@/types/lists";
 
 const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
 

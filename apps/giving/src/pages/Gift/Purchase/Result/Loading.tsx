@@ -1,5 +1,5 @@
-import LoaderRing from "components/LoaderRing";
-import { TLoading } from "slices/gift";
+import LoaderRing from "@/components/LoaderRing";
+import { TLoading } from "@/slices/gift";
 
 export default function Loading({
   msg,

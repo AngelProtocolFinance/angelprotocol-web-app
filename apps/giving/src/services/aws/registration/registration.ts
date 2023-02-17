@@ -1,4 +1,6 @@
-import { ApplicationStatusOptions } from "slices/admin/types";
+import { logger } from "@/helpers";
+import { adminTags } from "@/services/aws/tags";
+import { ApplicationStatusOptions } from "@/slices/admin/types";
 import {
   AWSQueryRes,
   ContactUpdateResult,
@@ -9,9 +11,7 @@ import {
   SavedRegistration,
   SubmitResult,
   WalletUpdateResult,
-} from "types/aws";
-import { adminTags } from "services/aws/tags";
-import { logger } from "helpers";
+} from "@/types/aws";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({

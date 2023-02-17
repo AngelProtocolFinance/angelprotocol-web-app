@@ -1,9 +1,9 @@
+import ERC20Abi from "@/abi/ERC20.json";
 import { formatUnits } from "@ethersproject/units";
-import ERC20Abi from "abi/ERC20.json";
 import { Multicall } from "ethereum-multicall";
 import { CallContext } from "ethereum-multicall/dist/esm/models";
 import { BalMap } from "./types";
-import { Token } from "types/aws";
+import { Token } from "@/types/aws";
 
 enum CALL_IDX {
   BALANCE,

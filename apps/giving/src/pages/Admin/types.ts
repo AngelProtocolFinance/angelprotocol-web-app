@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { EndowmentProposal } from "types/aws";
+import { EndowmentProposal } from "@/types/aws";
 import {
   AllianceMember,
   Asset,
@@ -11,8 +11,8 @@ import {
   FundDetails,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
-} from "types/contracts";
-import { DiffSet } from "types/utils";
+} from "@/types/contracts";
+import { DiffSet } from "@/types/utils";
 
 export type AdminParams = { id: string; type: string /**AccountType */ };
 export type ProposalParams = { id: string };

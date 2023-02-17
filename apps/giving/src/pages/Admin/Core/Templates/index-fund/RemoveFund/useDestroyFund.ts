@@ -1,12 +1,12 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import IndexFund from "@/contracts/IndexFund";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
-import { FundDestroyValues, RemoveFundMeta } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { FundDestroyValues, RemoveFundMeta } from "@/pages/Admin/types";
 
 export default function useDestroyFund() {
   const {

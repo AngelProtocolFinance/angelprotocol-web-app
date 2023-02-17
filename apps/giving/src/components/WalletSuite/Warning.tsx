@@ -1,5 +1,5 @@
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
+import Icon from "@/components/Icon";
+import { useModalContext } from "@/contexts/ModalContext";
 
 type Props = { text: string };
 export default function Warning(props: Props) {

@@ -1,6 +1,6 @@
+import Icon from "@/components/Icon";
+import TableSection, { Cells } from "@/components/TableSection";
 import { useState } from "react";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
 import { VOTES_PER_PAGE, useVoteList } from "./useVotesList";
 
 export default function Votes(props: { proposalId: number; classes?: string }) {

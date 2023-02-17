@@ -1,14 +1,14 @@
+import { ErrorStatus, LoadingStatus } from "@/components/Status";
+import { appRoutes } from "@/constants/routes";
+import { WithWallet } from "@/contexts/WalletContext";
+import { humanize } from "@/helpers";
+import { SubmitStep, setStep } from "@/slices/gift";
+import { purchase } from "@/slices/gift/purchase";
+import { useSetter } from "@/store/accessors";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
-import { ErrorStatus, LoadingStatus } from "components/Status";
-import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/gift";
-import { purchase } from "slices/gift/purchase";
-import { humanize } from "helpers";
-import { appRoutes } from "constants/routes";
+import { TokenWithAmount } from "@/types/slices";
 import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";

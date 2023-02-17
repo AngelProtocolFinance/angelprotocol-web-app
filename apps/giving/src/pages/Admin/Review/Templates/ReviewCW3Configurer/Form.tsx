@@ -1,6 +1,6 @@
-import { CW3ConfigValues, FormReviewCW3Config } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
-import { CheckField, Field } from "components/form";
+import { FormContainer, Submitter } from "@/components/admin";
+import { CheckField, Field } from "@/components/form";
+import { CW3ConfigValues, FormReviewCW3Config } from "@/pages/Admin/types";
 import useCreateProposal from "./useCreateProposal";
 
 type CV = CW3ConfigValues<FormReviewCW3Config>;

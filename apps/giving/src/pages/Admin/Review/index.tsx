@@ -1,5 +1,5 @@
+import { adminRoutes } from "@/constants/routes";
 import { Route, Routes } from "react-router-dom";
-import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";

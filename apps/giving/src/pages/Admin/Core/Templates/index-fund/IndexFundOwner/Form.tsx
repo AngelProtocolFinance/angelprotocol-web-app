@@ -1,6 +1,6 @@
-import { IndexFundOwnerValues as IV } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
-import { Field } from "components/form";
+import { FormContainer, Submitter } from "@/components/admin";
+import { Field } from "@/components/form";
+import { IndexFundOwnerValues as IV } from "@/pages/Admin/types";
 import useUpdateOwner from "./useUpdateOwner";
 
 export default function Form() {

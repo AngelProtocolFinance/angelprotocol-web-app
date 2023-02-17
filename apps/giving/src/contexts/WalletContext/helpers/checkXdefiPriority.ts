@@ -1,5 +1,5 @@
-import { Dwindow } from "types/ethereum";
-import { WalletError, WalletNotInstalledError } from "errors/errors";
+import { WalletError, WalletNotInstalledError } from "@/errors/errors";
+import { Dwindow } from "@/types/ethereum";
 
 export function checkXdefiPriority() {
   const dwindow = window as Dwindow;

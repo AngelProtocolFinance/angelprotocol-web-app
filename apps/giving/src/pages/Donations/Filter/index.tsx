@@ -1,11 +1,11 @@
+import Icon, { DrawerIcon } from "@/components/Icon";
+import { cleanObject } from "@/helpers/cleanObject";
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { DonationsQueryParams } from "types/aws";
-import Icon, { DrawerIcon } from "components/Icon";
-import { cleanObject } from "helpers/cleanObject";
+import { DonationsQueryParams } from "@/types/aws";
 import Form from "./Form";
 import { schema } from "./schema";
 

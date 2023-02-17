@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { Children, ReactElement } from "react";
-import { AccountType } from "types/contracts";
+import { AccountType } from "@/types/contracts";
 
 const types: AccountType[] = ["liquid", "locked"];
 export default function AccountTabs(props: {

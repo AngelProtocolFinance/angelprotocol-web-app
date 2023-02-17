@@ -1,4 +1,4 @@
-import { useGetWallet } from "contexts/WalletContext";
+import { useGetWallet } from "@/contexts/WalletContext";
 import { useGovStakerQuery, useGovStakerState } from "./gov";
 import { staker } from "./placeholders";
 

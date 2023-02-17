@@ -1,8 +1,8 @@
+import Icon from "@/components/Icon";
+import { Status } from "@/components/admin";
+import { adminRoutes } from "@/constants/routes";
 import { Link } from "react-router-dom";
-import { Expiration, Proposal } from "types/contracts";
-import Icon from "components/Icon";
-import { Status } from "components/admin";
-import { adminRoutes } from "constants/routes";
+import { Expiration, Proposal } from "@/types/contracts";
 
 export default function ProposalCard(props: Proposal) {
   return (

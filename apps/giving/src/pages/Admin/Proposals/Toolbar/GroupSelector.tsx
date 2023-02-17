@@ -1,6 +1,6 @@
-import { ProposalGroupOptions } from "slices/admin/types";
-import { useGetter, useSetter } from "store/accessors";
-import { changeSelectedGroup } from "slices/admin/proposals";
+import { changeSelectedGroup } from "@/slices/admin/proposals";
+import { useGetter, useSetter } from "@/store/accessors";
+import { ProposalGroupOptions } from "@/slices/admin/types";
 
 export default function GroupSelector() {
   const dispatch = useSetter();

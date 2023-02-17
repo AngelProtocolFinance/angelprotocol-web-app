@@ -1,9 +1,9 @@
+import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
+import { EIPMethods } from "@/constants/ethereum";
+import { WalletError } from "@/errors/errors";
+import { useLazyChainQuery } from "@/services/apes";
 import { useCallback } from "react";
-import { InjectedProvider } from "types/ethereum";
-import { useLazyChainQuery } from "services/apes";
-import { WalletError } from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EIPMethods } from "constants/ethereum";
+import { InjectedProvider } from "@/types/ethereum";
 import { toPrefixedHex } from "../helpers";
 
 export function useAddEthereumChain() {

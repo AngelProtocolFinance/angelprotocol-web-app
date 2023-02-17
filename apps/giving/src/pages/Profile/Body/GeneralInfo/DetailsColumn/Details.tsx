@@ -1,12 +1,12 @@
+import { isEmpty } from "@/helpers";
+import { useProfileContext } from "@/pages/Profile/ProfileContext";
 import { PropsWithChildren } from "react";
-import { useProfileContext } from "pages/Profile/ProfileContext";
-import { isEmpty } from "helpers";
 
-// import { chainIds } from "constants/chainIds";
-// import Copier from "components/Copier";
-// import ExtLink from "components/ExtLink";
-// import Icon from "components/Icon";
-// import { getAddressUrl, maskAddress } from "helpers";
+// import { chainIds } from "@/constants/chainIds";
+// import Copier from "@/components/Copier";
+// import ExtLink from "@/components/ExtLink";
+// import Icon from "@/components/Icon";
+// import { getAddressUrl, maskAddress } from "@/helpers";
 
 export default function Details() {
   const profile = useProfileContext();

@@ -1,9 +1,9 @@
+import banner from "@/assets/images/hero.png";
+import QueryLoader from "@/components/QueryLoader";
+import Seo from "@/components/Seo";
+import { idParamToNum } from "@/helpers";
+import { useProfileQuery } from "@/services/aws/aws";
 import { useParams } from "react-router-dom";
-import banner from "assets/images/hero.png";
-import { useProfileQuery } from "services/aws/aws";
-import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
-import { idParamToNum } from "helpers";
 import Content from "./Content";
 
 export default function Donate() {

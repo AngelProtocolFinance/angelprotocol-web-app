@@ -1,14 +1,14 @@
+import Popup from "@/components/Popup";
+import { TxPrompt } from "@/components/Prompt";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import Contract from "@/contracts/Contract";
+import { extractFeeAmount } from "@/helpers";
+import { invalidateApesTags } from "@/services/apes";
+import { useSetter } from "@/store/accessors";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
-import { TxOptions } from "types/slices";
-import { invalidateApesTags } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import { TxPrompt } from "components/Prompt";
-import { useSetter } from "store/accessors";
-import Contract from "contracts/Contract";
-import { extractFeeAmount } from "helpers";
+import { TxOptions } from "@/types/slices";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;

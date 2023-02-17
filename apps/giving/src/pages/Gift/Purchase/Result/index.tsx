@@ -1,4 +1,4 @@
-import { GiftCard, TxResult, TxStep } from "slices/gift";
+import { GiftCard, TxResult, TxStep } from "@/slices/gift";
 import { errKey, loadingKey } from "../constants";
 import Err from "./Err";
 import Loading from "./Loading";

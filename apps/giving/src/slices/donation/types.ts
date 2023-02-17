@@ -1,10 +1,10 @@
+import { OptionType } from "@/components/Selector";
+import { WalletState } from "@/contexts/WalletContext";
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { CountryOption } from "services/types";
-import { TokenWithAmount, TxOptions } from "types/slices";
-import { WalletState } from "contexts/WalletContext";
-import { OptionType } from "components/Selector";
+import { CountryOption } from "@/services/types";
+import { TokenWithAmount, TxOptions } from "@/types/slices";
 
 export type DonationRecipient = {
   id: number;

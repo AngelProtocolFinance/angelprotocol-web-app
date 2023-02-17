@@ -1,4 +1,4 @@
-import { TokenWithAmount as TWA } from "types/slices";
+import { TokenWithAmount as TWA } from "@/types/slices";
 import getBreakdown from "./getBreakdown";
 
 type TestToken = Pick<TWA, "amount" | "gift">;

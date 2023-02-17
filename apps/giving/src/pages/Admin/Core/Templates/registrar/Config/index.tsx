@@ -1,9 +1,9 @@
+import { FormError, FormSkeleton } from "@/components/admin";
+import { useRegistrarConfigQuery } from "@/services/juno/registrar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { RegistrarConfigValues } from "pages/Admin/types";
-import { RegistrarConfig, RegistrarConfigPayload } from "types/contracts";
-import { useRegistrarConfigQuery } from "services/juno/registrar";
-import { FormError, FormSkeleton } from "components/admin";
+import { RegistrarConfigValues } from "@/pages/Admin/types";
+import { RegistrarConfig, RegistrarConfigPayload } from "@/types/contracts";
 import Form from "./Form";
 import { schema } from "./schema";
 

@@ -1,14 +1,14 @@
+import { useErrorContext } from "@/contexts/ErrorContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import IndexFund from "@/contracts/IndexFund";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetter } from "@/store/accessors";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "pages/Admin/types";
-import { FundUpdateValues } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useGetWallet } from "contexts/WalletContext";
-import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { FundMemberUpdateMeta } from "@/pages/Admin/types";
+import { FundUpdateValues } from "@/pages/Admin/types";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();

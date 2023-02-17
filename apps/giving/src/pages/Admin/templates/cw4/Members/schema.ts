@@ -1,8 +1,8 @@
+import { requiredPositiveNumber } from "@/schemas/number";
+import { requiredWalletAddr } from "@/schemas/string";
 import * as Yup from "yup";
-import { MemberUpdatorValues } from "pages/Admin/types";
-import { SchemaShape } from "schemas/types";
-import { requiredPositiveNumber } from "schemas/number";
-import { requiredWalletAddr } from "schemas/string";
+import { MemberUpdatorValues } from "@/pages/Admin/types";
+import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../constants";
 
 const shape: SchemaShape<MemberUpdatorValues> = {

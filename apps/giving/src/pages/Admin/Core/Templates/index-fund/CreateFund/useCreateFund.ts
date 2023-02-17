@@ -1,15 +1,15 @@
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import IndexFund from "@/contracts/IndexFund";
+import { condense, roundDown } from "@/helpers";
+import { cleanObject } from "@/helpers/cleanObject";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetter } from "@/store/accessors";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
-import { FundDetails } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext";
-import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { condense, roundDown } from "helpers";
-import { cleanObject } from "helpers/cleanObject";
+import { CreateFundMeta, FundCreatorValues } from "@/pages/Admin/types";
+import { FundDetails } from "@/types/contracts";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {

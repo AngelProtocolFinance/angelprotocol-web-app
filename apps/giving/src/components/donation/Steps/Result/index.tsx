@@ -1,4 +1,4 @@
-import { TxStep } from "slices/donation";
+import { TxStep } from "@/slices/donation";
 import Err from "./Err";
 import Loading from "./Loading";
 import Success from "./Success";

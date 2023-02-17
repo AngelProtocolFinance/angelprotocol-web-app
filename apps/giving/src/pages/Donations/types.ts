@@ -1,4 +1,4 @@
-import { Donation } from "types/aws";
+import { Donation } from "@/types/aws";
 
 export type TableProps = {
   donations: Donation[];

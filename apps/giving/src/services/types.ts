@@ -1,3 +1,4 @@
+import { TxArgs } from "@/hooks/useCosmosTxSender";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {
@@ -7,8 +8,7 @@ import {
   Proposal,
   ReviewCW3Config,
   YieldVault,
-} from "types/contracts";
-import { TxArgs } from "hooks/useCosmosTxSender";
+} from "@/types/contracts";
 
 export type Tag = TagDescription<string>;
 export type TagPayload = PayloadAction<Tag[], string>;

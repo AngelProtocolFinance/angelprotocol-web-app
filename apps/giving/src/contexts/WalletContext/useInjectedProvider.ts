@@ -1,24 +1,24 @@
-import { formatUnits } from "@ethersproject/units";
-import { useCallback, useEffect, useState } from "react";
-import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "types/aws";
-import {
-  AccountChangeHandler,
-  ChainChangeHandler,
-  Dwindow,
-  InjectedProvider,
-} from "types/ethereum";
-import { getProvider } from "helpers";
+import { chainIDs } from "@/constants/chains";
+import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
+import { EIPMethods } from "@/constants/ethereum";
 import {
   UnexpectedStateError,
   UnsupportedChainError,
   WalletDisconnectedError,
   WalletError,
   WalletNotInstalledError,
-} from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EIPMethods } from "constants/ethereum";
+} from "@/errors/errors";
+import { getProvider } from "@/helpers";
+import { formatUnits } from "@ethersproject/units";
+import { useCallback, useEffect, useState } from "react";
+import { Connection, ProviderId, ProviderInfo } from "./types";
+import { BaseChain } from "@/types/aws";
+import {
+  AccountChangeHandler,
+  ChainChangeHandler,
+  Dwindow,
+  InjectedProvider,
+} from "@/types/ethereum";
 import { WALLET_METADATA } from "./constants";
 import {
   checkXdefiPriority,

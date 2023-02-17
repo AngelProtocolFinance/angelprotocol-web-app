@@ -1,3 +1,7 @@
+import { chainIDs } from "@/constants/chains";
+import { IS_MOBILE, IS_TEST } from "@/constants/env";
+import { WalletDisconnectedError } from "@/errors/errors";
+import { useChainQuery } from "@/services/apes";
 import {
   PropsWithChildren,
   createContext,
@@ -6,11 +10,7 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, TokenWithBalance } from "types/aws";
-import { useChainQuery } from "services/apes";
-import { WalletDisconnectedError } from "errors/errors";
-import { chainIDs } from "constants/chains";
-import { IS_MOBILE, IS_TEST } from "constants/env";
+import { BaseChain, Chain, TokenWithBalance } from "@/types/aws";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,

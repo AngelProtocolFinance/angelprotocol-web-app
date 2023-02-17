@@ -1,11 +1,11 @@
+import { useGetWallet } from "@/contexts/WalletContext/WalletContext";
+import Account from "@/contracts/Account";
+import CW3 from "@/contracts/CW3";
+import { scaleToStr } from "@/helpers";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { FormValues } from "./types";
-import { AccountType } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
-import { scaleToStr } from "helpers";
+import { AccountType } from "@/types/contracts";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();

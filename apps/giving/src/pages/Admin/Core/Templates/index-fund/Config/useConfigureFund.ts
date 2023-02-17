@@ -1,16 +1,16 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import IndexFund from "@/contracts/IndexFund";
+import { scaleToStr } from "@/helpers";
+import { genDiffMeta, getPayloadDiff } from "@/helpers/admin";
+import { cleanObject } from "@/helpers/cleanObject";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
-import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
-import { FundConfig } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
+import { FundConfigUpdateMeta, FundConfigValues } from "@/pages/Admin/types";
+import { FundConfig } from "@/types/contracts";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

@@ -1,10 +1,10 @@
+import QueryLoader from "@/components/QueryLoader";
+import { Selector, selectorButtonStyle } from "@/components/Selector";
+import { junoAddrPattern, terraAddrPattern } from "@/schemas/string";
+import { useCurrenciesQuery } from "@/services/apes";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Token } from "types/aws";
-import { useCurrenciesQuery } from "services/apes";
-import QueryLoader from "components/QueryLoader";
-import { Selector, selectorButtonStyle } from "components/Selector";
-import { junoAddrPattern, terraAddrPattern } from "schemas/string";
+import { Token } from "@/types/aws";
 
 export default function CurrencyDropdown({ classes = "" }) {
   const { getValues } = useFormContext<FV>();

@@ -1,7 +1,7 @@
-import { WithoutInstallers } from "contexts/WalletContext/types";
-import { Chain } from "types/aws";
-import { WALLET_METADATA } from "contexts/WalletContext/constants";
-import { EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EXPECTED_NETWORK_TYPE } from "@/constants/env";
+import { WALLET_METADATA } from "@/contexts/WalletContext/constants";
+import { WithoutInstallers } from "@/contexts/WalletContext/types";
+import { Chain } from "@/types/aws";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 

@@ -1,7 +1,7 @@
+import { positiveNumber, tokenAmountString } from "@/schemas/number";
 import * as Yup from "yup";
-import { FundConfigValues } from "pages/Admin/types";
-import { SchemaShape } from "schemas/types";
-import { positiveNumber, tokenAmountString } from "schemas/number";
+import { FundConfigValues } from "@/pages/Admin/types";
+import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundConfigValues> = {

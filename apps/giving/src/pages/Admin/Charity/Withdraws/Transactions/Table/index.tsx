@@ -1,5 +1,5 @@
-import { WithdrawLog } from "types/aws";
-import TableSection, { Cells } from "components/TableSection";
+import TableSection, { Cells } from "@/components/TableSection";
+import { WithdrawLog } from "@/types/aws";
 import LogRow from "./LogRow";
 
 type Props = {

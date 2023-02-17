@@ -1,15 +1,15 @@
+import { ErrorStatus, LoadingStatus } from "@/components/Status";
+import { appRoutes } from "@/constants/routes";
+import { WithWallet } from "@/contexts/WalletContext";
+import { humanize } from "@/helpers";
+import { SubmitStep, setStep } from "@/slices/donation";
+import { sendDonation } from "@/slices/donation/sendDonation";
+import { useSetter } from "@/store/accessors";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
-import { ErrorStatus, LoadingStatus } from "components/Status";
-import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
-import { sendDonation } from "slices/donation/sendDonation";
-import { humanize } from "helpers";
-import { appRoutes } from "constants/routes";
+import { TokenWithAmount } from "@/types/slices";
 import { estimateDonation } from "./estimateDonation";
 import getBreakdown from "./getBreakdown";
 

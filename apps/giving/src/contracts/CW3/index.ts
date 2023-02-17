@@ -1,10 +1,10 @@
+import { WalletState } from "@/contexts/WalletContext";
 import {
   CW3ConfigPayload,
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   Vote,
-} from "types/contracts";
-import { WalletState } from "contexts/WalletContext";
+} from "@/types/contracts";
 import Contract from "../Contract";
 
 export default class CW3 extends Contract {

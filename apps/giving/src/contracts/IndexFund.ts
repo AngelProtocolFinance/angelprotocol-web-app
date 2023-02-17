@@ -1,10 +1,10 @@
+import { contracts } from "@/constants/contracts";
 import {
   AllianceMember,
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
-} from "types/contracts";
-import { contracts } from "constants/contracts";
+} from "@/types/contracts";
 import Contract from "./Contract";
 
 export default class IndexFund extends Contract {

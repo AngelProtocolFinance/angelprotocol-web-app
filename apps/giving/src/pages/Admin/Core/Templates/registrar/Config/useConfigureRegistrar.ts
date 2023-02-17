@@ -1,18 +1,18 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import Registrar from "@/contracts/Registrar";
+import { genDiffMeta, getPayloadDiff } from "@/helpers/admin";
+import { cleanObject } from "@/helpers/cleanObject";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
-} from "pages/Admin/types";
-import { RegistrarConfigPayload } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import Registrar from "contracts/Registrar";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { genDiffMeta, getPayloadDiff } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
+} from "@/pages/Admin/types";
+import { RegistrarConfigPayload } from "@/types/contracts";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

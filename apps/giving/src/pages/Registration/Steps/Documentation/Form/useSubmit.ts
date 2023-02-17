@@ -1,9 +1,9 @@
+import { useErrorContext } from "@/contexts/ErrorContext";
+import { handleMutationResult } from "@/helpers";
+import { useUpdateRegMutation } from "@/services/aws/registration";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues } from "../types";
-import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { handleMutationResult } from "helpers";
 import { useRegState } from "../../StepGuard";
 import { getFilePreviews } from "./getFilePreviews";
 

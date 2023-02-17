@@ -1,6 +1,6 @@
+import Icon from "@/components/Icon";
+import { appRoutes } from "@/constants/routes";
 import { Link } from "react-router-dom";
-import Icon from "components/Icon";
-import { appRoutes } from "constants/routes";
 
 export default function PageError() {
   return (

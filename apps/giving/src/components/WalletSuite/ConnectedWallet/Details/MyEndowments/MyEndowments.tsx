@@ -1,4 +1,4 @@
-import { EndowmentBookmark } from "types/aws";
+import { EndowmentBookmark } from "@/types/aws";
 import Logo from "../Logo";
 import Links from "./Links";
 

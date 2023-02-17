@@ -1,5 +1,5 @@
-// import banner from "assets/images/bhm-banner.jpg";
-import { useGetter } from "store/accessors";
+// import banner from "@/assets/images/bhm-banner.jpg";
+import { useGetter } from "@/store/accessors";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Sidebar from "./Sidebar";

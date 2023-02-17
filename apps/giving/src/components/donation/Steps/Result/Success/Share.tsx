@@ -1,9 +1,9 @@
+import ExtLink from "@/components/ExtLink";
+import Icon, { IconType } from "@/components/Icon";
+import { useModalContext } from "@/contexts/ModalContext";
+import { DonationRecipient } from "@/slices/donation";
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
-import { useModalContext } from "contexts/ModalContext";
-import ExtLink from "components/ExtLink";
-import Icon, { IconType } from "components/Icon";
-import { DonationRecipient } from "slices/donation";
 
 export type SocialMedia = Extract<
   IconType,

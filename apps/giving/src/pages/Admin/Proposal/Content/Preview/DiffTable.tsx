@@ -1,7 +1,7 @@
-import { DiffSet } from "types/utils";
-import ImageWrapper from "components/ImageWrapper";
-import TableSection, { Cells } from "components/TableSection";
-import { bucketURL } from "helpers/uploadFiles";
+import ImageWrapper from "@/components/ImageWrapper";
+import TableSection, { Cells } from "@/components/TableSection";
+import { bucketURL } from "@/helpers/uploadFiles";
+import { DiffSet } from "@/types/utils";
 import PreviewContainer from "./common/PreviewContainer";
 
 export default function DiffTable<T extends object>(props: {

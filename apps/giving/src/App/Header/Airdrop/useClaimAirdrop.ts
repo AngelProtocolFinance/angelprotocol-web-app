@@ -1,12 +1,12 @@
+import { useGetWallet } from "@/contexts/WalletContext";
+import Airdrop from "@/contracts/Airdrop";
+import { condense } from "@/helpers";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender";
+import { invalidateJunoTags } from "@/services/juno";
+import { govTags } from "@/services/juno/tags";
 import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { Airdrops } from "types/aws";
-import { invalidateJunoTags } from "services/juno";
-import { govTags } from "services/juno/tags";
-import { useGetWallet } from "contexts/WalletContext";
-import Airdrop from "contracts/Airdrop";
-import useCosmosTxSender from "hooks/useCosmosTxSender";
-import { condense } from "helpers";
+import { Airdrops } from "@/types/aws";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();

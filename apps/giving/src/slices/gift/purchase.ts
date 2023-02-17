@@ -1,10 +1,10 @@
+import { APIs } from "@/constants/urls";
+import { WalletState } from "@/contexts/WalletContext";
+import Contract from "@/contracts/Contract";
+import { createAuthToken, getWasmAttribute, logger } from "@/helpers";
+import { invalidateApesTags } from "@/services/apes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TxOptions } from "types/slices";
-import { invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
-import Contract from "contracts/Contract";
-import { createAuthToken, getWasmAttribute, logger } from "helpers";
-import { APIs } from "constants/urls";
+import { TxOptions } from "@/types/slices";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {

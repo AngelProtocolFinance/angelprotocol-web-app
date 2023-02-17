@@ -1,7 +1,7 @@
-import { Vote } from "types/contracts";
-import { WalletState } from "contexts/WalletContext";
-import { scaleToStr } from "helpers";
-import { contracts } from "constants/contracts";
+import { contracts } from "@/constants/contracts";
+import { WalletState } from "@/contexts/WalletContext";
+import { scaleToStr } from "@/helpers";
+import { Vote } from "@/types/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";
 

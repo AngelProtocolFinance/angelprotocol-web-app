@@ -1,11 +1,11 @@
-import { Donation, KYCData } from "types/aws";
-import CsvExporter from "components/CsvExporter";
-import ExtLink from "components/ExtLink";
-import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import CsvExporter from "@/components/CsvExporter";
+import ExtLink from "@/components/ExtLink";
+import { HeaderButton } from "@/components/HeaderButton";
+import Icon from "@/components/Icon";
+import TableSection, { Cells } from "@/components/TableSection";
+import { getTxUrl, humanize, maskAddress } from "@/helpers";
+import useSort from "@/hooks/useSort";
+import { Donation, KYCData } from "@/types/aws";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(

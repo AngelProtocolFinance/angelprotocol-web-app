@@ -1,6 +1,6 @@
+import { appRoutes } from "@/constants/routes";
+import { createNavLinkStyler } from "@/helpers";
 import { NavLink } from "react-router-dom";
-import { createNavLinkStyler } from "helpers";
-import { appRoutes } from "constants/routes";
 
 export default function DesktopNav({ classes = "" }: { classes?: string }) {
   return (

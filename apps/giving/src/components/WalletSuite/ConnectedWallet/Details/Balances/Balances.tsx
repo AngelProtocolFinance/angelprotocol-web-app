@@ -1,6 +1,6 @@
+import { WalletState } from "@/contexts/WalletContext";
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
-import { WalletState } from "contexts/WalletContext";
 import CoinBalances from "./CoinBalances";
 
 export default function Balances(props: WalletState) {

@@ -1,10 +1,10 @@
+import { WithWallet } from "@/contexts/WalletContext";
+import { isEmpty } from "@/helpers";
+import { FormStep } from "@/slices/donation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
-import { FormStep } from "slices/donation";
-import { isEmpty } from "helpers";
+import { TokenWithAmount } from "@/types/slices";
 import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";

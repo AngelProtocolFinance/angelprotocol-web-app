@@ -1,4 +1,4 @@
-import { KYC, KYCStep } from "slices/donation";
+import { KYC, KYCStep } from "@/slices/donation";
 
 export type PrevTxDetails = { txHash: string; chainId: string };
 

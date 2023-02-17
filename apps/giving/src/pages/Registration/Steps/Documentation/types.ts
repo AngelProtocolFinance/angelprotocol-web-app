@@ -1,3 +1,3 @@
-import { Documentation } from "pages/Registration/types";
+import { Documentation } from "@/pages/Registration/types";
 
 export type FormValues = Omit<Documentation, "level"> & { level: never };

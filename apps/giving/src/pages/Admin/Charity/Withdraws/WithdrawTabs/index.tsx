@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
-import { AccountType, EndowmentBalance } from "types/contracts";
+import { AccountType, EndowmentBalance } from "@/types/contracts";
 import { accountTypeDisplayValue } from "../../constants";
 import Withdrawer from "./Withdrawer";
 

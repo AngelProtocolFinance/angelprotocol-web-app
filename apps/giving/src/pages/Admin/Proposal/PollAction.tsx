@@ -1,13 +1,13 @@
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import { getTagPayloads } from "@/helpers/admin";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { invalidateJunoTags, useLatestBlockQuery } from "@/services/juno";
+import { defaultProposalTags } from "@/services/juno/tags";
 import React, { ReactNode, useMemo } from "react";
-import { ProposalMeta } from "pages/Admin/types";
-import { ProposalDetails, TagPayload } from "services/types";
-import { invalidateJunoTags, useLatestBlockQuery } from "services/juno";
-import { defaultProposalTags } from "services/juno/tags";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { getTagPayloads } from "helpers/admin";
+import { ProposalMeta } from "@/pages/Admin/types";
+import { ProposalDetails, TagPayload } from "@/services/types";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
 

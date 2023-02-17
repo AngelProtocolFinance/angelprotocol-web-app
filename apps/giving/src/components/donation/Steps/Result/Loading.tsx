@@ -1,4 +1,4 @@
-import LoaderRing from "components/LoaderRing";
+import LoaderRing from "@/components/LoaderRing";
 
 export default function Loading({
   message,

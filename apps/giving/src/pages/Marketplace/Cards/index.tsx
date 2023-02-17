@@ -1,4 +1,4 @@
-import QueryLoader from "components/QueryLoader";
+import QueryLoader from "@/components/QueryLoader";
 import Card from "./Card";
 import useCards from "./useCards";
 

@@ -1,15 +1,15 @@
+import Icon from "@/components/Icon";
+import Prompt from "@/components/Prompt";
+import { chainIds } from "@/constants/chainIds";
+import { appRoutes } from "@/constants/routes";
+import { APIs } from "@/constants/urls";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import { createAuthToken } from "@/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
-import Prompt from "components/Prompt";
-import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { appRoutes } from "constants/routes";
-import { APIs } from "constants/urls";
 
 export default function Form({ classes = "" }) {
   const {

@@ -1,3 +1,4 @@
+import { contracts } from "@/constants/contracts";
 import { Coin } from "@cosmjs/proto-signing";
 import {
   DepositPayload,
@@ -6,8 +7,7 @@ import {
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
-} from "types/contracts";
-import { contracts } from "constants/contracts";
+} from "@/types/contracts";
 import Contract from "./Contract";
 
 export default class Account extends Contract {

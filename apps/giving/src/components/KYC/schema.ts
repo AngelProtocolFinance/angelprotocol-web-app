@@ -1,7 +1,7 @@
+import { requiredString } from "@/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
-import { requiredString } from "schemas/string";
+import { SchemaShape } from "@/schemas/types";
 
 const shape: SchemaShape<FormValues> = {
   name: Yup.object().shape({

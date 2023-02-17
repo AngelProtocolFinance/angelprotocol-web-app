@@ -1,5 +1,5 @@
-import { SortDirection, SortKey } from "pages/Admin/types";
-import Icon from "components/Icon";
+import Icon from "@/components/Icon";
+import { SortDirection, SortKey } from "@/pages/Admin/types";
 
 export default function Header(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { EndowmentProfile } from "types/aws";
+import { EndowmentProfile } from "@/types/aws";
 
 const ProfileContext = createContext<EndowmentProfile>({} as EndowmentProfile);
 

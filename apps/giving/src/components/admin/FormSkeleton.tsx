@@ -1,4 +1,4 @@
-import ContentLoader from "components/ContentLoader";
+import ContentLoader from "@/components/ContentLoader";
 import { DivContainer } from "./TemplateContainer";
 
 export function FormSkeleton(props: { classes?: string }) {

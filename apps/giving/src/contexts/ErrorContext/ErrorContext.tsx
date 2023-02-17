@@ -1,17 +1,17 @@
+import Prompt from "@/components/Prompt";
+import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
+import {
+  APError,
+  AP_ERROR_DISCRIMINATOR,
+  WalletNotInstalledError,
+} from "@/errors/errors";
+import { logger } from "@/helpers";
 import {
   PropsWithChildren,
   createContext,
   useCallback,
   useContext,
 } from "react";
-import Prompt from "components/Prompt";
-import { logger } from "helpers";
-import {
-  APError,
-  AP_ERROR_DISCRIMINATOR,
-  WalletNotInstalledError,
-} from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useModalContext } from "../ModalContext";
 import InstallWallet from "./InstallWalletContent";
 

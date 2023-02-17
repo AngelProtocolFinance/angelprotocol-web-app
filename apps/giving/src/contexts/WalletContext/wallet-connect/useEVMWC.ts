@@ -1,8 +1,8 @@
+import { WCProvider as WCP } from "@/helpers/evm";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { WalletState } from "./types";
-import { WCProvider as WCP } from "helpers/evm";
 import { WALLET_METADATA } from "../constants";
 import { WC_EVENT } from "./constants";
 

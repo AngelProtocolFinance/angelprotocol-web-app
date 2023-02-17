@@ -1,11 +1,11 @@
+import Icon from "@/components/Icon";
+import TableSection, { Cells } from "@/components/TableSection";
+import { adminRoutes } from "@/constants/routes";
+import { tokens } from "@/constants/tokens";
+import { condense, humanize } from "@/helpers";
 import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
-import { AccountType, CW20, GenericBalance } from "types/contracts";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
-import { condense, humanize } from "helpers";
-import { adminRoutes } from "constants/routes";
-import { tokens } from "constants/tokens";
+import { AccountType, CW20, GenericBalance } from "@/types/contracts";
 
 type Props = GenericBalance & { type: AccountType };
 export default function Holdings({ cw20, native, type }: Props) {

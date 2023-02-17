@@ -1,7 +1,7 @@
+import Icon from "@/components/Icon";
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
 import { FormValues as FV } from "./types";
-import Icon from "components/Icon";
 import CurrencyDropdown from "./CurrencyDropdown";
 import DateInput from "./DateInput";
 import DonationStatusDropdown from "./DonationStatusDropdown";

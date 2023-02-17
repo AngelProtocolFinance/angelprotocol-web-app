@@ -1,6 +1,6 @@
-import { EndowmentUpdateValues as V } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
-import { Field, Label } from "components/form";
+import { FormContainer, Submitter } from "@/components/admin";
+import { Field, Label } from "@/components/form";
+import { EndowmentUpdateValues as V } from "@/pages/Admin/types";
 import StatusOptions from "./StatusOptions";
 import StatusPreview from "./StatusPreview";
 import useUpdateStatus from "./useUpdateStatus";

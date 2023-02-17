@@ -1,4 +1,4 @@
-import { humanize } from "helpers";
+import { humanize } from "@/helpers";
 import { useProfileContext } from "../../../ProfileContext";
 
 export default function Balances() {

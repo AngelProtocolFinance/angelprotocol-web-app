@@ -1,6 +1,6 @@
-import { AllianceEditMeta } from "pages/Admin/types";
-import { AllianceMember } from "types/contracts";
-import defaultIcon from "assets/icons/angel-alliance.png";
+import defaultIcon from "@/assets/icons/angel-alliance.png";
+import { AllianceEditMeta } from "@/pages/Admin/types";
+import { AllianceMember } from "@/types/contracts";
 import Header from "./common/Header";
 import PreviewContainer from "./common/PreviewContainer";
 

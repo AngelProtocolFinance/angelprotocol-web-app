@@ -1,7 +1,7 @@
+import Icon from "@/components/Icon";
+import { Field } from "@/components/form";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";
-import Icon from "components/Icon";
-import { Field } from "components/form";
 
 export default function Reason() {
   const { watch, getValues } = useFormContext<VV>();

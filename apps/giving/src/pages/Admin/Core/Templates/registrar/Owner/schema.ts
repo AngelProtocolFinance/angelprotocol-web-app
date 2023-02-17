@@ -1,7 +1,7 @@
+import { requiredContractAddr } from "@/schemas/string";
 import * as Yup from "yup";
-import { RegistrarOwnerValues } from "pages/Admin/types";
-import { SchemaShape } from "schemas/types";
-import { requiredContractAddr } from "schemas/string";
+import { RegistrarOwnerValues } from "@/pages/Admin/types";
+import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<RegistrarOwnerValues> = {

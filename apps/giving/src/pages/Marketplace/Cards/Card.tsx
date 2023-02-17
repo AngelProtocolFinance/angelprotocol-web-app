@@ -1,13 +1,13 @@
+import BookmarkBtn from "@/components/BookmarkBtn";
+import Icon from "@/components/Icon";
+import Tooltip from "@/components/Tooltip";
+import { appRoutes } from "@/constants/routes";
+import { unsdgs } from "@/constants/unsdgs";
+import { isEmpty } from "@/helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
-import BookmarkBtn from "components/BookmarkBtn";
-import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
-import { isEmpty } from "helpers";
-import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
+import { EndowmentCard } from "@/types/aws";
+import { UNSDG_NUMS } from "@/types/lists";
 
 const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";

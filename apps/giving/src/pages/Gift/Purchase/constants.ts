@@ -1,4 +1,4 @@
-import { GiftCard, TError, TLoading, TxResult } from "slices/gift";
+import { GiftCard, TError, TLoading, TxResult } from "@/slices/gift";
 
 export const hashKey: keyof TxResult = "hash";
 export const secretKey: keyof GiftCard = "secret";

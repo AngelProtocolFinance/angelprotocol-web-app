@@ -1,16 +1,16 @@
+import Icon from "@/components/Icon";
+import Popup from "@/components/Popup";
+import { appRoutes } from "@/constants/routes";
+import { useErrorContext } from "@/contexts/ErrorContext";
+import { useModalContext } from "@/contexts/ModalContext";
+import { handleMutationResult, logger } from "@/helpers";
+import { useRequestEmailMutation } from "@/services/aws/registration";
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { InitReg } from "./types";
-import { InitApplication } from "types/aws";
-import { useRequestEmailMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import Popup from "components/Popup";
-import { handleMutationResult, logger } from "helpers";
-import { appRoutes } from "constants/routes";
+import { InitApplication } from "@/types/aws";
 import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {

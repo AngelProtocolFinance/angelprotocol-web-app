@@ -1,5 +1,5 @@
+import { DrawerIcon } from "@/components/Icon";
 import { PropsWithChildren } from "react";
-import { DrawerIcon } from "components/Icon";
 
 type Props = PropsWithChildren<{
   isOpen: boolean;

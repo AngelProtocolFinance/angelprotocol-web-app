@@ -1,10 +1,10 @@
+import APLogo from "@/components/APLogo";
+import WalletSuite from "@/components/WalletSuite";
+import { Steps } from "@/components/donation";
+import { getPossessiveForm } from "@/helpers";
+import { setRecipient } from "@/slices/donation";
+import { useSetter } from "@/store/accessors";
 import { useEffect } from "react";
-import APLogo from "components/APLogo";
-import WalletSuite from "components/WalletSuite";
-import { Steps } from "components/donation";
-import { useSetter } from "store/accessors";
-import { setRecipient } from "slices/donation";
-import { getPossessiveForm } from "helpers";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {

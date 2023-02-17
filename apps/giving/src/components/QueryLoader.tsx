@@ -1,8 +1,8 @@
+import Status, { ErrorStatus, LoadingStatus } from "@/components/Status";
+import { isEmpty } from "@/helpers";
 import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
 import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ReactElement } from "react";
-import Status, { ErrorStatus, LoadingStatus } from "components/Status";
-import { isEmpty } from "helpers";
 
 type Base = BaseQueryFn<any, unknown, unknown, any, any>;
 export type QueryState<T> = Pick<

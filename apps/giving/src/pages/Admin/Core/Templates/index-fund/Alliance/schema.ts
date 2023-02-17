@@ -1,7 +1,7 @@
+import { requiredWalletAddr } from "@/schemas/string";
 import * as Yup from "yup";
-import { AllianceEditValues } from "pages/Admin/types";
-import { SchemaShape } from "schemas/types";
-import { requiredWalletAddr } from "schemas/string";
+import { AllianceEditValues } from "@/pages/Admin/types";
+import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<AllianceEditValues> = {

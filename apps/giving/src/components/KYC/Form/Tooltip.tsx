@@ -1,5 +1,5 @@
+import { maskAddress } from "@/helpers";
 import { Props } from "../types";
-import { maskAddress } from "helpers";
 
 export default function Tooltip(props: Props) {
   if (props.type === "post-donation") {

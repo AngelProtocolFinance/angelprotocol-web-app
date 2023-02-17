@@ -1,12 +1,12 @@
+import { FormError, FormSkeleton } from "@/components/admin";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useMembersQuery } from "@/services/juno/cw4";
+import { setMembers } from "@/slices/admin/apCW4Members";
+import { useSetter } from "@/store/accessors";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { MemberUpdatorValues } from "pages/Admin/types";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useMembersQuery } from "services/juno/cw4";
-import { FormError, FormSkeleton } from "components/admin";
-import { useSetter } from "store/accessors";
-import { setMembers } from "slices/admin/apCW4Members";
+import { MemberUpdatorValues } from "@/pages/Admin/types";
 import MemberUpdateForm from "./Form";
 import { schema } from "./schema";
 

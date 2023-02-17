@@ -1,5 +1,5 @@
+import { createNavLinkStyler } from "@/helpers";
 import { NavLink } from "react-router-dom";
-import { createNavLinkStyler } from "helpers";
 import { templateRoutes as routes } from "../../constants";
 
 const styler = createNavLinkStyler(

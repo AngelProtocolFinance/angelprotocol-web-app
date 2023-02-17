@@ -1,3 +1,13 @@
+import { IS_TEST } from "@/constants/env";
+import { WalletState } from "@/contexts/WalletContext";
+import {
+  CosmosTxSimulationFail,
+  TxResultFail,
+  WalletDisconnectedError,
+  WrongChainError,
+} from "@/errors/errors";
+import { logger, toBase64 } from "@/helpers";
+import { getKeplrClient } from "@/helpers/keplr";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";
@@ -10,19 +20,9 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { Chain } from "types/aws";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { TxOptions } from "types/slices";
-import { WalletState } from "contexts/WalletContext";
-import { logger, toBase64 } from "helpers";
-import { getKeplrClient } from "helpers/keplr";
-import {
-  CosmosTxSimulationFail,
-  TxResultFail,
-  WalletDisconnectedError,
-  WrongChainError,
-} from "errors/errors";
-import { IS_TEST } from "constants/env";
+import { Chain } from "@/types/aws";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@/types/contracts";
+import { TxOptions } from "@/types/slices";
 
 // TODO: uni-6 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing

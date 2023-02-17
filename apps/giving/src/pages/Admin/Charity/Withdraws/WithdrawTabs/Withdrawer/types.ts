@@ -1,4 +1,4 @@
-import { AccountType, GenericBalance } from "types/contracts";
+import { AccountType, GenericBalance } from "@/types/contracts";
 
 export type Amount = {
   tokenId: string; //

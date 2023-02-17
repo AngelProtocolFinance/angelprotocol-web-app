@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
-import { maskAddress } from "helpers";
+import Icon from "@/components/Icon";
+import { maskAddress } from "@/helpers";
 
 type VaultProps = {
   address: string;

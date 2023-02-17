@@ -1,7 +1,7 @@
-import { URL_PARAMS, UrlParamValues } from "pages/DonateWidget";
-import { isEmpty } from "helpers";
-import { IS_TEST } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { IS_TEST } from "@/constants/env";
+import { appRoutes } from "@/constants/routes";
+import { isEmpty } from "@/helpers";
+import { URL_PARAMS, UrlParamValues } from "@/pages/DonateWidget";
 import { FormValues } from "./schema";
 
 const APP_URL = IS_TEST

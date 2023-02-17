@@ -4,7 +4,7 @@ import {
   GovStaker,
   GovState,
   Poll,
-} from "types/contracts";
+} from "@/types/contracts";
 
 export const staker: GovStaker = {
   balance: "0",

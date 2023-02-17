@@ -1,7 +1,7 @@
+import APLogo from "@/components/APLogo";
+import { getPossessiveForm } from "@/helpers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import APLogo from "components/APLogo";
-import { getPossessiveForm } from "helpers";
 import { FormValues } from "../schema";
 import Donater from "./Donater";
 

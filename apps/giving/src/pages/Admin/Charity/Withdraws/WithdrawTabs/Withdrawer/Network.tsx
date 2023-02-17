@@ -1,7 +1,7 @@
+import { chainIds } from "@/constants/chainIds";
 import { useEffect } from "react";
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { chainIds } from "constants/chainIds";
 
 export default function Network() {
   const { register, watch, trigger } = useFormContext<WithdrawValues>();

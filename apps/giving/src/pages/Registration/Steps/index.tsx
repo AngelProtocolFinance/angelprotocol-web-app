@@ -1,7 +1,7 @@
+import { ErrorStatus, LoadingStatus } from "@/components/Status";
+import { useRegQuery } from "@/services/aws/registration";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { InitReg } from "../types";
-import { useRegQuery } from "services/aws/registration";
-import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";

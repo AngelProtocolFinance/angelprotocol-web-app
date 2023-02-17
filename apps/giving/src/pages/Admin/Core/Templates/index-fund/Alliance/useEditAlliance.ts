@@ -1,14 +1,14 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import IndexFund from "@/contracts/IndexFund";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetter } from "@/store/accessors";
 import { useFormContext } from "react-hook-form";
-import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import IndexFund from "contracts/IndexFund";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
+import { AllianceEditMeta, AllianceEditValues } from "@/pages/Admin/types";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "@/types/contracts";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

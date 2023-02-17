@@ -1,20 +1,23 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import Account from "@/contracts/Account";
+import CW3 from "@/contracts/CW3";
+import { getTagPayloads } from "@/helpers/admin";
+import { cleanObject } from "@/helpers/cleanObject";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
+import {
+  EndowmentStatusMeta,
+  EndowmentUpdateValues,
+} from "@/pages/Admin/types";
 import {
   Beneficiary,
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
-} from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import Account from "contracts/Account";
-import CW3 from "contracts/CW3";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { getTagPayloads } from "helpers/admin";
-import { cleanObject } from "helpers/cleanObject";
+} from "@/types/contracts";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

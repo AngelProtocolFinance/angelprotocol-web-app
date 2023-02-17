@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Allocation, FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
+import { SchemaShape } from "@/schemas/types";
 import { PCT_PRECISION } from "./constants";
 
 type AllocationSchema = (allocations: Allocation[]) => SchemaShape<Allocation>;

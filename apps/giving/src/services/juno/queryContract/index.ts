@@ -1,5 +1,5 @@
+import { JUNO_LCD } from "@/constants/env";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { JUNO_LCD } from "constants/env";
 import { genQueryPath } from "./genQueryPath";
 
 export async function queryContract<T extends QT>(

@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
-import { useSetter } from "store/accessors";
-import { removeFundMember } from "slices/admin/newFundMembers";
+import Icon from "@/components/Icon";
+import { removeFundMember } from "@/slices/admin/newFundMembers";
+import { useSetter } from "@/store/accessors";
 
 export default function Member(props: { address: string }) {
   const dispatch = useSetter();

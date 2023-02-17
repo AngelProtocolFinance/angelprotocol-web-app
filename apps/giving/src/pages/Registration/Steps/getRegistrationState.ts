@@ -1,3 +1,5 @@
+import { Asset } from "@/components/registration";
+import { unsdgs } from "@/constants/unsdgs";
 import {
   ContactPerson,
   Documentation,
@@ -14,9 +16,7 @@ import {
   SavedRegistration,
   TDocumentation,
   WalletData,
-} from "types/aws";
-import { Asset } from "components/registration";
-import { unsdgs } from "constants/unsdgs";
+} from "@/types/aws";
 
 export function getRegistrationState(
   reg: SavedRegistration

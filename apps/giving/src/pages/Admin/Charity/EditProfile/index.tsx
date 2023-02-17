@@ -1,12 +1,12 @@
+import Seo from "@/components/Seo";
+import { FormError, FormSkeleton } from "@/components/admin";
+import { unsdgs } from "@/constants/unsdgs";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useProfileQuery } from "@/services/aws/aws";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
-import { EndowmentProfile } from "types/aws";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useProfileQuery } from "services/aws/aws";
-import Seo from "components/Seo";
-import { FormError, FormSkeleton } from "components/admin";
-import { unsdgs } from "constants/unsdgs";
+import { EndowmentProfile } from "@/types/aws";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";

@@ -1,15 +1,15 @@
+import ERC20Abi from "@/abi/ERC20.json";
+import { WalletState } from "@/contexts/WalletContext";
+import Contract from "@/contracts/Contract";
+import { getProvider, logger } from "@/helpers";
+import { invalidateApesTags } from "@/services/apes";
 import { Contract as EVMContract } from "@ethersproject/contracts";
 import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import ERC20Abi from "abi/ERC20.json";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
-import { KYCData } from "types/aws";
-import { TokenWithAmount } from "types/slices";
-import { invalidateApesTags } from "services/apes";
-import { WalletState } from "contexts/WalletContext";
-import Contract from "contracts/Contract";
-import { getProvider, logger } from "helpers";
+import { KYCData } from "@/types/aws";
+import { TokenWithAmount } from "@/types/slices";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";
 

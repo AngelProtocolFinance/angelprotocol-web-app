@@ -1,5 +1,5 @@
+import { useErrorContext } from "@/contexts/ErrorContext";
 import { PropsWithChildren, useEffect } from "react";
-import { useErrorContext } from "contexts/ErrorContext";
 
 export default function ErrorHandler(
   props: PropsWithChildren<{

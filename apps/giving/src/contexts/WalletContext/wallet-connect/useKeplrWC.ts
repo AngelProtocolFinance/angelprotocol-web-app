@@ -1,10 +1,10 @@
+import { chainIds } from "@/constants/chainIds";
+import { useErrorContext } from "@/contexts/ErrorContext";
+import { connector as ctor, getKeplrWCClient } from "@/helpers/keplr";
 import { KeplrQRCodeModalV1 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Connected, WalletState } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
-import { connector as ctor, getKeplrWCClient } from "helpers/keplr";
-import { chainIds } from "constants/chainIds";
 import { WALLET_METADATA } from "../constants";
 import { WC_EVENT } from "./constants";
 

@@ -1,6 +1,6 @@
-import { FundConfigValues as FV } from "pages/Admin/types";
-import { FormContainer, Submitter } from "components/admin";
-import { Field } from "components/form";
+import { FormContainer, Submitter } from "@/components/admin";
+import { Field } from "@/components/form";
+import { FundConfigValues as FV } from "@/pages/Admin/types";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {

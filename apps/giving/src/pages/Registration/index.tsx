@@ -1,6 +1,6 @@
+import Seo from "@/components/Seo";
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Seo from "components/Seo";
 import Signup from "./Signup";
 import routes from "./routes";
 

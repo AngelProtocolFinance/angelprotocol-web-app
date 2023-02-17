@@ -1,5 +1,5 @@
 import isMobile from "is-mobile";
-import { NetworkType } from "types/lists";
+import { NetworkType } from "@/types/lists";
 
 export const IS_MOBILE = isMobile();
 export const NETWORK:

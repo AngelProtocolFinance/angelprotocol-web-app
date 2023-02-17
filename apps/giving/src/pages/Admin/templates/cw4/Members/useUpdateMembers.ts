@@ -1,15 +1,15 @@
+import Popup from "@/components/Popup";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import CW4 from "@/contracts/CW4";
+import { getTagPayloads } from "@/helpers/admin";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetter } from "@/store/accessors";
 import { useFormContext } from "react-hook-form";
-import { CW4MemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
-import { CW4Member } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import { useGetter } from "store/accessors";
-import CW3 from "contracts/CW3";
-import CW4 from "contracts/CW4";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { getTagPayloads } from "helpers/admin";
+import { CW4MemberUpdateMeta, MemberUpdatorValues } from "@/pages/Admin/types";
+import { CW4Member } from "@/types/contracts";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

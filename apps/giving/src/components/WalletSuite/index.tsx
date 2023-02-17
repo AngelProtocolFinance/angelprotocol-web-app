@@ -1,4 +1,4 @@
-import { useGetWallet } from "contexts/WalletContext";
+import { useGetWallet } from "@/contexts/WalletContext";
 import ConnectedWallet from "./ConnectedWallet";
 import WalletSelectorOpener from "./WalletSelectorOpener";
 

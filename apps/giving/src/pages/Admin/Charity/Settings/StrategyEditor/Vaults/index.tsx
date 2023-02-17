@@ -1,8 +1,8 @@
+import QueryLoader from "@/components/QueryLoader";
+import { useVaultListQuery } from "@/services/juno/registrar";
 import { useFormContext } from "react-hook-form";
 import { Allocation, FormValues } from "../types";
-import { AccountType } from "types/contracts";
-import { useVaultListQuery } from "services/juno/registrar";
-import QueryLoader from "components/QueryLoader";
+import { AccountType } from "@/types/contracts";
 import Vault from "./Vault";
 
 type Props = { type: AccountType; selected: Allocation[] };

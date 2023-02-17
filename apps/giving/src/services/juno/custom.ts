@@ -1,11 +1,11 @@
+import { contracts } from "@/constants/contracts";
+import { adminRoutes, appRoutes } from "@/constants/routes";
+import { symbols } from "@/constants/tokens";
+import { condenseToNum, idParamToNum } from "@/helpers";
+import { isJunoAddress } from "@/schemas/tests";
 import { Args } from "./queryContract/types";
-import { AdminResources, ProposalDetails, Vault } from "services/types";
-import { CW3Config } from "types/contracts";
-import { condenseToNum, idParamToNum } from "helpers";
-import { isJunoAddress } from "schemas/tests";
-import { contracts } from "constants/contracts";
-import { adminRoutes, appRoutes } from "constants/routes";
-import { symbols } from "constants/tokens";
+import { AdminResources, ProposalDetails, Vault } from "@/services/types";
+import { CW3Config } from "@/types/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import {

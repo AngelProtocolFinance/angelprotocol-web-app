@@ -1,16 +1,16 @@
-import { AccountType } from "types/contracts";
-import { invalidateApesTags } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
-import { TxPrompt } from "components/Prompt";
-import { useSetter } from "store/accessors";
-import { TxOnSuccess, TxSuccessMeta } from "hooks/useCosmosTxSender";
+import { TxPrompt } from "@/components/Prompt";
+import { APIs } from "@/constants/urls";
+import { useModalContext } from "@/contexts/ModalContext";
 import {
   createAuthToken,
   getWasmAttribute,
   idParamToNum,
   logger,
-} from "helpers";
-import { APIs } from "constants/urls";
+} from "@/helpers";
+import { TxOnSuccess, TxSuccessMeta } from "@/hooks/useCosmosTxSender";
+import { invalidateApesTags } from "@/services/apes";
+import { useSetter } from "@/store/accessors";
+import { AccountType } from "@/types/contracts";
 
 type ProposalInfo = {
   endowment_multisig: string;

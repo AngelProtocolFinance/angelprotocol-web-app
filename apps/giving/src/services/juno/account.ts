@@ -1,11 +1,11 @@
+import { contracts } from "@/constants/contracts";
+import { IS_TEST } from "@/constants/env";
+import { denoms, symbols } from "@/constants/tokens";
+import { condenseToNum } from "@/helpers";
+import { accountTags } from "@/services/juno/tags";
 import { Args, Res, Result } from "./queryContract/types";
-import { EndowmentAsset } from "services/types";
-import { AccountType, EndowmentEntry } from "types/contracts";
-import { accountTags } from "services/juno/tags";
-import { condenseToNum } from "helpers";
-import { contracts } from "constants/contracts";
-import { IS_TEST } from "constants/env";
-import { denoms, symbols } from "constants/tokens";
+import { EndowmentAsset } from "@/services/types";
+import { AccountType, EndowmentEntry } from "@/types/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";

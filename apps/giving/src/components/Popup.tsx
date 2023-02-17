@@ -1,7 +1,7 @@
+import Icon from "@/components/Icon";
+import { useModalContext } from "@/contexts/ModalContext";
 import { Dialog } from "@headlessui/react";
 import { PropsWithChildren } from "react";
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
 
 type Props = PropsWithChildren<{ message: string }>;
 

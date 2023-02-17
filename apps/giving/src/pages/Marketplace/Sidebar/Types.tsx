@@ -1,6 +1,6 @@
-import { CapitalizedEndowmentType } from "types/contracts";
-import { useGetter, useSetter } from "store/accessors";
-import { setTypes } from "slices/components/marketFilter";
+import { setTypes } from "@/slices/components/marketFilter";
+import { useGetter, useSetter } from "@/store/accessors";
+import { CapitalizedEndowmentType } from "@/types/contracts";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<CapitalizedEndowmentType>[] = [

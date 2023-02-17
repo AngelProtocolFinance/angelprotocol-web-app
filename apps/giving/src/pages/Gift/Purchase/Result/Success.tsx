@@ -1,10 +1,10 @@
+import ExtLink from "@/components/ExtLink";
+import Icon from "@/components/Icon";
+import { chainIds } from "@/constants/chainIds";
+import { appRoutes } from "@/constants/routes";
+import { getTxUrl } from "@/helpers";
+import { GiftCard, TxResult } from "@/slices/gift";
 import { Link } from "react-router-dom";
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
-import { GiftCard, TxResult } from "slices/gift";
-import { getTxUrl } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { appRoutes } from "constants/routes";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";
 

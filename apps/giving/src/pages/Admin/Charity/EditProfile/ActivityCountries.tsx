@@ -1,8 +1,8 @@
+import QueryLoader from "@/components/QueryLoader";
+import { Selector, selectorButtonStyle } from "@/components/Selector";
+import { Label } from "@/components/form";
+import { useCountriesQuery } from "@/services/countries";
 import { FormValues } from "./types";
-import { useCountriesQuery } from "services/countries";
-import QueryLoader from "components/QueryLoader";
-import { Selector, selectorButtonStyle } from "components/Selector";
-import { Label } from "components/form";
 
 export default function ActivityCountries() {
   const queryState = useCountriesQuery({});

@@ -1,18 +1,18 @@
+import Popup from "@/components/Popup";
+import { contracts } from "@/constants/contracts";
+import { axlUSDCDenom, denoms, tokens } from "@/constants/tokens";
+import { useModalContext } from "@/contexts/ModalContext";
+import { useGetWallet } from "@/contexts/WalletContext";
+import CW3 from "@/contracts/CW3";
+import CW20 from "@/contracts/CW20";
+import { scaleToStr } from "@/helpers";
+import { getTagPayloads } from "@/helpers/admin";
+import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
+import { useAdminResources } from "@/pages/Admin/Guard";
 import { useFormContext } from "react-hook-form";
-import { FundSendMeta } from "pages/Admin/types";
-import { FundSendValues } from "pages/Admin/types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
-import { useAdminResources } from "pages/Admin/Guard";
-import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
-import Popup from "components/Popup";
-import CW3 from "contracts/CW3";
-import CW20 from "contracts/CW20";
-import useCosmosTxSender from "hooks/useCosmosTxSender/useCosmosTxSender";
-import { scaleToStr } from "helpers";
-import { getTagPayloads } from "helpers/admin";
-import { contracts } from "constants/contracts";
-import { axlUSDCDenom, denoms, tokens } from "constants/tokens";
+import { FundSendMeta } from "@/pages/Admin/types";
+import { FundSendValues } from "@/pages/Admin/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@/types/contracts";
 
 export default function useTransferFunds() {
   const {

@@ -1,8 +1,8 @@
+import Icon from "@/components/Icon";
+import TableSection, { Cells } from "@/components/TableSection";
+import { adminRoutes } from "@/constants/routes";
 import { Link } from "react-router-dom";
-import { Expiration, Proposal } from "types/contracts";
-import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection";
-import { adminRoutes } from "constants/routes";
+import { Expiration, Proposal } from "@/types/contracts";
 
 type Props = { proposals: Proposal[] };
 export default function Table({ proposals }: Props) {

@@ -1,5 +1,5 @@
-import { FileObject } from "types/aws";
-import { Bucket, bucketURL } from "helpers/uploadFiles";
+import { Bucket, bucketURL } from "@/helpers/uploadFiles";
+import { FileObject } from "@/types/aws";
 import { getFilePreviews } from "./getFilePreviews";
 
 const file1 = new File([], "file1");
