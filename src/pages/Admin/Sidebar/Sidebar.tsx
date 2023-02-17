@@ -9,7 +9,6 @@ import Header from "./Header";
 
 type Props = {
   className?: string;
-  endowId: number;
   linkGroups: LinkGroup[];
 };
 
@@ -20,7 +19,7 @@ export default function Sidebar(props: Props) {
     <Dialog.Panel
       className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
-      <Header endowId={props.endowId} />
+      <Header />
 
       <div className="flex flex-col py-3">
         {props.linkGroups.map((group) => (
