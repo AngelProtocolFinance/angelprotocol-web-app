@@ -31,9 +31,9 @@ function MobileSidebar({ linkGroups }: { linkGroups: LinkGroup[] }) {
   const { closeModal } = useModalContext();
 
   return (
-    <Dialog.Panel className="fixed top-0 left-0 z-20">
+    <Dialog.Panel className="fixed top-0 left-0 z-20 h-full">
       <Sidebar
-        className="max-h-screen overflow-y-auto scroller"
+        className="overflow-y-auto scroller"
         linkGroups={linkGroups}
         onChange={closeModal}
       />
