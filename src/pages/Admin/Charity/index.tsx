@@ -1,13 +1,15 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
+import { useAdminResources } from "../Guard";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
+import { LINKS } from "../Sidebar/LINKS";
 import Account from "./Account";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
-import Nav from "./Nav";
 import Settings from "./Settings";
 import StrategyEditor from "./Settings/StrategyEditor";
 import Templates from "./Templates";
@@ -16,15 +18,11 @@ import Withdraws from "./Withdraws";
 import { settings } from "./routes";
 
 export default function Charity() {
+  const { id } = useAdminResources();
+
   return (
     <Routes>
-      <Route
-        element={
-          <Layout>
-            <Nav />
-          </Layout>
-        }
-      >
+      <Route element={<Layout linkGroups={createLinkGroups(id)} />}>
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
@@ -51,4 +49,31 @@ export default function Charity() {
       </Route>
     </Routes>
   );
+}
+
+function createLinkGroups(endowId: number): LinkGroup[] {
+  return [
+    {
+      links: [
+        LINKS[adminRoutes.index],
+        LINKS[adminRoutes.withdraws],
+        LINKS[adminRoutes.contributions],
+      ],
+    },
+    {
+      title: "Invest",
+      links: [LINKS[adminRoutes.invest], LINKS[adminRoutes.settings]],
+    },
+    { title: "Profile", links: [LINKS[adminRoutes.edit_profile]] },
+    {
+      title: "Manage",
+      links: [
+        LINKS[adminRoutes.proposals],
+        {
+          ...LINKS[adminRoutes.widget_config],
+          to: `${LINKS[adminRoutes.widget_config].to}/${endowId}`,
+        },
+      ],
+    },
+  ];
 }
