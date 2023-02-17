@@ -4,7 +4,7 @@ import Sidebar, { SidebarOpener } from "./Sidebar";
 
 export default function Layout({ linkGroups }: { linkGroups: LinkGroup[] }) {
   return (
-    <div className="grid grid-cols-[auto_1fr] divide-x divide-prim">
+    <div className="grid md:grid-cols-[auto_1fr] md:divide-x md:divide-prim">
       {/** sidebar */}
       <SidebarOpener className="md:hidden" linkGroups={linkGroups} />
       <Sidebar className="max-md:hidden" linkGroups={linkGroups} />
