@@ -1,64 +1,74 @@
-import { IconType } from "components/Icon";
+import { LinkGroup, SocialMediaLink } from "./types";
 import { LITEPAPER } from "constants/urls";
 
-type SocialMedia =
-  | "Twitter"
-  | "Telegram"
-  | "Discord"
-  | "YouTube"
-  | "Medium"
-  | "Facebook"
-  | "Linkedin"
-  | "Instagram";
+export const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
+  {
+    title: "Twitter",
+    icon: {
+      type: "Twitter",
+      size: 24,
+    },
+    href: "https://twitter.com/angelprotocol",
+  },
+  {
+    title: "Telegram",
+    icon: {
+      type: "Telegram",
+      size: 24,
+    },
+    href: "https://t.me/angelprotocoI",
+  },
+  {
+    title: "Discord",
+    icon: {
+      type: "Discord",
+      size: 24,
+    },
+    href: "https://discord.gg/RhqA652ySA",
+  },
+  {
+    title: "YouTube",
+    icon: {
+      type: "Youtube",
+      size: 24,
+    },
+    href: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+  },
+  {
+    title: "Medium",
+    icon: {
+      type: "Medium",
+      size: 24,
+    },
+    href: "https://angelprotocol.medium.com",
+  },
+  {
+    title: "Facebook",
+    icon: {
+      type: "FacebookCircle",
+      size: 24,
+    },
+    href: "https://www.facebook.com/AngelProtocolFB/",
+  },
+  {
+    title: "Linkedin",
+    icon: {
+      type: "Linkedin",
+      size: 24,
+    },
+    href: "https://www.linkedin.com/company/angel-protocol/",
+  },
+  {
+    title: "Instagram",
+    icon: {
+      type: "Instagram",
+      size: 24,
+    },
+    href: "https://www.instagram.com/angelprotocol/",
+  },
+];
 
-type SocialMediaLinks = {
-  [index in SocialMedia]: { iconType: IconType; link: string };
-};
-
-export const SOCIAL_MEDIA_LINKS: SocialMediaLinks = {
-  Twitter: {
-    iconType: "Twitter",
-    link: "https://twitter.com/angelprotocol",
-  },
-  Telegram: {
-    iconType: "Telegram",
-    link: "https://t.me/angelprotocoI",
-  },
-  Discord: {
-    iconType: "Discord",
-    link: "https://discord.gg/RhqA652ySA",
-  },
-  YouTube: {
-    iconType: "Youtube",
-    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
-  },
-  Medium: {
-    iconType: "Medium",
-    link: "https://angelprotocol.medium.com",
-  },
-  Facebook: {
-    iconType: "FacebookCircle",
-    link: "https://www.facebook.com/AngelProtocolFB/",
-  },
-  Linkedin: {
-    iconType: "Linkedin",
-    link: "https://www.linkedin.com/company/angel-protocol/",
-  },
-  Instagram: {
-    iconType: "Instagram",
-    link: "https://www.instagram.com/angelprotocol/",
-  },
-};
-
-type Section = {
-  title: string;
-  links: {
-    text: string;
-    href?: string;
-  }[];
-};
-
-export const SECTIONS_DATA: Section[] = [
+export const GROUPS_DATA: LinkGroup[] = [
   {
     title: "Products",
     links: [
