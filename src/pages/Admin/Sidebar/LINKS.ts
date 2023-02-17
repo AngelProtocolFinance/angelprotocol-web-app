@@ -1,12 +1,12 @@
 import { Link } from "./types";
 import { adminRoutes } from "constants/routes";
 
-const _to: keyof Link = "to";
-
 type SIDEBAR_ROUTES = Exclude<
   adminRoutes,
   adminRoutes.proposal | adminRoutes.templates
 >;
+
+const _to: keyof Link = "to";
 
 export const LINKS: { [key in SIDEBAR_ROUTES]: Link & { [_to]: key } } = {
   [adminRoutes.index]: {
