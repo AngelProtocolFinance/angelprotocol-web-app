@@ -16,6 +16,7 @@ export const LINKS: { [key in SIDEBAR_ROUTES]: Link & { [_to]: key } } = {
       type: "Dashboard",
       size: 24,
     },
+    end: true,
   },
   [adminRoutes.withdraws]: {
     title: "Withdraw",

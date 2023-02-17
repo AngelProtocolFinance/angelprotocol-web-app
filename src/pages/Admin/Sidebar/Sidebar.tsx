@@ -28,6 +28,7 @@ export default function Sidebar(props: Props) {
             )}
             {group.links.map((link) => (
               <NavLink
+                end={link.end}
                 key={`nav_link-${link.to}`}
                 to={link.to}
                 className={linkClassName}
