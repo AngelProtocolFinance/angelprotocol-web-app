@@ -1,10 +1,10 @@
 import Popup from "@/components/Popup";
-import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3 } from "@ap/contracts";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "@ap/helpers";
+import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
 import {
   CW3ConfigUpdateMeta,

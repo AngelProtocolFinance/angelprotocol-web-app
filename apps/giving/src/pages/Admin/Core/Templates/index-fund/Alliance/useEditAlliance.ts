@@ -1,10 +1,10 @@
 import Popup from "@/components/Popup";
-import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
+import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "@/pages/Admin/types";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@ap/types/contracts";

@@ -1,9 +1,9 @@
 import Popup from "@/components/Popup";
-import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, Registrar } from "@ap/contracts";
+import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta, RegistrarOwnerValues } from "@/pages/Admin/types";
 

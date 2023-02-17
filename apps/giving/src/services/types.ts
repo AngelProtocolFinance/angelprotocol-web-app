@@ -1,4 +1,4 @@
-import { TxArgs } from "@/hooks/useCosmosTxSender";
+import { TxArgs } from "@ap/hooks/use-cosmos-tx-sender";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import {

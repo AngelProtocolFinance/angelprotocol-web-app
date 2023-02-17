@@ -1,5 +1,4 @@
 import { TxPrompt } from "@/components/Prompt";
-import { TxOnSuccess, TxSuccessMeta } from "@/hooks/useCosmosTxSender";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
 import { APIs } from "@ap/constants";
@@ -10,6 +9,7 @@ import {
   idParamToNum,
   logger,
 } from "@ap/helpers";
+import { TxOnSuccess, TxSuccessMeta } from "@ap/hooks/use-cosmos-tx-sender";
 import { AccountType } from "@ap/types/contracts";
 
 type ProposalInfo = {

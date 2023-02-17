@@ -1,8 +1,8 @@
-import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Account, CW3 } from "@ap/contracts";
 import { scaleToStr } from "@ap/helpers";
+import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { FormValues } from "./types";
 import { AccountType } from "@ap/types/contracts";
 

@@ -1,9 +1,9 @@
-import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import { cleanObject, condense, roundDown } from "@ap/helpers";
+import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "@/pages/Admin/types";
