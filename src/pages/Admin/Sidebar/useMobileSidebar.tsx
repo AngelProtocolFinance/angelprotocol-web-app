@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { matchPath, useLocation } from "react-router-dom";
-import { Link, LinkGroup } from "./types";
+import { Link, LinkGroup } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import { appRoutes } from "constants/routes";
 import Sidebar from "./Sidebar";

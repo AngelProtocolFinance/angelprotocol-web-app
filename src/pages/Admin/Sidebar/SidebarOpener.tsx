@@ -1,4 +1,4 @@
-import { LinkGroup } from "./types";
+import { LinkGroup } from "../types";
 import Icon from "components/Icon";
 import useMobileSidebar from "./useMobileSidebar";
 
