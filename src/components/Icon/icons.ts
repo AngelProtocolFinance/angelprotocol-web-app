@@ -92,6 +92,7 @@ import {
   MdPermDataSetting,
   MdSpaceDashboard,
   MdWaterDrop,
+  MdWidgets,
 } from "react-icons/md";
 import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -192,6 +193,7 @@ export const icons = {
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   WaterDrop: MdWaterDrop,
+  Widget: MdWidgets,
   Youtube: AiFillYoutube,
 } as const;
 

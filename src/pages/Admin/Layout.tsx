@@ -1,11 +1,13 @@
-import { PropsWithChildren } from "react";
 import { Outlet } from "react-router-dom";
+import { LinkGroup } from "./Sidebar/types";
+import Sidebar, { SidebarOpener } from "./Sidebar";
 
-export default function Layout({ children }: PropsWithChildren<{}>) {
+export default function Layout({ linkGroups }: { linkGroups: LinkGroup[] }) {
   return (
     <div className="grid grid-cols-[auto_1fr] divide-x divide-prim">
       {/** sidebar */}
-      <div className="px-5 py-6">{children}</div>
+      <SidebarOpener className="sm:hidden" linkGroups={linkGroups} />
+      <Sidebar className="max-sm:hidden" linkGroups={linkGroups} />
       {/** views */}
       <div className="p-10">
         <Outlet />

@@ -38,6 +38,7 @@ export enum adminRoutes {
   proposals = "proposals",
   templates = "templates",
   widget_config = "widget-config",
+  contributions = "contributions",
 
   //charity
   edit_profile = "edit-profile",
