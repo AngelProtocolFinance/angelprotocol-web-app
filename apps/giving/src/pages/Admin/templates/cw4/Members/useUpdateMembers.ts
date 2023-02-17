@@ -1,11 +1,10 @@
 import Popup from "@/components/Popup";
 import { useModalContext } from "@/contexts/ModalContext";
-import CW3 from "@/contracts/CW3";
-import CW4 from "@/contracts/CW4";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { useGetWallet } from "@ap/contexts/wallet-context";
+import { CW3, CW4 } from "@ap/contracts";
 import { getTagPayloads } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "@/pages/Admin/types";

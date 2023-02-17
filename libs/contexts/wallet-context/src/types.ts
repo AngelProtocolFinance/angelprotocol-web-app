@@ -1,8 +1,17 @@
 import { chainIDs } from "@ap/constants";
-import { BaseChain } from "@ap/types/aws";
-import { WalletState } from "./WalletContext";
+import { BaseChain, Chain, TokenWithBalance } from "@ap/types/aws";
 
 export type WithWallet<T> = T & { wallet: WalletState };
+
+export type WalletState = {
+  walletIcon: string;
+  displayCoin: TokenWithBalance;
+  coins: TokenWithBalance[];
+  address: string;
+  chain: Chain;
+  providerId: ProviderId;
+  supportedChains: BaseChain[];
+};
 
 export type ProviderId =
   | "binance-wallet"

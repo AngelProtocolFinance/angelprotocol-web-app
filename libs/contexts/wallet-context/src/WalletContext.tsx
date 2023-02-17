@@ -8,8 +8,7 @@ import {
   useContext,
   useMemo,
 } from "react";
-import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, TokenWithBalance } from "@ap/types/aws";
+import { Connection, ProviderStatus, WalletState } from "./types";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,
@@ -20,16 +19,6 @@ import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 import { useEVMWC, useKeplrWC } from "./wallet-connect";
-
-export type WalletState = {
-  walletIcon: string;
-  displayCoin: TokenWithBalance;
-  coins: TokenWithBalance[];
-  address: string;
-  chain: Chain;
-  providerId: ProviderId;
-  supportedChains: BaseChain[];
-};
 
 type State = {
   wallet?: WalletState;

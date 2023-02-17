@@ -1,9 +1,9 @@
 import Popup from "@/components/Popup";
 import { useModalContext } from "@/contexts/ModalContext";
-import CW3Review from "@/contracts/CW3/CW3Review";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetWallet } from "@ap/contexts/wallet-context";
+import { CW3Review } from "@ap/contracts";
 import { genDiffMeta, getPayloadDiff, getTagPayloads } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import {

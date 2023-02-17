@@ -1,10 +1,9 @@
-import Account from "@/contracts/Account";
-import CW3Endowment from "@/contracts/CW3/CW3Endowment";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { accountTypeDisplayValue } from "@/pages/Admin/Charity/constants";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { ap_wallets, chainIds } from "@ap/constants";
 import { useGetWallet } from "@ap/contexts/wallet-context";
+import { Account, CW3Endowment } from "@ap/contracts";
 import { scaleToStr } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";

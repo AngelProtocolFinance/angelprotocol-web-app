@@ -1,10 +1,9 @@
 import Popup from "@/components/Popup";
 import { useModalContext } from "@/contexts/ModalContext";
-import CW3 from "@/contracts/CW3";
-import Registrar from "@/contracts/Registrar";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetWallet } from "@ap/contexts/wallet-context";
+import { CW3, Registrar } from "@ap/contracts";
 import { useFormContext } from "react-hook-form";
 import { OwnerUpdateMeta, RegistrarOwnerValues } from "@/pages/Admin/types";
 

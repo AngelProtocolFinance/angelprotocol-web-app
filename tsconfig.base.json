@@ -21,6 +21,7 @@
       "@ap/contexts/wallet-context": [
         "libs/contexts/wallet-context/src/index.ts"
       ],
+      "@ap/contracts": ["libs/contracts/src/index.ts"],
       "@ap/helpers": ["libs/helpers/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],

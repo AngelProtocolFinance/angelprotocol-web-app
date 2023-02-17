@@ -1,8 +1,7 @@
-import CW20 from "@/contracts/CW20";
-import GiftCard from "@/contracts/GiftCard";
 import { SubmitStep } from "@/slices/gift";
 import { contracts } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
+import { CW20, GiftCard } from "@ap/contracts";
 import { extractFeeAmount, logger, scaleToStr } from "@ap/helpers";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { ConnectedWallet } from "@terra-money/wallet-provider";

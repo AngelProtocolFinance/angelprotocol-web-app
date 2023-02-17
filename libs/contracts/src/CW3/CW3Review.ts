@@ -15,7 +15,7 @@ export default class CW3Review extends CW3 {
     });
   }
 
-  createEmbeddedUpdateConfigMsg(payload: ReviewCW3ConfigPayload) {
+  override createEmbeddedUpdateConfigMsg(payload: ReviewCW3ConfigPayload) {
     return this.createEmbeddedWasmMsg(this.address, {
       update_config: payload,
     });
