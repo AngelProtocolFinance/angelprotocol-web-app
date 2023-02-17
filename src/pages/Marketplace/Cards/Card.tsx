@@ -55,7 +55,7 @@ export default function Card({
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
           <div className="text-gray-d1 dark:text-gray text-sm">
-            {hq_country && (
+   
               <p>
                 <span className="font-semibold">HQ:</span> {hq_country}
               </p>

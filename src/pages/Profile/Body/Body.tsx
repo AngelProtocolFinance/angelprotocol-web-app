@@ -41,9 +41,7 @@ export default function Body() {
             </div>
             <p className="w-full font-normal text-lg">{profile.tagline}</p>
           </div>
-          {(profile.hq_country || profile.url) && (
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-              {profile.hq_country && (
                 <span className="flex items-center gap-2 uppercase">
                   <Icon type="MapPin" className="h-6 w-6 text-orange" />
                   {profile.hq_country}
