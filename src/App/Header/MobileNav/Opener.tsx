@@ -16,9 +16,7 @@ export function Opener({ classes, links, logo }: Props) {
         closeModal();
       }
     },
-    50,
-    {},
-    { shouldAttachListener: isModalOpen }
+    { shouldAttachListener: isModalOpen, debounceTime: 50 }
   );
 
   return (
