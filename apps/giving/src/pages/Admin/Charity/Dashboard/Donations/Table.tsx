@@ -3,8 +3,8 @@ import ExtLink from "@/components/ExtLink";
 import { HeaderButton } from "@/components/HeaderButton";
 import Icon from "@/components/Icon";
 import TableSection, { Cells } from "@/components/TableSection";
-import useSort from "@/hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";
+import useSort from "@ap/hooks/use-sort";
 import { Donation, KYCData } from "@ap/types/aws";
 
 export default function Table(props: { donations: Donation[] }) {

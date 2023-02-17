@@ -28,6 +28,7 @@
       "@ap/hooks/use-cosmos-tx-sender": [
         "libs/hooks/use-cosmos-tx-sender/src/index.ts"
       ],
+      "@ap/hooks/use-sort": ["libs/hooks/use-sort/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
       "@ap/types/contracts": ["libs/types/contracts/src/index.ts"]
