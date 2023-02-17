@@ -5,6 +5,7 @@ import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
 import { FormStep } from "slices/donation";
 import { isEmpty } from "helpers";
+import { fiatTokens } from "constants/tokens";
 import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -19,10 +20,13 @@ export default function Donater({
   },
   ...state
 }: WithWallet<FormStep> & { config: ConfigParams }) {
-  const _tokens: TokenWithAmount[] = wallet.coins.map((t) => ({
-    ...t,
-    amount: "0",
-  }));
+  const _tokens: TokenWithAmount[] = [
+    ...wallet.coins.map((t) => ({
+      ...t,
+      amount: "0",
+    })),
+    ...fiatTokens,
+  ];
 
   const methods = useForm<DonateValues>({
     mode: "onChange",
