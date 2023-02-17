@@ -6,7 +6,7 @@ import { AmountProps } from ".";
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();
   return (
-    <Dialog.Panel className="grid content-start bg-gray-l5 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
+    <Dialog.Panel className="grid content-start bg-gray-l6 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
       <Amount title="principal" value={locked} />
       <Amount title="impact" value={liquid} />
       <button
@@ -44,7 +44,7 @@ function Text(props: {
   }
 
   return (
-    <p className="text-xs leading-snug mb-2 text-gray-d1 dark:text-gray-l3">
+    <p className="text-xs leading-snug mb-2 text-gray-d1 dark:text-gray-l4">
       <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );

@@ -1,7 +1,7 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useProposalsQuery } from "services/juno/cw3";
 import QueryLoader from "components/QueryLoader";
-import Balance from "./Balance";
+import Balances from "../common/Balances";
 import Donations from "./Donations";
 import Table from "./Table";
 
@@ -11,11 +11,8 @@ export default function Dashboard() {
 
   return (
     <div className="grid content-start mt-6">
-      <h3 className="uppercase font-extrabold text-2xl mb-1">Balances</h3>
-      <div className="grid gap-4 md:grid-cols-2">
-        <Balance type="liquid" />
-        <Balance type="locked" />
-      </div>
+      <h3 className="uppercase font-extrabold text-2xl mb-4">Balances</h3>
+      <Balances />
       <h3 className="mt-10 mb-4 uppercase font-extrabold text-2xl">
         New Proposals
       </h3>

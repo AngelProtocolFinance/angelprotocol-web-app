@@ -5,8 +5,8 @@ import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";
 
 export default function Withdraws() {
-  const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const { id } = useAdminResources();
+  const queryState = useBalanceQuery({ id });
 
   return (
     <div className="grid content-start font-work">
