@@ -1,4 +1,4 @@
-import { Link } from "./types";
+import { Link } from "../types";
 import { adminRoutes } from "constants/routes";
 
 type SIDEBAR_ROUTES = Exclude<
