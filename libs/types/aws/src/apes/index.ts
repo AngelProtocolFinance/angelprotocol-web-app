@@ -1,6 +1,6 @@
-import { ProposalStatus } from "../../contracts";
-import { NetworkType } from "../../lists";
-import { WithBalance } from "../../utils";
+import { ProposalStatus } from "@/types/contracts";
+import { NetworkType } from "@/types/lists";
+import { WithBalance } from "@/types/utils";
 
 /**
  * put all aws/apes definitions here, if big category exist, separate in a file

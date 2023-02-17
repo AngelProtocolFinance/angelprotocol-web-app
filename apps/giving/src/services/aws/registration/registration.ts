@@ -11,7 +11,7 @@ import {
   SavedRegistration,
   SubmitResult,
   WalletUpdateResult,
-} from "@/types/aws";
+} from "@ap/types/aws";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({

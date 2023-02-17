@@ -1,6 +1,6 @@
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
-import { EndowmentBookmark } from "@/types/aws";
+import { EndowmentBookmark } from "@ap/types/aws";
 import Logo from "../Logo";
 
 export default function Favourite({ name, endowId, logo }: EndowmentBookmark) {

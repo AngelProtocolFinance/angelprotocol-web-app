@@ -6,8 +6,8 @@ import {
 import { GENERIC_ERROR_MESSAGE, IS_TEST, chainIDs } from "@ap/constants";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { BaseChain } from "@/types/aws";
 import { Dwindow } from "@/types/ethereum";
+import { BaseChain } from "@ap/types/aws";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 import { juno_test_chain_info } from "./chains";

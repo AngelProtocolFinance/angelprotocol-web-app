@@ -4,7 +4,7 @@ import { junoAddrPattern, terraAddrPattern } from "@/schemas/string";
 import { useCurrenciesQuery } from "@/services/apes";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Token } from "@/types/aws";
+import { Token } from "@ap/types/aws";
 
 export default function CurrencyDropdown({ classes = "" }) {
   const { getValues } = useFormContext<FV>();

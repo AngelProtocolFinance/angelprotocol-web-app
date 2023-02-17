@@ -1,6 +1,6 @@
 import { Asset } from "@/components/registration";
 import { getFullURL, uploadFiles } from "@ap/helpers";
-import { FileObject } from "@/types/aws";
+import { FileObject } from "@ap/types/aws";
 
 export async function getFilePreviews<T extends { [index: string]: Asset }>(
   fields: T

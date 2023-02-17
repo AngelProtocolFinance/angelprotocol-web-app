@@ -8,7 +8,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { FileObject } from "@/types/aws";
+import { FileObject } from "@ap/types/aws";
 
 export type Asset = {
   previews: FileObject[]; //from previous submission

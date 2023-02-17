@@ -6,7 +6,7 @@ import { unsdgs } from "@ap/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";
-import { EndowmentProfile } from "@/types/aws";
+import { EndowmentProfile } from "@ap/types/aws";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";

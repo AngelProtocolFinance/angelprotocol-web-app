@@ -6,7 +6,7 @@ import { useDonationsQuery } from "@/services/apes";
 import { isEmpty } from "@ap/helpers";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Donation, DonationsQueryParams } from "@/types/aws";
+import { Donation, DonationsQueryParams } from "@ap/types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";

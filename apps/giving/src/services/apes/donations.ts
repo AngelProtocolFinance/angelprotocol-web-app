@@ -5,7 +5,7 @@ import {
   DonationsQueryParams,
   ReceiptPayload,
   Token,
-} from "@/types/aws";
+} from "@ap/types/aws";
 import { apes } from "./apes";
 
 type DonationResult = {

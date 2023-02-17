@@ -9,7 +9,7 @@ import {
   useMemo,
 } from "react";
 import { Connection, ProviderId, ProviderStatus } from "./types";
-import { BaseChain, Chain, TokenWithBalance } from "@/types/aws";
+import { BaseChain, Chain, TokenWithBalance } from "@ap/types/aws";
 import {
   BNB_WALLET_SUPPORTED_CHAINS,
   EVM_SUPPORTED_CHAINS,

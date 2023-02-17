@@ -1,5 +1,5 @@
 import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
-import { AWSQueryRes, LeaderboardEntry, Update } from "@/types/aws";
+import { AWSQueryRes, LeaderboardEntry, Update } from "@ap/types/aws";
 import { aws } from "./aws";
 
 interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {

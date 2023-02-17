@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 import TableSection, { Cells } from "@/components/TableSection";
 import useSort from "@/hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";
-import { Donation, KYCData } from "@/types/aws";
+import { Donation, KYCData } from "@ap/types/aws";
 
 export default function Table(props: { donations: Donation[] }) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(

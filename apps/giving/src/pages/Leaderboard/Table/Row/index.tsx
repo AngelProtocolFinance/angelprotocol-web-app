@@ -2,7 +2,7 @@ import defaultIcon from "@/assets/images/angelprotocol-horiz-blu.png";
 import { Cells } from "@/components/TableSection";
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
-import { LeaderboardEntry } from "@/types/aws";
+import { LeaderboardEntry } from "@ap/types/aws";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 

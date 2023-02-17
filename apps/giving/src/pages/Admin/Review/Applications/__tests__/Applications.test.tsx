@@ -1,6 +1,6 @@
 import AppWrapper from "@/test/AppWrapper";
 import { render, screen } from "@testing-library/react";
-import { EndowmentProposal } from "@/types/aws";
+import { EndowmentProposal } from "@ap/types/aws";
 import Applications from "..";
 
 const mockEndowmentApplicationsQuery = jest.fn();

@@ -10,13 +10,13 @@ import { getProvider } from "@ap/helpers";
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "@/types/aws";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
   Dwindow,
   InjectedProvider,
 } from "@/types/ethereum";
+import { BaseChain } from "@ap/types/aws";
 import { WALLET_METADATA } from "./constants";
 import {
   checkXdefiPriority,

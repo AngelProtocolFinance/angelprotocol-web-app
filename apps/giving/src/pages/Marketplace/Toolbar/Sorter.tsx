@@ -2,7 +2,7 @@ import Icon, { DrawerIcon } from "@/components/Icon";
 import { Sort, setSort } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
 import { Listbox } from "@headlessui/react";
-import { EndowmentsSortKey } from "@/types/aws";
+import { EndowmentsSortKey } from "@ap/types/aws";
 
 type Option = { name: string; key: EndowmentsSortKey };
 const options: Option[] = [

@@ -6,7 +6,7 @@ import { govTags } from "@/services/juno/tags";
 import { condense } from "@ap/helpers";
 import Decimal from "decimal.js";
 import { useMemo } from "react";
-import { Airdrops } from "@/types/aws";
+import { Airdrops } from "@ap/types/aws";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { wallet } = useGetWallet();

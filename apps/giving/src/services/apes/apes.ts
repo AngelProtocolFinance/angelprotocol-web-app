@@ -13,7 +13,7 @@ import {
   FetchedChain,
   Token,
   WithdrawLog,
-} from "@/types/aws";
+} from "@ap/types/aws";
 import { fetchBalances } from "./helpers/fetchBalances";
 
 export const apes = createApi({

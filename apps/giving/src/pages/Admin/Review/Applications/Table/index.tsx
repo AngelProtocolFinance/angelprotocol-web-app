@@ -1,5 +1,5 @@
 import TableSection, { Cells } from "@/components/TableSection";
-import { EndowmentProposal } from "@/types/aws";
+import { EndowmentProposal } from "@ap/types/aws";
 import AppRow from "./AppRow";
 import Header from "./Header";
 import StatusSelector from "./StatusSelector";

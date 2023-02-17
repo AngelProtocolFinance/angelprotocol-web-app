@@ -2,7 +2,7 @@ import ExtLink from "@/components/ExtLink";
 import { humanize, maskAddress } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { PropsWithChildren } from "react";
-import { WithdrawLog, WithdrawRoute } from "@/types/aws";
+import { WithdrawLog, WithdrawRoute } from "@ap/types/aws";
 import { explorerUrls } from "./constants";
 
 export default function Status({

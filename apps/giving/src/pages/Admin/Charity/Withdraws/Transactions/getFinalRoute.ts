@@ -1,4 +1,4 @@
-import { WithdrawLog } from "@/types/aws";
+import { WithdrawLog } from "@ap/types/aws";
 
 export function getFinalRoute({ routes = [], num_routes }: WithdrawLog) {
   const currRoute = routes.length;

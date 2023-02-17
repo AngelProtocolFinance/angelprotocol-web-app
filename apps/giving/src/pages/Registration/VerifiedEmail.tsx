@@ -10,7 +10,7 @@ import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { InitReg } from "./types";
-import { InitApplication } from "@/types/aws";
+import { InitApplication } from "@ap/types/aws";
 import routes, { steps } from "./routes";
 
 type JwtData = InitApplication & {

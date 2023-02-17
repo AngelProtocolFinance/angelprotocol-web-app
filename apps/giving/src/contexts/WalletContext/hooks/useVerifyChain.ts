@@ -2,7 +2,7 @@ import { useErrorContext } from "@/contexts/ErrorContext";
 import { WalletDisconnectedError, WrongNetworkError } from "@/errors/errors";
 import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
 import { useCallback, useEffect } from "react";
-import { Chain } from "@/types/aws";
+import { Chain } from "@ap/types/aws";
 
 export function useVerifyChain(
   chain: Chain | undefined,

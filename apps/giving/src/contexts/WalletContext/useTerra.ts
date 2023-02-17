@@ -13,7 +13,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
-import { BaseChain } from "@/types/aws";
+import { BaseChain } from "@ap/types/aws";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]

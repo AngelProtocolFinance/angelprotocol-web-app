@@ -1,6 +1,6 @@
+import { CapitalizedEndowmentType } from "@/types/contracts";
+import { NetworkType, UNSDG_NUMS } from "@/types/lists";
 import { Keplr } from "@keplr-wallet/types";
-import { CapitalizedEndowmentType } from "../../contracts";
-import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq: { country?: string; city?: string };

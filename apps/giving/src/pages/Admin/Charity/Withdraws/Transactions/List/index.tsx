@@ -1,4 +1,4 @@
-import { WithdrawLog } from "@/types/aws";
+import { WithdrawLog } from "@ap/types/aws";
 import Log from "./Log";
 
 type Props = {

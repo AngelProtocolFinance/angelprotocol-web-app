@@ -3,7 +3,7 @@ import { useErrorContext } from "@/contexts/ErrorContext";
 import { WalletState, useSetWallet } from "@/contexts/WalletContext";
 import { chainIDs } from "@ap/constants";
 import { Listbox } from "@headlessui/react";
-import { BaseChain } from "@/types/aws";
+import { BaseChain } from "@ap/types/aws";
 
 const SELECTOR_STYLE =
   "flex justify-between items-center w-full p-4 pl-3 font-normal font-body text-sm";

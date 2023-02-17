@@ -5,7 +5,7 @@ import metamaskIcon from "@/assets/icons/wallets/metamask.png";
 import xdefiIcon from "@/assets/icons/wallets/xdefi.jpg";
 import { EXPECTED_NETWORK_TYPE, IS_TEST, chainIDs } from "@ap/constants";
 import { WithoutInstallers } from "./types";
-import { BaseChain, Chain } from "@/types/aws";
+import { BaseChain, Chain } from "@ap/types/aws";
 
 export const WALLET_METADATA: {
   [key in WithoutInstallers]: {

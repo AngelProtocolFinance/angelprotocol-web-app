@@ -2,7 +2,7 @@ import { store } from "@/store/store";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { DonationsMetricList, Update } from "@/types/aws";
+import { DonationsMetricList, Update } from "@ap/types/aws";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {

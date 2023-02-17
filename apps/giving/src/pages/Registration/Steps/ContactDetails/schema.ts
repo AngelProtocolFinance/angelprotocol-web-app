@@ -3,7 +3,7 @@ import { requiredString } from "@/schemas/string";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "@/schemas/types";
-import { ContactRoles, ReferralMethods } from "@/types/aws";
+import { ContactRoles, ReferralMethods } from "@ap/types/aws";
 
 type Key = keyof FormValues;
 const roleKey: Key = "role";

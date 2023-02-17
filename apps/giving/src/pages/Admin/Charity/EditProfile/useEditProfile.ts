@@ -8,7 +8,7 @@ import { appRoutes } from "@ap/constants";
 import { getFullURL, getPayloadDiff, isEmpty, uploadFiles } from "@ap/helpers";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
-import { EndowmentProfileUpdate } from "@/types/aws";
+import { EndowmentProfileUpdate } from "@ap/types/aws";
 import { createADR36Payload } from "./createADR36Payload";
 
 // import optimizeImage from "./optimizeImage";

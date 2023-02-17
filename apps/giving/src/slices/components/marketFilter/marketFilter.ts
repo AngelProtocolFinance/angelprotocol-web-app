@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RegionType, Sort } from "./types";
-import { EndowDesignation } from "@/types/aws";
 import { CapitalizedEndowmentType } from "@/types/contracts";
 import { UNSDG_NUMS } from "@/types/lists";
+import { EndowDesignation } from "@ap/types/aws";
 import { clearedState, initialState } from "./constants";
 
 const marketFilter = createSlice({

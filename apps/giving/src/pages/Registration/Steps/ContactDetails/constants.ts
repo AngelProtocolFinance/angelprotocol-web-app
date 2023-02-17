@@ -1,5 +1,5 @@
 import { OptionType } from "@/components/Selector";
-import { ContactRoles, ReferralMethods } from "@/types/aws";
+import { ContactRoles, ReferralMethods } from "@ap/types/aws";
 
 export const roles: { [key in ContactRoles]: string } = {
   president: "Chairperson / President",

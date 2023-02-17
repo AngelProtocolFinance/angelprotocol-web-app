@@ -8,7 +8,7 @@ import {
   useWalletProfileQuery,
 } from "@/services/aws/aws";
 import { PropsWithChildren, useRef, useState } from "react";
-import { EndowmentBookmark } from "@/types/aws";
+import { EndowmentBookmark } from "@ap/types/aws";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 

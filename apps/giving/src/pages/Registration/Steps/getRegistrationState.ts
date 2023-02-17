@@ -16,7 +16,7 @@ import {
   SavedRegistration,
   TDocumentation,
   WalletData,
-} from "@/types/aws";
+} from "@ap/types/aws";
 
 export function getRegistrationState(
   reg: SavedRegistration

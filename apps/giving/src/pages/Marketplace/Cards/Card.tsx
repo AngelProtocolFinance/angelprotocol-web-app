@@ -5,8 +5,8 @@ import { appRoutes, unsdgs } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "@/types/aws";
 import { UNSDG_NUMS } from "@/types/lists";
+import { EndowmentCard } from "@ap/types/aws";
 
 const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";

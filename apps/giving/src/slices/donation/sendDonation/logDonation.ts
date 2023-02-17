@@ -1,7 +1,7 @@
 import { LogDonationFail } from "@/errors/errors";
 import { APIs, IS_TEST } from "@ap/constants";
 import { createAuthToken } from "@ap/helpers";
-import { TxLogPayload } from "@/types/aws";
+import { TxLogPayload } from "@ap/types/aws";
 
 //log donation, with optional receipt
 const logDonation = async (payload: TxLogPayload) => {

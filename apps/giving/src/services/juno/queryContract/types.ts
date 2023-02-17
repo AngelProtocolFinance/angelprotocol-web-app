@@ -1,4 +1,3 @@
-import { Token } from "@/types/aws";
 import {
   AdminVoteInfo,
   AllianceMember,
@@ -30,6 +29,7 @@ import {
   VotesPageOptions,
   YieldVault,
 } from "@/types/contracts";
+import { Token } from "@ap/types/aws";
 
 type EndowmentListRes = { endowments: EndowmentEntry[] };
 

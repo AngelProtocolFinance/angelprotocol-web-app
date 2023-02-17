@@ -7,7 +7,7 @@ import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { EndowmentIdName } from "@/types/aws";
+import { EndowmentIdName } from "@ap/types/aws";
 import { FormValues } from "../../schema";
 
 const containerStyle =

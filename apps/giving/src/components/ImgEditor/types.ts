@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { FileObject } from "@/types/aws";
+import { FileObject } from "@ap/types/aws";
 
 export type ImgLink = FileObject & { file?: File; preview: string };
 

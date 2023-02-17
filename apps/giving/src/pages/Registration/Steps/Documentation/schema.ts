@@ -3,7 +3,7 @@ import { genFileSchema } from "@/schemas/file";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "@/schemas/types";
-import { FileObject } from "@/types/aws";
+import { FileObject } from "@ap/types/aws";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [

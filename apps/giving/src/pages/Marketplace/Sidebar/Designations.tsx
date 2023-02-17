@@ -1,6 +1,6 @@
 import { setDesignations } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
-import { EndowDesignation } from "@/types/aws";
+import { EndowDesignation } from "@ap/types/aws";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<EndowDesignation>[] = [
