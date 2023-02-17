@@ -1,8 +1,6 @@
 import Icon from "@/components/Icon";
-import useHandleScreenResize, {
-  SCREEN_LG,
-} from "@/hooks/useHandleScreenResize";
 import { useModalContext } from "@ap/contexts";
+import { SCREEN_LG, useHandleScreenResize } from "@ap/hooks";
 import Menu from "./Menu";
 
 export function Opener({ classes = "" }: { classes?: string }) {
