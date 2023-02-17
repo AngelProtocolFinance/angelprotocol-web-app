@@ -55,11 +55,9 @@ export default function Card({
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
           <div className="text-gray-d1 dark:text-gray text-sm">
-   
-              <p>
-                <span className="font-semibold">HQ:</span> {hq_country}
-              </p>
-            )}
+            <p>
+              <span className="font-semibold">HQ:</span> {hq_country}
+            </p>
             <p className="line-clamp-2">
               <span className="font-semibold">Active in:</span>{" "}
               {isEmpty(active_in_countries)
