@@ -1,8 +1,8 @@
 import Icon from "@/components/Icon";
 import QueryLoader from "@/components/QueryLoader";
 import { DetailLabel, Status } from "@/components/admin";
-import { useGetWallet } from "@/contexts/WalletContext";
 import { useProposalDetailsQuery } from "@/services/juno/custom";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useParams } from "react-router-dom";
 import { ProposalParams } from "@/pages/Admin/types";
 import { Expiration } from "@ap/types/contracts";

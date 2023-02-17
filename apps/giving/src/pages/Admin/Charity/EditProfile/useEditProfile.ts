@@ -1,10 +1,10 @@
 import { ImgLink } from "@/components/ImgEditor";
 import { TxPrompt } from "@/components/Prompt";
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useEditProfileMutation } from "@/services/aws/aws";
 import { appRoutes } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { getFullURL, getPayloadDiff, isEmpty, uploadFiles } from "@ap/helpers";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";

@@ -1,11 +1,11 @@
 import Popup from "@/components/Popup";
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import CW20 from "@/contracts/CW20";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { axlUSDCDenom, contracts, denoms, tokens } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { getTagPayloads, scaleToStr } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "@/pages/Admin/types";

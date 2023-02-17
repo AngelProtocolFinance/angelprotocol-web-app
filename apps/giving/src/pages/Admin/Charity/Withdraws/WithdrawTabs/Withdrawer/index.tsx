@@ -1,5 +1,5 @@
-import { useGetWallet } from "@/contexts/WalletContext";
 import { chainIds } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { condense, roundDown } from "@ap/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";

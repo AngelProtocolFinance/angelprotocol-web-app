@@ -1,4 +1,4 @@
-import { WalletState } from "@/contexts/WalletContext";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { Fee, Msg } from "@terra-money/terra.js";
 import getTerraClient from "./getTerraClient";
 

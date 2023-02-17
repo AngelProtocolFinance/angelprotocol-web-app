@@ -1,6 +1,6 @@
 import { Label } from "@/components/form";
-import { useGetWallet } from "@/contexts/WalletContext";
 import { denoms, symbols } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "@/pages/Admin/types";

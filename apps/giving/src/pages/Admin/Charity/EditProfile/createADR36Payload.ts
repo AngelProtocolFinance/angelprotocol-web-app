@@ -1,4 +1,4 @@
-import { WalletState } from "@/contexts/WalletContext";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { getKeplr, toBase64 } from "@ap/helpers";
 import { ADR36Payload } from "@ap/types/aws";
 

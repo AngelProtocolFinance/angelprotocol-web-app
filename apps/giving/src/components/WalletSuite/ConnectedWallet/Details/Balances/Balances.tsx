@@ -1,4 +1,4 @@
-import { WalletState } from "@/contexts/WalletContext";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import CoinBalances from "./CoinBalances";

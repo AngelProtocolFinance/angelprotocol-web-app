@@ -1,5 +1,5 @@
 import { OptionType } from "@/components/Selector";
-import { WalletState } from "@/contexts/WalletContext";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";

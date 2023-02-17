@@ -1,9 +1,9 @@
 import { ErrorStatus, LoadingStatus } from "@/components/Status";
-import { WithWallet } from "@/contexts/WalletContext";
 import { SubmitStep, setStep } from "@/slices/gift";
 import { purchase } from "@/slices/gift/purchase";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
+import { WithWallet } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";

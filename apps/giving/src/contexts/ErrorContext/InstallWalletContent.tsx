@@ -1,7 +1,7 @@
 import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
-import { WithoutInstallers } from "../WalletContext";
-import { WALLET_METADATA } from "../WalletContext/constants";
+import { WithoutInstallers } from "@ap/contexts/wallet-context";
+import { WALLET_METADATA } from "@ap/contexts/wallet-context";
 
 export default function InstallWallet(props: {
   providerId: WithoutInstallers;

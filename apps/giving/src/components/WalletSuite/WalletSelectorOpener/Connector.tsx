@@ -1,8 +1,8 @@
 import ContentLoader from "@/components/ContentLoader";
 import { useErrorContext } from "@/contexts/ErrorContext";
 import { useModalContext } from "@/contexts/ModalContext";
+import { Connection } from "@ap/contexts/wallet-context";
 import { useState } from "react";
-import { Connection } from "@/contexts/WalletContext/types";
 
 export default function Connector(props: Connection) {
   const { handleError } = useErrorContext();

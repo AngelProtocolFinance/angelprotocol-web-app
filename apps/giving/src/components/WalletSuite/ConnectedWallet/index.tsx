@@ -1,5 +1,5 @@
 import { DrawerIcon } from "@/components/Icon";
-import { WalletState, useGetWallet } from "@/contexts/WalletContext";
+import { WalletState, useGetWallet } from "@ap/contexts/wallet-context";
 import { maskAddress } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { COMMON_BUTTON_STYLE } from "../constants";

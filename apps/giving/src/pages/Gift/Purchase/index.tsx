@@ -1,8 +1,8 @@
 import { ErrorStatus, LoadingStatus } from "@/components/Status";
-import { useGetWallet } from "@/contexts/WalletContext";
 import { GiftState, resetDetails } from "@/slices/gift";
 import { useGetter, useSetter } from "@/store/accessors";
 import { IS_TEST, chainIds } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useEffect } from "react";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";

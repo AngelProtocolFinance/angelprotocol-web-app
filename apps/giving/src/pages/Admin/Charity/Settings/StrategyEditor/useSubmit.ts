@@ -1,8 +1,8 @@
-import { useGetWallet } from "@/contexts/WalletContext/WalletContext";
 import Account from "@/contracts/Account";
 import CW3 from "@/contracts/CW3";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { FormValues } from "./types";
 import { AccountType } from "@ap/types/contracts";
 

@@ -1,5 +1,5 @@
 import { LoadingStatus } from "@/components/Status";
-import { useGetWallet } from "@/contexts/WalletContext";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useState } from "react";
 import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";

@@ -1,7 +1,7 @@
 import ERC20Abi from "@/abi/ERC20.json";
-import { WalletState } from "@/contexts/WalletContext";
 import Contract from "@/contracts/Contract";
 import { invalidateApesTags } from "@/services/apes";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { getProvider, logger } from "@ap/helpers";
 import { Contract as EVMContract } from "@ethersproject/contracts";
 import { TransactionResponse, Web3Provider } from "@ethersproject/providers";

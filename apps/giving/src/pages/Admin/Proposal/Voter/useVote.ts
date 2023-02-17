@@ -1,10 +1,10 @@
-import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import CW3Review from "@/contracts/CW3/CW3Review";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { invalidateJunoTags } from "@/services/juno";
 import { adminTags } from "@/services/juno/tags";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { useFormContext } from "react-hook-form";
 import { VoteValues as VV } from "./types";

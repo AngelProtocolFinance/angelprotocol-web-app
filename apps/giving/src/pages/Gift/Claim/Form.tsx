@@ -1,8 +1,8 @@
 import Icon from "@/components/Icon";
 import Prompt from "@/components/Prompt";
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import { APIs, appRoutes, chainIds } from "@ap/constants";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { createAuthToken } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";

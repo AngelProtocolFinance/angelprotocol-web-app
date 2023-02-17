@@ -1,4 +1,3 @@
-import { WalletState } from "@/contexts/WalletContext";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
@@ -6,6 +5,7 @@ import {
   WrongChainError,
 } from "@/errors/errors";
 import { IS_TEST } from "@ap/constants";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { getKeplrClient, logger, toBase64 } from "@ap/helpers";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";

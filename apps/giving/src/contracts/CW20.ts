@@ -1,4 +1,4 @@
-import { WalletState } from "@/contexts/WalletContext";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { scaleToStr, toBase64 } from "@ap/helpers";
 import Contract from "./Contract";
 

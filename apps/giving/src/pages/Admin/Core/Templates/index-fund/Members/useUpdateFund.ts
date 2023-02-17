@@ -1,10 +1,10 @@
 import { useErrorContext } from "@/contexts/ErrorContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import IndexFund from "@/contracts/IndexFund";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "@/pages/Admin/types";

@@ -1,5 +1,5 @@
-import { WalletState } from "@/contexts/WalletContext";
 import { contracts } from "@ap/constants";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { scaleToStr } from "@ap/helpers";
 import { Vote } from "@ap/types/contracts";
 import CW20 from "./CW20";

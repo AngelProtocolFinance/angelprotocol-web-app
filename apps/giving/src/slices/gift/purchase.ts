@@ -1,7 +1,7 @@
-import { WalletState } from "@/contexts/WalletContext";
 import Contract from "@/contracts/Contract";
 import { invalidateApesTags } from "@/services/apes";
 import { APIs } from "@ap/constants";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "@ap/types";

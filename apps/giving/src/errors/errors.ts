@@ -1,6 +1,6 @@
-import { WALLET_METADATA } from "@/contexts/WalletContext/constants";
 import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
-import { WithoutInstallers } from "@/contexts/WalletContext/types";
+import { WALLET_METADATA } from "@ap/contexts/wallet-context";
+import { WithoutInstallers } from "@ap/contexts/wallet-context";
 import { Chain } from "@ap/types/aws";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";

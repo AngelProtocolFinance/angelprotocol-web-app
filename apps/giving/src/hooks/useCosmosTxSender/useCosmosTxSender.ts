@@ -1,10 +1,10 @@
 import Popup from "@/components/Popup";
 import { TxPrompt } from "@/components/Prompt";
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import Contract from "@/contracts/Contract";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { extractFeeAmount } from "@ap/helpers";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";

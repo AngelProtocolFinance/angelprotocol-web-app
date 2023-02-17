@@ -1,7 +1,7 @@
 import ModalContext from "@/contexts/ModalContext";
-import WalletContext from "@/contexts/WalletContext";
 import useScrollTop from "@/hooks/useScrollTop";
 import { appRoutes, chainOptions } from "@ap/constants";
+import WalletContext from "@ap/contexts/wallet-context";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";

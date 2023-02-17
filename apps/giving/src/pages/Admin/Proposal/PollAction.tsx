@@ -1,9 +1,9 @@
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { invalidateJunoTags, useLatestBlockQuery } from "@/services/juno";
 import { defaultProposalTags } from "@/services/juno/tags";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import { getTagPayloads } from "@ap/helpers";
 import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "@/pages/Admin/types";

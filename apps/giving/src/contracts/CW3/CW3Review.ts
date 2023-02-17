@@ -1,5 +1,5 @@
-import { WalletState } from "@/contexts/WalletContext/WalletContext";
 import { contracts } from "@ap/constants";
+import { WalletState } from "@ap/contexts/wallet-context";
 import { ApplicationVote } from "@ap/types/contracts";
 import { ReviewCW3ConfigPayload } from "@ap/types/contracts";
 import CW3 from ".";

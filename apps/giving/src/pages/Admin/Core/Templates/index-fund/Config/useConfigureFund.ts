@@ -1,10 +1,10 @@
 import Popup from "@/components/Popup";
 import { useModalContext } from "@/contexts/ModalContext";
-import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import IndexFund from "@/contracts/IndexFund";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { useGetWallet } from "@ap/contexts/wallet-context";
 import {
   cleanObject,
   genDiffMeta,
