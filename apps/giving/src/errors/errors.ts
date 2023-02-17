@@ -1,5 +1,5 @@
-import { EXPECTED_NETWORK_TYPE } from "@/constants/env";
 import { WALLET_METADATA } from "@/contexts/WalletContext/constants";
+import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
 import { WithoutInstallers } from "@/contexts/WalletContext/types";
 import { Chain } from "@/types/aws";
 

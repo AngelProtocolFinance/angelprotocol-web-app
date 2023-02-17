@@ -1,4 +1,3 @@
-import { IS_TEST } from "@/constants/env";
 import { WalletState } from "@/contexts/WalletContext";
 import {
   CosmosTxSimulationFail,
@@ -8,6 +7,7 @@ import {
 } from "@/errors/errors";
 import { logger, toBase64 } from "@/helpers";
 import { getKeplrClient } from "@/helpers/keplr";
+import { IS_TEST } from "@ap/constants";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";
 import { EncodeObject } from "@cosmjs/proto-signing";

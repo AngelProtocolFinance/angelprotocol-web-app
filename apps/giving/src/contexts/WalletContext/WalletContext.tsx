@@ -1,7 +1,6 @@
-import { chainIDs } from "@/constants/chains";
-import { IS_MOBILE, IS_TEST } from "@/constants/env";
 import { WalletDisconnectedError } from "@/errors/errors";
 import { useChainQuery } from "@/services/apes";
+import { IS_MOBILE, IS_TEST, chainIDs } from "@ap/constants";
 import {
   PropsWithChildren,
   createContext,

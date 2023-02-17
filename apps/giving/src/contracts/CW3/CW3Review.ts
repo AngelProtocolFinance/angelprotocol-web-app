@@ -1,5 +1,5 @@
-import { contracts } from "@/constants/contracts";
 import { WalletState } from "@/contexts/WalletContext/WalletContext";
+import { contracts } from "@ap/constants";
 import { ApplicationVote } from "@/types/contracts";
 import { ReviewCW3ConfigPayload } from "@/types/contracts";
 import CW3 from ".";

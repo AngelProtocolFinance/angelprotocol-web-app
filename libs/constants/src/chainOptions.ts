@@ -1,5 +1,5 @@
-import { IS_TEST } from "@/constants/env";
 import { WalletControllerChainOptions } from "@terra-money/wallet-provider";
+import { IS_TEST } from "./env";
 
 /**
  * from: https://assets.terra.money/chains.json

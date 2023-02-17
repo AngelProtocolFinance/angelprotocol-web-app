@@ -1,4 +1,3 @@
-import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
 import {
   CosmosTxSimulationFail,
   LogApplicationUpdateError,
@@ -8,6 +7,7 @@ import {
   WalletDisconnectedError,
 } from "@/errors/errors";
 import { logger } from "@/helpers";
+import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,

@@ -1,5 +1,5 @@
-import { axlUSDCDenom, symbols } from "@/constants/tokens";
 import { humanize } from "@/helpers";
+import { axlUSDCDenom, symbols } from "@ap/constants";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "@/pages/Admin/types";
 

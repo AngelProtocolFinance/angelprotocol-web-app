@@ -1,4 +1,4 @@
-import { appRoutes } from "@/constants/routes";
+import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
 

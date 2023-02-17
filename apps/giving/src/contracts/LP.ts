@@ -1,5 +1,5 @@
-import { contracts } from "@/constants/contracts";
 import { scaleToStr } from "@/helpers";
+import { contracts } from "@ap/constants";
 import { Simulation } from "@/types/contracts";
 import CW20 from "./CW20";
 import Contract from "./Contract";

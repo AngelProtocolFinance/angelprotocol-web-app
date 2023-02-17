@@ -1,5 +1,5 @@
 import { Asset } from "@/components/registration";
-import { unsdgs } from "@/constants/unsdgs";
+import { unsdgs } from "@ap/constants";
 import {
   ContactPerson,
   Documentation,

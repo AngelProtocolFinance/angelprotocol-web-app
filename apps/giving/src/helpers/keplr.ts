@@ -1,5 +1,4 @@
-import { JUNO_LCD } from "@/constants/env";
-import { WC_BRIDGE } from "@/constants/urls";
+import { JUNO_LCD, WC_BRIDGE } from "@ap/constants";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex, toBase64 } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";

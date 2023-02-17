@@ -1,11 +1,11 @@
 import Prompt from "@/components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "@/errors/errors";
 import { logger } from "@/helpers";
+import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import {
   PropsWithChildren,
   createContext,

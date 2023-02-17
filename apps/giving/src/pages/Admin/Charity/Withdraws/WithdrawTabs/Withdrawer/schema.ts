@@ -1,6 +1,6 @@
-import { chainIds } from "@/constants/chainIds";
 import { tokenConstraint } from "@/schemas/number";
 import { requiredWalletAddr } from "@/schemas/string";
+import { chainIds } from "@ap/constants";
 import * as Yup from "yup";
 import { Amount, WithdrawValues as WV } from "./types";
 import { SchemaShape } from "@/schemas/types";

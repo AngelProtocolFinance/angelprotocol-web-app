@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { adminRoutes, appRoutes } from "@/constants/routes";
+import { adminRoutes, appRoutes } from "@ap/constants";
 import { Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { CompleteRegistration } from "./types";

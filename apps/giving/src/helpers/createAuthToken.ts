@@ -1,4 +1,4 @@
-import { ANGEL_SECRECT, APES_SECRECT } from "@/constants/env";
+import { ANGEL_SECRECT, APES_SECRECT } from "@ap/constants";
 import jwt from "jsonwebtoken";
 import { UserTypes } from "@/types/lists";
 

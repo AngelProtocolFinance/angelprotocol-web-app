@@ -3,9 +3,9 @@ import { HeaderButton } from "@/components/HeaderButton";
 import Icon from "@/components/Icon";
 import useKYC from "@/components/KYC/useKYC";
 import TableSection, { Cells } from "@/components/TableSection";
-import { appRoutes } from "@/constants/routes";
 import { getTxUrl, humanize, maskAddress } from "@/helpers";
 import useSort from "@/hooks/useSort";
+import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 

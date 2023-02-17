@@ -1,6 +1,3 @@
-import { chainIDs } from "@/constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
-import { EIPMethods } from "@/constants/ethereum";
 import {
   UnexpectedStateError,
   UnsupportedChainError,
@@ -9,6 +6,7 @@ import {
   WalletNotInstalledError,
 } from "@/errors/errors";
 import { getProvider } from "@/helpers";
+import { EIPMethods, GENERIC_ERROR_MESSAGE, chainIDs } from "@ap/constants";
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";

@@ -1,11 +1,11 @@
 import ERC20Abi from "@/abi/ERC20.json";
-import { ap_wallets } from "@/constants/ap_wallets";
 import { WalletState } from "@/contexts/WalletContext";
 import Account from "@/contracts/Account";
 import CW20 from "@/contracts/CW20";
 import GiftCard from "@/contracts/GiftCard";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "@/helpers";
 import { SubmitStep } from "@/slices/donation";
+import { ap_wallets } from "@ap/constants";
 import { Contract } from "@ethersproject/contracts";
 import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";

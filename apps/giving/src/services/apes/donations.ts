@@ -1,5 +1,5 @@
-import { IS_TEST } from "@/constants/env";
 import { createAuthToken } from "@/helpers";
+import { IS_TEST } from "@ap/constants";
 import {
   Donation,
   DonationsQueryParams,

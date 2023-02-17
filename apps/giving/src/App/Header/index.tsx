@@ -1,7 +1,7 @@
 import Airdrop from "@/App/Header/Airdrop";
 import APLogo from "@/components/APLogo";
 import WalletSuite from "@/components/WalletSuite";
-import { appRoutes } from "@/constants/routes";
+import { appRoutes } from "@ap/constants";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import DesktopNav from "./DesktopNav";

@@ -1,4 +1,4 @@
-import { contracts } from "@/constants/contracts";
+import { contracts } from "@ap/constants";
 import {
   AllianceMember,
   FundConfig,

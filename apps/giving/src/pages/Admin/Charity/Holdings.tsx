@@ -1,8 +1,7 @@
 import Icon from "@/components/Icon";
 import TableSection, { Cells } from "@/components/TableSection";
-import { adminRoutes } from "@/constants/routes";
-import { tokens } from "@/constants/tokens";
 import { condense, humanize } from "@/helpers";
+import { adminRoutes, tokens } from "@ap/constants";
 import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
 import { AccountType, CW20, GenericBalance } from "@/types/contracts";

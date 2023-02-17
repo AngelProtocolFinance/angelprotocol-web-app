@@ -1,5 +1,4 @@
 import { TxPrompt } from "@/components/Prompt";
-import { APIs } from "@/constants/urls";
 import { useModalContext } from "@/contexts/ModalContext";
 import {
   createAuthToken,
@@ -10,6 +9,7 @@ import {
 import { TxOnSuccess, TxSuccessMeta } from "@/hooks/useCosmosTxSender";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
+import { APIs } from "@ap/constants";
 import { AccountType } from "@/types/contracts";
 
 type ProposalInfo = {

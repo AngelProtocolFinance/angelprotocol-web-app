@@ -3,8 +3,7 @@ import binanceWalletIcon from "@/assets/icons/wallets/binance.png";
 import keplrIcon from "@/assets/icons/wallets/keplr.png";
 import metamaskIcon from "@/assets/icons/wallets/metamask.png";
 import xdefiIcon from "@/assets/icons/wallets/xdefi.jpg";
-import { chainIDs } from "@/constants/chains";
-import { EXPECTED_NETWORK_TYPE, IS_TEST } from "@/constants/env";
+import { EXPECTED_NETWORK_TYPE, IS_TEST, chainIDs } from "@ap/constants";
 import { WithoutInstallers } from "./types";
 import { BaseChain, Chain } from "@/types/aws";
 

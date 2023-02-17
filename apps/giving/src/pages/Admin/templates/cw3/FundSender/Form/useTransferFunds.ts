@@ -1,6 +1,4 @@
 import Popup from "@/components/Popup";
-import { contracts } from "@/constants/contracts";
-import { axlUSDCDenom, denoms, tokens } from "@/constants/tokens";
 import { useModalContext } from "@/contexts/ModalContext";
 import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
@@ -9,6 +7,7 @@ import { scaleToStr } from "@/helpers";
 import { getTagPayloads } from "@/helpers/admin";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { axlUSDCDenom, contracts, denoms, tokens } from "@ap/constants";
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "@/pages/Admin/types";
 import { FundSendValues } from "@/pages/Admin/types";

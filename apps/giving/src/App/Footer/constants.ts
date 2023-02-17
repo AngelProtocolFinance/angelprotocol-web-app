@@ -1,5 +1,5 @@
 import { IconType } from "@/components/Icon";
-import { LITEPAPER } from "@/constants/urls";
+import { LITEPAPER } from "@ap/constants";
 
 type SocialMedia =
   | "Twitter"

@@ -1,6 +1,6 @@
-import { IS_TEST } from "@/constants/env";
-import { APIs } from "@/constants/urls";
 import { createAuthToken } from "@/helpers";
+import { IS_TEST } from "@ap/constants";
+import { APIs } from "@ap/constants";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
   ADR36Payload,

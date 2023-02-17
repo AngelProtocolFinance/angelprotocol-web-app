@@ -1,4 +1,4 @@
-import { tokens } from "@/constants/tokens";
+import { tokens } from "@ap/constants";
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundSendValues } from "@/pages/Admin/types";

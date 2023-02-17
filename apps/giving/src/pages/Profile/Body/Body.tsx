@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
 import Seo from "@/components/Seo";
-import { appRoutes } from "@/constants/routes";
+import { appRoutes } from "@ap/constants";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";

@@ -1,4 +1,4 @@
-import { chainIds } from "@/constants/chainIds";
+import { chainIds } from "@ap/constants";
 import { useEffect } from "react";
 import { UseFormRegisterReturn, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";

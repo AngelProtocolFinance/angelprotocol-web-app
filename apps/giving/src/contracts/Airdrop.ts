@@ -1,5 +1,5 @@
-import { contracts } from "@/constants/contracts";
 import { condense } from "@/helpers";
+import { contracts } from "@ap/constants";
 import Decimal from "decimal.js";
 import { Airdrops } from "@/types/aws";
 import Contract from "./Contract";

@@ -1,5 +1,5 @@
-import { contracts } from "@/constants/contracts";
 import { registrarTags } from "@/services/juno/tags";
+import { contracts } from "@ap/constants";
 import { Args, Res, Result } from "./queryContract/types";
 import { junoApi } from "./index";
 import { genQueryPath } from "./queryContract/genQueryPath";

@@ -1,8 +1,8 @@
-import { contracts } from "@/constants/contracts";
-import { IS_TEST } from "@/constants/env";
-import { denoms, symbols } from "@/constants/tokens";
 import { condenseToNum } from "@/helpers";
 import { accountTags } from "@/services/juno/tags";
+import { contracts } from "@ap/constants";
+import { IS_TEST } from "@ap/constants";
+import { denoms, symbols } from "@ap/constants";
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentAsset } from "@/services/types";
 import { AccountType, EndowmentEntry } from "@/types/contracts";

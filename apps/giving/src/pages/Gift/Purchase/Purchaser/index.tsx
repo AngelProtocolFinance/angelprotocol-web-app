@@ -1,7 +1,6 @@
-import { IS_TEST } from "@/constants/env";
-import { denoms } from "@/constants/tokens";
 import { WithWallet } from "@/contexts/WalletContext";
 import { FormStep } from "@/slices/gift";
+import { IS_TEST, denoms } from "@ap/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";

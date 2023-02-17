@@ -1,4 +1,4 @@
-import { chainIds } from "@/constants/chainIds";
+import { chainIds } from "@ap/constants";
 import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;

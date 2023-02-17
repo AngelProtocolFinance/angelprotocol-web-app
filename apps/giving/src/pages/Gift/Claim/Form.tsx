@@ -1,11 +1,9 @@
 import Icon from "@/components/Icon";
 import Prompt from "@/components/Prompt";
-import { chainIds } from "@/constants/chainIds";
-import { appRoutes } from "@/constants/routes";
-import { APIs } from "@/constants/urls";
 import { useModalContext } from "@/contexts/ModalContext";
 import { useGetWallet } from "@/contexts/WalletContext";
 import { createAuthToken } from "@/helpers";
+import { APIs, appRoutes, chainIds } from "@ap/constants";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";

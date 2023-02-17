@@ -1,6 +1,6 @@
 import TableSection, { Cells } from "@/components/TableSection";
-import { tokens } from "@/constants/tokens";
 import { condense, humanize } from "@/helpers";
+import { tokens } from "@ap/constants";
 import { WithdrawMeta } from "@/pages/Admin/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

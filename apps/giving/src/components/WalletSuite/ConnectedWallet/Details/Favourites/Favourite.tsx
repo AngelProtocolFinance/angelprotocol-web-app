@@ -1,4 +1,4 @@
-import { appRoutes } from "@/constants/routes";
+import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { EndowmentBookmark } from "@/types/aws";
 import Logo from "../Logo";

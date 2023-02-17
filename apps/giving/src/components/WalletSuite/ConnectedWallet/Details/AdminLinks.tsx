@@ -1,7 +1,7 @@
-import { chainIds } from "@/constants/chainIds";
-import { appRoutes } from "@/constants/routes";
 import { WalletState } from "@/contexts/WalletContext";
 import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "@/services/juno/custom";
+import { chainIds } from "@ap/constants";
+import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 
 export default function AdminLinks(props: WalletState) {

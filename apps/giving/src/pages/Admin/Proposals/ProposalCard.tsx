@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
 import { Status } from "@/components/admin";
-import { adminRoutes } from "@/constants/routes";
+import { adminRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { Expiration, Proposal } from "@/types/contracts";
 

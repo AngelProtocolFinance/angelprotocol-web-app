@@ -1,4 +1,4 @@
-import { JUNO_LCD } from "@/constants/env";
+import { JUNO_LCD } from "@ap/constants";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { genQueryPath } from "./genQueryPath";
 

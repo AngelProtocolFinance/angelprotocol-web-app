@@ -1,4 +1,4 @@
-import { adminRoutes } from "@/constants/routes";
+import { adminRoutes } from "@ap/constants";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import Proposal from "../Proposal";

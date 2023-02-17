@@ -1,4 +1,4 @@
-import { JUNO_LCD } from "@/constants/env";
+import { JUNO_LCD } from "@ap/constants";
 import {
   BaseQueryFn,
   createApi,

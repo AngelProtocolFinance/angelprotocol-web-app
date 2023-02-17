@@ -1,7 +1,11 @@
-import { chainIds } from "@/constants/chainIds";
-import { IS_TEST, JUNO_LCD_OVERRIDE, JUNO_RPC_OVERRIDE } from "@/constants/env";
-import { APIs } from "@/constants/urls";
 import { UnsupportedChainError } from "@/errors/errors";
+import {
+  APIs,
+  IS_TEST,
+  JUNO_LCD_OVERRIDE,
+  JUNO_RPC_OVERRIDE,
+  chainIds,
+} from "@ap/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BaseChain,

@@ -1,5 +1,5 @@
-import { symbols } from "@/constants/tokens";
 import { humanize } from "@/helpers";
+import { symbols } from "@ap/constants";
 import { FundSendMeta } from "@/pages/Admin/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

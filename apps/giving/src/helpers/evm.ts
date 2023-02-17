@@ -1,4 +1,4 @@
-import { INFURA_ID } from "@/constants/env";
+import { INFURA_ID } from "@ap/constants";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ProviderId } from "@/contexts/WalletContext/types";
 import { Dwindow, InjectedProvider } from "@/types/ethereum";

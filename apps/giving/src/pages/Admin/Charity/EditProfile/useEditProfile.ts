@@ -1,6 +1,5 @@
 import { ImgLink } from "@/components/ImgEditor";
 import { TxPrompt } from "@/components/Prompt";
-import { appRoutes } from "@/constants/routes";
 import { useModalContext } from "@/contexts/ModalContext";
 import { useGetWallet } from "@/contexts/WalletContext";
 import { isEmpty } from "@/helpers";
@@ -8,6 +7,7 @@ import { getPayloadDiff } from "@/helpers/admin";
 import { getFullURL, uploadFiles } from "@/helpers/uploadFiles";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useEditProfileMutation } from "@/services/aws/aws";
+import { appRoutes } from "@ap/constants";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { FormValues as FV, FlatFormValues } from "./types";
 import { EndowmentProfileUpdate } from "@/types/aws";

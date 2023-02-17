@@ -1,10 +1,10 @@
 import Icon from "@/components/Icon";
 import Popup from "@/components/Popup";
-import { appRoutes } from "@/constants/routes";
 import { useErrorContext } from "@/contexts/ErrorContext";
 import { useModalContext } from "@/contexts/ModalContext";
 import { handleMutationResult, logger } from "@/helpers";
 import { useRequestEmailMutation } from "@/services/aws/registration";
+import { appRoutes } from "@ap/constants";
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";

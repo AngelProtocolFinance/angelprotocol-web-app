@@ -1,11 +1,9 @@
-import { chainIDs } from "@/constants/chains";
-import { GENERIC_ERROR_MESSAGE } from "@/constants/common";
-import { IS_TEST } from "@/constants/env";
 import {
   UnsupportedChainError,
   WalletError,
   WalletNotInstalledError,
 } from "@/errors/errors";
+import { GENERIC_ERROR_MESSAGE, IS_TEST, chainIDs } from "@ap/constants";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { BaseChain } from "@/types/aws";

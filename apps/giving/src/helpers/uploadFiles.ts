@@ -1,4 +1,4 @@
-import { APIs } from "@/constants/urls";
+import { APIs } from "@ap/constants";
 import { createAuthToken } from "./createAuthToken";
 
 export type Bucket = "endow-profiles" | "endow-reg";
