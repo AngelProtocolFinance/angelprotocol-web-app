@@ -7,6 +7,7 @@ export type Link = {
     type: IconType;
     size: number;
   };
+  end?: boolean;
 };
 
 export type LinkGroup = {
