@@ -1,11 +1,11 @@
 import ExtLink from "@/components/ExtLink";
-import { useModalContext } from "@/contexts/ModalContext";
 import {
   TxState,
   isError,
   isLoading,
   isSuccess,
 } from "@/hooks/useCosmosTxSender";
+import { useModalContext } from "@ap/contexts";
 import { getTxUrl } from "@ap/helpers";
 import { useNavigate } from "react-router-dom";
 import { Props as PromptProps } from "./types";

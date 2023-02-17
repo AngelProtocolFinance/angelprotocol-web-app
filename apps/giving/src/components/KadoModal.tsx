@@ -1,8 +1,8 @@
 import Icon from "@/components/Icon";
-import { useModalContext } from "@/contexts/ModalContext";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
 import { KADO_API_KEY, chainIDs } from "@ap/constants";
+import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { logger } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";

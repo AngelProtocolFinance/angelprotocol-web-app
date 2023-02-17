@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { useCallback } from "react";
 import { Airdrops } from "@ap/types/aws";
 import Catcher from "./Catcher";

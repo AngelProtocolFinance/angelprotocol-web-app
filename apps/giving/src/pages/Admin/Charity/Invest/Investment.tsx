@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { humanize, maskAddress } from "@ap/helpers";
 import { Vault } from "@/services/types";
 import Investor from "./Investor";

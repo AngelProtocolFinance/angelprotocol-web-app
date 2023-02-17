@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { Dialog } from "@headlessui/react";
 import { Props } from "./types";
 import Icon from "../Icon";

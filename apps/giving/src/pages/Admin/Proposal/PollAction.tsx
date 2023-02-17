@@ -1,7 +1,7 @@
-import { useModalContext } from "@/contexts/ModalContext";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { invalidateJunoTags, useLatestBlockQuery } from "@/services/juno";
 import { defaultProposalTags } from "@/services/juno/tags";
+import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3 } from "@ap/contracts";
 import { getTagPayloads } from "@ap/helpers";

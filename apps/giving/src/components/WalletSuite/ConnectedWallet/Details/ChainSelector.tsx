@@ -1,6 +1,6 @@
 import Icon, { DrawerIcon } from "@/components/Icon";
-import { useErrorContext } from "@/contexts/ErrorContext";
 import { chainIDs } from "@ap/constants";
+import { useErrorContext } from "@ap/contexts";
 import { WalletState, useSetWallet } from "@ap/contexts/wallet-context";
 import { Listbox } from "@headlessui/react";
 import { BaseChain } from "@ap/types/aws";

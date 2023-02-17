@@ -1,9 +1,9 @@
 import Prompt from "@/components/Prompt";
-import { useErrorContext } from "@/contexts/ErrorContext";
-import { useModalContext } from "@/contexts/ModalContext";
 import routes from "@/pages/Registration/routes";
 import { useSubmitMutation } from "@/services/aws/registration";
 import { chainIds } from "@ap/constants";
+import { useModalContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult } from "@ap/helpers";
 import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "@/pages/Registration/types";

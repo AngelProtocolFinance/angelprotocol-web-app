@@ -18,6 +18,7 @@
     "paths": {
       "@/*": ["apps/giving/src/*"],
       "@ap/constants": ["libs/constants/src/index.ts"],
+      "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [
         "libs/contexts/wallet-context/src/index.ts"
       ],

@@ -1,6 +1,6 @@
 import ContentLoader from "@/components/ContentLoader";
-import { useErrorContext } from "@/contexts/ErrorContext";
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts";
 import { Connection } from "@ap/contexts/wallet-context";
 import { useState } from "react";
 

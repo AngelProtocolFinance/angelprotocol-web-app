@@ -1,7 +1,7 @@
-import ModalContext from "@/contexts/ModalContext";
+import { ModalContext } from "@ap/contexts";
+import { ErrorContext } from "@ap/contexts";
 import { logger } from "@ap/helpers";
 import { Component, ErrorInfo, PropsWithChildren } from "react";
-import ErrorContext from "../contexts/ErrorContext";
 import ErrorHandler from "./ErrorHandler";
 
 type Props = PropsWithChildren;

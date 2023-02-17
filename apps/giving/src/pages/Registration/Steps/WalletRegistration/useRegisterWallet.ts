@@ -1,6 +1,6 @@
-import { useErrorContext } from "@/contexts/ErrorContext";
 import { useUpdateRegMutation } from "@/services/aws/registration";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { useErrorContext } from "@ap/contexts";
 import { useRegState } from "../StepGuard";
 
 export default function useRegisterWallet() {

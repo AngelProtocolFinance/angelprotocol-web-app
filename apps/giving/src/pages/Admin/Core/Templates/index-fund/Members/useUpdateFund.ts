@@ -1,7 +1,7 @@
-import { useErrorContext } from "@/contexts/ErrorContext";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
+import { useErrorContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import { useState } from "react";

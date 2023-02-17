@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { Dialog } from "@headlessui/react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";

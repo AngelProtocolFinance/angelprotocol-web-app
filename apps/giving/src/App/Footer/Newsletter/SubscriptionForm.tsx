@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
-import { useErrorContext } from "@/contexts/ErrorContext";
 import { useNewsletterSubscribeMutation } from "@/services/aws/hubspot";
+import { useErrorContext } from "@ap/contexts";
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";

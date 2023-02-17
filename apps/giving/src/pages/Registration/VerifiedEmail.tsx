@@ -1,9 +1,9 @@
 import Icon from "@/components/Icon";
 import Popup from "@/components/Popup";
-import { useErrorContext } from "@/contexts/ErrorContext";
-import { useModalContext } from "@/contexts/ModalContext";
 import { useRequestEmailMutation } from "@/services/aws/registration";
 import { appRoutes } from "@ap/constants";
+import { useModalContext } from "@ap/contexts";
+import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult, logger } from "@ap/helpers";
 import jwtDecode from "jwt-decode";
 import { PropsWithChildren } from "react";

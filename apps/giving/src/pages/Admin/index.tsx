@@ -1,4 +1,4 @@
-import ModalContext from "@/contexts/ModalContext";
+import { ModalContext } from "@ap/contexts";
 import Charity from "./Charity";
 import Core from "./Core";
 import { Guard } from "./Guard";

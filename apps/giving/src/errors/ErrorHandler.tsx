@@ -1,4 +1,4 @@
-import { useErrorContext } from "@/contexts/ErrorContext";
+import { useErrorContext } from "@ap/contexts";
 import { PropsWithChildren, useEffect } from "react";
 
 export default function ErrorHandler(

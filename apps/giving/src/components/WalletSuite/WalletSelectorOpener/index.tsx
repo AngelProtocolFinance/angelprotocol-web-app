@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { COMMON_BUTTON_STYLE } from "../constants";
 import WalletModal from "./WalletModal";
 

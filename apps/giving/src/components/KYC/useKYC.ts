@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { Props } from "./types";
 import Receipter from "./index";
 

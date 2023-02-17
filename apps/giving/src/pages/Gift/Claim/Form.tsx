@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
 import Prompt from "@/components/Prompt";
-import { useModalContext } from "@/contexts/ModalContext";
 import { APIs, appRoutes, chainIds } from "@ap/constants";
+import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { createAuthToken } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";

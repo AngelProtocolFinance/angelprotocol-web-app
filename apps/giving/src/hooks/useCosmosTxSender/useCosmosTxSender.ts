@@ -1,8 +1,8 @@
 import Popup from "@/components/Popup";
 import { TxPrompt } from "@/components/Prompt";
-import { useModalContext } from "@/contexts/ModalContext";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
+import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Contract } from "@ap/contracts";
 import { extractFeeAmount } from "@ap/helpers";

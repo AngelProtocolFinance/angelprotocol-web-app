@@ -1,11 +1,11 @@
 import Icon from "@/components/Icon";
 import Popup from "@/components/Popup";
 import Tooltip from "@/components/Tooltip";
-import { useModalContext } from "@/contexts/ModalContext";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
 } from "@/services/aws/aws";
+import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { PropsWithChildren, useRef, useState } from "react";
 import { EndowmentBookmark } from "@ap/types/aws";

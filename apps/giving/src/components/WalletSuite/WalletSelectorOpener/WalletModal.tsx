@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { useSetWallet } from "@ap/contexts/wallet-context";
 import { Dialog } from "@headlessui/react";
 import Connector from "./Connector";

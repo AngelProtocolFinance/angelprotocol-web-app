@@ -1,7 +1,7 @@
 import ExtLink from "@/components/ExtLink";
 import Icon, { IconType } from "@/components/Icon";
-import { useModalContext } from "@/contexts/ModalContext";
 import { DonationRecipient } from "@/slices/donation";
+import { useModalContext } from "@ap/contexts";
 import { Dialog } from "@headlessui/react";
 import { useCallback, useState } from "react";
 

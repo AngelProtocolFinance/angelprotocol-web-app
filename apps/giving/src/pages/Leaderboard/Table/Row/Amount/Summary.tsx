@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/ModalContext";
+import { useModalContext } from "@ap/contexts";
 import { humanize } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { AmountProps } from ".";
