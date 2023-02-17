@@ -1,3 +1,4 @@
+import { TokenWithAmount } from "types/slices";
 import haloIcon from "assets/icons/currencies/halo_outline.png";
 import junoIcon from "assets/icons/currencies/juno.svg";
 import unknownTokenIcon from "assets/icons/currencies/token.svg";
@@ -43,3 +44,18 @@ export const tokens: { [index: string]: CoinAsset } = new Proxy(_tokens, {
     return target[key] ?? { icon: unknownTokenIcon, symbol: "Token" };
   },
 });
+
+export const fiatTokens: TokenWithAmount[] = [
+  {
+    min_donation_amnt: 30,
+    symbol: "USD",
+    approved: true,
+    decimals: 2,
+    logo: "https://cdn-icons-png.flaticon.com/512/555/555526.png",
+    name: "US DOLLAR",
+    token_id: "USD",
+    type: "fiat",
+    balance: Number.MAX_VALUE,
+    amount: "",
+  },
+];
