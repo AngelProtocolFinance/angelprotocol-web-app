@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { LinkGroup } from "././types";
+import { LinkGroup } from "./Sidebar/types";
 import Sidebar, { SidebarOpener } from "./Sidebar";
 
 export default function Layout({ linkGroups }: { linkGroups: LinkGroup[] }) {

@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { LinkGroup } from ".././types";
+import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 import Layout from "../Layout";
