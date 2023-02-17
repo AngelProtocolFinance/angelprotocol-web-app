@@ -4,7 +4,7 @@ import { adminRoutes } from "constants/routes";
 import { useAdminResources } from "../Guard";
 
 export default function Nav() {
-  const { endowmentId } = useAdminResources();
+  // const { endowmentId } = useAdminResources();
 
   return (
     <div className="hidden lg:flex justify-end">
@@ -20,13 +20,13 @@ export default function Nav() {
       <NavLink end to={adminRoutes.proposals} className={styler}>
         Proposals
       </NavLink>
-      <NavLink
+      {/*      <NavLink
         end
         to={`${adminRoutes.widget_config}/${endowmentId}`}
         className={styler}
       >
         Embed Widget
-      </NavLink>
+      </NavLink>*/}
     </div>
   );
 }
