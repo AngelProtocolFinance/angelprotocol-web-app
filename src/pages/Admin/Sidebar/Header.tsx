@@ -2,9 +2,11 @@ import { useProfileQuery } from "services/aws/aws";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
+import { useAdminResources } from "../Guard";
 
-export default function Header({ endowId }: { endowId: number }) {
-  const { data: profile, isLoading, isError } = useProfileQuery(endowId);
+export default function Header() {
+  const { id } = useAdminResources();
+  const { data: profile, isLoading, isError } = useProfileQuery(id);
 
   return (
     <div className="flex flex-col gap-3 w-full py-6 px-5 border-b border-prim">

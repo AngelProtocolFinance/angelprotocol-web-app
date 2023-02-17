@@ -12,10 +12,7 @@ const DEFAULT_LINK: Link = {
   to: "",
 };
 
-export default function useMobileSidebar(
-  endowId: number,
-  linkGroups: LinkGroup[]
-) {
+export default function useMobileSidebar(linkGroups: LinkGroup[]) {
   const currPath = useLocation().pathname;
 
   const activeLink = linkGroups
@@ -27,7 +24,6 @@ export default function useMobileSidebar(
   const open = () =>
     showModal(Sidebar, {
       linkGroups,
-      endowId,
       className:
         "fixed top-0 left-0 z-20 max-h-screen overflow-y-auto scroller",
     });
