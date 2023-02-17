@@ -21,7 +21,7 @@ export default function Details() {
       )}
       <Detail title="active in">
         {isEmpty(profile.active_in_countries)
-          ? profile.hq.country
+          ? profile.hq_country
           : profile.active_in_countries.join(", ")}
       </Detail>
       {/* <Detail title="endowment address">

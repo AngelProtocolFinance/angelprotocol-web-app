@@ -34,7 +34,7 @@ function FormWithContext(props: EndowmentProfile) {
   const flatInitial: FlatFormValues = {
     name: props.name,
     categories_sdgs: props.categories.sdgs,
-    hq_country: props.hq.country || "",
+    hq_country: props.hq_country,
     active_in_countries: props.active_in_countries,
     image: props.image || "",
     logo: props.logo || "",
@@ -57,7 +57,7 @@ function FormWithContext(props: EndowmentProfile) {
     ...flatInitial,
     image: { name: "", publicUrl: props.image, preview: props.image },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
-    hq_country: { flag: "", name: props.hq.country || "" },
+    hq_country: { flag: "", name: props.hq_country },
     categories_sdgs: props.categories.sdgs.map((x) =>
       getSDGLabelValuePair(x, unsdgs[x].title)
     ),
