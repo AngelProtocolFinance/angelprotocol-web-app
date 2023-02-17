@@ -1,4 +1,4 @@
-import { Link } from "./types";
+import { Link } from "./Sidebar/types";
 import { Templates } from "pages/Admin/types";
 import { ProposalBase } from "pages/Admin/types";
 import { SchemaShape } from "schemas/types";
