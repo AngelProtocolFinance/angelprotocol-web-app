@@ -9,7 +9,8 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/constants",
-        "tsConfig": "libs/constants/tsconfig.lib.json"
+        "tsConfig": "libs/constants/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
       }
     },
     "lint": {

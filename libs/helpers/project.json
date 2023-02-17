@@ -10,7 +10,8 @@
       "options": {
         "outputPath": "dist/libs/helpers",
         "main": "libs/helpers/src/index.ts",
-        "tsConfig": "libs/helpers/tsconfig.lib.json"
+        "tsConfig": "libs/helpers/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
       }
     },
     "lint": {
