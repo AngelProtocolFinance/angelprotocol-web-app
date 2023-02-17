@@ -6,11 +6,11 @@ import Applications from "..";
 const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
-jest.mock("services/aws/registration", () => ({
+jest.mock("@/services/aws/registration", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
-jest.mock("pages/Admin/Guard", () => ({
+jest.mock("@/pages/Admin/Guard", () => ({
   __esModule: true,
   useAdminResources: () => mockAdminContext(),
 }));
