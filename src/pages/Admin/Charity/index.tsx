@@ -5,7 +5,7 @@ import { useAdminResources } from "../Guard";
 import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
-import { LINKS } from "../Sidebar/LINKS";
+import { LINKS } from "../constants";
 import Account from "./Account";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
