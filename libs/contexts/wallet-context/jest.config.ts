@@ -1,13 +1,7 @@
 /* eslint-disable */
 export default {
   displayName: "contexts-wallet-context",
-  preset: "../../../jest.preset.js",
-  transform: {
-    "^.+\\.[tj]sx?$": [
-      "@swc/jest",
-      { jsc: { transform: { react: { runtime: "automatic" } } } },
-    ],
-  },
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
+  preset: "../../../configs/jest/jest.preset.js",
+  setupFilesAfterEnv: ["../../../configs/jest/setupTests.ts"],
   coverageDirectory: "../../../coverage/libs/contexts/wallet-context",
 };

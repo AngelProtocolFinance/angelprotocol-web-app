@@ -9,6 +9,7 @@ const { exclude: _, ...swcJestConfig } = JSON.parse(
 export default {
   displayName: "helpers",
   preset: "../../configs/jest/jest.preset.js",
+  setupFilesAfterEnv: ["../../configs/jest/setupTests.ts"],
   transform: {
     "^.+\\.[tj]s$": ["@swc/jest", swcJestConfig],
   },

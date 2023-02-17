@@ -4,6 +4,7 @@ import type { Config } from "jest";
 const config: Config = {
   displayName: "giving",
   preset: "../../configs/jest/jest.preset.js",
+  setupFilesAfterEnv: ["../../configs/jest/setupTests.ts"],
   coverageDirectory: "../../coverage/apps/giving",
 };
 

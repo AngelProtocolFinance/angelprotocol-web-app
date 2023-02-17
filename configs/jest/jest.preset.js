@@ -15,5 +15,4 @@ module.exports = {
       "configs/jest/__mocks__/file.js",
     "\\.(css|less)$": "configs/jest/__mocks__/style.js",
   },
-  setupFilesAfterEnv: ["../../configs/jest/setupTests.ts"],
 };
