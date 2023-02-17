@@ -11,7 +11,7 @@ import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
 } from "@/pages/Admin/types";
-import { RegistrarConfigPayload } from "@/types/contracts";
+import { RegistrarConfigPayload } from "@ap/types/contracts";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

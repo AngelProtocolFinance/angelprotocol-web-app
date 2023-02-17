@@ -4,7 +4,7 @@ import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "@/slices/admin/types";
-import { PageOptions, Proposal } from "@/types/contracts";
+import { PageOptions, Proposal } from "@ap/types/contracts";
 import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;

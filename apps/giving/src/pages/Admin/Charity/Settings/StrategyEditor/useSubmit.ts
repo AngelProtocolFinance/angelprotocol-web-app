@@ -4,7 +4,7 @@ import CW3 from "@/contracts/CW3";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { FormValues } from "./types";
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 
 export default function useSubmit(type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();

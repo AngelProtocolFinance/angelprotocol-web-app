@@ -1,4 +1,4 @@
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 
 export type Props = { type: AccountType };
 

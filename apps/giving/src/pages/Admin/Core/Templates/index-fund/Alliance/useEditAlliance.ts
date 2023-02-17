@@ -8,7 +8,7 @@ import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "@/pages/Admin/types";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "@/types/contracts";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "@ap/types/contracts";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

@@ -16,7 +16,7 @@ import {
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

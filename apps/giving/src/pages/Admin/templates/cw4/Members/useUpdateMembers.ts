@@ -9,7 +9,7 @@ import { useGetter } from "@/store/accessors";
 import { getTagPayloads } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { CW4MemberUpdateMeta, MemberUpdatorValues } from "@/pages/Admin/types";
-import { CW4Member } from "@/types/contracts";
+import { CW4Member } from "@ap/types/contracts";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

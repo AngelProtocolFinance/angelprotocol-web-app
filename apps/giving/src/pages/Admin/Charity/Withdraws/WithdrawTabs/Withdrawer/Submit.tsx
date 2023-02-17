@@ -5,7 +5,7 @@ import { useLatestBlockQuery } from "@/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
-import { EndowmentDetails } from "@/types/contracts";
+import { EndowmentDetails } from "@ap/types/contracts";
 import Warning from "./Warning";
 
 export default function Submit() {

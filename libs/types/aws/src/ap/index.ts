@@ -1,5 +1,5 @@
-import { CapitalizedEndowmentType } from "@/types/contracts";
 import { NetworkType, UNSDG_NUMS } from "@/types/lists";
+import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { Keplr } from "@keplr-wallet/types";
 
 type EndowmentBase = {

@@ -2,7 +2,7 @@ import Icon from "@/components/Icon";
 import TableSection, { Cells } from "@/components/TableSection";
 import { adminRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
-import { Expiration, Proposal } from "@/types/contracts";
+import { Expiration, Proposal } from "@ap/types/contracts";
 
 type Props = { proposals: Proposal[] };
 export default function Table({ proposals }: Props) {

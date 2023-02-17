@@ -5,7 +5,7 @@ import { denoms, symbols } from "@ap/constants";
 import { condenseToNum } from "@ap/helpers";
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentAsset } from "@/services/types";
-import { AccountType, EndowmentEntry } from "@/types/contracts";
+import { AccountType, EndowmentEntry } from "@ap/types/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";

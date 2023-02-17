@@ -1,4 +1,4 @@
-import { Simulation } from "@/types/contracts";
+import { Simulation } from "@ap/types/contracts";
 
 export const simulation: Simulation = {
   return_amount: "1000000",

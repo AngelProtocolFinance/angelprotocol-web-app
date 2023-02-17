@@ -3,7 +3,7 @@ import { useAdminResources } from "@/pages/Admin/Guard";
 import { useAssetQuery } from "@/services/juno/account";
 import { humanize } from "@ap/helpers";
 import { PropsWithChildren } from "react";
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {

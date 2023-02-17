@@ -8,7 +8,7 @@ import { cleanObject, condense, roundDown } from "@ap/helpers";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "@/pages/Admin/types";
-import { FundDetails } from "@/types/contracts";
+import { FundDetails } from "@ap/types/contracts";
 import { INIT_SPLIT } from ".";
 
 export default function useCreateFund() {

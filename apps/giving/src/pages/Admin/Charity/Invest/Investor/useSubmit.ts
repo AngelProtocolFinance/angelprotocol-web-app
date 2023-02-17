@@ -5,7 +5,7 @@ import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { scaleToStr } from "@ap/helpers";
 import { FormValues } from "./types";
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 
 export default function useSubmit(vault: string, type: AccountType) {
   const { cw3, id, propMeta } = useAdminResources();

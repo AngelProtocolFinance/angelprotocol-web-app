@@ -1,0 +1,27 @@
+{
+  "name": "types-contracts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/contracts/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/contracts",
+        "main": "libs/types/contracts/src/index.ts",
+        "tsConfig": "libs/types/contracts/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/types/contracts/**/*.ts"]
+      }
+    }
+    
+  },
+  "tags": []
+}

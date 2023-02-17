@@ -8,7 +8,7 @@ import {
   Proposal,
   ReviewCW3Config,
   YieldVault,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 
 export type Tag = TagDescription<string>;
 export type TagPayload = PayloadAction<Tag[], string>;

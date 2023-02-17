@@ -10,7 +10,7 @@ import { getTagPayloads, scaleToStr } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { FundSendMeta } from "@/pages/Admin/types";
 import { FundSendValues } from "@/pages/Admin/types";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@/types/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@ap/types/contracts";
 
 export default function useTransferFunds() {
   const {

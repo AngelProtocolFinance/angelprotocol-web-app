@@ -13,7 +13,7 @@ import {
 } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "@/pages/Admin/types";
-import { FundConfig } from "@/types/contracts";
+import { FundConfig } from "@ap/types/contracts";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

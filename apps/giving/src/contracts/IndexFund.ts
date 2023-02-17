@@ -4,7 +4,7 @@ import {
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 import Contract from "./Contract";
 
 export default class IndexFund extends Contract {

@@ -7,7 +7,7 @@ import {
   StatusChangePayload,
   UpdateStategyPayload,
   WithdrawPayload,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 import Contract from "./Contract";
 
 export default class Account extends Contract {

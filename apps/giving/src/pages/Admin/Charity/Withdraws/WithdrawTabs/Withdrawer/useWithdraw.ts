@@ -9,7 +9,7 @@ import { scaleToStr } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "@/pages/Admin/types";
-import { Asset } from "@/types/contracts";
+import { Asset } from "@ap/types/contracts";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

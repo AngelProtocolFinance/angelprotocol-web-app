@@ -28,7 +28,7 @@ import {
   VaultListRes,
   VotesPageOptions,
   YieldVault,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 import { Token } from "@ap/types/aws";
 
 type EndowmentListRes = { endowments: EndowmentEntry[] };

@@ -19,7 +19,8 @@
       "@/*": ["apps/giving/src/*"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/helpers": ["libs/helpers/src/index.ts"],
-      "@ap/types/aws": ["libs/types/aws/src/index.ts"]
+      "@ap/types/aws": ["libs/types/aws/src/index.ts"],
+      "@ap/types/contracts": ["libs/types/contracts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

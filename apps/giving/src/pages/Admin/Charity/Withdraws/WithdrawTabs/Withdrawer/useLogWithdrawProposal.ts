@@ -10,7 +10,7 @@ import {
   idParamToNum,
   logger,
 } from "@ap/helpers";
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 
 type ProposalInfo = {
   endowment_multisig: string;

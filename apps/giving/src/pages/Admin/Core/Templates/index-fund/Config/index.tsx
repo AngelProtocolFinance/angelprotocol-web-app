@@ -4,7 +4,7 @@ import { condenseToStr } from "@ap/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfigValues } from "@/pages/Admin/types";
-import { FundConfig, IndexFundConfig } from "@/types/contracts";
+import { FundConfig, IndexFundConfig } from "@ap/types/contracts";
 import Form from "./Form";
 import { schema } from "./schema";
 

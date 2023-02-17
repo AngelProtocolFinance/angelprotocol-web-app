@@ -5,7 +5,7 @@ import { symbols } from "@ap/constants";
 import { condenseToNum, idParamToNum } from "@ap/helpers";
 import { Args } from "./queryContract/types";
 import { AdminResources, ProposalDetails, Vault } from "@/services/types";
-import { CW3Config } from "@/types/contracts";
+import { CW3Config } from "@ap/types/contracts";
 import { junoApi } from ".";
 import { queryContract } from "./queryContract";
 import {

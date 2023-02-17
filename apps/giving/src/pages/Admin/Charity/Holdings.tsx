@@ -4,7 +4,7 @@ import { adminRoutes, tokens } from "@ap/constants";
 import { condense, humanize } from "@ap/helpers";
 import { Coin } from "@cosmjs/proto-signing";
 import { Link } from "react-router-dom";
-import { AccountType, CW20, GenericBalance } from "@/types/contracts";
+import { AccountType, CW20, GenericBalance } from "@ap/types/contracts";
 
 type Props = GenericBalance & { type: AccountType };
 export default function Holdings({ cw20, native, type }: Props) {

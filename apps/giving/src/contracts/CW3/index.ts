@@ -4,7 +4,7 @@ import {
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   Vote,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 import Contract from "../Contract";
 
 export default class CW3 extends Contract {

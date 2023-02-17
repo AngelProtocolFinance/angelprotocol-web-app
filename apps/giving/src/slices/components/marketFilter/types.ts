@@ -1,10 +1,10 @@
-import { CapitalizedEndowmentType, EndowmentTier } from "@/types/contracts";
 import { UNSDG_NUMS } from "@/types/lists";
 import {
   EndowDesignation,
   EndowmentsSortKey,
   SortDirection,
 } from "@ap/types/aws";
+import { CapitalizedEndowmentType, EndowmentTier } from "@ap/types/contracts";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 export type SdgGroups = { [group: number]: UNSDG_NUMS[] };

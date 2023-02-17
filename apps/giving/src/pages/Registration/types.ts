@@ -1,6 +1,5 @@
 import { OptionType } from "@/components/Selector";
 import { Asset } from "@/components/registration";
-import { EndowmentTierNum } from "@/types/contracts";
 import { UNSDG_NUMS } from "@/types/lists";
 import { Optional } from "@/types/utils";
 import {
@@ -9,6 +8,7 @@ import {
   ReferralMethods,
   RegistrationStatus,
 } from "@ap/types/aws";
+import { EndowmentTierNum } from "@ap/types/contracts";
 
 //REF_ID is global to registration
 export type InitReg = {

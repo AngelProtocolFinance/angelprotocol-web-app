@@ -3,7 +3,7 @@ import { roundDownToNum } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
-import { AccountType } from "@/types/contracts";
+import { AccountType } from "@ap/types/contracts";
 import { PCT_PRECISION } from "../constants";
 
 type Props = {

@@ -2,7 +2,7 @@ import { contracts } from "@ap/constants";
 import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
-} from "@/types/contracts";
+} from "@ap/types/contracts";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
