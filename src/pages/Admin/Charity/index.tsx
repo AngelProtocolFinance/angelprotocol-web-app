@@ -6,6 +6,7 @@ import Layout from "../Layout";
 import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
+import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
@@ -27,6 +28,7 @@ export default function Charity() {
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
         <Route path={adminRoutes.withdraws} element={<Withdraws />} />
         <Route path={adminRoutes.invest} element={<Invest />} />
+        <Route path={adminRoutes.contributions} element={<Contributions />} />
         <Route path={adminRoutes.settings}>
           <Route
             path={`${settings.edit}/liquid`}
