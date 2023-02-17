@@ -9,7 +9,6 @@ import { isEmpty } from "helpers";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 
-const PLACEHOLDER_CITY = "City";
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
@@ -20,7 +19,7 @@ export default function Card({
   endow_type,
   categories: { sdgs },
   tagline,
-  hq,
+  hq_country,
   kyc_donors_only,
 }: EndowmentCard) {
   return (
@@ -56,16 +55,13 @@ export default function Card({
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
           <div className="text-gray-d1 dark:text-gray text-sm">
-            {hq.country && (
-              <p>
-                <span className="font-semibold">HQ:</span> {hq.country}
-                {hq.city && hq.city !== PLACEHOLDER_CITY ? `, ${hq.city}` : ""}
-              </p>
-            )}
+            <p>
+              <span className="font-semibold">HQ:</span> {hq_country}
+            </p>
             <p className="line-clamp-2">
               <span className="font-semibold">Active in:</span>{" "}
               {isEmpty(active_in_countries)
-                ? hq.country
+                ? hq_country
                 : active_in_countries.join(" ,")}
             </p>
           </div>
