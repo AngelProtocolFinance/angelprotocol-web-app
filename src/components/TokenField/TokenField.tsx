@@ -46,7 +46,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 
   const onSetAmount: OnSetAmount = (balance) =>
     setValue(amountField, balance as any, {
-      shouldValidate: true,
+      shouldValidate: token.type !== "fiat",
       shouldDirty: true,
     });
 
@@ -59,7 +59,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        {withBalance && (
+        {withBalance && token.type !== "fiat" && (
           <Balance
             token={token}
             onSetAmount={onSetAmount}
