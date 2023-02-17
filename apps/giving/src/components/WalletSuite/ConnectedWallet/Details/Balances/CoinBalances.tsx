@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { humanize, isEmpty } from "@/helpers";
+import { humanize, isEmpty } from "@ap/helpers";
 import { useMemo } from "react";
 import { TokenWithBalance } from "@/types/aws";
 import KadoOpener from "./KadoOpener";

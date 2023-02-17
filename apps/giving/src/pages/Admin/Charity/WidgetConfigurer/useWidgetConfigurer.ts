@@ -1,4 +1,4 @@
-import { idParamToNum } from "@/helpers";
+import { idParamToNum } from "@ap/helpers";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";

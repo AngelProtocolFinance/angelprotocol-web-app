@@ -1,5 +1,5 @@
-import { humanize } from "@/helpers";
 import { symbols } from "@ap/constants";
+import { humanize } from "@ap/helpers";
 import { FundSendMeta } from "@/pages/Admin/types";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

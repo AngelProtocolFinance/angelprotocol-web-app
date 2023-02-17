@@ -1,8 +1,8 @@
 import BookmarkBtn from "@/components/BookmarkBtn";
 import Icon from "@/components/Icon";
 import Tooltip from "@/components/Tooltip";
-import { isEmpty } from "@/helpers";
 import { appRoutes, unsdgs } from "@ap/constants";
+import { isEmpty } from "@ap/helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "@/types/aws";

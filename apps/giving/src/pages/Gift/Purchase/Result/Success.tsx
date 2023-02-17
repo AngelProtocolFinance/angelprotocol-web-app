@@ -1,8 +1,8 @@
 import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
-import { getTxUrl } from "@/helpers";
 import { GiftCard, TxResult } from "@/slices/gift";
 import { appRoutes, chainIds } from "@ap/constants";
+import { getTxUrl } from "@ap/helpers";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes";
 import { hashKey } from "../constants";

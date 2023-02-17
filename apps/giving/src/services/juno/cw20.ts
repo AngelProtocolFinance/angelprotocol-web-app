@@ -1,5 +1,5 @@
-import { condenseToNum } from "@/helpers";
 import { govTags } from "@/services/juno/tags";
+import { condenseToNum } from "@ap/helpers";
 import { Res, Result, WithAddrArgs } from "./queryContract/types";
 import { junoApi } from "./";
 import { genQueryPath } from "./queryContract/genQueryPath";

@@ -1,8 +1,8 @@
 import { WalletState } from "@/contexts/WalletContext";
 import Contract from "@/contracts/Contract";
-import { createAuthToken, getWasmAttribute, logger } from "@/helpers";
 import { invalidateApesTags } from "@/services/apes";
 import { APIs } from "@ap/constants";
+import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "@/types/slices";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";

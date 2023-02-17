@@ -1,11 +1,10 @@
 import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import IndexFund from "@/contracts/IndexFund";
-import { condense, roundDown } from "@/helpers";
-import { cleanObject } from "@/helpers/cleanObject";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
+import { cleanObject, condense, roundDown } from "@ap/helpers";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "@/pages/Admin/types";

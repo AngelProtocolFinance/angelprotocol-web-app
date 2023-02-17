@@ -2,8 +2,8 @@ import ThemeToggle from "@/App/Header/ThemeToggle";
 import APLogo from "@/components/APLogo";
 import Icon from "@/components/Icon";
 import { useModalContext } from "@/contexts/ModalContext";
-import { createNavLinkStyler } from "@/helpers";
 import { appRoutes } from "@ap/constants";
+import { createNavLinkStyler } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 

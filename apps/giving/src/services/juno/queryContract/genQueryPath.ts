@@ -1,4 +1,4 @@
-import { toBase64 } from "@/helpers";
+import { toBase64 } from "@ap/helpers";
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
 import { queryObject } from "./queryObjects";
 

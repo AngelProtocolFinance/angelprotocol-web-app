@@ -1,10 +1,10 @@
 import Icon from "@/components/Icon";
 import { useModalContext } from "@/contexts/ModalContext";
 import { useGetWallet } from "@/contexts/WalletContext";
-import { logger } from "@/helpers";
 import { invalidateApesTags } from "@/services/apes";
 import { useSetter } from "@/store/accessors";
 import { KADO_API_KEY, chainIDs } from "@ap/constants";
+import { logger } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
 import IFrame from "./IFrame";

@@ -1,10 +1,10 @@
 import Prompt from "@/components/Prompt";
 import { useErrorContext } from "@/contexts/ErrorContext";
 import { useModalContext } from "@/contexts/ModalContext";
-import { handleMutationResult } from "@/helpers";
 import routes from "@/pages/Registration/routes";
 import { useSubmitMutation } from "@/services/aws/registration";
 import { chainIds } from "@ap/constants";
+import { handleMutationResult } from "@ap/helpers";
 import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "@/pages/Registration/types";
 import { useRegState, withStepGuard } from "../StepGuard";

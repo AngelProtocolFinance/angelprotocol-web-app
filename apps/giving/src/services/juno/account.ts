@@ -1,8 +1,8 @@
-import { condenseToNum } from "@/helpers";
 import { accountTags } from "@/services/juno/tags";
 import { contracts } from "@ap/constants";
 import { IS_TEST } from "@ap/constants";
 import { denoms, symbols } from "@ap/constants";
+import { condenseToNum } from "@ap/helpers";
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentAsset } from "@/services/types";
 import { AccountType, EndowmentEntry } from "@/types/contracts";

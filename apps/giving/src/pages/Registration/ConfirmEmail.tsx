@@ -1,8 +1,8 @@
 import Popup from "@/components/Popup";
 import { useErrorContext } from "@/contexts/ErrorContext";
 import { useModalContext } from "@/contexts/ModalContext";
-import { handleMutationResult } from "@/helpers";
 import { useRequestEmailMutation } from "@/services/aws/registration";
+import { handleMutationResult } from "@ap/helpers";
 import { Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 

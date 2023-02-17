@@ -1,9 +1,9 @@
 import { useGetWallet } from "@/contexts/WalletContext";
 import Airdrop from "@/contracts/Airdrop";
-import { condense } from "@/helpers";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender";
 import { invalidateJunoTags } from "@/services/juno";
 import { govTags } from "@/services/juno/tags";
+import { condense } from "@ap/helpers";
 import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "@/types/aws";

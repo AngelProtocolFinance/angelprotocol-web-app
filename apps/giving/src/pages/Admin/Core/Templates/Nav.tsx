@@ -1,4 +1,4 @@
-import { createNavLinkStyler } from "@/helpers";
+import { createNavLinkStyler } from "@ap/helpers";
 import { NavLink } from "react-router-dom";
 import { templateRoutes as routes } from "../../constants";
 

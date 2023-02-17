@@ -6,8 +6,8 @@ import {
   UnexpectedStateError,
   WalletDisconnectedError,
 } from "@/errors/errors";
-import { logger } from "@/helpers";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { logger } from "@ap/helpers";
 import { TimeoutError } from "@cosmjs/stargate";
 import {
   CreateTxFailed,

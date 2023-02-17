@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
 import { useModalContext } from "@/contexts/ModalContext";
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 import Summary from "./Summary";
 
 export type AmountProps = {

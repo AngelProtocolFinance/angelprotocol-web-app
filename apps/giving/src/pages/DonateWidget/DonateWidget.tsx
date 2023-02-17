@@ -1,4 +1,4 @@
-import { isPrevDark, setToDarkMode, setToLightMode } from "@/helpers";
+import { isPrevDark, setToDarkMode, setToLightMode } from "@ap/helpers";
 import { useEffect } from "react";
 import ApiKeyChecker from "./ApiKeyChecker";
 import EndowmentLoader from "./EndowmentLoader";

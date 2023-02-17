@@ -1,5 +1,5 @@
-import { logger } from "@/helpers";
 import { adminTags } from "@/services/aws/tags";
+import { logger } from "@ap/helpers";
 import { ApplicationStatusOptions } from "@/slices/admin/types";
 import {
   AWSQueryRes,

@@ -1,4 +1,4 @@
-import { roundDownToNum } from "@/helpers";
+import { roundDownToNum } from "@ap/helpers";
 import { useMemo } from "react";
 import { ProposalDetails } from "@/services/types";
 

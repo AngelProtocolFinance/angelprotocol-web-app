@@ -1,5 +1,5 @@
 import { placeholderChain } from "@/contexts/WalletContext/constants";
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 import { FormValues } from "../schema";
 import AdvancedOptions from "./AdvancedOptions";
 

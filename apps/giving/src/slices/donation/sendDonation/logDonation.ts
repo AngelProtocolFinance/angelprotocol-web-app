@@ -1,6 +1,6 @@
 import { LogDonationFail } from "@/errors/errors";
-import { createAuthToken } from "@/helpers";
 import { APIs, IS_TEST } from "@ap/constants";
+import { createAuthToken } from "@ap/helpers";
 import { TxLogPayload } from "@/types/aws";
 
 //log donation, with optional receipt

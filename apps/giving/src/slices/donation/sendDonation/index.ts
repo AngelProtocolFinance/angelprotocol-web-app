@@ -1,8 +1,8 @@
 import ERC20Abi from "@/abi/ERC20.json";
 import { WalletState } from "@/contexts/WalletContext";
 import Contract from "@/contracts/Contract";
-import { getProvider, logger } from "@/helpers";
 import { invalidateApesTags } from "@/services/apes";
+import { getProvider, logger } from "@ap/helpers";
 import { Contract as EVMContract } from "@ethersproject/contracts";
 import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";

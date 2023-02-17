@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 import { BalanceProps } from "./types";
 
 export default function Balance({

@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { Airdrops } from "@/types/aws";
 import useClaimAirdrop from "./useClaimAirdrop";

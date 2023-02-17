@@ -1,15 +1,15 @@
 import { TxPrompt } from "@/components/Prompt";
 import { useModalContext } from "@/contexts/ModalContext";
+import { TxOnSuccess, TxSuccessMeta } from "@/hooks/useCosmosTxSender";
+import { invalidateApesTags } from "@/services/apes";
+import { useSetter } from "@/store/accessors";
+import { APIs } from "@ap/constants";
 import {
   createAuthToken,
   getWasmAttribute,
   idParamToNum,
   logger,
-} from "@/helpers";
-import { TxOnSuccess, TxSuccessMeta } from "@/hooks/useCosmosTxSender";
-import { invalidateApesTags } from "@/services/apes";
-import { useSetter } from "@/store/accessors";
-import { APIs } from "@ap/constants";
+} from "@ap/helpers";
 import { AccountType } from "@/types/contracts";
 
 type ProposalInfo = {

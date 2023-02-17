@@ -1,4 +1,4 @@
-import { maskAddress } from "@/helpers";
+import { maskAddress } from "@ap/helpers";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormValues as FV } from "../types";
 import { AccountType } from "@/types/contracts";

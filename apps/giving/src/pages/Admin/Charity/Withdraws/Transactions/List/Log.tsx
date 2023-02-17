@@ -1,5 +1,5 @@
 import ExtLink from "@/components/ExtLink";
-import { maskAddress } from "@/helpers";
+import { maskAddress } from "@ap/helpers";
 import { PropsWithChildren } from "react";
 import { WithdrawLog } from "@/types/aws";
 import Amount from "../Amount";

@@ -1,8 +1,8 @@
 import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
-import { getTxUrl, humanize } from "@/helpers";
 import { TxStep } from "@/slices/donation";
 import { appRoutes } from "@ap/constants";
+import { getTxUrl, humanize } from "@ap/helpers";
 import { Link } from "react-router-dom";
 import Share, { SocialMedia } from "./Share";
 

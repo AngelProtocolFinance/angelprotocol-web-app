@@ -1,7 +1,7 @@
 import QueryLoader from "@/components/QueryLoader";
-import { humanize } from "@/helpers";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useAssetQuery } from "@/services/juno/account";
+import { humanize } from "@ap/helpers";
 import { PropsWithChildren } from "react";
 import { AccountType } from "@/types/contracts";
 

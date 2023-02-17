@@ -1,5 +1,5 @@
 import Status, { ErrorStatus, LoadingStatus } from "@/components/Status";
-import { isEmpty } from "@/helpers";
+import { isEmpty } from "@ap/helpers";
 import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
 import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ReactElement } from "react";

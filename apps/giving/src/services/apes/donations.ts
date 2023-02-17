@@ -1,5 +1,5 @@
-import { createAuthToken } from "@/helpers";
 import { IS_TEST } from "@ap/constants";
+import { createAuthToken } from "@ap/helpers";
 import {
   Donation,
   DonationsQueryParams,

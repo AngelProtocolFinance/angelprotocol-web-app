@@ -1,8 +1,8 @@
 import { DrawerIcon } from "@/components/Icon";
-import { idParamToNum } from "@/helpers";
 import useHandleScreenResize, {
   SCREEN_MD,
 } from "@/hooks/useHandleScreenResize";
+import { idParamToNum } from "@ap/helpers";
 import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "../types";

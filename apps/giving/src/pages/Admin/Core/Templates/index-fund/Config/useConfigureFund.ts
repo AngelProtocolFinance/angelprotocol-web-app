@@ -3,11 +3,14 @@ import { useModalContext } from "@/contexts/ModalContext";
 import { useGetWallet } from "@/contexts/WalletContext";
 import CW3 from "@/contracts/CW3";
 import IndexFund from "@/contracts/IndexFund";
-import { scaleToStr } from "@/helpers";
-import { genDiffMeta, getPayloadDiff } from "@/helpers/admin";
-import { cleanObject } from "@/helpers/cleanObject";
 import useCosmosTxSender from "@/hooks/useCosmosTxSender/useCosmosTxSender";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import {
+  cleanObject,
+  genDiffMeta,
+  getPayloadDiff,
+  scaleToStr,
+} from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
 import { FundConfigUpdateMeta, FundConfigValues } from "@/pages/Admin/types";
 import { FundConfig } from "@/types/contracts";

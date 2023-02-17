@@ -1,5 +1,5 @@
 import Icon, { DrawerIcon } from "@/components/Icon";
-import { cleanObject } from "@/helpers/cleanObject";
+import { cleanObject } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormEventHandler, useRef } from "react";

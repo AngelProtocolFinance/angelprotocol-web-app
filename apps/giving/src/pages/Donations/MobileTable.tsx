@@ -1,7 +1,7 @@
 import Icon, { DrawerIcon } from "@/components/Icon";
 import useKYC from "@/components/KYC/useKYC";
-import { humanize, maskAddress } from "@/helpers";
 import useSort from "@/hooks/useSort";
+import { humanize, maskAddress } from "@ap/helpers";
 import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { TableProps } from "./types";

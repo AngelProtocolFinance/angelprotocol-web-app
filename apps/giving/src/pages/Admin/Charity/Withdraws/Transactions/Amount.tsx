@@ -1,4 +1,4 @@
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 
 type Props = {
   val: number;

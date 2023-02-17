@@ -1,4 +1,4 @@
-import { WCProvider as WCP } from "@/helpers/evm";
+import { WCProvider as WCP } from "@ap/helpers";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import { useEffect, useRef, useState } from "react";
 import { Connection, ProviderInfo } from "../types";

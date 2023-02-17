@@ -1,8 +1,8 @@
 import banner from "@/assets/images/hero.png";
 import QueryLoader from "@/components/QueryLoader";
 import Seo from "@/components/Seo";
-import { idParamToNum } from "@/helpers";
 import { useProfileQuery } from "@/services/aws/aws";
+import { idParamToNum } from "@ap/helpers";
 import { useParams } from "react-router-dom";
 import Content from "./Content";
 

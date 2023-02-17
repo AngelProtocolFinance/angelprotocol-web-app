@@ -1,4 +1,4 @@
-import { getSavedRegistrationReference } from "@/helpers";
+import { getSavedRegistrationReference } from "@ap/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";

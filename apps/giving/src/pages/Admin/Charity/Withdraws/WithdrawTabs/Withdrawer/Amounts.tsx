@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
-import { humanize } from "@/helpers";
 import { tokens } from "@ap/constants";
+import { humanize } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";

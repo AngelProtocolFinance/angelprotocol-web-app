@@ -1,5 +1,5 @@
-import { logger } from "@/helpers";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { logger } from "@ap/helpers";
 import { ErrorCode as errors } from "@ethersproject/logger";
 
 /** TODO: use this with sendDonation */

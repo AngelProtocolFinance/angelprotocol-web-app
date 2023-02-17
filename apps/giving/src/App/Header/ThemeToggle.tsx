@@ -1,5 +1,5 @@
 import Icon, { IconType } from "@/components/Icon";
-import { isPrevDark, setToDarkMode, setToLightMode } from "@/helpers";
+import { isPrevDark, setToDarkMode, setToLightMode } from "@ap/helpers";
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 

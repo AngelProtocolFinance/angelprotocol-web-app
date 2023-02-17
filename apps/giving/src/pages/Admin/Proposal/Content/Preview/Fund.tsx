@@ -1,4 +1,4 @@
-import { humanize } from "@/helpers";
+import { humanize } from "@ap/helpers";
 import { FundPreview } from "@/pages/Admin/types";
 import Header from "./common/Header";
 import KeyValue from "./common/KeyValue";

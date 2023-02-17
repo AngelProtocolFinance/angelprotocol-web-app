@@ -1,5 +1,5 @@
 import ExtLink from "@/components/ExtLink";
-import { humanize, maskAddress } from "@/helpers";
+import { humanize, maskAddress } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { WithdrawLog, WithdrawRoute } from "@/types/aws";

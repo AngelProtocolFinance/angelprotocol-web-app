@@ -4,8 +4,8 @@ import {
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "@/errors/errors";
-import { logger } from "@/helpers";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { logger } from "@ap/helpers";
 import {
   PropsWithChildren,
   createContext,

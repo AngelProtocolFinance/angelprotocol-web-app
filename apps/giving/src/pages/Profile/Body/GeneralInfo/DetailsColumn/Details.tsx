@@ -1,5 +1,5 @@
-import { isEmpty } from "@/helpers";
 import { useProfileContext } from "@/pages/Profile/ProfileContext";
+import { isEmpty } from "@ap/helpers";
 import { PropsWithChildren } from "react";
 
 export default function Details() {

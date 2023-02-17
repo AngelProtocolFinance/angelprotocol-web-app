@@ -5,8 +5,8 @@ import {
   WalletError,
   WalletNotInstalledError,
 } from "@/errors/errors";
-import { getProvider } from "@/helpers";
 import { EIPMethods, GENERIC_ERROR_MESSAGE, chainIDs } from "@ap/constants";
+import { getProvider } from "@ap/helpers";
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderId, ProviderInfo } from "./types";
