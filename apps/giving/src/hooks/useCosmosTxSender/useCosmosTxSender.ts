@@ -8,7 +8,7 @@ import { useSetter } from "@/store/accessors";
 import { extractFeeAmount } from "@ap/helpers";
 import { useState } from "react";
 import { Tx, TxArgs } from "./types";
-import { TxOptions } from "@/types/slices";
+import { TxOptions } from "@ap/types";
 import handleTxError from "./handleTxError";
 
 type Sender = (args: TxArgs) => Promise<void>;

@@ -1,7 +1,7 @@
 import { OptionType } from "@/components/Selector";
 import { Asset } from "@/components/registration";
-import { UNSDG_NUMS } from "@/types/lists";
-import { Optional } from "@/types/utils";
+import { Optional } from "@ap/types";
+import { UNSDG_NUMS } from "@ap/types";
 import {
   ContactRoles,
   FileObject,

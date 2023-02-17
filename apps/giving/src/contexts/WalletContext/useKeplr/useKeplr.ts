@@ -6,7 +6,7 @@ import {
 import { GENERIC_ERROR_MESSAGE, IS_TEST, chainIDs } from "@ap/constants";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
-import { Dwindow } from "@/types/ethereum";
+import { Dwindow } from "@ap/types";
 import { BaseChain } from "@ap/types/aws";
 import { WALLET_METADATA } from "../constants";
 import { retrieveUserAction, saveUserAction } from "../helpers";

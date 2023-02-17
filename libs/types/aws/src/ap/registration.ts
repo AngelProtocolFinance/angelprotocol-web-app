@@ -1,4 +1,4 @@
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 import { EndowmentTierNum } from "@ap/types/contracts";
 import { FileObject } from "../common";
 

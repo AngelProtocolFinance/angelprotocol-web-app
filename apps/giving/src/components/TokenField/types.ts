@@ -1,5 +1,5 @@
 import { FieldValues, Path } from "react-hook-form";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 
 export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
 

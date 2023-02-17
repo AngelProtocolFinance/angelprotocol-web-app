@@ -1,5 +1,5 @@
 import { FilterState, SdgGroups } from "./types";
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 
 export const SDG_GROUPS: {
   key: number;

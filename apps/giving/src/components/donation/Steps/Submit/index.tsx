@@ -9,7 +9,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import { estimateDonation } from "./estimateDonation";
 import getBreakdown from "./getBreakdown";
 

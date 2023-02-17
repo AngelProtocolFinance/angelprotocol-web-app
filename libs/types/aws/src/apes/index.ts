@@ -1,5 +1,5 @@
-import { NetworkType } from "@/types/lists";
-import { WithBalance } from "@/types/utils";
+import { WithBalance } from "@ap/types";
+import { NetworkType } from "@ap/types";
 import { ProposalStatus } from "@ap/types/contracts";
 
 /**

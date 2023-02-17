@@ -8,7 +8,7 @@ import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import { KYCData } from "@ap/types/aws";
 import donation, { setTxStatus } from "../donation";
 import logDonation from "./logDonation";

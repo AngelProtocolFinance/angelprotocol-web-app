@@ -1,4 +1,4 @@
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 import {
   EndowDesignation,
   EndowmentsSortKey,

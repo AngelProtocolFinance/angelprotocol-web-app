@@ -1,7 +1,7 @@
 import { contracts } from "@ap/constants";
 import { roundDown, scaleToStr } from "@ap/helpers";
 import { Coin } from "@cosmjs/proto-signing";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import { Asset } from "@ap/types/contracts";
 import Contract from "./Contract";
 

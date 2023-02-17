@@ -15,7 +15,7 @@ import {
   ChainChangeHandler,
   Dwindow,
   InjectedProvider,
-} from "@/types/ethereum";
+} from "@ap/types";
 import { BaseChain } from "@ap/types/aws";
 import { WALLET_METADATA } from "./constants";
 import {

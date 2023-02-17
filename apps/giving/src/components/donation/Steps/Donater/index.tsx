@@ -4,7 +4,7 @@ import { isEmpty } from "@ap/helpers";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import { ConfigParams } from "..";
 import Form from "./Form";
 import { schema } from "./schema";

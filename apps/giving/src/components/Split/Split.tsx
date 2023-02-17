@@ -1,5 +1,5 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import Portion from "./Portion";
 import Slider from "./Slider";
 

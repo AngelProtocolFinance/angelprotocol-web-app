@@ -8,7 +8,7 @@ import { appRoutes, unsdgs } from "@ap/constants";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 import ActivityCountries from "./ActivityCountries";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";

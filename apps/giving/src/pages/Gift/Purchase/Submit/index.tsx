@@ -8,7 +8,7 @@ import { humanize } from "@ap/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";

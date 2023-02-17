@@ -1,4 +1,4 @@
-import { NetworkType, UNSDG_NUMS } from "@/types/lists";
+import { NetworkType, UNSDG_NUMS } from "@ap/types";
 import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { Keplr } from "@keplr-wallet/types";
 

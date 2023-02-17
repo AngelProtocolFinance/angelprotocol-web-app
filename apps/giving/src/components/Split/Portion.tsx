@@ -1,7 +1,7 @@
 import { humanize } from "@ap/helpers";
 import { PropsWithChildren } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 
 type Props<FV extends FieldValues, T extends Path<FV>> = PropsWithChildren<{
   action: string;

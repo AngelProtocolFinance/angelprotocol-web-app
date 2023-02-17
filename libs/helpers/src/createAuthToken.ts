@@ -1,6 +1,6 @@
 import { ANGEL_SECRECT, APES_SECRECT } from "@ap/constants";
 import jwt from "jsonwebtoken";
-import { UserTypes } from "@/types/lists";
+import { UserTypes } from "@ap/types";
 
 type Payload = {
   authorization: string;

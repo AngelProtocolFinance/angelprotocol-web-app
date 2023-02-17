@@ -4,7 +4,7 @@ import { IS_TEST, denoms } from "@ap/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import Form from "./Form";
 import { schema } from "./schema";
 

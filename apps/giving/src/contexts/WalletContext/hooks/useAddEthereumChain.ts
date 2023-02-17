@@ -2,7 +2,7 @@ import { WalletError } from "@/errors/errors";
 import { useLazyChainQuery } from "@/services/apes";
 import { EIPMethods, GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import { useCallback } from "react";
-import { InjectedProvider } from "@/types/ethereum";
+import { InjectedProvider } from "@ap/types";
 import { toPrefixedHex } from "../helpers";
 
 export function useAddEthereumChain() {

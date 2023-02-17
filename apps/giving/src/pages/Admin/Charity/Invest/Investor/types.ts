@@ -1,4 +1,4 @@
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 
 export type FormValues = {
   token: TokenWithAmount;

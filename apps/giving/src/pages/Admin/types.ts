@@ -1,5 +1,5 @@
 import { Coin } from "@cosmjs/proto-signing";
-import { DiffSet } from "@/types/utils";
+import { DiffSet } from "@ap/types";
 import { EndowmentProposal } from "@ap/types/aws";
 import {
   AllianceMember,

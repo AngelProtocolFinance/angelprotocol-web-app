@@ -1,5 +1,5 @@
 import { OptionType } from "@/components/Selector";
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 
 export const getSDGLabelValuePair = (
   key: string | number,

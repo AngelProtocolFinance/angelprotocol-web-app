@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RegionType, Sort } from "./types";
-import { UNSDG_NUMS } from "@/types/lists";
+import { UNSDG_NUMS } from "@ap/types";
 import { EndowDesignation } from "@ap/types/aws";
 import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { clearedState, initialState } from "./constants";

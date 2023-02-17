@@ -19,7 +19,7 @@ import {
   calculateFee,
   isDeliverTxFailure,
 } from "@cosmjs/stargate";
-import { TxOptions } from "@/types/slices";
+import { TxOptions } from "@ap/types";
 import { Chain } from "@ap/types/aws";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@ap/types/contracts";
 

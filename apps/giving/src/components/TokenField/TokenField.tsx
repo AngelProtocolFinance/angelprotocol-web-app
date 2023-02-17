@@ -7,7 +7,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { OnSetAmount, Props } from "./types";
-import { TokenWithAmount } from "@/types/slices";
+import { TokenWithAmount } from "@ap/types";
 import Balance from "./Balance";
 import Steps from "./Steps";
 import TokenSelector from "./TokenSelector";
@@ -35,7 +35,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
     name: name,
   });
 
-  const amountField: any = `${name}.${amountKey}`;
+  const amountField: any = `${name}.${String(amountKey)}`;
 
   //reset amount when changing token
   useEffect(() => {
