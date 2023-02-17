@@ -43,7 +43,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
 
   const onSetAmount: OnSetAmount = (balance) =>
     setValue(amountField, balance as any, {
-      shouldValidate: true,
+      shouldValidate: token.type !== "fiat",
       shouldDirty: true,
     });
 
@@ -56,11 +56,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         >
           {label}
         </label>
-        <Balance
-          token={token}
-          onSetAmount={onSetAmount}
-          isGiftEnabled={!!withGiftcard}
-        />
+        {token.type !== "fiat" && (
+          <Balance
+            token={token}
+            onSetAmount={onSetAmount}
+            isGiftEnabled={!!withGiftcard}
+          />
+        )}
       </div>
 
       <div className="relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 dark:bg-blue-d6 field-container">
