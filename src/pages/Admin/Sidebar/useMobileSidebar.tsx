@@ -1,3 +1,4 @@
+import { Dialog } from "@headlessui/react";
 import { matchPath, useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "./types";
 import { useModalContext } from "contexts/ModalContext";
@@ -21,12 +22,21 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
 
   const { showModal } = useModalContext();
 
-  const open = () =>
-    showModal(Sidebar, {
-      linkGroups,
-      className:
-        "fixed top-0 left-0 z-20 max-h-screen overflow-y-auto scroller",
-    });
+  const open = () => showModal(MobileSidebar, { linkGroups });
 
   return { open, activeLink: activeLink ?? DEFAULT_LINK };
+}
+
+function MobileSidebar({ linkGroups }: { linkGroups: LinkGroup[] }) {
+  const { closeModal } = useModalContext();
+
+  return (
+    <Dialog.Panel className="fixed top-0 left-0 z-20">
+      <Sidebar
+        className="max-h-screen overflow-y-auto scroller"
+        linkGroups={linkGroups}
+        onChange={closeModal}
+      />
+    </Dialog.Panel>
+  );
 }

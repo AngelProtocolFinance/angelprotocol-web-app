@@ -1,8 +1,6 @@
-import { Dialog } from "@headlessui/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LinkGroup } from "./types";
-import { useModalContext } from "contexts/ModalContext";
+import { Link, LinkGroup } from "./types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import Header from "./Header";
@@ -10,13 +8,12 @@ import Header from "./Header";
 type Props = {
   className?: string;
   linkGroups: LinkGroup[];
+  onChange?: (link: Link) => void;
 };
 
 export default function Sidebar(props: Props) {
-  const { closeModal, isModalOpen } = useModalContext();
-
   return (
-    <Dialog.Panel
+    <div
       className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
       <Header />
@@ -34,7 +31,7 @@ export default function Sidebar(props: Props) {
                 key={`nav_link-${link.to}`}
                 to={link.to}
                 className={linkClassName}
-                onClick={() => isModalOpen && closeModal()}
+                onClick={() => props.onChange && props.onChange(link)}
               >
                 <Icon {...link.icon} />
                 {link.title}
@@ -43,7 +40,7 @@ export default function Sidebar(props: Props) {
           </React.Fragment>
         ))}
       </div>
-    </Dialog.Panel>
+    </div>
   );
 }
 
