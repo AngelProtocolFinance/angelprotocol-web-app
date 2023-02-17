@@ -3,23 +3,19 @@ import { useDonationsQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-// import DonationsTable from "./DonationsTable";
-
-export default function Donations({ classes = "" }: { classes?: string }) {
+export default function Contributions() {
   const { id } = useAdminResources();
   const queryState = useDonationsQuery({ id: id.toString() });
 
   return (
-    <div className={`grid grid-rows-[auto_1fr] ${classes}`}>
-      <h1 className="text-2xl font-extrabold uppercase mb-2">
-        Received donations
-      </h1>
+    <div>
+      <h2 className="text-[2rem] font-bold mb-10">Contributions</h2>
       <QueryLoader
         queryState={queryState}
         messages={{
-          loading: "Fetching donations..",
-          error: "Failed to get donations",
-          empty: "No donations found",
+          loading: "Fetching contributions..",
+          error: "Failed to get contributions",
+          empty: "No contributions found",
         }}
       >
         {(donations) => <Table donations={donations} />}

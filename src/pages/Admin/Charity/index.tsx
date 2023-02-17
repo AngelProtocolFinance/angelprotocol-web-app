@@ -7,6 +7,7 @@ import Proposal from "../Proposal";
 import Proposals from "../Proposals";
 import { LINKS } from "../constants";
 import Account from "./Account";
+import Contributions from "./Contributions";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Invest from "./Invest";
@@ -32,6 +33,7 @@ export default function Charity() {
           <Route path="locked" element={<Account type="locked" />} />
         </Route>
         <Route path={adminRoutes.invest} element={<Invest />} />
+        <Route path={adminRoutes.contributions} element={<Contributions />} />
         <Route path={adminRoutes.settings}>
           <Route path={settings.edit}>
             <Route path="liquid" element={<StrategyEditor type="liquid" />} />
