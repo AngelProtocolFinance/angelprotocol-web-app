@@ -5,7 +5,7 @@ import { useModalContext } from "@ap/contexts";
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV } from "./types";
-import { Vault } from "@/services/types";
+import { Vault } from "@ap/types/services";
 import useSubmit from "./useSubmit";
 
 export default function Form({ acct_type = "liquid", address }: Vault) {

@@ -4,8 +4,8 @@ import { symbols } from "@ap/constants";
 import { condenseToNum, idParamToNum } from "@ap/helpers";
 import { isJunoAddress } from "@ap/schemas";
 import { Args } from "./queryContract/types";
-import { AdminResources, ProposalDetails, Vault } from "@/services/types";
 import { CW3Config } from "@ap/types/contracts";
+import { AdminResources, ProposalDetails, Vault } from "@ap/types/services";
 import { junoApi } from "./juno";
 import { queryContract } from "./queryContract";
 import {

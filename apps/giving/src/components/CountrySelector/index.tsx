@@ -9,7 +9,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { CountryOption } from "@/services/types";
+import { CountryOption } from "@ap/types/services";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 

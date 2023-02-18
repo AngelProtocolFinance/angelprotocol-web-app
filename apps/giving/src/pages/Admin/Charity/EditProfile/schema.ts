@@ -2,7 +2,7 @@ import { ImgLink } from "@/components/ImgEditor";
 import { SchemaShape, genFileSchema, requiredString, url } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { CountryOption } from "@/services/types";
+import { CountryOption } from "@ap/types/services";
 
 export const VALID_MIME_TYPES = [
   "image/jpeg",

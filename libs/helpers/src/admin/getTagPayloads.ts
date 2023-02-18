@@ -7,7 +7,7 @@ import {
   registrarTags,
 } from "@ap/services/juno";
 import { ProposalMeta } from "@/pages/Admin/types";
-import { TagPayload } from "@/services/types";
+import { TagPayload } from "@ap/types/services";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {
   const _tags = [...defaultProposalTags];

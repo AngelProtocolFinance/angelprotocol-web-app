@@ -1,6 +1,6 @@
 import { useModalContext } from "@ap/contexts";
 import { humanize, maskAddress } from "@ap/helpers";
-import { Vault } from "@/services/types";
+import { Vault } from "@ap/types/services";
 import Investor from "./Investor";
 
 export default function Investment(props: Vault) {

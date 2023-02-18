@@ -46,7 +46,8 @@
       "@ap/services/juno": ["libs/services/juno/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
-      "@ap/types/contracts": ["libs/types/contracts/src/index.ts"]
+      "@ap/types/contracts": ["libs/types/contracts/src/index.ts"],
+      "@ap/types/services": ["libs/types/services/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

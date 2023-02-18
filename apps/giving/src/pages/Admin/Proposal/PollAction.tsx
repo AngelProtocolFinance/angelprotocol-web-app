@@ -10,7 +10,7 @@ import {
 } from "@ap/services/juno";
 import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "@/pages/Admin/types";
-import { ProposalDetails, TagPayload } from "@/services/types";
+import { ProposalDetails, TagPayload } from "@ap/types/services";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
 

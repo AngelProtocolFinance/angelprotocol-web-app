@@ -5,7 +5,7 @@ import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";
-import { AdminResources } from "@/services/types";
+import { AdminResources } from "@ap/types/services";
 
 export function Guard(props: {
   children(resources: AdminResources): ReactNode;
