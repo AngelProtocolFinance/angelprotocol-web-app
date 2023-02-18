@@ -1,8 +1,8 @@
-import { invalidateApesTags } from "@/services/apes";
 import { APIs } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { Contract } from "@ap/contracts";
 import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
+import { invalidateApesTags } from "@ap/services/apes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "@ap/types";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";

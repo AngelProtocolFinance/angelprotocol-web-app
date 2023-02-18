@@ -1,6 +1,6 @@
 import { WalletDisconnectedError } from "@/errors/errors";
-import { useChainQuery } from "@/services/apes";
 import { IS_MOBILE, IS_TEST, chainIDs } from "@ap/constants";
+import { useChainQuery } from "@ap/services/apes";
 import {
   PropsWithChildren,
   createContext,

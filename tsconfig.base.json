@@ -8,12 +8,14 @@
     "emitDecoratorMetadata": true,
     "noPropertyAccessFromIndexSignature": false,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["apps/giving/src/*"],
@@ -29,6 +31,7 @@
         "libs/hooks/use-cosmos-tx-sender/src/index.ts"
       ],
       "@ap/hooks/use-sort": ["libs/hooks/use-sort/src/index.ts"],
+      "@ap/services/apes": ["libs/services/apes/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
       "@ap/types/contracts": ["libs/types/contracts/src/index.ts"]

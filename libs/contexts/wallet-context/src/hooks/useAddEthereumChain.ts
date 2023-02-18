@@ -1,6 +1,6 @@
 import { WalletError } from "@/errors/errors";
-import { useLazyChainQuery } from "@/services/apes";
 import { EIPMethods, GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { useLazyChainQuery } from "@ap/services/apes";
 import { useCallback } from "react";
 import { InjectedProvider } from "@ap/types";
 import { toPrefixedHex } from "../helpers";

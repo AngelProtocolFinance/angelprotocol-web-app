@@ -1,6 +1,6 @@
 import QueryLoader from "@/components/QueryLoader";
 import { Selector } from "@/components/Selector";
-import { useTokensQuery } from "@/services/apes";
+import { useTokensQuery } from "@ap/services/apes";
 import { FormValues } from "../schema";
 
 export default function DenomSelector() {
