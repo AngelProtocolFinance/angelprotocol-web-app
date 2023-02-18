@@ -1,4 +1,3 @@
-import { aws } from "@/services/aws/aws";
 import { countriesApi } from "@/services/countries";
 import { junoApi } from "@/services/juno";
 import { adminReducer } from "@/slices/admin";
@@ -7,6 +6,7 @@ import { componentReducer } from "@/slices/components";
 import { donation } from "@/slices/donation";
 import gift from "@/slices/gift";
 import { apes } from "@ap/services/apes";
+import { aws } from "@ap/services/aws";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({

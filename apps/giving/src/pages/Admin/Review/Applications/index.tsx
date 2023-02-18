@@ -1,6 +1,6 @@
 import QueryLoader from "@/components/QueryLoader";
-import { useEndowmentApplicationsQuery } from "@/services/aws/registration";
 import { useGetter } from "@/store/accessors";
+import { useEndowmentApplicationsQuery } from "@ap/services/aws";
 import ApplicationsTable from "./Table";
 
 export default function Applications() {

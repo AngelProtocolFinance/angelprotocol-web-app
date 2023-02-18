@@ -1,8 +1,8 @@
 import Seo from "@/components/Seo";
 import { FormError, FormSkeleton } from "@/components/admin";
 import { useAdminResources } from "@/pages/Admin/Guard";
-import { useProfileQuery } from "@/services/aws/aws";
 import { unsdgs } from "@ap/constants";
+import { useProfileQuery } from "@ap/services/aws";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FlatFormValues, FormValues } from "./types";

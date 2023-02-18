@@ -1,6 +1,6 @@
 import QueryLoader from "@/components/QueryLoader";
 import Seo from "@/components/Seo";
-import { useLeaderboardsQuery } from "@/services/aws/leaderboard";
+import { useLeaderboardsQuery } from "@ap/services/aws";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
 

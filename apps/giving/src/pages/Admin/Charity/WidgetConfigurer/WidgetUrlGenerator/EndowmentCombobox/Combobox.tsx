@@ -1,8 +1,8 @@
 import { DrawerIcon } from "@/components/Icon";
 import QueryLoader from "@/components/QueryLoader";
-import { useEndowmentIdNamesQuery } from "@/services/aws/aws";
 import { unsdgs } from "@ap/constants";
 import { useDebouncer } from "@ap/hooks";
+import { useEndowmentIdNamesQuery } from "@ap/services/aws";
 import { Combobox as HuiCombobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useState } from "react";

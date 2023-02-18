@@ -1,5 +1,5 @@
-import { useLazyProfileQuery } from "@/services/aws/aws";
 import { useErrorContext } from "@ap/contexts";
+import { useLazyProfileQuery } from "@ap/services/aws";
 import { useEffect } from "react";
 
 export default function useLoadDefaultEndowmentName(

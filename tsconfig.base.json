@@ -41,6 +41,7 @@
       "@ap/hooks/use-sort": ["libs/hooks/use-sort/src/index.ts"],
       "@ap/schemas": ["libs/schemas/src/index.ts"],
       "@ap/services/apes": ["libs/services/apes/src/index.ts"],
+      "@ap/services/aws": ["libs/services/aws/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
       "@ap/types/contracts": ["libs/types/contracts/src/index.ts"]

@@ -1,9 +1,9 @@
+import { useGetter, useSetter } from "@/store/accessors";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
-} from "@/services/aws/aws";
-import { useGetter, useSetter } from "@/store/accessors";
+} from "@ap/services/aws";
 import { useMemo } from "react";
 
 export default function useCards() {

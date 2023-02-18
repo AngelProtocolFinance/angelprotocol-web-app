@@ -1,4 +1,3 @@
-import { adminTags } from "@/services/aws/tags";
 import { logger } from "@ap/helpers";
 import { ApplicationStatusOptions } from "@/slices/admin/types";
 import {
@@ -12,7 +11,8 @@ import {
   SubmitResult,
   WalletUpdateResult,
 } from "@ap/types/aws";
-import { aws } from "../aws";
+import { aws } from "./aws";
+import { adminTags } from "./tags";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({

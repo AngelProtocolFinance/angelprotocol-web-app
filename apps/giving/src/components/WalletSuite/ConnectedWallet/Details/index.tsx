@@ -1,8 +1,8 @@
 import LoaderRing from "@/components/LoaderRing";
-import { useWalletProfileQuery } from "@/services/aws/aws";
 import { appRoutes } from "@ap/constants";
 import { WalletState, useSetWallet } from "@ap/contexts/wallet-context";
 import { logger } from "@ap/helpers";
+import { useWalletProfileQuery } from "@ap/services/aws";
 import { Popover } from "@headlessui/react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";

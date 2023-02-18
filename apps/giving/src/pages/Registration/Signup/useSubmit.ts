@@ -1,6 +1,6 @@
-import { useNewApplicationMutation } from "@/services/aws/registration";
 import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult } from "@ap/helpers";
+import { useNewApplicationMutation } from "@ap/services/aws";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { InitReg } from "../types";

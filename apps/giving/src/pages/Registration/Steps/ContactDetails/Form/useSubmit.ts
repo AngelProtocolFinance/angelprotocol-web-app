@@ -1,6 +1,6 @@
-import { useUpdateRegMutation } from "@/services/aws/registration";
 import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult } from "@ap/helpers";
+import { useUpdateRegMutation } from "@ap/services/aws";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormValues as FV } from "../types";
