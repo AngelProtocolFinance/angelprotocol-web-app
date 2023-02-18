@@ -1,8 +1,8 @@
+import { SchemaShape } from "@ap/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "@/schemas/types";
 import Form from "./Form";
 
 export default function Signup({ classes = "" }: { classes?: string }) {

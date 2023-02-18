@@ -1,8 +1,7 @@
 import { OptionType } from "@/components/Selector";
-import { requiredString } from "@/schemas/string";
+import { SchemaShape, requiredString } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "@/schemas/types";
 import { ContactRoles, ReferralMethods } from "@ap/types/aws";
 
 type Key = keyof FormValues;

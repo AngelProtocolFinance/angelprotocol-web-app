@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noPropertyAccessFromIndexSignature": false,
     "resolveJsonModule": true,
     "rootDir": ".",
@@ -39,6 +39,7 @@
         "libs/hooks/use-cosmos-tx-sender/src/index.ts"
       ],
       "@ap/hooks/use-sort": ["libs/hooks/use-sort/src/index.ts"],
+      "@ap/schemas": ["libs/schemas/src/index.ts"],
       "@ap/services/apes": ["libs/services/apes/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],

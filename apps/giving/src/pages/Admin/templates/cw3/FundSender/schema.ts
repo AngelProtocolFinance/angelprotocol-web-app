@@ -1,8 +1,10 @@
-import { requiredTokenAmount } from "@/schemas/number";
-import { requiredWalletAddr } from "@/schemas/string";
+import {
+  SchemaShape,
+  requiredTokenAmount,
+  requiredWalletAddr,
+} from "@ap/schemas";
 import * as Yup from "yup";
 import { FundSendValues } from "@/pages/Admin/types";
-import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../constants";
 
 const shape: SchemaShape<FundSendValues> = {

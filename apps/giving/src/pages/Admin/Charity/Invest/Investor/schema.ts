@@ -1,7 +1,6 @@
-import { tokenShape } from "@/schemas/shape";
+import { SchemaShape, tokenShape } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "@/schemas/types";
 
 export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   token: Yup.object().shape(tokenShape),

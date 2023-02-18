@@ -1,9 +1,12 @@
-import { futureDate } from "@/schemas/date";
-import { requiredPositiveNumber } from "@/schemas/number";
-import { requiredContractAddr, stringByteSchema } from "@/schemas/string";
+import {
+  SchemaShape,
+  futureDate,
+  requiredContractAddr,
+  requiredPositiveNumber,
+  stringByteSchema,
+} from "@ap/schemas";
 import * as Yup from "yup";
 import { FundCreatorValues } from "@/pages/Admin/types";
-import { SchemaShape } from "@/schemas/types";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundCreatorValues> = {

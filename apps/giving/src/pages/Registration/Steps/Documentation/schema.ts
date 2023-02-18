@@ -1,8 +1,7 @@
 import { Asset } from "@/components/registration";
-import { genFileSchema } from "@/schemas/file";
+import { SchemaShape, genFileSchema } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "@/schemas/types";
 import { FileObject } from "@ap/types/aws";
 
 export const MB_LIMIT = 25;

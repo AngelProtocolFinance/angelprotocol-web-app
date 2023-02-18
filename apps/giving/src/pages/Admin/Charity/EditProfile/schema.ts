@@ -1,9 +1,7 @@
 import { ImgLink } from "@/components/ImgEditor";
-import { genFileSchema } from "@/schemas/file";
-import { requiredString, url } from "@/schemas/string";
+import { SchemaShape, genFileSchema, requiredString, url } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "@/schemas/types";
 import { CountryOption } from "@/services/types";
 
 export const VALID_MIME_TYPES = [

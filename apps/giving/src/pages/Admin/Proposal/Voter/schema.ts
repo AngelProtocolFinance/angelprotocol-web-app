@@ -1,6 +1,6 @@
+import { SchemaShape } from "@ap/schemas";
 import * as Yup from "yup";
 import { VoteValues as VV } from "./types";
-import { SchemaShape } from "@/schemas/types";
 
 type Keys = keyof VV;
 const type: Keys = "type";

@@ -1,9 +1,8 @@
-import { requiredString } from "@/schemas/string";
+import { SchemaShape, requiredString } from "@ap/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { FormValues as FV } from "./types";
-import { SchemaShape } from "@/schemas/types";
 import Form from "./Form";
 
 export default function Claim({ classes = "" }) {

@@ -10,7 +10,7 @@ type State = { error: Error | undefined };
 
 // https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
 export default class ErrorBoundary extends Component<Props, State> {
-  state: State = {
+  override state: State = {
     error: undefined,
   };
 
@@ -19,11 +19,11 @@ export default class ErrorBoundary extends Component<Props, State> {
     return { error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     logger.error("Caught error:", error, errorInfo);
   }
 
-  render() {
+  override render() {
     return (
       <ModalContext>
         <ErrorContext>

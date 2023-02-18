@@ -1,5 +1,5 @@
+import { SchemaShape } from "@ap/schemas";
 import * as Yup from "yup";
-import { SchemaShape } from "@/schemas/types";
 
 export type FormValues = { email: string };
 
