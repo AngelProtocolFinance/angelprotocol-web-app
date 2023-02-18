@@ -1,5 +1,4 @@
-import ImageWrapper from "@/components/ImageWrapper";
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, ImageWrapper, TableSection } from "@ap/components";
 import { bucketURL } from "@ap/helpers";
 import { DiffSet } from "@ap/types";
 import PreviewContainer from "./common/PreviewContainer";

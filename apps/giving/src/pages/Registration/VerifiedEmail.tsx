@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import Popup from "@/components/Popup";
+import { Popup } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useErrorContext } from "@ap/contexts";

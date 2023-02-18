@@ -1,6 +1,6 @@
 import ThemeToggle from "@/App/Header/ThemeToggle";
-import APLogo from "@/components/APLogo";
 import Icon from "@/components/Icon";
+import { APLogo } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { createNavLinkStyler } from "@ap/helpers";

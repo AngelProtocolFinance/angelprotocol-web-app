@@ -27,6 +27,7 @@
     "target": "es2015",
     "paths": {
       "@/*": ["apps/giving/src/*"],
+      "@ap/components": ["libs/components/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [
@@ -44,9 +45,9 @@
       "@ap/services/aws": ["libs/services/aws/src/index.ts"],
       "@ap/services/countries": ["libs/services/countries/src/index.ts"],
       "@ap/services/juno": ["libs/services/juno/src/index.ts"],
+      "@ap/slices/admin": ["libs/slices/admin/src/index.ts"],
       "@ap/slices/donation": ["libs/slices/donation/src/index.ts"],
       "@ap/slices/gift": ["libs/slices/gift/src/index.ts"],
-      "@ap/slices/admin": ["libs/slices/admin/src/index.ts"],
       "@ap/slices/market-filter": ["libs/slices/market-filter/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],

@@ -1,8 +1,7 @@
 import CsvExporter from "@/components/CsvExporter";
 import ExtLink from "@/components/ExtLink";
-import { HeaderButton } from "@/components/HeaderButton";
 import Icon from "@/components/Icon";
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, HeaderButton, TableSection } from "@ap/components";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";
 import useSort from "@ap/hooks/use-sort";
 import { Donation, KYCData } from "@ap/types/aws";

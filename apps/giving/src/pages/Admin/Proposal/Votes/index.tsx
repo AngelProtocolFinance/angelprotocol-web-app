@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { useState } from "react";
 import { VOTES_PER_PAGE, useVoteList } from "./useVotesList";
 

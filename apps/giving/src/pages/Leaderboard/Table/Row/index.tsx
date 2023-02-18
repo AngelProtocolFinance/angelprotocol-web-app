@@ -1,5 +1,5 @@
 import defaultIcon from "@/assets/images/angelprotocol-horiz-blu.png";
-import { Cells } from "@/components/TableSection";
+import { Cells } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "@ap/types/aws";

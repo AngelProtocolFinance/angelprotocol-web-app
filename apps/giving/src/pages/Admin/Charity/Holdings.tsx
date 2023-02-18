@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { adminRoutes, tokens } from "@ap/constants";
 import { condense, humanize } from "@ap/helpers";
 import { Coin } from "@cosmjs/proto-signing";

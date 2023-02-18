@@ -1,5 +1,4 @@
-import ContentLoader from "@/components/ContentLoader";
-import LogoPlaceholder from "@/components/LogoPlaceholder";
+import { ContentLoader, LogoPlaceholder } from "@ap/components";
 import { useState } from "react";
 
 type Props = {

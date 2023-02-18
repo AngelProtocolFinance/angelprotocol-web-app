@@ -1,5 +1,4 @@
-import Loader from "@/components/Loader";
-import Seo from "@/components/Seo";
+import { Loader, Seo } from "@ap/components";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer";

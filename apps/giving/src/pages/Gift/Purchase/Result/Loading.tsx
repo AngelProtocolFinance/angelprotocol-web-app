@@ -1,4 +1,4 @@
-import LoaderRing from "@/components/LoaderRing";
+import { LoaderRing } from "@ap/components";
 import { TLoading } from "@ap/slices/gift";
 
 export default function Loading({

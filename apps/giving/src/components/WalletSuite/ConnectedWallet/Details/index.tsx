@@ -1,4 +1,4 @@
-import LoaderRing from "@/components/LoaderRing";
+import { LoaderRing } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { WalletState, useSetWallet } from "@ap/contexts/wallet-context";
 import { logger } from "@ap/helpers";

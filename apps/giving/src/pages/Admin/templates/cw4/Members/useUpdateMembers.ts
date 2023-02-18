@@ -1,6 +1,6 @@
-import Popup from "@/components/Popup";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
+import { Popup } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, CW4 } from "@ap/contracts";

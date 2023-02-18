@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { Cells } from "@/components/TableSection";
+import { Cells } from "@ap/components";
 import { adminRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { EndowmentProposal } from "@ap/types/aws";

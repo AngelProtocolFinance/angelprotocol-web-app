@@ -1,5 +1,5 @@
-import Popup from "@/components/Popup";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { Popup } from "@ap/components";
 import { axlUSDCDenom, contracts, denoms, tokens } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";

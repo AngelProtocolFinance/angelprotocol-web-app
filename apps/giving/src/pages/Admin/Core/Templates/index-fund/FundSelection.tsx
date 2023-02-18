@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { Path } from "react-hook-form";
 import { FundIdContext } from "@/pages/Admin/types";
 import useFundSelection from "./useFundSelection";

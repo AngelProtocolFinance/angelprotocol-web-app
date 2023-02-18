@@ -1,5 +1,4 @@
-import ContentLoader from "@/components/ContentLoader";
-import ImageWrapper from "@/components/ImageWrapper";
+import { ContentLoader, ImageWrapper } from "@ap/components";
 import Observer from "./Observer";
 
 export default function LazyImage(props: {

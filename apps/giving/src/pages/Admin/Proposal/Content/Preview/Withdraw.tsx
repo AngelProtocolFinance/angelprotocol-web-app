@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { tokens } from "@ap/constants";
 import { condense, humanize } from "@ap/helpers";
 import { WithdrawMeta } from "@/pages/Admin/types";

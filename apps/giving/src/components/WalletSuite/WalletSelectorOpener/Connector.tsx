@@ -1,4 +1,4 @@
-import ContentLoader from "@/components/ContentLoader";
+import { ContentLoader } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
 import { useErrorContext } from "@ap/contexts";
 import { Connection } from "@ap/contexts/wallet-context";

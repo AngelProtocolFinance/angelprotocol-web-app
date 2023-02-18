@@ -1,5 +1,5 @@
 import ExtLink from "@/components/ExtLink";
-import { Cells } from "@/components/TableSection";
+import { Cells } from "@ap/components";
 import { maskAddress } from "@ap/helpers";
 import { WithdrawLog } from "@ap/types/aws";
 import Amount from "../Amount";

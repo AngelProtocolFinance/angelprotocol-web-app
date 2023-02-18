@@ -1,6 +1,6 @@
-import Seo from "@/components/Seo";
 import { FormError, FormSkeleton } from "@/components/admin";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { Seo } from "@ap/components";
 import { unsdgs } from "@ap/constants";
 import { useProfileQuery } from "@ap/services/aws";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { LeaderboardEntry } from "@ap/types/aws";
 import Row from "./Row";
 

@@ -1,4 +1,4 @@
-import Popup from "@/components/Popup";
+import { Popup } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";

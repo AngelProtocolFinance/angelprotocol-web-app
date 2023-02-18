@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { EndowmentProposal } from "@ap/types/aws";
 import AppRow from "./AppRow";
 import Header from "./Header";

@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "@/components/TableSection";
+import { Cells, TableSection } from "@ap/components";
 import { AllianceMemberWithFlags } from "@ap/slices/admin";
 import Member from "./Member";
 import Toolbar from "./Toolbar";

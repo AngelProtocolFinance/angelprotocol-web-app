@@ -1,6 +1,5 @@
-import BookmarkBtn from "@/components/BookmarkBtn";
 import Icon from "@/components/Icon";
-import Tooltip from "@/components/Tooltip";
+import { BookmarkBtn, Tooltip } from "@ap/components";
 import { appRoutes, unsdgs } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";
 import { useRef } from "react";
