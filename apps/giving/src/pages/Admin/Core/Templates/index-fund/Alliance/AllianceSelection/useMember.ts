@@ -1,13 +1,10 @@
-import {
-  resetMemberEdits,
-  setIsEditingMember,
-  toggleDeleteExistingMember,
-  undoAddMember,
-} from "@/slices/admin/allianceMembers";
 import { useGetter, useSetter } from "@/store/accessors";
+import {
+  AllianceMemberWithFlags,
+  allianceMembers as members,
+} from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { AllianceEditValues } from "@/pages/Admin/types";
-import { AllianceMemberWithFlags } from "@/slices/admin/types";
 
 export default function useMember(member: AllianceMemberWithFlags) {
   const { setValue, setFocus, resetField } =
@@ -28,23 +25,23 @@ export default function useMember(member: AllianceMemberWithFlags) {
     //reset ongoing edit
     if (isEditingMember) {
       resetFields();
-      dispatch(setIsEditingMember(false));
+      dispatch(members.setIsEditing(false));
     }
     if (member.isAdded) {
-      dispatch(undoAddMember(member.wallet));
+      dispatch(members.undoAdd(member.wallet));
     } else {
-      dispatch(toggleDeleteExistingMember(member.wallet));
+      dispatch(members.toggleDelete(member.wallet));
     }
   }
 
   function memberToggleEdit() {
     //prioritize existing edits on a member
     if (member.edits) {
-      dispatch(resetMemberEdits(member.wallet));
+      dispatch(members.resetEdits(member.wallet));
     } else {
       //reset previous edits
       resetFields();
-      dispatch(setIsEditingMember(true));
+      dispatch(members.setIsEditing(true));
       //init edit form values
       setValue("wallet", member.wallet);
       setValue("name", member.name);

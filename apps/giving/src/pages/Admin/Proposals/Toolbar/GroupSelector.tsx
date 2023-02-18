@@ -1,13 +1,14 @@
-import { changeSelectedGroup } from "@/slices/admin/proposals";
 import { useGetter, useSetter } from "@/store/accessors";
-import { ProposalGroupOptions } from "@/slices/admin/types";
+import { ProposalGroupOptions, proposals } from "@ap/slices/admin";
 
 export default function GroupSelector() {
   const dispatch = useSetter();
   const { activeGroup } = useGetter((state) => state.admin.proposals);
 
   function handleGroupChange(ev: React.ChangeEvent<HTMLSelectElement>) {
-    dispatch(changeSelectedGroup(ev.target.value as ProposalGroupOptions));
+    dispatch(
+      proposals.changeSelectedGroup(ev.target.value as ProposalGroupOptions)
+    );
   }
 
   return (

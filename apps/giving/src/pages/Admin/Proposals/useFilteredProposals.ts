@@ -1,9 +1,6 @@
 import { useProposalsQuery } from "@ap/services/juno";
+import { ProposalGroupOptions, ProposalStatusOptions } from "@ap/slices/admin";
 import { ProposalMeta } from "../types";
-import {
-  ProposalGroupOptions,
-  ProposalStatusOptions,
-} from "@/slices/admin/types";
 import { PageOptions, Proposal } from "@ap/types/contracts";
 import { useAdminResources } from "../Guard";
 

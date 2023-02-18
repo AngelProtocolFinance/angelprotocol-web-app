@@ -1,6 +1,6 @@
-import { setMembers } from "@/slices/admin/fundMembers";
 import { useGetter, useSetter } from "@/store/accessors";
 import { useFundListQuery } from "@ap/services/juno";
+import { fundMembers as members } from "@ap/slices/admin";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "@/pages/Admin/types";
@@ -25,7 +25,7 @@ export default function useInitFundMembers() {
     }
     if (fundMembers.length > 0) {
       dispatch(
-        setMembers(
+        members.set(
           fundMembers.map((member) => ({
             addr: member,
             isDeleted: false,
@@ -35,7 +35,7 @@ export default function useInitFundMembers() {
       );
       fundIdRef.current = fundId;
     } else {
-      dispatch(setMembers([]));
+      dispatch(members.set([]));
       fundIdRef.current = fundId;
     }
     //eslint-disable-next-line

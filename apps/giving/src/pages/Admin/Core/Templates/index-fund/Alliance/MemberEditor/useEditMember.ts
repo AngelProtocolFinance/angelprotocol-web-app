@@ -1,9 +1,5 @@
-import {
-  addMember,
-  saveMemberEdits,
-  setIsEditingMember,
-} from "@/slices/admin/allianceMembers";
 import { useGetter } from "@/store/accessors";
+import { allianceMembers as AMs } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AllianceEditValues as AV } from "@/pages/Admin/types";
@@ -20,7 +16,7 @@ export default function useAddMember() {
     resetField("name");
     resetField("logo");
     resetField("website");
-    dispatch(setIsEditingMember(false));
+    dispatch(AMs.setIsEditing(false));
   }
 
   async function editMember() {
@@ -36,7 +32,7 @@ export default function useAddMember() {
       //no need to check if member exist since same wallet address is
       //set on edits
       dispatch(
-        saveMemberEdits({
+        AMs.saveEdits({
           wallet: newAllianceMemberAddr,
           name,
           logo,
@@ -57,7 +53,7 @@ export default function useAddMember() {
         return;
       }
       dispatch(
-        addMember({
+        AMs.add({
           wallet: newAllianceMemberAddr,
           name,
           logo,

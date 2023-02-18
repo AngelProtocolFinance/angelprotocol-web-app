@@ -1,18 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ProposalGroupOptions, ProposalStatusOptions } from "./types";
 
-interface State {
+const initialState: {
   activeStatus: ProposalStatusOptions;
   activeGroup: ProposalGroupOptions;
-}
-
-const initialState: State = {
+} = {
   activeStatus: "all",
   activeGroup: "all",
 };
 
-const proposalsSlice = createSlice({
-  name: "component/proposals",
+const proposals = createSlice({
+  name: "proposals",
   initialState,
   reducers: {
     changeSelectedStatus: (
@@ -31,6 +29,5 @@ const proposalsSlice = createSlice({
   },
 });
 
-export default proposalsSlice.reducer;
-export const { changeSelectedStatus, changeSelectedGroup } =
-  proposalsSlice.actions;
+export default proposals.reducer;
+export const { actions } = proposals;

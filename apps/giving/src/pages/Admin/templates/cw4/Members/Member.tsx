@@ -1,18 +1,14 @@
 import Icon from "@/components/Icon";
-import {
-  toggleDeleteExistingMember,
-  undoAddMember,
-} from "@/slices/admin/apCW4Members";
 import { useSetter } from "@/store/accessors";
-import { MemberCopy } from "@/slices/admin/types";
+import { apCW4Members as APMembers, MemberCopy } from "@ap/slices/admin";
 
 export default function Member(props: MemberCopy) {
   const dispatch = useSetter();
   function memberItemAction() {
     if (props.is_added) {
-      dispatch(undoAddMember(props.addr));
+      dispatch(APMembers.undoAdd(props.addr));
     } else {
-      dispatch(toggleDeleteExistingMember(props.addr));
+      dispatch(APMembers.toggleDeleteExisting(props.addr));
     }
   }
   return (

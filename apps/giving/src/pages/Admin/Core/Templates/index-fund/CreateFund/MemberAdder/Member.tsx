@@ -1,12 +1,12 @@
 import Icon from "@/components/Icon";
-import { removeFundMember } from "@/slices/admin/newFundMembers";
 import { useSetter } from "@/store/accessors";
+import { newFundMembers } from "@ap/slices/admin";
 
 export default function Member(props: { address: string }) {
   const dispatch = useSetter();
 
   function deleteSelf() {
-    dispatch(removeFundMember(props.address));
+    dispatch(newFundMembers.remove(props.address));
   }
   return (
     <div

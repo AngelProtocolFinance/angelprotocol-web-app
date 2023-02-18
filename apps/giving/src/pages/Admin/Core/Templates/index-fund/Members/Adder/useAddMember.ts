@@ -1,5 +1,5 @@
-import { addMember as _addMember } from "@/slices/admin/fundMembers";
 import { useGetter, useSetter } from "@/store/accessors";
+import { fundMembers as FMs } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "@/pages/Admin/types";
 
@@ -23,7 +23,7 @@ export default function useAddMember() {
         message: "address already added or existing",
       });
     } else {
-      dispatch(_addMember(newMemberAddr));
+      dispatch(FMs.add(newMemberAddr));
       resetField("newMemberAddr");
     }
   }

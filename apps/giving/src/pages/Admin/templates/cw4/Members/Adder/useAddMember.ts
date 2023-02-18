@@ -1,5 +1,5 @@
-import { addMember as _addMember } from "@/slices/admin/apCW4Members";
 import { useGetter, useSetter } from "@/store/accessors";
+import { apCW4Members as APMembers } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { MemberUpdatorValues } from "@/pages/Admin/types";
 
@@ -22,7 +22,9 @@ export default function useAddMember() {
     if (existingMember) {
       setError("addr", { message: "address already added or existing" });
     } else {
-      dispatch(_addMember({ weight: +newMemberWeight, addr: newMemberAddr }));
+      dispatch(
+        APMembers.add({ weight: +newMemberWeight, addr: newMemberAddr })
+      );
       resetField("addr");
       resetField("weight");
     }

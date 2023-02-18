@@ -1,18 +1,14 @@
 import Icon from "@/components/Icon";
-import {
-  toggleDeleteExistingMember,
-  undoAddMember,
-} from "@/slices/admin/fundMembers";
 import { useSetter } from "@/store/accessors";
-import { AddressWithFlags } from "@/slices/admin/types";
+import { AddressWithFlags, fundMembers } from "@ap/slices/admin";
 
 export default function Member(props: AddressWithFlags) {
   const dispatch = useSetter();
   function memberItemAction() {
     if (props.isAdded) {
-      dispatch(undoAddMember(props.addr));
+      dispatch(fundMembers.undoAdd(props.addr));
     } else {
-      dispatch(toggleDeleteExistingMember(props.addr));
+      dispatch(fundMembers.toggleDeleteExisting(props.addr));
     }
   }
   return (

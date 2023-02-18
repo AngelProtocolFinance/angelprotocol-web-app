@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AllianceMemberWithFlags } from "@/slices/admin/types";
+import { AllianceMemberWithFlags } from "./types";
 import { AllianceMember } from "@ap/types/contracts";
 
 const initialState: {
@@ -7,15 +7,15 @@ const initialState: {
   members: AllianceMemberWithFlags[];
 } = { isEditingMember: false, members: [] };
 
-const allianceMembersSlice = createSlice({
-  name: "admin/allianceMembers",
+const allianceMembers = createSlice({
+  name: "allianceMembers",
   initialState,
   reducers: {
-    setIsEditingMember: (state, { payload }: PayloadAction<boolean>) => {
+    setIsEditing: (state, { payload }: PayloadAction<boolean>) => {
       state.isEditingMember = payload;
     },
 
-    saveMemberEdits: (state, { payload }: PayloadAction<AllianceMember>) => {
+    saveEdits: (state, { payload }: PayloadAction<AllianceMember>) => {
       const memberToEdit = state.members.find(
         (member) => member.wallet === payload.wallet
       );
@@ -24,7 +24,7 @@ const allianceMembersSlice = createSlice({
       }
     },
 
-    resetMemberEdits: (state, { payload }: PayloadAction<string>) => {
+    resetEdits: (state, { payload }: PayloadAction<string>) => {
       const memberToEdit = state.members.find(
         (member) => member.wallet === payload
       );
@@ -33,21 +33,18 @@ const allianceMembersSlice = createSlice({
       }
     },
 
-    setMembers: (
-      state,
-      { payload }: PayloadAction<AllianceMemberWithFlags[]>
-    ) => {
+    set: (state, { payload }: PayloadAction<AllianceMemberWithFlags[]>) => {
       state.members = payload;
     },
 
-    toggleDeleteExistingMember: (state, { payload }: PayloadAction<string>) => {
+    toggleDelete: (state, { payload }: PayloadAction<string>) => {
       const memberToMark = state.members.find(
         (member) => member.wallet === payload
       );
       //markDelete is triggered from list rendered by this state
       memberToMark!.isDeleted = !memberToMark!.isDeleted;
     },
-    addMember: (state, { payload }: PayloadAction<AllianceMember>) => {
+    add: (state, { payload }: PayloadAction<AllianceMember>) => {
       state.members.unshift({
         //add a defaulted alliance member
         ...payload,
@@ -55,7 +52,7 @@ const allianceMembersSlice = createSlice({
         isDeleted: false,
       });
     },
-    undoAddMember: (state, { payload }: PayloadAction<string>) => {
+    undoAdd: (state, { payload }: PayloadAction<string>) => {
       const memberIdx = state.members.findIndex(
         (member) => member.wallet === payload
       );
@@ -64,13 +61,5 @@ const allianceMembersSlice = createSlice({
   },
 });
 
-export default allianceMembersSlice.reducer;
-export const {
-  toggleDeleteExistingMember,
-  addMember,
-  undoAddMember,
-  setMembers,
-  setIsEditingMember,
-  saveMemberEdits,
-  resetMemberEdits,
-} = allianceMembersSlice.actions;
+export default allianceMembers.reducer;
+export const { actions } = allianceMembers;

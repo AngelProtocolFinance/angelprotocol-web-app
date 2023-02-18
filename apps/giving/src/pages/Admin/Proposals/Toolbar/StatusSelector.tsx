@@ -1,13 +1,14 @@
-import { changeSelectedStatus } from "@/slices/admin/proposals";
 import { useGetter, useSetter } from "@/store/accessors";
-import { ProposalStatusOptions } from "@/slices/admin/types";
+import { ProposalStatusOptions, proposals } from "@ap/slices/admin";
 
 export default function StatusSelector() {
   const dispatch = useSetter();
   const { activeStatus } = useGetter((state) => state.admin.proposals);
 
   function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
-    dispatch(changeSelectedStatus(ev.target.value as ProposalStatusOptions));
+    dispatch(
+      proposals.changeSelectedStatus(ev.target.value as ProposalStatusOptions)
+    );
   }
 
   return (

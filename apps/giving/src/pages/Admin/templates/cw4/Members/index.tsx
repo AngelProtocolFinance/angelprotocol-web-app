@@ -1,8 +1,8 @@
 import { FormError, FormSkeleton } from "@/components/admin";
 import { useAdminResources } from "@/pages/Admin/Guard";
-import { setMembers } from "@/slices/admin/apCW4Members";
 import { useSetter } from "@/store/accessors";
 import { useMembersQuery } from "@ap/services/juno";
+import { apCW4Members } from "@ap/slices/admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -18,7 +18,7 @@ export default function Members() {
   useEffect(() => {
     if (members.length > 0) {
       dispatch(
-        setMembers(
+        apCW4Members.set(
           members.map((member) => ({
             ...member,
             is_deleted: false,

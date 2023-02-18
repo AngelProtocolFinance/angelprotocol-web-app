@@ -1,5 +1,5 @@
-import { addFundMember } from "@/slices/admin/newFundMembers";
 import { useGetter } from "@/store/accessors";
+import { newFundMembers as NFMs } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { FundCreatorValues as V } from "@/pages/Admin/types";
@@ -23,7 +23,7 @@ export default function useAddMember() {
       );
       return;
     }
-    dispatch(addFundMember(newFundMemberAddr));
+    dispatch(NFMs.add(newFundMemberAddr));
     resetField("newFundAddr");
   }
 

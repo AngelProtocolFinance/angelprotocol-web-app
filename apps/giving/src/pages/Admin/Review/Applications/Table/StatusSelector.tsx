@@ -1,9 +1,8 @@
 import Icon from "@/components/Icon";
-import { changeSelectedStatus } from "@/slices/admin/applications";
 import { useGetter, useSetter } from "@/store/accessors";
+import { ApplicationStatusOptions, applications } from "@ap/slices/admin";
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
-import { ApplicationStatusOptions } from "@/slices/admin/types";
 
 const options: ApplicationStatusOptions[] = [
   "all",
@@ -23,7 +22,7 @@ export default function StatusSelector() {
   const { activeStatus } = useGetter((state) => state.admin.applications);
 
   function handleStatusChange(value: ApplicationStatusOptions) {
-    dispatch(changeSelectedStatus(value));
+    dispatch(applications.changeSelectedStatus(value));
   }
   return (
     <Listbox value={activeStatus} onChange={handleStatusChange}>

@@ -1,34 +1,29 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MemberCopy } from "@/slices/admin/types";
+import { MemberCopy } from "./types";
 import { CW4Member } from "@ap/types/contracts";
 
 const initialState: MemberCopy[] = [];
 
-const apCW4MembersSlice = createSlice({
-  name: "admin/apCW4Members",
+const apCW4Members = createSlice({
+  name: "apCW4Members",
   initialState,
   reducers: {
-    setMembers: (_, { payload }: PayloadAction<MemberCopy[]>) => payload,
+    set: (_, { payload }: PayloadAction<MemberCopy[]>) => payload,
 
-    toggleDeleteExistingMember: (state, { payload }: PayloadAction<string>) => {
+    toggleDeleteExisting: (state, { payload }: PayloadAction<string>) => {
       const memberToMark = state.find((member) => member.addr === payload);
       //markDelete is triggered from list rendered by this state
       memberToMark!.is_deleted = !memberToMark!.is_deleted;
     },
-    addMember: (state, { payload }: PayloadAction<CW4Member>) => {
+    add: (state, { payload }: PayloadAction<CW4Member>) => {
       state.push({ ...payload, is_deleted: false, is_added: true });
     },
-    undoAddMember: (state, { payload }: PayloadAction<string>) => {
+    undoAdd: (state, { payload }: PayloadAction<string>) => {
       const memberIdx = state.findIndex((member) => member.addr === payload);
       state.splice(memberIdx, 1);
     },
   },
 });
 
-export default apCW4MembersSlice.reducer;
-export const {
-  toggleDeleteExistingMember,
-  addMember,
-  undoAddMember,
-  setMembers,
-} = apCW4MembersSlice.actions;
+export default apCW4Members.reducer;
+export const { actions } = apCW4Members;

@@ -1,16 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ApplicationStatusOptions } from "./types";
 
-interface State {
+const initialState: {
   activeStatus: ApplicationStatusOptions;
-}
-
-const initialState: State = {
+} = {
   activeStatus: "under-review",
 };
 
-const proposalsSlice = createSlice({
-  name: "component/applications",
+const applications = createSlice({
+  name: "applications",
   initialState,
   reducers: {
     changeSelectedStatus: (
@@ -22,5 +20,5 @@ const proposalsSlice = createSlice({
   },
 });
 
-export default proposalsSlice.reducer;
-export const { changeSelectedStatus } = proposalsSlice.actions;
+export default applications.reducer;
+export const { actions } = applications;

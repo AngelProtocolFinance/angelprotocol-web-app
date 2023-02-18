@@ -1,5 +1,5 @@
 import { logger } from "@ap/helpers";
-import { ApplicationStatusOptions } from "@/slices/admin/types";
+import { ApplicationStatusOptions } from "@ap/slices/admin";
 import {
   AWSQueryRes,
   ContactUpdateResult,
