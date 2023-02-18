@@ -1,0 +1,26 @@
+{
+  "name": "slices-donation",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/slices/donation/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/slices/donation",
+        "main": "libs/slices/donation/src/index.ts",
+        "tsConfig": "libs/slices/donation/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/slices/donation/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

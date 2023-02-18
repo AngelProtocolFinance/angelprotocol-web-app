@@ -1,6 +1,6 @@
-import { setKYC, setStep } from "@/slices/donation";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
+import { setKYC, setStep } from "@ap/slices/donation";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";

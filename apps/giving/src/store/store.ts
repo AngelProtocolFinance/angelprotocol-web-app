@@ -1,12 +1,12 @@
 import { adminReducer } from "@/slices/admin";
 import authReducer from "@/slices/authSlice";
 import { componentReducer } from "@/slices/components";
-import { donation } from "@/slices/donation";
 import gift from "@/slices/gift";
 import { apes } from "@ap/services/apes";
 import { aws } from "@ap/services/aws";
 import { countriesApi } from "@ap/services/countries";
 import { junoApi } from "@ap/services/juno";
+import { donation } from "@ap/slices/donation";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({

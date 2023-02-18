@@ -1,9 +1,9 @@
 import ERC20Abi from "@/abi/ERC20.json";
-import { SubmitStep } from "@/slices/donation";
 import { ap_wallets } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { Account, CW20, GiftCard } from "@ap/contracts";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "@ap/helpers";
+import { SubmitStep } from "@ap/slices/donation";
 import { Contract } from "@ethersproject/contracts";
 import { TransactionRequest, Web3Provider } from "@ethersproject/providers";
 import { formatUnits, parseUnits } from "@ethersproject/units";

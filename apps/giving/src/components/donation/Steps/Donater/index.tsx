@@ -1,6 +1,6 @@
-import { FormStep } from "@/slices/donation";
 import { WithWallet } from "@ap/contexts/wallet-context";
 import { isEmpty } from "@ap/helpers";
+import { FormStep } from "@ap/slices/donation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "./types";

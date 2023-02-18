@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
-import { setStep } from "@/slices/donation";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
+import { setStep } from "@ap/slices/donation";
 import { Link } from "react-router-dom";
 
 export default function Err({

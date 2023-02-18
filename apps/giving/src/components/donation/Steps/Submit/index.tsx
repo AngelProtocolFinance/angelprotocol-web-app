@@ -1,10 +1,9 @@
 import { ErrorStatus, LoadingStatus } from "@/components/Status";
-import { SubmitStep, setStep } from "@/slices/donation";
-import { sendDonation } from "@/slices/donation/sendDonation";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
 import { WithWallet } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
+import { SubmitStep, sendDonation, setStep } from "@ap/slices/donation";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";

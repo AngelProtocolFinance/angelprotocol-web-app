@@ -1,12 +1,12 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { Steps } from "@/components/donation";
+import { useGetter, useSetter } from "@/store/accessors";
+import { appRoutes } from "@ap/constants";
 import {
   DonationRecipient,
   DonationState,
   setRecipient,
-} from "@/slices/donation";
-import { useGetter, useSetter } from "@/store/accessors";
-import { appRoutes } from "@ap/constants";
+} from "@ap/slices/donation";
 import { useEffect, useRef } from "react";
 
 export default function Content(props: DonationRecipient) {
