@@ -4,8 +4,9 @@ import { Contract } from "@ap/contracts";
 import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
 import { invalidateApesTags } from "@ap/services/apes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { GiftDetails, TxStatus } from "./types";
 import { TxOptions } from "@ap/types";
-import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
+import gift, { setTxStatus } from "./gift";
 
 type Args = {
   wallet: WalletState;

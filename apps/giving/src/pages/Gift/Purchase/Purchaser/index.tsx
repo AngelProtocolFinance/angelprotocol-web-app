@@ -1,6 +1,6 @@
-import { FormStep } from "@/slices/gift";
 import { IS_TEST, denoms } from "@ap/constants";
 import { WithWallet } from "@ap/contexts/wallet-context";
+import { FormStep } from "@ap/slices/gift";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";

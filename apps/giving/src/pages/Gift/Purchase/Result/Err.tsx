@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
-import { TError, setStep } from "@/slices/gift";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
+import { TError, setStep } from "@ap/slices/gift";
 import { Link } from "react-router-dom";
 
 export default function Err({ error }: TError) {

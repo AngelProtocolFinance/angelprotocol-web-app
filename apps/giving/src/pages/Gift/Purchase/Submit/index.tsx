@@ -1,10 +1,9 @@
 import { ErrorStatus, LoadingStatus } from "@/components/Status";
-import { SubmitStep, setStep } from "@/slices/gift";
-import { purchase } from "@/slices/gift/purchase";
 import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
 import { WithWallet } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
+import { SubmitStep, purchase, setStep } from "@ap/slices/gift";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";

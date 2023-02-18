@@ -1,13 +1,13 @@
 import { adminReducer } from "@/slices/admin";
 import authReducer from "@/slices/authSlice";
 import { componentReducer } from "@/slices/components";
-import gift from "@/slices/gift";
 import { apes } from "@ap/services/apes";
 import { aws } from "@ap/services/aws";
 import { countriesApi } from "@ap/services/countries";
 import { junoApi } from "@ap/services/juno";
 import { donation } from "@ap/slices/donation";
 import { configureStore } from "@reduxjs/toolkit";
+import gift from "libs/slices/gift/src/gift";
 
 export const store = configureStore({
   reducer: {
