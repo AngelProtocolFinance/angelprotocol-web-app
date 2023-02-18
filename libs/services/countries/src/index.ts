@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Country, CountryInRegion, CountryOption, Regions } from "./types";
+import {
+  Country,
+  CountryInRegion,
+  CountryOption,
+  Regions,
+} from "@/services/types";
 
 export const countriesApi = createApi({
   reducerPath: "countriesApi",

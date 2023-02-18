@@ -1,7 +1,7 @@
 import QueryLoader from "@/components/QueryLoader";
 import { Selector, selectorButtonStyle } from "@/components/Selector";
 import { Label } from "@/components/form";
-import { useCountriesQuery } from "@/services/countries";
+import { useCountriesQuery } from "@ap/services/countries";
 import { FormValues } from "./types";
 
 export default function ActivityCountries() {

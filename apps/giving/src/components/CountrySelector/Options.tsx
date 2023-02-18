@@ -1,5 +1,5 @@
 import QueryLoader from "@/components/QueryLoader";
-import { useCountriesQuery } from "@/services/countries";
+import { useCountriesQuery } from "@ap/services/countries";
 import { Combobox } from "@headlessui/react";
 import React from "react";
 

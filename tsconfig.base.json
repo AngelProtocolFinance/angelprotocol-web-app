@@ -42,6 +42,7 @@
       "@ap/schemas": ["libs/schemas/src/index.ts"],
       "@ap/services/apes": ["libs/services/apes/src/index.ts"],
       "@ap/services/aws": ["libs/services/aws/src/index.ts"],
+      "@ap/services/countries": ["libs/services/countries/src/index.ts"],
       "@ap/services/juno": ["libs/services/juno/src/index.ts"],
       "@ap/types": ["libs/types/src/index.ts"],
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
