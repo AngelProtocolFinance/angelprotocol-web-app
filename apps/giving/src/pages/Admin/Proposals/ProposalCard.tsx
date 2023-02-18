@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import { Status } from "@/components/admin";
+import { Status } from "@ap/components/admin";
 import { adminRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { Expiration, Proposal } from "@ap/types/contracts";

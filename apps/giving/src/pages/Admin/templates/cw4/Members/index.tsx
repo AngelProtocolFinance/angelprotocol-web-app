@@ -1,6 +1,6 @@
-import { FormError, FormSkeleton } from "@/components/admin";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { useSetter } from "@/store/accessors";
+import { FormError, FormSkeleton } from "@ap/components/admin";
 import { useMembersQuery } from "@ap/services/juno";
 import { apCW4Members } from "@ap/slices/admin";
 import { yupResolver } from "@hookform/resolvers/yup";

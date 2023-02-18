@@ -1,4 +1,4 @@
-import { FormError, FormSkeleton } from "@/components/admin";
+import { FormError, FormSkeleton } from "@ap/components/admin";
 import { condenseToStr } from "@ap/helpers";
 import { useIndexFundConfigQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";

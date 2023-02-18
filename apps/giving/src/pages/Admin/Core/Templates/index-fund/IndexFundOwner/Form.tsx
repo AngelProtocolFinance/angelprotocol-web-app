@@ -1,4 +1,4 @@
-import { FormContainer, Submitter } from "@/components/admin";
+import { FormContainer, Submitter } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
 import { IndexFundOwnerValues as IV } from "@/pages/Admin/types";
 import useUpdateOwner from "./useUpdateOwner";

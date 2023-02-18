@@ -1,5 +1,5 @@
-import { FormError, FormSkeleton } from "@/components/admin";
 import { useSetter } from "@/store/accessors";
+import { FormError, FormSkeleton } from "@ap/components/admin";
 import { useAllianceMembersQuery } from "@ap/services/juno";
 import { allianceMembers as members } from "@ap/slices/admin";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -1,5 +1,5 @@
-import { FormContainer, GroupContainer, Submitter } from "@/components/admin";
 import { Loader } from "@ap/components";
+import { FormContainer, GroupContainer, Submitter } from "@ap/components/admin";
 import { Field, Label } from "@ap/components/form";
 import { FundUpdateValues as FV } from "@/pages/Admin/types";
 import FundSelection from "../FundSelection";

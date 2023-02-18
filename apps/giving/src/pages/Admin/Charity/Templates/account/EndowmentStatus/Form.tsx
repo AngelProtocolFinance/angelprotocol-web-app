@@ -1,4 +1,4 @@
-import { FormContainer, Submitter } from "@/components/admin";
+import { FormContainer, Submitter } from "@ap/components/admin";
 import { Field, Label } from "@ap/components/form";
 import { EndowmentUpdateValues as V } from "@/pages/Admin/types";
 import StatusOptions from "./StatusOptions";

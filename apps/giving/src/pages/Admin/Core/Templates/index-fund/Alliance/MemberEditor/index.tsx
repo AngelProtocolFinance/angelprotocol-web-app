@@ -1,4 +1,4 @@
-import { GroupContainer } from "@/components/admin";
+import { GroupContainer } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
 import React from "react";
 import { AllianceEditValues as AV } from "@/pages/Admin/types";

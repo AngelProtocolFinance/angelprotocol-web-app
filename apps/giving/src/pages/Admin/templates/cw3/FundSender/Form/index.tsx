@@ -1,4 +1,4 @@
-import { FormContainer, Submitter } from "@/components/admin";
+import { FormContainer, Submitter } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
 import { FundSendValues as FS } from "@/pages/Admin/types";
 import Amount from "./Amount";

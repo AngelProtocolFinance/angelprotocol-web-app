@@ -1,4 +1,4 @@
-import { GroupContainer } from "@/components/admin";
+import { GroupContainer } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
 import { FundUpdateValues as T } from "@/pages/Admin/types";
 import useAddMember from "./useAddMember";

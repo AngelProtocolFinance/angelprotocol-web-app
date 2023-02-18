@@ -1,4 +1,4 @@
-import { FormContainer, Submitter } from "@/components/admin";
+import { FormContainer, Submitter } from "@ap/components/admin";
 import { CheckField, Field } from "@ap/components/form";
 import { CW3ConfigValues, FormReviewCW3Config } from "@/pages/Admin/types";
 import useCreateProposal from "./useCreateProposal";

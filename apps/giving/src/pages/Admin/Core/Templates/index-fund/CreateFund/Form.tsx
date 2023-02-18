@@ -1,4 +1,4 @@
-import { DivContainer, Submitter } from "@/components/admin";
+import { DivContainer, Submitter } from "@ap/components/admin";
 import { CheckField, Field, Label } from "@ap/components/form";
 import { useFormContext } from "react-hook-form";
 import { FundCreatorValues as V } from "@/pages/Admin/types";

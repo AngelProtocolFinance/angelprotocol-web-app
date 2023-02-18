@@ -29,6 +29,7 @@
       "@/*": ["apps/giving/src/*"],
       "@ap/components": ["libs/components/src/index.ts"],
       "@ap/components/form": ["libs/components/form/src/index.ts"],
+      "@ap/components/admin": ["libs/components/admin/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [
