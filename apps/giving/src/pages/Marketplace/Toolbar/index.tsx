@@ -1,14 +1,12 @@
 import Icon from "@/components/Icon";
-import { toggle } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
+import { toggle } from "@ap/slices/market-filter";
 import Search from "./Search";
 
 // import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const isFilterOpen = useGetter(
-    (state) => state.component.marketFilter.isOpen
-  );
+  const isFilterOpen = useGetter((state) => state.marketFilter.isOpen);
   const dispatch = useSetter();
   function toggleFilter() {
     dispatch(toggle());

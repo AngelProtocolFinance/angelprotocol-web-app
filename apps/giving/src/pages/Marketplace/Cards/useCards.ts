@@ -17,7 +17,7 @@ export default function useCards() {
     kyc_only,
     tiers,
     region,
-  } = useGetter((state) => state.component.marketFilter);
+  } = useGetter((state) => state.marketFilter);
 
   const selectedSDGs = useMemo(
     () => Object.entries(sdgGroups).flatMap(([, members]) => members),

@@ -1,12 +1,12 @@
-import { SDG_GROUPS, setSdgs } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
 import { unsdgs } from "@ap/constants";
+import { SDG_GROUPS, setSdgs } from "@ap/slices/market-filter";
 import { useMemo } from "react";
 import { UNSDG_NUMS } from "@ap/types";
 import { GroupProps, MultilevelFilter } from "./common";
 
 export default function SDGGroups() {
-  const sdgs = useGetter((state) => state.component.marketFilter.sdgGroups);
+  const sdgs = useGetter((state) => state.marketFilter.sdgGroups);
   const dispatch = useSetter();
 
   const groups: GroupProps<UNSDG_NUMS>[] = useMemo(() => {

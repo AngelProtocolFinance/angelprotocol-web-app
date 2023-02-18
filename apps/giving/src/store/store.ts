@@ -1,10 +1,10 @@
-import { componentReducer } from "@/slices/components";
 import { apes } from "@ap/services/apes";
 import { aws } from "@ap/services/aws";
 import { countriesApi } from "@ap/services/countries";
 import { junoApi } from "@ap/services/juno";
 import { admin } from "@ap/slices/admin";
 import { donation } from "@ap/slices/donation";
+import marketFilter from "@ap/slices/market-filter";
 import { configureStore } from "@reduxjs/toolkit";
 import gift from "libs/slices/gift/src/gift";
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     admin,
     donation,
     gift,
-    component: componentReducer,
+    marketFilter,
     [aws.reducerPath]: aws.reducer,
     [junoApi.reducerPath]: junoApi.reducer,
     [apes.reducerPath]: apes.reducer,

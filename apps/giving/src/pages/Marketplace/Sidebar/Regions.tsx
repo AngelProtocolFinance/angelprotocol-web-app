@@ -1,8 +1,8 @@
 import QueryLoader from "@/components/QueryLoader";
-import { setRegions } from "@/slices/components/marketFilter";
-import { RegionType } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
 import { useRegionsQuery } from "@ap/services/countries";
+import { setRegions } from "@ap/slices/market-filter";
+import { RegionType } from "@ap/slices/market-filter";
 import { GroupProps, MultiLevelFilterProps, MultilevelFilter } from "./common";
 
 type Props = Pick<
@@ -11,9 +11,7 @@ type Props = Pick<
 > & { type: RegionType };
 
 export default function Regions({ type, ...filterProps }: Props) {
-  const savedRegion = useGetter(
-    (state) => state.component.marketFilter.region[type]
-  );
+  const savedRegion = useGetter((state) => state.marketFilter.region[type]);
   const queryState = useRegionsQuery({});
   const dispatch = useSetter();
 

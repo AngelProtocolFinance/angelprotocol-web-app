@@ -1,5 +1,5 @@
-import { setDesignations } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
+import { setDesignations } from "@ap/slices/market-filter";
 import { EndowDesignation } from "@ap/types/aws";
 import { FilterOption, FlatFilter } from "./common";
 
@@ -14,7 +14,7 @@ const options: FilterOption<EndowDesignation>[] = [
 
 export default function Designations() {
   const designations = useGetter(
-    (state) => state.component.marketFilter.endow_designation
+    (state) => state.marketFilter.endow_designation
   );
   const dispatch = useSetter();
 

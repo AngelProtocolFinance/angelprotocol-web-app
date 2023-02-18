@@ -1,5 +1,5 @@
-import { setKYCOnly } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
+import { setKYCOnly } from "@ap/slices/market-filter";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -8,7 +8,7 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function KYCFilter() {
-  const kycOnly = useGetter((state) => state.component.marketFilter.kyc_only);
+  const kycOnly = useGetter((state) => state.marketFilter.kyc_only);
   const dispatch = useSetter();
 
   return (

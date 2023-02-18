@@ -1,5 +1,5 @@
-import { setTypes } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
+import { setTypes } from "@ap/slices/market-filter";
 import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { FilterOption, FlatFilter } from "./common";
 
@@ -10,9 +10,7 @@ const options: FilterOption<CapitalizedEndowmentType>[] = [
 ];
 
 export default function Types() {
-  const { endow_types: types } = useGetter(
-    (state) => state.component.marketFilter
-  );
+  const { endow_types: types } = useGetter((state) => state.marketFilter);
   const dispatch = useSetter();
 
   return (

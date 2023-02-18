@@ -1,0 +1,26 @@
+{
+  "name": "slices-market-filter",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/slices/market-filter/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/slices/market-filter",
+        "main": "libs/slices/market-filter/src/index.ts",
+        "tsConfig": "libs/slices/market-filter/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/slices/market-filter/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

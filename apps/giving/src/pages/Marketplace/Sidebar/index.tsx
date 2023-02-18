@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
-import { clear, reset, toggle } from "@/slices/components/marketFilter";
 import { useSetter } from "@/store/accessors";
+import { clear, reset, toggle } from "@ap/slices/market-filter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";

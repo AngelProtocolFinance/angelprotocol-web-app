@@ -1,6 +1,6 @@
 import Icon, { DrawerIcon } from "@/components/Icon";
-import { Sort, setSort } from "@/slices/components/marketFilter";
 import { useGetter, useSetter } from "@/store/accessors";
+import { Sort, setSort } from "@ap/slices/market-filter";
 import { Listbox } from "@headlessui/react";
 import { EndowmentsSortKey } from "@ap/types/aws";
 
@@ -12,7 +12,7 @@ const options: Option[] = [
 
 export default function Sorter() {
   const dispatch = useSetter();
-  const sort = useGetter((state) => state.component.marketFilter.sort);
+  const sort = useGetter((state) => state.marketFilter.sort);
   const isSortKeySelected = sort !== undefined;
 
   function handleSortChange(value: EndowmentsSortKey) {
