@@ -1,6 +1,6 @@
-import { queryContract } from "@/services/juno/queryContract";
 import { contracts } from "@ap/constants";
 import { condenseToNum } from "@ap/helpers";
+import { queryContract } from "@ap/services/juno";
 import { Coin } from "@cosmjs/proto-signing";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";

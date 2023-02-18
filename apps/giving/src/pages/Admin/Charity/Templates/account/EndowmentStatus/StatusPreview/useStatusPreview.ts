@@ -1,5 +1,5 @@
-import { useEndowmentsQuery } from "@/services/juno/account";
 import { useDebouncer } from "@ap/hooks";
+import { useEndowmentsQuery } from "@ap/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues } from "@/pages/Admin/types";

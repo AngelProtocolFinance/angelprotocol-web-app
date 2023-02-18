@@ -1,9 +1,8 @@
-import { invalidateJunoTags } from "@/services/juno";
-import { govTags } from "@/services/juno/tags";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Airdrop } from "@ap/contracts";
 import { condense } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { govTags, invalidateJunoTags } from "@ap/services/juno";
 import Decimal from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "@ap/types/aws";

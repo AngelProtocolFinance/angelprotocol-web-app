@@ -1,6 +1,6 @@
-import { useFundListQuery } from "@/services/juno/indexFund";
 import { setMembers } from "@/slices/admin/fundMembers";
 import { useGetter, useSetter } from "@/store/accessors";
+import { useFundListQuery } from "@ap/services/juno";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "@/pages/Admin/types";

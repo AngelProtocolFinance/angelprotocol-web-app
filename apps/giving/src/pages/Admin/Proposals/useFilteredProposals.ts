@@ -1,4 +1,4 @@
-import { useProposalsQuery } from "@/services/juno/cw3";
+import { useProposalsQuery } from "@ap/services/juno";
 import { ProposalMeta } from "../types";
 import {
   ProposalGroupOptions,

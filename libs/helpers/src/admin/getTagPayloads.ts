@@ -1,11 +1,11 @@
-import { invalidateJunoTags } from "@/services/juno";
 import {
   accountTags,
   adminTags,
   defaultProposalTags,
   indexfundTags,
+  invalidateJunoTags,
   registrarTags,
-} from "@/services/juno/tags";
+} from "@ap/services/juno";
 import { ProposalMeta } from "@/pages/Admin/types";
 import { TagPayload } from "@/services/types";
 

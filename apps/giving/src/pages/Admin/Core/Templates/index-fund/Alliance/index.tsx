@@ -1,7 +1,7 @@
 import { FormError, FormSkeleton } from "@/components/admin";
-import { useAllianceMembersQuery } from "@/services/juno/indexFund";
 import { setMembers } from "@/slices/admin/allianceMembers";
 import { useSetter } from "@/store/accessors";
+import { useAllianceMembersQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";

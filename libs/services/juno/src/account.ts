@@ -1,4 +1,3 @@
-import { accountTags } from "@/services/juno/tags";
 import { contracts } from "@ap/constants";
 import { IS_TEST } from "@ap/constants";
 import { denoms, symbols } from "@ap/constants";
@@ -6,9 +5,10 @@ import { condenseToNum } from "@ap/helpers";
 import { Args, Res, Result } from "./queryContract/types";
 import { EndowmentAsset } from "@/services/types";
 import { AccountType, EndowmentEntry } from "@ap/types/contracts";
-import { junoApi } from ".";
+import { junoApi } from "./juno";
 import { queryContract } from "./queryContract";
 import { genQueryPath } from "./queryContract/genQueryPath";
+import { accountTags } from "./tags";
 
 const accounts = contracts.accounts;
 export const account_api = junoApi.injectEndpoints({

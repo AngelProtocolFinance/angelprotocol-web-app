@@ -1,8 +1,8 @@
-import { govTags } from "@/services/juno/tags";
 import { contracts } from "@ap/constants";
 import { Args, Res, Result } from "../queryContract/types";
-import { junoApi } from "..";
+import { junoApi } from "../juno";
 import { genQueryPath } from "../queryContract/genQueryPath";
+import { govTags } from "../tags";
 
 const gov = contracts.gov;
 export const gov_api = junoApi.injectEndpoints({

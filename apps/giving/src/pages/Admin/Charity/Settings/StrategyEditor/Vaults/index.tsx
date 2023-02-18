@@ -1,5 +1,5 @@
 import QueryLoader from "@/components/QueryLoader";
-import { useVaultListQuery } from "@/services/juno/registrar";
+import { useVaultListQuery } from "@ap/services/juno";
 import { useFormContext } from "react-hook-form";
 import { Allocation, FormValues } from "../types";
 import { AccountType } from "@ap/types/contracts";

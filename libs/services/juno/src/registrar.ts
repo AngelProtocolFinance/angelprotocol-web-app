@@ -1,8 +1,8 @@
-import { registrarTags } from "@/services/juno/tags";
 import { contracts } from "@ap/constants";
 import { Args, Res, Result } from "./queryContract/types";
-import { junoApi } from "./index";
+import { junoApi } from "./juno";
 import { genQueryPath } from "./queryContract/genQueryPath";
+import { registrarTags } from "./tags";
 
 const reg = contracts.registrar;
 export const registrar_api = junoApi.injectEndpoints({

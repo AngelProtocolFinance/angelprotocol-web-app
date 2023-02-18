@@ -1,8 +1,8 @@
 import Icon from "@/components/Icon";
 import { templates } from "@/pages/Admin/constants";
-import { useLatestBlockQuery } from "@/services/juno";
 import { adminRoutes } from "@ap/constants";
 import { humanize } from "@ap/helpers";
+import { useLatestBlockQuery } from "@ap/services/juno";
 import { Link } from "react-router-dom";
 import GroupSelector from "./GroupSelector";
 import StatusSelector from "./StatusSelector";

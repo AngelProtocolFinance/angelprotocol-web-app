@@ -1,5 +1,5 @@
 import { FormError, FormSkeleton } from "@/components/admin";
-import { useIndexFundConfigQuery } from "@/services/juno/indexFund";
+import { useIndexFundConfigQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { IndexFundOwnerValues } from "@/pages/Admin/types";

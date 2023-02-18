@@ -1,5 +1,5 @@
 import { FormError, FormSkeleton } from "@/components/admin";
-import { useRegistrarConfigQuery } from "@/services/juno/registrar";
+import { useRegistrarConfigQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { RegistrarConfigValues } from "@/pages/Admin/types";

@@ -1,7 +1,7 @@
 import Icon from "@/components/Icon";
 import Loader from "@/components/Loader";
-import { useAdminResourcesQuery } from "@/services/juno/custom";
 import { useGetWallet } from "@ap/contexts/wallet-context";
+import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "./types";

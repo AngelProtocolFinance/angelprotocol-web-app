@@ -1,5 +1,4 @@
-import { useLatestBlockQuery } from "@/services/juno";
-import { useFundListQuery } from "@/services/juno/indexFund";
+import { useFundListQuery, useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
 import { FundIdContext } from "@/pages/Admin/types";

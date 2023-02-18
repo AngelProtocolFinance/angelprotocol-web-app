@@ -6,7 +6,7 @@ import { isJunoAddress } from "@ap/schemas";
 import { Args } from "./queryContract/types";
 import { AdminResources, ProposalDetails, Vault } from "@/services/types";
 import { CW3Config } from "@ap/types/contracts";
-import { junoApi } from ".";
+import { junoApi } from "./juno";
 import { queryContract } from "./queryContract";
 import {
   accountTags,

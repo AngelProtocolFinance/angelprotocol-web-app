@@ -1,0 +1,26 @@
+{
+  "name": "services-juno",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/services/juno/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/services/juno",
+        "main": "libs/services/juno/src/index.ts",
+        "tsConfig": "libs/services/juno/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/services/juno/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

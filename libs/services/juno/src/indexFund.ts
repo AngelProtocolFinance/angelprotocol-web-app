@@ -1,6 +1,6 @@
 import { contracts } from "@ap/constants";
 import { Args, Res, Result } from "./queryContract/types";
-import { junoApi } from ".";
+import { junoApi } from "./juno";
 import { genQueryPath } from "./queryContract/genQueryPath";
 import { indexfundTags } from "./tags";
 

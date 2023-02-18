@@ -1,7 +1,7 @@
 import QueryLoader from "@/components/QueryLoader";
 import { Field } from "@/components/form";
 import { useAdminResources } from "@/pages/Admin/Guard";
-import { useLatestBlockQuery } from "@/services/juno";
+import { useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues as WV } from "./types";
