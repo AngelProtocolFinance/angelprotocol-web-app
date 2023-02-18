@@ -1,6 +1,6 @@
 import QueryLoader from "@/components/QueryLoader";
-import { Field } from "@/components/form";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { Field } from "@ap/components/form";
 import { useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";

@@ -1,5 +1,5 @@
 import { FormContainer, Submitter } from "@/components/admin";
-import { Field, Label } from "@/components/form";
+import { Field, Label } from "@ap/components/form";
 import { FundDestroyValues as FD } from "@/pages/Admin/types";
 import FundSelection from "../FundSelection";
 import useDestroyFund from "./useDestroyFund";

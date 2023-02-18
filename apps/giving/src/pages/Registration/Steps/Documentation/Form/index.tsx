@@ -1,7 +1,7 @@
 import ExtLink from "@/components/ExtLink";
 import { Selector } from "@/components/Selector";
-import { CheckField, Field, Label } from "@/components/form";
 import { FileDropzone, LoadText } from "@/components/registration";
+import { CheckField, Field, Label } from "@ap/components/form";
 import { unsdgs } from "@ap/constants";
 import { TERMS_OF_USE } from "@ap/constants";
 import { Link } from "react-router-dom";

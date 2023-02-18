@@ -1,5 +1,5 @@
 import Split from "@/components/Split";
-import { CheckField } from "@/components/form/CheckField";
+import { CheckField } from "@ap/components/form";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../schema";
 import DenomSelector from "./DenomSelector";

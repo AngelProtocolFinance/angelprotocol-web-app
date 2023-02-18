@@ -1,5 +1,5 @@
-import { Field } from "@/components/form";
 import { Separator } from "@/components/registration";
+import { Field } from "@ap/components/form";
 import { Link } from "react-router-dom";
 import { FormValues } from "./types";
 import useSubmit from "./useSubmit";

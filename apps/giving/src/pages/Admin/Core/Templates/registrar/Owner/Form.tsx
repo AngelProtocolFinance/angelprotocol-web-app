@@ -1,5 +1,5 @@
 import { FormContainer, Submitter } from "@/components/admin";
-import { Field } from "@/components/form";
+import { Field } from "@ap/components/form";
 import { RegistrarOwnerValues as RV } from "@/pages/Admin/types";
 import useUpdateOwner from "./useUpdateOwner";
 

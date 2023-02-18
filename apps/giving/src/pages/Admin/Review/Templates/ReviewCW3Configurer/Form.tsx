@@ -1,5 +1,5 @@
 import { FormContainer, Submitter } from "@/components/admin";
-import { CheckField, Field } from "@/components/form";
+import { CheckField, Field } from "@ap/components/form";
 import { CW3ConfigValues, FormReviewCW3Config } from "@/pages/Admin/types";
 import useCreateProposal from "./useCreateProposal";
 

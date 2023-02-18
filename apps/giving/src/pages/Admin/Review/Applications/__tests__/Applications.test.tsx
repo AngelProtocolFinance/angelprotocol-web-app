@@ -6,7 +6,7 @@ import Applications from "..";
 const mockEndowmentApplicationsQuery = jest.fn();
 const mockAdminContext = jest.fn();
 
-jest.mock("@/services/aws/registration", () => ({
+jest.mock("@ap/services/aws", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));

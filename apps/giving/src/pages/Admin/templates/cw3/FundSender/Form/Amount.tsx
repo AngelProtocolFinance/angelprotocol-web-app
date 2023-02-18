@@ -1,4 +1,4 @@
-import { Label } from "@/components/form";
+import { Label } from "@ap/components/form";
 import { denoms, symbols } from "@ap/constants";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { ErrorMessage } from "@hookform/error-message";

@@ -1,6 +1,6 @@
 import QueryLoader from "@/components/QueryLoader";
 import { Selector, selectorButtonStyle } from "@/components/Selector";
-import { Label } from "@/components/form";
+import { Label } from "@ap/components/form";
 import { useCountriesQuery } from "@ap/services/countries";
 import { FormValues } from "./types";
 
