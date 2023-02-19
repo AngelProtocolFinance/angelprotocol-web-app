@@ -1,6 +1,5 @@
-import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
-import { BookmarkBtn, Breadcrumbs, Seo } from "@ap/components";
+import { BookmarkBtn, Breadcrumbs, ExtLink, Seo } from "@ap/components";
 import { appRoutes } from "@ap/constants";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";

@@ -1,4 +1,4 @@
-import ExtLink from "@/components/ExtLink";
+import { ExtLink } from "@ap/components";
 import { maskAddress } from "@ap/helpers";
 import { PropsWithChildren } from "react";
 import { WithdrawLog } from "@ap/types/aws";

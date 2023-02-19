@@ -1,4 +1,4 @@
-import ExtLink from "@/components/ExtLink";
+import { ExtLink } from "@ap/components";
 import { humanize, maskAddress } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { PropsWithChildren } from "react";

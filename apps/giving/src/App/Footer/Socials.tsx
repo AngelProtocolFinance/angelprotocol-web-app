@@ -1,5 +1,5 @@
-import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
+import { ExtLink } from "@ap/components";
 import { SOCIAL_MEDIA_LINKS } from "./constants";
 
 export default function Socials() {

@@ -1,6 +1,6 @@
-import ExtLink from "@/components/ExtLink";
 import Icon, { IconType } from "@/components/Icon";
 import { useProfileContext } from "@/pages/Profile/ProfileContext";
+import { ExtLink } from "@ap/components";
 
 export default function Socials() {
   const profile = useProfileContext();

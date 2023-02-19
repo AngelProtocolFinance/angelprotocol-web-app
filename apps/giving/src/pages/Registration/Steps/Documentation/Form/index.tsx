@@ -1,6 +1,6 @@
-import ExtLink from "@/components/ExtLink";
 import { Selector } from "@/components/Selector";
 import { FileDropzone, LoadText } from "@/components/registration";
+import { ExtLink } from "@ap/components";
 import { CheckField, Field, Label } from "@ap/components/form";
 import { unsdgs } from "@ap/constants";
 import { TERMS_OF_USE } from "@ap/constants";

@@ -1,5 +1,5 @@
-import ExtLink from "@/components/ExtLink";
 import Icon from "@/components/Icon";
+import { ExtLink } from "@ap/components";
 import { ErrorMessage } from "@hookform/error-message";
 import { useDropzone } from "react-dropzone";
 import {

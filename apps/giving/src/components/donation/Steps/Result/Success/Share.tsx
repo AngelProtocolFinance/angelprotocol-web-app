@@ -1,5 +1,5 @@
-import ExtLink from "@/components/ExtLink";
 import Icon, { IconType } from "@/components/Icon";
+import { ExtLink } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
 import { DonationRecipient } from "@ap/slices/donation";
 import { Dialog } from "@headlessui/react";

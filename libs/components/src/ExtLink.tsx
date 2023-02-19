@@ -1,14 +1,11 @@
 import React from "react";
 
-export type ExtLinkProps = Omit<
+type ExtLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   "target" | "rel"
 >;
 
-export default function ExtLink({
-  children,
-  ...props
-}: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "target" | "rel">) {
+export default function ExtLink({ children, ...props }: ExtLinkProps) {
   return (
     <a {...props} target="_blank" rel="noopener noreferrer">
       {children}
