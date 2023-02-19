@@ -1,5 +1,5 @@
-import { TxPrompt } from "@/components/Prompt";
 import { useSetter } from "@/store/accessors";
+import { TxPrompt } from "@ap/components/prompt";
 import { APIs } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import {

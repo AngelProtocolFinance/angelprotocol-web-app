@@ -1,9 +1,9 @@
-import Prompt from "@/components/Prompt";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
 } from "@/errors/errors";
+import Prompt from "@ap/components/prompt";
 import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import { logger } from "@ap/helpers";
 import {

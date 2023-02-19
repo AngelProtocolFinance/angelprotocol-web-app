@@ -1,6 +1,6 @@
-import { TxPrompt } from "@/components/Prompt";
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { ImgLink } from "@ap/components/img-editor";
+import { TxPrompt } from "@ap/components/prompt";
 import { appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";

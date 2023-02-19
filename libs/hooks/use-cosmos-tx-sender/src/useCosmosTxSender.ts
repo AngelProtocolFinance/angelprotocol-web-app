@@ -1,6 +1,6 @@
-import { TxPrompt } from "@/components/Prompt";
 import { useSetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
+import { TxPrompt } from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Contract } from "@ap/contracts";

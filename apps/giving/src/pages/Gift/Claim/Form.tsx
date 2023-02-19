@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import Prompt from "@/components/Prompt";
+import Prompt from "@ap/components/prompt";
 import { APIs, appRoutes, chainIds } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";

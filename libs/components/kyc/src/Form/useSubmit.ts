@@ -1,6 +1,6 @@
-import Prompt from "@/components/Prompt";
 import { useSetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
+import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useRequestReceiptMutation } from "@ap/services/apes";
 import { setKYC } from "@ap/slices/donation";
