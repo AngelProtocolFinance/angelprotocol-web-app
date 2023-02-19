@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { placeholderChain } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
 import { PropsWithChildren, useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import { DrawerIcon } from "@/components/Icon";
+import { DrawerIcon } from "@ap/components/icon";
 import { WalletState, useGetWallet } from "@ap/contexts/wallet-context";
 import { maskAddress } from "@ap/helpers";
 import { Popover } from "@headlessui/react";

@@ -1,4 +1,4 @@
-import Icon, { IconType } from "@/components/Icon";
+import Icon, { IconType } from "@ap/components/icon";
 import { CW4Member } from "@ap/types/contracts";
 
 export default function MemberItem(props: {

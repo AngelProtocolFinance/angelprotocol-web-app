@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { KADO_API_KEY, chainIDs } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";

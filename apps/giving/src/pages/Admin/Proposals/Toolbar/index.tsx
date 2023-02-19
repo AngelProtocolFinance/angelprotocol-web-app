@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { templates } from "@/pages/Admin/constants";
+import Icon from "@ap/components/icon";
 import { adminRoutes } from "@ap/constants";
 import { humanize } from "@ap/helpers";
 import { useLatestBlockQuery } from "@ap/services/juno";

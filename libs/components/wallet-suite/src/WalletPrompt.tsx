@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useModalContext } from "@ap/contexts";
 
 export default function WalletPrompt(props: { message: string }) {

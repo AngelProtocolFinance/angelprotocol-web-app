@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 
 type Props = { classes: { container?: string; icon?: string } };
 

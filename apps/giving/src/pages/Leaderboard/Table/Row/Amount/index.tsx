@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useModalContext } from "@ap/contexts";
 import { humanize } from "@ap/helpers";
 import Summary from "./Summary";

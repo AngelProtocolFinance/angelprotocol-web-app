@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { AddressWithFlags, fundMembers } from "@ap/slices/admin";
 
 export default function Member(props: AddressWithFlags) {

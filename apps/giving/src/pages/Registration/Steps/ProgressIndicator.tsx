@@ -1,4 +1,4 @@
-import { DrawerIcon } from "@/components/Icon";
+import { DrawerIcon } from "@ap/components/icon";
 import { idParamToNum } from "@ap/helpers";
 import { SCREEN_MD, useHandleScreenResize } from "@ap/hooks";
 import { PropsWithChildren, useState } from "react";

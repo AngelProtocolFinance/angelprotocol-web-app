@@ -1,4 +1,4 @@
-import Icon, { DrawerIcon } from "@/components/Icon";
+import Icon, { DrawerIcon } from "@ap/components/icon";
 import { useKYC } from "@ap/components/kyc";
 import { humanize, maskAddress } from "@ap/helpers";
 import useSort from "@ap/hooks/use-sort";

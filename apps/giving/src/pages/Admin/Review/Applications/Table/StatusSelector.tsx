@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useGetter, useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { ApplicationStatusOptions, applications } from "@ap/slices/admin";
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";

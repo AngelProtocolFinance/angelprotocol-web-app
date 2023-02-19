@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { PropsWithChildren, useState } from "react";
 
 type Props = PropsWithChildren<{

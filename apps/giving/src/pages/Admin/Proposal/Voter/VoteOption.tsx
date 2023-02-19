@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useFormContext } from "react-hook-form";
 import { Vote } from "@ap/types/contracts";
 

@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { LoadingStatus } from "@ap/components/status";
 import TokenField from "@ap/components/token-field";
 import { useModalContext } from "@ap/contexts";

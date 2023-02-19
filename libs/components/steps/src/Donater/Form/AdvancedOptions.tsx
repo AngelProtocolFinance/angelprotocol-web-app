@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import Split from "@ap/components/split";
 import { useState } from "react";
 import { DonateValues } from "../types";

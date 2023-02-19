@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { Cells, ExtLink, HeaderButton, TableSection } from "@ap/components";
+import Icon from "@ap/components/icon";
 import { useKYC } from "@ap/components/kyc";
 import { appRoutes } from "@ap/constants";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";

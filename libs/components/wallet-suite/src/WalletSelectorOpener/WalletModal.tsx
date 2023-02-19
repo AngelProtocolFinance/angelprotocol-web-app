@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useModalContext } from "@ap/contexts";
 import { useSetWallet } from "@ap/contexts/wallet-context";
 import { Dialog } from "@headlessui/react";

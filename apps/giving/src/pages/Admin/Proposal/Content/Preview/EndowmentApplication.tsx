@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { ExtLink } from "@ap/components";
+import Icon from "@ap/components/icon";
 import { PropsWithChildren } from "react";
 import { EndowmentProposal, FileObject } from "@ap/types/aws";
 import PreviewContainer from "./common/PreviewContainer";

@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { ExtLink } from "@ap/components";
+import Icon from "@ap/components/icon";
 import {
   WALLET_METADATA,
   WithoutInstallers,

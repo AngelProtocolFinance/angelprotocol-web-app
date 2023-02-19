@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { Loader } from "@ap/components";
+import Icon from "@ap/components/icon";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";

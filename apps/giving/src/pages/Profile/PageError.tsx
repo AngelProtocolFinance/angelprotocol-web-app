@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { appRoutes } from "@ap/constants";
 import { Link } from "react-router-dom";
 

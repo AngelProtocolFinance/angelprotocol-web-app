@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { appRoutes } from "@ap/constants";
 import { setStep } from "@ap/slices/donation";
 import { Link } from "react-router-dom";

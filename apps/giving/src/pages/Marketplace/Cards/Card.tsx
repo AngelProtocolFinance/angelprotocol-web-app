@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { BookmarkBtn, Tooltip } from "@ap/components";
+import Icon from "@ap/components/icon";
 import { appRoutes, unsdgs } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";
 import { useRef } from "react";

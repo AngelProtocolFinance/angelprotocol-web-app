@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useModalContext } from "@ap/contexts";
 import { SCREEN_LG, useHandleScreenResize } from "@ap/hooks";
 import Menu from "./Menu";

@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { humanize, isEmpty } from "@ap/helpers";
 import { useMemo } from "react";
 import { TokenWithBalance } from "@ap/types/aws";

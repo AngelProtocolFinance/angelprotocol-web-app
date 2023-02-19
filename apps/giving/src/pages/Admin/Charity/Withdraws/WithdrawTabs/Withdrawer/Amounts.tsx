@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { tokens } from "@ap/constants";
 import { humanize } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";

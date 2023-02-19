@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useDropzone } from "react-dropzone";

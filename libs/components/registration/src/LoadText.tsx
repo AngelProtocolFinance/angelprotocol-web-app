@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { PropsWithChildren } from "react";
 
 export function LoadText({

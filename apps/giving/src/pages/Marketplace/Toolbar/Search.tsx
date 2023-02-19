@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useGetter, useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { useDebouncer } from "@ap/hooks";
 import { setSearchText } from "@ap/slices/market-filter";
 import { QueryStatus } from "@reduxjs/toolkit/dist/query";

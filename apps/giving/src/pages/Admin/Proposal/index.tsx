@@ -1,6 +1,6 @@
-import Icon from "@/components/Icon";
 import { QueryLoader } from "@ap/components";
 import { DetailLabel, Status } from "@ap/components/admin";
+import Icon from "@ap/components/icon";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useProposalDetailsQuery } from "@ap/services/juno";
 import { useParams } from "react-router-dom";

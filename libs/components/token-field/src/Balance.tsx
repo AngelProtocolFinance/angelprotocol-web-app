@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { humanize } from "@ap/helpers";
 import { BalanceProps } from "./types";
 

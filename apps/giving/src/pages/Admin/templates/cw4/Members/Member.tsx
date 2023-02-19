@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useSetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { apCW4Members as APMembers, MemberCopy } from "@ap/slices/admin";
 
 export default function Member(props: MemberCopy) {

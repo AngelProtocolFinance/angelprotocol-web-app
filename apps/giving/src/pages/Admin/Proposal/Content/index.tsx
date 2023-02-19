@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { DetailLabel } from "@ap/components/admin";
+import Icon from "@ap/components/icon";
 import { useState } from "react";
 import {
   EmbeddedBankMsg,

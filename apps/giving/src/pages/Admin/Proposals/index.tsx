@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useGetter } from "@/store/accessors";
+import Icon from "@ap/components/icon";
 import { useState } from "react";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar";

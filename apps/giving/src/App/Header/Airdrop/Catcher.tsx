@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { humanize } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { Airdrops } from "@ap/types/aws";

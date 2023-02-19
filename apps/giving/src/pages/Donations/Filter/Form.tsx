@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { Popover } from "@headlessui/react";
 import { FC, FormEventHandler } from "react";
 import { FormValues as FV } from "./types";

@@ -1,4 +1,4 @@
-import Icon, { DrawerIcon } from "@/components/Icon";
+import Icon, { DrawerIcon } from "@ap/components/icon";
 import { cleanObject } from "@ap/helpers";
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";

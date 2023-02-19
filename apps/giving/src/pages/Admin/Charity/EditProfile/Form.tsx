@@ -1,6 +1,6 @@
-import Icon from "@/components/Icon";
 import CountrySelector from "@ap/components/country-selector";
 import { Field, Label } from "@ap/components/form";
+import Icon from "@ap/components/icon";
 import ImgEditor from "@ap/components/img-editor";
 import { RichTextEditor } from "@ap/components/rich-text";
 import { Selector } from "@ap/components/selector";

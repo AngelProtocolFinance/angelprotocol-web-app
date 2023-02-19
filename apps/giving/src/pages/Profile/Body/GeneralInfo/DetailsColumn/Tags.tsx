@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { useProfileContext } from "@/pages/Profile/ProfileContext";
+import Icon from "@ap/components/icon";
 import { unsdgs } from "@ap/constants";
 import { PropsWithChildren } from "react";
 

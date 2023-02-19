@@ -21,8 +21,7 @@
       "inputs": [
         "default",
         "^production",
-        "{workspaceRoot}/configs/jest/jest.preset.js",
-        "{workspaceRoot}/jest.preset.js"
+        "{workspaceRoot}/configs/jest/jest.preset.js"
       ]
     }
   },

@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Icon";
+import { IconType } from "@ap/components/icon";
 import { PropsWithChildren } from "react";
 import { IconBaseProps } from "react-icons";
 

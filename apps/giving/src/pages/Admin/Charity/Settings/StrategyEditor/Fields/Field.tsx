@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { roundDownToNum } from "@ap/helpers";
 import { ErrorMessage } from "@hookform/error-message";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";

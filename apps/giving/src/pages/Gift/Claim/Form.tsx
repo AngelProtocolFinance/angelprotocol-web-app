@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import Prompt from "@ap/components/prompt";
 import { APIs, appRoutes, chainIds } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";

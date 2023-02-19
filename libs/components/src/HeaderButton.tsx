@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { SortDirection, SortKey } from "@ap/hooks/use-sort";
 
 export function HeaderButton(

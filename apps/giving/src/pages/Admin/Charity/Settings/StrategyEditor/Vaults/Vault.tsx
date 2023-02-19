@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { maskAddress } from "@ap/helpers";
 
 type VaultProps = {

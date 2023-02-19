@@ -1,4 +1,4 @@
-import Icon, { IconType } from "@/components/Icon";
+import Icon, { IconType } from "@ap/components/icon";
 import { StatusProps } from "./types";
 import Status from "./Status";
 

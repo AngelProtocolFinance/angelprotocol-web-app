@@ -1,4 +1,5 @@
 import unknownFlag from "@/assets/icons/unknown-flag.jpeg";
+import Icon, { DrawerIcon } from "@ap/components/icon";
 import { useLazyCountryFlagQuery } from "@ap/services/countries";
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
@@ -10,7 +11,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { CountryOption } from "@ap/types/services";
-import Icon, { DrawerIcon } from "../../../../apps/giving/src/components/Icon";
 import Options from "./Options";
 
 type BaseFormShape = { [index: string]: CountryOption };

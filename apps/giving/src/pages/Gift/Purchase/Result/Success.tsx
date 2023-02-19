@@ -1,5 +1,5 @@
-import Icon from "@/components/Icon";
 import { ExtLink } from "@ap/components";
+import Icon from "@ap/components/icon";
 import { appRoutes, chainIds } from "@ap/constants";
 import { getTxUrl } from "@ap/helpers";
 import { GiftCard, TxResult } from "@ap/slices/gift";

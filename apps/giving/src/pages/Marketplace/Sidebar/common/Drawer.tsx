@@ -1,4 +1,4 @@
-import { DrawerIcon } from "@/components/Icon";
+import { DrawerIcon } from "@ap/components/icon";
 import { PropsWithChildren } from "react";
 
 type Props = PropsWithChildren<{

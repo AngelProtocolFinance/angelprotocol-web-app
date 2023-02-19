@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Icon";
+import { IconType } from "@ap/components/icon";
 import { LITEPAPER } from "@ap/constants";
 
 type SocialMedia =

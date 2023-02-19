@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@ap/components/icon";
 import { useErrorContext } from "@ap/contexts";
 import { useNewsletterSubscribeMutation } from "@ap/services/aws";
 import { ErrorMessage } from "@hookform/error-message";

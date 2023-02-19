@@ -1,4 +1,4 @@
-import Icon, { DrawerIcon } from "@/components/Icon";
+import Icon, { DrawerIcon } from "@ap/components/icon";
 import { chainIDs } from "@ap/constants";
 import { useErrorContext } from "@ap/contexts";
 import { WalletState, useSetWallet } from "@ap/contexts/wallet-context";
