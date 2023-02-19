@@ -1,6 +1,6 @@
 import { SchemaShape, requiredContractAddr } from "@ap/schemas";
 import * as Yup from "yup";
-import { IndexFundOwnerValues } from "@/pages/Admin/types";
+import { IndexFundOwnerValues } from "@ap/types/admin";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<IndexFundOwnerValues> = {

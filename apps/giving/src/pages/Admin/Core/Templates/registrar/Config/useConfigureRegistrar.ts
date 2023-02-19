@@ -9,7 +9,7 @@ import { useFormContext } from "react-hook-form";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
-} from "@/pages/Admin/types";
+} from "@ap/types/admin";
 import { RegistrarConfigPayload } from "@ap/types/contracts";
 
 type Key = keyof RegistrarConfigPayload;

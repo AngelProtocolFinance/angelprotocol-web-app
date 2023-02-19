@@ -2,7 +2,7 @@ import { FormError, FormSkeleton } from "@ap/components/admin";
 import { useRegistrarConfigQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { RegistrarConfigValues } from "@/pages/Admin/types";
+import { RegistrarConfigValues } from "@ap/types/admin";
 import { RegistrarConfig, RegistrarConfigPayload } from "@ap/types/contracts";
 import Form from "./Form";
 import { schema } from "./schema";

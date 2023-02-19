@@ -1,6 +1,6 @@
 import { DivContainer, Submitter } from "@ap/components/admin";
 import { Field, Label } from "@ap/components/form";
-import { AllianceEditValues as AV } from "@/pages/Admin/types";
+import { AllianceEditValues as AV } from "@ap/types/admin";
 import AllianceSelection from "./AllianceSelection";
 import MemberEditor from "./MemberEditor";
 import useEditAlliance from "./useEditAlliance";

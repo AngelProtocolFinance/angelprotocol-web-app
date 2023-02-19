@@ -10,7 +10,7 @@ import {
   CW3ConfigUpdateMeta,
   CW3ConfigValues,
   FormCW3Config,
-} from "@/pages/Admin/types";
+} from "@ap/types/admin";
 
 type Key = keyof FormCW3Config;
 type Value = FormCW3Config[Key];

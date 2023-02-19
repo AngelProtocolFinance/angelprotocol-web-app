@@ -6,10 +6,7 @@ import { Account, CW3 } from "@ap/contracts";
 import { cleanObject, getTagPayloads } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import {
-  EndowmentStatusMeta,
-  EndowmentUpdateValues,
-} from "@/pages/Admin/types";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "@ap/types/admin";
 import {
   Beneficiary,
   EndowmentStatus,

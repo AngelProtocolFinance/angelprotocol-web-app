@@ -6,7 +6,7 @@ import {
   invalidateJunoTags,
   registrarTags,
 } from "@ap/services/juno";
-import { ProposalMeta } from "@/pages/Admin/types";
+import { ProposalMeta } from "@ap/types/admin";
 import { TagPayload } from "@ap/types/services";
 
 export function getTagPayloads(type?: ProposalMeta["type"]): TagPayload[] {

@@ -1,7 +1,7 @@
 import { axlUSDCDenom } from "@ap/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FundSendValues } from "@/pages/Admin/types";
+import { FundSendValues } from "@ap/types/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 

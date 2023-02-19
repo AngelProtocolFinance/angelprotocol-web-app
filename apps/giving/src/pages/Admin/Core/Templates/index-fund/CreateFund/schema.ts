@@ -6,7 +6,7 @@ import {
   stringByteSchema,
 } from "@ap/schemas";
 import * as Yup from "yup";
-import { FundCreatorValues } from "@/pages/Admin/types";
+import { FundCreatorValues } from "@ap/types/admin";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundCreatorValues> = {

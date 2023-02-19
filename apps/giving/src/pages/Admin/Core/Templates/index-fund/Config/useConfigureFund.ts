@@ -11,7 +11,7 @@ import {
 } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { FundConfigUpdateMeta, FundConfigValues } from "@/pages/Admin/types";
+import { FundConfigUpdateMeta, FundConfigValues } from "@ap/types/admin";
 import { FundConfig } from "@ap/types/contracts";
 
 type Key = keyof FundConfig;

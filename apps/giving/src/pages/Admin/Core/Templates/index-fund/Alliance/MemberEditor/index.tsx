@@ -1,7 +1,7 @@
 import { GroupContainer } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
 import React from "react";
-import { AllianceEditValues as AV } from "@/pages/Admin/types";
+import { AllianceEditValues as AV } from "@ap/types/admin";
 import useEditMember from "./useEditMember";
 
 export default function MemberEditor() {

@@ -1,6 +1,6 @@
 import { DivContainer, Submitter } from "@ap/components/admin";
 import { Field, Label } from "@ap/components/form";
-import { MemberUpdatorValues as T } from "@/pages/Admin/types";
+import { MemberUpdatorValues as T } from "@ap/types/admin";
 import Adder from "./Adder";
 import Member from "./Member";
 import useUpdateMembers from "./useUpdateMembers";

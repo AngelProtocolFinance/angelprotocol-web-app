@@ -1,6 +1,6 @@
 import { FormContainer, Submitter } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
-import { FundConfigValues as FV } from "@/pages/Admin/types";
+import { FundConfigValues as FV } from "@ap/types/admin";
 import useConfigureFund from "./useConfigureFund";
 
 export default function Form() {

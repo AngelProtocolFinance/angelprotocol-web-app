@@ -1,6 +1,6 @@
 import { SchemaShape, requiredContractAddr } from "@ap/schemas";
 import * as Yup from "yup";
-import { FundUpdateValues } from "@/pages/Admin/types";
+import { FundUpdateValues } from "@ap/types/admin";
 import { proposalShape } from "../../../../constants";
 
 const shape: SchemaShape<FundUpdateValues> = {

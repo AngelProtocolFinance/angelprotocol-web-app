@@ -5,7 +5,7 @@ import { allianceMembers as members } from "@ap/slices/admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { AllianceEditValues } from "@/pages/Admin/types";
+import { AllianceEditValues } from "@ap/types/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 

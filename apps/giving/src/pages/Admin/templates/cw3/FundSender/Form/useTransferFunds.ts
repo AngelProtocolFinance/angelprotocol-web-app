@@ -7,8 +7,8 @@ import { CW3, CW20 } from "@ap/contracts";
 import { getTagPayloads, scaleToStr } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { FundSendMeta } from "@/pages/Admin/types";
-import { FundSendValues } from "@/pages/Admin/types";
+import { FundSendMeta } from "@ap/types/admin";
+import { FundSendValues } from "@ap/types/admin";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@ap/types/contracts";
 
 export default function useTransferFunds() {

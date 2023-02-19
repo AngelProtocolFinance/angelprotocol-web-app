@@ -1,7 +1,7 @@
 import { useGetter, useSetter } from "@/store/accessors";
 import { fundMembers as FMs } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "@/pages/Admin/types";
+import { FundUpdateValues } from "@ap/types/admin";
 
 export default function useAddMember() {
   const dispatch = useSetter();

@@ -4,7 +4,7 @@ import {
   requiredWalletAddr,
 } from "@ap/schemas";
 import * as Yup from "yup";
-import { EndowmentUpdateValues as EPV } from "@/pages/Admin/types";
+import { EndowmentUpdateValues as EPV } from "@ap/types/admin";
 import { proposalShape } from "../../../../constants";
 
 type BeneficiaryType = EPV["beneficiaryType"];

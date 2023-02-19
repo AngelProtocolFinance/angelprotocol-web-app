@@ -5,7 +5,7 @@ import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { FundDestroyValues, RemoveFundMeta } from "@/pages/Admin/types";
+import { FundDestroyValues, RemoveFundMeta } from "@ap/types/admin";
 
 export default function useDestroyFund() {
   const {

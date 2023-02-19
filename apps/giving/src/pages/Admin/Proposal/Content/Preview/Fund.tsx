@@ -1,5 +1,5 @@
 import { humanize } from "@ap/helpers";
-import { FundPreview } from "@/pages/Admin/types";
+import { FundPreview } from "@ap/types/admin";
 import Header from "./common/Header";
 import KeyValue from "./common/KeyValue";
 import MemberItem from "./common/MemberItem";

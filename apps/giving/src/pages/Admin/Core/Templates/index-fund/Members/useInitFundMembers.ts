@@ -3,7 +3,7 @@ import { useFundListQuery } from "@ap/services/juno";
 import { fundMembers as members } from "@ap/slices/admin";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "@/pages/Admin/types";
+import { FundUpdateValues } from "@ap/types/admin";
 
 export default function useInitFundMembers() {
   const { watch } = useFormContext<FundUpdateValues>();

@@ -1,6 +1,6 @@
 import { GroupContainer } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
-import { MemberUpdatorValues as T } from "@/pages/Admin/types";
+import { MemberUpdatorValues as T } from "@ap/types/admin";
 import useAddMember from "./useAddMember";
 
 export default function Adder() {

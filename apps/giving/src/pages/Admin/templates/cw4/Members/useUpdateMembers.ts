@@ -7,7 +7,7 @@ import { CW3, CW4 } from "@ap/contracts";
 import { getTagPayloads } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { CW4MemberUpdateMeta, MemberUpdatorValues } from "@/pages/Admin/types";
+import { CW4MemberUpdateMeta, MemberUpdatorValues } from "@ap/types/admin";
 import { CW4Member } from "@ap/types/contracts";
 
 export default function useUpdateMembers() {

@@ -6,7 +6,7 @@ import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { AllianceEditMeta, AllianceEditValues } from "@/pages/Admin/types";
+import { AllianceEditMeta, AllianceEditValues } from "@ap/types/admin";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@ap/types/contracts";
 
 export default function useEditAlliance() {

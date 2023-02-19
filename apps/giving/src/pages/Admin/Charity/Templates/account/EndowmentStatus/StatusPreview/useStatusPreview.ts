@@ -2,7 +2,7 @@ import { useDebouncer } from "@ap/hooks";
 import { useEndowmentsQuery } from "@ap/services/juno";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { EndowmentUpdateValues } from "@/pages/Admin/types";
+import { EndowmentUpdateValues } from "@ap/types/admin";
 
 export default function useStatusPreview() {
   const { watch, getFieldState, setValue } =

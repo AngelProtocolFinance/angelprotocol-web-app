@@ -4,7 +4,7 @@ import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AdminParams } from "./types";
+import { AdminParams } from "@ap/types/admin";
 import { AdminResources } from "@ap/types/services";
 
 export function Guard(props: {

@@ -5,8 +5,8 @@ import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta } from "@/pages/Admin/types";
-import { IndexFundOwnerValues } from "@/pages/Admin/types";
+import { OwnerUpdateMeta } from "@ap/types/admin";
+import { IndexFundOwnerValues } from "@ap/types/admin";
 
 export default function useUpdateOwner() {
   const { cw3, propMeta } = useAdminResources();

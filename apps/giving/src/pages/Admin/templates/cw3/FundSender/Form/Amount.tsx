@@ -3,7 +3,7 @@ import { denoms, symbols } from "@ap/constants";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@/pages/Admin/types";
+import { FundSendValues } from "@ap/types/admin";
 import Balance from "./Balance";
 import Denom from "./Denom";
 

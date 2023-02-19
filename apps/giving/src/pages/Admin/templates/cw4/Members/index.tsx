@@ -6,7 +6,7 @@ import { apCW4Members } from "@ap/slices/admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { MemberUpdatorValues } from "@/pages/Admin/types";
+import { MemberUpdatorValues } from "@ap/types/admin";
 import MemberUpdateForm from "./Form";
 import { schema } from "./schema";
 

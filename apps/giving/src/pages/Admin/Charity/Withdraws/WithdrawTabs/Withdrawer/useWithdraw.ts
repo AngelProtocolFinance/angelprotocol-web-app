@@ -7,7 +7,7 @@ import { scaleToStr } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
-import { WithdrawMeta } from "@/pages/Admin/types";
+import { WithdrawMeta } from "@ap/types/admin";
 import { Asset } from "@ap/types/contracts";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 

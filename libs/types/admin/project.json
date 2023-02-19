@@ -1,0 +1,26 @@
+{
+  "name": "types-admin",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/types/admin/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/types/admin",
+        "main": "libs/types/admin/src/index.ts",
+        "tsConfig": "libs/types/admin/tsconfig.lib.json",
+        "swcrc": "configs/lib.swcrc"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/types/admin/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

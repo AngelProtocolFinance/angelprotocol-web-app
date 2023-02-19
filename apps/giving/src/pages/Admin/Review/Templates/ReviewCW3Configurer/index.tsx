@@ -1,7 +1,7 @@
 import { useAdminResources } from "@/pages/Admin/Guard";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { CW3ConfigValues, FormReviewCW3Config } from "@/pages/Admin/types";
+import { CW3ConfigValues, FormReviewCW3Config } from "@ap/types/admin";
 import Form from "./Form";
 import { schema } from "./schema";
 

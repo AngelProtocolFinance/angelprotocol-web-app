@@ -1,4 +1,4 @@
-import { CW4MemberUpdateMeta } from "@/pages/Admin/types";
+import { CW4MemberUpdateMeta } from "@ap/types/admin";
 import Header from "./common/Header";
 import MemberItem from "./common/MemberItem";
 import PreviewContainer from "./common/PreviewContainer";

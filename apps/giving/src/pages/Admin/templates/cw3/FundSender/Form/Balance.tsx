@@ -1,7 +1,7 @@
 import { axlUSDCDenom, symbols } from "@ap/constants";
 import { humanize } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@/pages/Admin/types";
+import { FundSendValues } from "@ap/types/admin";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<FundSendValues>();

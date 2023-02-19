@@ -6,8 +6,8 @@ import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "@/pages/Admin/types";
-import { FundUpdateValues } from "@/pages/Admin/types";
+import { FundMemberUpdateMeta } from "@ap/types/admin";
+import { FundUpdateValues } from "@ap/types/admin";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();

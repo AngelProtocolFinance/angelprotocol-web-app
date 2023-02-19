@@ -9,7 +9,7 @@ import {
   useLatestBlockQuery,
 } from "@ap/services/juno";
 import React, { ReactNode, useMemo } from "react";
-import { ProposalMeta } from "@/pages/Admin/types";
+import { ProposalMeta } from "@ap/types/admin";
 import { ProposalDetails, TagPayload } from "@ap/types/services";
 import { useAdminResources } from "../Guard";
 import Voter from "./Voter";

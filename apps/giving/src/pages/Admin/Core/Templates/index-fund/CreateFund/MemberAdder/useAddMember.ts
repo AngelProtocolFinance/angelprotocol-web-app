@@ -2,7 +2,7 @@ import { useGetter } from "@/store/accessors";
 import { newFundMembers as NFMs } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { FundCreatorValues as V } from "@/pages/Admin/types";
+import { FundCreatorValues as V } from "@ap/types/admin";
 
 export default function useAddMember() {
   const { getValues, setError, resetField, trigger } = useFormContext<V>();

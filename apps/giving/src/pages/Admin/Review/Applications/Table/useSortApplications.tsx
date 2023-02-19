@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SortDirection, SortKey } from "@/pages/Admin/types";
+import { SortDirection, SortKey } from "@ap/types/admin";
 import { EndowmentProposal } from "@ap/types/aws";
 
 export default function useSortedApplications(

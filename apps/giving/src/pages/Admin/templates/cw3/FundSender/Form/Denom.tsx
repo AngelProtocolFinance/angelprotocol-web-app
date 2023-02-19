@@ -1,7 +1,7 @@
 import { tokens } from "@ap/constants";
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@/pages/Admin/types";
+import { FundSendValues } from "@ap/types/admin";
 
 function Denom({ denom }: { denom: string }) {
   const { register, watch } = useFormContext<FundSendValues>();

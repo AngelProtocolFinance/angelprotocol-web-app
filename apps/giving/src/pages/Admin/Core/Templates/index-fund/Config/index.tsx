@@ -3,7 +3,7 @@ import { condenseToStr } from "@ap/helpers";
 import { useIndexFundConfigQuery } from "@ap/services/juno";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FundConfigValues } from "@/pages/Admin/types";
+import { FundConfigValues } from "@ap/types/admin";
 import { FundConfig, IndexFundConfig } from "@ap/types/contracts";
 import Form from "./Form";
 import { schema } from "./schema";

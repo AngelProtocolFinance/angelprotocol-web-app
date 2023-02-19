@@ -1,6 +1,6 @@
 import { GroupContainer } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
-import { FundCreatorValues as V } from "@/pages/Admin/types";
+import { FundCreatorValues as V } from "@ap/types/admin";
 import Member from "./Member";
 import useAddMember from "./useAddMember";
 

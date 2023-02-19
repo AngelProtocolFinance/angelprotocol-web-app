@@ -5,7 +5,7 @@ import {
   positiveNumber,
 } from "@ap/schemas";
 import * as Yup from "yup";
-import { RegistrarConfigValues } from "@/pages/Admin/types";
+import { RegistrarConfigValues } from "@ap/types/admin";
 import { proposalShape } from "../../../../constants";
 
 const contractAddrSchema = contractAddr.nullable();

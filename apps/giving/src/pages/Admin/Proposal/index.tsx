@@ -4,7 +4,7 @@ import Icon from "@ap/components/icon";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useProposalDetailsQuery } from "@ap/services/juno";
 import { useParams } from "react-router-dom";
-import { ProposalParams } from "@/pages/Admin/types";
+import { ProposalParams } from "@ap/types/admin";
 import { Expiration } from "@ap/types/contracts";
 import { useAdminResources } from "../Guard";
 import Content from "./Content";

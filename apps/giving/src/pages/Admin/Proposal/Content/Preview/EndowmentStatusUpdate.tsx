@@ -1,4 +1,4 @@
-import { EndowmentStatusMeta } from "@/pages/Admin/types";
+import { EndowmentStatusMeta } from "@ap/types/admin";
 import { EndowmentStatus, EndowmentStatusNum } from "@ap/types/contracts";
 import KeyValue from "./common/KeyValue";
 import PreviewContainer from "./common/PreviewContainer";

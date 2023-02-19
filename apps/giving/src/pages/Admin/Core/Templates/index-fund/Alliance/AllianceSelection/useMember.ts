@@ -4,7 +4,7 @@ import {
   allianceMembers as members,
 } from "@ap/slices/admin";
 import { useFormContext } from "react-hook-form";
-import { AllianceEditValues } from "@/pages/Admin/types";
+import { AllianceEditValues } from "@ap/types/admin";
 
 export default function useMember(member: AllianceMemberWithFlags) {
   const { setValue, setFocus, resetField } =

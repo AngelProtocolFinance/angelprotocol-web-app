@@ -6,7 +6,7 @@ import { cleanObject, condense, roundDown } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateFundMeta, FundCreatorValues } from "@/pages/Admin/types";
+import { CreateFundMeta, FundCreatorValues } from "@ap/types/admin";
 import { FundDetails } from "@ap/types/contracts";
 import { INIT_SPLIT } from ".";
 

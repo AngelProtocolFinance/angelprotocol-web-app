@@ -1,7 +1,7 @@
 import { useFundListQuery, useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
-import { FundIdContext } from "@/pages/Admin/types";
+import { FundIdContext } from "@ap/types/admin";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>

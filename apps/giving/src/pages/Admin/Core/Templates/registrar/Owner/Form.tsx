@@ -1,6 +1,6 @@
 import { FormContainer, Submitter } from "@ap/components/admin";
 import { Field } from "@ap/components/form";
-import { RegistrarOwnerValues as RV } from "@/pages/Admin/types";
+import { RegistrarOwnerValues as RV } from "@ap/types/admin";
 import useUpdateOwner from "./useUpdateOwner";
 
 export default function Form() {
