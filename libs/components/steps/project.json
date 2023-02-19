@@ -11,6 +11,20 @@
       "options": {
         "lintFilePatterns": ["libs/components/steps/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/components/steps",
+        "tsConfig": "libs/components/steps/tsconfig.lib.json",
+        "project": "libs/components/steps/package.json",
+        "entryFile": "libs/components/steps/src/index.tsx",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "swc"
+      }
     }
   }
+  
 }
