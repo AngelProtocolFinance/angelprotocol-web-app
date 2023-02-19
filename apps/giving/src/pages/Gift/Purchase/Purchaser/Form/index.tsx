@@ -1,4 +1,4 @@
-import TokenField from "@/components/TokenField";
+import TokenField from "@ap/components/token-field";
 import { appRoutes } from "@ap/constants";
 import { setDetails } from "@ap/slices/gift";
 import { useFormContext } from "react-hook-form";

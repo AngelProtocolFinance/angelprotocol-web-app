@@ -1,7 +1,7 @@
+import Icon, { DrawerIcon } from "@/components/Icon";
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { SelectorProps } from "./types";
-import Icon, { DrawerIcon } from "../Icon";
 
 export default function TokenSelector({
   token,

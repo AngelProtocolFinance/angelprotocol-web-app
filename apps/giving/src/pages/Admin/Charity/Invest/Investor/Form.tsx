@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
 import { LoadingStatus } from "@/components/Status";
-import TokenField from "@/components/TokenField";
+import TokenField from "@ap/components/token-field";
 import { useModalContext } from "@ap/contexts";
 import { Dialog } from "@headlessui/react";
 import { useFormContext } from "react-hook-form";
