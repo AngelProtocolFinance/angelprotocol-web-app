@@ -1,0 +1,29 @@
+{
+  "name": "components-wallet-suite",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components/wallet-suite/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/components/wallet-suite/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/components/wallet-suite",
+        "tsConfig": "libs/components/wallet-suite/tsconfig.lib.json",
+        "project": "libs/components/wallet-suite/package.json",
+        "entryFile": "libs/components/wallet-suite/src/index.tsx",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "swc"
+      }
+    }
+  }
+}

@@ -38,6 +38,9 @@
       "@ap/components/token-field": [
         "libs/components/token-field/src/index.ts"
       ],
+      "@ap/components/wallet-suite": [
+        "libs/components/wallet-suite/src/index.tsx"
+      ],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [
