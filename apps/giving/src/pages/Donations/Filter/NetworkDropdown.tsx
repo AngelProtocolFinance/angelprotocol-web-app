@@ -1,5 +1,5 @@
-import { Selector, selectorButtonStyle } from "@/components/Selector";
 import { QueryLoader } from "@ap/components";
+import { Selector, selectorButtonStyle } from "@ap/components/selector";
 import { useChainsQuery } from "@ap/services/apes";
 import { FormValues as FV } from "./types";
 

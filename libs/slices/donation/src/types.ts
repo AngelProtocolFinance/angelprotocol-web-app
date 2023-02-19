@@ -1,4 +1,4 @@
-import { OptionType } from "@/components/Selector";
+import { OptionType } from "@ap/components/selector";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { TransactionRequest } from "@ethersproject/providers";
 import { CreateTxOptions } from "@terra-money/terra.js";

@@ -1,9 +1,9 @@
 import Icon from "@/components/Icon";
-import { Selector } from "@/components/Selector";
 import CountrySelector from "@ap/components/country-selector";
 import { Field, Label } from "@ap/components/form";
 import ImgEditor from "@ap/components/img-editor";
 import { RichTextEditor } from "@ap/components/rich-text";
+import { Selector } from "@ap/components/selector";
 import { appRoutes, unsdgs } from "@ap/constants";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { OptionType } from "@/components/Selector";
+import { OptionType } from "@ap/components/selector";
 import { SchemaShape, requiredString } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";

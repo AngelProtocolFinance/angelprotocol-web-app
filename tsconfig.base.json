@@ -50,6 +50,7 @@
       "@ap/components/kyc": ["libs/components/kyc/src/index.ts"],
       "@ap/components/prompt": ["libs/components/prompt/src/index.ts"],
       "@ap/components/status": ["libs/components/status/src/index.ts"],
+      "@ap/components/selector": ["libs/components/selector/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [

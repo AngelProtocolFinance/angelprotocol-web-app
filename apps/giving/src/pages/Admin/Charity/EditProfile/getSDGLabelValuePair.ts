@@ -1,4 +1,4 @@
-import { OptionType } from "@/components/Selector";
+import { OptionType } from "@ap/components/selector";
 import { UNSDG_NUMS } from "@ap/types";
 
 export const getSDGLabelValuePair = (

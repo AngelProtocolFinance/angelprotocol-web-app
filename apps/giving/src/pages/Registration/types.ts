@@ -1,5 +1,5 @@
-import { OptionType } from "@/components/Selector";
 import { Asset } from "@/components/registration";
+import { OptionType } from "@ap/components/selector";
 import { Optional } from "@ap/types";
 import { UNSDG_NUMS } from "@ap/types";
 import {

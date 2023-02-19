@@ -1,6 +1,6 @@
-import { Selector } from "@/components/Selector";
 import { LoadText } from "@/components/registration";
 import { Field, Label } from "@ap/components/form";
+import { Selector } from "@ap/components/selector";
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "@ap/types/aws";
 import { referralOptions, roleOptions } from "../constants";
