@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
-import { LoadText, Separator } from "@/components/registration";
 import { steps } from "@/pages/Registration/routes";
+import { LoadText, Separator } from "@ap/components/registration";
 import { WalletState, useSetWallet } from "@ap/contexts/wallet-context";
 import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";

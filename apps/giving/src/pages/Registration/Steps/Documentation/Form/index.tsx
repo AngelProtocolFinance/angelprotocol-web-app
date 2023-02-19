@@ -1,6 +1,6 @@
-import { FileDropzone, LoadText } from "@/components/registration";
 import { ExtLink } from "@ap/components";
 import { CheckField, Field, Label } from "@ap/components/form";
+import { FileDropzone, LoadText } from "@ap/components/registration";
 import { Selector } from "@ap/components/selector";
 import { unsdgs } from "@ap/constants";
 import { TERMS_OF_USE } from "@ap/constants";

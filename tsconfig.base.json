@@ -29,6 +29,9 @@
       "@/*": ["apps/giving/src/*"],
       "@ap/components": ["libs/components/src/index.ts"],
       "@ap/components/admin": ["libs/components/admin/src/index.ts"],
+      "@ap/components/registration": [
+        "libs/components/registration/src/index.ts"
+      ],
       "@ap/components/copier": ["libs/components/copier/src/index.ts"],
       "@ap/components/csv-exporter": [
         "libs/components/csv-exporter/src/index.ts"

@@ -1,4 +1,4 @@
-import { Asset } from "@/components/registration";
+import { Asset } from "@ap/components/registration";
 import { OptionType } from "@ap/components/selector";
 import { Optional } from "@ap/types";
 import { UNSDG_NUMS } from "@ap/types";

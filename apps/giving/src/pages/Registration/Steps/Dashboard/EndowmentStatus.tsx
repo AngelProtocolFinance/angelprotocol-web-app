@@ -1,6 +1,6 @@
 import Icon from "@/components/Icon";
-import { LoadText } from "@/components/registration";
 import { steps } from "@/pages/Registration/routes";
+import { LoadText } from "@ap/components/registration";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { RegistrationStatus } from "@ap/types/aws";

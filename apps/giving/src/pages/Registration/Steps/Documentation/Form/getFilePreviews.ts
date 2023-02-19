@@ -1,4 +1,4 @@
-import { Asset } from "@/components/registration";
+import { Asset } from "@ap/components/registration";
 import { getFullURL, uploadFiles } from "@ap/helpers";
 import { FileObject } from "@ap/types/aws";
 

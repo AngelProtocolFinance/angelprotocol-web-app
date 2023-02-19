@@ -1,4 +1,4 @@
-import { Asset } from "@/components/registration";
+import { Asset } from "@ap/components/registration";
 import { SchemaShape, genFileSchema } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";

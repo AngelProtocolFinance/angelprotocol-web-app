@@ -1,6 +1,6 @@
-import { Separator } from "@/components/registration";
 import { ExtLink } from "@ap/components";
 import { CheckField, Field } from "@ap/components/form";
+import { Separator } from "@ap/components/registration";
 import { PRIVACY_POLICY } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";

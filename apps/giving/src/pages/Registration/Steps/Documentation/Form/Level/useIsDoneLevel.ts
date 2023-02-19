@@ -1,4 +1,4 @@
-import { Asset } from "@/components/registration";
+import { Asset } from "@ap/components/registration";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../../types";
 import { TLevel } from ".";
