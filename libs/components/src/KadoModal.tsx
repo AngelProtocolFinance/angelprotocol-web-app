@@ -1,4 +1,3 @@
-import { useSetter } from "@/store/accessors";
 import Icon from "@ap/components/icon";
 import { KADO_API_KEY, chainIDs } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
@@ -7,12 +6,13 @@ import { logger } from "@ap/helpers";
 import { invalidateApesTags } from "@ap/services/apes";
 import { Dialog } from "@headlessui/react";
 import { useCallback } from "react";
+import { useDispatch } from "react-redux";
 import IFrame from "./IFrame";
 
 type KADO_NETWORK_VALUES = "ethereum" | "juno" | "terra";
 
 export default function KadoModal() {
-  const dispatch = useSetter();
+  const dispatch = useDispatch();
   const { closeModal, setModalOption } = useModalContext();
 
   const { wallet } = useGetWallet();

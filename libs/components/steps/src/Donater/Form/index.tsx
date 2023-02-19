@@ -1,9 +1,8 @@
-import { useGetter } from "@/store/accessors";
 import TokenField from "@ap/components/token-field";
 import { appRoutes } from "@ap/constants";
-import { setDetails } from "@ap/slices/donation";
+import { SliceState, setDetails } from "@ap/slices/donation";
 import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { matchRoutes, useLocation } from "react-router-dom";
 import { DonateValues } from "../types";
@@ -22,7 +21,9 @@ export default function Form(props: {
 
   const isInsideWidget = useIsInsideWidget();
 
-  const endowId = useGetter((state) => state.donation.recipient?.id);
+  const endowId = useSelector(
+    (state: SliceState) => state.donation.recipient?.id
+  );
 
   const dispatch = useDispatch();
 

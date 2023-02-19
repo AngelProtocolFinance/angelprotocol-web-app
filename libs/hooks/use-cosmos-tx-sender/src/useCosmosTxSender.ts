@@ -1,4 +1,3 @@
-import { useSetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
 import { TxPrompt } from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
@@ -7,6 +6,7 @@ import { Contract } from "@ap/contracts";
 import { extractFeeAmount } from "@ap/helpers";
 import { invalidateApesTags } from "@ap/services/apes";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Tx, TxArgs } from "./types";
 import { TxOptions } from "@ap/types";
 import handleTxError from "./handleTxError";
@@ -20,7 +20,7 @@ export default function useCosmosTxSender<T extends boolean = false>(
   /** use this state to show loading to modal forms */
   const [isSending, setIsSending] = useState(false);
   const { showModal, setModalOption } = useModalContext();
-  const dispatch = useSetter();
+  const dispatch = useDispatch();
 
   const sendTx: Sender = async ({
     msgs,

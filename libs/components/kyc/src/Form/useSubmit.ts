@@ -1,15 +1,15 @@
-import { useSetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
 import Prompt from "@ap/components/prompt";
 import { useModalContext } from "@ap/contexts";
 import { useRequestReceiptMutation } from "@ap/services/apes";
-import { setKYC } from "@ap/slices/donation";
+import { DonationDispatch, setKYC } from "@ap/slices/donation";
 import { useFormContext } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { FormValues as FV, Props } from "../types";
 
 export default function useSubmit(props: Props) {
   const { reset } = useFormContext<FV>();
-  const dispatch = useSetter();
+  const dispatch = useDispatch<DonationDispatch>();
   const [submitRequest] = useRequestReceiptMutation();
   const { showModal } = useModalContext();
 

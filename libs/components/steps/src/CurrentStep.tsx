@@ -1,17 +1,21 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import KYC from "@ap/components/kyc";
 import Status, { LoadingStatus } from "@ap/components/status";
 import { useGetWallet } from "@ap/contexts/wallet-context";
-import { resetDetails } from "@ap/slices/donation";
+import {
+  DonationDispatch,
+  SliceState,
+  resetDetails,
+} from "@ap/slices/donation";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
 import { ConfigParams } from "./index";
 
 export default function CurrentStep(props: ConfigParams) {
-  const state = useGetter((state) => state.donation);
-  const dispatch = useSetter();
+  const state = useSelector((state: SliceState) => state.donation);
+  const dispatch = useDispatch<DonationDispatch>();
   const { wallet, isLoading } = useGetWallet();
 
   /** reset form state when user disconnects, user might change wallet */

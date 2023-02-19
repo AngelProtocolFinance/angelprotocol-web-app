@@ -1,11 +1,16 @@
-import { useSetter } from "@/store/accessors";
 import { ErrorStatus, LoadingStatus } from "@ap/components/status";
 import { appRoutes } from "@ap/constants";
 import { WithWallet } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
-import { SubmitStep, sendDonation, setStep } from "@ap/slices/donation";
+import {
+  DonationDispatch,
+  SubmitStep,
+  sendDonation,
+  setStep,
+} from "@ap/slices/donation";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PropsWithChildren, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "@ap/types";
@@ -15,7 +20,7 @@ import getBreakdown from "./getBreakdown";
 type EstimateStatus = Estimate | "loading" | "error";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
-  const dispatch = useSetter();
+  const dispatch = useDispatch<DonationDispatch>();
   const terraWallet = useConnectedWallet();
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
@@ -33,7 +38,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
 
   function submit({ tx }: Estimate) {
     const { wallet, ...donation } = props;
-    dispatch(sendDonation({ donation, wallet, tx }));
+    dispatch(sendDonation({ donation, wallet, tx }) as any);
   }
 
   const { token } = props.details;

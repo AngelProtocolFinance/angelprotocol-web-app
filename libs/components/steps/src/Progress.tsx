@@ -1,7 +1,8 @@
-import { useGetter } from "@/store/accessors";
+import { SliceState } from "@ap/slices/donation";
+import { useSelector } from "react-redux";
 
 export default function Progress({ classes = "" }: { classes?: string }) {
-  const step = useGetter((state) => state.donation.step);
+  const step = useSelector((state: SliceState) => state.donation.step);
 
   return (
     <div

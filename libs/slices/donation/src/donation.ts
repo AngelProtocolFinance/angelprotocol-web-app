@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   DonationDetails,
   DonationRecipient,
@@ -13,7 +13,7 @@ import {
 const initialState: DonationState = { step: 0 };
 
 const donation = createSlice({
-  name: "donate",
+  name: "donation",
   initialState: initialState as DonationState,
   reducers: {
     setRecipient: (_, { payload }: PayloadAction<DonationRecipient>) => {
@@ -64,3 +64,7 @@ export const {
   setKYC,
   setTxStatus,
 } = donation.actions;
+
+type Actions = typeof donation.actions;
+export type DonationDispatch = Dispatch<ReturnType<Actions[keyof Actions]>>;
+export type SliceState = { [donation.name]: DonationState };

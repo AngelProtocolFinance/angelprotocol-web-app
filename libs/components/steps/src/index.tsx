@@ -1,8 +1,8 @@
-import { useGetter } from "@/store/accessors";
 import { KadoModal } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
-import { DonationState } from "@ap/slices/donation";
+import { DonationState, SliceState } from "@ap/slices/donation";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
 import CurrentStep from "./CurrentStep";
 import Progress from "./Progress";
 
@@ -17,7 +17,7 @@ type Props = { className?: string } & ConfigParams;
 
 export function Steps({ className = "", ...params }: Props) {
   const { showModal } = useModalContext();
-  const state = useGetter((state) => state.donation);
+  const state = useSelector((state: SliceState) => state.donation);
 
   const handleOpenKado = useCallback(
     () => showModal(KadoModal, {}),

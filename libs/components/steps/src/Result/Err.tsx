@@ -1,7 +1,7 @@
-import { useSetter } from "@/store/accessors";
 import Icon from "@ap/components/icon";
 import { appRoutes } from "@ap/constants";
-import { setStep } from "@ap/slices/donation";
+import { DonationDispatch, setStep } from "@ap/slices/donation";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Err({
@@ -11,7 +11,7 @@ export default function Err({
   classes?: string;
   endowId: number;
 }) {
-  const dispatch = useSetter();
+  const dispatch = useDispatch<DonationDispatch>();
 
   function goToForm() {
     dispatch(setStep(1));

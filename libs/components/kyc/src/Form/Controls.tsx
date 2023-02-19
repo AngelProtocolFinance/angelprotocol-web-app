@@ -1,8 +1,8 @@
-import { useSetter } from "@/store/accessors";
 import { appRoutes } from "@ap/constants";
-import { setKYC, setStep } from "@ap/slices/donation";
+import { DonationDispatch, setKYC, setStep } from "@ap/slices/donation";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FormValues, OnDonation } from "../types";
 
@@ -17,7 +17,7 @@ export default function Controls({
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
 
-  const dispatch = useSetter();
+  const dispatch = useDispatch<DonationDispatch>();
   const { state } = props;
   const {
     step,
