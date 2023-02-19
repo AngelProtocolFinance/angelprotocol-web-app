@@ -41,6 +41,9 @@
       "@ap/components/wallet-suite": [
         "libs/components/wallet-suite/src/index.tsx"
       ],
+      "@ap/components/country-selector": [
+        "libs/components/country-selector/src/index.tsx"
+      ],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [

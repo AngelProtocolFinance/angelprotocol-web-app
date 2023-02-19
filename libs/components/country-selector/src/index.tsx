@@ -10,7 +10,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { CountryOption } from "@ap/types/services";
-import Icon, { DrawerIcon } from "../Icon";
+import Icon, { DrawerIcon } from "../../../../apps/giving/src/components/Icon";
 import Options from "./Options";
 
 type BaseFormShape = { [index: string]: CountryOption };
