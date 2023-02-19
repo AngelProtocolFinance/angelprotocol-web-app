@@ -23,7 +23,7 @@ const fileObj = Yup.object().shape<SchemaShape<ImgLink>>({
 //construct strict shape to avoid hardcoding shape keys
 const shape: SchemaShape<FormValues> = {
   categories_sdgs: Yup.array().min(1, "required"),
-  tagline: requiredString,
+  tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
   logo: fileObj,
   url: url.required("required"),
@@ -33,7 +33,7 @@ const shape: SchemaShape<FormValues> = {
   }),
   name: requiredString,
   overview: requiredString,
-  active_in_countries: Yup.array().min(1, "required"),
+  active_in_countries: Yup.array(),
   social_media_url_facebook: url,
   social_media_url_twitter: url,
   social_media_url_linkedin: url,

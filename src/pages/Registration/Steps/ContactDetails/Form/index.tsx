@@ -3,6 +3,7 @@ import { ContactRoles, ReferralMethods } from "types/aws";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { LoadText } from "components/registration";
+import { APP_NAME } from "constants/common";
 import { referralOptions, roleOptions } from "../constants";
 import useSubmit from "./useSubmit";
 
@@ -93,7 +94,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Field
         name="goals"
         label="Goals"
-        placeholder="What is your goal working with Angel Giving?"
+        placeholder={`What is your goal working with ${APP_NAME}?`}
         classes={{ container: "mt-4" }}
         required
       />
