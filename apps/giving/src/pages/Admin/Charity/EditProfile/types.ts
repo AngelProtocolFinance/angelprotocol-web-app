@@ -1,5 +1,5 @@
-import { ImgLink } from "@/components/ImgEditor";
 import { OptionType } from "@/components/Selector";
+import { ImgLink } from "@ap/components/img-editor";
 import { UNSDG_NUMS } from "@ap/types";
 import { EndowmentProfileUpdate } from "@ap/types/aws";
 import { CountryOption } from "@ap/types/services";

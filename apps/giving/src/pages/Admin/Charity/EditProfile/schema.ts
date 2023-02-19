@@ -1,4 +1,4 @@
-import { ImgLink } from "@/components/ImgEditor";
+import { ImgLink } from "@ap/components/img-editor";
 import { SchemaShape, genFileSchema, requiredString, url } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
