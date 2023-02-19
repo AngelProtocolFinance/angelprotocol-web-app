@@ -1,6 +1,6 @@
-import { Steps } from "@/components/donation";
 import { useGetter, useSetter } from "@/store/accessors";
 import { Breadcrumbs } from "@ap/components";
+import { Steps } from "@ap/components/steps";
 import { appRoutes } from "@ap/constants";
 import {
   DonationRecipient,

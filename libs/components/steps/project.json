@@ -1,0 +1,16 @@
+{
+  "name": "components-steps",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/components/steps/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/components/steps/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

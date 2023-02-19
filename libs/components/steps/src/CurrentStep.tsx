@@ -4,10 +4,10 @@ import { useGetter, useSetter } from "@/store/accessors";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { resetDetails } from "@ap/slices/donation";
 import { useEffect } from "react";
-import { ConfigParams } from "..";
 import Donater from "./Donater";
 import Result from "./Result";
 import Submit from "./Submit";
+import { ConfigParams } from "./index";
 
 export default function CurrentStep(props: ConfigParams) {
   const state = useGetter((state) => state.donation);
