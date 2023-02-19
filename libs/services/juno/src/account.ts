@@ -1,6 +1,4 @@
-import { contracts } from "@ap/constants";
-import { IS_TEST } from "@ap/constants";
-import { denoms, symbols } from "@ap/constants";
+import { IS_TEST, contracts, denoms, symbols } from "@ap/constants";
 import { condenseToNum } from "@ap/helpers";
 import { Args, Res, Result } from "./queryContract/types";
 import { AccountType, EndowmentEntry } from "@ap/types/contracts";

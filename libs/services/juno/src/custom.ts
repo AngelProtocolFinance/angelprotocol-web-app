@@ -1,6 +1,4 @@
-import { contracts } from "@ap/constants";
-import { adminRoutes, appRoutes } from "@ap/constants";
-import { symbols } from "@ap/constants";
+import { adminRoutes, appRoutes, contracts, symbols } from "@ap/constants";
 import { condenseToNum, idParamToNum } from "@ap/helpers";
 import { isJunoAddress } from "@ap/schemas";
 import { Args } from "./queryContract/types";

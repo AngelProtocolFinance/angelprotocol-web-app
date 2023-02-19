@@ -1,5 +1,4 @@
-import { chainIds } from "@ap/constants";
-import { appRoutes } from "@ap/constants";
+import { appRoutes, chainIds } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { AP_ID, REVIEWER_ID, useIsMemberQuery } from "@ap/services/juno";
 import { Link } from "react-router-dom";

@@ -1,5 +1,4 @@
-import ERC20Abi from "@/abi/ERC20.json";
-import { ap_wallets } from "@ap/constants";
+import { ERC20Abi, ap_wallets } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { Account, CW20, GiftCard } from "@ap/contracts";
 import { extractFeeAmount, getProvider, logger, scaleToStr } from "@ap/helpers";

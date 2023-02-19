@@ -1,5 +1,4 @@
-import { IS_TEST } from "@ap/constants";
-import { APIs } from "@ap/constants";
+import { APIs, IS_TEST } from "@ap/constants";
 import { createAuthToken } from "@ap/helpers";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { NetworkType } from "@ap/types";
