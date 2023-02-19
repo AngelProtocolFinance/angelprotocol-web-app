@@ -1,6 +1,6 @@
-import CsvExporter from "@/components/CsvExporter";
 import Icon from "@/components/Icon";
 import QueryLoader from "@/components/QueryLoader";
+import CsvExporter from "@ap/components/csv-exporter";
 import { isEmpty } from "@ap/helpers";
 import { useDebouncer } from "@ap/hooks";
 import { useDonationsQuery } from "@ap/services/apes";

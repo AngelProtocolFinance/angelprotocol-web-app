@@ -1,4 +1,4 @@
-import CsvExporter from "@/components/CsvExporter";
+import CsvExporter from "@ap/components/csv-exporter";
 import Icon from "@/components/Icon";
 import { Cells, ExtLink, HeaderButton, TableSection } from "@ap/components";
 import { getTxUrl, humanize, maskAddress } from "@ap/helpers";
