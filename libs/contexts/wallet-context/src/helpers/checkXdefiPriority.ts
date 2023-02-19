@@ -1,4 +1,4 @@
-import { WalletError, WalletNotInstalledError } from "@/errors/errors";
+import { WalletError, WalletNotInstalledError } from "@ap/errors";
 import { Dwindow } from "@ap/types";
 
 export function checkXdefiPriority() {

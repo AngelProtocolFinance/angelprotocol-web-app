@@ -1,5 +1,5 @@
-import { WalletDisconnectedError } from "@/errors/errors";
 import { IS_MOBILE, IS_TEST, chainIDs } from "@ap/constants";
+import { WalletDisconnectedError } from "@ap/errors";
 import { useChainQuery } from "@ap/services/apes";
 import {
   PropsWithChildren,

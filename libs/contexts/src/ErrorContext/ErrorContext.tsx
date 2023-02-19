@@ -1,10 +1,10 @@
+import Prompt from "@ap/components/prompt";
+import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import {
   APError,
   AP_ERROR_DISCRIMINATOR,
   WalletNotInstalledError,
-} from "@/errors/errors";
-import Prompt from "@ap/components/prompt";
-import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+} from "@ap/errors";
 import { logger } from "@ap/helpers";
 import {
   PropsWithChildren,

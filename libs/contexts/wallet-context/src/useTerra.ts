@@ -1,10 +1,10 @@
 import station_icon from "@/assets/icons/wallets/terra-extension.jpg";
+import { IS_TEST, chainIDs } from "@ap/constants";
 import {
   ManualChainSwitchRequiredError,
   UnsupportedChainError,
   WalletDisconnectedError,
-} from "@/errors/errors";
-import { IS_TEST, chainIDs } from "@ap/constants";
+} from "@ap/errors";
 import {
   ConnectType,
   Installation,

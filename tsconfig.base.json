@@ -57,6 +57,7 @@
       "@ap/components/selector": ["libs/components/selector/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
+      "@ap/errors": ["libs/errors/src/index.ts"],
       "@ap/contexts/wallet-context": [
         "libs/contexts/wallet-context/src/index.ts"
       ],

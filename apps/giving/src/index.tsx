@@ -1,6 +1,6 @@
-import ErrorBoundary from "@/errors/ErrorBoundary";
 import { store } from "@/store/store";
 import { Loader } from "@ap/components";
+import { ErrorBoundary } from "@ap/errors";
 import { initTheme } from "@ap/helpers";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";

@@ -1,3 +1,4 @@
+import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
 import {
   CosmosTxSimulationFail,
   LogApplicationUpdateError,
@@ -5,8 +6,7 @@ import {
   TxResultFail,
   UnexpectedStateError,
   WalletDisconnectedError,
-} from "@/errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "@ap/constants";
+} from "@ap/errors";
 import { logger } from "@ap/helpers";
 import { TimeoutError } from "@cosmjs/stargate";
 import {

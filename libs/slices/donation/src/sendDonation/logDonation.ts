@@ -1,5 +1,5 @@
-import { LogDonationFail } from "@/errors/errors";
 import { APIs, IS_TEST } from "@ap/constants";
+import { LogDonationFail } from "@ap/errors";
 import { createAuthToken } from "@ap/helpers";
 import { TxLogPayload } from "@ap/types/aws";
 

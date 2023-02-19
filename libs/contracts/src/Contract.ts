@@ -1,11 +1,11 @@
+import { IS_TEST } from "@ap/constants";
+import { WalletState } from "@ap/contexts/wallet-context";
 import {
   CosmosTxSimulationFail,
   TxResultFail,
   WalletDisconnectedError,
   WrongChainError,
-} from "@/errors/errors";
-import { IS_TEST } from "@ap/constants";
-import { WalletState } from "@ap/contexts/wallet-context";
+} from "@ap/errors";
 import { getKeplrClient, logger, toBase64 } from "@ap/helpers";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { toUtf8 } from "@cosmjs/encoding";

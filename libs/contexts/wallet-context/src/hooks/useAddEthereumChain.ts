@@ -1,5 +1,5 @@
-import { WalletError } from "@/errors/errors";
 import { EIPMethods, GENERIC_ERROR_MESSAGE } from "@ap/constants";
+import { WalletError } from "@ap/errors";
 import { useLazyChainQuery } from "@ap/services/apes";
 import { useCallback } from "react";
 import { InjectedProvider } from "@ap/types";

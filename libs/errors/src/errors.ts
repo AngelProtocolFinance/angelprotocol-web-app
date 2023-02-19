@@ -22,7 +22,6 @@ export abstract class APError extends Error implements IAPError {
       name: this.name,
       message: this.message,
       stack: this.stack,
-      cause: this.cause,
       discriminator: this.discriminator,
     };
   }

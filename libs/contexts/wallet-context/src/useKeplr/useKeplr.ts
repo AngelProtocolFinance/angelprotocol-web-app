@@ -1,9 +1,9 @@
+import { GENERIC_ERROR_MESSAGE, IS_TEST, chainIDs } from "@ap/constants";
 import {
   UnsupportedChainError,
   WalletError,
   WalletNotInstalledError,
-} from "@/errors/errors";
-import { GENERIC_ERROR_MESSAGE, IS_TEST, chainIDs } from "@ap/constants";
+} from "@ap/errors";
 import { useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "../types";
 import { Dwindow } from "@ap/types";

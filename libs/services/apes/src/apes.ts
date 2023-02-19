@@ -1,4 +1,3 @@
-import { UnsupportedChainError } from "@/errors/errors";
 import {
   APIs,
   IS_TEST,
@@ -6,6 +5,7 @@ import {
   JUNO_RPC_OVERRIDE,
   chainIds,
 } from "@ap/constants";
+import { UnsupportedChainError } from "@ap/errors";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   BaseChain,

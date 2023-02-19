@@ -1,11 +1,11 @@
+import { EIPMethods, GENERIC_ERROR_MESSAGE, chainIDs } from "@ap/constants";
 import {
   UnexpectedStateError,
   UnsupportedChainError,
   WalletDisconnectedError,
   WalletError,
   WalletNotInstalledError,
-} from "@/errors/errors";
-import { EIPMethods, GENERIC_ERROR_MESSAGE, chainIDs } from "@ap/constants";
+} from "@ap/errors";
 import { getProvider } from "@ap/helpers";
 import { formatUnits } from "@ethersproject/units";
 import { useCallback, useEffect, useState } from "react";
