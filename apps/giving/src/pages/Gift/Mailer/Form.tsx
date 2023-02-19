@@ -1,7 +1,7 @@
 import Prompt from "@/components/Prompt";
-import { RichTextEditor } from "@/components/RichText";
 import { Label } from "@ap/components/form";
 import { Field } from "@ap/components/form";
+import { RichTextEditor } from "@ap/components/rich-text";
 import { APIs, appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { createAuthToken } from "@ap/helpers";

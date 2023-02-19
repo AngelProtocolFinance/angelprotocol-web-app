@@ -39,6 +39,7 @@
         "libs/components/token-field/src/index.ts"
       ],
       "@ap/components/img-editor": ["libs/components/img-editor/src/index.ts"],
+      "@ap/components/rich-text": ["libs/components/rich-text/src/index.ts"],
       "@ap/components/wallet-suite": [
         "libs/components/wallet-suite/src/index.tsx"
       ],
