@@ -1,6 +1,6 @@
-import placeHolderImage from "@/assets/images/home-banner.jpg";
 import React, { useRef, useState } from "react";
 import Loader from "./Loader";
+import placeHolderImage from "./assets/home-banner.jpg";
 
 export default function ImageWrapper({
   className,

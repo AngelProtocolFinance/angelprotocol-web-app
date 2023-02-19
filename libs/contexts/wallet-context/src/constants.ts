@@ -1,10 +1,10 @@
-import tokenLogo from "@/assets/icons/currencies/token.svg";
 import { EXPECTED_NETWORK_TYPE, IS_TEST, chainIDs } from "@ap/constants";
 import { WithoutInstallers } from "./types";
 import { BaseChain, Chain } from "@ap/types/aws";
 import binanceWalletIcon from "./assets/binance.png";
 import keplrIcon from "./assets/keplr.png";
 import metamaskIcon from "./assets/metamask.png";
+import tokenLogo from "./assets/token.svg";
 import xdefiIcon from "./assets/xdefi.jpg";
 
 export const WALLET_METADATA: {

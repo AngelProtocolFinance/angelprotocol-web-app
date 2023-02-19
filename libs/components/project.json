@@ -22,7 +22,8 @@
         "entryFile": "libs/components/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc"
+        "compiler": "swc",
+        "assets": ["libs/components/src/assets"]
       }
     }
     
