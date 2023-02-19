@@ -1,5 +1,5 @@
+import Icon, { IconType } from "@/components/Icon";
 import { StatusProps } from "./types";
-import Icon, { IconType } from "../Icon";
 import Status from "./Status";
 
 export function ErrorStatus({

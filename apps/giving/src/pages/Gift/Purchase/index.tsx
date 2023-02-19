@@ -1,5 +1,5 @@
-import { ErrorStatus, LoadingStatus } from "@/components/Status";
 import { useGetter, useSetter } from "@/store/accessors";
+import { ErrorStatus, LoadingStatus } from "@ap/components/status";
 import { IS_TEST, chainIds } from "@ap/constants";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { GiftState, resetDetails } from "@ap/slices/gift";

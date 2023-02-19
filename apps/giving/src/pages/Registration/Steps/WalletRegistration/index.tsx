@@ -1,4 +1,4 @@
-import { LoadingStatus } from "@/components/Status";
+import { LoadingStatus } from "@ap/components/status";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useState } from "react";
 import { useRegState, withStepGuard } from "../StepGuard";

@@ -1,4 +1,4 @@
-import Status, { ErrorStatus, LoadingStatus } from "@/components/Status";
+import Status, { ErrorStatus, LoadingStatus } from "@ap/components/status";
 import { isEmpty } from "@ap/helpers";
 import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
 import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";

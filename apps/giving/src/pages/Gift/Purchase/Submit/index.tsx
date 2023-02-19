@@ -1,5 +1,5 @@
-import { ErrorStatus, LoadingStatus } from "@/components/Status";
 import { useSetter } from "@/store/accessors";
+import { ErrorStatus, LoadingStatus } from "@ap/components/status";
 import { appRoutes } from "@ap/constants";
 import { WithWallet } from "@ap/contexts/wallet-context";
 import { humanize } from "@ap/helpers";
