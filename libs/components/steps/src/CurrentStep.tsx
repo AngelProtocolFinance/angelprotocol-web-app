@@ -1,6 +1,6 @@
-import KYC from "@/components/KYC";
 import Status, { LoadingStatus } from "@/components/Status";
 import { useGetter, useSetter } from "@/store/accessors";
+import KYC from "@ap/components/kyc";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { resetDetails } from "@ap/slices/donation";
 import { useEffect } from "react";

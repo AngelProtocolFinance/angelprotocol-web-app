@@ -47,6 +47,7 @@
       "@ap/components/country-selector": [
         "libs/components/country-selector/src/index.tsx"
       ],
+      "@ap/components/kyc": ["libs/components/kyc/src/index.ts"],
       "@ap/constants": ["libs/constants/src/index.ts"],
       "@ap/contexts": ["libs/contexts/src/index.ts"],
       "@ap/contexts/wallet-context": [
