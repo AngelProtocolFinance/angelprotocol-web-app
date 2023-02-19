@@ -25,13 +25,7 @@
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "swc",
-        "assets": [
-          {
-            "glob": "libs/contexts/wallet-context/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "assets": ["libs/contexts/wallet-context/src/assets"]
       }
     }
   }

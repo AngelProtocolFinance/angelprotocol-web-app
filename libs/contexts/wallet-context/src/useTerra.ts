@@ -1,4 +1,3 @@
-import station_icon from "@/assets/icons/wallets/terra-extension.jpg";
 import { IS_TEST, chainIDs } from "@ap/constants";
 import {
   ManualChainSwitchRequiredError,
@@ -14,6 +13,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 import { BaseChain } from "@ap/types/aws";
+import station_icon from "./assets/terra-extension.jpg";
 
 const SUPPORTED_CHAINS: BaseChain[] = IS_TEST
   ? [{ chain_id: chainIDs.terraTest, chain_name: "Terra Testnet" }]
