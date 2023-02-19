@@ -1,4 +1,4 @@
-import QueryLoader from "@/components/QueryLoader";
+import { QueryLoader } from "@ap/components";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";
 import { ReactElement } from "react";

@@ -1,5 +1,5 @@
-import QueryLoader from "@/components/QueryLoader";
 import { Selector, selectorButtonStyle } from "@/components/Selector";
+import { QueryLoader } from "@ap/components";
 import { junoAddrPattern, terraAddrPattern } from "@ap/schemas";
 import { useCurrenciesQuery } from "@ap/services/apes";
 import { useFormContext } from "react-hook-form";

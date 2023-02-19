@@ -1,5 +1,5 @@
-import QueryLoader from "@/components/QueryLoader";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { QueryLoader } from "@ap/components";
 import { useProposalsQuery } from "@ap/services/juno";
 import Balances from "../common/Balances";
 import Donations from "./Donations";

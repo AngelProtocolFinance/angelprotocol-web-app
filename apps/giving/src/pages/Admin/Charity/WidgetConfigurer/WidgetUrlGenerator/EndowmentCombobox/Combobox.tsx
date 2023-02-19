@@ -1,5 +1,5 @@
 import { DrawerIcon } from "@/components/Icon";
-import QueryLoader from "@/components/QueryLoader";
+import { QueryLoader } from "@ap/components";
 import { unsdgs } from "@ap/constants";
 import { useDebouncer } from "@ap/hooks";
 import { useEndowmentIdNamesQuery } from "@ap/services/aws";

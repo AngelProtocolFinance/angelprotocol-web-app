@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import QueryLoader from "@/components/QueryLoader";
+import { QueryLoader } from "@ap/components";
 import CsvExporter from "@ap/components/csv-exporter";
 import { isEmpty } from "@ap/helpers";
 import { useDebouncer } from "@ap/hooks";

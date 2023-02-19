@@ -1,5 +1,5 @@
-import QueryLoader from "@/components/QueryLoader";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { QueryLoader } from "@ap/components";
 import { Field } from "@ap/components/form";
 import { useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect } from "react";

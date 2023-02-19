@@ -1,5 +1,5 @@
-import QueryLoader from "@/components/QueryLoader";
 import { useGetter, useSetter } from "@/store/accessors";
+import { QueryLoader } from "@ap/components";
 import { useRegionsQuery } from "@ap/services/countries";
 import { setRegions } from "@ap/slices/market-filter";
 import { RegionType } from "@ap/slices/market-filter";

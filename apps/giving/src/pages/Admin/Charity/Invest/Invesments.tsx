@@ -1,5 +1,5 @@
-import QueryLoader from "@/components/QueryLoader";
 import { useAdminResources } from "@/pages/Admin/Guard";
+import { QueryLoader } from "@ap/components";
 import { useVaultsQuery } from "@ap/services/juno";
 import { AccountType } from "@ap/types/contracts";
 import Investment from "./Investment";

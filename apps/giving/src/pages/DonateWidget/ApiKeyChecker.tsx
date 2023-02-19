@@ -1,4 +1,4 @@
-import QueryLoader from "@/components/QueryLoader";
+import { QueryLoader } from "@ap/components";
 import { PropsWithChildren } from "react";
 
 export default function ApiKeyChecker(props: PropsWithChildren) {

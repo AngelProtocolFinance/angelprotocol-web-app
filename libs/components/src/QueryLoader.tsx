@@ -5,7 +5,7 @@ import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/build
 import { ReactElement } from "react";
 
 type Base = BaseQueryFn<any, unknown, unknown, any, any>;
-export type QueryState<T> = Pick<
+type QueryState<T> = Pick<
   TypedUseQueryHookResult<T, any, Base>,
   "isLoading" | "isError" | "data"
 >;
