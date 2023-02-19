@@ -1,4 +1,4 @@
-import Copier from "@/components/Copier";
+import Copier from "@ap/components/copier";
 import { FormProvider } from "react-hook-form";
 import WidgetExample from "./WidgetExample";
 import WidgetUrlGenerator from "./WidgetUrlGenerator";

@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["jest", "node", "@testing-library/jest-dom"]
+    "types": ["jest", "node"]
   },
   "include": [
     "jest.config.ts",
@@ -15,11 +15,6 @@
     "src/**/*.spec.js",
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
-    "src/**/*.d.ts",
-    "../../libs/components/copier/src/Copier.test.tsx"
-  ],
-  "files": [
-    "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../node_modules/@nrwl/react/typings/image.d.ts"
+    "src/**/*.d.ts"
   ]
 }

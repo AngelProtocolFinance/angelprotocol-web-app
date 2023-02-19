@@ -1,5 +1,5 @@
-import Copier from "@/components/Copier";
 import { steps } from "@/pages/Registration/routes";
+import Copier from "@ap/components/copier";
 import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";
 
