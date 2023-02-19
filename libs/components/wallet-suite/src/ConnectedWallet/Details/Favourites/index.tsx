@@ -1,4 +1,4 @@
-import QueryLoader from "libs/components/src/QueryLoader";
+import { QueryLoader } from "@ap/components";
 import { EndowmentBookmark } from "@ap/types/aws";
 import Favourite from "./Favourite";
 

@@ -1,6 +1,6 @@
+import { QueryLoader } from "@ap/components";
 import { useCountriesQuery } from "@ap/services/countries";
 import { Combobox } from "@headlessui/react";
-import QueryLoader from "libs/components/src/QueryLoader";
 import React from "react";
 
 const containerStyle =
