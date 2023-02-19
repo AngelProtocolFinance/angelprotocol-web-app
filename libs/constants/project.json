@@ -10,6 +10,7 @@
       "options": {
         "outputPath": "dist/libs/constants",
         "tsConfig": "libs/constants/tsconfig.lib.json",
+        "assets": ["libs/constants/src/assets"],
         "swcrc": "configs/lib.swcrc"
       }
     },

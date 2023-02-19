@@ -1,4 +1,4 @@
-import { appRoutes, chainOptions } from "@ap/constants";
+import { appRoutes, chainOptions, unsdgs } from "@ap/constants";
 import { ModalContext } from "@ap/contexts";
 import WalletContext from "@ap/contexts/wallet-context";
 import { useScrollTop } from "@ap/hooks";
