@@ -4,7 +4,7 @@ import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { fromHex, toBase64 } from "@cosmjs/encoding";
 import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
-import { Dwindow } from "libs/types/src/ethereum";
+import { Dwindow } from "@ap/types";
 
 export const connector = new WalletConnect({
   bridge: WC_BRIDGE,

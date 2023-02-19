@@ -1,5 +1,5 @@
 import angelProtocolLogo from "@/assets/images/angelprotocol-beta-horiz-wht.svg";
-import ExtLink from "libs/components/src/ExtLink";
+import { ExtLink } from "@ap/components";
 
 export default function APLogo({ className = "" }) {
   return (

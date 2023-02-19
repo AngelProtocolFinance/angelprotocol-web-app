@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon";
-import Split from "@/components/Split";
+import Split from "@ap/components/split";
 import { useState } from "react";
 import { DonateValues } from "../types";
 

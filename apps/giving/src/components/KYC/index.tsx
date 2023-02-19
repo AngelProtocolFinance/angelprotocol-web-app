@@ -1,6 +1,6 @@
+import { placeHolderCountryOption } from "@ap/components/country-selector";
 import { Dialog } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { placeHolderCountryOption } from "libs/components/country-selector/src";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues, Props } from "./types";
 import Form, { formStyle } from "./Form";

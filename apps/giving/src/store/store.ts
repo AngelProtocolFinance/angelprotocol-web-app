@@ -4,9 +4,9 @@ import { countriesApi } from "@ap/services/countries";
 import { junoApi } from "@ap/services/juno";
 import { admin } from "@ap/slices/admin";
 import { donation } from "@ap/slices/donation";
+import gift from "@ap/slices/gift";
 import marketFilter from "@ap/slices/market-filter";
 import { configureStore } from "@reduxjs/toolkit";
-import gift from "libs/slices/gift/src/gift";
 
 export const store = configureStore({
   reducer: {

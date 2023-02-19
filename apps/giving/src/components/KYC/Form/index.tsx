@@ -1,8 +1,8 @@
 import { Selector } from "@/components/Selector";
 import { ExtLink } from "@ap/components";
+import CountrySelector from "@ap/components/country-selector";
 import { CheckField, Field, Label } from "@ap/components/form";
 import { TERMS_OF_USE } from "@ap/constants";
-import CountrySelector from "libs/components/country-selector/src";
 import { useFormContext } from "react-hook-form";
 import { FormValues as FV, Props } from "../types";
 import Controls from "./Controls";
