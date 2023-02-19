@@ -5,7 +5,7 @@ import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
 import { invalidateApesTags } from "@ap/services/apes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GiftDetails, TxStatus } from "./types";
-import { TxOptions } from "@ap/types";
+import { TxOptions } from "@ap/types/slices";
 import gift, { setTxStatus } from "./gift";
 
 type Args = {

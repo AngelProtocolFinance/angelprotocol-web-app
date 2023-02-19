@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormValues } from "./types";
-import { TokenWithAmount } from "@ap/types";
 import { Vault } from "@ap/types/services";
+import { TokenWithAmount } from "@ap/types/slices";
 import Form from "./Form";
 import { schema } from "./schema";
 

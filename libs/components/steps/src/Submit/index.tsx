@@ -13,7 +13,7 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "@ap/types";
+import { TokenWithAmount } from "@ap/types/slices";
 import { estimateDonation } from "./estimateDonation";
 import getBreakdown from "./getBreakdown";
 

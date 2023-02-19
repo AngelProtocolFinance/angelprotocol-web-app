@@ -7,7 +7,7 @@ import { SubmitStep, purchase, setStep } from "@ap/slices/gift";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Estimate } from "./types";
-import { TokenWithAmount } from "@ap/types";
+import { TokenWithAmount } from "@ap/types/slices";
 import { estimateTx } from "./estimateTx";
 
 type EstimateStatus = Estimate | "loading" | "error";
