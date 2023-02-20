@@ -1,5 +1,6 @@
 import heroImage from "assets/images/bhm-hero.png";
 import ExtLink from "components/ExtLink";
+import { SUBDOMAIN_BUILDER } from "constants/common";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
@@ -26,7 +27,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
         </span>
         <ExtLink
           className="z-[1] inline-block rounded-md btn-orange px-4 py-2 mb-16 text-sm mt-5"
-          href="https://blackhistorymonth.angelprotocol.io"
+          href={SUBDOMAIN_BUILDER("blackhistorymonth")}
         >
           Donate Now
         </ExtLink>

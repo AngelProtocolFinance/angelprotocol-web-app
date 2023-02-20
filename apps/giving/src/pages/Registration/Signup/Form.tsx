@@ -3,6 +3,7 @@ import { FormValues as FV } from "./types";
 import ExtLink from "components/ExtLink";
 import { CheckField, Field } from "components/form";
 import { Separator } from "components/registration";
+import { APP_NAME } from "constants/common";
 import { PRIVACY_POLICY } from "constants/urls";
 import routes from "../routes";
 import useSubmit from "./useSubmit";
@@ -15,7 +16,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       className={`${classes} padded-container w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl font-bold text-center">
-        Register to Angel Giving
+        {`Register to ${APP_NAME}`}
       </h3>
 
       <Field<FV>

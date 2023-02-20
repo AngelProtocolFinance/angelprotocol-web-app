@@ -1,3 +1,6 @@
 import { Documentation } from "pages/Registration/types";
 
-export type FormValues = Omit<Documentation, "level"> & { level: never };
+type Key = keyof Documentation;
+const _level: Key = "level";
+
+export type FormValues = Omit<Documentation, typeof _level>;
