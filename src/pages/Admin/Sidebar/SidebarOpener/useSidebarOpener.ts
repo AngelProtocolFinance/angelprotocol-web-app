@@ -1,10 +1,9 @@
-import { Dialog } from "@headlessui/react";
 import { matchPath, useLocation } from "react-router-dom";
-import { Link, LinkGroup } from "./types";
+import { Link, LinkGroup } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 import { appRoutes } from "constants/routes";
-import Sidebar from "./Sidebar";
+import ToggleableSidebar from "./ToggleableSidebar";
 
 const ADMIN_ROUTE = `${appRoutes.admin}/:id/`;
 
@@ -14,7 +13,7 @@ const DEFAULT_LINK: Link = {
   to: "",
 };
 
-export default function useMobileSidebar(linkGroups: LinkGroup[]) {
+export default function useSidebarOpener(linkGroups: LinkGroup[]) {
   const currPath = useLocation().pathname;
 
   const activeLink = linkGroups
@@ -30,21 +29,7 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
     { shouldAttachListener: isModalOpen }
   );
 
-  const open = () => showModal(MobileSidebar, { linkGroups });
+  const open = () => showModal(ToggleableSidebar, { linkGroups });
 
   return { open, activeLink: activeLink ?? DEFAULT_LINK };
-}
-
-function MobileSidebar({ linkGroups }: { linkGroups: LinkGroup[] }) {
-  const { closeModal } = useModalContext();
-
-  return (
-    <Dialog.Panel className="fixed top-0 left-0 z-20 h-full">
-      <Sidebar
-        className="overflow-y-auto scroller"
-        linkGroups={linkGroups}
-        onChange={closeModal}
-      />
-    </Dialog.Panel>
-  );
 }

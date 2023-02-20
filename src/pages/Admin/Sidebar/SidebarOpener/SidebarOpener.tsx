@@ -1,11 +1,11 @@
-import { LinkGroup } from "./types";
+import { LinkGroup } from "../types";
 import Icon from "components/Icon";
-import useMobileSidebar from "./useMobileSidebar";
+import useSidebarOpener from "./useSidebarOpener";
 
 type Props = { className?: string; linkGroups: LinkGroup[] };
 
 export function SidebarOpener({ className = "", linkGroups }: Props) {
-  const { open, activeLink } = useMobileSidebar(linkGroups);
+  const { open, activeLink } = useSidebarOpener(linkGroups);
 
   return (
     <button
