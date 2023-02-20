@@ -14,7 +14,7 @@ type Props = {
 export default function Sidebar(props: Props) {
   return (
     <div
-      className={`flex flex-col w-72 sm:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${props.className}`}
     >
       <Header />
 
