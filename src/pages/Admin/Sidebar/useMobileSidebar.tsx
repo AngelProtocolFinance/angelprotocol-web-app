@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { matchPath, useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "./types";
 import { useModalContext } from "contexts/ModalContext";
+import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
 import { appRoutes } from "constants/routes";
 import Sidebar from "./Sidebar";
 
@@ -20,7 +21,14 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
     .flatMap((g) => g.links)
     .find((link) => !!matchPath(`${ADMIN_ROUTE}${link.to}`, currPath));
 
-  const { showModal } = useModalContext();
+  const { showModal, closeModal, isModalOpen } = useModalContext();
+
+  useHandleScreenResize(
+    (screenSize) => screenSize >= SCREEN_MD && closeModal(),
+    50,
+    {},
+    { shouldAttachListener: isModalOpen }
+  );
 
   const open = () => showModal(MobileSidebar, { linkGroups });
 
