@@ -97,6 +97,14 @@ export default function ImgEditor<T extends FieldValues, K extends keyof T>(
             )}
           </div>
         )}
+        {
+          //allow crop only on new uploaded image
+          !isInitial && (
+            <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
+              <Icon type="Crop" />
+            </IconButton>
+          )
+        }
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet";
 import { APP_NAME, DAPP_DOMAIN, SEO_IMAGE } from "constants/common";
 

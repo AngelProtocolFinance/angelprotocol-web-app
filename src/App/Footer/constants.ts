@@ -65,7 +65,7 @@ export const SECTIONS_DATA: Section[] = [
     links: [
       {
         text: "Non-profits",
-        href: `${BASE_DOMAIN}/non-profit-organizations/`,
+        href: `${BASE_DOMAIN}`,
       },
       {
         text: "Giving Partners (CSR)",
