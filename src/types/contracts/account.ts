@@ -24,8 +24,6 @@ export interface DonationsReceived {
   liquid: number;
 }
 
-type VaultWithBalance = [string /** vauld addr */, string /** vault balance */];
-
 export interface EndowmentState {
   tokens_on_hand: BalanceInfo;
   donations_received: DonationsReceived;
