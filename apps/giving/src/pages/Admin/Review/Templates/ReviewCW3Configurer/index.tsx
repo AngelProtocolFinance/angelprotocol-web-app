@@ -1,4 +1,4 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
+import { useAdminResources } from "@ap/contexts/admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { CW3ConfigValues, FormReviewCW3Config } from "@ap/types/admin";

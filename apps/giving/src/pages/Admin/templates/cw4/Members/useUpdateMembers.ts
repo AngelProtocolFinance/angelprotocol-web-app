@@ -1,7 +1,7 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, CW4 } from "@ap/contracts";
 import { getTagPayloads } from "@ap/helpers";

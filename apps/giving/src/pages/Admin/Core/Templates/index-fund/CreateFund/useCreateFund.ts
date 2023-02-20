@@ -1,5 +1,5 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import { cleanObject, condense, roundDown } from "@ap/helpers";

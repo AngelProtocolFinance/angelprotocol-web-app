@@ -1,5 +1,5 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { QueryLoader } from "@ap/components";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useDonationsQuery } from "@ap/services/apes";
 import Table from "./Table";
 

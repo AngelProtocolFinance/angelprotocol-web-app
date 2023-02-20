@@ -1,8 +1,8 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { ImgLink } from "@ap/components/img-editor";
 import { TxPrompt } from "@ap/components/prompt";
 import { appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { getFullURL, getPayloadDiff, isEmpty, uploadFiles } from "@ap/helpers";
 import { useEditProfileMutation } from "@ap/services/aws";

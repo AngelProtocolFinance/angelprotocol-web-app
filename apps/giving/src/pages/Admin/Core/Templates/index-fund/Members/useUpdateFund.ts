@@ -1,6 +1,6 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { useGetter } from "@/store/accessors";
 import { useErrorContext } from "@ap/contexts";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";

@@ -1,5 +1,5 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { QueryLoader } from "@ap/components";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useBalanceQuery } from "@ap/services/juno";
 import Transactions from "./Transactions";
 import WithdrawTabs from "./WithdrawTabs";

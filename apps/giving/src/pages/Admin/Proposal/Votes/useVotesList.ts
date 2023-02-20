@@ -1,6 +1,6 @@
+import { useAdminResources } from "@ap/contexts/admin";
 import { useVotesQuery } from "@ap/services/juno";
 import { VotesPageOptions } from "@ap/types/contracts";
-import { useAdminResources } from "../../Guard";
 
 //contract.voteList(genVoteListPageOptions(pollId, pageNum))
 export const VOTES_PER_PAGE = 15;

@@ -1,4 +1,5 @@
 import { useModalContext } from "@ap/contexts";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3 } from "@ap/contracts";
 import { getTagPayloads } from "@ap/helpers";
@@ -11,7 +12,6 @@ import {
 import React, { ReactNode, useMemo } from "react";
 import { ProposalMeta } from "@ap/types/admin";
 import { ProposalDetails, TagPayload } from "@ap/types/services";
-import { useAdminResources } from "../Guard";
 import Voter from "./Voter";
 
 export default function PollAction(props: ProposalDetails) {

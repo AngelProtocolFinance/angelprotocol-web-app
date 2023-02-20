@@ -1,13 +1,12 @@
-import { Loader } from "@ap/components";
-import Icon from "@ap/components/icon";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { useAdminResourcesQuery } from "@ap/services/juno";
 import { ReactNode, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AdminParams } from "@ap/types/admin";
 import { AdminResources } from "@ap/types/services";
+import Prompt from "./Prompt";
 
-export function Guard(props: {
+export default function Guard(props: {
   children(resources: AdminResources): ReactNode;
 }) {
   const { wallet } = useGetWallet();
@@ -21,18 +20,17 @@ export function Guard(props: {
     { skip: !id }
   );
 
-  if (isLoading)
-    return <GuardPrompt message="Getting admin resources" showLoader />;
+  if (isLoading) return <Prompt message="Getting admin resources" showLoader />;
 
   if (isError || !data)
-    return <GuardPrompt message="Error getting admin resources" />;
+    return <Prompt message="Error getting admin resources" />;
 
   return (
     <context.Provider value={data}>{props.children(data)}</context.Provider>
   );
 }
 
-const context = createContext({} as AdminResources);
+export const context = createContext({} as AdminResources);
 export const useAdminResources = <
   T extends AdminResources["type"] = any
 >(): Extract<AdminResources, { type: T }> => {
@@ -43,20 +41,3 @@ export const useAdminResources = <
   }
   return val as any;
 };
-
-function GuardPrompt(props: { message: string; showLoader?: true }) {
-  return (
-    <div className="place-self-center grid content-center justify-items-center min-h-[15rem] w-full bg-white dark:bg-blue-d6 border border-prim max-w-sm p-4 rounded">
-      {props.showLoader ? (
-        <Loader
-          gapClass="gap-2"
-          bgColorClass="bg-gray-d2 dark:bg-white"
-          widthClass="w-4"
-        />
-      ) : (
-        <Icon type="Info" size={30} />
-      )}
-      <p className="mt-2">{props.message}</p>
-    </div>
-  );
-}

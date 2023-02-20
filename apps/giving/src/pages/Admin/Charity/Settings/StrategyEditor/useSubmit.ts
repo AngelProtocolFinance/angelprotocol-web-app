@@ -1,4 +1,4 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Account, CW3 } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";

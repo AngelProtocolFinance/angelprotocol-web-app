@@ -1,7 +1,7 @@
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { Seo } from "@ap/components";
 import { FormError, FormSkeleton } from "@ap/components/admin";
 import { unsdgs } from "@ap/constants";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useProfileQuery } from "@ap/services/aws";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";

@@ -1,8 +1,8 @@
+import { useAdminResources } from "@ap/contexts/admin";
 import { useProposalsQuery } from "@ap/services/juno";
 import { ProposalGroupOptions, ProposalStatusOptions } from "@ap/slices/admin";
 import { ProposalMeta } from "@ap/types/admin";
 import { PageOptions, Proposal } from "@ap/types/contracts";
-import { useAdminResources } from "../Guard";
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
 export function useFilteredProposals(

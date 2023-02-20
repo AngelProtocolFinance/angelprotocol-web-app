@@ -1,6 +1,6 @@
 import { accountTypeDisplayValue } from "@/pages/Admin/Charity/constants";
-import { useAdminResources } from "@/pages/Admin/Guard";
 import { ap_wallets, chainIds } from "@ap/constants";
+import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { Account, CW3Endowment } from "@ap/contracts";
 import { scaleToStr } from "@ap/helpers";
