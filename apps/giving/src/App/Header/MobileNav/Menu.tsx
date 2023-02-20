@@ -1,4 +1,3 @@
-import ThemeToggle from "@/App/Header/ThemeToggle";
 import { APLogo } from "@ap/components";
 import Icon from "@ap/components/icon";
 import { appRoutes } from "@ap/constants";
@@ -6,6 +5,7 @@ import { useModalContext } from "@ap/contexts";
 import { createNavLinkStyler } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
+import ThemeToggle from "../ThemeToggle";
 
 export default function Menu() {
   const { closeModal } = useModalContext();

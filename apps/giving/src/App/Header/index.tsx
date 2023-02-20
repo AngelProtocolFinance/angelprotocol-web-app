@@ -1,9 +1,9 @@
-import Airdrop from "@/App/Header/Airdrop";
 import { APLogo } from "@ap/components";
 import WalletSuite from "@ap/components/wallet-suite";
 import { appRoutes } from "@ap/constants";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
+import Airdrop from "../Header/Airdrop";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
