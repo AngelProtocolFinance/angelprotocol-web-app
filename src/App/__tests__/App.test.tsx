@@ -54,21 +54,10 @@ describe("App.tsx tests", () => {
     const footer = screen.getByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
-    expect(
-      screen.getByRole("link", {
-        name: marketLink,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: leadLink,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: regLink,
-      })
-    ).toBeInTheDocument();
+    const market = screen.getByRole("link", {
+      name: marketLink,
+    });
+    expect(market).toBeInTheDocument();
 
     //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();

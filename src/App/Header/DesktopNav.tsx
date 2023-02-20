@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import ExtLink from "components/ExtLink";
 import { createNavLinkStyler } from "helpers";
 import { BASE_DOMAIN } from "constants/common";
 import { appRoutes } from "constants/routes";
@@ -6,23 +7,22 @@ import { appRoutes } from "constants/routes";
 export default function DesktopNav({ classes = "" }: { classes?: string }) {
   return (
     <nav className={`${classes} items-center justify-end font-body text-base`}>
-      <NavLink className={styler} to={BASE_DOMAIN}>
+      <ExtLink className={styles} href={BASE_DOMAIN}>
         For Non-Profits
-      </NavLink>
+      </ExtLink>
       <NavLink className={styler} to={appRoutes.index}>
         Marketplace
       </NavLink>
-      <NavLink to={`${BASE_DOMAIN}/csr-partners`} className={styler}>
+      <ExtLink href={`${BASE_DOMAIN}/csr-partners/`} className={styles}>
         Giving Partners
-      </NavLink>
-      <NavLink to={`${BASE_DOMAIN}/about-angel-giving`} className={styler}>
+      </ExtLink>
+      <ExtLink href={`${BASE_DOMAIN}/about-angel-giving/`} className={styles}>
         About
-      </NavLink>
+      </ExtLink>
     </nav>
   );
 }
 
-const styler = createNavLinkStyler(
-  "px-4 text-sm text-white hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold",
-  "pointer-events-none text-orange"
-);
+const styles =
+  "px-4 text-sm text-white hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 uppercase font-heading font-bold";
+const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
