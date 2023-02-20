@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { LinkGroup } from "../Sidebar/types";
 import { adminRoutes } from "constants/routes";
@@ -21,9 +22,11 @@ import { settings } from "./routes";
 export default function Charity() {
   const { id } = useAdminResources();
 
+  const linkGroups = useMemo(() => createLinkGroups(id), [id]);
+
   return (
     <Routes>
-      <Route element={<Layout linkGroups={createLinkGroups(id)} />}>
+      <Route element={<Layout linkGroups={linkGroups} />}>
         <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />
         <Route path={adminRoutes.proposals} element={<Proposals />} />
         <Route path={`${adminRoutes.templates}/*`} element={<Templates />} />
