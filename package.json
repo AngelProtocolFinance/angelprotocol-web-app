@@ -95,7 +95,7 @@
     "@peculiar/webcrypto": "^1.4.0",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@trivago/prettier-plugin-sort-imports": "^3.4.0",
     "@types/compress.js": "^1.1.1",
