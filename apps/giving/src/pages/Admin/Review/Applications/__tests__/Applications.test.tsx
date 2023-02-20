@@ -10,7 +10,7 @@ jest.mock("@ap/services/aws", () => ({
   __esModule: true,
   useEndowmentApplicationsQuery: () => mockEndowmentApplicationsQuery(),
 }));
-jest.mock("@/pages/Admin/Guard", () => ({
+jest.mock("@ap/contexts/admin", () => ({
   __esModule: true,
   useAdminResources: () => mockAdminContext(),
 }));
