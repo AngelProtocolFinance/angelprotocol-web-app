@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import APLogo from "components/APLogo";
+import Logo from "components/Logo";
 import WalletSuite from "components/WalletSuite";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { setRecipient } from "slices/donation";
 import { getPossessiveForm } from "helpers";
+import { LOGO } from "constants/common";
 import useWidgetParams from "./useWidgetParams";
 
 export default function InnerComponent(props: {
@@ -50,7 +51,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <APLogo className="w-20" />
+        <Logo className="w-20" logo={LOGO} />
       </footer>
     </div>
   );
