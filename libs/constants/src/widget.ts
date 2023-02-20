@@ -1,4 +1,4 @@
-import { UrlParamValues } from "./types";
+import { UrlParamValues } from "@ap/types/widget";
 
 export const URL_PARAMS: { [key: string]: keyof UrlParamValues } = {
   hideText: "hideText",

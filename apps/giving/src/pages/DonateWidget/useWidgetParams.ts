@@ -1,6 +1,6 @@
+import { URL_PARAMS } from "@ap/constants";
 import { useSearchParams } from "react-router-dom";
-import { UrlParamValues } from "./types";
-import { URL_PARAMS } from "./constants";
+import { UrlParamValues } from "@ap/types/widget";
 
 export default function useWidgetParams(): UrlParamValues {
   const [search] = useSearchParams();

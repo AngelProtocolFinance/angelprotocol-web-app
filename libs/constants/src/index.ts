@@ -12,3 +12,4 @@ export * from "./tokens";
 export * from "./unsdgs";
 export * from "./urls";
 export * from "./wallet-connect";
+export * from "./widget";

@@ -1,6 +1,6 @@
-import { URL_PARAMS, UrlParamValues } from "@/pages/DonateWidget";
-import { DAPP_DOMAIN, IS_TEST, appRoutes } from "@ap/constants";
+import { DAPP_DOMAIN, IS_TEST, URL_PARAMS, appRoutes } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";
+import { UrlParamValues } from "@ap/types/widget";
 import { FormValues } from "./schema";
 
 const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_DOMAIN}`;

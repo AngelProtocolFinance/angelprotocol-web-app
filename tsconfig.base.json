@@ -83,6 +83,7 @@
       "@ap/types/aws": ["libs/types/aws/src/index.ts"],
       "@ap/types/slices": ["libs/types/slices/src/index.ts"],
       "@ap/types/admin": ["libs/types/admin/src/index.ts"],
+      "@ap/types/widget": ["libs/types/widget/src/index.ts"],
       "@ap/types/contracts": ["libs/types/contracts/src/index.ts"],
       "@ap/types/services": ["libs/types/services/src/index.ts"]
     }
