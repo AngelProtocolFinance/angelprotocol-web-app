@@ -1,4 +1,3 @@
-import { accountTypeDisplayValue } from "@/pages/Admin/Charity/constants";
 import { ap_wallets, chainIds } from "@ap/constants";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
@@ -9,6 +8,7 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawValues } from "./types";
 import { WithdrawMeta } from "@ap/types/admin";
 import { Asset } from "@ap/types/contracts";
+import { accountTypeDisplayValue } from "../../../../constants";
 import useLogWithdrawProposal from "./useLogWithdrawProposal";
 
 export default function useWithdraw() {

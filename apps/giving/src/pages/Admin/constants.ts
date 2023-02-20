@@ -1,6 +1,7 @@
 import { SchemaShape, stringByteSchema } from "@ap/schemas";
 import { Templates } from "@ap/types/admin";
 import { ProposalBase } from "@ap/types/admin";
+import { AccountType } from "@ap/types/contracts";
 
 export const templates: { [key in Templates]: string } = {
   //index fund
@@ -38,4 +39,9 @@ export const templateRoutes: { [key in Templates | "index"]: string } = {
 export const proposalShape: SchemaShape<ProposalBase> = {
   title: stringByteSchema(4, 64),
   description: stringByteSchema(4, 1024),
+};
+
+export const accountTypeDisplayValue: { [key in AccountType]: string } = {
+  locked: "endowment",
+  liquid: "current",
 };

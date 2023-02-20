@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { AccountType, EndowmentBalance } from "@ap/types/contracts";
-import { accountTypeDisplayValue } from "../../constants";
+import { accountTypeDisplayValue } from "../../../constants";
 import Withdrawer from "./Withdrawer";
 
 const tabs: AccountType[] = ["liquid", "locked"];
