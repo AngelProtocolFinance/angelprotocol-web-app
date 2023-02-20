@@ -162,6 +162,7 @@ export type ProposalMeta =
   //TODO: add preview data
   | { type: "acc_strategy" }
   | { type: "acc_invest" }
+  | { type: "acc_redeem" }
 
   //registrar
   | RegistrarConfigUpdateMeta;

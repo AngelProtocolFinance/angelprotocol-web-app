@@ -1,17 +1,17 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useAssetQuery } from "services/juno/account";
+import { useAssetsQuery } from "services/juno/custom";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
 
 export default function Balances({ type }: { type: AccountType }) {
   const { id } = useAdminResources();
-  const queryState = useAssetQuery({ id, type });
+  const { data, ...rest } = useAssetsQuery({ endowId: id });
 
   return (
     <QueryLoader
-      queryState={queryState}
+      queryState={{ data: data && data[type], ...rest }}
       messages={{ loading: <Skeleton />, error: "Failed to get balances" }}
     >
       {({ total, free, invested, symbol }) => (
