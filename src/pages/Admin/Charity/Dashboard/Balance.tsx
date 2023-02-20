@@ -1,6 +1,6 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
-import { useBalanceQuery } from "services/juno/account";
+import { useStateQuery } from "services/juno/account";
 import QueryLoader from "components/QueryLoader";
 import Holdings from "../Holdings";
 import { accountTypeDisplayValue } from "../constants";
@@ -8,7 +8,7 @@ import { accountTypeDisplayValue } from "../constants";
 type Props = { type: AccountType };
 export default function Balance({ type }: Props) {
   const { endowmentId } = useAdminResources();
-  const queryState = useBalanceQuery({ id: endowmentId });
+  const queryState = useStateQuery({ id: endowmentId });
 
   return (
     <div className="rounded p-3 border border-prim bg-orange-l6 dark:bg-blue-d6">
@@ -22,9 +22,7 @@ export default function Balance({ type }: Props) {
           error: "Failed to get balances",
         }}
       >
-        {(balance) => (
-          <Holdings {...balance.tokens_on_hand[type]} type={type} />
-        )}
+        {(state) => <Holdings {...state.tokens_on_hand[type]} type={type} />}
       </QueryLoader>
     </div>
   );
