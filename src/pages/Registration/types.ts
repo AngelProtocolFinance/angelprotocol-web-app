@@ -1,3 +1,4 @@
+import { CountryOption } from "services/types";
 import {
   ContactRoles,
   FileObject,
@@ -55,6 +56,10 @@ export type Documentation = {
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   level: EndowmentTierNum;
+
+  hqCountry: CountryOption;
+  // general info
+  activeInCountries: OptionType<string>[];
 };
 
 //STEP 3

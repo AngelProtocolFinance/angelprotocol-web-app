@@ -22,7 +22,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
     );
 
   return (
-    <div className="grid place-items-center border border-gray-l2 dark:border-bluegray rounded bg-orange-l6 dark:bg-blue-d7">
+    <div className="grid place-items-center border border-prim rounded bg-orange-l6 dark:bg-blue-d7">
       <label
         className={`cursor-pointer grid place-items-center rounded-md p-4 w-full ${
           is_active ? "pointer-events-none" : ""

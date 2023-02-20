@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { Drawer, GroupProps } from "..";
+import { GroupProps } from "../types";
+import { Drawer } from "../Drawer";
 import Group from "./Group";
 
-type Props<T> = {
+export type MultiLevelFilterProps<T> = {
   label: string;
   groups: GroupProps<T>[];
   hideBottomBorder?: boolean;
 };
 
-export function MultilevelFilter<T>(props: Props<T>) {
+export function MultilevelFilter<T>(props: MultiLevelFilterProps<T>) {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggle() {
@@ -18,9 +19,7 @@ export function MultilevelFilter<T>(props: Props<T>) {
   return (
     <div
       className={`grid gap-6 px-2 py-4 ${
-        props.hideBottomBorder
-          ? ""
-          : "border-b border-gray-l2 dark:border-bluegray"
+        props.hideBottomBorder ? "" : "border-b border-prim"
       }`}
     >
       <Drawer isOpen={isOpen} toggle={toggle}>

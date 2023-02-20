@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CompleteRegistration } from "./types";
 import Icon from "components/Icon";
-import { BtnPrim } from "components/registration";
 import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Success({ classes = "" }: { classes?: string }) {
@@ -22,20 +22,12 @@ export default function Success({ classes = "" }: { classes?: string }) {
       <h1 className="text-[2rem] font-bold mt-10 text-center">
         {contact.orgName}’s endowment has been created!
       </h1>
-      <p className="mt-6 text-center">
-        Thank you for your interest in Angel Protocol!
-      </p>
-      <p className="mb-8 mt-4 text-gray-d1 dark:text-white/75 text-center">
-        Use the button below to start filling out {contact.orgName}’s profile
-        and attract donors!
-      </p>
-      <BtnPrim
-        className="w-full max-w-[26.25rem] text-center"
-        as="link"
+      <Link
+        className="mt-6 text-orange hover:text-orange-l2 underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
         to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
-        edit profile
-      </BtnPrim>
+        Start filling out {contact.orgName}’s profile and attract donors!
+      </Link>
     </div>
   );
 }

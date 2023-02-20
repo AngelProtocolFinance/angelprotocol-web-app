@@ -4,6 +4,7 @@ import { KeplrWalletConnectV1 } from "@keplr-wallet/wc-client";
 import WalletConnect from "@walletconnect/client/";
 import { ProviderId } from "contexts/WalletContext/types";
 import { Dwindow } from "types/ethereum";
+import { JUNO_LCD } from "constants/env";
 import { WC_BRIDGE } from "constants/urls";
 
 export const connector = new WalletConnect({
@@ -22,16 +23,26 @@ export function getKeplrWCClient() {
   return new KeplrWalletConnectV1(connector, { sendTx });
 }
 
+export function getKeplr(providerId: ProviderId) {
+  return providerId === "keplr-wc"
+    ? getKeplrWCClient()
+    : (window as Dwindow).keplr!;
+}
+
 export async function getKeplrClient(
   providerId: ProviderId,
   chain_id: string,
   rpcUrl: string
 ): Promise<SigningCosmWasmClient> {
-  const signer =
-    providerId === "keplr-wc"
-      ? getKeplrWCClient().getOfflineSignerOnlyAmino(chain_id)
-      : (window as Dwindow).keplr!.getOfflineSigner(chain_id);
-  return await SigningCosmWasmClient.connectWithSigner(rpcUrl, signer);
+  const keplr = getKeplr(providerId);
+  return await SigningCosmWasmClient.connectWithSigner(
+    rpcUrl,
+    keplr[
+      keplr instanceof KeplrWalletConnectV1
+        ? "getOfflineSignerOnlyAmino" // TODO: change sendTx to signDirect
+        : "getOfflineSigner"
+    ](chain_id)
+  );
 }
 
 type CustomSendTx = KeplrWalletConnectV1["sendTx"];
@@ -48,7 +59,7 @@ const sendTx: CustomSendTx = async (chainId, tx, mode) => {
 
   const { tx_response: res } = await fetch(
     /** see swagger definition by visiting lcd endpoint */
-    process.env.REACT_APP_JUNO_LCD_NODE + "/cosmos/tx/v1beta1/txs",
+    JUNO_LCD + "/cosmos/tx/v1beta1/txs",
     {
       method: "POST",
       body: JSON.stringify({

@@ -1,12 +1,12 @@
-import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { Contract as EVMContract } from "@ethersproject/contracts";
+import { TransactionResponse, Web3Provider } from "@ethersproject/providers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
-import { ethers } from "ethers";
 import { EstimatedTx, TxStatus } from "../types";
 import { DonateArgs } from "../types";
 import { KYCData } from "types/aws";
 import { TokenWithAmount } from "types/slices";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { getProvider, logger } from "helpers";
@@ -59,7 +59,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           chainName: wallet.chain.chain_name,
           charityName: recipient.name,
           denomination: token.symbol,
-          splitLiq: pctLiquidSplit,
+          splitLiq: `${pctLiquidSplit}`,
           transactionId: hash,
           transactionDate: new Date().toISOString(),
           walletAddress: wallet.address,
@@ -69,12 +69,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         updateTx({ hash });
 
         //invalidate cache entries
-        dispatch(
-          invalidateApesTags([
-            { type: apesTags.chain }, //user balance
-            { type: apesTags.donations }, //donation logs
-          ])
-        );
+        dispatch(invalidateApesTags(["chain", "donations"]));
       } else {
         updateTx("error");
       }
@@ -102,15 +97,13 @@ async function sendTransaction(
     }
     //evm donations
     default: {
-      const provider = new ethers.providers.Web3Provider(
-        getProvider(wallet.providerId) as any
-      );
+      const provider = new Web3Provider(getProvider(wallet.providerId) as any);
       const signer = provider.getSigner();
       let response: TransactionResponse;
       if (wallet.chain.native_currency.token_id === token.token_id) {
         response = await signer.sendTransaction(tx.val);
       } else {
-        const ER20Contract: any = new ethers.Contract(
+        const ER20Contract: any = new EVMContract(
           token.token_id,
           ERC20Abi,
           signer

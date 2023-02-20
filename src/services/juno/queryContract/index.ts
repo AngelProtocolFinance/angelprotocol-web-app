@@ -1,12 +1,12 @@
 import { ContractQueries as Q, ContractQueryTypes as QT } from "./types";
-import { baseUrl } from "../index";
+import { JUNO_LCD } from "constants/env";
 import { genQueryPath } from "./genQueryPath";
 
 export async function queryContract<T extends QT>(
   type: T,
   contract: string,
   args: Q[T]["args"],
-  url = baseUrl
+  url = JUNO_LCD
 ) {
   return fetch(`
     ${url}/${genQueryPath(type, args, contract)}

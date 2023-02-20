@@ -21,7 +21,7 @@ export default function Table({ donations, classes = "" }: TableProps) {
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-gray-l2 dark:divide-bluegray border-gray-l2 dark:border-bluegray"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 rounded divide-x border-b divide-prim border-prim"
       >
         <Cells
           type="th"
@@ -69,12 +69,13 @@ export default function Table({ donations, classes = "" }: TableProps) {
             USD Value
           </HeaderButton>
           <>TX Hash</>
+          <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-gray-l2 dark:divide-bluegray border-b last:border-b-0 border-gray-l2 dark:border-bluegray"
+        rowClass="even:bg-orange-l6 dark:even:bg-blue-d7 divide-x divide-prim border-b last:border-b-0 border-prim"
       >
         {sorted.map((row) => (
           <Cells key={row.hash} type="td" cellClass="p-3">
@@ -96,6 +97,15 @@ export default function Table({ donations, classes = "" }: TableProps) {
             >
               {maskAddress(row.hash)}
             </ExtLink>
+            <div className="text-center text-white">
+              <span
+                className={`${
+                  row.donationFinalized ? "bg-green" : "bg-gray-d1 dark:bg-gray"
+                } font-body px-2 py-0.5 rounded`}
+              >
+                {row.donationFinalized ? "RECEIVED" : "PENDING"}
+              </span>
+            </div>
             <button
               className="w-full flex justify-center"
               onClick={() =>

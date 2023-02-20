@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import React from "react";
 import { useCountriesQuery } from "services/countries";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";

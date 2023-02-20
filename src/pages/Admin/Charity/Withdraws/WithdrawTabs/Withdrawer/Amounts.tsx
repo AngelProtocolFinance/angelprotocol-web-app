@@ -29,7 +29,7 @@ export default function Amounts() {
 
         return (
           <div
-            className="flex relative mb-6 border-b border-gray-l2 dark:border-bluegray pr-2 pb-1 pt-6 items-center"
+            className="flex relative mb-6 border-b border-prim pr-2 pb-1 pt-6 items-center"
             key={field.id}
           >
             <button

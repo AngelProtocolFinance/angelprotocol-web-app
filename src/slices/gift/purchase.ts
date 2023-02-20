@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TxOptions } from "types/slices";
-import { apesTags, invalidateApesTags } from "services/apes";
+import { invalidateApesTags } from "services/apes";
 import { WalletState } from "contexts/WalletContext";
 import Contract from "contracts/Contract";
 import { createAuthToken, getWasmAttribute, logger } from "helpers";
+import { EMAIL_SUPPORT } from "constants/common";
 import { APIs } from "constants/urls";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
@@ -53,7 +54,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
         if (!res.ok) {
           return updateTx({
-            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${response.transactionHash}`,
+            error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}. Transaction: ${response.transactionHash}`,
           });
         }
         /** no problems, save giftcard code on user's computer */
@@ -71,7 +72,7 @@ export const purchase = createAsyncThunk<void, Args>(
       updateTx({ error: "Unexpected error occured. Please try again later." });
     } finally {
       /** invalidate user balance */
-      dispatch(invalidateApesTags([{ type: apesTags.chain }]));
+      dispatch(invalidateApesTags(["chain"]));
     }
   }
 );

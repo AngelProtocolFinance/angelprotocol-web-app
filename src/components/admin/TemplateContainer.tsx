@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 const containerClass =
-  "w-full p-6 rounded-md grid content-start gap-6 rounded bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray";
+  "w-full p-6 rounded-md grid content-start gap-6 rounded bg-white dark:bg-blue-d6 border border-prim";
 
 export function DivContainer({
   children,
@@ -23,7 +23,7 @@ export function GroupContainer({
 }: PropsWithChildren<{ className?: string }>) {
   return (
     <div
-      className={`p-3 pb-6 grid gap-6 rounded bg-orange-l6 dark:bg-blue-d7 border border-gray-l2 dark:border-bluegray ${className}`}
+      className={`p-3 pb-6 grid gap-6 rounded bg-orange-l6 dark:bg-blue-d7 border border-prim ${className}`}
     >
       {children}
     </div>

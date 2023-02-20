@@ -1,7 +1,7 @@
 import { AccountType } from "types/contracts";
 import { useAdminResources } from "pages/Admin/Guard";
 import { useBalanceQuery } from "services/juno/account";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Holdings from "../Holdings";
 import { accountTypeDisplayValue } from "../constants";
 
@@ -11,7 +11,7 @@ export default function Balance({ type }: Props) {
   const queryState = useBalanceQuery({ id: endowmentId });
 
   return (
-    <div className="rounded p-3 border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d6">
+    <div className="rounded p-3 border border-prim bg-orange-l6 dark:bg-blue-d6">
       <h4 className="uppercase font-extrabold">
         {accountTypeDisplayValue[type]}
       </h4>

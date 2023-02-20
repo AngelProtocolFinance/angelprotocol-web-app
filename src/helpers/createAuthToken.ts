@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { UserTypes } from "types/lists";
+import { ANGEL_SECRECT, APES_SECRECT } from "constants/env";
 
 type Payload = {
   authorization: string;
@@ -17,10 +18,10 @@ export function createAuthToken(userType: UserTypes) {
 
   // TO DO: Hide the secret key!
   if (userType === "angelprotocol-web-app") {
-    secret = process.env.REACT_APP_APES_AUTH_SECRET_KEY || "";
+    secret = APES_SECRECT || "";
     expiresIn = 30;
   } else {
-    secret = process.env.REACT_APP_ANGEL_AUTH_SECRET_KEY || "";
+    secret = ANGEL_SECRECT || "";
     expiresIn = 3600;
   }
 

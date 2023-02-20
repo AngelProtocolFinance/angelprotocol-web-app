@@ -1,7 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import { useState } from "react";
 import { GroupProps } from "../types";
-import { Checkbox, Drawer } from "..";
+import { Drawer } from "..";
 
 export default function Group<T>(props: GroupProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +25,12 @@ export default function Group<T>(props: GroupProps<T>) {
       onChange={props.onChange}
     >
       <div className="flex items-center gap-4 h-8 p-1 cursor-pointer">
-        <Checkbox checked={isAllSelected} onChange={toggleGroup} />
-
+        <input
+          type="checkbox"
+          className="checkbox checkbox-marketplace"
+          checked={isAllSelected}
+          onChange={toggleGroup}
+        />
         <Drawer isOpen={isOpen} toggle={toggle}>
           <span className="text-sm font-bold font-body capitalize">
             {props.label}
@@ -44,7 +48,12 @@ export default function Group<T>(props: GroupProps<T>) {
             >
               {({ selected }) => (
                 <>
-                  <Checkbox checked={selected} readOnly />
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-marketplace"
+                    checked={selected}
+                    readOnly
+                  />
                   {option.displayText}
                 </>
               )}

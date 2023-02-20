@@ -12,8 +12,8 @@ import {
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
 import { logger } from "helpers";
+import { EMAIL_SUPPORT } from "constants/common";
 import { aws } from "../aws";
-import { awsTags } from "../tags";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,7 +21,7 @@ const registration_api = aws.injectEndpoints({
       Pick<InitApplication, "Registration" | "ContactPerson">,
       { email: string }
     >({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
         url: "v2/registration",
         method: "POST",
@@ -29,7 +29,7 @@ const registration_api = aws.injectEndpoints({
       }),
     }),
     reg: builder.query<SavedRegistration & { reqId: number }, string>({
-      providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      providesTags: [{ type: "admin", id: adminTags.registration }],
       query: (uuid) => {
         return {
           url: "v1/registration",
@@ -106,7 +106,7 @@ const registration_api = aws.injectEndpoints({
       EndowmentProposal[],
       ApplicationStatusOptions
     >({
-      providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
+      providesTags: [{ type: "admin", id: adminTags.applications }],
       query: (status) => {
         return {
           url: `v2/registration/list${
@@ -123,7 +123,7 @@ const registration_api = aws.injectEndpoints({
      * verify again
      */
     requestEmail: builder.mutation<any, { uuid: string; email: string }>({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ uuid, email }) => {
         return {
           url: "v2/registration/build-email",
@@ -135,16 +135,16 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: { data: any }) => response,
     }),
     submit: builder.mutation<SubmitResult, { ref: string; chain_id: string }>({
-      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ ref, chain_id }) => ({
-        url: `v2/registration/${ref}/submit`,
+        url: `v3/registration/${ref}/submit`,
         method: "POST",
         body: { chain_id },
       }),
       transformErrorResponse(err, meta, arg) {
         return {
           status: err.status,
-          data: "Registration submission failed. Contact support@angelprotocol.io",
+          data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,
         };
       },
     }),

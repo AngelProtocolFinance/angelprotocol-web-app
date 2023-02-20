@@ -79,7 +79,7 @@ function Stat(props: {
 }) {
   return (
     <p
-      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-gray-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7 p-4`}
+      className={`uppercase ${props.textColor} grid min-w-[10rem] rounded-md border border-prim bg-orange-l6 dark:bg-blue-d7 p-4`}
     >
       <span className="">{props.title}</span>
       <span className="my-2 text-2xl">{props.value}</span>

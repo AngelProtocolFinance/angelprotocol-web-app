@@ -5,6 +5,7 @@ import Proposals from "../Proposals";
 import Dashboard from "./Dashboard";
 import EditProfile from "./EditProfile";
 import Templates from "./Templates";
+import WidgetConfigurer from "./WidgetConfigurer";
 import Withdraws from "./Withdraws";
 
 export default function Views() {
@@ -16,6 +17,10 @@ export default function Views() {
       <Route path={adminRoutes.withdraws} element={<Withdraws />} />
       <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
       <Route index element={<Dashboard />} />
+      <Route path={adminRoutes.widget_config}>
+        <Route index element={<WidgetConfigurer />} />
+        <Route path=":endowId" element={<WidgetConfigurer />} />
+      </Route>
     </Routes>
   );
 }

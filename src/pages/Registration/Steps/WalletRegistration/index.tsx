@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useGetWallet } from "contexts/WalletContext";
-import Icon from "components/Icon";
+import { LoadingStatus } from "components/Status";
 import { useRegState, withStepGuard } from "../StepGuard";
 import ChooseWallet from "./ChooseWallet";
 import RegisteredWallet from "./RegisteredWallet";
@@ -23,10 +23,7 @@ function WalletRegistration() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center gap-2">
-        <Icon type="Loading" className="animate-spin" />
-        <span>Wallet is loading</span>
-      </div>
+      <LoadingStatus classes="justify-center">Wallet is loading</LoadingStatus>
     );
   }
 

@@ -1,30 +1,34 @@
+import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { ProfileFormValues as UV } from "pages/Admin/types";
+import { FormValues as FV } from "./types";
+import { UNSDG_NUMS } from "types/lists";
+import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import {
-  FormContainer,
-  GroupContainer,
-  Submitter,
-  TextArea,
-  TextPrim,
-  TextSec,
-  errorStyle,
-} from "components/admin";
-import { Label } from "components/form";
+import { Selector } from "components/Selector";
+import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
-import SDGSelector from "./SDGSelector";
+import { unsdgs } from "constants/unsdgs";
+import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
+const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
+  getSDGLabelValuePair(key, title)
+);
+
 export default function Form() {
-  const { editProfile, isSubmitDisabled, id } = useEditProfile();
+  const { editProfile, isSubmitting, id, reset } = useEditProfile();
   return (
-    <FormContainer
+    <form
       onSubmit={editProfile}
-      className="max-w-4xl justify-self-center mt-6"
+      onReset={(e) => {
+        e.preventDefault();
+        reset();
+      }}
+      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
     >
       <Link
         to={`${appRoutes.profile}/${id}`}
@@ -33,90 +37,187 @@ export default function Form() {
         <Icon type="Back" />
         <span>Back to profile</span>
       </Link>
-      <TextPrim<UV> label="Proposal title" name="title" required />
-      <TextArea<UV> label="Proposal description" name="description" required />
-      <Label className="-mb-4" required>
-        Banner
-      </Label>
-      <ImgEditor<UV, "image">
-        name="image"
-        accept={VALID_MIME_TYPES}
-        aspect={[4, 1]}
-        classes="w-full aspect-[4/1] mb-4 rounded border border-gray-l2 dark:border-bluegray"
-      />
-      <Label className="-mb-4" required>
-        Logo
-      </Label>
-      <ImgEditor<UV, "logo">
-        name="logo"
-        accept={VALID_MIME_TYPES}
-        aspect={[1, 1]}
-        classes="w-28 sm:w-48 aspect-square mb-4 rounded border border-gray-l2 dark:border-bluegray"
-      />
-      <Label className="-mb-4">SDG#</Label>
-      <SDGSelector />
-      <TextPrim<UV> name="name" label="Charity Name" />
-      <TextPrim<UV> name="registration_number" label="Registration number" />
-      <TextPrim<UV> name="street_address" label="Street address" />
-      <Label className="-mb-4" required>
-        Country
-      </Label>
-      <CountrySelector<UV, "country">
-        placeholder="Select a country"
-        fieldName="country"
-        classes={{
-          container:
-            "px-4 border border-gray-l2 rounded focus-within:border-gray-d1 focus-within:dark:border-blue-l2 dark:border-bluegray bg-orange-l6 dark:bg-blue-d7",
-          input:
-            "text-sm py-3.5 w-full placeholder:text-sm placeholder:text-gray-d1 dark:placeholder:text-gray focus:outline-none bg-transparent",
-          error: errorStyle,
-        }}
-      />
-      <Label className="-mb-4">Overview</Label>
-      <RichTextEditor<UV>
-        fieldName="overview"
-        placeHolder="A short overview of your charity"
-        classes={{
-          container:
-            "rich-text-toolbar border border-gray-l2 dark:border-bluegray text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3",
-          error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
-          charCounter: "text-gray-d1 dark:text-gray",
-        }}
-      />
-
-      <Label className="-mb-4 font-bold">Social Media</Label>
-      <GroupContainer>
-        <TextSec<UV>
+      <Group
+        title="Public profile information"
+        description="The following information will be used to populate your public
+          profile."
+      >
+        <Field<FV>
+          classes="field-admin"
+          name="name"
+          label="Name of your organization"
+          required
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="tagline"
+          label="Tagline of your organization"
+          required
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="registration_number"
+          label="Organization’s registration number"
+        />
+        <Label className="-mb-4" required>
+          Banner image of your organization
+        </Label>
+        <ImgEditor<FV, "image">
+          name="image"
+          accept={VALID_MIME_TYPES}
+          aspect={[4, 1]}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+        />
+        <Label className="-mb-4" required>
+          Logo of your organization
+        </Label>
+        <ImgEditor<FV, "logo">
+          name="logo"
+          accept={VALID_MIME_TYPES}
+          aspect={[1, 1]}
+          classes={{
+            container: "mb-4",
+            dropzone: "w-28 sm:w-48 aspect-square",
+          }}
+        />
+        <Label className="-mb-4" required>
+          Description of your organization
+        </Label>
+        <RichTextEditor<FV>
+          fieldName="overview"
+          placeHolder="A short overview of your charity"
+          charLimit={4000}
+          classes={{
+            container:
+              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-orange-l6 dark:bg-blue-d7 p-3 min-h-[15rem]",
+            error: "static field-error -mt-4",
+            charCounter: "text-gray-d1 dark:text-gray",
+          }}
+        />
+        <Field<FV>
+          classes="field-admin"
           name="url"
-          label="Website"
+          label="Website of your organization"
           placeholder="https://website.org"
         />
-        <TextSec<UV>
-          name="facebook"
+      </Group>
+
+      <Group title="Organization">
+        <Label className="-mb-4" required>
+          Aligned SDG#
+        </Label>
+        <Selector<FV, "categories_sdgs", UNSDG_NUMS, true>
+          multiple
+          name="categories_sdgs"
+          options={sdgOptions}
+          classes={{ button: "field-input-admin" }}
+        />
+        <Label className="-mb-4" required>
+          Headquarters
+        </Label>
+        <CountrySelector<FV, "hq_country">
+          placeholder="Select a country"
+          fieldName="hq_country"
+          classes={{
+            container: "px-4 bg-orange-l6 dark:bg-blue-d7",
+            input: "text-sm py-3.5",
+            error: "field-error",
+          }}
+        />
+        <Label className="-mb-4">Active countries</Label>
+        <ActivityCountries<FV, "active_in_countries">
+          name="active_in_countries"
+          classes={{
+            container: "bg-white dark:bg-blue-d6 px-4 py-3",
+            button: "field-input-admin",
+          }}
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="street_address"
+          label="Address"
+        />
+      </Group>
+
+      <Group title="Social Media">
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_facebook"
           label="Facebook"
           placeholder="https://facebook.com/"
         />
-        <TextSec<UV>
-          name="twitter"
-          label="Twitter"
-          placeholder="https://twitter.com/"
-        />
-        <TextSec<UV>
-          name="linkedin"
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_linkedin"
           label="Linkedin"
           placeholder="https://linkedin.com/"
         />
-      </GroupContainer>
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_twitter"
+          label="Twitter"
+          placeholder="https://twitter.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_discord"
+          label="Discord"
+          placeholder="https://discord.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_instagram"
+          label="Instagram"
+          placeholder="https://instagram.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_youtube"
+          label="YouTube"
+          placeholder="https://youtube.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_url_tiktok"
+          label="Tiktok"
+          placeholder="https://tiktok.com/"
+        />
+      </Group>
 
-      <TextPrim<UV>
-        name="contact_email"
-        label="Contact email"
-        disabled={true}
-      />
+      <div className="flex gap-3">
+        <button
+          disabled={isSubmitting}
+          type="reset"
+          className="px-6 btn-outline-filled text-sm"
+        >
+          Reset changes
+        </button>
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="px-6 btn-orange text-sm"
+        >
+          Submit changes
+        </button>
+      </div>
+    </form>
+  );
+}
 
-      <Submitter disabled={isSubmitDisabled} type="submit">
-        Submit
-      </Submitter>
-    </FormContainer>
+function Group({
+  description,
+  ...props
+}: PropsWithChildren<{
+  title: string;
+  description?: string;
+}>) {
+  return (
+    <div className="grid gap-6 p-6 border border-prim rounded">
+      <h3 className="text-2xl font-bold font-body">{props.title}</h3>
+      {description && (
+        <p className="-mt-4 text-lg font-semibold">{description}</p>
+      )}
+      {props.children}
+    </div>
   );
 }

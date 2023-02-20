@@ -82,7 +82,7 @@ function Step({
       {/** line */}
       <div
         className={`h-[22px] border-l ${
-          isDone ? "border-orange" : "border-gray-l2 dark:border-bluegray"
+          isDone ? "border-orange" : "border-prim"
         } my-2 group-first:hidden`}
       />
       <div className="flex items-center">

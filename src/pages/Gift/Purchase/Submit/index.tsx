@@ -1,8 +1,9 @@
 import { PropsWithChildren, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Estimate } from "./types";
 import { TokenWithAmount } from "types/slices";
 import { WithWallet } from "contexts/WalletContext";
-import { BtnOutline, BtnPrim, BtnSec, Tooltip } from "components/gift";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
 import { SubmitStep, setStep } from "slices/gift";
 import { purchase } from "slices/gift/purchase";
@@ -38,7 +39,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
   const isNotEstimated = estimate === "error" || estimate === "loading";
 
   return (
-    <div>
+    <div className="grid content-start">
       <Row title="Currency:">
         <img
           alt=""
@@ -57,10 +58,15 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       </Row>
       <TxTotal estimate={estimate} token={token} />
       <div className="mt-12 grid grid-cols-2 gap-5">
-        <BtnSec onClick={goBack} type="button">
+        <button
+          className="btn-outline-filled btn-gift"
+          onClick={goBack}
+          type="button"
+        >
           Back
-        </BtnSec>
-        <BtnPrim
+        </button>
+        <button
+          className="btn-orange btn-gift"
           onClick={
             isNotEstimated
               ? undefined
@@ -72,14 +78,13 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           type="submit"
         >
           Complete
-        </BtnPrim>
-        <BtnOutline
-          as="link"
+        </button>
+        <Link
           to={appRoutes.marketplace}
-          className="col-span-full"
+          className="btn-gift btn-outline-filled col-span-full"
         >
           Cancel
-        </BtnOutline>
+        </Link>
       </div>
     </div>
   );
@@ -104,11 +109,9 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
-          <Tooltip
-            type="Info"
-            message="This transaction is likely to fail"
-            classes="my-3 text-red dark:text-red-l2"
-          />
+          <ErrorStatus classes="my-3 justify-self-center">
+            This transaction is likely to fail
+          </ErrorStatus>
         </>
       );
     case "loading":
@@ -122,11 +125,9 @@ function TxTotal({
               {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
-          <Tooltip
-            type="Loading"
-            message="Estimating transaction cost.."
-            classes="my-6"
-          />
+          <LoadingStatus classes="my-6 justify-self-center">
+            Estimating transaction cost..
+          </LoadingStatus>
         </>
       );
     default:
@@ -158,7 +159,7 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-gray-l2 dark:border-bluegray last:border-none`}
+      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-prim last:border-none`}
     >
       <p className="text-gray-d2 dark:text-white">{title}</p>
       {children}

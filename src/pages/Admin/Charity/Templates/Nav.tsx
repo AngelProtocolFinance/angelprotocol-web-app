@@ -9,7 +9,7 @@ const styler = createNavLinkStyler(
 
 export default function Nav() {
   return (
-    <div className="bg-white dark:bg-blue-d6 border border-gray-l2 dark:border-bluegray flex flex-col py-4 rounded">
+    <div className="bg-white dark:bg-blue-d6 border border-prim flex flex-col py-4 rounded">
       <Category title="Admin" classes="mb-2" />
       <NavLink end to={routes.cw4_members} className={styler}>
         Update group members

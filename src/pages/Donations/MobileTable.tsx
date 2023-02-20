@@ -11,10 +11,8 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
   const showKYCForm = useKYC();
 
   return (
-    <div
-      className={`${classes} border border-gray-l2 dark:border-bluegray rounded`}
-    >
-      <div className="grid items-center grid-cols-8 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray rounded">
+    <div className={`${classes} border border-prim rounded`}>
+      <div className="grid items-center grid-cols-8 uppercase text-xs font-bold bg-orange-l6 dark:bg-blue-d7 border-b border-prim divide-x divide-prim rounded">
         <div />
         <div className="col-start-2 col-span-4 p-4">Recipient</div>
         <div className="col-span-3 p-4">Date</div>
@@ -25,9 +23,9 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
           <Disclosure
             key={index}
             as="div"
-            className="even:bg-orange-l6 dark:even:bg-blue-d7 w-full border-b border-gray-l2 dark:border-bluegray"
+            className="even:bg-orange-l6 dark:even:bg-blue-d7 w-full border-b border-prim"
           >
-            <Disclosure.Button className="w-full grid grid-cols-8 border-b last:border-0 border-gray-l2 dark:border-bluegray divide-x divide-gray-l2 dark:divide-bluegray ">
+            <Disclosure.Button className="w-full grid grid-cols-8 border-b last:border-0 border-prim divide-x divide-prim">
               {({ open }) => (
                 <>
                   <DrawerIcon
@@ -50,6 +48,17 @@ export default function MobileTable({ donations, classes = "" }: TableProps) {
               <Row title="Amount">{humanize(row.amount, 3)}</Row>
               <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
               <Row title="TX Hash">{maskAddress(row.hash)}</Row>
+              <Row title="Status">
+                <div
+                  className={`${
+                    row.donationFinalized
+                      ? "bg-green"
+                      : "bg-gray-d1 dark:bg-gray"
+                  } font-body text-white px-2 py-0.5 rounded`}
+                >
+                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
+                </div>
+              </Row>
               <Row title="Receipt">
                 <button
                   className="block"

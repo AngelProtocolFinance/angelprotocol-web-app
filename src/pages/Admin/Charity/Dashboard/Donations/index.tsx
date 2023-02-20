@@ -1,6 +1,6 @@
 import { useAdminResources } from "pages/Admin/Guard";
 import { useDonationsQuery } from "services/apes";
-import { QueryLoader } from "components/admin";
+import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
 // import DonationsTable from "./DonationsTable";

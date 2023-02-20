@@ -1,6 +1,6 @@
 //NOTE: will be removed after admin refactor PR
-export function idParamToNum(id?: string | number) {
-  if (id === undefined) {
+export function idParamToNum(id?: string | number | null) {
+  if (id == null) {
     return 0;
   } else {
     const numId = Number(id);

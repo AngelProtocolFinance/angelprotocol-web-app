@@ -29,6 +29,9 @@ export default function RichText(props: Props) {
       //previous rich text format based on draft-js will throw parse error
       //in this case just set it to blank
       quill.setContents(quill.getContents());
+    } finally {
+      // set initial number of chars
+      setNumChars(quill.getLength() - 1);
     }
 
     if (!props.readOnly) {

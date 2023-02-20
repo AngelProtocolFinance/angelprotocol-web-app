@@ -1,6 +1,6 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
-import Icon, { IconTypes } from "components/Icon";
+import Icon, { IconType } from "components/Icon";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
 
 export default function ThemeToggle({ classes = "" }: { classes?: string }) {
@@ -28,7 +28,7 @@ export default function ThemeToggle({ classes = "" }: { classes?: string }) {
   );
 }
 
-const ToggleOption = (props: { checked: boolean; icon: IconTypes }) => (
+const ToggleOption = (props: { checked: boolean; icon: IconType }) => (
   <span
     aria-hidden="true"
     className={`flex items-center justify-center h-8 w-8 rounded-full pointer-events-none ${

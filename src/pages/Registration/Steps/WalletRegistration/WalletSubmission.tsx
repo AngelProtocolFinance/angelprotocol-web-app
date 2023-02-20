@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import { steps } from "pages/Registration/routes";
 import { WalletState, useSetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
-import { BtnPrim, BtnSec, LoadText, Separator } from "components/registration";
+import { LoadText, Separator } from "components/registration";
 import { useRegState } from "../StepGuard";
 import useRegisterWallet from "./useRegisterWallet";
 
@@ -29,9 +30,14 @@ export default function WalletSubmission({
           supported for registration.
         </p>
 
-        <BtnSec className="mt-8" disabled={isSubmitting} onClick={disconnect}>
+        <button
+          type="button"
+          className="mt-8 btn-outline-filled btn-reg"
+          disabled={isSubmitting}
+          onClick={disconnect}
+        >
           Change wallet
-        </BtnSec>
+        </button>
       </div>
     );
   }
@@ -41,7 +47,7 @@ export default function WalletSubmission({
       <h3 className="text-center md:text-left text-lg font-bold">
         You are already connected to a Wallet:
       </h3>
-      <div className="grid grid-cols-[auto_1fr] items-center border border-gray-l2 dark:border-bluegray p-4 rounded mt-8">
+      <div className="grid grid-cols-[auto_1fr] items-center border border-prim p-4 rounded mt-8">
         <img
           src={walletIcon}
           alt=""
@@ -53,34 +59,35 @@ export default function WalletSubmission({
 
       <Separator classes="my-8 before:mr-2 after:ml-2">OR</Separator>
 
-      <BtnSec
-        className="text-sm my-2"
+      <button
+        type="button"
+        className="my-2 btn-outline-filled btn-reg"
         disabled={isSubmitting}
         onClick={disconnect}
       >
         Connect new wallet
-      </BtnSec>
+      </button>
       <p className="text-center text-sm">We recommend using a new wallet.</p>
 
       <div className="grid grid-cols-2 md:flex mt-8 gap-2">
-        <BtnSec
-          as="link"
+        <Link
           to={`../${steps.doc}`}
           state={data.init}
           aria-disabled={isSubmitting}
-          className="min-w-[8rem]"
+          className="min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
-        </BtnSec>
-        <BtnPrim
+        </Link>
+        <button
+          type="button"
           disabled={isSubmitting}
-          className="min-w-[8rem]"
+          className="min-w-[8rem] btn-orange btn-reg"
           onClick={() => {
             registerWallet(address);
           }}
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
-        </BtnPrim>
+        </button>
       </div>
     </div>
   );

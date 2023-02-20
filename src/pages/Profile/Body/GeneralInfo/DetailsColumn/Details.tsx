@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useProfileContext } from "pages/Profile/ProfileContext";
+import { isEmpty } from "helpers";
 
 // import { chainIds } from "constants/chainIds";
 // import Copier from "components/Copier";
@@ -18,6 +19,11 @@ export default function Details() {
       {!!profile.street_address && (
         <Detail title="address">{profile.street_address}</Detail>
       )}
+      <Detail title="active in">
+        {isEmpty(profile.active_in_countries)
+          ? profile.hq_country
+          : profile.active_in_countries.join(", ")}
+      </Detail>
       {/* <Detail title="endowment address">
         <span className="flex items-center gap-4 w-full">
           <span className="hidden sm:block">
@@ -42,9 +48,9 @@ export default function Details() {
 function Detail(props: PropsWithChildren<{ title: string }>) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
-      <h6 className="font-header font-bold text-xs tracking-wider uppercase">
+      <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
-      </h6>
+      </p>
       <span className="font-body font-normal text-base text-gray-d1 dark:text-gray">
         {props.children || "-"}
       </span>

@@ -24,7 +24,7 @@ import {
 } from "errors/errors";
 import { IS_TEST } from "constants/env";
 
-// TODO: uni-5 and juno-1 have diff gas prices for fee display only,
+// TODO: uni-6 and juno-1 have diff gas prices for fee display only,
 // actual rate during submission is set by wallet - can be overridden with custom but keplr is buggy when customizing
 // NOTE: use "High" fee setting on JUNO testnet, otherwise transactions will fail
 const GAS_PRICE = IS_TEST

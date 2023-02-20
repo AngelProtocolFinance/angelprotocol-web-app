@@ -1,10 +1,3 @@
-export enum awsTags {
-  airdrop = "airdrop",
-  admin = "admin",
-  profile = "profile",
-  endowments = "endowments",
-}
-
 export enum chaTags {
   profile = "profile",
   profiles = "profiles",

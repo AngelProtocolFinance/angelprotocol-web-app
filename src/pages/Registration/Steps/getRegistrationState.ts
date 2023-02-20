@@ -99,6 +99,8 @@ function formatDocumentation({
   Website,
   UN_SDG,
   KycDonorsOnly,
+  HqCountry,
+  ActiveInCountries,
 }: DoneDocs["Registration"]): Documentation {
   return {
     //level 1
@@ -109,6 +111,7 @@ function formatDocumentation({
       value: sdg,
       label: `${sdg} - ${unsdgs[sdg].title}`,
     })),
+    hqCountry: { name: HqCountry, flag: "" },
 
     //level 2
     financialStatements: genFileAsset(fs || []),
@@ -117,6 +120,9 @@ function formatDocumentation({
     auditedFinancialReports: genFileAsset(afr || []),
     /**TODO: must be part of Registration not Metadata */
     isKYCRequired: KycDonorsOnly ? "Yes" : "No",
+
+    //general
+    activeInCountries: ActiveInCountries.map((c) => ({ label: c, value: c })),
 
     //meta
     level: Tier,

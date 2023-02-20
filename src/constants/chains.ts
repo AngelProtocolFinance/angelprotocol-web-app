@@ -1,6 +1,8 @@
+import { DAPP_DOMAIN } from "constants/common";
+
 export enum chainIDs {
   junoMain = "juno-1",
-  junoTest = "uni-5",
+  junoTest = "uni-6",
   polygonMain = "137",
   polygonTest = "80001",
   binanceMain = "56",
@@ -22,7 +24,7 @@ const explorers: { [key in chainIDs]: string } = {
   137: "https://polygonscan.com",
   80001: "https://mumbai.polygonscan.com",
   "juno-1": "https://www.mintscan.io/juno",
-  "uni-5": "https://testnet.mintscan.io/juno-testnet",
+  "uni-6": "https://testnet.mintscan.io/juno-testnet",
   "phoenix-1": "https://finder.terra.money/mainnet",
   "pisco-1": "https://finder.terra.money/testnet",
 };
@@ -74,8 +76,8 @@ export const chains: { [index: string]: Info } = new Proxy(_chains, {
   get(target, key: chainIDs) {
     return (
       target[key] ?? {
-        txExplorer: "https://app.angelprotocol.io",
-        addressExplorer: "https://app.angelprotocol.io",
+        txExplorer: DAPP_DOMAIN,
+        addressExplorer: DAPP_DOMAIN,
       }
     ); //TODO: what's good fallback link
   },
