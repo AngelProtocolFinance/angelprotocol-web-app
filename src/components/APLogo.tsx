@@ -1,4 +1,4 @@
-import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.svg";
+import angelProtocolLogo from "assets/images/angelgiving-H-logo-beta-wht.png";
 import ExtLink from "components/ExtLink";
 import { BASE_DOMAIN } from "constants/common";
 
