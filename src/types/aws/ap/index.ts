@@ -4,7 +4,7 @@ import { NetworkType, UNSDG_NUMS } from "../../lists";
 
 type EndowmentBase = {
   hq_country: string;
-  active_in_countries: string[];
+  active_in_countries?: string[];
   categories: { sdgs: UNSDG_NUMS[] };
   id: number;
   image: string;

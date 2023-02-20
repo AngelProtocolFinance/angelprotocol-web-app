@@ -12,7 +12,7 @@ import { unsdgs } from "constants/unsdgs";
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
-  active_in_countries,
+  active_in_countries = [],
   name,
   image,
   id,

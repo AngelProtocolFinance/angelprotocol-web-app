@@ -25,12 +25,13 @@ export default function EditProfile() {
 }
 
 function FormWithContext(props: EndowmentProfile) {
+  const { active_in_countries = [] } = props;
   // could just add to useForm.defaultValue - but not Partial here
   const flatInitial: FlatFormValues = {
     name: props.name,
     categories_sdgs: props.categories.sdgs,
     hq_country: props.hq_country,
-    active_in_countries: props.active_in_countries,
+    active_in_countries: active_in_countries,
     image: props.image || "",
     logo: props.logo || "",
     kyc_donors_only: props.kyc_donors_only,
@@ -56,7 +57,7 @@ function FormWithContext(props: EndowmentProfile) {
     categories_sdgs: props.categories.sdgs.map((x) =>
       getSDGLabelValuePair(x, unsdgs[x].title)
     ),
-    active_in_countries: props.active_in_countries.map((x) => ({
+    active_in_countries: active_in_countries.map((x) => ({
       label: x,
       value: x,
     })),
