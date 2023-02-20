@@ -1,6 +1,6 @@
-import { steps } from "@/pages/Registration/routes";
 import Copier from "@ap/components/copier";
 import { Link } from "react-router-dom";
+import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 export default function RegisteredWallet(props: {

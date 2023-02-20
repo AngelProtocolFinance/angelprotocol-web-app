@@ -1,4 +1,3 @@
-import routes from "@/pages/Registration/routes";
 import Prompt from "@ap/components/prompt";
 import { chainIds } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
@@ -6,7 +5,8 @@ import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult } from "@ap/helpers";
 import { useSubmitMutation } from "@ap/services/aws";
 import { Navigate } from "react-router-dom";
-import { CompleteRegistration } from "@/pages/Registration/types";
+import { CompleteRegistration } from "../../types";
+import routes from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";

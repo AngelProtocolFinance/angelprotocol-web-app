@@ -1,9 +1,9 @@
-import { steps } from "@/pages/Registration/routes";
 import Icon from "@ap/components/icon";
 import { LoadText } from "@ap/components/registration";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { RegistrationStatus } from "@ap/types/aws";
+import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 type Props = {
