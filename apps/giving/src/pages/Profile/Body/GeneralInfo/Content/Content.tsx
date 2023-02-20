@@ -1,5 +1,5 @@
-import { useProfileContext } from "@/pages/Profile/ProfileContext";
 import RichText from "@ap/components/rich-text";
+import { useProfileContext } from "../../../ProfileContext";
 import Container from "./Container";
 
 export default function Content() {

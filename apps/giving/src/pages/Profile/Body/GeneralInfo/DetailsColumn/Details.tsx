@@ -1,6 +1,6 @@
-import { useProfileContext } from "@/pages/Profile/ProfileContext";
 import { isEmpty } from "@ap/helpers";
 import { PropsWithChildren } from "react";
+import { useProfileContext } from "../../../ProfileContext";
 
 export default function Details() {
   const profile = useProfileContext();
