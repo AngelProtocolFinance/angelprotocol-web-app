@@ -1,5 +1,5 @@
-import { useGetter } from "@/store/accessors";
 import { useDebouncer } from "@ap/hooks";
+import { useGetter } from "@ap/store";
 import { useMemo, useState } from "react";
 
 export default function useAllianceSelection() {

@@ -1,9 +1,9 @@
-import { useSetter } from "@/store/accessors";
 import { APLogo } from "@ap/components";
 import { Steps } from "@ap/components/steps";
 import WalletSuite from "@ap/components/wallet-suite";
 import { getPossessiveForm } from "@ap/helpers";
 import { setRecipient } from "@ap/slices/donation";
+import { useSetter } from "@ap/store";
 import { useEffect } from "react";
 import useWidgetParams from "./useWidgetParams";
 

@@ -1,10 +1,10 @@
-import { useGetter } from "@/store/accessors";
 import { Popup } from "@ap/components";
 import { useModalContext } from "@ap/contexts";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { useGetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { AllianceEditMeta, AllianceEditValues } from "@ap/types/admin";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@ap/types/contracts";

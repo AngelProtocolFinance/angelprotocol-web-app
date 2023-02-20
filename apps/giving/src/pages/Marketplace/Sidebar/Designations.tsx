@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { setDesignations } from "@ap/slices/market-filter";
+import { useGetter, useSetter } from "@ap/store";
 import { EndowDesignation } from "@ap/types/aws";
 import { FilterOption, FlatFilter } from "./common";
 

@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { ProposalGroupOptions, proposals } from "@ap/slices/admin";
+import { useGetter, useSetter } from "@ap/store";
 
 export default function GroupSelector() {
   const dispatch = useSetter();

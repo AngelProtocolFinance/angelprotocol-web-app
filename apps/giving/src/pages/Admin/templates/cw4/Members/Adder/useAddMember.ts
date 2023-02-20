@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { apCW4Members as APMembers } from "@ap/slices/admin";
+import { useGetter, useSetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { MemberUpdatorValues } from "@ap/types/admin";
 

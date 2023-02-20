@@ -1,6 +1,6 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import Icon from "@ap/components/icon";
 import { ApplicationStatusOptions, applications } from "@ap/slices/admin";
+import { useGetter, useSetter } from "@ap/store";
 import { Listbox } from "@headlessui/react";
 import { Fragment } from "react";
 

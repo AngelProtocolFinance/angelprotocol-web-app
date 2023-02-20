@@ -1,4 +1,4 @@
-import { store } from "@/store/store";
+import { store } from "@ap/store";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";

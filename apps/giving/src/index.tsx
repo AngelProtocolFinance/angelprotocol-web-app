@@ -1,7 +1,7 @@
-import { store } from "@/store/store";
 import { Loader } from "@ap/components";
 import { ErrorBoundary } from "@ap/errors";
 import { initTheme } from "@ap/helpers";
+import { store } from "@ap/store";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";

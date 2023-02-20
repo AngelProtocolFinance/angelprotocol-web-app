@@ -1,4 +1,3 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { Breadcrumbs } from "@ap/components";
 import { Steps } from "@ap/components/steps";
 import { appRoutes } from "@ap/constants";
@@ -7,6 +6,7 @@ import {
   DonationState,
   setRecipient,
 } from "@ap/slices/donation";
+import { useGetter, useSetter } from "@ap/store";
 import { useEffect, useRef } from "react";
 
 export default function Content(props: DonationRecipient) {

@@ -1,4 +1,4 @@
-import { useGetter } from "@/store/accessors";
+import { useGetter } from "@ap/store";
 
 const NUM_STEPS = 2;
 export default function Progress({ classes = "" }: { classes?: string }) {

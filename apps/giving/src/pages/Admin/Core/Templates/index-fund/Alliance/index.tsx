@@ -1,7 +1,7 @@
-import { useSetter } from "@/store/accessors";
 import { FormError, FormSkeleton } from "@ap/components/admin";
 import { useAllianceMembersQuery } from "@ap/services/juno";
 import { allianceMembers as members } from "@ap/slices/admin";
+import { useSetter } from "@ap/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";

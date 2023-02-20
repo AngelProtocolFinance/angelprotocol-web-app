@@ -1,7 +1,7 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import Icon from "@ap/components/icon";
 import { useDebouncer } from "@ap/hooks";
 import { setSearchText } from "@ap/slices/market-filter";
+import { useGetter, useSetter } from "@ap/store";
 import { QueryStatus } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useState } from "react";
 

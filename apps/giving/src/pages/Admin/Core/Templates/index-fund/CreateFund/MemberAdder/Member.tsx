@@ -1,6 +1,6 @@
-import { useSetter } from "@/store/accessors";
 import Icon from "@ap/components/icon";
 import { newFundMembers } from "@ap/slices/admin";
+import { useSetter } from "@ap/store";
 
 export default function Member(props: { address: string }) {
   const dispatch = useSetter();

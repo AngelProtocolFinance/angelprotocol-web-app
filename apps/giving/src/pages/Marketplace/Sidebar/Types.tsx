@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { setTypes } from "@ap/slices/market-filter";
+import { useGetter, useSetter } from "@ap/store";
 import { CapitalizedEndowmentType } from "@ap/types/contracts";
 import { FilterOption, FlatFilter } from "./common";
 

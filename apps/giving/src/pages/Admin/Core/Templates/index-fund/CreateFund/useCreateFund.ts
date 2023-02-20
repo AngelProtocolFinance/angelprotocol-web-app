@@ -1,9 +1,9 @@
-import { useGetter } from "@/store/accessors";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { CW3, IndexFund } from "@ap/contracts";
 import { cleanObject, condense, roundDown } from "@ap/helpers";
 import useCosmosTxSender from "@ap/hooks/use-cosmos-tx-sender";
+import { useGetter } from "@ap/store";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreateFundMeta, FundCreatorValues } from "@ap/types/admin";

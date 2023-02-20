@@ -1,5 +1,5 @@
-import { useGetter } from "@/store/accessors";
 import { newFundMembers as NFMs } from "@ap/slices/admin";
+import { useGetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { FundCreatorValues as V } from "@ap/types/admin";

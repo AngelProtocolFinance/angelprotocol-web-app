@@ -1,5 +1,5 @@
-import { useGetter } from "@/store/accessors";
 import { allianceMembers as AMs } from "@ap/slices/admin";
+import { useGetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AllianceEditValues as AV } from "@ap/types/admin";

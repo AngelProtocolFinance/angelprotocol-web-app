@@ -1,8 +1,8 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import {
   AllianceMemberWithFlags,
   allianceMembers as members,
 } from "@ap/slices/admin";
+import { useGetter, useSetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { AllianceEditValues } from "@ap/types/admin";
 

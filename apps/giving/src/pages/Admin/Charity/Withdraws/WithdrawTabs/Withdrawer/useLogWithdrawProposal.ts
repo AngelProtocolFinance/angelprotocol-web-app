@@ -1,4 +1,3 @@
-import { useSetter } from "@/store/accessors";
 import { TxPrompt } from "@ap/components/prompt";
 import { APIs } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
@@ -10,6 +9,7 @@ import {
 } from "@ap/helpers";
 import { TxOnSuccess, TxSuccessMeta } from "@ap/hooks/use-cosmos-tx-sender";
 import { invalidateApesTags } from "@ap/services/apes";
+import { useSetter } from "@ap/store";
 import { AccountType } from "@ap/types/contracts";
 
 type ProposalInfo = {

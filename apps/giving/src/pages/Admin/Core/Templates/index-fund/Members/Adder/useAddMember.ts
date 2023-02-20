@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { fundMembers as FMs } from "@ap/slices/admin";
+import { useGetter, useSetter } from "@ap/store";
 import { useFormContext } from "react-hook-form";
 import { FundUpdateValues } from "@ap/types/admin";
 

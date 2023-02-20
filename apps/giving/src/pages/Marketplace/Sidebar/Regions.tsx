@@ -1,8 +1,8 @@
-import { useGetter, useSetter } from "@/store/accessors";
 import { QueryLoader } from "@ap/components";
 import { useRegionsQuery } from "@ap/services/countries";
 import { setRegions } from "@ap/slices/market-filter";
 import { RegionType } from "@ap/slices/market-filter";
+import { useGetter, useSetter } from "@ap/store";
 import { GroupProps, MultiLevelFilterProps, MultilevelFilter } from "./common";
 
 type Props = Pick<
