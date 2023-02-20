@@ -1,5 +1,5 @@
 import { IconType } from "components/Icon";
-import { BASE_DOMAIN } from "constants/common";
+import { BASE_DOMAIN, DAPP_DOMAIN } from "constants/common";
 import { LITEPAPER } from "constants/urls";
 
 type SocialMedia =
@@ -64,19 +64,14 @@ export const SECTIONS_DATA: Section[] = [
     title: "Products",
     links: [
       {
-        text: "For Non-profit orgs.",
-        href: `${BASE_DOMAIN}/non-profit-organizations/`,
+        text: "Non-profits",
+        href: `${BASE_DOMAIN}`,
       },
-      { text: "For Donors", href: `${BASE_DOMAIN}/donors/` },
       {
-        text: "For Changemakers",
-        href: `${BASE_DOMAIN}/changemakers/`,
-      },
-      { text: "For Investors", href: `${BASE_DOMAIN}/investors/` },
-      {
-        text: "For CSR Partners",
+        text: "Giving Partners (CSR)",
         href: `${BASE_DOMAIN}/csr-partners/`,
       },
+      { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
       // {
       //   text: "For Giftcards",
       //   href: "https://app.angel.giving/gift",
@@ -86,13 +81,12 @@ export const SECTIONS_DATA: Section[] = [
   {
     title: "About",
     links: [
-      { text: "About us", href: `${BASE_DOMAIN}/about/` },
+      { text: "About us", href: `${BASE_DOMAIN}/about-angel-giving/` },
       {
         text: "Meet the team",
-        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY`,
+        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-`,
       },
       { text: "News", href: `${BASE_DOMAIN}/news/` },
-      { text: "Stories", href: `${BASE_DOMAIN}/stories/` },
       { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
     ],
   },
