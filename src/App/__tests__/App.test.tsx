@@ -33,7 +33,7 @@ const heroText = /Reflecting on the past/i;
 const leadText = /leaderboard/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
-const leadLink = /leaderboard/i;
+const leadLink = /leaderboardi;
 const loaderTestId = "loader";
 
 describe("App.tsx tests", () => {

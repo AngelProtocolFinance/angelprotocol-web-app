@@ -1,5 +1,5 @@
 import { IconType } from "components/Icon";
-import { BASE_DOMAIN } from "constants/common";
+import { BASE_DOMAIN, DAPP_DOMAIN } from "constants/common";
 import { LITEPAPER } from "constants/urls";
 
 type SocialMedia =
@@ -67,11 +67,11 @@ export const SECTIONS_DATA: Section[] = [
         text: "Non-profits",
         href: `${BASE_DOMAIN}/non-profit-organizations/`,
       },
-      { text: "Leaderboard", href: `/leaderboard` },
       {
         text: "Giving Partners (CSR)",
         href: `${BASE_DOMAIN}/csr-partners/`,
       },
+      { text: "Impact Board", href: `${DAPP_DOMAIN}/leaderboard/` },
       // {
       //   text: "For Giftcards",
       //   href: "https://app.angel.giving/gift",
@@ -81,10 +81,10 @@ export const SECTIONS_DATA: Section[] = [
   {
     title: "About",
     links: [
-      { text: "About us", href: `${BASE_DOMAIN}/about/` },
+      { text: "About us", href: `${BASE_DOMAIN}/about-angel-giving/` },
       {
         text: "Meet the team",
-        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY`,
+        href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-`,
       },
       { text: "News", href: `${BASE_DOMAIN}/news/` },
       { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
