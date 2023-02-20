@@ -1,3 +1,4 @@
+import { EMAIL_SUPPORT } from "@ap/constants";
 import { logger } from "@ap/helpers";
 import { ApplicationStatusOptions } from "@ap/slices/admin";
 import {
@@ -143,7 +144,7 @@ const registration_api = aws.injectEndpoints({
       transformErrorResponse(err, meta, arg) {
         return {
           status: err.status,
-          data: "Registration submission failed. Contact support@angel.giving",
+          data: `Registration submission failed. Contact ${EMAIL_SUPPORT}`,
         };
       },
     }),

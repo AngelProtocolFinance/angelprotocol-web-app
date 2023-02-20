@@ -1,6 +1,7 @@
 import { Field, Label } from "@ap/components/form";
 import { LoadText } from "@ap/components/registration";
 import { Selector } from "@ap/components/selector";
+import { APP_NAME } from "@ap/constants";
 import { FormValues as FV } from "../types";
 import { ContactRoles, ReferralMethods } from "@ap/types/aws";
 import { referralOptions, roleOptions } from "../constants";
@@ -93,7 +94,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Field
         name="goals"
         label="Goals"
-        placeholder="What is your goal working with Angel Giving?"
+        placeholder={`What is your goal working with ${APP_NAME}?`}
         classes={{ container: "mt-4" }}
         required
       />

@@ -1,24 +1,21 @@
-import { appRoutes } from "@ap/constants";
 import { createNavLinkStyler } from "@ap/helpers";
 import { NavLink } from "react-router-dom";
+import { Link } from "../types";
 
-export default function DesktopNav({ classes = "" }: { classes?: string }) {
+type Props = { classes: string; links: Link[] };
+
+export default function DesktopNav({ classes, links }: Props) {
   return (
     <nav className={`${classes} items-center justify-end font-body text-base`}>
-      <NavLink className={styler} to={appRoutes.index}>
-        Marketplace
-      </NavLink>
-      {/*
-        NOTE: governance will be reenabled when we relaunch the $HALO token
-        <NavLink to={appRoutes.govern} className={styler}>
-          Governance
-        </NavLink> */}
-      <NavLink to={appRoutes.leaderboard} className={styler}>
-        Leaderboard
-      </NavLink>
-      <NavLink to={appRoutes.register} className={styler}>
-        Register
-      </NavLink>
+      {links.map((link) => (
+        <NavLink
+          key={`header-link-${link.title}`}
+          className={styler}
+          to={link.href}
+        >
+          {link.title}
+        </NavLink>
+      ))}
     </nav>
   );
 }

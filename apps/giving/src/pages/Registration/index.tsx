@@ -1,4 +1,5 @@
 import { Seo } from "@ap/components";
+import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./Signup";
@@ -16,8 +17,8 @@ export default function Registration() {
       fallback={<div className="place-self-center">Loading page...</div>}
     >
       <Seo
-        title="Registration Portal - Angel Giving"
-        url="https://app.angel.giving/register"
+        title={`Registration Portal - ${APP_NAME}`}
+        url={`${DAPP_DOMAIN}/register`}
       />
       <Routes>
         <Route

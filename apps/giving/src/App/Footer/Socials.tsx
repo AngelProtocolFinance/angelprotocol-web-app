@@ -1,18 +1,20 @@
 import { ExtLink } from "@ap/components";
 import Icon from "@ap/components/icon";
-import { SOCIAL_MEDIA_LINKS } from "./constants";
+import { SocialMediaLink } from "../types";
 
-export default function Socials() {
+type Props = { links: SocialMediaLink[] };
+
+export default function Socials({ links }: Props) {
   return (
     <div className="flex items-center gap-4 md:gap-8">
-      {Object.entries(SOCIAL_MEDIA_LINKS).map(([type, { iconType, link }]) => {
+      {links.map(({ title, icon, href }) => {
         return (
           <ExtLink
-            key={type}
-            href={link}
+            key={`social-link-${icon.type}`}
+            href={href}
             className="hover:text-blue-l1 active:text-blue transition ease-in-out duration-300"
           >
-            <Icon type={iconType} className="w-6 h-6" title={type} />
+            <Icon type={icon.type} size={icon.size} title={title} />
           </ExtLink>
         );
       })}

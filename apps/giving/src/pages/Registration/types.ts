@@ -9,6 +9,7 @@ import {
   RegistrationStatus,
 } from "@ap/types/aws";
 import { EndowmentTierNum } from "@ap/types/contracts";
+import { CountryOption } from "@ap/types/services";
 
 //REF_ID is global to registration
 export type InitReg = {
@@ -55,6 +56,10 @@ export type Documentation = {
   hasAuthority: boolean;
   hasAgreedToTerms: boolean;
   level: EndowmentTierNum;
+
+  hqCountry: CountryOption;
+  // general info
+  activeInCountries: OptionType<string>[];
 };
 
 //STEP 3

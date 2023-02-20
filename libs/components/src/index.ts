@@ -1,4 +1,4 @@
-export { default as APLogo } from "./APLogo";
+export { default as ActivityCountries } from "./ActivityCountries";
 export { default as BookmarkBtn } from "./BookmarkBtn";
 export { default as Breadcrumbs } from "./Breadcrumbs";
 export { default as ContentLoader } from "./ContentLoader";
@@ -9,6 +9,7 @@ export { default as ImageWrapper } from "./ImageWrapper";
 export { default as KadoModal } from "./KadoModal";
 export { default as Loader } from "./Loader";
 export { default as LoaderRing } from "./LoaderRing";
+export { default as Logo, type LogoProps } from "./Logo";
 export { default as LogoPlaceholder } from "./LogoPlaceholder";
 export { default as Popup } from "./Popup";
 export { default as QueryLoader } from "./QueryLoader";

@@ -1,3 +1,4 @@
+import { APP_NAME } from "@ap/constants";
 import { store } from "@ap/store";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
@@ -102,7 +103,7 @@ describe("App.tsx tests", () => {
     //registration is finally loaded
     expect(
       await screen.findByRole("heading", {
-        name: /register to angel giving/i,
+        name: `Register to ${APP_NAME}`,
       })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();

@@ -1,8 +1,9 @@
 import { Asset } from "@ap/components/registration";
-import { SchemaShape, genFileSchema } from "@ap/schemas";
+import { SchemaShape, genFileSchema, requiredString } from "@ap/schemas";
 import * as Yup from "yup";
 import { FormValues } from "./types";
 import { FileObject } from "@ap/types/aws";
+import { CountryOption } from "@ap/types/services";
 
 export const MB_LIMIT = 25;
 const VALID_MIME_TYPES = [
@@ -29,6 +30,9 @@ export const schema = Yup.object().shape<SchemaShape<FormValues>>({
   proofOfRegistration: Yup.object().shape(genAssetShape(true)),
   website: Yup.string().required("required").url("invalid url"),
   sdgs: Yup.array().min(1, "required"),
+  hqCountry: Yup.object().shape<SchemaShape<CountryOption>>({
+    name: requiredString,
+  }),
 
   //level 2-3 fields not required
   financialStatements: Yup.object().shape(genAssetShape()),

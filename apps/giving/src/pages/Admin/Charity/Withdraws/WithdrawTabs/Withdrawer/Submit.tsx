@@ -1,5 +1,6 @@
 import { QueryLoader } from "@ap/components";
 import { Field } from "@ap/components/form";
+import { APP_NAME } from "@ap/constants";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useLatestBlockQuery } from "@ap/services/juno";
 import { useEffect } from "react";
@@ -71,7 +72,7 @@ function SubmitWithReason({
     return (
       <>
         <Warning classes="mb-4">
-          Withdrawing from endowment funds requires Angel Giving team approval.
+          {`Withdrawing from endowment funds requires ${APP_NAME} team approval.`}
         </Warning>
         <Field<WV>
           name="reason"

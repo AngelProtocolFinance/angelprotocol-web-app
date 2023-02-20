@@ -1,7 +1,7 @@
 import { ExtLink } from "@ap/components";
 import { CheckField, Field } from "@ap/components/form";
 import { Separator } from "@ap/components/registration";
-import { PRIVACY_POLICY } from "@ap/constants";
+import { APP_NAME, PRIVACY_POLICY } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import routes from "../routes";
@@ -15,7 +15,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       className={`${classes} padded-container w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl font-bold text-center">
-        Register to Angel Giving
+        {`Register to ${APP_NAME}`}
       </h3>
 
       <Field<FV>

@@ -1,6 +1,6 @@
 import Icon from "@ap/components/icon";
 import Prompt from "@ap/components/prompt";
-import { APIs, appRoutes, chainIds } from "@ap/constants";
+import { APIs, APP_NAME, appRoutes, chainIds } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { createAuthToken } from "@ap/helpers";
@@ -58,7 +58,7 @@ export default function Form({ classes = "" }) {
         size={96}
       />
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Redeem Angel Giving Giftcard
+        {`Redeem ${APP_NAME} Giftcard`}
       </h3>
       <div className="relative grid w-full border border-prim rounded-lg overflow-clip">
         <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">

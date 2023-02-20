@@ -2,7 +2,7 @@ import { Label } from "@ap/components/form";
 import { Field } from "@ap/components/form";
 import Prompt from "@ap/components/prompt";
 import { RichTextEditor } from "@ap/components/rich-text";
-import { APIs, appRoutes } from "@ap/constants";
+import { APIs, APP_NAME, appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { createAuthToken } from "@ap/helpers";
 import { useFormContext } from "react-hook-form";
@@ -47,7 +47,7 @@ export default function Form({ classes = "" }) {
       autoComplete="off"
     >
       <h3 className="text-center text-3xl font-bold leading-snug">
-        Send Your Angel Giving Giftcard via Email
+        {`Send Your ${APP_NAME} Giftcard via Email`}
       </h3>
       <Field<FV> name="purchaser" label="Your name" classes="field-gift" />
       <Field<FV>

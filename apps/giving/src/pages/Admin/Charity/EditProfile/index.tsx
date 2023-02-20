@@ -1,6 +1,6 @@
 import { Seo } from "@ap/components";
 import { FormError, FormSkeleton } from "@ap/components/admin";
-import { unsdgs } from "@ap/constants";
+import { APP_NAME, DAPP_DOMAIN, unsdgs } from "@ap/constants";
 import { useAdminResources } from "@ap/contexts/admin";
 import { useProfileQuery } from "@ap/services/aws";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -69,11 +69,11 @@ function FormWithContext(props: EndowmentProfile) {
   return (
     <FormProvider {...methods}>
       <Seo
-        title={`${props.name} profile update - Angel Giving`}
+        title={`${props.name} profile update - ${APP_NAME}`}
         description={`${props.overview.slice(0, 140)}`}
         name={`${props.name}`}
         image={`${props.logo}`}
-        url={`https://app.angel.giving/profile/${props.id}`}
+        url={`${DAPP_DOMAIN}/profile/${props.id}`}
       />
       <Form />
     </FormProvider>

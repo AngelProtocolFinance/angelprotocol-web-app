@@ -1,5 +1,6 @@
 import banner from "@/assets/images/hero.png";
 import { QueryLoader, Seo } from "@ap/components";
+import { APP_NAME, DAPP_DOMAIN } from "@ap/constants";
 import { idParamToNum } from "@ap/helpers";
 import { useProfileQuery } from "@ap/services/aws";
 import { useParams } from "react-router-dom";
@@ -29,11 +30,11 @@ export default function Donate() {
         {(profile) => (
           <>
             <Seo
-              title={`Donate to ${profile.name} - Angel Giving`}
+              title={`Donate to ${profile.name} - ${APP_NAME}`}
               description={`${profile.overview.slice(0, 140)}`}
               name={`${profile.name}`}
               image={`${profile.logo}`}
-              url={`https://app.angel.giving/donate/${profile.id}`}
+              url={`${DAPP_DOMAIN}/donate/${profile.id}`}
             />
             <Content
               name={profile.name}

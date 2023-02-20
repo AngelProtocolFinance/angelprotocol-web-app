@@ -1,3 +1,4 @@
+import { ActivityCountries } from "@ap/components";
 import CountrySelector from "@ap/components/country-selector";
 import { Field, Label } from "@ap/components/form";
 import Icon from "@ap/components/icon";
@@ -9,7 +10,6 @@ import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { FormValues as FV } from "./types";
 import { UNSDG_NUMS } from "@ap/types";
-import ActivityCountries from "./ActivityCountries";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
@@ -123,7 +123,14 @@ export default function Form() {
             error: "field-error",
           }}
         />
-        <ActivityCountries />
+        <Label className="-mb-4">Active countries</Label>
+        <ActivityCountries<FV, "active_in_countries">
+          name="active_in_countries"
+          classes={{
+            container: "bg-white dark:bg-blue-d6 px-4 py-3",
+            button: "field-input-admin",
+          }}
+        />
         <Field<FV>
           classes="field-admin"
           name="street_address"

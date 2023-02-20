@@ -1,6 +1,6 @@
 import { Popup } from "@ap/components";
 import Icon from "@ap/components/icon";
-import { appRoutes } from "@ap/constants";
+import { APP_NAME, appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { useErrorContext } from "@ap/contexts";
 import { handleMutationResult, logger } from "@ap/helpers";
@@ -78,8 +78,8 @@ export default function VerifiedEmail({ classes = "" }: { classes?: string }) {
         Your email address is confirmed!
       </h1>
       <Text classes="mb-8 mt-2">
-        Thank you for your interest in Angel Giving! Your endowment is just a
-        few steps away.
+        {`Thank you for your interest in ${APP_NAME}! Your endowment is just a
+        few steps away.`}
       </Text>
       <Link
         className="w-full max-w-[26.25rem] btn-orange btn-reg"

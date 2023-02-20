@@ -1,13 +1,19 @@
-import { APLogo } from "@ap/components";
+import { Logo, LogoProps } from "@ap/components";
 import Icon from "@ap/components/icon";
-import { appRoutes } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import { createNavLinkStyler } from "@ap/helpers";
 import { Dialog } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
+import { Link } from "../../types";
 import ThemeToggle from "../ThemeToggle";
 
-export default function Menu() {
+export default function Menu({
+  links,
+  logo,
+}: {
+  links: Link[];
+  logo: LogoProps;
+}) {
   const { closeModal } = useModalContext();
   return (
     <Dialog.Panel
@@ -15,7 +21,7 @@ export default function Menu() {
       className="fixed top-0 inset-x-0 z-10 bg-blue dark:bg-blue-d5 shadow-lg pb-8"
     >
       <div className="flex justify-between items-center w-full py-4 padded-container border-b border-gray-l2">
-        <APLogo className="w-32" />
+        <Logo className="w-32" logo={logo} />
         <button
           onClick={closeModal}
           className="flex items-center text-white justify-center"
@@ -24,15 +30,15 @@ export default function Menu() {
         </button>
       </div>
       <nav className="mt-8 grid gap-y-4 w-full px-6 font-extrabold font-heading text-white text-3xl">
-        <NavLink to={appRoutes.index} className={navLinkStyle} end>
-          Marketplace
-        </NavLink>
-        <NavLink to={appRoutes.leaderboard} className={navLinkStyle}>
-          Leaderboard
-        </NavLink>
-        <NavLink to={appRoutes.register} className={navLinkStyle}>
-          Register
-        </NavLink>
+        {links.map((link) => (
+          <NavLink
+            key={`header-link-${link.title}`}
+            className={navLinkStyle}
+            to={link.href}
+          >
+            {link.title}
+          </NavLink>
+        ))}
         <span className="flex justify-between items-center mt-4">
           <span>Theme</span>
           <ThemeToggle classes="flex" />

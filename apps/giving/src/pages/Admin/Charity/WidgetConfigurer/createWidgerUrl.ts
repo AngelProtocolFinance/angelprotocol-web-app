@@ -1,11 +1,9 @@
 import { URL_PARAMS, UrlParamValues } from "@/pages/DonateWidget";
-import { IS_TEST, appRoutes } from "@ap/constants";
+import { DAPP_DOMAIN, IS_TEST, appRoutes } from "@ap/constants";
 import { isEmpty } from "@ap/helpers";
 import { FormValues } from "./schema";
 
-const APP_URL = IS_TEST
-  ? "http://localhost:4200"
-  : "https://app.angelprotocol.io";
+const APP_URL = IS_TEST ? "http://localhost:4200" : `${DAPP_DOMAIN}`;
 
 export default function createWidgetUrl(formValues: FormValues) {
   const rootUrl = `${APP_URL}${appRoutes.donate_widget}/${formValues.endowIdName.id}?apiKey=API_KEY`;

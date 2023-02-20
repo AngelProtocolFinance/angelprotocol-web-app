@@ -118,6 +118,8 @@ const mockApplications: EndowmentProposal[] = [
     ],
     KycDonorsOnly: true,
     poll_id: 1,
+    ActiveInCountries: [],
+    HqCountry: "",
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -161,6 +163,8 @@ const mockApplications: EndowmentProposal[] = [
     ],
     KycDonorsOnly: false,
     poll_id: 2,
+    ActiveInCountries: [],
+    HqCountry: "",
   },
   {
     RegistrationDate: "2022-06-30T10:05:45.350Z",
@@ -204,5 +208,7 @@ const mockApplications: EndowmentProposal[] = [
     ],
     KycDonorsOnly: false,
     poll_id: 3,
+    ActiveInCountries: [],
+    HqCountry: "",
   },
 ];

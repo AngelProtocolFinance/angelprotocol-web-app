@@ -1,4 +1,4 @@
-import { EXPECTED_NETWORK_TYPE } from "@ap/constants";
+import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "@ap/constants";
 import { WALLET_METADATA } from "@ap/contexts/wallet-context";
 import { WithoutInstallers } from "@ap/contexts/wallet-context";
 import { Chain } from "@ap/types/aws";
@@ -43,7 +43,7 @@ export class LogDonationFail extends Error {
   txHash: string;
   constructor(chainId: string, txHash: string) {
     super(
-      "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io"
+      `Failed to log your donation for receipt purposes. Kindly send an email to ${EMAIL_SUPPORT}`
     );
     this.chainId = chainId;
     this.txHash = txHash;

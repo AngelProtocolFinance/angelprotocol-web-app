@@ -1,5 +1,5 @@
 import { ErrorStatus, LoadingStatus } from "@ap/components/status";
-import { IS_TEST, chainIds } from "@ap/constants";
+import { APP_NAME, IS_TEST, chainIds } from "@ap/constants";
 import { useGetWallet } from "@ap/contexts/wallet-context";
 import { GiftState, resetDetails } from "@ap/slices/gift";
 import { useGetter, useSetter } from "@ap/store";
@@ -20,7 +20,7 @@ export default function Purchase({ classes = "" }) {
       {isHeadingShown(state) && (
         <>
           <h3 className="text-center text-3xl font-bold leading-snug">
-            Purchase Angel Giving Giftcard
+            {`Purchase ${APP_NAME} Giftcard`}
           </h3>
           <Progress classes="my-12" />
         </>

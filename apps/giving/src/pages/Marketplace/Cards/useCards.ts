@@ -53,6 +53,7 @@ export default function useCards() {
     ...(hqCountries ? { hq_country: hqCountries } : {}),
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     start: 0,
+    limit: 15,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =

@@ -28,9 +28,12 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
         ref.isOpen = shouldOpen;
       }
     },
-    150,
-    { isOpen: true },
-    { shouldAttachListener: true, shouldCallOnResizeOnLoad: true }
+    {
+      shouldAttachListener: true,
+      shouldCallOnResizeOnLoad: true,
+      debounceTime: 150,
+      ref: { isOpen: isOtherStepsShown },
+    }
   );
 
   return (

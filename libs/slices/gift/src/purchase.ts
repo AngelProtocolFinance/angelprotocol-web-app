@@ -1,4 +1,4 @@
-import { APIs } from "@ap/constants";
+import { APIs, EMAIL_SUPPORT } from "@ap/constants";
 import { WalletState } from "@ap/contexts/wallet-context";
 import { Contract } from "@ap/contracts";
 import { createAuthToken, getWasmAttribute, logger } from "@ap/helpers";
@@ -54,7 +54,7 @@ export const purchase = createAsyncThunk<void, Args>(
 
         if (!res.ok) {
           return updateTx({
-            error: `Failed to save gift card code. Kindly contact support@angelprotocol.io. Transaction: ${response.transactionHash}`,
+            error: `Failed to save gift card code. Kindly contact ${EMAIL_SUPPORT}. Transaction: ${response.transactionHash}`,
           });
         }
         /** no problems, save giftcard code on user's computer */

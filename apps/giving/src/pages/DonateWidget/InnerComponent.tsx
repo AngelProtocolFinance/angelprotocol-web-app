@@ -1,6 +1,7 @@
-import { APLogo } from "@ap/components";
+import { Logo } from "@ap/components";
 import { Steps } from "@ap/components/steps";
 import WalletSuite from "@ap/components/wallet-suite";
+import { LOGO } from "@ap/constants";
 import { getPossessiveForm } from "@ap/helpers";
 import { setRecipient } from "@ap/slices/donation";
 import { useSetter } from "@ap/store";
@@ -50,7 +51,7 @@ export default function InnerComponent(props: {
         </section>
       </div>
       <footer className="flex justify-center items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <APLogo className="w-20" />
+        <Logo className="w-20" logo={LOGO} />
       </footer>
     </div>
   );

@@ -1,5 +1,5 @@
 import { TxPrompt } from "@ap/components/prompt";
-import { APIs } from "@ap/constants";
+import { APIs, EMAIL_SUPPORT } from "@ap/constants";
 import { useModalContext } from "@ap/contexts";
 import {
   createAuthToken,
@@ -48,8 +48,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
 
       if (!response.ok) {
         return showModal(TxPrompt, {
-          error:
-            "Failed to log created withdraw proposal. Contact support@angelprotocol.io",
+          error: `Failed to log created withdraw proposal. Contact ${EMAIL_SUPPORT}`,
         });
       }
 
@@ -62,8 +61,7 @@ export default function useLogWithdrawProposal(successMeta?: TxSuccessMeta) {
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {
-        error:
-          "Failed to log created withdraw proposal. Contact support@angelprotocol.io",
+        error: `Failed to log created withdraw proposal. Contact ${EMAIL_SUPPORT}`,
       });
     }
   }

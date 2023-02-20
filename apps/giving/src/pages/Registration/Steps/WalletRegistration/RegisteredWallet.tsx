@@ -1,4 +1,5 @@
 import Copier from "@ap/components/copier";
+import { APP_NAME } from "@ap/constants";
 import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
@@ -12,9 +13,9 @@ export default function RegisteredWallet(props: {
     <div className="grid">
       <h3 className="text-lg font-bold">You Wallet is registered!</h3>
       <p className="text-gray-d1 dark:text-gray text-sm mt-2">
-        Once you have registered your wallet address, we shall be able to create
-        your Angel Giving endowment account. You can change your wallet at any
-        time.
+        {`Once you have registered your wallet address, we shall be able to create
+        your ${APP_NAME} endowment account. You can change your wallet at any
+        time.`}
       </p>
 
       <div className="grid mt-8 border border-prim p-8 rounded">

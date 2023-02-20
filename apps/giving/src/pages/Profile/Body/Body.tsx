@@ -1,6 +1,6 @@
 import { BookmarkBtn, Breadcrumbs, ExtLink, Seo } from "@ap/components";
 import Icon from "@ap/components/icon";
-import { appRoutes } from "@ap/constants";
+import { APP_NAME, DAPP_DOMAIN, appRoutes } from "@ap/constants";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
@@ -11,11 +11,11 @@ export default function Body() {
   return (
     <div className="flex justify-center items-center w-full h-full">
       <Seo
-        title={`${profile.name} - Angel Giving`}
+        title={`${profile.name} - ${APP_NAME}`}
         description={`${profile.overview.slice(0, 140)}`}
         name={`${profile.name}`}
         image={`${profile.logo}`}
-        url={`https://app.angel.giving/profile/${profile.id}`}
+        url={`${DAPP_DOMAIN}/profile/${profile.id}`}
       />
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
