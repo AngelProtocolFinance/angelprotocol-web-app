@@ -4,16 +4,6 @@
   "sourceRoot": "libs/types/slices/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/types/slices",
-        "main": "libs/types/slices/src/index.ts",
-        "tsConfig": "libs/types/slices/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

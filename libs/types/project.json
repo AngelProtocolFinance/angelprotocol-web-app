@@ -4,16 +4,6 @@
   "sourceRoot": "libs/types/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/types",
-        "main": "libs/types/src/index.ts",
-        "tsConfig": "libs/types/tsconfig.lib.json",
-        "swcrc": "configs/lib.swcrc"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -21,7 +11,6 @@
         "lintFilePatterns": ["libs/types/**/*.ts"]
       }
     }
-    
   },
   "tags": []
 }
