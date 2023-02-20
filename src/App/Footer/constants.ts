@@ -64,17 +64,12 @@ export const SECTIONS_DATA: Section[] = [
     title: "Products",
     links: [
       {
-        text: "For Non-profit orgs.",
+        text: "Non-profits",
         href: `${BASE_DOMAIN}/non-profit-organizations/`,
       },
-      { text: "For Donors", href: `${BASE_DOMAIN}/donors/` },
+      { text: "Leaderboard", href: `/leaderboard` },
       {
-        text: "For Changemakers",
-        href: `${BASE_DOMAIN}/changemakers/`,
-      },
-      { text: "For Investors", href: `${BASE_DOMAIN}/investors/` },
-      {
-        text: "For CSR Partners",
+        text: "Giving Partners (CSR)",
         href: `${BASE_DOMAIN}/csr-partners/`,
       },
       // {
@@ -92,7 +87,6 @@ export const SECTIONS_DATA: Section[] = [
         href: `${BASE_DOMAIN}/about/#:~:text=MEET%20THE%20TEAM-,Operations,-DUFFY%20CASEY`,
       },
       { text: "News", href: `${BASE_DOMAIN}/news/` },
-      { text: "Stories", href: `${BASE_DOMAIN}/stories/` },
       { text: "Careers", href: `${BASE_DOMAIN}/careers/` },
     ],
   },
