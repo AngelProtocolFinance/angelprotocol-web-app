@@ -18,7 +18,7 @@ export default function useMobileSidebar(linkGroups: LinkGroup[]) {
 
   const activeLink = linkGroups
     .flatMap((g) => g.links)
-    .find((link) => !!matchPath(`${ADMIN_ROUTE}${link}`, currPath));
+    .find((link) => !!matchPath(`${ADMIN_ROUTE}${link.to}`, currPath));
 
   const { showModal } = useModalContext();
 
